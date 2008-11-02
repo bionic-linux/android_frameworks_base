@@ -78,6 +78,10 @@ ifeq ($(HOST_OS),darwin)
 	LOCAL_SRC_FILES += \
 		executablepath_darwin.cpp
 endif
+ifeq ($(HOST_OS),freebsd)
+	LOCAL_SRC_FILES += \
+		executablepath_freebsd.cpp
+endif
 
 LOCAL_MODULE:= libutils
 
