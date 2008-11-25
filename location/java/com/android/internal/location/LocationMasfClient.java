@@ -176,7 +176,8 @@ public class LocationMasfClient {
         
         if (foundInCache) {
 
-            if (SystemClock.elapsedRealtime() - mLastCollectionUploadTime > MIN_COLLECTION_INTERVAL) {
+            if (SystemClock.elapsedRealtime() - mLastCollectionUploadTime > 
+                    MIN_COLLECTION_INTERVAL) {
                 uploadCollectionReport(true);
             }
 
@@ -995,10 +996,12 @@ public class LocationMasfClient {
             int radioType = -1;
             if (cellState.getRadioType() == CellState.RADIO_TYPE_GPRS) {
                 radioType = GCellularPlatformProfile.RADIO_TYPE_GPRS;
-            } else if (cellState.getRadioType() == CellState.RADIO_TYPE_CDMA) {
-                radioType = GCellularPlatformProfile.RADIO_TYPE_CDMA;
             } else if (cellState.getRadioType() == CellState.RADIO_TYPE_WCDMA) {
                 radioType = GCellularPlatformProfile.RADIO_TYPE_WCDMA;
+            } else if (cellState.getRadioType() == CellState.RADIO_TYPE_CDMA) {
+                radioType = GCellularPlatformProfile.RADIO_TYPE_CDMA;
+            } else if (cellState.getRadioType() == CellState.RADIO_TYPE_EVDO) {
+                radioType = GCellularPlatformProfile.RADIO_TYPE_EVDO;
             }
 
             // Cellular platform profile

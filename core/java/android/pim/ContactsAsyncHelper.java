@@ -17,7 +17,7 @@
 package android.pim;
 
 import com.android.internal.telephony.CallerInfo;
-import com.android.internal.telephony.Connection;
+import com.android.internal.telephony.ConnectionBase;
 
 import android.content.ContentUris;
 import android.content.Context;
@@ -116,7 +116,7 @@ public class ContactsAsyncHelper extends Handler {
             return (mCurrentCallerInfo != ci);
         }
         
-        public boolean isDifferentImageRequest(Connection connection) {
+        public boolean isDifferentImageRequest(ConnectionBase connection) {
             // if the connection does not exist, see if the 
             // mCurrentCallerInfo is also null to match.
             if (connection == null) {
@@ -231,7 +231,7 @@ public class ContactsAsyncHelper extends Handler {
      * Convenience method for calls that do not want to deal with listeners and tokens, but have
      * a CallerInfo object to cache the image to.
      */
-    public static final void updateImageViewWithContactPhotoAsync(CallerInfo info, Context context, 
+    public static final void updateImageViewWithContactPhotoAsync(CallerInfo info, Context context,
             ImageView imageView, Uri person, int placeholderImageResource) {
         // Added additional Cookie field in the callee.
         updateImageViewWithContactPhotoAsync (info, DEFAULT_TOKEN, null, null, context, 

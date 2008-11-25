@@ -33,8 +33,9 @@ public class CellState {
     public static String TAG = "CellState";
 
     public static int RADIO_TYPE_GPRS = 1;
-    public static int RADIO_TYPE_CDMA = 2;
-    public static int RADIO_TYPE_WCDMA = 3;
+    public static int RADIO_TYPE_WCDMA = 2;
+    public static int RADIO_TYPE_CDMA = 3;
+    public static int RADIO_TYPE_EVDO = 4;
 
     private int mCid = -1;
     private int mLac = -1;
@@ -51,9 +52,11 @@ public class CellState {
     }
 
     public CellState(ServiceState service, CellLocation location) {
-        GsmCellLocation loc = (GsmCellLocation)location;
-        mLac = loc.getLac(); // example: 6032
-        mCid = loc.getCid(); // example: 31792
+        if (location instanceof GsmCellLocation) {
+            GsmCellLocation loc = (GsmCellLocation)location;
+            mLac = loc.getLac(); // example: 6032
+            mCid = loc.getCid(); // example: 31792
+        }
         mTime = System.currentTimeMillis();
 
         // Get radio type
@@ -62,7 +65,12 @@ public class CellState {
             mRadioType = RADIO_TYPE_GPRS;
         } else if (radioType != null && radioType.equals("UMTS")) {
             mRadioType = RADIO_TYPE_WCDMA;
+        } else if (radioType != null && radioType.equals("CDMA")) {
+            mRadioType = RADIO_TYPE_CDMA;
+        } else if (radioType != null && radioType.equals("EVDO")) {
+            mRadioType = RADIO_TYPE_EVDO;
         }
+
 
         // Get MCC/MNC
         String operator = service.getOperatorNumeric();
@@ -75,7 +83,8 @@ public class CellState {
         }
 
         // Get Home MCC/MNC
-        String homeOperator = SystemProperties.get(TelephonyProperties.PROPERTY_SIM_OPERATOR_NUMERIC);
+        String homeOperator = SystemProperties.get(
+                TelephonyProperties.PROPERTY_SIM_OPERATOR_NUMERIC);
         if (homeOperator != null && !homeOperator.equals("")) {
             String mcc = homeOperator.substring(0, 3);
             String mnc = homeOperator.substring(3);

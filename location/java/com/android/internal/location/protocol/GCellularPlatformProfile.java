@@ -18,8 +18,9 @@ package com.android.internal.location.protocol;
 
 public interface GCellularPlatformProfile {
   static final int RADIO_TYPE_GPRS = 3;
-  static final int RADIO_TYPE_CDMA = 4;
-  static final int RADIO_TYPE_WCDMA = 5;
+  static final int RADIO_TYPE_WCDMA = 4;
+  static final int RADIO_TYPE_CDMA = 5;
+  static final int RADIO_TYPE_EVDO = 6;  
 
   static final int RADIO_TYPE = 1;
   static final int CARRIER = 2;

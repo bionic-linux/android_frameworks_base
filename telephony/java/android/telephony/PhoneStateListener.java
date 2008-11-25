@@ -10,24 +10,19 @@ import android.util.Log;
 import com.android.internal.telephony.IPhoneStateListener;
 
 /**
- * A listener class for monitoring changes in specific telephony states
- * on the device, including service state, signal strength, message 
- * waiting indicator (voicemail), and others.
+ * Class used to listen for changes in the phone state, including the service state, signal
+ * strength, message waiting (voicemail) indicator, etc.
+ *
  * <p>
- * Override the methods for the state that you wish to receive updates for, and 
- * pass your PhoneStateListener object, along with bitwise-or of the LISTEN_
- * flags to {@link TelephonyManager#listen TelephonyManager.listen()}.
- * <p>
- * Note that access to some telephony information is
- * permission-protected. Your application won't receive updates for protected 
- * information unless it has the appropriate permissions declared in 
- * its manifest file. Where permissions apply, they are noted in the
- * appropriate LISTEN_ flags. 
+ * Override the methods for the state that you wish to receive updates for, and pass
+ * your PhoneStateListener object, along with bitwise-or of the LISTEN_ flags to {@link
+ * TelephonyManager#listen TelephonyManager.listen()}.
  */
 public class PhoneStateListener {
 
     /**
-     * Stop listening for updates.
+     * Stop listening for updates.  Pass to {@link TelephonyManager#listen
+     * TelephonyManager.listen()}.
      */
     public static final int LISTEN_NONE = 0;
 
@@ -148,9 +143,6 @@ public class PhoneStateListener {
         // default implementation empty
     }
 
-    /**
-     * Callback invoked when device cell location changes. 
-     */
     public void onCellLocationChanged(CellLocation location) {
         // default implementation empty
     }

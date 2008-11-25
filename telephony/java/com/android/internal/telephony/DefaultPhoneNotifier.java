@@ -40,7 +40,7 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
     }
 
     public void notifyPhoneState(Phone sender) {
-        Call ringingCall = sender.getRingingCall();
+        CallBase ringingCall = sender.getRingingCall();
         String incomingNumber = "";
         if (ringingCall != null && ringingCall.getEarliestConnection() != null){
             incomingNumber = ringingCall.getEarliestConnection().getAddress();

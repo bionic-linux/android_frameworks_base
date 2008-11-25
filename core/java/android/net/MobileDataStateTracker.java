@@ -229,6 +229,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
     public String getTcpBufferSizesPropName() {
       String networkTypeStr = "unknown";
         TelephonyManager tm = new TelephonyManager(mContext);
+        //TODO We have to edit the parameter for getNetworkType regarding CDMA
         switch(tm.getNetworkType()) {
           case TelephonyManager.NETWORK_TYPE_GPRS:
             networkTypeStr = "gprs";
@@ -239,7 +240,16 @@ public class MobileDataStateTracker extends NetworkStateTracker {
           case TelephonyManager.NETWORK_TYPE_UMTS:
             networkTypeStr = "umts";
             break;
-        }
+          case TelephonyManager.NETWORK_TYPE_CDMA:
+            networkTypeStr = "cdma";
+            break;
+          case TelephonyManager.NETWORK_TYPE_EVDO_0:
+            networkTypeStr = "evdo";
+            break;
+          case TelephonyManager.NETWORK_TYPE_EVDO_A:
+            networkTypeStr = "evdo";
+            break;
+          }
         return "net.tcp.buffersize." + networkTypeStr;
     }
 

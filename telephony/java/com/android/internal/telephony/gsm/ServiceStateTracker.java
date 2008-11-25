@@ -24,7 +24,6 @@ import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERAT
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_NUMERIC;
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_SIM_OPERATOR_ALPHA;
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_SIM_OPERATOR_NUMERIC;
-import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.Phone;
 import android.app.AlarmManager;
 import android.content.ContentResolver;
@@ -42,11 +41,14 @@ import android.provider.Checkin;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Telephony.Intents;
-import android.telephony.gsm.GsmCellLocation;
 import android.telephony.ServiceState;
+import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TimeUtils;
+
+import com.android.internal.telephony.ServiceStateTrackerBase;
+import com.android.internal.telephony.TelephonyIntents;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -56,45 +58,15 @@ import java.util.TimeZone;
 /**
  * {@hide}
  */
-final class ServiceStateTracker extends Handler
-{
-    /**
-     *  The access technology currently in use:
-     *  0 = unknown
-     *  1 = GPRS only
-     *  2 = EDGE
-     *  3 = UMTS
-     */
-    static final int DATA_ACCESS_UNKNOWN = 0;
-    static final int DATA_ACCESS_GPRS = 1;
-    static final int DATA_ACCESS_EDGE = 2;
-    static final int DATA_ACCESS_UMTS = 3;
-
+final class ServiceStateTracker extends ServiceStateTrackerBase {
     //***** Instance Variables
-
     GSMPhone phone;
-    CommandsInterface cm;
-
-    ServiceState ss;
-    ServiceState newSS;
     GsmCellLocation cellLoc;
     GsmCellLocation newCellLoc;
     int mPreferredNetworkType;
 
     int rssi = 99;     // signal strength 0-31, 99=unknown
                        // That's "received signal strength indication" fyi
-
-    int[] pollingContext;  // Used as a unique identifier to
-                            // track requests associated with a poll
-                            // and ignore stale responses.
-                            // The value is a count-down of expected responses
-                            // in this pollingContext
-
-    boolean mDesiredPowerState;
-
-    boolean dontPollSignalStrength = false; // Default is to poll strength
-        // If we're getting unsolicited signal strength updates from the radio,
-        // set value to true and don't bother polling any more
 
     private int gprsState = ServiceState.STATE_OUT_OF_SERVICE;
     private int newGPRSState = ServiceState.STATE_OUT_OF_SERVICE;
@@ -107,11 +79,8 @@ final class ServiceStateTracker extends Handler
     /* gsm roaming status solely based on TS 27.007 7.2 CREG */
     private boolean mGsmRoaming = false;
 
-    private RegistrantList networkAttachedRegistrants = new RegistrantList();
     private RegistrantList gprsAttachedRegistrants = new RegistrantList();
     private RegistrantList gprsDetachedRegistrants = new RegistrantList();
-    private RegistrantList roamingOnRegistrants = new RegistrantList();
-    private RegistrantList roamingOffRegistrants = new RegistrantList();
 
     // Sometimes we get the NITZ time before we know what country we are in.
     // Keep the time zone information from the NITZ string so we can fix
@@ -138,63 +107,8 @@ final class ServiceStateTracker extends Handler
     //***** Constants
 
     static final boolean DBG = true;
-    static final String LOG_TAG = "GSM";
+    static final String LOG_TAG = "gsm.ServiceStateTracker";
 
-    // signal strength poll rate
-    static final int POLL_PERIOD_MILLIS = 20 * 1000;
-
-    //***** Events
-    
-    static final int EVENT_RADIO_STATE_CHANGED       = 1;
-    static final int EVENT_NETWORK_STATE_CHANGED        = 2;
-    static final int EVENT_GET_SIGNAL_STRENGTH  = 3;
-    static final int EVENT_POLL_STATE_REGISTRATION = 4;
-    static final int EVENT_POLL_STATE_GPRS = 5;
-    static final int EVENT_POLL_STATE_OPERATOR         = 6;
-    static final int EVENT_POLL_SIGNAL_STRENGTH = 10;
-    static final int EVENT_NITZ_TIME = 11;
-    static final int EVENT_SIGNAL_STRENGTH_UPDATE = 12;
-    static final int EVENT_RADIO_AVAILABLE = 13;
-    static final int EVENT_POLL_STATE_NETWORK_SELECTION_MODE = 14;
-    static final int EVENT_GET_LOC_DONE = 15;
-    static final int EVENT_SIM_RECORDS_LOADED = 16;
-    static final int EVENT_SIM_READY = 17;
-    static final int EVENT_LOCATION_UPDATES_ENABLED = 18;
-    static final int EVENT_GET_PREFERRED_NETWORK_TYPE = 19;
-    static final int EVENT_SET_PREFERRED_NETWORK_TYPE = 20;
-    static final int EVENT_RESET_PREFERRED_NETWORK_TYPE = 21;
-
-
-  //***** Time Zones
-
-    private static final String TIMEZONE_PROPERTY = "persist.sys.timezone";
-
-    // List of ISO codes for countries that can have an offset of GMT+0
-    // when not in daylight savings time.  This ignores some small places
-    // such as the Canary Islands (Spain) and Danmarkshavn (Denmark).
-    // The list must be sorted by code.
-    private static final String[] GMT_COUNTRY_CODES = {
-        "bf", // Burkina Faso
-        "ci", // Cote d'Ivoire
-        "eh", // Western Sahara
-        "fo", // Faroe Islands, Denmark
-        "gh", // Ghana
-        "gm", // Gambia
-        "gn", // Guinea
-        "gw", // Guinea Bissau
-        "ie", // Ireland
-        "lr", // Liberia
-        "is", // Iceland
-        "ma", // Morocco
-        "ml", // Mali
-        "mr", // Mauritania
-        "pt", // Portugal
-        "sl", // Sierra Leone
-        "sn", // Senegal
-        "st", // Sao Tome and Principe
-        "tg", // Togo
-        "uk", // U.K
-    };
         
     private ContentObserver mAutoTimeObserver = new ContentObserver(new Handler()) {
         @Override
@@ -207,8 +121,9 @@ final class ServiceStateTracker extends Handler
 
     //***** Constructors
 
-    ServiceStateTracker(GSMPhone phone)
-    {
+    public ServiceStateTracker(GSMPhone phone) {
+        super();
+
         this.phone = phone;
         cm = phone.mCM;
         ss = new ServiceState();
@@ -278,83 +193,18 @@ final class ServiceStateTracker extends Handler
             r.notifyRegistrant();
         }
     }
-
-    /**
-     * Registration point for combined roaming on
-     * combined roaming is true when roaming is true and ONS differs SPN
-     *
-     * @param h handler to notify
-     * @param what what code of message when delivered
-     * @param obj placed in Message.obj
-     */
-    void registerForRoamingOn(Handler h, int what, Object obj) {
-        Registrant r = new Registrant(h, what, obj);
-        roamingOnRegistrants.add(r);
-
-        if (ss.getRoaming()) {
-            r.notifyRegistrant();
-        }
-    }
-
-    /**
-     * Registration point for combined roaming off
-     * combined roaming is true when roaming is true and ONS differs SPN
-     *
-     * @param h handler to notify
-     * @param what what code of message when delivered
-     * @param obj placed in Message.obj
-     */
-    void registerForRoamingOff(Handler h, int what, Object obj) {
-        Registrant r = new Registrant(h, what, obj);
-        roamingOffRegistrants.add(r);
-
-        if (!ss.getRoaming()) {
-            r.notifyRegistrant();
-        }
-    }
-
-    /**
-     * Reregister network through toggle perferred network type
-     * This is a work aorund to deregister and register network since there is
-     * no ril api to set COPS=2 (deregister) only.
-     *
-     * @param onComplete is dispatched when this is complete.  it will be
-     * an AsyncResult, and onComplete.obj.exception will be non-null
-     * on failure.
-     */
-    void reRegisterNetwork(Message onComplete) {
-        cm.getPreferredNetworkType(
-                obtainMessage(EVENT_GET_PREFERRED_NETWORK_TYPE, onComplete));
-    }
-
+    
     //***** Called from GSMPhone
-
-    public void
-    setRadioPower(boolean power)
-    {
-        mDesiredPowerState = power;
-
-        setPowerStateToDesired();
-    }
-
     public void
     getLacAndCid(Message onComplete) {
         cm.getRegistrationState(obtainMessage(
                         EVENT_GET_LOC_DONE, onComplete));
     }
 
-    /*package*/ void enableLocationUpdates() {
-        cm.setLocationUpdates(true, obtainMessage(EVENT_LOCATION_UPDATES_ENABLED));
-    }
-    
-    /*package*/ void disableLocationUpdates() {
-        cm.setLocationUpdates(false, null);
-    }
-    //***** Overridden from Handler
 
+    //***** Overridden from ServiceStateTrackerBase
     public void
-    handleMessage (Message msg)
-    {
+    handleMessage (Message msg) {
         AsyncResult ar;
         int[] ints;
         String[] strings;
@@ -499,7 +349,7 @@ final class ServiceStateTracker extends Handler
 
             case EVENT_RESET_PREFERRED_NETWORK_TYPE:
                 ar = (AsyncResult) msg.obj;
-                if (ar.userObj != null) {
+                if (ar.userObj != null) { //TODO check in Data Connectivity
                     AsyncResult.forMessage(((Message) ar.userObj)).exception
                             = ar.exception;
                     ((Message) ar.userObj).sendToTarget();
@@ -512,23 +362,25 @@ final class ServiceStateTracker extends Handler
                 if (ar.exception == null) {
                     mPreferredNetworkType = ((int[])ar.result)[0];
                 } else {
-                    mPreferredNetworkType = Phone.NT_AUTO_TYPE;
+                    mPreferredNetworkType = Phone.NT_GLOBAL_AUTO_TYPE;
                 }
 
                 message = obtainMessage(EVENT_SET_PREFERRED_NETWORK_TYPE, ar.userObj);
-                int toggledNetworkType =
-                        (mPreferredNetworkType == Phone.NT_AUTO_TYPE) ?
-                        Phone.NT_GSM_TYPE : Phone.NT_AUTO_TYPE;
+                int toggledNetworkType = Phone.NT_GLOBAL_AUTO_TYPE;
+                        /*(mPreferredNetworkType == Phone.NT_AUTO_TYPE) ?
+                        Phone.NT_GSM_TYPE : Phone.NT_AUTO_TYPE;*/ //TODO check in Data Connectivity
 
                 cm.setPreferredNetworkType(toggledNetworkType, message);
                 break;
-
+            default:
+                Log.e(LOG_TAG, "Unhandled message with number: " + msg.what);
+            break;
         }
     }
 
     //***** Private Instance Methods
 
-    private void updateSpnDisplay() {
+    protected void updateSpnDisplay() {
         int rule = phone.mSIMRecords.getDisplayRule(ss.getOperatorNumeric());
         String spn = phone.mSIMRecords.getServiceProvideName();
         String plmn = ss.getOperatorAlphaLong();
@@ -552,35 +404,12 @@ final class ServiceStateTracker extends Handler
         curPlmn = plmn;
     }
 
-    private void
-    setPowerStateToDesired()
-    {
-        // If we want it on and it's off, turn it on
-        if (mDesiredPowerState
-            && cm.getRadioState() == CommandsInterface.RadioState.RADIO_OFF
-        ) {
-            cm.setRadioPower(true, null);
-        } else if (!mDesiredPowerState && cm.getRadioState().isOn()) {
-            // If it's on and available and we want it off..
-            cm.setRadioPower(false, null);
-        } // Otherwise, we're in the desired state
-    }
-
-    /** Cancel a pending (if any) pollState() operation */
-    private void
-    cancelPollState()
-    {
-        // This will effectively cancel the rest of the poll requests
-        pollingContext = new int[1];
-    }
-
     /**
      * Handle the result of one of the pollState()-related requests
      */
 
-    private void
-    handlePollStateResult (int what, AsyncResult ar)
-    {
+    protected void
+    handlePollStateResult (int what, AsyncResult ar) {
         int ints[];
         String states[];
 
@@ -693,8 +522,7 @@ final class ServiceStateTracker extends Handler
     }
 
     private void
-    setRssiDefaultValues()
-    {
+    setRssiDefaultValues() {
         rssi = 99;
     }
 
@@ -708,8 +536,7 @@ final class ServiceStateTracker extends Handler
      */
 
     private void
-    pollState()
-    {
+    pollState() {
         pollingContext = new int[1];
         pollingContext[0] = 0;
 
@@ -761,7 +588,7 @@ final class ServiceStateTracker extends Handler
         }
     }
 
-    private static String networkTypeToString(int type) {
+    private static String networkTypeToString(int type) { //Network Type from GPRS_REGISTRATION_STATE
         String ret = "unknown";
 
         switch (type) {
@@ -774,14 +601,16 @@ final class ServiceStateTracker extends Handler
             case DATA_ACCESS_UMTS:
                 ret = "UMTS";
                 break;
+            default:
+                Log.e(LOG_TAG, "Wrong network type: " + Integer.toString(type));
+                break;                
         }
 
         return ret;
     }
 
     private void
-    pollStateDone()
-    {
+    pollStateDone() {
         if (DBG) {
             Log.d(LOG_TAG, "Poll ServiceState done: " +
                 " oldSS=[" + ss + "] newSS=[" + newSS +
@@ -898,7 +727,8 @@ final class ServiceStateTracker extends Handler
                     if (zone != null) {
                         Context context = phone.getContext();
                         if (getAutoTime()) {
-                            AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                            AlarmManager alarm = 
+                            (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                             alarm.setTimeZone(zone.getID());
                         }
                         saveNitzTimeZone(zone.getID());
@@ -977,8 +807,7 @@ final class ServiceStateTracker extends Handler
     }
 
     private void
-    queueNextSignalStrengthPoll()
-    {
+    queueNextSignalStrengthPoll() {
         if (dontPollSignalStrength) {
             // The radio is telling us about signal strength changes
             // we don't have to ask it
@@ -1001,8 +830,7 @@ final class ServiceStateTracker extends Handler
      *  Called both for solicited and unsolicited signal stength updates
      */
     private void
-    onSignalStrengthResult(AsyncResult ar)
-    {
+    onSignalStrengthResult(AsyncResult ar) {
         int oldRSSI = rssi;
 
         if (ar.exception != null) {
@@ -1028,8 +856,7 @@ final class ServiceStateTracker extends Handler
 
     /** code is registration state 0-5 from TS 27.007 7.2 */
     private int
-    regCodeToServiceState(int code)
-    {
+    regCodeToServiceState(int code) {
         switch (code) {
             case 0:
             case 2: // 2 is "searching"
@@ -1056,8 +883,7 @@ final class ServiceStateTracker extends Handler
      * returns true if registered roam, false otherwise
      */
     private boolean
-    regCodeIsRoaming (int code)
-    {
+    regCodeIsRoaming (int code) {
         // 5 is  "in service -- roam"
         return 5 == code;
     }
@@ -1093,8 +919,7 @@ final class ServiceStateTracker extends Handler
     }
 
     private static
-    int twoDigitsAt(String s, int offset)
-    {
+    int twoDigitsAt(String s, int offset) {
         int a, b;
 
         a = Character.digit(s.charAt(offset), 10);
@@ -1162,8 +987,7 @@ final class ServiceStateTracker extends Handler
      */
 
     private
-    void setTimeFromNITZString (String nitz, int nitzReceiveTime)
-    {
+    void setTimeFromNITZString (String nitz, int nitzReceiveTime) {
         // "yy/mm/dd,hh:mm:ss(+/-)tz"
         // tz is in number of quarter-hours
 
@@ -1259,7 +1083,8 @@ final class ServiceStateTracker extends Handler
             if (zone != null) {
                 Context context = phone.getContext();
                 if (getAutoTime()) {
-                    AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                    AlarmManager alarm = 
+                            (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     alarm.setTimeZone(zone.getID());
                 }
                 saveNitzTimeZone(zone.getID());
