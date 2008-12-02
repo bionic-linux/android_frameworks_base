@@ -86,6 +86,9 @@ public class AsyncPlayer {
                     catch (IOException e) {
                         Log.w(mTag, "error loading sound for " + cmd.uri, e);
                     }
+                    catch (IllegalStateException e) {
+                        Log.w(mTag, "error native mediaplayer loading fail for " + cmd.uri, e);
+                    }
                     break;
                 case STOP:
                     if (mPlayer != null) {
