@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "z00763279f8f357e585a2da5c74f268d8",
+        "filename": "include/utils/Errors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001302
+      },
+      "writtenOn": "2008-12-03T16:11:28Z",
+      "side": 1,
+      "message": "On 2008/11/04 16:47:47, David Turner wrote:\n\u003e please do not introduce tabs in the source code\n\nok, i\u0027ll fix it at next commit for review.\nIs any style guide documentation available for platform related projects?",
+      "revId": "6e2b1366f8c9888b105a04bda70ee5023c03ba20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
