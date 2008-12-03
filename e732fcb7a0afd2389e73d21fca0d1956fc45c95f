@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "zb882623a4e8c5384f1430e89af2a6cf3",
+        "filename": "core/res/res/layout/keyboard.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:18Z",
+      "side": 1,
+      "message": "Missing copyright header",
+      "revId": "e732fcb7a0afd2389e73d21fca0d1956fc45c95f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z04c96e1b52b4b610d9ef91d3ae839218",
+        "filename": "core/res/res/layout/keyboard.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:18Z",
+      "side": 1,
+      "message": "The Android style does not use tabs, but spaces, and the indentation should be 4 spaces",
+      "revId": "e732fcb7a0afd2389e73d21fca0d1956fc45c95f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zfc245f1cf1e12bfda7a957175b7fd838",
+        "filename": "core/res/res/layout/keyboard.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:18Z",
+      "side": 1,
+      "message": "This implementation is not flexible at all, it encodes a qwerty keyboard and it ill-suited for localization, etc.",
+      "revId": "e732fcb7a0afd2389e73d21fca0d1956fc45c95f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
