@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "zf78a943fcc01a8f48701403db3af5f54",
+        "filename": "location/java/com/android/internal/location/CellState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:15Z",
+      "side": 1,
+      "message": "Any particular reason why values for WCDMA and CDMA are swapped?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z7b6e405a6767c978afd992cf5fe0d454",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:16Z",
+      "side": 1,
+      "message": "Is there a particular reason you switched WCDMA and CDMA values?  These values are encoded into a protocol buffer, and may need to match constants defined elsewhere (eg, on a server).\n",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z9345816ce7be41765c23145b5b5b8129",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:16Z",
+      "side": 1,
+      "message": "Does not seem like the appropriate place to put this logic.  setRadioPower() can be called multiple times (eg, airplane mode on/off); does the baseband need these settings every time?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za70e22fd08006ada8cee3170b52f1c85",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:16Z",
+      "side": 1,
+      "message": "Seems like this could conflict with user setting (eg, if user selects \"2G only\" from UI).",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z0b12658d898c5ecbcb300f27db3d4a51",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1694,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:15Z",
+      "side": 1,
+      "message": "Fix indenting for above lines.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
