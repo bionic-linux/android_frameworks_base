@@ -16,6 +16,40 @@
       "revId": "6e2b1366f8c9888b105a04bda70ee5023c03ba20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z9a7990302a8a0d89a6d5767ef394bf11",
+        "filename": "include/utils/Errors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2008-12-03T16:11:28Z",
+      "side": 1,
+      "message": "not yet, but one is being prepared. for now, avoid TABS in source code as much as possible. thanks you",
+      "revId": "6e2b1366f8c9888b105a04bda70ee5023c03ba20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zbd01f04ac14f29e7fb659627013a9277",
+        "filename": "include/utils/Errors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2008-12-03T16:11:28Z",
+      "side": 1,
+      "message": "please do not introduce tabs in the source code",
+      "revId": "6e2b1366f8c9888b105a04bda70ee5023c03ba20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
