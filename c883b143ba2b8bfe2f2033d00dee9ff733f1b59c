@@ -70,6 +70,125 @@
     },
     {
       "key": {
+        "uuid": "z67ebb0afc351b9dde3aa1ce703bad8d7",
+        "filename": "preloaded-classes",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:17Z",
+      "side": 1,
+      "message": "Please group these with the other com.android.internal.telephony.* classes",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zdbb87f214f56879ecd682482f221a1e6",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:17Z",
+      "side": 1,
+      "message": "Yes, please do this.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z63b29270a22c525cdca47cbbc7e98d7b",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:17Z",
+      "side": 1,
+      "message": "If system type is an int, why not store it as an int instead of as a String, and avoid calling parseInt()?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z65091b15754f88f742a590ccedd8a578",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:17Z",
+      "side": 1,
+      "message": "Don\u0027t really need the action.equals() check, since that check is performed by the caller.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd0f8805b151098dd013a2f60d74410da",
+        "filename": "telephony/java/android/telephony/CellLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:17Z",
+      "side": 1,
+      "message": "Please define a static int for CDMA phone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ze7371aaaa941eacb65d4da68890d63ab",
+        "filename": "telephony/java/com/android/internal/telephony/BaseCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:17Z",
+      "side": 1,
+      "message": "Do we need this? Can\u0027t we just use registerForSIMLockedOrAbsent()?  Or can these events occur\nindependently (ie, device may have both SIM and RUIM)?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z53ed7267f9ba7dc99800373ad6ba3512",
+        "filename": "telephony/java/com/android/internal/telephony/IIccPhoneBook.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2008-12-03T16:11:17Z",
+      "side": 1,
+      "message": "If this line isn\u0027t needed, please remove (though isn\u0027t it needed for List below?).",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z9345816ce7be41765c23145b5b5b8129",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 1
