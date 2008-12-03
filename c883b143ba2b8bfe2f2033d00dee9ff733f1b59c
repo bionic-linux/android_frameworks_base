@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "ze15388a645609da6fca10e34a861803e",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001145
+      },
+      "writtenOn": "2008-12-03T16:11:16Z",
+      "side": 1,
+      "message": "Please don\u0027t change these. This is an existing server protocol.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z7b6e405a6767c978afd992cf5fe0d454",
         "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2008-12-03T16:11:16Z",
       "side": 1,
       "message": "Is there a particular reason you switched WCDMA and CDMA values?  These values are encoded into a protocol buffer, and may need to match constants defined elsewhere (eg, on a server).\n",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za7a94f0aa4657788aed059d8e2b8b33c",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001145
+      },
+      "writtenOn": "2008-12-03T16:11:16Z",
+      "side": 1,
+      "message": "Please remove this line. We don\u0027t distinguish between CDMA and EVDO radio on the server-side. ",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
