@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "z7ef4289aa678d49be43ed6a3e6d0881d",
+        "filename": "location/java/com/android/internal/location/LocationMasfClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1001145
+      },
+      "writtenOn": "2008-12-03T16:11:18Z",
+      "side": 1,
+      "message": "In this case, can you set the radioType to RADIO_TYPE_CDMA. Our servers don\u0027t distinguish between CDMA and EVDO radio. ",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ze15388a645609da6fca10e34a861803e",
         "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
         "patchSetId": 1
