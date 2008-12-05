@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "z7b0541c7fba0c2d9d333d4c01e8b37bc",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 0,
+      "message": "On 2008/12/03 16:11:18, John Huang wrote:\n\u003e Why is this comment removed?\n\nWolfgang: must have been a merge problem. Will be reverted to the original file.",
+      "revId": "a895b79ccf23e88c4e1ef1e5377e84cd0ad15cf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z35c6c4ff0d0ac8ac84c3b9221083ee5c",
         "filename": "telephony/java/android/telephony/PhoneStateListener.java",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2008-12-03T16:11:17Z",
       "side": 0,
       "message": "Why is this comment removed?",
+      "revId": "a895b79ccf23e88c4e1ef1e5377e84cd0ad15cf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z39dad546fc24bde47988e76dba868b92",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 0,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Why is this comment removed?\n\nWolfgang: must have been a merge problem. Will be reverted to the original file.",
       "revId": "a895b79ccf23e88c4e1ef1e5377e84cd0ad15cf8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false

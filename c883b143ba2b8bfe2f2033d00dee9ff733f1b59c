@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "z7151acd895d383e6dc2250529cbc9274",
+        "filename": "location/java/com/android/internal/location/CellState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:15, John Huang wrote:\n\u003e Any particular reason why values for WCDMA and CDMA are swapped?\n\nWolfgang: will be reverted to original; incl. removal of EVDO",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z7ef4289aa678d49be43ed6a3e6d0881d",
         "filename": "location/java/com/android/internal/location/LocationMasfClient.java",
         "patchSetId": 1
@@ -53,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "zd29b1cf44a38fba7a00ac38abdbebc53",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:16, Rohan Seth wrote:\n\u003e Please don\u0027t change these. This is an existing server protocol.\n\nWolfgang: will be reverted to original file",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z7b6e405a6767c978afd992cf5fe0d454",
         "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
         "patchSetId": 1
@@ -64,6 +98,23 @@
       "writtenOn": "2008-12-03T16:11:16Z",
       "side": 1,
       "message": "Is there a particular reason you switched WCDMA and CDMA values?  These values are encoded into a protocol buffer, and may need to match constants defined elsewhere (eg, on a server).\n",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zdd7a604721ba2a6ffaeaf22d0cc5b16b",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:16, John Huang wrote:\n\u003e Is there a particular reason you switched WCDMA and CDMA values?  These values\n\u003e are encoded into a protocol buffer, and may need to match constants defined\n\u003e elsewhere (eg, on a server).\n\u003e \nWolfgang: will be reverted to original file",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +138,23 @@
     },
     {
       "key": {
+        "uuid": "zf985963a14b40de592ece059f4d3841f",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:16, Rohan Seth wrote:\n\u003e Please remove this line. We don\u0027t distinguish between CDMA and EVDO radio on the\n\u003e server-side. \n\nWolfgang: will be reverted to original file",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z67ebb0afc351b9dde3aa1ce703bad8d7",
         "filename": "preloaded-classes",
         "patchSetId": 1
@@ -98,6 +166,23 @@
       "writtenOn": "2008-12-03T16:11:17Z",
       "side": 1,
       "message": "Please group these with the other com.android.internal.telephony.* classes",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z1af0cfa9928c6739d76b45155343ffac",
+        "filename": "preloaded-classes",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Please group these with the other com.android.internal.telephony.* classes\n\nWolfgang: Ok",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +206,23 @@
     },
     {
       "key": {
+        "uuid": "z936043004707de94aee8dbc3b8325082",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Yes, please do this.\n\nWolfgang: Sure",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z63b29270a22c525cdca47cbbc7e98d7b",
         "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
         "patchSetId": 1
@@ -132,6 +234,23 @@
       "writtenOn": "2008-12-03T16:11:17Z",
       "side": 1,
       "message": "If system type is an int, why not store it as an int instead of as a String, and avoid calling parseInt()?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd9e0d7c82854cc18ca814a4e90522c52",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e If system type is an int, why not store it as an int instead of as a String, and\n\u003e avoid calling parseInt()?\n\nWolfgang: ok",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -155,6 +274,23 @@
     },
     {
       "key": {
+        "uuid": "zbca90472b64dbd51005a754a52409ca2",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Don\u0027t really need the action.equals() check, since that check is performed by\n\u003e the caller.\n\nWolfgang: will be removed",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zd0f8805b151098dd013a2f60d74410da",
         "filename": "telephony/java/android/telephony/CellLocation.java",
         "patchSetId": 1
@@ -166,6 +302,23 @@
       "writtenOn": "2008-12-03T16:11:17Z",
       "side": 1,
       "message": "Please define a static int for CDMA phone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z3e437674cb6e9c1e93c5b3d16defa3df",
+        "filename": "telephony/java/android/telephony/CellLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Please define a static int for CDMA phone.\n\nWolfgang: OK",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -189,6 +342,23 @@
     },
     {
       "key": {
+        "uuid": "zd3b792b7b4481346db93ad502363683b",
+        "filename": "telephony/java/com/android/internal/telephony/BaseCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Do we need this? Can\u0027t we just use registerForSIMLockedOrAbsent()?  Or can these\n\u003e events occur\n\u003e independently (ie, device may have both SIM and RUIM)?\nWolfgang: We have implemented it in that way, because we receive RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED which differ RUIM and SIM states in its parameters. So we should also notify only SIM or RUIM registrants in the specific case.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z53ed7267f9ba7dc99800373ad6ba3512",
         "filename": "telephony/java/com/android/internal/telephony/IIccPhoneBook.aidl",
         "patchSetId": 1
@@ -206,6 +376,23 @@
     },
     {
       "key": {
+        "uuid": "zacf9ddedb279b8fae1e8fece7dc9e1b3",
+        "filename": "telephony/java/com/android/internal/telephony/IIccPhoneBook.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e If this line isn\u0027t needed, please remove (though isn\u0027t it needed for List\n\u003e below?).\n\nWolfgang: will be removed",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z9345816ce7be41765c23145b5b5b8129",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 1
@@ -217,6 +404,23 @@
       "writtenOn": "2008-12-03T16:11:16Z",
       "side": 1,
       "message": "Does not seem like the appropriate place to put this logic.  setRadioPower() can be called multiple times (eg, airplane mode on/off); does the baseband need these settings every time?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z3a18312158c7ea57fae1eb3cdf14dd47",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-05T19:08:21Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:16, John Huang wrote:\n\u003e Does not seem like the appropriate place to put this logic.  setRadioPower() can\n\u003e be called multiple times (eg, airplane mode on/off); does the baseband need\n\u003e these settings every time?\n\nWolfgang: The baseband should remember this setting. That would make the function synchronized() unnecessary. Needs to be double checked on HW. An intermediate solution is to include at least a check that this is done only for the  mInitialRadioStateChange. Next upload will include the intermediate solution.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
