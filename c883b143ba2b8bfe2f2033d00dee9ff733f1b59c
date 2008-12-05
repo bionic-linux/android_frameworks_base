@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "z16fdabb8338110dae2ebb76abbf7b9aa",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Should ISimPhoneBook.aidl be deleted if its not being used?\nAlso, add tab to match the other lines.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd959942b79c4eda2af6a9c322896c90b",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Fix indentation of }",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zf78a943fcc01a8f48701403db3af5f54",
         "filename": "location/java/com/android/internal/location/CellState.java",
         "patchSetId": 1
@@ -36,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "zbe8aac74b8994ee746f8217873caa1ff",
+        "filename": "location/java/com/android/internal/location/LocationCollector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Name should be enable_google_location_features?\nWhy remove com.google?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z7ef4289aa678d49be43ed6a3e6d0881d",
         "filename": "location/java/com/android/internal/location/LocationMasfClient.java",
         "patchSetId": 1
@@ -64,6 +115,23 @@
       "writtenOn": "2008-12-05T19:16:13Z",
       "side": 1,
       "message": "On 2008/12/03 16:11:18, Rohan Seth wrote:\n\u003e In this case, can you set the radioType to RADIO_TYPE_CDMA. Our servers don\u0027t\n\u003e distinguish between CDMA and EVDO radio. \n\nWolfgang: Ok",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z2b682f6cdedc1b80d2d626ce053fc454",
+        "filename": "location/java/com/android/internal/location/NetworkLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "enable_google_location_features?",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -274,6 +342,40 @@
     },
     {
       "key": {
+        "uuid": "z9b2e43b6204a18c53ff669f5713ca5b0",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z25780e92b0832ed196cbae937805db82",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z65091b15754f88f742a590ccedd8a578",
         "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
         "patchSetId": 1
@@ -342,6 +444,57 @@
     },
     {
       "key": {
+        "uuid": "z31b2860fc30e2d489447d8907d6f2ccb",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Make sure this gets routed to \"radio\" log as John Haung\nmentioned.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z08cf83060b7a0b063ebf31a06d3cd2ee",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z4f3a7cec5a9b22d3ec72f3b11708e5c8",
+        "filename": "telephony/java/com/android/internal/telephony/BaseCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Needs to goto to \"radio\" log?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ze7371aaaa941eacb65d4da68890d63ab",
         "filename": "telephony/java/com/android/internal/telephony/BaseCommands.java",
         "patchSetId": 1
@@ -376,6 +529,91 @@
     },
     {
       "key": {
+        "uuid": "z9249da34f3d0419b012c0621c9381996",
+        "filename": "telephony/java/com/android/internal/telephony/CallBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "One blank line above/below.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z4c006d6b62bb3fec2b81468972e84e12",
+        "filename": "telephony/java/com/android/internal/telephony/CallBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "One blank line",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z326c1bcde4677b75ba993c1971e27351",
+        "filename": "telephony/java/com/android/internal/telephony/CallTrackerBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove extra blank lines in this file.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zf068d7e59df8dfa800eec2c739776c48",
+        "filename": "telephony/java/com/android/internal/telephony/DriverCall.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z6c2635730eae216e3c2c3a84f15b3014",
+        "filename": "telephony/java/com/android/internal/telephony/DriverCall.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Log to \"radio\"",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z53ed7267f9ba7dc99800373ad6ba3512",
         "filename": "telephony/java/com/android/internal/telephony/IIccPhoneBook.aidl",
         "patchSetId": 1
@@ -404,6 +642,295 @@
       "writtenOn": "2008-12-05T19:08:21Z",
       "side": 1,
       "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e If this line isn\u0027t needed, please remove (though isn\u0027t it needed for List\n\u003e below?).\n\nWolfgang: will be removed",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z70f97f673b7588e8589fb0e473f067ff",
+        "filename": "telephony/java/com/android/internal/telephony/IccException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Remove blank line",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8ff8e8734d8c8f0fd56c44a15a32a0f9",
+        "filename": "telephony/java/com/android/internal/telephony/IccFileNotFound.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove blank line",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za04523783dd5df58ca52d62cc8ad0428",
+        "filename": "telephony/java/com/android/internal/telephony/IccFileTypeMismatch.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove blank line",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z75dbdb76e3efaaf8e3278a648b0d7b00",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Should this be done now?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z164150e78b7792229c24a74ce6975e62",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z02c7a80178c98077143a3e5c45987c3a",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Since the other \"\u003d\" are aligned these should probably\nalso be aligned.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8340db802b82e4b991a480b7fd2d7182",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Remove extra blank before \"\u003d\"",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zed4f488605c5be25b711f042279aaadb",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8c71a2554a628a1f85b346ac0817d2db",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length here and the several lines below.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z113558f34358d85d979056f0f3507b9a",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line lengths here and below.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z98d437fbd0fe0c058ed1969bd735b674",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove if not needed?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z9610ac41f8ddf270d379f1f05274a7b7",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Fix indentation.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8934a774187313b17eebead6b6729c44",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneProxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z91e2ce20e7374d0d45b774a48bc43d5f",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z41ffada638b7ea4fce7378a97bbe5d5c",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove?\n",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z1c4f146c2fd55479f45030538f028e42",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove if not used.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z33972b4dbadc55e34d71f008d2d0814c",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Why not rename them?\n",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -461,6 +988,23 @@
     },
     {
       "key": {
+        "uuid": "zd5bdf5fd20ed440e3ade54866d25f73e",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "\"IccUtils is linked to IccUtils\" doesn\u0027t make sense but\nmaybe I\u0027m missing something. But removing the plural doesn\u0027t\nseem to add any value. I\u0027d remove the comment entirely but\nif kept fix line length.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z0b12658d898c5ecbcb300f27db3d4a51",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 1
@@ -472,6 +1016,924 @@
       "writtenOn": "2008-12-03T16:11:15Z",
       "side": 1,
       "message": "Fix indenting for above lines.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z2bfef7f8d76c11e58c9d28a2ce0b617a",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z4a73ceed4692f3043a6e438121cead1f",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2477,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Fix indentation.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zdb73d1e96ad7203d6219c792f04357fe",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zc7efe4187ac947d50162c8d7ee32ee28",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zc16201a476f3562bef8e529448bcdf3d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd5304115fe2c97e17ad9541100d624ea",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length here and below.\n",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zb7f3b868ede29c5cd9455a8f9f6c19bc",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "I find having to Call classes confusing as suggested\nelse where maybe this should be CDMACall?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z746464b8976d145ac33b8db5d0170de4",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Fix trailing white space here and below.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z758f213606bd913d5c8ee3e77077a718",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CallFailCause.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Remove unused values?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zaaa6977df73c42b053f599ac579a6448",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CallTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Should this comment be moved above ringingCall?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd53dab5d2e1c5678227625e3705b5901",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CallTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z30ce7a46c2c5028cbb11cf6b6bd705d8",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CallTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "delete blank lines.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zc5c5ea7ada441ca344a9dfd712f4f2a8",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Log to \"radio\".",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zc77ce910b7e14f1372bb6f43a800fdcf",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove white space",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z016774edea14484889607f19bca7d4ca",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove white space",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z1df06dc67901714633772d4f4ca3e924",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Looks like a good time to remove these lines.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zb165fe8186f37b185a5ec7301ecb82b0",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/RuimSmsInterfaceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "What needs to be done here and below?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ze9bbd796ce2dcf86b0ee5ab8984c70f8",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "I suggest a TODO comment here indicating this class\nis incomplete.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za6c5c5c7ebe2726b5f86b07498dffbf9",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "If this can\u0027t be removed than I\u0027d suggest using\n\"//\" as it\u0027s easier to see the extent of the commented\nout code or at least put the closing \"*/\" in column one.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zab833405904ae2ce59c84b98709220f8",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same as above?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zeb9b5707b881998e2e04dbec7552345a",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zec8e4cbce54fbcbd41bf8d522a5be3e7",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zc1496aef878b79814de516ad1f489d2e",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z54186185564de0a2dd1bda673f0d42e6",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z2294549874868d37a039b058fff3446a",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8f3e778fca947d36054e01733c5ee6d7",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zc4cb366c18c9c4728424f31e80d83d79",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z618393094fc8c17e8b55ee3c0064a179",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z5f8c38b2747baa9e5eea22de21451a5f",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zb9616c38c3a5c45cddafd0ca095e9d72",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z0b4d2beb4aabeed163572cd5cf552580",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za5ecc34df84810199e4127906da7be8d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z188e24b8939a12820c3095e9d94f2591",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zcb797b7392c30f02ffde847465fa8b3e",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z987b80213414ab16a2c3a3177ca86fb1",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length maybe split with \"+\" or?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z9c6c9a47b667b8b09742cc9b380335b0",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "same?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zc5bd3dedf41e21e317c70c89a52dad89",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zf704e4a7c8db2267569c2aed696bedb8",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd0ae49dba7d10e435dcef5026b46de61",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Split with \"+\" or?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z9c138e108293bbd1288cf7acef569b61",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "split?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z0667d5db924438cb8e61e127ec8ee127",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Is there something that needs to be done?\nAlso, line length.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8d4408a217e7090ad44c420a475e2b9c",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "same as above.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zdb78ea3dd63bf9658682ba08fd6ee653",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z3898f80223dec32d133114d72d2d94f0",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z2f11ec6106265f5b07327ae91a46970c",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z37f52e1fd2e86c3c6c96e7cdadacbd89",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd9454eb54be27ff0566c35c60a3c2e3d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Maybe retain GSMCall?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za1501e1273bfd46f3e2adaea7da1049a",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/CallTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Maybe move comment up?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z58c12680e201858a4d35ef7c1880de55",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z21588ae0f7ec140f7884d27cc46c2d27",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Order as per android style guide (android, com, junit, net, org, java, javax).\n\n\nAlso, replace wild card imports per style guide:\nhttp://source.android.com/submit-patches/code-style-guide#imports\n",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z257e289c4b0ed20ef6076919ed70ff19",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zcb0d030d95d65da8753c3e05875901a2",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:39Z",
+      "side": 1,
+      "message": "Maybe retain GSMCall and CDMACall, I find this overloaded\nnaming confusing but maybe that\u0027s just me.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z62bef0a2dd8e911254589ed60d04f6cd",
+        "filename": "telephony/java/com/android/internal/telephony/test/SimulatedCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ze59d56ca1cdc1a5e73eec2d6a36b85d7",
+        "filename": "telephony/java/com/android/internal/telephony/test/SimulatedCommands.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2008-12-05T22:59:40Z",
+      "side": 1,
+      "message": "line length",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
