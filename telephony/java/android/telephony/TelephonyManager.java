@@ -115,7 +115,9 @@ public class TelephonyManager {
     public CellLocation getCellLocation() {
         try {
             Bundle bundle = getITelephony().getCellLocation();
-            return CellLocation.newFromBundle(bundle);  //TODO remove cdma and gsmCellLocation make CellLocation active and define different impl in the phone
+            // TODO remove cdma and gsmCellLocation make CellLocation 
+            // active and define different impl in the phone
+            return CellLocation.newFromBundle(bundle);  
         } catch (RemoteException ex) {
         }
         return null;
@@ -226,11 +228,13 @@ public class TelephonyManager {
     public static final int NETWORK_TYPE_EDGE = 2;
     /** Current network is UMTS */
     public static final int NETWORK_TYPE_UMTS = 3;
-    /** Current network is CDMA */
+    /** Current network is CDMA: Either IS95A or IS95B*/
     public static final int NETWORK_TYPE_CDMA = 4;
     /** Current network is EVDO revision 0 or revision A*/
     public static final int NETWORK_TYPE_EVDO_0 = 5;
     public static final int NETWORK_TYPE_EVDO_A = 6;
+    /** Current network is 1xRTT*/
+    public static final int NETWORK_TYPE_1xRTT = 7;
 
     /**
      * Returns a constant indicating the radio technology (network type) 
@@ -243,6 +247,7 @@ public class TelephonyManager {
      * @see #NETWORK_TYPE_CDMA
      * @see #NETWORK_TYPE_EVDO_0
      * @see #NETWORK_TYPE_EVDO_A
+     * @see #NETWORK_TYPE_1xRTT
      */
     public int getNetworkType() {
         String prop = SystemProperties.get(TelephonyProperties.PROPERTY_DATA_NETWORK_TYPE);
@@ -258,11 +263,14 @@ public class TelephonyManager {
         else if ("CDMA".equals(prop)) {
             return NETWORK_TYPE_CDMA;
                 }
-        else if ("EVDO_0".equals(prop)) {
+        else if ("CDMA - EvDo rev. 0".equals(prop)) {
             return NETWORK_TYPE_EVDO_0;
             }
-        else if ("EVDO_A".equals(prop)) {
+        else if ("CDMA - EvDo rev. A".equals(prop)) {
             return NETWORK_TYPE_EVDO_A;
+            }
+        else if ("CDMA - 1xRTT".equals(prop)) {
+            return NETWORK_TYPE_1xRTT;
             }
         else {
             return NETWORK_TYPE_UNKNOWN;

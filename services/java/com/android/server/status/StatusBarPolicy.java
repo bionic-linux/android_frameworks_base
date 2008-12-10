@@ -723,10 +723,12 @@ public class StatusBarPolicy {
             iconList = sSignalImages;
         }
         
-        //TODO Fill in static final ints instead of magic numbers
-        try {
-            if(Integer.parseInt(ss.getSystemType()) == 2 || Integer.parseInt(ss.getSystemType()) == 3) {
-                switch(ss.getExtendedCdmaRoaming()) {
+        if(ss.getRadioTechnology() == ServiceState.RADIO_TECHNOLOGY_1xRTT 
+                || ss.getRadioTechnology() == ServiceState.RADIO_TECHNOLOGY_EVDO_0
+                || ss.getRadioTechnology() == ServiceState.RADIO_TECHNOLOGY_EVDO_A 
+                || ss.getRadioTechnology() == ServiceState.RADIO_TECHNOLOGY_IS95A
+                || ss.getRadioTechnology() == ServiceState.RADIO_TECHNOLOGY_IS95B) {
+            switch(ss.getExtendedCdmaRoaming()) {
                 case ServiceState.REGISTRATION_STATE_ROAMING:
                     iconList = this.sSignalImages_r_cdma;
                     break;
@@ -736,13 +738,8 @@ public class StatusBarPolicy {
                 default:
                     iconList = this.sSignalImages_cdma;
                 break;   
-                }
             }
         }
-        catch(NumberFormatException ex) {
-            Log.w(TAG, "Warining! The systemType variable, needed for cdma, is not yet set.");
-        }
-
 
         mPhoneData.iconId = iconList[asu];
         mService.updateIcon(mPhoneIcon, mPhoneData, null);
@@ -760,13 +757,17 @@ public class StatusBarPolicy {
                 mDataIconList = sDataNetType_3g;
                 break;
             case TelephonyManager.NETWORK_TYPE_CDMA:
-                //TODO check id IS95 has to be displayed or if wardning hsa to be removed!
+            //TODO check if IS95 has to be displayed or if the warning can be removed!
                 if( (ss.getRadioTechnology() == ServiceState.RADIO_TECHNOLOGY_IS95A) ||
-                        ss.getRadioTechnology() == ServiceState.RADIO_TECHNOLOGY_IS95B)   {
-                Log.w(TAG, "Warning! CDMA radio technology is either IS95A or IS95B, but you will see 1xRTT!");
+                        ss.getRadioTechnology() == ServiceState.RADIO_TECHNOLOGY_IS95B) {
+                    Log.w(TAG, "Warning! CDMA radio technology is either IS95A or IS95B,"
+                         + " but you will see 1xRTT!");
                 }
                 mDataIconList = this.sDataNetType_1xrtt;
                 break;
+        case TelephonyManager.NETWORK_TYPE_1xRTT:
+            mDataIconList = this.sDataNetType_1xrtt;
+            break;
             case TelephonyManager.NETWORK_TYPE_EVDO_0: //fall through 
             case TelephonyManager.NETWORK_TYPE_EVDO_A:
                 mDataIconList = sDataNetType_evdo;
@@ -957,7 +958,7 @@ public class StatusBarPolicy {
 
         Log.w(TAG, "updateTTY: enabled: " + enabled);
         
-        if (action.equals(TtyIntent.TTY_ENABLED_CHANGE_ACTION) && enabled) {
+        if (enabled) {
             // TTY is on
             Log.w(TAG, "updateTTY: set TTY on");
             mService.updateIcon(mTTYModeIcon, mTTYModeEnableIconData, null);

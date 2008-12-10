@@ -174,7 +174,9 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
         Registrant r = new Registrant(h, what, obj);
         cdmaDataConnectionAttachedRegistrants.add(r);
 
-        if (cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_1xRTT || cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_0 || cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_A) {
+        if (cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_1xRTT 
+           || cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_0 
+           || cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_A) {
             r.notifyRegistrant();
         }
     }
@@ -190,7 +192,9 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
         Registrant r = new Registrant(h, what, obj);
         cdmaDataConnectionDetachedRegistrants.add(r);
 
-        if (cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_1xRTT && cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_0 && cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_A) {
+        if (cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_1xRTT 
+           && cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_0 
+           && cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_A) {
             r.notifyRegistrant();
         }
     }    
@@ -363,7 +367,8 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
 
     protected void updateSpnDisplay() {
 
-        //TODO Check this method again, because it is not sure at the moment how the RUIM handles the SIM stuff
+        // TODO Check this method again, because it is not sure at the moment how 
+        // the RUIM handles the SIM stuff
 
         //int rule = phone.mRuimRecords.getDisplayRule(ss.getOperatorNumeric());
         String spn = null; //phone.mRuimRecords.getServiceProvideName();
@@ -426,7 +431,8 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
         } else try {
             switch (what) {
             case EVENT_POLL_STATE_REGISTRATION_CDMA:
-                final int offset = 3; //offset, because we don't want the first 3 values in the int-array
+                //offset, because we don't want the first 3 values in the int-array
+                final int offset = 3; 
                 states = (String[])ar.result;
 
                 int responseValuesRegistrationState[] = {
@@ -444,18 +450,22 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
                         this.mRegistrationState = Integer.parseInt(states[0]);
                         if (states.length == 10) {                           
                             for(int i = 0; i < states.length - offset; i++) {
-                                if (states[i + offset] != null && states[i + offset].length() > 0) {
+                                if (states[i + offset] != null 
+                                  && states[i + offset].length() > 0) {
                                     try {
-                                        responseValuesRegistrationState[i] = Integer.parseInt(states[i + offset], 16);
+                                        responseValuesRegistrationState[i] = 
+                                           Integer.parseInt(states[i + offset], 16);
                                     }
                                     catch(NumberFormatException ex) {
-                                        Log.w(LOG_TAG, "Warning! There is an unexpected value returned as response from RIL_REQUEST_REGISTRATION_STATE.");
+                                        Log.w(LOG_TAG, "Warning! There is an unexpected value returned"
+                                            + " as response from RIL_REQUEST_REGISTRATION_STATE.");
                                     }
                                 }
                             }
                         }
                         else {
-                            Log.e(LOG_TAG, "Too less parameters returned from RIL_REQUEST_REGISTRATION_STATE");
+                            Log.e(LOG_TAG, "Too less parameters returned from" 
+                                + " RIL_REQUEST_REGISTRATION_STATE");
                         }
                     } catch (NumberFormatException ex) {
                         Log.w(LOG_TAG, "error parsing RegistrationState: " + ex);
@@ -463,11 +473,13 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
                 }
 
                 mCdmaRoaming = regCodeIsRoaming(this.mRegistrationState);
-                this.newCdmaDataConnectionState = radioTechnologyToServiceState(responseValuesRegistrationState[0]);
+                this.newCdmaDataConnectionState = 
+                    radioTechnologyToServiceState(responseValuesRegistrationState[0]);
                 newSS.setState (regCodeToServiceState(this.mRegistrationState));
                 newSS.setRadioTechnology(responseValuesRegistrationState[0]);
                 newSS.setCssIndicator(responseValuesRegistrationState[4]);
-                newSS.setSystemAndNetworkId(responseValuesRegistrationState[5], responseValuesRegistrationState[6]);
+                newSS.setSystemAndNetworkId(responseValuesRegistrationState[5], 
+                    responseValuesRegistrationState[6]);
 
                 newNetworkType = responseValuesRegistrationState[0];
 
@@ -482,7 +494,6 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
 
                 if (opNames != null && opNames.length >= 4) {
                     newSS.setOperatorName (opNames[0], opNames[1], opNames[2]);
-                    newSS.setSystemType(opNames[3]);
                 }
                 break;
 
@@ -491,7 +502,8 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
                 newSS.setIsManualSelection(ints[0] == 1);
                 break;
             default:
-                Log.e(LOG_TAG, "RIL response handle in wrong phone! Expected CDMA RIL request and get GSM RIL request.");
+                Log.e(LOG_TAG, "RIL response handle in wrong phone!" 
+                    + " Expected CDMA RIL request and get GSM RIL request.");
             break;
             }
 
@@ -516,7 +528,8 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
                 newSS.setExtendedCdmaRoaming(ServiceState.REGISTRATION_STATE_ROAMING_AFFILIATE);
                 break;
             default:
-                Log.w(LOG_TAG, "Received a different registration state, but don't changed the extended cdma roaming mode.");
+                Log.w(LOG_TAG, "Received a different registration state, " 
+                    + "but don't changed the extended cdma roaming mode.");
             }
             pollStateDone();
         }
@@ -567,19 +580,19 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
             // are allowed to arrive out-of-order
 
             pollingContext[0]++;
+        //RIL_REQUEST_OPERATOR is necessary for CDMA    
         cm.getOperator(
-                obtainMessage(
-                        EVENT_POLL_STATE_OPERATOR_CDMA, pollingContext));//RIL_REQUEST_OPERATOR is necessary for CDMA
+                obtainMessage(EVENT_POLL_STATE_OPERATOR_CDMA, pollingContext));
 
         pollingContext[0]++;
+        //RIL_REQUEST_REGISTRATION_STATE is necessary for CDMA
         cm.getRegistrationState(
-                obtainMessage(
-                        EVENT_POLL_STATE_REGISTRATION_CDMA, pollingContext)); //RIL_REQUEST_REGISTRATION_STATE is necessary for CDMA 
+                obtainMessage(EVENT_POLL_STATE_REGISTRATION_CDMA, pollingContext));  
 
         pollingContext[0]++;
+        //RIL_REQUEST_QUERY_NETWORK_SELECTION_MODE necessary for CDMA
         cm.getNetworkSelectionMode(
-                obtainMessage(
-                        EVENT_POLL_STATE_NETWORK_SELECTION_MODE_CDMA, pollingContext)); //RIL_REQUEST_QUERY_NETWORK_SELECTION_MODE necessary for CDMA
+                obtainMessage(EVENT_POLL_STATE_NETWORK_SELECTION_MODE_CDMA, pollingContext)); 
         break;
         }
     }
@@ -590,14 +603,16 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
         switch (type) {
         case DATA_ACCESS_CDMA_IS95A:
         case DATA_ACCESS_CDMA_IS95B:
-        case DATA_ACCESS_CDMA_1xRTT:
             ret = "CDMA";
             break;
+        case DATA_ACCESS_CDMA_1xRTT:
+            ret = "CDMA - 1xRTT";
+            break;
         case DATA_ACCESS_CDMA_EvDo_0:
-            ret = "EVDO_0";
+            ret = "CDMA - EvDo rev. 0";
             break;
         case DATA_ACCESS_CDMA_EvDo_A:
-            ret = "EVDO_A";
+            ret = "CDMA - EvDo rev. A";
             break;
         default:
             if (DBG) {
@@ -628,21 +643,22 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
 
         boolean hasCdmaDataConnectionAttached =
             (this.cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_1xRTT 
-                    && this.cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_0 
-                    && this.cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_A)
-                    && (this.newCdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_1xRTT 
-                    || this.newCdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_0 
-                    || this.newCdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_A);
+                  && this.cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_0 
+                  && this.cdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_A)
+             && (this.newCdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_1xRTT 
+                  || this.newCdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_0 
+                  || this.newCdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_A);
 
         boolean hasCdmaDataConnectionDetached =
-            (this.cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_1xRTT 
-                    || this.cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_0 
-                    || this.cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_A)
-                    && (this.newCdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_1xRTT 
-                    && this.newCdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_0 
-                    && this.newCdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_A);
+            ( this.cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_1xRTT 
+                  || this.cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_0 
+                  || this.cdmaDataConnectionState == ServiceState.RADIO_TECHNOLOGY_EVDO_A)
+              && (this.newCdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_1xRTT 
+                  && this.newCdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_0 
+                  && this.newCdmaDataConnectionState != ServiceState.RADIO_TECHNOLOGY_EVDO_A);
 
-        boolean hasCdmaDataConnectionChanged = cdmaDataConnectionState != newCdmaDataConnectionState;
+        boolean hasCdmaDataConnectionChanged = 
+                       cdmaDataConnectionState != newCdmaDataConnectionState;
 
         boolean hasNetworkTypeChanged = networkType != newNetworkType; 
 
@@ -736,7 +752,8 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
                     if (zone != null) {
                         Context context = phone.getContext();
                         if (getAutoTime()) {
-                            AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                            AlarmManager alarm = 
+                                (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                             alarm.setTimeZone(zone.getID());
                         }
                         saveNitzTimeZone(zone.getID());
@@ -912,7 +929,8 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
 
     /**
      * @return The current CDMA data connection state. ServiceState.RADIO_TECHNOLOGY_1xRTT or
-     * ServiceState.RADIO_TECHNOLOGY_EVDO is the same as "attached" and ServiceState.RADIO_TECHNOLOGY_UNKNOWN is the same as detached.
+     * ServiceState.RADIO_TECHNOLOGY_EVDO is the same as "attached" and 
+     * ServiceState.RADIO_TECHNOLOGY_UNKNOWN is the same as detached.
      */
     /*package*/ int getCurrentCdmaDataConnectionState() {
         return cdmaDataConnectionState;

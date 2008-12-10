@@ -33,9 +33,8 @@ public class CellState {
     public static String TAG = "CellState";
 
     public static int RADIO_TYPE_GPRS = 1;
-    public static int RADIO_TYPE_WCDMA = 2;
-    public static int RADIO_TYPE_CDMA = 3;
-    public static int RADIO_TYPE_EVDO = 4;
+    public static int RADIO_TYPE_CDMA = 2;
+    public static int RADIO_TYPE_WCDMA = 3;
 
     private int mCid = -1;
     private int mLac = -1;
@@ -67,8 +66,6 @@ public class CellState {
             mRadioType = RADIO_TYPE_WCDMA;
         } else if (radioType != null && radioType.equals("CDMA")) {
             mRadioType = RADIO_TYPE_CDMA;
-        } else if (radioType != null && radioType.equals("EVDO")) {
-            mRadioType = RADIO_TYPE_EVDO;
         }
 
 

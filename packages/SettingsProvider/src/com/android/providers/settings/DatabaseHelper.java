@@ -517,7 +517,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteStatement stmt = db.compileStatement("INSERT OR IGNORE INTO system(name,value)"
                 + " VALUES(?,?);");
  
-        loadSetting(stmt, Settings.System.CURRENT_ACTIVE_PHONE, 1);
+        loadSetting(stmt, Settings.System.CURRENT_ACTIVE_PHONE, RILConstants.CDMA_PHONE);
         loadSetting(stmt, Settings.System.DIM_SCREEN, 1);
         loadSetting(stmt, Settings.System.STAY_ON_WHILE_PLUGGED_IN, 
                 "1".equals(SystemProperties.get("ro.kernel.qemu")) ? 1 : 0);

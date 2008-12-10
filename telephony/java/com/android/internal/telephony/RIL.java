@@ -20,10 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
-//deinstsc import com.android.internal.telephony.*;
 import com.android.internal.telephony.CallForwardInfo;
 import com.android.internal.telephony.gsm.CommandException;
-//import com.android.internal.telephony.gsm.DriverCall;
 import com.android.internal.telephony.gsm.NetworkInfo;
 import com.android.internal.telephony.gsm.PDPContextState;
 import com.android.internal.telephony.IccUtils; 
@@ -546,8 +544,6 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
 
     //***** Constructors
-
-    //TODO OLD constructor REMOVE
     public
     RIL(Context context) { 
         super(context);
@@ -1137,37 +1133,39 @@ public final class RIL extends BaseCommands implements CommandsInterface {
     public void
     setRadioPower(boolean on, Message result) {
         //if radio is OFF set preferred NW type and cmda subscription
-        synchronized (mStateMonitor) {
-            if (!mState.isOn()) {
-                int modemNetworkMode;
-                switch(mNetworkMode) {
-                    case RILConstants.NETWORK_MODE_GSM_UMTS:
-                        modemNetworkMode = Phone.NT_GSM_UMTS_AUTO_TYPE;
-                        break;
-                    case RILConstants.NETWORK_MODE_CDMA:
-                        modemNetworkMode = Phone.NT_CDMA_EVDO_AUTO_TYPE;
-                        break;
-                    case RILConstants.NETWORK_MODE_GLOBAL:
-                    default:
-                        modemNetworkMode = Phone.NT_GLOBAL_AUTO_TYPE;
+        if(mInitialRadioStateChange) {
+            synchronized (mStateMonitor) {
+                if (!mState.isOn()) {
+                    int modemNetworkMode;
+                    switch(mNetworkMode) {
+                        case RILConstants.NETWORK_MODE_GSM_UMTS:
+                            modemNetworkMode = Phone.NT_GSM_UMTS_AUTO_TYPE;
+                            break;
+                        case RILConstants.NETWORK_MODE_CDMA:
+                            modemNetworkMode = Phone.NT_CDMA_EVDO_AUTO_TYPE;
+                            break;
+                        case RILConstants.NETWORK_MODE_GLOBAL:
+                        default:
+                            modemNetworkMode = Phone.NT_GLOBAL_AUTO_TYPE;
+                    }
+                    RILRequest rrPnt = RILRequest.obtain(
+                                   RIL_REQUEST_SET_PREFERRED_NETWORK_TYPE, null);
+
+                    rrPnt.mp.writeInt(1);
+                    rrPnt.mp.writeInt(modemNetworkMode);
+                    if (RILJ_LOG) riljLog(rrPnt.serialString() + "> " 
+                        + requestToString(rrPnt.mRequest) + " : " + modemNetworkMode);
+
+                    send(rrPnt);
+
+                    RILRequest rrCs = RILRequest.obtain(
+                                   RIL_REQUEST_CDMA_SET_SUBSCRIPTION, null);
+                    rrCs.mp.writeInt(1);
+                    rrCs.mp.writeInt(mCdmaSubscription);
+                    if (RILJ_LOG) riljLog(rrCs.serialString() + "> " 
+                    + requestToString(rrCs.mRequest) + " : " + mCdmaSubscription);    
+                    send(rrCs);                
                 }
-                RILRequest rrPnt = RILRequest.obtain(RIL_REQUEST_SET_PREFERRED_NETWORK_TYPE, null);
-
-                rrPnt.mp.writeInt(1);
-                rrPnt.mp.writeInt(modemNetworkMode);
-                if (RILJ_LOG) riljLog(rrPnt.serialString() + "> " + requestToString(rrPnt.mRequest)
-                        + " : " + modemNetworkMode);
-
-                send(rrPnt);
-
-                
-                RILRequest rrCs = RILRequest.obtain(RIL_REQUEST_CDMA_SET_SUBSCRIPTION, null);
-                rrCs.mp.writeInt(1);
-                rrCs.mp.writeInt(mCdmaSubscription);
-                if (RILJ_LOG) riljLog(rrCs.serialString() + "> " + requestToString(rrCs.mRequest)
-                        + " : " + mCdmaSubscription);    
-                send(rrCs);                
-                
             }
         }
         RILRequest rr 
@@ -1475,8 +1473,6 @@ public final class RIL extends BaseCommands implements CommandsInterface {
         RILRequest rr 
                 = RILRequest.obtain(RIL_REQUEST_OEM_HOOK_RAW, response);
 
-        //TODO T: IccUtils is linked to IccUtils which is stored in telephony package
-        //        Maybe in a later version all function calls of IccUtils will be renamed to IccUtils.
         if (RILJ_LOG) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
                + "[" + IccUtils.bytesToHexString(data) + "]");
 
@@ -1675,7 +1671,6 @@ public final class RIL extends BaseCommands implements CommandsInterface {
         }
 
         if (mInitialRadioStateChange) {
-            mInitialRadioStateChange = false;
             if (newState.isOn()) {
                 /* If this is our first notification, make sure the radio
                  * is powered off.  This gets the radio into a known state,
@@ -1684,14 +1679,15 @@ public final class RIL extends BaseCommands implements CommandsInterface {
                  * and/or radio knowing.
                  */
                 if (DBG) Log.d(LOG_TAG, "Radio ON @ init; reset to OFF");
-                setRadioPower(false, null);
+                    setRadioPower(false, null);
             } else {
                 if (DBG) Log.d(LOG_TAG, "Radio OFF @ init");
                 setRadioState(newState);                
-        }
+            }
+            mInitialRadioStateChange = false;
         } else {
-        setRadioState(newState);
-    }
+            setRadioState(newState);
+        }
     }
 
     /**
@@ -2393,26 +2389,6 @@ public final class RIL extends BaseCommands implements CommandsInterface {
         return new IccIoResult(sw1, sw2, s);
     }
 
-// TODO: not used any longer, might be deleted
-/*    private Object
-    responseSimStatus(Parcel p) {
-        int status;
-
-        // TODO: change code here due to new card structures
-        status = ((int[])responseInts(p))[0];
-        switch (status){
-            case RIL_SIM_ABSENT:    return IccStatus.ICC_ABSENT;
-            case RIL_SIM_NOT_READY: return IccStatus.ICC_NOT_READY;
-            case RIL_SIM_READY:     return IccStatus.ICC_READY;
-            case RIL_SIM_PIN:       return IccStatus.ICC_PIN;
-            case RIL_SIM_PUK:       return IccStatus.ICC_PUK;
-            case RIL_SIM_NETWORK_PERSONALIZATION:   
-                                    return IccStatus.ICC_NETWORK_PERSONALIZATION;
-            default:
-                throw new RuntimeException ("Invalid RIL_REQUEST_GET_SIM_STATUS result: " + status);
-        }
-    }*/
-
     private Object
     responseIccCardStatus(Parcel p) {
         RadioState currentRadioState;
@@ -2474,7 +2450,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             }
             else {
                 index = status.gsm_umts_subscription_app_index;
-    }
+            }
 
             // check if PIN required
             if (status.application.get(index).app_state.isPinRequired()) {

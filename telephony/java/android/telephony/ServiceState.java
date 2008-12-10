@@ -95,7 +95,6 @@ public class ServiceState implements Parcelable {
     private boolean mIsManualNetworkSelection;
 
     //***** CDMA
-    private String mSystemType;
     private int mRadioTechnology;
     private boolean mCssIndicator;
     private int mNetworkId;
@@ -140,7 +139,6 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = s.mOperatorAlphaShort;
         mOperatorNumeric = s.mOperatorNumeric;
         mIsManualNetworkSelection = s.mIsManualNetworkSelection;
-        mSystemType = s.mSystemType;
         mRadioTechnology = s.mRadioTechnology;
         mCssIndicator = s.mCssIndicator;
         mNetworkId = s.mNetworkId;
@@ -158,7 +156,6 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = in.readString();
         mOperatorNumeric = in.readString();
         mIsManualNetworkSelection = in.readInt() != 0;
-        mSystemType = in.readString();
         mRadioTechnology = in.readInt();
         mCssIndicator = (in.readInt() != 0);
         mNetworkId = in.readInt();
@@ -173,7 +170,6 @@ public class ServiceState implements Parcelable {
         out.writeString(mOperatorAlphaShort);
         out.writeString(mOperatorNumeric);
         out.writeInt(mIsManualNetworkSelection ? 1 : 0);
-        out.writeString(mSystemType);
         out.writeInt(mRadioTechnology);
         out.writeInt(mCssIndicator ? 1 : 0);
         out.writeInt(mNetworkId);
@@ -276,7 +272,6 @@ public class ServiceState implements Parcelable {
                 + ((null == mOperatorAlphaLong) ? 0 : mOperatorAlphaLong.hashCode())
                 + ((null == mOperatorAlphaShort) ? 0 : mOperatorAlphaShort.hashCode())
                 + ((null == mOperatorNumeric) ? 0 : mOperatorNumeric.hashCode())
-                + ((null == mSystemType) ? 0 : mSystemType.hashCode())
                 + (mExtendedCdmaRoaming));
     }
 
@@ -300,7 +295,6 @@ public class ServiceState implements Parcelable {
                 && equalsHandlesNulls(mOperatorAlphaLong, s.mOperatorAlphaLong)
                 && equalsHandlesNulls(mOperatorAlphaShort, s.mOperatorAlphaShort)
                 && equalsHandlesNulls(mOperatorNumeric, s.mOperatorNumeric)
-                && equalsHandlesNulls(mSystemType, s.mSystemType)
                 && equalsHandlesNulls(mRadioTechnology, s.mRadioTechnology)
                 && equalsHandlesNulls(mCssIndicator, s.mCssIndicator)
                 && equalsHandlesNulls(mNetworkId, s.mNetworkId)
@@ -350,7 +344,6 @@ public class ServiceState implements Parcelable {
                 + " " + mOperatorAlphaShort
                 + " " + mOperatorNumeric
                 + " " + (mIsManualNetworkSelection ? "(manual)" : "")
-                + " " + mSystemType
                 + " " + radioTechnology
                 + " " + (mCssIndicator ? "CSS supported" : "CSS not supported")
                 + "NetworkId: " + mNetworkId
@@ -365,7 +358,6 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = null;
         mOperatorNumeric = null;
         mIsManualNetworkSelection = false;
-        mSystemType =null;
         mRadioTechnology = 0;
         mCssIndicator = false;
         mNetworkId = -1;
@@ -380,7 +372,6 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = null;
         mOperatorNumeric = null;
         mIsManualNetworkSelection = false;
-        mSystemType = null;
         mRadioTechnology = 0;
         mCssIndicator = false;
         mNetworkId = -1;
@@ -434,7 +425,6 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = m.getString("operator-alpha-short");
         mOperatorNumeric = m.getString("operator-numeric");
         mIsManualNetworkSelection = m.getBoolean("manual");
-        mSystemType = m.getString("systemType");
         mRadioTechnology = m.getInt("radioTechnology");
         mCssIndicator = m.getBoolean("cssIndicator");
         mNetworkId = m.getInt("networkId");
@@ -455,7 +445,6 @@ public class ServiceState implements Parcelable {
         m.putString("operator-alpha-short", mOperatorAlphaShort);
         m.putString("operator-numeric", mOperatorNumeric);
         m.putBoolean("manual", Boolean.valueOf(mIsManualNetworkSelection));
-        m.putString("systemType", mSystemType);
         m.putInt("radioTechnology", mRadioTechnology);
         m.putBoolean("cssIndicator", mCssIndicator);
         m.putInt("networkId", mNetworkId);
@@ -464,10 +453,6 @@ public class ServiceState implements Parcelable {
     }
 
     //***** CDMA
-    public void setSystemType(String systemType) {
-        this.mSystemType = systemType;
-    }
-
     public void setRadioTechnology(int state) {
         this.mRadioTechnology = state;
     }
@@ -479,13 +464,6 @@ public class ServiceState implements Parcelable {
     public void setSystemAndNetworkId(int systemId, int networkId) {
         this.mSystemId = systemId;
         this.mNetworkId = networkId;
-    }
-
-    public String getSystemType() {
-        if(this.mSystemType == null) {
-            return "SystemType not yet set!";
-        }
-        return this.mSystemType;
     }
 
     public int getRadioTechnology() {

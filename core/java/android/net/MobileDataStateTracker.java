@@ -194,7 +194,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
      */
     public boolean isAvailable() {
         getPhoneService(false);
-        
+
         /*
          * If the phone process has crashed in the past, we'll get a
          * RemoteException and need to re-reference the service.
@@ -209,7 +209,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                 if (retry == 0) getPhoneService(true);
             }
         }
-        
+
         return false;
     }
 
@@ -249,7 +249,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
           case TelephonyManager.NETWORK_TYPE_EVDO_A:
             networkTypeStr = "evdo";
             break;
-          }
+        }
         return "net.tcp.buffersize." + networkTypeStr;
     }
 
@@ -277,7 +277,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                 if (retry == 0) getPhoneService(true);
             }
         }
-        
+
         Log.w(TAG, "Failed to tear down mobile data connectivity");
         return false;
     }
@@ -326,7 +326,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                     "Ignoring mobile radio request because could not acquire PhoneService");
                 break;
             }
-            
+
             try {
                 return mPhoneService.setRadio(turnOn);
             } catch (RemoteException e) {

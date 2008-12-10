@@ -18,7 +18,6 @@ package com.android.internal.telephony;
 
 import com.android.internal.telephony.AdnRecord;
 
-//import java.util.List;
 
 
 /** Interface for applications to access the ICC phone book.

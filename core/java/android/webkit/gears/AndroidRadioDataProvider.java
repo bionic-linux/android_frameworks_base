@@ -48,6 +48,7 @@ public final class AndroidRadioDataProvider extends PhoneStateListener {
   private static final int RADIO_TYPE_WCDMA = 2;
   private static final int RADIO_TYPE_CDMA = 3;  
   private static final int RADIO_TYPE_EVDO = 4;  
+  private static final int RADIO_TYPE_1xRTT = 5;
 
   /** Simple container for radio data */
   public static final class RadioData {
@@ -117,6 +118,8 @@ public final class AndroidRadioDataProvider extends PhoneStateListener {
           radioData.radioType = RADIO_TYPE_EVDO;
       } else if (type == TelephonyManager.NETWORK_TYPE_EVDO_A) {
           radioData.radioType = RADIO_TYPE_EVDO;
+      } else if (type == TelephonyManager.NETWORK_TYPE_1xRTT) {
+          radioData.radioType = RADIO_TYPE_1xRTT;
       }
 
       // Print out what we got.

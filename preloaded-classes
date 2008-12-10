@@ -481,8 +481,6 @@ com.android.internal.os.RuntimeInit
 com.android.internal.os.RuntimeInit$UncaughtHandler
 com.android.internal.os.ZygoteInit$MethodAndArgsCaller
 com.android.internal.policy.PolicyManager
-com.android.internal.telephony.BaseCommands
-com.android.internal.telephony.CommandsInterface
 com.android.internal.policy.impl.PhoneLayoutInflater
 com.android.internal.policy.impl.PhoneWindow
 com.android.internal.policy.impl.PhoneWindow$1
@@ -490,6 +488,9 @@ com.android.internal.policy.impl.PhoneWindow$ContextMenuCallback
 com.android.internal.policy.impl.PhoneWindow$DecorView
 com.android.internal.policy.impl.PhoneWindow$PanelFeatureState
 com.android.internal.policy.impl.PhoneWindow$PanelFeatureState$SavedState
+com.android.internal.telephony.BaseCommands
+com.android.internal.telephony.CommandsInterface
+com.android.internal.telephony.IccCardBase
 com.android.internal.telephony.Phone
 com.android.internal.telephony.Phone$DataActivityState
 com.android.internal.telephony.Phone$DataState
@@ -497,7 +498,6 @@ com.android.internal.telephony.Phone$State
 com.android.internal.telephony.PhoneBase
 com.android.internal.telephony.PhoneStateIntentReceiver
 com.android.internal.telephony.RIL
-com.android.internal.telephony.IccCardBase
 com.android.internal.telephony.gsm.GSMPhone
 com.android.internal.telephony.gsm.GsmAlphabet
 com.android.internal.telephony.gsm.ISms$Stub
