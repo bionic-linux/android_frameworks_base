@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "z5dfa6f4c7320eb2c30a8467718d889fe",
+        "filename": "location/java/com/android/internal/location/CellState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 19:08:21, Wolfgang Schmidt wrote:\n\u003e On 2008/12/03 16:11:15, John Huang wrote:\n\u003e \u003e Any particular reason why values for WCDMA and CDMA are swapped?\n\u003e \n\u003e Wolfgang: will be reverted to original; incl. removal of EVDO\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zbe8aac74b8994ee746f8217873caa1ff",
         "filename": "location/java/com/android/internal/location/LocationCollector.java",
         "patchSetId": 1
@@ -914,6 +931,23 @@
       "writtenOn": "2008-12-05T22:59:39Z",
       "side": 1,
       "message": "Remove if not used.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z121419d445c7fc5581598e2de468ce72",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e Remove if not used.\n\nWolfgang: we leave this constructor in the code",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
