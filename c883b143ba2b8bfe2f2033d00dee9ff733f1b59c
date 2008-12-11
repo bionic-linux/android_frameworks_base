@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "ze9868b16463e264f771bf3fd5fb1c28b",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e Fix indentation of }\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zf78a943fcc01a8f48701403db3af5f54",
         "filename": "location/java/com/android/internal/location/CellState.java",
         "patchSetId": 1
@@ -138,6 +155,23 @@
     },
     {
       "key": {
+        "uuid": "z347da99597d894a13d7a38ff041250be",
+        "filename": "location/java/com/android/internal/location/LocationMasfClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 19:16:13, Wolfgang Schmidt wrote:\n\u003e On 2008/12/03 16:11:18, Rohan Seth wrote:\n\u003e \u003e In this case, can you set the radioType to RADIO_TYPE_CDMA. Our servers don\u0027t\n\u003e \u003e distinguish between CDMA and EVDO radio. \n\u003e \n\u003e Wolfgang: Ok\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z2b682f6cdedc1b80d2d626ce053fc454",
         "filename": "location/java/com/android/internal/location/NetworkLocationProvider.java",
         "patchSetId": 1
@@ -189,6 +223,23 @@
     },
     {
       "key": {
+        "uuid": "z8a18d04b4aeb5eac566ad3301187fd00",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:16, Rohan Seth wrote:\n\u003e Please don\u0027t change these. This is an existing server protocol.\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z7b6e405a6767c978afd992cf5fe0d454",
         "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
         "patchSetId": 1
@@ -217,6 +268,23 @@
       "writtenOn": "2008-12-05T19:08:21Z",
       "side": 1,
       "message": "On 2008/12/03 16:11:16, John Huang wrote:\n\u003e Is there a particular reason you switched WCDMA and CDMA values?  These values\n\u003e are encoded into a protocol buffer, and may need to match constants defined\n\u003e elsewhere (eg, on a server).\n\u003e \nWolfgang: will be reverted to original file",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zcb5900ed8b964090a16573dc32e23e78",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:16, John Huang wrote:\n\u003e Is there a particular reason you switched WCDMA and CDMA values?  These values\n\u003e are encoded into a protocol buffer, and may need to match constants defined\n\u003e elsewhere (eg, on a server).\n\u003e \n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -257,6 +325,23 @@
     },
     {
       "key": {
+        "uuid": "z29c552d1fef1c8c2053ee0b082bc9897",
+        "filename": "location/java/com/android/internal/location/protocol/GCellularPlatformProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 19:08:21, Wolfgang Schmidt wrote:\n\u003e On 2008/12/03 16:11:16, Rohan Seth wrote:\n\u003e \u003e Please remove this line. We don\u0027t distinguish between CDMA and EVDO radio on\n\u003e the\n\u003e \u003e server-side. \n\u003e \n\u003e Wolfgang: will be reverted to original file\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z67ebb0afc351b9dde3aa1ce703bad8d7",
         "filename": "preloaded-classes",
         "patchSetId": 1
@@ -291,6 +376,23 @@
     },
     {
       "key": {
+        "uuid": "zc0190e059b35ce1b9ee942533a9cceaf",
+        "filename": "preloaded-classes",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 19:08:21, Wolfgang Schmidt wrote:\n\u003e On 2008/12/03 16:11:17, John Huang wrote:\n\u003e \u003e Please group these with the other com.android.internal.telephony.* classes\n\u003e \n\u003e Wolfgang: Ok\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zdbb87f214f56879ecd682482f221a1e6",
         "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
         "patchSetId": 1
@@ -319,6 +421,23 @@
       "writtenOn": "2008-12-05T19:08:21Z",
       "side": 1,
       "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Yes, please do this.\n\nWolfgang: Sure",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za8a217e43774bcd7b3e4a16689dc35ec",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 19:08:21, Wolfgang Schmidt wrote:\n\u003e On 2008/12/03 16:11:17, John Huang wrote:\n\u003e \u003e Yes, please do this.\n\u003e \n\u003e Wolfgang: Sure\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -376,6 +495,57 @@
     },
     {
       "key": {
+        "uuid": "z099781f16e5c2614cf2d3c00961ff554",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e If system type is an int, why not store it as an int instead of as a String, and\n\u003e avoid calling parseInt()?\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z192fec462ff9b94c5411f28c0d5a4114",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e If system type is an int, why not store it as an int instead of as a String, and\n\u003e avoid calling parseInt()?\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zad69fccd4d5e7a1e6d29e817d0915b7b",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e If system type is an int, why not store it as an int instead of as a String, and\n\u003e avoid calling parseInt()?\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z25780e92b0832ed196cbae937805db82",
         "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
         "patchSetId": 1
@@ -387,6 +557,23 @@
       "writtenOn": "2008-12-05T22:59:39Z",
       "side": 1,
       "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z3a2c21afc67ab75eb9eab21d3f37278e",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e line length\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -427,6 +614,23 @@
     },
     {
       "key": {
+        "uuid": "ze28e969e709292565d801126ab6ddba6",
+        "filename": "services/java/com/android/server/status/StatusBarPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Don\u0027t really need the action.equals() check, since that check is performed by\n\u003e the caller.\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zd0f8805b151098dd013a2f60d74410da",
         "filename": "telephony/java/android/telephony/CellLocation.java",
         "patchSetId": 1
@@ -461,6 +665,23 @@
     },
     {
       "key": {
+        "uuid": "z091496bb251d8394f87157f109bf1b2a",
+        "filename": "telephony/java/android/telephony/CellLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e Please define a static int for CDMA phone.\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z31b2860fc30e2d489447d8907d6f2ccb",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 1
@@ -478,6 +699,23 @@
     },
     {
       "key": {
+        "uuid": "zef340d2d221b0f6c0b24431e7576ab57",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e Make sure this gets routed to \"radio\" log as John Haung\n\u003e mentioned.\n\nThe file \u0027logd_write.c\u0027 is project system/core/ has been updated",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z08cf83060b7a0b063ebf31a06d3cd2ee",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -489,6 +727,23 @@
       "writtenOn": "2008-12-05T22:59:39Z",
       "side": 1,
       "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z712683ff5e61ce09bb327f1f8f1e7f64",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e line length\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -659,6 +914,23 @@
       "writtenOn": "2008-12-05T19:08:21Z",
       "side": 1,
       "message": "On 2008/12/03 16:11:17, John Huang wrote:\n\u003e If this line isn\u0027t needed, please remove (though isn\u0027t it needed for List\n\u003e below?).\n\nWolfgang: will be removed",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z5a01da80133d0808d031a800e849b875",
+        "filename": "telephony/java/com/android/internal/telephony/IIccPhoneBook.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 19:08:21, Wolfgang Schmidt wrote:\n\u003e On 2008/12/03 16:11:17, John Huang wrote:\n\u003e \u003e If this line isn\u0027t needed, please remove (though isn\u0027t it needed for List\n\u003e \u003e below?).\n\u003e \n\u003e Wolfgang: will be removed\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -903,6 +1175,23 @@
     },
     {
       "key": {
+        "uuid": "zf7b000bc170a6f806ee9cd47105714c5",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e Remove?\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z41ffada638b7ea4fce7378a97bbe5d5c",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 1
@@ -914,6 +1203,23 @@
       "writtenOn": "2008-12-05T22:59:39Z",
       "side": 1,
       "message": "Remove?\n",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zbc0d2354bbe31ceaf2c339d3c41ca9e3",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e Remove?\n\u003e \n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -971,6 +1277,23 @@
     },
     {
       "key": {
+        "uuid": "z626eb818beca640af2f7c5afe9b2a5d6",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e Why not rename them?\n\u003e \n\nDuring the project the RIL interface has been extended and reviewed also by other parties handling the CDMA RIL. If this change is really required, this needs further discussion.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z9345816ce7be41765c23145b5b5b8129",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 1
@@ -1022,6 +1345,23 @@
     },
     {
       "key": {
+        "uuid": "ze48759140ddfe7127a0010fa75b049f4",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:16, John Huang wrote:\n\u003e Seems like this could conflict with user setting (eg, if user selects \"2G only\"\n\u003e from UI).\n\nWolfgang: the settings and handling for Preferred network types will be updated in upcoming deliveries.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zd5bdf5fd20ed440e3ade54866d25f73e",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 1
@@ -1033,6 +1373,23 @@
       "writtenOn": "2008-12-05T22:59:39Z",
       "side": 1,
       "message": "\"IccUtils is linked to IccUtils\" doesn\u0027t make sense but\nmaybe I\u0027m missing something. But removing the plural doesn\u0027t\nseem to add any value. I\u0027d remove the comment entirely but\nif kept fix line length.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z4e5c95ecd432f1b6d76520294bba864c",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e \"IccUtils is linked to IccUtils\" doesn\u0027t make sense but\n\u003e maybe I\u0027m missing something. But removing the plural doesn\u0027t\n\u003e seem to add any value. I\u0027d remove the comment entirely but\n\u003e if kept fix line length.\n\nWolfgang: comment removed; done",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1056,6 +1413,23 @@
     },
     {
       "key": {
+        "uuid": "z861bb26dd365b10e69d6660851473698",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1694,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/03 16:11:15, John Huang wrote:\n\u003e Fix indenting for above lines.\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z2bfef7f8d76c11e58c9d28a2ce0b617a",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 1
@@ -1073,6 +1447,23 @@
     },
     {
       "key": {
+        "uuid": "z9009d11ba2e5ecba669c7fc55dc843d0",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e Remove\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z4a73ceed4692f3043a6e438121cead1f",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 1
@@ -1084,6 +1475,23 @@
       "writtenOn": "2008-12-05T22:59:39Z",
       "side": 1,
       "message": "Fix indentation.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zabedc1a9d007dbcb8ea9330974cd6865",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2477,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:39, Wink Saville wrote:\n\u003e Fix indentation.\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1583,6 +1991,23 @@
     },
     {
       "key": {
+        "uuid": "z213ea875bd279c6699b39aaa304a6e15",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e Line length\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "za5ecc34df84810199e4127906da7be8d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
         "patchSetId": 1
@@ -1594,6 +2019,23 @@
       "writtenOn": "2008-12-05T22:59:40Z",
       "side": 1,
       "message": "Line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zda8a3321c0d9d69826aabb51d0c81cb3",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e Line length\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1617,6 +2059,23 @@
     },
     {
       "key": {
+        "uuid": "z37bbd6b95c86c86971ff4469bfdc335e",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e line length\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zcb797b7392c30f02ffde847465fa8b3e",
         "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
         "patchSetId": 1
@@ -1628,6 +2087,23 @@
       "writtenOn": "2008-12-05T22:59:40Z",
       "side": 1,
       "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z88be25c3c49516a455bbb0531e99fe82",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e line length\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1651,6 +2127,23 @@
     },
     {
       "key": {
+        "uuid": "z72bfd9065aaa0fc2607a7d3cc25d1289",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e line length maybe split with \"+\" or?\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z9c6c9a47b667b8b09742cc9b380335b0",
         "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
         "patchSetId": 1
@@ -1662,6 +2155,23 @@
       "writtenOn": "2008-12-05T22:59:40Z",
       "side": 1,
       "message": "same?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z7399e40ee7f08076b3afca5255831a75",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e same?\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1685,6 +2195,23 @@
     },
     {
       "key": {
+        "uuid": "z38e6066bae364ff8768b068be4dcea6e",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e line length\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zf704e4a7c8db2267569c2aed696bedb8",
         "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
         "patchSetId": 1
@@ -1696,6 +2223,23 @@
       "writtenOn": "2008-12-05T22:59:40Z",
       "side": 1,
       "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z559520f9c49ca6664ad6010c4dc6dca5",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e line length\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1719,6 +2263,23 @@
     },
     {
       "key": {
+        "uuid": "zd082520d131225967e47e355a3800e64",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e Split with \"+\" or?\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z9c138e108293bbd1288cf7acef569b61",
         "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
         "patchSetId": 1
@@ -1730,6 +2291,23 @@
       "writtenOn": "2008-12-05T22:59:40Z",
       "side": 1,
       "message": "split?",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z4571b1a41d632037f3ab22db5aa6bb51",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e split?\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1753,6 +2331,23 @@
     },
     {
       "key": {
+        "uuid": "zb07e937f48107434871424b9dcee7b7f",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e Is there something that needs to be done?\n\u003e Also, line length.\n\nWolfgang: line length done",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z8d4408a217e7090ad44c420a475e2b9c",
         "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
         "patchSetId": 1
@@ -1764,6 +2359,23 @@
       "writtenOn": "2008-12-05T22:59:40Z",
       "side": 1,
       "message": "same as above.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zacf615db9acd7520985c1d567fc1a3ee",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e same as above.\n\nWolfgang: line length done",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1787,6 +2399,23 @@
     },
     {
       "key": {
+        "uuid": "zb6b6cebbe1670bec7dada158fece8b90",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e same as above\n\nWolfgang: line length done",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z3898f80223dec32d133114d72d2d94f0",
         "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
         "patchSetId": 1
@@ -1798,6 +2427,23 @@
       "writtenOn": "2008-12-05T22:59:40Z",
       "side": 1,
       "message": "line length",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd8172d99f540b65f2f82bdeb3d1a9c0b",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e line length\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -1821,6 +2467,23 @@
     },
     {
       "key": {
+        "uuid": "z67b37bfb3016cd57deacaeb503dddda4",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e line length\n\nDone.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z37f52e1fd2e86c3c6c96e7cdadacbd89",
         "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
         "patchSetId": 1
@@ -1832,6 +2495,23 @@
       "writtenOn": "2008-12-05T22:59:40Z",
       "side": 1,
       "message": "line length.",
+      "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z45e632573f54060bfb7e15acd6efdb12",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/ServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1001408
+      },
+      "writtenOn": "2008-12-11T09:41:37Z",
+      "side": 1,
+      "message": "On 2008/12/05 22:59:40, Wink Saville wrote:\n\u003e line length.\n\nDone.",
       "revId": "c883b143ba2b8bfe2f2033d00dee9ff733f1b59c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
