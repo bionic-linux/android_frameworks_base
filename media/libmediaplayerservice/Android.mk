@@ -20,14 +20,21 @@ LOCAL_SHARED_LIBRARIES := \
 	libutils \
 	libvorbisidec \
 	libsonivox \
-	libopencoreplayer \
 	libmedia \
 	libandroid_runtime
+
+ifeq ($(BUILD_WITHOUT_PV),true)
+LOCAL_CFLAGS += -DBUILD_WITHOUT_PV
+else
+LOCAL_SHARED_LIBRARIES += \
+	libopencoreplayer 
+endif
 
 LOCAL_C_INCLUDES := external/tremor/Tremor \
 	$(call include-path-for, graphics corecg)
 
 LOCAL_MODULE:= libmediaplayerservice
+
 
 include $(BUILD_SHARED_LIBRARY)
 

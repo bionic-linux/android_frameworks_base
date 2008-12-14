@@ -41,7 +41,10 @@
 #include "MediaPlayerService.h"
 #include "MidiFile.h"
 #include "VorbisPlayer.h"
+
+#if !defined(BUILD_WITHOUT_PV)
 #include <media/PVPlayer.h>
+#endif
 
 /* desktop Linux needs a little help with gettid() */
 #if defined(HAVE_GETTID) && !defined(HAVE_ANDROID_OS)
@@ -468,7 +471,11 @@ static player_type getPlayerType(int fd, int64_t offset, int64_t length)
     }
 
     // Fall through to PV
+#if !defined(BUILD_WITHOUT_PV)
     return PV_PLAYER;
+#else
+    return VORBIS_PLAYER;
+#endif
 }
 
 static player_type getPlayerType(const char* url)
@@ -492,8 +499,12 @@ static player_type getPlayerType(const char* url)
         return VORBIS_PLAYER;
     }
 
+#if !defined(BUILD_WITHOUT_PV)
     // Fall through to PV
     return PV_PLAYER;
+#else
+    return VORBIS_PLAYER;
+#endif
 }
 
 static sp<MediaPlayerBase> createPlayer(player_type playerType, void* cookie,
@@ -501,10 +512,12 @@ static sp<MediaPlayerBase> createPlayer(player_type playerType, void* cookie,
 {
     sp<MediaPlayerBase> p;
     switch (playerType) {
+#if !defined(BUILD_WITHOUT_PV)
         case PV_PLAYER:
             LOGV(" create PVPlayer");
             p = new PVPlayer();
             break;
+#endif
         case SONIVOX_PLAYER:
             LOGV(" create MidiFile");
             p = new MidiFile();
