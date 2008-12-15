@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "zcd9f18c02dd9fe912274be6680256890",
+        "filename": "media/libmediaplayerservice/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2008-12-15T18:51:07Z",
+      "side": 1,
+      "message": "I\u0027d prefer to see a :\u003d here (i.e. early evaluation) instead of +\u003d (which defaults to \u003d, i.e. late evaluation).",
+      "revId": "ee219070090212a84aa8848471b78619efc0398d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z000ee834fa7a34a5087759f2b184ce77",
+        "filename": "media/libmediaplayerservice/MediaPlayerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2008-12-15T18:51:07Z",
+      "side": 1,
+      "message": "The double-negative hurts readability. How about #if defined(BUILD_WITH_PV) ?",
+      "revId": "ee219070090212a84aa8848471b78619efc0398d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z83982a916e67ecb8b976d6c39c96d2ab",
+        "filename": "media/libmediaplayerservice/MediaPlayerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2008-12-15T18:51:07Z",
+      "side": 1,
+      "message": "This could be expanded to include the previous 5 lines, avoiding the strlen/strcmp above.",
+      "revId": "ee219070090212a84aa8848471b78619efc0398d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
