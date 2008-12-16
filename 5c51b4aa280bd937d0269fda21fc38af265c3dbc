@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "zfec4154a46b29a3f9aa11147634c17b8",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "Please follow the standard style guidelines for Android: add spaces between the if and ( and around the !\u003d\n\n",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z558cb13e5daa0ff04f94ab9bcf883c50",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "Put the { on the previousl ine",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z77c5b9b1e14e03743be6d8a8091961e4",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "Put { } around the content of the if\nAdd space after \"if\"",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zac05ee929e29d6f1eff8ccac17549512",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "This is expensive and unnecessary, simply set the icon bounds to the following:\nwidth\u003dMath.min(menuItemWidth, iconIntrinsicWidth)\nheight\u003dMath.min(menuItemHeight, iconIntrinsicHeight)\nThe menu doesn\u0027t draw often enough to justify the cost of creating a new icon drawable",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zd243af83cbbaa9bb23d30866e65df4b1",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "Add space around the \u003d",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z685509e801e74ebb93afdcb5cdfc2d92",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "Use // for single line comments",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8a075131ee27842d512fd59cf3c87ed1",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "This has to be done in setIcon(), do not change the content of the View at layout time",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z52969e764467de56e3f84c4492794236",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "This is wrong, you are changing the gravity *after* layout already happened in the parent. This need to be done in setIcon()\n",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z06fabcb61351f6d1b1ebb53a639a239a",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "The only thing the code should do in this method is set the bounds of the icon, nothing else",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z547286d1664bc9105716b82081bb319c",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "As mentioned above, this is unnecessarily costly and complicated, do not do this, remove this method",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ze4337b1b654eb9e057b60a81bddfb718",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "Do not use tabs",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zb9fb8df05c20400d85130c564e531369",
+        "filename": "core/java/com/android/internal/view/menu/IconMenuItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-16T12:19:46Z",
+      "side": 1,
+      "message": "Do not use tabs",
+      "revId": "5c51b4aa280bd937d0269fda21fc38af265c3dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
