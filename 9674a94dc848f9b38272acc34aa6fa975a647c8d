@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "z983e674b0b851410fbe8aac79202d8e8",
+        "filename": "core/java/android/database/sqlite/SQLiteQueryBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-21T23:58:35Z",
+      "side": 1,
+      "message": "Don\u0027t create a new StringBuilder every time, just use mWhere.delete(0, mWhere.length())",
+      "revId": "9674a94dc848f9b38272acc34aa6fa975a647c8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
