@@ -16,6 +16,23 @@
       "revId": "9674a94dc848f9b38272acc34aa6fa975a647c8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zc4659e47538fe435254eda933f351c07",
+        "filename": "core/java/android/database/sqlite/SQLiteQueryBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2008-12-22T02:13:02Z",
+      "side": 1,
+      "message": "On 2008/12/21 23:58:35, Romain Guy wrote:\n\u003e Don\u0027t create a new StringBuilder every time, just use mWhere.delete(0,\n\u003e mWhere.length())\n\nCONCEPT:\nThe mWhereClause variable is used for keeping same conditions.\nBut normally, the buildQuery() method gets different conditions every time.\nSo the buildQuery() method makes different strings every time, and it returns different where-sentences.\n\nSo I think we should not delete mWhereClause variable.\nIn same reason, I think we should not use mWhere.delete(0, mWhere.length()).\n\nplease see message for more details.",
+      "revId": "9674a94dc848f9b38272acc34aa6fa975a647c8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
