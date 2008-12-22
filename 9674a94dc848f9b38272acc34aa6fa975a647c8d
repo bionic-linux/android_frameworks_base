@@ -33,6 +33,23 @@
       "revId": "9674a94dc848f9b38272acc34aa6fa975a647c8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z4e205edd8a4d17f933e54e170ace3d24",
+        "filename": "core/java/android/database/sqlite/SQLiteQueryBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-22T10:38:20Z",
+      "side": 1,
+      "message": "You\u0027re right, we cannot get rid of the field. Your change looks correct to me then :)",
+      "revId": "9674a94dc848f9b38272acc34aa6fa975a647c8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
