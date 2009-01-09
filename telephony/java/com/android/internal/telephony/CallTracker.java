@@ -21,7 +21,7 @@ import java.util.List;
 
 import com.android.internal.telephony.gsm.CommandException;
 //import com.android.internal.telephony.gsm.DriverCall;
-//import com.android.internal.telephony.gsm.GSMConnection;
+//import com.android.internal.telephony.gsm.GsmConnection;
 
 import android.os.AsyncResult;
 import android.os.Handler;
@@ -31,8 +31,8 @@ import android.util.Log;
 /**
  * {@hide}
  */
-public abstract class CallTrackerBase extends Handler {
-    static final String LOG_TAG = "CallTrackerBase";
+public abstract class CallTracker extends Handler {
+    static final String LOG_TAG = "CallTracker";
     
     private static final boolean DBG_POLL = false;
     
@@ -133,7 +133,7 @@ public abstract class CallTrackerBase extends Handler {
     public abstract void handleMessage (Message msg);
 
     private void log(String msg) {
-        Log.d(LOG_TAG, "[CallTrackerBase] " + msg);
+        Log.d(LOG_TAG, "[CallTracker] " + msg);
     }
     
 }

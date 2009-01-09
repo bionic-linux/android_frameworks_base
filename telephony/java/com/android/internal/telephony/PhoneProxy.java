@@ -241,19 +241,19 @@ public class PhoneProxy implements Phone {
         mActivePhone.clearDisconnected();
     }
 
-    public CallBase getForegroundCall() {
+    public Call getForegroundCall() {
         return mActivePhone.getForegroundCall();
     }
 
-    public CallBase getBackgroundCall() {
+    public Call getBackgroundCall() {
         return mActivePhone.getBackgroundCall();
     }
 
-    public CallBase getRingingCall() {
+    public Call getRingingCall() {
         return mActivePhone.getRingingCall();
     }
 
-    public ConnectionBase dial(String dialString) throws CallStateException { 
+    public Connection dial(String dialString) throws CallStateException { 
         return mActivePhone.dial(dialString);
     }
 

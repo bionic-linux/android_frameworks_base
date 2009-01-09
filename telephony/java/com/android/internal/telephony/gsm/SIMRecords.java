@@ -31,14 +31,14 @@ import com.android.internal.telephony.AdnRecordCache;
 import com.android.internal.telephony.AdnRecordLoader;
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.IccException;
-import com.android.internal.telephony.IccRecordsBase;
+import com.android.internal.telephony.IccRecords;
 import static com.android.internal.telephony.TelephonyProperties.*;
 import com.android.internal.telephony.gsm.SimCard;
 
 /**
  * {@hide}
  */
-public final class SIMRecords extends IccRecordsBase {
+public final class SIMRecords extends IccRecords {
     static final String LOG_TAG = "GSM";
 
     private static final boolean CRASH_RIL = false;

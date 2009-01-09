@@ -19,7 +19,7 @@ package com.android.internal.telephony;
 /**
  * {@hide}
  */
-public abstract class ConnectionBase {
+public abstract class Connection {
     public enum DisconnectCause {
         NOT_DISCONNECTED,   /* has not yet disconnected */
         INCOMING_MISSED,    /* an incoming call that was missed and never answered */
@@ -55,7 +55,7 @@ public abstract class ConnectionBase {
     /**
      * @return Call that owns this Connection, or null if none
      */
-    public abstract CallBase getCall();
+    public abstract Call getCall();
 
     /**
      * Connection create time in currentTimeMillis() format
@@ -115,13 +115,13 @@ public abstract class ConnectionBase {
      * Returns getCall().getState() or Call.State.IDLE if not
      * connected
      */
-    public CallBase.State getState() {
-        CallBase c;
+    public Call.State getState() {
+        Call c;
 
         c = getCall();
 
         if (c == null) { 
-            return CallBase.State.IDLE;
+            return Call.State.IDLE;
         } else {
             return c.getState();
         }

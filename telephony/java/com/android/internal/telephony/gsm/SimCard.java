@@ -25,7 +25,7 @@ import android.os.RegistrantList;
 import android.util.Log;
 
 import com.android.internal.telephony.CommandsInterface;
-import com.android.internal.telephony.IccCardBase;
+import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.TelephonyIntents;
@@ -38,7 +38,7 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 /**
  * {@hide}
  */
-public final class SimCard extends IccCardBase {
+public final class SimCard extends Handler implements IccCard {
     static final String LOG_TAG="GSM";
     
     //***** Instance Variables
@@ -46,6 +46,8 @@ public final class SimCard extends IccCardBase {
 
     private GSMPhone phone;
     private CommandsInterface.IccStatus status = null;
+    private boolean mDesiredPinLocked;
+    private boolean mDesiredFdnEnabled; 
     private boolean mSimPinLocked = true; // Default to locked
     private boolean mSimFdnEnabled = false; // Default to disabled.
                                             // Will be updated when SIM_READY.

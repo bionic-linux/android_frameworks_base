@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * {@hide}
  */
-public final class SIMFileHandler extends IccFileHandlerBase {
+public final class SIMFileHandler extends IccFileHandler {
     static final String LOG_TAG = "GSM";
 
     //***** Instance Variables

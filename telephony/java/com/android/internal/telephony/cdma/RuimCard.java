@@ -25,7 +25,7 @@ import android.os.RegistrantList;
 import android.util.Log;
 
 import com.android.internal.telephony.CommandsInterface;
-import com.android.internal.telephony.IccCardBase;
+import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.TelephonyIntents;
@@ -40,7 +40,7 @@ import static android.Manifest.permission.READ_PHONE_STATE;
  * {@hide}
  */
 // TODO to be implemented
-public final class RuimCard extends IccCardBase {
+public final class RuimCard extends Handler implements IccCard {
     static final String LOG_TAG="RuimCard";
     
     //***** Instance Variables
@@ -49,6 +49,8 @@ public final class RuimCard extends IccCardBase {
     private CDMAPhone phone;
     
     private CommandsInterface.IccStatus status = null;
+    private boolean mDesiredPinLocked;
+    private boolean mDesiredFdnEnabled; 
     private boolean mRuimPinLocked = true; // default to locked
     private boolean mRuimFdnEnabled = false; // Default to disabled.
                                             // Will be updated when RUIM_READY.

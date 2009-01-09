@@ -47,7 +47,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.TimeUtils;
 
-import com.android.internal.telephony.ServiceStateTrackerBase;
+import com.android.internal.telephony.ServiceStateTracker;
 import com.android.internal.telephony.TelephonyIntents;
 
 import java.util.Arrays;
@@ -58,7 +58,7 @@ import java.util.TimeZone;
 /**
  * {@hide}
  */
-final class ServiceStateTracker extends ServiceStateTrackerBase {
+final class GsmServiceStateTracker extends ServiceStateTracker {
     //***** Instance Variables
     GSMPhone phone;
     GsmCellLocation cellLoc;
@@ -107,13 +107,13 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
     //***** Constants
 
     static final boolean DBG = true;
-    static final String LOG_TAG = "gsm.ServiceStateTracker";
+    static final String LOG_TAG = "GsmServiceStateTracker";
 
         
     private ContentObserver mAutoTimeObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
-            Log.i("ServiceStateTracker", "Auto time state changed");
+            Log.i("GsmServiceStateTracker", "Auto time state changed");
             revertToNitz();
         }
     };
@@ -121,7 +121,7 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
 
     //***** Constructors
 
-    public ServiceStateTracker(GSMPhone phone) {
+    public GsmServiceStateTracker(GSMPhone phone) {
         super();
 
         this.phone = phone;
@@ -202,7 +202,7 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
     }
 
 
-    //***** Overridden from ServiceStateTrackerBase
+    //***** Overridden from ServiceStateTracker
     public void
     handleMessage (Message msg) {
         AsyncResult ar;

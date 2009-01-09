@@ -40,13 +40,13 @@ import com.android.internal.telephony.gsm.SimTlv;
 
 // can't be used since VoiceMailConstants is not public
 //import com.android.internal.telephony.gsm.VoiceMailConstants;
-import com.android.internal.telephony.IccRecordsBase;
+import com.android.internal.telephony.IccRecords;
 import com.android.internal.telephony.PhoneBase;
 
 /**
  * {@hide}
  */
-public final class RuimRecords extends IccRecordsBase {
+public final class RuimRecords extends IccRecords {
     static final String LOG_TAG = "RuimRecords";
 
     private static final boolean CRASH_RIL = false;

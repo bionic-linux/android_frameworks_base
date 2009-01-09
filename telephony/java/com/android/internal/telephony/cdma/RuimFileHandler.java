@@ -31,7 +31,7 @@ import java.util.ArrayList;
 /**
  * {@hide}
  */
-public final class RuimFileHandler extends IccFileHandlerBase {
+public final class RuimFileHandler extends IccFileHandler {
     static final String LOG_TAG = "RuimFileHandler";
 
     //***** Instance Variables    

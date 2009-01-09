@@ -34,8 +34,8 @@ import static com.android.internal.telephony.TelephonyProperties.*;
 /**
  * {@hide}
  */
-public abstract class IccRecordsBase extends Handler implements IccConstants {
-    static String LOG_TAG = "IccRecordsBase";
+public abstract class IccRecords extends Handler implements IccConstants {
+    static String LOG_TAG = "IccRecords";
     
     protected static final boolean DBG = true;    
     //***** Instance Variables
@@ -106,7 +106,7 @@ public abstract class IccRecordsBase extends Handler implements IccConstants {
     
     //***** Constructor
 
-    public IccRecordsBase(PhoneBase phone) {
+    public IccRecords(PhoneBase phone) {
         this.phone = phone;
     }
 

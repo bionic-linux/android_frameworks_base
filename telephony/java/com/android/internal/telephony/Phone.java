@@ -555,7 +555,7 @@ public interface Phone {
      * {@link #registerForPhoneStateChanged(android.os.Handler, int, 
      * java.lang.Object) registerForPhoneStateChanged()}.
      */
-    CallBase getForegroundCall();
+    Call getForegroundCall();
 
     /** 
      * Gets the background call object, which represents all connections that
@@ -572,7 +572,7 @@ public interface Phone {
      * {@link #registerForPhoneStateChanged(android.os.Handler, int, 
      * java.lang.Object) registerForPhoneStateChanged()}.
      */
-    CallBase getBackgroundCall();
+    Call getBackgroundCall();
 
     /** 
      * Gets the ringing call object, which represents an incoming 
@@ -589,7 +589,7 @@ public interface Phone {
      * {@link #registerForPhoneStateChanged(android.os.Handler, int, 
      * java.lang.Object) registerForPhoneStateChanged()}.
      */
-    CallBase getRingingCall();
+    Call getRingingCall();
 
     /** 
      * Initiate a new voice connection. This happens asynchronously, so you
@@ -601,7 +601,7 @@ public interface Phone {
      * dialing, alerting, ringing, or waiting.  Other errors are 
      * handled asynchronously.
      */
-    ConnectionBase dial(String dialString) throws CallStateException;
+    Connection dial(String dialString) throws CallStateException;
 
     /**
      * Handles PIN MMI commands (PIN/PIN2/PUK/PUK2), which are initiated

@@ -35,9 +35,9 @@ import android.util.Log;
 import com.android.internal.telephony.CallForwardInfo;
 import com.android.internal.telephony.CallStateException;
 import com.android.internal.telephony.CommandsInterface;
-import com.android.internal.telephony.ConnectionBase;
+import com.android.internal.telephony.Connection;
 import com.android.internal.telephony.IccCard;
-import com.android.internal.telephony.IccFileHandlerBase;
+import com.android.internal.telephony.IccFileHandler;
 import com.android.internal.telephony.IccPhoneBookInterfaceManager;
 import com.android.internal.telephony.IccSmsInterfaceManager;
 import com.android.internal.telephony.MmiCode;
@@ -62,9 +62,9 @@ public class CDMAPhone extends PhoneBase {
     private static final boolean LOCAL_DEBUG = false;
      
     //***** Instance Variables
-    CallTracker mCT;
+    CdmaCallTracker mCT;
     SMSDispatcher mSMS;
-    ServiceStateTracker mSST;
+    CdmaServiceStateTracker mSST;
 //    DataConnectionTracker mDataConnection; //TODO
     RuimRecords mRuimRecords;
     RuimCard mRuimCard;
@@ -94,8 +94,8 @@ public class CDMAPhone extends PhoneBase {
         mCM = ci;
  
         mCM.setPhoneType(RILConstants.CDMA_PHONE);       
-        mCT = new CallTracker(this);   
-        mSST = new ServiceStateTracker (this);
+        mCT = new CdmaCallTracker(this);   
+        mSST = new CdmaServiceStateTracker (this);
         mSMS = new SMSDispatcher(this);
         mIccFileHandler = new RuimFileHandler(this);
         mRuimRecords = new RuimRecords(this);
@@ -138,7 +138,7 @@ public class CDMAPhone extends PhoneBase {
         return false;
     }
     
-    public Call 
+    public CdmaCall 
     getRingingCall() {
         return mCT.ringingCall;
     }
@@ -201,7 +201,7 @@ public class CDMAPhone extends PhoneBase {
         mNotifier.notifySignalStrength(this);
     }
 
-    public ConnectionBase
+    public Connection
     dial (String dialString) throws CallStateException {
         // Need to make sure dialString gets parsed properly
         String newDialString = PhoneNumberUtils.stripSeparators(dialString);
@@ -230,7 +230,7 @@ public class CDMAPhone extends PhoneBase {
         //TODO: ....
     }
     
-    public Call getBackgroundCall() {
+    public CdmaCall getBackgroundCall() {
         return mCT.backgroundCall;
     }
     
@@ -351,7 +351,7 @@ public class CDMAPhone extends PhoneBase {
         //TODO: ...
     }
     
-    public Call getForegroundCall() {
+    public CdmaCall getForegroundCall() {
         return mCT.foregroundCall;
     }
     
@@ -633,7 +633,7 @@ public class CDMAPhone extends PhoneBase {
     }
    
     /*package*/ void
-    notifyNewRingingConnection(ConnectionBase c) {
+    notifyNewRingingConnection(Connection c) {
         /* we'd love it if this was package-scoped*/
         super.notifyNewRingingConnectionP(c);
     }
@@ -864,7 +864,7 @@ public class CDMAPhone extends PhoneBase {
      /**
       * {@inheritDoc}
       */  
-     protected IccFileHandlerBase getIccFileHandler(){
+     protected IccFileHandler getIccFileHandler(){
          return this.mIccFileHandler;    
      }
        

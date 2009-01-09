@@ -52,9 +52,9 @@ import android.util.Log;
 import com.android.internal.telephony.CallForwardInfo;
 import com.android.internal.telephony.CallStateException;
 import com.android.internal.telephony.CommandsInterface;
-import com.android.internal.telephony.ConnectionBase;
+import com.android.internal.telephony.Connection;
 import com.android.internal.telephony.IccCard;
-import com.android.internal.telephony.IccFileHandlerBase;
+import com.android.internal.telephony.IccFileHandler;
 import com.android.internal.telephony.IccPhoneBookInterfaceManager;
 import com.android.internal.telephony.IccSmsInterfaceManager;
 import com.android.internal.telephony.MmiCode;
@@ -90,8 +90,8 @@ public class GSMPhone extends PhoneBase {
 
     //***** Instance Variables
 
-    CallTracker mCT;
-    ServiceStateTracker mSST;
+    GsmCallTracker mCT;
+    GsmServiceStateTracker mSST;
     SMSDispatcher mSMS;
     DataConnectionTracker mDataConnection;
     SIMRecords mSIMRecords;
@@ -138,8 +138,8 @@ public class GSMPhone extends PhoneBase {
         }
 
         mCM.setPhoneType(RILConstants.GSM_PHONE);
-        mCT = new CallTracker(this);
-        mSST = new ServiceStateTracker (this);
+        mCT = new GsmCallTracker(this);
+        mSST = new GsmServiceStateTracker (this);
         mSMS = new SMSDispatcher(this);
         mIccFileHandler = new SIMFileHandler(this);
         mSIMRecords = new SIMRecords(this);
@@ -330,7 +330,7 @@ public class GSMPhone extends PhoneBase {
     }
 
     /*package*/ void
-    notifyNewRingingConnection(ConnectionBase c) {
+    notifyNewRingingConnection(Connection c) {
         /* we'd love it if this was package-scoped*/
         super.notifyNewRingingConnectionP(c);
     }
@@ -344,7 +344,7 @@ public class GSMPhone extends PhoneBase {
     }
     
     /*package*/ void
-    notifyDisconnect(ConnectionBase cn) {
+    notifyDisconnect(Connection cn) {
         mDisconnectRegistrants.notifyResult(cn);
     }
 
@@ -463,17 +463,17 @@ public class GSMPhone extends PhoneBase {
         mCT.explicitCallTransfer();
     }
 
-    public Call
+    public GsmCall
     getForegroundCall() {
         return mCT.foregroundCall;
     }
 
-    public Call 
+    public GsmCall 
     getBackgroundCall() {
         return mCT.backgroundCall;
     }
 
-    public Call 
+    public GsmCall 
     getRingingCall() {
         return mCT.ringingCall;
     }
@@ -484,7 +484,7 @@ public class GSMPhone extends PhoneBase {
             return false;
         }
 
-        if (getRingingCall().getState() != Call.State.IDLE) {
+        if (getRingingCall().getState() != GsmCall.State.IDLE) {
             if (LOCAL_DEBUG) Log.d(LOG_TAG, "MmiCode 0: rejectCall");
             try {
                 mCT.rejectCall();
@@ -493,7 +493,7 @@ public class GSMPhone extends PhoneBase {
                     "reject failed", e);
                 notifySuppServiceFailed(Phone.SuppService.REJECT);
             }
-        } else if (getBackgroundCall().getState() != Call.State.IDLE) {
+        } else if (getBackgroundCall().getState() != GsmCall.State.IDLE) {
             if (LOCAL_DEBUG) Log.d(LOG_TAG,
                     "MmiCode 0: hangupWaitingOrBackground");
             mCT.hangupWaitingOrBackground();
@@ -510,21 +510,21 @@ public class GSMPhone extends PhoneBase {
             return false;
         }
 
-        Call call = (Call) getForegroundCall();
+        GsmCall call = (GsmCall) getForegroundCall();
 
         try {
             if (len > 1) {
                 char ch = dialString.charAt(1);
                 int callIndex = ch - '0';
 
-                if (callIndex >= 1 && callIndex <= CallTracker.MAX_CONNECTIONS) {
+                if (callIndex >= 1 && callIndex <= GsmCallTracker.MAX_CONNECTIONS) {
                     if (LOCAL_DEBUG) Log.d(LOG_TAG,
                             "MmiCode 1: hangupConnectionByIndex " +
                             callIndex);
                     mCT.hangupConnectionByIndex(call, callIndex);
                 }
             } else {
-                if (call.getState() != Call.State.IDLE) {
+                if (call.getState() != GsmCall.State.IDLE) {
                     if (LOCAL_DEBUG) Log.d(LOG_TAG,
                             "MmiCode 1: hangup foreground");
                     //mCT.hangupForegroundResumeBackground();
@@ -552,16 +552,16 @@ public class GSMPhone extends PhoneBase {
             return false;
         }
 
-        Call call = (Call) getForegroundCall();
+        GsmCall call = (GsmCall) getForegroundCall();
 
         if (len > 1) {
             try {
                 char ch = dialString.charAt(1);
                 int callIndex = ch - '0';
-                Connection conn = mCT.getConnectionByIndex(call, callIndex);
+                GsmConnection conn = mCT.getConnectionByIndex(call, callIndex);
                 
                 // gsm index starts at 1, up to 5 connections in a call,
-                if (conn != null && callIndex >= 1 && callIndex <= CallTracker.MAX_CONNECTIONS) {
+                if (conn != null && callIndex >= 1 && callIndex <= GsmCallTracker.MAX_CONNECTIONS) {
                     if (LOCAL_DEBUG) Log.d(LOG_TAG, "MmiCode 2: separate call "+
                             callIndex);
                     mCT.separate(conn);
@@ -577,7 +577,7 @@ public class GSMPhone extends PhoneBase {
             }
         } else {
             try {
-                if (getRingingCall().getState() != Call.State.IDLE) {
+                if (getRingingCall().getState() != GsmCall.State.IDLE) {
                     if (LOCAL_DEBUG) Log.d(LOG_TAG,
                     "MmiCode 2: accept ringing call");
                     mCT.acceptCall();
@@ -686,16 +686,16 @@ public class GSMPhone extends PhoneBase {
     }
 
     boolean isInCall() {
-        Call.State foregroundCallState = getForegroundCall().getState();
-        Call.State backgroundCallState = getBackgroundCall().getState();
-        Call.State ringingCallState = getRingingCall().getState();
+        GsmCall.State foregroundCallState = getForegroundCall().getState();
+        GsmCall.State backgroundCallState = getBackgroundCall().getState();
+        GsmCall.State ringingCallState = getRingingCall().getState();
 
        return (foregroundCallState.isAlive() ||
                 backgroundCallState.isAlive() ||
                 ringingCallState.isAlive());
     }
 
-    public ConnectionBase
+    public Connection
     dial (String dialString) throws CallStateException {
         // Need to make sure dialString gets parsed properly
         String newDialString = PhoneNumberUtils.stripSeparators(dialString);
@@ -1398,7 +1398,7 @@ public class GSMPhone extends PhoneBase {
     /**
      * {@inheritDoc}
      */  
-    protected IccFileHandlerBase getIccFileHandler(){
+    protected IccFileHandler getIccFileHandler(){
         return this.mIccFileHandler;    
     }
 }

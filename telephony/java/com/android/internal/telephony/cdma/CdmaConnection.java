@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.android.internal.telephony.gsm;
+package com.android.internal.telephony.cdma;
 
 import com.android.internal.telephony.*;
+
 import android.os.Handler;
 import android.os.Registrant;
 import android.os.Looper;
@@ -27,26 +28,27 @@ import android.util.Log;
 import android.util.Config;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.ServiceState;
+ 
 
 /**
  * {@hide}
  */
-public class Connection extends ConnectionBase {
-    static final String LOG_TAG = "GSM";
+public class CdmaConnection extends Connection {
+    static final String LOG_TAG = "CDMA";
 
     //***** Instance Variables
 
-    CallTracker owner;
-    Call parent;
+    CdmaCallTracker owner;
+    CdmaCall parent;
 
-    String address;     // MAY BE NULL!!!
+    
+    String address;             // MAY BE NULL!!!  
     String dialString;          // outgoing calls only
     String postDialString;      // outgoing calls only    
     boolean isIncoming;
     boolean disconnected; 
-
-    int index;          // index in CallTracker.connections[], -1 if unassigned
-                        // The GSM index is 1 + this
+    
+    int index;          // index in CdmaCallTracker.connections[], -1 if unassigned
 
     /*
      * These time/timespan values are based on System.currentTimeMillis(),
@@ -67,10 +69,10 @@ public class Connection extends ConnectionBase {
                             // into HOLDING
 
     int nextPostDialChar;       // index into postDialString
-
+    
     DisconnectCause cause = DisconnectCause.NOT_DISCONNECTED;
     PostDialState postDialState = PostDialState.NOT_STARTED;
-
+    
     Handler h;
 
     //***** Event Constants
@@ -106,7 +108,7 @@ public class Connection extends ConnectionBase {
 
     /** This is probably an MT call that we first saw in a CLCC response */
     /*package*/
-    Connection (DriverCall dc, CallTracker ct, int index) {
+    CdmaConnection (DriverCall dc, CdmaCallTracker ct, int index) {
         owner = ct;
         h = new MyHandler(owner.getLooper());
 
@@ -123,7 +125,7 @@ public class Connection extends ConnectionBase {
 
     /** This is an MO call, created when dialing */
     /*package*/
-    Connection (String dialString, CallTracker ct, Call parent) {
+    CdmaConnection (String dialString, CdmaCallTracker ct, CdmaCall parent) {
         owner = ct;
         h = new MyHandler(owner.getLooper());
 
@@ -138,9 +140,9 @@ public class Connection extends ConnectionBase {
         createTime = System.currentTimeMillis();
 
         this.parent = parent;
-        parent.attachFake(this, Call.State.DIALING);
+        parent.attachFake(this, CdmaCall.State.DIALING);
     }
-    
+
     static boolean
     equalsHandlesNulls (Object a, Object b) {
         return (a == null) ? (b == null) : a.equals (b);
@@ -160,8 +162,8 @@ public class Connection extends ConnectionBase {
 
         String cAddress = PhoneNumberUtils.stringFromStringAndTOA(c.number, c.TOA);
         return isIncoming == c.isMT && equalsHandlesNulls(address, cAddress); 
-    }
-
+    }   
+    
     public String
     toString() {
         return (isIncoming ? "incoming" : "outgoing");
@@ -172,7 +174,7 @@ public class Connection extends ConnectionBase {
     }
 
 
-    public Call getCall() {
+    public CdmaCall getCall() {
         return parent;
     }
 
@@ -199,7 +201,7 @@ public class Connection extends ConnectionBase {
     }
 
     public long getHoldDurationMillis() {
-        if (getState() != Call.State.HOLDING) {
+        if (getState() != CdmaCall.State.HOLDING) {
             // If not holding, return 0
             return 0;
         } else {
@@ -215,9 +217,9 @@ public class Connection extends ConnectionBase {
         return isIncoming;
     }
 
-    public Call.State getState() {
+    public CdmaCall.State getState() {
         if (disconnected) {
-            return Call.State.DISCONNECTED;
+            return CdmaCall.State.DISCONNECTED;
         } else {   
             return super.getState();
         }
@@ -245,7 +247,7 @@ public class Connection extends ConnectionBase {
 
     public void proceedAfterWaitChar() {
         if (postDialState != PostDialState.WAIT) {
-            Log.w(LOG_TAG, "Connection.proceedAfterWaitChar(): Expected " 
+            Log.w(LOG_TAG, "CdmaConnection.proceedAfterWaitChar(): Expected " 
                 + "getPostDialState() to be WAIT but was " + postDialState);
             return;
         }
@@ -257,7 +259,7 @@ public class Connection extends ConnectionBase {
     
     public void proceedAfterWildChar(String str) {
         if (postDialState != PostDialState.WILD) {
-            Log.w(LOG_TAG, "Connection.proceedAfterWaitChar(): Expected " 
+            Log.w(LOG_TAG, "CdmaConnection.proceedAfterWaitChar(): Expected " 
                 + "getPostDialState() to be WILD but was " + postDialState);
             return;
         }
@@ -327,34 +329,35 @@ public class Connection extends ConnectionBase {
             case CallFailCause.USER_BUSY:
                 return DisconnectCause.BUSY;
 
-            case CallFailCause.NO_CIRCUIT_AVAIL:
-            case CallFailCause.TEMPORARY_FAILURE:
-            case CallFailCause.SWITCHING_CONGESTION:
-            case CallFailCause.CHANNEL_NOT_AVAIL:
-            case CallFailCause.QOS_NOT_AVAIL:
-            case CallFailCause.BEARER_NOT_AVAIL:
-                return DisconnectCause.CONGESTION;
-
-            case CallFailCause.ACM_LIMIT_EXCEEDED:
-                return DisconnectCause.LIMIT_EXCEEDED;
-
-            case CallFailCause.CALL_BARRED:
-                return DisconnectCause.CALL_BARRED;
-
-            case CallFailCause.FDN_BLOCKED:
-                return DisconnectCause.FDN_BLOCKED;
+                // TODO: check if cases are needed for CDMA
+//            case CallFailCause.NO_CIRCUIT_AVAIL:
+//            case CallFailCause.TEMPORARY_FAILURE:
+//            case CallFailCause.SWITCHING_CONGESTION:
+//            case CallFailCause.CHANNEL_NOT_AVAIL:
+//            case CallFailCause.QOS_NOT_AVAIL:
+//            case CallFailCause.BEARER_NOT_AVAIL:
+//                return DisconnectCause.CONGESTION;
+//
+//            case CallFailCause.ACM_LIMIT_EXCEEDED:
+//                return DisconnectCause.LIMIT_EXCEEDED;
+//
+//            case CallFailCause.CALL_BARRED:
+//                return DisconnectCause.CALL_BARRED;
+//
+//            case CallFailCause.FDN_BLOCKED:
+//                return DisconnectCause.FDN_BLOCKED;
 
             case CallFailCause.ERROR_UNSPECIFIED:
             case CallFailCause.NORMAL_CLEARING: 
             default:
-                GSMPhone phone = owner.phone;
+                CDMAPhone phone = owner.phone;
                 int serviceState = phone.getServiceState().getState();
                 if (serviceState == ServiceState.STATE_POWER_OFF) {
                     return DisconnectCause.POWER_OFF;
                 } else if (serviceState == ServiceState.STATE_OUT_OF_SERVICE
                         || serviceState == ServiceState.STATE_EMERGENCY_ONLY ) {
                     return DisconnectCause.OUT_OF_SERVICE;
-                } else if (phone.getIccCard().getState() != SimCard.State.READY) {
+                } else if (phone.getIccCard().getState() != RuimCard.State.READY) {
                     return DisconnectCause.SIM_ERROR;
                 } else {
                     return DisconnectCause.NORMAL;
@@ -380,7 +383,7 @@ public class Connection extends ConnectionBase {
             disconnected = true;
 
             if (Config.LOGD) Log.d(LOG_TAG,
-                    "[GSMConn] onDisconnect: cause=" + cause);
+                    "[CDMAConn] onDisconnect: cause=" + cause);
 
             owner.phone.notifyDisconnect(this);
 
@@ -393,10 +396,10 @@ public class Connection extends ConnectionBase {
     // Returns true if state has changed, false if nothing changed
     /*package*/ boolean
     update (DriverCall dc) {
-        Call newParent;
+        CdmaCall newParent;
         boolean changed = false;
         boolean wasConnectingInOrOut = isConnectingInOrOut();
-        boolean wasHolding = (getState() == Call.State.HOLDING);
+        boolean wasHolding = (getState() == CdmaCall.State.HOLDING);
 
         newParent = parentFromDCState(dc.state);
 
@@ -434,7 +437,7 @@ public class Connection extends ConnectionBase {
             onConnectedInOrOut();
         }
 
-        if (changed && !wasHolding && (getState() == Call.State.HOLDING)) {
+        if (changed && !wasHolding && (getState() == CdmaCall.State.HOLDING)) {
             // We've transitioned into HOLDING
             onStartedHolding();
         }
@@ -455,11 +458,12 @@ public class Connection extends ConnectionBase {
         }
 
         parent = owner.backgroundCall;
-        parent.attachFake(this, Call.State.HOLDING);
+        parent.attachFake(this, CdmaCall.State.HOLDING);
 
         onStartedHolding();
     }
 
+    // TODO: find another name for this function
     /*package*/ int
     getGSMIndex() throws CallStateException {
         if (index >= 0) {
@@ -553,7 +557,7 @@ public class Connection extends ConnectionBase {
         Registrant postDialHandler;
 
         if (postDialState == PostDialState.CANCELLED) {
-            //Log.v("GSM", "##### processNextPostDialChar: postDialState == CANCELLED, bail");
+            //Log.v("CDMA", "##### processNextPostDialChar: postDialState == CANCELLED, bail");
             return;
         }
 
@@ -576,7 +580,7 @@ public class Connection extends ConnectionBase {
                 // Will call processNextPostDialChar
                 h.obtainMessage(EVENT_NEXT_POST_DIAL).sendToTarget();
                 // Don't notify application
-                Log.e("GSM", "processNextPostDialChar: c=" + c + " isn't valid!");
+                Log.e("CDMA", "processNextPostDialChar: c=" + c + " isn't valid!");
                 return;
             }
         }
@@ -595,17 +599,16 @@ public class Connection extends ConnectionBase {
             // arg1 is the character that was/is being processed
             notifyMessage.arg1 = c;
 
-            //Log.v("GSM", "##### processNextPostDialChar: send msg to postDialHandler, arg1=" + c);
+            //Log.v("CDMA", "##### processNextPostDialChar: send msg to postDialHandler, arg1=" + c);
             notifyMessage.sendToTarget();
         }
-//moved indent due to maximum character length
-/*
-else {
-if (postDialHandler == null)
-Log.v("GSM", "##### processNextPostDialChar: postDialHandler is NULL!");
-else
-Log.v("GSM", "##### processNextPostDialChar: postDialHandler.messageForRegistrant() returned NULL!");
-}
+/* Reviewer Comment: moved due to Line length more than 100
+  else {
+  if (postDialHandler == null)
+  Log.v("CDMA", "##### processNextPostDialChar: postDialHandler is NULL!");
+  else
+  Log.v("CDMA", "##### processNextPostDialChar: postDialHandler.messageForRegistrant() returned NULL!");
+  }
 */
     }
 
@@ -616,11 +619,11 @@ Log.v("GSM", "##### processNextPostDialChar: postDialHandler.messageForRegistran
     private boolean
     isConnectingInOrOut() {
         return parent == null || parent == owner.ringingCall 
-            || parent.state == Call.State.DIALING 
-            || parent.state == Call.State.ALERTING;
+            || parent.state == CdmaCall.State.DIALING 
+            || parent.state == CdmaCall.State.ALERTING;
     }
-
-    private Call
+    
+    private CdmaCall
     parentFromDCState (DriverCall.State state) {
         switch (state) {
             case ACTIVE:
@@ -644,6 +647,6 @@ Log.v("GSM", "##### processNextPostDialChar: postDialHandler.messageForRegistran
     }
 
     private void log(String msg) {
-        Log.d(LOG_TAG, "[GSMConn] " + msg);
+        Log.d(LOG_TAG, "[CDMAConn] " + msg);
     }
 }

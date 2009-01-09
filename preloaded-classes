@@ -490,7 +490,6 @@ com.android.internal.policy.impl.PhoneWindow$PanelFeatureState
 com.android.internal.policy.impl.PhoneWindow$PanelFeatureState$SavedState
 com.android.internal.telephony.BaseCommands
 com.android.internal.telephony.CommandsInterface
-com.android.internal.telephony.IccCardBase
 com.android.internal.telephony.Phone
 com.android.internal.telephony.Phone$DataActivityState
 com.android.internal.telephony.Phone$DataState
@@ -502,7 +501,7 @@ com.android.internal.telephony.gsm.GSMPhone
 com.android.internal.telephony.gsm.GsmAlphabet
 com.android.internal.telephony.gsm.ISms$Stub
 com.android.internal.telephony.gsm.PdpConnection$PdpFailCause
-com.android.internal.telephony.gsm.ServiceStateTracker
+com.android.internal.telephony.gsm.GsmServiceStateTracker
 com.android.internal.telephony.gsm.SimCard
 com.android.internal.view.menu.MenuDialogHelper
 com.android.internal.widget.LockPatternView

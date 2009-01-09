@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * {@hide}
  */
-public abstract class IccFileHandlerBase extends Handler {
+public abstract class IccFileHandler extends Handler {
     
     //from TS 11.11 9.1 or elsewhere
     static protected final int COMMAND_READ_BINARY = 0xb0;

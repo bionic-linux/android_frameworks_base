@@ -95,7 +95,7 @@ public abstract class PhoneBase implements Phone {
     
     //***** Instance Variables   
     public CommandsInterface mCM;
-    protected IccFileHandlerBase mIccFileHandler;
+    protected IccFileHandler mIccFileHandler;
     // TODO T: should be protected but GsmMmiCode and DataConnectionTracker still refer to it directly  
     public Handler h;
     
@@ -239,7 +239,7 @@ public abstract class PhoneBase implements Phone {
      * Subclasses of Phone probably want to replace this with a 
      * version scoped to their packages
      */
-    protected void notifyNewRingingConnectionP(ConnectionBase cn) {    
+    protected void notifyNewRingingConnectionP(Connection cn) {    
         AsyncResult ar = new AsyncResult(null, cn, null);
         mNewRingingConnectionRegistrants.notifyRegistrants(ar);
     }
@@ -356,7 +356,7 @@ public abstract class PhoneBase implements Phone {
      * Subclasses of Phone probably want to replace this with a 
      * version scoped to their packages
      */
-    protected void notifyDisconnectP(ConnectionBase cn) {
+    protected void notifyDisconnectP(Connection cn) {
         AsyncResult ar = new AsyncResult(null, cn, null);
         mDisconnectRegistrants.notifyRegistrants(ar);
     }
@@ -413,7 +413,7 @@ public abstract class PhoneBase implements Phone {
     /**
      * Retrieves the IccFileHandler of the Phone instance
      */        
-    protected abstract IccFileHandlerBase getIccFileHandler();
+    protected abstract IccFileHandler getIccFileHandler();
 
     
     /**

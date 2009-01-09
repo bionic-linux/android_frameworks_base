@@ -17,7 +17,7 @@
 package android.pim;
 
 import com.android.internal.telephony.CallerInfo;
-import com.android.internal.telephony.ConnectionBase;
+import com.android.internal.telephony.Connection;
 
 import android.content.ContentUris;
 import android.content.Context;
@@ -116,7 +116,7 @@ public class ContactsAsyncHelper extends Handler {
             return (mCurrentCallerInfo != ci);
         }
         
-        public boolean isDifferentImageRequest(ConnectionBase connection) {
+        public boolean isDifferentImageRequest(Connection connection) {
             // if the connection does not exist, see if the 
             // mCurrentCallerInfo is also null to match.
             if (connection == null) {

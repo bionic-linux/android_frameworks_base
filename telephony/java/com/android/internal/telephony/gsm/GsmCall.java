@@ -23,11 +23,11 @@ import java.util.List;
 /**
  * {@hide}
  */
-class Call extends CallBase {
+class GsmCall extends Call {
     /*************************** Instance Variables **************************/
 
-    /*package*/ ArrayList<ConnectionBase> connections = new ArrayList<ConnectionBase>();
-    /*package*/ CallTracker owner;
+    /*package*/ ArrayList<Connection> connections = new ArrayList<Connection>();
+    /*package*/ GsmCallTracker owner;
 
     
     /***************************** Class Methods *****************************/
@@ -48,13 +48,13 @@ class Call extends CallBase {
 
     /****************************** Constructors *****************************/
     /*package*/
-    Call (CallTracker owner) {
+    GsmCall (GsmCallTracker owner) {
         this.owner = owner;
     }
 
     /************************** Overridden from Call *************************/
 
-    public List<ConnectionBase>
+    public List<Connection>
     getConnections() {
         // FIXME should return Collections.unmodifiableList();
         return connections;
@@ -85,7 +85,7 @@ class Call extends CallBase {
         return state.toString();
     }
 
-    //***** Called from GSMConnection
+    //***** Called from GsmConnection
 
     /*package*/ void
     attach(Connection conn, DriverCall dc) {
@@ -102,10 +102,10 @@ class Call extends CallBase {
     }
 
     /**
-     * Called by GSMConnection when it has disconnected
+     * Called by GsmConnection when it has disconnected
      */
     void
-    connectionDisconnected(Connection conn) {
+    connectionDisconnected(GsmConnection conn) {
         if (state != State.DISCONNECTED) {
             /* If only disconnected connections remain, we are disconnected*/
 
@@ -128,7 +128,7 @@ class Call extends CallBase {
 
 
     /*package*/ void
-    detach(Connection conn) {
+    detach(GsmConnection conn) {
         connections.remove(conn);
 
         if (connections.size() == 0) {
@@ -137,7 +137,7 @@ class Call extends CallBase {
     }
 
     /*package*/ boolean
-    update (Connection conn, DriverCall dc) {
+    update (GsmConnection conn, DriverCall dc) {
         State newState;
         boolean changed = false;
         
@@ -157,10 +157,10 @@ class Call extends CallBase {
      */
     /*package*/ boolean
     isFull() {
-        return connections.size() == CallTracker.MAX_CONNECTIONS_PER_CALL;
+        return connections.size() == GsmCallTracker.MAX_CONNECTIONS_PER_CALL;
     }
 
-    //***** Called from CallTracker
+    //***** Called from GsmCallTracker
 
 
     /** 
@@ -173,7 +173,7 @@ class Call extends CallBase {
         for (int i = 0, s = connections.size()
                 ; i < s; i++
         ) {
-            Connection cn = (Connection)connections.get(i);
+            GsmConnection cn = (GsmConnection)connections.get(i);
 
             cn.onHangupLocal();
         }
@@ -185,7 +185,7 @@ class Call extends CallBase {
     void
     clearDisconnected() {
         for (int i = connections.size() - 1 ; i >= 0 ; i--) {
-            Connection cn = (Connection)connections.get(i);
+            GsmConnection cn = (GsmConnection)connections.get(i);
             
             if (cn.getState() == State.DISCONNECTED) {
                 connections.remove(i);

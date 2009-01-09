@@ -19,9 +19,9 @@ package com.android.internal.telephony.cdma;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.internal.telephony.CallBase;
+import com.android.internal.telephony.Call;
 import com.android.internal.telephony.CallStateException;
-import com.android.internal.telephony.ConnectionBase;
+import com.android.internal.telephony.Connection;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.DriverCall;
 
@@ -29,12 +29,12 @@ import com.android.internal.telephony.DriverCall;
 /**
  * {@hide}
  */
-public final class Call extends CallBase {
+public final class CdmaCall extends Call {
     /*************************** Instance Variables **************************/
 
-    /*package*/ ArrayList<ConnectionBase> connections = new ArrayList<ConnectionBase>();
+    /*package*/ ArrayList<Connection> connections = new ArrayList<Connection>();
     /*package*/ State state = State.IDLE;
-    /*package*/ CallTracker owner;
+    /*package*/ CdmaCallTracker owner;
     
     /***************************** Class Methods *****************************/
 
@@ -54,14 +54,14 @@ public final class Call extends CallBase {
 
     /****************************** Constructors *****************************/
     /*package*/
-    Call (CallTracker owner) {
+    CdmaCall (CdmaCallTracker owner) {
         this.owner = owner;
     }
     
     /************************** Overridden from Call *************************/
    // TODO is currently a copy of GSM to build
     // has to be implemented 
-    public List<ConnectionBase>
+    public List<Connection>
     getConnections() {
         // FIXME should return Collections.unmodifiableList();
         return connections;
@@ -96,7 +96,7 @@ public final class Call extends CallBase {
         return state.toString();
     }
 
-    //***** Called from GSMConnection
+    //***** Called from CdmaConnection
 
     /*package*/ void
     attach(Connection conn, DriverCall dc) {
@@ -106,17 +106,17 @@ public final class Call extends CallBase {
     }
 
     /*package*/ void
-    attachFake(Connection conn, State state){
+    attachFake(Connection conn, State state) {
         connections.add(conn);
 
         this.state = state;
     }
 
     /**
-     * Called by Connection when it has disconnected
+     * Called by CdmaConnection when it has disconnected
      */
     void
-    connectionDisconnected(Connection conn) {
+    connectionDisconnected(CdmaConnection conn) {
         if (state != State.DISCONNECTED) {
             /* If only disconnected connections remain, we are disconnected*/
 
@@ -139,7 +139,7 @@ public final class Call extends CallBase {
 
 
     /*package*/ void
-    detach(Connection conn) {
+    detach(CdmaConnection conn) {
         connections.remove(conn);
 
         if (connections.size() == 0) {
@@ -148,7 +148,7 @@ public final class Call extends CallBase {
     }
 
     /*package*/ boolean
-    update (Connection conn, DriverCall dc) {
+    update (CdmaConnection conn, DriverCall dc) {
         State newState;
         boolean changed = false;
         
@@ -168,10 +168,10 @@ public final class Call extends CallBase {
      */
     /*package*/ boolean
     isFull() {
-        return connections.size() == CallTracker.MAX_CONNECTIONS_PER_CALL;
+        return connections.size() == CdmaCallTracker.MAX_CONNECTIONS_PER_CALL;
     }
 
-    //***** Called from CallTracker
+    //***** Called from CdmaCallTracker
 
 
     /** 
@@ -184,7 +184,7 @@ public final class Call extends CallBase {
         for (int i = 0, s = connections.size()
                 ; i < s; i++
         ) {
-            Connection cn = (Connection)connections.get(i);
+            CdmaConnection cn = (CdmaConnection)connections.get(i);
 
             cn.onHangupLocal();
         }
@@ -195,7 +195,7 @@ public final class Call extends CallBase {
      */
    void clearDisconnected() {
         for (int i = connections.size() - 1 ; i >= 0 ; i--) {
-        Connection cn = (Connection)connections.get(i);
+        CdmaConnection cn = (CdmaConnection)connections.get(i);
             
             if (cn.getState() == State.DISCONNECTED) {
                 connections.remove(i);

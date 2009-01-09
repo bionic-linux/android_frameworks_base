@@ -45,7 +45,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.TimeUtils;
 
-import com.android.internal.telephony.ServiceStateTrackerBase;
+import com.android.internal.telephony.ServiceStateTracker;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.gsm.CommandException;
 import com.android.internal.telephony.gsm.MccTable;
@@ -58,7 +58,7 @@ import java.util.TimeZone;
 /**
  * {@hide}
  */
-final class ServiceStateTracker extends ServiceStateTrackerBase {
+final class CdmaServiceStateTracker extends ServiceStateTracker {
     //***** Instance Variables
     CDMAPhone phone;
     CdmaCellLocation cellLoc;
@@ -104,14 +104,14 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
     private int curSpnRule = 0;
 
     //***** Constants
-    static final String LOG_TAG = "cdma.ServiceStateTracker";
+    static final String LOG_TAG = "CdmaServiceStateTracker";
     static final String TMUK = "23430";
 
 
     private ContentObserver mAutoTimeObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
-            Log.i("ServiceStateTracker", "Auto time state changed");
+            Log.i("CdmaServiceStateTracker", "Auto time state changed");
             revertToNitz();
         }
     };
@@ -119,7 +119,7 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
 
     //***** Constructors
 
-    public ServiceStateTracker(CDMAPhone phone) {
+    public CdmaServiceStateTracker(CDMAPhone phone) {
         super();
 
         this.phone = phone;
@@ -207,7 +207,7 @@ final class ServiceStateTracker extends ServiceStateTrackerBase {
     }
 
 
-    //***** Overridden from ServiceStateTrackerBase
+    //***** Overridden from ServiceStateTracker
     public void
     handleMessage (Message msg) {
         AsyncResult ar;

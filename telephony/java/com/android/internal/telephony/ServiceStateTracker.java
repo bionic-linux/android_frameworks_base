@@ -26,7 +26,7 @@ import android.telephony.ServiceState;
 /**
  * {@hide}
  */
-public abstract class ServiceStateTrackerBase extends Handler {
+public abstract class ServiceStateTracker extends Handler {
     /**
      *  The access technology currently in use:
      *  0 = unknown
@@ -141,7 +141,7 @@ public abstract class ServiceStateTrackerBase extends Handler {
 
 
     //***** Constructors
-    public ServiceStateTrackerBase() {
+    public ServiceStateTracker() {
 
 
     }

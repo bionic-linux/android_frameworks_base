@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * {@hide}
  */
-public abstract class CallBase {
+public abstract class Call {
     /* Enums */
 
     public enum State {
@@ -53,7 +53,7 @@ public abstract class CallBase {
      *  It will change across event loop iterations            top
      */
 
-    public abstract List<ConnectionBase> getConnections();
+    public abstract List<Connection> getConnections();
     public abstract Phone getPhone();
     public abstract boolean isMultiparty();
     public abstract void hangup() throws CallStateException;
@@ -65,7 +65,7 @@ public abstract class CallBase {
      * @param c a Connection object
      * @return true if the call contains the connection object passed in
      */
-    public boolean hasConnection(ConnectionBase c) {
+    public boolean hasConnection(Connection c) {
         return c.getCall() == this;
     }
     
@@ -105,12 +105,12 @@ public abstract class CallBase {
      * Returns the Connection associated with this Call that was created
      * first, or null if there are no Connections in this Call
      */
-    public ConnectionBase
+    public Connection
     getEarliestConnection() {
         List l;
         long time = Long.MAX_VALUE;
-        ConnectionBase c;
-        ConnectionBase earliest = null;
+        Connection c;
+        Connection earliest = null;
         
         l = getConnections();
         
@@ -119,7 +119,7 @@ public abstract class CallBase {
         }
         
         for (int i = 0, s = l.size() ; i < s ; i++) {
-            c = (ConnectionBase) l.get(i);
+            c = (Connection) l.get(i);
             long t;
             
             t = c.getCreateTime();
@@ -144,7 +144,7 @@ public abstract class CallBase {
         }
 
         for (int i = 0, s = l.size() ; i < s ; i++) {
-            ConnectionBase c = (ConnectionBase) l.get(i);
+            Connection c = (Connection) l.get(i);
             long t;
 
             t = c.getCreateTime();
@@ -167,7 +167,7 @@ public abstract class CallBase {
         }
 
         for (int i = 0, s = l.size() ; i < s ; i++) {
-            ConnectionBase c = (ConnectionBase) l.get(i);
+            Connection c = (Connection) l.get(i);
             long t;
 
             t = c.getConnectTime();
