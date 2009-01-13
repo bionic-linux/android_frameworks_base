@@ -35,6 +35,7 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.server.search.SearchableInfo;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -42,19 +43,13 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnFocusChangeListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -62,7 +57,7 @@ import android.widget.WrapperListAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import java.util.concurrent.LinkedBlockingQueue;
+import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -71,7 +66,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * 
  * @hide
  */
-public class SearchDialog extends Dialog {
+public class SearchDialog extends Dialog implements OnItemClickListener, OnItemSelectedListener {
 
     // Debugging support
     final static String LOG_TAG = "SearchDialog";
@@ -81,7 +76,6 @@ public class SearchDialog extends Dialog {
     // interaction with runtime
     IntentFilter mCloseDialogsFilter;
     IntentFilter mPackageFilter;
-    private final Handler mHandler = new Handler(); // why isn't Dialog.mHandler shared?
     
     private static final String INSTANCE_KEY_COMPONENT = "comp";
     private static final String INSTANCE_KEY_APPDATA = "data";
@@ -96,15 +90,10 @@ public class SearchDialog extends Dialog {
     private static final int INSTANCE_SELECTED_QUERY = -1;
 
     // views & widgets
-    private View mSearchBarLayout;
     private TextView mBadgeLabel;
-    private LinearLayout mSearchEditLayout;
-    private EditText mSearchTextField;
+    private AutoCompleteTextView mSearchTextField;
     private Button mGoButton;
-    private ListView mSuggestionsList;
 
-    private ViewTreeObserver mViewTreeObserver = null;
-    
     // interaction with searchable application
     private ComponentName mLaunchComponent;
     private Bundle mAppSearchData;
@@ -115,21 +104,19 @@ public class SearchDialog extends Dialog {
     private SearchableInfo mSearchable;
     
     // support for suggestions 
-    private SuggestionsRunner mSuggestionsRunner;
     private String mUserQuery = null;
     private int mUserQuerySelStart;
     private int mUserQuerySelEnd;
-    private boolean mNonUserQuery = false;
     private boolean mLeaveJammedQueryOnRefocus = false;
     private String mPreviousSuggestionQuery = null;
-    private Context mProviderContext;
-    private Animation mSuggestionsEntry;
-    private Animation mSuggestionsExit;
-    private boolean mSkipNextAnimate;
     private int mPresetSelection = -1;
     private String mSuggestionAction = null;
     private Uri mSuggestionData = null;
     private String mSuggestionQuery = null;
+    
+    // support for AutoCompleteTextView suggestions display
+    private SuggestionsAdapter mSuggestionsAdapter;
+
 
     /**
      * Constructor - fires it up and makes it look like the search UI.
@@ -137,7 +124,7 @@ public class SearchDialog extends Dialog {
      * @param context Application Context we can use for system acess
      */
     public SearchDialog(Context context) {
-        super(context, com.android.internal.R.style.Theme_Translucent);
+        super(context, com.android.internal.R.style.Theme_SearchBar);
     }
 
     /**
@@ -149,56 +136,37 @@ public class SearchDialog extends Dialog {
         super.onCreate(savedInstanceState);
 
         Window theWindow = getWindow();
-        theWindow.requestFeature(Window.FEATURE_NO_TITLE);
-        theWindow.setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
-                WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         theWindow.setGravity(Gravity.TOP|Gravity.FILL_HORIZONTAL);
 
         setContentView(com.android.internal.R.layout.search_bar);
 
-        // Note:  theWindow.setBackgroundDrawable(null) does not work here - you get blackness
-        theWindow.setBackgroundDrawableResource(android.R.color.transparent);
-
         theWindow.setLayout(ViewGroup.LayoutParams.FILL_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         WindowManager.LayoutParams lp = theWindow.getAttributes();
-        lp.dimAmount = 0.5f;
         lp.setTitle("Search Dialog");
+        lp.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
         theWindow.setAttributes(lp);
 
         // get the view elements for local access
-        mSearchBarLayout = findViewById(com.android.internal.R.id.search_bar);
         mBadgeLabel = (TextView) findViewById(com.android.internal.R.id.search_badge);
-        mSearchEditLayout = (LinearLayout)findViewById(com.android.internal.R.id.search_edit_frame);
-        mSearchTextField = (EditText) findViewById(com.android.internal.R.id.search_src_text);
+        mSearchTextField = (AutoCompleteTextView) 
+                findViewById(com.android.internal.R.id.search_src_text);
         mGoButton = (Button) findViewById(com.android.internal.R.id.search_go_btn);
-        mSuggestionsList = (ListView) findViewById(com.android.internal.R.id.search_suggest_list);
         
         // attach listeners
         mSearchTextField.addTextChangedListener(mTextWatcher);
         mSearchTextField.setOnKeyListener(mTextKeyListener);
         mGoButton.setOnClickListener(mGoButtonClickListener);
-        mGoButton.setOnKeyListener(mGoButtonKeyListener);
-        mSuggestionsList.setOnItemClickListener(mSuggestionsListItemClickListener);
-        mSuggestionsList.setOnKeyListener(mSuggestionsKeyListener);
-        mSuggestionsList.setOnFocusChangeListener(mSuggestFocusListener);
-        mSuggestionsList.setOnItemSelectedListener(mSuggestSelectedListener);
+        mGoButton.setOnKeyListener(mButtonsKeyListener);
 
         // pre-hide all the extraneous elements
         mBadgeLabel.setVisibility(View.GONE);
-        mSuggestionsList.setVisibility(View.GONE);
 
         // Additional adjustments to make Dialog work for Search
 
         // Touching outside of the search dialog will dismiss it 
         setCanceledOnTouchOutside(true);
         
-        // Preload animations
-        mSuggestionsEntry = AnimationUtils.loadAnimation(getContext(), 
-                com.android.internal.R.anim.grow_fade_in);
-        mSuggestionsExit = AnimationUtils.loadAnimation(getContext(), 
-                com.android.internal.R.anim.fade_out);
-
         // Set up broadcast filters
         mCloseDialogsFilter = new
         IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -238,17 +206,10 @@ public class SearchDialog extends Dialog {
         }
         
         // OK, we're going to show ourselves
-        if (mSuggestionsList != null) {
-            mSuggestionsList.setVisibility(View.GONE);      // prevent any flicker if was visible
-        }
         super.show();
 
         setupSearchableInfo();
         
-        // start the suggestions thread (which will mainly idle)
-        mSuggestionsRunner = new SuggestionsRunner();
-        new Thread(mSuggestionsRunner, "SearchSuggestions").start();
-
         mLaunchComponent = componentName;
         mAppSearchData = appSearchData;
         mGlobalSearchMode = globalSearch;
@@ -257,15 +218,21 @@ public class SearchDialog extends Dialog {
         getContext().registerReceiver(mBroadcastReceiver, mCloseDialogsFilter);
         getContext().registerReceiver(mBroadcastReceiver, mPackageFilter);
         
-        mViewTreeObserver = mSearchBarLayout.getViewTreeObserver();
-        mViewTreeObserver.addOnGlobalLayoutListener(mGlobalLayoutListener);
+        // configure the autocomplete aspects of the input box
+        mSearchTextField.setOnItemClickListener(this);
+        mSearchTextField.setOnItemSelectedListener(this);
+        
+        // attach the suggestions adapter
+        mSuggestionsAdapter = new SuggestionsAdapter(getContext(), mSearchable);
+        mSearchTextField.setAdapter(mSuggestionsAdapter);
 
         // finally, load the user's initial text (which may trigger suggestions)
-        mNonUserQuery = false;
+        mSuggestionsAdapter.setNonUserQuery(false);
         if (initialQuery == null) {
             initialQuery = "";     // This forces the preload to happen, triggering suggestions
         }
         mSearchTextField.setText(initialQuery);
+        
         if (selectInitialQuery) {
             mSearchTextField.selectAll();
         } else {
@@ -303,21 +270,7 @@ public class SearchDialog extends Dialog {
             // This is OK - it just means we didn't have any registered
         }
         
-        // ignore layout notifications
-        try {
-            if (mViewTreeObserver != null) {
-                mViewTreeObserver.removeGlobalOnLayoutListener(mGlobalLayoutListener);
-            }
-        } catch (RuntimeException e) {
-            // This is OK - none registered or observer "dead"
-        } 
-        mViewTreeObserver = null;
-
         // dump extra memory we're hanging on to
-        if (mSuggestionsRunner != null) {
-            mSuggestionsRunner.cancelSuggestions();
-            mSuggestionsRunner = null;
-        }
         mLaunchComponent = null;
         mAppSearchData = null;
         mSearchable = null;
@@ -325,7 +278,6 @@ public class SearchDialog extends Dialog {
         mSuggestionData = null;
         mSuggestionQuery = null;
         mActivityContext = null;
-        mProviderContext = null;
         mPreviousSuggestionQuery = null;
         mUserQuery = null;
     }
@@ -354,9 +306,8 @@ public class SearchDialog extends Dialog {
         int selectedElement = INSTANCE_SELECTED_QUERY;
         if (mGoButton.isFocused()) {
             selectedElement = INSTANCE_SELECTED_BUTTON;
-        } else if ((mSuggestionsList.getVisibility() == View.VISIBLE) && 
-                mSuggestionsList.isFocused()) {
-            selectedElement = mSuggestionsList.getSelectedItemPosition();   // 0..n
+        } else if (mSearchTextField.isPopupShowing()) {
+            selectedElement = 0; // TODO mSearchTextField.getListSelection()    // 0..n
         }
         bundle.putInt(INSTANCE_KEY_SELECTED_ELEMENT, selectedElement);
         
@@ -391,11 +342,13 @@ public class SearchDialog extends Dialog {
             // for some reason, we couldn't re-instantiate
             return;
         }
-        mSkipNextAnimate = true;
         
-        mNonUserQuery = true;
+        mSuggestionsAdapter.setNonUserQuery(true);
         mSearchTextField.setText(displayQuery);
-        mNonUserQuery = false;
+        // TODO because the new query is (not) processed in another thread, we can't just
+        // take away this flag (yet).  The better solution here is going to require a new API
+        // in AutoCompleteTextView which allows us to change the text w/o changing the suggestions.
+//      mSuggestionsAdapter.setNonUserQuery(false);
         
         // clean up the selection state
         switch (selectedElement) {
@@ -413,6 +366,7 @@ public class SearchDialog extends Dialog {
         default:
             // defer selecting a list element until suggestion list appears
             mPresetSelection = selectedElement;
+            // TODO mSearchTextField.setListSelection(selectedElement)
             break;
         }
     }
@@ -437,11 +391,28 @@ public class SearchDialog extends Dialog {
     private void setupSearchableInfo() {
         if (mSearchable != null) {
             mActivityContext = mSearchable.getActivityContext(getContext());
-            mProviderContext = mSearchable.getProviderContext(getContext(), mActivityContext);
             
             updateSearchButton();
             updateSearchBadge();
             updateQueryHint();
+            
+            // In order to properly configure the input method (if one is being used), we
+            // need to let it know if we'll be providing suggestions.  Although it would be
+            // difficult/expensive to know if every last detail has been configured properly, we 
+            // can at least see if a suggestions provider has been configured, and use that
+            // as our trigger.
+            int inputType = mSearchable.getInputType();
+            // We only touch this if the input type is set up for text (which it almost certainly
+            // should be, in the case of search!)
+            if ((inputType & InputType.TYPE_MASK_CLASS) == InputType.TYPE_CLASS_TEXT) {
+                // The existence of a suggestions authority is the proxy for "suggestions 
+                // are available here"
+                inputType &= ~InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE;
+                if (mSearchable.getSuggestAuthority() != null) {
+                    inputType |= InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE;
+                }
+            }
+            mSearchTextField.setInputType(inputType);
         }
     }
 
@@ -458,16 +429,22 @@ public class SearchDialog extends Dialog {
         cancel();
     }
     
-    /**
-     * Update the text in the search button
-     */
-    private void updateSearchButton() {
-        int textId = mSearchable.getSearchButtonText();
-        if (textId == 0) {
-            textId = com.android.internal.R.string.search_go;
+    /**    
+     * Update the text in the search button.  Note: This is deprecated functionality, for 
+     * 1.0 compatibility only.
+     */  
+    private void updateSearchButton() { 
+        String textLabel = null;
+        Drawable iconLabel = null;
+        int textId = mSearchable.getSearchButtonText(); 
+        if (textId != 0) {
+            textLabel = mActivityContext.getResources().getString(textId);  
+        } else {
+            iconLabel = getContext().getResources().
+                    getDrawable(com.android.internal.R.drawable.ic_btn_search);
         }
-        String goText = mActivityContext.getResources().getString(textId);
-        mGoButton.setText(goText);
+        mGoButton.setText(textLabel);  
+        mGoButton.setCompoundDrawablesWithIntrinsicBounds(iconLabel, null, null, null);
     }
     
     /**
@@ -561,8 +538,8 @@ public class SearchDialog extends Dialog {
             }
             updateWidgetState();
             // Only do suggestions if actually typed by user
-            if (!mNonUserQuery) {
-                updateSuggestions();
+            if (mSuggestionsAdapter.getNonUserQuery()) {
+                mPreviousSuggestionQuery = s.toString();
                 mUserQuery = mSearchTextField.getText().toString();
                 mUserQuerySelStart = mSearchTextField.getSelectionStart();
                 mUserQuerySelEnd = mSearchTextField.getSelectionEnd();
@@ -584,156 +561,6 @@ public class SearchDialog extends Dialog {
         mGoButton.setFocusable(enabled);
     }
 
-    /**
-     * In response to a change in the query text, update the suggestions
-     */
-    private void updateSuggestions() {
-        final String queryText = mSearchTextField.getText().toString();
-        mPreviousSuggestionQuery = queryText;
-        if (DBG_LOG_TIMING == 1) {
-            dbgLogTiming("updateSuggestions()");
-        }
-        
-        mSuggestionsRunner.requestSuggestions(mSearchable, queryText);
-        
-        // For debugging purposes, put in a lot of strings (really fast typist)
-        if (DBG_JAM_THREADING > 0) {
-            for (int ii = 1; ii < DBG_JAM_THREADING; ++ii) {
-                final String jamQuery = queryText + ii;
-                mSuggestionsRunner.requestSuggestions(mSearchable, jamQuery);
-            }
-            // one final (correct) string for cleanup
-            mSuggestionsRunner.requestSuggestions(mSearchable, queryText);
-        }
-    }
-
-    /**
-     * This class defines a queued message structure for processing user keystrokes, and a
-     * thread that allows the suggestions to be gathered out-of-band, and allows us to skip
-     * over multiple keystrokes if the typist is faster than the content provider.
-     */
-    private class SuggestionsRunner implements Runnable {
-
-        private class Request {
-            final SearchableInfo mSearchableInfo;     // query will set these
-            final String mQueryText;
-            final boolean cancelRequest;              // cancellation will set this
-            
-            // simple constructors
-            Request(final SearchableInfo searchable, final String queryText) {
-                mSearchableInfo = searchable;
-                mQueryText = queryText;
-                cancelRequest = false;
-            }
-            
-            Request() {
-                mSearchableInfo = null;
-                mQueryText = null;
-                cancelRequest = true;
-            }
-        }
-        
-        private final LinkedBlockingQueue<Request> mSuggestionsQueue = 
-                                                            new LinkedBlockingQueue<Request>();
-
-        /**
-         * Queue up a suggestions request (non-blocking - can safely call from UI thread)
-         */
-        public void requestSuggestions(final SearchableInfo searchable, final String queryText) {
-            Request request = new Request(searchable, queryText);
-            try {
-                mSuggestionsQueue.put(request);
-            } catch (InterruptedException e) {
-                // discard the request.
-            }
-        }
-        
-        /**
-         * Cancel blocking suggestions, discard any results, and shut down the thread.
-         * (non-blocking - can safely call from UI thread)
-         */
-        private void cancelSuggestions() {
-            Request request = new Request();
-            try {
-                mSuggestionsQueue.put(request);
-            } catch (InterruptedException e) {
-                // discard the request.
-                // TODO can we do better here?
-            }
-        }
-        
-        /**
-         * This runnable implements the logic for decoupling keystrokes from suggestions.  
-         * The logic isn't quite obvious here, so I'll try to describe it.
-         * 
-         * Normally we simply sleep waiting for a keystroke.  When a keystroke arrives,
-         * we immediately dispatch a request to gather suggestions.  
-         * 
-         * But this can take a while, so by the time it comes back, more keystrokes may have 
-         * arrived.  If anything happened while we were gathering the suggestion, we discard its 
-         * results, and then use the most recent keystroke to start the next suggestions request.
-         * 
-         * Any request containing cancelRequest == true will cause the thread to immediately
-         * terminate.
-         */
-        public void run() {            
-            // outer blocking loop simply waits for a suggestion
-            while (true) {
-                try {
-                    Request request = mSuggestionsQueue.take();
-                    if (request.cancelRequest) {
-                        return;
-                    }
-                    
-                    // since we were idle, what we're really interested is the final element
-                    // in the queue.  So keep pulling until we get the last element.
-                    // TODO Could we just do some sort of takeHead() here?
-                    while (! mSuggestionsQueue.isEmpty()) {
-                        request = mSuggestionsQueue.take();
-                        if (request.cancelRequest) {
-                            return;
-                        }
-                    }
-                    final Request useRequest = request;
-                    
-                    // now process the final element (unless it's a cancel - that can be discarded)
-                    
-                    if (useRequest.mSearchableInfo != null) {
-                        
-                        // go get the cursor.  this is what takes time.
-                        final Cursor c = getSuggestions(useRequest.mSearchableInfo, 
-                                useRequest.mQueryText);
-                        
-                        // We now have a suggestions result.  But, if any new requests have arrived,
-                        // we're going to discard them - we don't want to waste time displaying 
-                        // out-of-date results, we just want to get going on the next set.
-                        // Note, null cursor is a valid result (no suggestions).  This logic also
-                        // supports the need to discard the results *and* stop the thread if a kill 
-                        // request arrives during a query.
-                        if (mSuggestionsQueue.size() > 0) {
-                            if (c != null) {
-                                c.close();
-                            }
-                        } else {
-                            mHandler.post(new Runnable() {
-                                public void run() {
-                                    updateSuggestionsWithCursor(c, useRequest.mSearchableInfo);
-                                } 
-                            });
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    // loop back for more
-                }
-                // At this point the queue may contain zero-to-many new requests;  We simply 
-                // loop back to handle them (or, block until new requests arrive)
-            }
-        }
-    }
-        
-    /**
-     * Back in the UI thread, handle incoming cursors
-     */
     private final static String[] ONE_LINE_FROM =       {SearchManager.SUGGEST_COLUMN_TEXT_1 };
     private final static String[] ONE_LINE_ICONS_FROM = {SearchManager.SUGGEST_COLUMN_TEXT_1,
                                                          SearchManager.SUGGEST_COLUMN_ICON_1,
@@ -757,209 +584,6 @@ public class SearchDialog extends Dialog {
                                                     com.android.internal.R.id.icon2};
     
     /**
-     * A new cursor (with suggestions) is ready for use.  Update the UI.
-     */
-    void updateSuggestionsWithCursor(Cursor c, final SearchableInfo searchable) {
-        ListAdapter adapter = null;
-        
-        // first, check for various conditions that disqualify this cursor
-        if ((c == null) || (c.getCount() == 0)) {
-            // no cursor, or cursor with no data
-        } else if ((searchable != mSearchable) || !isShowing()) {
-            // race condition (suggestions arrived after conditions changed)
-        } else {
-            // check cursor before trying to create list views from it
-            int colId = c.getColumnIndex("_id");
-            int col1 = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1);
-            int col2 = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2);
-            int colIc1 = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_ICON_1);
-            int colIc2 = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_ICON_2);
-            
-            boolean minimal = (colId >= 0) && (col1 >= 0);
-            boolean hasIcons = (colIc1 >= 0) && (colIc2 >= 0);
-            boolean has2Lines = col2 >= 0;
-
-            if (minimal) {
-                int layout;
-                String[] from;
-                int[] to;
-                
-                if (hasIcons) {
-                    if (has2Lines) {
-                        layout = com.android.internal.R.layout.search_dropdown_item_icons_2line;
-                        from = TWO_LINE_ICONS_FROM;
-                        to = TWO_LINE_ICONS_TO;
-                    } else {
-                        layout = com.android.internal.R.layout.search_dropdown_item_icons_1line;
-                        from = ONE_LINE_ICONS_FROM;
-                        to = ONE_LINE_ICONS_TO;
-                    }
-                } else {
-                    if (has2Lines) {
-                        layout = com.android.internal.R.layout.search_dropdown_item_2line;
-                        from = TWO_LINE_FROM;
-                        to = TWO_LINE_TO;
-                    } else {
-                        layout = com.android.internal.R.layout.search_dropdown_item_1line;
-                        from = ONE_LINE_FROM;
-                        to = ONE_LINE_TO;
-                    }
-                }
-                try {
-                    if (DBG_LOG_TIMING == 1) {
-                        dbgLogTiming("updateSuggestions(3)");
-                    }
-                    adapter = new SuggestionsCursorAdapter(getContext(), layout, c, from, to, 
-                            mProviderContext);
-                    if (DBG_LOG_TIMING == 1) {
-                        dbgLogTiming("updateSuggestions(4)");
-                    }
-                } catch (RuntimeException e) {
-                    Log.e(LOG_TAG, "Exception while creating SuggestionsCursorAdapter", e);
-                }
-            }
-            
-            // Provide some help for developers instead of just silently discarding
-            if ((colIc1 >= 0) != (colIc2 >= 0)) {
-                Log.w(LOG_TAG, "Suggestion icon column(s) discarded, must be 0 or 2 columns.");
-            } else if (adapter == null) {
-                Log.w(LOG_TAG, "Suggestions cursor discarded due to missing required columns.");
-            }
-        }
-        
-        // if we have a cursor but we're not using it (e.g. disqualified), close it now
-        if ((c != null) && (adapter == null)) {
-            c.close();
-            c = null;
-        }
-        
-        // we only made an adapter if there were 1+ suggestions.  Now, based on the existence
-        // of the adapter, we'll also show/hide the list.
-        discardListCursor(mSuggestionsList);
-        if (adapter == null) {
-            showSuggestions(false, !mSkipNextAnimate);
-        } else {
-            layoutSuggestionsList();
-            showSuggestions(true, !mSkipNextAnimate);
-        }
-        mSkipNextAnimate = false;
-        if (DBG_LOG_TIMING == 1) {
-            dbgLogTiming("updateSuggestions(5)");
-        }
-        mSuggestionsList.setAdapter(adapter);
-        // now that we have an adapter, we can actually adjust the selection & scroll positions
-        if (mPresetSelection >= 0) {
-            boolean bTouchMode = mSuggestionsList.isInTouchMode();
-            mSuggestionsList.setSelection(mPresetSelection);
-            mPresetSelection = -1;
-        }
-        if (DBG_LOG_TIMING == 1) {
-            dbgLogTiming("updateSuggestions(6)");
-        }
-    }
-    
-    /**
-     * Utility for showing & hiding the suggestions list.  This is also responsible for triggering
-     * animation, if any, at the right time.
-     * 
-     * @param visible If true, show the suggestions, if false, hide them.
-     * @param animate If true, use animation.  If false, "just do it."
-     */
-    private void showSuggestions(boolean visible, boolean animate) {
-        if (visible) {
-            if (animate && (mSuggestionsList.getVisibility() != View.VISIBLE)) {
-                mSuggestionsList.startAnimation(mSuggestionsEntry);
-            }
-            mSuggestionsList.setVisibility(View.VISIBLE);
-        } else {
-            if (animate && (mSuggestionsList.getVisibility() != View.GONE)) {
-                mSuggestionsList.startAnimation(mSuggestionsExit);
-            }
-            mSuggestionsList.setVisibility(View.GONE);
-        }
-    }
-    
-    /**
-     * This helper class supports the suggestions list by allowing 3rd party (e.g. app) resources
-     * to be used in suggestions
-     */
-    private static class SuggestionsCursorAdapter extends SimpleCursorAdapter {
-        
-        private Resources mProviderResources;
-        
-        public SuggestionsCursorAdapter(Context context, int layout, Cursor c,
-                String[] from, int[] to, Context providerContext) {
-            super(context, layout, c, from, to);
-            mProviderResources = providerContext.getResources();
-        }
-        
-        /**
-         * Overriding this allows us to affect the way that an icon is loaded.  Specifically,
-         * we can be more controlling about the resource path (and allow icons to come from other
-         * packages).
-         *
-         * @param v ImageView to receive an image
-         * @param value the value retrieved from the cursor
-         */
-        @Override
-        public void setViewImage(ImageView v, String value) {
-            int resID;
-            Drawable img = null;
-
-            try {
-                resID = Integer.parseInt(value);
-                if (resID != 0) {
-                    img = mProviderResources.getDrawable(resID);
-                }
-            } catch (NumberFormatException nfe) {
-                // img = null;
-            } catch (NotFoundException e2) {
-                // img = null;
-            }
-            
-            // finally, set the image to whatever we've gotten
-            v.setImageDrawable(img);
-        }
-        
-        /**
-         * This method is overridden purely to provide a bit of protection against
-         * flaky content providers.
-         */
-        @Override 
-        /**
-         * @see android.widget.ListAdapter#getView(int, View, ViewGroup)
-         */
-        public View getView(int position, View convertView, ViewGroup parent) {
-            try {
-                return super.getView(position, convertView, parent);
-            } catch (RuntimeException e) {
-                Log.w(LOG_TAG, "Search Suggestions cursor returned exception " + e.toString());
-                // what can I return here?
-                View v = newView(mContext, mCursor, parent);
-                if (v != null) {
-                    TextView tv = (TextView) v.findViewById(com.android.internal.R.id.text1);
-                    tv.setText(e.toString());
-                }
-                return v;
-            }
-        }
-    }
-    
-    /**
-     * Cleanly close the cursor being used by a ListView.  Do this before replacing the adapter
-     * or before closing the ListView.
-     */
-    private void discardListCursor(ListView list) {
-        CursorAdapter ca = getSuggestionsAdapter(list);
-        if (ca != null) {
-            Cursor c = ca.getCursor();
-            if (c != null) {
-                ca.changeCursor(null);
-            }
-        }
-    }
-    
-    /**
      * Safely retrieve the suggestions cursor adapter from the ListView
      * 
      * @param adapterView The ListView containing our adapter
@@ -979,61 +603,10 @@ public class SearchDialog extends Dialog {
     }
 
     /**
-     * Get the query cursor for the search suggestions.
-     * 
-     * @param query The search text entered (so far)
-     * @return Returns a cursor with suggestions, or null if no suggestions 
+     * React to typing in the GO search button by refocusing to EditText. 
+     * Continue typing the query.
      */
-    private Cursor getSuggestions(final SearchableInfo searchable, final String query) {
-        Cursor cursor = null;
-        if (searchable.getSuggestAuthority() != null) {
-            try {
-                StringBuilder uriStr = new StringBuilder("content://");
-                uriStr.append(searchable.getSuggestAuthority());
-
-                // if content path provided, insert it now
-                final String contentPath = searchable.getSuggestPath();
-                if (contentPath != null) {
-                    uriStr.append('/');
-                    uriStr.append(contentPath);
-                }
-
-                // append standard suggestion query path 
-                uriStr.append('/' + SearchManager.SUGGEST_URI_PATH_QUERY);
-
-                // inject query, either as selection args or inline
-                String[] selArgs = null;
-                if (searchable.getSuggestSelection() != null) {    // if selection provided, use it
-                    selArgs = new String[] {query};
-                } else {
-                    uriStr.append('/');                             // no sel, use REST pattern
-                    uriStr.append(Uri.encode(query));
-                }
-
-                // finally, make the query
-                if (DBG_LOG_TIMING == 1) {
-                    dbgLogTiming("getSuggestions(1)");
-                }
-                cursor = getContext().getContentResolver().query(
-                                                        Uri.parse(uriStr.toString()), null, 
-                                                        searchable.getSuggestSelection(), selArgs,
-                                                        null);
-                if (DBG_LOG_TIMING == 1) {
-                    dbgLogTiming("getSuggestions(2)");
-                }
-            } catch (RuntimeException e) {
-                Log.w(LOG_TAG, "Search Suggestions query returned exception " + e.toString());
-                cursor = null;
-            }
-        }
-        
-        return cursor;
-    }
-
-    /**
-     * React to typing in the GO button by refocusing to EditText.  Continue typing the query.
-     */
-    View.OnKeyListener mGoButtonKeyListener = new View.OnKeyListener() {
+    View.OnKeyListener mButtonsKeyListener = new View.OnKeyListener() {
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             // also guard against possible race conditions (late arrival after dismiss)
             if (mSearchable != null) {
@@ -1054,7 +627,7 @@ public class SearchDialog extends Dialog {
             }
         }
     };
-
+    
     /**
      * React to the user typing "enter" or other hardwired keys while typing in the search box.
      * This handles these special keys while the edit box has focus.
@@ -1095,7 +668,10 @@ public class SearchDialog extends Dialog {
      * React to the user typing while the suggestions are focused.  First, check for action
      * keys.  If not handled, try refocusing regular characters into the EditText.  In this case,
      * replace the query text (start typing fresh text).
+     * 
+     * TODO:  Move this code into mTextKeyListener, testing for a list entry being hilited
      */
+    /*
     View.OnKeyListener mSuggestionsKeyListener = new View.OnKeyListener() {
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             boolean handled = false;
@@ -1109,6 +685,7 @@ public class SearchDialog extends Dialog {
             return handled;
         }
     };
+    */
     
     /**
      * Per UI design, we're going to "steer" any typed keystrokes back into the EditText
@@ -1141,6 +718,9 @@ public class SearchDialog extends Dialog {
     /**
      * Update query text based on transitions in and out of suggestions list.
      */
+    /*
+     * TODO - figure out if this logic is required for the autocomplete text view version
+
     OnFocusChangeListener mSuggestFocusListener = new OnFocusChangeListener() {
         public void onFocusChange(View v, boolean hasFocus) {
             // also guard against possible race conditions (late arrival after dismiss)
@@ -1171,23 +751,8 @@ public class SearchDialog extends Dialog {
 
         }
     };
+    */
     
-    /**
-     * Update query text based on movement of selection in/out of suggestion list
-     */
-    OnItemSelectedListener mSuggestSelectedListener = new OnItemSelectedListener() {
-        public void onItemSelected(AdapterView parent, View view, int position, long id) {
-            // Update query text while user navigates through suggestions list
-            // also guard against possible race conditions (late arrival after dismiss)
-            if (mSearchable != null && position >= 0 && mSuggestionsList.isFocused()) {
-                jamSuggestionQuery(true, parent, position);
-            }
-        }
-
-        // No action needed on this callback
-        public void onNothingSelected(AdapterView parent) { }        
-    };
-
     /**
      * This is the listener for the ACTION_CLOSE_SYSTEM_DIALOGS intent.  It's an indication that
      * we should close ourselves immediately, in order to allow a higher-priority UI to take over
@@ -1225,20 +790,6 @@ public class SearchDialog extends Dialog {
         }
     };
     
-    /**
-     * Listener for layout changes in the main layout.  I use this to dynamically clean up 
-     * the layout of the dropdown and make it "pixel perfect."
-     */
-    private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener 
-        = new ViewTreeObserver.OnGlobalLayoutListener() {
-        
-        // It's very important that layoutSuggestionsList() does not reset
-        // the values more than once, or this becomes an infinite loop.
-        public void onGlobalLayout() {
-            layoutSuggestionsList();
-        }
-    };
-
     /**
      * Various ways to launch searches
      */
@@ -1334,7 +885,7 @@ public class SearchDialog extends Dialog {
      * @param jamQuery True means to set the query, false means to reset it to the user's choice
      */
     private void jamSuggestionQuery(boolean jamQuery, AdapterView<?> parent, int position) {
-        mNonUserQuery = true;       // disables any suggestions processing
+        mSuggestionsAdapter.setNonUserQuery(true);       // disables any suggestions processing
         if (jamQuery) {
             CursorAdapter ca = getSuggestionsAdapter(parent);
             Cursor c = ca.getCursor();
@@ -1357,7 +908,10 @@ public class SearchDialog extends Dialog {
                 }
                 if (jamText != null) {
                     mSearchTextField.setText(jamText);
-                    mSearchTextField.selectAll();
+                    /* mSearchTextField.selectAll(); */ // this didn't work anyway in the old UI
+                    // TODO this is only needed in the model where we have a selection in the ACTV
+                    // and in the dropdown at the same time.
+                    mSearchTextField.setSelection(jamText.length());
                 }
             }
         } else {
@@ -1373,7 +927,10 @@ public class SearchDialog extends Dialog {
                 mSearchTextField.selectAll();
             }
         }
-        mNonUserQuery = false;
+        // TODO because the new query is (not) processed in another thread, we can't just
+        // take away this flag (yet).  The better solution here is going to require a new API
+        // in AutoCompleteTextView which allows us to change the text w/o changing the suggestions.
+//      mSuggestionsAdapter.setNonUserQuery(false);
     }
 
     /**
@@ -1419,18 +976,6 @@ public class SearchDialog extends Dialog {
     }
 
     /**
-     * Handler for clicks in the suggestions list
-     */
-    private OnItemClickListener mSuggestionsListItemClickListener = new OnItemClickListener() {
-        public void onItemClick(AdapterView parent, View v, int position, long id) {
-            // this guard protects against possible race conditions (late arrival of click)
-            if (mSearchable != null) {
-                launchSuggestion(parent, position);
-            }
-        }
-    };
-    
-    /**
      * Shared code for launching a query from a suggestion.
      * 
      * @param av The AdapterView (really a ListView) containing the suggestions
@@ -1440,6 +985,16 @@ public class SearchDialog extends Dialog {
      */
     private boolean launchSuggestion(AdapterView<?> av, int position) {
         CursorAdapter ca = getSuggestionsAdapter(av);
+        return launchSuggestion(ca, position);
+    }
+    
+    /**
+     * Shared code for launching a query from a suggestion.
+     * @param ca The cursor adapter containing the suggestions
+     * @param position The suggestion we'll be launching from
+     * @return true if a successful launch, false if could not (e.g. bad position)
+     */
+    private boolean launchSuggestion(CursorAdapter ca, int position) {
         Cursor c = ca.getCursor();
         if ((c != null) && c.moveToPosition(position)) {
             setupSuggestionIntent(c, mSearchable);
@@ -1455,33 +1010,6 @@ public class SearchDialog extends Dialog {
             return true;
         }
         return false;
-    }
-    
-    /**
-     * Manually adjust suggestions list into its perfectly-tweaked position.
-     * 
-     * NOTE:  This MUST not adjust the parameters if they are already set correctly,
-     * or you create an infinite loop via the ViewTreeObserver.OnGlobalLayoutListener callback. 
-     */
-    private void layoutSuggestionsList() {
-        final int FUDGE_SUGG_X = 1;
-        final int FUDGE_SUGG_WIDTH = 2;
-        
-        int[] itemLoc = new int[2];
-        mSearchTextField.getLocationOnScreen(itemLoc);
-        int x,width;
-        x = itemLoc[0] + FUDGE_SUGG_X;
-        width = mSearchTextField.getMeasuredWidth() + FUDGE_SUGG_WIDTH;
-        
-        // now set params and relayout
-        ViewGroup.MarginLayoutParams lp;
-        lp = (ViewGroup.MarginLayoutParams) mSuggestionsList.getLayoutParams();
-        boolean changing = (lp.width != width) || (lp.leftMargin != x);
-        if (changing) {
-            lp.leftMargin = x;
-            lp.width = width;
-            mSuggestionsList.setLayoutParams(lp);
-        }
     }
     
     /**
@@ -1586,6 +1114,301 @@ public class SearchDialog extends Dialog {
         }
         return result;
     }
+        
+    /**
+     * Support for AutoCompleteTextView-based suggestions
+     */
+    /**
+     * This class provides the filtering-based interface to suggestions providers.
+     * It is hardwired in a couple of places to support GoogleSearch - for example, it supports
+     * two-line suggestions, but it does not support icons.
+     */
+    private static class SuggestionsAdapter extends SimpleCursorAdapter {
+        private final String TAG = "SuggestionsAdapter";
+        
+        SearchableInfo mSearchable;
+        private Resources mProviderResources;
+        
+        // These private variables are shared by the filter thread and must be protected
+        private WeakReference<Cursor> mRecentCursor = new WeakReference<Cursor>(null);
+        private boolean mNonUserQuery = false;
+
+        public SuggestionsAdapter(Context context, SearchableInfo searchable) {
+            super(context, -1, null, null, null);
+            mSearchable = searchable;
+            
+            // set up provider resources (gives us icons, etc.)
+            Context activityContext = mSearchable.getActivityContext(mContext);
+            Context providerContext = mSearchable.getProviderContext(mContext, activityContext);
+            mProviderResources = providerContext.getResources();
+        }
+        
+        /**
+         * Set this field (temporarily!) to disable suggestions updating.  This allows us
+         * to change the string in the text view without changing the suggestions list.
+         */
+        public void setNonUserQuery(boolean nonUserQuery) {
+            synchronized (this) {
+                mNonUserQuery = nonUserQuery;
+            }
+        }
+        
+        public boolean getNonUserQuery() {
+            synchronized (this) {
+                return mNonUserQuery;
+            }
+        }
+
+        /**
+         * Use the search suggestions provider to obtain a live cursor.  This will be called
+         * in a worker thread, so it's OK if the query is slow (e.g. round trip for suggestions).
+         * The results will be processed in the UI thread and changeCursor() will be called.
+         * 
+         * In order to provide the Search Mgr functionality of seeing your query change as you
+         * scroll through the list, we have to be able to jam new text into the string without
+         * retriggering the suggestions.  We do that here via the "nonUserQuery" flag.  In that
+         * case we simply return the existing cursor.
+         * 
+         * TODO: Dianne suggests that this should simply be promoted into an AutoCompleteTextView
+         * behavior (perhaps optionally).
+         * 
+         * TODO: The "nonuserquery" logic has a race condition because it happens in another thread.
+         * This also needs to be fixed.
+         */
+        @Override
+        public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
+            String query = (constraint == null) ? "" : constraint.toString();
+            Cursor c = null;
+            synchronized (this) {
+                if (mNonUserQuery) {
+                    c = mRecentCursor.get();
+                    mNonUserQuery = false;
+                }
+            }
+            if (c == null) {
+                c = getSuggestions(mSearchable, query);
+                synchronized (this) {
+                    mRecentCursor = new WeakReference<Cursor>(c);
+                }
+            }
+            return c;
+        }
+        
+        /**
+         * Overriding changeCursor() allows us to change not only the cursor, but by sampling
+         * the cursor's columns, the actual display characteristics of the list.
+         */
+        @Override
+        public void changeCursor(Cursor c) {
+            
+            // first, check for various conditions that disqualify this cursor
+            if ((c == null) || (c.getCount() == 0)) {
+                // no cursor, or cursor with no data
+                changeCursorAndColumns(null, null, null);
+                if (c != null) {
+                    c.close();
+                }
+                return;
+            }
+
+            // check cursor before trying to create list views from it
+            int colId = c.getColumnIndex("_id");
+            int col1 = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1);
+            int col2 = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_2);
+            int colIc1 = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_ICON_1);
+            int colIc2 = c.getColumnIndex(SearchManager.SUGGEST_COLUMN_ICON_2);
+
+            boolean minimal = (colId >= 0) && (col1 >= 0);
+            boolean hasIcons = (colIc1 >= 0) && (colIc2 >= 0);
+            boolean has2Lines = col2 >= 0;
+
+            if (minimal) {
+                int layout;
+                String[] from;
+                int[] to;
+
+                if (hasIcons) {
+                    if (has2Lines) {
+                        layout = com.android.internal.R.layout.search_dropdown_item_icons_2line;
+                        from = TWO_LINE_ICONS_FROM;
+                        to = TWO_LINE_ICONS_TO;
+                    } else {
+                        layout = com.android.internal.R.layout.search_dropdown_item_icons_1line;
+                        from = ONE_LINE_ICONS_FROM;
+                        to = ONE_LINE_ICONS_TO;
+                    }
+                } else {
+                    if (has2Lines) {
+                        layout = com.android.internal.R.layout.search_dropdown_item_2line;
+                        from = TWO_LINE_FROM;
+                        to = TWO_LINE_TO;
+                    } else {
+                        layout = com.android.internal.R.layout.search_dropdown_item_1line;
+                        from = ONE_LINE_FROM;
+                        to = ONE_LINE_TO;
+                    }
+                }
+                // Now actually set up the cursor, columns, and the list view
+                changeCursorAndColumns(c, from, to);
+                setViewResource(layout);              
+            } else {
+                // Provide some help for developers instead of just silently discarding
+                Log.w(LOG_TAG, "Suggestions cursor discarded due to missing required columns.");
+                changeCursorAndColumns(null, null, null);
+                c.close();
+            }
+            if ((colIc1 >= 0) != (colIc2 >= 0)) {
+                Log.w(LOG_TAG, "Suggestion icon column(s) discarded, must be 0 or 2 columns.");
+            }    
+        }
+        
+        /**
+         * Overriding this allows us to write the selected query back into the box.
+         * NOTE:  This is a vastly simplified version of SearchDialog.jamQuery() and does
+         * not universally support the search API.  But it is sufficient for Google Search.
+         */
+        @Override
+        public CharSequence convertToString(Cursor cursor) {
+            CharSequence result = null;
+            if (cursor != null) {
+                int column = cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_QUERY);
+                if (column >= 0) {
+                    final String query = cursor.getString(column);
+                    if (query != null) {
+                        result = query;
+                    }
+                }
+            }
+            return result;
+        }
+
+        /**
+         * Get the query cursor for the search suggestions.
+         * 
+         * TODO this is functionally identical to the version in SearchDialog.java.  Perhaps it 
+         * could be hoisted into SearchableInfo or some other shared spot.
+         * 
+         * @param query The search text entered (so far)
+         * @return Returns a cursor with suggestions, or null if no suggestions 
+         */
+        private Cursor getSuggestions(final SearchableInfo searchable, final String query) {
+            Cursor cursor = null;
+            if (searchable.getSuggestAuthority() != null) {
+                try {
+                    StringBuilder uriStr = new StringBuilder("content://");
+                    uriStr.append(searchable.getSuggestAuthority());
+
+                    // if content path provided, insert it now
+                    final String contentPath = searchable.getSuggestPath();
+                    if (contentPath != null) {
+                        uriStr.append('/');
+                        uriStr.append(contentPath);
+                    }
+
+                    // append standard suggestion query path 
+                    uriStr.append('/' + SearchManager.SUGGEST_URI_PATH_QUERY);
+
+                    // inject query, either as selection args or inline
+                    String[] selArgs = null;
+                    if (searchable.getSuggestSelection() != null) {    // use selection if provided
+                        selArgs = new String[] {query};
+                    } else {
+                        uriStr.append('/');                             // no sel, use REST pattern
+                        uriStr.append(Uri.encode(query));
+                    }
+
+                    // finally, make the query
+                    cursor = mContext.getContentResolver().query(
+                                                        Uri.parse(uriStr.toString()), null, 
+                                                        searchable.getSuggestSelection(), selArgs,
+                                                        null);
+                } catch (RuntimeException e) {
+                    Log.w(TAG, "Search Suggestions query returned exception " + e.toString());
+                    cursor = null;
+                }
+            }
+            
+            return cursor;
+        }
+
+        /**
+         * Overriding this allows us to affect the way that an icon is loaded.  Specifically,
+         * we can be more controlling about the resource path (and allow icons to come from other
+         * packages).
+         * 
+         * TODO: This is 100% identical to the version in SearchDialog.java
+         *
+         * @param v ImageView to receive an image
+         * @param value the value retrieved from the cursor
+         */
+        @Override
+        public void setViewImage(ImageView v, String value) {
+            int resID;
+            Drawable img = null;
+
+            try {
+                resID = Integer.parseInt(value);
+                if (resID != 0) {
+                    img = mProviderResources.getDrawable(resID);
+                }
+            } catch (NumberFormatException nfe) {
+                // img = null;
+            } catch (NotFoundException e2) {
+                // img = null;
+            }
+            
+            // finally, set the image to whatever we've gotten
+            v.setImageDrawable(img);
+        }
+        
+        /**
+         * This method is overridden purely to provide a bit of protection against
+         * flaky content providers.
+         * 
+         * TODO: This is 100% identical to the version in SearchDialog.java
+         * 
+         * @see android.widget.ListAdapter#getView(int, View, ViewGroup)
+         */
+        @Override 
+        public View getView(int position, View convertView, ViewGroup parent) {
+            try {
+                return super.getView(position, convertView, parent);
+            } catch (RuntimeException e) {
+                Log.w(TAG, "Search Suggestions cursor returned exception " + e.toString());
+                // what can I return here?
+                View v = newView(mContext, mCursor, parent);
+                if (v != null) {
+                    TextView tv = (TextView) v.findViewById(com.android.internal.R.id.text1);
+                    tv.setText(e.toString());
+                }
+                return v;
+            }
+        }
+
+    }
+    
+    /**
+     * Implements OnItemClickListener
+     */
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Log.d(LOG_TAG, "onItemClick() position " + position);
+        launchSuggestion(mSuggestionsAdapter, position);
+    }
+    
+    /** 
+     * Implements OnItemSelectedListener
+     */
+     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//         Log.d(LOG_TAG, "onItemSelected() position " + position);
+         jamSuggestionQuery(true, parent, position);
+     }
+
+     /** 
+      * Implements OnItemSelectedListener
+      */
+     public void onNothingSelected(AdapterView<?> parent) {
+//         Log.d(LOG_TAG, "onNothingSelected()");
+     }
 
     /**
      * Debugging Support

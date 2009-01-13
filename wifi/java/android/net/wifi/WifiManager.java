@@ -24,8 +24,6 @@ import android.os.IBinder;
 import android.os.Handler;
 import android.os.RemoteException;
 
-import com.android.internal.os.RuntimeInit;
-
 import java.util.List;
 
 /**
@@ -227,6 +225,27 @@ public class WifiManager {
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_PICK_WIFI_NETWORK = "android.net.wifi.PICK_WIFI_NETWORK";
 
+    /**
+     * In this mode, Wi-Fi will be kept active,
+     * and will behave normally, i.e., it will attempt to automatically
+     * establish a connection to a remembered access point that is
+     * within range, and will do periodic scans if there are remembered
+     * access points but none are in range.
+     * @hide pending API council review
+     */
+    public static final int WIFI_MODE_FULL = 1;
+    /**
+     * In this mode, Wi-Fi will be kept active,
+     * but the only operation that will be supported is initiation of
+     * scans, and the subsequent reporting of scan results. No attempts
+     * will be made to automatically connect to remembered access points,
+     * nor will periodic scans be automatically performed looking for
+     * remembered access points. Scans must be explicitly requested by
+     * an application in this mode.
+     * @hide pending API council review
+     */
+    public static final int WIFI_MODE_SCAN_ONLY = 2;
+
     /** Anything worse than or equal to this will show 0 bars. */
     private static final int MIN_RSSI = -100;
     
@@ -236,10 +255,6 @@ public class WifiManager {
     IWifiManager mService;
     Handler mHandler;
 
-    /** Don't allow use of default constructor */
-    private WifiManager() {
-    }
-
     /**
      * Create a new WifiManager instance.
      * Applications will almost always want to use
@@ -247,7 +262,7 @@ public class WifiManager {
      * the standard {@link android.content.Context#WIFI_SERVICE Context.WIFI_SERVICE}.
      * @param service the Binder interface
      * @param handler target for messages
-     * {@hide} - hide this because it takes in a parameter of type IWifiManager, which
+     * @hide - hide this because it takes in a parameter of type IWifiManager, which
      * is a system private class.
      */
     public WifiManager(IWifiManager service, Handler handler) {
@@ -504,6 +519,56 @@ public class WifiManager {
     }
 
     /**
+     * Return the number of frequency channels that are allowed
+     * to be used in the current regulatory domain.
+     * @return the number of allowed channels, or {@code -1} if an error occurs
+     *
+     * @hide pending API council
+     */
+    public int getNumAllowedChannels() {
+        try {
+            return mService.getNumAllowedChannels();
+        } catch (RemoteException e) {
+            return -1;
+        }
+    }
+
+    /**
+     * Set the number of frequency channels that are allowed to be used
+     * in the current regulatory domain. This method should be used only
+     * if the correct number of channels cannot be determined automatically
+     * for some reason.
+     * @param numChannels the number of allowed channels. Must be greater than 0
+     * and less than or equal to 16.
+     * @return {@code true} if the operation succeeds, {@code false} otherwise, e.g.,
+     * {@code numChannels} is out of range.
+     *
+     * @hide pending API council
+     */
+    public boolean setNumAllowedChannels(int numChannels) {
+        try {
+            return mService.setNumAllowedChannels(numChannels);
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Return the list of valid values for the number of allowed radio channels
+     * for various regulatory domains.
+     * @return the list of channel counts, or {@code null} if the operation fails
+     *
+     * @hide pending API council review
+     */
+    public int[] getValidChannelCounts() {
+        try {
+            return mService.getValidChannelCounts();
+        } catch (RemoteException e) {
+            return null;
+        }
+   }
+
+    /**
      * Return the DHCP-assigned addresses from the last successful DHCP request,
      * if any.
      * @return the DHCP information
@@ -608,13 +673,15 @@ public class WifiManager {
      */
     public class WifiLock {
         private String mTag;
-        private IBinder mBinder;
+        private final IBinder mBinder;
         private int mRefCount;
+        int mLockType;
         private boolean mRefCounted;
         private boolean mHeld;
 
-        private WifiLock(String tag) {
+        private WifiLock(int lockType, String tag) {
             mTag = tag;
+            mLockType = lockType;
             mBinder = new Binder();
             mRefCount = 0;
             mRefCounted = true;
@@ -624,20 +691,20 @@ public class WifiManager {
         /**
          * Locks the Wi-Fi radio on until {@link #release} is called.
          *
-         * If this WifiLock is reference-counted, each call to {@link #acquire} will increment the
+         * If this WifiLock is reference-counted, each call to {@code acquire} will increment the
          * reference count, and the radio will remain locked as long as the reference count is 
          * above zero.
          *
-         * If this WifiLock is not reference-counted, the first call to {@link #acquire} will lock
+         * If this WifiLock is not reference-counted, the first call to {@code acquire} will lock
          * the radio, but subsequent calls will be ignored.  Only one call to {@link #release}
-         * will be required, regardless of the number of times that {@link #acquire} is called.
+         * will be required, regardless of the number of times that {@code acquire} is called.
          */
         public void acquire() {
             synchronized (mBinder) {
                 if (mRefCounted ? (++mRefCount > 0) : (!mHeld)) {
                     try {
-                        mService.acquireWifiLock(mBinder, mTag);
-                    } catch (RemoteException e) {
+                        mService.acquireWifiLock(mBinder, mLockType, mTag);
+                    } catch (RemoteException ignore) {
                     }
                     mHeld = true;
                 }
@@ -647,12 +714,12 @@ public class WifiManager {
         /**
          * Unlocks the Wi-Fi radio, allowing it to turn off when the device is idle.
          *
-         * If this WifiLock is reference-counted, each call to {@link #release} will decrement the
+         * If this WifiLock is reference-counted, each call to {@code release} will decrement the
          * reference count, and the radio will be unlocked only when the reference count reaches
-         * zero.  If the reference count goes below zero (that is, if {@link #release} is called 
+         * zero.  If the reference count goes below zero (that is, if {@code release} is called
          * a greater number of times than {@link #acquire}), an exception is thrown.
          *
-         * If this WifiLock is not reference-counted, the first call to {@link #release} (after
+         * If this WifiLock is not reference-counted, the first call to {@code release} (after
          * the radio was locked using {@link #acquire}) will unlock the radio, and subsequent
          * calls will be ignored.
          */
@@ -661,7 +728,7 @@ public class WifiManager {
                 if (mRefCounted ? (--mRefCount == 0) : (mHeld)) {
                     try {
                         mService.releaseWifiLock(mBinder);
-                    } catch (RemoteException e) {
+                    } catch (RemoteException ignore) {
                     }
                     mHeld = false;
                 }
@@ -713,14 +780,13 @@ public class WifiManager {
 
         @Override
         protected void finalize() throws Throwable {
+            super.finalize();
             synchronized (mBinder) {
                 if (mHeld) {
                     try {
                         mService.releaseWifiLock(mBinder);
-                    } catch (RemoteException e) {
+                    } catch (RemoteException ignore) {
                     }
-                    RuntimeInit.crash("WifiLock", new Exception(
-                            "WifiLock finalized while still held: " + mTag));
                 }
             }
         }
@@ -729,6 +795,8 @@ public class WifiManager {
     /**
      * Creates a new WifiLock.
      *
+     * @param lockType the type of lock to create. See {@link #WIFI_MODE_FULL} and
+     * {@link #WIFI_MODE_SCAN_ONLY} for descriptions of the types of Wi-Fi locks.
      * @param tag a tag for the WifiLock to identify it in debugging messages.  This string is 
      *            never shown to the user under normal conditions, but should be descriptive 
      *            enough to identify your application and the specific WifiLock within it, if it
@@ -737,9 +805,26 @@ public class WifiManager {
      * @return a new, unacquired WifiLock with the given tag.
      *
      * @see WifiLock
+     *
+     * @hide pending API council review
      */
-    public WifiLock createWifiLock(String tag) {
-        return new WifiLock(tag);
+    public WifiLock createWifiLock(int lockType, String tag) {
+        return new WifiLock(lockType, tag);
     }
     
+    /**
+     * Creates a new WifiLock.
+     *
+     * @param tag a tag for the WifiLock to identify it in debugging messages.  This string is
+     *            never shown to the user under normal conditions, but should be descriptive
+     *            enough to identify your application and the specific WifiLock within it, if it
+     *            holds multiple WifiLocks.
+     *
+     * @return a new, unacquired WifiLock with the given tag.
+     *
+     * @see WifiLock
+     */
+    public WifiLock createWifiLock(String tag) {
+        return new WifiLock(WIFI_MODE_FULL, tag);
+    }
 }

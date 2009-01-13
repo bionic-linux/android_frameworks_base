@@ -30,7 +30,7 @@
 #include "DisplayHardware/DisplayHardware.h"
 
 
-// We don't honor the premultipliad alpha flags, which means that
+// We don't honor the premultiplied alpha flags, which means that
 // premultiplied surface may be composed using a non-premultiplied
 // equation. We do this because it may be a lot faster on some hardware
 // The correct value is HONOR_PREMULTIPLIED_ALPHA = 1
@@ -53,14 +53,15 @@ Vector<GLuint> LayerBase::deletedTextures;
 int32_t LayerBase::sIdentity = 0;
 
 LayerBase::LayerBase(SurfaceFlinger* flinger, DisplayID display)
-    : dpy(display), invalidate(false),
+    : dpy(display), contentDirty(false),
       mFlinger(flinger),
       mTransformed(false),
       mOrientation(0),
       mCanUseCopyBit(false),
       mTransactionFlags(0),
       mPremultipliedAlpha(true),
-      mIdentity(uint32_t(android_atomic_inc(&sIdentity)))
+      mIdentity(uint32_t(android_atomic_inc(&sIdentity))),
+      mInvalidate(0)
 {
     const DisplayHardware& hw(flinger->graphicPlane(0).displayHardware());
     mFlags = hw.getFlags();
@@ -205,7 +206,7 @@ uint32_t LayerBase::doTransaction(uint32_t flags)
     if (temp.sequence != front.sequence) {
         // invalidate and recompute the visible regions if needed
         flags |= eVisibleRegion;
-        this->invalidate = true;
+        this->contentDirty = true;
     }
     
     // Commit the transaction
@@ -256,7 +257,7 @@ void LayerBase::validateVisibility(const Transform& planeTransform)
 
     // see if we can/should use 2D h/w with the new configuration
     mCanUseCopyBit = false;
-    copybit_t* copybit = mFlinger->getBlitEngine();
+    copybit_device_t* copybit = mFlinger->getBlitEngine();
     if (copybit) { 
         const int step = copybit->get(copybit, COPYBIT_ROTATION_STEP_DEG);
         const int scaleBits = copybit->get(copybit, COPYBIT_SCALING_FRAC_BITS);
@@ -299,10 +300,20 @@ void LayerBase::lockPageFlip(bool& recomputeVisibleRegions)
 void LayerBase::unlockPageFlip(
         const Transform& planeTransform, Region& outDirtyRegion)
 {
+    if ((android_atomic_and(~1, &mInvalidate)&1) == 1) {
+        outDirtyRegion.orSelf(visibleRegionScreen);
+    }
 }
 
 void LayerBase::finishPageFlip()
 {
+}
+
+void LayerBase::invalidate()
+{
+    if ((android_atomic_or(1, &mInvalidate)&1) == 0) {
+        mFlinger->signalEvent();
+    }
 }
 
 void LayerBase::drawRegion(const Region& reg) const
@@ -413,7 +424,7 @@ void LayerBase::drawWithOpenGL(const Region& clip,
         // premultiplied alpha.
         
         // If the texture doesn't have an alpha channel we can
-        // use REPLACE and switch to non premultiplied-alpha
+        // use REPLACE and switch to non premultiplied alpha
         // blending (SRCA/ONE_MINUS_SRCA).
         
         GLenum env, src;
@@ -431,11 +442,11 @@ void LayerBase::drawWithOpenGL(const Region& clip,
         glTexEnvx(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, env);
     } else {
         glTexEnvx(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        glColor4x(0x10000, 0x10000, 0x10000, 0x10000);
         if (needsBlending()) {
             GLenum src = mPremultipliedAlpha ? GL_ONE : GL_SRC_ALPHA;
             glEnable(GL_BLEND);
             glBlendFunc(src, GL_ONE_MINUS_SRC_ALPHA);
-            glColor4x(0x10000, 0x10000, 0x10000, 0x10000);
         } else {
             glDisable(GL_BLEND);
         }
@@ -463,7 +474,7 @@ void LayerBase::drawWithOpenGL(const Region& clip,
             glMatrixMode(GL_TEXTURE);
             glLoadIdentity();
             if (!(mFlags & DisplayHardware::NPOT_EXTENSION)) {
-                // find the smalest power-of-two that will accomodate our surface
+                // find the smallest power-of-two that will accommodate our surface
                 GLuint tw = 1 << (31 - clz(t.width));
                 GLuint th = 1 << (31 - clz(t.height));
                 if (tw < t.width)  tw <<= 1;
@@ -556,7 +567,7 @@ void LayerBase::loadTexture(const Region& dirty,
     GLuint texture_w = tw;
     GLuint texture_h = th;
     if (!(flags & DisplayHardware::NPOT_EXTENSION)) {
-        // find the smalest power-of-two that will accomodate our surface
+        // find the smallest power-of-two that will accommodate our surface
         texture_w = 1 << (31 - clz(t.width));
         texture_h = 1 << (31 - clz(t.height));
         if (texture_w < t.width)  texture_w <<= 1;
@@ -582,6 +593,8 @@ void LayerBase::loadTexture(const Region& dirty,
             glTexImage2D(GL_DIRECT_TEXTURE_2D_QUALCOMM, 0,
                     GL_RGBA, tw, th, 0,
                     GL_RGBA, GL_UNSIGNED_BYTE, t.data);
+        } else if (t.format == GGL_PIXEL_FORMAT_BGRA_8888) {
+            // TODO: add GL_BGRA extension
         } else {
             // oops, we don't handle this format, try the regular path
             goto regular;
@@ -592,7 +605,7 @@ void LayerBase::loadTexture(const Region& dirty,
 regular:
         Rect bounds(dirty.bounds());
         GLvoid* data = 0;
-        if (texture_w!=textureWidth || texture_w!=textureHeight) {
+        if (texture_w!=textureWidth || texture_h!=textureHeight) {
             // texture size changed, we need to create a new one
 
             if (!textureWidth || !textureHeight) {
@@ -606,31 +619,36 @@ regular:
                     bounds.set(Rect(tw, th));
                 }
             }
-
+            
             if (t.format == GGL_PIXEL_FORMAT_RGB_565) {
                 glTexImage2D(GL_TEXTURE_2D, 0,
-                        GL_RGB, tw, th, 0,
+                        GL_RGB, texture_w, texture_h, 0,
                         GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
             } else if (t.format == GGL_PIXEL_FORMAT_RGBA_4444) {
                 glTexImage2D(GL_TEXTURE_2D, 0,
-                        GL_RGBA, tw, th, 0,
+                        GL_RGBA, texture_w, texture_h, 0,
                         GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
             } else if (t.format == GGL_PIXEL_FORMAT_RGBA_8888) {
                 glTexImage2D(GL_TEXTURE_2D, 0,
-                        GL_RGBA, tw, th, 0,
+                        GL_RGBA, texture_w, texture_h, 0,
                         GL_RGBA, GL_UNSIGNED_BYTE, data);
             } else if ( t.format == GGL_PIXEL_FORMAT_YCbCr_422_SP ||
                         t.format == GGL_PIXEL_FORMAT_YCbCr_420_SP) {
                 // just show the Y plane of YUV buffers
                 data = t.data;
                 glTexImage2D(GL_TEXTURE_2D, 0,
-                        GL_LUMINANCE, tw, th, 0,
+                        GL_LUMINANCE, texture_w, texture_h, 0,
                         GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
+            } else {
+                // oops, we don't handle this format!
+                LOGE("layer %p, texture=%d, using format %d, which is not "
+                     "supported by the GL", this, textureName, t.format);
+                textureName = -1;
             }
-            textureWidth = tw;
-            textureHeight = th;
+            textureWidth = texture_w;
+            textureHeight = texture_h;
         }
-        if (!data) {
+        if (!data && textureName>=0) {
             if (t.format == GGL_PIXEL_FORMAT_RGB_565) {
                 glTexSubImage2D(GL_TEXTURE_2D, 0,
                         0, bounds.top, t.width, bounds.height(),

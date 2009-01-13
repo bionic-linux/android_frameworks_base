@@ -24,9 +24,10 @@
 #include <utils/Parcel.h>
 
 #include <ui/Rect.h>
-#include <ui/BlitHardware.h>
 
-#include <corecg/SkRegion.h>
+#include <hardware/copybit.h>
+
+#include <core/SkRegion.h>
 
 namespace android {
 // ---------------------------------------------------------------------------
@@ -166,7 +167,6 @@ private:
     }
     mutable Region::iterator i;
 };
-
 // ---------------------------------------------------------------------------
 }; // namespace android
 

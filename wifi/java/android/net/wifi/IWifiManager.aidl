@@ -55,12 +55,18 @@ interface IWifiManager
     boolean setWifiEnabled(boolean enable);
 
     int getWifiState();
+
+    int getNumAllowedChannels();
+
+    boolean setNumAllowedChannels(int numChannels);
+
+    int[] getValidChannelCounts();
     
     boolean saveConfiguration();
 
     DhcpInfo getDhcpInfo();
 
-    boolean acquireWifiLock(IBinder lock, String tag);
+    boolean acquireWifiLock(IBinder lock, int lockType, String tag);
 
     boolean releaseWifiLock(IBinder lock);
 }

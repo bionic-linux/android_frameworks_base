@@ -12,11 +12,15 @@ LOCAL_SRC_FILES:= \
 	IMediaPlayerService.cpp \
 	IMediaPlayerClient.cpp \
 	IMediaPlayer.cpp \
+	IMediaRecorder.cpp \
+	mediarecorder.cpp \
+	IMediaMetadataRetriever.cpp \
 	mediametadataretriever.cpp \
-	ToneGenerator.cpp
+	ToneGenerator.cpp \
+	JetPlayer.cpp
 
 LOCAL_SHARED_LIBRARIES := \
-	libui libcutils libutils
+	libui libcutils libutils libsonivox
 
 LOCAL_MODULE:= libmedia
 

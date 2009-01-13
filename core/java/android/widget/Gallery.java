@@ -56,7 +56,13 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
     private static final String TAG = "Gallery";
 
     private static final boolean localLOGV = Config.LOGV;
-    
+
+    /**
+     * Duration in milliseconds from the start of a scroll during which we're
+     * unsure whether the user is scrolling or flinging.
+     */
+    private static final int SCROLL_TO_FLING_UNCERTAINTY_TIMEOUT = 250;
+
     /**
      * Horizontal spacing between items.
      */
@@ -104,6 +110,17 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
      * Executes the delta scrolls from a fling or scroll movement. 
      */
     private FlingRunnable mFlingRunnable = new FlingRunnable();
+
+    /**
+     * Sets mSuppressSelectionChanged = false. This is used to set it to false
+     * in the future. It will also trigger a selection changed.
+     */
+    private Runnable mDisableSuppressSelectionChangedRunnable = new Runnable() {
+        public void run() {
+            mSuppressSelectionChanged = false;
+            selectionChanged();
+        }
+    };
     
     /**
      * When fling runnable runs, it resets this to false. Any method along the
@@ -122,7 +139,7 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
      * Whether to continuously callback on the item selected listener during a
      * fling.
      */
-    private boolean mShouldCallbackDuringFling;
+    private boolean mShouldCallbackDuringFling = true;
 
     /**
      * Whether to callback when an item that is not selected is clicked.
@@ -133,8 +150,21 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
      * If true, do not callback to item selected listener. 
      */
     private boolean mSuppressSelectionChanged;
+
+    /**
+     * If true, we have received the "invoke" (center or enter buttons) key
+     * down. This is checked before we action on the "invoke" key up, and is
+     * subsequently cleared.
+     */
+    private boolean mReceivedInvokeKeyDown;
     
     private AdapterContextMenuInfo mContextMenuInfo;
+
+    /**
+     * If true, this onScroll is the first for this user's drag (remember, a
+     * drag sends many onScrolls).
+     */
+    private boolean mIsFirstScroll;
     
     public Gallery(Context context) {
         this(context, null);
@@ -854,8 +884,13 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         
         if (!mShouldCallbackDuringFling) {
+            // We want to suppress selection changes
+            
+            // Remove any future code to set mSuppressSelectionChanged = false
+            removeCallbacks(mDisableSuppressSelectionChangedRunnable);
+
             // This will get reset once we scroll into slots
-            mSuppressSelectionChanged = true;
+            if (!mSuppressSelectionChanged) mSuppressSelectionChanged = true;
         }
         
         // Fling the gallery!
@@ -882,15 +917,26 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
          */
         mParent.requestDisallowInterceptTouchEvent(true);
         
-        // As the user scrolls, we want to callback selection changes so related
-        // into on the screen is up-to-date with the user's selection
-        if (mSuppressSelectionChanged) {
-            mSuppressSelectionChanged = false;
+        // As the user scrolls, we want to callback selection changes so related-
+        // info on the screen is up-to-date with the gallery's selection
+        if (!mShouldCallbackDuringFling) {
+            if (mIsFirstScroll) {
+                /*
+                 * We're not notifying the client of selection changes during
+                 * the fling, and this scroll could possibly be a fling. Don't
+                 * do selection changes until we're sure it is not a fling.
+                 */
+                if (!mSuppressSelectionChanged) mSuppressSelectionChanged = true;
+                postDelayed(mDisableSuppressSelectionChangedRunnable, SCROLL_TO_FLING_UNCERTAINTY_TIMEOUT);
+            }
+        } else {
+            if (mSuppressSelectionChanged) mSuppressSelectionChanged = false;
         }
         
         // Track the motion
         trackMotionScroll(-1 * (int) distanceX);
-        
+       
+        mIsFirstScroll = false;
         return true;
     }
     
@@ -909,6 +955,9 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
             mDownTouchView = getChildAt(mDownTouchPosition - mFirstPosition);
             mDownTouchView.setPressed(true);
         }
+        
+        // Reset the multiple-scroll tracking state
+        mIsFirstScroll = true;
         
         // Must return true to get matching events for this down event.
         return true;
@@ -1062,6 +1111,11 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
                 playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
             }
             return true;
+
+        case KeyEvent.KEYCODE_DPAD_CENTER:
+        case KeyEvent.KEYCODE_ENTER:
+            mReceivedInvokeKeyDown = true;
+            // fallthrough to default handling
         }
         
         return super.onKeyDown(keyCode, event);
@@ -1072,19 +1126,26 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         switch (keyCode) {
         case KeyEvent.KEYCODE_DPAD_CENTER:
         case KeyEvent.KEYCODE_ENTER: {
-            if (mItemCount > 0) {
-
-                dispatchPress(mSelectedChild);
-                postDelayed(new Runnable() {
-                    public void run() {
-                        dispatchUnpress();
-                    }
-                }, ViewConfiguration.getPressedStateDuration());
-
-                int selectedIndex = mSelectedPosition - mFirstPosition;
-                performItemClick(getChildAt(selectedIndex), mSelectedPosition, mAdapter
-                        .getItemId(mSelectedPosition));
+            
+            if (mReceivedInvokeKeyDown) {
+                if (mItemCount > 0) {
+    
+                    dispatchPress(mSelectedChild);
+                    postDelayed(new Runnable() {
+                        public void run() {
+                            dispatchUnpress();
+                        }
+                    }, ViewConfiguration.getPressedStateDuration());
+    
+                    int selectedIndex = mSelectedPosition - mFirstPosition;
+                    performItemClick(getChildAt(selectedIndex), mSelectedPosition, mAdapter
+                            .getItemId(mSelectedPosition));
+                }
             }
+            
+            // Clear the flag
+            mReceivedInvokeKeyDown = false;
+            
             return true;
         }
         }

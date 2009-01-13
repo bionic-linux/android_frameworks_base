@@ -20,7 +20,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
@@ -36,6 +35,24 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
+/**
+ * A Drawable that wraps a bitmap and can be tiled, stretched, or aligned. You can create a
+ * BitmapDrawable from a file path, an input stream, through XML inflation, or from
+ * a {@link android.graphics.Bitmap} object.
+ * <p>It can be defined in an XML file with the <code>&lt;bitmap></code> element.</p>
+ * <p>
+ * Also see the {@link android.graphics.Bitmap} class, which handles the management and 
+ * transformation of raw bitmap graphics, and should be used when drawing to a 
+ * {@link android.graphics.Canvas}.
+ * </p>
+ *
+ * @attr ref android.R.styleable#BitmapDrawable_src
+ * @attr ref android.R.styleable#BitmapDrawable_antialias
+ * @attr ref android.R.styleable#BitmapDrawable_filter
+ * @attr ref android.R.styleable#BitmapDrawable_dither
+ * @attr ref android.R.styleable#BitmapDrawable_gravity
+ * @attr ref android.R.styleable#BitmapDrawable_tileMode
+ */
 public class BitmapDrawable extends Drawable {
 
     private static final int DEFAULT_PAINT_FLAGS = Paint.FILTER_BITMAP_FLAG;

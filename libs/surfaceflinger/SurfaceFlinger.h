@@ -41,7 +41,8 @@
 #include "BootAnimation.h"
 #include "Barrier.h"
 
-struct copybit_t;
+struct copybit_device_t;
+struct overlay_device_t;
 
 namespace android {
 
@@ -74,7 +75,7 @@ public:
             int32_t                 generateId(int pid);
             void                    free(int32_t id);
             status_t                bindLayer(LayerBaseClient* layer, int32_t id);
-            sp<MemoryDealer>        createAllocator(int memory_type);
+            sp<MemoryDealer>        createAllocator(uint32_t memory_type);
 
     inline  bool                    isValid(int32_t i) const;
     inline  const uint8_t*          inUseArray() const;
@@ -92,7 +93,6 @@ public:
     
 private:
     int                     getClientPid() const { return mPid; }
-    const sp<GPUHardwareInterface>&  getGPU() const;
         
     int                         mPid;
     uint32_t                    mBitmap;
@@ -179,7 +179,8 @@ public:
                 return mGPU; 
             }
 
-            copybit_t* getBlitEngine() const;
+            copybit_device_t* getBlitEngine() const;
+            overlay_control_device_t* getOverlayEngine() const;
             
 private:
     friend class BClient;
@@ -381,23 +382,15 @@ private:
 
 // ---------------------------------------------------------------------------
 
-class FreezeLock {
+class FreezeLock : public LightRefBase<FreezeLock> {
     SurfaceFlinger* mFlinger;
-    mutable volatile int32_t mCount;
 public:
     FreezeLock(SurfaceFlinger* flinger)
-        : mFlinger(flinger), mCount(0) {
+        : mFlinger(flinger) {
         mFlinger->incFreezeCount();
     }
     ~FreezeLock() {
         mFlinger->decFreezeCount();
-    }
-    inline void incStrong(void*) const {
-        android_atomic_inc(&mCount);
-    }
-    inline void decStrong(void*) const {
-        if (android_atomic_dec(&mCount) == 1)
-             delete this;
     }
 };
 

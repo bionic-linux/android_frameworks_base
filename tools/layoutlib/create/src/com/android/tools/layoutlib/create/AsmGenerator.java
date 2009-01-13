@@ -68,7 +68,8 @@ public class AsmGenerator {
      * 
      * @param log Output logger.
      * @param osDestJar The path of the destination JAR to create.
-     * @param stubMethods The list of methods to stub out
+     * @param stubMethods The list of methods to stub out. Each entry must be in the form
+     *          "package.package.OuterClass$InnerClass#MethodName".
      * @param renameClasses The list of classes to rename, must be an even list: the binary FQCN
      *          of class to replace followed by the new FQCN.
      * @param deleteReturns List of classes for which the methods returning them should be deleted.
@@ -187,7 +188,7 @@ public class AsmGenerator {
         
         for (Entry<String, ClassReader> entry : mDeps.entrySet()) {
             ClassReader cr = entry.getValue();
-            byte[] b = transform(cr, false /* stubNativesOnly */);
+            byte[] b = transform(cr, true /* stubNativesOnly */);
             String name = classNameToEntryPath(transformName(cr.getClassName()));
             all.put(name, b);
         }

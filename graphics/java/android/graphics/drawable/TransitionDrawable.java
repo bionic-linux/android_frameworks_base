@@ -20,9 +20,19 @@ import android.graphics.Canvas;
 import android.os.SystemClock;
 
 /**
- * Transition drawables are an extension of LayerDrawables and are intended to cross fade between
- * the first and second layers. To start the transition, call {@link #startTransition(int)}. To
- * display just the first layer, call {@link #resetTransition()}
+ * An extension of LayerDrawables that is intended to cross-fade between
+ * the first and second layer. To start the transition, call {@link #startTransition(int)}. To
+ * display just the first layer, call {@link #resetTransition()}.
+ * <p>
+ * It can be defined in an XML file with the <code>&lt;transition></code> element.
+ * Each Drawable in the transition is defined in a nested <code>&lt;item></code>.
+ * </p>
+ * @attr ref android.R.styleable#LayerDrawableItem_left
+ * @attr ref android.R.styleable#LayerDrawableItem_top
+ * @attr ref android.R.styleable#LayerDrawableItem_right
+ * @attr ref android.R.styleable#LayerDrawableItem_bottom
+ * @attr ref android.R.styleable#LayerDrawableItem_drawable
+ * @attr ref android.R.styleable#LayerDrawableItem_id
  *
  */
 public class TransitionDrawable extends LayerDrawable implements Drawable.Callback {
@@ -55,18 +65,37 @@ public class TransitionDrawable extends LayerDrawable implements Drawable.Callba
     private int mDuration;
     private TransitionState mState;
 
+    /**
+     * Create a new transition drawable with the specified list of layers. At least
+     * 2 layers are required for this drawable to work properly.
+     */
+    public TransitionDrawable(Drawable[] layers) {
+        this(new TransitionState(null, null), layers);
+    }
+
+    /**
+     * Create a new transition drawable with no layer. To work correctly, at least 2
+     * layers must be added to this drawable.
+     *
+     * @see #TransitionDrawable(Drawable[])
+     */
     TransitionDrawable() {
         this(new TransitionState(null, null));
     }
-    
+
     private TransitionDrawable(TransitionState state) {
         super(state);
         mState = state;
     }
-    
+
+    private TransitionDrawable(TransitionState state, Drawable[] layers) {
+        super(layers, state);
+        mState = state;
+    }
+
     @Override
     LayerState createConstantState(LayerState state) {
-        return new TransitionState((TransitionState)state, this);
+        return new TransitionState((TransitionState) state, this);
     }
     
     /**
@@ -213,7 +242,7 @@ public class TransitionDrawable extends LayerDrawable implements Drawable.Callba
         public Drawable newDrawable() {
             return new TransitionDrawable(this);
         }
-        
+
         @Override
         public int getChangingConfigurations() {
             return mChangingConfigurations;

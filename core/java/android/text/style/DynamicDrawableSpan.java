@@ -16,18 +16,56 @@
 
 package android.text.style;
 
-import java.lang.ref.WeakReference;
-
-import android.graphics.drawable.Drawable;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Paint.Style;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+import java.lang.ref.WeakReference;
 
 /**
  *
  */
-public abstract class DynamicDrawableSpan
-extends ReplacementSpan
-{
+public abstract class DynamicDrawableSpan extends ReplacementSpan {
+    private static final String TAG = "DynamicDrawableSpan";
+    
+    /**
+     * A constant indicating that the bottom of this span should be aligned
+     * with the bottom of the surrounding text, i.e., at the same level as the
+     * lowest descender in the text.
+     */
+    public static final int ALIGN_BOTTOM = 0;
+    
+    /**
+     * A constant indicating that the bottom of this span should be aligned
+     * with the baseline of the surrounding text.
+     */
+    public static final int ALIGN_BASELINE = 1;
+    
+    protected final int mVerticalAlignment;
+    
+    public DynamicDrawableSpan() {
+        mVerticalAlignment = ALIGN_BOTTOM;
+    }
+
+    /**
+     * @param verticalAlignment one of {@link #ALIGN_BOTTOM} or {@link #ALIGN_BASELINE}.
+     */
+    protected DynamicDrawableSpan(int verticalAlignment) {
+        mVerticalAlignment = verticalAlignment;
+    }
+
+    /**
+     * Returns the vertical alignment of this span, one of {@link #ALIGN_BOTTOM} or
+     * {@link #ALIGN_BASELINE}.
+     */
+    public int getVerticalAlignment() {
+        return mVerticalAlignment;
+    }
+
     /**
      * Your subclass must implement this method to provide the bitmap   
      * to be drawn.  The dimensions of the bitmap must be the same
@@ -35,48 +73,56 @@ extends ReplacementSpan
      */
     public abstract Drawable getDrawable();
 
+    @Override
     public int getSize(Paint paint, CharSequence text,
                          int start, int end,
                          Paint.FontMetricsInt fm) {
-        Drawable b = getCachedDrawable();
+        Drawable d = getCachedDrawable();
+        Rect rect = d.getBounds();
 
         if (fm != null) {
-            fm.ascent = -b.getIntrinsicHeight();
-            fm.descent = 0;
+            fm.ascent = -rect.bottom; 
+            fm.descent = 0; 
 
             fm.top = fm.ascent;
             fm.bottom = 0;
         }
 
-        return b.getIntrinsicWidth();
+        return rect.right;
     }
 
+    @Override
     public void draw(Canvas canvas, CharSequence text,
                      int start, int end, float x, 
                      int top, int y, int bottom, Paint paint) {
         Drawable b = getCachedDrawable();
         canvas.save();
         
-        canvas.translate(x, bottom-b.getIntrinsicHeight());;
+        int transY = bottom - b.getBounds().bottom;
+        if (mVerticalAlignment == ALIGN_BASELINE) {
+            transY -= paint.getFontMetricsInt().descent;
+        }
+
+        canvas.translate(x, transY);
         b.draw(canvas);
         canvas.restore();
     }
 
     private Drawable getCachedDrawable() {
-        WeakReference wr = mDrawableRef;
-        Drawable b = null;
+        WeakReference<Drawable> wr = mDrawableRef;
+        Drawable d = null;
 
         if (wr != null)
-            b = (Drawable) wr.get();
+            d = wr.get();
 
-        if (b == null) {
-            b = getDrawable();
-            mDrawableRef = new WeakReference(b);
+        if (d == null) {
+            d = getDrawable();
+            mDrawableRef = new WeakReference<Drawable>(d);
         }
 
-        return b;
+        return d;
     }
 
-    private WeakReference mDrawableRef;
+    private WeakReference<Drawable> mDrawableRef;
 }
 

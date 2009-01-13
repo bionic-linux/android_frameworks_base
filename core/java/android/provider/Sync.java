@@ -25,7 +25,6 @@ import android.os.Handler;
 
 import java.util.Map;
 
-
 /**
  * The Sync provider stores information used in managing the syncing of the device,
  * including the history and pending syncs.
@@ -489,11 +488,19 @@ public final class Sync {
          */
         public static final Uri CONTENT_URI = Uri.parse("content://sync/settings");
 
-        /** controls whether or not the devices listens for sync tickles */
+        /** controls whether or not the device listens for sync tickles */
         public static final String SETTING_LISTEN_FOR_TICKLES = "listen_for_tickles";
+
+        /** controls whether or not the device connect to Google in background for various
+         *  stuff, including GTalk, checkin, Market and data sync ...
+         */
+        public static final String SETTING_BACKGROUND_DATA = "background_data";
 
         /** controls whether or not the individual provider is synced when tickles are received */
         public static final String SETTING_SYNC_PROVIDER_PREFIX = "sync_provider_";
+
+        /** query column project */
+        private static final String[] PROJECTION = { KEY, VALUE };
 
         /**
          * Convenience function for updating a single settings value as a
@@ -516,6 +523,32 @@ public final class Sync {
         }
 
         /**
+         * Convenience function for getting a setting value as a boolean without using the
+         * QueryMap for light-weight setting querying.
+         * @param contentResolver The ContentResolver for querying the setting.
+         * @param name The name of the setting to query
+         * @param def The default value for the setting.
+         * @return The value of the setting.
+         */
+        static public boolean getBoolean(ContentResolver contentResolver,
+                String name, boolean def) {
+            Cursor cursor = contentResolver.query(
+                    CONTENT_URI,
+                    PROJECTION,
+                    KEY + "=?",
+                    new String[] { name },
+                    null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    return Boolean.parseBoolean(cursor.getString(1));
+                }
+            } finally {
+                if (cursor != null) cursor.close();
+            }
+            return def;
+        }
+
+        /**
          * A convenience method to set whether or not the provider is synced when
          * it receives a network tickle.
          *
@@ -529,15 +562,26 @@ public final class Sync {
         }
 
         /**
-         * A convenience method to set whether or not the tickle xmpp connection
-         * should be established.
+         * A convenience method to set whether or not the device should listen to tickles.
          *
          * @param contentResolver the ContentResolver to use to access the settings table
-         * @param flag true if the tickle xmpp connection should be established
+         * @param flag true if it should listen.
          */
         static public void setListenForNetworkTickles(ContentResolver contentResolver,
                 boolean flag) {
             putBoolean(contentResolver, SETTING_LISTEN_FOR_TICKLES, flag);
+        }
+
+        /**
+         * A convenience method to set whether or not the device should connect to Google
+         * in background.
+         *
+         * @param contentResolver the ContentResolver to use to access the settings table
+         * @param flag true if it should connect.
+         */
+        static public void setBackgroundData(ContentResolver contentResolver,
+                boolean flag) {
+            putBoolean(contentResolver, SETTING_BACKGROUND_DATA, flag);
         }
 
         public static class QueryMap extends ContentQueryMap {
@@ -570,20 +614,39 @@ public final class Sync {
             }
 
             /**
-             * Set whether or not the tickle xmpp connection should be established.
+             * Set whether or not the device should listen for tickles.
              *
-             * @param flag true if the tickle xmpp connection should be established
+             * @param flag true if it should listen.
              */
             public void setListenForNetworkTickles(boolean flag) {
                 Settings.setListenForNetworkTickles(mContentResolver, flag);
             }
 
             /**
-             * Check if the tickle xmpp connection should be established
-             * @return true if it should be stablished
+             * Check if the device should listen to tickles.
+
+             * @return true if it should
              */
             public boolean getListenForNetworkTickles() {
                 return getBoolean(SETTING_LISTEN_FOR_TICKLES, true);
+            }
+
+            /**
+             * Set whether or not the device should connect to Google in background
+             *
+             * @param flag true if it should
+             */
+            public void setBackgroundData(boolean flag) {
+                Settings.setBackgroundData(mContentResolver, flag);
+            }
+
+            /**
+             * Check if the device should connect to Google in background.
+
+             * @return true if it should
+             */
+            public boolean getBackgroundData() {
+                return getBoolean(SETTING_BACKGROUND_DATA, true);
             }
 
             /**
