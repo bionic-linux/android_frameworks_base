@@ -45,9 +45,11 @@ public class Main {
             AsmGenerator agen = new AsmGenerator(log, osDestJar[0],
                     new Class<?>[] {  // classes to inject in the final JAR
                         OverrideMethod.class,
-                        OverrideMethod.MethodListener.class
+                        MethodListener.class,
+                        MethodAdapter.class
                     },
                     new String[] {  // methods to force override
+                        "android.view.View#isInEditMode",
                         "android.content.res.Resources$Theme#obtainStyledAttributes",
                     },
                     new String[] {  // classes to rename (so that we can replace them in layoutlib)
@@ -68,7 +70,7 @@ public class Main {
                         "android.view.SurfaceView",             "android.view._Original_SurfaceView",
                     },
                     new String[] { // methods deleted from their return type.
-                    "android.graphics.Paint", // class to delete method from
+                        "android.graphics.Paint", // class to delete method from
                         "android.graphics.Paint$Align", // list of type identifying methods to delete
                         "android.graphics.Paint$Style",
                         "android.graphics.Paint$Join",

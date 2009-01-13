@@ -22,12 +22,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Shader;
+import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.util.AttributeSet;
@@ -40,6 +42,8 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 import android.widget.RemoteViews.RemoteView;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.os.SystemClock;
 
 import com.android.internal.R;
@@ -171,7 +175,7 @@ public class ProgressBar extends View {
         
         Drawable drawable = a.getDrawable(R.styleable.ProgressBar_progressDrawable);
         if (drawable != null) {
-            drawable = tileify(drawable);
+            drawable = tileify(drawable, false);
             setProgressDrawable(drawable);
         }
 
@@ -214,18 +218,12 @@ public class ProgressBar extends View {
         a.recycle();
     }
 
-    /*
-     * TODO: This is almost ready to be removed. This was used to support our
-     * old style of progress bars with the ticks. Need to check with designers
-     * on whether they can give us a transparent 'tick' overlay tile for our new
-     * gradient-based progress bars. (We still need the ticked progress bar for
-     * media player apps.) I'll remove this and add XML support if they want to
-     * do the overlay approach. If they want to just have a separate style for
-     * this legacy stuff, then we can keep it around.
+    /**
+     * Converts a drawable to a tiled version of itself. It will recursively
+     * traverse layer and state list drawables.
      */
-    
-    // TODO Remove all this once ShapeDrawable + shaders are supported through XML
-    private Drawable tileify(Drawable drawable) {
+    private Drawable tileify(Drawable drawable, boolean clip) {
+        
         if (drawable instanceof LayerDrawable) {
             LayerDrawable background = (LayerDrawable) drawable;
             final int N = background.getNumberOfLayers();
@@ -233,7 +231,7 @@ public class ProgressBar extends View {
             
             for (int i = 0; i < N; i++) {
                 int id = background.getId(i);
-                outDrawables[i] = createDrawableForTile(background.getDrawable(i),
+                outDrawables[i] = tileify(background.getDrawable(i),
                         (id == R.id.progress || id == R.id.secondaryProgress));
             }
 
@@ -243,30 +241,36 @@ public class ProgressBar extends View {
                 newBg.setId(i, background.getId(i));
             }
             
-            drawable = newBg;
+            return newBg;
+            
+        } else if (drawable instanceof StateListDrawable) {
+            StateListDrawable in = (StateListDrawable) drawable;
+            StateListDrawable out = new StateListDrawable();
+            int numStates = in.getStateCount();
+            for (int i = 0; i < numStates; i++) {
+                out.addState(in.getStateSet(i), tileify(in.getStateDrawable(i), clip));
+            }
+            return out;
+            
+        } else if (drawable instanceof BitmapDrawable) {
+            final Bitmap tileBitmap = ((BitmapDrawable) drawable).getBitmap();
+            if (mSampleTile == null) {
+                mSampleTile = tileBitmap;
+            }
+            
+            final ShapeDrawable shapeDrawable = new ShapeDrawable(getDrawableShape());
+
+            final BitmapShader bitmapShader = new BitmapShader(tileBitmap,
+                    Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
+            shapeDrawable.getPaint().setShader(bitmapShader);
+
+            return (clip) ? new ClipDrawable(shapeDrawable, Gravity.LEFT,
+                    ClipDrawable.HORIZONTAL) : shapeDrawable;
         }
+        
         return drawable;
     }
 
-    // TODO Remove all this once ShapeDrawable + shaders are supported through XML
-    private Drawable createDrawableForTile(Drawable tileDrawable, boolean clip) {
-        if (!(tileDrawable instanceof BitmapDrawable)) return tileDrawable;
-
-        final Bitmap tileBitmap = ((BitmapDrawable) tileDrawable).getBitmap();
-        if (mSampleTile == null) {
-            mSampleTile = tileBitmap;
-        }
-        
-        final ShapeDrawable shapeDrawable = new ShapeDrawable(getDrawableShape());
-
-        final BitmapShader bitmapShader = new BitmapShader(tileBitmap,
-                Shader.TileMode.REPEAT, Shader.TileMode.CLAMP);
-        shapeDrawable.getPaint().setShader(bitmapShader);
-
-        return (clip) ? new ClipDrawable(shapeDrawable, Gravity.LEFT,
-                ClipDrawable.HORIZONTAL) : shapeDrawable;
-    }
-    
     Shape getDrawableShape() {
         final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
         return new RoundRectShape(roundedCorners, null, null);
@@ -285,7 +289,7 @@ public class ProgressBar extends View {
             newBg.setOneShot(background.isOneShot());
             
             for (int i = 0; i < N; i++) {
-                Drawable frame = createDrawableForTile(background.getFrame(i), true);
+                Drawable frame = tileify(background.getFrame(i), true);
                 frame.setLevel(10000);
                 newBg.addFrame(frame, background.getDuration(i));
             }
@@ -427,7 +431,7 @@ public class ProgressBar extends View {
     Drawable getCurrentDrawable() {
         return mCurrentDrawable;
     }
-    
+
     @Override
     protected boolean verifyDrawable(Drawable who) {
         return who == mProgressDrawable || who == mIndeterminateDrawable
@@ -445,29 +449,29 @@ public class ProgressBar extends View {
 
         private int mId;
         private int mProgress;
-        private boolean mFromTouch;
+        private boolean mFromUser;
         
-        RefreshProgressRunnable(int id, int progress, boolean fromTouch) {
+        RefreshProgressRunnable(int id, int progress, boolean fromUser) {
             mId = id;
             mProgress = progress;
-            mFromTouch = fromTouch;
+            mFromUser = fromUser;
         }
         
         public void run() {
-            doRefreshProgress(mId, mProgress, mFromTouch);
+            doRefreshProgress(mId, mProgress, mFromUser);
             // Put ourselves back in the cache when we are done
             mRefreshProgressRunnable = this;
         }
         
-        public void setup(int id, int progress, boolean fromTouch) {
+        public void setup(int id, int progress, boolean fromUser) {
             mId = id;
             mProgress = progress;
-            mFromTouch = fromTouch;
+            mFromUser = fromUser;
         }
         
     }
     
-    private synchronized void doRefreshProgress(int id, int progress, boolean fromTouch) {
+    private synchronized void doRefreshProgress(int id, int progress, boolean fromUser) {
         float scale = mMax > 0 ? (float) progress / (float) mMax : 0;
         final Drawable d = mCurrentDrawable;
         if (d != null) {
@@ -484,16 +488,16 @@ public class ProgressBar extends View {
         }
         
         if (id == R.id.progress) {
-            onProgressRefresh(scale, fromTouch);
+            onProgressRefresh(scale, fromUser);
         }
     }
     
-    void onProgressRefresh(float scale, boolean fromTouch) {        
+    void onProgressRefresh(float scale, boolean fromUser) {        
     }
 
-    private synchronized void refreshProgress(int id, int progress, boolean fromTouch) {
+    private synchronized void refreshProgress(int id, int progress, boolean fromUser) {
         if (mUiThreadId == Thread.currentThread().getId()) {
-            doRefreshProgress(id, progress, fromTouch);
+            doRefreshProgress(id, progress, fromUser);
         } else {
             RefreshProgressRunnable r;
             if (mRefreshProgressRunnable != null) {
@@ -501,10 +505,10 @@ public class ProgressBar extends View {
                 r = mRefreshProgressRunnable;
                 // Uncache it
                 mRefreshProgressRunnable = null;
-                r.setup(id, progress, fromTouch);
+                r.setup(id, progress, fromUser);
             } else {
                 // Make a new one
-                r = new RefreshProgressRunnable(id, progress, fromTouch);
+                r = new RefreshProgressRunnable(id, progress, fromUser);
             }
             post(r);
         }
@@ -525,7 +529,7 @@ public class ProgressBar extends View {
         setProgress(progress, false);
     }
     
-    synchronized void setProgress(int progress, boolean fromTouch) {
+    synchronized void setProgress(int progress, boolean fromUser) {
         if (mIndeterminate) {
             return;
         }
@@ -540,7 +544,7 @@ public class ProgressBar extends View {
 
         if (progress != mProgress) {
             mProgress = progress;
-            refreshProgress(R.id.progress, mProgress, fromTouch);
+            refreshProgress(R.id.progress, mProgress, fromUser);
         }
     }
 
@@ -700,7 +704,7 @@ public class ProgressBar extends View {
         mAnimation = null;
         mTransformation = null;
         if (mIndeterminateDrawable instanceof AnimationDrawable) {
-            ((AnimationDrawable)mIndeterminateDrawable).stop();
+            ((AnimationDrawable) mIndeterminateDrawable).stop();
             mShouldStartAnimationDrawable = false;
         }
     }
@@ -754,17 +758,31 @@ public class ProgressBar extends View {
     @Override
     public void invalidateDrawable(Drawable dr) {
         if (!mInDrawing) {
-            super.invalidateDrawable(dr);
+            if (dr == mProgressDrawable || dr == mIndeterminateDrawable) {
+                final Rect dirty = dr.getBounds();
+                final int scrollX = mScrollX + mPaddingLeft;
+                final int scrollY = mScrollY + mPaddingRight;
+
+                invalidate(dirty.left + scrollX, dirty.top + scrollY,
+                        dirty.right + scrollX, dirty.bottom + scrollY);
+            } else {
+                super.invalidateDrawable(dr);
+            }
         }
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        Drawable d = mCurrentDrawable;
-        if (d != null) {
-            // onDraw will translate the canvas so we draw starting at 0,0
-            d.setBounds(0, 0, w - mPaddingRight - mPaddingLeft, 
-                    h - mPaddingBottom - mPaddingTop);
+        // onDraw will translate the canvas so we draw starting at 0,0
+        int right = w - mPaddingRight - mPaddingLeft;
+        int bottom = h - mPaddingBottom - mPaddingTop;
+
+        if (mIndeterminateDrawable != null) {
+            mIndeterminateDrawable.setBounds(0, 0, right, bottom);
+        }
+        
+        if (mProgressDrawable != null) {
+            mProgressDrawable.setBounds(0, 0, right, bottom);
         }
     }
 
@@ -795,8 +813,9 @@ public class ProgressBar extends View {
             }
             d.draw(canvas);
             canvas.restore();
-            if (mShouldStartAnimationDrawable && mCurrentDrawable instanceof AnimationDrawable) {
-                ((AnimationDrawable)mCurrentDrawable).start();
+            if (mShouldStartAnimationDrawable && d instanceof AnimationDrawable) {
+                ((AnimationDrawable) d).start();
+                mShouldStartAnimationDrawable = false;
             }
         }
     }
@@ -816,5 +835,80 @@ public class ProgressBar extends View {
 
         setMeasuredDimension(resolveSize(dw, widthMeasureSpec),
                 resolveSize(dh, heightMeasureSpec));
+    }
+    
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        
+        int[] state = getDrawableState();
+        
+        if (mProgressDrawable != null && mProgressDrawable.isStateful()) {
+            mProgressDrawable.setState(state);
+        }
+        
+        if (mIndeterminateDrawable != null && mIndeterminateDrawable.isStateful()) {
+            mIndeterminateDrawable.setState(state);
+        }
+    }
+
+    static class SavedState extends BaseSavedState {
+        int progress;
+        int secondaryProgress;
+        
+        /**
+         * Constructor called from {@link ProgressBar#onSaveInstanceState()}
+         */
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+        
+        /**
+         * Constructor called from {@link #CREATOR}
+         */
+        private SavedState(Parcel in) {
+            super(in);
+            progress = in.readInt();
+            secondaryProgress = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(progress);
+            out.writeInt(secondaryProgress);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR
+                = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        // Force our ancestor class to save its state
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState ss = new SavedState(superState);
+        
+        ss.progress = mProgress;
+        ss.secondaryProgress = mSecondaryProgress;
+        
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        
+        setProgress(ss.progress);
+        setSecondaryProgress(ss.secondaryProgress);
     }
 }

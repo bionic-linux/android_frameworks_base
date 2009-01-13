@@ -16,10 +16,11 @@
 
 package com.android.layoutlib.bridge;
 
-import com.android.layoutlib.api.IProjectCallback;
+import com.android.internal.util.XmlUtils;
 import com.android.layoutlib.api.ILayoutBridge;
 import com.android.layoutlib.api.ILayoutLog;
 import com.android.layoutlib.api.ILayoutResult;
+import com.android.layoutlib.api.IProjectCallback;
 import com.android.layoutlib.api.IResourceValue;
 import com.android.layoutlib.api.IStyleResourceValue;
 import com.android.layoutlib.api.IXmlPullParser;
@@ -27,9 +28,7 @@ import com.android.layoutlib.api.ILayoutResult.ILayoutViewInfo;
 import com.android.layoutlib.bridge.LayoutResult.LayoutViewInfo;
 import com.android.ninepatch.NinePatch;
 import com.android.tools.layoutlib.create.OverrideMethod;
-import com.android.tools.layoutlib.create.OverrideMethod.MethodListener;
-
-import org.xmlpull.v1.XmlPullParser;
+import com.android.tools.layoutlib.create.MethodAdapter;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -39,16 +38,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
-
-import com.android.internal.util.XmlUtils;
-
 import android.util.TypedValue;
 import android.view.BridgeInflater;
 import android.view.IWindow;
 import android.view.IWindowSession;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.AttachInfo;
@@ -65,14 +64,18 @@ import java.util.Map;
 /**
  * Main entry point of the LayoutLib Bridge.
  * <p/>To use this bridge, simply instantiate an object of type {@link Bridge} and call
- * {@link #computeLayout(XmlPullParser, int, int, boolean, Map)}.
+ * {@link #computeLayout(IXmlPullParser, Object, int, int, String, boolean, Map, Map, IProjectCallback, ILayoutLog)}.
  */
 public final class Bridge implements ILayoutBridge {
     
     private static final int DEFAULT_TITLE_BAR_HEIGHT = 25;
     private static final int DEFAULT_STATUS_BAR_HEIGHT = 25;
-
-    private ILayoutLog mLogger;
+    
+    public static class StaticMethodNotImplementedException extends RuntimeException {
+        public StaticMethodNotImplementedException(String msg) {
+            super(msg);
+        }
+    }
 
     /**
      * Maps from id to resource name/type.
@@ -98,13 +101,10 @@ public final class Bridge implements ILayoutBridge {
         new HashMap<String, NinePatch>();
     
     private static Map<String, Map<String, Integer>> sEnumValueMap;
-    
-    private final static MethodListener sNullMethodListener = new MethodListener() {
-        public void onInvoke(String signature, Object caller) {
-            // pass
-        }
-    };
 
+    /**
+     * A default logger than prints to stdout/stderr.
+     */
     private final static ILayoutLog sDefaultLogger = new ILayoutLog() {
         public void error(String message) {
             System.err.println(message);
@@ -124,17 +124,23 @@ public final class Bridge implements ILayoutBridge {
         }
     };
 
-    private final static String[] IGNORED_STATIC_METHODS = new String[] {
-        "android.content.res.AssetManager#init()V",
-        "android.content.res.AssetManager#deleteTheme(I)V",
-        "android.content.res.AssetManager#destroy()V",
-        "android.graphics._Original_Paint#native_init()I",
-        "android.graphics.Bitmap#nativeRecycle(I)V",
-        "android.graphics.Bitmap#nativeDestructor(I)V",
-        "android.view.animation.Transformation#<clinit>()V",
-        "android.view.animation.Transformation#<init>()V",
-        "android.view.animation.Transformation#clear()V",
-    };
+    /**
+     * Logger defined during a compute layout operation.
+     * <p/>
+     * This logger is generally set to {@link #sDefaultLogger} except during rendering
+     * operations when it might be set to a specific provided logger.
+     * <p/>
+     * To change this value, use a block synchronized on {@link #sDefaultLogger}.
+     */
+    private static ILayoutLog sLogger = sDefaultLogger;
+
+    /*
+     * (non-Javadoc)
+     * @see com.android.layoutlib.api.ILayoutBridge#getApiLevel()
+     */
+    public int getApiLevel() {
+        return API_CURRENT;
+    }
 
     /*
      * (non-Javadoc)
@@ -149,21 +155,52 @@ public final class Bridge implements ILayoutBridge {
     private static synchronized boolean sinit(String fontOsLocation,
             Map<String, Map<String, Integer>> enumValueMap) {
 
-        // set an empty method listener for some known static methods we don't care about.
-        for (String method : IGNORED_STATIC_METHODS) {
-            OverrideMethod.setMethodListener(method, sNullMethodListener);
-        }
+        // When DEBUG_LAYOUT is set and is not 0 or false, setup a default listener
+        // on static (native) methods which prints the signature on the console and
+        // throws an exception.
+        // This is useful when testing the rendering in ADT to identify static native 
+        // methods that are ignored -- layoutlib_create makes them returns 0/false/null
+        // which is generally OK yet might be a problem, so this is how you'd find out.
+        //
+        // Currently layoutlib_create only overrides static native method.
+        // Static non-natives are not overridden and thus do not get here.
+        final String debug = System.getenv("DEBUG_LAYOUT");
+        if (debug != null && !debug.equals("0") && !debug.equals("false")) {
 
-        
-        // set a the default listener for the rest of the static methods. It prints out
-        // missing stub methods but only if the environment variable DEBUG_LAYOUT is set.
-        if (System.getenv("DEBUG_LAYOUT") != null) {
-            OverrideMethod.setDefaultListener(new MethodListener() {
-                public void onInvoke(String signature, Object caller) {
-                    System.out.println("Missing Stub: " + signature);
+            OverrideMethod.setDefaultListener(new MethodAdapter() {
+                @Override
+                public void onInvokeV(String signature, boolean isNative, Object caller) {
+                    if (sLogger != null) {
+                        synchronized (sDefaultLogger) {
+                            sLogger.error("Missing Stub: " + signature +
+                                    (isNative ? " (native)" : ""));
+                        }
+                    }
+
+                    if (debug.equalsIgnoreCase("throw")) {
+                        // Throwing this exception doesn't seem that useful. It breaks
+                        // the layout editor yet doesn't display anything meaningful to the
+                        // user. Having the error in the console is just as useful. We'll
+                        // throw it only if the environment variable is "throw" or "THROW".
+                        throw new StaticMethodNotImplementedException(signature);
+                    }
                 }
             });
         }
+
+        // Override View.isInEditMode to return true.
+        //
+        // This allows custom views that are drawn in the Graphical Layout Editor to adapt their
+        // rendering for preview. Most important this let custom views know that they can't expect
+        // the rest of their activities to be alive.
+        OverrideMethod.setMethodListener("android.view.View#isInEditMode()Z",
+            new MethodAdapter() {
+                @Override
+                public int onInvokeI(String signature, boolean isNative, Object caller) {
+                    return 1;
+                }
+            }
+        );
 
         // load the fonts.
         FontLoader fontLoader = FontLoader.create(fontOsLocation);
@@ -179,7 +216,7 @@ public final class Bridge implements ILayoutBridge {
         // the internal version), and put the content in the maps.
         try {
             // WARNING: this only works because the class is already loaded, and therefore
-            // the objects returned by Field.get() are the same as the onea used by
+            // the objects returned by Field.get() are the same as the ones used by
             // the code accessing the R class.
             // int[] does not implement equals/hashCode, and if the parsing used a different class
             // loader for the R class, this would NOT work.
@@ -223,29 +260,50 @@ public final class Bridge implements ILayoutBridge {
     }
 
     /*
+     * For compatilibty purposes, we implement the old deprecated version of computeLayout.
      * (non-Javadoc)
      * @see com.android.layoutlib.api.ILayoutBridge#computeLayout(com.android.layoutlib.api.IXmlPullParser, java.lang.Object, int, int, java.lang.String, java.util.Map, java.util.Map, com.android.layoutlib.api.IProjectCallback, com.android.layoutlib.api.ILayoutLog)
      */
+    @Deprecated
     public ILayoutResult computeLayout(IXmlPullParser layoutDescription,
             Object projectKey,
             int screenWidth, int screenHeight, String themeName,
             Map<String, Map<String, IResourceValue>> projectResources,
             Map<String, Map<String, IResourceValue>> frameworkResources,
             IProjectCallback customViewLoader, ILayoutLog logger) {
-        // DEBUG
-        //long time1 = System.currentTimeMillis();
+        boolean isProjectTheme = false;
+        if (themeName.charAt(0) == '*') {
+            themeName = themeName.substring(1);
+            isProjectTheme = true;
+        }
         
+        return computeLayout(layoutDescription, projectKey, screenWidth, screenHeight, themeName, isProjectTheme,
+                projectResources, frameworkResources, customViewLoader, logger);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.android.layoutlib.api.ILayoutBridge#computeLayout(com.android.layoutlib.api.IXmlPullParser, java.lang.Object, int, int, java.lang.String, boolean, java.util.Map, java.util.Map, com.android.layoutlib.api.IProjectCallback, com.android.layoutlib.api.ILayoutLog)
+     */
+    public ILayoutResult computeLayout(IXmlPullParser layoutDescription,
+            Object projectKey,
+            int screenWidth, int screenHeight, String themeName, boolean isProjectTheme,
+            Map<String, Map<String, IResourceValue>> projectResources,
+            Map<String, Map<String, IResourceValue>> frameworkResources,
+            IProjectCallback customViewLoader, ILayoutLog logger) {
         if (logger == null) {
             logger = sDefaultLogger;
         }
         
-        mLogger = logger;
+        synchronized (sDefaultLogger) {
+            sLogger = logger;
+        }
         
         // find the current theme and compute the style inheritance map
         Map<IStyleResourceValue, IStyleResourceValue> styleParentMap =
             new HashMap<IStyleResourceValue, IStyleResourceValue>();
         
-        IStyleResourceValue currentTheme = computeStyleMaps(themeName,
+        IStyleResourceValue currentTheme = computeStyleMaps(themeName, isProjectTheme,
                 projectResources.get(BridgeConstants.RES_STYLE),
                 frameworkResources.get(BridgeConstants.RES_STYLE), styleParentMap);
         
@@ -278,11 +336,11 @@ public final class Bridge implements ILayoutBridge {
             View view = inflater.inflate(parser, root);
             
             // set the AttachInfo on the root view.
-            AttachInfo info = new AttachInfo(new Handler());
+            AttachInfo info = new AttachInfo(new WindowSession(), new Window(),
+                    new Handler(), null);
             info.mHasWindowFocus = true;
             info.mWindowVisibility = View.VISIBLE;
             info.mInTouchMode = false; // this is so that we can display selections.
-            info.mSession = new WindowSession();
             root.dispatchAttachedToWindow(info, 0);
 
             // get the background drawable
@@ -307,10 +365,6 @@ public final class Bridge implements ILayoutBridge {
             root.draw(canvas);
             canvas.dispose();
             
-            // DEBUG
-            //long time2 = System.currentTimeMillis();
-            //System.out.println("Layout: " + (time2 - time1));
-
             return new LayoutResult(visit(((ViewGroup)view).getChildAt(0), context),
                     canvas.getImage());
         } catch (Throwable e) {
@@ -326,6 +380,11 @@ public final class Bridge implements ILayoutBridge {
             // then return with an ERROR status and the message from the real exception
             return new LayoutResult(ILayoutResult.ERROR,
                     t.getClass().getSimpleName() + ": " + t.getMessage());
+        } finally {
+            // Remove the global logger
+            synchronized (sDefaultLogger) {
+                sLogger = sDefaultLogger;
+            }
         }
     }
 
@@ -354,7 +413,6 @@ public final class Bridge implements ILayoutBridge {
     /**
      * Returns the name of a framework resource whose value is an int array.
      * @param array
-     * @return
      */
     public static String resolveResourceValue(int[] array) {
         return sRArrayMap.get(array);
@@ -388,7 +446,6 @@ public final class Bridge implements ILayoutBridge {
      * bounds of all the views.
      * @param view the root View
      * @param context the context.
-     * @return
      */
     private ILayoutViewInfo visit(View view, BridgeContext context) {
         if (view == null) {
@@ -417,15 +474,15 @@ public final class Bridge implements ILayoutBridge {
      * @param themeName the name of the current theme.  In order to differentiate project and
      * platform themes sharing the same name, all project themes must be prepended with
      * a '*' character.
+     * @param isProjectTheme Is this a project theme 
      * @param inProjectStyleMap the project style map
      * @param inFrameworkStyleMap the framework style map
      * @param outInheritanceMap the map of style inheritance. This is filled by the method
      * @return the {@link IStyleResourceValue} matching <var>themeName</var>
      */
     private IStyleResourceValue computeStyleMaps(
-            String themeName,
-            Map<String, IResourceValue> inProjectStyleMap,
-            Map<String, IResourceValue> inFrameworkStyleMap,
+            String themeName, boolean isProjectTheme, Map<String,
+            IResourceValue> inProjectStyleMap, Map<String, IResourceValue> inFrameworkStyleMap,
             Map<IStyleResourceValue, IStyleResourceValue> outInheritanceMap) {
         
         if (inProjectStyleMap != null && inFrameworkStyleMap != null) {
@@ -433,12 +490,9 @@ public final class Bridge implements ILayoutBridge {
             IResourceValue theme = null;
             
             // project theme names have been prepended with a *
-            if (themeName.charAt(0) == '*') {
-                themeName = themeName.substring(1);
+            if (isProjectTheme) {
                 theme = inProjectStyleMap.get(themeName);
-            }
-
-            if (theme == null) {
+            } else {
                 theme = inFrameworkStyleMap.get(themeName);
             }
             
@@ -550,15 +604,13 @@ public final class Bridge implements ILayoutBridge {
             return (IStyleResourceValue)parent;
         }
         
-        mLogger.error(String.format("Unable to resolve parent style name: ", parentName));
+        sLogger.error(String.format("Unable to resolve parent style name: ", parentName));
         
         return null;
     }
     
     /**
-     * Compute the name of the parent style, or <code>null</code> if the style is a root style.
-     * @param styleName
-     * @return
+     * Computes the name of the parent style, or <code>null</code> if the style is a root style.
      */
     private String getParentName(String styleName) {
         int index = styleName.lastIndexOf('.');
@@ -572,8 +624,6 @@ public final class Bridge implements ILayoutBridge {
     /**
      * Returns the top screen offset. This depends on whether the current theme defines the user
      * of the title and status bars.
-     * @param currentTheme
-     * @param styleInheritanceMap
      * @return the pixel height offset
      */
     private int getScreenOffset(IStyleResourceValue currentTheme, BridgeContext context) {
@@ -705,53 +755,128 @@ public final class Bridge implements ILayoutBridge {
     }
     
     /**
-     * Implementation of IWindowSession so that mSession is not null in the SurfaceView.
+     * Implementation of {@link IWindowSession} so that mSession is not null in
+     * the {@link SurfaceView}.
      */
     private static final class WindowSession implements IWindowSession {
 
-        public int add(IWindow arg0, LayoutParams arg1, int arg2, Rect arg3) throws RemoteException {
+        @SuppressWarnings("unused")
+        public int add(IWindow arg0, LayoutParams arg1, int arg2, Rect arg3)
+                throws RemoteException {
             // pass for now.
             return 0;
         }
 
+        @SuppressWarnings("unused")
         public void finishDrawing(IWindow arg0) throws RemoteException {
             // pass for now.
         }
 
+        @SuppressWarnings("unused")
         public void finishKey(IWindow arg0) throws RemoteException {
             // pass for now.
         }
 
+        @SuppressWarnings("unused")
         public boolean getInTouchMode() throws RemoteException {
             // pass for now.
             return false;
         }
 
+        @SuppressWarnings("unused")
         public MotionEvent getPendingPointerMove(IWindow arg0) throws RemoteException {
             // pass for now.
             return null;
         }
 
+        @SuppressWarnings("unused")
         public MotionEvent getPendingTrackballMove(IWindow arg0) throws RemoteException {
             // pass for now.
             return null;
         }
 
+        @SuppressWarnings("unused")
         public int relayout(IWindow arg0, LayoutParams arg1, int arg2, int arg3, int arg4,
-                Rect arg5, Rect arg6, Surface arg7) throws RemoteException {
+                boolean arg4_5, Rect arg5, Rect arg6, Rect arg7, Surface arg8)
+                throws RemoteException {
             // pass for now.
             return 0;
         }
 
+        public void getDisplayFrame(IWindow window, Rect outDisplayFrame) {
+            // pass for now.
+        }
+        
+        @SuppressWarnings("unused")
         public void remove(IWindow arg0) throws RemoteException {
             // pass for now.
         }
 
+        @SuppressWarnings("unused")
         public void setInTouchMode(boolean arg0) throws RemoteException {
             // pass for now.
         }
 
+        @SuppressWarnings("unused")
         public void setTransparentRegion(IWindow arg0, Region arg1) throws RemoteException {
+            // pass for now.
+        }
+
+        public void setInsets(IWindow window, int touchable, Rect contentInsets,
+                Rect visibleInsets) {
+            // pass for now.
+        }
+        
+        public IBinder asBinder() {
+            // pass for now.
+            return null;
+        }
+    }
+    
+    /**
+     * Implementation of {@link IWindow} to pass to the {@link AttachInfo}.
+     */
+    private static final class Window implements IWindow {
+
+        @SuppressWarnings("unused")
+        public void dispatchAppVisibility(boolean arg0) throws RemoteException {
+            // pass for now.
+        }
+
+        @SuppressWarnings("unused")
+        public void dispatchGetNewSurface() throws RemoteException {
+            // pass for now.
+        }
+
+        @SuppressWarnings("unused")
+        public void dispatchKey(KeyEvent arg0) throws RemoteException {
+            // pass for now.
+        }
+
+        @SuppressWarnings("unused")
+        public void dispatchPointer(MotionEvent arg0, long arg1) throws RemoteException {
+            // pass for now.
+        }
+
+        @SuppressWarnings("unused")
+        public void dispatchTrackball(MotionEvent arg0, long arg1) throws RemoteException {
+            // pass for now.
+        }
+
+        @SuppressWarnings("unused")
+        public void executeCommand(String arg0, String arg1, ParcelFileDescriptor arg2)
+                throws RemoteException {
+            // pass for now.
+        }
+
+        @SuppressWarnings("unused")
+        public void resized(int arg0, int arg1, Rect arg2, Rect arg3, boolean arg4)
+                throws RemoteException {
+            // pass for now.
+        }
+
+        @SuppressWarnings("unused")
+        public void windowFocusChanged(boolean arg0, boolean arg1) throws RemoteException {
             // pass for now.
         }
 
@@ -759,7 +884,6 @@ public final class Bridge implements ILayoutBridge {
             // pass for now.
             return null;
         }
-        
-    };
+    }
 
 }

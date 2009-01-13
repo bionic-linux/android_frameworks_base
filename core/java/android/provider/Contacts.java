@@ -16,6 +16,8 @@
 
 package android.provider;
 
+import com.android.internal.R;
+
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -28,8 +30,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
-
-import com.android.internal.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -170,10 +170,18 @@ public class Contacts {
      */
     public interface PeopleColumns {
         /**
-         * The persons name.
+         * The person's name.
          * <P>Type: TEXT</P>
          */
         public static final String NAME = "name";
+
+        /**
+         * Phonetic equivalent of the person's name, in a locale-dependent
+         * character set (e.g. hiragana for Japanese).
+         * Used for pronunciation and/or collation in some languages.
+         * <p>Type: TEXT</P>
+         */
+        public static final String PHONETIC_NAME = "phonetic_name";
 
         /**
          * The display name. If name is not null name, else if number is not null number,
@@ -1509,6 +1517,12 @@ public class Contacts {
             public static final String NAME = "name";
 
             /**
+             * The extra field for the contact phonetic name.
+             * <P>Type: String</P>
+             */
+            public static final String PHONETIC_NAME = "phonetic_name";
+
+            /**
              * The extra field for the contact company.
              * <P>Type: String</P>
              */
@@ -1535,7 +1549,7 @@ public class Contacts {
             /**
              * The extra field for the contact phone number type.
              * <P>Type: Either an integer value from {@link android.provider.Contacts.PhonesColumns PhonesColumns},
-             *  or a string specifying a type and label.</P>
+             *  or a string specifying a custom label.</P>
              */
             public static final String PHONE_TYPE = "phone_type";
 
@@ -1546,6 +1560,32 @@ public class Contacts {
             public static final String PHONE_ISPRIMARY = "phone_isprimary";
 
             /**
+             * The extra field for an optional second contact phone number.
+             * <P>Type: String</P>
+             */
+            public static final String SECONDARY_PHONE = "secondary_phone";
+
+            /**
+             * The extra field for an optional second contact phone number type.
+             * <P>Type: Either an integer value from {@link android.provider.Contacts.PhonesColumns PhonesColumns},
+             *  or a string specifying a custom label.</P>
+             */
+            public static final String SECONDARY_PHONE_TYPE = "secondary_phone_type";
+
+            /**
+             * The extra field for an optional third contact phone number.
+             * <P>Type: String</P>
+             */
+            public static final String TERTIARY_PHONE = "tertiary_phone";
+
+            /**
+             * The extra field for an optional third contact phone number type.
+             * <P>Type: Either an integer value from {@link android.provider.Contacts.PhonesColumns PhonesColumns},
+             *  or a string specifying a custom label.</P>
+             */
+            public static final String TERTIARY_PHONE_TYPE = "tertiary_phone_type";
+
+            /**
              * The extra field for the contact email address.
              * <P>Type: String</P>
              */
@@ -1554,7 +1594,7 @@ public class Contacts {
             /**
              * The extra field for the contact email type.
              * <P>Type: Either an integer value from {@link android.provider.Contacts.ContactMethodsColumns ContactMethodsColumns}
-             *  or a string specifying a type and label.</P>
+             *  or a string specifying a custom label.</P>
              */
             public static final String EMAIL_TYPE = "email_type";
 
@@ -1565,6 +1605,32 @@ public class Contacts {
             public static final String EMAIL_ISPRIMARY = "email_isprimary";
 
             /**
+             * The extra field for an optional second contact email address.
+             * <P>Type: String</P>
+             */
+            public static final String SECONDARY_EMAIL = "secondary_email";
+
+            /**
+             * The extra field for an optional second contact email type.
+             * <P>Type: Either an integer value from {@link android.provider.Contacts.ContactMethodsColumns ContactMethodsColumns}
+             *  or a string specifying a custom label.</P>
+             */
+            public static final String SECONDARY_EMAIL_TYPE = "secondary_email_type";
+
+            /**
+             * The extra field for an optional third contact email address.
+             * <P>Type: String</P>
+             */
+            public static final String TERTIARY_EMAIL = "tertiary_email";
+
+            /**
+             * The extra field for an optional third contact email type.
+             * <P>Type: Either an integer value from {@link android.provider.Contacts.ContactMethodsColumns ContactMethodsColumns}
+             *  or a string specifying a custom label.</P>
+             */
+            public static final String TERTIARY_EMAIL_TYPE = "tertiary_email_type";
+
+            /**
              * The extra field for the contact postal address.
              * <P>Type: String</P>
              */
@@ -1573,7 +1639,7 @@ public class Contacts {
             /**
              * The extra field for the contact postal address type.
              * <P>Type: Either an integer value from {@link android.provider.Contacts.ContactMethodsColumns ContactMethodsColumns}
-             *  or a string specifying a type and label.</P>
+             *  or a string specifying a custom label.</P>
              */
             public static final String POSTAL_TYPE = "postal_type";
 

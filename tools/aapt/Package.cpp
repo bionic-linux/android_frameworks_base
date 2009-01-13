@@ -22,7 +22,7 @@ static const char* kExcludeExtension = ".EXCLUDE";
 static const char* kNoCompressExt[] = {
     ".jpg", ".jpeg", ".png", ".gif",
     ".wav", ".mp2", ".mp3", ".ogg", ".aac",
-    ".mpg", ".mpeg", ".mid", ".midi", ".smf",
+    ".mpg", ".mpeg", ".mid", ".midi", ".smf", ".jet",
     ".rtttl", ".imy", ".xmf", ".mp4", ".m4a",
     ".m4v", ".3gp", ".3gpp", ".3g2", ".3gpp2",
     ".amr", ".awb", ".wma", ".wmv"
@@ -34,7 +34,7 @@ ssize_t processAssets(Bundle* bundle, ZipFile* zip,
                         const sp<AaptDir>& dir, const AaptGroupEntry& ge);
 bool processFile(Bundle* bundle, ZipFile* zip,
                         const sp<AaptGroup>& group, const sp<AaptFile>& file);
-bool okayToCompress(const String8& pathName);
+bool okayToCompress(Bundle* bundle, const String8& pathName);
 ssize_t processJarFiles(Bundle* bundle, ZipFile* zip);
 
 /*
@@ -327,7 +327,7 @@ bool processFile(Bundle* bundle, ZipFile* zip,
     } else if (!hasData) {
         /* don't compress certain files, e.g. PNGs */
         int compressionMethod = bundle->getCompressionMethod();
-        if (!okayToCompress(storageName)) {
+        if (!okayToCompress(bundle, storageName)) {
             compressionMethod = ZipEntry::kCompressStored;
         }
         result = zip->add(file->getSourceFile().string(), storageName.string(), compressionMethod,
@@ -365,7 +365,7 @@ bool processFile(Bundle* bundle, ZipFile* zip,
  * Determine whether or not we want to try to compress this file based
  * on the file extension.
  */
-bool okayToCompress(const String8& pathName)
+bool okayToCompress(Bundle* bundle, const String8& pathName)
 {
     String8 ext = pathName.getPathExtension();
     int i;
@@ -376,6 +376,19 @@ bool okayToCompress(const String8& pathName)
     for (i = 0; i < NELEM(kNoCompressExt); i++) {
         if (strcasecmp(ext.string(), kNoCompressExt[i]) == 0)
             return false;
+    }
+
+    const android::Vector<const char*>& others(bundle->getNoCompressExtensions());
+    for (i = 0; i < (int)others.size(); i++) {
+        const char* str = others[i];
+        int pos = pathName.length() - strlen(str);
+        if (pos < 0) {
+            continue;
+        }
+        const char* path = pathName.string();
+        if (strcasecmp(path + pos, str) == 0) {
+            return false;
+        }
     }
 
     return true;

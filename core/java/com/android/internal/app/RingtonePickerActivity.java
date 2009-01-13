@@ -139,6 +139,9 @@ public final class RingtonePickerActivity extends AlertActivity implements
         }
         
         mCursor = mRingtoneManager.getCursor();
+        
+        // The volume keys will control the stream that we are choosing a ringtone for
+        setVolumeControlStream(mRingtoneManager.inferStreamType());
 
         // Get the URI whose list item should have a checkmark
         mExistingUri = intent
@@ -166,6 +169,14 @@ public final class RingtonePickerActivity extends AlertActivity implements
 
     public void onPrepareListView(ListView listView) {
         
+        if (mHasDefaultItem) {
+            mDefaultRingtonePos = addDefaultRingtoneItem(listView);
+            
+            if (RingtoneManager.isDefault(mExistingUri)) {
+                mClickedPos = mDefaultRingtonePos;
+            }
+        }
+        
         if (mHasSilentItem) {
             mSilentPos = addSilentItem(listView);
             
@@ -175,14 +186,6 @@ public final class RingtonePickerActivity extends AlertActivity implements
             }
         }
 
-        if (mHasDefaultItem) {
-            mDefaultRingtonePos = addDefaultRingtoneItem(listView);
-            
-            if (RingtoneManager.isDefault(mExistingUri)) {
-                mClickedPos = mDefaultRingtonePos;
-            }
-        }
-        
         if (mClickedPos == -1) {
             mClickedPos = getListPosition(mRingtoneManager.getRingtonePosition(mExistingUri));
         }

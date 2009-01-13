@@ -18,6 +18,7 @@ package android.hardware;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.io.IOException;
 
 import android.util.Log;
 import android.view.Surface;
@@ -98,13 +99,58 @@ public class Camera {
     }
 
     /**
+     * Reconnect to the camera after passing it to MediaRecorder. To save
+     * setup/teardown time, a client of Camera can pass an initialized Camera
+     * object to a MediaRecorder to use for video recording. Once the 
+     * MediaRecorder is done with the Camera, this method can be used to
+     * re-establish a connection with the camera hardware. NOTE: The Camera
+     * object must first be unlocked by the process that owns it before it
+     * can be connected to another proces.
+     *
+     * @throws IOException if the method fails.
+     *
+     * FIXME: Unhide after approval
+     * @hide
+     */
+    public native final void reconnect() throws IOException;
+    
+    /**
+     * Lock the camera to prevent other processes from accessing it. To save
+     * setup/teardown time, a client of Camera can pass an initialized Camera
+     * object to another process. This method is used to re-lock the Camera
+     * object prevent other processes from accessing it. By default, the
+     * Camera object is locked. Locking it again from the same process will
+     * have no effect. Attempting to lock it from another process if it has
+     * not been unlocked will fail.
+     * Returns 0 if lock was successful.
+     *
+     * FIXME: Unhide after approval
+     * @hide
+     */
+    public native final int lock();
+    
+    /**
+     * Unlock the camera to allow aother process to access it. To save
+     * setup/teardown time, a client of Camera can pass an initialized Camera
+     * object to another process. This method is used to unlock the Camera
+     * object before handing off the Camera object to the other process.
+
+     * Returns 0 if unlock was successful.
+     *
+     * FIXME: Unhide after approval
+     * @hide
+     */
+    public native final int unlock();
+    
+    /**
      * Sets the SurfaceHolder to be used for a picture preview. If the surface
      * changed since the last call, the screen will blank. Nothing happens
      * if the same surface is re-set.
      * 
      * @param holder the SurfaceHolder upon which to place the picture preview
+     * @throws IOException if the method fails.
      */
-    public final void setPreviewDisplay(SurfaceHolder holder) {
+    public final void setPreviewDisplay(SurfaceHolder holder) throws IOException {
         setPreviewDisplay(holder.getSurface());
     }
 
@@ -134,6 +180,14 @@ public class Camera {
      * Stop drawing preview frames to the surface.
      */
     public native final void stopPreview();
+    
+    /**
+     * Return current preview state.
+     *
+     * FIXME: Unhide before release
+     * @hide
+     */
+    public native final boolean previewEnabled();
     
     /**
      * Can be called at any time to instruct the camera to use a callback for
@@ -226,7 +280,9 @@ public class Camera {
     };
 
     /**
-     * Registers a callback to be invoked when the auto focus responds.
+     * Starts auto-focus function and registers a callback function to
+     * run when camera is focused. Only valid after startPreview() has
+     * been called.
      * 
      * @param cb the callback to run
      */
@@ -263,10 +319,19 @@ public class Camera {
     };
 
     /**
-     * Registers a callback to be invoked when a picture is taken.
+     * Triggers an asynchronous image capture. The camera service
+     * will initiate a series of callbacks to the application as the
+     * image capture progresses. The shutter callback occurs after
+     * the image is captured. This can be used to trigger a sound
+     * to let the user know that image has been captured. The raw
+     * callback occurs when the raw image data is available. The jpeg
+     * callback occurs when the compressed image is available. If the
+     * application does not need a particular callback, a null can be
+     * passed instead of a callback method.
      * 
-     * @param raw  the callback to run for raw images, may be null
-     * @param jpeg the callback to run for jpeg images, may be null
+     * @param shutter   callback after the image is captured, may be null
+     * @param raw       callback with raw image data, may be null
+     * @param jpeg      callback with jpeg image data, may be null
      */
     public final void takePicture(ShutterCallback shutter, PictureCallback raw,
             PictureCallback jpeg) {
@@ -500,6 +565,58 @@ public class Camera {
         }
 
         /**
+         * Sets the dimensions for EXIF thumbnails.
+         * 
+         * @param width  the width of the thumbnail, in pixels
+         * @param height the height of the thumbnail, in pixels
+         *
+         * FIXME: unhide before release
+         * @hide
+         */
+        public void setThumbnailSize(int width, int height) {
+            set("jpeg-thumbnail-width", width);
+            set("jpeg-thumbnail-height", height);
+        }
+
+        /**
+         * Returns the dimensions for EXIF thumbnail
+         * 
+         * @return a Size object with the height and width setting 
+         *          for the EXIF thumbnails
+         *
+         * FIXME: unhide before release
+         * @hide
+         */
+        public Size getThumbnailSize() {
+            return new Size(getInt("jpeg-thumbnail-width"),
+                            getInt("jpeg-thumbnail-height"));
+        }
+
+        /**
+         * Sets the quality of the EXIF thumbnail
+         * 
+         * @param quality the JPEG quality of the EXIT thumbnail
+         *
+         * FIXME: unhide before release
+         * @hide
+         */
+        public void setThumbnailQuality(int quality) {
+            set("jpeg-thumbnail-quality", quality);
+        }
+
+        /**
+         * Returns the quality setting for the EXIF thumbnail
+         * 
+         * @return the JPEG quality setting of the EXIF thumbnail
+         *
+         * FIXME: unhide before release
+         * @hide
+         */
+        public int getThumbnailQuality() {
+            return getInt("jpeg-thumbnail-quality");
+        }
+
+        /**
          * Sets the rate at which preview frames are received.
          * 
          * @param fps the frame rate (frames per second)
@@ -522,7 +639,7 @@ public class Camera {
          * Sets the image format for preview pictures.
          * 
          * @param pixel_format the desired preview picture format 
-         *                     (<var>PixelFormat.YCbCr_422_SP</var>,
+         *                     (<var>PixelFormat.YCbCr_420_SP</var>,
          *                      <var>PixelFormat.RGB_565</var>, or
          *                      <var>PixelFormat.JPEG</var>)
          * @see android.graphics.PixelFormat
@@ -579,7 +696,7 @@ public class Camera {
          * Sets the image format for pictures.
          * 
          * @param pixel_format the desired picture format 
-         *                     (<var>PixelFormat.YCbCr_422_SP</var>,
+         *                     (<var>PixelFormat.YCbCr_420_SP</var>,
          *                      <var>PixelFormat.RGB_565</var>, or
          *                      <var>PixelFormat.JPEG</var>)
          * @see android.graphics.PixelFormat
@@ -605,6 +722,7 @@ public class Camera {
         private String cameraFormatForPixelFormat(int pixel_format) {
             switch(pixel_format) {
             case PixelFormat.YCbCr_422_SP: return "yuv422sp";
+            case PixelFormat.YCbCr_420_SP: return "yuv420sp";
             case PixelFormat.RGB_565:      return "rgb565";
             case PixelFormat.JPEG:         return "jpeg";
             default:                       return null;
@@ -617,6 +735,9 @@ public class Camera {
 
             if (format.equals("yuv422sp"))
                 return PixelFormat.YCbCr_422_SP;
+
+            if (format.equals("yuv420sp"))
+                return PixelFormat.YCbCr_420_SP;
 
             if (format.equals("rgb565"))
                 return PixelFormat.RGB_565;

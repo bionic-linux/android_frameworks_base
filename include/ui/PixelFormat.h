@@ -43,7 +43,7 @@ enum {
 
     // logical pixel formats used by the SurfaceFlinger -----------------------
     PIXEL_FORMAT_CUSTOM         = -4,
-        // Custom pixel-format described by a PixelFormatInfo sructure
+        // Custom pixel-format described by a PixelFormatInfo structure
 
     PIXEL_FORMAT_TRANSLUCENT    = -3,
         // System chooses a format that supports translucency (many alpha bits)
@@ -61,6 +61,7 @@ enum {
     PIXEL_FORMAT_RGBX_8888   = GGL_PIXEL_FORMAT_RGBX_8888,  // 4x8-bit RGB0
     PIXEL_FORMAT_RGB_888     = GGL_PIXEL_FORMAT_RGB_888,    // 3x8-bit RGB
     PIXEL_FORMAT_RGB_565     = GGL_PIXEL_FORMAT_RGB_565,    // 16-bit RGB
+    PIXEL_FORMAT_BGRA_8888   = GGL_PIXEL_FORMAT_BGRA_8888,  // 4x8-bit BGRA
     PIXEL_FORMAT_RGBA_5551   = GGL_PIXEL_FORMAT_RGBA_5551,  // 16-bit ARGB
     PIXEL_FORMAT_RGBA_4444   = GGL_PIXEL_FORMAT_RGBA_4444,  // 16-bit ARGB
     PIXEL_FORMAT_A_8         = GGL_PIXEL_FORMAT_A_8,        // 8-bit A
@@ -95,7 +96,7 @@ struct PixelFormatInfo
     uint32_t    reserved[2];
 };
 
-// considere caching the results of these functions are they're not
+// Consider caching the results of these functions are they're not
 // guaranteed to be fast.
 ssize_t     bytesPerPixel(PixelFormat format);
 ssize_t     bitsPerPixel(PixelFormat format);
