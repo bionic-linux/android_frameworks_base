@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "z40fac4bda1531510dedabd93f740c86e",
+        "filename": "location/java/com/android/internal/location/LocationCollector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "Defect 1086. due to that defect we have done the renaming, to have it working. On the master branch is the official fix for this defect. We will rename according to master branch.\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zbcae95ce851cc598bac850e8d251aad5",
         "filename": "location/java/com/android/internal/location/NetworkLocationProvider.java",
         "patchSetId": 4
@@ -30,6 +47,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "Should probably not be changed as it changes again in\nthe master branch. (Revert this entire file?).",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z2968cec2002f79551ebac17647f46f18",
+        "filename": "location/java/com/android/internal/location/NetworkLocationProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "Defect 1086. due to that defect we have done the renaming, to have it working. On the master branch is the official fix for this defect. We will rename according to master branch\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "z67a27033c1011b684321c07ed090df16",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecord.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "yes ok. Will be fixed in the next upload\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z5717108d9b38607857bf2e98470dd3bb",
         "filename": "telephony/java/com/android/internal/telephony/AdnRecord.java",
         "patchSetId": 4
@@ -64,6 +115,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "Remove extra blank lines\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z9b4464a601d8eb50e7659797a2684ec7",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecord.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "yes ok. Will be fixed in the next upload\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +155,23 @@
     },
     {
       "key": {
+        "uuid": "zc958cd3cc47a56457cd9d8db365ecd87",
+        "filename": "telephony/java/com/android/internal/telephony/BaseCommands.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "yes we added RILB in logd_write.c line146",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zdbdfb9b3394e37989e1d0721e407ded3",
         "filename": "telephony/java/com/android/internal/telephony/DriverCall.java",
         "patchSetId": 4
@@ -98,6 +183,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "Change to \"RILB\" so this will be routed to logcat\nradio buffer.",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z3335aabd8670919a2e3f8dc5a9b7b3e6",
+        "filename": "telephony/java/com/android/internal/telephony/DriverCall.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "yes, will be fixedin next upload",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +223,23 @@
     },
     {
       "key": {
+        "uuid": "z9260f4db8cdf414d6b753d1e098f6061",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z6a9f6cefec50a49bef0452da79ade325",
         "filename": "telephony/java/com/android/internal/telephony/PhoneProxy.java",
         "patchSetId": 4
@@ -132,6 +251,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "Line to long",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za8ec86ff1e8127d2b55d2e5684249c6a",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneProxy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n\n\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -155,6 +291,23 @@
     },
     {
       "key": {
+        "uuid": "z57b9cdd84d16a36b3012b9185a52cec6",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneSubInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zbe68835cd92ca5fa474aabcb303fc6e0",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 4
@@ -166,6 +319,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "Refactor common code in the two constructors?",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z7cf201477fc1d06f3cda9010cbb47502",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -189,6 +359,23 @@
     },
     {
       "key": {
+        "uuid": "zbb1d790d00c4f26c0c53f9d1b9bfc74a",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z88dcca0e0523b6ece9838ed744f8a90f",
         "filename": "telephony/java/com/android/internal/telephony/RIL.java",
         "patchSetId": 4
@@ -200,6 +387,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "Line is a little to long.",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z1a05ede49a6761f72fa7980812547f30",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -223,6 +427,23 @@
     },
     {
       "key": {
+        "uuid": "z5c31e5f93fda76b88c57bb66a4782902",
+        "filename": "telephony/java/com/android/internal/telephony/ServiceStateTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ze6efd70cb2ba9ac9bec8613a0147ef33",
         "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
         "patchSetId": 4
@@ -234,6 +455,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "Change to CDMA and add this to\n/system/core/liblog/logd_write.c/__android_log_write.",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z54286a70b9d4527f8131029357673b16",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -257,6 +495,23 @@
     },
     {
       "key": {
+        "uuid": "z088d78819b5effc48ccf570062bede4a",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z27f03e7c4e64b014043992ac4199a128",
         "filename": "telephony/java/com/android/internal/telephony/cdma/RuimCard.java",
         "patchSetId": 4
@@ -268,6 +523,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "CDMA?",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zbe7d9527a8924bdb501e9903a1728381",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/RuimCard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -291,6 +563,23 @@
     },
     {
       "key": {
+        "uuid": "zac8102def8fbd9141c575a5809972bf0",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/RuimFileHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z563a9f307f33abaf4aed5e0a7e9148a6",
         "filename": "telephony/java/com/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager.java",
         "patchSetId": 4
@@ -302,6 +591,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "CDMA?",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zb278609fe433d86ad4c4f25b8bd0cf41",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/RuimPhoneBookInterfaceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -325,6 +631,23 @@
     },
     {
       "key": {
+        "uuid": "z66aa1c38721a32add4a01612532300c8",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/RuimRecords.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zafb4cf93f1fba7da12fefd803fbedd1c",
         "filename": "telephony/java/com/android/internal/telephony/cdma/RuimSmsInterfaceManager.java",
         "patchSetId": 4
@@ -342,6 +665,23 @@
     },
     {
       "key": {
+        "uuid": "zb47e581e6f0b94ea585ba0b327433a79",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/RuimSmsInterfaceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "will be fixed in next upload\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z5d7f3c41365b0f87d95bc610d202bad2",
         "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
         "patchSetId": 4
@@ -353,6 +693,23 @@
       "writtenOn": "2009-01-13T05:24:06Z",
       "side": 1,
       "message": "Should this be commented out?",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z7ceab4f56a896d83e2503567f66ad954",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-14T12:19:11Z",
+      "side": 1,
+      "message": "it\u0027s moved to PhoneBase.java, removed here\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
