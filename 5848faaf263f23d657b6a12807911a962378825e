@@ -206,6 +206,125 @@
     },
     {
       "key": {
+        "uuid": "z980c067733fbecee506e297966d7f90c",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "Exposing this doesn\u0027t feel right, but at this time\nit is fairly widely so lets not change it yet:)\n\"Handler h\" below looks easy to change to use an the\naccessor so I\u0027m suggesting it be changed now.",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8e6c7848523492b80dacea72704ac994",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "I agree with your comment, I suggest changing GsmMmiCode\nand DataConnectionTractker use getHandler() and then\nremove this completely from PhoneBase and have the derived\nclasses define the Handler explicitly as before.",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z210540e38bad93feec65aecde13f7041",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zde1bc41d5ab8308d8440f16f607897a3",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "Line to long, here an below",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zed975211eac5054937961dd93e9aa810",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "Line to long",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z6ed1d45cd62d7914cba4fcf097a9d0c4",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "line to long\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z4a3ff93f91d07a58d7cbcba35b26e264",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "line to long",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z9ec8ba685c984b140620bbfda53b8dda",
         "filename": "telephony/java/com/android/internal/telephony/PhoneFactory.java",
         "patchSetId": 4
@@ -478,6 +597,23 @@
     },
     {
       "key": {
+        "uuid": "za4dbc08df81f6300982c5b6b0fafe4a6",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "Should be defined here see comment in PhoneBase.java.",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z3c3e3132fc2f1f9d43f29d3bbf6becf2",
         "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
         "patchSetId": 4
@@ -710,6 +846,40 @@
       "writtenOn": "2009-01-14T12:19:11Z",
       "side": 1,
       "message": "it\u0027s moved to PhoneBase.java, removed here\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zcc81ac2710752b1b8f2bb5442ec19662",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "On 2009/01/14 12:19:11, Stefan Schülein wrote:\n\u003e it\u0027s moved to PhoneBase.java, removed here\n\u003e \n\nShould be defined here see comment in PhoneBase.java.",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z83acdb524a9a06fc543b1b46fef1ba45",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2009-01-14T20:20:45Z",
+      "side": 1,
+      "message": "Change to use getHandler()",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
