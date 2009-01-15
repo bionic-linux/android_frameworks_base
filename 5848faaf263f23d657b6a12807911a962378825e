@@ -257,6 +257,23 @@
     },
     {
       "key": {
+        "uuid": "z6eb109393eaae63396aaf6a7cdafad3b",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-15T13:36:14Z",
+      "side": 1,
+      "message": "ok, fixed with next update\n\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zde1bc41d5ab8308d8440f16f607897a3",
         "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
         "patchSetId": 4
@@ -268,6 +285,23 @@
       "writtenOn": "2009-01-14T20:20:45Z",
       "side": 1,
       "message": "Line to long, here an below",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z8e6c05598b16595800c60d71dff84246",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-15T13:36:14Z",
+      "side": 1,
+      "message": "ok, fixed with next update\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -291,6 +325,23 @@
     },
     {
       "key": {
+        "uuid": "z25558804a0896d50618ff806f349c723",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-15T13:36:14Z",
+      "side": 1,
+      "message": "ok, fixed with next update",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z6ed1d45cd62d7914cba4fcf097a9d0c4",
         "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
         "patchSetId": 4
@@ -308,6 +359,23 @@
     },
     {
       "key": {
+        "uuid": "z89f10b6d3ae00fa0a19be903a171525b",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-15T13:36:14Z",
+      "side": 1,
+      "message": "ok, fixed with next update\n\n",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z4a3ff93f91d07a58d7cbcba35b26e264",
         "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
         "patchSetId": 4
@@ -319,6 +387,23 @@
       "writtenOn": "2009-01-14T20:20:45Z",
       "side": 1,
       "message": "line to long",
+      "revId": "5848faaf263f23d657b6a12807911a962378825e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z425442c9d9a8deac416e4155d36c953a",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000095
+      },
+      "writtenOn": "2009-01-15T13:36:14Z",
+      "side": 1,
+      "message": "ok, fixed with next update\n",
       "revId": "5848faaf263f23d657b6a12807911a962378825e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
