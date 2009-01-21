@@ -17,6 +17,8 @@
 
 package android.util;
 
+import android.os.SystemProperties;
+
 /**
  * Build configuration.  The constants in this class vary depending
  * on release vs. debug build.  This is the configuration for release builds.
@@ -48,4 +50,10 @@ public final class Config
      * Are DEBUG log messages enabled?
      */
     public static final boolean LOGD = true;
+
+    /**
+     * Does this build require provisioning?
+     */
+    public static final boolean REQUIRES_PROVISIONING =
+            SystemProperties.getBoolean("ro.requires_provisioning", false);
 }

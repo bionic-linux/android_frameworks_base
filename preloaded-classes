@@ -312,6 +312,7 @@ android.text.style.WrapTogetherSpan
 android.text.util.Linkify
 android.util.AndroidRuntimeException
 android.util.AttributeSet
+android.util.Config
 android.util.DisplayMetrics
 android.util.FloatMath
 android.util.SparseArray
