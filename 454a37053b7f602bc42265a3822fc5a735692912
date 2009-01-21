@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "z41d7488b2bc9a34f9bb53f3b9aa26530",
+        "filename": "core/java/android/provider/Downloads.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000773
+      },
+      "writtenOn": "2009-01-21T00:45:00Z",
+      "side": 1,
+      "message": "Is this for back compatibility? If yes, please add a comment for obsolete.",
+      "revId": "454a37053b7f602bc42265a3822fc5a735692912",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
