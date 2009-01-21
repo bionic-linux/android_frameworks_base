@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "z5b07db2dc34e74cfa13cbfc90062b9c6",
+        "filename": "core/java/android/util/Config.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2009-01-21T03:06:55Z",
+      "side": 1,
+      "message": "I thought we were going to add a method here instead of constants.  If we add constants, then we\u0027re only going to be able to configure system-defined options, and not app-defined ones.",
+      "revId": "2297bba465c7015b13f29b92b76f38b63e78d0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
