@@ -69,8 +69,9 @@ public abstract class ApplicationThreadNative extends Binder
             data.enforceInterface(IApplicationThread.descriptor);
             IBinder b = data.readStrongBinder();
             boolean finished = data.readInt() != 0;
+            boolean userLeaving = data.readInt() != 0;
             int configChanges = data.readInt();
-            schedulePauseActivity(b, finished, configChanges);
+            schedulePauseActivity(b, finished, userLeaving, configChanges);
             return true;
         }
 
@@ -97,7 +98,8 @@ public abstract class ApplicationThreadNative extends Binder
         {
             data.enforceInterface(IApplicationThread.descriptor);
             IBinder b = data.readStrongBinder();
-            scheduleResumeActivity(b);
+            boolean isForward = data.readInt() != 0;
+            scheduleResumeActivity(b, isForward);
             return true;
         }
         
@@ -120,7 +122,8 @@ public abstract class ApplicationThreadNative extends Binder
             List<ResultInfo> ri = data.createTypedArrayList(ResultInfo.CREATOR);
             List<Intent> pi = data.createTypedArrayList(Intent.CREATOR);
             boolean notResumed = data.readInt() != 0;
-            scheduleLaunchActivity(intent, b, info, state, ri, pi, notResumed);
+            boolean isForward = data.readInt() != 0;
+            scheduleLaunchActivity(intent, b, info, state, ri, pi, notResumed, isForward);
             return true;
         }
         
@@ -342,11 +345,12 @@ class ApplicationThreadProxy implements IApplicationThread {
     }
     
     public final void schedulePauseActivity(IBinder token, boolean finished,
-            int configChanges) throws RemoteException {
+            boolean userLeaving, int configChanges) throws RemoteException {
         Parcel data = Parcel.obtain();
         data.writeInterfaceToken(IApplicationThread.descriptor);
         data.writeStrongBinder(token);
         data.writeInt(finished ? 1 : 0);
+        data.writeInt(userLeaving ? 1 :0);
         data.writeInt(configChanges);
         mRemote.transact(SCHEDULE_PAUSE_ACTIVITY_TRANSACTION, data, null,
                 IBinder.FLAG_ONEWAY);
@@ -376,11 +380,12 @@ class ApplicationThreadProxy implements IApplicationThread {
         data.recycle();
     }
 
-    public final void scheduleResumeActivity(IBinder token)
+    public final void scheduleResumeActivity(IBinder token, boolean isForward)
             throws RemoteException {
         Parcel data = Parcel.obtain();
         data.writeInterfaceToken(IApplicationThread.descriptor);
         data.writeStrongBinder(token);
+        data.writeInt(isForward ? 1 : 0);
         mRemote.transact(SCHEDULE_RESUME_ACTIVITY_TRANSACTION, data, null,
                 IBinder.FLAG_ONEWAY);
         data.recycle();
@@ -399,7 +404,7 @@ class ApplicationThreadProxy implements IApplicationThread {
 
     public final void scheduleLaunchActivity(Intent intent, IBinder token,
             ActivityInfo info, Bundle state, List<ResultInfo> pendingResults,
-    		List<Intent> pendingNewIntents, boolean notResumed)
+    		List<Intent> pendingNewIntents, boolean notResumed, boolean isForward)
     		throws RemoteException {
         Parcel data = Parcel.obtain();
         data.writeInterfaceToken(IApplicationThread.descriptor);
@@ -410,6 +415,7 @@ class ApplicationThreadProxy implements IApplicationThread {
         data.writeTypedList(pendingResults);
         data.writeTypedList(pendingNewIntents);
         data.writeInt(notResumed ? 1 : 0);
+        data.writeInt(isForward ? 1 : 0);
         mRemote.transact(SCHEDULE_LAUNCH_ACTIVITY_TRANSACTION, data, null,
                 IBinder.FLAG_ONEWAY);
         data.recycle();

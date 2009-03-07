@@ -38,7 +38,7 @@
 
 #include <private/media/AudioTrackShared.h>
 
-#include <hardware/AudioHardwareInterface.h>
+#include <hardware_legacy/AudioHardwareInterface.h>
 
 #include "AudioMixer.h"
 #include "AudioFlinger.h"
@@ -104,7 +104,7 @@ AudioFlinger::AudioFlinger()
         mA2dpOutput(0), mOutput(0), mRequestedOutput(0), mAudioRecordThread(0),
         mSampleRate(0), mFrameCount(0), mChannelCount(0), mFormat(0), mMixBuffer(0),
         mLastWriteTime(0), mNumWrites(0), mNumDelayedWrites(0), mStandby(false),
-        mInWrite(false)
+        mInWrite(false), mA2dpDisableCount(0), mA2dpSuppressed(false)
 {
     mHardwareStatus = AUDIO_HW_IDLE;
     mAudioHardware = AudioHardwareInterface::create();
@@ -204,6 +204,27 @@ size_t AudioFlinger::getOutputFrameCount(AudioStreamOut* output)
 {
     return output->bufferSize() / output->channelCount() / sizeof(int16_t);
 }
+
+#ifdef WITH_A2DP
+bool AudioFlinger::streamDisablesA2dp(int streamType)
+{
+    return (streamType == AudioTrack::SYSTEM ||
+            streamType == AudioTrack::RING ||
+            streamType == AudioTrack::ALARM ||
+            streamType == AudioTrack::NOTIFICATION);
+}
+
+void AudioFlinger::setA2dpEnabled(bool enable)
+{
+    if (enable) {
+        LOGD("set output to A2DP\n");
+        setOutput(mA2dpOutput);
+    } else {
+        LOGD("set output to hardware audio\n");
+        setOutput(mHardwareOutput);
+    }
+}
+#endif // WITH_A2DP
 
 status_t AudioFlinger::dumpClients(int fd, const Vector<String16>& args)
 {
@@ -457,7 +478,7 @@ bool AudioFlinger::threadLoop()
             if (UNLIKELY(count)) {
                 for (size_t i=0 ; i<count ; i++) {
                     const sp<Track>& track = tracksToRemove[i];
-                    mActiveTracks.remove(track);
+                    removeActiveTrack(track);
                     if (track->isTerminated()) {
                         mTracks.remove(track);
                         mAudioMixer->deleteTrackName(track->mName);
@@ -653,13 +674,16 @@ status_t AudioFlinger::setRouting(int mode, uint32_t routes, uint32_t mask)
     LOGD("setRouting %d %d %d\n", mode, routes, mask);
     if (mode == AudioSystem::MODE_NORMAL && 
             (mask & AudioSystem::ROUTE_BLUETOOTH_A2DP)) {
+        AutoMutex lock(&mLock);
+
+        bool enableA2dp = false;
         if (routes & AudioSystem::ROUTE_BLUETOOTH_A2DP) {
-            LOGD("set output to A2DP\n");
-            setOutput(mA2dpOutput);
-        } else {
-            LOGD("set output to hardware audio\n");
-            setOutput(mHardwareOutput);
+            if (mA2dpDisableCount > 0)
+                mA2dpSuppressed = true;
+            else
+                enableA2dp = true;
         }
+        setA2dpEnabled(enableA2dp);
         LOGD("setOutput done\n");
     }
 #endif
@@ -776,13 +800,21 @@ status_t AudioFlinger::setStreamVolume(int stream, float value)
         return BAD_VALUE;
     }
 
-    mStreamTypes[stream].volume = value;
     status_t ret = NO_ERROR;
     if (stream == AudioTrack::VOICE_CALL) {
         AutoMutex lock(mHardwareLock);
         mHardwareStatus = AUDIO_SET_VOICE_VOLUME;
         ret = mAudioHardware->setVoiceVolume(value);
         mHardwareStatus = AUDIO_HW_IDLE;
+        // FIXME: This is a temporary fix to re-base the internally
+        // generated in-call audio so that it is never muted, which is
+        // already the case for the hardware routed in-call audio.
+        // When audio stream handling is reworked, this should be
+        // addressed more cleanly.  Fixes #1324; see discussion at
+        // http://review.source.android.com/8224
+        mStreamTypes[stream].volume = value * (1.0 - 1.0 / 6.0) + (1.0 / 6.0);
+    } else {
+        mStreamTypes[stream].volume = value;
     }
     return ret;
 }
@@ -805,6 +837,11 @@ float AudioFlinger::streamVolume(int stream) const
 {
     if (uint32_t(stream) >= AudioTrack::NUM_STREAM_TYPES) {
         return 0.0f;
+    }
+    if (stream == AudioTrack::VOICE_CALL) {
+        // FIXME: Re-base internally generated in-call audio,
+        // reverse of above in setStreamVolume.
+        return (mStreamTypes[stream].volume - (1.0 / 6.0)) / (1.0 - 1.0 / 6.0);
     }
     return mStreamTypes[stream].volume;
 }
@@ -832,10 +869,15 @@ bool AudioFlinger::isMusicActive() const
 
 status_t AudioFlinger::setParameter(const char* key, const char* value)
 {
-    status_t result;
+    status_t result, result2;
     AutoMutex lock(mHardwareLock);
     mHardwareStatus = AUDIO_SET_PARAMETER;
     result = mAudioHardware->setParameter(key, value);
+    if (mA2dpAudioInterface) {
+        result2 = mA2dpAudioInterface->setParameter(key, value);
+        if (result2)
+            result = result2;
+    }
     mHardwareStatus = AUDIO_HW_IDLE;
     return result;
 }
@@ -870,7 +912,7 @@ status_t AudioFlinger::addTrack(const sp<Track>& track)
         // effectively get the latency it requested.
         track->mFillingUpStatus = Track::FS_FILLING;
         track->mResetDone = false;
-        mActiveTracks.add(track);
+        addActiveTrack(track);
         return NO_ERROR;
     }
     return ALREADY_EXISTS;
@@ -892,7 +934,7 @@ void AudioFlinger::remove_track_l(wp<Track> track, int name)
         t->reset();
     }
     audioMixer()->deleteTrackName(name);
-    mActiveTracks.remove(track);
+    removeActiveTrack(track);
     mWaitWorkCV.broadcast();
 }
 
@@ -911,6 +953,44 @@ void AudioFlinger::destroyTrack(const sp<Track>& track)
         mTracks.remove(track);
         audioMixer()->deleteTrackName(keep->name());
     }
+}
+
+void AudioFlinger::addActiveTrack(const wp<Track>& t)
+{
+    mActiveTracks.add(t);
+
+#ifdef WITH_A2DP
+    // disable A2DP for certain stream types
+    sp<Track> track = t.promote();
+    if (streamDisablesA2dp(track->type())) {
+        if (mA2dpDisableCount++ == 0 && isA2dpEnabled()) {
+            setA2dpEnabled(false);
+            mA2dpSuppressed = true;
+            LOGD("mA2dpSuppressed = true\n");
+        }
+        LOGD("mA2dpDisableCount incremented to %d\n", mA2dpDisableCount);
+    }
+#endif
+}
+
+void AudioFlinger::removeActiveTrack(const wp<Track>& t)
+{
+    mActiveTracks.remove(t);
+#ifdef WITH_A2DP
+    // disable A2DP for certain stream types
+    sp<Track> track = t.promote();
+    if (streamDisablesA2dp(track->type())) {
+        if (mA2dpDisableCount > 0) {
+            mA2dpDisableCount--;
+            if (mA2dpDisableCount == 0 && mA2dpSuppressed) {
+                setA2dpEnabled(true);
+                mA2dpSuppressed = false;
+            }
+            LOGD("mA2dpDisableCount decremented to %d\n", mA2dpDisableCount);
+        } else
+            LOGE("mA2dpDisableCount is already zero");
+    }
+#endif
 }
 
 // ----------------------------------------------------------------------------

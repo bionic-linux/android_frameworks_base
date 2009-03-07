@@ -117,6 +117,7 @@ public final class ViewRoot extends Handler implements ViewParent,
 
     View mView;
     View mFocusedView;
+    View mRealFocusedView;  // this is not set to null in touch mode
     int mViewVisibility;
     boolean mAppVisible = true;
 
@@ -971,9 +972,19 @@ public final class ViewRoot extends Handler implements ViewParent,
             
         if (mFirst) {
             // handle first focus request
-            if (mView != null && !mView.hasFocus()) {
-                mView.requestFocus(View.FOCUS_FORWARD);
-                mFocusedView = mView.findFocus();
+            if (DEBUG_INPUT_RESIZE) Log.v(TAG, "First: mView.hasFocus()="
+                    + mView.hasFocus());
+            if (mView != null) {
+                if (!mView.hasFocus()) {
+                    mView.requestFocus(View.FOCUS_FORWARD);
+                    mFocusedView = mRealFocusedView = mView.findFocus();
+                    if (DEBUG_INPUT_RESIZE) Log.v(TAG, "First: requested focused view="
+                            + mFocusedView);
+                } else {
+                    mRealFocusedView = mView.findFocus();
+                    if (DEBUG_INPUT_RESIZE) Log.v(TAG, "First: existing focused view="
+                            + mRealFocusedView);
+                }
             }
         }
 
@@ -1214,13 +1225,16 @@ public final class ViewRoot extends Handler implements ViewParent,
             // requestChildRectangleOnScreen() call (in which case 'rectangle'
             // is non-null and we just want to scroll to whatever that
             // rectangle is).
-            View focus = mFocusedView;
+            View focus = mRealFocusedView;
             if (focus != mLastScrolledFocus) {
                 // If the focus has changed, then ignore any requests to scroll
                 // to a rectangle; first we want to make sure the entire focus
                 // view is visible.
                 rectangle = null;
             }
+            if (DEBUG_INPUT_RESIZE) Log.v(TAG, "Eval scroll: focus=" + focus
+                    + " rectangle=" + rectangle + " ci=" + ci
+                    + " vi=" + vi);
             if (focus == mLastScrolledFocus && !mScrollMayChange
                     && rectangle == null) {
                 // Optimization: if the focus hasn't changed since last
@@ -1234,6 +1248,7 @@ public final class ViewRoot extends Handler implements ViewParent,
                 // a pan so it can be seen.
                 mLastScrolledFocus = focus;
                 mScrollMayChange = false;
+                if (DEBUG_INPUT_RESIZE) Log.v(TAG, "Need to scroll?");
                 // Try to find the rectangle from the focus view.
                 if (focus.getGlobalVisibleRect(mVisRect, null)) {
                     if (DEBUG_INPUT_RESIZE) Log.v(TAG, "Root w="
@@ -1307,7 +1322,9 @@ public final class ViewRoot extends Handler implements ViewParent,
             mAttachInfo.mTreeObserver.dispatchOnGlobalFocusChange(mFocusedView, focused);
             scheduleTraversals();
         }
-        mFocusedView = focused;
+        mFocusedView = mRealFocusedView = focused;
+        if (DEBUG_INPUT_RESIZE) Log.v(TAG, "Request child focus: focus now "
+                + mFocusedView);
     }
 
     public void clearChildFocus(View child) {
@@ -1315,7 +1332,8 @@ public final class ViewRoot extends Handler implements ViewParent,
 
         View oldFocus = mFocusedView;
 
-        mFocusedView = null;
+        if (DEBUG_INPUT_RESIZE) Log.v(TAG, "Clearing child focus");
+        mFocusedView = mRealFocusedView = null;
         if (mView != null && !mView.hasFocus()) {
             // If a view gets the focus, the listener will be invoked from requestChildFocus()
             if (!mView.requestFocus(View.FOCUS_FORWARD)) {
@@ -1579,9 +1597,16 @@ public final class ViewRoot extends Handler implements ViewParent,
                     InputMethodManager imm = InputMethodManager.peekInstance();
                     if (imm != null) {
                         imm.onWindowFocus(mView.findFocus(),
-                                mWindowAttributes.softInputMode, !mHasHadWindowFocus,
-                                mWindowAttributes.flags);
+                                mWindowAttributes.softInputMode,
+                                !mHasHadWindowFocus, mWindowAttributes.flags);
                     }
+                    // Clear the forward bit.  We can just do this directly, since
+                    // the window manager doesn't care about it.
+                    mWindowAttributes.softInputMode &=
+                            ~WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION;
+                    ((WindowManager.LayoutParams)mView.getLayoutParams())
+                            .softInputMode &=
+                                ~WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION;
                     mHasHadWindowFocus = true;
                 }
             }
@@ -2030,14 +2055,20 @@ public final class ViewRoot extends Handler implements ViewParent,
             }
             return;
         }
-        InputMethodManager imm = InputMethodManager.peekInstance();
-        if (imm != null && mView != null && imm.isActive()) {
-            int seq = enqueuePendingEvent(event, sendDone);
-            if (DEBUG_IMF) Log.v(TAG, "Sending key event to IME: seq="
-                    + seq + " event=" + event);
-            imm.dispatchKeyEvent(mView.getContext(), seq, event,
-                    mInputMethodCallback);
-            return;
+        // If it is possible for this window to interact with the input
+        // method window, then we want to first dispatch our key events
+        // to the input method.
+        if (WindowManager.LayoutParams.mayUseInputMethod(
+                mWindowAttributes.flags)) {
+            InputMethodManager imm = InputMethodManager.peekInstance();
+            if (imm != null && mView != null && imm.isActive()) {
+                int seq = enqueuePendingEvent(event, sendDone);
+                if (DEBUG_IMF) Log.v(TAG, "Sending key event to IME: seq="
+                        + seq + " event=" + event);
+                imm.dispatchKeyEvent(mView.getContext(), seq, event,
+                        mInputMethodCallback);
+                return;
+            }
         }
         deliverKeyEventToViewHierarchy(event, sendDone);
     }

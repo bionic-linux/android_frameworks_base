@@ -554,13 +554,15 @@ public final class Gmail {
      *
      * @param account the account of the conversation
      * @param conversationId the conversation
-     * @param maxMessageId the highest message id to whose labels should be changed
+     * @param maxServerMessageId the highest message id to whose labels should be changed. Note that
+     *   everywhere else in this file messageId means local message id but here you need to use a
+     *   server message id.
      * @param label the label to add or remove
      * @param add true to add the label, false to remove it
      * @throws NonexistentLabelException thrown if the label does not exist
      */
     public void addOrRemoveLabelOnConversation(
-            String account, long conversationId, long maxMessageId, String label,
+            String account, long conversationId, long maxServerMessageId, String label,
             boolean add)
             throws NonexistentLabelException {
         if (TextUtils.isEmpty(account)) {
@@ -571,7 +573,7 @@ public final class Gmail {
                     AUTHORITY_PLUS_CONVERSATIONS + account + "/" + conversationId + "/labels");
             ContentValues values = new ContentValues();
             values.put(LabelColumns.CANONICAL_NAME, label);
-            values.put(ConversationColumns.MAX_MESSAGE_ID, maxMessageId);
+            values.put(ConversationColumns.MAX_MESSAGE_ID, maxServerMessageId);
             mContentResolver.insert(uri, values);
         } else {
             String encodedLabel;
@@ -584,7 +586,7 @@ public final class Gmail {
                     AUTHORITY_PLUS_CONVERSATIONS + account + "/"
                             + conversationId + "/labels/" + encodedLabel);
             mContentResolver.delete(
-                    uri, ConversationColumns.MAX_MESSAGE_ID, new String[]{"" + maxMessageId});
+                    uri, ConversationColumns.MAX_MESSAGE_ID, new String[]{"" + maxServerMessageId});
         }
     }
 
@@ -1433,6 +1435,11 @@ public final class Gmail {
             return SORTED_USER_MEANINGFUL_SYSTEM_LABELS;
         }
 
+        /**
+         * If you are ever tempted to remove outbox or draft from this set make sure you have a
+         * way to stop draft and outbox messages from getting purged before they are sent to the
+         * server.
+         */
         private static final Set<String> FORCED_INCLUDED_LABELS =
                 Sets.newHashSet(LABEL_OUTBOX, LABEL_DRAFT);
 
@@ -2368,7 +2375,7 @@ public final class Gmail {
         /**
          * @return the max message id in the conversation
          */
-        public long getMaxMessageId() {
+        public long getMaxServerMessageId() {
             return mCursor.getLong(mMaxMessageIdIndex);
         }
 

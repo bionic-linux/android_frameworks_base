@@ -40,7 +40,7 @@ class IMemoryHeap;
 class OverlayRef : public LightRefBase<OverlayRef>
 {
 public:
-    OverlayRef(overlay_handle_t const*, const sp<IOverlay>&,
+    OverlayRef(overlay_handle_t, const sp<IOverlay>&,
             uint32_t w, uint32_t h, int32_t f, uint32_t ws, uint32_t hs);
 
     static sp<OverlayRef> readFromParcel(const Parcel& data);
@@ -53,8 +53,8 @@ private:
     OverlayRef();
     virtual ~OverlayRef();
 
-    overlay_handle_t const *mOverlayHandle;
-    sp<IOverlay> mOverlayChanel;
+    overlay_handle_t mOverlayHandle;
+    sp<IOverlay> mOverlayChannel;
     uint32_t mWidth;
     uint32_t mHeight;
     int32_t  mFormat;
@@ -74,13 +74,13 @@ public:
     void destroy();
     
     /* get the HAL handle for this overlay */
-    overlay_handle_t const* getHandleRef() const;
+    overlay_handle_t getHandleRef() const;
 
     /* blocks until an overlay buffer is available and return that buffer. */
-    overlay_buffer_t dequeueBuffer();
+    status_t dequeueBuffer(overlay_buffer_t* buffer);
 
     /* release the overlay buffer and post it */
-    int queueBuffer(overlay_buffer_t buffer);
+    status_t queueBuffer(overlay_buffer_t buffer);
 
     /* returns the address of a given buffer if supported, NULL otherwise. */
     void* getBufferAddress(overlay_buffer_t buffer);
@@ -91,6 +91,7 @@ public:
     int32_t getFormat() const;
     int32_t getWidthStride() const;
     int32_t getHeightStride() const;
+    int32_t getBufferCount() const;
     status_t getStatus() const;
     
 private:

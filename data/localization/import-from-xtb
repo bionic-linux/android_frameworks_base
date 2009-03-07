@@ -1,7 +1,5 @@
 #!/bin/sh
 
-locale=it
-
 extract()
 {
     module=$1
@@ -46,9 +44,17 @@ extract()
         p4 edit $out
         p4 add $out
         mkdir -p `dirname $out`
-        ../../../../out/host/linux-x86/bin/transconsole -m $1 $2 -p $module -i $module-$locale.xtb $i > $out
+        if ../../../../out/host/linux-x86/bin/transconsole -m $1 $2 -p $module -i $module-$locale.xtb $i > $out
+        then :
+        else
+            p4 revert $out
+            p4 delete $out
+        fi
     done
 }
+
+for locale in fr it es de nl cs pl ja zh-TW zh-CN ru
+do
 
 extract AndroidAlarmClock ../../../../packages/apps/AlarmClock ../../apps/AlarmClock ../../../../packages/apps/AlarmClock
 extract AndroidBrowser ../../../../packages/apps/Browser ../../apps/Browser ../../../../packages/apps/Browser
@@ -82,5 +88,7 @@ extract AndroidUpdater ../../../../packages/apps/Updater ../../apps/Updater ../.
 extract AndroidVending ../../../../vendor ../../partner ../../../../vendor/google/apps/Vending
 extract AndroidVoiceDialer ../../../../packages/apps/VoiceDialer ../../apps/VoiceDialer ../../../../packages/apps/VoiceDialer
 extract AndroidYoutube ../../../../vendor ../../partner ../../../../vendor/google/apps/YouTube
+
+done
 
 exit 0
