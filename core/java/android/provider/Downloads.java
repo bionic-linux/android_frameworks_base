@@ -63,7 +63,7 @@ public final class Downloads implements BaseColumns {
      * that had initiated a download when that download completes. The
      * download's content: uri is specified in the intent's data.
      */
-    public static final String DOWNLOAD_COMPLETED_ACTION =
+    public static final String ACTION_DOWNLOAD_COMPLETED =
             "android.intent.action.DOWNLOAD_COMPLETED";
 
     /**
@@ -76,7 +76,7 @@ public final class Downloads implements BaseColumns {
      * Note: this is not currently sent for downloads that have completed
      * successfully.
      */
-    public static final String NOTIFICATION_CLICKED_ACTION =
+    public static final String ACTION_NOTIFICATION_CLICKED =
             "android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED";
 
     /**
@@ -84,14 +84,14 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init/Read</P>
      */
-    public static final String URI = "uri";
+    public static final String COLUMN_URI = "uri";
 
     /**
      * The name of the column containing application-specific data.
      * <P>Type: TEXT</P>
      * <P>Owner can Init/Read/Write</P>
      */
-    public static final String APP_DATA = "entity";
+    public static final String COLUMN_APP_DATA = "entity";
 
     /**
      * The name of the column containing the flags that indicates whether
@@ -104,7 +104,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: BOOLEAN</P>
      * <P>Owner can Init</P>
      */
-    public static final String NO_INTEGRITY = "no_integrity";
+    public static final String COLUMN_NO_INTEGRITY = "no_integrity";
 
     /**
      * The name of the column containing the filename that the initiating
@@ -113,7 +113,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init</P>
      */
-    public static final String FILENAME_HINT = "hint";
+    public static final String COLUMN_FILE_NAME_HINT = "hint";
 
     /**
      * The name of the column containing the filename where the downloaded data
@@ -128,7 +128,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init/Read</P>
      */
-    public static final String MIMETYPE = "mimetype";
+    public static final String COLUMN_MIME_TYPE = "mimetype";
 
     /**
      * The name of the column containing the flag that controls the destination
@@ -136,7 +136,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: INTEGER</P>
      * <P>Owner can Init</P>
      */
-    public static final String DESTINATION = "destination";
+    public static final String COLUMN_DESTINATION = "destination";
 
     /**
      * The name of the column containing the flags that controls whether the
@@ -145,7 +145,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: INTEGER</P>
      * <P>Owner can Init/Read/Write</P>
      */
-    public static final String VISIBILITY = "visibility";
+    public static final String COLUMN_VISIBILITY = "visibility";
 
     /**
      * The name of the column containing the current control state  of the download.
@@ -154,7 +154,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: INTEGER</P>
      * <P>Owner can Read</P>
      */
-    public static final String CONTROL = "control";
+    public static final String COLUMN_CONTROL = "control";
 
     /**
      * The name of the column containing the current status of the download.
@@ -163,7 +163,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: INTEGER</P>
      * <P>Owner can Read</P>
      */
-    public static final String STATUS = "status";
+    public static final String COLUMN_STATUS = "status";
 
     /**
      * The name of the column containing the date at which some interesting
@@ -172,7 +172,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: BIGINT</P>
      * <P>Owner can Read</P>
      */
-    public static final String LAST_MODIFICATION = "lastmod";
+    public static final String COLUMN_LAST_MODIFICATION = "lastmod";
 
     /**
      * The name of the column containing the package name of the application
@@ -181,7 +181,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init/Read</P>
      */
-    public static final String NOTIFICATION_PACKAGE = "notificationpackage";
+    public static final String COLUMN_NOTIFICATION_PACKAGE = "notificationpackage";
 
     /**
      * The name of the column containing the component name of the class that
@@ -191,7 +191,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init/Read</P>
      */
-    public static final String NOTIFICATION_CLASS = "notificationclass";
+    public static final String COLUMN_NOTIFICATION_CLASS = "notificationclass";
 
     /**
      * If extras are specified when requesting a download they will be provided in the intent that
@@ -199,7 +199,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init</P>
      */
-    public static final String NOTIFICATION_EXTRAS = "notificationextras";
+    public static final String COLUMN_NOTIFICATION_EXTRAS = "notificationextras";
 
     /**
      * The name of the column contain the values of the cookie to be used for
@@ -208,7 +208,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init</P>
      */
-    public static final String COOKIE_DATA = "cookiedata";
+    public static final String COLUMN_COOKIE_DATA = "cookiedata";
 
     /**
      * The name of the column containing the user agent that the initiating
@@ -216,7 +216,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init</P>
      */
-    public static final String USER_AGENT = "useragent";
+    public static final String COLUMN_USER_AGENT = "useragent";
 
     /**
      * The name of the column containing the referer (sic) that the initiating
@@ -224,7 +224,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init</P>
      */
-    public static final String REFERER = "referer";
+    public static final String COLUMN_REFERER = "referer";
 
     /**
      * The name of the column containing the total size of the file being
@@ -232,7 +232,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: INTEGER</P>
      * <P>Owner can Read</P>
      */
-    public static final String TOTAL_BYTES = "total_bytes";
+    public static final String COLUMN_TOTAL_BYTES = "total_bytes";
 
     /**
      * The name of the column containing the size of the part of the file that
@@ -240,7 +240,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: INTEGER</P>
      * <P>Owner can Read</P>
      */
-    public static final String CURRENT_BYTES = "current_bytes";
+    public static final String COLUMN_CURRENT_BYTES = "current_bytes";
 
     /**
      * The name of the column where the initiating application can provide the
@@ -252,7 +252,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: INTEGER</P>
      * <P>Owner can Init</P>
      */
-    public static final String OTHER_UID = "otheruid";
+    public static final String COLUMN_OTHER_UID = "otheruid";
 
     /**
      * The name of the column where the initiating application can provided the
@@ -261,7 +261,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init/Read/Write</P>
      */
-    public static final String TITLE = "title";
+    public static final String COLUMN_TITLE = "title";
 
     /**
      * The name of the column where the initiating application can provide the
@@ -270,7 +270,7 @@ public final class Downloads implements BaseColumns {
      * <P>Type: TEXT</P>
      * <P>Owner can Init/Read/Write</P>
      */
-    public static final String DESCRIPTION = "description";
+    public static final String COLUMN_DESCRIPTION = "description";
 
     /*
      * Lists the destinations that an application can specify for a download.
@@ -471,34 +471,40 @@ public final class Downloads implements BaseColumns {
     public static final int STATUS_UNHANDLED_REDIRECT = 493;
 
     /**
-     * This download couldn't be completed because there were
-     * too many redirects.
-     */
-    public static final int STATUS_TOO_MANY_REDIRECTS = 494;
-
-    /**
      * This download couldn't be completed because of an
      * unspecified unhandled HTTP code.
      */
-    public static final int STATUS_UNHANDLED_HTTP_CODE = 495;
+    public static final int STATUS_UNHANDLED_HTTP_CODE = 494;
 
     /**
      * This download couldn't be completed because of an
      * error receiving or processing data at the HTTP level.
      */
-    public static final int STATUS_HTTP_DATA_ERROR = 496;
+    public static final int STATUS_HTTP_DATA_ERROR = 495;
 
     /**
-     * This download is visible and shows in the notifications while
-     * in progress and after completion.
+     * This download couldn't be completed because of an
+     * HttpException while setting up the request.
      */
-    public static final int VISIBILITY_VISIBLE_NOTIFY_COMPLETED = 0;
+    public static final int STATUS_HTTP_EXCEPTION = 496;
+
+    /**
+     * This download couldn't be completed because there were
+     * too many redirects.
+     */
+    public static final int STATUS_TOO_MANY_REDIRECTS = 497;
 
     /**
      * This download is visible but only shows in the notifications
      * while it's in progress.
      */
-    public static final int VISIBILITY_VISIBLE = 1;
+    public static final int VISIBILITY_VISIBLE = 0;
+
+    /**
+     * This download is visible and shows in the notifications while
+     * in progress and after completion.
+     */
+    public static final int VISIBILITY_VISIBLE_NOTIFY_COMPLETED = 1;
 
     /**
      * This download doesn't show in the UI or in the notifications.

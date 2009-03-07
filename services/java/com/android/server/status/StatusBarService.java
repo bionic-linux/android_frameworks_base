@@ -331,6 +331,7 @@ public class StatusBarService extends IStatusBar.Stub
                 mPixelFormat);
         lp.gravity = Gravity.TOP | Gravity.FILL_HORIZONTAL;
         lp.setTitle("StatusBar");
+        lp.windowAnimations = R.style.Animation_StatusBar;
 
         WindowManagerImpl.getDefault().addView(mStatusBarView, lp);
     }
@@ -1476,7 +1477,8 @@ public class StatusBarService extends IStatusBar.Stub
         lp.type = WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL;
         lp.flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
                 | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
         lp.format = pixelFormat;
         lp.gravity = Gravity.TOP | Gravity.FILL_HORIZONTAL;
         lp.setTitle("StatusBarExpanded");

@@ -1072,6 +1072,7 @@ public final class ActivityThread {
         List<Intent> pendingIntents;
 
         boolean startsNotResumed;
+        boolean isForward;
 
         ActivityRecord() {
             parent = null;
@@ -1206,10 +1207,12 @@ public final class ActivityThread {
         private static final String TWO_COUNT_COLUMNS = "%17s %8d %17s %8d";
 
         public final void schedulePauseActivity(IBinder token, boolean finished,
-                int configChanges) {
+                boolean userLeaving, int configChanges) {
             queueOrSendMessage(
                     finished ? H.PAUSE_ACTIVITY_FINISHING : H.PAUSE_ACTIVITY,
-                    token, configChanges);
+                    token,
+                    (userLeaving ? 1 : 0),
+                    configChanges);
         }
 
         public final void scheduleStopActivity(IBinder token, boolean showWindow,
@@ -1225,8 +1228,8 @@ public final class ActivityThread {
                 token);
         }
 
-        public final void scheduleResumeActivity(IBinder token) {
-            queueOrSendMessage(H.RESUME_ACTIVITY, token);
+        public final void scheduleResumeActivity(IBinder token, boolean isForward) {
+            queueOrSendMessage(H.RESUME_ACTIVITY, token, isForward ? 1 : 0);
         }
 
         public final void scheduleSendResult(IBinder token, List<ResultInfo> results) {
@@ -1240,7 +1243,7 @@ public final class ActivityThread {
         // activity itself back to the activity manager. (matters more with ipc)
         public final void scheduleLaunchActivity(Intent intent, IBinder token,
                 ActivityInfo info, Bundle state, List<ResultInfo> pendingResults,
-                List<Intent> pendingNewIntents, boolean notResumed) {
+                List<Intent> pendingNewIntents, boolean notResumed, boolean isForward) {
             ActivityRecord r = new ActivityRecord();
 
             r.token = token;
@@ -1252,6 +1255,7 @@ public final class ActivityThread {
             r.pendingIntents = pendingNewIntents;
 
             r.startsNotResumed = notResumed;
+            r.isForward = isForward;
 
             queueOrSendMessage(H.LAUNCH_ACTIVITY, r);
         }
@@ -1586,10 +1590,10 @@ public final class ActivityThread {
                     handleRelaunchActivity(r, msg.arg1);
                 } break;
                 case PAUSE_ACTIVITY:
-                    handlePauseActivity((IBinder)msg.obj, false, msg.arg2);
+                    handlePauseActivity((IBinder)msg.obj, false, msg.arg1 != 0, msg.arg2);
                     break;
                 case PAUSE_ACTIVITY_FINISHING:
-                    handlePauseActivity((IBinder)msg.obj, true, msg.arg2);
+                    handlePauseActivity((IBinder)msg.obj, true, msg.arg1 != 0, msg.arg2);
                     break;
                 case STOP_ACTIVITY_SHOW:
                     handleStopActivity((IBinder)msg.obj, true, msg.arg2);
@@ -1604,7 +1608,8 @@ public final class ActivityThread {
                     handleWindowVisibility((IBinder)msg.obj, false);
                     break;
                 case RESUME_ACTIVITY:
-                    handleResumeActivity((IBinder)msg.obj, true);
+                    handleResumeActivity((IBinder)msg.obj, true,
+                            msg.arg1 != 0);
                     break;
                 case SEND_RESULT:
                     handleSendResult((ResultData)msg.obj);
@@ -2167,7 +2172,7 @@ public final class ActivityThread {
         Activity a = performLaunchActivity(r);
 
         if (a != null) {
-            handleResumeActivity(r.token, false);
+            handleResumeActivity(r.token, false, r.isForward);
 
             if (!r.activity.mFinished && r.startsNotResumed) {
                 // The activity manager actually wants this one to start out
@@ -2522,7 +2527,7 @@ public final class ActivityThread {
         return r;
     }
 
-    final void handleResumeActivity(IBinder token, boolean clearHide) {
+    final void handleResumeActivity(IBinder token, boolean clearHide, boolean isForward) {
         // If we are getting ready to gc after going to the background, well
         // we are back active so skip it.
         unscheduleGcIdler();
@@ -2537,6 +2542,9 @@ public final class ActivityThread {
                 a.mStartedActivity + ", hideForNow: " + r.hideForNow
                 + ", finished: " + a.mFinished);
 
+            final int forwardBit = isForward ?
+                    WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION : 0;
+            
             // If the window hasn't yet been added to the window manager,
             // and this guy didn't finish itself or start another activity,
             // then go ahead and add the window.
@@ -2548,6 +2556,7 @@ public final class ActivityThread {
                 WindowManager.LayoutParams l = r.window.getAttributes();
                 a.mDecor = decor;
                 l.type = WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
+                l.softInputMode |= forwardBit;
                 wm.addView(decor, l);
 
             // If the window has already been added, but during resume
@@ -2566,6 +2575,18 @@ public final class ActivityThread {
                 if (r.newConfig != null) {
                     performConfigurationChanged(r.activity, r.newConfig);
                     r.newConfig = null;
+                }
+                Log.v(TAG, "Resuming " + r + " with isForward=" + isForward);
+                WindowManager.LayoutParams l = r.window.getAttributes();
+                if ((l.softInputMode
+                        & WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION)
+                        != forwardBit) {
+                    l.softInputMode = (l.softInputMode
+                            & (~WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION))
+                            | forwardBit;
+                    ViewManager wm = a.getWindowManager();
+                    View decor = r.window.getDecorView();
+                    wm.updateViewLayout(decor, l);
                 }
                 r.activity.mDecor.setVisibility(View.VISIBLE);
                 mNumVisibleActivities++;
@@ -2628,9 +2649,14 @@ public final class ActivityThread {
     }
 
     private final void handlePauseActivity(IBinder token, boolean finished,
-            int configChanges) {
+            boolean userLeaving, int configChanges) {
         ActivityRecord r = mActivities.get(token);
         if (r != null) {
+            //Log.v(TAG, "userLeaving=" + userLeaving + " handling pause of " + r);
+            if (userLeaving) {
+                performUserLeavingActivity(r);
+            }
+            
             r.activity.mConfigChangeFlags |= configChanges;
             Bundle state = performPauseActivity(token, finished, true);
 
@@ -2640,6 +2666,10 @@ public final class ActivityThread {
             } catch (RemoteException ex) {
             }
         }
+    }
+
+    final void performUserLeavingActivity(ActivityRecord r) {
+        mInstrumentation.callActivityOnUserLeaving(r.activity);
     }
 
     final Bundle performPauseActivity(IBinder token, boolean finished,

@@ -165,6 +165,10 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
      * value to another, when no window animation is driving it.
      */
     static final int DEFAULT_DIM_DURATION = 200;
+
+    /** Adjustment to time to perform a dim, to make it more dramatic.
+     */
+    static final int DIM_DURATION_MULTIPLIER = 6;
     
     static final int UPDATE_FOCUS_NORMAL = 0;
     static final int UPDATE_FOCUS_WILL_ASSIGN_LAYERS = 1;
@@ -541,7 +545,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         return -1;
     }
     
-    private void addWindowToListInOrderLocked(WindowState win) {
+    private void addWindowToListInOrderLocked(WindowState win, boolean addToToken) {
         final IWindow client = win.mClient;
         final WindowToken token = win.mToken;
         final ArrayList localmWindows = mWindows;
@@ -669,7 +673,9 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                     + i + " of " + N);
                 localmWindows.add(i, win);
             }
-            token.windows.add(tokenWindowsPos, win);
+            if (addToToken) {
+                token.windows.add(tokenWindowsPos, win);
+            }
 
         } else {
             // Figure out this window's ordering relative to the window
@@ -689,7 +695,9 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                     // For negative sublayers, we go below all windows
                     // in the same sublayer.
                     if (wSublayer >= sublayer) {
-                        token.windows.add(i, win);
+                        if (addToToken) {
+                            token.windows.add(i, win);
+                        }
                         placeWindowBefore(
                             wSublayer >= 0 ? attached : w, win);
                         break;
@@ -698,14 +706,18 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                     // For positive sublayers, we go above all windows
                     // in the same sublayer.
                     if (wSublayer > sublayer) {
-                        token.windows.add(i, win);
+                        if (addToToken) {
+                            token.windows.add(i, win);
+                        }
                         placeWindowBefore(w, win);
                         break;
                     }
                 }
             }
             if (i >= NA) {
-                token.windows.add(win);
+                if (addToToken) {
+                    token.windows.add(win);
+                }
                 if (sublayer < 0) {
                     placeWindowBefore(attached, win);
                 } else {
@@ -717,7 +729,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             }
         }
         
-        if (win.mAppToken != null) {
+        if (win.mAppToken != null && addToToken) {
             win.mAppToken.allAppWindows.add(win);
         }
     }
@@ -759,19 +771,46 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             return;
         }
         win.mTargetAppToken = null;
-        addWindowToListInOrderLocked(win);
+        addWindowToListInOrderLocked(win, true);
         moveInputMethodDialogsLocked(pos);
+    }
+    
+    private int tmpRemoveWindowLocked(int interestingPos, WindowState win) {
+        int wpos = mWindows.indexOf(win);
+        if (wpos >= 0) {
+            if (wpos < interestingPos) interestingPos--;
+            mWindows.remove(wpos);
+            int NC = win.mChildWindows.size();
+            while (NC > 0) {
+                NC--;
+                WindowState cw = (WindowState)win.mChildWindows.get(NC);
+                int cpos = mWindows.indexOf(cw);
+                if (cpos >= 0) {
+                    if (cpos < interestingPos) interestingPos--;
+                    mWindows.remove(cpos);
+                }
+            }
+        }
+        return interestingPos;
+    }
+    
+    private void reAddWindowToListInOrderLocked(WindowState win) {
+        addWindowToListInOrderLocked(win, false);
+        // This is a hack to get all of the child windows added as well
+        // at the right position.  Child windows should be rare and
+        // this case should be rare, so it shouldn't be that big a deal.
+        int wpos = mWindows.indexOf(win);
+        if (wpos >= 0) {
+            mWindows.remove(wpos);
+            reAddWindowLocked(wpos, win);
+        }
     }
     
     void moveInputMethodDialogsLocked(int pos) {
         ArrayList<WindowState> dialogs = mInputMethodDialogs;
         final int N = dialogs.size();
         for (int i=0; i<N; i++) {
-            int wpos = mWindows.indexOf(dialogs.get(i));
-            if (wpos >= 0) {
-                if (wpos < pos) pos--;
-                mWindows.remove(wpos);
-            }
+            pos = tmpRemoveWindowLocked(pos, dialogs.get(i));
         }
         if (pos >= 0) {
             final AppWindowToken targetAppToken = mInputMethodTarget.mAppToken;
@@ -782,15 +821,14 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             for (int i=0; i<N; i++) {
                 WindowState win = dialogs.get(i);
                 win.mTargetAppToken = targetAppToken;
-                mWindows.add(pos, win);
-                pos++;
+                pos = reAddWindowLocked(pos, win);
             }
             return;
         }
         for (int i=0; i<N; i++) {
             WindowState win = dialogs.get(i);
             win.mTargetAppToken = null;
-            addWindowToListInOrderLocked(win);
+            reAddWindowToListInOrderLocked(win);
         }
     }
     
@@ -806,26 +844,49 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             // In this case, the input method windows are to be placed
             // immediately above the window they are targeting.
             
-            WindowState firstImWin = imPos < DN
+            // First check to see if the input method windows are already
+            // located here, and contiguous.
+            final int N = mWindows.size();
+            WindowState firstImWin = imPos < N
                     ? (WindowState)mWindows.get(imPos) : null;
-            if (imWin != null) {
-                if (imWin == firstImWin) {
-                    // Already at the correct location!
-                    return false;
+                    
+            // Figure out the actual input method window that should be
+            // at the bottom of their stack.
+            WindowState baseImWin = imWin != null
+                    ? imWin : mInputMethodDialogs.get(0);
+            if (baseImWin.mChildWindows.size() > 0) {
+                WindowState cw = (WindowState)baseImWin.mChildWindows.get(0);
+                if (cw.mSubLayer < 0) baseImWin = cw;
+            }
+            
+            if (firstImWin == baseImWin) {
+                // The windows haven't moved...  but are they still contiguous?
+                // First find the top IM window.
+                int pos = imPos+1;
+                while (pos < N) {
+                    if (!((WindowState)mWindows.get(pos)).mIsImWindow) {
+                        break;
+                    }
+                    pos++;
                 }
-            } else {
-                if (mInputMethodDialogs.get(0) == firstImWin) {
-                    // Already at the correct location!
+                pos++;
+                // Now there should be no more input method windows above.
+                while (pos < N) {
+                    if (((WindowState)mWindows.get(pos)).mIsImWindow) {
+                        break;
+                    }
+                    pos++;
+                }
+                if (pos >= N) {
+                    // All is good!
                     return false;
                 }
             }
             
             if (imWin != null) {
-                int oldPos = mWindows.indexOf(imWin);
-                mWindows.remove(oldPos);
-                if (imPos > oldPos) imPos--;
+                imPos = tmpRemoveWindowLocked(imPos, imWin);
                 imWin.mTargetAppToken = mInputMethodTarget.mAppToken;
-                mWindows.add(imPos, imWin);
+                reAddWindowLocked(imPos, imWin);
                 if (DN > 0) moveInputMethodDialogsLocked(imPos+1);
             } else {
                 moveInputMethodDialogsLocked(imPos);
@@ -836,9 +897,9 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             // because they aren't currently associated with a focus window.
             
             if (imWin != null) {
-                mWindows.remove(imWin);
+                tmpRemoveWindowLocked(0, imWin);
                 imWin.mTargetAppToken = null;
-                addWindowToListInOrderLocked(imWin);
+                reAddWindowToListInOrderLocked(imWin);
                 if (DN > 0) moveInputMethodDialogsLocked(-1);;
             } else {
                 moveInputMethodDialogsLocked(-1);;
@@ -985,10 +1046,11 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                 imMayMove = false;
             } else if (attrs.type == TYPE_INPUT_METHOD_DIALOG) {
                 mInputMethodDialogs.add(win);
+                addWindowToListInOrderLocked(win, true);
                 adjustInputMethodDialogsLocked();
                 imMayMove = false;
             } else {
-                addWindowToListInOrderLocked(win);
+                addWindowToListInOrderLocked(win, true);
             }
             
             Binder.restoreCallingIdentity(origId);
@@ -1071,7 +1133,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         if (win.mSurface != null && !mDisplayFrozen) {
             // If we are not currently running the exit animation, we
             // need to see about starting one.
-            if (win.isVisible()) {
+            if (win.isVisibleLw()) {
                 int transit = WindowManagerPolicy.TRANSIT_EXIT;
                 if (win.getAttrs().type == TYPE_APPLICATION_STARTING) {
                     transit = WindowManagerPolicy.TRANSIT_PREVIEW_DONE;
@@ -1281,7 +1343,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             win.mViewVisibility = viewVisibility;
             if (viewVisibility == View.VISIBLE &&
                     (win.mAppToken == null || !win.mAppToken.clientHidden)) {
-                displayed = !win.isVisible();
+                displayed = !win.isVisibleLw();
                 if (win.mExiting) {
                     win.mExiting = false;
                     win.mAnimation = null;
@@ -1331,7 +1393,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                         if (win.getAttrs().type == TYPE_APPLICATION_STARTING) {
                             transit = WindowManagerPolicy.TRANSIT_PREVIEW_DONE;
                         }
-                        if (win.isVisible() &&
+                        if (win.isVisibleLw() &&
                               applyAnimationLocked(win, transit, false)) {
                             win.mExiting = true;
                             mKeyWaiter.finishedKey(session, client, true,
@@ -1910,6 +1972,10 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         }
     }
 
+    public int getPendingAppTransition() {
+        return mNextAppTransition;
+    }
+    
     public void executeAppTransition() {
         if (!checkCallingPermission(android.Manifest.permission.MANAGE_APP_TOKENS,
                 "executeAppTransition()")) {
@@ -1988,7 +2054,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                         mWindows.remove(startingWindow);
                         ttoken.windows.remove(startingWindow);
                         ttoken.allAppWindows.remove(startingWindow);
-                        addWindowToListInOrderLocked(startingWindow);
+                        addWindowToListInOrderLocked(startingWindow, true);
                         wtoken.allAppWindows.add(startingWindow);
                         
                         // Propagate other interesting state between the
@@ -2153,6 +2219,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                 if (swin != null && (swin.mDrawPending
                         || swin.mCommitDrawPending)) {
                     swin.mPolicyVisibility = false;
+                    swin.mPolicyVisibilityAfterAnim = false;
                  }
             }
             
@@ -2487,26 +2554,30 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         return 0;
     }
 
+    private final int reAddWindowLocked(int index, WindowState win) {
+        final int NCW = win.mChildWindows.size();
+        boolean added = false;
+        for (int j=0; j<NCW; j++) {
+            WindowState cwin = (WindowState)win.mChildWindows.get(j);
+            if (cwin.mSubLayer >= 0) {
+                mWindows.add(index, win);
+                index++;
+                added = true;
+            }
+            mWindows.add(index, cwin);
+            index++;
+        }
+        if (!added) {
+            mWindows.add(index, win);
+            index++;
+        }
+        return index;
+    }
+    
     private final int reAddAppWindowsLocked(int index, WindowToken token) {
         final int NW = token.windows.size();
         for (int i=0; i<NW; i++) {
-            WindowState win = token.windows.get(i);
-            final int NCW = win.mChildWindows.size();
-            boolean added = false;
-            for (int j=0; j<NCW; j++) {
-                WindowState cwin = (WindowState)win.mChildWindows.get(j);
-                if (cwin.mSubLayer >= 0) {
-                    mWindows.add(index, win);
-                    index++;
-                    added = true;
-                }
-                mWindows.add(index, cwin);
-                index++;
-            }
-            if (!added) {
-                mWindows.add(index, win);
-                index++;
-            }
+            index = reAddWindowLocked(index, token.windows.get(i));
         }
         return index;
     }
@@ -2835,7 +2906,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             final int N = mWindows.size();
             for (int i=0; i<N; i++) {
                 WindowState w = (WindowState)mWindows.get(i);
-                if (w.isVisible() && !w.isDisplayedLw()) {
+                if (w.isVisibleLw() && !w.isDisplayedLw()) {
                     return;
                 }
             }
@@ -4060,7 +4131,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                                     topErrWindow = child;
                                 }
                             }
-                            if (!child.isVisible()) {
+                            if (!child.isVisibleLw()) {
                                 //Log.i(TAG, "Not visible!");
                                 continue;
                             }
@@ -4389,7 +4460,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             }
             
             if (mLastWin == null || !mLastWin.mToken.paused
-                || !mLastWin.isVisible()) {
+                || !mLastWin.isVisibleLw()) {
                 // If the current window has been paused, we aren't -really-
                 // finished...  so let the waiters still wait.
                 mLastWin = null;
@@ -4921,8 +4992,10 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         final int mBaseLayer;
         final int mSubLayer;
         final boolean mLayoutAttached;
+        final boolean mIsImWindow;
         int mViewVisibility;
         boolean mPolicyVisibility = true;
+        boolean mPolicyVisibilityAfterAnim = true;
         boolean mAppFreezing;
         Surface mSurface;
         boolean mAttachedHidden;    // is our parent window hidden?
@@ -5071,6 +5144,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                 mDeathRecipient = null;
                 mAttachedWindow = null;
                 mLayoutAttached = false;
+                mIsImWindow = false;
                 mBaseLayer = 0;
                 mSubLayer = 0;
                 return;
@@ -5089,6 +5163,8 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                 mAttachedWindow.mChildWindows.add(this);
                 mLayoutAttached = mAttrs.type !=
                         WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+                mIsImWindow = attachedWindow.mAttrs.type == TYPE_INPUT_METHOD
+                        || attachedWindow.mAttrs.type == TYPE_INPUT_METHOD_DIALOG;
             } else {
                 // The multiplier here is to reserve space for multiple
                 // windows in the same type layer.
@@ -5098,6 +5174,8 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                 mSubLayer = 0;
                 mAttachedWindow = null;
                 mLayoutAttached = false;
+                mIsImWindow = mAttrs.type == TYPE_INPUT_METHOD
+                        || mAttrs.type == TYPE_INPUT_METHOD_DIALOG;
             }
 
             WindowState appWin = this;
@@ -5562,6 +5640,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             mAnimation = null;
             mAnimLayer = mLayer;
             mHasTransformation = false;
+            mPolicyVisibility = mPolicyVisibilityAfterAnim;
             mTransformation.clear();
             if (mHasDrawn
                     && mAttrs.type == WindowManager.LayoutParams.TYPE_APPLICATION_STARTING
@@ -5710,7 +5789,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
          * surface, or we are in the process of running an exit animation
          * that will remove the surface.
          */
-        boolean isVisible() {
+        public boolean isVisibleLw() {
             final AppWindowToken atoken = mAppToken;
             return mSurface != null && mPolicyVisibility && !mAttachedHidden
                     && (atoken == null || !atoken.hiddenRequested)
@@ -5865,18 +5944,32 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             return mHasDrawn;
         }
 
-        public void showLw() {
-            if (!mPolicyVisibility) {
+        public void showLw(boolean doAnimation) {
+            if (!mPolicyVisibility || !mPolicyVisibilityAfterAnim) {
                 mSurfacesChanged = true;
                 mPolicyVisibility = true;
+                mPolicyVisibilityAfterAnim = true;
+                if (doAnimation) {
+                    applyAnimationLocked(this, WindowManagerPolicy.TRANSIT_ENTER, true);
+                }
                 requestAnimationLocked(0);
             }
         }
 
-        public void hideLw() {
-            if (mPolicyVisibility) {
+        public void hideLw(boolean doAnimation) {
+            if (mPolicyVisibility || mPolicyVisibilityAfterAnim) {
                 mSurfacesChanged = true;
-                mPolicyVisibility = false;
+                if (doAnimation) {
+                    applyAnimationLocked(this, WindowManagerPolicy.TRANSIT_EXIT, false);
+                    if (mAnimation == null) {
+                        doAnimation = false;
+                    }
+                }
+                if (doAnimation) {
+                    mPolicyVisibilityAfterAnim = false;
+                } else {
+                    mPolicyVisibility = false;
+                }
                 requestAnimationLocked(0);
             }
         }
@@ -5887,7 +5980,8 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                   + " mClient=" + mClient.asBinder());
             pw.println(prefix + "mAttrs=" + mAttrs);
             pw.println(prefix + "mAttachedWindow=" + mAttachedWindow
-                    + " mLayoutAttached=" + mLayoutAttached);
+                    + " mLayoutAttached=" + mLayoutAttached
+                    + " mIsImWindow=" + mIsImWindow);
             pw.println(prefix + "mBaseLayer=" + mBaseLayer
                   + " mSubLayer=" + mSubLayer
                   + " mAnimLayer=" + mLayer + "+"
@@ -5901,7 +5995,8 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
             pw.println(prefix + "mTargetAppToken=" + mTargetAppToken);
             pw.println(prefix + "mViewVisibility=0x" + Integer.toHexString(mViewVisibility)
                   + " mPolicyVisibility=" + mPolicyVisibility
-                  + " mAttachedHidden=" + mAttachedHidden
+                  + " (after=" + mPolicyVisibilityAfterAnim
+                  + ") mAttachedHidden=" + mAttachedHidden
                   + " mLastHidden=" + mLastHidden
                   + " mHaveFrame=" + mHaveFrame);
             pw.println(prefix + "Requested w=" + mRequestedWidth + " h=" + mRequestedHeight
@@ -6807,11 +6902,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         
         for (i=0; i<N; i++) {
             WindowState w = (WindowState)mWindows.get(i);
-            if (w.mBaseLayer == curBaseLayer) {
-                curLayer += WINDOW_LAYER_MULTIPLIER;
-                w.mLayer = curLayer;
-            } else if (w.mAttrs.type == TYPE_INPUT_METHOD
-                    || w.mAttrs.type == TYPE_INPUT_METHOD_DIALOG) {
+            if (w.mBaseLayer == curBaseLayer || w.mIsImWindow) {
                 curLayer += WINDOW_LAYER_MULTIPLIER;
                 w.mLayer = curLayer;
             } else {
@@ -7521,6 +7612,13 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                                 long duration = (w.mAnimating && w.mAnimation != null)
                                         ? w.mAnimation.computeDurationHint()
                                         : DEFAULT_DIM_DURATION;
+                                if (target > mDimTargetAlpha) {
+                                    // This is happening behind the activity UI,
+                                    // so we can make it run a little longer to
+                                    // give a stronger impression without disrupting
+                                    // the user.
+                                    duration *= DIM_DURATION_MULTIPLIER;
+                                }
                                 mDimTargetAlpha = target;
                                 mDimDeltaPerMs = (mDimTargetAlpha-mDimCurrentAlpha)
                                         / duration;
@@ -7591,6 +7689,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
                 if (more) {
                     if (SHOW_TRANSACTIONS) Log.i(TAG, "  DIM "
                             + mDimSurface + ": alpha=" + mDimCurrentAlpha);
+                    mLastDimAnimTime = currentTime;
                     mDimSurface.setAlpha(mDimCurrentAlpha);
                     animating = true;
                 } else {

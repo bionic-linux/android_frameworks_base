@@ -25,7 +25,10 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.content.ContentQueryMap;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -37,6 +40,7 @@ import android.text.TextUtils;
 import android.util.AndroidException;
 import android.util.Log;
 
+import java.net.URISyntaxException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -854,6 +858,43 @@ public final class Settings {
          */
         public static final String WIFI_IDLE_MS = "wifi_idle_ms";
 
+        /**
+         * The policy for deciding when Wi-Fi should go to sleep (which will in
+         * turn switch to using the mobile data as an Internet connection).
+         * <p>
+         * Set to one of {@link #WIFI_SLEEP_POLICY_DEFAULT},
+         * {@link #WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED}, or
+         * {@link #WIFI_SLEEP_POLICY_NEVER}.
+         * 
+         * @hide pending API council
+         */
+        public static final String WIFI_SLEEP_POLICY = "wifi_sleep_policy";
+
+        /**
+         * Value for {@link #WIFI_SLEEP_POLICY} to use the default Wi-Fi sleep
+         * policy, which is to sleep shortly after the turning off
+         * according to the {@link #STAY_ON_WHILE_PLUGGED_IN} setting.
+         * 
+         * @hide pending API council
+         */
+        public static final int WIFI_SLEEP_POLICY_DEFAULT = 0;
+
+        /**
+         * Value for {@link #WIFI_SLEEP_POLICY} to use the default policy when
+         * the device is on battery, and never go to sleep when the device is
+         * plugged in.
+         * 
+         * @hide pending API council
+         */
+        public static final int WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED = 1;
+        
+        /**
+         * Value for {@link #WIFI_SLEEP_POLICY} to never go to sleep.
+         * 
+         * @hide pending API council
+         */
+        public static final int WIFI_SLEEP_POLICY_NEVER = 2;
+        
         /**
          * Whether to use static IP and other static network attributes.
          * <p>
@@ -1699,12 +1740,12 @@ public final class Settings {
          */
         public static final Uri CONTENT_URI =
             Uri.parse("content://" + AUTHORITY + "/secure");
-        
+
         /**
          * Whether ADB is enabled.
          */
         public static final String ADB_ENABLED = "adb_enabled";
-    
+
         /**
          * Setting to allow mock locations and location provider status to be injected into the
          * LocationManager service for testing purposes during application development.  These
@@ -1712,7 +1753,7 @@ public final class Settings {
          * by network, gps, or other location providers.
          */
         public static final String ALLOW_MOCK_LOCATION = "mock_location";
-    
+
         /**
          * The Android ID (a unique 64-bit value) as a hex string.
          * Identical to that obtained by calling
@@ -1720,24 +1761,40 @@ public final class Settings {
          * so you can get it without binding to a service.
          */
         public static final String ANDROID_ID = "android_id";
-    
+
         /**
          * Whether bluetooth is enabled/disabled
          * 0=disabled. 1=enabled.
          */
         public static final String BLUETOOTH_ON = "bluetooth_on";
-    
+
+        /**
+         * Get the key that retrieves a bluetooth headset's priority.
+         * @hide
+         */
+        public static final String getBluetoothHeadsetPriorityKey(String address) {
+            return ("bluetooth_headset_priority_" + address.toUpperCase());
+        }
+
+        /**
+         * Get the key that retrieves a bluetooth a2dp sink's priority.
+         * @hide
+         */
+        public static final String getBluetoothA2dpSinkPriorityKey(String address) {
+            return ("bluetooth_a2dp_sink_priority_" + address.toUpperCase());
+        }
+
         /**
          * Whether or not data roaming is enabled. (0 = false, 1 = true)
          */
         public static final String DATA_ROAMING = "data_roaming";
-    
+
         /**
          * Setting to record the input method used by default, holding the ID
          * of the desired method.
          */
         public static final String DEFAULT_INPUT_METHOD = "default_input_method";
-    
+
         /**
          * Whether the device has been provisioned (0 = false, 1 = true)
          */
@@ -1912,7 +1969,13 @@ public final class Settings {
          * Whether the Wi-Fi watchdog is enabled.
          */
         public static final String WIFI_WATCHDOG_ON = "wifi_watchdog_on";
-    
+
+        /**
+         * A comma-separated list of SSIDs for which the Wi-Fi watchdog should be enabled.
+         * @hide pending API council
+         */
+        public static final String WIFI_WATCHDOG_WATCH_LIST = "wifi_watchdog_watch_list";
+
         /**
          * The number of pings to test if an access point is a good connection.
          */
@@ -2056,6 +2119,12 @@ public final class Settings {
          */
         public static final String YOUTUBE_USE_PROXY
                 = "youtube_use_proxy";
+
+        /**
+         * MMS - maximum message size in bytes for a MMS message.
+         */
+        public static final String MMS_MAXIMUM_MESSAGE_SIZE
+                = "mms_maximum_message_size";
 
         /**
          * Event tags from the kernel event log to upload during checkin.
@@ -2622,6 +2691,22 @@ public final class Settings {
                 "short_keylight_delay_ms";
 
         /**
+         * URL that points to the voice search servers. To be factored out of this class.
+         */
+        public static final String VOICE_SEARCH_URL = "voice_search_url";
+
+        /**
+         * Speech encoding used with voice search on 3G networks. To be factored out of this class.
+         */
+        public static final String VOICE_SEARCH_ENCODING_THREE_G = "voice_search_encoding_three_g";
+
+        /**
+         * Speech encoding used with voice search on WIFI networks. To be factored out of this class.
+         */
+        public static final String VOICE_SEARCH_ENCODING_WIFI = "voice_search_encoding_wifi";
+        
+        
+        /**
          * @deprecated
          * @hide
          */
@@ -2674,7 +2759,12 @@ public final class Settings {
 
         /**
          * Descriptive name of the bookmark that can be displayed to the user.
-         * <P>Type: TEXT</P>
+         * If this is empty, the title should be resolved at display time (use
+         * {@link #getTitle(Context, Cursor)} any time you want to display the
+         * title of a bookmark.)
+         * <P>
+         * Type: TEXT
+         * </P>
          */
         public static final String TITLE = "title";
 
@@ -2754,17 +2844,16 @@ public final class Settings {
 
         /**
          * Add a new bookmark to the system.
-         *
+         * 
          * @param cr The ContentResolver to query.
          * @param intent The desired target of the bookmark.
-         * @param title Bookmark title that is shown to the user; null if none.
+         * @param title Bookmark title that is shown to the user; null if none
+         *            or it should be resolved to the intent's title.
          * @param folder Folder in which to place the bookmark; null if none.
-         * @param shortcut Shortcut that will invoke the bookmark; 0 if none.
-         *                 If this is non-zero and there is an existing
-         *                 bookmark entry with this same shortcut, then that
-         *                 existing shortcut is cleared (the bookmark is not
-         *                 removed).
-         *
+         * @param shortcut Shortcut that will invoke the bookmark; 0 if none. If
+         *            this is non-zero and there is an existing bookmark entry
+         *            with this same shortcut, then that existing shortcut is
+         *            cleared (the bookmark is not removed).
          * @return The unique content URL for the new bookmark entry.
          */
         public static Uri add(ContentResolver cr,
@@ -2813,8 +2902,48 @@ public final class Settings {
          * @return CharSequence The label for this folder that should be shown
          *         to the user.
          */
-        public static CharSequence labelForFolder(Resources r, String folder) {
+        public static CharSequence getLabelForFolder(Resources r, String folder) {
             return folder;
+        }
+
+        /**
+         * Return the title as it should be displayed to the user. This takes
+         * care of localizing bookmarks that point to activities.
+         * 
+         * @param context A context.
+         * @param cursor A cursor pointing to the row whose title should be
+         *            returned. The cursor must contain at least the
+         *            {@link #TITLE} and {@link #INTENT} columns.
+         * @return A title that is localized and can be displayed to the user.
+         */
+        public static CharSequence getTitle(Context context, Cursor cursor) {
+            int titleColumn = cursor.getColumnIndex(TITLE);
+            int intentColumn = cursor.getColumnIndex(INTENT);
+            if (titleColumn == -1 || intentColumn == -1) {
+                throw new IllegalArgumentException(
+                        "The cursor must contain the TITLE and INTENT columns.");
+            }
+            
+            String title = cursor.getString(titleColumn);
+            if (!TextUtils.isEmpty(title)) {
+                return title;
+            }
+            
+            String intentUri = cursor.getString(intentColumn);
+            if (TextUtils.isEmpty(intentUri)) {
+                return "";
+            }
+            
+            Intent intent;
+            try {
+                intent = Intent.getIntent(intentUri);
+            } catch (URISyntaxException e) {
+                return "";
+            }
+            
+            PackageManager packageManager = context.getPackageManager();
+            ResolveInfo info = packageManager.resolveActivity(intent, 0);
+            return info.loadLabel(packageManager);
         }
     }
 

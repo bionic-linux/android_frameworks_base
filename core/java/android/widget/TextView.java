@@ -235,6 +235,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         float[] mTmpOffset = new float[2];
         ExtractedTextRequest mExtracting;
         final ExtractedText mTmpExtracted = new ExtractedText();
+        boolean mBatchEditing;
     }
     InputMethodState mInputMethodState;
 
@@ -714,10 +715,10 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                     bufferType = BufferType.EDITABLE;
                     break;
             }
-            mInputType = EditorInfo.TYPE_CLASS_TEXT;
         }
 
-        if (password) {
+        if (password && (mInputType&EditorInfo.TYPE_MASK_CLASS)
+                == EditorInfo.TYPE_CLASS_TEXT) {
             mInputType = (mInputType & ~(EditorInfo.TYPE_MASK_VARIATION))
                 | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD;
         }
@@ -3505,7 +3506,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         */
 
         InputMethodManager imm = InputMethodManager.peekInstance();
-        if (highlight != null && mInputMethodState != null && imm != null) {
+        if (highlight != null && mInputMethodState != null
+                && !mInputMethodState.mBatchEditing && imm != null) {
             if (imm.isActive(this)) {
                 int candStart = -1;
                 int candEnd = -1;
@@ -3772,8 +3774,12 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         return super.onKeyUp(keyCode, event);
     }
 
+    @Override public boolean onCheckIsTextEditor() {
+        return mInputType != EditorInfo.TYPE_NULL;
+    }
+    
     @Override public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        if (mInputType != EditorInfo.TYPE_NULL) {
+        if (onCheckIsTextEditor()) {
             if (mInputMethodState == null) {
                 mInputMethodState = new InputMethodState();
             }
@@ -3860,6 +3866,38 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public void onCommitCompletion(CompletionInfo text) {
     }
 
+    /**
+     * Called by the framework in response to a request to begin a batch
+     * of edit operations from the current input method, as a result of
+     * it calling {@link InputConnection#beginBatchEdit
+     * InputConnection.beginBatchEdit()}.  The default implementation sets
+     * up the TextView's internal state to take care of this; if overriding
+     * you should call through to the super class.
+     */
+    public void onBeginBatchEdit() {
+        if (mInputMethodState != null) {
+            // XXX we should be smarter here, such as not doing invalidates
+            // until all edits are done.
+            mInputMethodState.mBatchEditing = true;
+        }
+    }
+    
+    /**
+     * Called by the framework in response to a request to end a batch
+     * of edit operations from the current input method, as a result of
+     * it calling {@link InputConnection#endBatchEdit
+     * InputConnection.endBatchEdit()}.  The default implementation sets
+     * up the TextView's internal state to take care of this; if overriding
+     * you should call through to the super class.
+     */
+    public void onEndBatchEdit() {
+        if (mInputMethodState != null) {
+            mInputMethodState.mBatchEditing = false;
+            // Cheezy way to get us to report the current cursor location.
+            invalidateCursor();
+        }
+    }
+    
     /**
      * Called by the framework in response to a private command from the
      * current method, provided by it calling
@@ -5267,6 +5305,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             if (mError != null) {
                 hideError();
             }
+            // Don't leave us in the middle of a batch edit.
+            onEndBatchEdit();
         }
 
         startStopMarquee(focused);
@@ -5296,6 +5336,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             if (mBlink != null) {
                 mBlink.cancel();
             }
+            // Don't leave us in the middle of a batch edit.
+            onEndBatchEdit();
         }
 
         startStopMarquee(hasWindowFocus);
@@ -5334,12 +5376,11 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             mLayout != null) {
             boolean moved = mMovement.onTouchEvent(this, (Spannable) mText, event);
 
-            if (mText instanceof Editable
-                    && mInputType != EditorInfo.TYPE_NULL) {
+            if (mText instanceof Editable && onCheckIsTextEditor()) {
                 if (event.getAction() == MotionEvent.ACTION_UP && isFocused()) {
                     InputMethodManager imm = (InputMethodManager)
                             getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(this);
+                    imm.showSoftInput(this, 0);
                 }
             }
 
