@@ -24,6 +24,19 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
+LOCAL_SRC_FILES:= \
+    AudioHardwareOss.cpp \
+
+LOCAL_SHARED_LIBRARIES := \
+    libcutils \
+    libutils
+
+LOCAL_MODULE:= libaudio_oss
+
+include $(BUILD_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+
 LOCAL_SRC_FILES:=               \
     AudioFlinger.cpp            \
     AudioMixer.cpp.arm          \
@@ -40,7 +53,12 @@ LOCAL_SHARED_LIBRARIES := \
 ifeq ($(strip $(BOARD_USES_GENERIC_AUDIO)),true)
   LOCAL_STATIC_LIBRARIES += libaudiointerface
 else
+ifeq ($(strip $(BOARD_USES_GENERIC_OSSAUDIO)),true)
+  LOCAL_STATIC_LIBRARIES += libaudiointerface
+  LOCAL_STATIC_LIBRARIES += libaudio_oss
+else
   LOCAL_SHARED_LIBRARIES += libaudio
+endif
 endif
 
 LOCAL_MODULE:= libaudioflinger
