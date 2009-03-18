@@ -45,7 +45,11 @@ public class TranslateAnimation extends Animation {
     private float mToYDelta;
 
     /**
+<<<<<<< HEAD   (42e480 Revert "Add support for camera preview to be in overlay surf)
      * Constructor used when an TranslateAnimation is loaded from a resource.
+=======
+     * Constructor used when a TranslateAnimation is loaded from a resource.
+>>>>>>> BRANCH (ba87e3 auto import from //branches/cupcake_rel/...@138607)
      * 
      * @param context Application context to use
      * @param attrs Attribute set from which to read values
