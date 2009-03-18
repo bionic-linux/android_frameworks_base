@@ -1,3 +1,4 @@
+<<<<<<< HEAD   (69577a Fix build.)
 /*
  * Copyright (C) 2007 The Android Open Source Project
  *
@@ -108,3 +109,5 @@ void LayerScreenshot::takeScreenshot(Mutex& lock, Parcel* reply)
 // ---------------------------------------------------------------------------
 
 }; // namespace android
+=======
+>>>>>>> BRANCH (ba87e3 auto import from //branches/cupcake_rel/...@138607)

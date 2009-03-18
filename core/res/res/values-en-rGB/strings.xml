@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<<<<<<< HEAD   (69577a Fix build.)
     <string name="byteShort">"B"</string>
     <string name="kilobyteShort">"KB"</string>
     <string name="megabyteShort">"MB"</string>
@@ -762,4 +763,7 @@
     <skip />
     <!-- no translation found for candidates_style (7738463880139922176) -->
     <skip />
+=======
+    <string name="byteShort">B</string>
+>>>>>>> BRANCH (ba87e3 auto import from //branches/cupcake_rel/...@138607)
 </resources>
