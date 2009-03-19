@@ -1073,6 +1073,7 @@ void SurfaceFlinger::debugShowFPS() const
         mFps =  ((mFrameCount - mLastFrameCount) * float(s2ns(1))) / diff;
         mLastFpsTime = now;
         mLastFrameCount = mFrameCount;
+	LOGI("mFps = %f", mFps);
     }
     // XXX: mFPS has the value we want
  }
