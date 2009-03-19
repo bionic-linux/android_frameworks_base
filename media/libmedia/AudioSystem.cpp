@@ -44,35 +44,6 @@ size_t AudioSystem::gInBuffSize = 0;
 // establish binder interface to AudioFlinger service
 const sp<IAudioFlinger>& AudioSystem::get_audio_flinger()
 {
-    Mutex::Autolock _l(gLock);
-    if (gAudioFlinger.get() == 0) {
-        sp<IServiceManager> sm = defaultServiceManager();
-        sp<IBinder> binder;
-        do {
-            binder = sm->getService(String16("media.audio_flinger"));
-            if (binder != 0)
-                break;
-            LOGW("AudioFlinger not published, waiting...");
-            usleep(500000); // 0.5 s
-        } while(true);
-        if (gAudioFlingerClient == NULL) {
-            gAudioFlingerClient = new AudioFlingerClient();
-        } else {
-            if (gAudioErrorCallback) {
-                gAudioErrorCallback(NO_ERROR);
-            }
-         }
-        binder->linkToDeath(gAudioFlingerClient);
-        gAudioFlinger = interface_cast<IAudioFlinger>(binder);
-        gAudioFlinger->registerClient(gAudioFlingerClient);
-        // Cache frequently accessed parameters 
-        for (int output = 0; output < NUM_AUDIO_OUTPUT_TYPES; output++) {
-            gOutFrameCount[output] = (int)gAudioFlinger->frameCount(output);
-            gOutSamplingRate[output] = (int)gAudioFlinger->sampleRate(output);
-            gOutLatency[output] = gAudioFlinger->latency(output);
-        }
-        gA2dpEnabled = gAudioFlinger->isA2dpEnabled();
-    }
     LOGE_IF(gAudioFlinger==0, "no AudioFlinger!?");
     return gAudioFlinger;
 }

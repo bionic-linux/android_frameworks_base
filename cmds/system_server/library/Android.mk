@@ -18,7 +18,6 @@ LOCAL_SHARED_LIBRARIES := \
 	libsurfaceflinger \
 	libaudioflinger \
     libcameraservice \
-    libmediaplayerservice \
 	libutils \
 	libcutils
 

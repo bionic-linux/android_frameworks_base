@@ -76,7 +76,7 @@ extern "C" status_t system_init()
         AudioFlinger::instantiate();
 
         // Start the media playback service
-        MediaPlayerService::instantiate();
+        // MediaPlayerService::instantiate();
 
         // Start the camera service
         CameraService::instantiate();
