@@ -559,6 +559,7 @@ void LayerBuffer::OverlaySource::onVisibilityResolved(
                 overlay_dev->setPosition(overlay_dev, mOverlay, x,y,w,h);
                 overlay_dev->setParameter(overlay_dev, mOverlay, 
                         OVERLAY_TRANSFORM, mLayer.getOrientation());
+                overlay_dev->commitUpdates(overlay_dev, mOverlay);
             }
         }
     }
