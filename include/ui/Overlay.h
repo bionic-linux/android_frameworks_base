@@ -82,6 +82,8 @@ public:
     /* release the overlay buffer and post it */
     status_t queueBuffer(overlay_buffer_t buffer);
 
+    int resizeInput(uint32_t w, uint32_t h);
+
     status_t setCrop(uint32_t x, uint32_t y, uint32_t w, uint32_t h) ;
 
     status_t getCrop(uint32_t* x, uint32_t* y, uint32_t* w, uint32_t* h) ;
