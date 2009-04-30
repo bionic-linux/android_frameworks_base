@@ -149,6 +149,26 @@ public class WifiService extends IWifiManager.Stub {
      * a new present (enabled) hidden network.
      */
     private int mNumHiddenNetworkPresent;
+
+    /*
+     * Map used to keep track of adhoc networks presence, which
+     * is needed to switch between ap scan modes.
+     * If there is at least one adhoc network that is currently
+     * present (enabled), we want to do ap scan 2 instead of
+     * 1 so that we can associate correctly (see wpa_supplicant 
+     * for details).
+     */
+    private final Map<Integer, Boolean> mIsAdhocNetworkPresent;
+    /*
+     * The number of currently present adhoc networks. When this
+     * counter goes from 0 to 1 or from 1 to 0, we change the
+     * ap scan mode to 2 or 1 respectively. Initially, we
+     * set the counter to 0 and we increment it every time we add
+     * a new present (enabled) adhoc network.
+     */
+    private int mNumAdhocNetworkPresent;
+    
+    
     /*
      * Whether we change the scan mode is due to a hidden network
      * (in this class, this is always the case)
@@ -192,6 +212,13 @@ public class WifiService extends IWifiManager.Stub {
          */
         mIsHiddenNetworkPresent = new HashMap<Integer, Boolean>();
         mNumHiddenNetworkPresent = 0;
+        
+        /*
+         * Initialize the adhoc networks state
+         */
+        mIsAdhocNetworkPresent = new HashMap<Integer, Boolean>();
+        mNumAdhocNetworkPresent = 0;
+        
 
         mScanResultCache = new LinkedHashMap<String, ScanResult>(
             SCAN_RESULT_CACHE_SIZE, 0.75f, true) {
@@ -247,6 +274,147 @@ public class WifiService extends IWifiManager.Stub {
 
         setWifiEnabledBlocking(wifiEnabled, false, Process.myUid());
     }
+
+    /**
+     * Initializes the Adhoc Networks state.  Must be called when we
+     * enable Wi-Fi.
+     */
+    private synchronized void initializeAdhocNetworksState() {
+    	resetAdhocNetworksState();
+    	
+    	List<WifiConfiguration> networks = getConfiguredNetworks();
+    	if (!networks.isEmpty()) {
+    		for (WifiConfiguration config : networks) {
+    			if (config != null && config.isAdhoc) {
+    				addOrUpdateAdhocNetwork(
+    						config.networkId,
+    						config.status != WifiConfiguration.Status.DISABLED);
+    			}
+    		}
+    	}
+    }
+    
+    /**
+     * Resets the Adhoc networks state.
+     */
+    private synchronized void resetAdhocNetworksState() {
+        mNumAdhocNetworkPresent = 0;
+        mIsAdhocNetworkPresent.clear();
+    }
+    
+    /**
+     * Updates the netId network presence status if netId is an existing
+     * Adhoc network. If the network does not exist, adds the network.
+     */
+    private synchronized void addOrUpdateAdhocNetwork(int netId, boolean present) {
+        if (0 <= netId) {
+
+            // If we are adding a new entry or modifying an existing one
+            Boolean isPresent = mIsAdhocNetworkPresent.get(netId);
+            if (isPresent == null || isPresent != present) {
+                if (present) {
+                    incrementAdhocNetworkPresentCounter();
+                } else {
+                    // If we add a new hidden network, no need to change
+                    // the counter (it must be 0)
+                    if (isPresent != null) {
+                        decrementAdhocNetworkPresentCounter();
+                    }
+                }
+                mIsAdhocNetworkPresent.put(netId, new Boolean(present));
+            }
+        } else {
+            Log.e(TAG, "addOrUpdateAdhocNetwork(): Invalid (negative) network id!");
+        }
+    }
+    
+    /**
+     * Returns true if there is at least one adhoc network enabled 
+     */
+    private boolean isAdhocNetworkPresent() {
+    	return (mNumAdhocNetworkPresent > 0);
+    }
+    
+    /**
+     * Increments the present (enabled) adhoc networks counter.
+     */
+    private void incrementAdhocNetworkPresentCounter() {
+        ++mNumAdhocNetworkPresent;
+    }
+
+    /**
+     * Decrements the present (enabled) adhoc networks counter.
+     */
+    private void decrementAdhocNetworkPresentCounter() {
+        if (0 < mNumAdhocNetworkPresent) {
+            --mNumAdhocNetworkPresent;
+        }
+    } 
+        
+    /**
+     * Removes the netId network if it is adhoc (being kept track of).
+     */
+    private synchronized void removeNetworkIfAdhoc(int netId) {
+        if (isAdhocNetwork(netId)) {
+            removeAdhocNetwork(netId);
+        }
+    } 
+
+    /**
+     * Removes the netId network. For the call to be successful, the network
+     * must be adhoc.
+     */
+    private synchronized void removeAdhocNetwork(int netId) {
+        if (0 <= netId) {
+            Boolean isPresent =
+                mIsAdhocNetworkPresent.remove(netId);
+            if (isPresent != null) {
+                // If we remove an existing hidden network that is not
+                // present, no need to change the counter
+                if (isPresent) {
+                    decrementAdhocNetworkPresentCounter();
+                }
+            } else {
+                if (DBG) {
+                    Log.d(TAG, "removeAdhocNetwork(): Removing a non-existent network!");
+                }
+            }
+        } else {
+            Log.e(TAG, "removeAdhocNetwork(): Invalid (negative) network id!");
+        }
+    }
+
+    /**
+     * Returns true if netId is an existing Adhoc network.
+     */
+    private synchronized boolean isAdhocNetwork(int netId) {
+        return mIsAdhocNetworkPresent.containsKey(netId);
+    }
+    
+    /**
+     * Marks all but netId network as not present.
+     */
+    private synchronized void markAllAdhocNetworksButOneAsNotPresent(int netId) {
+        for (Map.Entry<Integer, Boolean> entry : mIsAdhocNetworkPresent.entrySet()) {
+            if (entry != null) {
+                Integer networkId = entry.getKey();
+                if (networkId != netId) {
+                    updateNetworkIfAdhoc(
+                        networkId, false);
+                }
+            }
+        }
+    }
+
+    /**
+     * Updates the netId network presence status if netId is an existing
+     * Adhoc network.
+     */
+    private synchronized void updateNetworkIfAdhoc(int netId, boolean present) {
+        if (isAdhocNetwork(netId)) {
+            addOrUpdateAdhocNetwork(netId, present);
+        }
+    }    
 
     /**
      * Initializes the hidden networks state. Must be called when we
@@ -544,6 +712,7 @@ public class WifiService extends IWifiManager.Stub {
         if (enable) {
             mWifiStateTracker.setNumAllowedChannels();
             initializeHiddenNetworksState();
+            initializeAdhocNetworksState();
         }
 
         return true;
@@ -831,6 +1000,19 @@ public class WifiService extends IWifiManager.Stub {
                 }
             }
         }
+        
+        value = WifiNative.getNetworkVariableCommand(netId, WifiConfiguration.modeVarName);
+        config.isAdhoc = false;
+        if (!TextUtils.isEmpty(value)) {
+            try {
+                if (Integer.parseInt(value) == 1)
+                {
+                	config.isAdhoc = true;
+                }
+            } catch (NumberFormatException ignore) {
+            }        	
+        }
+        
     }
 
     /**
@@ -873,12 +1055,18 @@ public class WifiService extends IWifiManager.Stub {
         mNeedReconfig = mNeedReconfig || doReconfig;
 
         /*
-         * If we have hidden networks, we may have to change the scan mode
+         * If we have hidden or adhoc networks, we may have to change 
+         * the scan mode (or ap scan mode in the case of Adhoc)
          */
         if (config.hiddenSSID) {
             // Mark the network as present unless it is disabled
             addOrUpdateHiddenNetwork(
                 netId, config.status != WifiConfiguration.Status.DISABLED);
+        }
+        else if (config.isAdhoc) {
+        	// Mark the network as present unless it is disabled
+        	addOrUpdateAdhocNetwork(
+        			netId, config.status != WifiConfiguration.Status.DISABLED);
         }
 
         setVariables: {
@@ -911,6 +1099,35 @@ public class WifiService extends IWifiManager.Stub {
                 break setVariables;
             }
 
+            if (config.isAdhoc) {
+            	//Set Adhoc Mode
+            	if (!WifiNative.setNetworkVariableCommand(
+                		netId,
+                		WifiConfiguration.modeVarName,
+                		WifiConfiguration.modeAdhoc)) {
+                	if (DBG) {
+                		Log.d(TAG, "failed to set mode: " + WifiConfiguration.modeAdhoc);
+                	}
+            	}
+            	
+            	//Set Frequency
+            	String frequency;
+            	if (config.frequency != 0) {
+            		frequency = Integer.toString(config.frequency);
+            	} else {
+            		//Default to channel 1
+            		frequency = Integer.toString(WifiConfiguration.ChannelFrequency.CHANNEL_1);
+            	}
+	            if (!WifiNative.setNetworkVariableCommand(
+	               		netId,
+	               		WifiConfiguration.frequencyVarName,
+	               		frequency)) {
+	               	if (DBG) {
+	               		Log.d(TAG, "failed to set mode: " + config.frequency);
+	               	}
+	            }            
+        	}
+        
             String allowedKeyManagementString =
                 makeString(config.allowedKeyManagement, WifiConfiguration.KeyMgmt.strings);
             if (config.allowedKeyManagement.cardinality() != 0 &&
@@ -1124,6 +1341,7 @@ public class WifiService extends IWifiManager.Stub {
          * If we have hidden networks, we may have to change the scan mode
          */
         removeNetworkIfHidden(netId);
+        removeNetworkIfAdhoc(netId);
 
         return mWifiStateTracker.removeNetwork(netId);
     }
@@ -1140,12 +1358,15 @@ public class WifiService extends IWifiManager.Stub {
 
         /*
          * If we have hidden networks, we may have to change the scan mode
+         * If we have Adhoc networks, we may have to set the ap scan mode
          */
          synchronized(this) {
              if (disableOthers) {
                  markAllHiddenNetworksButOneAsNotPresent(netId);
+                 markAllAdhocNetworksButOneAsNotPresent(netId);
              }
              updateNetworkIfHidden(netId, true);
+             updateNetworkIfAdhoc(netId, true);
          }
 
         synchronized (mWifiStateTracker) {
@@ -1164,9 +1385,11 @@ public class WifiService extends IWifiManager.Stub {
 
         /*
          * If we have hidden networks, we may have to change the scan mode
+         * If we have an adhoc network, we need to update our counters
          */
         updateNetworkIfHidden(netId, false);
-
+        updateNetworkIfAdhoc(netId, false);
+        
         synchronized (mWifiStateTracker) {
             return WifiNative.disableNetworkCommand(netId);
         }
@@ -1380,6 +1603,16 @@ public class WifiService extends IWifiManager.Stub {
         boolean result;
         enforceChangePermission();
         synchronized (mWifiStateTracker) {
+        	/**
+        	 * If we have an adhoc network enabled,
+        	 * we need to save the config with AP_SCAN=2
+        	 */ 
+        	if (isAdhocNetworkPresent()) {
+        		WifiNative.setScanResultHandlingCommand(WifiStateTracker.SUPPL_SCAN_HANDLING_LIST_ONLY);
+        	} else {
+        		WifiNative.setScanResultHandlingCommand(WifiStateTracker.SUPPL_SCAN_HANDLING_NORMAL);
+        	}
+        	
             result = WifiNative.saveConfigCommand();
             if (result && mNeedReconfig) {
                 mNeedReconfig = false;
