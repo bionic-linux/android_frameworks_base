@@ -17,6 +17,7 @@
 package android.widget;
 
 import android.content.Context;
+import android.hardware.SensorManager;
 import android.view.ViewConfiguration;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
@@ -79,9 +80,9 @@ public class Scroller  {
         mFinished = true;
         mInterpolator = interpolator;
         float ppi = context.getResources().getDisplayMetrics().density * 160.0f;
-        mDeceleration = 9.8f   // g (m/s^2)
-                      * 39.37f // inch/meter
-                      * ppi    // pixels per inch
+        mDeceleration = SensorManager.GRAVITY_EARTH   // g (m/s^2)
+                      * 39.37f                        // inch/meter
+                      * ppi                           // pixels per inch
                       * ViewConfiguration.getScrollFriction();
     }
     
@@ -347,7 +348,9 @@ public class Scroller  {
     }
     
     /**
-     * 
+     * Abort the animation. Contrary to a forceFinished(true), abortAnimation
+     * will set getCurrX() and getCurrY() respectively to getFinalX() and
+     * getFinalY().
      */
     public void abortAnimation() {
         mCurrX = mFinalX;
@@ -367,18 +370,33 @@ public class Scroller  {
         mDurationReciprocal = 1.0f / (float)mDuration;
         mFinished = false;
     }
-    
+
+    /**
+     * Returns the time elapsed since the beginning of the scrolling.
+     *
+     * @return The time elapsed since scrolling starts.
+     */
     public int timePassed() {
         return (int)(AnimationUtils.currentAnimationTimeMillis() - mStartTime);
     }
-    
+
+    /**
+     * Use it to change where the scroll animation will end.
+     *
+     * @param newX The new X offset as an absolute distance from the origin.
+     */
     public void setFinalX(int newX) {
         mFinalX = newX;
         mDeltaX = mFinalX - mStartX;
         mFinished = false;
     }
 
-   public void setFinalY(int newY) {
+    /**
+     * Use it to change where the scroll animation will end.
+     *
+     * @param newY The new Y offset as an absolute distance from the origin.
+     */
+    public void setFinalY(int newY) {
         mFinalY = newY;
         mDeltaY = mFinalY - mStartY;
         mFinished = false;
