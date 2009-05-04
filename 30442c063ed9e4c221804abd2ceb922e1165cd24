@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAQn///8A\u003d",
+        "filename": "core/java/android/widget/Scroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-05-04T16:22:26Z",
+      "side": 1,
+      "message": "This explanation is too close to the implementation. Documentation should not describe the implementation. Instead, please say something like: \"Aborting the animation cause the scroller to move to the final x and y positions.\"\n\nAlso, please use {@link} when referencing other methods. You may also want to add an @see #forcedFinished(boolean)",
+      "revId": "30442c063ed9e4c221804abd2ceb922e1165cd24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAQn///78\u003d",
+        "filename": "core/java/android/widget/Scroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-05-04T16:22:26Z",
+      "side": 1,
+      "message": "Your @return is just a copy of the javadoc body. You should use this tag to give more technical info about the returned value, like \"@return A duration in milliseconds\" or \"@return The elapsed time in milliseconds\"",
+      "revId": "30442c063ed9e4c221804abd2ceb922e1165cd24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAQn///74\u003d",
+        "filename": "core/java/android/widget/Scroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-05-04T16:22:26Z",
+      "side": 1,
+      "message": "Do not say \"Use it...\", instead describe what the method does. For instance, \"Sets the X coordinate of the final position for this scroller\".",
+      "revId": "30442c063ed9e4c221804abd2ceb922e1165cd24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAQn///70\u003d",
+        "filename": "core/java/android/widget/Scroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-05-04T16:22:26Z",
+      "side": 1,
+      "message": "See previous comment.",
+      "revId": "30442c063ed9e4c221804abd2ceb922e1165cd24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
