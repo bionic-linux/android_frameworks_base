@@ -332,13 +332,18 @@ final class SMSDispatcher extends Handler {
         String pduString = (String) ar.result;
         SmsMessage sms = SmsMessage.newFromCDS(pduString);
 
-        if (sms != null) {
+        if (sms != null && sms.isStatusReportMessage()) {
+            int messageStatus = sms.getStatus();
             int messageRef = sms.messageRef;
             for (int i = 0, count = deliveryPendingList.size(); i < count; i++) {
                 SmsTracker tracker = deliveryPendingList.get(i);
                 if (tracker.mMessageRef == messageRef) {
-                    // Found it.  Remove from list and broadcast.
-                    deliveryPendingList.remove(i);
+                    // Found it.
+                    if ((messageStatus & 0x20) == 0) {
+                        // If not temporary error, remove from list.
+                        deliveryPendingList.remove(i);
+                    }
+                    // Broadcast.
                     PendingIntent intent = tracker.mDeliveryIntent;
                     Intent fillIn = new Intent();
                     fillIn.putExtra("pdu", SimUtils.hexStringToBytes(pduString));
