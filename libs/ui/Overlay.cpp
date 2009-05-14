@@ -86,6 +86,14 @@ void* Overlay::getBufferAddress(overlay_buffer_t buffer)
 
 void Overlay::destroy() {  
     if (mStatus != NO_ERROR) return;
+
+    /* Must delete objects in the reverse order of creation.
+     * Thus, the data side must be closed first and then the
+     * control side must be destroyed. */
+    if (mOverlayData){
+        overlay_data_close(mOverlayData);
+        mOverlayData = NULL;
+    }
     mOverlayRef->mOverlayChannel->destroy();
 }
 
