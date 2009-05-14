@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAARn////8\u003d",
+        "filename": "include/ui/Overlay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2009-05-14T05:33:10Z",
+      "side": 1,
+      "message": "This API should use the Rect class:\n\nstatus_t setCrop(const Rect\u0026 crop);",
+      "revId": "08af3fbc94ae3b9ce46a2918711c6a7b68ddce64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAARn////4\u003d",
+        "filename": "include/ui/Overlay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2009-05-14T05:33:10Z",
+      "side": 1,
+      "message": "This API should use the Rect class:\n\nstatus_t getCrop(Rect* crop);",
+      "revId": "08af3fbc94ae3b9ce46a2918711c6a7b68ddce64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
