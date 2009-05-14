@@ -27,6 +27,7 @@
 
 #include <ui/PixelFormat.h>
 #include <ui/IOverlay.h>
+#include <ui/Rect.h>
 
 #include <hardware/overlay.h>
 
@@ -81,6 +82,12 @@ public:
 
     /* release the overlay buffer and post it */
     status_t queueBuffer(overlay_buffer_t buffer);
+
+    /* change the width and height of the overlay */
+    status_t resizeInput(uint32_t width, uint32_t height);
+
+    /* set the crop parameters */
+    status_t setCrop(const Rect& crop);
 
     /* returns the address of a given buffer if supported, NULL otherwise. */
     void* getBufferAddress(overlay_buffer_t buffer);
