@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAASH////M\u003d",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-05-15T22:14:51Z",
+      "side": 1,
+      "message": "Doing this will trigger mOnDateChangedListener to be fired twice. Please put a guard to avoid that (see the listener above on mDayPicker.)",
+      "revId": "79d96faa655db3165557009472a168e02045fee4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
