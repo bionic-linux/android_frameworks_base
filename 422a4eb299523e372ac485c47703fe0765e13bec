@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAASH////U\u003d",
+        "filename": "core/java/android/app/DatePickerDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-05-15T22:12:27Z",
+      "side": 1,
+      "message": "Please use spaces, not tabs",
+      "revId": "422a4eb299523e372ac485c47703fe0765e13bec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
