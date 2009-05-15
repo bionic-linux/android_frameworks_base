@@ -110,6 +110,14 @@ public class DatePicker extends FrameLayout {
                  * subtract by one to ensure our internal state is always 0-11
                  */
                 mMonth = newVal - 1;
+                //We need to make sure that the mDay selected is valid for the new month.
+                // e.g. if mDay was previously selected to be 31, but we changed the month from May 
+                // to April, we need to re-adjust the value to 30.
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.MONTH, mMonth);
+                cal.set(Calendar.YEAR, mYear);
+                int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+                mDay = mDay > max ? max : mDay;
                 if (mOnDateChangedListener != null) {
                     mOnDateChangedListener.onDateChanged(DatePicker.this, mYear, mMonth, mDay);
                 }
@@ -121,6 +129,15 @@ public class DatePicker extends FrameLayout {
         mYearPicker.setOnChangeListener(new OnChangedListener() {
             public void onChanged(NumberPicker picker, int oldVal, int newVal) {
                 mYear = newVal;
+                // Adjust for leap year.
+                if (mMonth == Calendar.FEBRUARY){
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.YEAR, mYear);
+                    cal.set(Calendar.MONTH, mMonth);
+                    int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+                    mDay = mDay > max ? max : mDay;
+                    updateDaySpinner();
+                }
                 if (mOnDateChangedListener != null) {
                     mOnDateChangedListener.onDateChanged(DatePicker.this, mYear, mMonth, mDay);
                 }
