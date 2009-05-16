@@ -72,6 +72,12 @@ status_t Overlay::setCrop(const Rect& crop)
         crop.top, crop.right, crop.bottom);
 }
 
+status_t Overlay::setAttributes(int param, int value)
+{
+    if (mStatus != NO_ERROR) return mStatus;
+    return mOverlayData->setAttributes(mOverlayData, param, value);
+}
+
 int32_t Overlay::getBufferCount() const
 {
     if (mStatus != NO_ERROR) return mStatus;
