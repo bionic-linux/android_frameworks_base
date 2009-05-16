@@ -89,6 +89,9 @@ public:
     /* set the crop parameters */
     status_t setCrop(const Rect& crop);
 
+    /* set the buffer attributes */
+    status_t setAttributes(int param, int value);
+
     /* returns the address of a given buffer if supported, NULL otherwise. */
     void* getBufferAddress(overlay_buffer_t buffer);
 
