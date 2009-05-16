@@ -59,6 +59,19 @@ status_t Overlay::queueBuffer(overlay_buffer_t buffer)
     return mOverlayData->queueBuffer(mOverlayData, buffer);
 }
 
+status_t Overlay::resizeInput(uint32_t width, uint32_t height)
+{
+    if (mStatus != NO_ERROR) return mStatus;
+    return mOverlayData->resizeInput(mOverlayData, width, height);
+}
+
+status_t Overlay::setCrop(const Rect& crop)
+{
+    if (mStatus != NO_ERROR) return mStatus;
+    return mOverlayData->setCrop(mOverlayData, crop.left, 
+        crop.top, crop.right, crop.bottom);
+}
+
 int32_t Overlay::getBufferCount() const
 {
     if (mStatus != NO_ERROR) return mStatus;
