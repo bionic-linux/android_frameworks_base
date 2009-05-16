@@ -189,6 +189,9 @@ private:
                     sp<CameraHardwareInterface> mHardware;
                     pid_t                       mClientPid;
                     bool                        mUseOverlay;
+                    sp<OverlayRef>              mOverlayRef;
+                    int                         mOverlayW;
+                    int                         mOverlayH;
     };
 
 // ----------------------------------------------------------------------------
