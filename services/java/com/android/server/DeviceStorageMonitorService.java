@@ -120,7 +120,7 @@ class DeviceStorageMonitorService extends Binder {
     
     private final void restatDataDir() {
         mFileStats.restat(DATA_PATH);
-        mFreeMem = mFileStats.getAvailableBlocks()*mBlkSize;
+        mFreeMem = (long)mFileStats.getAvailableBlocks() * (long)mBlkSize;
         // Allow freemem to be overridden by debug.freemem for testing
         String debugFreeMem = SystemProperties.get("debug.freemem");
         if (!"".equals(debugFreeMem)) {
@@ -251,7 +251,7 @@ class DeviceStorageMonitorService extends Binder {
         //initialize block size
         mBlkSize = mFileStats.getBlockSize();
         //initialize total storage on device
-        mTotalMemory = (mFileStats.getBlockCount()*mBlkSize)/100;
+        mTotalMemory = ((long)mFileStats.getBlockCount() * (long)mBlkSize)/100;
         mStorageLowIntent = new Intent(Intent.ACTION_DEVICE_STORAGE_LOW);
         mStorageOkIntent = new Intent(Intent.ACTION_DEVICE_STORAGE_OK);
         checkMemory(true);
