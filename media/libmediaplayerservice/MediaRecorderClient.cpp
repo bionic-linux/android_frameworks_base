@@ -30,10 +30,23 @@
 #include <utils/MemoryHeapBase.h>
 #include <utils/MemoryBase.h>
 #include <media/PVMediaRecorder.h>
+#include <utils/String16.h>
 
 #include "MediaRecorderClient.h"
 
 namespace android {
+
+const char* cameraPermission = "android.permission.CAMERA";
+
+static bool checkPermission(const char* permissionString) {
+#ifndef HAVE_ANDROID_OS
+    return true;
+#endif
+    if (getpid() == IPCThreadState::self()->getCallingPid()) return true;
+    bool ok = checkCallingPermission(String16(permissionString));
+    if (!ok) LOGE("Request requires %s", permissionString);
+    return ok;
+}
 
 status_t MediaRecorderClient::setCamera(const sp<ICamera>& camera)
 {
@@ -60,6 +73,9 @@ status_t MediaRecorderClient::setPreviewSurface(const sp<ISurface>& surface)
 status_t MediaRecorderClient::setVideoSource(int vs)
 {
     LOGV("setVideoSource(%d)", vs);
+    if (!checkPermission(cameraPermission)) {
+        return PERMISSION_DENIED;
+    }
     Mutex::Autolock lock(mLock);
     if (mRecorder == NULL)	{
         LOGE("recorder is not initialized");
@@ -121,6 +137,17 @@ status_t MediaRecorderClient::setOutputFile(const char* path)
     return mRecorder->setOutputFile(path);
 }
 
+status_t MediaRecorderClient::setOutputFile(int fd, int64_t offset, int64_t length)
+{
+    LOGV("setOutputFile(%d, %lld, %lld)", fd, offset, length);
+    Mutex::Autolock lock(mLock);
+    if (mRecorder == NULL) {
+        LOGE("recorder is not initialized");
+        return NO_INIT;
+    }
+    return mRecorder->setOutputFile(fd, offset, length);
+}
+
 status_t MediaRecorderClient::setVideoSize(int width, int height)
 {
     LOGV("setVideoSize(%dx%d)", width, height);
@@ -141,6 +168,16 @@ status_t MediaRecorderClient::setVideoFrameRate(int frames_per_second)
         return NO_INIT;
     }
     return mRecorder->setVideoFrameRate(frames_per_second);
+}
+
+status_t MediaRecorderClient::setParameters(const String8& params) {
+    LOGV("setParameters(%s)", params.string());
+    Mutex::Autolock lock(mLock);
+    if (mRecorder == NULL) {
+        LOGE("recorder is not initialized");
+        return NO_INIT;
+    }
+    return mRecorder->setParameters(params);
 }
 
 status_t MediaRecorderClient::prepare()
@@ -245,6 +282,17 @@ MediaRecorderClient::~MediaRecorderClient()
 {
     LOGV("Client destructor");
     release();
+}
+
+status_t MediaRecorderClient::setListener(const sp<IMediaPlayerClient>& listener)
+{
+    LOGV("setListener");
+    Mutex::Autolock lock(mLock);
+    if (mRecorder == NULL) {
+        LOGE("recorder is not initialized");
+        return NO_INIT;
+    }
+    return mRecorder->setListener(listener);
 }
 
 }; // namespace android

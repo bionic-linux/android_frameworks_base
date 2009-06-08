@@ -21,6 +21,13 @@ package com.android.internal.telephony;
  */
 public abstract class Connection
 {
+    // Number presentation type for caller id display
+    public static int PRESENTATION_ALLOWED = 1;    // normal
+    public static int PRESENTATION_RESTRICTED = 2; // block by user
+    public static int PRESENTATION_UNKNOWN = 3;    // no specified or unknown by network
+    public static int PRESENTATION_PAYPHONE = 4;   // show pay phone info
+
+    
     public enum DisconnectCause {
         NOT_DISCONNECTED,   /* has not yet disconnected */
         INCOMING_MISSED,    /* an incoming call that was missed and never answered */
@@ -37,7 +44,10 @@ public abstract class Connection
         OUT_OF_SERVICE,     /* out of service */
         SIM_ERROR,          /* No SIM, SIM locked, or other SIM error */
         CALL_BARRED,        /* call was blocked by call barrring */
-        FDN_BLOCKED         /* call was blocked by fixed dial number */
+        FDN_BLOCKED,        /* call was blocked by fixed dial number */
+        CS_RESTRICTED,      /* call was blocked by restricted all voice access */
+        CS_RESTRICTED_NORMAL,/* call was blocked by restricted normal voice access */
+        CS_RESTRICTED_EMERGENCY/* call was blocked by restricted emergency voice access */
     }
 
     Object userData;
@@ -215,7 +225,12 @@ public abstract class Connection
     /**
      * Cancel any post
      */
-    public abstract void cancelPostDial();
+    public abstract void cancelPostDial();       
     
-
+    /**
+     * Returns the caller id presentation type for incoming and waiting calls
+     * @return one of PRESENTATION_*
+     */
+    public abstract int getNumberPresentation();
+    
 }

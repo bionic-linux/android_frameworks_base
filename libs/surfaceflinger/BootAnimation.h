@@ -26,7 +26,8 @@
 #include <ui/ISurfaceComposer.h>
 #include <ui/SurfaceComposerClient.h>
 
-#include <GLES/egl.h>
+#include <EGL/egl.h>
+#include <GLES/gl.h>
 
 #include "Barrier.h"
 
@@ -35,6 +36,7 @@ class SkBitmap;
 namespace android {
 
 class AssetManager;
+class EGLNativeWindowSurface;
 
 // ---------------------------------------------------------------------------
 
@@ -60,20 +62,17 @@ private:
 
     status_t initTexture(Texture* texture, AssetManager& asset, const char* name);
     bool android();
-    bool cylon();
 
     sp<SurfaceComposerClient>       mSession;
     AssetManager mAssets;
-    Texture mLeftTrail;
-    Texture mRightTrail;
-    Texture mBrightSpot;
-    Texture mAndroid[3];
-    int     mWidth;
-    int     mHeight;
+    Texture     mAndroid[2];
+    int         mWidth;
+    int         mHeight;
     EGLDisplay  mDisplay;
     EGLDisplay  mContext;
     EGLDisplay  mSurface;
     sp<Surface> mFlingerSurface;
+    sp<EGLNativeWindowSurface> mNativeWindowSurface;
     Barrier mBarrier;
 };
 

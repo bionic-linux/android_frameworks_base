@@ -21,6 +21,7 @@ import android.app.PendingIntent;
 import android.widget.ArrayAdapter;
 import android.view.View;
 import android.widget.ListView;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -57,22 +58,6 @@ public class NotificationTestList extends TestActivity
     }
 
     private Test[] mTests = new Test[] {
-        new Test("Crash") {
-            public void run()
-            {
-                PowerManager.WakeLock wl
-                        = ((PowerManager)NotificationTestList.this.getSystemService("power"))
-                            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "crasher");
-                wl.acquire();
-                mHandler.postDelayed(new Runnable() {
-                            public void run() {
-                                throw new RuntimeException("Die!");
-                            }
-                        }, 10000);
-
-            }
-        },
-
         new Test("No view") {
             public void run() {
                 Notification n = new Notification(R.drawable.icon1, "No view",
@@ -153,6 +138,60 @@ public class NotificationTestList extends TestActivity
             }
         },
 
+        new Test("Blue Lights") {
+            public void run()
+            {
+                Notification n = new Notification();
+                n.flags |= Notification.FLAG_SHOW_LIGHTS;
+                n.ledARGB = 0xff0000ff;
+                mNM.notify(1, n);
+            }
+        },
+
+        new Test("Red Lights") {
+            public void run()
+            {
+                Notification n = new Notification();
+                n.flags |= Notification.FLAG_SHOW_LIGHTS;
+                n.ledARGB = 0xffff0000;
+                mNM.notify(1, n);
+            }
+        },
+
+        new Test("Yellow Lights") {
+            public void run()
+            {
+                Notification n = new Notification();
+                n.flags |= Notification.FLAG_SHOW_LIGHTS;
+                n.ledARGB = 0xffffff00;
+                mNM.notify(1, n);
+            }
+        },
+
+        new Test("Blue Blinking Slow") {
+            public void run()
+            {
+                Notification n = new Notification();
+                n.flags |= Notification.FLAG_SHOW_LIGHTS;
+                n.ledARGB = 0xffffff00;
+                n.ledOnMS = 1300;
+                n.ledOffMS = 1300;
+                mNM.notify(1, n);
+            }
+        },
+
+        new Test("Blue Blinking Fast") {
+            public void run()
+            {
+                Notification n = new Notification();
+                n.flags |= Notification.FLAG_SHOW_LIGHTS;
+                n.ledARGB = 0xffffff00;
+                n.ledOnMS = 300;
+                n.ledOffMS = 300;
+                mNM.notify(1, n);
+            }
+        },
+
         new Test("Default All") {
             public void run()
             {
@@ -188,7 +227,8 @@ public class NotificationTestList extends TestActivity
             {
                 Notification n = new Notification();
                 n.sound = Uri.parse(
-                        "android.resource://com.android.notificationtest/raw/ringer");
+                        ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                        getPackageName() + "/raw/ringer");
                 Log.d(TAG, "n.sound=" + n.sound);
 
                 mNM.notify(1, n);
@@ -463,6 +503,22 @@ public class NotificationTestList extends TestActivity
         new Test("Persistent with numbers 4444") {
             public void run() {
                 mNM.notify(1, notificationWithNumbers(4444));
+            }
+        },
+
+        new Test("Crash") {
+            public void run()
+            {
+                PowerManager.WakeLock wl
+                        = ((PowerManager)NotificationTestList.this.getSystemService("power"))
+                            .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "crasher");
+                wl.acquire();
+                mHandler.postDelayed(new Runnable() {
+                            public void run() {
+                                throw new RuntimeException("Die!");
+                            }
+                        }, 10000);
+
             }
         },
 

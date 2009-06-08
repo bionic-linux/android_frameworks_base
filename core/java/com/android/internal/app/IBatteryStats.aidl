@@ -19,12 +19,33 @@ package com.android.internal.app;
 import com.android.internal.os.BatteryStatsImpl;
 
 interface IBatteryStats {
-    BatteryStatsImpl getStatistics();
+    byte[] getStatistics();
     void noteStartWakelock(int uid, String name, int type);
     void noteStopWakelock(int uid, String name, int type);
     void noteStartSensor(int uid, int sensor);
     void noteStopSensor(int uid, int sensor);
-    void setOnBattery(boolean onBattery);
+    void noteStartGps(int uid);
+    void noteStopGps(int uid);
+    void noteScreenOn();
+    void noteScreenBrightness(int brightness);
+    void noteScreenOff();
+    void noteInputEvent();
+    void noteUserActivity(int uid, int event);
+    void notePhoneOn();
+    void notePhoneOff();
+    void notePhoneSignalStrength(int asu);
+    void notePhoneDataConnectionState(int dataType, boolean hasData);
+    void noteWifiOn(int uid);
+    void noteWifiOff(int uid);
+    void noteWifiRunning();
+    void noteWifiStopped();
+    void noteBluetoothOn();
+    void noteBluetoothOff();
+    void noteFullWifiLockAcquired(int uid);
+    void noteFullWifiLockReleased(int uid);
+    void noteScanWifiLockAcquired(int uid);
+    void noteScanWifiLockReleased(int uid);
+    void setOnBattery(boolean onBattery, int level);
     long getAwakeTimeBattery();
     long getAwakeTimePlugged();
 }

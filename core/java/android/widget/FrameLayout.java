@@ -24,6 +24,7 @@ import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.view.Gravity;
 import android.widget.RemoteViews.RemoteView;
@@ -45,18 +46,31 @@ import android.widget.RemoteViews.RemoteView;
  */
 @RemoteView
 public class FrameLayout extends ViewGroup {
+    @ViewDebug.ExportedProperty
     boolean mMeasureAllChildren = false;
 
+    @ViewDebug.ExportedProperty
     private Drawable mForeground;
+    @ViewDebug.ExportedProperty
     private int mForegroundPaddingLeft = 0;
+    @ViewDebug.ExportedProperty
     private int mForegroundPaddingTop = 0;
+    @ViewDebug.ExportedProperty
     private int mForegroundPaddingRight = 0;
+    @ViewDebug.ExportedProperty
     private int mForegroundPaddingBottom = 0;
 
     private final Rect mSelfBounds = new Rect();
     private final Rect mOverlayBounds = new Rect();
+    @ViewDebug.ExportedProperty
     private int mForegroundGravity = Gravity.FILL;
 
+    /** {@hide} */
+    @ViewDebug.ExportedProperty
+    protected boolean mForegroundInPadding = true;
+
+    boolean mForegroundBoundsChanged = false;
+    
     public FrameLayout(Context context) {
         super(context);
     }
@@ -71,6 +85,9 @@ public class FrameLayout extends ViewGroup {
         TypedArray a = context.obtainStyledAttributes(attrs, com.android.internal.R.styleable.FrameLayout,
                     defStyle, 0);
 
+        mForegroundGravity = a.getInt(
+                com.android.internal.R.styleable.FrameLayout_foregroundGravity, mForegroundGravity);
+
         final Drawable d = a.getDrawable(com.android.internal.R.styleable.FrameLayout_foreground);
         if (d != null) {
             setForeground(d);
@@ -80,8 +97,8 @@ public class FrameLayout extends ViewGroup {
             setMeasureAllChildren(true);
         }
 
-        mForegroundGravity = a.getInt(com.android.internal.R.styleable.FrameLayout_foregroundGravity,
-                mForegroundGravity);
+        mForegroundInPadding = a.getBoolean(
+                com.android.internal.R.styleable.FrameLayout_foregroundInsidePadding, true);
 
         a.recycle();
     }
@@ -93,6 +110,7 @@ public class FrameLayout extends ViewGroup {
      *
      * @attr ref android.R.styleable#FrameLayout_foregroundGravity
      */
+    @android.view.RemotableViewMethod
     public void setForegroundGravity(int foregroundGravity) {
         if (mForegroundGravity != foregroundGravity) {
             if ((foregroundGravity & Gravity.HORIZONTAL_GRAVITY_MASK) == 0) {
@@ -104,6 +122,23 @@ public class FrameLayout extends ViewGroup {
             }
 
             mForegroundGravity = foregroundGravity;
+
+
+            if (mForegroundGravity == Gravity.FILL && mForeground != null) {
+                Rect padding = new Rect();
+                if (mForeground.getPadding(padding)) {
+                    mForegroundPaddingLeft = padding.left;
+                    mForegroundPaddingTop = padding.top;
+                    mForegroundPaddingRight = padding.right;
+                    mForegroundPaddingBottom = padding.bottom;
+                }
+            } else {
+                mForegroundPaddingLeft = 0;
+                mForegroundPaddingTop = 0;
+                mForegroundPaddingRight = 0;
+                mForegroundPaddingBottom = 0;
+            }
+
             requestLayout();
         }
     }
@@ -166,12 +201,14 @@ public class FrameLayout extends ViewGroup {
                 if (drawable.isStateful()) {
                     drawable.setState(getDrawableState());
                 }
-                Rect padding = new Rect();
-                if (drawable.getPadding(padding)) {
-                    mForegroundPaddingLeft = padding.left;
-                    mForegroundPaddingTop = padding.top;
-                    mForegroundPaddingRight = padding.right;
-                    mForegroundPaddingBottom = padding.bottom;
+                if (mForegroundGravity == Gravity.FILL) {
+                    Rect padding = new Rect();
+                    if (drawable.getPadding(padding)) {
+                        mForegroundPaddingLeft = padding.left;
+                        mForegroundPaddingTop = padding.top;
+                        mForegroundPaddingRight = padding.right;
+                        mForegroundPaddingBottom = padding.bottom;
+                    }
                 }
             }  else {
                 setWillNotDraw(true);
@@ -243,6 +280,8 @@ public class FrameLayout extends ViewGroup {
         final int parentTop = mPaddingTop + mForegroundPaddingTop;
         final int parentBottom = bottom - top - mPaddingBottom - mForegroundPaddingBottom;
 
+        mForegroundBoundsChanged = true;
+        
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
             if (child.getVisibility() != GONE) {
@@ -302,18 +341,7 @@ public class FrameLayout extends ViewGroup {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
-        final Drawable foreground = mForeground;
-        if (foreground != null) {
-            final Rect selfBounds = mSelfBounds;
-            final Rect overlayBounds = mOverlayBounds;
-
-            selfBounds.set(0, 0, w, h);
-            Gravity.apply(mForegroundGravity, foreground.getIntrinsicWidth(),
-                    foreground.getIntrinsicHeight(), selfBounds, overlayBounds);
-
-            foreground.setBounds(overlayBounds);
-        }
+        mForegroundBoundsChanged = true;
     }
 
     /**
@@ -324,7 +352,29 @@ public class FrameLayout extends ViewGroup {
         super.draw(canvas);
 
         if (mForeground != null) {
-            mForeground.draw(canvas);
+            final Drawable foreground = mForeground;
+            if (mForegroundBoundsChanged) {
+                mForegroundBoundsChanged = false;
+                if (foreground != null) {
+                    final Rect selfBounds = mSelfBounds;
+                    final Rect overlayBounds = mOverlayBounds;
+
+                    final int w = mRight-mLeft;
+                    final int h = mBottom-mTop;
+                    
+                    if (mForegroundInPadding) {
+                        selfBounds.set(0, 0, w, h);
+                    } else {
+                        selfBounds.set(mPaddingLeft, mPaddingTop, w - mPaddingRight, h - mPaddingBottom);
+                    }
+
+                    Gravity.apply(mForegroundGravity, foreground.getIntrinsicWidth(),
+                            foreground.getIntrinsicHeight(), selfBounds, overlayBounds);
+                    foreground.setBounds(overlayBounds);
+                }
+            }
+            
+            foreground.draw(canvas);
         }
     }
 
@@ -348,6 +398,7 @@ public class FrameLayout extends ViewGroup {
      * 
      * @attr ref android.R.styleable#FrameLayout_measureAllChildren
      */
+    @android.view.RemotableViewMethod
     public void setMeasureAllChildren(boolean measureAll) {
         mMeasureAllChildren = measureAll;
     }

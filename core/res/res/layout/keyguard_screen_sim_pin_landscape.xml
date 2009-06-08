@@ -20,7 +20,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FF000000"
+    android:background="@android:color/background_dark"
         >
 
     <!-- displays dots as user enters pin -->
@@ -45,11 +45,10 @@
             android:maxLines="1"
             android:background="@null"
             android:textSize="32sp"
-            android:password="true"
+            android:inputType="textPassword"
             />
 
         <ImageButton android:id="@+id/backspace"
-             style="@android:style/Widget.Button.Inset"
              android:src="@android:drawable/ic_input_delete"
              android:layout_width="wrap_content"
              android:layout_height="fill_parent"
@@ -88,12 +87,7 @@
             android:layout_weight="1.0"
             android:layout_marginBottom="8dip"
             android:layout_marginRight="8dip"
-            android:paddingLeft="4dip"
-            android:paddingRight="4dip"
-            android:paddingTop="8dip"
-            android:paddingBottom="8dip"
             android:textSize="18sp"
-            android:drawablePadding="3dip"
             />
 
         <Button android:id="@+id/emergencyCall"
@@ -105,13 +99,9 @@
             android:layout_weight="1.0"
             android:layout_marginBottom="8dip"
             android:layout_marginLeft="8dip"
-            android:paddingLeft="4dip"
-            android:paddingRight="4dip"
-            android:paddingTop="8dip"
-            android:paddingBottom="8dip"
             android:textSize="18sp"
             android:drawableLeft="@drawable/ic_emergency"
-            android:drawablePadding="3dip"
+            android:drawablePadding="8dip"
         />
     </LinearLayout>
 

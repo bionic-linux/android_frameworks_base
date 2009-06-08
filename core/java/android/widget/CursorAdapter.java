@@ -127,7 +127,7 @@ public abstract class CursorAdapter extends BaseAdapter implements Filterable,
     /**
      * @see android.widget.ListAdapter#getCount()
      */
-    public final int getCount() {
+    public int getCount() {
         if (mDataValid && mCursor != null) {
             return mCursor.getCount();
         } else {
@@ -138,7 +138,7 @@ public abstract class CursorAdapter extends BaseAdapter implements Filterable,
     /**
      * @see android.widget.ListAdapter#getItem(int)
      */
-    public final Object getItem(int position) {
+    public Object getItem(int position) {
         if (mDataValid && mCursor != null) {
             mCursor.moveToPosition(position);
             return mCursor;
@@ -150,7 +150,7 @@ public abstract class CursorAdapter extends BaseAdapter implements Filterable,
     /**
      * @see android.widget.ListAdapter#getItemId(int)
      */
-    public final long getItemId(int position) {
+    public long getItemId(int position) {
         if (mDataValid && mCursor != null) {
             if (mCursor.moveToPosition(position)) {
                 return mCursor.getLong(mRowIDColumn);
@@ -348,6 +348,20 @@ public abstract class CursorAdapter extends BaseAdapter implements Filterable,
         mFilterQueryProvider = filterQueryProvider;
     }
 
+    /**
+     * Called when the {@link ContentObserver} on the cursor receives a change notification.
+     * The default implementation provides the auto-requery logic, but may be overridden by
+     * sub classes.
+     * 
+     * @see ContentObserver#onChange(boolean)
+     */
+    protected void onContentChanged() {
+        if (mAutoRequery && mCursor != null && !mCursor.isClosed()) {
+            if (Config.LOGV) Log.v("Cursor", "Auto requerying " + mCursor + " due to update");
+            mDataValid = mCursor.requery();
+        }
+    }
+
     private class ChangeObserver extends ContentObserver {
         public ChangeObserver() {
             super(new Handler());
@@ -360,10 +374,7 @@ public abstract class CursorAdapter extends BaseAdapter implements Filterable,
 
         @Override
         public void onChange(boolean selfChange) {
-            if (mAutoRequery && mCursor != null && !mCursor.isClosed()) {
-                if (Config.LOGV) Log.v("Cursor", "Auto requerying " + mCursor + " due to update");
-                mDataValid = mCursor.requery();
-            }
+            onContentChanged();
         }
     }
 

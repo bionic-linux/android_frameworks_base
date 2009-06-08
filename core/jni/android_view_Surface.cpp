@@ -212,7 +212,9 @@ static jobject Surface_lockCanvas(JNIEnv* env, jobject clazz, jobject dirtyRect)
         dirty.top   = env->GetIntField(dirtyRect, ro.t);
         dirty.right = env->GetIntField(dirtyRect, ro.r);
         dirty.bottom= env->GetIntField(dirtyRect, ro.b);
-        dirtyRegion.set(dirty);    
+        if (dirty.left < dirty.right && dirty.top < dirty.bottom) {
+            dirtyRegion.set(dirty);    
+        }
     } else {
         dirtyRegion.set(Rect(0x3FFF,0x3FFF));
     }
@@ -246,6 +248,14 @@ static jobject Surface_lockCanvas(JNIEnv* env, jobject clazz, jobject dirtyRect)
     int saveCount = nativeCanvas->save();
     env->SetIntField(clazz, so.saveCount, saveCount);
 
+    if (dirtyRect) {
+        Rect bounds(dirtyRegion.bounds());
+        env->SetIntField(dirtyRect, ro.l, bounds.left);
+        env->SetIntField(dirtyRect, ro.t, bounds.top);
+        env->SetIntField(dirtyRect, ro.r, bounds.right);
+        env->SetIntField(dirtyRect, ro.b, bounds.bottom);
+    }
+    
 	return canvas;
 }
 
@@ -314,9 +324,9 @@ static void Surface_closeTransaction(
 }
 
 static void Surface_setOrientation(
-        JNIEnv* env, jobject clazz, jint display, jint orientation)
+        JNIEnv* env, jobject clazz, jint display, jint orientation, jint flags)
 {
-    int err = SurfaceComposerClient::setOrientation(display, orientation);
+    int err = SurfaceComposerClient::setOrientation(display, orientation, flags);
     if (err < 0) {
         doThrow(env, "java/lang/IllegalArgumentException", NULL);
     }
@@ -555,7 +565,7 @@ static JNINativeMethod gSurfaceMethods[] = {
 	{"unlockCanvas",        "(Landroid/graphics/Canvas;)V", (void*)Surface_unlockCanvas },
 	{"openTransaction",     "()V",  (void*)Surface_openTransaction },
     {"closeTransaction",    "()V",  (void*)Surface_closeTransaction },
-    {"setOrientation",      "(II)V", (void*)Surface_setOrientation },
+    {"setOrientation",      "(III)V", (void*)Surface_setOrientation },
     {"freezeDisplay",       "(I)V", (void*)Surface_freezeDisplay },
     {"unfreezeDisplay",     "(I)V", (void*)Surface_unfreezeDisplay },
     {"setLayer",            "(I)V", (void*)Surface_setLayer },

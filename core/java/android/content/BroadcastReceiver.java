@@ -16,7 +16,11 @@
 
 package android.content;
 
+import android.app.ActivityManagerNative;
+import android.app.IActivityManager;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 
 /**
@@ -40,14 +44,14 @@ import android.util.Log;
  * <ul>
  * <li> <b>Normal broadcasts</b> (sent with {@link Context#sendBroadcast(Intent)
  * Context.sendBroadcast}) are completely asynchronous.  All receivers of the
- * broadcast are run, in an undefined order, often at the same time.  This is
- * more efficient, but means that receivers can not use the result or abort
+ * broadcast are run in an undefined order, often at the same time.  This is
+ * more efficient, but means that receivers cannot use the result or abort
  * APIs included here.
  * <li> <b>Ordered broadcasts</b> (sent with {@link Context#sendOrderedBroadcast(Intent, String)
  * Context.sendOrderedBroadcast}) are delivered to one receiver at a time.
  * As each receiver executes in turn, it can propagate a result to the next
  * receiver, or it can completely abort the broadcast so that it won't be passed
- * to other receivers.  The order receivers runs in can be controlled with the
+ * to other receivers.  The order receivers run in can be controlled with the
  * {@link android.R.styleable#AndroidManifestIntentFilter_priority
  * android:priority} attribute of the matching intent-filter; receivers with
  * the same priority will be run in an arbitrary order.
@@ -57,14 +61,14 @@ import android.util.Log;
  * situations revert to delivering the broadcast one receiver at a time.  In
  * particular, for receivers that may require the creation of a process, only
  * one will be run at a time to avoid overloading the system with new processes.
- * In this situation, however, the non-ordered semantics hold: these receivers
- * can not return results or abort their broadcast.</p>
+ * In this situation, however, the non-ordered semantics hold: these receivers still
+ * cannot return results or abort their broadcast.</p>
  * 
  * <p>Note that, although the Intent class is used for sending and receiving
  * these broadcasts, the Intent broadcast mechanism here is completely separate
  * from Intents that are used to start Activities with
  * {@link Context#startActivity Context.startActivity()}.
- * There is no way for an BroadcastReceiver
+ * There is no way for a BroadcastReceiver
  * to see or capture Intents used with startActivity(); likewise, when
  * you broadcast an Intent, you will never find or start an Activity.
  * These two operations are semantically very different: starting an
@@ -75,7 +79,7 @@ import android.util.Log;
  * <p>The BroadcastReceiver class (when launched as a component through
  * a manifest's {@link android.R.styleable#AndroidManifestReceiver &lt;receiver&gt;}
  * tag) is an important part of an
- * <a href="{@docRoot}intro/lifecycle.html">application's overall lifecycle</a>.</p>
+ * <a href="{@docRoot}guide/topics/fundamentals.html#lcycles">application's overall lifecycle</a>.</p>
  * 
  * <p>Topics covered here:
  * <ol>
@@ -99,7 +103,7 @@ import android.util.Log;
  * its process before the asynchronous operation completes.
  * 
  * <p>In particular, you may <i>not</i> show a dialog or bind to a service from
- * within an BroadcastReceiver.  For the former, you should instead use the
+ * within a BroadcastReceiver.  For the former, you should instead use the
  * {@link android.app.NotificationManager} API.  For the latter, you can
  * use {@link android.content.Context#startService Context.startService()} to
  * send a command to the service.
@@ -131,13 +135,13 @@ import android.util.Log;
  * tag in their <code>AndroidManifest.xml</code>) will be able to send an
  * Intent to the receiver.
  * 
- * <p>See the <a href="{@docRoot}devel/security.html">Security Model</a>
+ * <p>See the <a href="{@docRoot}guide/topics/security/security.html">Security and Permissions</a>
  * document for more information on permissions and security in general.
  * 
  * <a name="ProcessLifecycle"></a>
  * <h3>Process Lifecycle</h3>
  * 
- * <p>A process that is currently executing an BroadcastReceiver (that is,
+ * <p>A process that is currently executing a BroadcastReceiver (that is,
  * currently running the code in its {@link #onReceive} method) is
  * considered to be a foreground process and will be kept running by the
  * system except under cases of extreme memory pressure.
@@ -152,7 +156,7 @@ import android.util.Log;
  * more important processes.
  * 
  * <p>This means that for longer-running operations you will often use
- * a {@link android.app.Service} in conjunction with an BroadcastReceiver to keep
+ * a {@link android.app.Service} in conjunction with a BroadcastReceiver to keep
  * the containing process active for the entire time of your operation.
  */
 public abstract class BroadcastReceiver {
@@ -163,7 +167,7 @@ public abstract class BroadcastReceiver {
      * This method is called when the BroadcastReceiver is receiving an Intent
      * broadcast.  During this time you can use the other methods on
      * BroadcastReceiver to view/modify the current result values.  The function
-     * is normally called from the main thread of its process, so you should
+     * is normally called within the main thread of its process, so you should
      * never perform long-running operations in it (there is a timeout of
      * 10 seconds that the system allows before considering the receiver to
      * be blocked and a candidate to be killed). You cannot launch a popup dialog
@@ -175,12 +179,42 @@ public abstract class BroadcastReceiver {
      * return a result to you asynchronously -- in particular, for interacting
      * with services, you should use
      * {@link Context#startService(Intent)} instead of
-     * {@link Context#bindService(Intent, ServiceConnection, int)}.
+     * {@link Context#bindService(Intent, ServiceConnection, int)}.  If you wish
+     * to interact with a service that is already running, you can use
+     * {@link #peekService}.
+     * 
+     * <p>The Intent filters used in {@link android.content.Context#registerReceiver}
+     * and in application manifests are <em>not</em> guaranteed to be exclusive. They
+     * are hints to the operating system about how to find suitable recipients. It is
+     * possible for senders to force delivery to specific recipients, bypassing filter
+     * resolution.  For this reason, {@link #onReceive(Context, Intent) onReceive()}
+     * implementations should respond only to known actions, ignoring any unexpected
+     * Intents that they may receive.
      * 
      * @param context The Context in which the receiver is running.
      * @param intent The Intent being received.
      */
     public abstract void onReceive(Context context, Intent intent);
+
+    /**
+     * Provide a binder to an already-running service.  This method is synchronous
+     * and will not start the target service if it is not present, so it is safe
+     * to call from {@link #onReceive}.
+     * 
+     * @param myContext The Context that had been passed to {@link #onReceive(Context, Intent)}
+     * @param service The Intent indicating the service you wish to use.  See {@link
+     * Context#startService(Intent)} for more information.
+     */
+    public IBinder peekService(Context myContext, Intent service) {
+        IActivityManager am = ActivityManagerNative.getDefault();
+        IBinder binder = null;
+        try {
+            binder = am.peekService(service, service.resolveTypeIfNeeded(
+                    myContext.getContentResolver()));
+        } catch (RemoteException e) {
+        }
+        return binder;
+    }
 
     /**
      * Change the current result code of this broadcast; only works with

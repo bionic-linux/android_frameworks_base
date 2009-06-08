@@ -18,6 +18,7 @@ package android.inputmethodservice;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.IBinder;
 import android.view.Gravity;
 import android.view.WindowManager;
@@ -29,18 +30,6 @@ import android.view.WindowManager;
  * always visible.
  */
 class SoftInputWindow extends Dialog {
-
-    /**
-     * Create a DockWindow that uses the default style.
-     * 
-     * @param context The Context the DockWindow is to run it. In particular, it
-     *        uses the window manager and theme in this context to present its
-     *        UI.
-     */
-    public SoftInputWindow(Context context) {
-        super(context, com.android.internal.R.style.Theme_InputMethod);
-        initDockWindow();
-    }
 
     public void setToken(IBinder token) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -139,6 +128,9 @@ class SoftInputWindow extends Dialog {
 
         lp.gravity = Gravity.BOTTOM;
         lp.width = -1;
+        // Let the input method window's orientation follow sensor based rotation
+        // Turn this off for now, it is very problematic.
+        //lp.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_USER;
 
         getWindow().setAttributes(lp);
         getWindow().setFlags(

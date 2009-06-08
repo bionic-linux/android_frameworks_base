@@ -16,7 +16,9 @@
 
 package android.text.method;
 
+import android.util.Log;
 import android.view.KeyEvent;
+import android.graphics.Rect;
 import android.text.*;
 import android.widget.TextView;
 import android.view.View;
@@ -131,6 +133,16 @@ implements MovementMethod
     }
 
     public boolean onKeyDown(TextView widget, Spannable buffer, int keyCode, KeyEvent event) {
+        if (executeDown(widget, buffer, keyCode)) {
+            MetaKeyKeyListener.adjustMetaAfterKeypress(buffer);
+            MetaKeyKeyListener.resetLockedMeta(buffer);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean executeDown(TextView widget, Spannable buffer, int keyCode) {
         boolean handled = false;
 
         switch (keyCode) {
@@ -170,6 +182,20 @@ implements MovementMethod
         return false;
     }
 
+    public boolean onKeyOther(TextView view, Spannable text, KeyEvent event) {
+        int code = event.getKeyCode();
+        if (code != KeyEvent.KEYCODE_UNKNOWN
+                && event.getAction() == KeyEvent.ACTION_MULTIPLE) {
+            int repeat = event.getRepeatCount();
+            boolean handled = false;
+            while ((--repeat) > 0) {
+                handled |= executeDown(view, text, code);
+            }
+            return handled;
+        }
+        return false;
+    }
+    
     public boolean onTrackballEvent(TextView widget, Spannable text,
             MotionEvent event) {
         return false;
@@ -177,23 +203,54 @@ implements MovementMethod
     
     public boolean onTouchEvent(TextView widget, Spannable buffer,
                                 MotionEvent event) {
+        int initialScrollX = -1, initialScrollY = -1;
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            initialScrollX = Touch.getInitialScrollX(widget, buffer);
+            initialScrollY = Touch.getInitialScrollY(widget, buffer);
+        }
+        
         boolean handled = Touch.onTouchEvent(widget, buffer, event);
 
-        if (widget.isFocused()) {
+        if (widget.isFocused() && !widget.didTouchFocusSelect()) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
+                // If we have scrolled, then the up shouldn't move the cursor,
+                // but we do need to make sure the cursor is still visible at
+                // the current scroll offset to avoid the scroll jumping later
+                // to show it.
+                if ((initialScrollY >= 0 && initialScrollY != widget.getScrollY()) ||
+                        (initialScrollX >= 0 && initialScrollX != widget.getScrollX())) {
+                    widget.moveCursorToVisibleOffset();
+                    return true;
+                }
+                
                 int x = (int) event.getX();
                 int y = (int) event.getY();
 
                 x -= widget.getTotalPaddingLeft();
                 y -= widget.getTotalPaddingTop();
 
+                // Clamp the position to inside of the view.
+                if (x < 0) {
+                    x = 0;
+                } else if (x >= (widget.getWidth()-widget.getTotalPaddingRight())) {
+                    x = widget.getWidth()-widget.getTotalPaddingRight() - 1;
+                }
+                if (y < 0) {
+                    y = 0;
+                } else if (y >= (widget.getHeight()-widget.getTotalPaddingBottom())) {
+                    y = widget.getHeight()-widget.getTotalPaddingBottom() - 1;
+                }
+                
                 x += widget.getScrollX();
                 y += widget.getScrollY();
 
                 Layout layout = widget.getLayout();
                 int line = layout.getLineForVertical(y);
+                
                 int off = layout.getOffsetForHorizontal(line, x);
 
+                // XXX should do the same adjust for x as we do for the line.
+                
                 boolean cap = (MetaKeyKeyListener.getMetaState(buffer,
                                 KeyEvent.META_SHIFT_ON) == 1) ||
                               (MetaKeyKeyListener.getMetaState(buffer,

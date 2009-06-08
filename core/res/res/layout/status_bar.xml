@@ -90,14 +90,14 @@
 
     <com.android.server.status.DateView android:id="@+id/date"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="fill_parent"
         android:singleLine="true"
         android:textSize="16sp"
         android:textStyle="bold"
         android:gravity="center_vertical|left"
         android:paddingLeft="6px"
         android:paddingRight="6px"
-        android:textColor="#ff000000"
+        android:textColor="?android:attr/textColorPrimaryInverse"
         android:background="@drawable/statusbar_background"
         />
 </com.android.server.status.StatusBarView>

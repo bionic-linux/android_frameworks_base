@@ -92,7 +92,7 @@ public class KeyEvent implements Parcelable {
     public static final int KEYCODE_SYM             = 63;
     public static final int KEYCODE_EXPLORER        = 64;
     public static final int KEYCODE_ENVELOPE        = 65;
-    public static final int KEYCODE_ENTER         = 66;
+    public static final int KEYCODE_ENTER           = 66;
     public static final int KEYCODE_DEL             = 67;
     public static final int KEYCODE_GRAVE           = 68;
     public static final int KEYCODE_MINUS           = 69;
@@ -111,13 +111,13 @@ public class KeyEvent implements Parcelable {
     public static final int KEYCODE_MENU            = 82;
     public static final int KEYCODE_NOTIFICATION    = 83;
     public static final int KEYCODE_SEARCH          = 84;
-    public static final int KEYCODE_PLAYPAUSE       = 85;
-    public static final int KEYCODE_STOP            = 86;
-    public static final int KEYCODE_NEXTSONG        = 87;
-    public static final int KEYCODE_PREVIOUSSONG    = 88;
-    public static final int KEYCODE_REWIND          = 89;
-    public static final int KEYCODE_FORWARD         = 90;
-    private static final int LAST_KEYCODE           = KEYCODE_FORWARD;
+    public static final int KEYCODE_MEDIA_PLAY_PAUSE= 85;
+    public static final int KEYCODE_MEDIA_STOP      = 86;
+    public static final int KEYCODE_MEDIA_NEXT      = 87;
+    public static final int KEYCODE_MEDIA_PREVIOUS  = 88;
+    public static final int KEYCODE_MEDIA_REWIND    = 89;
+    public static final int KEYCODE_MEDIA_FAST_FORWARD = 90;
+    public static final int KEYCODE_MUTE            = 91;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
@@ -126,7 +126,15 @@ public class KeyEvent implements Parcelable {
     //  frameworks/base/core/res/res/values/attrs.xml
     //  commands/monkey/Monkey.java
     //  emulator?
+    //
+    //  Also Android currently does not reserve code ranges for vendor-
+    //  specific key codes.  If you have new key codes to have, you
+    //  MUST contribute a patch to the open source project to define
+    //  those new codes.  This is intended to maintain a consistent
+    //  set of key code definitions across all Android devices.
    
+    private static final int LAST_KEYCODE           = KEYCODE_MUTE;
+    
     /**
      * @deprecated There are now more than MAX_KEYCODE keycodes.
      * Use {@link #getMaxKeyCode()} instead.
@@ -144,8 +152,12 @@ public class KeyEvent implements Parcelable {
     public static final int ACTION_UP               = 1;
     /**
      * {@link #getAction} value: multiple duplicate key events have
-     * occurred in a row.  The {#link {@link #getRepeatCount()} method returns
-     * the number of duplicates.
+     * occurred in a row, or a complex string is being delivered.  If the
+     * key code is not {#link {@link #KEYCODE_UNKNOWN} then the
+     * {#link {@link #getRepeatCount()} method returns the number of times
+     * the given key code should be executed.
+     * Otherwise, if the key code {@link #KEYCODE_UNKNOWN}, then
+     * this is a sequence of characters as returned by {@link #getCharacters}.
      */
     public static final int ACTION_MULTIPLE         = 2;
 
@@ -224,6 +236,28 @@ public class KeyEvent implements Parcelable {
     public static final int FLAG_SOFT_KEYBOARD = 0x2;
     
     /**
+     * This mask is set if we don't want the key event to cause us to leave
+     * touch mode.
+     */
+    public static final int FLAG_KEEP_TOUCH_MODE = 0x4;
+    
+    /**
+     * This mask is set if an event was known to come from a trusted part
+     * of the system.  That is, the event is known to come from the user,
+     * and could not have been spoofed by a third party component.
+     */
+    public static final int FLAG_FROM_SYSTEM = 0x8;
+    
+    /**
+     * This mask is used for compatibility, to identify enter keys that are
+     * coming from an IME whose enter key has been auto-labelled "next" or
+     * "done".  This allows TextView to dispatch these as normal enter keys
+     * for old applications, but still do the appropriate action when
+     * receiving them.
+     */
+    public static final int FLAG_EDITOR_ACTION = 0x10;
+    
+    /**
      * Returns the maximum keycode.
      */
     public static int getMaxKeyCode() {
@@ -248,6 +282,7 @@ public class KeyEvent implements Parcelable {
     private int mFlags;
     private long mDownTime;
     private long mEventTime;
+    private String mCharacters;
 
     public interface Callback {
         /**
@@ -406,6 +441,44 @@ public class KeyEvent implements Parcelable {
     }
 
     /**
+     * Create a new key event for a string of characters.  The key code,
+     * action, and repeat could will automatically be set to
+     * {@link #KEYCODE_UNKNOWN}, {@link #ACTION_MULTIPLE}, and 0 for you.
+     * 
+     * @param time The time (in {@link android.os.SystemClock#uptimeMillis})
+     * at which this event occured.
+     * @param characters The string of characters.
+     * @param device The device ID that generated the key event.
+     * @param flags The flags for this key event
+     */
+    public KeyEvent(long time, String characters, int device, int flags) {
+        mDownTime = time;
+        mEventTime = time;
+        mCharacters = characters;
+        mAction = ACTION_MULTIPLE;
+        mKeyCode = KEYCODE_UNKNOWN;
+        mRepeatCount = 0;
+        mDeviceId = device;
+        mFlags = flags;
+    }
+
+    /**
+     * Make an exact copy of an existing key event.
+     */
+    public KeyEvent(KeyEvent origEvent) {
+        mDownTime = origEvent.mDownTime;
+        mEventTime = origEvent.mEventTime;
+        mAction = origEvent.mAction;
+        mKeyCode = origEvent.mKeyCode;
+        mRepeatCount = origEvent.mRepeatCount;
+        mMetaState = origEvent.mMetaState;
+        mDeviceId = origEvent.mDeviceId;
+        mScancode = origEvent.mScancode;
+        mFlags = origEvent.mFlags;
+        mCharacters = origEvent.mCharacters;
+    }
+
+    /**
      * Copy an existing key event, modifying its time and repeat count.
      * 
      * @param origEvent The existing event to be copied.
@@ -423,15 +496,30 @@ public class KeyEvent implements Parcelable {
         mDeviceId = origEvent.mDeviceId;
         mScancode = origEvent.mScancode;
         mFlags = origEvent.mFlags;
+        mCharacters = origEvent.mCharacters;
     }
 
+    /**
+     * Create a new key event that is the same as the given one, but whose
+     * event time and repeat count are replaced with the given value.
+     * 
+     * @param event The existing event to be copied.  This is not modified.
+     * @param eventTime The new event time
+     * (in {@link android.os.SystemClock#uptimeMillis}) of the event.
+     * @param newRepeat The new repeat count of the event.
+     */
+    public static KeyEvent changeTimeRepeat(KeyEvent event, long eventTime,
+            int newRepeat) {
+        return new KeyEvent(event, eventTime, newRepeat);
+    }
+    
     /**
      * Copy an existing key event, modifying its action.
      * 
      * @param origEvent The existing event to be copied.
      * @param action The new action code of the event.
      */
-    public KeyEvent(KeyEvent origEvent, int action) {
+    private KeyEvent(KeyEvent origEvent, int action) {
         mDownTime = origEvent.mDownTime;
         mEventTime = origEvent.mEventTime;
         mAction = action;
@@ -441,8 +529,34 @@ public class KeyEvent implements Parcelable {
         mDeviceId = origEvent.mDeviceId;
         mScancode = origEvent.mScancode;
         mFlags = origEvent.mFlags;
+        // Don't copy mCharacters, since one way or the other we'll lose it
+        // when changing the action.
     }
 
+    /**
+     * Create a new key event that is the same as the given one, but whose
+     * action is replaced with the given value.
+     * 
+     * @param event The existing event to be copied.  This is not modified.
+     * @param action The new action code of the event.
+     */
+    public static KeyEvent changeAction(KeyEvent event, int action) {
+        return new KeyEvent(event, action);
+    }
+    
+    /**
+     * Create a new key event that is the same as the given one, but whose
+     * flags are replaced with the given value.
+     * 
+     * @param event The existing event to be copied.  This is not modified.
+     * @param flags The new flags constant.
+     */
+    public static KeyEvent changeFlags(KeyEvent event, int flags) {
+        event = new KeyEvent(event);
+        event.mFlags = flags;
+        return event;
+    }
+    
     /**
      * Don't use in new code, instead explicitly check
      * {@link #getAction()}.
@@ -472,14 +586,15 @@ public class KeyEvent implements Parcelable {
         case KEYCODE_ENDCALL:
         case KEYCODE_VOLUME_UP:
         case KEYCODE_VOLUME_DOWN:
+        case KEYCODE_MUTE:
         case KEYCODE_POWER:
         case KEYCODE_HEADSETHOOK:
-        case KEYCODE_PLAYPAUSE:
-        case KEYCODE_STOP:
-        case KEYCODE_NEXTSONG:
-        case KEYCODE_PREVIOUSSONG:
-        case KEYCODE_REWIND:
-        case KEYCODE_FORWARD:
+        case KEYCODE_MEDIA_PLAY_PAUSE:
+        case KEYCODE_MEDIA_STOP:
+        case KEYCODE_MEDIA_NEXT:
+        case KEYCODE_MEDIA_PREVIOUS:
+        case KEYCODE_MEDIA_REWIND:
+        case KEYCODE_MEDIA_FAST_FORWARD:
         case KEYCODE_CAMERA:
         case KEYCODE_FOCUS:
         case KEYCODE_SEARCH:
@@ -580,7 +695,7 @@ public class KeyEvent implements Parcelable {
 
     /**
      * Retrieve the key code of the key event.  This is the physical key that
-     * was pressed -- not the Unicode character.
+     * was pressed, <em>not</em> the Unicode character.
      * 
      * @return The key code of the event.
      */
@@ -588,6 +703,18 @@ public class KeyEvent implements Parcelable {
         return mKeyCode;
     }
 
+    /**
+     * For the special case of a {@link #ACTION_MULTIPLE} event with key
+     * code of {@link #KEYCODE_UNKNOWN}, this is a raw string of characters
+     * associated with the event.  In all other cases it is null.
+     * 
+     * @return Returns a String of 1 or more characters associated with
+     * the event.
+     */
+    public final String getCharacters() {
+        return mCharacters;
+    }
+    
     /**
      * Retrieve the hardware key id of this key event.  These values are not
      * reliable and vary from device to device.
@@ -772,16 +899,18 @@ public class KeyEvent implements Parcelable {
                 if (receiver.onKeyMultiple(code, count, this)) {
                     return true;
                 }
-                mAction = ACTION_DOWN;
-                mRepeatCount = 0;
-                boolean handled = receiver.onKeyDown(code, this);
-                if (handled) {
-                    mAction = ACTION_UP;
-                    receiver.onKeyUp(code, this);
+                if (code != KeyEvent.KEYCODE_UNKNOWN) {
+                    mAction = ACTION_DOWN;
+                    mRepeatCount = 0;
+                    boolean handled = receiver.onKeyDown(code, this);
+                    if (handled) {
+                        mAction = ACTION_UP;
+                        receiver.onKeyUp(code, this);
+                    }
+                    mAction = ACTION_MULTIPLE;
+                    mRepeatCount = count;
+                    return handled;
                 }
-                mAction = ACTION_MULTIPLE;
-                mRepeatCount = count;
-                return handled;
         }
         return false;
     }
