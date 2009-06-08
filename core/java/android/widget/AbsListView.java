@@ -17,7 +17,6 @@
 package android.widget;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -28,9 +27,11 @@ import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -40,7 +41,11 @@ import android.view.ViewConfiguration;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManagerImpl;
+import android.view.inputmethod.BaseInputConnection;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputConnectionWrapper;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ContextMenu.ContextMenuInfo;
 
 import com.android.internal.R;
@@ -369,7 +374,6 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
     private int mLastTouchMode = TOUCH_MODE_UNKNOWN;
 
-    // TODO: REMOVE WHEN WE'RE DONE WITH PROFILING
     private static final boolean PROFILE_SCROLLING = false;
     private boolean mScrollProfilingStarted = false;
 
@@ -423,6 +427,13 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      */
     private FastScroller mFastScroller;
 
+    private int mTouchSlop;
+
+    private float mDensityScale;
+
+    private InputConnection mDefInputConnection;
+    private InputConnectionWrapper mPublicInputConnection;
+    
     /**
      * Interface definition for a callback to be invoked when the list or grid
      * has been scrolled.
@@ -557,6 +568,15 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     @ViewDebug.ExportedProperty
     public boolean isFastScrollEnabled() {
         return mFastScrollEnabled;
+    }
+    
+    /**
+     * If fast scroll is visible, then don't draw the vertical scrollbar.
+     * @hide 
+     */
+    @Override
+    protected boolean isVerticalScrollBarHidden() {
+        return mFastScroller != null && mFastScroller.isVisible();
     }
 
     /**
@@ -696,6 +716,9 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         setWillNotDraw(false);
         setAlwaysDrawnWithCacheEnabled(false);
         setScrollingCacheEnabled(true);
+
+        mTouchSlop = ViewConfiguration.get(mContext).getScaledTouchSlop();
+        mDensityScale = getContext().getResources().getDisplayMetrics().density;
     }
 
     private void useDefaultSelector() {
@@ -877,13 +900,17 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             mSyncMode = SYNC_FIRST_POSITION;
         }
 
-        // Don't restore the type filter window when there is no keyboard
-        int keyboardHidden = getContext().getResources().getConfiguration().keyboardHidden;
-        if (keyboardHidden != Configuration.KEYBOARDHIDDEN_YES) {
-            String filterText = ss.filter;
-            setFilterText(filterText);
-        }
+        setFilterText(ss.filter);
+
         requestLayout();
+    }
+
+    private boolean acceptFilter() {
+        if (!mTextFilterEnabled || !(getAdapter() instanceof Filterable) ||
+                ((Filterable) getAdapter()).getFilter() == null) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -893,7 +920,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      * @see #setTextFilterEnabled
      */
     public void setFilterText(String filterText) {
-        if (mTextFilterEnabled && filterText != null && filterText.length() > 0) {
+        // TODO: Should we check for acceptFilter()?
+        if (mTextFilterEnabled && !TextUtils.isEmpty(filterText)) {
             createTextFilter(false);
             // This is going to call our listener onTextChanged, but we might not
             // be ready to bring up a window yet
@@ -913,6 +941,17 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         }
     }
 
+    /**
+     * Returns the list's text filter, if available. 
+     * @return the list's text filter or null if filtering isn't enabled
+     */
+    public CharSequence getTextFilter() {
+        if (mTextFilterEnabled && mTextFilter != null) {
+            return mTextFilter.getText();
+        }
+        return null;
+    }
+    
     @Override
     protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
@@ -943,6 +982,18 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         mSelectedTop = 0;
         mSelectorRect.setEmpty();
         invalidate();
+    }
+    
+    /**
+     * The list is empty and we need to change the layout, so *really* clear everything out.
+     * @hide - for AutoCompleteTextView & SearchDialog only
+     */
+    /* package */ void resetListAndClearViews() {
+        rememberSyncState();
+        removeAllViewsInLayout();
+        mRecycler.clear();
+        mRecycler.setViewTypeCount(mAdapter.getViewTypeCount());
+        requestLayout();
     }
 
     @Override
@@ -1061,6 +1112,24 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         mInLayout = true;
         layoutChildren();
         mInLayout = false;
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    protected boolean setFrame(int left, int top, int right, int bottom) {
+        final boolean changed = super.setFrame(left, top, right, bottom);
+
+        // Reposition the popup when the frame has changed. This includes
+        // translating the widget, not just changing its dimension. The
+        // filter popup needs to follow the widget.
+        if (mFiltered && changed && getWindowVisibility() == View.VISIBLE && mPopup != null &&
+                mPopup.isShowing()) {
+            positionPopup();
+        }
+
+        return changed;
     }
 
     protected void layoutChildren() {
@@ -1366,7 +1435,10 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
             final View v = getChildAt(mSelectedPosition - mFirstPosition);
 
-            if (v != null) v.setPressed(true);
+            if (v != null) {
+                if (v.hasFocusable()) return;
+                v.setPressed(true);
+            }
             setPressed(true);
 
             final boolean longClickable = isLongClickable();
@@ -1610,6 +1682,9 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             mContextMenuInfo = createContextMenuInfo(child, longPressPosition, longPressId);
             handled = super.showContextMenuForChild(AbsListView.this);
         }
+        if (handled) {
+            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+        }
         return handled;
     }
 
@@ -1758,8 +1833,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         // Check if we have moved far enough that it looks more like a
         // scroll than a tap
         final int distance = Math.abs(deltaY);
-        int touchSlop = ViewConfiguration.getTouchSlop();
-        if (distance > touchSlop) {
+        if (distance > mTouchSlop) {
             createScrollingCache();
             mTouchMode = TOUCH_MODE_SCROLL;
             mMotionCorrection = deltaY;
@@ -1979,8 +2053,9 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 velocityTracker.computeCurrentVelocity(1000);
                 int initialVelocity = (int)velocityTracker.getYVelocity();
 
-                if ((Math.abs(initialVelocity) > ViewConfiguration.getMinimumFlingVelocity()) &&
-                        (getChildCount() > 0)){
+                if ((Math.abs(initialVelocity) >
+                        ViewConfiguration.get(mContext).getScaledMinimumFlingVelocity()) &&
+                        (getChildCount() > 0)) {
                     if (mFlingRunnable == null) {
                         mFlingRunnable = new FlingRunnable();
                     }
@@ -2571,10 +2646,12 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         clearScrollingCache();
         mSpecificTop = selectedTop;
         selectedPos = lookForSelectablePosition(selectedPos, down);
-        if (selectedPos >= 0) {
+        if (selectedPos >= firstPosition && selectedPos <= getLastVisiblePosition()) {
             mLayoutMode = LAYOUT_SPECIFIC;
             setSelectionInt(selectedPos);
             invokeOnItemScrollListener();
+        } else {
+            selectedPos = INVALID_POSITION;
         }
         reportScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
 
@@ -2711,14 +2788,25 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     private void showPopup() {
         // Make sure we have a window before showing the popup
         if (getWindowVisibility() == View.VISIBLE) {
-            int screenHeight = WindowManagerImpl.getDefault().getDefaultDisplay().getHeight();
-            final int[] xy = new int[2];
-            getLocationOnScreen(xy);
-            int bottomGap = screenHeight - xy[1] - getHeight() + 20;
-            mPopup.showAtLocation(this, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL,
-                    xy[0], bottomGap);
+            createTextFilter(true);
+            positionPopup();
             // Make sure we get focus if we are showing the popup
             checkFocus();
+        }
+    }
+
+    private void positionPopup() {
+        int screenHeight = getResources().getDisplayMetrics().heightPixels;
+        final int[] xy = new int[2];
+        getLocationOnScreen(xy);
+        // TODO: The 20 below should come from the theme and be expressed in dip
+        // TODO: And the gravity should be defined in the theme as well
+        final int bottomGap = screenHeight - xy[1] - getHeight() + (int) (mDensityScale * 20);
+        if (!mPopup.isShowing()) {
+            mPopup.showAtLocation(this, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL,
+                    xy[0], bottomGap);
+        } else {
+            mPopup.update(xy[0], bottomGap, -1, -1);
         }
     }
 
@@ -2783,8 +2871,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      * @return True if the text filter handled the event, false otherwise.
      */
     boolean sendToTextFilter(int keyCode, int count, KeyEvent event) {
-        if (!mTextFilterEnabled || !(getAdapter() instanceof Filterable) ||
-                ((Filterable) getAdapter()).getFilter() == null) {
+        if (!acceptFilter()) {
             return false;
         }
 
@@ -2818,7 +2905,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
             KeyEvent forwardEvent = event;
             if (forwardEvent.getRepeatCount() > 0) {
-                forwardEvent = new KeyEvent(event, event.getEventTime(), 0);
+                forwardEvent = KeyEvent.changeTimeRepeat(event, event.getEventTime(), 0);
             }
 
             int action = event.getAction();
@@ -2840,6 +2927,69 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     }
 
     /**
+     * Return an InputConnection for editing of the filter text.
+     */
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        if (isTextFilterEnabled()) {
+            // XXX we need to have the text filter created, so we can get an
+            // InputConnection to proxy to.  Unfortunately this means we pretty
+            // much need to make it as soon as a list view gets focus.
+            createTextFilter(false);
+            if (mPublicInputConnection == null) {
+                mDefInputConnection = new BaseInputConnection(this, false);
+                mPublicInputConnection = new InputConnectionWrapper(
+                        mTextFilter.onCreateInputConnection(outAttrs), true) {
+                    @Override
+                    public boolean reportFullscreenMode(boolean enabled) {
+                        // Use our own input connection, since it is
+                        // the "real" one the IME is talking with.
+                        return mDefInputConnection.reportFullscreenMode(enabled);
+                    }
+
+                    @Override
+                    public boolean performEditorAction(int editorAction) {
+                        // The editor is off in its own window; we need to be
+                        // the one that does this.
+                        if (editorAction == EditorInfo.IME_ACTION_DONE) {
+                            InputMethodManager imm = (InputMethodManager)
+                                    getContext().getSystemService(
+                                            Context.INPUT_METHOD_SERVICE);
+                            if (imm != null) {
+                                imm.hideSoftInputFromWindow(getWindowToken(), 0);
+                            }
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean sendKeyEvent(KeyEvent event) {
+                        // Use our own input connection, since the filter
+                        // text view may not be shown in a window so has
+                        // no ViewRoot to dispatch events with.
+                        return mDefInputConnection.sendKeyEvent(event);
+                    }
+                };
+            }
+            outAttrs.inputType = EditorInfo.TYPE_CLASS_TEXT
+                    | EditorInfo.TYPE_TEXT_VARIATION_FILTER;
+            outAttrs.imeOptions = EditorInfo.IME_ACTION_DONE;
+            return mPublicInputConnection;
+        }
+        return null;
+    }
+    
+    /**
+     * For filtering we proxy an input connection to an internal text editor,
+     * and this allows the proxying to happen.
+     */
+    @Override
+    public boolean checkInputConnectionProxy(View view) {
+        return view == mTextFilter;
+    }
+    
+    /**
      * Creates the window for the text filter and populates it with an EditText field;
      *
      * @param animateEntrance true if the window should appear with an animation
@@ -2848,13 +2998,20 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         if (mPopup == null) {
             Context c = getContext();
             PopupWindow p = new PopupWindow(c);
-            LayoutInflater layoutInflater = (LayoutInflater) c
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater)
+                    c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mTextFilter = (EditText) layoutInflater.inflate(
                     com.android.internal.R.layout.typing_filter, null);
+            // For some reason setting this as the "real" input type changes
+            // the text view in some way that it doesn't work, and I don't
+            // want to figure out why this is.
+            mTextFilter.setRawInputType(EditorInfo.TYPE_CLASS_TEXT
+                    | EditorInfo.TYPE_TEXT_VARIATION_FILTER);
+            mTextFilter.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
             mTextFilter.addTextChangedListener(this);
             p.setFocusable(false);
             p.setTouchable(false);
+            p.setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
             p.setContentView(mTextFilter);
             p.setWidth(LayoutParams.WRAP_CONTENT);
             p.setHeight(LayoutParams.WRAP_CONTENT);
@@ -2905,17 +3062,19 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     }
 
     /**
-     * For our text watcher that associated with the text filter
+     * For our text watcher that is associated with the text filter.  Does
+     * nothing.
      */
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
 
     /**
-     * For our text watcher that associated with the text filter. Performs the actual
-     * filtering as the text changes.
+     * For our text watcher that is associated with the text filter. Performs
+     * the actual filtering as the text changes, and takes care of hiding and
+     * showing the popup displaying the currently entered filter text.
      */
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (mPopup != null) {
+        if (mPopup != null && isTextFilterEnabled()) {
             int length = s.length();
             boolean showing = mPopup.isShowing();
             if (!showing && length > 0) {
@@ -2924,7 +3083,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 mFiltered = true;
             } else if (showing && length == 0) {
                 // Remove the filter popup if the user has cleared all text
-                mPopup.dismiss();
+                dismissPopup();
                 mFiltered = false;
             }
             if (mAdapter instanceof Filterable) {
@@ -2941,7 +3100,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     }
 
     /**
-     * For our text watcher that associated with the text filter
+     * For our text watcher that is associated with the text filter.  Does
+     * nothing.
      */
     public void afterTextChanged(Editable s) {
     }
@@ -3069,6 +3229,14 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
          * {@link android.widget.Adapter#getItemViewType(int) }
          */
         int viewType;
+
+        /**
+         * When this boolean is set, the view has been added to the AbsListView
+         * at least once. It is used to know whether headers/footers have already
+         * been added to the list view and whether they should be treated as
+         * recycled views or not.
+         */
+        boolean recycledHeaderFooter;
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
@@ -3203,7 +3371,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 if (lp != null && lp.viewType != AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
                     // Note:  We do place AdapterView.ITEM_VIEW_TYPE_IGNORE in active views.
                     //        However, we will NOT place them into scrap views.
-                    activeViews[i] = getChildAt(i);
+                    activeViews[i] = child;
                 }
             }
         }

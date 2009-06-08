@@ -100,6 +100,12 @@ public class CameraTest extends ActivityInstrumentationTestCase<MediaFrameworkTe
      */
     private void terminateMessageLooper() {
         mLooper.quit();
+        //TODO yslau : take out the sleep until bug#1693519 fix
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            Log.v(TAG, e.toString());
+        }
         mCamera.release();
     }
     
@@ -136,11 +142,13 @@ public class CameraTest extends ActivityInstrumentationTestCase<MediaFrameworkTe
     //Implement the RawPictureCallback
     private final class RawPictureCallback implements PictureCallback { 
         public void onPictureTaken(byte [] rawData, Camera camera) {
-           if (rawData != null) {
-               rawPictureCallbackResult = true;
-           } else {
-               rawPictureCallbackResult = false;
-           }
+           // no support for raw data - success if we get the callback
+           rawPictureCallbackResult = true;
+           //if (rawData != null) {
+           //    rawPictureCallbackResult = true;
+           //} else {
+           //    rawPictureCallbackResult = false;
+           //}
             Log.v(TAG, "RawPictureCallback callback");
         }
     };
@@ -220,8 +228,8 @@ public class CameraTest extends ActivityInstrumentationTestCase<MediaFrameworkTe
      */
     @LargeTest
     public void testTakePicture() throws Exception {  
-        initializeMessageLooper();
         synchronized (lock) {
+            initializeMessageLooper();
             try {
                 lock.wait(WAIT_FOR_COMMAND_TO_COMPLETE);
             } catch(Exception e) {
@@ -242,8 +250,8 @@ public class CameraTest extends ActivityInstrumentationTestCase<MediaFrameworkTe
      */
     @LargeTest
     public void testCheckPreview() throws Exception {  
-        initializeMessageLooper();
         synchronized (lock) {
+            initializeMessageLooper();
             try {
                 lock.wait(WAIT_FOR_COMMAND_TO_COMPLETE);
             } catch(Exception e) {

@@ -97,7 +97,10 @@ LOCAL_SRC_FILES += \
 	core/java/android/view/IWindowManager.aidl \
 	core/java/android/view/IWindowSession.aidl \
 	core/java/com/android/internal/app/IBatteryStats.aidl \
-	core/java/com/android/internal/gadget/IGadgetService.aidl \
+	core/java/com/android/internal/app/IUsageStats.aidl \
+	core/java/com/android/internal/appwidget/IAppWidgetService.aidl \
+	core/java/com/android/internal/appwidget/IAppWidgetHost.aidl \
+	core/java/com/android/internal/os/IResultReceiver.aidl \
 	core/java/com/android/internal/view/IInputContext.aidl \
 	core/java/com/android/internal/view/IInputContextCallback.aidl \
 	core/java/com/android/internal/view/IInputMethod.aidl \
@@ -118,7 +121,8 @@ LOCAL_SRC_FILES += \
 	telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl \
 	telephony/java/com/android/internal/telephony/gsm/ISimPhoneBook.aidl \
 	telephony/java/com/android/internal/telephony/gsm/ISms.aidl \
-	wifi/java/android/net/wifi/IWifiManager.aidl
+	wifi/java/android/net/wifi/IWifiManager.aidl \
+	telephony/java/com/android/internal/telephony/IExtendedNetworkService.aidl
 
 # FRAMEWORKS_BASE_JAVA_SRC_DIRS comes from build/core/pathmap.mk
 LOCAL_AIDL_INCLUDES += $(FRAMEWORKS_BASE_JAVA_SRC_DIRS)
@@ -165,7 +169,7 @@ aidl_files := \
 	frameworks/base/core/java/android/content/Intent.aidl \
 	frameworks/base/core/java/android/content/SyncStats.aidl \
 	frameworks/base/core/java/android/content/res/Configuration.aidl \
-	frameworks/base/core/java/android/gadget/GadgetInfo.aidl \
+	frameworks/base/core/java/android/appwidget/AppWidgetProviderInfo.aidl \
 	frameworks/base/core/java/android/net/Uri.aidl \
 	frameworks/base/core/java/android/os/Bundle.aidl \
 	frameworks/base/core/java/android/os/ParcelFileDescriptor.aidl \
@@ -173,6 +177,7 @@ aidl_files := \
 	frameworks/base/core/java/android/view/MotionEvent.aidl \
 	frameworks/base/core/java/android/view/Surface.aidl \
 	frameworks/base/core/java/android/view/WindowManager.aidl \
+	frameworks/base/core/java/android/widget/RemoteViews.aidl \
 	frameworks/base/core/java/com/android/internal/view/IInputContext.aidl \
 	frameworks/base/core/java/com/android/internal/view/IInputMethod.aidl \
 	frameworks/base/core/java/com/android/internal/view/IInputMethodCallback.aidl \

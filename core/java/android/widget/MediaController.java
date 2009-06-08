@@ -388,12 +388,12 @@ public class MediaController extends FrameLayout {
         int keyCode = event.getKeyCode();
         if (event.getRepeatCount() == 0 && event.isDown() && (
                 keyCode ==  KeyEvent.KEYCODE_HEADSETHOOK ||
-                keyCode ==  KeyEvent.KEYCODE_PLAYPAUSE ||
+                keyCode ==  KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE ||
                 keyCode ==  KeyEvent.KEYCODE_SPACE)) {
             doPauseResume();
             show(sDefaultTimeout);
             return true;
-        } else if (keyCode ==  KeyEvent.KEYCODE_STOP) {
+        } else if (keyCode ==  KeyEvent.KEYCODE_MEDIA_STOP) {
             if (mPlayer.isPlaying()) {
                 mPlayer.pause();
                 updatePausePlay();
@@ -405,6 +405,8 @@ public class MediaController extends FrameLayout {
             return super.dispatchKeyEvent(event);
         } else if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_MENU) {
             hide();
+
+            return true;
         } else {
             show(sDefaultTimeout);
         }
@@ -451,6 +453,7 @@ public class MediaController extends FrameLayout {
         public void onProgressChanged(SeekBar bar, int progress, boolean fromtouch) {
             if (fromtouch) {
                 mDragging = true;
+                duration = mPlayer.getDuration();
                 long newposition = (duration * progress) / 1000L;
                 mPlayer.seekTo( (int) newposition);
                 if (mCurrentTime != null)

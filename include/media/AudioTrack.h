@@ -42,18 +42,6 @@ class audio_track_cblk_t;
 class AudioTrack
 {
 public:
-
-    enum stream_type {
-        DEFAULT         =-1,
-        VOICE_CALL      = 0,
-        SYSTEM          = 1,
-        RING            = 2,
-        MUSIC           = 3,
-        ALARM           = 4,
-        NOTIFICATION    = 5,
-        NUM_STREAM_TYPES
-    };
-
     enum channel_index {
         MONO   = 0,
         LEFT   = 0,
@@ -127,7 +115,7 @@ public:
      * Parameters:
      *
      * streamType:         Select the type of audio stream this track is attached to
-     *                     (e.g. AudioTrack::MUSIC).
+     *                     (e.g. AudioSystem::MUSIC).
      * sampleRate:         Track sampling rate in Hz.
      * format:             PCM sample format (e.g AudioSystem::PCM_16_BIT for signed
      *                     16 bits per sample).
@@ -421,6 +409,7 @@ private:
     int                     mLoopCount;
     uint32_t                mRemainingFrames;
     uint32_t                mMarkerPosition;
+    bool                    mMarkerReached;
     uint32_t                mNewPosition;
     uint32_t                mUpdatePeriod;
 };

@@ -31,10 +31,21 @@ import java.io.UnsupportedEncodingException;
  * @hide
  */
 public class BluetoothDevice {
-    public static final int MODE_UNKNOWN = -1;
-    public static final int MODE_OFF = 0;
-    public static final int MODE_CONNECTABLE = 1;
-    public static final int MODE_DISCOVERABLE = 2;
+
+    public static final int BLUETOOTH_STATE_OFF = 0;
+    public static final int BLUETOOTH_STATE_TURNING_ON = 1;
+    public static final int BLUETOOTH_STATE_ON = 2;
+    public static final int BLUETOOTH_STATE_TURNING_OFF = 3;
+
+    /** Inquiry scan and page scan are both off.
+     *  Device is neither discoverable nor connectable */
+    public static final int SCAN_MODE_NONE = 0;
+    /** Page scan is on, inquiry scan is off.
+     *  Device is connectable, but not discoverable */
+    public static final int SCAN_MODE_CONNECTABLE = 1;
+    /** Page scan and inquiry scan are on.
+     *  Device is connectable and discoverable */
+    public static final int SCAN_MODE_CONNECTABLE_DISCOVERABLE = 3;
 
     public static final int RESULT_FAILURE = -1;
     public static final int RESULT_SUCCESS = 0;
@@ -54,12 +65,14 @@ public class BluetoothDevice {
     /** A bond attempt failed because the other side explicilty rejected
      * bonding */
     public static final int UNBOND_REASON_AUTH_REJECTED = 2;
-    /** A bond attempt failed because we cancelled the bonding process */
-    public static final int UNBOND_REASON_CANCELLED = 3;
+    /** A bond attempt failed because we canceled the bonding process */
+    public static final int UNBOND_REASON_AUTH_CANCELED = 3;
     /** A bond attempt failed because we could not contact the remote device */
-    public static final int UNBOND_REASON_AUTH_REMOTE_DEVICE_DOWN = 4;
+    public static final int UNBOND_REASON_REMOTE_DEVICE_DOWN = 4;
+    /** A bond attempt failed because a discovery is in progress */
+    public static final int UNBOND_REASON_DISCOVERY_IN_PROGRESS = 5;
     /** An existing bond was explicitly revoked */
-    public static final int UNBOND_REASON_REMOVED = 5;
+    public static final int UNBOND_REASON_REMOVED = 6;
 
     private static final String TAG = "BluetoothDevice";
     
@@ -76,7 +89,7 @@ public class BluetoothDevice {
     }
 
     /**
-     * Get the current status of Bluetooth hardware.
+     * Is Bluetooth currently turned on.
      *
      * @return true if Bluetooth enabled, false otherwise.
      */
@@ -88,37 +101,30 @@ public class BluetoothDevice {
     }
 
     /**
+     * Get the current state of Bluetooth.
+     *
+     * @return One of BLUETOOTH_STATE_ or BluetoothError.ERROR.
+     */
+    public int getBluetoothState() {
+        try {
+            return mService.getBluetoothState();
+        } catch (RemoteException e) {Log.e(TAG, "", e);}
+        return BluetoothError.ERROR;
+    }
+
+    /**
      * Enable the Bluetooth device.
      * Turn on the underlying hardware.
-     * This is an asynchronous call, BluetoothIntent.ENABLED_ACTION will be
-     * sent if and when the device is successfully enabled.
+     * This is an asynchronous call,
+     * BluetoothIntent.BLUETOOTH_STATE_CHANGED_ACTION can be used to check if
+     * and when the device is sucessfully enabled.
      * @return false if we cannot enable the Bluetooth device. True does not
      * imply the device was enabled, it only implies that so far there were no
      * problems.
      */
     public boolean enable() {
-        return enable(null);
-    }
-
-    /**
-     * Enable the Bluetooth device.
-     * Turns on the underlying hardware.
-     * This is an asynchronous call. onEnableResult() of your callback will be
-     * called when the call is complete, with either RESULT_SUCCESS or
-     * RESULT_FAILURE.
-     *
-     * Your callback will be called from a binder thread, not the main thread.
-     *
-     * In addition to the callback, BluetoothIntent.ENABLED_ACTION will be
-     * broadcast if the device is successfully enabled.
-     *
-     * @param callback Your callback, null is ok.
-     * @return true if your callback was successfully registered, or false if
-     * there was an error, implying your callback will never be called.
-     */
-    public boolean enable(IBluetoothDeviceCallback callback) {
         try {
-            return mService.enable(callback);
+            return mService.enable();
         } catch (RemoteException e) {Log.e(TAG, "", e);}
         return false;
     }
@@ -131,7 +137,7 @@ public class BluetoothDevice {
      */
     public boolean disable() {
         try {
-            return mService.disable();
+            return mService.disable(true);
         } catch (RemoteException e) {Log.e(TAG, "", e);}
         return false;
     }
@@ -174,18 +180,6 @@ public class BluetoothDevice {
         return false;
     }
 
-    public String getMajorClass() {
-        try {
-            return mService.getMajorClass();
-        } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return null;
-    }
-    public String getMinorClass() {
-        try {
-            return mService.getMinorClass();
-        } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return null;
-    }
     public String getVersion() {
         try {
             return mService.getVersion();
@@ -211,15 +205,26 @@ public class BluetoothDevice {
         return null;
     }
 
-    public int getMode() {
+    /**
+     * Get the current scan mode.
+     * Used to determine if the local device is connectable and/or discoverable
+     * @return Scan mode, one of SCAN_MODE_* or an error code
+     */
+    public int getScanMode() {
         try {
-            return mService.getMode();
+            return mService.getScanMode();
         } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return MODE_UNKNOWN;
+        return BluetoothError.ERROR_IPC;
     }
-    public void setMode(int mode) {
+
+    /**
+     * Set the current scan mode.
+     * Used to make the local device connectable and/or discoverable
+     * @param scanMode One of SCAN_MODE_*
+     */
+    public void setScanMode(int scanMode) {
         try {
-            mService.setMode(mode);
+            mService.setScanMode(scanMode);
         } catch (RemoteException e) {Log.e(TAG, "", e);}
     }
 
@@ -435,24 +440,6 @@ public class BluetoothDevice {
         return null;
     }
 
-    public String getRemoteAlias(String address) {
-        try {
-            return mService.getRemoteAlias(address);
-        } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return null;
-    }
-    public boolean setRemoteAlias(String address, String alias) {
-        try {
-            return mService.setRemoteAlias(address, alias);
-        } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return false;
-    }
-    public boolean clearRemoteAlias(String address) {
-        try {
-            return mService.clearRemoteAlias(address);
-        } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return false;
-    }
     public String getRemoteVersion(String address) {
         try {
             return mService.getRemoteVersion(address);
@@ -477,24 +464,6 @@ public class BluetoothDevice {
         } catch (RemoteException e) {Log.e(TAG, "", e);}
         return null;
     }
-    public String getRemoteMajorClass(String address) {
-        try {
-            return mService.getRemoteMajorClass(address);
-        } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return null;
-    }
-    public String getRemoteMinorClass(String address) {
-        try {
-            return mService.getRemoteMinorClass(address);
-        } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return null;
-    }
-    public String[] getRemoteServiceClasses(String address) {
-        try {
-            return mService.getRemoteServiceClasses(address);
-        } catch (RemoteException e) {Log.e(TAG, "", e);}
-        return null;
-    }
 
     /**
      * Returns the RFCOMM channel associated with the 16-byte UUID on
@@ -512,12 +481,20 @@ public class BluetoothDevice {
         return false;
     }
 
+    /**
+     * Get the major, minor and servics classes of a remote device.
+     * These classes are encoded as a 32-bit integer. See BluetoothClass.
+     * @param address remote device
+     * @return 32-bit class suitable for use with BluetoothClass, or
+     *         BluetoothClass.ERROR on error
+     */
     public int getRemoteClass(String address) {
         try {
             return mService.getRemoteClass(address);
         } catch (RemoteException e) {Log.e(TAG, "", e);}
         return BluetoothClass.ERROR;
     }
+
     public byte[] getRemoteFeatures(String address) {
         try {
             return mService.getRemoteFeatures(address);
@@ -574,10 +551,9 @@ public class BluetoothDevice {
         }
         return pinBytes;
     }
-    
 
-    /* Sanity check a bluetooth address, such as "00:43:A8:23:10:F0" */
     private static final int ADDRESS_LENGTH = 17;
+    /** Sanity check a bluetooth address, such as "00:43:A8:23:10:F0" */
     public static boolean checkBluetoothAddress(String address) {
         if (address == null || address.length() != ADDRESS_LENGTH) {
             return false;

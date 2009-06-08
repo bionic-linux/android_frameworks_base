@@ -22,11 +22,20 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.ResultReceiver;
+import android.os.SystemClock;
+import android.provider.Settings;
+import android.text.InputType;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.method.MovementMethod;
 import android.util.Log;
+import android.util.PrintWriterPrinter;
+import android.util.Printer;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,6 +44,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
@@ -43,13 +53,34 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 /**
  * InputMethodService provides a standard implementation of an InputMethod,
  * which final implementations can derive from and customize.  See the
  * base class {@link AbstractInputMethodService} and the {@link InputMethod}
  * interface for more information on the basics of writing input methods.
+ * 
+ * <p>In addition to the normal Service lifecycle methods, this class
+ * introduces some new specific callbacks that most subclasses will want
+ * to make use of:</p>
+ * <ul>
+ * <li> {@link #onInitializeInterface()} for user-interface initialization,
+ * in particular to deal with configuration changes while the service is
+ * running.
+ * <li> {@link #onBindInput} to find out about switching to a new client.
+ * <li> {@link #onStartInput} to deal with an input session starting with
+ * the client.
+ * <li> {@link #onCreateInputView()}, {@link #onCreateCandidatesView()},
+ * and {@link #onCreateExtractTextView()} for non-demand generation of the UI.
+ * <li> {@link #onStartInputView(EditorInfo, boolean)} to deal with input
+ * starting within the input area of the IME.
+ * </ul>
  * 
  * <p>An input method has significant discretion in how it goes about its
  * work: the {@link android.inputmethodservice.InputMethodService} provides
@@ -176,17 +207,30 @@ import android.widget.FrameLayout;
  * You can use these to reset and initialize your input state for the current
  * target.  For example, you will often want to clear any input state, and
  * update a soft keyboard to be appropriate for the new inputType.</p>
+ * 
+ * @attr ref android.R.styleable#InputMethodService_imeFullscreenBackground
+ * @attr ref android.R.styleable#InputMethodService_imeExtractEnterAnimation
+ * @attr ref android.R.styleable#InputMethodService_imeExtractExitAnimation
  */
 public class InputMethodService extends AbstractInputMethodService {
     static final String TAG = "InputMethodService";
     static final boolean DEBUG = false;
     
+    InputMethodManager mImm;
+    
+    int mTheme = android.R.style.Theme_InputMethod;
+    
     LayoutInflater mInflater;
+    TypedArray mThemeAttrs;
     View mRootView;
     SoftInputWindow mWindow;
+    boolean mInitialized;
     boolean mWindowCreated;
     boolean mWindowAdded;
     boolean mWindowVisible;
+    boolean mWindowWasVisible;
+    boolean mInShowWindow;
+    ViewGroup mFullscreenArea;
     FrameLayout mExtractFrame;
     FrameLayout mCandidatesFrame;
     FrameLayout mInputFrame;
@@ -196,16 +240,26 @@ public class InputMethodService extends AbstractInputMethodService {
     InputBinding mInputBinding;
     InputConnection mInputConnection;
     boolean mInputStarted;
+    boolean mInputViewStarted;
+    boolean mCandidatesViewStarted;
+    InputConnection mStartedInputConnection;
     EditorInfo mInputEditorInfo;
     
+    int mShowInputFlags;
     boolean mShowInputRequested;
     boolean mLastShowInputRequested;
-    boolean mShowCandidatesRequested;
+    int mCandidatesVisibility;
+    CompletionInfo[] mCurCompletions;
+    
+    boolean mShowInputForced;
     
     boolean mFullscreenApplied;
     boolean mIsFullscreen;
     View mExtractView;
+    boolean mExtractViewHidden;
     ExtractEditText mExtractEditText;
+    ViewGroup mExtractAccessories;
+    Button mExtractAction;
     ExtractedText mExtractedText;
     int mExtractedToken;
     
@@ -220,8 +274,8 @@ public class InputMethodService extends AbstractInputMethodService {
     final ViewTreeObserver.OnComputeInternalInsetsListener mInsetsComputer =
             new ViewTreeObserver.OnComputeInternalInsetsListener() {
         public void onComputeInternalInsets(ViewTreeObserver.InternalInsetsInfo info) {
-            if (isFullscreenMode()) {
-                // In fullscreen mode, we just say the window isn't covering
+            if (isExtractViewShown()) {
+                // In true fullscreen mode, we just say the window isn't covering
                 // any content so we don't impact whatever is behind.
                 View decor = getWindow().getWindow().getDecorView();
                 info.contentInsets.top = info.visibleInsets.top
@@ -236,6 +290,21 @@ public class InputMethodService extends AbstractInputMethodService {
         }
     };
 
+    final View.OnClickListener mActionClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            final EditorInfo ei = getCurrentInputEditorInfo();
+            final InputConnection ic = getCurrentInputConnection();
+            if (ei != null && ic != null) {
+                if (ei.actionId != 0) {
+                    ic.performEditorAction(ei.actionId);
+                } else if ((ei.imeOptions&EditorInfo.IME_MASK_ACTION)
+                        != EditorInfo.IME_ACTION_NONE) {
+                    ic.performEditorAction(ei.imeOptions&EditorInfo.IME_MASK_ACTION);
+                }
+            }
+        }
+    };
+    
     /**
      * Concrete implementation of
      * {@link AbstractInputMethodService.AbstractInputMethodImpl} that provides
@@ -262,6 +331,9 @@ public class InputMethodService extends AbstractInputMethodService {
             mInputConnection = binding.getConnection();
             if (DEBUG) Log.v(TAG, "bindInput(): binding=" + binding
                     + " ic=" + mInputConnection);
+            InputConnection ic = getCurrentInputConnection();
+            if (ic != null) ic.reportFullscreenMode(mIsFullscreen);
+            initialize();
             onBindInput();
         }
 
@@ -277,31 +349,50 @@ public class InputMethodService extends AbstractInputMethodService {
             mInputConnection = null;
         }
 
-        public void startInput(EditorInfo attribute) {
+        public void startInput(InputConnection ic, EditorInfo attribute) {
             if (DEBUG) Log.v(TAG, "startInput(): editor=" + attribute);
-            doStartInput(attribute, false);
+            doStartInput(ic, attribute, false);
         }
 
-        public void restartInput(EditorInfo attribute) {
+        public void restartInput(InputConnection ic, EditorInfo attribute) {
             if (DEBUG) Log.v(TAG, "restartInput(): editor=" + attribute);
-            doStartInput(attribute, true);
+            doStartInput(ic, attribute, true);
         }
 
         /**
          * Handle a request by the system to hide the soft input area.
          */
-        public void hideSoftInput() {
+        public void hideSoftInput(int flags, ResultReceiver resultReceiver) {
             if (DEBUG) Log.v(TAG, "hideSoftInput()");
+            boolean wasVis = isInputViewShown();
+            mShowInputFlags = 0;
             mShowInputRequested = false;
+            mShowInputForced = false;
             hideWindow();
+            if (resultReceiver != null) {
+                resultReceiver.send(wasVis != isInputViewShown()
+                        ? InputMethodManager.RESULT_HIDDEN
+                        : (wasVis ? InputMethodManager.RESULT_UNCHANGED_SHOWN
+                                : InputMethodManager.RESULT_UNCHANGED_HIDDEN), null);
+            }
         }
 
         /**
          * Handle a request by the system to show the soft input area.
          */
-        public void showSoftInput(int flags) {
+        public void showSoftInput(int flags, ResultReceiver resultReceiver) {
             if (DEBUG) Log.v(TAG, "showSoftInput()");
-            onShowRequested(flags);
+            boolean wasVis = isInputViewShown();
+            mShowInputFlags = 0;
+            if (onShowInputRequested(flags, false)) {
+                showWindow(true);
+            }
+            if (resultReceiver != null) {
+                resultReceiver.send(wasVis != isInputViewShown()
+                        ? InputMethodManager.RESULT_SHOWN
+                        : (wasVis ? InputMethodManager.RESULT_UNCHANGED_SHOWN
+                                : InputMethodManager.RESULT_UNCHANGED_HIDDEN), null);
+            }
         }
     }
     
@@ -316,8 +407,7 @@ public class InputMethodService extends AbstractInputMethodService {
                 return;
             }
             if (DEBUG) Log.v(TAG, "finishInput() in " + this);
-            onFinishInput();
-            mInputStarted = false;
+            doFinishInput();
         }
 
         /**
@@ -328,6 +418,7 @@ public class InputMethodService extends AbstractInputMethodService {
             if (!isEnabled()) {
                 return;
             }
+            mCurCompletions = completions;
             onDisplayCompletions(completions);
         }
         
@@ -377,6 +468,13 @@ public class InputMethodService extends AbstractInputMethodService {
             }
             InputMethodService.this.onAppPrivateCommand(action, data);
         }
+        
+        /**
+         * 
+         */
+        public void toggleSoftInput(int showFlags, int hideFlags) {
+            InputMethodService.this.onToggleSoftInput(showFlags, hideFlags);
+        }
     }
     
     /**
@@ -391,7 +489,7 @@ public class InputMethodService extends AbstractInputMethodService {
          * of the application behind.  This value is relative to the top edge
          * of the input method window.
          */
-        int contentTopInsets;
+        public int contentTopInsets;
         
         /**
          * This is the top part of the UI that is visibly covering the
@@ -404,7 +502,7 @@ public class InputMethodService extends AbstractInputMethodService {
          * needed to make the focus visible.  This value is relative to the top edge
          * of the input method window.
          */
-        int visibleTopInsets;
+        public int visibleTopInsets;
         
         /**
          * Option for {@link #touchableInsets}: the entire window frame
@@ -435,29 +533,71 @@ public class InputMethodService extends AbstractInputMethodService {
         public int touchableInsets;
     }
     
+    /**
+     * You can call this to customize the theme used by your IME's window.
+     * This theme should typically be one that derives from
+     * {@link android.R.style#Theme_InputMethod}, which is the default theme
+     * you will get.  This must be set before {@link #onCreate}, so you
+     * will typically call it in your constructor with the resource ID
+     * of your custom theme.
+     */
+    public void setTheme(int theme) {
+        if (mWindow != null) {
+            throw new IllegalStateException("Must be called before onCreate()");
+        }
+        mTheme = theme;
+    }
+    
     @Override public void onCreate() {
+        super.setTheme(mTheme);
         super.onCreate();
+        mImm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         mInflater = (LayoutInflater)getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        mWindow = new SoftInputWindow(this);
+        mWindow = new SoftInputWindow(this, mTheme);
         initViews();
         mWindow.getWindow().setLayout(FILL_PARENT, WRAP_CONTENT);
     }
     
+    /**
+     * This is a hook that subclasses can use to perform initialization of
+     * their interface.  It is called for you prior to any of your UI objects
+     * being created, both after the service is first created and after a
+     * configuration change happens.
+     */
+    public void onInitializeInterface() {
+    }
+    
+    void initialize() {
+        if (!mInitialized) {
+            mInitialized = true;
+            onInitializeInterface();
+        }
+    }
+    
     void initViews() {
-        mWindowVisible = false;
+        mInitialized = false;
         mWindowCreated = false;
         mShowInputRequested = false;
-        mShowCandidatesRequested = false;
+        mShowInputForced = false;
         
+        mThemeAttrs = obtainStyledAttributes(android.R.styleable.InputMethodService);
         mRootView = mInflater.inflate(
                 com.android.internal.R.layout.input_method, null);
         mWindow.setContentView(mRootView);
         mRootView.getViewTreeObserver().addOnComputeInternalInsetsListener(mInsetsComputer);
-        
+        if (Settings.System.getInt(getContentResolver(),
+                Settings.System.FANCY_IME_ANIMATIONS, 0) != 0) {
+            mWindow.getWindow().setWindowAnimations(
+                    com.android.internal.R.style.Animation_InputMethodFancy);
+        }
+        mFullscreenArea = (ViewGroup)mRootView.findViewById(com.android.internal.R.id.fullscreenArea);
+        mExtractViewHidden = false;
         mExtractFrame = (FrameLayout)mRootView.findViewById(android.R.id.extractArea);
         mExtractView = null;
         mExtractEditText = null;
+        mExtractAccessories = null;
+        mExtractAction = null;
         mFullscreenApplied = false;
         
         mCandidatesFrame = (FrameLayout)mRootView.findViewById(android.R.id.candidatesArea);
@@ -466,7 +606,8 @@ public class InputMethodService extends AbstractInputMethodService {
         mIsInputViewShown = false;
         
         mExtractFrame.setVisibility(View.GONE);
-        mCandidatesFrame.setVisibility(View.INVISIBLE);
+        mCandidatesVisibility = getCandidatesHiddenVisibility();
+        mCandidatesFrame.setVisibility(mCandidatesVisibility);
         mInputFrame.setVisibility(View.GONE);
     }
     
@@ -486,26 +627,48 @@ public class InputMethodService extends AbstractInputMethodService {
      * regenerating the input method UI as a result of the configuration
      * change, so you can rely on your {@link #onCreateInputView} and
      * other methods being called as appropriate due to a configuration change.
+     * 
+     * <p>When a configuration change does happen,
+     * {@link #onInitializeInterface()} is guaranteed to be called the next
+     * time prior to any of the other input or UI creation callbacks.  The
+     * following will be called immediately depending if appropriate for current 
+     * state: {@link #onStartInput} if input is active, and
+     * {@link #onCreateInputView} and {@link #onStartInputView} and related
+     * appropriate functions if the UI is displayed.
      */
     @Override public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         
         boolean visible = mWindowVisible;
+        int showFlags = mShowInputFlags;
         boolean showingInput = mShowInputRequested;
-        boolean showingCandidates = mShowCandidatesRequested;
+        CompletionInfo[] completions = mCurCompletions;
         initViews();
+        mInputViewStarted = false;
+        mCandidatesViewStarted = false;
+        if (mInputStarted) {
+            doStartInput(getCurrentInputConnection(),
+                    getCurrentInputEditorInfo(), true);
+        }
         if (visible) {
-            if (showingCandidates) {
-                setCandidatesViewShown(true);
-            }
             if (showingInput) {
-                // If we are showing the full soft keyboard, then go through
-                // this path to take care of current decisions about fullscreen
-                // etc.
-                onShowRequested(InputMethod.SHOW_EXPLICIT);
-            } else {
-                // Otherwise just put it back for its candidates.
+                // If we were last showing the soft keyboard, try to do so again.
+                if (onShowInputRequested(showFlags, true)) {
+                    showWindow(true);
+                    if (completions != null) {
+                        mCurCompletions = completions;
+                        onDisplayCompletions(completions);
+                    }
+                } else {
+                    hideWindow();
+                }
+            } else if (mCandidatesVisibility == View.VISIBLE) {
+                // If the candidates are currently visible, make sure the
+                // window is shown for them.
                 showWindow(false);
+            } else {
+                // Otherwise hide the window.
+                hideWindow();
             }
         }
     }
@@ -568,6 +731,10 @@ public class InputMethodService extends AbstractInputMethodService {
      * the input method, or null if there is none.
      */
     public InputConnection getCurrentInputConnection() {
+        InputConnection ic = mStartedInputConnection;
+        if (ic != null) {
+            return ic;
+        }
         return mInputConnection;
     }
     
@@ -593,15 +760,24 @@ public class InputMethodService extends AbstractInputMethodService {
         if (mIsFullscreen != isFullscreen || !mFullscreenApplied) {
             changed = true;
             mIsFullscreen = isFullscreen;
+            InputConnection ic = getCurrentInputConnection();
+            if (ic != null) ic.reportFullscreenMode(isFullscreen);
             mFullscreenApplied = true;
-            Drawable bg = onCreateBackgroundDrawable();
-            if (bg == null) {
-                // We need to give the window a real drawable, so that it
-                // correctly sets its mode.
-                bg = getResources().getDrawable(android.R.color.transparent);
+            initialize();
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)
+                    mFullscreenArea.getLayoutParams();
+            if (isFullscreen) {
+                mFullscreenArea.setBackgroundDrawable(mThemeAttrs.getDrawable(
+                        com.android.internal.R.styleable.InputMethodService_imeFullscreenBackground));
+                lp.height = 0;
+                lp.weight = 1;
+            } else {
+                mFullscreenArea.setBackgroundDrawable(null);
+                lp.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                lp.weight = 0;
             }
-            mWindow.getWindow().setBackgroundDrawable(bg);
-            mExtractFrame.setVisibility(isFullscreen ? View.VISIBLE : View.GONE);
+            ((ViewGroup)mFullscreenArea.getParent()).updateViewLayout(
+                    mFullscreenArea, lp);
             if (isFullscreen) {
                 if (mExtractView == null) {
                     View v = onCreateExtractTextView();
@@ -609,8 +785,9 @@ public class InputMethodService extends AbstractInputMethodService {
                         setExtractView(v);
                     }
                 }
-                startExtractingText();
+                startExtractingText(false);
             }
+            updateExtractFrameVisibility();
         }
         
         if (changed) {
@@ -668,12 +845,66 @@ public class InputMethodService extends AbstractInputMethodService {
     }
     
     /**
+     * Controls the visibility of the extracted text area.  This only applies
+     * when the input method is in fullscreen mode, and thus showing extracted
+     * text.  When false, the extracted text will not be shown, allowing some
+     * of the application to be seen behind.  This is normally set for you
+     * by {@link #onUpdateExtractingVisibility}.  This controls the visibility
+     * of both the extracted text and candidate view; the latter since it is
+     * not useful if there is no text to see.
+     */
+    public void setExtractViewShown(boolean shown) {
+        if (mExtractViewHidden == shown) {
+            mExtractViewHidden = !shown;
+            updateExtractFrameVisibility();
+        }
+    }
+    
+    /**
+     * Return whether the fullscreen extract view is shown.  This will only
+     * return true if {@link #isFullscreenMode()} returns true, and in that
+     * case its value depends on the last call to
+     * {@link #setExtractViewShown(boolean)}.  This effectively lets you
+     * determine if the application window is entirely covered (when this
+     * returns true) or if some part of it may be shown (if this returns
+     * false, though if {@link #isFullscreenMode()} returns true in that case
+     * then it is probably only a sliver of the application).
+     */
+    public boolean isExtractViewShown() {
+        return mIsFullscreen && !mExtractViewHidden;
+    }
+    
+    void updateExtractFrameVisibility() {
+        int vis;
+        if (isFullscreenMode()) {
+            vis = mExtractViewHidden ? View.INVISIBLE : View.VISIBLE;
+            mExtractFrame.setVisibility(View.VISIBLE);
+        } else {
+            vis = View.VISIBLE;
+            mExtractFrame.setVisibility(View.GONE);
+        }
+        updateCandidatesVisibility(mCandidatesVisibility == View.VISIBLE);
+        if (mWindowWasVisible && mFullscreenArea.getVisibility() != vis) {
+            int animRes = mThemeAttrs.getResourceId(vis == View.VISIBLE
+                    ? com.android.internal.R.styleable.InputMethodService_imeExtractEnterAnimation
+                    : com.android.internal.R.styleable.InputMethodService_imeExtractExitAnimation,
+                    0);
+            if (animRes != 0) {
+                mFullscreenArea.startAnimation(AnimationUtils.loadAnimation(
+                        this, animRes));
+            }
+        }
+        mFullscreenArea.setVisibility(vis);
+    }
+    
+    /**
      * Compute the interesting insets into your UI.  The default implementation
      * uses the top of the candidates frame for the visible insets, and the
      * top of the input frame for the content insets.  The default touchable
      * insets are {@link Insets#TOUCHABLE_INSETS_VISIBLE}.
      * 
-     * <p>Note that this method is not called when in fullscreen mode, since
+     * <p>Note that this method is not called when
+     * {@link #isExtractViewShown} returns true, since
      * in that case the application is left as-is behind the input method and
      * not impacted by anything in its UI.
      * 
@@ -684,9 +915,16 @@ public class InputMethodService extends AbstractInputMethodService {
         if (mInputFrame.getVisibility() == View.VISIBLE) {
             mInputFrame.getLocationInWindow(loc);
         } else {
-            loc[1] = 0;
+            View decor = getWindow().getWindow().getDecorView();
+            loc[1] = decor.getHeight();
         }
-        outInsets.contentTopInsets = loc[1];
+        if (isFullscreenMode()) {
+            // In fullscreen mode, we never resize the underlying window.
+            View decor = getWindow().getWindow().getDecorView();
+            outInsets.contentTopInsets = decor.getHeight();
+        } else {
+            outInsets.contentTopInsets = loc[1];
+        }
         if (mCandidatesFrame.getVisibility() == View.VISIBLE) {
             mCandidatesFrame.getLocationInWindow(loc);
         }
@@ -708,6 +946,7 @@ public class InputMethodService extends AbstractInputMethodService {
             mIsInputViewShown = isShown;
             mInputFrame.setVisibility(isShown ? View.VISIBLE : View.GONE);
             if (mInputView == null) {
+                initialize();
                 View v = onCreateInputView();
                 if (v != null) {
                     setInputView(v);
@@ -717,12 +956,19 @@ public class InputMethodService extends AbstractInputMethodService {
     }
     
     /**
+     * Returns true if we have been asked to show our input view.
+     */
+    public boolean isShowInputRequested() {
+        return mShowInputRequested;
+    }
+    
+    /**
      * Return whether the soft input view is <em>currently</em> shown to the
      * user.  This is the state that was last determined and
      * applied by {@link #updateInputViewShown()}.
      */
     public boolean isInputViewShown() {
-        return mIsInputViewShown;
+        return mIsInputViewShown && mWindowVisible;
     }
     
     /**
@@ -744,10 +990,7 @@ public class InputMethodService extends AbstractInputMethodService {
      * it is hidden.
      */
     public void setCandidatesViewShown(boolean shown) {
-        if (mShowCandidatesRequested != shown) {
-            mCandidatesFrame.setVisibility(shown ? View.VISIBLE : View.INVISIBLE);
-            mShowCandidatesRequested = shown;
-        }
+        updateCandidatesVisibility(shown);
         if (!mShowInputRequested && mWindowVisible != shown) {
             // If we are being asked to show the candidates view while the app
             // has not asked for the input view to be shown, then we need
@@ -760,11 +1003,36 @@ public class InputMethodService extends AbstractInputMethodService {
         }
     }
     
-    public void setStatusIcon(int iconResId) {
-        mStatusIcon = iconResId;
-        if (mInputConnection != null && mWindowVisible) {
-            mInputConnection.showStatusIcon(getPackageName(), iconResId);
+    void updateCandidatesVisibility(boolean shown) {
+        int vis = shown ? View.VISIBLE : getCandidatesHiddenVisibility();
+        if (mCandidatesVisibility != vis) {
+            mCandidatesFrame.setVisibility(vis);
+            mCandidatesVisibility = vis;
         }
+    }
+    
+    /**
+     * Returns the visibility mode (either {@link View#INVISIBLE View.INVISIBLE}
+     * or {@link View#GONE View.GONE}) of the candidates view when it is not
+     * shown.  The default implementation returns GONE when
+     * {@link #isExtractViewShown} returns true,
+     * otherwise VISIBLE.  Be careful if you change this to return GONE in
+     * other situations -- if showing or hiding the candidates view causes
+     * your window to resize, this can cause temporary drawing artifacts as
+     * the resize takes place.
+     */
+    public int getCandidatesHiddenVisibility() {
+        return isExtractViewShown() ? View.GONE : View.INVISIBLE;
+    }
+    
+    public void showStatusIcon(int iconResId) {
+        mStatusIcon = iconResId;
+        mImm.showStatusIcon(mToken, getPackageName(), iconResId);
+    }
+    
+    public void hideStatusIcon() {
+        mStatusIcon = 0;
+        mImm.hideStatusIcon(mToken);
     }
     
     /**
@@ -775,22 +1043,30 @@ public class InputMethodService extends AbstractInputMethodService {
      * @param id Unique identifier of the new input method ot start.
      */
     public void switchInputMethod(String id) {
-        ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE))
-                .setInputMethod(mToken, id);
+        mImm.setInputMethod(mToken, id);
     }
     
     public void setExtractView(View view) {
         mExtractFrame.removeAllViews();
         mExtractFrame.addView(view, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.FILL_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+                ViewGroup.LayoutParams.FILL_PARENT));
         mExtractView = view;
         if (view != null) {
             mExtractEditText = (ExtractEditText)view.findViewById(
                     com.android.internal.R.id.inputExtractEditText);
-            startExtractingText();
+            mExtractEditText.setIME(this);
+            mExtractAction = (Button)view.findViewById(
+                    com.android.internal.R.id.inputExtractAction);
+            if (mExtractAction != null) {
+                mExtractAccessories = (ViewGroup)view.findViewById(
+                        com.android.internal.R.id.inputExtractAccessories);
+            }
+            startExtractingText(false);
         } else {
             mExtractEditText = null;
+            mExtractAccessories = null;
+            mExtractAction = null;
         }
     }
     
@@ -819,20 +1095,6 @@ public class InputMethodService extends AbstractInputMethodService {
                 ViewGroup.LayoutParams.FILL_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         mInputView = view;
-    }
-    
-    /**
-     * Called by the framework to create a Drawable for the background of
-     * the input method window.  May return null for no background.  The default
-     * implementation returns a non-null standard background only when in
-     * fullscreen mode.  This is called each time the fullscreen mode changes.
-     */
-    public Drawable onCreateBackgroundDrawable() {
-        if (isFullscreenMode()) {
-            return getResources().getDrawable(
-                    com.android.internal.R.drawable.input_method_fullscreen_background);
-        }
-        return null;
     }
     
     /**
@@ -890,27 +1152,111 @@ public class InputMethodService extends AbstractInputMethodService {
     }
     
     /**
+     * Called when the input view is being hidden from the user.  This will
+     * be called either prior to hiding the window, or prior to switching to
+     * another target for editing.
+     * 
+     * <p>The default
+     * implementation uses the InputConnection to clear any active composing
+     * text; you can override this (not calling the base class implementation)
+     * to perform whatever behavior you would like.
+     * 
+     * @param finishingInput If true, {@link #onFinishInput} will be
+     * called immediately after.
+     */
+    public void onFinishInputView(boolean finishingInput) {
+        if (!finishingInput) {
+            InputConnection ic = getCurrentInputConnection();
+            if (ic != null) {
+                ic.finishComposingText();
+            }
+        }
+    }
+    
+    /**
+     * Called when only the candidates view has been shown for showing
+     * processing as the user enters text through a hard keyboard.
+     * This will always be called after {@link #onStartInput},
+     * allowing you to do your general setup there and just view-specific
+     * setup here.  You are guaranteed that {@link #onCreateCandidatesView()}
+     * will have been called some time before this function is called.
+     * 
+     * <p>Note that this will <em>not</em> be called when the input method
+     * is running in full editing mode, and thus receiving
+     * {@link #onStartInputView} to initiate that operation.  This is only
+     * for the case when candidates are being shown while the input method
+     * editor is hidden but wants to show its candidates UI as text is
+     * entered through some other mechanism.
+     * 
+     * @param info Description of the type of text being edited.
+     * @param restarting Set to true if we are restarting input on the
+     * same text field as before.
+     */
+    public void onStartCandidatesView(EditorInfo info, boolean restarting) {
+    }
+    
+    /**
+     * Called when the candidates view is being hidden from the user.  This will
+     * be called either prior to hiding the window, or prior to switching to
+     * another target for editing.
+     * 
+     * <p>The default
+     * implementation uses the InputConnection to clear any active composing
+     * text; you can override this (not calling the base class implementation)
+     * to perform whatever behavior you would like.
+     * 
+     * @param finishingInput If true, {@link #onFinishInput} will be
+     * called immediately after.
+     */
+    public void onFinishCandidatesView(boolean finishingInput) {
+        if (!finishingInput) {
+            InputConnection ic = getCurrentInputConnection();
+            if (ic != null) {
+                ic.finishComposingText();
+            }
+        }
+    }
+    
+    /**
      * The system has decided that it may be time to show your input method.
      * This is called due to a corresponding call to your
-     * {@link InputMethod#showSoftInput(int) InputMethod.showSoftInput(int)}
-     * method.  The default implementation simply calls
-     * {@link #showWindow(boolean)}, except if the
-     * {@link InputMethod#SHOW_EXPLICIT InputMethod.SHOW_EXPLICIT} flag is
-     * not set and the input method is running in fullscreen mode.
+     * {@link InputMethod#showSoftInput InputMethod.showSoftInput()}
+     * method.  The default implementation uses
+     * {@link #onEvaluateInputViewShown()}, {@link #onEvaluateFullscreenMode()},
+     * and the current configuration to decide whether the input view should
+     * be shown at this point.
      * 
      * @param flags Provides additional information about the show request,
-     * as per {@link InputMethod#showSoftInput(int) InputMethod.showSoftInput(int)}.
+     * as per {@link InputMethod#showSoftInput InputMethod.showSoftInput()}.
+     * @param configChange This is true if we are re-showing due to a
+     * configuration change.
+     * @return Returns true to indicate that the window should be shown.
      */
-    public void onShowRequested(int flags) {
+    public boolean onShowInputRequested(int flags, boolean configChange) {
         if (!onEvaluateInputViewShown()) {
-            return;
+            return false;
         }
-        if ((flags&InputMethod.SHOW_EXPLICIT) == 0 && onEvaluateFullscreenMode()) {
-            // Don't show if this is not explicit requested by the user and
-            // the input method is fullscreen.  That would be too disruptive.
-            return;
+        if ((flags&InputMethod.SHOW_EXPLICIT) == 0) {
+            if (!configChange && onEvaluateFullscreenMode()) {
+                // Don't show if this is not explicitly requested by the user and
+                // the input method is fullscreen.  That would be too disruptive.
+                // However, we skip this change for a config change, since if
+                // the IME is already shown we do want to go into fullscreen
+                // mode at this point.
+                return false;
+            }
+            Configuration config = getResources().getConfiguration();
+            if (config.keyboard != Configuration.KEYBOARD_NOKEYS) {
+                // And if the device has a hard keyboard, even if it is
+                // currently hidden, don't show the input method implicitly.
+                // These kinds of devices don't need it that much.
+                return false;
+            }
         }
-        showWindow(true);
+        if ((flags&InputMethod.SHOW_FORCED) != 0) {
+            mShowInputForced = true;
+        }
+        return true;
     }
     
     public void showWindow(boolean showInput) {
@@ -920,6 +1266,23 @@ public class InputMethodService extends AbstractInputMethodService {
                 + " mWindowCreated=" + mWindowCreated
                 + " mWindowVisible=" + mWindowVisible
                 + " mInputStarted=" + mInputStarted);
+        
+        if (mInShowWindow) {
+            Log.w(TAG, "Re-entrance in to showWindow");
+            return;
+        }
+        
+        try {
+            mWindowWasVisible = mWindowVisible;
+            mInShowWindow = true;
+            showWindowInner(showInput);
+        } finally {
+            mWindowWasVisible = true;
+            mInShowWindow = false;
+        }
+    }
+    
+    void showWindowInner(boolean showInput) {
         boolean doShowInput = false;
         boolean wasVisible = mWindowVisible;
         mWindowVisible = true;
@@ -935,43 +1298,75 @@ public class InputMethodService extends AbstractInputMethodService {
         }
         
         if (DEBUG) Log.v(TAG, "showWindow: updating UI");
+        initialize();
         updateFullscreenMode();
         updateInputViewShown();
         
         if (!mWindowAdded || !mWindowCreated) {
             mWindowAdded = true;
             mWindowCreated = true;
+            initialize();
+            if (DEBUG) Log.v(TAG, "CALL: onCreateCandidatesView");
             View v = onCreateCandidatesView();
             if (DEBUG) Log.v(TAG, "showWindow: candidates=" + v);
             if (v != null) {
                 setCandidatesView(v);
             }
         }
-        if (doShowInput) {
-            if (mInputStarted) {
-                if (DEBUG) Log.v(TAG, "showWindow: starting input view");
+        if (mShowInputRequested) {
+            if (!mInputViewStarted) {
+                if (DEBUG) Log.v(TAG, "CALL: onStartInputView");
+                mInputViewStarted = true;
                 onStartInputView(mInputEditorInfo, false);
             }
-            startExtractingText();
+        } else if (!mCandidatesViewStarted) {
+            if (DEBUG) Log.v(TAG, "CALL: onStartCandidatesView");
+            mCandidatesViewStarted = true;
+            onStartCandidatesView(mInputEditorInfo, false);
+        }
+        
+        if (doShowInput) {
+            startExtractingText(false);
         }
         
         if (!wasVisible) {
             if (DEBUG) Log.v(TAG, "showWindow: showing!");
+            onWindowShown();
             mWindow.show();
-            if (mInputConnection != null) {
-                mInputConnection.showStatusIcon(getPackageName(), mStatusIcon);
-            }
         }
     }
     
     public void hideWindow() {
+        if (mInputViewStarted) {
+            if (DEBUG) Log.v(TAG, "CALL: onFinishInputView");
+            onFinishInputView(false);
+        } else if (mCandidatesViewStarted) {
+            if (DEBUG) Log.v(TAG, "CALL: onFinishCandidatesView");
+            onFinishCandidatesView(false);
+        }
+        mInputViewStarted = false;
+        mCandidatesViewStarted = false;
         if (mWindowVisible) {
             mWindow.hide();
             mWindowVisible = false;
-            if (mInputConnection != null) {
-                mInputConnection.hideStatusIcon();
-            }
+            onWindowHidden();
+            mWindowWasVisible = false;
         }
+    }
+    
+    /**
+     * Called when the input method window has been shown to the user, after
+     * previously not being visible.  This is done after all of the UI setup
+     * for the window has occurred (creating its views etc).
+     */
+    public void onWindowShown() {
+    }
+    
+    /**
+     * Called when the input method window has been hidden from the user,
+     * after previously being visible.
+     */
+    public void onWindowHidden() {
     }
     
     /**
@@ -1008,18 +1403,46 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onStartInput(EditorInfo attribute, boolean restarting) {
     }
     
-    void doStartInput(EditorInfo attribute, boolean restarting) {
-        if (mInputStarted && !restarting) {
+    void doFinishInput() {
+        if (mInputViewStarted) {
+            if (DEBUG) Log.v(TAG, "CALL: onFinishInputView");
+            onFinishInputView(true);
+        } else if (mCandidatesViewStarted) {
+            if (DEBUG) Log.v(TAG, "CALL: onFinishCandidatesView");
+            onFinishCandidatesView(true);
+        }
+        mInputViewStarted = false;
+        mCandidatesViewStarted = false;
+        if (mInputStarted) {
+            if (DEBUG) Log.v(TAG, "CALL: onFinishInput");
             onFinishInput();
         }
+        mInputStarted = false;
+        mStartedInputConnection = null;
+        mCurCompletions = null;
+    }
+
+    void doStartInput(InputConnection ic, EditorInfo attribute, boolean restarting) {
+        if (!restarting) {
+            doFinishInput();
+        }
         mInputStarted = true;
+        mStartedInputConnection = ic;
         mInputEditorInfo = attribute;
+        initialize();
+        if (DEBUG) Log.v(TAG, "CALL: onStartInput");
         onStartInput(attribute, restarting);
         if (mWindowVisible) {
             if (mShowInputRequested) {
+                if (DEBUG) Log.v(TAG, "CALL: onStartInputView");
+                mInputViewStarted = true;
                 onStartInputView(mInputEditorInfo, restarting);
+                startExtractingText(true);
+            } else if (mCandidatesVisibility == View.VISIBLE) {
+                if (DEBUG) Log.v(TAG, "CALL: onStartCandidatesView");
+                mCandidatesViewStarted = true;
+                onStartCandidatesView(mInputEditorInfo, restarting);
             }
-            startExtractingText();
         }
     }
     
@@ -1029,8 +1452,17 @@ public class InputMethodService extends AbstractInputMethodService {
      * {@link #onStartInput(EditorInfo, boolean)} to perform input in a
      * new editor, or the input method may be left idle.  This method is
      * <em>not</em> called when input restarts in the same editor.
+     * 
+     * <p>The default
+     * implementation uses the InputConnection to clear any active composing
+     * text; you can override this (not calling the base class implementation)
+     * to perform whatever behavior you would like.
      */
     public void onFinishInput() {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic != null) {
+            ic.finishComposingText();
+        }
     }
     
     /**
@@ -1055,9 +1487,11 @@ public class InputMethodService extends AbstractInputMethodService {
         if (mExtractedToken != token) {
             return;
         }
-        if (mExtractEditText != null && text != null) {
-            mExtractedText = text;
-            mExtractEditText.setExtractedText(text);
+        if (text != null) {
+            if (mExtractEditText != null) {
+                mExtractedText = text;
+                mExtractEditText.setExtractedText(text);
+            }
         }
     }
     
@@ -1073,9 +1507,19 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onUpdateSelection(int oldSelStart, int oldSelEnd,
             int newSelStart, int newSelEnd,
             int candidatesStart, int candidatesEnd) {
-        if (mExtractEditText != null && mExtractedText != null) {
+        final ExtractEditText eet = mExtractEditText;
+        if (eet != null && isFullscreenMode() && mExtractedText != null) {
             final int off = mExtractedText.startOffset;
-            mExtractEditText.setSelection(newSelStart-off, newSelEnd-off);
+            eet.startInternalChanges();
+            newSelStart -= off;
+            newSelEnd -= off;
+            final int len = eet.getText().length();
+            if (newSelStart < 0) newSelStart = 0;
+            else if (newSelStart > len) newSelStart = len;
+            if (newSelEnd < 0) newSelEnd = 0;
+            else if (newSelEnd > len) newSelEnd = len;
+            eet.setSelection(newSelStart, newSelEnd);
+            eet.finishInternalChanges();
         }
     }
 
@@ -1095,38 +1539,91 @@ public class InputMethodService extends AbstractInputMethodService {
      * 0 or have the {@link InputMethodManager#HIDE_IMPLICIT_ONLY
      * InputMethodManager.HIDE_IMPLICIT_ONLY} bit set.
      */
-    public void dismissSoftInput(int flags) {
-        ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromInputMethod(mToken, flags);
+    public void requestHideSelf(int flags) {
+        mImm.hideSoftInputFromInputMethod(mToken, flags);
     }
     
+    /**
+     * Show the input method. This is a call back to the
+     * IMF to handle showing the input method.
+     * Close this input method's soft input area, removing it from the display.
+     * The input method will continue running, but the user can no longer use
+     * it to generate input by touching the screen.
+     * @param flags Provides additional operating flags.  Currently may be
+     * 0 or have the {@link InputMethodManager#SHOW_FORCED
+     * InputMethodManager.} bit set.
+     */
+    private void requestShowSelf(int flags) {
+        mImm.showSoftInputFromInputMethod(mToken, flags);
+    }
+    
+    /**
+     * Override this to intercept key down events before they are processed by the
+     * application.  If you return true, the application will not itself
+     * process the event.  If you return true, the normal application processing
+     * will occur as if the IME had not seen the event at all.
+     * 
+     * <p>The default implementation intercepts {@link KeyEvent#KEYCODE_BACK
+     * KeyEvent.KEYCODE_BACK} to hide the current IME UI if it is shown.  In
+     * additional, in fullscreen mode only, it will consume DPAD movement
+     * events to move the cursor in the extracted text view, not allowing
+     * them to perform navigation in the underlying application.
+     */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
             if (mShowInputRequested) {
                 // If the soft input area is shown, back closes it and we
                 // consume the back key.
-                dismissSoftInput(0);
+                requestHideSelf(0);
                 return true;
-            }
-            if (mShowCandidatesRequested) {
-                // If the candidates are shown, we just want to make sure
-                // they are now hidden but otherwise let the app execute
-                // the back.
-                // XXX this needs better interaction with the soft input
-                // implementation.
-                //setCandidatesViewShown(false);
+            } else if (mWindowVisible) {
+                if (mCandidatesVisibility == View.VISIBLE) {
+                    // If we are showing candidates even if no input area, then
+                    // hide them.
+                    setCandidatesViewShown(false);
+                    return true;
+                } else {
+                    // If we have the window visible for some other reason --
+                    // most likely to show candidates -- then just get rid
+                    // of it.  This really shouldn't happen, but just in case...
+                    hideWindow();
+                    return true;
+                }
             }
         }
-        return false;
+        return doMovementKey(keyCode, event, MOVEMENT_DOWN);
     }
 
+    /**
+     * Override this to intercept special key multiple events before they are
+     * processed by the
+     * application.  If you return true, the application will not itself
+     * process the event.  If you return true, the normal application processing
+     * will occur as if the IME had not seen the event at all.
+     * 
+     * <p>The default implementation always returns false, except when
+     * in fullscreen mode, where it will consume DPAD movement
+     * events to move the cursor in the extracted text view, not allowing
+     * them to perform navigation in the underlying application.
+     */
     public boolean onKeyMultiple(int keyCode, int count, KeyEvent event) {
-        return false;
+        return doMovementKey(keyCode, event, count);
     }
 
+    /**
+     * Override this to intercept key up events before they are processed by the
+     * application.  If you return true, the application will not itself
+     * process the event.  If you return true, the normal application processing
+     * will occur as if the IME had not seen the event at all.
+     * 
+     * <p>The default implementation always returns false, except when
+     * in fullscreen mode, where it will consume DPAD movement
+     * events to move the cursor in the extracted text view, not allowing
+     * them to perform navigation in the underlying application.
+     */
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        return false;
+        return doMovementKey(keyCode, event, MOVEMENT_UP);
     }
 
     public boolean onTrackballEvent(MotionEvent event) {
@@ -1136,21 +1633,453 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onAppPrivateCommand(String action, Bundle data) {
     }
     
-    void startExtractingText() {
-        if (mExtractEditText != null && getCurrentInputStarted()
+    /**
+     * Handle a request by the system to toggle the soft input area.
+     */
+    private void onToggleSoftInput(int showFlags, int hideFlags) {
+        if (DEBUG) Log.v(TAG, "toggleSoftInput()");
+        if (isInputViewShown()) {
+            requestHideSelf(hideFlags);
+        } else {
+            requestShowSelf(showFlags);
+        }
+    }
+    
+    static final int MOVEMENT_DOWN = -1;
+    static final int MOVEMENT_UP = -2;
+    
+    void reportExtractedMovement(int keyCode, int count) {
+        int dx = 0, dy = 0;
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                dx = -count;
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                dx = count;
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                dy = -count;
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                dy = count;
+                break;
+        }
+        onExtractedCursorMovement(dx, dy);       
+    }
+    
+    boolean doMovementKey(int keyCode, KeyEvent event, int count) {
+        final ExtractEditText eet = mExtractEditText;
+        if (isExtractViewShown() && isInputViewShown() && eet != null) {
+            // If we are in fullscreen mode, the cursor will move around
+            // the extract edit text, but should NOT cause focus to move
+            // to other fields.
+            MovementMethod movement = eet.getMovementMethod();
+            Layout layout = eet.getLayout();
+            if (movement != null && layout != null) {
+                // We want our own movement method to handle the key, so the
+                // cursor will properly move in our own word wrapping.
+                if (count == MOVEMENT_DOWN) {
+                    if (movement.onKeyDown(eet,
+                            (Spannable)eet.getText(), keyCode, event)) {
+                        reportExtractedMovement(keyCode, 1);
+                        return true;
+                    }
+                } else if (count == MOVEMENT_UP) {
+                    if (movement.onKeyUp(eet,
+                            (Spannable)eet.getText(), keyCode, event)) {
+                        return true;
+                    }
+                } else {
+                    if (movement.onKeyOther(eet, (Spannable)eet.getText(), event)) {
+                        reportExtractedMovement(keyCode, count);
+                    } else {
+                        KeyEvent down = KeyEvent.changeAction(event, KeyEvent.ACTION_DOWN);
+                        if (movement.onKeyDown(eet,
+                                (Spannable)eet.getText(), keyCode, down)) {
+                            KeyEvent up = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
+                            movement.onKeyUp(eet,
+                                    (Spannable)eet.getText(), keyCode, up);
+                            while (--count > 0) {
+                                movement.onKeyDown(eet,
+                                        (Spannable)eet.getText(), keyCode, down);
+                                movement.onKeyUp(eet,
+                                        (Spannable)eet.getText(), keyCode, up);
+                            }
+                            reportExtractedMovement(keyCode, count);
+                        }
+                    }
+                }
+            }
+            // Regardless of whether the movement method handled the key,
+            // we never allow DPAD navigation to the application.
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                case KeyEvent.KEYCODE_DPAD_UP:
+                case KeyEvent.KEYCODE_DPAD_DOWN:
+                    return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Send the given key event code (as defined by {@link KeyEvent}) to the
+     * current input connection is a key down + key up event pair.  The sent
+     * events have {@link KeyEvent#FLAG_SOFT_KEYBOARD KeyEvent.FLAG_SOFT_KEYBOARD}
+     * set, so that the recipient can identify them as coming from a software
+     * input method, and
+     * {@link KeyEvent#FLAG_KEEP_TOUCH_MODE KeyEvent.FLAG_KEEP_TOUCH_MODE}, so
+     * that they don't impact the current touch mode of the UI.
+     *
+     * @param keyEventCode The raw key code to send, as defined by
+     * {@link KeyEvent}.
+     */
+    public void sendDownUpKeyEvents(int keyEventCode) {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic == null) return;
+        long eventTime = SystemClock.uptimeMillis();
+        ic.sendKeyEvent(new KeyEvent(eventTime, eventTime,
+                KeyEvent.ACTION_DOWN, keyEventCode, 0, 0, 0, 0,
+                KeyEvent.FLAG_SOFT_KEYBOARD|KeyEvent.FLAG_KEEP_TOUCH_MODE));
+        ic.sendKeyEvent(new KeyEvent(SystemClock.uptimeMillis(), eventTime,
+                KeyEvent.ACTION_UP, keyEventCode, 0, 0, 0, 0,
+                KeyEvent.FLAG_SOFT_KEYBOARD|KeyEvent.FLAG_KEEP_TOUCH_MODE));
+    }
+    
+    /**
+     * Ask the input target to execute its default action via
+     * {@link InputConnection#performEditorAction
+     * InputConnection.performEditorAction()}.
+     * 
+     * @param fromEnterKey If true, this will be executed as if the user had
+     * pressed an enter key on the keyboard, that is it will <em>not</em>
+     * be done if the editor has set {@link EditorInfo#IME_FLAG_NO_ENTER_ACTION
+     * EditorInfo.IME_FLAG_NO_ENTER_ACTION}.  If false, the action will be
+     * sent regardless of how the editor has set that flag.
+     * 
+     * @return Returns a boolean indicating whether an action has been sent.
+     * If false, either the editor did not specify a default action or it
+     * does not want an action from the enter key.  If true, the action was
+     * sent (or there was no input connection at all).
+     */
+    public boolean sendDefaultEditorAction(boolean fromEnterKey) {
+        EditorInfo ei = getCurrentInputEditorInfo();
+        if (ei != null &&
+                (!fromEnterKey || (ei.imeOptions &
+                        EditorInfo.IME_FLAG_NO_ENTER_ACTION) == 0) &&
+                (ei.imeOptions & EditorInfo.IME_MASK_ACTION) !=
+                    EditorInfo.IME_ACTION_NONE) {
+            // If the enter key was pressed, and the editor has a default
+            // action associated with pressing enter, then send it that
+            // explicit action instead of the key event.
+            InputConnection ic = getCurrentInputConnection();
+            if (ic != null) {
+                ic.performEditorAction(ei.imeOptions&EditorInfo.IME_MASK_ACTION);
+            }
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Send the given UTF-16 character to the current input connection.  Most
+     * characters will be delivered simply by calling
+     * {@link InputConnection#commitText InputConnection.commitText()} with
+     * the character; some, however, may be handled different.  In particular,
+     * the enter character ('\n') will either be delivered as an action code
+     * or a raw key event, as appropriate.
+     * 
+     * @param charCode The UTF-16 character code to send.
+     */
+    public void sendKeyChar(char charCode) {
+        switch (charCode) {
+            case '\n': // Apps may be listening to an enter key to perform an action
+                if (!sendDefaultEditorAction(true)) {
+                    sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
+                }
+                break;
+            default:
+                // Make sure that digits go through any text watcher on the client side.
+                if (charCode >= '0' && charCode <= '9') {
+                    sendDownUpKeyEvents(charCode - '0' + KeyEvent.KEYCODE_0);
+                } else {
+                    InputConnection ic = getCurrentInputConnection();
+                    if (ic != null) {
+                        ic.commitText(String.valueOf((char) charCode), 1);
+                    }
+                }
+                break;
+        }
+    }
+    
+    /**
+     * This is called when the user has moved the cursor in the extracted
+     * text view, when running in fullsreen mode.  The default implementation
+     * performs the corresponding selection change on the underlying text
+     * editor.
+     */
+    public void onExtractedSelectionChanged(int start, int end) {
+        InputConnection conn = getCurrentInputConnection();
+        if (conn != null) {
+            conn.setSelection(start, end);
+        }
+    }
+    
+    /**
+     * This is called when the user has clicked on the extracted text view,
+     * when running in fullscreen mode.  The default implementation hides
+     * the candidates view when this happens, but only if the extracted text
+     * editor has a vertical scroll bar because its text doesn't fit.
+     * Re-implement this to provide whatever behavior you want.
+     */
+    public void onExtractedTextClicked() {
+        if (mExtractEditText == null) {
+            return;
+        }
+        if (mExtractEditText.hasVerticalScrollBar()) {
+            setCandidatesViewShown(false);
+        }
+    }
+    
+    /**
+     * This is called when the user has performed a cursor movement in the
+     * extracted text view, when it is running in fullscreen mode.  The default
+     * implementation hides the candidates view when a vertical movement
+     * happens, but only if the extracted text editor has a vertical scroll bar
+     * because its text doesn't fit.
+     * Re-implement this to provide whatever behavior you want.
+     * @param dx The amount of cursor movement in the x dimension.
+     * @param dy The amount of cursor movement in the y dimension.
+     */
+    public void onExtractedCursorMovement(int dx, int dy) {
+        if (mExtractEditText == null || dy == 0) {
+            return;
+        }
+        if (mExtractEditText.hasVerticalScrollBar()) {
+            setCandidatesViewShown(false);
+        }
+    }
+    
+    /**
+     * This is called when the user has selected a context menu item from the
+     * extracted text view, when running in fullscreen mode.  The default
+     * implementation sends this action to the current InputConnection's
+     * {@link InputConnection#performContextMenuAction(int)}, for it
+     * to be processed in underlying "real" editor.  Re-implement this to
+     * provide whatever behavior you want.
+     */
+    public boolean onExtractTextContextMenuItem(int id) {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic != null) {
+            ic.performContextMenuAction(id);
+        }
+        return true;
+    }
+    
+    /**
+     * Return text that can be used as a button label for the given
+     * {@link EditorInfo#imeOptions EditorInfo.imeOptions}.  Returns null
+     * if there is no action requested.  Note that there is no guarantee that
+     * the returned text will be relatively short, so you probably do not
+     * want to use it as text on a soft keyboard key label.
+     * 
+     * @param imeOptions The value from @link EditorInfo#imeOptions EditorInfo.imeOptions}.
+     * 
+     * @return Returns a label to use, or null if there is no action.
+     */
+    public CharSequence getTextForImeAction(int imeOptions) {
+        switch (imeOptions&EditorInfo.IME_MASK_ACTION) {
+            case EditorInfo.IME_ACTION_NONE:
+                return null;
+            case EditorInfo.IME_ACTION_GO:
+                return getText(com.android.internal.R.string.ime_action_go);
+            case EditorInfo.IME_ACTION_SEARCH:
+                return getText(com.android.internal.R.string.ime_action_search);
+            case EditorInfo.IME_ACTION_SEND:
+                return getText(com.android.internal.R.string.ime_action_send);
+            case EditorInfo.IME_ACTION_NEXT:
+                return getText(com.android.internal.R.string.ime_action_next);
+            case EditorInfo.IME_ACTION_DONE:
+                return getText(com.android.internal.R.string.ime_action_done);
+            default:
+                return getText(com.android.internal.R.string.ime_action_default);
+        }
+    }
+    
+    /**
+     * Called when the fullscreen-mode extracting editor info has changed,
+     * to determine whether the extracting (extract text and candidates) portion
+     * of the UI should be shown.  The standard implementation hides or shows
+     * the extract area depending on whether it makes sense for the
+     * current editor.  In particular, a {@link InputType#TYPE_NULL}
+     * input type or {@link EditorInfo#IME_FLAG_NO_EXTRACT_UI} flag will
+     * turn off the extract area since there is no text to be shown.
+     */
+    public void onUpdateExtractingVisibility(EditorInfo ei) {
+        if (ei.inputType == InputType.TYPE_NULL ||
+                (ei.imeOptions&EditorInfo.IME_FLAG_NO_EXTRACT_UI) != 0) {
+            // No reason to show extract UI!
+            setExtractViewShown(false);
+            return;
+        }
+        
+        setExtractViewShown(true);
+    }
+    
+    /**
+     * Called when the fullscreen-mode extracting editor info has changed,
+     * to update the state of its UI such as the action buttons shown.
+     * You do not need to deal with this if you are using the standard
+     * full screen extract UI.  If replacing it, you will need to re-implement
+     * this to put the appropriate action button in your own UI and handle it,
+     * and perform any other changes.
+     * 
+     * <p>The standard implementation turns on or off its accessory area
+     * depending on whether there is an action button, and hides or shows
+     * the entire extract area depending on whether it makes sense for the
+     * current editor.  In particular, a {@link InputType#TYPE_NULL} or 
+     * {@link InputType#TYPE_TEXT_VARIATION_FILTER} input type will turn off the
+     * extract area since there is no text to be shown.
+     */
+    public void onUpdateExtractingViews(EditorInfo ei) {
+        if (!isExtractViewShown()) {
+            return;
+        }
+        
+        if (mExtractAccessories == null) {
+            return;
+        }
+        final boolean hasAction = ei.actionLabel != null || (
+                (ei.imeOptions&EditorInfo.IME_MASK_ACTION) != EditorInfo.IME_ACTION_NONE &&
+                (ei.imeOptions&EditorInfo.IME_FLAG_NO_ACCESSORY_ACTION) == 0 &&
+                ei.inputType != InputType.TYPE_NULL);
+        if (hasAction) {
+            mExtractAccessories.setVisibility(View.VISIBLE);
+            if (ei.actionLabel != null) {
+                mExtractAction.setText(ei.actionLabel);
+            } else {
+                mExtractAction.setText(getTextForImeAction(ei.imeOptions));
+            }
+            mExtractAction.setOnClickListener(mActionClickListener);
+        } else {
+            mExtractAccessories.setVisibility(View.GONE);
+            mExtractAction.setOnClickListener(null);
+        }
+    }
+    
+    /**
+     * This is called when, while currently displayed in extract mode, the
+     * current input target changes.  The default implementation will
+     * auto-hide the IME if the new target is not a full editor, since this
+     * can be an confusing experience for the user.
+     */
+    public void onExtractingInputChanged(EditorInfo ei) {
+        if (ei.inputType == InputType.TYPE_NULL) {
+            requestHideSelf(InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+    
+    void startExtractingText(boolean inputChanged) {
+        final ExtractEditText eet = mExtractEditText;
+        if (eet != null && getCurrentInputStarted()
                 && isFullscreenMode()) {
             mExtractedToken++;
             ExtractedTextRequest req = new ExtractedTextRequest();
             req.token = mExtractedToken;
+            req.flags = InputConnection.GET_TEXT_WITH_STYLES;
             req.hintMaxLines = 10;
             req.hintMaxChars = 10000;
-            mExtractedText = mInputConnection.getExtractedText(req,
-                    InputConnection.EXTRACTED_TEXT_MONITOR);
-            if (mExtractedText != null) {
-                mExtractEditText.setExtractedText(mExtractedText);
+            mExtractedText = getCurrentInputConnection().getExtractedText(req,
+                    InputConnection.GET_EXTRACTED_TEXT_MONITOR);
+            
+            final EditorInfo ei = getCurrentInputEditorInfo();
+            
+            try {
+                eet.startInternalChanges();
+                onUpdateExtractingVisibility(ei);
+                onUpdateExtractingViews(ei);
+                int inputType = ei.inputType;
+                if ((inputType&EditorInfo.TYPE_MASK_CLASS)
+                        == EditorInfo.TYPE_CLASS_TEXT) {
+                    if ((inputType&EditorInfo.TYPE_TEXT_FLAG_IME_MULTI_LINE) != 0) {
+                        inputType |= EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE;
+                    }
+                }
+                eet.setInputType(inputType);
+                eet.setHint(ei.hintText);
+                if (mExtractedText != null) {
+                    eet.setEnabled(true);
+                    eet.setExtractedText(mExtractedText);
+                } else {
+                    eet.setEnabled(false);
+                    eet.setText("");
+                }
+            } finally {
+                eet.finishInternalChanges();
             }
-            mExtractEditText.setInputType(getCurrentInputEditorInfo().inputType);
-            mExtractEditText.setHint(mInputEditorInfo.hintText);
+            
+            if (inputChanged) {
+                onExtractingInputChanged(ei);
+            }
         }
+    }
+    
+    /**
+     * Performs a dump of the InputMethodService's internal state.  Override
+     * to add your own information to the dump.
+     */
+    @Override protected void dump(FileDescriptor fd, PrintWriter fout, String[] args) {
+        final Printer p = new PrintWriterPrinter(fout);
+        p.println("Input method service state for " + this + ":");
+        p.println("  mWindowCreated=" + mWindowCreated
+                + " mWindowAdded=" + mWindowAdded);
+        p.println("  mWindowVisible=" + mWindowVisible
+                + " mWindowWasVisible=" + mWindowWasVisible
+                + " mInShowWindow=" + mInShowWindow);
+        p.println("  Configuration=" + getResources().getConfiguration());
+        p.println("  mToken=" + mToken);
+        p.println("  mInputBinding=" + mInputBinding);
+        p.println("  mInputConnection=" + mInputConnection);
+        p.println("  mStartedInputConnection=" + mStartedInputConnection);
+        p.println("  mInputStarted=" + mInputStarted
+                + " mInputViewStarted=" + mInputViewStarted
+                + " mCandidatesViewStarted=" + mCandidatesViewStarted);
+        
+        if (mInputEditorInfo != null) {
+            p.println("  mInputEditorInfo:");
+            mInputEditorInfo.dump(p, "    ");
+        } else {
+            p.println("  mInputEditorInfo: null");
+        }
+        
+        p.println("  mShowInputRequested=" + mShowInputRequested
+                + " mLastShowInputRequested=" + mLastShowInputRequested
+                + " mShowInputForced=" + mShowInputForced
+                + " mShowInputFlags=0x" + Integer.toHexString(mShowInputFlags));
+        p.println("  mCandidatesVisibility=" + mCandidatesVisibility
+                + " mFullscreenApplied=" + mFullscreenApplied
+                + " mIsFullscreen=" + mIsFullscreen
+                + " mExtractViewHidden=" + mExtractViewHidden);
+        
+        if (mExtractedText != null) {
+            p.println("  mExtractedText:");
+            p.println("    text=" + mExtractedText.text.length() + " chars"
+                    + " startOffset=" + mExtractedText.startOffset);
+            p.println("    selectionStart=" + mExtractedText.selectionStart
+                    + " selectionEnd=" + mExtractedText.selectionEnd
+                    + " flags=0x" + Integer.toHexString(mExtractedText.flags));
+        } else {
+            p.println("  mExtractedText: null");
+        }
+        p.println("  mExtractedToken=" + mExtractedToken);
+        p.println("  mIsInputViewShown=" + mIsInputViewShown
+                + " mStatusIcon=" + mStatusIcon);
+        p.println("Last computed insets:");
+        p.println("  contentTopInsets=" + mTmpInsets.contentTopInsets
+                + " visibleTopInsets=" + mTmpInsets.visibleTopInsets
+                + " touchableInsets=" + mTmpInsets.touchableInsets);
     }
 }

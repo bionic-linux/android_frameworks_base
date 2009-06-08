@@ -128,22 +128,21 @@ status_t AudioTrack::set(
        return NO_INIT;
     }
     int afSampleRate;
-    if (AudioSystem::getOutputSamplingRate(&afSampleRate) != NO_ERROR) {
+    if (AudioSystem::getOutputSamplingRate(&afSampleRate, streamType) != NO_ERROR) {
         return NO_INIT;
     }
     int afFrameCount;
-    if (AudioSystem::getOutputFrameCount(&afFrameCount) != NO_ERROR) {
+    if (AudioSystem::getOutputFrameCount(&afFrameCount, streamType) != NO_ERROR) {
         return NO_INIT;
     }
     uint32_t afLatency;
-    if (AudioSystem::getOutputLatency(&afLatency) != NO_ERROR) {
+    if (AudioSystem::getOutputLatency(&afLatency, streamType) != NO_ERROR) {
         return NO_INIT;
     }
 
-
     // handle default values first.
-    if (streamType == DEFAULT) {
-        streamType = MUSIC;
+    if (streamType == AudioSystem::DEFAULT) {
+        streamType = AudioSystem::MUSIC;
     }
     if (sampleRate == 0) {
         sampleRate = afSampleRate;
@@ -157,7 +156,7 @@ status_t AudioTrack::set(
     }
 
     // validate parameters
-    if (((format != AudioSystem::PCM_8_BIT) || mSharedBuffer != 0) &&
+    if (((format != AudioSystem::PCM_8_BIT) || sharedBuffer != 0) &&
         (format != AudioSystem::PCM_16_BIT)) {
         LOGE("Invalid format");
         return BAD_VALUE;
@@ -169,6 +168,8 @@ status_t AudioTrack::set(
 
     // Ensure that buffer depth covers at least audio hardware latency
     uint32_t minBufCount = afLatency / ((1000 * afFrameCount)/afSampleRate);
+    if (minBufCount < 2) minBufCount = 2;
+
     // When playing from shared buffer, playback will start even if last audioflinger
     // block is partly filled.
     if (sharedBuffer != 0 && minBufCount > 1) {
@@ -258,9 +259,10 @@ status_t AudioTrack::set(
     mLatency = afLatency + (1000*mFrameCount) / mSampleRate;
     mLoopCount = 0;
     mMarkerPosition = 0;
+    mMarkerReached = false;
     mNewPosition = 0;
     mUpdatePeriod = 0;
-    
+
     return NO_ERROR;
 }
 
@@ -317,7 +319,7 @@ void AudioTrack::start()
 {
     sp<AudioTrackThread> t = mAudioTrackThread;
 
-    LOGV("start");
+    LOGV("start %p", this);
     if (t != 0) {
         if (t->exitPending()) {
             if (t->requestExitAndWait() == WOULD_BLOCK) {
@@ -349,7 +351,7 @@ void AudioTrack::stop()
 {
     sp<AudioTrackThread> t = mAudioTrackThread;
 
-    LOGV("stop");
+    LOGV("stop %p", this);
     if (t != 0) {
         t->mLock.lock();
     }
@@ -359,6 +361,9 @@ void AudioTrack::stop()
         // Cancel loops (If we are in the middle of a loop, playback
         // would not stop until loopCount reaches 0).
         setLoop(0, 0, 0);
+        // the playback head position will reset to 0, so if a marker is set, we need
+        // to activate it again
+        mMarkerReached = false;
         // Force flush if a shared buffer is used otherwise audioflinger
         // will not stop before end of buffer is reached.
         if (mSharedBuffer != 0) {
@@ -384,14 +389,18 @@ bool AudioTrack::stopped() const
 void AudioTrack::flush()
 {
     LOGV("flush");
+    
+    // clear playback marker and periodic update counter
+    mMarkerPosition = 0;
+    mMarkerReached = false;
+    mUpdatePeriod = 0;
+    
 
     if (!mActive) {
-        mCblk->lock.lock();
         mAudioTrack->flush();
         // Release AudioTrack callback thread in case it was waiting for new buffers
         // in AudioTrack::obtainBuffer()
         mCblk->cv.signal();
-        mCblk->lock.unlock();
     }
 }
 
@@ -434,15 +443,15 @@ void AudioTrack::setSampleRate(int rate)
 {
     int afSamplingRate;
 
-    if (AudioSystem::getOutputSamplingRate(&afSamplingRate) != NO_ERROR) {
+    if (AudioSystem::getOutputSamplingRate(&afSamplingRate, mStreamType) != NO_ERROR) {
         return;
     }
     // Resampler implementation limits input sampling rate to 2 x output sampling rate.
+    if (rate <= 0) rate = 1;
     if (rate > afSamplingRate*2) rate = afSamplingRate*2;
-
     if (rate > MAX_SAMPLE_RATE) rate = MAX_SAMPLE_RATE;
 
-    mCblk->sampleRate = rate;
+    mCblk->sampleRate = (uint16_t)rate;
 }
 
 uint32_t AudioTrack::getSampleRate()
@@ -467,10 +476,15 @@ status_t AudioTrack::setLoop(uint32_t loopStart, uint32_t loopEnd, int loopCount
 
     if (loopStart >= loopEnd ||
         loopEnd - loopStart > mFrameCount) {
-        LOGW("setLoop invalid value: loopStart %d, loopEnd %d, loopCount %d, framecount %d, user %d", loopStart, loopEnd, loopCount, mFrameCount, cblk->user);
+        LOGE("setLoop invalid value: loopStart %d, loopEnd %d, loopCount %d, framecount %d, user %d", loopStart, loopEnd, loopCount, mFrameCount, cblk->user);
         return BAD_VALUE;
     }
-    // TODO handle shared buffer here: limit loop end to framecount
+
+    if ((mSharedBuffer != 0) && (loopEnd   > mFrameCount)) {
+        LOGE("setLoop invalid value: loop markers beyond data: loopStart %d, loopEnd %d, framecount %d",
+            loopStart, loopEnd, mFrameCount);
+        return BAD_VALUE;
+    }   
 
     cblk->loopStart = loopStart;
     cblk->loopEnd = loopEnd;
@@ -504,6 +518,7 @@ status_t AudioTrack::setMarkerPosition(uint32_t marker)
     if (mCbf == 0) return INVALID_OPERATION;
 
     mMarkerPosition = marker;
+    mMarkerReached = false;
 
     return NO_ERROR;
 }
@@ -603,13 +618,20 @@ status_t AudioTrack::obtainBuffer(Buffer* audioBuffer, int32_t waitCount)
             if (__builtin_expect(result!=NO_ERROR, false)) { 
                 cblk->waitTimeMs += WAIT_PERIOD_MS;
                 if (cblk->waitTimeMs >= cblk->bufferTimeoutMs) {
-                    LOGW(   "obtainBuffer timed out (is the CPU pegged?) "
-                            "user=%08x, server=%08x", cblk->user, cblk->server);
-                    mAudioTrack->start(); // FIXME: Wake up audioflinger
-                    timeout = 1;
+                    // timing out when a loop has been set and we have already written upto loop end
+                    // is a normal condition: no need to wake AudioFlinger up.
+                    if (cblk->user < cblk->loopEnd) {
+                        LOGW(   "obtainBuffer timed out (is the CPU pegged?) %p "
+                                "user=%08x, server=%08x", this, cblk->user, cblk->server);
+                        //unlock cblk mutex before calling mAudioTrack->start() (see issue #1617140) 
+                        cblk->lock.unlock();
+                        mAudioTrack->start();
+                        cblk->lock.lock();
+                        timeout = 1;
+                    }
                     cblk->waitTimeMs = 0;
                 }
-                ;
+                
                 if (--waitCount == 0) {
                     return TIMED_OUT;
                 }
@@ -668,7 +690,7 @@ ssize_t AudioTrack::write(const void* buffer, size_t userSize)
         return BAD_VALUE;
     }
 
-    LOGV("write %d bytes, mActive=%d", userSize, mActive);
+    LOGV("write %p: %d bytes, mActive=%d", this, userSize, mActive);
 
     ssize_t written = 0;
     const int8_t *src = (const int8_t *)buffer;
@@ -744,10 +766,10 @@ bool AudioTrack::processAudioBuffer(const sp<AudioTrackThread>& thread)
     }
 
     // Manage marker callback
-    if(mMarkerPosition > 0) {
+    if (!mMarkerReached && (mMarkerPosition > 0)) {
         if (mCblk->server >= mMarkerPosition) {
             mCbf(EVENT_MARKER, mUserData, (void *)&mMarkerPosition);
-            mMarkerPosition = 0;
+            mMarkerReached = true;
         }
     }
 
@@ -795,7 +817,14 @@ bool AudioTrack::processAudioBuffer(const sp<AudioTrackThread>& thread)
         writtenSize = audioBuffer.size;
 
         // Sanity check on returned size
-        if (ssize_t(writtenSize) <= 0) break;
+        if (ssize_t(writtenSize) <= 0) {
+            // The callback is done filling buffers
+            // Keep this thread going to handle timed events and
+            // still try to get more data in intervals of WAIT_PERIOD_MS
+            // but don't just loop and block the CPU, so wait
+            usleep(WAIT_PERIOD_MS*1000);
+            break;
+        }
         if (writtenSize > reqSize) writtenSize = reqSize;
 
         if (mFormat == AudioSystem::PCM_8_BIT) {

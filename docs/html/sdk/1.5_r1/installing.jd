@@ -1,0 +1,10 @@
+sdk.version=1.5
+sdk.rel.id=1
+sdk.date=April 2009
+
+page.title=Installing the Android SDK
+@jd:body
+
+<p>See the <a href="{@docRoot}sdk/preview/index.html">Download page</a> for more information.</p>
+
+

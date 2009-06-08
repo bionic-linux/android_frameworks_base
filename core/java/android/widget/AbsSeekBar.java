@@ -40,9 +40,15 @@ public abstract class AbsSeekBar extends ProgressBar {
      * Whether this is user seekable.
      */
     boolean mIsUserSeekable = true;
+
+    /**
+     * On key presses (right or left), the amount to increment/decrement the
+     * progress.
+     */
+    private int mKeyProgressIncrement = 1;
     
     private static final int NO_ALPHA = 0xFF;
-    float mDisabledAlpha;
+    private float mDisabledAlpha;
     
     public AbsSeekBar(Context context) {
         super(context);
@@ -101,6 +107,39 @@ public abstract class AbsSeekBar extends ProgressBar {
         invalidate();
     }
 
+    /**
+     * Sets the amount of progress changed via the arrow keys.
+     * 
+     * @param increment The amount to increment or decrement when the user
+     *            presses the arrow keys.
+     */
+    public void setKeyProgressIncrement(int increment) {
+        mKeyProgressIncrement = increment < 0 ? -increment : increment;
+    }
+
+    /**
+     * Returns the amount of progress changed via the arrow keys.
+     * <p>
+     * By default, this will be a value that is derived from the max progress.
+     * 
+     * @return The amount to increment or decrement when the user presses the
+     *         arrow keys. This will be positive.
+     */
+    public int getKeyProgressIncrement() {
+        return mKeyProgressIncrement;
+    }
+    
+    @Override
+    public synchronized void setMax(int max) {
+        super.setMax(max);
+
+        if ((mKeyProgressIncrement == 0) || (getMax() / mKeyProgressIncrement > 20)) {
+            // It will take the user too long to change this via keys, change it
+            // to something more reasonable
+            setKeyProgressIncrement(Math.max(1, Math.round((float) getMax() / 20)));
+        }
+    }
+
     @Override
     protected boolean verifyDrawable(Drawable who) {
         return who == mThumb || super.verifyDrawable(who);
@@ -125,7 +164,7 @@ public abstract class AbsSeekBar extends ProgressBar {
     void onProgressRefresh(float scale, boolean fromUser) { 
         Drawable thumb = mThumb;
         if (thumb != null) {
-            setThumbPos(getWidth(), getHeight(), thumb, scale, Integer.MIN_VALUE);
+            setThumbPos(getWidth(), thumb, scale, Integer.MIN_VALUE);
             /*
              * Since we draw translated, the drawable's bounds that it signals
              * for invalidation won't be the actual bounds we want invalidated,
@@ -150,7 +189,7 @@ public abstract class AbsSeekBar extends ProgressBar {
         
         if (thumbHeight > trackHeight) {
             if (thumb != null) {
-                setThumbPos(w, h, thumb, scale, 0);
+                setThumbPos(w, thumb, scale, 0);
             }
             int gapForCenteringTrack = (thumbHeight - trackHeight) / 2;
             if (d != null) {
@@ -167,16 +206,15 @@ public abstract class AbsSeekBar extends ProgressBar {
             }
             int gap = (trackHeight - thumbHeight) / 2;
             if (thumb != null) {
-                setThumbPos(w, h, thumb, scale, gap);
+                setThumbPos(w, thumb, scale, gap);
             }
         }
     }
 
     /**
      * @param gap If set to {@link Integer#MIN_VALUE}, this will be ignored and
-     *            the old vertical bounds will be used.
      */
-    private void setThumbPos(int w, int h, Drawable thumb, float scale, int gap) {
+    private void setThumbPos(int w, Drawable thumb, float scale, int gap) {
         int available = w - mPaddingLeft - mPaddingRight;
         int thumbWidth = thumb.getIntrinsicWidth();
         int thumbHeight = thumb.getIntrinsicHeight();
@@ -282,11 +320,6 @@ public abstract class AbsSeekBar extends ProgressBar {
         
         final int max = getMax();
         progress += scale * max;
-        if (progress < 0) {
-            progress = 0;
-        } else if (progress > max) {
-            progress = max;
-        }
         
         setProgress((int) progress, true);
     }
@@ -314,6 +347,12 @@ public abstract class AbsSeekBar extends ProgressBar {
     void onStopTrackingTouch() {
     }
 
+    /**
+     * Called when the user changes the seekbar's progress by using a key event.
+     */
+    void onKeyChange() {
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         int progress = getProgress();
@@ -321,12 +360,14 @@ public abstract class AbsSeekBar extends ProgressBar {
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 if (progress <= 0) break;
-                setProgress(progress - 1, true);
+                setProgress(progress - mKeyProgressIncrement, true);
+                onKeyChange();
                 return true;
         
             case KeyEvent.KEYCODE_DPAD_RIGHT:
                 if (progress >= getMax()) break;
-                setProgress(progress + 1, true);
+                setProgress(progress + mKeyProgressIncrement, true);
+                onKeyChange();
                 return true;
         }
 

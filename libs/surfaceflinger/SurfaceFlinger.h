@@ -35,11 +35,11 @@
 #include <private/ui/LayerState.h>
 #include <private/ui/SurfaceFlingerSynchro.h>
 
+#include "Barrier.h"
+#include "BootAnimation.h"
+#include "CPUGauge.h"
 #include "Layer.h"
 #include "Tokenizer.h"
-#include "CPUGauge.h"
-#include "BootAnimation.h"
-#include "Barrier.h"
 
 struct copybit_device_t;
 struct overlay_device_t;
@@ -48,16 +48,17 @@ namespace android {
 
 // ---------------------------------------------------------------------------
 
-class BClient;
 class Client;
+class BClient;
 class DisplayHardware;
+class FreezeLock;
 class GPUHardwareInterface;
 class IGPUCallback;
 class Layer;
 class LayerBuffer;
-class RFBServer;
+class LayerOrientationAnim;
+class OrientationAnimation;
 class SurfaceHeapManager;
-class FreezeLock;
 
 typedef int32_t ClientID;
 
@@ -110,6 +111,8 @@ private:
 class GraphicPlane
 {
 public:
+    static status_t orientationToTransfrom(int orientation, int w, int h,
+            Transform* tr);
 
                                 GraphicPlane();
                                 ~GraphicPlane();
@@ -119,6 +122,7 @@ public:
         void                    setDisplayHardware(DisplayHardware *);
         void                    setTransform(const Transform& tr);
         status_t                setOrientation(int orientation);
+        int                     getOrientation() const { return mOrientation; }
 
         const DisplayHardware&  displayHardware() const;
         const Transform&        transform() const;
@@ -130,6 +134,7 @@ private:
         Transform               mTransform;
         Transform               mOrientationTransform;
         Transform               mGlobalTransform;
+        int                     mOrientation;
 };
 
 // ---------------------------------------------------------------------------
@@ -162,7 +167,7 @@ public:
     virtual void                        closeGlobalTransaction();
     virtual status_t                    freezeDisplay(DisplayID dpy, uint32_t flags);
     virtual status_t                    unfreezeDisplay(DisplayID dpy, uint32_t flags);
-    virtual int                         setOrientation(DisplayID dpy, int orientation);
+    virtual int                         setOrientation(DisplayID dpy, int orientation, uint32_t flags);
     virtual void                        signal() const;
     virtual status_t requestGPU(const sp<IGPUCallback>& callback, 
             gpu_info_t* gpu);
@@ -181,7 +186,12 @@ public:
 
             copybit_device_t* getBlitEngine() const;
             overlay_control_device_t* getOverlayEngine() const;
+
             
+    status_t removeLayer(LayerBase* layer);
+    status_t addLayer(LayerBase* layer);
+    status_t invalidateLayerVisibility(LayerBase* layer);
+    
 private:
     friend class BClient;
     friend class LayerBase;
@@ -234,6 +244,7 @@ private:
         }
         LayerVector     layersSortedByZ;
         uint8_t         orientation;
+        uint8_t         orientationType;
         uint8_t         freezeDisplay;
     };
 
@@ -337,7 +348,6 @@ private:
                 sp<GPUHardwareInterface>    mGPU;
                 GLuint                      mWormholeTexName;
                 sp<BootAnimation>           mBootAnimation;
-                sp<RFBServer>               mRFBServer;
                 nsecs_t                     mBootTime;
                 
                 // Can only accessed from the main thread, these members
@@ -352,6 +362,8 @@ private:
                 bool                        mFreezeDisplay;
                 int32_t                     mFreezeCount;
                 nsecs_t                     mFreezeDisplayTime;
+                friend class OrientationAnimation;
+                OrientationAnimation*       mOrientationAnimation;
 
                 // access protected by mDebugLock
     mutable     Mutex                       mDebugLock;

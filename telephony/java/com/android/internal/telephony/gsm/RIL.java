@@ -201,7 +201,7 @@ public final class RIL extends BaseCommands implements CommandsInterface
     private Context mContext;
     WakeLock mWakeLock;
     int mRequestMessagesPending;
-
+    
     // Is this the first radio state change?
     private boolean mInitialRadioStateChange = true;
 
@@ -1980,6 +1980,7 @@ public final class RIL extends BaseCommands implements CommandsInterface
             case RIL_UNSOL_SIM_SMS_STORAGE_FULL: ret =  responseVoid(p); break;
             case RIL_UNSOL_SIM_REFRESH: ret =  responseInts(p); break;
             case RIL_UNSOL_CALL_RING: ret =  responseVoid(p); break;
+            case RIL_UNSOL_RESTRICTED_STATE_CHANGED: ret = responseInts(p); break;
             default: 
                 throw new RuntimeException("Unrecognized unsol response: " + response); 
             //break; (implied)
@@ -2170,6 +2171,13 @@ public final class RIL extends BaseCommands implements CommandsInterface
                     mRingRegistrant.notifyRegistrant();
                 }
                 break;
+                
+            case RIL_UNSOL_RESTRICTED_STATE_CHANGED:
+                if (RILJ_LOGD) unsljLogvRet(response, ret);
+                if (mRestrictedStateRegistrant != null) {
+                    mRestrictedStateRegistrant.notifyRegistrant(
+                                        new AsyncResult (null, ret, null));
+                }
         }
     }
 
@@ -2321,7 +2329,9 @@ public final class RIL extends BaseCommands implements CommandsInterface
             case RIL_SIM_NETWORK_PERSONALIZATION:   
                                     return SimStatus.SIM_NETWORK_PERSONALIZATION;
             default:
-                throw new RuntimeException ("Invalid RIL_REQUEST_GET_SIM_STATUS result: " + status);
+                // Unrecognized SIM status.  Treat it like a missing SIM.
+                Log.e(LOG_TAG, "Unrecognized RIL_REQUEST_GET_SIM_STATUS result: " + status);
+                return SimStatus.SIM_ABSENT;
         }
     }
 
@@ -2347,7 +2357,8 @@ public final class RIL extends BaseCommands implements CommandsInterface
             dc.als = p.readInt();
             dc.isVoice = (0 == p.readInt()) ? false : true;
             dc.number = p.readString();
-
+            dc.numberPresentation = DriverCall.presentationFromCLIP(p.readInt());
+            
             // Make sure there's a leading + on addresses with a TOA
             // of 145
 
@@ -2553,6 +2564,7 @@ public final class RIL extends BaseCommands implements CommandsInterface
             case RIL_UNSOL_SIM_SMS_STORAGE_FULL: return "UNSOL_SIM_SMS_STORAGE_FULL";
             case RIL_UNSOL_SIM_REFRESH: return "UNSOL_SIM_REFRESH";
             case RIL_UNSOL_CALL_RING: return "UNSOL_CALL_RING";
+            case RIL_UNSOL_RESTRICTED_STATE_CHANGED: return "RIL_UNSOL_RESTRICTED_STATE_CHANGED";
             default: return "<unknown reponse>";
         }
     }

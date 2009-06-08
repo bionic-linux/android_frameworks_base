@@ -304,6 +304,9 @@ public class SensorManager extends IRotationWatcher.Stub
 
                 if (mSensorDataFd == null) {
                     Log.e(TAG, "mSensorDataFd == NULL, exiting");
+                    synchronized (sListeners) {
+                        mThread = null;
+                    }
                     return;
                 }
                 // this thread is guaranteed to be unique
@@ -321,17 +324,16 @@ public class SensorManager extends IRotationWatcher.Stub
                     // wait for an event
                     final int sensor = sensors_data_poll(values, status, timestamp);
 
-                    if (sensor == -1) {
-                        // we lost the connection to the event stream. this happens
-                        // when the last listener is removed.
-                        Log.d(TAG, "_sensors_data_poll() failed, we bail out.");
-                        break;
-                    }
-
                     int accuracy = status[0];
                     synchronized (sListeners) {
-                        if (sListeners.isEmpty()) {
-                            // we have no more listeners, terminate the thread
+                        if (sensor == -1 || sListeners.isEmpty()) {
+                            if (sensor == -1) {
+                                // we lost the connection to the event stream. this happens
+                                // when the last listener is removed.
+                                Log.d(TAG, "_sensors_data_poll() failed, we bail out.");
+                            }
+
+                            // we have no more listeners or polling failed, terminate the thread
                             sensors_data_close();
                             mThread = null;
                             break;
@@ -614,12 +616,16 @@ public class SensorManager extends IRotationWatcher.Stub
      * @param sensors a bit masks of the sensors to register to
      * @param rate rate of events. This is only a hint to the system. events
      * may be received faster or slower than the specified rate. Usually events
-     * are received faster.
+     * are received faster. The value must be one of {@link #SENSOR_DELAY_NORMAL},
+     * {@link #SENSOR_DELAY_UI}, {@link #SENSOR_DELAY_GAME}, or {@link #SENSOR_DELAY_FASTEST}.
      *
      * @return true if the sensor is supported and successfully enabled
      */
     @Deprecated
     public boolean registerListener(SensorListener listener, int sensors, int rate) {
+        if (listener == null) {
+            return false;
+        }
         boolean result = false;
         result = registerLegacyListener(SENSOR_ACCELEROMETER, Sensor.TYPE_ACCELEROMETER,
                 listener, sensors, rate) || result;
@@ -638,6 +644,9 @@ public class SensorManager extends IRotationWatcher.Stub
     private boolean registerLegacyListener(int legacyType, int type,
             SensorListener listener, int sensors, int rate)
     {
+        if (listener == null) {
+            return false;
+        }
         boolean result = false;
         // Are we activating this legacy sensor?
         if ((sensors & legacyType) != 0) {
@@ -693,6 +702,9 @@ public class SensorManager extends IRotationWatcher.Stub
     private void unregisterLegacyListener(int legacyType, int type,
             SensorListener listener, int sensors)
     {
+        if (listener == null) {
+            return;
+        }
         // do we know about this listener?
         LegacyListener legacyListener = null;
         synchronized (mLegacyListenersMap) {
@@ -741,7 +753,7 @@ public class SensorManager extends IRotationWatcher.Stub
      */
     @Deprecated
     public void unregisterListener(SensorListener listener) {
-        unregisterListener(listener, SENSOR_ALL);
+        unregisterListener(listener, SENSOR_ALL | SENSOR_ORIENTATION_RAW);
     }
 
     /**
@@ -774,7 +786,9 @@ public class SensorManager extends IRotationWatcher.Stub
      * @param sensor The {@link android.hardware.Sensor Sensor} to register to.
      * @param rate The rate {@link android.hardware.SensorEvent sensor events} are delivered at.
      * This is only a hint to the system. Events may be received faster or
-     * slower than the specified rate. Usually events are received faster.
+     * slower than the specified rate. Usually events are received faster. The value must be
+     * one of {@link #SENSOR_DELAY_NORMAL}, {@link #SENSOR_DELAY_UI}, {@link #SENSOR_DELAY_GAME},
+     * or {@link #SENSOR_DELAY_FASTEST}.
      *
      * @return true if the sensor is supported and successfully enabled.
      *
@@ -791,7 +805,9 @@ public class SensorManager extends IRotationWatcher.Stub
      * @param sensor The {@link android.hardware.Sensor Sensor} to register to.
      * @param rate The rate {@link android.hardware.SensorEvent sensor events} are delivered at.
      * This is only a hint to the system. Events may be received faster or
-     * slower than the specified rate. Usually events are received faster.
+     * slower than the specified rate. Usually events are received faster. The value must be one
+     * of {@link #SENSOR_DELAY_NORMAL}, {@link #SENSOR_DELAY_UI}, {@link #SENSOR_DELAY_GAME}, or
+     * {@link #SENSOR_DELAY_FASTEST}.
      * @param handler The {@link android.os.Handler Handler} the
      * {@link android.hardware.SensorEvent sensor events} will be delivered to.
      *
@@ -800,6 +816,9 @@ public class SensorManager extends IRotationWatcher.Stub
      */
     public boolean registerListener(SensorEventListener listener, Sensor sensor, int rate,
             Handler handler) {
+        if (listener == null || sensor == null) {
+            return false;
+        }
         boolean result;
         int delay = -1;
         switch (rate) {
@@ -829,9 +848,11 @@ public class SensorManager extends IRotationWatcher.Stub
                     }
                 }
 
+                String name = sensor.getName();
+                int handle = sensor.getHandle();
                 if (l == null) {
                     l = new ListenerDelegate(listener, sensor, handler);
-                    result = mSensorService.enableSensor(l, sensor.getHandle(), delay);
+                    result = mSensorService.enableSensor(l, name, handle, delay);
                     if (result) {
                         sListeners.add(l);
                         sListeners.notify();
@@ -840,7 +861,7 @@ public class SensorManager extends IRotationWatcher.Stub
                         sSensorThread.startLocked(mSensorService);
                     }
                 } else {
-                    result = mSensorService.enableSensor(l, sensor.getHandle(), delay);
+                    result = mSensorService.enableSensor(l, name, handle, delay);
                     if (result) {
                         l.addSensor(sensor);
                     }
@@ -854,6 +875,9 @@ public class SensorManager extends IRotationWatcher.Stub
     }
 
     private void unregisterListener(Object listener, Sensor sensor) {
+        if (listener == null || sensor == null) {
+            return;
+        }
         try {
             synchronized (sListeners) {
                 final int size = sListeners.size();
@@ -861,8 +885,9 @@ public class SensorManager extends IRotationWatcher.Stub
                     ListenerDelegate l = sListeners.get(i);
                     if (l.getListener() == listener) {
                         // disable these sensors
+                        String name = sensor.getName();
                         int handle = sensor.getHandle();
-                        mSensorService.enableSensor(l, handle, SENSOR_DISABLE);
+                        mSensorService.enableSensor(l, name, handle, SENSOR_DISABLE);
                         // if we have no more sensors enabled on this listener,
                         // take it off the list.
                         if (l.removeSensor(sensor) == 0) {
@@ -878,6 +903,9 @@ public class SensorManager extends IRotationWatcher.Stub
     }
 
     private void unregisterListener(Object listener) {
+        if (listener == null) {
+            return;
+        }
         try {
             synchronized (sListeners) {
                 final int size = sListeners.size();
@@ -886,7 +914,9 @@ public class SensorManager extends IRotationWatcher.Stub
                     if (l.getListener() == listener) {
                         // disable all sensors for this listener
                         for (Sensor sensor : l.getSensors()) {
-                            mSensorService.enableSensor(l, sensor.getHandle(), SENSOR_DISABLE);
+                            String name = sensor.getName();
+                            int handle = sensor.getHandle();
+                            mSensorService.enableSensor(l, name, handle, SENSOR_DISABLE);
                         }
                         sListeners.remove(i);
                         break;

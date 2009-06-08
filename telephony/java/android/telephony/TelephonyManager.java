@@ -98,8 +98,6 @@ public class TelephonyManager {
      * @see #EXTRA_STATE
      * @see #EXTRA_INCOMING_NUMBER
      * @see #getCallState
-     * 
-     * @hide pending API Council approval
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_PHONE_STATE_CHANGED =
@@ -116,32 +114,24 @@ public class TelephonyManager {
      * <p class="note">
      * Retrieve with
      * {@link android.content.Intent#getStringExtra(String)}.
-     * 
-     * @hide pending API Council approval
      */
     public static final String EXTRA_STATE = Phone.STATE_KEY;
 
     /**
      * Value used with {@link #EXTRA_STATE} corresponding to
      * {@link #CALL_STATE_IDLE}.
-     * 
-     * @hide pending API Council approval
      */
     public static final String EXTRA_STATE_IDLE = Phone.State.IDLE.toString();
 
     /**
      * Value used with {@link #EXTRA_STATE} corresponding to
      * {@link #CALL_STATE_RINGING}.
-     * 
-     * @hide pending API Council approval
      */
     public static final String EXTRA_STATE_RINGING = Phone.State.RINGING.toString();
 
     /**
      * Value used with {@link #EXTRA_STATE} corresponding to
      * {@link #CALL_STATE_OFFHOOK}.
-     * 
-     * @hide pending API Council approval
      */
     public static final String EXTRA_STATE_OFFHOOK = Phone.State.OFFHOOK.toString();
 
@@ -153,8 +143,6 @@ public class TelephonyManager {
      * <p class="note">
      * Retrieve with
      * {@link android.content.Intent#getStringExtra(String)}.
-     * 
-     * @hide pending API Council approval
      */
     public static final String EXTRA_INCOMING_NUMBER = "incoming_number";
 
@@ -252,10 +240,7 @@ public class TelephonyManager {
      */
     public List<NeighboringCellInfo> getNeighboringCellInfo() {
        try {
-           ITelephony tel = getITelephony(); 
-           if (tel != null) {
-               return tel.getNeighboringCellInfo();
-           }
+           return getITelephony().getNeighboringCellInfo();
        } catch (RemoteException ex) {
        }
        return null;
@@ -683,7 +668,8 @@ public class TelephonyManager {
     public void listen(PhoneStateListener listener, int events) {
         String pkgForDebug = mContext != null ? mContext.getPackageName() : "<unknown>";
         try {
-            mRegistry.listen(pkgForDebug, listener.callback, events, true);
+            Boolean notifyNow = (getITelephony() != null);
+            mRegistry.listen(pkgForDebug, listener.callback, events, notifyNow);
         } catch (RemoteException ex) {
             // system process dead
         }

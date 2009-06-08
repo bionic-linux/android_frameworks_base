@@ -82,7 +82,7 @@ MediaPlayer::MediaPlayer()
     mListener = NULL;
     mCookie = NULL;
     mDuration = -1;
-    mStreamType = AudioTrack::MUSIC;
+    mStreamType = AudioSystem::MUSIC;
     mCurrentPosition = -1;
     mSeekPosition = -1;
     mCurrentState = MEDIA_PLAYER_IDLE;
@@ -91,6 +91,7 @@ MediaPlayer::MediaPlayer()
     mLoop = false;
     mLeftVolume = mRightVolume = 1.0;
     mVideoWidth = mVideoHeight = 0;
+    mLockThreadId = 0;
 }
 
 void MediaPlayer::onFirstRef()
@@ -172,7 +173,7 @@ status_t MediaPlayer::setDataSource(const sp<IMediaPlayer>& player)
 status_t MediaPlayer::setDataSource(const char *url)
 {
     LOGV("setDataSource(%s)", url);
-    status_t err = UNKNOWN_ERROR;
+    status_t err = BAD_VALUE;
     if (url != NULL) {
         const sp<IMediaPlayerService>& service(getMediaPlayerService());
         if (service != 0) {
@@ -199,7 +200,7 @@ status_t MediaPlayer::setVideoSurface(const sp<Surface>& surface)
 {
     LOGV("setVideoSurface");
     Mutex::Autolock _l(mLock);
-    if (mPlayer == 0) return UNKNOWN_ERROR;
+    if (mPlayer == 0) return NO_INIT;
     return  mPlayer->setVideoSurface(surface->getISurface());
 }
 
@@ -215,20 +216,32 @@ status_t MediaPlayer::prepareAsync_l()
     return INVALID_OPERATION;
 }
 
+// TODO: In case of error, prepareAsync provides the caller with 2 error codes,
+// one defined in the Android framework and one provided by the implementation
+// that generated the error. The sync version of prepare returns only 1 error
+// code.
 status_t MediaPlayer::prepare()
 {
     LOGV("prepare");
     Mutex::Autolock _l(mLock);
-    if (mPrepareSync) return UNKNOWN_ERROR;
+    mLockThreadId = getThreadId();
+    if (mPrepareSync) {
+        mLockThreadId = 0;
+        return -EALREADY;
+    }
     mPrepareSync = true;
     status_t ret = prepareAsync_l();
-    if (ret != NO_ERROR) return ret;
+    if (ret != NO_ERROR) {
+        mLockThreadId = 0;
+        return ret;
+    }
 
     if (mPrepareSync) {
         mSignal.wait(mLock);  // wait for prepare done
         mPrepareSync = false;
     }
     LOGV("prepare complete - status=%d", mPrepareStatus);
+    mLockThreadId = 0;
     return mPrepareStatus;
 }
 
@@ -253,7 +266,6 @@ status_t MediaPlayer::start()
         status_t ret = mPlayer->start();
         if (ret != NO_ERROR) {
             mCurrentState = MEDIA_PLAYER_STATE_ERROR;
-            ret = UNKNOWN_ERROR;
         } else {
             if (mCurrentState == MEDIA_PLAYER_PLAYBACK_COMPLETE) {
                 LOGV("playback completed immediately following start()");
@@ -275,7 +287,6 @@ status_t MediaPlayer::stop()
         status_t ret = mPlayer->stop();
         if (ret != NO_ERROR) {
             mCurrentState = MEDIA_PLAYER_STATE_ERROR;
-            ret = UNKNOWN_ERROR;
         } else {
             mCurrentState = MEDIA_PLAYER_STOPPED;
         }
@@ -295,7 +306,6 @@ status_t MediaPlayer::pause()
         status_t ret = mPlayer->pause();
         if (ret != NO_ERROR) {
             mCurrentState = MEDIA_PLAYER_STATE_ERROR;
-            ret = UNKNOWN_ERROR;
         } else {
             mCurrentState = MEDIA_PLAYER_PAUSED;
         }
@@ -406,8 +416,12 @@ status_t MediaPlayer::seekTo_l(int msec)
 
 status_t MediaPlayer::seekTo(int msec)
 {
+    mLockThreadId = getThreadId();
     Mutex::Autolock _l(mLock);
-    return seekTo_l(msec);
+    status_t result = seekTo_l(msec);
+    mLockThreadId = 0;
+
+    return result;
 }
 
 status_t MediaPlayer::reset()
@@ -422,7 +436,6 @@ status_t MediaPlayer::reset()
         if (ret != NO_ERROR) {
             LOGE("reset() failed with return code (%d)", ret);
             mCurrentState = MEDIA_PLAYER_STATE_ERROR;
-            ret = UNKNOWN_ERROR;
         } else {
             mCurrentState = MEDIA_PLAYER_IDLE;
         }
@@ -485,14 +498,24 @@ void MediaPlayer::notify(int msg, int ext1, int ext2)
 {
     LOGV("message received msg=%d, ext1=%d, ext2=%d", msg, ext1, ext2);
     bool send = true;
+    bool locked = false;
 
     // TODO: In the future, we might be on the same thread if the app is
     // running in the same process as the media server. In that case,
     // this will deadlock.
-    mLock.lock();
+    // 
+    // The threadId hack below works around this for the care of prepare
+    // and seekTo within the same process.
+    // FIXME: Remember, this is a hack, it's not even a hack that is applied
+    // consistently for all use-cases, this needs to be revisited.
+     if (mLockThreadId != getThreadId()) {
+        mLock.lock();
+        locked = true;
+    } 
+
     if (mPlayer == 0) {
         LOGV("notify(%d, %d, %d) callback on disconnected mediaplayer", msg, ext1, ext2);
-        mLock.unlock();   // release the lock when done.
+        if (locked) mLock.unlock();   // release the lock when done.
         return;
     }
 
@@ -516,7 +539,9 @@ void MediaPlayer::notify(int msg, int ext1, int ext2)
         }
         break;
     case MEDIA_ERROR:
-        // Always log errors
+        // Always log errors.
+        // ext1: Media framework error code.
+        // ext2: Implementation dependant error code.
         LOGE("error (%d, %d)", ext1, ext2);
         mCurrentState = MEDIA_PLAYER_STATE_ERROR;
         if (mPrepareSync)
@@ -527,6 +552,11 @@ void MediaPlayer::notify(int msg, int ext1, int ext2)
             mSignal.signal();
             send = false;
         }
+        break;
+    case MEDIA_INFO:
+        // ext1: Media framework error code.
+        // ext2: Implementation dependant error code.
+        LOGW("info/warning (%d, %d)", ext1, ext2);
         break;
     case MEDIA_SEEK_COMPLETE:
         LOGV("Received seek complete");
@@ -554,7 +584,7 @@ void MediaPlayer::notify(int msg, int ext1, int ext2)
     }
 
     sp<MediaPlayerListener> listener = mListener;
-    mLock.unlock();
+    if (locked) mLock.unlock();
 
     // this prevents re-entrant calls into client code
     if ((listener != 0) && send) {

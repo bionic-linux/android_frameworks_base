@@ -16,18 +16,12 @@
 
 package android.text.method;
 
-import android.os.Message;
-import android.os.Handler;
 import android.text.*;
 import android.text.method.TextKeyListener.Capitalize;
 import android.util.SparseArray;
-import android.util.SparseIntArray;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.TextView;
-
-import java.util.HashMap;
 
 /**
  * This is the standard key listener for alphabetic input on qwerty
@@ -302,20 +296,29 @@ public class QwertyKeyListener extends BaseKeyListener {
                 String old = new String(repl[0].mText);
 
                 content.removeSpan(repl[0]);
-                content.setSpan(TextKeyListener.INHIBIT_REPLACEMENT,
-                                en, en, Spannable.SPAN_POINT_POINT);
-                content.replace(st, en, old);
 
-                en = content.getSpanStart(TextKeyListener.INHIBIT_REPLACEMENT);
-                if (en - 1 >= 0) {
+                // only cancel the autocomplete if the cursor is at the end of
+                // the replaced span (or after it, because the user is
+                // backspacing over the space after the word, not the word
+                // itself).
+                if (selStart >= en) {
                     content.setSpan(TextKeyListener.INHIBIT_REPLACEMENT,
-                                    en - 1, en,
-                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                } else {
-                    content.removeSpan(TextKeyListener.INHIBIT_REPLACEMENT);
-                }
+                                    en, en, Spannable.SPAN_POINT_POINT);
+                    content.replace(st, en, old);
 
-                adjustMetaAfterKeypress(content);
+                    en = content.getSpanStart(TextKeyListener.INHIBIT_REPLACEMENT);
+                    if (en - 1 >= 0) {
+                        content.setSpan(TextKeyListener.INHIBIT_REPLACEMENT,
+                                        en - 1, en,
+                                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    } else {
+                        content.removeSpan(TextKeyListener.INHIBIT_REPLACEMENT);
+                    }
+                    adjustMetaAfterKeypress(content);
+                } else {
+                    adjustMetaAfterKeypress(content);
+                    return super.onKeyDown(view, content, keyCode, event);
+                }
 
                 return true;
             }
@@ -402,23 +405,34 @@ public class QwertyKeyListener extends BaseKeyListener {
         PICKER_SETS.put('<', "\u00AB");
         PICKER_SETS.put('>', "\u00BB");
         PICKER_SETS.put('?', "\u00BF");
-        PICKER_SETS.put('A', "\u00C0\u00C1\u00C2\u00C4\u00C6\u00C3\u00C5");
-        PICKER_SETS.put('C', "\u00C7");
-        PICKER_SETS.put('E', "\u00C8\u00C9\u00CA\u00CB");
-        PICKER_SETS.put('I', "\u00CC\u00CD\u00CE\u00CF");
-        PICKER_SETS.put('N', "\u00D1");
-        PICKER_SETS.put('O', "\u00D8\u0152\u00D5\u00D2\u00D3\u00D4\u00D6");
-        PICKER_SETS.put('U', "\u00D9\u00DA\u00DB\u00DC");
+        PICKER_SETS.put('A', "\u00C0\u00C1\u00C2\u00C4\u00C6\u00C3\u00C5\u0104\u0100");
+        PICKER_SETS.put('C', "\u00C7\u0106\u010C");
+        PICKER_SETS.put('D', "\u010E");
+        PICKER_SETS.put('E', "\u00C8\u00C9\u00CA\u00CB\u0118\u011A\u0112");
+        PICKER_SETS.put('L', "\u0141");
+        PICKER_SETS.put('I', "\u00CC\u00CD\u00CE\u00CF\u012A");
+        PICKER_SETS.put('N', "\u00D1\u0143\u0147");
+        PICKER_SETS.put('O', "\u00D8\u0152\u00D5\u00D2\u00D3\u00D4\u00D6\u014C");
+        PICKER_SETS.put('R', "\u0158");
+        PICKER_SETS.put('S', "\u015A\u0160");
+        PICKER_SETS.put('T', "\u0164");
+        PICKER_SETS.put('U', "\u00D9\u00DA\u00DB\u00DC\u016E\u016A");
         PICKER_SETS.put('Y', "\u00DD\u0178");
-        PICKER_SETS.put('a', "\u00E0\u00E1\u00E2\u00E4\u00E6\u00E3\u00E5");
-        PICKER_SETS.put('c', "\u00E7");
-        PICKER_SETS.put('e', "\u00E8\u00E9\u00EA\u00EB");
-        PICKER_SETS.put('i', "\u00EC\u00ED\u00EE\u00EF");
-        PICKER_SETS.put('n', "\u00F1");
-        PICKER_SETS.put('o', "\u00F8\u0153\u00F5\u00F2\u00F3\u00F4\u00F6");
-        PICKER_SETS.put('s', "\u00A7\u00DF");
-        PICKER_SETS.put('u', "\u00F9\u00FA\u00FB\u00FC");
+        PICKER_SETS.put('Z', "\u0179\u017B\u017D");
+        PICKER_SETS.put('a', "\u00E0\u00E1\u00E2\u00E4\u00E6\u00E3\u00E5\u0105\u0101");
+        PICKER_SETS.put('c', "\u00E7\u0107\u010D");
+        PICKER_SETS.put('d', "\u010F");
+        PICKER_SETS.put('e', "\u00E8\u00E9\u00EA\u00EB\u0119\u011B\u0113");
+        PICKER_SETS.put('i', "\u00EC\u00ED\u00EE\u00EF\u012B");
+        PICKER_SETS.put('l', "\u0142");
+        PICKER_SETS.put('n', "\u00F1\u0144\u0148");
+        PICKER_SETS.put('o', "\u00F8\u0153\u00F5\u00F2\u00F3\u00F4\u00F6\u014D");
+        PICKER_SETS.put('r', "\u0159");
+        PICKER_SETS.put('s', "\u00A7\u00DF\u015B\u0161");
+        PICKER_SETS.put('t', "\u0165");
+        PICKER_SETS.put('u', "\u00F9\u00FA\u00FB\u00FC\u016F\u016B");
         PICKER_SETS.put('y', "\u00FD\u00FF");
+        PICKER_SETS.put('z', "\u017A\u017C\u017E");
         PICKER_SETS.put(KeyCharacterMap.PICKER_DIALOG_INPUT,
                              "\u2026\u00A5\u2022\u00AE\u00A9\u00B1");
     };
@@ -442,7 +456,7 @@ public class QwertyKeyListener extends BaseKeyListener {
         return Character.toUpperCase(src.charAt(0)) + src.substring(1);
     }
 
-    /* package */ static class Replaced
+    /* package */ static class Replaced implements NoCopySpan
     {
         public Replaced(char[] text) {
             mText = text;

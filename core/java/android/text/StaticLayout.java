@@ -16,6 +16,7 @@
 
 package android.text;
 
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import com.android.internal.util.ArrayUtils;
 import android.util.Log;
@@ -421,11 +422,16 @@ extends Layout
 
                 // dump(chdirs, n, "final");
 
-                // extra: enforce that all tabs go the primary direction
+                // extra: enforce that all tabs and surrogate characters go the
+                // primary direction
+                // TODO: actually do directions right for surrogates
 
                 for (int j = 0; j < n; j++) {
-                    if (chs[j] == '\t')
+                    char c = chs[j];
+
+                    if (c == '\t' || (c >= 0xD800 && c <= 0xDFFF)) {
                         chdirs[j] = SOR;
+                    }
                 }
 
                 // extra: enforce that object replacements go to the
@@ -548,16 +554,41 @@ extends Layout
                     char c = chs[j - start];
                     float before = w;
 
-                    switch (c) {
-                    case '\n':
-                        break;
-
-                    case '\t':
+                    if (c == '\n') {
+                        ;
+                    } else if (c == '\t') {
                         w = Layout.nextTab(sub, start, end, w, null);
                         tab = true;
-                        break;
+                    } else if (c >= 0xD800 && c <= 0xDFFF && j + 1 < next) {
+                        int emoji = Character.codePointAt(chs, j - start);
 
-                    default:
+                        if (emoji >= MIN_EMOJI && emoji <= MAX_EMOJI) {
+                            Bitmap bm = EMOJI_FACTORY.
+                                getBitmapFromAndroidPua(emoji);
+
+                            if (bm != null) {
+                                Paint whichPaint;
+
+                                if (spanned == null) {
+                                    whichPaint = paint;
+                                } else {
+                                    whichPaint = mWorkPaint;
+                                }
+
+                                float wid = (float) bm.getWidth() *
+                                            -whichPaint.ascent() /
+                                            bm.getHeight();
+
+                                w += wid;
+                                tab = true;
+                                j++;
+                            } else {
+                                w += widths[j - start + (end - start)];
+                            }
+                        } else {
+                            w += widths[j - start + (end - start)];
+                        }
+                    } else {
                         w += widths[j - start + (end - start)];
                     }
 
@@ -576,7 +607,30 @@ extends Layout
                         if (fmbottom > fitbottom)
                             fitbottom = fmbottom;
 
-                        if (c == ' ' || c == '\t') {
+                        /*
+                         * From the Unicode Line Breaking Algorithm:
+                         * (at least approximately)
+                         *  
+                         * .,:; are class IS: breakpoints
+                         *      except when adjacent to digits
+                         * /    is class SY: a breakpoint
+                         *      except when followed by a digit.
+                         * -    is class HY: a breakpoint
+                         *      except when followed by a digit.
+                         *
+                         * Ideographs are class ID: breakpoints when adjacent,
+                         * except for NS (non-starters), which can be broken
+                         * after but not before.
+                         */
+
+                        if (c == ' ' || c == '\t' ||
+                            ((c == '.'  || c == ',' || c == ':' || c == ';') &&
+                             (j - 1 < here || !Character.isDigit(chs[j - 1 - start])) &&
+                             (j + 1 >= next || !Character.isDigit(chs[j + 1 - start]))) ||
+                            ((c == '/' || c == '-') &&
+                             (j + 1 >= next || !Character.isDigit(chs[j + 1 - start]))) ||
+                            (c >= FIRST_CJK && isIdeographic(c, true) &&
+                             j + 1 < next && isIdeographic(chs[j + 1 - start], false))) {
                             okwidth = w;
                             ok = j + 1;
 
@@ -592,6 +646,11 @@ extends Layout
                     } else if (breakOnlyAtSpaces) {
                         if (ok != here) {
                             // Log.e("text", "output ok " + here + " to " +ok);
+
+                            while (ok < next && chs[ok - start] == ' ') {
+                                ok++;
+                            }
+
                             v = out(source,
                                     here, ok,
                                     okascent, okdescent, oktop, okbottom,
@@ -623,6 +682,11 @@ extends Layout
                     } else {
                         if (ok != here) {
                             // Log.e("text", "output ok " + here + " to " +ok);
+
+                            while (ok < next && chs[ok - start] == ' ') {
+                                ok++;
+                            }
+
                             v = out(source,
                                     here, ok,
                                     okascent, okdescent, oktop, okbottom,
@@ -737,6 +801,98 @@ extends Layout
                     widths, bufstart, 0,
                     where, ellipsizedWidth, 0, paint);
         }
+    }
+
+    private static final char FIRST_CJK = '\u2E80';
+    /**
+     * Returns true if the specified character is one of those specified
+     * as being Ideographic (class ID) by the Unicode Line Breaking Algorithm
+     * (http://www.unicode.org/unicode/reports/tr14/), and is therefore OK
+     * to break between a pair of.
+     *
+     * @param includeNonStarters also return true for category NS
+     *                           (non-starters), which can be broken
+     *                           after but not before.
+     */
+    private static final boolean isIdeographic(char c, boolean includeNonStarters) {
+        if (c >= '\u2E80' && c <= '\u2FFF') {
+            return true; // CJK, KANGXI RADICALS, DESCRIPTION SYMBOLS
+        }
+        if (c == '\u3000') {
+            return true; // IDEOGRAPHIC SPACE
+        }
+        if (c >= '\u3040' && c <= '\u309F') {
+            if (!includeNonStarters) {
+                switch (c) {
+                case '\u3041': //  # HIRAGANA LETTER SMALL A
+                case '\u3043': //  # HIRAGANA LETTER SMALL I
+                case '\u3045': //  # HIRAGANA LETTER SMALL U
+                case '\u3047': //  # HIRAGANA LETTER SMALL E
+                case '\u3049': //  # HIRAGANA LETTER SMALL O
+                case '\u3063': //  # HIRAGANA LETTER SMALL TU
+                case '\u3083': //  # HIRAGANA LETTER SMALL YA
+                case '\u3085': //  # HIRAGANA LETTER SMALL YU
+                case '\u3087': //  # HIRAGANA LETTER SMALL YO
+                case '\u308E': //  # HIRAGANA LETTER SMALL WA
+                case '\u3095': //  # HIRAGANA LETTER SMALL KA
+                case '\u3096': //  # HIRAGANA LETTER SMALL KE
+                case '\u309B': //  # KATAKANA-HIRAGANA VOICED SOUND MARK
+                case '\u309C': //  # KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+                case '\u309D': //  # HIRAGANA ITERATION MARK
+                case '\u309E': //  # HIRAGANA VOICED ITERATION MARK
+                    return false;
+                }
+            }
+            return true; // Hiragana (except small characters)
+        }
+        if (c >= '\u30A0' && c <= '\u30FF') {
+            if (!includeNonStarters) {
+                switch (c) {
+                case '\u30A0': //  # KATAKANA-HIRAGANA DOUBLE HYPHEN
+                case '\u30A1': //  # KATAKANA LETTER SMALL A
+                case '\u30A3': //  # KATAKANA LETTER SMALL I
+                case '\u30A5': //  # KATAKANA LETTER SMALL U
+                case '\u30A7': //  # KATAKANA LETTER SMALL E
+                case '\u30A9': //  # KATAKANA LETTER SMALL O
+                case '\u30C3': //  # KATAKANA LETTER SMALL TU
+                case '\u30E3': //  # KATAKANA LETTER SMALL YA
+                case '\u30E5': //  # KATAKANA LETTER SMALL YU
+                case '\u30E7': //  # KATAKANA LETTER SMALL YO
+                case '\u30EE': //  # KATAKANA LETTER SMALL WA
+                case '\u30F5': //  # KATAKANA LETTER SMALL KA
+                case '\u30F6': //  # KATAKANA LETTER SMALL KE
+                case '\u30FB': //  # KATAKANA MIDDLE DOT
+                case '\u30FC': //  # KATAKANA-HIRAGANA PROLONGED SOUND MARK
+                case '\u30FD': //  # KATAKANA ITERATION MARK
+                case '\u30FE': //  # KATAKANA VOICED ITERATION MARK
+                    return false;
+                }
+            }
+            return true; // Katakana (except small characters)
+        }
+        if (c >= '\u3400' && c <= '\u4DB5') {
+            return true; // CJK UNIFIED IDEOGRAPHS EXTENSION A
+        }
+        if (c >= '\u4E00' && c <= '\u9FBB') {
+            return true; // CJK UNIFIED IDEOGRAPHS
+        }
+        if (c >= '\uF900' && c <= '\uFAD9') {
+            return true; // CJK COMPATIBILITY IDEOGRAPHS
+        }
+        if (c >= '\uA000' && c <= '\uA48F') {
+            return true; // YI SYLLABLES
+        }
+        if (c >= '\uA490' && c <= '\uA4CF') {
+            return true; // YI RADICALS
+        }
+        if (c >= '\uFE62' && c <= '\uFE66') {
+            return true; // SMALL PLUS SIGN to SMALL EQUALS SIGN
+        }
+        if (c >= '\uFF10' && c <= '\uFF19') {
+            return true; // WIDE DIGITS
+        }
+
+        return false;
     }
 
 /*

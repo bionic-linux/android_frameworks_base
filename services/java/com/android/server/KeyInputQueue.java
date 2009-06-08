@@ -165,6 +165,7 @@ public abstract class KeyInputQueue {
     public static native int getScancodeState(int deviceId, int sw);
     public static native int getKeycodeState(int sw);
     public static native int getKeycodeState(int deviceId, int sw);
+    public static native boolean hasKeys(int[] keycodes, boolean[] keyExists);
     
     public static KeyEvent newKeyEvent(InputDevice device, long downTime,
             long eventTime, boolean down, int keycode, int repeatCount,
@@ -175,7 +176,7 @@ public abstract class KeyInputQueue {
                 keycode, repeatCount,
                 device != null ? device.mMetaKeysState : 0,
                 device != null ? device.id : -1, scancode,
-                flags);
+                flags | KeyEvent.FLAG_FROM_SYSTEM);
     }
     
     Thread mThread = new Thread("InputDeviceReader") {

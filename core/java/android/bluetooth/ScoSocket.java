@@ -16,16 +16,11 @@
 
 package android.bluetooth;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
-
-import java.io.IOException;
-import java.lang.Thread;
-
 
 /**
  * The Android Bluetooth API is not finalized, and *will* change. Use at your
@@ -56,7 +51,7 @@ public class ScoSocket {
     private int mConnectedCode;
     private int mClosedCode;
 
-    private WakeLock mWakeLock;  // held while STATE_CONNECTING or STATE_CONNECTED
+    private WakeLock mWakeLock;  // held while in STATE_CONNECTING
 
     static {
         classInitNative();
@@ -81,7 +76,7 @@ public class ScoSocket {
         try {
             if (VDBG) log(this + " SCO OBJECT DTOR");
             destroyNative();
-            releaseWakeLock();
+            releaseWakeLockNow();
         } finally {
             super.finalize();
         }
@@ -103,7 +98,7 @@ public class ScoSocket {
             return true;
         } else {
             mState = STATE_CLOSED;
-            releaseWakeLock();
+            releaseWakeLockNow();
             return false;
         }
     }
@@ -130,6 +125,7 @@ public class ScoSocket {
 
     public synchronized void close() {
         if (DBG) log(this + " SCO OBJECT close() mState = " + mState);
+        acquireWakeLock();
         mState = STATE_CLOSED;
         closeNative();
         releaseWakeLock();
@@ -152,19 +148,16 @@ public class ScoSocket {
             mState = STATE_CLOSED;
         }
         mHandler.obtainMessage(mConnectedCode, mState, -1, this).sendToTarget();
-        if (result < 0) {
-            releaseWakeLock();
-        }
+        releaseWakeLockNow();
     }
 
     private synchronized void onAccepted(int result) {
         if (VDBG) log("onAccepted() " + this);
         if (mState != STATE_ACCEPT) {
-            if (DBG) log("Strange state" + this);
+            if (DBG) log("Strange state " + this);
             return;
         }
         if (result >= 0) {
-            acquireWakeLock();
             mState = STATE_CONNECTED;
         } else {
             mState = STATE_CLOSED;
@@ -184,13 +177,25 @@ public class ScoSocket {
     private void acquireWakeLock() {
         if (!mWakeLock.isHeld()) {
             mWakeLock.acquire();
-            if (VDBG) log("mWakeLock.acquire()" + this);
+            if (VDBG) log("mWakeLock.acquire() " + this);
         }
     }
 
     private void releaseWakeLock() {
         if (mWakeLock.isHeld()) {
-            if (VDBG) log("mWakeLock.release()" + this);
+            // Keep apps processor awake for a further 2 seconds.
+            // This is a hack to resolve issue http://b/1616263 - in which
+            // we are left in a 80 mA power state when remotely terminating a
+            // call while connected to BT headset "HTC BH S100 " with A2DP and
+            // HFP profiles.
+            if (VDBG) log("mWakeLock.release() in 2 sec" + this);
+            mWakeLock.acquire(2000);
+        }
+    }
+
+    private void releaseWakeLockNow() {
+        if (mWakeLock.isHeld()) {
+            if (VDBG) log("mWakeLock.release() now" + this);
             mWakeLock.release();
         }
     }

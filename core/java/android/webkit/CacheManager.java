@@ -52,6 +52,7 @@ public final class CacheManager {
 
     private static final String NO_STORE = "no-store";
     private static final String NO_CACHE = "no-cache";
+    private static final String PRIVATE  = "private";
     private static final String MAX_AGE = "max-age";
 
     private static long CACHE_THRESHOLD = 6 * 1024 * 1024;
@@ -281,9 +282,7 @@ public final class CacheManager {
         CacheResult result = mDataBase.getCache(url);
         if (result != null) {
             if (result.contentLength == 0) {
-                if (result.httpStatusCode != 301
-                        && result.httpStatusCode != 302
-                        && result.httpStatusCode != 307) {
+                if (!checkCacheRedirect(result.httpStatusCode)) {
                     // this should not happen. If it does, remove it.
                     mDataBase.removeCache(url);
                     return null;
@@ -349,6 +348,17 @@ public final class CacheManager {
             return null;
         }
 
+        // according to the rfc 2616, the 303 response MUST NOT be cached.
+        if (statusCode == 303) {
+            return null;
+        }
+
+        // like the other browsers, do not cache redirects containing a cookie
+        // header.
+        if (checkCacheRedirect(statusCode) && !headers.getSetCookie().isEmpty()) {
+            return null;
+        }
+
         CacheResult ret = parseHeaders(statusCode, headers, mimeType);
         if (ret != null) {
             setupFiles(url, ret);
@@ -394,9 +404,7 @@ public final class CacheManager {
         }
 
         cacheRet.contentLength = cacheRet.outFile.length();
-        if (cacheRet.httpStatusCode == 301
-                || cacheRet.httpStatusCode == 302
-                || cacheRet.httpStatusCode == 307) {
+        if (checkCacheRedirect(cacheRet.httpStatusCode)) {
             // location is in database, no need to keep the file
             cacheRet.contentLength = 0;
             cacheRet.localPath = new String();
@@ -467,6 +475,15 @@ public final class CacheManager {
             for (int i = 0; i < size; i++) {
                 new File(mBaseDir, pathList.get(i)).delete();
             }
+        }
+    }
+
+    private static boolean checkCacheRedirect(int statusCode) {
+        if (statusCode == 301 || statusCode == 302 || statusCode == 307) {
+            // as 303 can't be cached, we do not return true
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -612,7 +629,7 @@ public final class CacheManager {
                 // must be re-validated on every load. It does not mean that
                 // the content can not be cached. set to expire 0 means it
                 // can only be used in CACHE_MODE_CACHE_ONLY case
-                if (NO_CACHE.equals(controls[i])) {
+                if (NO_CACHE.equals(controls[i]) || PRIVATE.equals(controls[i])) {
                     ret.expires = 0;
                 } else if (controls[i].startsWith(MAX_AGE)) {
                     int separator = controls[i].indexOf('=');

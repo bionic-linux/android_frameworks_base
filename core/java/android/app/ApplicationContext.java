@@ -103,6 +103,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Map.Entry;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -1487,7 +1490,7 @@ class ApplicationContext extends Context {
     static final class ApplicationPackageManager extends PackageManager {
         @Override
         public PackageInfo getPackageInfo(String packageName, int flags)
-            throws NameNotFoundException {
+                throws NameNotFoundException {
             try {
                 PackageInfo pi = mPM.getPackageInfo(packageName, flags);
                 if (pi != null) {
@@ -1500,6 +1503,43 @@ class ApplicationContext extends Context {
             throw new NameNotFoundException(packageName);
         }
 
+        public Intent getLaunchIntentForPackage(String packageName)
+                throws NameNotFoundException {
+            // First see if the package has an INFO activity; the existence of
+            // such an activity is implied to be the desired front-door for the
+            // overall package (such as if it has multiple launcher entries).
+            Intent intent = getLaunchIntentForPackageCategory(this, packageName,
+                    Intent.CATEGORY_INFO);
+            if (intent != null) {
+                return intent;
+            }
+            
+            // Otherwise, try to find a main launcher activity.
+            return getLaunchIntentForPackageCategory(this, packageName,
+                    Intent.CATEGORY_LAUNCHER);
+        }
+        
+        // XXX This should be implemented as a call to the package manager,
+        // to reduce the work needed.
+        static Intent getLaunchIntentForPackageCategory(PackageManager pm,
+                String packageName, String category) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent intentToResolve = new Intent(Intent.ACTION_MAIN, null);
+            intentToResolve.addCategory(category);
+            final List<ResolveInfo> apps =
+                    pm.queryIntentActivities(intentToResolve, 0);
+            // I wish there were a way to directly get the "main" activity of a
+            // package but ...
+            for (ResolveInfo app : apps) {
+                if (app.activityInfo.packageName.equals(packageName)) {
+                    intent.setClassName(packageName, app.activityInfo.name);
+                    return intent;
+                }
+            }
+            return null;
+        }
+        
         @Override
         public int[] getPackageGids(String packageName)
             throws NameNotFoundException {
@@ -1627,6 +1667,15 @@ class ApplicationContext extends Context {
             }
 
             throw new NameNotFoundException(className.toString());
+        }
+
+        @Override
+        public String[] getSystemSharedLibraryNames() {
+             try {
+                 return mPM.getSystemSharedLibraryNames();
+             } catch (RemoteException e) {
+                 throw new RuntimeException("Package manager has died", e);
+             }
         }
 
         @Override
@@ -1972,6 +2021,18 @@ class ApplicationContext extends Context {
                 String appPackageName) throws NameNotFoundException {
             return getResourcesForApplication(
                 getApplicationInfo(appPackageName, 0));
+        }
+
+        int mCachedSafeMode = -1;
+        @Override public boolean isSafeMode() {
+            try {
+                if (mCachedSafeMode < 0) {
+                    mCachedSafeMode = mPM.isSafeMode() ? 1 : 0;
+                }
+                return mCachedSafeMode != 0;
+            } catch (RemoteException e) {
+                throw new RuntimeException("Package manager has died", e);
+            }
         }
 
         static void configurationChanged() {
@@ -2418,7 +2479,8 @@ class ApplicationContext extends Context {
         private final FileStatus mFileStatus = new FileStatus();
         private long mTimestamp;
 
-        private List<OnSharedPreferenceChangeListener> mListeners;
+        private static final Object mContent = new Object();
+        private WeakHashMap<OnSharedPreferenceChangeListener, Object> mListeners;
 
         SharedPreferencesImpl(
             File file, int mode, Map initialContents) {
@@ -2429,7 +2491,7 @@ class ApplicationContext extends Context {
             if (FileUtils.getFileStatus(file.getPath(), mFileStatus)) {
                 mTimestamp = mFileStatus.mtime;
             }
-            mListeners = new ArrayList<OnSharedPreferenceChangeListener>();
+            mListeners = new WeakHashMap<OnSharedPreferenceChangeListener, Object>();
         }
 
         public boolean hasFileChanged() {
@@ -2451,9 +2513,7 @@ class ApplicationContext extends Context {
         
         public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
             synchronized(this) {
-                if (!mListeners.contains(listener)) {
-                    mListeners.add(listener);
-                }
+                mListeners.put(listener, mContent);
             }
         }
 
@@ -2562,13 +2622,14 @@ class ApplicationContext extends Context {
 
                 boolean hasListeners;
                 List<String> keysModified = null;
-                List<OnSharedPreferenceChangeListener> listeners = null;
+                Set<OnSharedPreferenceChangeListener> listeners = null;
 
                 synchronized (SharedPreferencesImpl.this) {
                     hasListeners = mListeners.size() > 0;
                     if (hasListeners) {
                         keysModified = new ArrayList<String>();
-                        listeners = new ArrayList<OnSharedPreferenceChangeListener>(mListeners);
+                        listeners =
+                                new HashSet<OnSharedPreferenceChangeListener>(mListeners.keySet());
                     }
 
                     synchronized (this) {
@@ -2577,9 +2638,7 @@ class ApplicationContext extends Context {
                             mClear = false;
                         }
 
-                        Iterator<Entry<String, Object>> it = mModified.entrySet().iterator();
-                        while (it.hasNext()) {
-                            Map.Entry<String, Object> e = it.next();
+                        for (Entry<String, Object> e : mModified.entrySet()) {
                             String k = e.getKey();
                             Object v = e.getValue();
                             if (v == this) {
@@ -2602,10 +2661,10 @@ class ApplicationContext extends Context {
                 if (hasListeners) {
                     for (int i = keysModified.size() - 1; i >= 0; i--) {
                         final String key = keysModified.get(i);
-                        // Call in the order they were registered
-                        final int listenersSize = listeners.size();
-                        for (int j = 0; j < listenersSize; j++) {
-                            listeners.get(j).onSharedPreferenceChanged(SharedPreferencesImpl.this, key);
+                        for (OnSharedPreferenceChangeListener listener : listeners) {
+                            if (listener != null) {
+                                listener.onSharedPreferenceChanged(SharedPreferencesImpl.this, key);
+                            }
                         }
                     }
                 }
@@ -2664,10 +2723,8 @@ class ApplicationContext extends Context {
                     mTimestamp = mFileStatus.mtime;
                 }
                 
-                // Writing was successful, delete the backup file
-                if (!mBackupFile.delete()) {
-                    Log.e(TAG, "Couldn't delete new backup file " + mBackupFile);
-                }
+                // Writing was successful, delete the backup file if there is one.
+                mBackupFile.delete();
                 return true;
             } catch (XmlPullParserException e) {
                 Log.w(TAG, "writeFileLocked: Got exception:", e);

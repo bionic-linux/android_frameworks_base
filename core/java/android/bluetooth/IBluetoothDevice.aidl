@@ -26,21 +26,20 @@ import android.bluetooth.IBluetoothDeviceCallback;
 interface IBluetoothDevice
 {
     boolean isEnabled();
-    boolean enable(in IBluetoothDeviceCallback callback);  // async
-    boolean disable();
+    int getBluetoothState();
+    boolean enable();
+    boolean disable(boolean persistSetting);
 
     String getAddress();
     String getName();
     boolean setName(in String name);
-    String getMajorClass();
-    String getMinorClass();
     String getVersion();
     String getRevision();
     String getManufacturer();
     String getCompany();
 
-    int getMode();
-    boolean setMode(int mode);
+    int getScanMode();
+    boolean setScanMode(int mode);
 
     int getDiscoverableTimeout();
     boolean setDiscoverableTimeout(int timeout);
@@ -64,17 +63,11 @@ interface IBluetoothDevice
     int getBondState(in String address);
 
     String getRemoteName(in String address);
-    String getRemoteAlias(in String address);
-    boolean setRemoteAlias(in String address, in String alias);
-    boolean clearRemoteAlias(in String address);
     String getRemoteVersion(in String address);
     String getRemoteRevision(in String address);
     int getRemoteClass(in String address);
     String getRemoteManufacturer(in String address);
     String getRemoteCompany(in String address);
-    String getRemoteMajorClass(in String address);
-    String getRemoteMinorClass(in String address);
-    String[] getRemoteServiceClasses(in String address);
     boolean getRemoteServiceChannel(in String address, int uuid16, in IBluetoothDeviceCallback callback);
     byte[] getRemoteFeatures(in String adddress);
     String lastSeen(in String address);

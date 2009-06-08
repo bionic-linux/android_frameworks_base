@@ -43,6 +43,8 @@ import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -148,6 +150,8 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
     public static final String ARGUMENT_TEST_SIZE_PREDICATE = "size";
     /** @hide */
     public static final String ARGUMENT_INCLUDE_PERF = "perf";
+    /** @hide */
+    public static final String ARGUMENT_DELAY_MSEC = "delay_msec";
 
     private static final String SMALL_SUITE = "small";
     private static final String MEDIUM_SUITE = "medium";  
@@ -249,6 +253,7 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
     private String mPackageOfTests;
     private boolean mCoverage;
     private String mCoverageFilePath;
+    private int mDelayMsec;
 
     @Override
     public void onCreate(Bundle arguments) {
@@ -277,11 +282,18 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
             logOnly = getBooleanArgument(arguments, ARGUMENT_LOG_ONLY);
             mCoverage = getBooleanArgument(arguments, "coverage");
             mCoverageFilePath = arguments.getString("coverageFile");
+
+            try {
+                Object delay = arguments.get(ARGUMENT_DELAY_MSEC);  // Accept either string or int
+                if (delay != null) mDelayMsec = Integer.parseInt(delay.toString());
+            } catch (NumberFormatException e) {
+                Log.e(LOG_TAG, "Invalid delay_msec parameter", e);
+            }
         }
-        
+
         TestSuiteBuilder testSuiteBuilder = new TestSuiteBuilder(getClass().getName(),
                 getTargetContext().getClassLoader());
-        
+
         if (testSizePredicate != null) {
             testSuiteBuilder.addRequirements(testSizePredicate);
         }
@@ -290,20 +302,23 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
         }
 
         if (testClassesArg == null) {
-            TestSuite testSuite = null;
             if (mPackageOfTests != null) {
                 testSuiteBuilder.includePackages(mPackageOfTests);
             } else {
-                testSuite = getTestSuite();
-                testSuiteBuilder.addTestSuite(testSuite);
-            }
-
-            if (testSuite == null) {
-                testSuiteBuilder.includePackages(getTargetContext().getPackageName());
+                TestSuite testSuite = getTestSuite();
+                if (testSuite != null) {
+                    testSuiteBuilder.addTestSuite(testSuite);
+                } else {
+                    // no package or class bundle arguments were supplied, and no test suite 
+                    // provided so add all tests in application
+                    testSuiteBuilder.includePackages("");
+                }
             }
         } else {
             parseTestClasses(testClassesArg, testSuiteBuilder);
         }
+        
+        testSuiteBuilder.addRequirements(getBuilderRequirements());
 
         mTestRunner = getAndroidTestRunner();
         mTestRunner.setContext(getTargetContext());
@@ -318,6 +333,10 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
             mTestRunner.addTestListener(new WatcherResultPrinter(mTestCount));
         }
         start();
+    }
+
+    List<Predicate<TestMethod>> getBuilderRequirements() {
+        return new ArrayList<Predicate<TestMethod>>();
     }
 
     /**
@@ -600,6 +619,18 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
             } else {
                 mTestResult.putString(Instrumentation.REPORT_KEY_STREAMRESULT, "");
             }
+
+            // The delay_msec parameter is normally used to provide buffers of idle time
+            // for power measurement purposes.  To make sure there is a delay before and after
+            // every test in a suite, we delay *after* every test (see endTest below) and also
+            // delay *before* the first test.  So, delay test1 delay test2 delay.
+
+            try {
+                if (mTestNum == 1) Thread.sleep(mDelayMsec);
+            } catch (InterruptedException e) {
+                throw new IllegalStateException(e);
+            }
+
             sendStatus(REPORT_VALUE_RESULT_START, mTestResult);
             mTestResultCode = 0;
         }
@@ -636,10 +667,15 @@ public class InstrumentationTestRunner extends Instrumentation implements TestSu
                 mTestResult.putString(Instrumentation.REPORT_KEY_STREAMRESULT, ".");
             }
             sendStatus(mTestResultCode, mTestResult);
+
+            try {  // Sleep after every test, if specified
+                Thread.sleep(mDelayMsec);
+            } catch (InterruptedException e) {
+                throw new IllegalStateException(e);
+            }
         }
 
         // TODO report the end of the cycle
         // TODO report runtime for each test
     }
 }
-
