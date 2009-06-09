@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAX3////M\u003d",
+        "filename": "core/java/android/widget/ListView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3174,
+      "author": {
+        "id": 1002187
+      },
+      "writtenOn": "2009-06-09T18:08:59Z",
+      "side": 1,
+      "message": "Should document result if choice mode is invalid?\n\n@return The item\u0027s checked state or \u003ccode\u003efalse\u003c/code\u003e if choice mode is invalid",
+      "revId": "80eb4aab503304d735f90eca8e795678f5ffe504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
