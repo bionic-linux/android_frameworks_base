@@ -21,6 +21,16 @@ that locks the current selection at the center. When one is selected, we'll show
 </pre>
 </li>
 
+<li> Create a file called attrs.xml under res/values/ and place the following in it: 
+<pre>
+&lt;?xml version="1.0" encoding="utf-8"?> 
+&lt;resources> 
+    &lt;declare-styleable name="default_gallery"> 
+        &lt;attr name="android:galleryItemBackground" /> 
+    &lt;/declare-styleable> 
+&lt;/resources>
+</pre>
+</li>
 
 <li>Open the HelloGallery.java file. Insert the following for the <code>onCreate()</code> method:
 <pre>
@@ -33,6 +43,7 @@ public void onCreate(Bundle savedInstanceState) {
     g.setAdapter(new ImageAdapter(this));
 
     g.setOnItemClickListener(new OnItemClickListener() {
+        &#64;Override
         public void onItemClick(AdapterView parent, View v, int position, long id) {
             Toast.makeText(HelloGallery.this, "" + position, Toast.LENGTH_SHORT).show();
         }
@@ -69,9 +80,9 @@ public class ImageAdapter extends BaseAdapter {
 
     public ImageAdapter(Context c) {
         mContext = c;
-        TypedArray a = obtainStyledAttributes(android.R.styleable.Theme);
+        TypedArray a = obtainStyledAttributes(R.styleable.default_gallery); 
         mGalleryItemBackground = a.getResourceId(
-                android.R.styleable.Theme_galleryItemBackground, 0);
+            R.styleable.default_gallery_android_galleryItemBackground, 0);
         a.recycle();
     }
 
