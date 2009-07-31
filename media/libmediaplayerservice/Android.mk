@@ -11,7 +11,8 @@ LOCAL_SRC_FILES:=               \
     MediaPlayerService.cpp \
     MetadataRetrieverClient.cpp \
     VorbisPlayer.cpp \
-    MidiFile.cpp
+    MidiFile.cpp \
+    FLACPlayer.cpp
 
 ifeq ($(TARGET_OS)-$(TARGET_SIMULATOR),linux-true)
 LOCAL_LDLIBS += -ldl -lpthread
@@ -24,6 +25,7 @@ LOCAL_SHARED_LIBRARIES := \
     libsonivox \
     libopencore_player \
     libopencore_author \
+    libFLAC \
     libmedia \
     libandroid_runtime
 
@@ -34,6 +36,7 @@ LOCAL_SHARED_LIBRARIES += \
 endif
 
 LOCAL_C_INCLUDES := external/tremor/Tremor \
+    external/flac/include \
     $(call include-path-for, graphics corecg)
 
 ifeq ($(BUILD_WITHOUT_PV),true)
