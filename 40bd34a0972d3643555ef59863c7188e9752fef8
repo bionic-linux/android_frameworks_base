@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAfX///+o\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2009-08-09T16:50:32Z",
+      "side": 1,
+      "message": "might want to update this comment too",
+      "revId": "40bd34a0972d3643555ef59863c7188e9752fef8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAfX///+k\u003d",
+        "filename": "media/libmediaplayerservice/FLACPlayer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2009-08-09T16:50:32Z",
+      "side": 1,
+      "message": "given that this is a new file, please use the current year\n(that goes for some of the other files too)",
+      "revId": "40bd34a0972d3643555ef59863c7188e9752fef8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
