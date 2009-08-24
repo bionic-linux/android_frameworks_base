@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAiH///9s\u003d",
+        "filename": "docs/html/guide/tutorials/views/hello-gallery.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-08-24T21:29:06Z",
+      "side": 1,
+      "message": "Use \u0026gt; intead of \u003e (for all instances in this snippet)",
+      "revId": "5e8b98c5a20d3860052eae5beb0a0b35d82f6b64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAiH///9o\u003d",
+        "filename": "docs/html/guide/tutorials/views/hello-gallery.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-08-24T21:29:06Z",
+      "side": 1,
+      "message": "Do not call this attribute android:, this is reserved for system widgets.",
+      "revId": "5e8b98c5a20d3860052eae5beb0a0b35d82f6b64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAiH///9k\u003d",
+        "filename": "docs/html/guide/tutorials/views/hello-gallery.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-08-24T21:29:06Z",
+      "side": 1,
+      "message": "Remove _android",
+      "revId": "5e8b98c5a20d3860052eae5beb0a0b35d82f6b64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
