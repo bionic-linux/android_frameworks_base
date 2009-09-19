@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAm3///ck\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmDataConnectionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2009-09-19T22:00:18Z",
+      "side": 1,
+      "message": "We don\u0027t want this change.  When we enable a *new* apn we currently must cleanup the old.  If the application is enabling and disabling the mms apn, perhaps the application could be optimized, but we do not want to try to optimize that here.",
+      "revId": "1feb7b0157300e55b146e2c47f36be221d932fa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
