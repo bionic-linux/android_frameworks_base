@@ -371,8 +371,8 @@ public class ShapeDrawable extends Drawable {
         Paint mPaint;
         Shape mShape;
         Rect mPadding;
-        int mIntrinsicWidth;
-        int mIntrinsicHeight;
+        int mIntrinsicWidth = -1;
+        int mIntrinsicHeight = -1;
         int mAlpha = 255;
         ShaderFactory mShaderFactory;
         
