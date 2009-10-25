@@ -84,6 +84,10 @@ LOCAL_MODULE:= libutils
 LOCAL_CFLAGS += -DLIBUTILS_NATIVE=1 $(TOOL_CFLAGS)
 LOCAL_C_INCLUDES += external/zlib
 
+ifeq ($(HOST_OS),freebsd)
+	LOCAL_REQUIRED_MODULES:= unwind
+endif
+
 ifeq ($(HOST_OS),windows)
 ifeq ($(strip $(USE_CYGWIN),),)
 # Under MinGW, ctype.h doesn't need multi-byte support
