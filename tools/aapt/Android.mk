@@ -39,6 +39,9 @@ LOCAL_LDLIBS := -lz
 ifeq ($(HOST_OS),linux)
 LOCAL_LDLIBS += -lrt
 endif
+ifeq ($(HOST_OS),freebsd)
+LOCAL_LDLIBS += -lpthread
+endif
 
 ifeq ($(HOST_OS),windows)
 ifeq ($(strip $(USE_CYGWIN),),)
