@@ -84,6 +84,10 @@ LOCAL_MODULE:= libutils
 LOCAL_CFLAGS += -DLIBUTILS_NATIVE=1 $(TOOL_CFLAGS)
 LOCAL_C_INCLUDES += external/zlib
 
+ifeq ($(HOST_OS),freebsd)
+  LOCAL_C_INCLUDES += prebuilt/freebsd-x86/toolchain/arm-eabi-4.4.0/lib/gcc/arm-unknown-eabi/4.4.0/include
+endif
+
 ifeq ($(HOST_OS),windows)
 ifeq ($(strip $(USE_CYGWIN),),)
 # Under MinGW, ctype.h doesn't need multi-byte support
