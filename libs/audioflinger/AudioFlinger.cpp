@@ -2397,6 +2397,7 @@ bool AudioFlinger::AudioRecordThread::threadLoop()
     int inBufferSize = 0;
     int inFrameCount = 0;
     AudioStreamIn* input = 0;
+    int nFramesize = 0;
 
     mActive = 0;
     
@@ -2427,6 +2428,7 @@ bool AudioFlinger::AudioRecordThread::threadLoop()
                     if (input != 0) {
                         inBufferSize = input->bufferSize();
                         inFrameCount = inBufferSize/input->frameSize();                        
+                        nFramesize = input->frameSize();
                     }
                 } else {
                     mStartStatus = NO_INIT;
@@ -2442,10 +2444,9 @@ bool AudioFlinger::AudioRecordThread::threadLoop()
         } else if (mRecordTrack != 0) {
 
             buffer.frameCount = inFrameCount;
-            if (LIKELY(mRecordTrack->getNextBuffer(&buffer) == NO_ERROR &&
-                       (int)buffer.frameCount == inFrameCount)) {
+            if (LIKELY(mRecordTrack->getNextBuffer(&buffer) == NO_ERROR )) {
                 LOGV("AudioRecordThread read: %d frames", buffer.frameCount);
-                ssize_t bytesRead = input->read(buffer.raw, inBufferSize);
+                ssize_t bytesRead = input->read(buffer.raw, buffer.frameCount*nFramesize);
                 if (bytesRead < 0) {
                     LOGE("Error reading audio input");
                     sleep(1);
