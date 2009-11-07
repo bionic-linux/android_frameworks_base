@@ -306,6 +306,42 @@ public class MediaRecorder
             throws IllegalStateException;
 
     /**
+     * Sets the sample rate of the audio to be captured.  Must be called
+     * after setAudioSource(). Call this after setOutFormat() but before
+     * prepare().
+     *
+     * @param rate the number of samples per second of audio to capture
+     * @throws IllegalStateException if it is called after
+     * prepare() or before setOutputFormat().
+     *
+     */
+    public native void setAudioSampleRate(int rate) throws IllegalStateException;
+
+    /**
+     * Sets the Bit rate of the audio to be encoded.  Must be called
+     * after setAudioSource(). Call this after setOutFormat() but before
+     * prepare().
+     *
+     * @param rate the number of bit per second of audio to encoded
+     * @throws IllegalStateException if it is called after
+     * prepare() or before setOutputFormat().
+     *
+     */
+    public native void setAudioBitRate(int rate) throws IllegalStateException;
+
+    /**
+     * Sets the channel number of the audio to be encoded.  Must be called
+     * after setAudioSource(). Call this after setOutFormat() but before
+     * prepare().
+     *
+     * @param channel the number of channel audio to encoded
+     * @throws IllegalStateException if it is called after
+     * prepare() or before setOutputFormat().
+     *
+     */
+    public native void setAudioChannel(int channel) throws IllegalStateException;
+
+    /**
      * Sets the width and height of the video to be captured.  Must be called
      * after setVideoSource(). Call this after setOutFormat() but before
      * prepare().

@@ -94,6 +94,15 @@ enum video_encoder {
 // Maximum frames per second is 24
 #define MEDIA_RECORDER_MAX_FRAME_RATE         24
 
+// Maximum samples per second is 48000
+#define MEDIA_RECORDER_MAX_SAMPLE_RATE         48000
+
+// Maximum encoded bits per second is 48000
+#define MEDIA_RECORDER_MAX_BIT_RATE            320000
+
+// Maximum encoded bits per second is 48000
+#define MEDIA_RECORDER_MAX_CHANNEL_NUMBER       2
+
 /*
  * The state machine of the media_recorder uses a set of different state names.
  * The mapping between the media_recorder and the pvauthorengine is shown below:
@@ -160,6 +169,9 @@ public:
     status_t    setAudioEncoder(int ae);
     status_t    setOutputFile(const char* path);
     status_t    setOutputFile(int fd, int64_t offset, int64_t length);
+    status_t    setAudioSampleRate(int bits_per_second);
+    status_t    setAudioBitRate(int samples_per_second);
+    status_t    setAudioChannel(int channel);
     status_t    setVideoSize(int width, int height);
     status_t    setVideoFrameRate(int frames_per_second);
     status_t    setParameters(const String8& params);

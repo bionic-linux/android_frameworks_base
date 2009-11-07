@@ -39,6 +39,9 @@ public:
     status_t setOutputFormat(output_format of);
     status_t setAudioEncoder(audio_encoder ae);
     status_t setVideoEncoder(video_encoder ve);
+    status_t setAudioSampleRate(int samples_per_second);
+    status_t setAudioBitRate(int bits_per_second);
+    status_t setAudioChannel(int channel);
     status_t setVideoSize(int width, int height);
     status_t setVideoFrameRate(int frames_per_second);
     status_t setCamera(const sp<ICamera>& camera);
