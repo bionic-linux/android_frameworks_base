@@ -244,7 +244,23 @@ public abstract class CompoundButton extends Button implements Checkable {
                     break;
             }
 
-            buttonDrawable.setBounds(0, y, buttonDrawable.getIntrinsicWidth(), y + height);
+            final int horizontalGravity = getGravity() & Gravity.HORIZONTAL_GRAVITY_MASK;
+            final int width = buttonDrawable.getIntrinsicWidth();
+
+            int x = 0;
+
+            if (getText().equals("")) {
+                switch (horizontalGravity) {
+                case Gravity.RIGHT:
+                    x = getWidth() - width;
+                    break;
+                case Gravity.CENTER_HORIZONTAL:
+                    x = (getWidth() - width) / 2;
+                    break;
+                }
+            }
+
+            buttonDrawable.setBounds(x, y, x + width, y + height);
             buttonDrawable.draw(canvas);
         }
     }
