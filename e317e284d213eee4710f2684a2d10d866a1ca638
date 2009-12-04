@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAo3///Ag\u003d",
+        "filename": "core/java/android/widget/CompoundButton.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-12-04T17:22:20Z",
+      "side": 1,
+      "message": "Do not call getGravity() again, reuse the call made earlier.",
+      "revId": "e317e284d213eee4710f2684a2d10d866a1ca638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAo3///Ac\u003d",
+        "filename": "core/java/android/widget/CompoundButton.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-12-04T17:22:20Z",
+      "side": 1,
+      "message": "Do *not* perform a string comparison on every draw.",
+      "revId": "e317e284d213eee4710f2684a2d10d866a1ca638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAo3///AY\u003d",
+        "filename": "core/java/android/widget/CompoundButton.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-12-04T17:22:20Z",
+      "side": 1,
+      "message": "Indent the case statements, following the style above",
+      "revId": "e317e284d213eee4710f2684a2d10d866a1ca638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
