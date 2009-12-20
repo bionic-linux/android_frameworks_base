@@ -14,7 +14,8 @@ LOCAL_SRC_FILES:=               \
     VorbisPlayer.cpp            \
     VorbisMetadataRetriever.cpp \
     MidiMetadataRetriever.cpp \
-    MidiFile.cpp
+    MidiFile.cpp                \
+    WavPackPlayer.cpp
 
 ifeq ($(BUILD_WITH_FULL_STAGEFRIGHT),true)
 
@@ -34,6 +35,7 @@ LOCAL_SHARED_LIBRARIES :=     \
 	libutils              \
 	libbinder             \
 	libvorbisidec         \
+        libWavPack            \
 	libsonivox            \
 	libopencore_player    \
 	libopencore_author    \
@@ -47,6 +49,7 @@ LOCAL_SHARED_LIBRARIES += libdl
 endif
 
 LOCAL_C_INCLUDES := external/tremor/Tremor                              \
+        external/wavpack/include                                        \
 	$(JNI_H_INCLUDE)                                                \
 	$(call include-path-for, graphics corecg)                       \
 	$(TOP)/external/opencore/extern_libs_v2/khronos/openmax/include \

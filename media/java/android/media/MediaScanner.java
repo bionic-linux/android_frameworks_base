@@ -69,7 +69,7 @@ import java.util.Iterator;
  *   which calls doScanFile, which after some setup calls back down to native code, calling
  *   MediaScanner.processFile().
  * - MediaScanner.processFile() calls one of several methods, depending on the type of the
- *   file: parseMP3, parseMP4, parseMidi, parseOgg or parseWMA.
+ *   file: parseMP3, parseMP4, parseMidi, parseOgg, parseWMA or parseWavPack.
  * - each of these methods gets metadata key/value pairs from the file, and repeatedly
  *   calls native MyMediaScannerClient.handleStringTag, which calls back up to its Java
  *   counterparts in this file.
@@ -88,7 +88,7 @@ import java.util.Iterator;
  * Java MediaScannerClient doScanFile, which calls
  * Java MediaScanner processFile (native method), which calls
  * native MediaScanner processFile, which calls
- * native parseMP3, parseMP4, parseMidi, parseOgg or parseWMA, which calls
+ * native parseMP3, parseMP4, parseMidi, parseOgg, parseWMA or parseWavPack, which calls
  * native MyMediaScanner handleStringTag, which calls
  * Java MyMediaScanner handleStringTag.
  * Once MediaScanner processFile returns, an entry is inserted in to the database.
@@ -504,8 +504,9 @@ public class MediaScanner
                     mFileType == MediaFile.FILE_TYPE_OGG ||
                     mFileType == MediaFile.FILE_TYPE_AAC ||
                     mFileType == MediaFile.FILE_TYPE_MID ||
-                    mFileType == MediaFile.FILE_TYPE_WMA) {
-                // we only extract metadata from MP3, M4A, OGG, MID, AAC and WMA files.
+                    mFileType == MediaFile.FILE_TYPE_WMA ||
+                    mFileType == MediaFile.FILE_TYPE_WAVPACK) {
+                // we only extract metadata from MP3, M4A, OGG, MID, AAC, WMA and WV files.
                 // check MP4 files, to determine if they contain only audio.
                 return true;
             }
