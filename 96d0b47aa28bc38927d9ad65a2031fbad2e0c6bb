@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAr3///s4\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Missing copyright header",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///s8\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Please write a javadoc for this class",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///s0\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Your indentation is wrong, Android uses 4 spaces. Please fix.",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sw\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Needs javadoc for all public APIs",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///ss\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Remove debug log",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///so\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Remove debug log",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sk\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Please remove the LogWriter, is has nothing to do with OpenGL or wallpapers",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sg\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Reuse the interfaces from GLSurfaceView instead of creating new ones",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sc\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Reuse from GLSurfaceView",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sY\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Reuse from GLSurfaceView",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sU\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Reuse from GLSurfaceView",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sQ\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Reuse from GLSurfaceView",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sM\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Reuse from GLSurfaceView",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3///sI\u003d",
+        "filename": "opengl/java/android/opengl/GLWallpaperService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-01-15T22:29:28Z",
+      "side": 1,
+      "message": "Reuse from GLSurfaceView",
+      "revId": "96d0b47aa28bc38927d9ad65a2031fbad2e0c6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
