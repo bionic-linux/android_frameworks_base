@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAr3//+3A\u003d",
+        "filename": "location/java/com/android/internal/location/GpsLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-02-02T18:39:54Z",
+      "side": 1,
+      "message": "It\u0027d be good to sanity check (before and after the transition) that the relationship between mNavigating and mEngineOn is proper (i.e. assert (!mNavigating || mEngine))",
+      "revId": "8ab11f87acf01b830ad0db46ec549406b33c39de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
