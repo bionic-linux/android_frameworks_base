@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAr3//+3Q\u003d",
+        "filename": "location/java/com/android/internal/location/GpsLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-02-02T18:33:23Z",
+      "side": 1,
+      "message": "maybe the release() should be in a finally block",
+      "revId": "2f3a615feaa1286612576bc15f6bd8cae011301f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
