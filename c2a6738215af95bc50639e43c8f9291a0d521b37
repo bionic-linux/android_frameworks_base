@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAr3//+3I\u003d",
+        "filename": "location/java/com/android/internal/location/GpsLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-02-02T18:36:16Z",
+      "side": 1,
+      "message": "The name of the \"status\" variable is a bit ambiguous, as its usage suggests that it\u0027s actually a state machine transition.",
+      "revId": "c2a6738215af95bc50639e43c8f9291a0d521b37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
