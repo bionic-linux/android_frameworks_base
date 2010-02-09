@@ -981,12 +981,26 @@ public class ViewDebug {
             out.write(Integer.toHexString(view.hashCode()));
             out.write(' ');
             dumpViewProperties(context, view, out);
+            dumpViewLocation(view, out);
             out.newLine();
         } catch (IOException e) {
             Log.w("View", "Error while dumping hierarchy tree");
             return false;
         }
         return true;
+    }
+
+    private static void dumpViewLocation(View view, BufferedWriter out) {
+        if(view != null && view.mAttachInfo != null) {
+            int screenLocation[] = new int[2];
+	    view.getLocationOnScreen(screenLocation);
+            try {
+                writeEntry(out, "", "screenX", "", Integer.toString(screenLocation[0]));
+                writeEntry(out, "", "screenY", "", Integer.toString(screenLocation[1]));
+            } catch  (IOException e) {
+                Log.w("View", "Error while dumping dumpViewLocation: " + e.getMessage());
+            }
+        }
     }
 
     private static Field[] getExportedPropertyFields(Class<?> klass) {

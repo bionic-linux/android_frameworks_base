@@ -25,9 +25,11 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.text.format.DateFormat;
 import android.text.format.Time;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewDebug;
 import android.widget.RemoteViews.RemoteView;
 
 import java.util.TimeZone;
@@ -243,4 +245,12 @@ public class AnalogClock extends View {
             invalidate();
         }
     };
+
+    /**
+     * {@hide}
+     */
+    @ViewDebug.ExportedProperty
+    public String getCurrentTime() {
+        return DateFormat.format("h:mm:ss aa", mCalendar.toMillis(false)).toString();
+    }
 }

@@ -24,6 +24,7 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
+import android.view.ViewDebug;
 
 import java.util.Calendar;
 
@@ -125,5 +126,13 @@ public class DigitalClock extends TextView {
         public void onChange(boolean selfChange) {
             setFormat();
         }
+    }
+
+    /**
+     * {@hide}
+     */
+    @ViewDebug.ExportedProperty
+    public String getCurrentTime() {
+        return DateFormat.format(m12, mCalendar).toString();
     }
 }
