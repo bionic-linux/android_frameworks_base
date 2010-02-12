@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2010 Sony Ericsson Mobile Communications AB
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,6 +52,8 @@ public class IccUtils {
             ret.append((char)('0' + v));
 
             v = (data[i] >> 4) & 0xf;
+            // Some PLMNs have 'f' as high nibble, ignore it
+            if (v == 0xf) continue;
             if (v > 9)  break;
             ret.append((char)('0' + v));
         }
