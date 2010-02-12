@@ -317,28 +317,6 @@ void RefBase::decStrong(const void* id) const
     refs->decWeak(id);
 }
 
-void RefBase::forceIncStrong(const void* id) const
-{
-    weakref_impl* const refs = mRefs;
-    refs->addWeakRef(id);
-    refs->incWeak(id);
-    
-    refs->addStrongRef(id);
-    const int32_t c = android_atomic_inc(&refs->mStrong);
-    LOG_ASSERT(c >= 0, "forceIncStrong called on %p after ref count underflow",
-               refs);
-#if PRINT_REFS
-    LOGD("forceIncStrong of %p from %p: cnt=%d\n", this, id, c);
-#endif
-
-    switch (c) {
-    case INITIAL_STRONG_VALUE:
-        android_atomic_add(-INITIAL_STRONG_VALUE, &refs->mStrong);
-        // fall through...
-    case 0:
-        const_cast<RefBase*>(this)->onFirstRef();
-    }
-}
 
 int32_t RefBase::getStrongCount() const
 {

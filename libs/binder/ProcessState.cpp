@@ -224,11 +224,19 @@ sp<IBinder> ProcessState::getStrongProxyForHandle(int32_t handle)
             if (b) e->refs = b->getWeakRefs();
             result = b;
         } else {
-            // This little bit of nastyness is to allow us to add a primary
-            // reference to the remote proxy when this team doesn't have one
-            // but another team is sending the handle to us.
-            result.force_set(b);
-            e->refs->decWeak(this);
+            if(e->refs->attemptIncStrong(this)) {
+                result = b;
+                // Undo the successful attemptIncStrong
+                b->decStrong(this);
+                e->refs->decWeak(this);
+            } else {
+                e->refs->decWeak(this);
+ 
+                b = new BpBinder(handle);
+                e->binder = b;
+                if (b) e->refs = b->getWeakRefs();
+                result = b;
+            }
         }
     }
 
