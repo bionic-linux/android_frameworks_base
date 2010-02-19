@@ -127,12 +127,4 @@ public class DigitalClock extends TextView {
             setFormat();
         }
     }
-
-    /**
-     * {@hide}
-     */
-    @ViewDebug.ExportedProperty
-    public String getCurrentTime() {
-        return DateFormat.format(m12, mCalendar).toString();
-    }
 }

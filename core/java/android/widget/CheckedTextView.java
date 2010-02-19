@@ -75,7 +75,7 @@ public class CheckedTextView extends TextView implements Checkable {
         setChecked(!mChecked);
     }
 
-@ViewDebug.ExportedProperty
+    @ViewDebug.ExportedProperty
     public boolean isChecked() {
         return mChecked;
     }

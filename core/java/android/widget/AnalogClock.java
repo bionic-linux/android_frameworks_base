@@ -245,12 +245,4 @@ public class AnalogClock extends View {
             invalidate();
         }
     };
-
-    /**
-     * {@hide}
-     */
-    @ViewDebug.ExportedProperty
-    public String getCurrentTime() {
-        return DateFormat.format("h:mm:ss aa", mCalendar.toMillis(false)).toString();
-    }
 }

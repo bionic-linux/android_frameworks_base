@@ -99,7 +99,7 @@ public abstract class CompoundButton extends Button implements Checkable {
         return super.performClick();
     }
 
-@ViewDebug.ExportedProperty
+    @ViewDebug.ExportedProperty
     public boolean isChecked() {
         return mChecked;
     }
