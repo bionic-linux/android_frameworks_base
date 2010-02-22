@@ -601,7 +601,12 @@ static void Surface_writeToParcel(
     }
 
     const sp<SurfaceControl>& control(getSurfaceControl(env, clazz));
-    SurfaceControl::writeSurfaceToParcel(control, parcel);
+    const sp<Surface>& surface(getSurface(env, clazz));
+    if(surface != NULL) {
+        surface->writeToParcel(parcel);
+    } else {
+        SurfaceControl::writeSurfaceToParcel(control, parcel);
+    }
 }
 
 // ----------------------------------------------------------------------------

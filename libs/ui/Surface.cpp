@@ -743,5 +743,18 @@ status_t Surface::getBufferLocked(int index, int usage)
     return err; 
 }
 
+status_t Surface::writeToParcel(Parcel* parcel)
+{
+    parcel->writeStrongBinder(mClient!=0  ? mClient->connection() : NULL);
+    parcel->writeStrongBinder(mSurface!=0 ? mSurface->asBinder()  : NULL);
+    parcel->writeInt32(mToken);
+    parcel->writeInt32(mIdentity);
+    parcel->writeInt32(mWidth);
+    parcel->writeInt32(mHeight);
+    parcel->writeInt32(mFormat);
+    parcel->writeInt32(mFlags);
+    return NO_ERROR;
+}
+
 }; // namespace android
 

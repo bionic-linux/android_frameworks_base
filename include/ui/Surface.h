@@ -163,6 +163,8 @@ public:
     // setSwapRectangle() is intended to be used by GL ES clients
     void        setSwapRectangle(const Rect& r);
 
+    status_t    writeToParcel(Parcel* parcel);
+
 private:
     // can't be copied
     Surface& operator = (Surface& rhs);
