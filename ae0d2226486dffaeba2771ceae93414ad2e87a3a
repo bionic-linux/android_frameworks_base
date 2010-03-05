@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAvH///+A\u003d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1000773
+      },
+      "writtenOn": "2010-03-05T02:26:37Z",
+      "side": 1,
+      "message": "This will cause the problem where hit test may fail. As WebKit gets 0 as height, you can\u0027t select the link in the content.",
+      "revId": "ae0d2226486dffaeba2771ceae93414ad2e87a3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
