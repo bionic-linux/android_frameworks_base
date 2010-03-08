@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAvX///4w\u003d",
+        "filename": "core/jni/android_server_BluetoothEventLoop.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1001002
+      },
+      "writtenOn": "2010-03-08T23:48:07Z",
+      "side": 1,
+      "message": "This has the same use-after-close race.",
+      "revId": "78fe95879303e7179262380bbbdcb0394c07a8e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAvX///44\u003d",
+        "filename": "core/jni/android_server_BluetoothEventLoop.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1001002
+      },
+      "writtenOn": "2010-03-08T23:48:07Z",
+      "side": 1,
+      "message": "This introduces a use-after-close race on the controlFdw file descriptor. dbusAddWatch() or dbusRemoveWatch() might write() to this file descriptor after its been closed. By that time this file descriptor might be valid for another socket. This type of use-after-close problem is a nightmare to debug.\n\nI think that if you set nat-\u003econtrolFdw to zero before closing the file descriptor then we should be safe here.",
+      "revId": "78fe95879303e7179262380bbbdcb0394c07a8e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
