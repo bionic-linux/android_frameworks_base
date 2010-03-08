@@ -564,7 +564,8 @@ static void *eventLoopMain(void *ptr) {
                                 NULL, NULL, NULL, NULL, NULL);
                         tearDownEventLoop(nat);
                         nat->vm->DetachCurrentThread();
-                        shutdown(nat->controlFdR,SHUT_RDWR);
+                        close(nat->controlFdR);
+                        nat->controlFdR = 0;
                         return NULL;
                     }
                     case EVENT_LOOP_ADD:
@@ -653,9 +654,12 @@ static jboolean startEventLoopNative(JNIEnv *env, jobject object) {
 
 done:
     if (JNI_FALSE == result) {
-        if (nat->controlFdW || nat->controlFdR) {
-            shutdown(nat->controlFdW, SHUT_RDWR);
+        if (nat->controlFdW) {
+            close(nat->controlFdW);
             nat->controlFdW = 0;
+        }
+        if (nat->controlFdR) {
+            close(nat->controlFdR);
             nat->controlFdR = 0;
         }
         if (nat->me) env->DeleteGlobalRef(nat->me);
@@ -692,9 +696,8 @@ static void stopEventLoopNative(JNIEnv *env, jobject object) {
         nat->watchData = NULL;
         nat->pollDataSize = 0;
         nat->pollMemberCount = 0;
-        shutdown(nat->controlFdW, SHUT_RDWR);
+        close(nat->controlFdW);
         nat->controlFdW = 0;
-        nat->controlFdR = 0;
     }
     pthread_mutex_unlock(&(nat->thread_mutex));
 #endif // HAVE_BLUETOOTH
