@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAvX///1c\u003d",
+        "filename": "core/java/android/server/BluetoothEventLoop.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-03-09T06:47:36Z",
+      "side": 1,
+      "message": "Please remove this comment. There are no comments for the imports.",
+      "revId": "5bf02dc08830125de30a8e4747eeb3805e7d484f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAvX///1Y\u003d",
+        "filename": "core/java/android/server/BluetoothEventLoop.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-03-09T06:47:36Z",
+      "side": 1,
+      "message": "Please remove the tabs.\n\nDo we need ON_AFTER_RELEASE ?",
+      "revId": "5bf02dc08830125de30a8e4747eeb3805e7d484f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAvX///1U\u003d",
+        "filename": "core/java/android/server/BluetoothEventLoop.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-03-09T06:47:36Z",
+      "side": 1,
+      "message": "Please remove tabs. Also we would have to do this for every type of pairing request and not just of type PIN",
+      "revId": "5bf02dc08830125de30a8e4747eeb3805e7d484f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
