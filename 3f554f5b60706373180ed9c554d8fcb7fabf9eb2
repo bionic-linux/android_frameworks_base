@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAvn///+s\u003d",
+        "filename": "core/java/android/server/BluetoothEventLoop.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-03-10T17:25:35Z",
+      "side": 1,
+      "message": "onDisplayPasskey, onRequestPasskeyConfirmation, onRequestPasskey, onRequestPairingConsent are the other types of pairing which require the wake locks",
+      "revId": "3f554f5b60706373180ed9c554d8fcb7fabf9eb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
