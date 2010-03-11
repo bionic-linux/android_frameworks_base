@@ -69,6 +69,24 @@
       "revId": "78fe95879303e7179262380bbbdcb0394c07a8e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAvn///4w\u003d",
+        "filename": "core/jni/android_server_BluetoothEventLoop.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1003450
+      },
+      "writtenOn": "2010-03-11T14:34:53Z",
+      "side": 1,
+      "message": "Sorry, I missed the \"...skipping 16 common lines\" above. Anyway if I am correct the controlFdW is used in the dbusAddWatch() and dbusRemoveWatch() functions passed along to dbus by the thread in eventLoopMain()/dbus_connection_set_watch_functions(). Before the thread quits the references are removed by calling dbus_connection_set_watch_functions() again with NULL (line 563). Since we wait for the thread to quit on line 689 above with pthread_join() the controlFdW should not be used from anywhere else?",
+      "parentUuid": "AAAAvn///48\u003d",
+      "revId": "78fe95879303e7179262380bbbdcb0394c07a8e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
