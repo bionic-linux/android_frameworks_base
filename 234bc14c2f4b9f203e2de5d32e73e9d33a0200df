@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAv3///74\u003d",
+        "filename": "core/jni/android_server_BluetoothEventLoop.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002408
+      },
+      "writtenOn": "2010-03-12T19:10:39Z",
+      "side": 1,
+      "message": "Build break right here, chould be nat-\u003econtrolFdR",
+      "revId": "234bc14c2f4b9f203e2de5d32e73e9d33a0200df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
