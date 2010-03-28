@@ -497,7 +497,7 @@ public class DateUtils
                 }
             }
         } else if (duration < WEEK_IN_MILLIS && minResolution < WEEK_IN_MILLIS) {
-            count = duration / DAY_IN_MILLIS;
+            count = getNumberOfDaysPassed(time, now);
             if (past) {
                 if (abbrevRelative) {
                     resId = com.android.internal.R.plurals.abbrev_num_days_ago;
@@ -519,6 +519,22 @@ public class DateUtils
 
         String format = r.getQuantityString(resId, (int) count);
         return String.format(format, count);
+    }
+    
+    /**
+     * Returns the number of days passed between two dates.
+     *
+     * @param date1 first date
+     * @param date2 second date
+     * @return number of days passed between to dates.
+     */
+    private static long getNumberOfDaysPassed(long date1, long date2) {
+        Time time = new Time();
+        time.set(date1);
+        int day1 = Time.getJulianDay(date1, time.gmtoff);
+        time.set(date2);
+        int day2 = Time.getJulianDay(date2, time.gmtoff);
+        return Math.abs(day2 - day1);
     }
     
     /**
