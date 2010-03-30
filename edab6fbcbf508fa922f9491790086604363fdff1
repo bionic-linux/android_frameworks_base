@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAwX////M\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1003245
+      },
+      "writtenOn": "2010-03-30T01:47:31Z",
+      "side": 1,
+      "message": "The value return is absolute. See line 541.",
+      "parentUuid": "AAAAwX////k\u003d",
+      "revId": "edab6fbcbf508fa922f9491790086604363fdff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAwX////g\u003d",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-03-30T01:15:51Z",
       "side": 1,
       "message": "synchronized static method already implies lock on the class, so no need for this inner lock.",
+      "revId": "edab6fbcbf508fa922f9491790086604363fdff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAwX////I\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1003245
+      },
+      "writtenOn": "2010-03-30T01:47:31Z",
+      "side": 1,
+      "message": "Ups, sorry!",
+      "parentUuid": "AAAAwX////g\u003d",
       "revId": "edab6fbcbf508fa922f9491790086604363fdff1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
