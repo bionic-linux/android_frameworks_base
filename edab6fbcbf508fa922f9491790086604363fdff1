@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAwX////k\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2010-03-30T01:15:51Z",
+      "side": 1,
+      "message": "would be good to remark about possible negative values.",
+      "revId": "edab6fbcbf508fa922f9491790086604363fdff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAwX////g\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2010-03-30T01:15:51Z",
+      "side": 1,
+      "message": "synchronized static method already implies lock on the class, so no need for this inner lock.",
+      "revId": "edab6fbcbf508fa922f9491790086604363fdff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
