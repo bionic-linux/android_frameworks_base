@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAwX///8g\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1003245
+      },
+      "writtenOn": "2010-03-31T00:46:04Z",
+      "side": 1,
+      "message": "I will do some tests to make sure that the divisions will not cause the issue that was generating this bug. It looks like it will work just fine :)",
+      "parentUuid": "AAAAwX///8w\u003d",
+      "revId": "6d12ade256ea7b9894cbe12685425c6c826a1d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAwX///8s\u003d",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2010-03-31T00:06:50Z",
       "side": 1,
       "message": "thanks for catching this synchronization-- to minimize the code change could you add it to the method signature instead of this inline block?",
+      "revId": "6d12ade256ea7b9894cbe12685425c6c826a1d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAwX///8c\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1003245
+      },
+      "writtenOn": "2010-03-31T00:46:04Z",
+      "side": 1,
+      "message": "I have done what you are suggesting but it caused a compilation message about updating the API. I was not sure about this API change process and what impacts it could cause so I just synchronized the code internally. Any thoughts ?",
+      "parentUuid": "AAAAwX///8s\u003d",
       "revId": "6d12ade256ea7b9894cbe12685425c6c826a1d58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
