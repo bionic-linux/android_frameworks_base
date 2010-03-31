@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAwX///8E\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1003245
+      },
+      "writtenOn": "2010-03-31T01:24:00Z",
+      "side": 1,
+      "message": "Hey Jeff,\n\nYour proposal generates the same effect of the original code version. The division for DAY_IN_MILLIS may generate a fraction part which would cause one day imprecision. Causing the error is easy, just tested a call on 25/03 at 22:50 and current time 30/11 at 21:00 would result in 4 days instead of 5. I understand your efforts not to use one more object, but avoiding this issues by using the Time class which already does the calculations right might worth here. So please consider keeping the latest patch set\n\nHope to hear from you...",
+      "parentUuid": "AAAAwX///8w\u003d",
+      "revId": "6d12ade256ea7b9894cbe12685425c6c826a1d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAwX///8s\u003d",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 3
