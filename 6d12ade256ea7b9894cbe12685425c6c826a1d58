@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAwX///8w\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2010-03-31T00:06:50Z",
+      "side": 1,
+      "message": "so i started thinking about this more, and it looks like the only reason you\u0027re using the Time object is to generate gmtoff.  disregarding edge cases like leap seconds, the two gmtoff values seem to cancel each other out.\n\nthis can be solved much more simply by using:\n\ncount \u003d Math.abs((date1 / DAY_IN_MILLIS) - (date2 / DAY_IN_MILLIS))\n\nwhich doesn\u0027t need a Time instance, and can done inline above, instead of breaking into this separate method.",
+      "revId": "6d12ade256ea7b9894cbe12685425c6c826a1d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAwX///8s\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2010-03-31T00:06:50Z",
+      "side": 1,
+      "message": "thanks for catching this synchronization-- to minimize the code change could you add it to the method signature instead of this inline block?",
+      "revId": "6d12ade256ea7b9894cbe12685425c6c826a1d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
