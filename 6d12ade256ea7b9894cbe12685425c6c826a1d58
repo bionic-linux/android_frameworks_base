@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAwX///7I\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1003245
+      },
+      "writtenOn": "2010-03-31T16:19:38Z",
+      "side": 1,
+      "message": "Well It seams i missed something last time I tested your suggestion \u003d/ I rebuilt my sources with it once again and it works just fine! Clean and simple.",
+      "parentUuid": "AAAAwX///74\u003d",
+      "revId": "6d12ade256ea7b9894cbe12685425c6c826a1d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAwX///8s\u003d",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 3
