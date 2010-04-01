@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAwX///5E\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1003245
+      },
+      "writtenOn": "2010-04-01T01:44:32Z",
+      "side": 1,
+      "message": "Hey Jeff,\n\nI definitely have found the problem on our simpler solution. Not using the GMT offset on the Time.getJulianDay(date, gmtoff); method returns values that when subtracted will result in wrong days count. I have debuged using my local gmt and zero on the function parameter and using zero generates wrong values. I am really convinced that we should keep using the Time class now. How does it sound to you ?",
+      "parentUuid": "AAAAwX///7I\u003d",
+      "revId": "6d12ade256ea7b9894cbe12685425c6c826a1d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAwX///8s\u003d",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 3
