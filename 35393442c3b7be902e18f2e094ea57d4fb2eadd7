@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAwX///g4\u003d",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-04-08T08:55:28Z",
+      "side": 1,
+      "message": "what is the point of String.valueOf a string?",
+      "revId": "35393442c3b7be902e18f2e094ea57d4fb2eadd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
