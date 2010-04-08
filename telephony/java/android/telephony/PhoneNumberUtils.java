@@ -203,6 +203,11 @@ public class PhoneNumberUtils
             }
         }
 
+        int pos = addPlusChar(phoneNumber);
+        if (pos >= 0 && ret.length() > pos) {
+            ret.insert(pos, '+');
+        }
+
         return ret.toString();
     }
 
@@ -266,6 +271,30 @@ public class PhoneNumberUtils
         } else {
             return trimIndex - 1;
         }
+    }
+
+    /** GSM codes
+     *  Finds if a GSM code includes the international prefix (+).
+     *
+     * @param number the number to dial.
+     *
+     * @return the position where the + char will be inserted, -1 if the GSM code was not found.
+     */
+    static private int
+    addPlusChar(String number) {
+        final String CLIR_OFF = "#31#+";
+        final String CLIR_ON = "*31#+";
+        int pos = -1;
+
+        if (number.startsWith(CLIR_OFF)) {
+            pos = CLIR_OFF.length() - 1;
+        }
+
+        if (number.startsWith(CLIR_ON)) {
+            pos = CLIR_ON.length() - 1;
+        }
+
+        return pos;
     }
 
     /**
