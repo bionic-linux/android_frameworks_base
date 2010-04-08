@@ -3575,6 +3575,13 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             if (mRecyclerListener != null) {
                 mRecyclerListener.onMovedToScrapHeap(scrap);
             }
+
+            // Make sure scrap does not have focus and is not selected
+            // or pressed.  These properties can be set by the AbsListView
+            // and should be cleared when views are recycled.
+            scrap.clearFocus();
+            scrap.setSelected(false);
+            scrap.setPressed(false);
         }
 
         /**
@@ -3608,6 +3615,13 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                     if (hasListener) {
                         mRecyclerListener.onMovedToScrapHeap(victim);
                     }
+
+                    // Make sure victim does not have focus and is not selected
+                    // or pressed.  These properties can be set by the AbsListView
+                    // and should be cleared when views are recycled.
+                    victim.clearFocus();
+                    victim.setSelected(false);
+                    victim.setPressed(false);
 
                     if (ViewDebug.TRACE_RECYCLER) {
                         ViewDebug.trace(victim,
