@@ -16,6 +16,24 @@
       "revId": "35393442c3b7be902e18f2e094ea57d4fb2eadd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAwX///dU\u003d",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-04-08T22:01:53Z",
+      "side": 1,
+      "message": "No point. I\u0027ll remove it.",
+      "parentUuid": "AAAAwX///g4\u003d",
+      "revId": "35393442c3b7be902e18f2e094ea57d4fb2eadd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
