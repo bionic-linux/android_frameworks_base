@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAwX///V4\u003d",
+        "filename": "telephony/java/android/telephony/NeighboringCellInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-04-10T07:40:21Z",
+      "side": 1,
+      "message": "How about the LAC then? If location is FFFFFFFF then mLac becomes 65535, right? Should the new test cover both lac and cid?",
+      "revId": "a2004dcde7644e67ef1d344535c45caadfdf55d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
