@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAwX///kg\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-04-12T21:57:58Z",
+      "side": 1,
+      "message": "In GSMPhone this is onMMIDone, your meets the convention, but lets make both the same and change this to onMMIDone.",
+      "revId": "94f8e3a7f6ce020044084f6616feccf391096f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
