@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAwn///tY\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2010-04-17T21:13:54Z",
+      "side": 1,
+      "message": "These would be better as constants.",
+      "revId": "a745ba54e454a9e120dee86e63b64a6641cb8749",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
