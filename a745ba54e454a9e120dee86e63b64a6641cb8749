@@ -16,6 +16,24 @@
       "revId": "a745ba54e454a9e120dee86e63b64a6641cb8749",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAwn///eI\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-04-21T10:25:31Z",
+      "side": 1,
+      "message": "Do you mean declaring them as final or also moving them outside to class scope?",
+      "parentUuid": "AAAAwn///tY\u003d",
+      "revId": "a745ba54e454a9e120dee86e63b64a6641cb8749",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
