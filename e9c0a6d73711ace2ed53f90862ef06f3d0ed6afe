@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAw3///5k\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaMmiCode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-04-22T23:37:28Z",
+      "side": 1,
+      "message": "Looks like this should include State.CANCELLED also. If we all agree I\u0027ll change GsmMmiCode.",
+      "revId": "e9c0a6d73711ace2ed53f90862ef06f3d0ed6afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
