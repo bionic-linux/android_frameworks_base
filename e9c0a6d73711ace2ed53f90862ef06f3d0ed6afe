@@ -16,6 +16,24 @@
       "revId": "e9c0a6d73711ace2ed53f90862ef06f3d0ed6afe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAw3///4Q\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaMmiCode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-04-23T01:20:29Z",
+      "side": 1,
+      "message": "I agree. Its cleaner to change it. \n\nBut may not be necessary because currently the isCancelable() method below returns false. I wonder if this method will be called even once. Even if it called twice, onMMIDone handles the case pretty well.",
+      "parentUuid": "AAAAw3///5k\u003d",
+      "revId": "e9c0a6d73711ace2ed53f90862ef06f3d0ed6afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
