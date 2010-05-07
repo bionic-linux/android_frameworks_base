@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAyX///ns\u003d",
+        "filename": "core/java/android/accounts/AccountManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1003425
+      },
+      "writtenOn": "2010-05-07T21:33:15Z",
+      "side": 1,
+      "message": "where this this change come from? This is what it looks like on master:\n\n        if (bundle \u003d\u003d null) {\n            // This should never happen, but it does, occasionally. If it does return null to\n            // signify that we were not able to get the authtoken.\n            // TODO: remove this when the bug is found that sometimes causes a null bundle to be\n            // returned\n            Log.e(TAG, \"blockingGetAuthToken: null was returned from getResult() for \"\n                    + account + \", authTokenType \" + authTokenType);\n            return null;\n        }",
+      "revId": "97d576f9121351f995afefca64bc0ea315e1ac8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
