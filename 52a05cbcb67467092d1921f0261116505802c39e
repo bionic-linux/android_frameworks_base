@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAyn///k4\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2010-05-12T18:04:09Z",
+      "side": 1,
+      "message": "This comment will need to be updated as well.",
+      "revId": "52a05cbcb67467092d1921f0261116505802c39e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
