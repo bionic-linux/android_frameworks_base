@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAyn///h0\u003d",
+        "filename": "core/java/android/database/Cursor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-05-12T23:40:25Z",
+      "side": 1,
+      "message": "its, not it\u0027s\n\nBut don\u0027t worry about this one... I\u0027m going to be cleaning up dozens of them in one big CL one day.  Maybe sooner.",
+      "revId": "b8225078a602f2ac053c454329fc919db4665a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAyn///hw\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteCursor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-05-12T23:40:25Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "b8225078a602f2ac053c454329fc919db4665a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAyn///hs\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteProgram.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-05-12T23:40:25Z",
+      "side": 1,
+      "message": "etc",
+      "revId": "b8225078a602f2ac053c454329fc919db4665a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
