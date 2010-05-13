@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzH////s\u003d",
+        "filename": "core/java/android/os/IRemoteControl.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2010-05-13T16:10:06Z",
+      "side": 1,
+      "message": "I don\u0027t think Region implements readFromParcel(Parcel) now. Is there a missing patch in this series?",
+      "revId": "e591f723883dd967c0801b0579d1198ed2a68719",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
