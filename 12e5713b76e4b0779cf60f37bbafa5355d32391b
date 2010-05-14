@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzH///0g\u003d",
+        "filename": "libs/ui/Surface.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-05-14T18:05:33Z",
+      "side": 1,
+      "message": "remove the extra spaces",
+      "revId": "12e5713b76e4b0779cf60f37bbafa5355d32391b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
