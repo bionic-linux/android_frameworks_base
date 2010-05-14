@@ -16,6 +16,24 @@
       "revId": "e591f723883dd967c0801b0579d1198ed2a68719",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///20\u003d",
+        "filename": "core/java/android/os/IRemoteControl.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003213
+      },
+      "writtenOn": "2010-05-14T09:20:46Z",
+      "side": 1,
+      "message": "Yes, it looks like I\u0027ve managed to post it without all the right dependencies.\n\nhttps://review.source.android.com/#change,14014 adds readFromParcel() to Region.",
+      "parentUuid": "AAAAzH////s\u003d",
+      "revId": "e591f723883dd967c0801b0579d1198ed2a68719",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
