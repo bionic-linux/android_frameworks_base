@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzH///xs\u003d",
+        "filename": "docs/html/guide/tutorials/views/hello-gallery.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-05-14T19:51:10Z",
+      "side": 1,
+      "message": "Please call it DefaultGallery, or better, HelloGallery.",
+      "revId": "247eb52874ccf18bcf77e79656f70efbb585b2f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///xw\u003d",
+        "filename": "docs/html/guide/tutorials/views/hello-gallery.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-05-14T19:51:10Z",
+      "side": 1,
+      "message": "This works only with a Java 1.6 compiler, do not use @Override with interfaces.",
+      "revId": "247eb52874ccf18bcf77e79656f70efbb585b2f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
