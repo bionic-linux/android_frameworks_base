@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzH///Wo\u003d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000687
+      },
+      "writtenOn": "2010-05-18T22:29:01Z",
+      "side": 1,
+      "message": "enableBroadcast() is a blocking call. It won\u0027t return til radio finished the update of messageId.\n\nPlease add comments on its blocking feature so that the application can use it wisely to prevent UI blocking.",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///Wk\u003d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000687
+      },
+      "writtenOn": "2010-05-18T22:29:01Z",
+      "side": 1,
+      "message": "Similar to enableBroadcast, add blocking comment as well.",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///WY\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000687
+      },
+      "writtenOn": "2010-05-18T22:29:01Z",
+      "side": 1,
+      "message": "please use meaningful constants for code scheme 0 and 255.",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///V8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000687
+      },
+      "writtenOn": "2010-05-18T22:29:01Z",
+      "side": 1,
+      "message": "This requires the RIL setGsmBroadcastConfig() implemented as state-less machine, i.e, each time the caller provides a complete list of active ids/schemes. All other ids/schemes not in list will be removed. \n\nNeed update the ril.h to add this requirement.",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///V4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000687
+      },
+      "writtenOn": "2010-05-18T22:29:01Z",
+      "side": 1,
+      "message": "May want to expose this to public via SmsManager.",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///V0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000687
+      },
+      "writtenOn": "2010-05-18T22:29:01Z",
+      "side": 1,
+      "message": "Is this SmsCbHeader for both GSM and UMTS header?",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///Vw\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000687
+      },
+      "writtenOn": "2010-05-18T22:29:01Z",
+      "side": 1,
+      "message": "shell it check if the UDH indicator is present (3GPP 23.040) and decode User Data Header here?",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
