@@ -73,7 +73,7 @@ import java.util.Random;
 public class WifiWatchdogService {
     private static final String TAG = "WifiWatchdogService";
     private static final boolean V = false || Config.LOGV;
-    private static final boolean D = true || Config.LOGD;
+    private static final boolean D = Config.DEBUG;
     
     private Context mContext;
     private ContentResolver mContentResolver;
@@ -1263,7 +1263,7 @@ public class WifiWatchdogService {
                 return false;
                 
             } catch (Exception e) {
-                if (V || Config.LOGD) {
+                if (V || Config.DEBUG) {
                     Log.d(TAG, "DnsPinger.isReachable got an unknown exception", e);
                 }
                 return false;

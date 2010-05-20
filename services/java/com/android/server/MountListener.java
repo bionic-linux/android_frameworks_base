@@ -104,7 +104,7 @@ final class MountListener implements Runnable {
      * @param event  An event received from the vol service daemon
      */
     private void handleEvent(String event) {
-        if (Config.LOGD) Log.d(TAG, "handleEvent " + event);
+        if (Config.DEBUG) Log.d(TAG, "handleEvent " + event);
     
         int colonIndex = event.indexOf(':');
         String path = (colonIndex > 0 ? event.substring(colonIndex + 1) : null);

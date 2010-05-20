@@ -57,7 +57,7 @@ import android.provider.Settings;
 class DeviceStorageMonitorService extends Binder {
     private static final String TAG = "DeviceStorageMonitorService";
     private static final boolean DEBUG = false;
-    private static final boolean localLOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    private static final boolean localLOGV = DEBUG ? Config.DEBUG : Config.LOGV;
     private static final int DEVICE_MEMORY_WHAT = 1;
     private static final int MONITOR_INTERVAL = 1; //in minutes
     private static final int LOW_MEMORY_NOTIFICATION_ID = 1;

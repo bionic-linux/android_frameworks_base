@@ -41,7 +41,7 @@ import com.android.server.am.BatteryStatsService;
 class SensorService extends ISensorService.Stub {
     static final String TAG = SensorService.class.getSimpleName();
     private static final boolean DEBUG = false;
-    private static final boolean localLOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    private static final boolean localLOGV = DEBUG ? Config.DEBUG : Config.LOGV;
     private static final int SENSOR_DISABLE = -1;
     
     /**

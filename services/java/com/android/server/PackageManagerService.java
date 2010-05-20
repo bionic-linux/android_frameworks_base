@@ -2216,7 +2216,7 @@ class PackageManagerService extends IPackageManager.Stub {
             }
         }
 
-        if ((parseFlags&PackageParser.PARSE_CHATTY) != 0 && Config.LOGD) Log.d(
+        if ((parseFlags&PackageParser.PARSE_CHATTY) != 0 && Config.DEBUG) Log.d(
                 TAG, "Scanning package " + pkgName);
         if (mPackages.containsKey(pkgName) || mSharedLibraries.containsKey(pkgName)) {
             Log.w(TAG, "*************************************************");
@@ -2302,7 +2302,7 @@ class PackageManagerService extends IPackageManager.Stub {
                     mLastScanError = PackageManager.INSTALL_FAILED_INSUFFICIENT_STORAGE;
                     return null;
                 }
-                if ((parseFlags&PackageParser.PARSE_CHATTY) != 0 && Config.LOGD) {
+                if ((parseFlags&PackageParser.PARSE_CHATTY) != 0 && Config.DEBUG) {
                     Log.d(TAG, "Shared UserID " + pkg.mSharedUserId + " (uid="
                             + suid.userId + "): packages=" + suid.packages);
                 }
@@ -2577,7 +2577,7 @@ class PackageManagerService extends IPackageManager.Stub {
                         } else {
                             p.info.authority = p.info.authority + ";" + names[j];
                         }
-                        if ((parseFlags&PackageParser.PARSE_CHATTY) != 0 && Config.LOGD)
+                        if ((parseFlags&PackageParser.PARSE_CHATTY) != 0 && Config.DEBUG)
                             Log.d(TAG, "Registered content provider: " + names[j] +
                             ", className = " + p.info.name +
                             ", isSyncable = " + p.info.isSyncable);
@@ -2600,7 +2600,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Providers: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Providers: " + r);
             }
     
             N = pkg.services.size();
@@ -2620,7 +2620,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Services: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Services: " + r);
             }
     
             N = pkg.receivers.size();
@@ -2640,7 +2640,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Receivers: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Receivers: " + r);
             }
     
             N = pkg.activities.size();
@@ -2660,7 +2660,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Activities: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Activities: " + r);
             }
     
             N = pkg.permissionGroups.size();
@@ -2694,7 +2694,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Permission Groups: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Permission Groups: " + r);
             }
     
             N = pkg.permissions.size();
@@ -2755,7 +2755,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Permissions: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Permissions: " + r);
             }
     
             N = pkg.instrumentation.size();
@@ -2777,7 +2777,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Instrumentation: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Instrumentation: " + r);
             }
     
             if (pkg.protectedBroadcasts != null) {
@@ -2887,7 +2887,7 @@ class PackageManagerService extends IPackageManager.Stub {
             if (! sharedLibraryFile.exists() ||
                 sharedLibraryFile.length() != entry.getSize() ||
                 sharedLibraryFile.lastModified() != entry.getTime()) {
-                if (Config.LOGD) {
+                if (Config.DEBUG) {
                     Log.d(TAG, "Caching shared lib " + entry.getName());
                 }
                 if (mInstaller == null) {
@@ -2973,7 +2973,7 @@ class PackageManagerService extends IPackageManager.Stub {
     }
 
     void removePackageLI(PackageParser.Package pkg, boolean chatty) {
-        if (chatty && Config.LOGD) Log.d(
+        if (chatty && Config.DEBUG) Log.d(
             TAG, "Removing package " + pkg.applicationInfo.packageName );
 
         synchronized (mPackages) {
@@ -3014,7 +3014,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 for (int j = 0; j < names.length; j++) {
                     if (mProviders.get(names[j]) == p) {
                         mProviders.remove(names[j]);
-                        if (chatty && Config.LOGD) Log.d(
+                        if (chatty && Config.DEBUG) Log.d(
                             TAG, "Unregistered content provider: " + names[j] +
                             ", className = " + p.info.name +
                             ", isSyncable = " + p.info.isSyncable);
@@ -3030,7 +3030,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Providers: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Providers: " + r);
             }
     
             N = pkg.services.size();
@@ -3048,7 +3048,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Services: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Services: " + r);
             }
     
             N = pkg.receivers.size();
@@ -3066,7 +3066,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Receivers: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Receivers: " + r);
             }
     
             N = pkg.activities.size();
@@ -3084,7 +3084,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Activities: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Activities: " + r);
             }
     
             N = pkg.permissions.size();
@@ -3118,7 +3118,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Permissions: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Permissions: " + r);
             }
     
             N = pkg.instrumentation.size();
@@ -3136,7 +3136,7 @@ class PackageManagerService extends IPackageManager.Stub {
                 }
             }
             if (r != null) {
-                if (Config.LOGD) Log.d(TAG, "  Instrumentation: " + r);
+                if (Config.DEBUG) Log.d(TAG, "  Instrumentation: " + r);
             }
         }
     }
