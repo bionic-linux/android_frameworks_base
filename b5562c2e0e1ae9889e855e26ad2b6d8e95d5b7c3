@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "AAAAzH//+90\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-05-26T02:04:28Z",
+      "side": 1,
+      "message": "This code doesn\u0027t seem to have anything to do with Sim. However, this class is for access sms on sim.\nIn Cdma case setBroadcastConfig functionality is implemented thru CdmaSmsDispatcher and CdmaPhone and then thru PhoneProxy. There is a same function in GsmPhone which still says not implemented. Why not use that?",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAzH///WY\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
         "patchSetId": 2
