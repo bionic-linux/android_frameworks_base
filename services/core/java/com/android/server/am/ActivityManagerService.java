@@ -17437,6 +17437,25 @@ public final class ActivityManagerService extends ActivityManagerNative
         int changes = 0;
 
         if (values != null) {
+
+            // Ignore attempts to set an excluded language
+            if (values.locale != null) {
+                String filter = SystemProperties.get("ro.product.locale.excluded");
+
+                if (filter != null) {
+                    // cannot be null but can be empty according to documentation
+                    String language = values.locale.getLanguage();
+                    // cannot be null but can be empty according to the documentation
+                    String country = values.locale.getCountry();
+
+                    if(language.length() > 0 && country.length() > 0) {
+                        if (filter.contains(language + "_" + country)) {
+                            values.locale = null;
+                        }
+                    }
+                }
+            }
+
             Configuration newConfig = new Configuration(mConfiguration);
             changes = newConfig.updateFrom(values);
             if (changes != 0) {

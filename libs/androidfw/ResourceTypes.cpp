@@ -36,6 +36,9 @@
 #include <utils/Log.h>
 #include <utils/String16.h>
 #include <utils/String8.h>
+#ifdef HAVE_ANDROID_OS
+#include <cutils/properties.h>
+#endif
 
 #ifdef __ANDROID__
 #include <binder/TextOutput.h>
@@ -5710,10 +5713,32 @@ void ResTable::getLocales(Vector<String8>* locales) const
     const size_t I = configs.size();
 
     char locale[RESTABLE_MAX_LOCALE_LEN];
+
+#ifdef HAVE_ANDROID_OS
+    // Get the list of possible excluded locale from property
+    const char* exclPropName = "ro.product.locale.excluded";
+    char filter[PROPERTY_VALUE_MAX];
+    const int filterLen = property_get(exclPropName, filter, NULL);
+    char *underscore;
+    while ((underscore = strchr(filter, '_')) != NULL) {
+        *underscore = '-';
+    }
+#endif
+
     for (size_t i=0; i<I; i++) {
         configs[i].getBcp47Locale(locale);
         const size_t J = locales->size();
         size_t j;
+
+#ifdef HAVE_ANDROID_OS
+        // Run the current locale through our locale filter
+        if (strlen(locale) >= 5 && filterLen >= 5) {
+            // If filtered, skip to next locale in loop
+            if (strstr(filter, locale) != NULL) {
+                continue;
+            }
+        }
+#endif
         for (j=0; j<J; j++) {
             if (0 == strcmp(locale, (*locales)[j].string())) {
                 break;
