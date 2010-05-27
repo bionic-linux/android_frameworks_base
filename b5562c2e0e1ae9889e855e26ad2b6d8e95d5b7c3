@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAzH//+8k\u003d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-05-27T05:37:28Z",
+      "side": 1,
+      "message": "Absolutely, will do.",
+      "parentUuid": "AAAAzH///Wo\u003d",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAzH///Wk\u003d",
         "filename": "telephony/java/android/telephony/SmsManager.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-05-18T22:29:01Z",
       "side": 1,
       "message": "Similar to enableBroadcast, add blocking comment as well.",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH//+8g\u003d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-05-27T05:37:28Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "AAAAzH///Wk\u003d",
       "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAzH//+8c\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-05-27T05:37:28Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "AAAAzH///WY\u003d",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAzH///V8\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
         "patchSetId": 2
@@ -81,6 +135,24 @@
       "writtenOn": "2010-05-18T22:29:01Z",
       "side": 1,
       "message": "This requires the RIL setGsmBroadcastConfig() implemented as state-less machine, i.e, each time the caller provides a complete list of active ids/schemes. All other ids/schemes not in list will be removed. \n\nNeed update the ril.h to add this requirement.",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH//+8Y\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-05-27T05:37:28Z",
+      "side": 1,
+      "message": "This is exactly why I chose to limit the calls that replace the entire config to one place, beneath the public API. With the current mechanism, there should be no risk of over-writing previous configs?",
+      "parentUuid": "AAAAzH///V8\u003d",
       "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAzH//+8U\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-05-27T05:37:28Z",
+      "side": 1,
+      "message": "As described in general comments, I don\u0027t think each app should be able to disable reception for all other apps. Instead, the activation of CBS is controlled in a \"reference counted\" manner, meaning that it\u0027s activated whenever there\u0027s at least one requested subscription, otherwise deactivated.",
+      "parentUuid": "AAAAzH///V4\u003d",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAzH///V0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
         "patchSetId": 2
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAzH//+8Q\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-05-27T05:37:28Z",
+      "side": 1,
+      "message": "No, this is for GSM headers only. However, at least with the Qualcomm RIL implementation, the UMTS header format is not used. Instead, a CBS message received over UMTS is converted into GSM format before dispatched to Java RIL. This way the format does not become dependent on the currently used RAT (which would require the intent to hold additional information about which format the PDU has). I think this is an excellent abstraction. Perhaps this should be added to the RIL interface specification though, in order not to make this vendor dependent.",
+      "parentUuid": "AAAAzH///V0\u003d",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAzH///Vw\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
         "patchSetId": 2
@@ -132,6 +240,24 @@
       "writtenOn": "2010-05-18T22:29:01Z",
       "side": 1,
       "message": "shell it check if the UDH indicator is present (3GPP 23.040) and decode User Data Header here?",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH//+8M\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-05-27T05:37:28Z",
+      "side": 1,
+      "message": "I see no real point since even though 23.038 defines support for a UDH also for SMS-CB data coding scheme, to my knowledge there aren\u0027t actually any UDH information elements that are applicable to SMS-CB (the ones in 23.040 are for normal point-to-point SMS only, e.g. concatenation does not make sense since SMS-CB uses the page parameter instead).",
+      "parentUuid": "AAAAzH///Vw\u003d",
       "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
