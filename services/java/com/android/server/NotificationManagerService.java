@@ -73,6 +73,7 @@ class NotificationManagerService extends INotificationManager.Stub
     // message codes
     private static final int MESSAGE_TIMEOUT = 2;
 
+    private static final int LONGER_DELAY = 5000; // 5 seconds
     private static final int LONG_DELAY = 3500; // 3.5 seconds
     private static final int SHORT_DELAY = 2000; // 2 seconds
     
@@ -538,9 +539,24 @@ class NotificationManagerService extends INotificationManager.Stub
     private void scheduleTimeoutLocked(ToastRecord r, boolean immediate)
     {
         Message m = Message.obtain(mHandler, MESSAGE_TIMEOUT, r);
-        long delay = immediate ? 0 : (r.duration == Toast.LENGTH_LONG ? LONG_DELAY : SHORT_DELAY);
+        long delay = immediate ? 0 : getToastDuration(r.duration);
         mHandler.removeCallbacksAndMessages(r);
         mHandler.sendMessageDelayed(m, delay);
+    }
+
+    private int getToastDuration(int duration)
+    {
+        switch (duration)
+        {
+            case Toast.LENGTH_SHORT:
+                return SHORT_DELAY;
+            case Toast.LENGTH_LONG:
+                return LONG_DELAY;
+            case Toast.LENGTH_LONGER:
+                return LONGER_DELAY;
+            default:
+                return SHORT_DELAY;
+        }
     }
 
     private void handleTimeout(ToastRecord record)

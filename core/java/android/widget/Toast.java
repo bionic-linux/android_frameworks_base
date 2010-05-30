@@ -65,6 +65,13 @@ public class Toast {
      */
     public static final int LENGTH_LONG = 1;
 
+    /**
+     * Show the view or text notification for a longer period of time.  This time
+     * could be user-definable.
+     * @see #setDuration
+     */
+    public static final int LENGTH_LONGER = 2;
+
     final Handler mHandler = new Handler();    
     final Context mContext;
     final TN mTN;
@@ -141,6 +148,7 @@ public class Toast {
      * Set how long to show the view for.
      * @see #LENGTH_SHORT
      * @see #LENGTH_LONG
+     * @see #LENGTH_LONGER
      */
     public void setDuration(int duration) {
         mDuration = duration;
@@ -223,8 +231,8 @@ public class Toast {
      * @param context  The context to use.  Usually your {@link android.app.Application}
      *                 or {@link android.app.Activity} object.
      * @param text     The text to show.  Can be formatted text.
-     * @param duration How long to display the message.  Either {@link #LENGTH_SHORT} or
-     *                 {@link #LENGTH_LONG}
+     * @param duration How long to display the message.  Either {@link #LENGTH_SHORT}, 
+     *                 {@link #LENGTH_LONG} or {@link #LENGTH_LONGER}
      *
      */
     public static Toast makeText(Context context, CharSequence text, int duration) {
@@ -248,8 +256,8 @@ public class Toast {
      * @param context  The context to use.  Usually your {@link android.app.Application}
      *                 or {@link android.app.Activity} object.
      * @param resId    The resource id of the string resource to use.  Can be formatted text.
-     * @param duration How long to display the message.  Either {@link #LENGTH_SHORT} or
-     *                 {@link #LENGTH_LONG}
+     * @param duration How long to display the message.  Either {@link #LENGTH_SHORT}, 
+     *                 {@link #LENGTH_LONG} or {@link #LENGTH_LONGER}
      *
      * @throws Resources.NotFoundException if the resource can't be found.
      */
