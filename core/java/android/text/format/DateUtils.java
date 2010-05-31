@@ -449,6 +449,14 @@ public class DateUtils
         boolean past = (now >= time);
         long duration = Math.abs(now - time);
 
+        Time startTime = new Time();
+        startTime.set(time);
+        Time currentTime = new Time();
+        currentTime.set(now);
+
+        int startDay = Time.getJulianDay(time, startTime.gmtoff);
+        int currentDay = Time.getJulianDay(now, currentTime.gmtoff);
+
         int resId;
         long count;
         if (duration < MINUTE_IN_MILLIS && minResolution < MINUTE_IN_MILLIS) {
@@ -497,7 +505,7 @@ public class DateUtils
                 }
             }
         } else if (duration < WEEK_IN_MILLIS && minResolution < WEEK_IN_MILLIS) {
-            count = duration / DAY_IN_MILLIS;
+            count = Math.abs(currentDay - startDay);
             if (past) {
                 if (abbrevRelative) {
                     resId = com.android.internal.R.plurals.abbrev_num_days_ago;
