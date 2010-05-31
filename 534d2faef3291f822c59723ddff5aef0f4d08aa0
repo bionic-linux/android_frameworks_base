@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzX///50\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-05-31T17:17:46Z",
+      "side": 1,
+      "message": "this function has been a performance hotspot in the past, so I\u0027m reluctant to add more computation in here, especially up here where it\u0027s not used in all branches below.\n\ncould you at least move this down past line 507 where you actually need the currentDay and startDay variables?\n\nalso, could you add a unit test for this?",
+      "revId": "534d2faef3291f822c59723ddff5aef0f4d08aa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
