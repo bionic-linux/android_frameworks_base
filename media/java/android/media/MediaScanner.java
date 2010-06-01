@@ -333,17 +333,17 @@ public class MediaScanner
         Uri mTableUri;
         long mRowId;
         String mPath;
-        long mLastModified;
+        long mLastModifiedSeconds;
         boolean mSeenInFileSystem;
-        boolean mLastModifiedChanged;
+        boolean mLastModifiedSecondsChanged;
 
-        FileCacheEntry(Uri tableUri, long rowId, String path, long lastModified) {
+        FileCacheEntry(Uri tableUri, long rowId, String path, long lastModifiedSeconds) {
             mTableUri = tableUri;
             mRowId = rowId;
             mPath = path;
-            mLastModified = lastModified;
+            mLastModifiedSeconds = lastModifiedSeconds;
             mSeenInFileSystem = false;
-            mLastModifiedChanged = false;
+            mLastModifiedSecondsChanged = false;
         }
 
         @Override
@@ -394,11 +394,12 @@ public class MediaScanner
         private int mYear;
         private int mDuration;
         private String mPath;
-        private long mLastModified;
+        private long mLastModifiedSeconds;
         private long mFileSize;
         private String mWriter;
 
-        public FileCacheEntry beginFile(String path, String mimeType, long lastModified, long fileSize) {
+        public FileCacheEntry beginFile(String path, String mimeType, long lastModifiedSeconds,
+               long fileSize) {
 
             // special case certain file names
             // I use regionMatches() instead of substring() below
@@ -456,10 +457,10 @@ public class MediaScanner
             entry.mSeenInFileSystem = true;
 
             // add some slack to avoid a rounding error
-            long delta = lastModified - entry.mLastModified;
+            long delta = lastModifiedSeconds - entry.mLastModifiedSeconds;
             if (delta > 1 || delta < -1) {
-                entry.mLastModified = lastModified;
-                entry.mLastModifiedChanged = true;
+                entry.mLastModifiedSeconds = lastModifiedSeconds;
+                entry.mLastModifiedSecondsChanged = true;
             }
 
             if (mProcessPlaylists && MediaFile.isPlayListFileType(mFileType)) {
@@ -479,20 +480,20 @@ public class MediaScanner
             mYear = 0;
             mDuration = 0;
             mPath = path;
-            mLastModified = lastModified;
+            mLastModifiedSeconds = lastModifiedSeconds;
             mWriter = null;
 
             return entry;
         }
 
-        public void scanFile(String path, long lastModified, long fileSize) {
+        public void scanFile(String path, long lastModifiedSeconds, long fileSize) {
             // This is the callback funtion from native codes.
             // Log.v(TAG, "scanFile: "+path);
-            doScanFile(path, null, lastModified, fileSize, false);
+            doScanFile(path, null, lastModifiedSeconds, fileSize, false);
         }
 
-        public void scanFile(String path, String mimeType, long lastModified, long fileSize) {
-            doScanFile(path, mimeType, lastModified, fileSize, false);
+        public void scanFile(String path, String mimeType, long lastModifiedSeconds, long fileSize) {
+            doScanFile(path, mimeType, lastModifiedSeconds, fileSize, false);
         }
 
         private boolean isMetadataSupported(int fileType) {
@@ -511,13 +512,14 @@ public class MediaScanner
             }
             return false;
         }
-        public Uri doScanFile(String path, String mimeType, long lastModified, long fileSize, boolean scanAlways) {
+        public Uri doScanFile(String path, String mimeType, long lastModifiedSeconds, long fileSize,
+               boolean scanAlways) {
             Uri result = null;
 //            long t1 = System.currentTimeMillis();
             try {
-                FileCacheEntry entry = beginFile(path, mimeType, lastModified, fileSize);
+                FileCacheEntry entry = beginFile(path, mimeType, lastModifiedSeconds, fileSize);
                 // rescan for metadata if file was modified since last scan
-                if (entry != null && (entry.mLastModifiedChanged || scanAlways)) {
+                if (entry != null && (entry.mLastModifiedSecondsChanged || scanAlways)) {
                     String lowpath = path.toLowerCase();
                     boolean ringtones = (lowpath.indexOf(RINGTONES_DIR) > 0);
                     boolean notifications = (lowpath.indexOf(NOTIFICATIONS_DIR) > 0);
@@ -632,7 +634,7 @@ public class MediaScanner
 
             map.put(MediaStore.MediaColumns.DATA, mPath);
             map.put(MediaStore.MediaColumns.TITLE, mTitle);
-            map.put(MediaStore.MediaColumns.DATE_MODIFIED, mLastModified);
+            map.put(MediaStore.MediaColumns.DATE_MODIFIED, mLastModifiedSeconds);
             map.put(MediaStore.MediaColumns.SIZE, mFileSize);
             map.put(MediaStore.MediaColumns.MIME_TYPE, mMimeType);
 
@@ -640,13 +642,13 @@ public class MediaScanner
                 map.put(Video.Media.ARTIST, (mArtist != null && mArtist.length() > 0 ? mArtist : MediaFile.UNKNOWN_STRING));
                 map.put(Video.Media.ALBUM, (mAlbum != null && mAlbum.length() > 0 ? mAlbum : MediaFile.UNKNOWN_STRING));
                 map.put(Video.Media.DURATION, mDuration);
-                map.put(Video.Media.DATE_TAKEN, mLastModified * 1000);
+                map.put(Video.Media.DATE_TAKEN, mLastModifiedSeconds * 1000);
                 // FIXME - add RESOLUTION
             } else if (MediaFile.isImageFileType(mFileType)) {
                 // FIXME - add DESCRIPTION
                 // DATE_TAKEN will be overridden later if this is a JPEG image whose EXIF data
                 // contains date time information.
-                map.put(Images.Media.DATE_TAKEN, mLastModified * 1000);
+                map.put(Images.Media.DATE_TAKEN, mLastModifiedSeconds * 1000);
             } else if (MediaFile.isAudioFileType(mFileType)) {
                 map.put(Audio.Media.ARTIST, (mArtist != null && mArtist.length() > 0 ? mArtist : MediaFile.UNKNOWN_STRING));
                 map.put(Audio.Media.ALBUM, (mAlbum != null && mAlbum.length() > 0 ? mAlbum : MediaFile.UNKNOWN_STRING));
@@ -918,14 +920,14 @@ public class MediaScanner
                     while (c.moveToNext()) {
                         long rowId = c.getLong(ID_AUDIO_COLUMN_INDEX);
                         String path = c.getString(PATH_AUDIO_COLUMN_INDEX);
-                        long lastModified = c.getLong(DATE_MODIFIED_AUDIO_COLUMN_INDEX);
+                        long lastModifiedSeconds = c.getLong(DATE_MODIFIED_AUDIO_COLUMN_INDEX);
 
                         String key = path;
                         if (mCaseInsensitivePaths) {
                             key = path.toLowerCase();
                         }
                         mFileCache.put(key, new FileCacheEntry(mAudioUri, rowId, path,
-                                lastModified));
+                                lastModifiedSeconds));
                     }
                 } finally {
                     c.close();
@@ -946,14 +948,14 @@ public class MediaScanner
                     while (c.moveToNext()) {
                         long rowId = c.getLong(ID_VIDEO_COLUMN_INDEX);
                         String path = c.getString(PATH_VIDEO_COLUMN_INDEX);
-                        long lastModified = c.getLong(DATE_MODIFIED_VIDEO_COLUMN_INDEX);
+                        long lastModifiedSeconds = c.getLong(DATE_MODIFIED_VIDEO_COLUMN_INDEX);
 
                         String key = path;
                         if (mCaseInsensitivePaths) {
                             key = path.toLowerCase();
                         }
                         mFileCache.put(key, new FileCacheEntry(mVideoUri, rowId, path,
-                                lastModified));
+                                lastModifiedSeconds));
                     }
                 } finally {
                     c.close();
@@ -976,14 +978,14 @@ public class MediaScanner
                     while (c.moveToNext()) {
                         long rowId = c.getLong(ID_IMAGES_COLUMN_INDEX);
                         String path = c.getString(PATH_IMAGES_COLUMN_INDEX);
-                       long lastModified = c.getLong(DATE_MODIFIED_IMAGES_COLUMN_INDEX);
+                       long lastModifiedSeconds = c.getLong(DATE_MODIFIED_IMAGES_COLUMN_INDEX);
 
                         String key = path;
                         if (mCaseInsensitivePaths) {
                             key = path.toLowerCase();
                         }
                         mFileCache.put(key, new FileCacheEntry(mImagesUri, rowId, path,
-                                lastModified));
+                                lastModifiedSeconds));
                     }
                 } finally {
                     c.close();
@@ -1007,14 +1009,15 @@ public class MediaScanner
 
                             if (path != null && path.length() > 0) {
                                 long rowId = c.getLong(ID_PLAYLISTS_COLUMN_INDEX);
-                                long lastModified = c.getLong(DATE_MODIFIED_PLAYLISTS_COLUMN_INDEX);
+                                long lastModifiedSeconds = c.getLong(
+                                    DATE_MODIFIED_PLAYLISTS_COLUMN_INDEX);
 
                                 String key = path;
                                 if (mCaseInsensitivePaths) {
                                     key = path.toLowerCase();
                                 }
                                 mFileCache.put(key, new FileCacheEntry(mPlaylistsUri, rowId, path,
-                                        lastModified));
+                                        lastModifiedSeconds));
                             }
                         }
                     } finally {
@@ -1112,7 +1115,7 @@ public class MediaScanner
             if (fileMissing) {
                 // do not delete missing playlists, since they may have been modified by the user.
                 // the user can delete them in the media player instead.
-                // instead, clear the path and lastModified fields in the row
+                // instead, clear the path and lastModifiedSeconds fields in the row
                 MediaFile.MediaFileType mediaFileType = MediaFile.getFileType(path);
                 int fileType = (mediaFileType == null ? 0 : mediaFileType.fileType);
 
@@ -1203,8 +1206,12 @@ public class MediaScanner
             prescan(path);
 
             File file = new File(path);
+
+            // lastModified is in milliseconds on Files.
+            long lastModifiedSeconds = file.lastModified() / 1000;
+
             // always scan the file, so we can return the content://media Uri for existing files
-            return mClient.doScanFile(path, mimeType, file.lastModified(), file.length(), true);
+            return mClient.doScanFile(path, mimeType, lastModifiedSeconds, file.length(), true);
         } catch (RemoteException e) {
             Log.e(TAG, "RemoteException in MediaScanner.scanFile()", e);
             return null;
@@ -1436,7 +1443,7 @@ public class MediaScanner
             String path = entry.mPath;
 
             // only process playlist files if they are new or have been modified since the last scan
-            if (entry.mLastModifiedChanged) {
+            if (entry.mLastModifiedSecondsChanged) {
                 ContentValues values = new ContentValues();
                 int lastSlash = path.lastIndexOf('/');
                 if (lastSlash < 0) throw new IllegalArgumentException("bad path " + path);
@@ -1449,15 +1456,17 @@ public class MediaScanner
                     String name = (lastDot < 0 ? path.substring(lastSlash + 1) : path.substring(lastSlash + 1, lastDot));
                     values.put(MediaStore.Audio.Playlists.NAME, name);
                     values.put(MediaStore.Audio.Playlists.DATA, path);
-                    values.put(MediaStore.Audio.Playlists.DATE_MODIFIED, entry.mLastModified);
+                    values.put(MediaStore.Audio.Playlists.DATE_MODIFIED,
+                        entry.mLastModifiedSeconds);
                     uri = mMediaProvider.insert(mPlaylistsUri, values);
                     rowId = ContentUris.parseId(uri);
                     membersUri = Uri.withAppendedPath(uri, Playlists.Members.CONTENT_DIRECTORY);
                 } else {
                     uri = ContentUris.withAppendedId(mPlaylistsUri, rowId);
 
-                    // update lastModified value of existing playlist
-                    values.put(MediaStore.Audio.Playlists.DATE_MODIFIED, entry.mLastModified);
+                    // update lastModifiedSeconds value of existing playlist
+                    values.put(MediaStore.Audio.Playlists.DATE_MODIFIED,
+                        entry.mLastModifiedSeconds);
                     mMediaProvider.update(uri, values, null, null);
 
                     // delete members of existing playlist
