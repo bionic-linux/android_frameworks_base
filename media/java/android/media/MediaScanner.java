@@ -1204,7 +1204,7 @@ public class MediaScanner
 
             File file = new File(path);
             // always scan the file, so we can return the content://media Uri for existing files
-            return mClient.doScanFile(path, mimeType, file.lastModified(), file.length(), true);
+            return mClient.doScanFile(path, mimeType, file.lastModified()/1000, file.length(), true);
         } catch (RemoteException e) {
             Log.e(TAG, "RemoteException in MediaScanner.scanFile()", e);
             return null;
