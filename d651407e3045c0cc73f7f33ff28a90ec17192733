@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzX///po\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-02T15:43:22Z",
+      "side": 1,
+      "message": "line too long now.  keep it \u003c\u003d 100",
+      "revId": "d651407e3045c0cc73f7f33ff28a90ec17192733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX///pk\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-02T15:43:22Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "d651407e3045c0cc73f7f33ff28a90ec17192733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
