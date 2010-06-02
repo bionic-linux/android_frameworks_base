@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAzX///qE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-06-02T15:00:54Z",
+      "side": 1,
+      "message": "The two existing implementations of the AIDL interface for GSM and CDMA are prefixed with Sim and Ruim, respectively. They do not only implement SIM access stuff though.\n\nIt\u0027s true that there was already a common GSM/CDMA interface available on the Phone/Dispatcher classes, however although it has the same method signature for GSM and CDMA, the implementations expect totally different parameters. For example the setBroadcastConfig method takes an array of ints, but the content of that array is supposed to be completely different sets of values for GSM and CDMA. Since I didn\u0027t see the point of a common interface that is still interpreted differently for the two implementations, I decided to make it even simpler and place the GSM and CDMA specific stuff in the already existing implementations of the AIDL stubs.",
+      "parentUuid": "AAAAzH//+90\u003d",
+      "revId": "b5562c2e0e1ae9889e855e26ad2b6d8e95d5b7c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAzH///WY\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
         "patchSetId": 2
