@@ -80,7 +80,6 @@ public class ImageButton extends ImageView {
 
     public ImageButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setFocusable(true);
     }
 
     @Override
