@@ -67,6 +67,24 @@
       "revId": "e249acc95589ba00c493290f045d3befb6da66f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX//+DY\u003d",
+        "filename": "core/java/android/net/Proxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-06-16T14:29:59Z",
+      "side": 1,
+      "message": "The pattern of this file seems to be \"static final public\", will change to that for consistency.",
+      "parentUuid": "AAAAzX//+D0\u003d",
+      "revId": "e249acc95589ba00c493290f045d3befb6da66f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
