@@ -145,6 +145,18 @@ public class MiniThumbFile {
         }
     }
 
+    public synchronized void removeMiniThumbDataFile() {
+        String path = randomAccessFilePath(MINI_THUMB_DATA_FILE_VERSION);
+        File file = new File(path);
+        if (file.exists()) {
+            try {
+                file.delete();
+            } catch (SecurityException ex) {
+                // ignore
+            }
+        }
+    }
+
     // Get the magic number for the specified id in the mini-thumb file.
     // Returns 0 if the magic is not available.
     public synchronized long getMagic(long id) {
