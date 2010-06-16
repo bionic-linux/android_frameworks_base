@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAz3///+8\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteDatabase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2010-06-16T23:06:11Z",
+      "side": 1,
+      "message": "this is same as the existing method DatabaseUtils.queryNumEntries(table)\n\nso don\u0027t need this.",
+      "revId": "01eccb8e0ad601f75ce8696f1347409f97f2dd77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAz3///+4\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteDatabase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2010-06-16T23:06:11Z",
+      "side": 1,
+      "message": "count(*) is more efficient than count(1)",
+      "revId": "01eccb8e0ad601f75ce8696f1347409f97f2dd77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAz3///+0\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteDatabase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2010-06-16T23:06:11Z",
+      "side": 1,
+      "message": "why does this have to be in uppercase?\n\nalso, trim() is already performed once by TextUtils.isEmpty().\nshoudl reuse trimmed string",
+      "revId": "01eccb8e0ad601f75ce8696f1347409f97f2dd77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAz3///+w\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteDatabase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2010-06-16T23:06:11Z",
+      "side": 1,
+      "message": "not buying this logic. whereclause shouldn\u0027t have \"WHERE\" in it.\ndocumentation saying that should suffice.",
+      "revId": "01eccb8e0ad601f75ce8696f1347409f97f2dd77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAz3///+s\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteDatabase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2010-06-16T23:06:11Z",
+      "side": 1,
+      "message": "can do return right here",
+      "revId": "01eccb8e0ad601f75ce8696f1347409f97f2dd77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
