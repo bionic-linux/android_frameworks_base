@@ -1668,6 +1668,71 @@ public class SQLiteDatabase extends SQLiteClosable {
         }
     }
 
+    /**
+     * Runs a count statement with the provided table name.
+     * This method can be used to quickly get the number of all entries in a table.
+     *
+     * @param tablename The table name on which the statement should be executed
+     * @return The count of rows returned by the count statement
+     */
+    public long count(String tablename) {
+        return count(tablename, null, null);
+    }
+
+    /**
+     * Runs a count statement with the provided table name and Where-Clause.
+     * This method can be used to quickly get the number of entries in a table,
+     * filtered by a custom where query.
+     *
+     * @param tablename The table name on which the statement should be executed
+     * @param whereClause A custom Where-Clause in the format "A = B AND C = D ..."
+     * @return The count of rows returned by the count statement
+     */
+    public long count(String tablename, String whereClause) {
+        return count(tablename, whereClause, null);
+    }
+
+    /**
+     * Runs a count statement with the provided table name and Where-Clause.
+     * This method can be used to quickly get the number of entries in a table,
+     * filtered by a custom where query. You can also pass selection Arguments
+     * if you used the ? Parameter in your Where-Clause
+     *
+     * @param tablename The table name on which the statement should be executed
+     * @param whereClause A custom Where-Clause in the format "A = B AND C = D ..."
+     * @param selectionArgs Selection Arguments to be passed for the WHERE query
+     * @return The count of rows returned by the count statement
+     */
+    public long count(String tablename, String whereClause, String[] selectionArgs) {
+        StringBuilder statement = new StringBuilder();
+        statement.append("SELECT COUNT(1) FROM ");
+        statement.append(tablename);
+        if (!TextUtils.isEmpty(whereClause)) {
+            //Handle leading WHERE statement if present
+            whereClause = whereClause.trim().toUpperCase();
+            if (whereClause.startsWith("WHERE ")) {
+                statement.append(" ");
+            } else {
+                statement.append(" WHERE ");
+            }
+            statement.append(whereClause);
+        } else {
+            //make sure selectionArgs is null when no whereClause is specified
+            selectionArgs = null;
+        }
+        long ret = 0;
+        Cursor c = null;
+        try {
+            c = rawQuery(statement.toString(), selectionArgs);
+            if (c.moveToFirst()) {
+                ret = c.getLong(0);
+            }
+        } finally {
+            if (c != null) c.close();
+        }
+        return ret;
+    }
+
     @Override
     protected void finalize() {
         if (isOpen()) {
