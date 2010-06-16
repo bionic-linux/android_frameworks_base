@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzX//+DE\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-16T16:40:32Z",
+      "side": 1,
+      "message": "Style nit: wrap these single line if bodies with { ... }",
+      "revId": "25ba7dd7830a9b6f22c66db8846b9428380fe374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
