@@ -89,12 +89,10 @@ public class MiniThumbFile {
     private void removeOldFile() {
         String oldPath = randomAccessFilePath(MINI_THUMB_DATA_FILE_VERSION - 1);
         File oldFile = new File(oldPath);
-        if (oldFile.exists()) {
-            try {
-                oldFile.delete();
-            } catch (SecurityException ex) {
-                // ignore
-            }
+        try {
+            oldFile.delete();
+        } catch (SecurityException ex) {
+            // ignore
         }
     }
 
@@ -141,6 +139,16 @@ public class MiniThumbFile {
             } catch (IOException ex) {
                 // ignore exception
             }
+        }
+    }
+
+    public synchronized void removeMiniThumbDataFile() {
+        String path = randomAccessFilePath(MINI_THUMB_DATA_FILE_VERSION);
+        File file = new File(path);
+        try {
+            file.delete();
+        } catch (SecurityException ex) {
+            // ignore
         }
     }
 
