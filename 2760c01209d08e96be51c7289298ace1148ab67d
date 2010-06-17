@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0H///+Y\u003d",
+        "filename": "core/java/android/database/DatabaseUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1003856
+      },
+      "writtenOn": "2010-06-17T17:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0H///+o\u003d",
+      "revId": "2760c01209d08e96be51c7289298ace1148ab67d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0H///+k\u003d",
         "filename": "core/java/android/database/DatabaseUtils.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-06-17T16:59:12Z",
       "side": 1,
       "message": "an orthogonal point (but if this could be addressed here, would be great) is creation of cursor to fetch a single row is less efficient than selecting one column out of the ONLY row this query should have returned. and it is done by SQLiteStatement.simpleQueryForLong().\n\nso, it would be nice to modify this code to simply call that method, like so:\n   String s \u003d (!TextUtils.isEmpty(selection)) ? \" where \" + selection : \"\";\n   return longForQuery(db, \"select count(*) from \" + table + s,\n               selectionArgs);\n\nsorry don\u0027t mean to say your code is wrong or anything but this would be a nice optimization to do while you are in this code.",
+      "revId": "2760c01209d08e96be51c7289298ace1148ab67d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0H///+U\u003d",
+        "filename": "core/java/android/database/DatabaseUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1003856
+      },
+      "writtenOn": "2010-06-17T17:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0H///+k\u003d",
       "revId": "2760c01209d08e96be51c7289298ace1148ab67d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
