@@ -167,6 +167,18 @@ public final class BluetoothDevice implements Parcelable {
             "android.bluetooth.device.action.BOND_STATE_CHANGED";
 
     /**
+     * Broadcast Action: Indicates a headset has posted an event
+     * (<code>AT+XEVENT=</code> command).
+     * <p>Always contains the extra fields {@link #EXTRA_DEVICE}
+     * and {@link #EXTRA_XEVENT_ARGS}.
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} to receive.
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_HEADSET_XEVENT =
+            "android.bluetooth.device.action.HEADSET_XEVENT";
+
+    /**
      * Used as a Parcelable {@link BluetoothDevice} extra field in every intent
      * broadcast by this class. It contains the {@link BluetoothDevice} that
      * the intent applies to.
@@ -191,6 +203,13 @@ public final class BluetoothDevice implements Parcelable {
      * #ACTION_FOUND} and {@link #ACTION_CLASS_CHANGED} intents.
      */
     public static final String EXTRA_CLASS = "android.bluetooth.device.extra.CLASS";
+
+    /**
+     * Used as a Parcelable String array extra field in {@link
+     * #ACTION_HEADSET_XEVENT} intents.
+     * @hide
+     */
+    public static final String EXTRA_XEVENT_ARGS = "android.bluetooth.device.extra.XEVENT_ARGS";
 
     /**
      * Used as an int extra field in {@link #ACTION_BOND_STATE_CHANGED} intents.
