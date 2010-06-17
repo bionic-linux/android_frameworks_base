@@ -45,7 +45,7 @@ import android.util.Log;
  * This BluetoothHeadset object is not immediately bound to the
  * BluetoothHeadset service. Use the ServiceListener interface to obtain a
  * notification when it is bound, this is especially important if you wish to
- * immediately call methods on BluetootHeadset after construction.
+ * immediately call methods on BluetoothHeadset after construction.
  *
  * Android only supports one connected Bluetooth Headset at a time.
  *
