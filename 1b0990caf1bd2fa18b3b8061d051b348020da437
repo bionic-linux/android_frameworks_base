@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0X///6k\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-06-18T19:38:56Z",
+      "side": 1,
+      "message": "Technically missing spaces before/after the parentheses. Would be good to fix in a future upload, if there\u0027s a chance. See also the while() a few lines below.",
+      "revId": "1b0990caf1bd2fa18b3b8061d051b348020da437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0X///6g\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-06-18T19:38:56Z",
+      "side": 1,
+      "message": "Misssing a space between \")\" and \"{\"",
+      "revId": "1b0990caf1bd2fa18b3b8061d051b348020da437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
