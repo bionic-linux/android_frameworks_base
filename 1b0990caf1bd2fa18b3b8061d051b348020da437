@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0X///6U\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-06-18T19:50:51Z",
+      "side": 1,
+      "message": "right.",
+      "parentUuid": "AAAA0X///6k\u003d",
+      "revId": "1b0990caf1bd2fa18b3b8061d051b348020da437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0X///6g\u003d",
         "filename": "telephony/java/com/android/internal/telephony/IccUtils.java",
         "patchSetId": 1
