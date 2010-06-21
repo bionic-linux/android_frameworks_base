@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0X///18\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1004038
+      },
+      "writtenOn": "2010-06-21T11:32:56Z",
+      "side": 1,
+      "message": "From what I have seen, the MediaProvider/MediaStore does not store Mini Video thumbnails to file, they are only generated in memory and discarded when no longer used. Only micro thumbnails are stored for video, eliminating the need to prune mini video thumbnail files.",
+      "parentUuid": "AAAA0H///9k\u003d",
+      "revId": "02cb9891014e4118394b86529408ecd75217fbea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0H///9w\u003d",
         "filename": "media/java/android/media/MediaScanner.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0X///10\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1004038
+      },
+      "writtenOn": "2010-06-21T11:32:56Z",
+      "side": 1,
+      "message": "Sounds good, I will add a jpeg-filter.",
+      "parentUuid": "AAAA0H///9w\u003d",
+      "revId": "02cb9891014e4118394b86529408ecd75217fbea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0H///9o\u003d",
         "filename": "media/java/android/media/MediaScanner.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2010-06-17T19:37:21Z",
       "side": 1,
       "message": "We need to do the same things for video thumbnails.",
+      "revId": "02cb9891014e4118394b86529408ecd75217fbea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0X///14\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1004038
+      },
+      "writtenOn": "2010-06-21T11:32:56Z",
+      "side": 1,
+      "message": "From what I have seen, the MediaProvider/MediaStore does not store Mini Video thumbnails to file, they are only generated in memory and discarded when no longer used. Only micro thumbnails are stored for video, eliminating the need to prune mini video thumbnail files.",
+      "parentUuid": "AAAA0H///9o\u003d",
       "revId": "02cb9891014e4118394b86529408ecd75217fbea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
