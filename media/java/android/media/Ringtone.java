@@ -222,7 +222,9 @@ public class Ringtone {
         if (mAudio != null) {
             // do not ringtones if stream volume is 0
             // (typically because ringer mode is silent).
-            if (mAudioManager.getStreamVolume(mStreamType) != 0) {
+            // or if wireless headset is not connected.
+            if (mAudioManager.getStreamVolume(mStreamType) != 0
+                    || mAudioManager.isWiredHeadsetOn()) {
                 mAudio.start();
             }
         }
