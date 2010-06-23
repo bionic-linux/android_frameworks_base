@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n///z8\u003d",
+        "filename": "libs/ui/EventHub.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2010-06-23T22:33:47Z",
+      "side": 1,
+      "message": "This isn\u0027t enough to clean up since the file descriptor has already been added to mFDs so it needs to be removed from there too.",
+      "revId": "e911044a23a8818e97dd03e13143eedd11e4eaa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
