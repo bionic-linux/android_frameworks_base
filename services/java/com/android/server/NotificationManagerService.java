@@ -405,6 +405,36 @@ class NotificationManagerService extends INotificationManager.Stub
         }
     }
 
+    class DeviceProvisionedObserver extends ContentObserver {
+
+        DeviceProvisionedObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.DEVICE_PROVISIONED), false, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            // Check if the device is provisioned
+            if (0 != Settings.Secure.getInt(resolver,
+                    Settings.Secure.DEVICE_PROVISIONED, 0)) {
+                // Device provisioned, allow notifications
+                mDisabledNotifications = StatusBarManager.DISABLE_NONE;
+
+                resolver.unregisterContentObserver(this);
+            }
+        }
+    }
+
     NotificationManagerService(Context context, StatusBarService statusBar,
             LightsService lights)
     {
@@ -439,6 +469,10 @@ class NotificationManagerService extends INotificationManager.Stub
         if (0 == Settings.Secure.getInt(mContext.getContentResolver(),
                     Settings.Secure.DEVICE_PROVISIONED, 0)) {
             mDisabledNotifications = StatusBarManager.DISABLE_NOTIFICATION_ALERTS;
+            // Set up an observer to keep track when the device is provisioned
+            DeviceProvisionedObserver deviceProvisionedObserver =
+                    new DeviceProvisionedObserver(mHandler);
+            deviceProvisionedObserver.observe();
         }
 
         // register for battery changed notifications
