@@ -495,25 +495,27 @@ public class DateUtils
                     resId = com.android.internal.R.plurals.in_num_hours;
                 }
             }
-        } else if (duration < WEEK_IN_MILLIS && minResolution < WEEK_IN_MILLIS) {
+        } else {
             count = getNumberOfDaysPassed(time, now);
-            if (past) {
-                if (abbrevRelative) {
-                    resId = com.android.internal.R.plurals.abbrev_num_days_ago;
+            if (count < (WEEK_IN_MILLIS / DAY_IN_MILLIS) && minResolution < WEEK_IN_MILLIS) {
+                if (past) {
+                    if (abbrevRelative) {
+                        resId = com.android.internal.R.plurals.abbrev_num_days_ago;
+                    } else {
+                        resId = com.android.internal.R.plurals.num_days_ago;
+                    }
                 } else {
-                    resId = com.android.internal.R.plurals.num_days_ago;
+                    if (abbrevRelative) {
+                        resId = com.android.internal.R.plurals.abbrev_in_num_days;
+                    } else {
+                        resId = com.android.internal.R.plurals.in_num_days;
+                    }
                 }
             } else {
-                if (abbrevRelative) {
-                    resId = com.android.internal.R.plurals.abbrev_in_num_days;
-                } else {
-                    resId = com.android.internal.R.plurals.in_num_days;
-                }
+                // We know that we won't be showing the time, so it is safe to pass
+                // in a null context.
+                return formatDateRange(null, time, time, flags);
             }
-        } else {
-            // We know that we won't be showing the time, so it is safe to pass
-            // in a null context.
-            return formatDateRange(null, time, time, flags);
         }
 
         String format = r.getQuantityString(resId, (int) count);
