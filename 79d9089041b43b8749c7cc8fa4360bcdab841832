@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n///Cc\u003d",
+        "filename": "services/java/com/android/server/NotificationManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2010-07-01T21:29:40Z",
+      "side": 1,
+      "message": "Furthermore, this line completely ignores anyone else in the system who might happen to have the status bar / notifications disabled.",
+      "revId": "79d9089041b43b8749c7cc8fa4360bcdab841832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
