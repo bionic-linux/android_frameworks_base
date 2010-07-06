@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n//+wE\u003d",
+        "filename": "libs/surfaceflinger/LayerBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2010-07-06T09:09:12Z",
+      "side": 1,
+      "message": "An anonymous enum would be preferable.  Be sure to put it in the android namespace.",
+      "revId": "5eb54c0dc66cf0965994f584162d1b10c560358f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n//+wM\u003d",
+        "filename": "libs/surfaceflinger/LayerBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2010-07-06T09:09:12Z",
+      "side": 1,
+      "message": "Instead of modifying both branches of the block, just nest them.  Not sure how much effect the branch prediction annotations have here but since we\u0027re using them we might as well mark up the renderEffect predicate also.\n\nif (LIKELY(renderEffect \u003d\u003d 0)) {\n   ... existing code ...\n} else {\n   ... new code ...\n}",
+      "revId": "5eb54c0dc66cf0965994f584162d1b10c560358f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n//+wI\u003d",
+        "filename": "libs/surfaceflinger/SurfaceFlinger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1703,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2010-07-06T09:09:12Z",
+      "side": 1,
+      "message": "Missing break.",
+      "revId": "5eb54c0dc66cf0965994f584162d1b10c560358f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
