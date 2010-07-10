@@ -66,6 +66,8 @@ public class Resources {
             = new LongSparseArray<Drawable.ConstantState>();
     private static final SparseArray<ColorStateList> mPreloadedColorStateLists
             = new SparseArray<ColorStateList>();
+    private static final LongSparseArray<Drawable.ConstantState> sPreloadedColorDrawables
+            = new LongSparseArray<Drawable.ConstantState>();
     private static boolean mPreloaded;
 
     /*package*/ final TypedValue mTmpValue = new TypedValue();
@@ -75,6 +77,8 @@ public class Resources {
             = new LongSparseArray<WeakReference<Drawable.ConstantState> >();
     private final SparseArray<WeakReference<ColorStateList> > mColorStateListCache
             = new SparseArray<WeakReference<ColorStateList> >();
+    private final LongSparseArray<WeakReference<Drawable.ConstantState> > mColorDrawableCache
+            = new LongSparseArray<WeakReference<Drawable.ConstantState> >();
     private boolean mPreloading;
 
     /*package*/ TypedArray mCachedStyledAttributes = null;
@@ -1330,6 +1334,38 @@ public class Resources {
             }
             mDrawableCache.clear();
             mColorStateListCache.clear();
+
+            int colorDrawableCacheSize = mColorDrawableCache.size();
+            if (DEBUG_CONFIG) {
+                Log.d(TAG, "Cleaning up color drawables config changes: 0x"
+                        + Integer.toHexString(configChanges));
+            }
+            for (int i=0; i<colorDrawableCacheSize; i++) {
+                WeakReference<Drawable.ConstantState> ref = mColorDrawableCache.valueAt(i);
+                if (ref != null) {
+                    Drawable.ConstantState cs = ref.get();
+                    if (cs != null) {
+                        if (Configuration.needNewResources(
+                                configChanges, cs.getChangingConfigurations())) {
+                            if (DEBUG_CONFIG) {
+                                Log.d(TAG, "FLUSHING #0x"
+                                        + Long.toHexString(mColorDrawableCache.keyAt(i))
+                                        + " / " + cs + " with changes: 0x"
+                                        + Integer.toHexString(cs.getChangingConfigurations()));
+                            }
+                            mColorDrawableCache.setValueAt(i, null);
+                        } else if (DEBUG_CONFIG) {
+                            Log.d(TAG, "(Keeping #0x"
+                                    + Long.toHexString(mColorDrawableCache.keyAt(i))
+                                    + " / " + cs + " with changes: 0x"
+                                    + Integer.toHexString(cs.getChangingConfigurations())
+                                    + ")");
+                        }
+                    }
+                }
+            }
+            mColorDrawableCache.clear();
+
             flushLayoutCache();
         }
         synchronized (mSync) {
@@ -1661,13 +1697,18 @@ public class Resources {
         }
 
         final long key = (((long) value.assetCookie) << 32) | value.data;
-        Drawable dr = getCachedDrawable(key);
+        boolean isColorDrawable = false;
+        if (value.type >= TypedValue.TYPE_FIRST_COLOR_INT &&
+                value.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+            isColorDrawable = true;
+        }
+        Drawable dr = isColorDrawable ? getCachedColorDrawable(key) : getCachedDrawable(key);
 
         if (dr != null) {
             return dr;
         }
 
-        Drawable.ConstantState cs = sPreloadedDrawables.get(key);
+        Drawable.ConstantState cs = isColorDrawable ? sPreloadedColorDrawables.get(key) : sPreloadedDrawables.get(key);
         if (cs != null) {
             dr = cs.newDrawable(this);
         } else {
@@ -1726,13 +1767,21 @@ public class Resources {
             cs = dr.getConstantState();
             if (cs != null) {
                 if (mPreloading) {
-                    sPreloadedDrawables.put(key, cs);
+                    if (isColorDrawable) {
+                        sPreloadedColorDrawables.put(key, cs);
+                    } else {
+                        sPreloadedDrawables.put(key, cs);
+                    }
                 } else {
                     synchronized (mTmpValue) {
                         //Log.i(TAG, "Saving cached drawable @ #" +
                         //        Integer.toHexString(key.intValue())
                         //        + " in " + this + ": " + cs);
-                        mDrawableCache.put(key, new WeakReference<Drawable.ConstantState>(cs));
+                        if (isColorDrawable) {
+                            mColorDrawableCache.put(key, new WeakReference<Drawable.ConstantState>(cs));
+                        } else {
+                            mDrawableCache.put(key, new WeakReference<Drawable.ConstantState>(cs));
+                        }
                     }
                 }
             }
@@ -1754,6 +1803,25 @@ public class Resources {
                 }
                 else {  // our entry has been purged
                     mDrawableCache.delete(key);
+                }
+            }
+        }
+        return null;
+    }
+
+    private Drawable getCachedColorDrawable(long key) {
+        synchronized (mTmpValue) {
+            WeakReference<Drawable.ConstantState> wr = mColorDrawableCache.get(key);
+            if (wr != null) {   // we have the key
+                Drawable.ConstantState entry = wr.get();
+                if (entry != null) {
+                    //Log.i(TAG, "Returning cached color drawable @ #" +
+                    //        Integer.toHexString(((Integer)key).intValue())
+                    //        + " in " + this + ": " + entry);
+                    return entry.newDrawable();
+                }
+                else {  // our entry has been purged
+                    mColorDrawableCache.delete(key);
                 }
             }
         }
