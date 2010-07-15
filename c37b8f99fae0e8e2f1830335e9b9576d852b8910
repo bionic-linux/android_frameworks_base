@@ -16,6 +16,24 @@
       "revId": "c37b8f99fae0e8e2f1830335e9b9576d852b8910",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///mI\u003d",
+        "filename": "core/java/android/content/res/Resources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1002915
+      },
+      "writtenOn": "2010-07-15T06:43:20Z",
+      "side": 1,
+      "message": "Do you means that it should be used by a single method like a getCachedDrawable(cache, key)?",
+      "parentUuid": "AAAA1H///mQ\u003d",
+      "revId": "c37b8f99fae0e8e2f1830335e9b9576d852b8910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
