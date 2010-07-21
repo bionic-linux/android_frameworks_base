@@ -70,6 +70,10 @@ LOCAL_SRC_FILES:= \
     CursorWindow.cpp \
 	InputTransport.cpp
 
+ifeq ($(ARCH_HAS_BIGENDIAN),true)
+LOCAL_CFLAGS += -DBYTE_ORDER_BIG_ENDIAN=1
+endif
+
 LOCAL_SHARED_LIBRARIES := \
 	liblog \
 	libcutils \
