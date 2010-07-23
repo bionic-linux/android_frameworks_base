@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA3H///bU\u003d",
+        "filename": "core/java/android/bluetooth/EventAtCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-07-23T18:44:08Z",
+      "side": 1,
+      "message": "Would prefer a 2010 copyright here as (I assume) it\u0027s mostly new code.",
+      "revId": "3e0d34238a1b2683a6cbaa9679057216a1c42acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///a8\u003d",
+        "filename": "core/java/android/bluetooth/EventAtCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-07-23T18:44:08Z",
+      "side": 1,
+      "message": "Standard android code style indents at every brace.",
+      "revId": "3e0d34238a1b2683a6cbaa9679057216a1c42acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///bQ\u003d",
+        "filename": "core/java/android/bluetooth/EventAtCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-07-23T18:44:08Z",
+      "side": 1,
+      "message": "Standard Android code style uses space, not tabs.",
+      "revId": "3e0d34238a1b2683a6cbaa9679057216a1c42acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///bM\u003d",
+        "filename": "core/java/android/bluetooth/EventAtCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-07-23T18:44:08Z",
+      "side": 1,
+      "message": "Standard Android code style indents continuations by 8 spaces so that they stand out more.",
+      "revId": "3e0d34238a1b2683a6cbaa9679057216a1c42acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///bI\u003d",
+        "filename": "core/java/android/bluetooth/EventAtCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-07-23T18:44:08Z",
+      "side": 1,
+      "message": "Same here: we prefer continuations to be an even 8 spaces. Since we allow 100 columns, this could also fit on a single line.",
+      "revId": "3e0d34238a1b2683a6cbaa9679057216a1c42acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///a4\u003d",
+        "filename": "core/java/android/bluetooth/EventAtCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-07-23T18:44:08Z",
+      "side": 1,
+      "message": "We try to avoid trailing whitespace.",
+      "revId": "3e0d34238a1b2683a6cbaa9679057216a1c42acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
