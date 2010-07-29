@@ -57,6 +57,7 @@
 
 #include "MidiFile.h"
 #include "VorbisPlayer.h"
+#include "WavPackPlayer.h"
 #include <media/PVPlayer.h>
 #include "TestPlayerStub.h"
 #include "StagefrightPlayer.h"
@@ -199,6 +200,7 @@ extmap FILE_EXTS [] =  {
         {".ota", SONIVOX_PLAYER},
         {".ogg", VORBIS_PLAYER},
         {".oga", VORBIS_PLAYER},
+        {".wv", WAVPACK_PLAYER},
 #ifndef NO_OPENCORE
         {".wma", PV_PLAYER},
         {".wmv", PV_PLAYER},
@@ -711,6 +713,9 @@ player_type getPlayerType(int fd, int64_t offset, int64_t length)
     if (ident == 0x5367674f) // 'OggS'
         return OverrideStagefrightForVorbis(VORBIS_PLAYER);
 
+    if(ident == 0x6b707677) // 'wvpk'
+        return WAVPACK_PLAYER;
+
 #ifndef NO_OPENCORE
     if (ident == 0x75b22630) {
         // The magic number for .asf files, i.e. wmv and wma content.
@@ -801,6 +806,10 @@ static sp<MediaPlayerBase> createPlayer(player_type playerType, void* cookie,
         case VORBIS_PLAYER:
             LOGV(" create VorbisPlayer");
             p = new VorbisPlayer();
+            break;
+        case WAVPACK_PLAYER:
+            LOGV(" create WavPackPlayer");
+            p = new WavPackPlayer();
             break;
 #if BUILD_WITH_FULL_STAGEFRIGHT
         case STAGEFRIGHT_PLAYER:

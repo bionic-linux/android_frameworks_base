@@ -38,6 +38,7 @@
 #include <media/PVMetadataRetriever.h>
 #include <private/media/VideoFrame.h>
 #include "VorbisMetadataRetriever.h"
+#include "WavPackMetadataRetriever.h"
 #include "MidiMetadataRetriever.h"
 #include "MetadataRetrieverClient.h"
 #include "StagefrightMetadataRetriever.h"
@@ -126,6 +127,10 @@ static sp<MediaMetadataRetrieverBase> createRetriever(player_type playerType)
         case VORBIS_PLAYER:
             LOGV("create vorbis metadata retriever");
             p = new VorbisMetadataRetriever();
+            break;
+        case WAVPACK_PLAYER:
+            LOGV("create WavPack metadata retriever");
+            p = new WavPackMetadataRetriever();
             break;
         case SONIVOX_PLAYER:
             LOGV("create midi metadata retriever");

@@ -14,7 +14,9 @@ LOCAL_SRC_FILES:=               \
     VorbisPlayer.cpp            \
     VorbisMetadataRetriever.cpp \
     MidiMetadataRetriever.cpp 	\
-    MidiFile.cpp
+    MidiFile.cpp                \
+    WavPackPlayer.cpp           \
+    WavPackMetadataRetriever.cpp 
 
 ifeq ($(BUILD_WITH_FULL_STAGEFRIGHT),true)
 
@@ -35,6 +37,7 @@ LOCAL_SHARED_LIBRARIES :=     		\
 	libutils              			\
 	libbinder             			\
 	libvorbisidec         			\
+        libWavPack                              \
 	libsonivox            			\
 	libmedia              			\
 	libandroid_runtime    			\
@@ -60,7 +63,8 @@ LOCAL_C_INCLUDES :=                                                 \
 	$(call include-path-for, graphics corecg)                       \
 	$(TOP)/external/opencore/extern_libs_v2/khronos/openmax/include \
 	$(TOP)/frameworks/base/media/libstagefright/include             \
-        $(TOP)/external/tremolo/Tremolo
+        $(TOP)/external/tremolo/Tremolo                                 \
+        $(TOP)/external/wavpack/include
 
 LOCAL_MODULE:= libmediaplayerservice
 
