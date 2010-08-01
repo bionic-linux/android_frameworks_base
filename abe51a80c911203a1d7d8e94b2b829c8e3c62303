@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA33///sM\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 0,
+      "message": "this list is now dynamically made, based on interfaces returned by DCT.",
+      "revId": "abe51a80c911203a1d7d8e94b2b829c8e3c62303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

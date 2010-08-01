@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA33///sA\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 1,
+      "message": "I\u0027ve seen that telephony framework is not up when we execute this code. so assuming initial state as disconnected works for now...but querying the initial states rather than relying on intent seems better.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///r8\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 1,
+      "message": "i think we can get rid of all the code in this section if data connection tracker calls phonenotifier even when it returns APN_ALREADY_ACTIVE.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///r4\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 1,
+      "message": "i can add code here for adding private routes to IPV6 dns servers as well. But does some body else do this already?",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///r0\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 1,
+      "message": "should we remove ipv6 routes?",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///rw\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 1,
+      "message": "overriding this function here is kind of a hack....Network state tracker / network info keeps only one data connection states, where as we keep separate states for ipv4 and ipv6.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///sQ\u003d",
+        "filename": "core/java/com/android/internal/net/IpVersion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 1,
+      "message": "Couldn\u0027t find any other class I could use for this. Suggestions?",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///rs\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 1,
+      "message": "perhaps a new call back such as LISTEN_FEATURE_CONNECTION_STATE or something is in order...\n\nAs of now, I am just making sure existing call back works..",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///ro\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-01T00:34:29Z",
+      "side": 1,
+      "message": "i am overloading the existing intent to add APN_STATEs. I am in favor of adding a new intent like ACTION_FEATURE_CONNECTION_STATE_CHANGED or ACTION_APN_TYPE_CONNECTION_STATE_CHANGED. \n\n..but it seems to me external applications already use this intent, so we have to maintain backward compatibility I suppose...",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
