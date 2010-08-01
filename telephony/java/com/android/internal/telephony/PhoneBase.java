@@ -35,6 +35,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.R;
+import com.android.internal.net.IpVersion;
+import com.android.internal.telephony.Phone.DataState;
 import com.android.internal.telephony.gsm.GsmDataConnection;
 import com.android.internal.telephony.test.SimulatedRadioControl;
 
@@ -916,32 +918,69 @@ public abstract class PhoneBase extends Handler implements Phone {
          logUnexpectedCdmaMethodCall("unsetOnEcbModeExitResponse");
      }
 
+    @Deprecated
     public String getInterfaceName(String apnType) {
-        return mDataConnection.getInterfaceName(apnType);
+        return mDataConnection.getInterfaceName(apnType, IpVersion.INET);
     }
 
+    public String getInterfaceName(String apnType, IpVersion ipVersion) {
+        return mDataConnection.getInterfaceName(apnType, ipVersion);
+    }
+
+    @Deprecated
     public String getIpAddress(String apnType) {
-        return mDataConnection.getIpAddress(apnType);
+        return mDataConnection.getIpAddress(apnType, IpVersion.INET);
+    }
+
+    public String getIpAddress(String apnType, IpVersion ipVersion) {
+        return mDataConnection.getIpAddress(apnType, ipVersion);
     }
 
     public boolean isDataConnectivityEnabled() {
         return mDataConnection.getDataEnabled();
     }
 
-    public String getGateway(String apnType) {
-        return mDataConnection.getGateway(apnType);
+    /*
+     * (non-Javadoc)
+     * @see com.android.internal.telephony.Phone#getDataConnectionState(java.lang.String, int)
+     * DataStateTracker doesn't support MPDP or IPV6 yet. Just one state now, so report that!
+     */
+    public DataState getDataConnectionState(String apnType, IpVersion ipVersion) {
+        if (ipVersion == IpVersion.INET && mDataConnection.isApnTypeActive(apnType)) {
+            return getDataConnectionState();
+        }
+        return DataState.DISCONNECTED;
     }
 
+    @Deprecated
+    public String getGateway(String apnType) {
+        return mDataConnection.getGateway(apnType, IpVersion.INET);
+    }
+
+    public String getGateway(String apnType, IpVersion ipVersion) {
+        return mDataConnection.getGateway(apnType, ipVersion);
+    }
+
+    @Deprecated
     public String[] getDnsServers(String apnType) {
-        return mDataConnection.getDnsServers(apnType);
+        return mDataConnection.getDnsServers(apnType, IpVersion.INET);
+    }
+
+    public String[] getDnsServers(String apnType, IpVersion ipVersion) {
+        return mDataConnection.getDnsServers(apnType, ipVersion);
     }
 
     public String[] getActiveApnTypes() {
         return mDataConnection.getActiveApnTypes();
     }
 
+    @Deprecated
     public String getActiveApn() {
         return mDataConnection.getActiveApnString();
+    }
+
+    public String getActiveApn(String apnType, IpVersion ipVersion) {
+        return mDataConnection.getActiveApnString(apnType, ipVersion);
     }
 
     public int enableApnType(String type) {

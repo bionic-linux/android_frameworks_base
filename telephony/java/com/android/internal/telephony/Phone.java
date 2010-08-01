@@ -26,6 +26,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 
+import com.android.internal.net.IpVersion;
 import com.android.internal.telephony.DataConnection;
 import com.android.internal.telephony.gsm.NetworkInfo;
 import com.android.internal.telephony.gsm.GsmDataConnection;
@@ -100,6 +101,8 @@ public interface Phone {
     static final String FAILURE_REASON_KEY = "reason";
     static final String STATE_CHANGE_REASON_KEY = "reason";
     static final String DATA_APN_TYPES_KEY = "apnType";
+    static final String DATA_APN_TYPE_STATE_KEY = "apnTypeState";
+    static final String DATA_IPVERSION_KEY = "ipVersion";
     static final String DATA_APN_KEY = "apn";
 
     static final String DATA_IFACE_NAME_KEY = "iface";
@@ -241,11 +244,19 @@ public interface Phone {
     CellLocation getCellLocation();
 
     /**
-     * Get the current DataState. No change notification exists at this
+     * Get the current DataState. Reports state as CONNECTED if at least
+     * one data connection is active no matter which ip version.
      * interface -- use
      * {@link android.telephony.PhoneStateListener} instead.
      */
     DataState getDataConnectionState();
+
+    /**
+     * Get the current DataState of 'apnType' on 'ipVersion'. No change
+     * notification exists at this interface -- use
+     * {@link android.telephony.PhoneStateListener} instead.
+     */
+    DataState getDataConnectionState(String apnType, IpVersion ipVersion);
 
     /**
      * Get the current DataActivityState. No change notification exists at this
@@ -308,7 +319,15 @@ public interface Phone {
      * Returns a string identifier for currently active or last connected APN.
      *  @return The string name.
      */
+    @Deprecated
     String getActiveApn();
+
+    /**
+     * Returns a string identifier for the apn used to establish the specified APN type
+     * on the specified ipVersion
+     *  @return The string name.
+     */
+    String getActiveApn(String apnType, IpVersion ipVersion);
 
     /**
      * Get current signal strength. No change notification available on this
@@ -1368,25 +1387,53 @@ public interface Phone {
     /**
      * Returns the name of the network interface used by the specified APN type.
      */
+    @Deprecated
     String getInterfaceName(String apnType);
+
+    /**
+     * Returns the name of the network interface used by the specified APN type on
+     * specified ipVersion.
+     */
+    String getInterfaceName(String apnType, IpVersion ipVersion);
 
     /**
      * Returns the IP address of the network interface used by the specified
      * APN type.
      */
+    @Deprecated
     String getIpAddress(String apnType);
+
+    /**
+     * Returns the IP address of the network interface used by the specified
+     * APN type on specified ipVersion.
+     */
+    String getIpAddress(String apnType, IpVersion ipVersion);
 
     /**
      * Returns the gateway for the network interface used by the specified APN
      * type.
      */
+    @Deprecated
     String getGateway(String apnType);
+
+    /**
+     * Returns the gateway for the network interface used by the specified APN
+     * type on specified ipVersion.
+     */
+    String getGateway(String apnType, IpVersion ipVersion);
 
     /**
      * Returns the DNS servers for the network interface used by the specified
      * APN type.
      */
+    @Deprecated
     public String[] getDnsServers(String apnType);
+
+    /**
+     * Returns the DNS servers for the network interface used by the specified
+     * APN type on specified ipVersion.
+     */
+    public String[] getDnsServers(String apnType, IpVersion ipVersion);
 
     /**
      * Retrieves the unique device ID, e.g., IMEI for GSM phones and MEID for CDMA phones.
@@ -1706,6 +1753,4 @@ public interface Phone {
      * @param h Handler to be removed from the registrant list.
      */
     void unsetOnEcbModeExitResponse(Handler h);
-
-
 }

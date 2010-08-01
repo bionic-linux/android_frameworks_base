@@ -28,6 +28,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import com.android.internal.net.IpVersion;
+
 /**
  * {@hide}
  *
@@ -578,5 +580,38 @@ public abstract class DataConnectionTracker extends Handler {
         }
     }
 
+    public String getInterfaceName(String apnType, IpVersion ipVersion) {
+        if (ipVersion == IpVersion.INET) {
+            return getInterfaceName(apnType);
+        }
+        return null;
+    }
 
+    public String getIpAddress(String apnType, IpVersion ipVersion) {
+        if (ipVersion == IpVersion.INET) {
+            return getIpAddress(apnType);
+        }
+        return null;
+    }
+
+    public String getGateway(String apnType, IpVersion ipVersion) {
+        if (ipVersion == IpVersion.INET) {
+            return getGateway(apnType);
+        }
+        return null;
+    }
+
+    public String[] getDnsServers(String apnType, IpVersion ipVersion) {
+        if (ipVersion == IpVersion.INET) {
+            return getDnsServers(apnType);
+        }
+        return null;
+    }
+
+    public String getActiveApnString(String apnType, IpVersion ipVersion) {
+        if (ipVersion == IpVersion.INET && isApnTypeActive(apnType)) {
+            return getActiveApnString();
+        }
+        return null;
+    }
 }

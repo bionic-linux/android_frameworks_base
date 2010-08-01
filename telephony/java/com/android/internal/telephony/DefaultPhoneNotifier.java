@@ -22,6 +22,7 @@ import android.os.ServiceManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.android.internal.net.IpVersion;
 import com.android.internal.telephony.ITelephonyRegistry;
 
 /**
@@ -92,19 +93,54 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
         }
     }
 
-    public void notifyDataConnection(Phone sender, String reason) {
+    /*
+     * Notify state change for 'apnType' on 'ipVersion'
+     */
+    public void notifyDataConnection(Phone sender, String apnType, IpVersion ipVersion, String reason) {
+
         TelephonyManager telephony = TelephonyManager.getDefault();
+        int networkType = ((telephony!=null) ? telephony.getNetworkType() :
+            TelephonyManager.NETWORK_TYPE_UNKNOWN);
+
         try {
             mRegistry.notifyDataConnection(
                     convertDataState(sender.getDataConnectionState()),
-                    sender.isDataConnectivityPossible(), reason,
-                    sender.getActiveApn(),
-                    sender.getActiveApnTypes(),
-                    sender.getInterfaceName(null),
-                    ((telephony!=null) ? telephony.getNetworkType() :
-                    TelephonyManager.NETWORK_TYPE_UNKNOWN));
+                    apnType, ipVersion.toString(),
+                    convertDataState(sender.getDataConnectionState(apnType, ipVersion)),
+                    sender.getActiveApn(apnType, ipVersion),
+                    sender.getInterfaceName(apnType, ipVersion),
+                    sender.isDataConnectivityPossible(),
+                    networkType,
+                    reason);
         } catch (RemoteException ex) {
             // system process is dead
+        }
+    }
+
+    /*
+     * Interface for use by legacy data connection tracker that does not support MPDP or IPV6.
+     */
+    @Deprecated
+    public void notifyDataConnection(Phone sender, String reason) {
+
+        /*
+         * Legacy code does not support MPDP or IPV6. Only one data connection
+         * can be active at a time and only on IPv4. There is only one state and all
+         * active apnTypes will have the same state.
+         */
+
+        String apnTypes[] = sender.getActiveApnTypes();
+
+        if (apnTypes == null || apnTypes.length == 0) {
+            /*
+             * Ideally this should never happen. GsmDCT and CdmaDCT ensures that
+             * it never returns null and will contain atleast apn type default.
+             */
+            return;
+        }
+
+        for (String type : apnTypes) {
+            notifyDataConnection(sender, type, IpVersion.INET, reason);
         }
     }
 

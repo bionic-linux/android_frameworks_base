@@ -31,6 +31,7 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.util.Log;
 
+import com.android.internal.net.IpVersion;
 import com.android.internal.telephony.cdma.CDMAPhone;
 import com.android.internal.telephony.gsm.GSMPhone;
 import com.android.internal.telephony.gsm.NetworkInfo;
@@ -838,5 +839,29 @@ public class PhoneProxy extends Handler implements Phone {
 
     public void unsetOnEcbModeExitResponse(Handler h){
         mActivePhone.unsetOnEcbModeExitResponse(h);
+    }
+
+    public String getActiveApn(String apnType, IpVersion ipVersion) {
+        return mActivePhone.getActiveApn(apnType, ipVersion);
+    }
+
+    public DataState getDataConnectionState(String apnType, IpVersion ipVersion) {
+        return mActivePhone.getDataConnectionState(apnType, ipVersion);
+    }
+
+    public String[] getDnsServers(String apnType, IpVersion ipVersion) {
+        return mActivePhone.getDnsServers(apnType, ipVersion);
+    }
+
+    public String getGateway(String apnType, IpVersion ipVersion) {
+        return mActivePhone.getGateway(apnType, ipVersion);
+    }
+
+    public String getInterfaceName(String apnType, IpVersion ipVersion) {
+        return mActivePhone.getInterfaceName(apnType, ipVersion);
+    }
+
+    public String getIpAddress(String apnType, IpVersion ipVersion) {
+        return mActivePhone.getIpAddress(apnType, ipVersion);
     }
 }
