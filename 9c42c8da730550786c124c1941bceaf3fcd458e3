@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAA33///ao\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "General comment.  We want to have a separate MDST for each IpVersion.  IpVersion signifies a different network with ip/gateway/dns/capabilities that may come and go independent from the other connection and we\u0027d like to track them separately.  Should be relatively easy to add.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///ak\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "v4 and v6 versions not needed if they are separate MDSTs.  Do need a member tracking if we are the v4 or v6 version though (like mApnType).\n\nDo want to track (single) mInterfaceName.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA33///sA\u003d",
         "filename": "core/java/android/net/MobileDataStateTracker.java",
         "patchSetId": 1
@@ -19,6 +53,160 @@
     },
     {
       "key": {
+        "uuid": "AAAA33///iE\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "Not always true - may depend on hardware/timings.  We should make it non-sticky though (you commented on this elsewhere, and I agree) so we should at least try to ask Telephony for the state of our apn+IpV - if it can\u0027t yet that\u0027s fine and we assume disconnected.",
+      "parentUuid": "AAAA33///sA\u003d",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///ag\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "Should ipVersion EVER not be set?  I\u0027m not sure we want to cover over bugs like that where it\u0027ll work fine on v4 but not on v6..",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///aU\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "I think we now just need apnType from DATA_APN_TYPE_KEY",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///aQ\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "this is no longer needed - can do an \u0027equals\u0027 on apnType or mApnTypeToWatchFor..  can probably get rid of isApnTypeIncluded",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///aM\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "if we have separate trackers for v4 and v6, need to compare IpV here",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///aA\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "obviously goes away with separate trackers",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///Z8\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "this goes away with separate trackers",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///VY\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "if we want the user to be able to request v6 (the device starts a v4 context only at boot, with on-demand v6, or vice-versa) we will need setEnableApn to also take IpV",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///YU\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "if you know you\u0027ll get all the state transition events, you can remove the mEnabled flag.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA33///r8\u003d",
         "filename": "core/java/android/net/MobileDataStateTracker.java",
         "patchSetId": 1
@@ -30,6 +218,58 @@
       "writtenOn": "2010-08-01T00:34:29Z",
       "side": 1,
       "message": "i think we can get rid of all the code in this section if data connection tracker calls phonenotifier even when it returns APN_ALREADY_ACTIVE.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///YQ\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "I agree",
+      "parentUuid": "AAAA33///r8\u003d",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///VU\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "With a separate trackers, you need to route this at the ConnectivityService level - this level need not change",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///VQ\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "not a bad idea, but simpler with separate trackers..  only one iface name",
       "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +327,41 @@
     },
     {
       "key": {
+        "uuid": "AAAA33///VE\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "I think this goes away with separate trackers for v4 and v6",
+      "parentUuid": "AAAA33///rw\u003d",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///VA\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "Can the TAG just contain the mApnType?  This this code isn\u0027t needed.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA33///sQ\u003d",
         "filename": "core/java/com/android/internal/net/IpVersion.java",
         "patchSetId": 1
@@ -98,6 +373,24 @@
       "writtenOn": "2010-08-01T00:34:29Z",
       "side": 1,
       "message": "Couldn\u0027t find any other class I could use for this. Suggestions?",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///bI\u003d",
+        "filename": "core/java/com/android/internal/net/IpVersion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "Nope.  We had some discussions here too and didn\u0027t come up with anything.  We\u0027re kind of outside the norm for java and framework hadn\u0027t had to deal with it yet.  We\u0027re true pioneers :)",
+      "parentUuid": "AAAA33///sQ\u003d",
       "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +414,57 @@
     },
     {
       "key": {
+        "uuid": "AAAA33///cQ\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "You should track the last anyDataConnectionState used and not call again until it changes.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///bY\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "should probably remove the REPLACE_PENDING flag as these aren\u0027t sticky and each need to be seen",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///bM\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "the APN_TYPES_KEY should be renamed DATA_APN_TYPE_KEY",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA33///ro\u003d",
         "filename": "services/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 1
@@ -132,6 +476,227 @@
       "writtenOn": "2010-08-01T00:34:29Z",
       "side": 1,
       "message": "i am overloading the existing intent to add APN_STATEs. I am in favor of adding a new intent like ACTION_FEATURE_CONNECTION_STATE_CHANGED or ACTION_APN_TYPE_CONNECTION_STATE_CHANGED. \n\n..but it seems to me external applications already use this intent, so we have to maintain backward compatibility I suppose...",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///bc\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "I think we can drop the sticky part - I agree it doesn\u0027t make sense.  This intent is internal.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///ds\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/DataConnectionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "add TODO\u0027s?\n\nCan we remove the old versions?",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///dw\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/DefaultPhoneNotifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is needed.\n\nwill this catch apns going inactive?",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///eQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "I think you may be able to get rid of apn_type_key",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///eI\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is needed.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///eE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "don\u0027t bother to deprecate - remove the old stuff",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///eA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "again - remove the old",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///d8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1403,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "remove the old",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///d4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "remove the old",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///d0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "remove the old",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///eY\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "No need to deprecate - this is an internal-only api.  drop the old in favor of the new",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///eU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "add a TODO to fix this.",
+      "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///ec\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneProxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-04T22:02:04Z",
+      "side": 1,
+      "message": "don\u0027t bother with new versions - update the old with the ipVersion params.",
       "revId": "9c42c8da730550786c124c1941bceaf3fcd458e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
