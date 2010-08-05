@@ -121,6 +121,7 @@ class MountService extends IMountService.Stub
     final private ArrayList<MountServiceBinderListener> mListeners =
             new ArrayList<MountServiceBinderListener>();
     private boolean                               mBooted = false;
+    private boolean                               mBootChecked = false;
     private boolean                               mReady = false;
     private boolean                               mSendUmsConnectedOnBoot = false;
 
@@ -320,6 +321,12 @@ class MountService extends IMountService.Stub
                                  * the volume is shared (runtime restart while ums enabled)
                                  */
                                 notifyVolumeStateChange(null, path, VolumeState.NoMedia, VolumeState.Shared);
+                            } else if (state.equals(Environment.MEDIA_REMOVED)) {
+                                /*
+                                 * Re-send media remove message to the status bar.
+                                 * Otherwise, there will be no indication due to timing issue.
+                                 * */
+                                updatePublicVolumeState(path, Environment.MEDIA_REMOVED);
                             }
 
                             /*
@@ -332,6 +339,8 @@ class MountService extends IMountService.Stub
                             }
                         } catch (Exception ex) {
                             Slog.e(TAG, "Boot-time mount exception", ex);
+                        } finally {
+                            mBootChecked = true;
                         }
                     }
                 }.start();
@@ -376,7 +385,7 @@ class MountService extends IMountService.Stub
             return;
         }
 
-        if (mLegacyState.equals(state)) {
+        if (mLegacyState.equals(state) && mBootChecked) {
             Slog.w(TAG, String.format("Duplicate state transition (%s -> %s)", mLegacyState, state));
             return;
         }
