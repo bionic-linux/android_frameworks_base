@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4n///88\u003d",
+        "filename": "services/surfaceflinger/LayerBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-09T21:12:25Z",
+      "side": 1,
+      "message": "it should check for ROT_270 too.",
+      "revId": "f440e5703fb1ce7bde34c7012bdc9024bdf78405",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
