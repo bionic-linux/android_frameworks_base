@@ -36,6 +36,11 @@ void MediaSource::ReadOptions::reset() {
 
 void MediaSource::ReadOptions::setSeekTo(int64_t time_us) {
     mOptions |= kSeekTo_Option;
+    //Incase the app layer tries to seek to negative offset
+    //resetting the value to Zero.
+    if (time_us < 0) {
+        time_us = 0;
+    }
     mSeekTimeUs = time_us;
 }
 
