@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 package com.android.internal.telephony;
 
 import android.app.Activity;
@@ -23,6 +24,10 @@ import android.provider.Telephony;
 import android.provider.Telephony.Sms.Intents;
 import android.util.Config;
 import android.util.Log;
+import android.content.ServiceConnection;
+import android.content.ComponentName;
+import android.os.IBinder;
+import android.os.RemoteException;
 
 /**
  * WAP push handler class.
@@ -42,10 +47,74 @@ public class WapPushOverSms {
      */
     private final int WAKE_LOCK_TIMEOUT = 5000;
 
+    /**
+     * A handle to WapPushManager interface
+     */
+    private WapPushConnection mWapConn = null;
+    private class WapPushConnection implements ServiceConnection {
+        private IWapPushManager mWapPushMan;
+        private Context mOwner;
+        public WapPushConnection (Context ownerContext) {
+            mOwner=ownerContext;
+        }
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mWapPushMan = IWapPushManager.Stub.asInterface(service);
+            if (Config.DEBUG) Log.v(LOG_TAG, "wappush manager connected to " + 
+                    mOwner.hashCode());
+        }
+        public void onServiceDisconnected(ComponentName name) {
+            mWapPushMan = null;
+            if (Config.DEBUG) Log.v(LOG_TAG, "wappush manager disconnected.");
+            ///WapPushManager must be always attached.
+            bindWapPushManager(true); 
+        }
+
+        /**
+         * bind WapPushManager
+         * 
+         * @param repeat  If repeat is true, this method tries to connect to 
+         * WapPushManager repeatedly every 1 second until connected asyncronously.
+         * Else, bindService is called only once.
+         */
+        public void bindWapPushManager(boolean repeat){
+            if(mWapPushMan!=null) return;
+
+            final ServiceConnection wapPushConnection = this;
+            if(repeat){
+                new Thread() {
+                    public void run() {
+                        while(mWapPushMan==null) {
+                            mOwner.bindService(new Intent(IWapPushManager.class.getName()), 
+                                    wapPushConnection, Context.BIND_AUTO_CREATE);
+                            try { 
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e ) {
+                                if (Config.DEBUG) Log.v(LOG_TAG, "sleep interrupted.");
+                            }
+                        }
+                    }
+                }.start();
+            }
+            else {
+                mOwner.bindService(new Intent(IWapPushManager.class.getName()), 
+                        wapPushConnection, Context.BIND_AUTO_CREATE);
+            }
+        }
+        /**
+         * Returns interface to WapPushManager
+         */
+        public IWapPushManager getWapPushManager() {
+            return mWapPushMan;
+        }
+    }
+
     public WapPushOverSms(Phone phone, SMSDispatcher smsDispatcher) {
         mSmsDispatcher = smsDispatcher;
         mContext = phone.getContext();
+        mWapConn = new WapPushConnection(mContext) ;
+        mWapConn.bindWapPushManager(false); 
     }
+
 
     /**
      * Dispatches inbound messages that are in the WAP PDU format. See
@@ -106,22 +175,78 @@ public class WapPushOverSms {
         }
 
         String mimeType = pduDecoder.getValueString();
-
+        long binaryContentType = pduDecoder.getValue32();
         index += pduDecoder.getDecodedDataLength();
 
         byte[] header = new byte[headerLength];
         System.arraycopy(pdu, headerStartIndex, header, 0, header.length);
 
         byte[] intentData;
-        String permission;
 
-        if (mimeType.equals(WspTypeDecoder.CONTENT_TYPE_B_PUSH_CO)) {
+        if (mimeType != null && mimeType.equals(WspTypeDecoder.CONTENT_TYPE_B_PUSH_CO)) {
             intentData = pdu;
         } else {
             int dataIndex = headerStartIndex + headerLength;
             intentData = new byte[pdu.length - dataIndex];
             System.arraycopy(pdu, dataIndex, intentData, 0, intentData.length);
         }
+
+        /**
+         * Seek for application ID field in WSP header.
+         * If application ID is found, WapPushManager substitute the message
+         * processing. Since WapPushManager is optional module, if WapPushManager
+         * is not found, legacy message processing will be continued.
+         */
+        if ( pduDecoder.seekXWapApplicationId(index, index+headerLength-1 ) ) {
+            index = (int)pduDecoder.getValue32();
+            pduDecoder.decodeXWapApplicationId(index); 
+            String wapAppId=pduDecoder.getValueString();
+            if(wapAppId == null) {
+                wapAppId=Integer.toString((int)pduDecoder.getValue32());
+            }
+
+            String contentType = ((mimeType == null) ? 
+                                  Long.toString(binaryContentType) : mimeType);
+            if (Config.DEBUG) Log.v(LOG_TAG, "appid found: " + wapAppId + ":" + contentType );
+
+            try {
+                boolean processFurther = true;
+                IWapPushManager wapPushMan = mWapConn.getWapPushManager();
+                if (wapPushMan == null) {
+                    if (Config.DEBUG) Log.w(LOG_TAG, "wap push manager not found!");
+                }
+                else {
+                    Intent intent = new Intent();
+                    intent.putExtra("transactionId", transactionId);
+                    intent.putExtra("pduType", pduType);
+                    intent.putExtra("header", header);
+                    intent.putExtra("data", intentData);
+                    intent.putExtra("contentTypeParameters", 
+                            pduDecoder.getContentParameters());
+
+                    int procRet = wapPushMan.processMessage(wapAppId, contentType, intent);
+                    if (Config.DEBUG) Log.v(LOG_TAG, "procRet:" + procRet);
+                    if((procRet & WapPushManagerParams.MESSAGE_HANDLED) > 0 
+                        && (procRet & WapPushManagerParams.FURTHER_PROCESSING) == 0 ) {
+                        processFurther = false;
+                    }
+                }
+                if(!processFurther) {
+                    return Intents.RESULT_SMS_HANDLED;
+                }
+            }
+            catch (RemoteException e) {
+                if (Config.DEBUG) Log.w(LOG_TAG, "remote func failed...");
+            }
+        }
+        if (Config.DEBUG) Log.v(LOG_TAG, "fall back to existing handler");
+
+        if (mimeType == null ) {
+            if (Config.DEBUG) Log.w(LOG_TAG, "Header Content-Type error.");
+            return Intents.RESULT_SMS_GENERIC_ERROR;
+        }
+
+        String permission;
 
         if (mimeType.equals(WspTypeDecoder.CONTENT_TYPE_B_MMS)) {
             permission = "android.permission.RECEIVE_MMS";
