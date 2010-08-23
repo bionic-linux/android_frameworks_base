@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA6H///9U\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-23T19:15:15Z",
+      "side": 1,
+      "message": "should removeCallbacks be called in dispose()?",
+      "revId": "8cc716f5654818ffb75b39be229c252c75e794e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
