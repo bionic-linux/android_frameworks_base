@@ -34,6 +34,24 @@
       "revId": "8cc716f5654818ffb75b39be229c252c75e794e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA6H///n4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CDMAPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-24T17:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA6H///9U\u003d",
+      "revId": "8cc716f5654818ffb75b39be229c252c75e794e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
