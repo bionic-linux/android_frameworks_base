@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA6X///nU\u003d",
+        "filename": "core/java/android/widget/TextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6984,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2010-08-26T17:56:13Z",
+      "side": 1,
+      "message": "In the non-selection case, isn\u0027t it better not to include OTHER_LETTER? Otherwise, for space-less languages, really long character sequences (limited below to 48) will be suggested for addition in the context menu. The menu doesn\u0027t look very nice when such long words are suggested.",
+      "revId": "ffc579bebfc0694bd90353daf87430950201389f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA6X///nQ\u003d",
+        "filename": "core/java/android/widget/TextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7310,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2010-08-26T17:56:13Z",
+      "side": 1,
+      "message": "What is this change for? Could you please add a comment?",
+      "revId": "ffc579bebfc0694bd90353daf87430950201389f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
