@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA6X///fg\u003d",
+        "filename": "core/java/android/widget/TextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6984,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-08-27T10:04:15Z",
+      "side": 1,
+      "message": "Difficult call really. For some languages the user will get super-long words which is not really usable, but not for all and not in every case. Disabling this in all cases might be too limiting. We dont expect that many users will discover the ability to add words if they need to do a selection first. We\u0027ll ask for advice from usability people internally though.",
+      "parentUuid": "AAAA6X///nU\u003d",
+      "revId": "ffc579bebfc0694bd90353daf87430950201389f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA6X///nQ\u003d",
         "filename": "core/java/android/widget/TextView.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-08-26T17:56:13Z",
       "side": 1,
       "message": "What is this change for? Could you please add a comment?",
+      "revId": "ffc579bebfc0694bd90353daf87430950201389f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA6X///fc\u003d",
+        "filename": "core/java/android/widget/TextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7310,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-08-27T10:04:15Z",
+      "side": 1,
+      "message": "It was percieved as improved usability if the selection was automatically deselected after having added a word to the dictionary.",
+      "parentUuid": "AAAA6X///nQ\u003d",
       "revId": "ffc579bebfc0694bd90353daf87430950201389f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
