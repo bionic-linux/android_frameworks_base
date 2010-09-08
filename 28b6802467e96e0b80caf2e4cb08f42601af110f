@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7X///xc\u003d",
+        "filename": "media/java/android/media/MiniThumbFile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002792
+      },
+      "writtenOn": "2010-09-08T14:57:29Z",
+      "side": 1,
+      "message": "file.exists() can throw SecurityException, too. Why the check in the first place? Won\u0027t file.delete() fail gracefully anyway?",
+      "revId": "28b6802467e96e0b80caf2e4cb08f42601af110f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
