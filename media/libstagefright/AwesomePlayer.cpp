@@ -181,6 +181,11 @@ void AwesomeLocalRenderer::init(
 AwesomePlayer::AwesomePlayer()
     : mQueueStarted(false),
       mTimeSource(NULL),
+      mFallbackTimeSource(NULL),
+      mAudioEOSOccurred(false),
+      mVideoEOSOccurred(false),
+      mVideoDurationUs(0),
+      mAudioDurationUs(0),
       mVideoRendererIsPreview(false),
       mAudioPlayer(NULL),
       mFlags(0),
@@ -378,7 +383,9 @@ void AwesomePlayer::reset_l() {
     if (mTimeSource != mAudioPlayer) {
         delete mTimeSource;
     }
-    mTimeSource = NULL;
+    delete mFallbackTimeSource;
+
+    mTimeSource = mFallbackTimeSource = NULL;
 
     delete mAudioPlayer;
     mAudioPlayer = NULL;
@@ -547,7 +554,9 @@ status_t AwesomePlayer::play_l() {
                 }
 
                 delete mTimeSource;
+                delete mFallbackTimeSource;
                 mTimeSource = mAudioPlayer;
+                mFallbackTimeSource = new SystemTimeSource;
 
                 deferredAudioSeek = true;
 
@@ -563,6 +572,12 @@ status_t AwesomePlayer::play_l() {
 
     if (mTimeSource == NULL && mAudioPlayer == NULL) {
         mTimeSource = new SystemTimeSource;
+        /*
+            Fallback timer isn't needed because for video only clip
+            we don't need to worry about audio ending early or the
+            system timer not being available
+        */
+        mFallbackTimeSource = NULL;
     }
 
     if (mVideoSource != NULL) {
@@ -702,9 +717,28 @@ status_t AwesomePlayer::getDuration(int64_t *durationUs) {
 }
 
 status_t AwesomePlayer::getPosition(int64_t *positionUs) {
+    /*
+        In determining the position, use the video source's
+        position whenever possible, unless the video track
+        is shorter than the audio track.
+
+        The conditions below assume that mVideoEOSOccurred !=
+        mAudioEOSOccurred since if both EOSes have occurred,
+        the playback would have ended.
+
+        For the second "else if" we don't need to check if
+        Audio EOS occurred because:
+            a) if we have video, we'll always use video's
+               time. If we don't have video then,
+               notifyStreamDone() will have been triggered
+               and playback would have ended by now
+            b) if video EOS has occurred then audio EOS
+               hasn't occurred. Otherwise we wouldn't be
+               here.
+    */
     if (mSeeking) {
         *positionUs = mSeekTimeUs;
-    } else if (mVideoSource != NULL) {
+    } else if (mVideoSource != NULL && !mVideoEOSOccurred) {
         Mutex::Autolock autoLock(mMiscStateLock);
         *positionUs = mVideoTimeUs;
     } else if (mAudioPlayer != NULL) {
@@ -733,8 +767,16 @@ status_t AwesomePlayer::seekTo_l(int64_t timeUs) {
     mSeekTimeUs = timeUs;
     mFlags &= ~AT_EOS;
 
-    seekAudioIfNecessary_l();
+    //Reset the Audio EOS occurred flag unless
+    //we are still past the EOS even after the seek
+    if (timeUs < mAudioDurationUs)
+        mAudioEOSOccurred = false;
 
+    //Ditto for Video EOS
+    if (timeUs < mVideoDurationUs)
+        mVideoEOSOccurred = false;
+
+    seekAudioIfNecessary_l();
     if (!(mFlags & PLAYING)) {
         LOGV("seeking while paused, sending SEEK_COMPLETE notification"
              " immediately.");
@@ -747,9 +789,9 @@ status_t AwesomePlayer::seekTo_l(int64_t timeUs) {
 }
 
 void AwesomePlayer::seekAudioIfNecessary_l() {
-    if (mSeeking && mVideoSource == NULL && mAudioPlayer != NULL) {
+    if (mSeeking && mAudioPlayer != NULL && !mAudioEOSOccurred
+        && (mVideoSource == NULL || mVideoEOSOccurred)) {
         mAudioPlayer->seekTo(mSeekTimeUs);
-
         mWatchForAudioSeekComplete = true;
         mWatchForAudioEOS = true;
         mSeekNotificationSent = false;
@@ -809,6 +851,7 @@ status_t AwesomePlayer::initAudioDecoder() {
             if (mDurationUs < 0 || durationUs > mDurationUs) {
                 mDurationUs = durationUs;
             }
+            mAudioDurationUs = durationUs;
         }
 
         status_t err = mAudioSource->start();
@@ -875,6 +918,13 @@ void AwesomePlayer::onVideoEvent() {
     }
     mVideoEventPending = false;
 
+    if (mVideoEOSOccurred && !mAudioEOSOccurred)
+    {
+        //Continue polling to see if Video EOS went away due to seek
+        postVideoEvent_l();
+        return;
+    }
+
     if (mSeeking) {
         if (mLastVideoBuffer) {
             mLastVideoBuffer->release();
@@ -911,7 +961,21 @@ void AwesomePlayer::onVideoEvent() {
                     continue;
                 }
 
-                postStreamDoneEvent_l(err);
+                mVideoEOSOccurred = true;
+                mVideoDurationUs = mVideoTimeUs;
+
+                if (mAudioEOSOccurred || mAudioSource == NULL)
+                    postStreamDoneEvent_l(err);
+                else
+                {
+                    //Seek audio in case we happened reach video EOS
+                    //and audio hasn't had a chance to seek
+                    seekAudioIfNecessary_l();
+
+                    //Post a video event to start polling
+                    //if video EOS went away due to seek
+                    postVideoEvent_l();
+                }
                 return;
             }
 
@@ -937,7 +1001,7 @@ void AwesomePlayer::onVideoEvent() {
     }
 
     if (mSeeking) {
-        if (mAudioPlayer != NULL) {
+        if (mAudioPlayer != NULL && !mAudioEOSOccurred) {
             LOGV("seeking audio to %lld us (%.2f secs).", timeUs, timeUs / 1E6);
 
             mAudioPlayer->seekTo(timeUs);
@@ -963,17 +1027,19 @@ void AwesomePlayer::onVideoEvent() {
 
     if (mFlags & FIRST_FRAME) {
         mFlags &= ~FIRST_FRAME;
-
-        mTimeSourceDeltaUs = mTimeSource->getRealTimeUs() - timeUs;
+        mTimeSourceDeltaUs = (mAudioEOSOccurred ? mFallbackTimeSource : mTimeSource)->getRealTimeUs()
+                            - timeUs;
     }
 
     int64_t realTimeUs, mediaTimeUs;
     if (mAudioPlayer != NULL
+        && !mAudioEOSOccurred
         && mAudioPlayer->getMediaTimeMapping(&realTimeUs, &mediaTimeUs)) {
         mTimeSourceDeltaUs = realTimeUs - mediaTimeUs;
     }
 
-    int64_t nowUs = mTimeSource->getRealTimeUs() - mTimeSourceDeltaUs;
+    int64_t nowUs = (mAudioEOSOccurred ? mFallbackTimeSource : mTimeSource)->getRealTimeUs() - mTimeSourceDeltaUs;
+    LOGV("using %s timesource", mAudioEOSOccurred ? "fallback" : "original");
 
     int64_t latenessUs = nowUs - timeUs;
 
@@ -1078,7 +1144,13 @@ void AwesomePlayer::onCheckAudioStatus() {
     status_t finalStatus;
     if (mWatchForAudioEOS && mAudioPlayer->reachedEOS(&finalStatus)) {
         mWatchForAudioEOS = false;
-        postStreamDoneEvent_l(finalStatus);
+        mAudioEOSOccurred = true;
+
+        //Pretend it's the first frame so  we can reset the sync point
+        mFlags |= FIRST_FRAME;
+
+        if (mVideoEOSOccurred || mVideoSource == NULL)
+            postStreamDoneEvent_l(finalStatus);
     }
 
     postCheckAudioStatusEvent_l();
