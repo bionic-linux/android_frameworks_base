@@ -1731,6 +1731,13 @@ public interface Phone {
     public int getLteOnCdmaMode();
 
     /**
+     * Returns the IccFilehanler used for reading SIM files
+     *
+     * @return IccFilehanler
+     */
+    IccFileHandler getIccFileHandler();
+
+    /**
      * TODO: Adding a function for each property is not good.
      * A fucntion of type getPhoneProp(propType) where propType is an
      * enum of GSM+CDMA+LTE props would be a better approach.

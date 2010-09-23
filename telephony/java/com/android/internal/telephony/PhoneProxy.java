@@ -859,4 +859,8 @@ public class PhoneProxy extends Handler implements Phone {
     public UsimServiceTable getUsimServiceTable() {
         return mActivePhone.getUsimServiceTable();
     }
+
+    public IccFileHandler getIccFileHandler() {
+        return mActivePhone.getIccFileHandler();
+    }
 }

@@ -214,13 +214,31 @@ public abstract class IccFileHandler extends Handler implements IccConstants {
      */
 
     public void loadEFTransparent(int fileid, Message onLoaded) {
-        Message response = obtainMessage(EVENT_GET_BINARY_SIZE_DONE,
-                        fileid, 0, onLoaded);
-
-        phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, getEFPath(fileid),
-                        0, 0, GET_RESPONSE_EF_SIZE_BYTES, null, null, response);
+        loadEFTransparent(getEFPath(fileid), fileid, onLoaded);
     }
+    /**
+     * Load a SIM Transparent EF
+     *
+     * @param efPath path to field
+     * @param fileid EF id
+     * @param onLoaded
+     *
+     * ((AsyncResult)(onLoaded.obj)).result is the byte[]
+     *
+     */
+    public void loadEFTransparent(String efPath, int fileid, Message onLoaded) {
+        int path = 0;
+        try {
+            path = Integer.parseInt(efPath, 16);
+        } catch (NumberFormatException e) {
+            loge("uncaught exception" + e);
+            throw new RuntimeException("efPath is not numeric");
+        }
+        Message response = obtainMessage(EVENT_GET_BINARY_SIZE_DONE, fileid, path, onLoaded);
 
+        phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, efPath, 0, 0,
+                             GET_RESPONSE_EF_SIZE_BYTES, null, null, response);
+    }
     /**
      * Load a SIM Transparent EF-IMG. Used right after loadEFImgLinearFixed to
      * retrive STK's icon data.
@@ -422,6 +440,8 @@ public abstract class IccFileHandler extends Handler implements IccConstants {
 
                 fileid = msg.arg1;
 
+                int path = msg.arg2;
+
                 if (TYPE_EF != data[RESPONSE_DATA_FILE_TYPE]) {
                     throw new IccFileTypeMismatch();
                 }
@@ -432,8 +452,13 @@ public abstract class IccFileHandler extends Handler implements IccConstants {
 
                 size = ((data[RESPONSE_DATA_FILE_SIZE_1] & 0xff) << 8)
                        + (data[RESPONSE_DATA_FILE_SIZE_2] & 0xff);
+                String sPath = getEFPath(fileid);
 
-                phone.mCM.iccIO(COMMAND_READ_BINARY, fileid, getEFPath(fileid),
+                if (path > 0) {
+                    sPath = Integer.toHexString(path);
+                }
+
+                phone.mCM.iccIO(COMMAND_READ_BINARY, fileid, sPath,
                                 0, 0, size, null, null,
                                 obtainMessage(EVENT_READ_BINARY_DONE,
                                               fileid, 0, response));
