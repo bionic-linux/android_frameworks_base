@@ -1707,6 +1707,12 @@ public interface Phone {
      */
     void unsetOnEcbModeExitResponse(Handler h);
 
+    /**
+     * Returns the IccFilehanler used for reading SIM files
+     *
+     * @return IccFilehanler
+     */
+    IccFileHandler getIccFileHandler();
 
     /**
      * TODO: Adding a function for each property is not good.
