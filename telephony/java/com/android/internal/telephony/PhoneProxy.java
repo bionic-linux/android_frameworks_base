@@ -843,4 +843,8 @@ public class PhoneProxy extends Handler implements Phone {
     public boolean isCspPlmnEnabled() {
         return mActivePhone.isCspPlmnEnabled();
     }
+
+    public IccFileHandler getIccFileHandler() {
+        return mActivePhone.getIccFileHandler();
+    }
 }
