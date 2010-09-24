@@ -15,10 +15,12 @@
  */
 
 #define LOG_TAG "MPEG4Extractor"
+//#define LOG_NDEBUG 0
 #include <utils/Log.h>
 
 #include "include/MPEG4Extractor.h"
 #include "include/SampleTable.h"
+#include "include/TrackFragmentTable.h"
 
 #include <arpa/inet.h>
 
@@ -42,11 +44,15 @@ namespace android {
 
 class MPEG4Source : public MediaSource {
 public:
-    // Caller retains ownership of both "dataSource" and "sampleTable".
+    // Caller retains ownership of both "dataSource", "sampleTable" and "fragmentTable".
     MPEG4Source(const sp<MetaData> &format,
                 const sp<DataSource> &dataSource,
                 int32_t timeScale,
-                const sp<SampleTable> &sampleTable);
+                const sp<SampleTable> &sampleTable,
+                const sp<TrackFragmentTable> &fragmentTable,
+                bool moofPresent,
+                uint64_t *nextFragmentTimestamp,
+                const sp<MPEG4Extractor> &parentExtractor);
 
     virtual status_t start(MetaData *params = NULL);
     virtual status_t stop();
@@ -66,7 +72,11 @@ private:
     sp<DataSource> mDataSource;
     int32_t mTimescale;
     sp<SampleTable> mSampleTable;
-    uint32_t mCurrentSampleIndex;
+    sp<TrackFragmentTable> mFragmentTable;
+    bool mHasFragments;
+    sp<MPEG4Extractor> mParentExtractor;
+    uint64_t mCurrentSampleIndex;
+    uint64_t *mNextFragmentTimestamp;
 
     bool mIsAVC;
     size_t mNALLengthSize;
@@ -184,7 +194,6 @@ status_t MPEG4DataSource::setCachedRange(off_t offset, size_t size) {
 
     if (err < (ssize_t)size) {
         clearCache();
-
         return ERROR_IO;
     }
 
@@ -262,12 +271,25 @@ MPEG4Extractor::MPEG4Extractor(const sp<DataSource> &source)
     : mDataSource(source),
       mHaveMetadata(false),
       mHasVideo(false),
+      mHasFragments(false),
+      mMFRAParsed(false),
       mFirstTrack(NULL),
       mLastTrack(NULL),
+      mFirstTFRA(NULL),
+      mLastTFRA(NULL),
+      mFirstPSSH(NULL),
+      mLastPSSH(NULL),
+      mFirstMovieFrag(NULL),
+      mLastMovieFrag(NULL),
+      mNextMoofParsingOffset(0),
+      mPresentationTimescale(0),
       mFileMetaData(new MetaData) {
+    LOGV("MPEG4Extractor::MPEG4Extractor() In/Out");
 }
 
 MPEG4Extractor::~MPEG4Extractor() {
+    LOGV("MPEG4Extractor::~MPEG4Extractor() In");
+
     Track *track = mFirstTrack;
     while (track) {
         Track *next = track->next;
@@ -276,6 +298,103 @@ MPEG4Extractor::~MPEG4Extractor() {
         track = next;
     }
     mFirstTrack = mLastTrack = NULL;
+
+    TrackFragRandomAccess *tfra = mFirstTFRA;
+    while (tfra) {
+
+        TFRAEntry *entry = tfra->firstTFRAEntry;
+        while (entry) {
+
+            TFRAEntry *nextEntry = entry->next;
+            delete entry;
+            entry = nextEntry;
+        }
+        tfra->firstTFRAEntry = NULL;
+
+        TrackFragRandomAccess *nextTfra = tfra->next;
+        delete tfra;
+        tfra = nextTfra;
+    }
+    mFirstTFRA = mLastTFRA = NULL;
+
+    PSSHeader *pssh = mFirstPSSH;
+    while (pssh) {
+
+        if (NULL != pssh->data) {
+            free(pssh->data);
+            pssh->data = NULL;
+        }
+        PSSHeader *nextPssh = pssh->next;
+        delete pssh;
+        pssh = nextPssh;
+    }
+    mFirstPSSH = mLastPSSH = NULL;
+
+    MovieFrag *moof = mFirstMovieFrag;
+    while (moof) {
+
+        TrackFrag *traf = moof->firstTRAF;
+        while (traf) {
+
+            TrackFragRun *trun = traf->firstTrun;
+            while (trun) {
+
+                Sample *sample = trun->firstSample;
+                while (sample) {
+
+                    Sample *nextSample = sample->next;
+                    delete sample;
+                    sample = nextSample;
+                }
+                trun->firstSample = trun->lastSample = NULL;
+
+                TrackFragRun *nextTrun = trun->next;
+                delete trun;
+                trun = nextTrun;
+            }
+            traf->firstTrun = traf->lastTrun = NULL;
+
+            if (traf->encryption) {
+
+                EncryptionInfo *info = traf->encryption->firstInfo;
+                while (info) {
+
+                    if (info->initVec) {
+                        free(info->initVec);
+                        info->initVec = NULL;
+                    }
+
+                    SubSampleMappingData *entry = info->firstEntry;
+                    while (entry) {
+
+                        SubSampleMappingData *nextEntry = entry->next;
+                        delete(entry);
+                        entry = nextEntry;
+                    }
+                    info->firstEntry = info->lastEntry = NULL;
+
+                    EncryptionInfo *nextInfo = info->next;
+                    delete info;
+                    info = nextInfo;
+                }
+                traf->encryption->firstInfo = traf->encryption->lastInfo = NULL;
+
+                delete(traf->encryption);
+            }
+            traf->encryption = NULL;
+
+            TrackFrag *nextTraf = traf->next;
+            delete traf;
+            traf = nextTraf;
+        }
+        moof->firstTRAF = moof->lastTRAF = NULL;
+
+        MovieFrag *nextMoof = moof->next;
+        delete moof;
+        moof = nextMoof;
+    }
+    mFirstMovieFrag = mLastMovieFrag = NULL;
+    LOGV("MPEG4Extractor::~MPEG4Extractor() Out");
 }
 
 sp<MetaData> MPEG4Extractor::getMetaData() {
@@ -331,15 +450,29 @@ sp<MetaData> MPEG4Extractor::getTrackMetaData(
         const char *mime;
         CHECK(track->meta->findCString(kKeyMIMEType, &mime));
         if (!strncasecmp("video/", mime, 6)) {
-            uint32_t sampleIndex;
-            uint32_t sampleTime;
-            if (track->sampleTable->findThumbnailSample(&sampleIndex) == OK
-                    && track->sampleTable->getMetaDataForSample(
-                        sampleIndex, NULL /* offset */, NULL /* size */,
+            if (!mHasFragments) {
+                // no movie fragments
+                uint32_t sampleIndex;
+                uint32_t sampleTime;
+                if (track->sampleTable->findThumbnailSample(&sampleIndex) == OK
+                        && track->sampleTable->getMetaDataForSample(
+                            sampleIndex, NULL /* offset */, NULL /* size */,
+                            &sampleTime) == OK) {
+                                track->meta->setInt64(
+                                kKeyThumbnailTime,
+                                ((int64_t)sampleTime * 1000000) / track->timescale);
+                }
+            } else {
+                uint32_t sampleTime = 0;
+                if (track->hasFragmentTable) {
+                    if (track->fragmentTable->findThumbnailSample(
+                        NULL /* offset */, NULL /* size */,
                         &sampleTime) == OK) {
-                track->meta->setInt64(
-                        kKeyThumbnailTime,
-                        ((int64_t)sampleTime * 1000000) / track->timescale);
+                                track->meta->setInt64(
+                                        kKeyThumbnailTime,
+                                        (sampleTime * 1000000) / track->timescale);
+                    }
+                }
             }
         }
     }
@@ -364,6 +497,66 @@ status_t MPEG4Extractor::readMetaData() {
             mFileMetaData->setCString(kKeyMIMEType, "audio/mp4");
         }
 
+        if (mHasFragments) {
+            off_t fileSize = 0;
+            err = mDataSource->getSize(&fileSize);
+            if (err != OK) {
+                return err;
+            }
+
+            // parse the moof boxes to get first samples for each track
+            bool done = false;
+            while (!done) {
+
+                if  (mNextMoofParsingOffset < fileSize) {
+                    err = parseNextMOOF(mNextMoofParsingOffset, mDataSource);
+                    if (err != OK) {
+                        break;
+                    }
+                }
+
+                done = true;
+                Track *track = mFirstTrack;
+                while (NULL != track) {
+                    if (!track->hasFragmentTable || !track->fragmentTable->firstFragmentUpdated()) {
+                        // this track needs samples
+                        done = false;
+                        break;
+                    }
+                    track = track->next;
+                }
+            }
+
+            // for video tracks, parse more MOOF until the best thumbnail is extracted
+            Track *track = mFirstTrack;
+            while (NULL != track) {
+                if (track->hasFragmentTable && track->fragmentTable->isVideo()) {
+                    while (!track->fragmentTable->hasBestThumbnail()) {
+                        // this track needs more fragments to determine the best thumbnail
+                        if  (mNextMoofParsingOffset < fileSize) {
+                            err = parseNextMOOF(mNextMoofParsingOffset, mDataSource);
+                            if (err != OK) {
+                                break;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                track = track->next;
+            }
+
+            // set max buffer size for each track
+            // default to 1K if not known
+            track = mFirstTrack;
+            while (NULL != track) {
+                size_t maxSize = 0;
+                track->fragmentTable->getMaxSampleSize(&maxSize);
+                if (0 == maxSize) maxSize = 1024;
+                track->meta->setInt32(kKeyMaxInputSize, maxSize + 10 * 2);
+                track = track->next;
+            }
+        }
         return OK;
     }
 
@@ -414,6 +607,8 @@ static void convertTimeToDate(int64_t time_1904, String8 *s) {
 }
 
 status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
+
+    //LOGV("parseChunk() offset 0x%x", (uint32_t)offset);
     uint32_t hdr[2];
     if (mDataSource->readAt(*offset, hdr, 8) < 8) {
         return ERROR_IO;
@@ -488,6 +683,20 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
         case FOURCC('u', 'd', 't', 'a'):
         case FOURCC('i', 'l', 's', 't'):
         {
+            bool isMovieExtends = false;
+            if (chunk_type == FOURCC('m', 'v', 'e', 'x')) {
+                mHasFragments = true;
+                isMovieExtends = true;
+            }
+
+            if (chunk_type == FOURCC('m', 'o', 'o', 'f')) {
+                mHasFragments = true;
+                status_t err = parseMOOF(*offset, chunk_size, mDataSource);
+                if (err != OK) {
+                    return err;
+                }
+            }
+
             if (chunk_type == FOURCC('s', 't', 'b', 'l')) {
                 LOGV("sampleTable chunk is %d bytes long.", (size_t)chunk_size);
 
@@ -521,6 +730,14 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
                 track->skipTrack = false;
                 track->timescale = 0;
                 track->meta->setCString(kKeyMIMEType, "application/octet-stream");
+                track->sampleTable = NULL;
+                track->fragmentTable = NULL;
+                track->defaultSampleDescIndex = 0;
+                track->defaultSampleDuration = 0;
+                track->defaultSampleSize = 0;
+                track->defaultSampleFlags = 0;
+                track->nextTimestamp = 0;
+                track->hasFragmentTable = false;
             }
 
             off_t stop_offset = *offset + chunk_size;
@@ -560,9 +777,14 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
                 if (err != OK) {
                     return err;
                 }
+            } else if (isMovieExtends && !mMFRAParsed) {
+                // parse mfra now
+                // mfra box is optional
+                parseMFRA(*offset);
+                mMFRAParsed = true;
+
             } else if (chunk_type == FOURCC('m', 'o', 'o', 'v')) {
                 mHaveMetadata = true;
-
                 return UNKNOWN_ERROR;  // Return a dummy error.
             }
             break;
@@ -580,7 +802,7 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
             }
 
             uint64_t ctime, mtime, duration;
-            int32_t id;
+            uint32_t id = 0;
             uint32_t width, height;
 
             if (version == 1) {
@@ -618,6 +840,7 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
                 height = U32_AT(&buffer[80]);
             }
 
+            mLastTrack->id = id;
             *offset += chunk_size;
             break;
         }
@@ -718,8 +941,12 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
                 }
             }
 
-            if (*offset != stop_offset) {
+            // there could be other boxes under stsd box
+            // if there is stuff left in the stsd box, just skip them
+            if (stop_offset < *offset) {
                 return ERROR_MALFORMED;
+            } else if (stop_offset > *offset) {
+                *offset = stop_offset;
             }
             break;
         }
@@ -1025,7 +1252,7 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
                 return ERROR_MALFORMED;
             }
 
-            uint8_t header[12];
+            uint8_t header[28];
             if (mDataSource->readAt(
                         data_offset, header, sizeof(header))
                     < (ssize_t)sizeof(header)) {
@@ -1035,16 +1262,150 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
             int64_t creationTime;
             if (header[0] == 1) {
                 creationTime = U64_AT(&header[4]);
+                mPresentationTimescale = U64_AT(&header[20]);
             } else if (header[0] != 0) {
                 return ERROR_MALFORMED;
             } else {
                 creationTime = U32_AT(&header[4]);
+                mPresentationTimescale = U32_AT(&header[12]);
             }
 
             String8 s;
             convertTimeToDate(creationTime, &s);
 
             mFileMetaData->setCString(kKeyDate, s.string());
+
+            *offset += chunk_size;
+            break;
+        }
+
+        case FOURCC('m', 'e', 'h', 'd'):
+        {
+            if (chunk_data_size < 4) {
+                return ERROR_MALFORMED;
+            }
+
+            uint8_t header[12];
+            if (mDataSource->readAt(
+                        data_offset, header, sizeof(header)) < (ssize_t)sizeof(header)) {
+                return ERROR_IO;
+            }
+
+            if (header[0] == 1) {
+                mOverallDuration = U64_AT(&header[4]);
+            } else {
+                mOverallDuration = U32_AT(&header[4]);
+            }
+            // override individual track duration if applicable
+            if ((0 != mOverallDuration) && (0 != mPresentationTimescale)) {
+                Track * track = mFirstTrack;
+                while (NULL != track) {
+                    int64_t tmp_1 = 0;
+                    int64_t tmp_2 = (mOverallDuration * 1000000) / mPresentationTimescale;
+                    track->meta->findInt64(kKeyDuration, &tmp_1);
+                    if (tmp_1 < tmp_2) {
+                    track->meta->setInt64(
+                            kKeyDuration,
+                            tmp_2);
+                    }
+                    track = track->next;
+                }
+            }
+
+            *offset += chunk_size;
+            break;
+        }
+
+        case FOURCC('t', 'r', 'e', 'x'):
+        {
+            if (chunk_data_size < 24) {
+                return ERROR_MALFORMED;
+            }
+
+            uint8_t buffer[24];
+            if (mDataSource->readAt(
+                        data_offset, buffer, sizeof(buffer)) < (ssize_t)sizeof(buffer)) {
+                return ERROR_IO;
+            }
+
+            uint32_t id = U32_AT(&buffer[4]);
+
+            // find the track with match id
+            // assume all trak's come before mvex
+            Track* tmpTrack = mFirstTrack;
+            while (NULL != tmpTrack) {
+                if (id == tmpTrack->id) {
+                    tmpTrack->defaultSampleDescIndex = U32_AT(&buffer[8]);
+                    tmpTrack->defaultSampleDuration = U32_AT(&buffer[12]);
+                    tmpTrack->defaultSampleSize = U32_AT(&buffer[16]);
+                    tmpTrack->defaultSampleFlags = U32_AT(&buffer[20]);
+                    break;
+                }
+                tmpTrack = tmpTrack->next;
+            }
+
+            *offset += chunk_size;
+            break;
+        }
+
+        case FOURCC('u', 'u', 'i', 'd'):
+        {
+            if (chunk_data_size < 20) {
+                return ERROR_MALFORMED;
+            }
+
+            // read in extended type, 16 bytes
+            // check for Protection System Specific Header box (PIFF extension)
+            uint8_t buffer[16];
+            if (mDataSource->readAt(
+                    data_offset, buffer, 16) < 16) {
+                return ERROR_IO;
+            }
+            data_offset += 16;
+
+            bool found = true;
+            for (uint32_t idx = 0; idx < 16; idx++) {
+                if (buffer[idx] != PSSH_BOX_UUID[idx]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                PSSHeader *pssh = new PSSHeader;
+                pssh->next = NULL;
+                if (mLastPSSH) {
+                    mLastPSSH->next = pssh;
+                } else {
+                    mFirstPSSH = pssh;
+                }
+                mLastPSSH = pssh;
+
+                // read in system id
+                data_offset += 4;
+                if (mDataSource->readAt(
+                        data_offset, &pssh->systemId[0], 16) < 16) {
+                    return ERROR_IO;
+                }
+                data_offset += 16;
+
+                // read in data size
+                if (mDataSource->readAt(
+                        data_offset, &buffer[0], 4) < 4) {
+                    return ERROR_IO;
+                }
+                data_offset += 4;
+                pssh->dataSize = U32_AT(&buffer[0]);
+
+                // read in data
+                pssh->data = (uint8_t *)malloc(pssh->dataSize);
+                if (NULL == pssh->data) {
+                    return -ENOMEM;
+                }
+                if (mDataSource->readAt(
+                        data_offset, pssh->data, pssh->dataSize) < (ssize_t)pssh->dataSize) {
+                    return ERROR_IO;
+                }
+            }
 
             *offset += chunk_size;
             break;
@@ -1191,6 +1552,1101 @@ status_t MPEG4Extractor::parseMetaData(off_t offset, size_t size) {
     return OK;
 }
 
+status_t MPEG4Extractor::parseMFRA(off_t offset) {
+    // seek to EOF minus 16 bytes
+    // look for mfro (movie fragment random access offset) box
+    off_t fileSize = 0;
+    uint32_t mfraOffset = 0, tfraOffset = 0;
+    uint32_t mfroOffset = 16;
+    uint64_t mfraSize = 0, boxSize = 0;
+
+    status_t err = mDataSource->getSize(&fileSize);
+    if (err != OK) {
+        return err;
+    }
+
+    uint32_t hdr[4];
+    off_t readOffset = fileSize - mfroOffset;
+
+    if (mDataSource->readAt(readOffset, hdr, 16) < 16) {
+        return ERROR_IO;
+    }
+
+    uint32_t boxType = ntohl(hdr[1]);
+    char box[5];
+    MakeFourCCString(boxType, box);
+    PathAdder autoAdder(&mPath, boxType);
+
+    switch (boxType) {
+        case FOURCC('m', 'f', 'r', 'o'):
+            LOGV("Found mfro box");
+            mfraOffset = ntohl(hdr[3]);
+            LOGV("mfraOffset 0x%x", mfraOffset);
+            break;
+        default:
+            return ERROR_IO;
+            break;
+    }
+
+    // get to the beginning of the mfra box
+    readOffset -= (mfraOffset - mfroOffset);
+    if (mDataSource->readAt(readOffset, &hdr[0], 8) < 8) {
+        return ERROR_IO;
+    }
+    readOffset += 8;
+
+    boxType = ntohl(hdr[1]);
+    MakeFourCCString(boxType, box);
+    PathAdder autoAdder_1(&mPath, boxType);
+
+    tfraOffset = 8;
+
+    switch (boxType) {
+        case FOURCC('m', 'f', 'r', 'a'): {
+            LOGV("Found mfra box");
+            mfraSize = ntohl(hdr[0]);
+
+            if (mfraSize == 1) {
+                if (mDataSource->readAt(readOffset, &mfraSize, 8) < 8) {
+                    return ERROR_IO;
+                }
+                readOffset += 8;
+                mfraSize = ntoh64(mfraSize);
+                tfraOffset += 8;
+            }
+            break;
+        }
+        default:
+            return ERROR_IO;
+            break;
+    }
+
+    off_t count = mfraSize - tfraOffset;
+    off_t savedReadOffset = readOffset;
+    bool done = false;
+    while (((readOffset - savedReadOffset) < count) && !done) {
+        // read in the tfra boxes
+        if (mDataSource->readAt(readOffset, hdr, 8) < 8) {
+                return ERROR_IO;
+        }
+        readOffset += 8;
+
+        uint32_t boxType = ntohl(hdr[1]);
+        char box[5];
+        MakeFourCCString(boxType, box);
+        PathAdder autoAdder_2(&mPath, boxType);
+
+        switch (boxType) {
+            case FOURCC('m', 'f', 'r', 'o'):
+                LOGV("Found mfro box again, done parsing");
+                done = true;
+                break;
+
+            case FOURCC('t', 'f', 'r', 'a'): {
+                LOGV("Found tfra box");
+                boxSize = ntohl(hdr[0]);
+
+                if (boxSize == 1) {
+                    if (mDataSource->readAt(readOffset, &boxSize, 8) < 8) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 8;
+                    boxSize = ntoh64(boxSize);
+                }
+                uint8_t version;
+                if (mDataSource->readAt(readOffset, &version, 1) < 1) {
+                    return ERROR_IO;
+                }
+                // discard 3 bytes of flags
+                readOffset += 4;
+
+                uint32_t id = 0;
+                if (mDataSource->readAt(readOffset, &id, 4) < 4) {
+                    return ERROR_IO;
+                }
+                readOffset += 4;
+                id = ntohl(id);
+
+                uint32_t reserved = 0;
+                if (mDataSource->readAt(readOffset, &reserved, 4) < 4) {
+                    return ERROR_IO;
+                }
+                readOffset += 4;
+                reserved = ntohl(reserved);
+
+                uint32_t entries = 0;
+                if (mDataSource->readAt(readOffset, &entries, 4) < 4) {
+                    return ERROR_IO;
+                }
+                readOffset += 4;
+                entries = ntohl(entries);
+
+                TrackFragRandomAccess *tfra = new TrackFragRandomAccess;
+                tfra->next = NULL;
+                if (mLastTFRA) {
+                    mLastTFRA->next = tfra;
+                } else {
+                    mFirstTFRA = tfra;
+                }
+                mLastTFRA = tfra;
+
+                tfra->id = id;
+                tfra->entryCount = entries;
+                tfra->firstTFRAEntry = NULL;
+                tfra->lastTFRAEntry = NULL;
+
+                uint8_t trafNumSizelen = reserved & 0x00000003;
+                uint8_t trunNumSizelen = (reserved >> 2) & 0x00000003;
+                uint8_t sampleNumSizelen = (reserved >> 4) & 0x00000003;
+
+                for (uint32_t idx = 0; idx < entries; idx++) {
+
+                    TFRAEntry *entry = new TFRAEntry;
+                    entry->next = NULL;
+                    if (tfra->lastTFRAEntry) {
+                        tfra->lastTFRAEntry->next = entry;
+                    } else {
+                        tfra->firstTFRAEntry = entry;
+                    }
+                    tfra->lastTFRAEntry = entry;
+
+                    entry->time64 = 0;
+                    entry->moofOffset64 = 0;
+                    entry->trafNumber = 0;
+                    entry->trunNumber = 0;
+                    entry->sampleNumber = 0;
+
+                    uint8_t data[8];
+
+                    if (1 == version) {
+                        if (mDataSource->readAt(readOffset, &data[0], 8) < 8) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 8;
+                        entry->time64 = U64_AT(&data[0]);
+
+                        if (mDataSource->readAt(readOffset, &data[0], 8) < 8) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 8;
+                        entry->moofOffset64 = U64_AT(&data[0]);
+                    } else {
+                        if (mDataSource->readAt(readOffset, &data[0], 4) < 4) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 4;
+                        uint32_t temp =  U32_AT(&data[0]);
+                        entry->time64 = temp;
+
+                        if (mDataSource->readAt(readOffset, &data[0], 4) < 4) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 4;
+                        temp = U32_AT(&data[0]);
+                        entry->moofOffset64 = temp;
+                    }
+
+                    switch (trafNumSizelen) {
+                        case 0: {
+                            if (mDataSource->readAt(readOffset, &data[0], 1) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 1;
+                            entry->trafNumber = data[0];
+                            break;
+                        }
+                        case 1: {
+                            if (mDataSource->readAt(readOffset, &data[0], 2) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 2;
+                            entry->trafNumber = U16_AT(&data[0]);
+                            break;
+                        }
+                        case 2: {
+                            if (mDataSource->readAt(readOffset, &data[0], 3) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 2;
+                            entry->trafNumber = U24_AT(&data[0]);
+                            break;
+                        }
+                        case 3: {
+                            if (mDataSource->readAt(readOffset, &data[0], 4) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 4;
+                            entry->trafNumber = U32_AT(&data[0]);
+                            break;
+                        }
+                    }
+
+                    switch (trunNumSizelen) {
+                        case 0: {
+                            if (mDataSource->readAt(readOffset, &data[0], 1) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 1;
+                            entry->trunNumber = data[0];
+                            break;
+                        }
+                        case 1: {
+                            if (mDataSource->readAt(readOffset, &data[0], 2) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 2;
+                            entry->trunNumber = U16_AT(&data[0]);
+                            break;
+                        }
+                        case 2: {
+                            if (mDataSource->readAt(readOffset, &data[0], 3) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 3;
+                            entry->trunNumber = U24_AT(&data[0]);
+                            break;
+                        }
+                        case 3: {
+                            if (mDataSource->readAt(readOffset, &data[0], 4) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 4;
+                            entry->trunNumber = U32_AT(&data[0]);
+                            break;
+                        }
+                    }
+
+                    switch (sampleNumSizelen) {
+                        case 0: {
+                            if (mDataSource->readAt(readOffset, &data[0], 1) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 1;
+                            entry->sampleNumber = data[0];
+                            break;
+                        }
+                        case 1: {
+                            if (mDataSource->readAt(readOffset, &data[0], 2) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 2;
+                            entry->sampleNumber = U16_AT(&data[0]);
+                            break;
+                        }
+                        case 2: {
+                            if (mDataSource->readAt(readOffset, &data[0], 3) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 3;
+                            entry->sampleNumber = U24_AT(&data[0]);
+                            break;
+                        }
+                        case 3:	{
+                            if (mDataSource->readAt(readOffset, &data[0], 4) < 1) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 4;
+                            entry->sampleNumber = U32_AT(&data[0]);
+                            break;
+                        }
+                    }
+                } // end for
+                break;
+            } //end case
+            default: {
+                // skip this box
+                boxSize = ntohl(hdr[0]);
+                if (boxSize == 1) {
+                    if (mDataSource->readAt(readOffset, &boxSize, 8) < 8) {
+                        return ERROR_IO;
+                    }
+                    boxSize = ntoh64(boxSize);
+                    readOffset += (boxSize - 16);
+                } else {
+                    readOffset += (boxSize - 8);
+                }
+                break;
+            }
+        } // end switch
+    } // end while
+
+    // create the track fragment tables for each track
+    Track *track = mFirstTrack;
+    while (NULL != track) {
+
+        bool isVideoTrack = false;
+        const char *mime;
+        CHECK(track->meta->findCString(kKeyMIMEType, &mime));
+        if (!strncasecmp("video/", mime, 6)) {
+            isVideoTrack = true;
+        }
+
+        track->fragmentTable = new TrackFragmentTable(track->id, track->timescale, isVideoTrack);
+        track->hasFragmentTable = true;
+        // set the random access info
+        TrackFragRandomAccess *randomAccess = mFirstTFRA;
+        while (NULL != randomAccess) {
+            // there is only one per track
+            if (randomAccess->id == track->id) {
+                track->fragmentTable->setRandomAccessInfo(randomAccess);
+                // set first sample timestamp to first sync sample timestamp
+                track->nextTimestamp = randomAccess->firstTFRAEntry->time64;
+                break;
+            } else {
+                randomAccess = randomAccess->next;
+            }
+        }
+        track = track->next;
+    }
+
+    return OK;
+}
+
+status_t MPEG4Extractor::parseNextMOOF(const sp<DataSource> &dataSource) {
+    return parseNextMOOF(mNextMoofParsingOffset, dataSource);
+}
+
+
+status_t MPEG4Extractor::parseNextMOOF(off_t offset, const sp<DataSource> &dataSource) {
+    //LOGV("MPEG4Extractor::parseNextMOOF() In offset 0x%x", (uint32_t)offset);
+
+    Mutex::Autolock autoLock(mLock);
+
+    off_t fileSize = 0;
+    status_t err = dataSource->getSize(&fileSize);
+    if (err != OK) {
+        return err;
+    }
+
+    off_t nextMoofOffset = offset;
+    bool found = false;
+    while (fileSize > 0) {
+        // look the first moof box from offset
+        // parse it and return
+        uint32_t hdr[2];
+        if (dataSource->readAt(nextMoofOffset, hdr, 8) < 8) {
+            return ERROR_IO;
+        }
+        uint64_t chunk_size = 0;
+        chunk_size = ntohl(hdr[0]);
+        uint32_t chunk_type = ntohl(hdr[1]);
+
+        if (chunk_size == 1) {
+            if (dataSource->readAt(nextMoofOffset + 8, &chunk_size, 8) < 8) {
+                return ERROR_IO;
+            }
+            chunk_size = ntoh64(chunk_size);
+        }
+
+        char chunk[5];
+        MakeFourCCString(chunk_type, chunk);
+        PathAdder autoAdder(&mPath, chunk_type);
+
+        if (chunk_type == FOURCC('m', 'o', 'o', 'f')) {
+            found = true;
+            // check if there are sync samples in this moof
+            mSyncSamplesInMoof = new MoofSyncSamples;
+            mSyncSamplesInMoof->entryCount = 0;
+            mSyncSamplesInMoof->firstSyncSample = NULL;
+            mSyncSamplesInMoof->lastSyncSample = NULL;
+
+            TrackFragRandomAccess *randomAccess = mFirstTFRA;
+               while (NULL != randomAccess) {
+                   TFRAEntry *entry = randomAccess->firstTFRAEntry;
+                   while (NULL != entry) {
+                       if (nextMoofOffset == (off_t)entry->moofOffset64) {
+
+                           SyncSample *syncSample = new SyncSample;
+                           syncSample->next = NULL;
+                           if (mSyncSamplesInMoof->lastSyncSample) {
+                               mSyncSamplesInMoof->lastSyncSample->next = syncSample;
+                           } else {
+                               mSyncSamplesInMoof->firstSyncSample = syncSample;
+                           }
+                           mSyncSamplesInMoof->lastSyncSample = syncSample;
+                           mSyncSamplesInMoof->entryCount++;
+                           syncSample->entry = entry;
+                       }
+                       entry = entry->next;
+                   }
+                randomAccess = randomAccess->next;
+            }
+               if (0 == mSyncSamplesInMoof->entryCount) {
+                   delete mSyncSamplesInMoof;
+                   mSyncSamplesInMoof = NULL;
+                   parseMOOF(nextMoofOffset, chunk_size, dataSource);
+               } else {
+                   parseMOOF(nextMoofOffset, chunk_size, dataSource, mSyncSamplesInMoof);
+
+                   SyncSample *syncSample = mSyncSamplesInMoof->firstSyncSample;
+                   while ((syncSample != NULL) && (mSyncSamplesInMoof->entryCount > 0)) {
+
+                       SyncSample *next = syncSample->next;
+                       syncSample->entry = NULL;
+
+                       delete syncSample;
+                       mSyncSamplesInMoof->entryCount--;
+                       syncSample = next;
+                   }
+                   delete mSyncSamplesInMoof;
+                   mSyncSamplesInMoof = NULL;
+               }
+            nextMoofOffset += chunk_size;
+            break;
+        } else {
+            nextMoofOffset += chunk_size;
+            fileSize -= chunk_size;
+        }
+    }
+    mNextMoofParsingOffset = nextMoofOffset;
+
+    if (found) {
+        return OK;
+    }
+
+    return ERROR_IO;
+}
+
+status_t MPEG4Extractor::parseMOOF(off_t moofOffset, off_t moofSize,
+        const sp<DataSource> &dataSource, MoofSyncSamples *syncSamples) {
+    //LOGV("MPEG4Extractor::parseMOOF In moofOffset 0x%x moofSize 0x%x syncSamples 0x%x",
+    //		(uint32_t)moofOffset, (uint32_t)moofSize, (uint32_t)syncSamples);
+
+    MovieFrag *moof = new MovieFrag;
+    moof->next = NULL;
+    if (mLastMovieFrag) {
+        mLastMovieFrag->next = moof;
+    } else {
+        mFirstMovieFrag = moof;
+    }
+    mLastMovieFrag = moof;
+
+    moof->offset = moofOffset;
+    moof->sequenceNum = 0;
+    moof->firstTRAF = NULL;
+    moof->lastTRAF = NULL;
+
+    off_t readOffset = moofOffset;
+    uint32_t hdr[4];
+
+    // skip over moof box type and size
+    if (dataSource->readAt(readOffset, hdr, 8) < 8) {
+        return ERROR_IO;
+    }
+    readOffset += 8;
+
+    uint64_t boxSize = ntohl(hdr[0]);
+    if (boxSize == 1) {
+        // skip over the extended size
+        readOffset += 8;
+    }
+
+    off_t dataSize = moofSize - (readOffset - moofOffset);
+    uint32_t trafCount = 0;
+    uint32_t trunCount = 0;
+    uint64_t sampleDataOffset = moofOffset;
+    uint64_t sampleOffsetForNextRun = moofOffset;
+    bool tfhdHasOffset = false;
+    bool firstSyncSampleInTRAF = true;
+
+    while ((readOffset - moofOffset) < dataSize) {
+        // look for a mfhd, a traf, a trun or a uuid
+        if (dataSource->readAt(readOffset, hdr, 8) < 8) {
+            return ERROR_IO;
+        }
+        readOffset += 8;
+
+        uint64_t boxSize = ntohl(hdr[0]);
+        uint32_t boxType = ntohl(hdr[1]);
+
+        char box[5];
+        MakeFourCCString(boxType, box);
+        PathAdder autoAdder(&mPath, boxType);
+
+        switch (boxType) {
+            case FOURCC('m', 'f', 'h', 'd'): {
+                if (boxSize == 1) {
+                    // skip over the extended size
+                    readOffset += 8;
+                }
+                // skip over version + flags
+                readOffset += 4;
+                uint8_t data[4];
+                if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                    return ERROR_IO;
+                }
+                readOffset += 4;
+                moof->sequenceNum = U32_AT(&data[0]);
+
+                break;
+            }
+            case FOURCC('t', 'r', 'a', 'f'): {
+                TrackFrag *traf = new TrackFrag;
+                traf->next = NULL;
+                if (moof->lastTRAF) {
+                    moof->lastTRAF->next = traf;
+                } else {
+                    moof->firstTRAF = traf;
+                }
+                moof->lastTRAF = traf;
+                trafCount++;
+                trunCount = 0;
+                firstSyncSampleInTRAF = true;
+
+                traf->id = 0;
+                traf->trafNumInParentMoof = trafCount;
+                traf->offsetOfParentMoof = moofOffset;
+                traf->sizeOfParentMoof = moofSize;
+                traf->hasSyncSamples = false;
+                traf->firstSyncSTrunNum = 0;
+                traf->firstSyncSampleNum = 0;
+                traf->firstSyncTimestamp = 0;
+                traf->firstSampleTimestamp = 0;
+                traf->fixTimestamps = false;
+                traf->maxSampleSize = 0;
+                traf->baseDataOffset = 0;
+                traf->sampleDescIndex = 0;
+                traf->defaultSampleDuration = 0;
+                traf->defaultSampleSize = 0;
+                traf->defaultSampleFlags = 0;
+                traf->firstTrun = NULL;
+                traf->lastTrun = NULL;
+                traf->encryption = NULL;
+
+                if (boxSize == 1) {
+                    // skip over the extended size
+                    readOffset += 8;
+                }
+                break;
+            }
+            case FOURCC('t', 'f', 'h', 'd'): {
+                if (boxSize == 1) {
+                    // skip over the extended size
+                    readOffset += 8;
+                }
+
+                // skip version, read in flags
+                uint8_t data[8];
+                if (dataSource->readAt(readOffset + 1, &data[0], 3) < 3) {
+                    return ERROR_IO;
+                }
+                readOffset += 4;
+                uint32_t flags = U24_AT(&data[0]);
+                if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                    return ERROR_IO;
+                }
+                readOffset += 4;
+                moof->lastTRAF->id = U32_AT(&data[0]);
+
+                if (flags & 0x000001) {
+                    if (dataSource->readAt(readOffset, &data[0], 8) < 8) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 8;
+                    tfhdHasOffset = true;
+                    moof->lastTRAF->baseDataOffset = U64_AT(&data[0]);
+                } else {
+                    tfhdHasOffset = false;
+
+                    TrackFrag *tmpTRAF = moof->firstTRAF;
+                    uint32_t id = moof->lastTRAF->id;
+                    bool found = false;
+                    while (tmpTRAF != moof->lastTRAF) {
+                        if (id == tmpTRAF->id) {
+                            found = true;
+                            break;
+                        }
+                        tmpTRAF = tmpTRAF->next;
+                    }
+                    if (found) {
+                        moof->lastTRAF->baseDataOffset = sampleOffsetForNextRun;
+                    } else {
+                        moof->lastTRAF->baseDataOffset = moofOffset;
+                    }
+                }
+
+                bool found = false;
+                Track *track = mFirstTrack;
+                while (!found && (NULL != track)) {
+                    if (track->id != moof->lastTRAF->id) {
+                        track = track->next;
+                    } else {
+                        found = true;
+                    }
+                }
+
+                moof->lastTRAF->firstSampleTimestamp = track->nextTimestamp;
+
+                if (flags & 0x000002) {
+                    if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 4;
+                    moof->lastTRAF->sampleDescIndex = U32_AT(&data[0]);
+                } else {
+                    moof->lastTRAF->sampleDescIndex = track->defaultSampleDescIndex;
+                }
+
+                if (flags & 0x000008) {
+                    if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 4;
+                    moof->lastTRAF->defaultSampleDuration = U32_AT(&data[0]);
+                } else {
+                    moof->lastTRAF->defaultSampleDuration = track->defaultSampleDuration;
+                }
+
+                if (flags & 0x000010) {
+                    if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 4;
+                    moof->lastTRAF->defaultSampleSize = U32_AT(&data[0]);
+                } else {
+                    moof->lastTRAF->defaultSampleSize = track->defaultSampleSize;
+                }
+
+                if (flags & 0x000020) {
+                    if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 4;
+                    moof->lastTRAF->defaultSampleFlags = U32_AT(&data[0]);
+                } else {
+                    moof->lastTRAF->defaultSampleFlags = track->defaultSampleFlags;
+                }
+
+                moof->lastTRAF->maxSampleSize = (track->defaultSampleSize > moof->lastTRAF->defaultSampleSize) ?
+                                                    track->defaultSampleSize : moof->lastTRAF->defaultSampleSize;
+                break;
+            }
+
+            case FOURCC('t', 'r', 'u', 'n'): {
+                TrackFragRun *trun = new TrackFragRun;
+                trun->next = NULL;
+                if (moof->lastTRAF->lastTrun) {
+                    moof->lastTRAF->lastTrun->next = trun;
+                } else {
+                    moof->lastTRAF->firstTrun = trun;
+                }
+                moof->lastTRAF->lastTrun = trun;
+
+                trunCount++;
+
+                bool found = false;
+                Track *track = mFirstTrack;
+                while (!found && (NULL != track)) {
+                    if (track->id != moof->lastTRAF->id) {
+                        track = track->next;
+                    } else {
+                        found = true;
+                    }
+                }
+
+                trun->trunNumInParentTraf = trunCount;
+                trun->entryCount = 0;
+                trun->dataOffset = 0;
+                trun->firstSampleFlags = 0;
+                trun->firstSample = NULL;
+                trun->lastSample = NULL;
+
+                // find out if there are any sync samples in this run
+                uint32_t numSyncSamples = 0;
+                uint32_t *sampleNums = NULL;
+                uint64_t *timestamps = NULL;
+                if (syncSamples != NULL) {
+                    sampleNums = (uint32_t *)malloc(syncSamples->entryCount * sizeof(uint32_t));
+                    timestamps = (uint64_t *)malloc(syncSamples->entryCount * sizeof(uint64_t));
+                    SyncSample *syncSample = syncSamples->firstSyncSample;
+                    for (uint32_t idx = 0; idx < syncSamples->entryCount; idx++) {
+                        if ((syncSample->entry->trafNumber == trafCount) &&
+                                (syncSample->entry->trunNumber == trunCount)) {
+                            sampleNums[numSyncSamples] = syncSample->entry->sampleNumber;
+                            timestamps[numSyncSamples] = syncSample->entry->time64;
+                            numSyncSamples++;
+                        }
+                        syncSample = syncSample->next;
+                    }
+                }
+
+                if (numSyncSamples) {
+                    moof->lastTRAF->hasSyncSamples = true;
+                }
+
+                if (boxSize == 1) {
+                    // skip over the extended size
+                    readOffset += 8;
+                }
+                // skip version, read in flags
+                uint8_t data[4];
+                if (dataSource->readAt(readOffset + 1, &data[0], 3) < 3) {
+                    return ERROR_IO;
+                }
+                readOffset += 4;
+                uint32_t flags = U24_AT(&data[0]);
+
+                if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                    return ERROR_IO;
+                }
+                readOffset += 4;
+                trun->entryCount = U32_AT(&data[0]);
+
+                if (flags & 0x000001) {
+                    if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 4;
+                    trun->dataOffset = moof->lastTRAF->baseDataOffset;
+                    trun->dataOffset += U32_AT(&data[0]);
+                } else {
+                    if (1 == trunCount) {
+                        if (tfhdHasOffset) {
+                            trun->dataOffset = moof->lastTRAF->baseDataOffset;
+                        } else {
+                            trun->dataOffset = moofOffset + moofSize + 8;
+                        }
+                    } else {
+                        trun->dataOffset = sampleOffsetForNextRun;
+                    }
+                }
+
+                if (flags & 0x000004) {
+                    if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 4;
+                    trun->firstSampleFlags = U32_AT(&data[0]);
+                }
+
+                uint32_t sampleNum = 0;
+                uint64_t sampleOffset = trun->dataOffset;
+                for (uint32_t idx = 0; idx < trun->entryCount; idx++) {
+                    Sample *entry = new Sample;
+                    entry->next = NULL;
+                    if (trun->lastSample) {
+                        trun->lastSample->next = entry;
+                    } else {
+                        trun->firstSample = entry;
+                    }
+                    trun->lastSample = entry;
+
+                    sampleNum++;
+
+                    entry->sampleNumInParentTrun = sampleNum;
+                    entry->sampleDuration = moof->lastTRAF->defaultSampleDuration;
+                    entry->sampleSize = moof->lastTRAF->defaultSampleSize;
+                    entry->sampleFlags = moof->lastTRAF->defaultSampleFlags;
+                    entry->sampleCompTimeOffset = 0;
+
+                    if (flags & 0x000100) {
+                        if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 4;
+                        entry->sampleDuration = U32_AT(&data[0]);
+                    }
+
+                    if (flags & 0x000200) {
+                        if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 4;
+                        entry->sampleSize = U32_AT(&data[0]);
+                    }
+
+                    if (flags & 0x000400) {
+                        if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 4;
+                        entry->sampleFlags = U32_AT(&data[0]);
+                    }
+
+                    if (flags & 0x000800) {
+                        if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 4;
+                        entry->sampleCompTimeOffset = U32_AT(&data[0]);
+                    }
+
+                    if (entry->sampleSize > moof->lastTRAF->maxSampleSize) {
+                        moof->lastTRAF->maxSampleSize = entry->sampleSize;
+                    }
+
+                    entry->sampleTimestamp = track->nextTimestamp;
+
+                    if ((numSyncSamples > 0) && (NULL != sampleNums) && (NULL != timestamps)) {
+                        // see if this is a sync sample
+                        for (uint32_t idx = 0; idx < numSyncSamples; idx++) {
+                            if (sampleNum == sampleNums[idx]) {
+                                if (firstSyncSampleInTRAF) {
+                                    // this is the first sync sample in the track fragment
+                                    firstSyncSampleInTRAF = false;
+                                    if ((trunCount > 1) || (sampleNum > 1)) {
+                                        // the earlier samples in this traf may not have the correct timestamp
+                                        // compare the sync sample timestamp with track time
+                                        if (entry->sampleTimestamp != timestamps[idx]) {
+                                            // need to fix the previous samples
+                                            moof->lastTRAF->firstSyncSTrunNum = trunCount;
+                                            moof->lastTRAF->firstSyncSampleNum = sampleNum;
+                                            moof->lastTRAF->firstSyncTimestamp = entry->sampleTimestamp;
+                                            moof->lastTRAF->fixTimestamps = true;
+
+                                            // calculate the first sample timestamp in this traf
+                                            uint64_t firstTS = moof->lastTRAF->firstTrun->firstSample->sampleTimestamp;
+                                            uint64_t deltaTS = entry->sampleTimestamp - firstTS;
+
+                                            moof->lastTRAF->firstSampleTimestamp =  timestamps[idx] - deltaTS;
+                                        }
+                                    }
+                                }
+                                entry->sampleTimestamp = timestamps[idx];
+                                track->nextTimestamp = timestamps[idx];
+                                break;
+                            }
+                        }
+                    }
+
+                    track->nextTimestamp += entry->sampleDuration;
+
+                    entry->sampleDataOffset = sampleOffset;
+                    sampleOffset += entry->sampleSize;
+                } // end for
+
+                sampleOffsetForNextRun = sampleOffset;
+                break;
+            }
+
+            case FOURCC('u', 'u', 'i', 'd') : {
+                // read in extended type, 16 bytes
+                // check for Sample Encryption box (PIFF extension)
+                off_t skipSize = boxSize - 16;
+                if (boxSize == 1) {
+                    if (dataSource->readAt(readOffset, &boxSize, 8) < 8) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 8;
+                    boxSize = ntoh64(boxSize);
+                    skipSize = boxSize - 24;
+                }
+
+                uint8_t data[16];
+                if (dataSource->readAt(readOffset, &data[0], 16) < 16) {
+                    return ERROR_IO;
+                }
+                readOffset += 16;
+
+                bool found = true;
+                for (uint32_t idx = 0; idx < 16; idx++) {
+                    if (data[idx] != SAMPLE_ENCRYPTION_BOX_UUID[idx]) {
+                        found = false;
+                        break;
+                    }
+                }
+                if (found) {
+                    // skip version, read in flags
+                    if (dataSource->readAt(readOffset + 1, &data[0], 3) < 3) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 4;
+                    uint32_t flags = U24_AT(&data[0]);
+
+                    SampleEncryption *encrypt = new SampleEncryption;
+                    moof->lastTRAF->encryption = encrypt;
+
+                    encrypt->algorithmID = 0;
+                    encrypt->initVecSize = 0;
+                    for (uint32_t ii = 0; ii < sizeof(encrypt->keyID); ii++) {
+                        encrypt->keyID[ii] = 0;
+                    }
+                    encrypt->sampleCount = 0;
+                    encrypt->firstInfo = NULL;
+                    encrypt->lastInfo = NULL;
+
+                    if (flags & 0x000001) {
+                        if (dataSource->readAt(readOffset, &data[0], 3) < 3) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 3;
+                        encrypt->algorithmID = U24_AT(&data[0]);
+
+                        if (dataSource->readAt(readOffset, &data[0], 1) < 1) {
+                            return ERROR_IO;
+                        }
+
+                        readOffset += 1;
+                        encrypt->initVecSize = data[0];
+
+                        if (dataSource->readAt(readOffset, &encrypt->keyID[0], 16) < 16) {
+                            return ERROR_IO;
+                        }
+                        readOffset += 16;
+                    }
+
+                    if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                        return ERROR_IO;
+                    }
+                    readOffset += 4;
+                    encrypt->sampleCount = U32_AT(&data[0]);
+
+                    for (uint32_t ii = 0; ii < encrypt->sampleCount; ii++) {
+                        EncryptionInfo *info = new EncryptionInfo;
+                        info->next = NULL;
+                        if (encrypt->lastInfo) {
+                            encrypt->lastInfo->next = info;
+                        } else {
+                            encrypt->firstInfo = info;
+                        }
+                        encrypt->lastInfo = info;
+
+                        info->initVec = NULL;
+                        info->entryCount = 0;
+                        info->firstEntry = NULL;
+                        info->lastEntry = NULL;
+
+                        info->initVec = (uint8_t *)malloc(encrypt->initVecSize);
+                        if (NULL == info->initVec) {
+                            return -ENOMEM;
+                        }
+
+                        if (dataSource->readAt(readOffset, info->initVec, encrypt->initVecSize) < encrypt->initVecSize) {
+                            return ERROR_IO;
+                        }
+                        readOffset += encrypt->initVecSize;
+
+                        if (flags & 0x000002) {
+                            if (dataSource->readAt(readOffset, &data[0], 2) < 2) {
+                                return ERROR_IO;
+                            }
+                            readOffset += 2;
+                            info->entryCount = U16_AT(&data[0]);
+
+                            for (uint32_t jj = 0; jj < info->entryCount; jj++) {
+                                SubSampleMappingData *entry = new SubSampleMappingData;
+                                entry->next = NULL;
+                                if (info->lastEntry) {
+                                    info->lastEntry->next = entry;
+                                } else {
+                                    info->firstEntry = entry;
+                                }
+                                info->lastEntry = entry;
+
+                                entry->clearBytes = 0;
+                                entry->encryptedbytes = 0;
+
+                                if (dataSource->readAt(readOffset, &data[0], 2) < 2) {
+                                    return ERROR_IO;
+                                }
+                                readOffset += 2;
+                                entry->clearBytes = U16_AT(&data[0]);
+
+                                if (dataSource->readAt(readOffset, &data[0], 4) < 4) {
+                                    return ERROR_IO;
+                                }
+                                readOffset += 4;
+                                entry->encryptedbytes = U32_AT(&data[0]);
+                            } // end for
+                        } // end if
+                    } // end for
+                } // end if
+                break;
+            }
+            default: {
+                // skip this box
+                off_t skipSize = boxSize - 16;
+                if (boxSize == 1) {
+                    if (dataSource->readAt(readOffset, hdr, 8) < 8) {
+                        return ERROR_IO;
+                    }
+                    boxSize = ntoh64(boxSize);
+                    skipSize = boxSize - 24;
+                }
+                readOffset += skipSize;
+                break;
+            }
+        } // end switch
+    } // end while
+
+    // update the track fragment tables
+    TrackFrag* trackFrag = moof->firstTRAF;
+    while (NULL != trackFrag) {
+        Track * track = mFirstTrack;
+        while (NULL != track) {
+            if (track->id == trackFrag->id) {
+                if (!track->hasFragmentTable) {
+                    // mvex and mfra not available
+                    // create table now
+                    bool isVideoTrack = false;
+                    const char *mime;
+                    CHECK(track->meta->findCString(kKeyMIMEType, &mime));
+                    if (!strncasecmp("video/", mime, 6)) {
+                        isVideoTrack = true;
+                    }
+                    track->fragmentTable = new TrackFragmentTable(track->id, track->timescale, isVideoTrack);
+                    track->hasFragmentTable = true;
+                }
+
+                if (trackFrag->fixTimestamps) {
+                    // fix up the timestamps in the samples before the first sync sample in the traf
+                    uint64_t timestamp = trackFrag->firstSampleTimestamp;
+
+                    trunCount = 1;
+                    bool done = false;
+                    uint32_t sampleNum = 0;
+                    TrackFragRun *trun = trackFrag->firstTrun;
+                    while (NULL != trun && !done) {
+                        if (trunCount < trackFrag->firstSyncSTrunNum) {
+                            // all samples in this run needs fixing
+                            Sample *sample = trun->firstSample;
+                            while (NULL != sample) {
+                                sample->sampleTimestamp = timestamp;
+                                timestamp += sample->sampleDuration;
+                                sample = sample->next;
+                            }
+                            trunCount++;
+                            trun = trun->next;
+                        } else if (trunCount == trackFrag->firstSyncSTrunNum) {
+                            // some samples in this run needs fixing
+                            sampleNum = 1;
+                            Sample *sample = trun->firstSample;
+                            while (NULL != sample) {
+                                if (sampleNum < trackFrag->firstSyncSampleNum) {
+                                    sample->sampleTimestamp = timestamp;
+                                    timestamp += sample->sampleDuration;
+                                    sample = sample->next;
+                                    sampleNum++;
+                                } else {
+                                    done = true;
+                                    break;
+                                }
+                            }
+                        } else {
+                            done = true;
+                            break;
+                        }
+                    } // end while
+                    trackFrag->fixTimestamps = false;
+                } // end if
+
+                track->fragmentTable->updateTable(trackFrag);
+                size_t newMaxSize = 0;
+                track->fragmentTable->getMaxSampleSize(&newMaxSize);
+                int32_t maxSize = 0;
+                track->meta->findInt32(kKeyMaxInputSize, &maxSize);
+                if (newMaxSize > (size_t)maxSize) {
+                    track->meta->setInt32(kKeyMaxInputSize, newMaxSize + 10 * 2);
+                }
+            } // end if
+            track = track->next;
+        } // end while
+        trackFrag = trackFrag->next;
+    } // end while
+
+    return OK;
+}
+
 sp<MediaSource> MPEG4Extractor::getTrack(size_t index) {
     status_t err;
     if ((err = readMetaData()) != OK) {
@@ -1212,7 +2668,8 @@ sp<MediaSource> MPEG4Extractor::getTrack(size_t index) {
     }
 
     return new MPEG4Source(
-            track->meta, mDataSource, track->timescale, track->sampleTable);
+            track->meta, mDataSource, track->timescale, track->sampleTable,
+            track->fragmentTable, mHasFragments, &track->nextTimestamp, this);
 }
 
 // static
@@ -1337,12 +2794,20 @@ MPEG4Source::MPEG4Source(
         const sp<MetaData> &format,
         const sp<DataSource> &dataSource,
         int32_t timeScale,
-        const sp<SampleTable> &sampleTable)
+        const sp<SampleTable> &sampleTable,
+        const sp<TrackFragmentTable> &fragmentTable,
+        bool moofPresent,
+        uint64_t *nextFragmentTimestamp,
+        const sp<MPEG4Extractor> &parentExtractor)
     : mFormat(format),
       mDataSource(dataSource),
       mTimescale(timeScale),
       mSampleTable(sampleTable),
+      mFragmentTable(fragmentTable),
+      mHasFragments(moofPresent),
+      mParentExtractor(parentExtractor),
       mCurrentSampleIndex(0),
+      mNextFragmentTimestamp(nextFragmentTimestamp),
       mIsAVC(false),
       mNALLengthSize(0),
       mStarted(false),
@@ -1350,6 +2815,7 @@ MPEG4Source::MPEG4Source(
       mBuffer(NULL),
       mWantsNALFragments(false),
       mSrcBuffer(NULL) {
+
     const char *mime;
     bool success = mFormat->findCString(kKeyMIMEType, &mime);
     CHECK(success);
@@ -1461,53 +2927,158 @@ status_t MPEG4Source::read(
     *out = NULL;
 
     int64_t seekTimeUs;
-    if (options && options->getSeekTo(&seekTimeUs)) {
-        uint32_t sampleIndex;
-        status_t err = mSampleTable->findClosestSample(
-                seekTimeUs * mTimescale / 1000000,
-                &sampleIndex, SampleTable::kSyncSample_Flag);
+    off_t offset = 0;
+    size_t size = 0;
+    uint32_t dts = 0;
+    status_t err = OK;
 
-        if (err != OK) {
-            if (err == ERROR_OUT_OF_RANGE) {
-                // An attempt to seek past the end of the stream would
-                // normally cause this ERROR_OUT_OF_RANGE error. Propagating
-                // this all the way to the MediaPlayer would cause abnormal
-                // termination. Legacy behaviour appears to be to behave as if
-                // we had seeked to the end of stream, ending normally.
-                err = ERROR_END_OF_STREAM;
+    if (!mHasFragments) {
+        // no movie fragments, use sample table
+        if (options && options->getSeekTo(&seekTimeUs)) {
+            uint32_t sampleIndex;
+            err = mSampleTable->findClosestSample(
+                    seekTimeUs * mTimescale / 1000000,
+                    &sampleIndex, SampleTable::kSyncSample_Flag);
+
+            if (err != OK) {
+                if (err == ERROR_OUT_OF_RANGE) {
+                    // An attempt to seek past the end of the stream would
+                    // normally cause this ERROR_OUT_OF_RANGE error. Propagating
+                    // this all the way to the MediaPlayer would cause abnormal
+                    // termination. Legacy behaviour appears to be to behave as if
+                    // we had seeked to the end of stream, ending normally.
+                    err = ERROR_END_OF_STREAM;
+                }
+                return err;
             }
-            return err;
+
+            mCurrentSampleIndex = sampleIndex;
+
+            if (mBuffer != NULL) {
+                mBuffer->release();
+                mBuffer = NULL;
+            }
+            // fall through
         }
 
-        mCurrentSampleIndex = sampleIndex;
-        if (mBuffer != NULL) {
-            mBuffer->release();
-            mBuffer = NULL;
+        if (mBuffer == NULL) {
+            err = mSampleTable->getMetaDataForSample(
+                    mCurrentSampleIndex, &offset, &size, &dts);
+
+            if (err != OK) {
+                return err;
+            }
         }
+    } else {
+        // has movie fragments, use fragment table
+        off_t moofOffset = 0;
+        uint64_t nextTimestamp = 0;
 
-        // fall through
-    }
+        if (options && options->getSeekTo(&seekTimeUs)) {
+            uint64_t sampleIndex;
+            err = mFragmentTable->findClosestSample(
+                    seekTimeUs * mTimescale / 1000000,
+                    TrackFragmentTable::kSyncSample_Flag,
+                    &offset, &size, &dts, &moofOffset, &nextTimestamp);
+            // if the moof has not been parsed,
+            // we need to parse it and try again
+            if (err == ERROR_NOT_YET_PARSED) {
+                *mNextFragmentTimestamp = nextTimestamp;
+                err = mParentExtractor->parseNextMOOF(moofOffset, mDataSource);
+                if (err == OK) {
+                    err = mFragmentTable->findClosestSample(
+                            seekTimeUs * mTimescale / 1000000,
+                            TrackFragmentTable::kSyncSample_Flag,
+                            &offset, &size, &dts, &moofOffset, &nextTimestamp);
+                }
+            }
 
-    off_t offset;
-    size_t size;
-    uint32_t dts;
+            if (err != OK) {
+                if (err == ERROR_OUT_OF_RANGE) {
+                    // An attempt to seek past the end of the stream would
+                    // normally cause this ERROR_OUT_OF_RANGE error. Propagating
+                    // this all the way to the MediaPlayer would cause abnormal
+                    // termination. Legacy behaviour appears to be to behave as if
+                    // we had seeked to the end of stream, ending normally.
+                    err = ERROR_END_OF_STREAM;
+                }
+                return err;
+            }
+
+            if (mBuffer != NULL) {
+                mBuffer->release();
+                mBuffer = NULL;
+            }
+        } else {
+            if (mBuffer == NULL) {
+                err = mFragmentTable->getMetaDataForNextSample(
+                        &offset, &size, &dts, &moofOffset, &nextTimestamp);
+
+                if (err == ERROR_NOT_YET_PARSED) {
+                    // no sample returned
+                    // parse next moof box
+                    // try getting metadata for sample again
+                    *mNextFragmentTimestamp = nextTimestamp;
+                    err = mParentExtractor->parseNextMOOF(moofOffset, mDataSource);
+                    while (1) {
+                        if (err != OK) {
+                            // end of data reached
+                            return ERROR_END_OF_STREAM;
+                        }
+                        err = mFragmentTable->getMetaDataForNextSample(
+                                   &offset, &size, &dts, &moofOffset, &nextTimestamp);
+                        if (err == OK) {
+                            // found
+                            break;
+                        }
+                        // look at the next moof
+                        err = mParentExtractor->parseNextMOOF(mDataSource);
+                    }
+                }
+            }
+        }
+    } // end else
+
     bool newBuffer = false;
     if (mBuffer == NULL) {
         newBuffer = true;
-
-        status_t err =
-            mSampleTable->getMetaDataForSample(
-                    mCurrentSampleIndex, &offset, &size, &dts);
-
-        if (err != OK) {
-            return err;
-        }
-
         err = mGroup->acquire_buffer(&mBuffer);
 
         if (err != OK) {
             CHECK_EQ(mBuffer, NULL);
             return err;
+        }
+        if (mHasFragments) {
+            // make sure the buffer is big enough
+            // if not, allocate a bigger buffer
+            size_t bufSize = mBuffer->size();
+            int32_t maxSize = 0;
+
+            mFormat->findInt32(kKeyMaxInputSize, &maxSize);
+            if (bufSize < (size_t)maxSize) {
+                // delete old buffer
+                mBuffer->release();
+                mBuffer = NULL;
+
+                delete mGroup;
+                mGroup = NULL;
+
+                delete[] mSrcBuffer;
+                mSrcBuffer = NULL;
+
+                // allocate new buffer
+                mGroup = new MediaBufferGroup;
+
+                mGroup->add_buffer(new MediaBuffer(maxSize));
+
+                mSrcBuffer = new uint8_t[maxSize];
+
+                err = mGroup->acquire_buffer(&mBuffer);
+                if (err != OK) {
+                    CHECK_EQ(mBuffer, NULL);
+                    return err;
+                }
+            }
         }
     }
 
@@ -1519,7 +3090,6 @@ status_t MPEG4Source::read(
             if (num_bytes_read < (ssize_t)size) {
                 mBuffer->release();
                 mBuffer = NULL;
-
                 return ERROR_IO;
             }
 
@@ -1534,7 +3104,6 @@ status_t MPEG4Source::read(
         if (!mIsAVC) {
             *out = mBuffer;
             mBuffer = NULL;
-
             return OK;
         }
 
@@ -1552,7 +3121,6 @@ status_t MPEG4Source::read(
 
             mBuffer->release();
             mBuffer = NULL;
-
             return ERROR_MALFORMED;
         }
 
@@ -1571,7 +3139,6 @@ status_t MPEG4Source::read(
         }
 
         *out = clone;
-
         return OK;
     } else {
         // Whole NAL units are returned but each fragment is prefixed by
@@ -1583,7 +3150,6 @@ status_t MPEG4Source::read(
         if (num_bytes_read < (ssize_t)size) {
             mBuffer->release();
             mBuffer = NULL;
-
             return ERROR_IO;
         }
 
@@ -1599,7 +3165,6 @@ status_t MPEG4Source::read(
             if (srcOffset + nalLength > size) {
                 mBuffer->release();
                 mBuffer = NULL;
-
                 return ERROR_MALFORMED;
             }
 
@@ -1628,7 +3193,6 @@ status_t MPEG4Source::read(
 
         *out = mBuffer;
         mBuffer = NULL;
-
         return OK;
     }
 }
@@ -1647,7 +3211,8 @@ bool SniffMPEG4(
         || !memcmp(header, "ftyp3ge6", 8) || !memcmp(header, "ftyp3gg6", 8)
         || !memcmp(header, "ftypisom", 8) || !memcmp(header, "ftypM4V ", 8)
         || !memcmp(header, "ftypM4A ", 8) || !memcmp(header, "ftypf4v ", 8)
-        || !memcmp(header, "ftypkddi", 8) || !memcmp(header, "ftypM4VP", 8)) {
+        || !memcmp(header, "ftypkddi", 8) || !memcmp(header, "ftypM4VP", 8)
+        || !memcmp(header, "ftypmmp4", 8) || !memcmp(header, "ftypisml", 8)) {
         *mimeType = MEDIA_MIMETYPE_CONTAINER_MPEG4;
         *confidence = 0.1;
 

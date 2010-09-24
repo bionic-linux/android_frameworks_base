@@ -24,6 +24,11 @@ uint16_t U16_AT(const uint8_t *ptr) {
     return ptr[0] << 8 | ptr[1];
 }
 
+uint32_t U24_AT(const uint8_t *ptr) {
+    uint32_t tmp = ptr[0] << 16 | ptr[1] << 8 | ptr[2];
+    return tmp;
+}
+
 uint32_t U32_AT(const uint8_t *ptr) {
     return ptr[0] << 24 | ptr[1] << 16 | ptr[2] << 8 | ptr[3];
 }

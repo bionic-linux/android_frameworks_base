@@ -26,6 +26,7 @@ namespace android {
     (c1 << 24 | c2 << 16 | c3 << 8 | c4)
 
 uint16_t U16_AT(const uint8_t *ptr);
+uint32_t U24_AT(const uint8_t *ptr);
 uint32_t U32_AT(const uint8_t *ptr);
 uint64_t U64_AT(const uint8_t *ptr);
 

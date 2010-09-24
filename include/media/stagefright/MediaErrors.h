@@ -36,9 +36,10 @@ enum {
     ERROR_BUFFER_TOO_SMALL  = MEDIA_ERROR_BASE - 9,
     ERROR_UNSUPPORTED       = MEDIA_ERROR_BASE - 10,
     ERROR_END_OF_STREAM     = MEDIA_ERROR_BASE - 11,
+    ERROR_NOT_YET_PARSED    = MEDIA_ERROR_BASE - 12,
 
     // Not technically an error.
-    INFO_FORMAT_CHANGED    = MEDIA_ERROR_BASE - 12,
+    INFO_FORMAT_CHANGED    = MEDIA_ERROR_BASE - 13,
 };
 
 }  // namespace android
