@@ -278,8 +278,17 @@ public class GSMPhone extends PhoneBase {
         return mSST.mSignalStrength;
     }
 
-    public boolean getMessageWaitingIndicator() {
-        return mSIMRecords.getVoiceMessageWaiting();
+    // pending voice mail count updated after phone creation
+    private void updateVoiceMail() {
+        if (mSIMRecords == null) {
+            return;
+        }
+        // get voice mail count from SIM
+        int countVoiceMessages = mSIMRecords.getVoiceMessageCount();
+        if (countVoiceMessages == 0) {
+            countVoiceMessages = getStoredVoiceMessageCount();
+        }
+        setVoiceMessageCount(countVoiceMessages);
     }
 
     public boolean getCallForwardingIndicator() {
@@ -407,17 +416,6 @@ public class GSMPhone extends PhoneBase {
     /*package*/ void
     notifyDataConnectionFailed(String reason) {
         mNotifier.notifyDataConnectionFailed(this, reason);
-    }
-
-    /*package*/ void
-    updateMessageWaitingIndicator(int mwi) {
-        /*
-         * mwi = number of voice mails; count is known, set notification mwi =
-         * -1; count is unknown, set notification mwi = 0; no unread voicemails
-         * , clear notification
-         */
-        // this also calls notifyMessageWaitingIndicator()
-        mSIMRecords.setVoiceMessageWaiting(1, mwi);
     }
 
     public void
@@ -1236,8 +1234,8 @@ public class GSMPhone extends PhoneBase {
                     storeVoiceMailNumber(null);
                     setVmSimImsi(null);
                 }
-
-            break;
+                updateVoiceMail();
+                break;
 
             case EVENT_GET_BASEBAND_VERSION_DONE:
                 ar = (AsyncResult)msg.obj;
@@ -1494,4 +1492,24 @@ public class GSMPhone extends PhoneBase {
     public boolean isCspPlmnEnabled() {
         return mSIMRecords.isCspPlmnEnabled();
     }
+
+    /** gets the voice mail count from preferences */
+    private int getStoredVoiceMessageCount() {
+        int countVoiceMessages = 0;
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String imsi = sp.getString(VM_ID, null);
+        String currentImsi = getSubscriberId();
+
+        Log.d(LOG_TAG, "Voicemail count retrieval for Imsi = " + imsi +
+                " current Imsi = " + currentImsi );
+
+        if ((imsi != null) && (currentImsi != null)
+                && (currentImsi.equals(imsi))) {
+            // get voice mail count from preferences
+            countVoiceMessages = sp.getInt(VM_COUNT, 0);
+            Log.d(LOG_TAG, "Voice Mail Count from preference = " + countVoiceMessages );
+        }
+        return countVoiceMessages;
+    }
+
 }
