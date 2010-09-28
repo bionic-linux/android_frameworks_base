@@ -31,6 +31,7 @@ import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.SmsMessageBase.TextEncodingDetails;
 import com.android.internal.telephony.gsm.SmsMessage;
 import com.android.internal.telephony.CommandsInterface;
+import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.SMSDispatcher;
 import com.android.internal.telephony.SmsHeader;
 import com.android.internal.telephony.SmsMessageBase;
@@ -103,13 +104,13 @@ final class GsmSMSDispatcher extends SMSDispatcher {
 
         // Special case the message waiting indicator messages
         if (sms.isMWISetMessage()) {
-            mGsmPhone.updateMessageWaitingIndicator(sms.getNumOfVoicemails());
+            updateMessageWaitingIndicator(sms.getNumOfVoicemails());
             handled |= sms.isMwiDontStore();
             if (Config.LOGD) {
                 Log.d(TAG, "Received voice mail indicator set SMS shouldStore=" + !handled);
             }
         } else if (sms.isMWIClearMessage()) {
-            mGsmPhone.updateMessageWaitingIndicator(0);
+            updateMessageWaitingIndicator(0);
             handled |= sms.isMwiDontStore();
             if (Config.LOGD) {
                 Log.d(TAG, "Received voice mail indicator clear SMS shouldStore=" + !handled);
@@ -384,4 +385,26 @@ final class GsmSMSDispatcher extends SMSDispatcher {
                 return CommandsInterface.GSM_SMS_FAIL_CAUSE_UNSPECIFIED_ERROR;
         }
     }
+
+    /* package */void updateMessageWaitingIndicator(int mwi) {
+        Message onComplete;
+        // range check
+        if (mwi < 0) {
+            mwi = -1;
+        } else if (mwi > 0xff) {
+            // TS 23.040 9.2.3.24.2
+            // "The value 255 shall be taken to mean 255 or greater"
+            mwi = 0xff;
+        }
+        // update voice mail count in GsmPhone
+        ((PhoneBase) mPhone).setVoiceMessageCount(mwi);
+        // store voice mail count in SIM/preferences
+        if (mGsmPhone.mSIMRecords != null) {
+            onComplete = obtainMessage(EVENT_UPDATE_ICC_MWI);
+            mGsmPhone.mSIMRecords.setVoiceMessageWaiting(1, mwi, onComplete);
+        } else {
+            Log.d(TAG, "SIM Records not found, MWI not updated");
+        }
+    }
+
 }
