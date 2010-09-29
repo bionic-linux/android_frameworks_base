@@ -147,4 +147,7 @@ public interface TelephonyProperties
      * when there is a radio technology change.
      */
     static final String PROPERTY_RESET_ON_RADIO_TECH_CHANGE = "persist.radio.reset_on_switch";
+
+    /** The delay between sms sending retries */
+    static final String PROPERTY_SMS_RETRY_DELAY = "persist.radio.sms_retry_delay";
 }
