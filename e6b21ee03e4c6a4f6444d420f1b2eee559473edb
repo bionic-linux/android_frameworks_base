@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7n//+3Y\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-09-29T04:42:07Z",
+      "side": 1,
+      "message": "we\u0027re actually trying to reduce the use of SystemProperties.  they\u0027re getting over-used for the wrong reasons and more usage just means it\u0027ll be harder to clean up later.  or so I\u0027ve been told.",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+3U\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-09-29T04:42:07Z",
+      "side": 1,
+      "message": "no Log.d in shipping code.  should be wrapped in e.g.\n\nprivate static final LOCAL_LOGD \u003d false;\nif (LOCAL_LOGD) Log.d(TAG, ...\")",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+3Q\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-09-29T04:42:07Z",
+      "side": 1,
+      "message": "so you hold the mPendingMessagesList lock even when sending the SMS?  can\u0027t that take awhile?",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+3M\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-09-29T04:42:07Z",
+      "side": 1,
+      "message": "this will block callers trying to enqueue while sendSms is still running",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
