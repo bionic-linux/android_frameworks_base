@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7n//+w8\u003d",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-09-29T21:58:28Z",
+      "side": 1,
+      "message": "Could you flesh out this comment significantly?  People won\u0027t often read through git logs or gerrit discussions to find the meaning of this, and the meaning isn\u0027t super clear on its own.  Is there a spec you could reference?  Or a rationale of why products/carriers would want/need this mode?",
+      "revId": "ddf92d5765b6c1ee1b9ed657f449ff67f10b4ffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
