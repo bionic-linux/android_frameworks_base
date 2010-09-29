@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7n//+2o\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-09-29T06:06:33Z",
+      "side": 1,
+      "message": "I\u0027m sorry but I\u0027m not sure what is the bug, the \"old\" code will always print the of mState which seems reasonable. Under what condition is this not what is wanted?",
+      "revId": "9a8e567d2a801d36842e611c1ec7d73c71fffd8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
