@@ -34,6 +34,24 @@
       "revId": "9a8e567d2a801d36842e611c1ec7d73c71fffd8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+zQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-09-29T17:29:04Z",
+      "side": 1,
+      "message": "Thanks for clarifying, I thought that was the case but wanted to make sure there was an \"real\" bug that I was missing.\n\nThere is one minor problem and that is switchToRadioState has a path that doesn\u0027t call setRadioState, but that is only called \"once\" so its probably safe to ignore for logging output. Although I\u0027m going to investigate a little further as the mInitialRadioStateChange might not be working as exactly as intended.",
+      "parentUuid": "AAAA7n//+zg\u003d",
+      "revId": "9a8e567d2a801d36842e611c1ec7d73c71fffd8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
