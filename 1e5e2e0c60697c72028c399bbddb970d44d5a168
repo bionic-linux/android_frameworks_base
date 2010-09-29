@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7n//+0g\u003d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1001047
+      },
+      "writtenOn": "2010-09-29T15:15:53Z",
+      "side": 1,
+      "message": "Instead of storing the dialog, can you store the InvokeListBox object and add a method to dismiss the dialog through that?  Also name the variable something more descriptive.",
+      "revId": "1e5e2e0c60697c72028c399bbddb970d44d5a168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
