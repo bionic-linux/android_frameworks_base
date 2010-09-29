@@ -332,4 +332,17 @@
     <!-- 2 means give warning -->
     <integer name="config_datause_notification_type">2</integer>
 
+    <!-- Enables synchronous sending algorithm for mobile-originated sms.
+         When it is set to true SmsDispacher will wait for a message to be
+         sent before sending request for subsequent message while queueing all
+         messages that are requested to be sent. When this resource is set
+         to false (default) the SmsDispatcher behaves as it used to by sending
+         all messages as soon as it receives the request to send them.
+         Some vendors would want to enable this when their modem is not capable
+         of storing large amount of MO SMS while facing operator's requirement
+         to be able to send all these sms (for example sending 3 page sms to 7
+         recipients will generate 21 SEND_SMS ril requests which might overflow
+         some modem's MO SMS queue) -->
+    <bool name="config_smsSyncSending">false</bool>
+
 </resources>
