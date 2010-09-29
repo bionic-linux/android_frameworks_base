@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA7n//+zo\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-09-29T17:06:54Z",
+      "side": 1,
+      "message": "This is something you\u0027d want to enable for a whole product?  Can\u0027t you just use a resource and have an overlay resource in your product config?",
+      "parentUuid": "AAAA7n//+zw\u003d",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA7n//+3U\u003d",
         "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
         "patchSetId": 1
