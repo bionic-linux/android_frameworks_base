@@ -514,6 +514,23 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
             }
             break;
 
+        case EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED:
+        {
+            ar = (AsyncResult)msg.obj;
+            if (ar.exception == null) {
+                ints = (int[]) ar.result;
+            }
+        }
+
+        case EVENT_CDMA_PRL_VERSION_CHANGED:
+        {
+            ar = (AsyncResult)msg.obj;
+            if (ar.exception == null) {
+                ints = (int[]) ar.result;
+                mPrlVersion = Integer.toString(ints[0]);
+            }
+        }
+
         case EVENT_SET_RADIO_POWER_OFF:
             synchronized(this) {
                 if (mPendingRadioPowerOffAfterDataOff) {
