@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA7n//+xM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-09-29T21:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA7n//+zo\u003d",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA7n//+3U\u003d",
         "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
         "patchSetId": 1
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Ok. Will change that.",
       "parentUuid": "AAAA7n//+3U\u003d",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+xI\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-09-29T21:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA7n//+z0\u003d",
       "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
