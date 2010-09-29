@@ -367,6 +367,9 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
     public void setCdmaBroadcastActivation(boolean activate, Message response) {
     }
 
+    public void getCdmaSubscriptionSource(Message result) {
+    }
+
     public void exitEmergencyCallbackMode(Message response) {
     }
 }
