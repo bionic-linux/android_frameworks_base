@@ -2382,12 +2382,12 @@ public final class ActivityManagerService extends ActivityManagerNative implemen
             } else if (onlyThisProcess == null) {
                 // This activity is not currently visible, but is running.
                 // Tell it to become visible.
-                r.visible = true;
                 if (r.state != ActivityState.RESUMED && r != starting) {
                     // If this activity is paused, tell it
                     // to now show its window.
                     if (DEBUG_VISBILITY) Slog.v(
                             TAG, "Making visible and scheduling visibility: " + r);
+                    r.visible = true;
                     try {
                         mWindowManager.setAppVisibility(r, true);
                         r.app.thread.scheduleWindowVisibility(r, true);
