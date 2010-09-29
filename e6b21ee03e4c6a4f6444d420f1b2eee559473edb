@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA7n//+zw\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-09-29T17:03:01Z",
+      "side": 1,
+      "message": "So what is the new way of providing configurable parameters? (we don\u0027t want to force all users of Android into syncSending mode - I still want to leave by default async mode)",
+      "parentUuid": "AAAA7n//+3Y\u003d",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA7n//+3U\u003d",
         "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-09-29T04:42:07Z",
       "side": 1,
       "message": "no Log.d in shipping code.  should be wrapped in e.g.\n\nprivate static final LOCAL_LOGD \u003d false;\nif (LOCAL_LOGD) Log.d(TAG, ...\")",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+z0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-09-29T17:03:01Z",
+      "side": 1,
+      "message": "Ok. Will change that.",
+      "parentUuid": "AAAA7n//+3U\u003d",
       "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA7n//+0I\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-09-29T17:03:01Z",
+      "side": 1,
+      "message": "No. sendSms will only dispatch RIL request.",
+      "parentUuid": "AAAA7n//+3Q\u003d",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA7n//+3M\u003d",
         "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2010-09-29T04:42:07Z",
       "side": 1,
       "message": "this will block callers trying to enqueue while sendSms is still running",
+      "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+z4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-09-29T17:03:01Z",
+      "side": 1,
+      "message": "Yes. As intended. See my reply for line 1041.",
+      "parentUuid": "AAAA7n//+3M\u003d",
       "revId": "e6b21ee03e4c6a4f6444d420f1b2eee559473edb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
