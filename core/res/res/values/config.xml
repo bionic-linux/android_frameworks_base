@@ -332,4 +332,7 @@
     <!-- 2 means give warning -->
     <integer name="config_datause_notification_type">2</integer>
 
+    <!-- Enables synchronous sending algorithm for mobile-originated sms. -->
+    <bool name="config_smsSyncSending">false</bool>
+
 </resources>
