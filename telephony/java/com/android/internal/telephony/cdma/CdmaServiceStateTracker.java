@@ -177,6 +177,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         cm.registerForNetworkStateChanged(this, EVENT_NETWORK_STATE_CHANGED_CDMA, null);
         cm.setOnNITZTime(this, EVENT_NITZ_TIME, null);
         cm.setOnSignalStrengthUpdate(this, EVENT_SIGNAL_STRENGTH_UPDATE, null);
+        cm.registerForCdmaPrlChanged(this, EVENT_CDMA_PRL_VERSION_CHANGED, null);
 
         cm.registerForRUIMReady(this, EVENT_RUIM_READY, null);
 
@@ -209,6 +210,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         cm.unSetOnSignalStrengthUpdate(this);
         cm.unSetOnNITZTime(this);
         cr.unregisterContentObserver(this.mAutoTimeObserver);
+        cm.unregisterForCdmaPrlChanged(this);
     }
 
     @Override
@@ -511,6 +513,21 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
                     Log.d(LOG_TAG, "Received OTA_PROGRAMMING Complete,Reload MDN ");
                     cm.getCDMASubscription( obtainMessage(EVENT_POLL_STATE_CDMA_SUBSCRIPTION));
                 }
+            }
+            break;
+
+        case EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED:
+            ar = (AsyncResult)msg.obj;
+            if (ar.exception == null) {
+                ints = (int[]) ar.result;
+            }
+            break;
+
+        case EVENT_CDMA_PRL_VERSION_CHANGED:
+            ar = (AsyncResult)msg.obj;
+            if (ar.exception == null) {
+                ints = (int[]) ar.result;
+                mPrlVersion = Integer.toString(ints[0]);
             }
             break;
 
