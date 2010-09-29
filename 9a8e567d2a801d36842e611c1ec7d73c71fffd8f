@@ -16,6 +16,24 @@
       "revId": "9a8e567d2a801d36842e611c1ec7d73c71fffd8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+zg\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/RIL.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-09-29T17:08:15Z",
+      "side": 1,
+      "message": "The problem was that first you would see bunch of messages reacting to this UNSOL (for example \"Radio Off @ init\"), then you will see RIL sending POWER request (seemingly for no reason) and only then you would see that you actually received UNSOL.\nThat\u0027s why it is better to log received message first, and only then react upon it (just like it is done for all other UNSOL messages).",
+      "parentUuid": "AAAA7n//+2o\u003d",
+      "revId": "9a8e567d2a801d36842e611c1ec7d73c71fffd8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
