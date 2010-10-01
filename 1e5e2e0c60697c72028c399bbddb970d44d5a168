@@ -34,6 +34,24 @@
       "revId": "1e5e2e0c60697c72028c399bbddb970d44d5a168",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+iI\u003d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1001047
+      },
+      "writtenOn": "2010-10-01T12:51:50Z",
+      "side": 1,
+      "message": "It is a little confusing either way.  If you change the name to be more descriptive that might be clear enough.\n\nOne more question: what happens if the dialog is canceled?  Do we reset mDialog to null or will we potential dismiss a dialog that has already been dismissed?",
+      "parentUuid": "AAAA7n//+jk\u003d",
+      "revId": "1e5e2e0c60697c72028c399bbddb970d44d5a168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
