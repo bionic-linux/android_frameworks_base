@@ -16,6 +16,24 @@
       "revId": "1e5e2e0c60697c72028c399bbddb970d44d5a168",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+jk\u003d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2010-10-01T05:56:57Z",
+      "side": 1,
+      "message": "I investigated this, but that will generate more code, since we inside InvokeListBox need to keep a reference to the dialog, and then in the WebView we need to keep a reference to the InvokeListBox element. So in the callback methods of the dialog we would have to set both the ref to InvokeListBox and the dialog ref to null, so we know when to destroy them. Have i missed something?\n\nThe naming of the variable should be changed.",
+      "parentUuid": "AAAA7n//+0g\u003d",
+      "revId": "1e5e2e0c60697c72028c399bbddb970d44d5a168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
