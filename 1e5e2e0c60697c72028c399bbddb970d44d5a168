@@ -52,6 +52,24 @@
       "revId": "1e5e2e0c60697c72028c399bbddb970d44d5a168",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///7o\u003d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2010-10-04T06:44:14Z",
+      "side": 1,
+      "message": "Yep, I agree the ref should be set to null in this case also.",
+      "parentUuid": "AAAA7n//+iI\u003d",
+      "revId": "1e5e2e0c60697c72028c399bbddb970d44d5a168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
