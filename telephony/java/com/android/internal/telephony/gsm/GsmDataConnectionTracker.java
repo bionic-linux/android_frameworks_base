@@ -83,9 +83,6 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
 
     //***** Instance Variables
 
-    // Indicates baseband will not auto-attach
-    private boolean noAutoAttach = false;
-
     private boolean mReregisterOnReconnectFailure = false;
     private ContentResolver mResolver;
 
@@ -254,7 +251,6 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
         if (dataEnabled[APN_DEFAULT_ID]) {
             enabledCount++;
         }
-        noAutoAttach = !dataEnabled[APN_DEFAULT_ID];
 
         if (!mRetryMgr.configure(SystemProperties.get("ro.gsm.data_retry_config"))) {
             if (!mRetryMgr.configure(DEFAULT_DATA_RETRY_CONFIG)) {
@@ -436,11 +432,9 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
             return true;
         }
 
-        int gprsState = mGsmPhone.mSST.getCurrentGprsState();
         boolean desiredPowerState = mGsmPhone.mSST.getDesiredPowerState();
 
         if ((state == State.IDLE || state == State.SCANNING)
-                && (gprsState == ServiceState.STATE_IN_SERVICE || noAutoAttach)
                 && mGsmPhone.mSIMRecords.getRecordsLoaded()
                 && (mGsmPhone.mSST.isConcurrentVoiceAndData() ||
                         phone.getState() == Phone.State.IDLE )
@@ -467,7 +461,6 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
             if (DBG)
                 log("trySetupData: Not ready for data: " +
                     " dataState=" + state +
-                    " gprsState=" + gprsState +
                     " sim=" + mGsmPhone.mSIMRecords.getRecordsLoaded() +
                     " UMTS=" + mGsmPhone.mSST.isConcurrentVoiceAndData() +
                     " phoneState=" + phone.getState() +
