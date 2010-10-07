@@ -30,6 +30,7 @@ import android.util.Log;
 import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.SmsMessageBase.TextEncodingDetails;
 import com.android.internal.telephony.gsm.SmsMessage;
+import com.android.internal.telephony.gsm.GsmAlphabet.GsmLanguage;
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.SMSDispatcher;
 import com.android.internal.telephony.SmsHeader;
@@ -162,8 +163,20 @@ final class GsmSMSDispatcher extends SMSDispatcher {
     /** {@inheritDoc} */
     protected void sendText(String destAddr, String scAddr, String text,
             PendingIntent sentIntent, PendingIntent deliveryIntent) {
+
+        SmsHeader smsHeader = null;
+        GsmLanguage extensionLanguage = GsmAlphabet.getExtensionLanguage(text);
+
+        if (extensionLanguage != null && extensionLanguage != GsmLanguage.DEFAULT) {
+            // We will code this with a national single shift table
+            smsHeader = new SmsHeader();
+            smsHeader.lockingShiftLanguage = GsmLanguage.DEFAULT;
+            smsHeader.singleShiftLanguage = extensionLanguage;
+        }
+
         SmsMessage.SubmitPdu pdu = SmsMessage.getSubmitPdu(
-                scAddr, destAddr, text, (deliveryIntent != null));
+                scAddr, destAddr, text, (deliveryIntent != null), smsHeader);
+
         sendRawPdu(pdu.encodedScAddress, pdu.encodedMessage, sentIntent, deliveryIntent);
     }
 
@@ -172,17 +185,25 @@ final class GsmSMSDispatcher extends SMSDispatcher {
             ArrayList<String> parts, ArrayList<PendingIntent> sentIntents,
             ArrayList<PendingIntent> deliveryIntents) {
 
+        SmsHeader smsHeader = new SmsHeader();
+
         int refNumber = getNextConcatenatedRef() & 0x00FF;
         int msgCount = parts.size();
         int encoding = android.telephony.SmsMessage.ENCODING_UNKNOWN;
 
+        // We want the same encoding of all parts.
+        // Check if we can manage with gsm7bit (with extensions) or if we need
+        // unicode for this message.
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < msgCount; i++) {
-            TextEncodingDetails details = SmsMessage.calculateLength(parts.get(i), false);
-            if (encoding != details.codeUnitSize
-                    && (encoding == android.telephony.SmsMessage.ENCODING_UNKNOWN
-                            || encoding == android.telephony.SmsMessage.ENCODING_7BIT)) {
-                encoding = details.codeUnitSize;
-            }
+            sb.append(parts.get(i));
+        }
+        GsmLanguage extensionLanguage = GsmAlphabet.getExtensionLanguage(sb.toString());
+        if (extensionLanguage != null) {
+            smsHeader.singleShiftLanguage = extensionLanguage;
+            encoding = android.telephony.SmsMessage.ENCODING_7BIT;
+        } else {
+            encoding = android.telephony.SmsMessage.ENCODING_16BIT;
         }
 
         for (int i = 0; i < msgCount; i++) {
@@ -197,7 +218,6 @@ final class GsmSMSDispatcher extends SMSDispatcher {
             // Note:  It's not sufficient to just flip this bit to true; it will have
             // ripple effects (several calculations assume 8-bit ref).
             concatRef.isEightBits = true;
-            SmsHeader smsHeader = new SmsHeader();
             smsHeader.concatRef = concatRef;
 
             PendingIntent sentIntent = null;
@@ -211,8 +231,7 @@ final class GsmSMSDispatcher extends SMSDispatcher {
             }
 
             SmsMessage.SubmitPdu pdus = SmsMessage.getSubmitPdu(scAddress, destinationAddress,
-                    parts.get(i), deliveryIntent != null, SmsHeader.toByteArray(smsHeader),
-                    encoding);
+                    parts.get(i), deliveryIntent != null, smsHeader, encoding);
 
             sendRawPdu(pdus.encodedScAddress, pdus.encodedMessage, sentIntent, deliveryIntent);
         }
@@ -261,17 +280,24 @@ final class GsmSMSDispatcher extends SMSDispatcher {
             return;
         }
 
+        SmsHeader smsHeader = new SmsHeader();
+
         int refNumber = getNextConcatenatedRef() & 0x00FF;
         int msgCount = parts.size();
         int encoding = android.telephony.SmsMessage.ENCODING_UNKNOWN;
 
+        // We want the same encoding of all parts.
+        // Check if we can manage with gsm7bit (with extensions) or if we need
+        // unicode for this message.
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < msgCount; i++) {
-            TextEncodingDetails details = SmsMessage.calculateLength(parts.get(i), false);
-            if (encoding != details.codeUnitSize
-                    && (encoding == android.telephony.SmsMessage.ENCODING_UNKNOWN
-                            || encoding == android.telephony.SmsMessage.ENCODING_7BIT)) {
-                encoding = details.codeUnitSize;
-            }
+            sb.append(parts.get(i));
+        }
+        GsmLanguage extensionLanguage = GsmAlphabet.getExtensionLanguage(sb.toString());
+        if (extensionLanguage != null) {
+            smsHeader.singleShiftLanguage = extensionLanguage;
+        } else {
+            encoding = android.telephony.SmsMessage.ENCODING_16BIT;
         }
 
         for (int i = 0; i < msgCount; i++) {
@@ -279,8 +305,7 @@ final class GsmSMSDispatcher extends SMSDispatcher {
             concatRef.refNumber = refNumber;
             concatRef.seqNumber = i + 1;  // 1-based sequence
             concatRef.msgCount = msgCount;
-            concatRef.isEightBits = false;
-            SmsHeader smsHeader = new SmsHeader();
+            concatRef.isEightBits = true;
             smsHeader.concatRef = concatRef;
 
             PendingIntent sentIntent = null;
@@ -294,8 +319,7 @@ final class GsmSMSDispatcher extends SMSDispatcher {
             }
 
             SmsMessage.SubmitPdu pdus = SmsMessage.getSubmitPdu(scAddress, destinationAddress,
-                    parts.get(i), deliveryIntent != null, SmsHeader.toByteArray(smsHeader),
-                    encoding);
+                    parts.get(i), deliveryIntent != null, smsHeader, encoding);
 
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("smsc", pdus.encodedScAddress);
