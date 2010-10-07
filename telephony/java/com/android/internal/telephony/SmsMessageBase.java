@@ -18,6 +18,9 @@ package com.android.internal.telephony;
 
 import android.util.Log;
 import com.android.internal.telephony.SmsHeader;
+import com.android.internal.telephony.gsm.GsmAlphabet;
+import com.android.internal.telephony.gsm.GsmAlphabet.GsmLanguage;
+
 import java.util.Arrays;
 
 import static android.telephony.SmsMessage.MessageClass;
@@ -118,6 +121,23 @@ public abstract class SmsMessageBase {
          */
         public int codeUnitSize;
 
+        /**
+         * The alphabet to use for encoding (i.e. locking shift)
+         * com.android.internal.telephony.GsmAlphabet GSM_NATIONAL_LANGUAGE_*).
+         */
+        public GsmLanguage alphabet = GsmLanguage.DEFAULT;
+
+        /**
+         * The extension table to use for encoding (i.e. single shift)
+         * com.android.internal.telephony.GsmAlphabet GSM_NATIONAL_LANGUAGE_*).
+         */
+        public GsmLanguage extensionTable = GsmLanguage.DEFAULT;
+
+        /**
+         * The length of the header needed to encode the text, including UDHL
+         */
+        public int headerLength = 0;
+
         @Override
         public String toString() {
             return "TextEncodingDetails " +
@@ -125,6 +145,9 @@ public abstract class SmsMessageBase {
                     ", codeUnitCount=" + codeUnitCount +
                     ", codeUnitsRemaining=" + codeUnitsRemaining +
                     ", codeUnitSize=" + codeUnitSize +
+                    ", alphabet=" + alphabet.getLanguageCode() +
+                    ", extensionTable=" + extensionTable.getLanguageCode() +
+                    ", headerLength=" + headerLength +
                     " }";
         }
     }

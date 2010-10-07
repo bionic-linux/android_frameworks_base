@@ -23,11 +23,11 @@ import android.util.Config;
 import android.util.Log;
 import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.EncodeException;
-import com.android.internal.telephony.GsmAlphabet;
 import com.android.internal.telephony.SimRegionCache;
 import com.android.internal.telephony.SmsHeader;
+import com.android.internal.telephony.SmsHeader.ConcatRef;
 import com.android.internal.telephony.SmsMessageBase;
-import com.android.internal.telephony.SmsMessageBase.TextEncodingDetails;
+import com.android.internal.telephony.gsm.GsmAlphabet.GsmLanguage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -39,7 +39,6 @@ import static android.telephony.SmsMessage.ENCODING_UNKNOWN;
 import static android.telephony.SmsMessage.MAX_USER_DATA_BYTES;
 import static android.telephony.SmsMessage.MAX_USER_DATA_BYTES_WITH_HEADER;
 import static android.telephony.SmsMessage.MAX_USER_DATA_SEPTETS;
-import static android.telephony.SmsMessage.MAX_USER_DATA_SEPTETS_WITH_HEADER;
 import static android.telephony.SmsMessage.MessageClass;
 
 /**
@@ -239,7 +238,7 @@ public class SmsMessage extends SmsMessageBase{
      */
     public static SubmitPdu getSubmitPdu(String scAddress,
             String destinationAddress, String message,
-            boolean statusReportRequested, byte[] header) {
+            boolean statusReportRequested, SmsHeader header) {
         return getSubmitPdu(scAddress, destinationAddress, message, statusReportRequested, header,
                 ENCODING_UNKNOWN);
     }
@@ -258,7 +257,7 @@ public class SmsMessage extends SmsMessageBase{
      */
     public static SubmitPdu getSubmitPdu(String scAddress,
             String destinationAddress, String message,
-            boolean statusReportRequested, byte[] header, int encoding) {
+            boolean statusReportRequested, SmsHeader header, int encoding) {
 
         // Perform null parameter checks.
         if (message == null || destinationAddress == null) {
@@ -271,6 +270,7 @@ public class SmsMessage extends SmsMessageBase{
         ByteArrayOutputStream bo = getSubmitPduHead(
                 scAddress, destinationAddress, mtiByte,
                 statusReportRequested, ret);
+
         // User Data (and length)
         byte[] userData;
         if (encoding == ENCODING_UNKNOWN) {
@@ -279,10 +279,18 @@ public class SmsMessage extends SmsMessageBase{
         }
         try {
             if (encoding == ENCODING_7BIT) {
-                userData = GsmAlphabet.stringToGsm7BitPackedWithHeader(message, header);
+                GsmLanguage alphabet = GsmLanguage.DEFAULT;
+                GsmLanguage extensionTable = GsmLanguage.DEFAULT;
+                if (header != null) {
+                    alphabet = header.lockingShiftLanguage;
+                    extensionTable = header.singleShiftLanguage;
+                }
+
+                userData = GsmAlphabet.getAlphabet(alphabet, extensionTable)
+                        .stringToGsm7BitPackedWithHeader(message, SmsHeader.toByteArray(header));
             } else { //assume UCS-2
                 try {
-                    userData = encodeUCS2(message, header);
+                    userData = encodeUCS2(message, SmsHeader.toByteArray(header));
                 } catch(UnsupportedEncodingException uex) {
                     Log.e(LOG_TAG,
                             "Implausible UnsupportedEncodingException ",
@@ -294,7 +302,7 @@ public class SmsMessage extends SmsMessageBase{
             // Encoding to the 7-bit alphabet failed. Let's see if we can
             // send it as a UCS-2 encoded message
             try {
-                userData = encodeUCS2(message, header);
+                userData = encodeUCS2(message, SmsHeader.toByteArray(header));
                 encoding = ENCODING_16BIT;
             } catch(UnsupportedEncodingException uex) {
                 Log.e(LOG_TAG,
@@ -758,9 +766,15 @@ public class SmsMessage extends SmsMessageBase{
          */
         String getUserDataGSM7Bit(int septetCount) {
             String ret;
+            GsmLanguage alphabet = GsmLanguage.DEFAULT;
+            GsmLanguage extensionTable = GsmLanguage.DEFAULT;
+            if (userDataHeader != null) {
+                alphabet = userDataHeader.lockingShiftLanguage;
+                extensionTable = userDataHeader.singleShiftLanguage;
+            }
 
-            ret = GsmAlphabet.gsm7BitPackedToString(pdu, cur, septetCount,
-                    mUserDataSeptetPadding);
+            ret = GsmAlphabet.getAlphabet(alphabet, extensionTable).gsm7BitPackedToString(pdu, cur,
+                    septetCount, mUserDataSeptetPadding);
 
             cur += (septetCount * 7) / 8;
 
@@ -824,28 +838,61 @@ public class SmsMessage extends SmsMessageBase{
      */
     public static TextEncodingDetails calculateLength(CharSequence msgBody,
             boolean use7bitOnly) {
-        TextEncodingDetails ted = new TextEncodingDetails();
+
+        TextEncodingDetails ted = null;
         try {
-            int septets = GsmAlphabet.countGsmSeptets(msgBody, !use7bitOnly);
-            ted.codeUnitCount = septets;
-            if (septets > MAX_USER_DATA_SEPTETS) {
-                ted.msgCount = (septets + (MAX_USER_DATA_SEPTETS_WITH_HEADER - 1)) /
-                        MAX_USER_DATA_SEPTETS_WITH_HEADER;
-                ted.codeUnitsRemaining = (ted.msgCount *
-                        MAX_USER_DATA_SEPTETS_WITH_HEADER) - septets;
+            ted = new TextEncodingDetails();
+
+            ted.extensionTable = GsmAlphabet.getExtensionLanguage(msgBody);
+
+            if (ted.extensionTable == null) {
+                if (use7bitOnly) {
+                    ted.extensionTable = GsmLanguage.DEFAULT;
+                } else {
+                    // This is not a very pretty solution, but we use it to stick to
+                    // the legacy concept of throw-catch-ing into UCS2 coding.
+                    // Since we now know from the TextEncodingDetails that we need
+                    // UCS2, refactoring should be considered.
+                    throw new EncodeException();
+                }
+            }
+
+            ted.codeUnitCount = GsmAlphabet.getAlphabet(ted.alphabet, ted.extensionTable)
+                    .countGsmSeptets(msgBody, !use7bitOnly);
+
+            SmsHeader header = new SmsHeader();
+            header.lockingShiftLanguage = ted.alphabet;
+            header.singleShiftLanguage = ted.extensionTable;
+
+            ted.headerLength = SmsHeader.getLengthWithUDHL(header);
+
+            int userdataSeptets = (MAX_USER_DATA_BYTES - ted.headerLength) * 8 / 7;
+
+            if (ted.codeUnitCount > userdataSeptets) {
+                // This message needs to be concatenated, recalculate
+                header.concatRef = new ConcatRef();
+                header.concatRef.isEightBits = true;
+                ted.headerLength = SmsHeader.getLengthWithUDHL(header);
+                userdataSeptets = (MAX_USER_DATA_BYTES - ted.headerLength) * 8 / 7;
+                ted.msgCount = (ted.codeUnitCount + userdataSeptets - 1) / userdataSeptets;
+                ted.codeUnitsRemaining = (ted.msgCount * userdataSeptets) - ted.codeUnitCount;
             } else {
                 ted.msgCount = 1;
-                ted.codeUnitsRemaining = MAX_USER_DATA_SEPTETS - septets;
+                ted.codeUnitsRemaining = userdataSeptets - ted.codeUnitCount;
             }
             ted.codeUnitSize = ENCODING_7BIT;
         } catch (EncodeException ex) {
+            SmsHeader header = new SmsHeader();
+            ted = new TextEncodingDetails(); // To reset old values
             int octets = msgBody.length() * 2;
             ted.codeUnitCount = msgBody.length();
             if (octets > MAX_USER_DATA_BYTES) {
-                ted.msgCount = (octets + (MAX_USER_DATA_BYTES_WITH_HEADER - 1)) /
-                        MAX_USER_DATA_BYTES_WITH_HEADER;
-                ted.codeUnitsRemaining = ((ted.msgCount *
-                        MAX_USER_DATA_BYTES_WITH_HEADER) - octets) / 2;
+                // This message needs to be concatenated, recalculate
+                header.concatRef = new ConcatRef();
+                header.concatRef.isEightBits = true;
+                ted.headerLength = SmsHeader.getLengthWithUDHL(header);
+                ted.msgCount = (octets + MAX_USER_DATA_BYTES_WITH_HEADER - 1) / MAX_USER_DATA_BYTES_WITH_HEADER;
+                ted.codeUnitsRemaining = ((ted.msgCount * MAX_USER_DATA_BYTES_WITH_HEADER) - octets) / 2;
             } else {
                 ted.msgCount = 1;
                 ted.codeUnitsRemaining = (MAX_USER_DATA_BYTES - octets)/2;
