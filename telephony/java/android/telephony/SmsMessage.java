@@ -19,7 +19,8 @@ package android.telephony;
 import android.os.Parcel;
 import android.util.Log;
 
-import com.android.internal.telephony.GsmAlphabet;
+import com.android.internal.telephony.gsm.GsmAlphabet;
+import com.android.internal.telephony.gsm.GsmAlphabet.GsmLanguage;
 import com.android.internal.telephony.EncodeException;
 import com.android.internal.telephony.SmsHeader;
 import com.android.internal.telephony.SmsMessageBase;
@@ -254,23 +255,43 @@ public class SmsMessage {
      *         space chars.  If false, and if the messageBody contains
      *         non-7-bit encodable characters, length is calculated
      *         using a 16-bit encoding.
-     * @return an int[4] with int[0] being the number of SMS's
+     * @return an int[5] with int[0] being the number of SMS's
      *         required, int[1] the number of code units used, and
      *         int[2] is the number of code units remaining until the
      *         next message. int[3] is an indicator of the encoding
      *         code unit size (see the ENCODING_* definitions in this
-     *         class).
+     *         class). int[4] is the number of code units used in
+     *         the last message.
      */
     public static int[] calculateLength(CharSequence msgBody, boolean use7bitOnly) {
         int activePhone = TelephonyManager.getDefault().getPhoneType();
+
         TextEncodingDetails ted = (PHONE_TYPE_CDMA == activePhone) ?
             com.android.internal.telephony.cdma.SmsMessage.calculateLength(msgBody, use7bitOnly) :
             com.android.internal.telephony.gsm.SmsMessage.calculateLength(msgBody, use7bitOnly);
-        int ret[] = new int[4];
+
+        int ret[] = new int[5];
         ret[0] = ted.msgCount;
         ret[1] = ted.codeUnitCount;
         ret[2] = ted.codeUnitsRemaining;
         ret[3] = ted.codeUnitSize;
+
+        switch (ted.codeUnitSize) {
+            case ENCODING_7BIT:
+                ret[4] = (MAX_USER_DATA_BYTES - ted.headerLength) * 8 / 7;
+                break;
+
+            case ENCODING_16BIT:
+                ret[4] = (MAX_USER_DATA_BYTES - ted.headerLength) / 2;
+                break;
+
+            case ENCODING_8BIT:
+            default:
+                ret[4] = MAX_USER_DATA_BYTES - ted.headerLength;
+                break;
+        }
+        ret[4] -= ted.codeUnitsRemaining;
+
         return ret;
     }
 
@@ -286,21 +307,14 @@ public class SmsMessage {
      */
     public static ArrayList<String> fragmentText(String text) {
         int activePhone = TelephonyManager.getDefault().getPhoneType();
+
         TextEncodingDetails ted = (PHONE_TYPE_CDMA == activePhone) ?
             com.android.internal.telephony.cdma.SmsMessage.calculateLength(text, false) :
             com.android.internal.telephony.gsm.SmsMessage.calculateLength(text, false);
 
-        // TODO(cleanup): The code here could be rolled into the logic
-        // below cleanly if these MAX_* constants were defined more
-        // flexibly...
-
-        int limit;
-        if (ted.msgCount > 1) {
-            limit = (ted.codeUnitSize == ENCODING_7BIT) ?
-                MAX_USER_DATA_SEPTETS_WITH_HEADER : MAX_USER_DATA_BYTES_WITH_HEADER;
-        } else {
-            limit = (ted.codeUnitSize == ENCODING_7BIT) ?
-                MAX_USER_DATA_SEPTETS : MAX_USER_DATA_BYTES;
+        int limit = MAX_USER_DATA_BYTES - ted.headerLength;
+        if (ted.codeUnitSize == ENCODING_7BIT) {
+            limit = limit * 8 / 7;
         }
 
         int pos = 0;  // Index in code units.
@@ -314,7 +328,9 @@ public class SmsMessage {
                     nextPos = pos + Math.min(limit, textLen - pos);
                 } else {
                     // For multi-segment messages, CDMA 7bit equals GSM 7bit encoding (EMS mode).
-                    nextPos = GsmAlphabet.findGsmSeptetLimitIndex(text, pos, limit);
+                    GsmLanguage extensionLanguage = GsmAlphabet.getExtensionLanguage(text);
+                    nextPos = GsmAlphabet.getAlphabet(GsmLanguage.DEFAULT, extensionLanguage)
+                            .findGsmSeptetLimitIndex(text, pos, limit);
                 }
             } else {  // Assume unicode.
                 nextPos = pos + Math.min(limit / 2, textLen - pos);
@@ -380,14 +396,14 @@ public class SmsMessage {
      */
     public static SubmitPdu getSubmitPdu(String scAddress,
             String destinationAddress, String message,
-            boolean statusReportRequested, byte[] header) {
+            boolean statusReportRequested, SmsHeader header) {
         SubmitPduBase spb;
         int activePhone = TelephonyManager.getDefault().getPhoneType();
 
         if (PHONE_TYPE_CDMA == activePhone) {
             spb = com.android.internal.telephony.cdma.SmsMessage.getSubmitPdu(scAddress,
                     destinationAddress, message, statusReportRequested,
-                    SmsHeader.fromByteArray(header));
+                    header);
         } else {
             spb = com.android.internal.telephony.gsm.SmsMessage.getSubmitPdu(scAddress,
                     destinationAddress, message, statusReportRequested, header);

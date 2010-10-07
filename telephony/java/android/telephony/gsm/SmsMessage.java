@@ -375,7 +375,8 @@ public class SmsMessage {
                     SmsHeader.fromByteArray(header));
         } else {
             spb = com.android.internal.telephony.gsm.SmsMessage.getSubmitPdu(scAddress,
-                    destinationAddress, message, statusReportRequested, header);
+                    destinationAddress, message, statusReportRequested, SmsHeader
+                            .fromByteArray(header));
         }
 
         return new SubmitPdu(spb);

@@ -18,17 +18,21 @@ package com.android.internal.telephony;
 
 import android.telephony.SmsMessage;
 
+import com.android.internal.telephony.gsm.GsmAlphabet;
+import com.android.internal.telephony.gsm.GsmAlphabet.GsmLanguage;
 import com.android.internal.util.HexDump;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import java.util.ArrayList;
+import android.util.Log;
 
 /**
  * SMS user data header, as specified in TS 23.040 9.2.3.24.
  */
 public class SmsHeader {
+    static final String LOG_TAG = "GSM";
 
     // TODO(cleanup): this datastructure is generally referred to as
     // the 'user data header' or UDH, and so the class name should
@@ -66,6 +70,8 @@ public class SmsHeader {
     public static final int ELT_ID_HYPERLINK_FORMAT_ELEMENT           = 0x21;
     public static final int ELT_ID_REPLY_ADDRESS_ELEMENT              = 0x22;
     public static final int ELT_ID_ENHANCED_VOICE_MAIL_INFORMATION    = 0x23;
+    public static final int ELT_ID_NATIONAL_LANGUAGE_SINGLE_SHIFT     = 0x24;
+    public static final int ELT_ID_NATIONAL_LANGUAGE_LOCKING_SHIFT    = 0x25;
 
     public static final int PORT_WAP_PUSH = 2948;
     public static final int PORT_WAP_WSP  = 9200;
@@ -95,6 +101,8 @@ public class SmsHeader {
     public PortAddrs portAddrs;
     public ConcatRef concatRef;
     public ArrayList<MiscElt> miscEltList = new ArrayList<MiscElt>();
+    public GsmLanguage singleShiftLanguage = GsmLanguage.DEFAULT;
+    public GsmLanguage lockingShiftLanguage = GsmLanguage.DEFAULT;
 
     public SmsHeader() {}
 
@@ -157,6 +165,12 @@ public class SmsHeader {
                 portAddrs.areEightBits = false;
                 smsHeader.portAddrs = portAddrs;
                 break;
+            case ELT_ID_NATIONAL_LANGUAGE_SINGLE_SHIFT:
+                smsHeader.singleShiftLanguage = GsmLanguage.toGsmLanguage(inStream.read());
+                break;
+            case ELT_ID_NATIONAL_LANGUAGE_LOCKING_SHIFT:
+                smsHeader.lockingShiftLanguage = GsmLanguage.toGsmLanguage(inStream.read());
+                break;
             default:
                 MiscElt miscElt = new MiscElt();
                 miscElt.id = id;
@@ -174,9 +188,13 @@ public class SmsHeader {
      * @return Byte array representing the SmsHeader
      */
     public static byte[] toByteArray(SmsHeader smsHeader) {
-        if ((smsHeader.portAddrs == null) &&
-            (smsHeader.concatRef == null) &&
-            (smsHeader.miscEltList.size() == 0)) {
+        if (smsHeader == null ||
+            (smsHeader.portAddrs == null &&
+            smsHeader.concatRef == null &&
+            smsHeader.miscEltList.size() == 0 &&
+            smsHeader.singleShiftLanguage == GsmLanguage.DEFAULT &&
+            smsHeader.lockingShiftLanguage == GsmLanguage.DEFAULT)) {
+
             return null;
         }
 
@@ -196,6 +214,7 @@ public class SmsHeader {
             outStream.write(concatRef.msgCount);
             outStream.write(concatRef.seqNumber);
         }
+
         PortAddrs portAddrs = smsHeader.portAddrs;
         if (portAddrs != null) {
             if (portAddrs.areEightBits) {
@@ -212,12 +231,59 @@ public class SmsHeader {
                 outStream.write(portAddrs.origPort & 0x00FF);
             }
         }
+
+        if (smsHeader.singleShiftLanguage != GsmLanguage.DEFAULT) {
+            outStream.write(ELT_ID_NATIONAL_LANGUAGE_SINGLE_SHIFT);
+            outStream.write(1);
+            outStream.write(smsHeader.singleShiftLanguage.getLanguageCode());
+        }
+
+        if (smsHeader.lockingShiftLanguage != GsmLanguage.DEFAULT) {
+            outStream.write(ELT_ID_NATIONAL_LANGUAGE_LOCKING_SHIFT);
+            outStream.write(1);
+            outStream.write(smsHeader.lockingShiftLanguage.getLanguageCode());
+        }
+
         for (MiscElt miscElt : smsHeader.miscEltList) {
             outStream.write(miscElt.id);
             outStream.write(miscElt.data.length);
             outStream.write(miscElt.data, 0, miscElt.data.length);
         }
+
         return outStream.toByteArray();
+    }
+
+    /**
+     * Returns the length of the header, _including_ the UDHL byte
+     * @return the length of the header, _including_ the UDHL byte
+     */
+    public static int getLengthWithUDHL(SmsHeader smsHeader) {
+        int length = 0;
+
+        if (smsHeader != null) {
+            if (smsHeader.concatRef != null) {
+                length += smsHeader.concatRef.isEightBits ? 5 : 6;
+            }
+
+            if (smsHeader.portAddrs != null) {
+                length += smsHeader.portAddrs.areEightBits ? 4 : 6;
+            }
+
+            if (smsHeader.singleShiftLanguage != GsmLanguage.DEFAULT) {
+                length += 3;
+            }
+
+            if (smsHeader.lockingShiftLanguage != GsmLanguage.DEFAULT) {
+                length += 3;
+            }
+
+            for (MiscElt miscElt : smsHeader.miscEltList) {
+                length += 2 + miscElt.data.length;
+            }
+        }
+
+        // Add one byte for UDHL if there actually is a header
+        return length > 0 ? length + 1 : length;
     }
 
     @Override
@@ -243,6 +309,8 @@ public class SmsHeader {
             builder.append(", areEightBits=" + portAddrs.areEightBits);
             builder.append(" }");
         }
+        builder.append(", SingleShift language: " + singleShiftLanguage.getLanguageCode());
+        builder.append(", LockingShift language: " + lockingShiftLanguage.getLanguageCode());
         for (MiscElt miscElt : miscEltList) {
             builder.append(", MiscElt ");
             builder.append("{ id=" + miscElt.id);
