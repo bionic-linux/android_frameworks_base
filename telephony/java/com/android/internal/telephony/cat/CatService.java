@@ -138,6 +138,7 @@ public class CatService extends Handler implements AppInterface {
 
     // Events to signal SIM presence or absent in the device.
     private static final int MSG_ID_ICC_RECORDS_LOADED       = 20;
+    private static final int MSG_ID_ICC_REFRESH_RESET        = 30;
 
     private static final int DEV_ID_KEYPAD      = 0x01;
     private static final int DEV_ID_DISPLAY     = 0x02;
@@ -172,12 +173,16 @@ public class CatService extends Handler implements AppInterface {
         // Register for SIM ready event.
         mIccRecords.registerForRecordsLoaded(this, MSG_ID_ICC_RECORDS_LOADED, null);
 
+        // Register for IccRefreshReset event.
+        mIccRecords.registerForIccRefreshReset(this, MSG_ID_ICC_REFRESH_RESET, null);
+
         mCmdIf.reportStkServiceIsRunning(null);
         CatLog.d(this, "Is running");
     }
 
     public void dispose() {
         mIccRecords.unregisterForRecordsLoaded(this);
+        mIccRecords.unregisterForIccRefreshReset(this);
         mCmdIf.unSetOnCatSessionEnd(this);
         mCmdIf.unSetOnCatProactiveCmd(this);
         mCmdIf.unSetOnCatEvent(this);
@@ -579,6 +584,9 @@ public class CatService extends Handler implements AppInterface {
         case MSG_ID_RESPONSE:
             handleCmdResponse((CatResponseMessage) msg.obj);
             break;
+        case MSG_ID_ICC_REFRESH_RESET:
+            handleIccRefreshReset();
+            break;
         default:
             throw new AssertionError("Unrecognized CAT command: " + msg.what);
         }
@@ -610,6 +618,19 @@ public class CatService extends Handler implements AppInterface {
             return true;
         }
         return false;
+    }
+
+    private  void  handleIccRefreshReset() {
+        CommandDetails cmdDet = new  CommandDetails();
+        cmdDet.typeOfCommand = AppInterface.CommandType.SET_UP_MENU.value();
+        SelectItemParams cmdParams = new  SelectItemParams(cmdDet,null,false);
+        CatCmdMessage cmdMsg = new CatCmdMessage(cmdParams);
+
+        // Send intent with NULL menu to uninstall STK Main menu.
+        CatLog.d(this, "Sending NULL menu to uninstall CAT menu");
+        Intent intent = new Intent(AppInterface.CAT_CMD_ACTION);
+        intent.putExtra("STK CMD", cmdMsg);
+        mContext.sendBroadcast(intent);
     }
 
     private void handleCmdResponse(CatResponseMessage resMsg) {
