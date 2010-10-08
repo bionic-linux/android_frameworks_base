@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA73///Sk\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-10-08T02:33:20Z",
+      "side": 1,
+      "message": "stylistically, I\u0027d drop the unnecessary parens.\n\nbut let\u0027s see what Dianne thinks of the patch first, as she really knows/owns this code",
+      "revId": "3915728ad99c651dc18b886e7d8c8269e9937072",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
