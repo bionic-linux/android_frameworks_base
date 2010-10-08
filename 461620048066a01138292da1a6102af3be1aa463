@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA73///Us\u003d",
+        "filename": "media/libstagefright/codecs/mp3dec/src/pvmp3_reorder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2010-10-08T00:14:44Z",
+      "side": 1,
+      "message": "would it make sense to define this number as a constant in one of the header files?",
+      "revId": "461620048066a01138292da1a6102af3be1aa463",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///Uo\u003d",
+        "filename": "media/libstagefright/codecs/mp3dec/src/pvmp3_reorder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2010-10-08T00:14:44Z",
+      "side": 1,
+      "message": "is it guaranteed that (sfb_lines * 3 + 2) \u003c 198 ?",
+      "revId": "461620048066a01138292da1a6102af3be1aa463",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
