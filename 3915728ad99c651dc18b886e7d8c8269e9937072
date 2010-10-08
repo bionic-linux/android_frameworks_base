@@ -16,6 +16,24 @@
       "revId": "3915728ad99c651dc18b886e7d8c8269e9937072",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///OE\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2010-10-08T18:06:49Z",
+      "side": 1,
+      "message": "Yes, please drop the parens.  It is inconsistent with the style in the rest of this file.",
+      "parentUuid": "AAAA73///Sk\u003d",
+      "revId": "3915728ad99c651dc18b886e7d8c8269e9937072",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
