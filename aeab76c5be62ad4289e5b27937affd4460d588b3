@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA73///QQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-10-08T14:21:46Z",
+      "side": 1,
+      "message": "Might want to document on getSubscriberId() above that it may return null, even just a one-liner comment \"// may be null\" in lieu of a more formal annotations system in use.",
+      "revId": "aeab76c5be62ad4289e5b27937affd4460d588b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
