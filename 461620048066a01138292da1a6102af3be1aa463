@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA73///Kg\u003d",
+        "filename": "media/libstagefright/codecs/mp3dec/src/pvmp3_reorder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002074
+      },
+      "writtenOn": "2010-10-09T01:14:12Z",
+      "side": 1,
+      "message": "I think, in this case, is a matter of preference, it was used to keep track of the scratch memory usage, it won\u0027t change",
+      "parentUuid": "AAAA73///Us\u003d",
+      "revId": "461620048066a01138292da1a6102af3be1aa463",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA73///Uo\u003d",
         "filename": "media/libstagefright/codecs/mp3dec/src/pvmp3_reorder.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-10-08T00:14:44Z",
       "side": 1,
       "message": "is it guaranteed that (sfb_lines * 3 + 2) \u003c 198 ?",
+      "revId": "461620048066a01138292da1a6102af3be1aa463",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///Jg\u003d",
+        "filename": "media/libstagefright/codecs/mp3dec/src/pvmp3_reorder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002074
+      },
+      "writtenOn": "2010-10-09T01:14:12Z",
+      "side": 1,
+      "message": "sfb_lines is computed as a difference between consecutive elements on a constant table, whose max difference is 66. As a constant table this will not (or shouldn\u0027t) changed,\nThe for-loop  \nfor (freq \u003d 0; freq \u003c 3*sfb_lines; freq +\u003d 3)\nwith accesses to Scratch_mem[freq  ], Scratch_mem[freq+1], and Scratch_mem[freq+2], there freq+2 will not exceed 198.",
+      "parentUuid": "AAAA73///Uo\u003d",
       "revId": "461620048066a01138292da1a6102af3be1aa463",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
