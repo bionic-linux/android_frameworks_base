@@ -16,6 +16,7 @@
 
 package com.android.internal.telephony;
 
+import com.android.internal.telephony.IccCardStatus.PinState;
 
 /**
  * See also RIL_AppStatus in include/telephony/ril.h
@@ -103,8 +104,8 @@ public class IccCardApplication {
     public String         app_label;
     // applicable to USIM and CSIM
     public int            pin1_replaced;
-    public int            pin1;
-    public int            pin2;
+    public PinState       pin1;
+    public PinState       pin2;
 
     AppType AppTypeFromRILInt(int type) {
         AppType newType;

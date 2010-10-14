@@ -28,6 +28,7 @@ import android.util.Log;
 
 import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.CommandsInterface.RadioState;
+import com.android.internal.telephony.IccCardStatus.PinState;
 
 /**
  * {@hide}
@@ -48,7 +49,6 @@ public abstract class IccCard {
     private boolean mIccPinLocked = true; // Default to locked
     private boolean mIccFdnEnabled = false; // Default to disabled.
                                             // Will be updated when SIM_READY.
-
 
     /* The extra data for broacasting intent INTENT_ICC_STATE_CHANGE */
     static public final String INTENT_KEY_ICC_STATE = "ss";
@@ -621,24 +621,7 @@ public abstract class IccCard {
             currentRadioState == RadioState.RUIM_LOCKED_OR_ABSENT ||
             currentRadioState == RadioState.RUIM_READY) {
 
-            int index;
-
-            // check for CDMA radio technology
-            if (currentRadioState == RadioState.RUIM_LOCKED_OR_ABSENT ||
-                currentRadioState == RadioState.RUIM_READY) {
-                index = mIccCardStatus.getCdmaSubscriptionAppIndex();
-            }
-            else {
-                index = mIccCardStatus.getGsmUmtsSubscriptionAppIndex();
-            }
-
-            IccCardApplication app;
-            if (index >= 0 && index < IccCardStatus.CARD_MAX_APPS) {
-                app = mIccCardStatus.getApplication(index);
-            } else {
-                Log.e(mLogTag, "[IccCard] Invalid Subscription Application index:" + index);
-                return IccCard.State.ABSENT;
-            }
+            IccCardApplication app = getCurrentApplication();
 
             if (app == null) {
                 Log.e(mLogTag, "[IccCard] Subscription Application in not present");
@@ -690,6 +673,44 @@ public abstract class IccCard {
             // Returns ICC card status for both GSM and CDMA mode
             return mIccCardStatus.getCardState().isCardPresent();
         }
+    }
+
+    private IccCardApplication getCurrentApplication() {
+        if (mIccCardStatus == null) {
+            return null;
+        }
+
+        RadioState currentRadioState = mPhone.mCM.getRadioState();
+
+        int index;
+        // check for CDMA radio technology
+        if (currentRadioState == RadioState.RUIM_LOCKED_OR_ABSENT ||
+            currentRadioState == RadioState.RUIM_READY) {
+            index = mIccCardStatus.getCdmaSubscriptionAppIndex();
+        } else {
+            index = mIccCardStatus.getGsmUmtsSubscriptionAppIndex();
+        }
+
+        return mIccCardStatus.getApplication(index);
+    }
+
+    private PinState getAppPin2State() {
+        IccCardApplication app = getCurrentApplication();
+        return (app != null) ? app.pin2 : PinState.PINSTATE_UNKNOWN;
+    }
+
+    /**
+     * @return true if PIN2 on ICC card is blocked
+     */
+    public boolean isPin2Blocked() {
+        return getAppPin2State() == PinState.PINSTATE_ENABLED_BLOCKED;
+    }
+
+    /**
+     * @return true if PIN2 on ICC card is permanently blocked
+     */
+    public boolean isPin2PermBlocked() {
+        return getAppPin2State() == PinState.PINSTATE_ENABLED_PERM_BLOCKED;
     }
 
     private void log(String msg) {

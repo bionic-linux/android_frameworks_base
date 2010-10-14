@@ -58,6 +58,7 @@ import com.android.internal.telephony.IccCardStatus;
 import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.RILConstants;
 import com.android.internal.telephony.SmsResponse;
+import com.android.internal.telephony.IccCardStatus.PinState;
 import com.android.internal.telephony.cdma.CdmaCallWaitingNotification;
 import com.android.internal.telephony.cdma.CdmaInformationRecords;
 
@@ -2891,8 +2892,8 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             ca.aid            = p.readString();
             ca.app_label      = p.readString();
             ca.pin1_replaced  = p.readInt();
-            ca.pin1           = p.readInt();
-            ca.pin2           = p.readInt();
+            ca.pin1           = PinState.values()[p.readInt()];
+            ca.pin2           = PinState.values()[p.readInt()];
             status.addApplication(ca);
         }
         return status;
