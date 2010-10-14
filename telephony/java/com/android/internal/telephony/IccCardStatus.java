@@ -36,6 +36,7 @@ public class IccCardStatus {
         }
     };
 
+    /* RIL_PinState ril.h */
     public enum PinState {
         PINSTATE_UNKNOWN,
         PINSTATE_ENABLED_NOT_VERIFIED,
