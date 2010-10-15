@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H///xQ\u003d",
+        "filename": "media/libmediaplayerservice/WavPackMetadataRetriever.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002348
+      },
+      "writtenOn": "2010-10-15T07:27:01Z",
+      "side": 1,
+      "message": "typo: cleear",
+      "revId": "cdab86b1d8899c68da94ad220102cb2fc3a58d0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H///xM\u003d",
+        "filename": "media/libmediaplayerservice/WavPackMetadataRetriever.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002348
+      },
+      "writtenOn": "2010-10-15T07:27:01Z",
+      "side": 1,
+      "message": "why use a 2D array?",
+      "revId": "cdab86b1d8899c68da94ad220102cb2fc3a58d0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H///xE\u003d",
+        "filename": "media/libmediaplayerservice/WavPackPlayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002348
+      },
+      "writtenOn": "2010-10-15T07:27:01Z",
+      "side": 1,
+      "message": "This code looks like it was copy \u0026 pasted from wputils.c . . . that\u0027s scary, and not permitted by AOSP. At a minimum it would be better to use that file directly?\n\nhttp://www.google.com/codesearch/p?hl\u003den#x1xIvGneLHs/src/wputils.c\u0026q\u003dwputils.c\u0026sa\u003dN\u0026cd\u003d1\u0026ct\u003drc",
+      "revId": "cdab86b1d8899c68da94ad220102cb2fc3a58d0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
