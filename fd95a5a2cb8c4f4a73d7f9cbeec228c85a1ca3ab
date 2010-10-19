@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H///Q4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-10-19T19:39:27Z",
+      "side": 1,
+      "message": "typo: Syncronous -\u003e Synchronous\n\nalso, I think both of these can be final?",
+      "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H///Q0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-10-19T19:39:27Z",
+      "side": 1,
+      "message": "An ArrayList isn\u0027t the ideal data structure for removing the head.\n\nIt probably doesn\u0027t matter, but not sure fast teenage girls text these days.  LinkedList might be better.",
+      "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H///Qs\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-10-19T19:39:27Z",
+      "side": 1,
+      "message": "does it make sense to call sendSms without the mPendingMessagesList lock held to reduce contention from others trying to call enqueueMessageForSending?",
+      "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H///Qw\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-10-19T19:39:27Z",
+      "side": 1,
+      "message": "nit: spaces after \"//\"",
+      "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
