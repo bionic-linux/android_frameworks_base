@@ -118,7 +118,8 @@ LOCAL_SRC_FILES:= \
 	IServiceManager.cpp \
 	Unicode.cpp \
     BackupData.cpp \
-	BackupHelpers.cpp
+	BackupHelpers.cpp \
+	FontEngineManager.cpp
 
 ifeq ($(TARGET_SIMULATOR),true)
 LOCAL_SRC_FILES += $(hostSources)
@@ -139,7 +140,8 @@ LOCAL_LDLIBS += -lpthread
 LOCAL_SHARED_LIBRARIES := \
 	libz \
 	liblog \
-	libcutils
+	libcutils \
+	libdl
 
 ifneq ($(TARGET_SIMULATOR),true)
 ifeq ($(TARGET_OS)-$(TARGET_ARCH),linux-x86)
