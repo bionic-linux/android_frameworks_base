@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H//+dY\u003d",
+        "filename": "telephony/java/android/telephony/SmsCbMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2010-10-26T13:53:04Z",
+      "side": 1,
+      "message": "Response to comment from patchset #2: This class does not support parsing of CB PDU data according to the UMTS format, only the GSM format (up to 15 pages * 88 bytes). This is because the RIL interface specifies that the GSM format is to be used. Furthermore, the RIL implementations we\u0027ve seen that supports CB over UMTS at all will actually convert CB pages received over UMTS back into GSM format, making the RAT transparent to the framework while at the same time complying to the existing RIL interface.",
+      "revId": "21837f9bf51f401080475d539dfeb6b907b08217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H//+dU\u003d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2010-10-26T13:53:04Z",
+      "side": 1,
+      "message": "Added note about call being blocking.",
+      "revId": "21837f9bf51f401080475d539dfeb6b907b08217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H//+dQ\u003d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2010-10-26T13:53:04Z",
+      "side": 1,
+      "message": "Added note about call being blocking.",
+      "revId": "21837f9bf51f401080475d539dfeb6b907b08217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H//+dM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmSMSDispatcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2010-10-26T13:53:04Z",
+      "side": 1,
+      "message": "Response to comment on patch set #2: Again, GSM and UMTS formats are not distinguished here since it\u0027s assumed that the RIL implementation will deliver data in GSM format.",
+      "revId": "21837f9bf51f401080475d539dfeb6b907b08217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H//+dI\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2010-10-26T13:53:04Z",
+      "side": 1,
+      "message": "Added constants for min and max scheme",
+      "revId": "21837f9bf51f401080475d539dfeb6b907b08217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H//+dE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SimSmsInterfaceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2010-10-26T13:53:04Z",
+      "side": 1,
+      "message": "Using constants for min and max scheme.",
+      "revId": "21837f9bf51f401080475d539dfeb6b907b08217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
