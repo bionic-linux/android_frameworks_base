@@ -50,7 +50,8 @@ LOCAL_C_INCLUDES:= \
 	$(JNI_H_INCLUDE) \
         $(TOP)/external/opencore/extern_libs_v2/khronos/openmax/include \
         $(TOP)/external/opencore/android \
-        $(TOP)/external/tremolo
+        $(TOP)/external/tremolo \
+        $(TOP)/external/wavpack/include
 
 LOCAL_SHARED_LIBRARIES := \
         libbinder         \
@@ -61,7 +62,8 @@ LOCAL_SHARED_LIBRARIES := \
         libsonivox        \
         libvorbisidec     \
         libsurfaceflinger_client \
-        libcamera_client
+        libcamera_client \
+        libWavPack
 
 LOCAL_STATIC_LIBRARIES := \
         libstagefright_aacdec \
