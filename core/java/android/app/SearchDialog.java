@@ -572,7 +572,11 @@ public class SearchDialog extends Dialog implements OnItemClickListener, OnItemS
             if (mSearchable != null) {
                 int hintId = mSearchable.getHintId();
                 if (hintId != 0) {
-                    hint = mActivityContext.getString(hintId);
+                    try {
+                        hint = mActivityContext.getString(hintId);
+                    } catch (Resources.NotFoundException e) {
+                        Log.w(LOG_TAG, "Could not find hint string: " + e);
+                    }
                 }
             }
             mSearchAutoComplete.setHint(hint);
