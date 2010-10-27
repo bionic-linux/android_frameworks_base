@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA8H//+Pg\u003d",
+        "filename": "media/libmediaplayerservice/WavPackMetadataRetriever.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002952
+      },
+      "writtenOn": "2010-10-27T22:06:42Z",
+      "side": 1,
+      "message": "Fixed in new patch, thanks.",
+      "parentUuid": "AAAA8H///xQ\u003d",
+      "revId": "cdab86b1d8899c68da94ad220102cb2fc3a58d0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA8H///xM\u003d",
         "filename": "media/libmediaplayerservice/WavPackMetadataRetriever.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA8H//+PU\u003d",
+        "filename": "media/libmediaplayerservice/WavPackMetadataRetriever.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002952
+      },
+      "writtenOn": "2010-10-27T22:06:42Z",
+      "side": 1,
+      "message": "For the metadata retriever interface I was reusing existing Android code (the Ogg Vorbis code), and I used a 2D array without thinking. I have changed this to use a 1D array in my new patch, thanks for pointing this out.",
+      "parentUuid": "AAAA8H///xM\u003d",
+      "revId": "cdab86b1d8899c68da94ad220102cb2fc3a58d0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA8H///xE\u003d",
         "filename": "media/libmediaplayerservice/WavPackPlayer.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2010-10-15T07:27:01Z",
       "side": 1,
       "message": "This code looks like it was copy \u0026 pasted from wputils.c . . . that\u0027s scary, and not permitted by AOSP. At a minimum it would be better to use that file directly?\n\nhttp://www.google.com/codesearch/p?hl\u003den#x1xIvGneLHs/src/wputils.c\u0026q\u003dwputils.c\u0026sa\u003dN\u0026cd\u003d1\u0026ct\u003drc",
+      "revId": "cdab86b1d8899c68da94ad220102cb2fc3a58d0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H//+PI\u003d",
+        "filename": "media/libmediaplayerservice/WavPackPlayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002952
+      },
+      "writtenOn": "2010-10-27T22:06:42Z",
+      "side": 1,
+      "message": "This code is based on the callback functions used in wputils.c I didn\u0027t want to use that code directly as I needed flexibility to be able to modify and/or enhance functionality in the callbacks. However I have now rewritten the functions so their functionality and purpose is clearer, new code is in the new patch set.",
+      "parentUuid": "AAAA8H///xE\u003d",
       "revId": "cdab86b1d8899c68da94ad220102cb2fc3a58d0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
