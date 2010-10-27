@@ -12022,6 +12022,15 @@ public final class ActivityManagerService extends ActivityManagerNative implemen
             }
             if (inStopping) {
                 mStoppingServices.remove(r);
+                if (r.bindings.size() > 0) {
+                    Iterator<IntentBindRecord> it = r.bindings.values().iterator();
+                    while (it.hasNext()) {
+                        IntentBindRecord record = it.next();
+                        record.binder = null;
+                        record.requested = record.received = record.hasBound = false;
+                    }
+                    System.gc();
+                }
             }
             updateOomAdjLocked(r.app);
         }
