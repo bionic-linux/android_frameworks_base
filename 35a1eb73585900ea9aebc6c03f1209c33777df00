@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H//+VU\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12026,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2010-10-27T07:45:08Z",
+      "side": 1,
+      "message": "Why not just r.bindings.clear()?",
+      "revId": "35a1eb73585900ea9aebc6c03f1209c33777df00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8H//+VQ\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12032,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2010-10-27T07:45:08Z",
+      "side": 1,
+      "message": "Forcing a GC every time a service is stopped is too much.",
+      "revId": "35a1eb73585900ea9aebc6c03f1209c33777df00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
