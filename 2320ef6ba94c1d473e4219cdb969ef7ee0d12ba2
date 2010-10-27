@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H//+M4\u003d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1000773
+      },
+      "writtenOn": "2010-10-27T22:57:26Z",
+      "side": 1,
+      "message": "This will be set to null in cancel(). No need here.",
+      "revId": "2320ef6ba94c1d473e4219cdb969ef7ee0d12ba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
