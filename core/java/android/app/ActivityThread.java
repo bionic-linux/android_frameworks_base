@@ -2571,6 +2571,10 @@ public final class ActivityThread {
                     }
                 }
             }
+            if (r.stopped) {
+                r.activity.performRestart();
+                r.stopped = false;
+            }
             deliverResults(r, res.results);
             if (resumed) {
                 mInstrumentation.callActivityOnResume(r.activity);
