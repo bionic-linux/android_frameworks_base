@@ -363,6 +363,10 @@ public class WebView extends AbsoluteLayout
     // It's used to dismiss the dialog in destroy if not done before.
     private AlertDialog mListBoxDialog = null;
 
+    // Reference to save password dialog so it can be dimissed if WebView
+    // is destroyed when the dialog is open.
+    private AlertDialog mSavePasswordDialog = null;
+
     static final String LOGTAG = "webview";
 
     private ZoomManager mZoomManager;
@@ -1399,30 +1403,34 @@ public class WebView extends AbsoluteLayout
             neverRemember.getData().putString("password", password);
             neverRemember.obj = resumeMsg;
 
-            new AlertDialog.Builder(getContext())
+            mSavePasswordDialog = new AlertDialog.Builder(getContext())
                     .setTitle(com.android.internal.R.string.save_password_label)
                     .setMessage(com.android.internal.R.string.save_password_message)
                     .setPositiveButton(com.android.internal.R.string.save_password_notnow,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             resumeMsg.sendToTarget();
+                            mSavePasswordDialog = null;
                         }
                     })
                     .setNeutralButton(com.android.internal.R.string.save_password_remember,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             remember.sendToTarget();
+                            mSavePasswordDialog = null;
                         }
                     })
                     .setNegativeButton(com.android.internal.R.string.save_password_never,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             neverRemember.sendToTarget();
+                            mSavePasswordDialog = null;
                         }
                     })
                     .setOnCancelListener(new OnCancelListener() {
                         public void onCancel(DialogInterface dialog) {
                             resumeMsg.sendToTarget();
+                            mSavePasswordDialog = null;
                         }
                     }).show();
             // Return true so that WebViewCore will pause while the dialog is
@@ -1660,6 +1668,10 @@ public class WebView extends AbsoluteLayout
         if (mListBoxDialog != null) {
             mListBoxDialog.dismiss();
             mListBoxDialog = null;
+        }
+        if (mSavePasswordDialog != null) {
+            mSavePasswordDialog.dismiss();
+            mSavePasswordDialog = null;
         }
         // remove so that it doesn't cause events
         if (mWebTextView != null) {
