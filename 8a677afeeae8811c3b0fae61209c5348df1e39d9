@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H//+Dg\u003d",
+        "filename": "core/java/com/google/android/mms/pdu/PduComposer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1002473
+      },
+      "writtenOn": "2010-10-28T18:28:01Z",
+      "side": 1,
+      "message": "if this method now returns ERROR, the caller PduComposer.make() will return null if makeSendReqPdu() doesn\u0027t return SUCCESS. I think that can trip up the callers who call PduComposer.make(), as they are expecting a valid byte[] returned, and don\u0027t always check null.\n\nIf you are to make this change, I think you need to take care of the callers up the chain.",
+      "revId": "8a677afeeae8811c3b0fae61209c5348df1e39d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
