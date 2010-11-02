@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H//9hg\u003d",
+        "filename": "services/java/com/android/server/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2344,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-11-02T20:51:52Z",
+      "side": 1,
+      "message": "I think that the canonical Android style puts the else on the same line as the closing brace... but I\u0027m not 100% sure.",
+      "revId": "0170b4e9d93f86738ad2d8801df88f3883c16d44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
