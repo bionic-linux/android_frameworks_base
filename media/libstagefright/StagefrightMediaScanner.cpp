@@ -164,6 +164,7 @@ status_t StagefrightMediaScanner::processFile(
         return UNKNOWN_ERROR;
     }
 
+    status_t status;
     if (!strcasecmp(extension, ".mid")
             || !strcasecmp(extension, ".smf")
             || !strcasecmp(extension, ".imy")
@@ -172,11 +173,17 @@ status_t StagefrightMediaScanner::processFile(
             || !strcasecmp(extension, ".rtttl")
             || !strcasecmp(extension, ".rtx")
             || !strcasecmp(extension, ".ota")) {
-        return HandleMIDI(path, &client);
+        status = HandleMIDI(path, &client);
+        if (status != OK)
+            return status;
+        goto endfile;
     }
 
     if (!strcasecmp(extension, ".ogg")) {
-        return HandleOGG(path, &client);
+        status = HandleOGG(path, &client);
+        if (status != OK)
+            return status;
+        goto endfile;
     }
 
     if (mRetriever->setDataSource(path) == OK
@@ -214,7 +221,7 @@ status_t StagefrightMediaScanner::processFile(
             }
         }
     }
-
+ endfile:
     client.endFile();
 
     return OK;
