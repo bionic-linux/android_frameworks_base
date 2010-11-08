@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H//8vY\u003d",
+        "filename": "core/java/android/app/SearchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2010-11-08T20:29:34Z",
+      "side": 1,
+      "message": "Isn\u0027t this an application bug?  If the application has given a hint ID that doesn\u0027t actually exist, the application should be crashed rather than fairly-silently eating the error.",
+      "revId": "a2c4ed8d41264ec5c02acd33763fdf7e55da0ed2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
