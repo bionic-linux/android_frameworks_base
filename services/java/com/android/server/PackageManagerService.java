@@ -1868,7 +1868,7 @@ class PackageManagerService extends IPackageManager.Stub {
             set2.add(sig);
         }
         // Make sure s2 contains all signatures in s1.
-        if (set1.equals(set2)) {
+        if (set2.containsAll(set1)) {
             return PackageManager.SIGNATURE_MATCH;
         }
         return PackageManager.SIGNATURE_NO_MATCH;
