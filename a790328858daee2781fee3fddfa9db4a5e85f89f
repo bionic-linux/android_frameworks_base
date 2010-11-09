@@ -1,0 +1,735 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8n///+k\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Can you document what this function does, especially with regards to error conditions. Who exactly shall implement it, and under which conditions is it going to be called? etc...",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+g\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+c\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to belong to a public interface header file. Can you move that somewhere else?",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+Y\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "May I recommend the usage of a C++ namespace here to avoid naming conflicts with other libraries?\n\nIt\u0027d be nice to have a short description of where this is used below.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+U\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+Q\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+M\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+I\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Please specify the units of the metrics below. If they depend on the context, indicate how one can obtain metrics in pixels, or in original font units, or whatever else.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+E\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "will be \u003c\u003d 0 is ambiguous. I\u0027d prefer if you stated that you are using the \"positive Y downwards\" convention here instead in the FontMetrics description, since all vertical values are affected.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+A\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Please specify what you mean by \"recommended\" here.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///98\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Please specify that this is the font-specified baseline-to-baseline distance instead (or if it is really leading, how you can use it to compute this distance, e.g. fBottom - fTop + fLeading ?)",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///94\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Please specify that the values contained here are all in fractional pixels (since it seems so), and not in original font units.\n\nAlso specify that they may be hinted, so that one should not assume that they are the linearly-scaled values.\n\nAlso, you will need something for the metrics of vectorial glyph outlines too, this structure doesn\u0027t seem adequate for this.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///90\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Please specify units. Also explain how one can use these, or link to the FreeType spec that describes how to.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9w\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9s\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "specify \"width of the glyph\u0027s bounding box in pixels\"",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9o\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "specify \"height of the glyph\u0027s bounding box in pixels\"",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9k\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Why is this not an integer. If should be \"the glyph\u0027s bounding box left edge coordinate in pixels\", and an int16_t",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9g\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Same here, should be \"the glyph\u0027s bounding box\u0027s top edge coordinate\". Likely negative since using the Y-downwards convention.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9c\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Please explain where the flags below are used, and what they really mean",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9Y\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Explain what fontID is",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9U\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "document precise meaning",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9Q\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "these bit descriptors do not match the enum Flags above. Remove the comment and reference the enum definition instead.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9M\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Explain how these 4 values are used / computed",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9I\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Can this be NULL?",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9E\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Can this be NULL?",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///9A\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Can this be NULL?",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///88\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Please do not make this inline. This is an implementation detail.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///84\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///80\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Explain what the flags are. Link to the FreeType doc if it\u0027s useful.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8w\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Why return a uin32_t when all other methods assume a glyphID is only a uint16_t?",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8s\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "As you probably know, the mapping from glyphID to Unicode codepoints is not always possible, so don\u0027t say \"if glyph index is not present in the font\", but something like \"if glyph index doesn\u0027t correspond to individual Unicode codepoint\" instead.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8o\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Explain units (i.e. fractional pixels)",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8k\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "This actually returns a GlyphMetrics, not an advance. Specify which fields of the returned structure/class are valid after this method is called. Also specify the result for an invalid glyphID",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8g\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "same remark as above regarding units",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8c\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "explain what happens in case of bad glyph id",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8Y\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Explain what is the expected buffer format, if the function will clear all the buffer\u0027s memory or not, what is the rowbyte orientation, and how the glyph image is mapped into the buffer\n(e.g. origin is always mapped to lower-left corner of the buffer, or something different)",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8U\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Explain what happens if the font doesn\u0027t have vertical font metrics.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8Q\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "Explain in which units the GlyphOutline coordinates are, and how the data can be used later by the caller.\nHow to obtain the vectorial glyph metrics, instead of the pixel-based ones?",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8M\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "explain how the result is zero-terminated in case of buffer overflow.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8E\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "I\u0027mnot a big fan of function overloading for the sake of handling different file descriptor types. Can\u0027t you use something else like a union to describe a file, and only implement one method of each kind that uses it instead?",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///8I\u003d",
+        "filename": "include/utils/FontEngineManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "description doesn\u0027t match signature here!",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+s\u003d",
+        "filename": "libs/utils/FontEngineManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure that this does not constitute a valid open-source license disclaimer. Can you use something more specific like the MIT or BSD license clauses here.",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA8n///+o\u003d",
+        "filename": "libs/utils/FontEngineManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000411
+      },
+      "writtenOn": "2010-11-09T11:44:58Z",
+      "side": 1,
+      "message": "For the record, you can just define FEM_LOG(...) and use fprintf(fplot, __VA_ARGS__). This will avoid having two distinct macros for the cases where you have one or several arguments.\n\nAlso, consider using fprintf(fplog, __FUNCTION__ \":\"); fprintf(fplog, __VA_ARGS__) so you don\u0027t need to prepend the name of your functions on each FEM_LOG call().",
+      "revId": "a790328858daee2781fee3fddfa9db4a5e85f89f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
