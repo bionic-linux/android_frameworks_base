@@ -1478,6 +1478,12 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
                 mZoneOffset  = tzOffset;
                 mZoneDst     = dst != 0;
                 mZoneTime    = c.getTimeInMillis();
+
+                // Guess the timezone based on NITZ offset.
+                if (TimeZone.getAvailableIDs(tzOffset).length > 0) {
+                    TimeZone.setDefault(TimeZone.getTimeZone(TimeZone
+                     .getAvailableIDs(tzOffset)[0]));
+                }
             }
 
             if (zone != null) {
