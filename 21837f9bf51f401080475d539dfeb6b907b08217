@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "AAAA9H///5Y\u003d",
+        "filename": "telephony/java/android/telephony/SmsCbMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003871
+      },
+      "writtenOn": "2010-11-15T20:31:09Z",
+      "side": 1,
+      "message": "May want to include the reference in the comments as to where this data comes from. For example, from TS23.041 9.4.1, etc.",
+      "revId": "21837f9bf51f401080475d539dfeb6b907b08217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9H///5c\u003d",
+        "filename": "telephony/java/android/telephony/SmsCbMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003871
+      },
+      "writtenOn": "2010-11-15T20:31:09Z",
+      "side": 1,
+      "message": "May want to include the reference in the comments as to where this data comes from. For example, from TS23.041 9.4.1, etc.",
+      "revId": "21837f9bf51f401080475d539dfeb6b907b08217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA8H//+dU\u003d",
         "filename": "telephony/java/android/telephony/SmsManager.java",
         "patchSetId": 4
