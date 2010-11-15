@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA83///nk\u003d",
+        "filename": "api/current.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 216221,
+      "author": {
+        "id": 1004696
+      },
+      "writtenOn": "2010-11-15T09:47:27Z",
+      "side": 1,
+      "message": "Why did this happen? Any idea?",
+      "revId": "84029037239fec6e54327519c3e5ad30088c28ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
