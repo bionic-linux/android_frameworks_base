@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA9n////8\u003d",
+        "filename": "media/libstagefright/StagefrightMediaScanner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-11-16T00:29:25Z",
+      "side": 1,
+      "message": "style: always use { braces } with an if statement, even if it\u0027s just a single line body",
+      "revId": "9b2ad63202dc5f00414c2f672a7d7d50ae661875",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n////4\u003d",
+        "filename": "media/libstagefright/StagefrightMediaScanner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-11-16T00:29:25Z",
+      "side": 1,
+      "message": "style: always use { braces } with an if statement, even if it\u0027s just a single line body",
+      "revId": "9b2ad63202dc5f00414c2f672a7d7d50ae661875",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
