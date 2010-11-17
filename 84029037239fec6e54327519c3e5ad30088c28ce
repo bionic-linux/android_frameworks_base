@@ -16,6 +16,24 @@
       "revId": "84029037239fec6e54327519c3e5ad30088c28ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n///zg\u003d",
+        "filename": "api/current.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 216221,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-11-17T23:10:05Z",
+      "side": 1,
+      "message": "We\u0027ve seen similar changes caused by differences between Java implementations, possibly OpenJDK vs Sun/Oracle JDK. This isn\u0027t an actual concern.",
+      "parentUuid": "AAAA83///nk\u003d",
+      "revId": "84029037239fec6e54327519c3e5ad30088c28ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
