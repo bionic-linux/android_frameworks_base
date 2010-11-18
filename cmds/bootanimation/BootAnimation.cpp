@@ -49,6 +49,9 @@
 #include <GLES/glext.h>
 #include <EGL/eglext.h>
 
+#include <cutils/properties.h>
+#include <media/AudioSystem.h>
+
 #include "BootAnimation.h"
 
 #define USER_BOOTANIMATION_FILE "/data/local/bootanimation.zip"
@@ -84,6 +87,8 @@ void BootAnimation::binderDied(const wp<IBinder>& who)
 {
     // woah, surfaceflinger died!
     ALOGD("SurfaceFlinger died, exiting...");
+
+    stopSound();
 
     // calling requestExit() is not enough here because the Surface code
     // might be blocked on a condition variable that will never be updated.
@@ -208,6 +213,86 @@ status_t BootAnimation::initTexture(void* buffer, size_t len)
     return NO_ERROR;
 }
 
+bool BootAnimation::prepareSound()
+{
+    mZipFd = -1;
+    mPlayer = NULL;
+
+    char volume[PROPERTY_VALUE_MAX];
+    // The default boot sound volume is 73% of the max volume.
+    property_get("persist.sys.boot.sound.volume", volume, "73");
+    LOGD("persist.sys.boot.sound.volume:%s", volume);
+    int soundVolume = atoi(volume);
+    if (soundVolume < 0) {
+        soundVolume = 0;
+    }
+
+    if (soundVolume > 100) {
+        soundVolume = 100;
+    }
+
+    // If the phone is in the silent or silent+vibrate mode, do nothing.
+    if (soundVolume == 0) {
+        return true;
+    }
+
+    mZipFd = ::open("/data/local/bootanimation.zip", O_RDONLY);
+    if (mZipFd < 0) {
+        mZipFd = ::open("/system/media/bootanimation.zip", O_RDONLY);
+        if (mZipFd < 0) {
+            LOGW("Unable to open bootanimation.zip\n");
+            return false;
+        }
+    }
+
+    ZipFileRO& zip(mZip);
+    ZipEntryRO mp3 = zip.findEntryByName("bootanim.mp3");
+    if (!mp3) {
+        LOGI("mp3 is null");
+        return false;
+    }
+
+    FileMap* mp3Map = zip.createEntryFileMap(mp3);
+    if (!mp3Map) {
+        LOGI("mp3Map is null");
+        return false;
+    }
+
+    mPlayer = new MediaPlayer();
+    if (mPlayer == NULL) {
+        LOGE("Fail to new MediaPlayer()\n");
+        return false;
+    }
+
+    status_t st = mPlayer->setDataSource(mZipFd, mp3Map->getDataOffset(),
+            mp3Map->getDataLength());
+
+    if (st != NO_ERROR) {
+        LOGE("setDataSource fail(%d)\n", st);
+        return false;
+    }
+
+    st = mPlayer->setAudioStreamType(AUDIO_STREAM_SYSTEM);
+
+    if (st != NO_ERROR) {
+        LOGE("setAudioStreamType fail(%d)\n", st);
+        return false;
+    }
+
+    if ((st = mPlayer->prepare()) != NO_ERROR) {
+        LOGE("prepare fail(%d)\n", st);
+        return false;
+    }
+
+    double dVolume = AudioSystem::linearToLog(soundVolume);
+    if ((st = mPlayer->setVolume(dVolume, dVolume)) != NO_ERROR) {
+        LOGE("setVolume fail(%d)\n", st);
+        return false;
+    }
+
+    return true;
+}
+
 status_t BootAnimation::readyToRun() {
     mAssets.addDefaultAssets();
 
@@ -215,6 +300,19 @@ status_t BootAnimation::readyToRun() {
     status_t status = session()->getDisplayInfo(0, &dinfo);
     if (status)
         return -1;
+
+    mAndroidAnimation = false;
+    status_t err = mZip.open(USER_BOOTANIMATION_FILE);
+    if (err != NO_ERROR) {
+        err = mZip.open(SYSTEM_BOOTANIMATION_FILE);
+        if (err != NO_ERROR) {
+            mAndroidAnimation = true;
+        }
+    }
+    mPlayerReady = false;
+    if(!mAndroidAnimation) {
+        mPlayerReady = prepareSound();
+    }
 
     // create the native surface
     sp<SurfaceControl> control = session()->createSurface(
@@ -260,9 +358,7 @@ status_t BootAnimation::readyToRun() {
     mFlingerSurfaceControl = control;
     mFlingerSurface = s;
 
-    mAndroidAnimation = true;
-
-    // If the device has encryption turned on or is in process 
+    // If the device has encryption turned on or is in process
     // of being encrypted we show the encrypted boot animation.
     char decrypt[PROPERTY_VALUE_MAX];
     property_get("vold.decrypt", decrypt, "");
@@ -284,12 +380,45 @@ status_t BootAnimation::readyToRun() {
     return NO_ERROR;
 }
 
+bool BootAnimation::playSound()
+{
+    if (mPlayer== NULL || !mPlayerReady)
+        return false;
+
+    status_t st = mPlayer->start();
+    if (st != NO_ERROR) {
+        LOGE("start fail(%d)\n", st);
+        return false;
+    }
+
+    return true;
+}
+
+void BootAnimation::stopSound()
+{
+    if (mPlayer != NULL) {
+        status_t st = mPlayer->stop();
+        if (st != NO_ERROR) {
+            LOGE("stop fail(%d)\n", st);
+        }
+        mPlayer = NULL;
+    }
+
+    if (mZipFd >= 0) {
+        ::close(mZipFd);
+        mZipFd = -1;
+    }
+}
+
 bool BootAnimation::threadLoop()
 {
     bool r;
     if (mAndroidAnimation) {
         r = android();
     } else {
+        if (!playSound()) {
+            stopSound();
+        }
         r = movie();
     }
 
