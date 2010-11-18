@@ -50,12 +50,17 @@
 #include <GLES/glext.h>
 #include <EGL/eglext.h>
 
+#include <cutils/properties.h>
+#include <media/AudioSystem.h>
+
 #include "BootAnimation.h"
 
 #define USER_BOOTANIMATION_FILE "/data/local/bootanimation.zip"
 #define SYSTEM_BOOTANIMATION_FILE "/system/media/bootanimation.zip"
 #define SYSTEM_ENCRYPTED_BOOTANIMATION_FILE "/system/media/bootanimation-encrypted.zip"
 #define EXIT_PROP_NAME "service.bootanim.exit"
+
+#define AUDIO_FILENAME "audio.mp3"
 
 extern "C" int clock_nanosleep(clockid_t clock_id, int flags,
                            const struct timespec *request,
@@ -90,6 +95,8 @@ void BootAnimation::binderDied(const wp<IBinder>& who)
 {
     // woah, surfaceflinger died!
     ALOGD("SurfaceFlinger died, exiting...");
+
+    stopSound();
 
     // calling requestExit() is not enough here because the Surface code
     // might be blocked on a condition variable that will never be updated.
@@ -214,6 +221,94 @@ status_t BootAnimation::initTexture(void* buffer, size_t len)
     return NO_ERROR;
 }
 
+/**
+ * Prepares the mediaplayer with the audio mp3 read from the animation zip file
+ *
+ * @returns true if the mediaplayer is prepared successfully, false otherwise
+ */
+bool BootAnimation::prepareSound()
+{
+    mPlayer = NULL;
+
+    char volume[PROPERTY_VALUE_MAX];
+    // The default boot sound volume is 73% of the max volume.
+    property_get("persist.sys.boot.sound.volume", volume, "73");
+
+    ALOGD("persist.sys.boot.sound.volume:%s\n", volume);
+    int soundVolume = atoi(volume);
+    // If the phone is in silent or silent+vibrate mode, do nothing.
+    if (soundVolume <= 0) {
+        return false;
+    } else if (soundVolume > 100) {
+        soundVolume = 100;
+    }
+
+    ZipFileRO& zip(mZip);
+    ZipEntryRO mp3Entry = zip.findEntryByName(AUDIO_FILENAME);
+    if (!mp3Entry) {
+        // mp3 not present, do nothing.
+        return false;
+    }
+
+    int method;
+    if (!zip.getEntryInfo(mp3Entry, &method, 0, 0, 0, 0, 0)) {
+        ALOGE("Couldn't read zip entry info\n");
+        return false;
+    }
+
+    if (method != ZipFileRO::kCompressStored) {
+        ALOGE("cannot handle zip compression method %d: stored files only\n", method);
+        return false;
+    }
+
+    FileMap* mp3Map = zip.createEntryFileMap(mp3Entry);
+    if (!mp3Map) {
+        ALOGE("mp3Map is null\n");
+        return false;
+    }
+
+    mPlayer = new MediaPlayer();
+    if (mPlayer == NULL) {
+        ALOGE("Failed to create MediaPlayer()\n");
+        return false;
+    }
+
+    int zipFd;
+    if (((zipFd = ::open(SYSTEM_ENCRYPTED_BOOTANIMATION_FILE, O_RDONLY)) < 0) &&
+            ((zipFd = ::open(USER_BOOTANIMATION_FILE, O_RDONLY)) < 0) &&
+            ((zipFd = ::open(SYSTEM_BOOTANIMATION_FILE, O_RDONLY)) < 0)) {
+        ALOGE("Unable to open animation zip file\n");
+        return false;
+    }
+
+    status_t st = mPlayer->setDataSource(zipFd, mp3Map->getDataOffset(),
+            mp3Map->getDataLength());
+    ::close(zipFd);
+    if (st != NO_ERROR) {
+        ALOGE("mPlayer->setDataSource failed(%d)\n", st);
+        return false;
+    }
+
+    st = mPlayer->setAudioStreamType(AUDIO_STREAM_SYSTEM);
+    if (st != NO_ERROR) {
+        ALOGE("mPlayer->setAudioStreamType failed(%d)\n", st);
+        return false;
+    }
+
+    if ((st = mPlayer->prepare()) != NO_ERROR) {
+        ALOGE("mPlayer->prepare failed(%d)\n", st);
+        return false;
+    }
+
+    double dVolume = AudioSystem::linearToLog(soundVolume);
+    if ((st = mPlayer->setVolume(dVolume, dVolume)) != NO_ERROR) {
+        ALOGE("mPlayer->setVolume failed(%d)\n", st);
+        return false;
+    }
+
+    return true;
+}
+
 status_t BootAnimation::readyToRun() {
     mAssets.addDefaultAssets();
 
@@ -268,9 +363,7 @@ status_t BootAnimation::readyToRun() {
     mFlingerSurfaceControl = control;
     mFlingerSurface = s;
 
-    mAndroidAnimation = true;
-
-    // If the device has encryption turned on or is in process 
+    // If the device has encryption turned on or is in process
     // of being encrypted we show the encrypted boot animation.
     char decrypt[PROPERTY_VALUE_MAX];
     property_get("vold.decrypt", decrypt, "");
@@ -287,9 +380,35 @@ status_t BootAnimation::readyToRun() {
             ((access(SYSTEM_BOOTANIMATION_FILE, R_OK) == 0) &&
             (mZip.open(SYSTEM_BOOTANIMATION_FILE) == NO_ERROR))) {
         mAndroidAnimation = false;
+        mAudioReady = prepareSound();
     }
 
     return NO_ERROR;
+}
+
+bool BootAnimation::playSound()
+{
+    if (mPlayer == NULL || !mAudioReady)
+        return false;
+
+    status_t st = mPlayer->start();
+    if (st != NO_ERROR) {
+        ALOGE("mPlayer->start failed(%d)\n", st);
+        return false;
+    }
+
+    return true;
+}
+
+void BootAnimation::stopSound()
+{
+    if (mPlayer != NULL) {
+        status_t st = mPlayer->stop();
+        if (st != NO_ERROR) {
+            ALOGE("mPlayer->stop failed(%d)\n", st);
+        }
+        mPlayer = NULL;
+    }
 }
 
 bool BootAnimation::threadLoop()
@@ -298,6 +417,9 @@ bool BootAnimation::threadLoop()
     if (mAndroidAnimation) {
         r = android();
     } else {
+        if (!playSound()) {
+            stopSound();
+        }
         r = movie();
     }
 
