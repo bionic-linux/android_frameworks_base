@@ -29,6 +29,8 @@
 #include <EGL/egl.h>
 #include <GLES/gl.h>
 
+#include <media/mediaplayer.h>
+
 class SkBitmap;
 
 namespace android {
@@ -82,6 +84,9 @@ private:
     status_t initTexture(void* buffer, size_t len);
     bool android();
     bool movie();
+    bool prepareSound();
+    bool playSound();
+    void stopSound();
 
     sp<SurfaceComposerClient>       mSession;
     AssetManager mAssets;
@@ -95,6 +100,9 @@ private:
     sp<Surface> mFlingerSurface;
     bool        mAndroidAnimation;
     ZipFileRO   mZip;
+    int         mZipFd;
+    sp<MediaPlayer> mPlayer;
+    bool        mPlayerReady;
 };
 
 // ---------------------------------------------------------------------------
