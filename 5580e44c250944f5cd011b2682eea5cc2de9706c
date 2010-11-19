@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA9n///nc\u003d",
+        "filename": "media/libstagefright/StagefrightMediaScanner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-11-19T00:03:28Z",
+      "side": 0,
+      "message": "unnecessary whitespace change.  we try to always minimize whitespace changes to ease merges",
+      "revId": "5580e44c250944f5cd011b2682eea5cc2de9706c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
