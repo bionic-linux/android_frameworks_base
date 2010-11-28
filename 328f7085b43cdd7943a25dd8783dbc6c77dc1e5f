@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA9n//+hs\u003d",
+        "filename": "telephony/java/android/telephony/SmsCbMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1004138
+      },
+      "writtenOn": "2010-11-28T15:13:20Z",
+      "side": 1,
+      "message": "You have not covered the case of long GSM CB message which construct from more than one GSM CB page. In such a case the unpackBody function will fail to parse (7-BIT)",
+      "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
