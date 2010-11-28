@@ -16,6 +16,24 @@
       "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//+hA\u003d",
+        "filename": "telephony/java/android/telephony/SmsCbMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2010-11-28T20:30:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean. In case of GSM format, one SmsCbMessage will represent one CB page. Each page will be separately dispatched from RIL, and assembled in the dispatcher. The client will then unpack each page and concatenate the text, just like normal point to point SMS is handled (SmsMessage).",
+      "parentUuid": "AAAA9n//+hs\u003d",
+      "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
