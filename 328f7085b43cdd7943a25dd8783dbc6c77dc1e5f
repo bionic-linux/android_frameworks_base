@@ -52,6 +52,24 @@
       "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//+bE\u003d",
+        "filename": "telephony/java/android/telephony/SmsCbMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2010-11-29T11:27:58Z",
+      "side": 1,
+      "message": "I disagree. In case of multiple pages, each page will contain 82 bytes being unpacked into 93 characters. The remaining 5 bits are set to zero and does not spill over into the following page. Hence I see no problems unpacking each page separately.",
+      "parentUuid": "AAAA9n//+ck\u003d",
+      "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
