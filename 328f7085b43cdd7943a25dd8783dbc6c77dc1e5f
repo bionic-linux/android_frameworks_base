@@ -34,6 +34,24 @@
       "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//+ck\u003d",
+        "filename": "telephony/java/android/telephony/SmsCbMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1004138
+      },
+      "writtenOn": "2010-11-29T09:53:38Z",
+      "side": 1,
+      "message": "When you have several pages that are encoded as 7 bit you cannot unpack a single page due to the shifting of the 8 bit to the next page",
+      "parentUuid": "AAAA9n//+hA\u003d",
+      "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
