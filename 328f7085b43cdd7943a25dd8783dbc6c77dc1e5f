@@ -70,6 +70,24 @@
       "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//+Os\u003d",
+        "filename": "telephony/java/android/telephony/SmsCbMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1004138
+      },
+      "writtenOn": "2010-11-30T06:41:14Z",
+      "side": 1,
+      "message": "Henrik, you are right. my mistake. the unpaking will be ok",
+      "parentUuid": "AAAA9n//+bE\u003d",
+      "revId": "328f7085b43cdd7943a25dd8783dbc6c77dc1e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
