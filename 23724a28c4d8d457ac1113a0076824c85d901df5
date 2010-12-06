@@ -87,6 +87,24 @@
       "revId": "23724a28c4d8d457ac1113a0076824c85d901df5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//9fs\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/WspTypeDecoder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-12-06T20:39:44Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "AAAA9n//9jU\u003d",
+      "revId": "23724a28c4d8d457ac1113a0076824c85d901df5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
