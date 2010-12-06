@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA9n//9js\u003d",
+        "filename": "packages/WAPPushManager/src/com/android/smspush/WapPushManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1004421
+      },
+      "writtenOn": "2010-12-06T06:24:33Z",
+      "side": 1,
+      "message": "We will change copyright notice as suggested.",
+      "parentUuid": "AAAA9n//9q4\u003d",
+      "revId": "23724a28c4d8d457ac1113a0076824c85d901df5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA9n//9q0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/WspTypeDecoder.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2010-12-03T19:02:38Z",
       "side": 1,
       "message": "Maybe a while() would be more representative of the logic. Or maybe not, since the for() implies a monotonic index.",
+      "revId": "23724a28c4d8d457ac1113a0076824c85d901df5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//9jo\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/WspTypeDecoder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1004421
+      },
+      "writtenOn": "2010-12-06T06:24:33Z",
+      "side": 1,
+      "message": "We would like to leave it unchanged unless this is also a reason for Review Failure.",
+      "parentUuid": "AAAA9n//9q0\u003d",
       "revId": "23724a28c4d8d457ac1113a0076824c85d901df5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
