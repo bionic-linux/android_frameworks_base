@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA9n//9ao\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccCustProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-07T00:23:04Z",
+      "side": 1,
+      "message": "I have not seen getDefaultPhone invocation from within android.com.internal.telephony before. Can we just pass the Phone object to this class or may be even pass the filehandler to this class through the constructor if that is all that this class needs.",
+      "revId": "8ac8a95b5ada4489103afd1b9a9fa8d8c1c393bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//9ak\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccCustProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-07T00:23:04Z",
+      "side": 1,
+      "message": "Might be good to have an else case where we print an error message and set mProcessingStarted \u003d false. Same comment applies to the case when SIM records are not loaded  inside the if statement above.",
+      "revId": "8ac8a95b5ada4489103afd1b9a9fa8d8c1c393bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//9ac\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccCustProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-07T00:23:04Z",
+      "side": 1,
+      "message": "Is there a standard reference for this?",
+      "revId": "8ac8a95b5ada4489103afd1b9a9fa8d8c1c393bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//9aU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccCustProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-07T00:23:04Z",
+      "side": 1,
+      "message": "Should there be a default value for this variable ? May be SIM_CARD_TYPE_NOT_VALID ?",
+      "revId": "8ac8a95b5ada4489103afd1b9a9fa8d8c1c393bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
