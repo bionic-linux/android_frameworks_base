@@ -55,6 +55,9 @@ SampleTable::SampleTable(const sp<DataSource> &source)
       mTimeToSample(NULL),
       mSyncSampleOffset(-1),
       mNumSyncSamples(0),
+      mTimeToSampleCountCtts(0),
+      mCttsSampleBuffer(NULL),
+      mTimeToSampleCtts(NULL),
       mSampleToChunkEntries(NULL) {
     mSampleIterator = new SampleIterator(this);
 }
@@ -68,6 +71,12 @@ SampleTable::~SampleTable() {
 
     delete mSampleIterator;
     mSampleIterator = NULL;
+
+    delete[] mTimeToSampleCtts;
+    mTimeToSampleCtts = NULL;
+
+    delete[] mCttsSampleBuffer;
+    mCttsSampleBuffer = NULL;
 }
 
 status_t SampleTable::setChunkOffsetParams(
@@ -219,6 +228,50 @@ status_t SampleTable::setSampleSizeParams(
         }
     }
 
+    return OK;
+}
+
+status_t SampleTable::setTimeToSampleParamsCtts(
+        off_t data_offset, size_t data_size) {
+    if (mTimeToSampleCtts != NULL || data_size < 8) {
+        return ERROR_MALFORMED;
+    }
+    uint8_t header[8];
+    uint32_t count_ctts,k=0;
+    if (mDataSource->readAt(
+                data_offset, header, sizeof(header)) < (ssize_t)sizeof(header)) {
+        return ERROR_IO;
+    }
+
+    if (U32_AT(header) != 0) {
+       // Expected version = 0, flags = 0.
+        return ERROR_MALFORMED;
+    }
+
+    mTimeToSampleCountCtts = U32_AT(&header[4]);
+
+    //find out the actual number of samples
+    mCttsSampleBuffer = new int32_t[mTimeToSampleCountCtts * 2];
+    size_t size = sizeof(int32_t) * mTimeToSampleCountCtts * 2;
+    if (mDataSource->readAt(
+                data_offset + 8, mCttsSampleBuffer, size) < (ssize_t)size) {
+        return ERROR_IO;
+    }
+
+    uint32_t countsamples = 0;
+    for(uint32_t i=0 ; i < mTimeToSampleCountCtts * 2; i+=2)
+        countsamples += ntohl(mCttsSampleBuffer[i]);
+
+    mTimeToSampleCtts = new int32_t[countsamples];
+
+    for (uint32_t i = 0; i < mTimeToSampleCountCtts * 2; i++) {
+        count_ctts = ntohl(mCttsSampleBuffer[i++]);
+        for(uint32_t j = 0;j < count_ctts ;j++){
+           mTimeToSampleCtts[k] = ntohl(mCttsSampleBuffer[i]);
+           LOGV("for loop ctts samples %d %d %d",mTimeToSampleCountCtts,mTimeToSampleCtts[k],k);
+           k++;
+        }
+    }
     return OK;
 }
 

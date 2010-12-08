@@ -1065,6 +1065,20 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
             break;
         }
 
+        case FOURCC('c', 't', 't', 's'):
+        {
+            status_t err =
+                mLastTrack->sampleTable->setTimeToSampleParamsCtts(
+                        data_offset, chunk_data_size);
+
+            if (err != OK) {
+                return err;
+            }
+
+            *offset += chunk_size;
+            break;
+        }
+
         case FOURCC('s', 't', 't', 's'):
         {
             status_t err =
@@ -1728,6 +1742,10 @@ status_t MPEG4Source::read(
             CHECK(mBuffer != NULL);
             mBuffer->set_range(0, size);
             mBuffer->meta_data()->clear();
+
+            if(mSampleTable->mTimeToSampleCtts)
+                 dts = dts + mSampleTable->mTimeToSampleCtts[mCurrentSampleIndex];
+
             mBuffer->meta_data()->setInt64(
                     kKeyTime, ((int64_t)dts * 1000000) / mTimescale);
             ++mCurrentSampleIndex;
