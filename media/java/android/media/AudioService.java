@@ -568,6 +568,7 @@ public class AudioService extends IAudioService.Stub {
 
     private void setRingerModeInt(int ringerMode, boolean persist) {
         mRingerMode = ringerMode;
+        AudioSystem.setRingerMode(ringerMode, 0);
 
         // Mute stream if not previously muted by ringer mode and ringer mode
         // is not RINGER_MODE_NORMAL and stream is affected by ringer mode.
@@ -577,16 +578,22 @@ public class AudioService extends IAudioService.Stub {
         for (int streamType = numStreamTypes - 1; streamType >= 0; streamType--) {
             if (isStreamMutedByRingerMode(streamType)) {
                 if (!isStreamAffectedByRingerMode(streamType) ||
-                    mRingerMode == AudioManager.RINGER_MODE_NORMAL) {
+                        mRingerMode == AudioManager.RINGER_MODE_NORMAL ||
+                        (streamType == AudioSystem.STREAM_RING &&
+                        (mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_WIRED_HEADSET) ||
+                        mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_WIRED_HEADPHONE)))) {
                     mStreamStates[streamType].mute(null, false);
                     mRingerModeMutedStreams &= ~(1 << streamType);
                 }
             } else {
                 if (isStreamAffectedByRingerMode(streamType) &&
-                    mRingerMode != AudioManager.RINGER_MODE_NORMAL) {
-                   mStreamStates[streamType].mute(null, true);
-                   mRingerModeMutedStreams |= (1 << streamType);
-               }
+                        mRingerMode != AudioManager.RINGER_MODE_NORMAL &&
+                        (streamType != AudioSystem.STREAM_RING ||
+                        (!mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_WIRED_HEADSET) &&
+                        !mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_WIRED_HEADPHONE)))) {
+                    mStreamStates[streamType].mute(null, true);
+                    mRingerModeMutedStreams |= (1 << streamType);
+                }
             }
         }
 
@@ -1146,6 +1153,8 @@ public class AudioService extends IAudioService.Stub {
              * volume index. Instead, the handler for the message above will
              * take care of changing the index.
              */
+            adjustVolumeIndex = false;
+        } else if (mRingerMode == AudioManager.RINGER_MODE_SILENT) {
             adjustVolumeIndex = false;
         }
 
@@ -1918,6 +1927,7 @@ public class AudioService extends IAudioService.Stub {
                     }
                 }
             }
+            setRingerModeInt(getRingerMode(), false);
         }
     }
 
