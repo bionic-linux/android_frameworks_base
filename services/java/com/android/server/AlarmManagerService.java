@@ -61,6 +61,8 @@ class AlarmManagerService extends IAlarmManager.Stub {
     private static final int ELAPSED_REALTIME_WAKEUP_MASK = 1 << AlarmManager.ELAPSED_REALTIME_WAKEUP; 
     private static final int ELAPSED_REALTIME_MASK = 1 << AlarmManager.ELAPSED_REALTIME;
     private static final int TIME_CHANGED_MASK = 1 << 16;
+
+    private static final long MINUTE_MILLIS = 60*1000;
     
     private static final String TAG = "AlarmManager";
     private static final String ClockReceiver_TAG = "ClockReceiver";
@@ -785,15 +787,12 @@ class AlarmManagerService extends IAlarmManager.Stub {
             	scheduleDateChangedEvent();
             }
         }
-        
+
         public void scheduleTimeTickEvent() {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.add(Calendar.MINUTE, 1);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-      
-            set(AlarmManager.RTC, calendar.getTimeInMillis(), mTimeTickSender);
+            long current, next;
+            current = System.currentTimeMillis();
+            next = (current-(current%MINUTE_MILLIS))+MINUTE_MILLIS;
+            set(AlarmManager.RTC, next, mTimeTickSender);
         }
 	
         public void scheduleDateChangedEvent() {
