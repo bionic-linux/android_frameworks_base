@@ -46,6 +46,8 @@ public:
 
     status_t setTimeToSampleParams(off_t data_offset, size_t data_size);
 
+    status_t setTimeToSampleParamsCtts(off_t data_offset, size_t data_size);
+
     status_t setSyncSampleParams(off_t data_offset, size_t data_size);
 
     ////////////////////////////////////////////////////////////////////////////
@@ -69,6 +71,8 @@ public:
             uint32_t req_time, uint32_t *sample_index, uint32_t flags);
 
     status_t findThumbnailSample(uint32_t *sample_index);
+
+    int32_t *mTimeToSampleCtts;
 
 protected:
     ~SampleTable();
@@ -118,6 +122,9 @@ private:
 
     SampleTable(const SampleTable &);
     SampleTable &operator=(const SampleTable &);
+
+    uint32_t mTimeToSampleCountCtts;
+    int32_t *mCttsSampleBuffer;
 };
 
 }  // namespace android

@@ -55,6 +55,9 @@ SampleTable::SampleTable(const sp<DataSource> &source)
       mTimeToSample(NULL),
       mSyncSampleOffset(-1),
       mNumSyncSamples(0),
+      mTimeToSampleCountCtts(0),
+      mCttsSampleBuffer(NULL),
+      mTimeToSampleCtts(NULL),
       mSampleToChunkEntries(NULL) {
     mSampleIterator = new SampleIterator(this);
 }
@@ -68,6 +71,12 @@ SampleTable::~SampleTable() {
 
     delete mSampleIterator;
     mSampleIterator = NULL;
+
+    delete[] mTimeToSampleCtts;
+    mTimeToSampleCtts = NULL;
+
+    delete[] mCttsSampleBuffer;
+    mCttsSampleBuffer = NULL;
 }
 
 status_t SampleTable::setChunkOffsetParams(
