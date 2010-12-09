@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+H///2A\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1004677
+      },
+      "writtenOn": "2010-12-09T19:48:54Z",
+      "side": 1,
+      "message": "only one of the three \"if\" case will be valid at a time.  So onComplete message will be used only once. I will change the code to \nif (efMWIS !\u003dnull) { ...}\nelse if efCPHS_MWI !\u003d null) {...} \nelse if ((efMWIS \u003d\u003d null) \u0026\u0026 (efCPHS_MWI \u003d\u003d null)) {..}",
+      "parentUuid": "AAAA93///1k\u003d",
+      "revId": "0dd500627ed28e5d44b65dfc8a7a26fe323627a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA93///1g\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
         "patchSetId": 3
