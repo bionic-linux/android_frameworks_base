@@ -99,9 +99,9 @@ public class PhoneFactory {
                         Settings.Secure.PREFERRED_NETWORK_MODE, preferredNetworkMode);
                 Log.i(LOG_TAG, "Network Mode set to " + Integer.toString(networkMode));
 
-                //Get preferredNetworkMode from Settings.System
+                //Get CDMA subscription mode from Settings.System
                 int cdmaSubscription = Settings.Secure.getInt(context.getContentResolver(),
-                        Settings.Secure.PREFERRED_CDMA_SUBSCRIPTION, preferredCdmaSubscription);
+                        Settings.Secure.CDMA_SUBSCRIPTION_MODE, preferredCdmaSubscription);
                 Log.i(LOG_TAG, "Cdma Subscription set to " + Integer.toString(cdmaSubscription));
 
                 //reads the system properties and makes commandsinterface
