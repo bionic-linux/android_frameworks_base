@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA93///1o\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-09T19:10:55Z",
+      "side": 1,
+      "message": "add onComplete parameter",
+      "revId": "0dd500627ed28e5d44b65dfc8a7a26fe323627a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA93///1k\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-09T19:10:55Z",
+      "side": 1,
+      "message": "You may not use the same messages multiple times. I see the possibility that onComplete could be used in the EVENT_SET_MWIS_DONE.",
+      "revId": "0dd500627ed28e5d44b65dfc8a7a26fe323627a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA93///1g\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-09T19:10:55Z",
+      "side": 1,
+      "message": "onComplete could be used again on EVENT_SET_CPHS_MWIS_DONE.",
+      "revId": "0dd500627ed28e5d44b65dfc8a7a26fe323627a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA93///1c\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-09T19:10:55Z",
+      "side": 1,
+      "message": "And here directly. Message.copyFrom should be used to make a shallow copy of the onComplete message as needed.",
+      "revId": "0dd500627ed28e5d44b65dfc8a7a26fe323627a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
