@@ -87,6 +87,24 @@
       "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+H///uc\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1004677
+      },
+      "writtenOn": "2010-12-10T16:49:16Z",
+      "side": 1,
+      "message": "yes. will do.",
+      "parentUuid": "AAAA+H///us\u003d",
+      "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
