@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+H///yM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2010-12-10T01:33:40Z",
+      "side": 1,
+      "message": "Might as well fix this comment while we\u0027re at it...",
+      "revId": "c4add76f0c1c1435ac08304d424ab15852976c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
