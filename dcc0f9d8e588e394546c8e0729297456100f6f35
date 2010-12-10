@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+H///u0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1004677
+      },
+      "writtenOn": "2010-12-10T16:29:43Z",
+      "side": 1,
+      "message": "Logic is slightly different for Gsm \u0026 Cdma. For GSM the voicemail count is written into the SIM , local value updated and count stored in preferences only if sim write fails.\n\nFor CDMA, ( no UIM write as UIM does not support this file id) ,  the count local value is updated and count is always stored in preferences",
+      "parentUuid": "AAAA+H///yo\u003d",
+      "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+H///ys\u003d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2010-12-10T01:17:43Z",
       "side": 1,
       "message": "the comment says range is 0-99 but this and the test above is clamping to 255, comment or code bug?",
+      "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+H///u4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1004677
+      },
+      "writtenOn": "2010-12-10T16:29:43Z",
+      "side": 1,
+      "message": "code bug. as per standards it is 99 for cdma \u0026 255 for Gsm. But 0xff was in cdma in the original Google code , so I did not edit and retained the same as part of this change. Internally we had a discussion thread to change it.",
+      "parentUuid": "AAAA+H///ys\u003d",
       "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
