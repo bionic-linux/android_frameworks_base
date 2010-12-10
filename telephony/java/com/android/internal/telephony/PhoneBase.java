@@ -106,6 +106,11 @@ public abstract class PhoneBase extends Handler implements Phone {
     // Key used to read/write "disable DNS server check" pref (used for testing)
     public static final String DNS_SERVER_CHECK_DISABLED_KEY = "dns_server_check_disabled_key";
 
+    // Key used for storing voice mail count
+    public static final String VM_COUNT = "vm_count_key";
+    // Key used to read/write the ID for storing the voice mail
+    public static final String VM_ID = "vm_id_key";
+
     /* Instance Variables */
     public CommandsInterface mCM;
     protected IccFileHandler mIccFileHandler;
@@ -115,7 +120,7 @@ public abstract class PhoneBase extends Handler implements Phone {
     int mCallRingContinueToken = 0;
     int mCallRingDelay;
     public boolean mIsTheCurrentActivePhone = true;
-
+    private int mVmCount = 0;
     /**
      * Set a system property, unless we're in unit test mode
      */
@@ -746,8 +751,21 @@ public abstract class PhoneBase extends Handler implements Phone {
     public abstract int getPhoneType();
 
     /** @hide */
-    public int getVoiceMessageCount(){
-        return 0;
+    /** @return number of voicemails */
+    public int getVoiceMessageCount() {
+        return mVmCount;
+    }
+
+    /** @return true if there are messages waiting, false otherwise. */
+    public boolean getMessageWaitingIndicator() {
+        return mVmCount != 0;
+    }
+
+    /** sets the voice mail count of the phone and notifies listeners. */
+    public void setVoiceMessageCount(int countWaiting) {
+        mVmCount = countWaiting;
+        // notify listeners of voice mail
+        notifyMessageWaitingIndicator();
     }
 
     /**
