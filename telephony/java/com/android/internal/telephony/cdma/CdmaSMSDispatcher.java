@@ -36,12 +36,13 @@ import android.util.Log;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage.MessageClass;
 
-import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.CommandsInterface;
+import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.SmsHeader;
 import com.android.internal.telephony.SmsMessageBase;
 import com.android.internal.telephony.SMSDispatcher;
 import com.android.internal.telephony.SmsMessageBase.TextEncodingDetails;
+import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.cdma.SmsMessage;
 import com.android.internal.telephony.cdma.sms.SmsEnvelope;
 import com.android.internal.telephony.cdma.sms.UserData;
@@ -125,15 +126,7 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
         if ((SmsEnvelope.TELESERVICE_VMN == teleService) ||
                 (SmsEnvelope.TELESERVICE_MWI == teleService)) {
             // handling Voicemail
-            int voicemailCount = sms.getNumOfVoicemails();
-            Log.d(TAG, "Voicemail count=" + voicemailCount);
-            // Store the voicemail count in preferences.
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(
-                    ((CDMAPhone) mPhone).getContext());
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putInt(CDMAPhone.VM_COUNT_CDMA, voicemailCount);
-            editor.commit();
-            ((CDMAPhone) mPhone).updateMessageWaitingIndicator(voicemailCount);
+            updateMessageWaitingIndicator(sms.getNumOfVoicemails());
             handled = true;
         } else if (((SmsEnvelope.TELESERVICE_WMT == teleService) ||
                 (SmsEnvelope.TELESERVICE_WEMT == teleService)) &&
@@ -507,5 +500,20 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
         default:
             return CommandsInterface.CDMA_SMS_FAIL_CAUSE_ENCODING_PROBLEM;
         }
+    }
+
+    /* package */void updateMessageWaitingIndicator(int mwi) {
+        // range check
+        if (mwi < 0) {
+            mwi = -1;
+        } else if (mwi > 99) {
+            // C.S0015-B v2, 4.5.12
+            // range: 0-99
+            mwi = 99;
+        }
+        // update voice mail count in phone and notify listeners
+        ((PhoneBase) mPhone).setVoiceMessageCount(mwi);
+        // store voice mail count in preferences
+        storeVoiceMailCount();
     }
 }
