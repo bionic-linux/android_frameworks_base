@@ -144,6 +144,8 @@ public final class SIMRecords extends IccRecords {
     private static final int EVENT_GET_CFIS_DONE = 32;
     private static final int EVENT_GET_CSP_CPHS_DONE = 33;
 
+    private static final int EVENT_SET_MWIS_DONE = 36;
+    private static final int EVENT_SET_CPHS_MWIS_DONE = 37;
     // ***** Constructor
 
     SIMRecords(GSMPhone p) {
@@ -186,7 +188,6 @@ public final class SIMRecords extends IccRecords {
         imsi = null;
         msisdn = null;
         voiceMailNum = null;
-        countVoiceMessages = 0;
         mncLength = UNINITIALIZED;
         iccid = null;
         // -1 means no EF_SPN found; treat accordingly.
@@ -326,26 +327,16 @@ public final class SIMRecords extends IccRecords {
      * @param countWaiting The number of messages waiting, if known. Use
      *                     -1 to indicate that an unknown number of
      *                      messages are waiting
+     * @param onComplete Message that needs to be posted back to the caller on
+     *            completion. Used to propagate errors from the response to the
+     *            request originator
      */
     public void
-    setVoiceMessageWaiting(int line, int countWaiting) {
+    setVoiceMessageWaiting(int line, int countWaiting, Message onComplete) {
         if (line != 1) {
             // only profile 1 is supported
             return;
         }
-
-        // range check
-        if (countWaiting < 0) {
-            countWaiting = -1;
-        } else if (countWaiting > 0xff) {
-            // TS 23.040 9.2.3.24.2
-            // "The value 255 shall be taken to mean 255 or greater"
-            countWaiting = 0xff;
-        }
-
-        countVoiceMessages = countWaiting;
-
-        ((GSMPhone) phone).notifyMessageWaitingIndicator();
 
         try {
             if (efMWIS != null) {
@@ -353,7 +344,7 @@ public final class SIMRecords extends IccRecords {
 
                 // lsb of byte 0 is 'voicemail' status
                 efMWIS[0] = (byte)((efMWIS[0] & 0xfe)
-                                    | (countVoiceMessages == 0 ? 0 : 1));
+                                    | (countWaiting == 0 ? 0 : 1));
 
                 // byte 1 is the number of voice messages waiting
                 if (countWaiting < 0) {
@@ -366,18 +357,24 @@ public final class SIMRecords extends IccRecords {
 
                 phone.getIccFileHandler().updateEFLinearFixed(
                     EF_MWIS, 1, efMWIS, null,
-                    obtainMessage (EVENT_UPDATE_DONE, EF_MWIS));
-            }
-
-            if (efCPHS_MWI != null) {
+                    obtainMessage (EVENT_SET_MWIS_DONE, EF_MWIS, 0, onComplete ));
+            } else if (efCPHS_MWI != null) {
                     // Refer CPHS4_2.WW6 B4.2.3
                 efCPHS_MWI[0] = (byte)((efCPHS_MWI[0] & 0xf0)
-                            | (countVoiceMessages == 0 ? 0x5 : 0xa));
+                            | (countWaiting == 0 ? 0x5 : 0xa));
 
                 phone.getIccFileHandler().updateEFTransparent(
-                    EF_VOICE_MAIL_INDICATOR_CPHS, efCPHS_MWI,
-                    obtainMessage (EVENT_UPDATE_DONE, EF_VOICE_MAIL_INDICATOR_CPHS));
+                        EF_VOICE_MAIL_INDICATOR_CPHS,
+                        efCPHS_MWI,
+                        obtainMessage(EVENT_SET_CPHS_MWIS_DONE, EF_VOICE_MAIL_INDICATOR_CPHS, 0,
+                                onComplete));
+            } else {
+                AsyncResult.forMessage((onComplete)).exception =
+                    new IccVmNotSupportedException(
+                        "SIM does not support EF_MWIS & EF_CPHS_MWIS");
+                onComplete.sendToTarget();
             }
+
         } catch (ArrayIndexOutOfBoundsException ex) {
             Log.w(LOG_TAG,
                 "Error saving voice mail state to SIM. Probably malformed SIM record", ex);
@@ -646,64 +643,57 @@ public final class SIMRecords extends IccRecords {
             case EVENT_GET_MWIS_DONE:
                 isRecordLoadResponse = true;
 
-                ar = (AsyncResult)msg.obj;
-                data = (byte[])ar.result;
+                ar = (AsyncResult) msg.obj;
+                data = (byte[]) ar.result;
+
+                Log.d(LOG_TAG, "EF_MWIS : " + IccUtils.bytesToHexString(data));
 
                 if (ar.exception != null) {
+                    Log.d(LOG_TAG, "EVENT_GET_MWIS_DONE exception = "
+                            + ar.exception);
                     break;
                 }
-
-                Log.d(LOG_TAG, "EF_MWIS: " +
-                   IccUtils.bytesToHexString(data));
-
-                efMWIS = data;
 
                 if ((data[0] & 0xff) == 0xff) {
                     Log.d(LOG_TAG, "SIMRecords: Uninitialized record MWIS");
                     break;
                 }
 
-                // Refer TS 51.011 Section 10.3.45 for the content description
-                boolean voiceMailWaiting = ((data[0] & 0x01) != 0);
-                countVoiceMessages = data[1] & 0xff;
+                efMWIS = data;
+                break;
 
-                if (voiceMailWaiting && countVoiceMessages == 0) {
-                    // Unknown count = -1
-                    countVoiceMessages = -1;
+            case EVENT_SET_MWIS_DONE:
+            case EVENT_SET_CPHS_MWIS_DONE: {
+                ar = (AsyncResult) msg.obj;
+                Message onComplete = (Message) ar.userObj;
+                if (onComplete == null) {
+                    break;
                 }
-
-                ((GSMPhone) phone).notifyMessageWaitingIndicator();
-            break;
+                if (ar.exception != null) {
+                    AsyncResult.forMessage((onComplete)).exception =
+                        new IccVmNotSupportedException(
+                            "SIM update failed for EF_MWIS/EF_CPHS_MWIS");
+                } else {
+                    AsyncResult.forMessage((onComplete)).exception = null;
+                }
+                onComplete.sendToTarget();
+                break;
+            }
 
             case EVENT_GET_VOICE_MAIL_INDICATOR_CPHS_DONE:
                 isRecordLoadResponse = true;
+                ar = (AsyncResult) msg.obj;
+                data = (byte[]) ar.result;
 
-                ar = (AsyncResult)msg.obj;
-                data = (byte[])ar.result;
+                Log.d(LOG_TAG, "EF_CPHS_MWI: " + IccUtils.bytesToHexString(data));
 
                 if (ar.exception != null) {
+                    Log.d(LOG_TAG, "EVENT_GET_VOICE_MAIL_INDICATOR_CPHS_DONE exception = "
+                            + ar.exception);
                     break;
                 }
-
                 efCPHS_MWI = data;
-
-                // Use this data if the EF[MWIS] exists and
-                // has been loaded
-
-                if (efMWIS == null) {
-                    int indicator = (int)(data[0] & 0xf);
-
-                    // Refer CPHS4_2.WW6 B4.2.3
-                    if (indicator == 0xA) {
-                        // Unknown count = -1
-                        countVoiceMessages = -1;
-                    } else if (indicator == 0x5) {
-                        countVoiceMessages = 0;
-                    }
-
-                    ((GSMPhone) phone).notifyMessageWaitingIndicator();
-                }
-            break;
+                break;
 
             case EVENT_GET_ICCID_DONE:
                 isRecordLoadResponse = true;
@@ -1551,5 +1541,37 @@ public final class SIMRecords extends IccRecords {
         }
 
         Log.w(LOG_TAG, "[CSP] Value Added Service Group (0xC0), not found!");
+    }
+
+    public int getVoiceMessageCount() {
+        boolean voiceMailWaiting = false;
+        int countVoiceMessages = 0;
+
+        if (efMWIS != null) {
+            // Use this data if the EF[MWIS] exists and
+            // has been loaded
+            // Refer TS 51.011 Section 10.3.45 for the content description
+            voiceMailWaiting = ((efMWIS[0] & 0x01) != 0);
+            countVoiceMessages = efMWIS[1] & 0xff;
+
+            if (voiceMailWaiting && countVoiceMessages == 0) {
+                // Unknown count = -1
+                countVoiceMessages = -1;
+            }
+            Log.d(LOG_TAG, " VoiceMessageCount from SIM MWIS = " + countVoiceMessages);
+        } else if (efCPHS_MWI != null) {
+            // use voice mail count from CPHS
+            int indicator = (int) (efCPHS_MWI[0] & 0xf);
+
+            // Refer CPHS4_2.WW6 B4.2.3
+            if (indicator == 0xA) {
+                // Unknown count = -1
+                countVoiceMessages = -1;
+            } else if (indicator == 0x5) {
+                countVoiceMessages = 0;
+            }
+            Log.d(LOG_TAG, " VoiceMessageCount from SIM CPHS = " + countVoiceMessages);
+        }
+        return countVoiceMessages;
     }
 }
