@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+H///yo\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-10T01:17:43Z",
+      "side": 1,
+      "message": "Any possibility we can move this to the base class and use the same code for Cdma and Gsm? We now have \"storeVoiceMailCount\" in the base class, could we override the store in GsmSMSDispatcher rather than duplicating this code?",
+      "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+H///ys\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-10T01:17:43Z",
+      "side": 1,
+      "message": "the comment says range is 0-99 but this and the test above is clamping to 255, comment or code bug?",
+      "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
