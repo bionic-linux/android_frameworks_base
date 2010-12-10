@@ -69,6 +69,24 @@
       "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+H///us\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-10T16:41:12Z",
+      "side": 1,
+      "message": "Seems to me we should use 99 then.",
+      "parentUuid": "AAAA+H///u4\u003d",
+      "revId": "dcc0f9d8e588e394546c8e0729297456100f6f35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
