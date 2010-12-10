@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+H///yk\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-12-10T01:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA8H///Q4\u003d",
+      "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA8H///Q0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2010-10-19T19:39:27Z",
       "side": 1,
       "message": "An ArrayList isn\u0027t the ideal data structure for removing the head.\n\nIt probably doesn\u0027t matter, but not sure fast teenage girls text these days.  LinkedList might be better.",
+      "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+H///yg\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-12-10T01:15:28Z",
+      "side": 1,
+      "message": "Done. :)",
+      "parentUuid": "AAAA8H///Q0\u003d",
       "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+H///yc\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-12-10T01:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA8H///Qs\u003d",
+      "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA8H///Qw\u003d",
         "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2010-10-19T19:39:27Z",
       "side": 1,
       "message": "nit: spaces after \"//\"",
+      "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+H///yY\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2010-12-10T01:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA8H///Qw\u003d",
       "revId": "fd95a5a2cb8c4f4a73d7f9cbeec228c85a1ca3ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
