@@ -90,7 +90,6 @@ public class CDMAPhone extends PhoneBase {
     // Default Emergency Callback Mode exit timer
     private static final int DEFAULT_ECM_EXIT_TIMER_VALUE = 300000;
 
-    static final String VM_COUNT_CDMA = "vm_count_key_cdma";
     private static final String VM_NUMBER_CDMA = "vm_number_key_cdma";
     private String mVmNumber = null;
 
@@ -208,7 +207,7 @@ public class CDMAPhone extends PhoneBase {
         updateCurrentCarrierInProvider(operatorNumeric);
 
         // Notify voicemails.
-        notifier.notifyMessageWaitingChanged(this);
+        updateVoiceMail();
     }
 
     public void dispose() {
@@ -361,11 +360,6 @@ public class CDMAPhone extends PhoneBase {
 
     public SignalStrength getSignalStrength() {
         return mSST.mSignalStrength;
-    }
-
-    public boolean
-    getMessageWaitingIndicator() {
-        return (getVoiceMessageCount() > 0);
     }
 
     public List<? extends MmiCode>
@@ -736,19 +730,9 @@ public class CDMAPhone extends PhoneBase {
         return number;
     }
 
-    /* Returns Number of Voicemails
-     * @hide
-     */
-    public int getVoiceMessageCount() {
-        int voicemailCount =  mRuimRecords.getVoiceMessageCount();
-        // If mRuimRecords.getVoiceMessageCount returns zero, then there is possibility
-        // that phone was power cycled and would have lost the voicemail count.
-        // So get the count from preferences.
-        if (voicemailCount == 0) {
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-            voicemailCount = sp.getInt(VM_COUNT_CDMA, 0);
-        }
-        return voicemailCount;
+    // pending voice mail count updated after phone creation
+    private void updateVoiceMail() {
+        setVoiceMessageCount(getStoredVoiceMessageCount());
     }
 
     public String getVoiceMailAlphaTag() {
@@ -859,18 +843,6 @@ public class CDMAPhone extends PhoneBase {
         intent.putExtra(PHONE_IN_ECM_STATE, mIsPhoneInEcmState);
         ActivityManagerNative.broadcastStickyIntent(intent,null);
         if (DBG) Log.d(LOG_TAG, "sendEmergencyCallbackModeChange");
-    }
-
-    /*package*/ void
-    updateMessageWaitingIndicator(boolean mwi) {
-        // this also calls notifyMessageWaitingIndicator()
-        mRuimRecords.setVoiceMessageWaiting(1, mwi ? -1 : 0);
-    }
-
-    /* This function is overloaded to send number of voicemails instead of sending true/false */
-    /*package*/ void
-    updateMessageWaitingIndicator(int mwi) {
-        mRuimRecords.setVoiceMessageWaiting(1, mwi);
     }
 
     /**
@@ -1455,4 +1427,11 @@ public class CDMAPhone extends PhoneBase {
         }
         return false;
     }
+
+    /** gets the voice mail count from preferences */
+    private int getStoredVoiceMessageCount() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return (sp.getInt(VM_COUNT, 0));
+    }
+
 }

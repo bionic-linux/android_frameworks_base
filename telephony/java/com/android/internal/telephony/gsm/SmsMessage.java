@@ -93,6 +93,8 @@ public class SmsMessage extends SmsMessageBase{
      */
     private boolean isStatusReportMessage = false;
 
+    private int mVoiceMailCount = 0;
+
     public static class SubmitPdu extends SubmitPduBase {
     }
 
@@ -1099,6 +1101,13 @@ public class SmsMessage extends SmsMessageBase{
                 isMwi = true;
                 mwiSense = active;
                 mwiDontStore = ((dataCodingScheme & 0xF0) == 0xC0);
+
+                /* Set voice mail count based on notification bit */
+                if (active == true) {
+                    mVoiceMailCount = -1; // unknown number of messages waiting
+                } else {
+                    mVoiceMailCount = 0; // no unread messages
+                }
             } else {
                 isMwi = false;
 
@@ -1164,4 +1173,11 @@ public class SmsMessage extends SmsMessageBase{
         return messageClass;
     }
 
+    /**
+     * This function shall be called to get the number of voicemails.
+     * @hide
+     */
+    public int getNumOfVoicemails() {
+        return mVoiceMailCount;
+    }
 }
