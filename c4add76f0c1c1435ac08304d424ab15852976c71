@@ -16,6 +16,24 @@
       "revId": "c4add76f0c1c1435ac08304d424ab15852976c71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+H///yA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1005066
+      },
+      "writtenOn": "2010-12-10T01:39:17Z",
+      "side": 1,
+      "message": "The value of network mode passed to RIL is being used by RIL to set the subscription mode when it recovers from the crash. The setting CDMA_SUBSCRIPTION_MODE is set by the user to RUIM or NV through settings app (file: CdmaSubscriptionListPreference.java).",
+      "parentUuid": "AAAA+H///yM\u003d",
+      "revId": "c4add76f0c1c1435ac08304d424ab15852976c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
