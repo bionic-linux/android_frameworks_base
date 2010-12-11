@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+H///sg\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-11T01:00:32Z",
+      "side": 1,
+      "message": "Make this 14?",
+      "revId": "d152439e1514c5a75a82e621d1c5add8f74e89ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+X////s\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-11T01:00:32Z",
+      "side": 1,
+      "message": "Move this line between CommandsInterface and SmsHeader.",
+      "revId": "d152439e1514c5a75a82e621d1c5add8f74e89ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+X////o\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaSMSDispatcher.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-11T01:00:32Z",
+      "side": 1,
+      "message": "Move this line between SmsMessageBase.TextEncodingDetails and cdma.SmsMessage.",
+      "revId": "d152439e1514c5a75a82e621d1c5add8f74e89ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
