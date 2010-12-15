@@ -1056,7 +1056,7 @@ public class WifiStateTracker extends NetworkStateTracker {
                         setDetailedState(DetailedState.OBTAINING_IPADDR);
                     }
                 }
-                sendNetworkStateChangeBroadcast(mWifiInfo.getBSSID());
+                sendNetworkStateChangeBroadcast(result.BSSID);
                 break;
 
             case EVENT_SCAN_RESULTS_AVAILABLE:
