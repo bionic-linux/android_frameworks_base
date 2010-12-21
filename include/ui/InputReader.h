@@ -113,6 +113,9 @@ public:
 
     /* Gets the excluded device names for the platform. */
     virtual void getExcludedDeviceNames(Vector<String8>& outExcludedDeviceNames) = 0;
+
+    /* Gets the id to the associated display (default/unset = 0). */
+    virtual int32_t getDisplayAssociation(const String8& deviceName) = 0;
 };
 
 

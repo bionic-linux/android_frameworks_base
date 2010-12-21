@@ -58,6 +58,7 @@ static struct {
     jmethodID getVirtualKeyDefinitions;
     jmethodID getInputDeviceCalibration;
     jmethodID getExcludedDeviceNames;
+    jmethodID getDisplayAssociation;
     jmethodID getMaxEventsPerSecond;
 } gCallbacksClassInfo;
 
@@ -188,6 +189,7 @@ public:
     virtual void getInputDeviceCalibration(const String8& deviceName,
             InputDeviceCalibration& outCalibration);
     virtual void getExcludedDeviceNames(Vector<String8>& outExcludedDeviceNames);
+    virtual int32_t getDisplayAssociation(const String8& deviceName);
 
     /* --- InputDispatcherPolicyInterface implementation --- */
 
@@ -548,6 +550,24 @@ void NativeInputManager::getExcludedDeviceNames(Vector<String8>& outExcludedDevi
         }
         env->DeleteLocalRef(result);
     }
+}
+
+int32_t NativeInputManager::getDisplayAssociation(const String8& deviceName) {
+    int32_t displayId = 0;
+    JNIEnv* env = jniEnv();
+
+    jstring deviceNameStr = env->NewStringUTF(deviceName.string());
+
+    displayId = env->CallIntMethod(mCallbacksObj,
+            gCallbacksClassInfo.getDisplayAssociation, deviceNameStr);
+    if (checkAndClearExceptionFromCallback(env, "getDisplayAssociation")) {
+        LOGE("NativeInputManager::getDisplayAssociation - got an exception!");
+        displayId = 0;
+    }
+
+    env->DeleteLocalRef(deviceNameStr);
+
+    return displayId;
 }
 
 void NativeInputManager::notifySwitch(nsecs_t when, int32_t switchCode,
@@ -1361,6 +1381,9 @@ int register_android_server_InputManager(JNIEnv* env) {
 
     GET_METHOD_ID(gCallbacksClassInfo.getExcludedDeviceNames, gCallbacksClassInfo.clazz,
             "getExcludedDeviceNames", "()[Ljava/lang/String;");
+
+    GET_METHOD_ID(gCallbacksClassInfo.getDisplayAssociation, gCallbacksClassInfo.clazz,
+            "getDisplayAssociation", "(Ljava/lang/String;)I");
 
     GET_METHOD_ID(gCallbacksClassInfo.getMaxEventsPerSecond, gCallbacksClassInfo.clazz,
             "getMaxEventsPerSecond", "()I");

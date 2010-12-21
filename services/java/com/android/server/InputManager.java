@@ -357,7 +357,9 @@ public class InputManager {
         private static final boolean DEBUG_VIRTUAL_KEYS = false;
         private static final String EXCLUDED_DEVICES_PATH = "etc/excluded-input-devices.xml";
         private static final String CALIBRATION_DIR_PATH = "usr/idc/";
-        
+        private static final String DISPLAY_ASSOCIATION_PATH =
+                "etc/input-device-display-associations.xml";
+
         @SuppressWarnings("unused")
         public void notifyConfigurationChanged(long whenNanos) {
             mWindowManagerService.sendNewConfiguration();
@@ -519,7 +521,52 @@ public class InputManager {
             
             return names.toArray(new String[names.size()]);
         }
-        
+
+        @SuppressWarnings("unused")
+        public int getDisplayAssociation(String deviceName) {
+            int displayId = 0;
+
+            // Read partner-provided list of input device associations
+            XmlPullParser parser = null;
+            // Environment.getRootDirectory() is a fancy way of saying ANDROID_ROOT or "/system".
+            File confFile = new File(Environment.getRootDirectory(), DISPLAY_ASSOCIATION_PATH);
+            FileReader confreader = null;
+            try {
+                confreader = new FileReader(confFile);
+                parser = Xml.newPullParser();
+                parser.setInput(confreader);
+                XmlUtils.beginDocument(parser, "devices");
+
+                while (true) {
+                    XmlUtils.nextElement(parser);
+                    if (null == parser.getName()) {
+                        break;
+                    }
+
+                    String name = parser.getAttributeValue(null, "name");
+                    if (name.equals(deviceName)) {
+                        String displayIdStr = parser.getAttributeValue(null, "display");
+                        // NumberFormatException caught below
+                        displayId = Integer.parseInt(displayIdStr);
+                        break;
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                // It's ok if the file does not exist.
+            } catch (Exception e) {
+                Slog.e(TAG, "Exception while parsing '" + confFile.getAbsolutePath() + "'", e);
+            } finally {
+                try {
+                    if (confreader != null) {
+                        confreader.close();
+                    }
+                } catch (IOException e) {
+                }
+            }
+
+            return displayId;
+        }
+
         @SuppressWarnings("unused")
         public int getMaxEventsPerSecond() {
             int result = 0;

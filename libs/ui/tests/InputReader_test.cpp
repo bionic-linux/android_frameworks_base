@@ -103,6 +103,10 @@ public:
         mExcludedDeviceNames.push(deviceName);
     }
 
+    int32_t getDisplayAssociation(const android::String8&) {
+        return 0;
+    }
+
 private:
     virtual bool getDisplayInfo(int32_t displayId,
             int32_t* width, int32_t* height, int32_t* orientation) {

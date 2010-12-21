@@ -136,6 +136,8 @@ public final class ViewRoot extends Handler implements ViewParent,
     int mViewVisibility;
     boolean mAppVisible = true;
 
+    private boolean mProcessPositionEvents = false;
+
     SurfaceHolder.Callback2 mSurfaceHolderCallback;
     BaseSurfaceHolder mSurfaceHolder;
     boolean mIsCreating;
@@ -310,6 +312,16 @@ public final class ViewRoot extends Handler implements ViewParent,
      */
     public void profile() {
         mProfile = true;
+    }
+
+    /**
+     * Allow ViewRoot to process/dispatch position class events as pointer class events.
+     * @param processPosition process the position class events or not.
+     *
+     * @hide
+     */
+    public void setProcessPositionEvents(boolean processPosition) {
+        mProcessPositionEvents = processPosition;
     }
 
     /**
@@ -2841,6 +2853,12 @@ public final class ViewRoot extends Handler implements ViewParent,
             dispatchPointer(event, sendDone);
         } else if ((source & InputDevice.SOURCE_CLASS_TRACKBALL) != 0) {
             dispatchTrackball(event, sendDone);
+        } else if ((source & InputDevice.SOURCE_CLASS_POSITION) != 0) {
+            if (mProcessPositionEvents) {
+                dispatchPointer(event, sendDone);
+            } else if (sendDone) {
+                finishInputEvent();
+            }
         } else {
             // TODO
             Log.v(TAG, "Dropping unsupported motion event (unimplemented): " + event);

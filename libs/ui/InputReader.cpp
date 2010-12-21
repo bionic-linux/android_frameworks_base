@@ -310,7 +310,7 @@ void InputReader::removeDevice(int32_t deviceId) {
 InputDevice* InputReader::createDevice(int32_t deviceId, const String8& name, uint32_t classes) {
     InputDevice* device = new InputDevice(this, deviceId, name);
 
-    const int32_t associatedDisplayId = 0; // FIXME: hardcoded for current single-display devices
+    const int32_t associatedDisplayId = mPolicy->getDisplayAssociation(name);
 
     // Switch-like devices.
     if (classes & INPUT_DEVICE_CLASS_SWITCH) {
