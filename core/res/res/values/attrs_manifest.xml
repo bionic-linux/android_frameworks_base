@@ -106,7 +106,11 @@
          For example, it may expose functionality or data outside of itself
          that would cause a security hole, but is useful for testing.  This
          kind of application can not be installed without the
-         INSTALL_ALLOW_TEST flag, which means only through adb install.  -->
+         INSTALL_ALLOW_TEST flag, which means only through adb install.
+         This option can also be used for the uses-permission tag to tell
+         the package manager that a certain permission is required for
+         test purposes and should be ignored in release builds ("user"
+         and "userdebug"). -->
     <attr name="testOnly" format="boolean" />
     
     <!-- A unique name for the given item.  This must use a Java-style naming
@@ -864,6 +868,10 @@
         tag; often this is one of the {@link android.Manifest.permission standard
         system permissions}. -->
         <attr name="name" />
+        <!-- Tell the package manager that the permission is required
+        for test purposes only and should be ignored in release builds
+        ("user" and "userdebug").-->
+        <attr name="testOnly" />
     </declare-styleable>
 
     <!-- The <code>uses-configuration</code> tag specifies

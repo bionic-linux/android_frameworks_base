@@ -30,6 +30,7 @@ import android.content.res.XmlResourceParser;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PatternMatcher;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Config;
@@ -844,10 +845,14 @@ public class PackageParser {
                 // that may change.
                 String name = sa.getNonResourceString(
                         com.android.internal.R.styleable.AndroidManifestUsesPermission_name);
+                boolean testOnly = sa.getBoolean(
+                        com.android.internal.R.styleable.AndroidManifestUsesPermission_testOnly,
+                        false);
 
                 sa.recycle();
 
-                if (name != null && !pkg.requestedPermissions.contains(name)) {
+                if (name != null && !pkg.requestedPermissions.contains(name)
+                        && !(testOnly && SystemProperties.getBoolean("ro.secure", false))) {
                     pkg.requestedPermissions.add(name.intern());
                 }
 
