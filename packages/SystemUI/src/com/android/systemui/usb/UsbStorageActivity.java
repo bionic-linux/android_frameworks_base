@@ -232,9 +232,15 @@ public class UsbStorageActivity extends Activity
         return null;
     }
 
-    private void showDialogInner(int id) {
-        removeDialog(id);
-        showDialog(id);
+    private void showDialogInner(final int id) {
+        // Make sure to do the dialogs on the UI thread
+        mUIHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                removeDialog(id);
+                showDialog(id);
+            }
+        });
     }
 
     private void switchUsbMassStorage(final boolean on) {
