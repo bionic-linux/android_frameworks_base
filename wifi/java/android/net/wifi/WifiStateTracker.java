@@ -941,6 +941,8 @@ public class WifiStateTracker extends NetworkStateTracker {
                     mDhcpTarget = null;
                 }
                 mContext.removeStickyBroadcast(new Intent(WifiManager.NETWORK_STATE_CHANGED_ACTION));
+                mContext.removeStickyBroadcast(
+                    new Intent(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION));
                 if (ActivityManagerNative.isSystemReady()) {
                     intent = new Intent(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
                     intent.putExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, false);
