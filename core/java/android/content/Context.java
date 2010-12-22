@@ -1212,6 +1212,12 @@ public abstract class Context {
      * <dd> An {@link android.app.UiModeManager} for controlling UI modes.
      * <dt> {@link #DOWNLOAD_SERVICE} ("download")
      * <dd> A {@link android.app.DownloadManager} for requesting HTTP downloads
+     * <dt> {@link #FM_RECEIVER_SERVICE} ("fm_receiver")
+     * <dd> An {@link android.fm.FmReceiver FmReceiver} for controlling the reception of
+     * FM radio.
+     * <dt> {@link #FM_TRANSMITTER_SERVICE} ("fm_transmitter")
+     * <dd> An {@link android.fm.FmTransmitter FmTransmitter} for controlling the output
+     * of FM radio from the device.
      * </dl>
      *
      * <p>Note:  System services obtained via this API may be closely associated with
@@ -1261,6 +1267,10 @@ public abstract class Context {
      * @see android.app.UiModeManager
      * @see #DOWNLOAD_SERVICE
      * @see android.app.DownloadManager
+     * @see #FM_RECEIVER_SERVICE
+     * @see android.fm.FmReceiver
+     * @see #FM_TRANSMITTER_SERVICE
+     * @see android.fm.FmTransmitter
      */
     public abstract Object getSystemService(String name);
 
@@ -1548,6 +1558,24 @@ public abstract class Context {
      * @see #getSystemService
      */
     public static final String DOWNLOAD_SERVICE = "download";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a {@link
+     * android.fm.FmReceiver} that controls the reception of FM radio.
+     *
+     * @see #getSystemService
+     * @see android.fm.FmReceiver
+     */
+    public static final String FM_RECEIVER_SERVICE = "fm_receiver";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a {@link
+     * android.fm.FmTransmitter} that controls the output of FM radio.
+     *
+     * @see #getSystemService
+     * @see android.fm.FmTransmitter
+     */
+    public static final String FM_TRANSMITTER_SERVICE = "fm_transmitter";
 
     /**
      * Use with {@link #getSystemService} to retrieve a

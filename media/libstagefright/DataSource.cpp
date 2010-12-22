@@ -19,6 +19,7 @@
 #include "include/MPEG4Extractor.h"
 #include "include/WAVExtractor.h"
 #include "include/OggExtractor.h"
+#include "include/PCMExtractor.h"
 #include "include/MPEG2TSExtractor.h"
 #include "include/NuCachedSource2.h"
 #include "include/NuHTTPDataSource.h"
@@ -29,6 +30,7 @@
 #include <media/stagefright/foundation/AMessage.h>
 #include <media/stagefright/DataSource.h>
 #include <media/stagefright/FileSource.h>
+#include <media/stagefright/FMRadioDataSource.h>
 #include <media/stagefright/MediaErrors.h>
 #include <utils/String8.h>
 

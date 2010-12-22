@@ -34,6 +34,8 @@ import android.content.Intent;
 import android.content.pm.IPackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.fm.FmReceiverService;
+import android.fm.FmTransmitterService;
 import android.media.AudioService;
 import android.os.Looper;
 import android.os.RemoteException;
@@ -299,6 +301,22 @@ class ServerThread extends Thread {
                         Context.THROTTLE_SERVICE, throttle);
             } catch (Throwable e) {
                 Slog.e(TAG, "Failure starting ThrottleService", e);
+            }
+
+            try {
+                Slog.i(TAG, "FM receiver Service");
+                ServiceManager.addService(Context.FM_RECEIVER_SERVICE,
+                        new FmReceiverService(context));
+            } catch (Throwable e) {
+                Slog.e(TAG, "Failure starting FM receiver Service", e);
+            }
+
+            try {
+                Slog.i(TAG, "FM transmitter Service");
+                ServiceManager.addService(Context.FM_TRANSMITTER_SERVICE,
+                        new FmTransmitterService(context));
+            } catch (Throwable e) {
+                Slog.e(TAG, "Failure starting FM transmitter Service", e);
             }
 
             try {

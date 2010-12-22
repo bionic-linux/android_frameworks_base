@@ -189,7 +189,21 @@ LOCAL_SRC_FILES += \
 	vpn/java/android/net/vpn/IVpnService.aidl \
 	voip/java/android/net/sip/ISipSession.aidl \
 	voip/java/android/net/sip/ISipSessionListener.aidl \
-	voip/java/android/net/sip/ISipService.aidl
+	voip/java/android/net/sip/ISipService.aidl \
+	fmradio/java/android/fm/IFmReceiver.aidl \
+    fmradio/java/android/fm/IFmTransmitter.aidl \
+    fmradio/java/android/fm/IOnStateChangedListener.aidl \
+    fmradio/java/android/fm/IOnStartedListener.aidl \
+    fmradio/java/android/fm/IOnErrorListener.aidl \
+    fmradio/java/android/fm/IOnScanListener.aidl \
+    fmradio/java/android/fm/IOnForcedPauseListener.aidl \
+    fmradio/java/android/fm/IOnForcedResetListener.aidl \
+    fmradio/java/android/fm/IOnBlockScanListener.aidl \
+    fmradio/java/android/fm/IOnRDSDataFoundListener.aidl \
+    fmradio/java/android/fm/IOnSignalStrengthListener.aidl \
+    fmradio/java/android/fm/IOnStereoListener.aidl \
+    fmradio/java/android/fm/IOnExtraCommandListener.aidl \
+    fmradio/java/android/fm/IOnAutomaticSwitchListener.aidl
 #
 
 

@@ -145,6 +145,10 @@ public class MediaRecorder
         /** Microphone audio source tuned for voice recognition if available, behaves like
          *  {@link #DEFAULT} otherwise. */
         public static final int VOICE_RECOGNITION = 6;
+
+        /** FM Radio Rx audio source */
+        public static final int FM_RADIO_RX = 7;
+
     }
 
     /**
