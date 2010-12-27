@@ -1478,4 +1478,17 @@ public final class SimulatedCommands extends BaseCommands
     public void getCdmaPrlVersion(Message response) {
         unimplemented(response);
     }
+    public void setUiccSubscription(int slotId, int appIndex, int subId, int subStatus,
+            Message response) {
+        unimplemented(response);
+    }
+
+    public void setDataSubscription (Message response) {
+        unimplemented(response);
+    }
+
+    public void setSubscriptionMode(int subscription_mode, Message response) {
+        unimplemented(response);
+    }
+
 }

@@ -24,16 +24,29 @@ import com.android.internal.telephony.IPhoneStateListener;
 
 interface ITelephonyRegistry {
     void listen(String pkg, IPhoneStateListener callback, int events, boolean notifyNow);
+    void listenOnSubscription(String pkg, IPhoneStateListener callback, int events, boolean notifyNow, int subscription);
 
     void notifyCallState(int state, String incomingNumber);
+    void notifyCallStateOnSubscription(int state, String incomingNumber, in int subscription);
+
     void notifyServiceState(in ServiceState state);
+    void notifyServiceStateOnSubscription(in ServiceState state, in int subscription);
+
     void notifySignalStrength(in SignalStrength signalStrength);
+    void notifySignalStrengthOnSubscription(in SignalStrength signalStrength, in int subscription);
+
     void notifyMessageWaitingChanged(boolean mwi);
+    void notifyMessageWaitingChangedOnSubscription(boolean mwi, in int subscription);
+
     void notifyCallForwardingChanged(boolean cfi);
+    void notifyCallForwardingChangedOnSubscription(boolean cfi, in int subscription);
+
     void notifyDataActivity(int state);
     void notifyDataConnection(int state, boolean isDataConnectivityPossible,
             String reason, String apn, in String[] apnTypes, String interfaceName, int networkType,
             String gateway);
     void notifyDataConnectionFailed(String reason);
+
     void notifyCellLocation(in Bundle cellLocation);
+    void notifyCellLocationOnSubscription(in Bundle cellLocation, in int subscription);
 }
