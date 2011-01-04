@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//+Vk\u003d",
+        "filename": "services/java/com/android/server/am/BroadcastRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2011-01-04T08:08:39Z",
+      "side": 1,
+      "message": "Thanks.  Please just drop the resultToString; I\u0027d rather not keep it around than having to build the string for every broadcast.",
+      "revId": "4507c2153198dd2d81299ecbc2beb1d286db4028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
