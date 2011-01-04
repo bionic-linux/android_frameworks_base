@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//+OA\u003d",
+        "filename": "core/tests/coretests/src/android/widget/TextViewWordLimitsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1005346
+      },
+      "writtenOn": "2011-01-04T21:21:22Z",
+      "side": 1,
+      "message": "should be textDash",
+      "revId": "f8e42fe0e5fd6d42bbb42be6df056c6205bc93a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//+N8\u003d",
+        "filename": "core/tests/coretests/src/android/widget/TextViewWordLimitsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1005346
+      },
+      "writtenOn": "2011-01-04T21:21:22Z",
+      "side": 1,
+      "message": "textPunctOther",
+      "revId": "f8e42fe0e5fd6d42bbb42be6df056c6205bc93a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//+N4\u003d",
+        "filename": "core/tests/coretests/src/android/widget/TextViewWordLimitsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1005346
+      },
+      "writtenOn": "2011-01-04T21:21:22Z",
+      "side": 1,
+      "message": "textSymbolOther",
+      "revId": "f8e42fe0e5fd6d42bbb42be6df056c6205bc93a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
