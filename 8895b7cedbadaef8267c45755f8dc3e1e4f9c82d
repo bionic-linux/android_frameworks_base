@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//+RY\u003d",
+        "filename": "core/res/res/values/attrs_manifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-01-04T17:50:00Z",
+      "side": 1,
+      "message": "This would need some comments above it, at least.",
+      "revId": "8895b7cedbadaef8267c45755f8dc3e1e4f9c82d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
