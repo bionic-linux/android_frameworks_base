@@ -7245,45 +7245,92 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             return -1;
         }
 
-        int len = mText.length();
-        int end = Math.min(offset, len);
+        int start;
+        int end;
 
-        if (end < 0) {
-            return -1;
-        }
+        // Use the selection if it is a valid word
+        if (hasSelection()) {
+            start = getSelectionStart();
+            end = getSelectionEnd();
 
-        int start = end;
-
-        for (; start > 0; start--) {
-            char c = mTransformed.charAt(start - 1);
-            int type = Character.getType(c);
-
-            if (c != '\'' &&
-                type != Character.UPPERCASE_LETTER &&
-                type != Character.LOWERCASE_LETTER &&
-                type != Character.TITLECASE_LETTER &&
-                type != Character.MODIFIER_LETTER &&
-                type != Character.DECIMAL_DIGIT_NUMBER) {
-                break;
+            if (start > end) {
+                int temp = start;
+                start = end;
+                end = temp;
             }
-        }
 
-        for (; end < len; end++) {
-            char c = mTransformed.charAt(end);
-            int type = Character.getType(c);
+            for (int i = start; i < end; i++) {
+                int c = Character.codePointAt(mTransformed, i);
+                int type = Character.getType(c);
 
-            if (c != '\'' &&
-                type != Character.UPPERCASE_LETTER &&
-                type != Character.LOWERCASE_LETTER &&
-                type != Character.TITLECASE_LETTER &&
-                type != Character.MODIFIER_LETTER &&
-                type != Character.DECIMAL_DIGIT_NUMBER) {
-                break;
+                if (c >= 0x10000) { // Two Character codepoint
+                    i++;
+                }
+
+                if (c != '\'' &&
+                    type != Character.UPPERCASE_LETTER &&
+                    type != Character.LOWERCASE_LETTER &&
+                    type != Character.TITLECASE_LETTER &&
+                    type != Character.MODIFIER_LETTER &&
+                    type != Character.OTHER_LETTER &&
+                    type != Character.DECIMAL_DIGIT_NUMBER) {
+                    return -1;
+                }
             }
-        }
 
-        if (start == end) {
-            return -1;
+        // Use the word around the cursor if no selection
+        } else {
+            int len = mText.length();
+            end = Math.min(offset, len);
+
+            if (end < 0) {
+                return -1;
+            }
+
+            start = end;
+
+            for (; start > 0; start--) {
+                char c = mTransformed.charAt(start - 1);
+                int type = Character.getType(c);
+
+                if (type == Character.SURROGATE) { // Two Character codepoint
+                    end = start - 1; // Recheck as a pair when scanning forward
+                    continue;
+                }
+
+                if (c != '\'' &&
+                    type != Character.UPPERCASE_LETTER &&
+                    type != Character.LOWERCASE_LETTER &&
+                    type != Character.TITLECASE_LETTER &&
+                    type != Character.MODIFIER_LETTER &&
+                    type != Character.OTHER_LETTER &&
+                    type != Character.DECIMAL_DIGIT_NUMBER) {
+                    break;
+                }
+            }
+
+            for (; end < len; end++) {
+                int c = Character.codePointAt(mTransformed, end);
+                int type = Character.getType(c);
+
+                if (c >= 0x10000) { // Two Character codepoint
+                    end++;
+                }
+
+                if (c != '\'' &&
+                    type != Character.UPPERCASE_LETTER &&
+                    type != Character.LOWERCASE_LETTER &&
+                    type != Character.TITLECASE_LETTER &&
+                    type != Character.MODIFIER_LETTER &&
+                    type != Character.OTHER_LETTER &&
+                    type != Character.DECIMAL_DIGIT_NUMBER) {
+                    break;
+                }
+            }
+
+            if (start == end) {
+                return -1;
+            }
         }
 
         if (end - start > 48) {
@@ -7292,7 +7339,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
         boolean hasLetter = false;
         for (int i = start; i < end; i++) {
-            if (Character.isLetter(mTransformed.charAt(i))) {
+            if (Character.isLetter(Character.codePointAt(mTransformed, i))) {
                 hasLetter = true;
                 break;
             }
@@ -7439,6 +7486,14 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 menu.add(0, ID_PASTE, 0, com.android.internal.R.string.paste).
                      setOnMenuItemClickListener(handler).
                      setAlphabeticShortcut('v');
+                added = true;
+            }
+
+            String word = getWordForDictionary();
+            if (word != null) {
+                menu.add(1, ID_ADD_TO_DICTIONARY, 0,
+                     getContext().getString(com.android.internal.R.string.addToDictionary, word)).
+                     setOnMenuItemClickListener(handler);
                 added = true;
             }
         } else {
@@ -7602,6 +7657,11 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
             case ID_ADD_TO_DICTIONARY:
                 String word = getWordForDictionary();
+
+                if (mText instanceof Spannable) {
+                    stopTextSelectionMode();
+                }
+
                 if (word != null) {
                     Intent i = new Intent("com.android.settings.USER_DICTIONARY_INSERT");
                     i.putExtra("word", word);
