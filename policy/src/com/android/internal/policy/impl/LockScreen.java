@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (c) 2010, Code Aurora Forum. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +38,7 @@ import android.media.AudioManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 
 import java.util.Date;
 import java.io.File;
@@ -53,13 +55,13 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
     private static final String TAG = "LockScreen";
     private static final String ENABLE_MENU_KEY_FILE = "/data/local/enable_menu_key";
 
-    private Status mStatus = Status.Normal;
+    private Status[] mStatus = {Status.Normal};
 
     private final LockPatternUtils mLockPatternUtils;
     private final KeyguardUpdateMonitor mUpdateMonitor;
     private final KeyguardScreenCallback mCallback;
 
-    private TextView mCarrier;
+    private TextView[] mCarrier;
     private SlidingTab mSelector;
     private TextView mTime;
     private TextView mDate;
@@ -93,6 +95,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
     private java.text.DateFormat mTimeFormat;
     private boolean mEnableMenuKeyInLockScreen;
 
+    private int[] mResId = {R.id.carrier, R.id.carrier_sub2};
     /**
      * The status of this lock screen.
      */
@@ -111,6 +114,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
          * The sim card is missing.
          */
         SimMissing(false),
+
 
         /**
          * The sim card is missing, and this is the device isn't provisioned, so we don't let
@@ -195,10 +199,17 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
             inflater.inflate(R.layout.keyguard_screen_tab_unlock_land, this, true);
         }
 
-        mCarrier = (TextView) findViewById(R.id.carrier);
-        // Required for Marquee to work
-        mCarrier.setSelected(true);
-        mCarrier.setTextColor(0xffffffff);
+        int numPhones = TelephonyManager.getPhoneCount();
+        // Sim States for the subscription
+        mStatus = new Status[numPhones];
+        mCarrier = new TextView[numPhones];
+        for (int i = 0; i < numPhones; i++) {
+            mStatus[i] = Status.Normal;
+            mCarrier[i] = (TextView) findViewById(mResId[i]);
+            // Required for Marquee to work
+            mCarrier[i].setSelected(true);
+            mCarrier[i].setTextColor(0xffffffff);
+        }
 
         mDate = (TextView) findViewById(R.id.date);
         mStatus1 = (TextView) findViewById(R.id.status1);
@@ -269,8 +280,10 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
         mPluggedIn = updateMonitor.isDevicePluggedIn();
         mBatteryLevel = updateMonitor.getBatteryLevel();
 
-        mStatus = getCurrentStatus(updateMonitor.getSimState());
-        updateLayout(mStatus);
+        for (int i = 0; i < TelephonyManager.getPhoneCount(); i++) {
+            mStatus[i] = getCurrentStatus(updateMonitor.getSimState(i));
+            updateLayout(mStatus[i], i);
+        }
 
         refreshBatteryStringAndIcon();
         refreshAlarmDisplay();
@@ -432,7 +445,9 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
     }
 
     private void updateStatusLines() {
-        if (!mStatus.showStatusLines()
+        // Use default subscription status for alarm and charging text display.
+        int sub = TelephonyManager.getDefaultSubscription();
+        if (!mStatus[sub].showStatusLines()
                 || (mCharging == null && mNextAlarm == null)) {
             mStatus1.setVisibility(View.INVISIBLE);
             mStatus2.setVisibility(View.INVISIBLE);
@@ -463,9 +478,10 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
     }
 
     /** {@inheritDoc} */
-    public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn) {
+    public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn, int subscription) {
         if (DBG) Log.d(TAG, "onRefreshCarrierInfo(" + plmn + ", " + spn + ")");
-        updateLayout(mStatus);
+        // Update operator name display.
+        updateLayout(mStatus[subscription], subscription);
     }
 
     /**
@@ -500,20 +516,19 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
     /**
      * Update the layout to match the current status.
      */
-    private void updateLayout(Status status) {
+    private void updateLayout(Status status, int subscription) {
         // The emergency call button no longer appears on this screen.
-        if (DBG) Log.d(TAG, "updateLayout: status=" + status);
+        if (DBG) Log.d(TAG, "updateLayout: status=" + status + "subscription=" + subscription);
 
         mEmergencyCallButton.setVisibility(View.GONE); // in almost all cases
 
         switch (status) {
             case Normal:
                 // text
-                mCarrier.setText(
-                        getCarrierString(
-                                mUpdateMonitor.getTelephonyPlmn(),
-                                mUpdateMonitor.getTelephonySpn()));
-
+                mCarrier[subscription].setText(
+                         getCarrierString(
+                         mUpdateMonitor.getTelephonyPlmn(subscription),
+                         mUpdateMonitor.getTelephonySpn(subscription)));
                 // Empty now, but used for sliding tab feedback
                 mScreenLocked.setText("");
 
@@ -525,9 +540,9 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
             case NetworkLocked:
                 // The carrier string shows both sim card status (i.e. No Sim Card) and
                 // carrier's name and/or "Emergency Calls Only" status
-                mCarrier.setText(
+                mCarrier[subscription].setText(
                         getCarrierString(
-                                mUpdateMonitor.getTelephonyPlmn(),
+                                mUpdateMonitor.getTelephonyPlmn(subscription),
                                 getContext().getText(R.string.lockscreen_network_locked_message)));
                 mScreenLocked.setText(R.string.lockscreen_instructions_when_pattern_disabled);
 
@@ -538,7 +553,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
                 break;
             case SimMissing:
                 // text
-                mCarrier.setText(R.string.lockscreen_missing_sim_message_short);
+                mCarrier[subscription].setText(R.string.lockscreen_missing_sim_message_short);
                 mScreenLocked.setText(R.string.lockscreen_missing_sim_instructions);
 
                 // layout
@@ -549,9 +564,9 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
                 break;
             case SimMissingLocked:
                 // text
-                mCarrier.setText(
+                mCarrier[subscription].setText(
                         getCarrierString(
-                                mUpdateMonitor.getTelephonyPlmn(),
+                                mUpdateMonitor.getTelephonyPlmn(subscription),
                                 getContext().getText(R.string.lockscreen_missing_sim_message_short)));
                 mScreenLocked.setText(R.string.lockscreen_missing_sim_instructions);
 
@@ -563,9 +578,9 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
                 break;
             case SimLocked:
                 // text
-                mCarrier.setText(
+                mCarrier[subscription].setText(
                         getCarrierString(
-                                mUpdateMonitor.getTelephonyPlmn(),
+                                mUpdateMonitor.getTelephonyPlmn(subscription),
                                 getContext().getText(R.string.lockscreen_sim_locked_message)));
 
                 // layout
@@ -575,9 +590,9 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
                 break;
             case SimPukLocked:
                 // text
-                mCarrier.setText(
+                mCarrier[subscription].setText(
                         getCarrierString(
-                                mUpdateMonitor.getTelephonyPlmn(),
+                                mUpdateMonitor.getTelephonyPlmn(subscription),
                                 getContext().getText(R.string.lockscreen_sim_puk_locked_message)));
                 mScreenLocked.setText(R.string.lockscreen_sim_puk_locked_instructions);
 
@@ -602,10 +617,10 @@ class LockScreen extends LinearLayout implements KeyguardScreen, KeyguardUpdateM
         }
     }
 
-    public void onSimStateChanged(IccCard.State simState) {
+    public void onSimStateChanged(IccCard.State simState, int subscription) {
         if (DBG) Log.d(TAG, "onSimStateChanged(" + simState + ")");
-        mStatus = getCurrentStatus(simState);
-        updateLayout(mStatus);
+        mStatus[subscription] = getCurrentStatus(simState);
+        updateLayout(mStatus[subscription], subscription);
         updateStatusLines();
     }
 
