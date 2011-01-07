@@ -409,7 +409,7 @@ public class SimUnlockScreen extends LinearLayout implements KeyguardScreen, Vie
 
     }
 
-    public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn) {
+    public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn, int subscription) {
 
     }
 
