@@ -641,7 +641,7 @@ public class KeyguardViewMediator implements KeyguardViewCallback,
     }
 
     /** {@inheritDoc} */
-    public void onSimStateChanged(IccCard.State simState) {
+    public void onSimStateChanged(IccCard.State simState, int subscription) {
         if (DEBUG) Log.d(TAG, "onSimStateChanged: " + simState);
 
         switch (simState) {
