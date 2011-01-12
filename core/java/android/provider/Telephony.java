@@ -37,6 +37,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import android.telephony.SmsManager;
 
 /**
  * The Telephony provider contains data related to phone operation.
@@ -69,6 +70,8 @@ public final class Telephony {
         public static final int MESSAGE_TYPE_OUTBOX = 4;
         public static final int MESSAGE_TYPE_FAILED = 5; // for failed outgoing messages
         public static final int MESSAGE_TYPE_QUEUED = 6; // for messages to send later
+        public static final int MESSAGE_TYPE_INBOX_SUB1 = 7;
+        public static final int MESSAGE_TYPE_INBOX_SUB2 = 8;
 
 
         /**
@@ -161,6 +164,12 @@ public final class Telephony {
         public static final String LOCKED = "locked";
 
         /**
+         * The sub_id to which the message belongs to
+         * <p>Type: INTEGER</p>
+         */
+        public static final String SUB_ID = "sub_id";
+
+        /**
          * Error code associated with sending or receiving this message
          * <P>Type: INTEGER</P>
          */
@@ -209,13 +218,14 @@ public final class Telephony {
          * @param date the timestamp for the message
          * @param read true if the message has been read, false if not
          * @param deliveryReport true if a delivery report was requested, false if not
+         * @param subscription the subscription which the message belongs to
          * @return the URI for the new message
          */
         public static Uri addMessageToUri(ContentResolver resolver,
                 Uri uri, String address, String body, String subject,
-                Long date, boolean read, boolean deliveryReport) {
+                Long date, boolean read, boolean deliveryReport, int subscription) {
             return addMessageToUri(resolver, uri, address, body, subject,
-                    date, read, deliveryReport, -1L);
+                    date, read, deliveryReport, -1L, subscription);
         }
 
         /**
@@ -230,13 +240,16 @@ public final class Telephony {
          * @param read true if the message has been read, false if not
          * @param deliveryReport true if a delivery report was requested, false if not
          * @param threadId the thread_id of the message
+         * @param subscription the subscription which the message belongs to
          * @return the URI for the new message
          */
         public static Uri addMessageToUri(ContentResolver resolver,
                 Uri uri, String address, String body, String subject,
-                Long date, boolean read, boolean deliveryReport, long threadId) {
-            ContentValues values = new ContentValues(7);
+                Long date, boolean read, boolean deliveryReport, long threadId, int subscription) {
+            ContentValues values = new ContentValues(8);
+            Log.v(TAG,"Telephony addMessageToUri sub id: " + subscription);
 
+            values.put(SUB_ID, subscription);
             values.put(ADDRESS, address);
             if (date != null) {
                 values.put(DATE, date);
@@ -340,7 +353,27 @@ public final class Telephony {
                     String address, String body, String subject, Long date,
                     boolean read) {
                 return addMessageToUri(resolver, CONTENT_URI, address, body,
-                        subject, date, read, false);
+                        subject, date, read, false,
+                        SmsManager.getDefault().getPreferredSmsSubscription());
+            }
+
+            /**
+             * Add an SMS to the Draft box.
+             *
+             * @param resolver the content resolver to use
+             * @param address the address of the sender
+             * @param body the body of the message
+             * @param subject the psuedo-subject of the message
+             * @param date the timestamp for the message
+             * @param read true if the message has been read, false if not
+             * @param subscription the subscription which the message belongs to
+             * @return the URI for the new message
+             */
+            public static Uri addMessage(ContentResolver resolver,
+                    String address, String body, String subject, Long date,
+                    boolean read, int subscription) {
+                return addMessageToUri(resolver, CONTENT_URI, address, body,
+                        subject, date, read, false, subscription);
             }
         }
 
@@ -372,7 +405,25 @@ public final class Telephony {
             public static Uri addMessage(ContentResolver resolver,
                     String address, String body, String subject, Long date) {
                 return addMessageToUri(resolver, CONTENT_URI, address, body,
-                        subject, date, true, false);
+                        subject, date, true, false,
+                        SmsManager.getDefault().getPreferredSmsSubscription());
+            }
+
+            /**
+             * Add an SMS to the Draft box.
+             *
+             * @param resolver the content resolver to use
+             * @param address the address of the sender
+             * @param body the body of the message
+             * @param subject the psuedo-subject of the message
+             * @param date the timestamp for the message
+             * @param subscription the subscription which the message belongs to
+             * @return the URI for the new message
+             */
+            public static Uri addMessage(ContentResolver resolver,
+                    String address, String body, String subject, Long date, int subscription) {
+                return addMessageToUri(resolver, CONTENT_URI, address, body,
+                        subject, date, true, false, subscription);
             }
         }
 
@@ -404,7 +455,25 @@ public final class Telephony {
             public static Uri addMessage(ContentResolver resolver,
                     String address, String body, String subject, Long date) {
                 return addMessageToUri(resolver, CONTENT_URI, address, body,
-                        subject, date, true, false);
+                        subject, date, true, false,
+                        SmsManager.getDefault().getPreferredSmsSubscription());
+            }
+
+            /**
+             * Add an SMS to the Draft box.
+             *
+             * @param resolver the content resolver to use
+             * @param address the address of the sender
+             * @param body the body of the message
+             * @param subject the psuedo-subject of the message
+             * @param date the timestamp for the message
+             * @param subscription the subscription which the message belongs to
+             * @return the URI for the new message
+             */
+            public static Uri addMessage(ContentResolver resolver,
+                    String address, String body, String subject, Long date, int subscription) {
+                return addMessageToUri(resolver, CONTENT_URI, address, body,
+                        subject, date, true, false, subscription);
             }
 
             /**
@@ -453,8 +522,28 @@ public final class Telephony {
             public static Uri addMessage(ContentResolver resolver,
                     String address, String body, String subject, Long date,
                     boolean deliveryReport, long threadId) {
+                return addMessageToUri(resolver, CONTENT_URI, address, body, subject, date,
+                        true, deliveryReport, threadId,
+                        SmsManager.getDefault().getPreferredSmsSubscription());
+            }
+
+            /**
+             * Add an SMS to the Out box.
+             *
+             * @param resolver the content resolver to use
+             * @param address the address of the sender
+             * @param body the body of the message
+             * @param subject the psuedo-subject of the message
+             * @param date the timestamp for the message
+             * @param deliveryReport whether a delivery report was requested for the message
+             * @param subscription the subscription which the message belongs to
+             * @return the URI for the new message
+             */
+            public static Uri addMessage(ContentResolver resolver,
+                    String address, String body, String subject, Long date,
+                    boolean deliveryReport, long threadId, int subscription) {
                 return addMessageToUri(resolver, CONTENT_URI, address, body,
-                        subject, date, true, deliveryReport, threadId);
+                        subject, date, true, deliveryReport, threadId, subscription);
             }
         }
 
@@ -622,6 +711,9 @@ public final class Telephony {
                     Intent intent) {
                 Object[] messages = (Object[]) intent.getSerializableExtra("pdus");
                 byte[][] pduObjs = new byte[messages.length][];
+                int subscription = intent.getIntExtra("sub_id", 0);
+
+                Log.v(TAG, " getMessagesFromIntent subscription : " + subscription);
 
                 for (int i = 0; i < messages.length; i++) {
                     pduObjs[i] = (byte[]) messages[i];
@@ -632,6 +724,7 @@ public final class Telephony {
                 for (int i = 0; i < pduCount; i++) {
                     pdus[i] = pduObjs[i];
                     msgs[i] = SmsMessage.createFromPdu(pdus[i]);
+                    msgs[i].mSubscription = subscription;
                 }
                 return msgs;
             }
@@ -1080,6 +1173,12 @@ public final class Telephony {
          * <P>Type: INTEGER (boolean)</P>
          */
         public static final String LOCKED = "locked";
+
+        /**
+         * The sub id to which message belongs to
+         * <p>Type: INTEGER</p>
+         */
+        public static final String SUB_ID = "sub_id";
 
         /**
          * Meta data used externally.
@@ -1768,5 +1867,6 @@ public final class Telephony {
         public static final String EXTRA_PLMN       = "plmn";
         public static final String EXTRA_SHOW_SPN   = "showSpn";
         public static final String EXTRA_SPN        = "spn";
+        public static final String EXTRA_SUBSCRIPTION = "subscription";
     }
 }

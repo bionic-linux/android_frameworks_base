@@ -81,6 +81,12 @@ public class SmsMessage {
      */
     public SmsMessageBase mWrappedSmsMessage;
 
+    /** Indicates the subscription
+     *
+     * @hide
+     */
+    public int mSubscription = 0;
+
     public static class SubmitPdu {
 
         public byte[] encodedScAddress; // Null if not applicable.
