@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//89g\u003d",
+        "filename": "core/java/android/server/BluetoothEventLoop.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2011-01-12T17:48:03Z",
+      "side": 1,
+      "message": "if address \u003d\u003d null return.\n\nis better.",
+      "revId": "24a3c9211940f59563fdd6b81829a9609278fb27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
