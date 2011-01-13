@@ -28,6 +28,7 @@ import android.os.Debug;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -434,6 +435,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
     private int mTouchSlop;
     private float mDensityScale;
+    private long mDisplaySyncTiming;
 
     private InputConnection mDefInputConnection;
     private InputConnectionWrapper mPublicInputConnection;
@@ -576,6 +578,9 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
         mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
         mDensityScale = getContext().getResources().getDisplayMetrics().density;
+        mDisplaySyncTiming =
+            getContext().getResources().
+            getInteger(com.android.internal.R.integer.config_displaySyncTiming);
     }
 
     /**
@@ -2401,6 +2406,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
          */
         private int mLastFlingY;
 
+        /**
+         * The last processing time.
+         */
+        private long mLastStartTime = 0;
+
         FlingRunnable() {
             mScroller = new Scroller(getContext());
         }
@@ -2411,7 +2421,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             mScroller.fling(0, initialY, 0, initialVelocity,
                     0, Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
             mTouchMode = TOUCH_MODE_FLING;
-            post(this);
+            postDelayed(this, mDisplaySyncTiming);
+            mLastStartTime = SystemClock.uptimeMillis() + mDisplaySyncTiming;
 
             if (PROFILE_FLINGING) {
                 if (!mFlingProfilingStarted) {
@@ -2487,7 +2498,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 if (more && !atEnd) {
                     invalidate();
                     mLastFlingY = y;
-                    post(this);
+                    long nowTime = SystemClock.uptimeMillis();
+                    long delay = nowTime - mLastStartTime;
+                    delay = (delay < mDisplaySyncTiming ? (mDisplaySyncTiming - delay) : 0);
+                    postDelayed(this, delay);
+                    mLastStartTime = nowTime + delay;
                 } else {
                     endFling();
                     

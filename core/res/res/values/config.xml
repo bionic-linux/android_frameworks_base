@@ -302,6 +302,10 @@
          and should not be enabled for any others. -->
     <bool name="config_filterJumpyTouchEvents">false</bool>
     
+    <!-- Enable to adjust for the improvement for smooth scrolling when fling ListView.
+         The default is 17 (1000msec/60fps) -->
+    <integer name="config_displaySyncTiming">17</integer>
+
     <!-- Component name of the default wallpaper. This will be ImageWallpaper if not 
          specified -->
     <string name="default_wallpaper_component">@null</string>
