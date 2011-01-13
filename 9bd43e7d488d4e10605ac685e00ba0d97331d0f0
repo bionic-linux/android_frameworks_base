@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//81E\u003d",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-01-13T06:36:46Z",
+      "side": 1,
+      "message": "This should actually be set to slightly lower than 16, 15 would be a good value.",
+      "revId": "9bd43e7d488d4e10605ac685e00ba0d97331d0f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
