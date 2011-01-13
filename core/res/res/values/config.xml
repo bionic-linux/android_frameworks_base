@@ -302,6 +302,11 @@
          and should not be enabled for any others. -->
     <bool name="config_filterJumpyTouchEvents">false</bool>
     
+    <!-- Enable to adjust for the improvement for smooth scrolling when fling ListView.
+         This value should be configured to be suitable for the display drawing frame rate
+         If the display drawing frame rate is 60fps, the value should be 17 (1000msec/60fps) -->
+    <integer name="config_displaySyncTiming">17</integer>
+
     <!-- Component name of the default wallpaper. This will be ImageWallpaper if not 
          specified -->
     <string name="default_wallpaper_component">@null</string>

@@ -45,6 +45,7 @@ import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
@@ -434,6 +435,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
     private int mTouchSlop;
     private float mDensityScale;
+    private long mDisplaySyncTiming;
 
     private InputConnection mDefInputConnection;
     private InputConnectionWrapper mPublicInputConnection;
@@ -576,6 +578,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
         mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
         mDensityScale = getContext().getResources().getDisplayMetrics().density;
+        mDisplaySyncTiming = getContext().getResources().getInteger(
+                com.android.internal.R.integer.config_displaySyncTiming);
     }
 
     /**
@@ -2401,6 +2405,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
          */
         private int mLastFlingY;
 
+        /**
+         * The last processing time.
+         */
+        private long mLastStartTime = 0;
+
         FlingRunnable() {
             mScroller = new Scroller(getContext());
         }
@@ -2411,7 +2420,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             mScroller.fling(0, initialY, 0, initialVelocity,
                     0, Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
             mTouchMode = TOUCH_MODE_FLING;
-            post(this);
+            postDelayed(this, mDisplaySyncTiming);
+            mLastStartTime = AnimationUtils.currentAnimationTimeMillis() + mDisplaySyncTiming;
 
             if (PROFILE_FLINGING) {
                 if (!mFlingProfilingStarted) {
@@ -2487,7 +2497,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 if (more && !atEnd) {
                     invalidate();
                     mLastFlingY = y;
-                    post(this);
+                    long nowTime = AnimationUtils.currentAnimationTimeMillis();
+                    long delay = nowTime - mLastStartTime;
+                    delay = (delay < mDisplaySyncTiming ? (mDisplaySyncTiming - delay) : 0);
+                    postDelayed(this, delay);
+                    mLastStartTime = nowTime + delay;
                 } else {
                     endFling();
                     
