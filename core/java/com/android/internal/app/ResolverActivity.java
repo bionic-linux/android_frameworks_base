@@ -368,8 +368,17 @@ public class ResolverActivity extends AlertActivity implements
 
             DisplayResolveInfo dri = mList.get(position);
             
-            Intent intent = new Intent(dri.origIntent != null
-                    ? dri.origIntent : mIntent);
+            // If DisplayResolveInfo has an associated intent
+            // use it else use the intent that started ResolverActivity
+            // and clear the FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS flag.
+            Intent intent;
+            if (dri.origIntent != null) {
+                intent = dri.origIntent;
+            } else {
+                intent = mIntent;
+                intent.setFlags(intent.getFlags() &
+                       ~Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            }
             intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT
                     |Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
             ActivityInfo ai = dri.ri.activityInfo;
