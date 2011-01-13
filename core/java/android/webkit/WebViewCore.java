@@ -1836,6 +1836,9 @@ final class WebViewCore {
                 core.mDrawIsPaused = true;
                 if (core.mDrawIsScheduled) {
                     core.mEventHub.removeMessages(EventHub.WEBKIT_DRAW);
+                    // removeMessages sets mDrawIsScheduled to false.
+                    // Reset to true in order to enable resumeUpdatePicture
+                    core.mDrawIsScheduled = true;
                 }
             }
         }
