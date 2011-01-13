@@ -436,7 +436,8 @@ bool BootAnimation::movie()
 
     const int xc = (mWidth - animation.width) / 2;
     const int yc = ((mHeight - animation.height) / 2);
-    nsecs_t lastFrame = systemTime();
+
+    nsecs_t nextFrame = systemTime();
     nsecs_t frameDuration = s2ns(1) / animation.fps;
 
     Region clearReg(Rect(mWidth, mHeight));
@@ -478,14 +479,18 @@ bool BootAnimation::movie()
                     glDisable(GL_SCISSOR_TEST);
                 }
                 glDrawTexiOES(xc, yc, 0, animation.width, animation.height);
-                eglSwapBuffers(mDisplay, mSurface);
 
-                nsecs_t now = systemTime();
-                nsecs_t delay = frameDuration - (now - lastFrame);
-                lastFrame = now;
-                long wait = ns2us(frameDuration);
+                // See how much longer the currently visible frame should be shown
+                // and wait if needed
+                nsecs_t delay = nextFrame - systemTime();
+                long wait = ns2us(delay);
                 if (wait > 0)
                     usleep(wait);
+
+                eglSwapBuffers(mDisplay, mSurface);
+
+                // Record time when the next frame should be shown
+                nextFrame = systemTime() + frameDuration;
             }
             usleep(part.pause * ns2us(frameDuration));
         }
