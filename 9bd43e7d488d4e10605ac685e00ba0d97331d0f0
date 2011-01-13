@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAA+3//804\u003d",
+        "filename": "core/java/android/widget/AbsListView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-01-13T06:41:14Z",
+      "side": 1,
+      "message": "Please format like this:\n\nmDisplaySyncTiming \u003d getContext().getResources().getInteger(\n        com.android.internal....);",
+      "revId": "9bd43e7d488d4e10605ac685e00ba0d97331d0f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//80w\u003d",
+        "filename": "core/java/android/widget/AbsListView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-01-13T06:41:14Z",
+      "side": 1,
+      "message": "Please format like this:\n\nmDisplaySyncTiming \u003d getContext().getResources().getInteger(\n        com.android.internal....);",
+      "revId": "9bd43e7d488d4e10605ac685e00ba0d97331d0f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//800\u003d",
+        "filename": "core/java/android/widget/AbsListView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2425,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-01-13T06:41:14Z",
+      "side": 1,
+      "message": "Please use AnimationUtils.currentAnimationTimeMillis() instead of uptimeMillis",
+      "revId": "9bd43e7d488d4e10605ac685e00ba0d97331d0f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//80s\u003d",
+        "filename": "core/java/android/widget/AbsListView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2501,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-01-13T06:41:14Z",
+      "side": 1,
+      "message": "Please use AnimationUtils.currentAnimationTimeMillis() instead of uptimeMillis",
+      "revId": "9bd43e7d488d4e10605ac685e00ba0d97331d0f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+3//81E\u003d",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 1
