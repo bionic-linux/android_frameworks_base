@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//8zw\u003d",
+        "filename": "core/java/com/android/internal/app/ResolverActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2011-01-13T08:40:23Z",
+      "side": 1,
+      "message": "This is wrong -- intent\u0027s flags are not the same as activity info\u0027s flags.  Just clear the FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS flag here.",
+      "revId": "a4b7ebda9ac398aad7c27d22b1dbdf573aef78bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
