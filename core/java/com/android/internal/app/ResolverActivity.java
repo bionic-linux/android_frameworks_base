@@ -368,11 +368,19 @@ public class ResolverActivity extends AlertActivity implements
 
             DisplayResolveInfo dri = mList.get(position);
             
-            Intent intent = new Intent(dri.origIntent != null
-                    ? dri.origIntent : mIntent);
+            ActivityInfo ai = dri.ri.activityInfo;
+            // If DisplayResolveInfo has an associated intent
+            // use it else use the intent that started ResolverActivity
+            // and override the flags with the selected Activity's flags
+            Intent intent;
+            if (dri.origIntent != null) {
+                intent = dri.origIntent;
+            } else {
+                intent = mIntent;
+                intent.setFlags(ai.flags);
+            }
             intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT
                     |Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
-            ActivityInfo ai = dri.ri.activityInfo;
             intent.setComponent(new ComponentName(
                     ai.applicationInfo.packageName, ai.name));
             return intent;
