@@ -1301,7 +1301,8 @@
         <activity android:name="com.android.internal.app.RingtonePickerActivity"
                 android:theme="@style/Theme.Dialog.Alert"
                 android:excludeFromRecents="true"
-                android:multiprocess="true">
+                android:multiprocess="true"
+                android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.RINGTONE_PICKER" />
                 <category android:name="android.intent.category.DEFAULT" />
