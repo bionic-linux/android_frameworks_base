@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//8Hs\u003d",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-01-18T23:04:23Z",
+      "side": 1,
+      "message": "setRingerMode() has never been used so far in native code.\nDo you have a special need for it?",
+      "revId": "1788b2b1d7a07f09ba29a519e2e0fbac4b3e676f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//8G0\u003d",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-01-18T23:04:23Z",
+      "side": 1,
+      "message": "Please update comment if the logic changes.",
+      "revId": "1788b2b1d7a07f09ba29a519e2e0fbac4b3e676f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//8HI\u003d",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-01-18T23:04:23Z",
+      "side": 1,
+      "message": "How is this related to BT headsets?\nOr is the commit message wrong?",
+      "revId": "1788b2b1d7a07f09ba29a519e2e0fbac4b3e676f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//8G8\u003d",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-01-18T23:04:23Z",
+      "side": 1,
+      "message": "Is this directly related to this issue? If not please submit another change.",
+      "revId": "1788b2b1d7a07f09ba29a519e2e0fbac4b3e676f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//8G4\u003d",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1930,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-01-18T23:04:23Z",
+      "side": 1,
+      "message": "We should do this only when a condition affecting ringer mode has changed.",
+      "revId": "1788b2b1d7a07f09ba29a519e2e0fbac4b3e676f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
