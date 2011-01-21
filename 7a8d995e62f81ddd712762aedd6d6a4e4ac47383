@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//71o\u003d",
+        "filename": "media/libstagefright/NuCachedSource2.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-01-21T19:03:28Z",
+      "side": 1,
+      "message": "Rather than change the meaning of \"avail\" here, could you name a new variable?\n\nsize_t bytesToCopy \u003d ....\nmCache-\u003ecopy(..., bytesToCopy)",
+      "revId": "7a8d995e62f81ddd712762aedd6d6a4e4ac47383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
