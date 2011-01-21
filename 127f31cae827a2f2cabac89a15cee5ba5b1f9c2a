@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//72s\u003d",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-01-21T13:31:31Z",
+      "side": 1,
+      "message": "What are these needed for? Seems dangerous to have one normal inbox and two dedicated ones for each subscription. Overall, type and subscription are two completely different things so why mix them? Besides, you seem to have introduced a new column for this value anyway?",
+      "revId": "127f31cae827a2f2cabac89a15cee5ba5b1f9c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//72o\u003d",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-01-21T13:31:31Z",
+      "side": 1,
+      "message": "Why does MMS need this column?",
+      "revId": "127f31cae827a2f2cabac89a15cee5ba5b1f9c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//73E\u003d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-01-21T13:31:31Z",
+      "side": 1,
+      "message": "Instead of overloading every method in this class with a subscription parameter, couldn\u0027t a new factory method be added alongside the existing getDefault() method, that returns an instance of SmsManager for each subscription?",
+      "revId": "127f31cae827a2f2cabac89a15cee5ba5b1f9c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//724\u003d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-01-21T13:31:31Z",
+      "side": 1,
+      "message": "Poor comment, the first word is the name of the parameter itself, meaning the documentation will simply read \"on which the...\" for this parameter.",
+      "revId": "127f31cae827a2f2cabac89a15cee5ba5b1f9c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//73A\u003d",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-01-21T13:31:31Z",
+      "side": 1,
+      "message": "If this is to be a public member, code style says it should not have the m prefix.\nOn the other hand, perhaps it would be better of exposed via getter?",
+      "revId": "127f31cae827a2f2cabac89a15cee5ba5b1f9c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//72w\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/ISms.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-01-21T13:31:31Z",
+      "side": 1,
+      "message": "It\u0027s starting to look a bit complicated now with an aidl interface implemented by a proxy to a proxy to the actual implementation. :)\n\nWould it be possible to define a separate aidl interface, e.g. ISmsProxy, simply offering a factory method for retrieving an ISms interface given a subscription?\nAnd then implementing this as a new system service that returns the IccInterfaceManagerProxy from the given Phone instance. And finally modify SmsManager to use the new interface to retrieve an ISms interface directly associated with the given subscription instead of having to pass the subscription parameter to each call on ISms.\n\nCould that work? Or perhaps having two system services (one purely for backwards compatibility) is not ok?",
+      "revId": "127f31cae827a2f2cabac89a15cee5ba5b1f9c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//72k\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/MSimIccSmsInterfaceManagerProxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-01-21T13:31:31Z",
+      "side": 1,
+      "message": "I cannot see that this class is instantiated anywhere? Shouldn\u0027t PhoneProxy use it?",
+      "revId": "127f31cae827a2f2cabac89a15cee5ba5b1f9c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//720\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/MSimIccSmsInterfaceManagerProxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-01-21T13:31:31Z",
+      "side": 1,
+      "message": "mPhones perhaps?",
+      "revId": "127f31cae827a2f2cabac89a15cee5ba5b1f9c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
