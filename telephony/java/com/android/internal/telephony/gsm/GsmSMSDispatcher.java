@@ -59,6 +59,7 @@ final class GsmSMSDispatcher extends SMSDispatcher {
     protected void handleStatusReport(AsyncResult ar) {
         String pduString = (String) ar.result;
         SmsMessage sms = SmsMessage.newFromCDS(pduString);
+	int tpStatus = sms.getStatus();
 
         if (sms != null) {
             int messageRef = sms.messageRef;
@@ -66,7 +67,9 @@ final class GsmSMSDispatcher extends SMSDispatcher {
                 SmsTracker tracker = deliveryPendingList.get(i);
                 if (tracker.mMessageRef == messageRef) {
                     // Found it.  Remove from list and broadcast.
-                    deliveryPendingList.remove(i);
+                    if(tpStatus >= Sms.STATUS_FAILED || tpStatus < Sms.STATUS_PENDING ) {
+                    	deliveryPendingList.remove(i);
+                    }
                     PendingIntent intent = tracker.mDeliveryIntent;
                     Intent fillIn = new Intent();
                     fillIn.putExtra("pdu", IccUtils.hexStringToBytes(pduString));
