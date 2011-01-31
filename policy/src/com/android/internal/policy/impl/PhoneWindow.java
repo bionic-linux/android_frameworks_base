@@ -316,16 +316,17 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         if (st.createdPanelView == null) {
             // Init the panel state's menu--return false if init failed
             if (st.menu == null) {
-                if (!initializePanelMenu(st) || (st.menu == null)) {
+                if (!initializePanelMenu(st)) {
                     return false;
                 }
-                // Call callback, and return if it doesn't want to display menu
-                if ((cb == null) || !cb.onCreatePanelMenu(st.featureId, st.menu)) {
-                    // Ditch the menu created above
-                    st.menu = null;
+            }
 
-                    return false;
-                }
+            // Call callback, and return if it doesn't want to display menu
+            if ((cb == null) || !cb.onCreatePanelMenu(st.featureId, st.menu)) {
+                // Ditch the menu created above
+                st.menu = null;
+
+                return false;
             }
 
             // Callback and return if the callback does not want to show the menu
