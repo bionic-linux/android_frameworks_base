@@ -215,7 +215,7 @@ struct egl_context_t : public egl_object_t
     
     egl_context_t(EGLDisplay dpy, EGLContext context, EGLConfig config,
             int impl, egl_connection_t const* cnx, int version) 
-    : dpy(dpy), context(context), read(0), draw(0), impl(impl), cnx(cnx),
+    : dpy(dpy), context(context), config(config), read(0), draw(0), impl(impl), cnx(cnx),
       version(version)
     {
     }
