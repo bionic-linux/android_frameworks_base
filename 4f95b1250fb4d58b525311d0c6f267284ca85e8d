@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//5L8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2011-02-10T20:01:42Z",
+      "side": 1,
+      "message": "This is not always the case. GSM ETWS primary message is 56 bytes as defined in 9.4.1.3 of TS 23.041",
+      "revId": "4f95b1250fb4d58b525311d0c6f267284ca85e8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//5L4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2011-02-10T20:01:42Z",
+      "side": 1,
+      "message": "If it is ETWS primary message this will choke.",
+      "revId": "4f95b1250fb4d58b525311d0c6f267284ca85e8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
