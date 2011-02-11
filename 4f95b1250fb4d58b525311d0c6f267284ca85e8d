@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+3//5IQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-02-11T08:52:47Z",
+      "side": 1,
+      "message": "The actual payload of ETWS messages is limited to 56 bytes, yes, but surely they are contained within a standard 88 byte GSM CB page?\n\nAnyway, this length is only used as a means of detecting if the pdu is in GSM or UMTS format, lacking a dedicated RAT parameter in the RIL event.\nAnd since ETWS only applies to GSM, the condition used to determine GSM or UMTS will still be correct?\n\nIf the pdu is actually shorter than 88, it will still be (correctly) detected as GSM and decoded up to its length.",
+      "parentUuid": "AAAA+3//5L8\u003d",
+      "revId": "4f95b1250fb4d58b525311d0c6f267284ca85e8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+3//5L4\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2011-02-10T20:01:42Z",
       "side": 1,
       "message": "If it is ETWS primary message this will choke.",
+      "revId": "4f95b1250fb4d58b525311d0c6f267284ca85e8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//5IM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-02-11T08:52:47Z",
+      "side": 1,
+      "message": "You are right that data coding scheme and page parameter would be incorrect, yes, since ETWS uses those bytes for warning type instead.\nThe only way I can see to avoid this is to handle ETWS as a dedicated sub-category here, i.e., if the message identifier matches ETWS, branch off at line 73 and decode it as a ETWS primary notification message instead.\n\nBut in my opinion, ETWS support should be added in a separate commit so that all aspects of it can be fully tested. This commit would really need to be merged now to 1) add the UMTS support and 2) fix the critical issue with the missing \"\u0026 0xff\".",
+      "parentUuid": "AAAA+3//5L4\u003d",
       "revId": "4f95b1250fb4d58b525311d0c6f267284ca85e8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
