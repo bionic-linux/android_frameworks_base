@@ -69,6 +69,24 @@
       "revId": "4f95b1250fb4d58b525311d0c6f267284ca85e8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//5GE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003902
+      },
+      "writtenOn": "2011-02-11T18:15:10Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "AAAA+3//5IM\u003d",
+      "revId": "4f95b1250fb4d58b525311d0c6f267284ca85e8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
