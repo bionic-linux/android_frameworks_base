@@ -31,6 +31,7 @@ import android.content.res.XmlResourceParser;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -197,6 +198,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
     final int[] mTempCoords = new int[2];
     Rect mTempRect;
+    Point mTempPoint = new Point(0, 0);
 
     private ColorStateList mTextColor;
     private int mCurTextColor;
@@ -7881,15 +7883,19 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             clip.right = right - compoundPaddingRight;
             clip.bottom = bottom - extendedPaddingBottom;
 
+            final Point globalOffset = mTempPoint;
+            globalOffset.set(0, 0);
+
             final ViewParent parent = hostView.getParent();
-            if (parent == null || !parent.getChildVisibleRect(hostView, clip, null)) {
+            if (parent == null || !parent.getChildVisibleRect(hostView, clip, globalOffset)) {
                 return false;
             }
 
-            final int[] coords = mTempCoords;
-            hostView.getLocationInWindow(coords);
-            final int posX = coords[0] + mPositionX + (int) mHotspotX;
-            final int posY = coords[1] + mPositionY + (int) mHotspotY;
+            // Note: The coordinates below will be in the relative to the
+            //       ViewRoot of hostView. When ADJUST_PAN is set they will
+            //       differ significantly from screen coordinates.
+            final int posX = globalOffset.x + mPositionX + (int) mHotspotX;
+            final int posY = globalOffset.y + mPositionY + (int) mHotspotY;
 
             return posX >= clip.left && posX <= clip.right &&
                     posY >= clip.top && posY <= clip.bottom;
