@@ -668,6 +668,10 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
                                     cid = Integer.parseInt(states[2], 16);
                                 }
                             }
+			    if (states.lenght >= 4) {
+				newNetworkType = Integer.parseInt(states[3], 16);
+				newSS.setRadioTechnology(newNetworkType);
+			    }
                             if (states.length > 14) {
                                 if (states[14] != null && states[14].length() > 0) {
                                     psc = Integer.parseInt(states[14], 16);
