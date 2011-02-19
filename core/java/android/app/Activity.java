@@ -412,14 +412,13 @@ import java.util.HashMap;
  *
  *     static final int PICK_CONTACT_REQUEST = 0;
  *
- *     protected boolean onKeyDown(int keyCode, KeyEvent event) {
+ *     public boolean onKeyDown(int keyCode, KeyEvent event) {
  *         if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
  *             // When the user center presses, let them pick a contact.
- *             startActivityForResult(
- *                 new Intent(Intent.ACTION_PICK,
- *                 new Uri("content://contacts")),
- *                 PICK_CONTACT_REQUEST);
- *            return true;
+ *             Intent intent = new Intent(Intent.ACTION_PICK,
+ *                     Uri.parse("content://contacts/people"));
+ *             startActivityForResult(intent, PICK_CONTACT_REQUEST);
+ *             return true;
  *         }
  *         return false;
  *     }
@@ -430,7 +429,7 @@ import java.util.HashMap;
  *             if (resultCode == RESULT_OK) {
  *                 // A contact was picked.  Here we will just display it
  *                 // to the user.
- *                 startActivity(new Intent(Intent.ACTION_VIEW, data));
+ *                 startActivity(new Intent(Intent.ACTION_VIEW, data.getData()));
  *             }
  *         }
  *     }
