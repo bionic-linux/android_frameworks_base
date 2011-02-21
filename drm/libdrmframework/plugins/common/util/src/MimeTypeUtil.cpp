@@ -22,6 +22,18 @@ namespace android {
 #undef LOG_TAG
 #define LOG_TAG "MimeTypeUtil"
 
+#ifdef DRM_OMA_FL_ERROR
+#define LOG_ERROR(...) LOGW(__VA_ARGS__)
+#else
+#define LOG_ERROR(...)
+#endif
+
+#ifdef DRM_OMA_FL_ENGINE_DEBUG
+#define LOG_DEBUG(...) LOGD(__VA_ARGS__)
+#else
+#define LOG_DEBUG(...)
+#endif
+
 enum {
     MIMETYPE_AUDIO       = 0,
     MIMETYPE_APPLICATION = 1,
@@ -59,6 +71,7 @@ static const char mime_group_audio[]       = "audio/";
 static const char mime_group_application[] = "application/";
 static const char mime_group_image[]       = "image/";
 static const char mime_group_video[]       = "video/";
+static const char mime_type_unsupported[]  = "unsupported/drm.mimetype";
 
 static struct MimeGroup mimeGroup[] = {
     {MIMETYPE_AUDIO,       mime_group_audio,        sizeof(mime_group_audio)-1},
@@ -113,42 +126,43 @@ static struct MimeTypeList mimeTypeList[] = {
  */
 String8 MimeTypeUtil::convertMimeType(String8& mimeType) {
     String8 result = mimeType;
-    const char* pTmp;
     const char* pMimeType;
     struct MimeGroup* pGroup;
     struct MimeTypeList* pMimeItem;
     int len;
-
     pMimeType = mimeType.string();
     if (NULL != pMimeType) {
-        /* Check which group the mimetype is */
-        pGroup = mimeGroup;
-
-        while (MIMETYPE_LAST != pGroup->type) {
-            if (0 == strncmp(pMimeType, pGroup->pGroup, pGroup->size)) {
-                break;
-            }
-            pGroup++;
-        }
-
-        /* Go through the mimetype list. Only check items of the correct group */
-        if (MIMETYPE_LAST != pGroup->type) {
-            pMimeItem = mimeTypeList;
-            len = strlen (pMimeType+pGroup->size);
-
-            while (MIMETYPE_LAST != pMimeItem->type) {
-                if ((len == pMimeItem->size) &&
-                    (0 == strcmp(pMimeType+pGroup->size, pMimeItem->pMimeExt))) {
-                    result = String8(pMimeItem->pMimeType);
+        if ((0 == strncmp(pMimeType, mime_group_audio, (sizeof mime_group_audio) - 1)) ||
+            (0 == strncmp(pMimeType, mime_group_video, (sizeof mime_group_video) - 1))) {
+            /* Check which group the mimetype is */
+            pGroup = mimeGroup;
+            while (MIMETYPE_LAST != pGroup->type) {
+                if (0 == strncmp(pMimeType, pGroup->pGroup, pGroup->size)) {
                     break;
                 }
-                pMimeItem++;
+                pGroup++;
             }
-        }
-        LOGI("convertMimeType got mimetype %s, converted into mimetype %s",
-             pMimeType, result.string());
-    }
 
+            /* Go through the mimetype list. Only check items of the correct group */
+            if (MIMETYPE_LAST != pGroup->type) {
+                pMimeItem = mimeTypeList;
+                len = strlen (pMimeType+pGroup->size);
+                while (MIMETYPE_LAST != pMimeItem->type) {
+                    if ((pGroup->type == pMimeItem->type) &&
+                        (len == pMimeItem->size) &&
+                        (0 == strcmp(pMimeType+pGroup->size, pMimeItem->pMimeExt))) {
+                        result = String8(pMimeItem->pMimeType);
+                        break;
+                    }
+                    pMimeItem++;
+                }
+            }
+        } else {
+            result = String8(mime_type_unsupported);
+        }
+        LOG_DEBUG("convertMimeType got mimetype %s, converted into mimetype %s",
+                pMimeType, result.string());
+    }
     return result;
 }
 };
