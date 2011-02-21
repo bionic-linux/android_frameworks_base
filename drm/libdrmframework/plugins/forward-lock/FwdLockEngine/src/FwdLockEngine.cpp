@@ -41,6 +41,18 @@
 #undef LOG_TAG
 #define LOG_TAG "FwdLockEngine"
 
+#ifdef DRM_OMA_FL_ERROR
+#define LOG_ERROR(...) LOGW(__VA_ARGS__)
+#else
+#define LOG_ERROR(...)
+#endif
+
+#ifdef DRM_OMA_FL_ENGINE_DEBUG
+#define LOG_DEBUG(...) LOGD(__VA_ARGS__)
+#else
+#define LOG_DEBUG(...)
+#endif
+
 using namespace android;
 // This extern "C" is mandatory to be managed by TPlugInManager
 extern "C" IDrmEngine* create() {
@@ -53,14 +65,25 @@ extern "C" void destroy(IDrmEngine* plugIn) {
 }
 
 FwdLockEngine::FwdLockEngine() {
-    LOGD("FwdLockEngine Construction");
+    LOG_DEBUG("FwdLockEngine Construction");
 }
 
 FwdLockEngine::~FwdLockEngine() {
-    LOGD("FwdLockEngine Destruction");
+    LOG_DEBUG("FwdLockEngine Destruction");
 
-    convertSessionMap.destroyMap();
-    decodeSessionMap.destroyMap();
+    int size = decodeSessionMap.getSize();
+
+    for (int i = 0; i < size; i++) {
+        DecodeSession *session = (DecodeSession*) decodeSessionMap.getValueAt(i);
+        FwdLockFile_detach(session->fileDesc);
+        ::close(session->fileDesc);
+    }
+
+    size = convertSessionMap.getSize();
+    for (int i = 0; i < size; i++) {
+        ConvertSession *convSession = (ConvertSession*) convertSessionMap.getValueAt(i);
+        FwdLockConv_CloseSession(convSession->uniqueId, &(convSession->output));
+    }
 }
 
 int FwdLockEngine::getConvertedStatus(FwdLockConv_Status_t status) {
@@ -74,12 +97,12 @@ int FwdLockEngine::getConvertedStatus(FwdLockConv_Status_t status) {
         case FwdLockConv_Status_InvalidArgument:
         case FwdLockConv_Status_UnsupportedFileFormat:
         case FwdLockConv_Status_UnsupportedContentTransferEncoding:
-            LOGD("FwdLockEngine getConvertedStatus: file conversion Error %d. " \
+            LOG_DEBUG("FwdLockEngine getConvertedStatus: file conversion Error %d. "
                   "Returning STATUS_INPUTDATA_ERROR", status);
             retStatus = DrmConvertedStatus::STATUS_INPUTDATA_ERROR;
             break;
         default:
-            LOGD("FwdLockEngine getConvertedStatus: file conversion Error %d. " \
+            LOG_DEBUG("FwdLockEngine getConvertedStatus: file conversion Error %d. "
                   "Returning STATUS_ERROR", status);
             retStatus = DrmConvertedStatus::STATUS_ERROR;
             break;
@@ -91,7 +114,7 @@ int FwdLockEngine::getConvertedStatus(FwdLockConv_Status_t status) {
 DrmConstraints* FwdLockEngine::onGetConstraints(int uniqueId, const String8* path, int action) {
     DrmConstraints* drmConstraints = NULL;
 
-    LOGD("FwdLockEngine::onGetConstraints");
+    LOG_DEBUG("FwdLockEngine::onGetConstraints");
 
     if (NULL != path &&
         (RightsStatus::RIGHTS_VALID == onCheckRightsStatus(uniqueId, *path, action))) {
@@ -105,7 +128,7 @@ DrmConstraints* FwdLockEngine::onGetConstraints(int uniqueId, const String8* pat
 DrmMetadata* FwdLockEngine::onGetMetadata(int uniqueId, const String8* path) {
     DrmMetadata* drmMetadata = NULL;
 
-    LOGD("FwdLockEngine::onGetMetadata");
+    LOG_DEBUG("FwdLockEngine::onGetMetadata");
 
     if (NULL != path) {
         // Returns empty metadata to show no error condition.
@@ -116,13 +139,12 @@ DrmMetadata* FwdLockEngine::onGetMetadata(int uniqueId, const String8* path) {
 }
 
 android::status_t FwdLockEngine::onInitialize(int uniqueId) {
-    LOGD("FwdLockEngine::onInitialize");
-
+    LOG_DEBUG("FwdLockEngine::onInitialize");
 
     if (FwdLockGlue_InitializeKeyEncryption()) {
-        LOGD("FwdLockEngine::onInitialize -- FwdLockGlue_InitializeKeyEncryption succeeded");
+        LOG_DEBUG("FwdLockEngine::onInitialize -- FwdLockGlue_InitializeKeyEncryption succeeded");
     } else {
-        LOGD("FwdLockEngine::onInitialize -- FwdLockGlue_InitializeKeyEncryption failed:"
+        LOG_DEBUG("FwdLockEngine::onInitialize -- FwdLockGlue_InitializeKeyEncryption failed:"
              "errno = %d", errno);
     }
 
@@ -132,13 +154,13 @@ android::status_t FwdLockEngine::onInitialize(int uniqueId) {
 android::status_t
 FwdLockEngine::onSetOnInfoListener(int uniqueId, const IDrmEngine::OnInfoListener* infoListener) {
     // Not used
-    LOGD("FwdLockEngine::onSetOnInfoListener");
+    LOG_DEBUG("FwdLockEngine::onSetOnInfoListener");
 
     return DRM_NO_ERROR;
 }
 
 android::status_t FwdLockEngine::onTerminate(int uniqueId) {
-    LOGD("FwdLockEngine::onTerminate");
+    LOG_DEBUG("FwdLockEngine::onTerminate");
 
     return DRM_NO_ERROR;
 }
@@ -146,7 +168,7 @@ android::status_t FwdLockEngine::onTerminate(int uniqueId) {
 DrmSupportInfo* FwdLockEngine::onGetSupportInfo(int uniqueId) {
     DrmSupportInfo* pSupportInfo = new DrmSupportInfo();
 
-    LOGD("FwdLockEngine::onGetSupportInfo");
+    LOG_DEBUG("FwdLockEngine::onGetSupportInfo");
 
     // fill all Forward Lock mimetypes and extensions
     if (NULL != pSupportInfo) {
@@ -193,7 +215,7 @@ status_t FwdLockEngine::onSaveRights(
             const String8& rightsPath,
             const String8& contentPath) {
     // No rights to save. Return
-    LOGD("FwdLockEngine::onSaveRights");
+    LOG_DEBUG("FwdLockEngine::onSaveRights");
     return DRM_ERROR_UNKNOWN;
 }
 
@@ -201,7 +223,7 @@ DrmInfo* FwdLockEngine::onAcquireDrmInfo(int uniqueId, const DrmInfoRequest* drm
     DrmInfo* drmInfo = NULL;
 
     // Nothing to be done for Forward Lock file
-    LOGD("FwdLockEngine::onAcquireDrmInfo");
+    LOG_DEBUG("FwdLockEngine::onAcquireDrmInfo");
 
     return drmInfo;
 }
@@ -211,7 +233,7 @@ int FwdLockEngine::onCheckRightsStatus(int uniqueId,
                                        int action) {
     int result = RightsStatus::RIGHTS_INVALID;
 
-    LOGD("FwdLockEngine::onCheckRightsStatus");
+    LOG_DEBUG("FwdLockEngine::onCheckRightsStatus");
 
     // Only Transfer action is not allowed for forward Lock files.
     if (onCanHandle(uniqueId, path)) {
@@ -241,7 +263,7 @@ status_t FwdLockEngine::onConsumeRights(int uniqueId,
                                         int action,
                                         bool reserve) {
     // No rights consumption
-    LOGD("FwdLockEngine::onConsumeRights");
+    LOG_DEBUG("FwdLockEngine::onConsumeRights");
     return DRM_NO_ERROR;
 }
 
@@ -249,14 +271,14 @@ bool FwdLockEngine::onValidateAction(int uniqueId,
                                      const String8& path,
                                      int action,
                                      const ActionDescription& description) {
-    LOGD("FwdLockEngine::onValidateAction");
+    LOG_DEBUG("FwdLockEngine::onValidateAction");
 
     // For the forwardlock engine checkRights and ValidateAction are the same.
     return (onCheckRightsStatus(uniqueId, path, action) == RightsStatus::RIGHTS_VALID);
 }
 
 String8 FwdLockEngine::onGetOriginalMimeType(int uniqueId, const String8& path) {
-    LOGD("FwdLockEngine::onGetOriginalMimeType");
+    LOG_DEBUG("FwdLockEngine::onGetOriginalMimeType");
     String8 mimeString = String8("");
     int fileDesc = FwdLockFile_open(path.string());
 
@@ -280,7 +302,7 @@ int FwdLockEngine::onGetDrmObjectType(int uniqueId,
                                       const String8& mimeType) {
     String8 mimeStr = String8(mimeType);
 
-    LOGD("FwdLockEngine::onGetDrmObjectType");
+    LOG_DEBUG("FwdLockEngine::onGetDrmObjectType");
 
     mimeStr.toLower();
 
@@ -301,13 +323,13 @@ int FwdLockEngine::onGetDrmObjectType(int uniqueId,
 
 status_t FwdLockEngine::onRemoveRights(int uniqueId, const String8& path) {
     // No Rights to remove
-    LOGD("FwdLockEngine::onRemoveRights");
+    LOG_DEBUG("FwdLockEngine::onRemoveRights");
     return DRM_NO_ERROR;
 }
 
 status_t FwdLockEngine::onRemoveAllRights(int uniqueId) {
     // No rights to remove
-    LOGD("FwdLockEngine::onRemoveAllRights");
+    LOG_DEBUG("FwdLockEngine::onRemoveAllRights");
     return DRM_NO_ERROR;
 }
 
@@ -319,14 +341,14 @@ status_t FwdLockEngine::onSetPlaybackStatus(int uniqueId, DecryptHandle* decrypt
                                             int playbackStatus, int position) {
 #endif
     // Not used
-    LOGD("FwdLockEngine::onSetPlaybackStatus");
+    LOG_DEBUG("FwdLockEngine::onSetPlaybackStatus");
     return DRM_NO_ERROR;
 }
 
 status_t FwdLockEngine::onOpenConvertSession(int uniqueId,
                                          int convertId) {
     status_t result = DRM_ERROR_UNKNOWN;
-    LOGD("FwdLockEngine::onOpenConvertSession");
+    LOG_DEBUG("FwdLockEngine::onOpenConvertSession");
     if (!convertSessionMap.isCreated(convertId)) {
         ConvertSession *newSession = new ConvertSession();
         if (FwdLockConv_Status_OK ==
@@ -334,7 +356,7 @@ status_t FwdLockEngine::onOpenConvertSession(int uniqueId,
             convertSessionMap.addValue(convertId, newSession);
             result = DRM_NO_ERROR;
         } else {
-            LOGD("FwdLockEngine::onOpenConvertSession -- FwdLockConv_OpenSession failed.");
+            LOG_DEBUG("FwdLockEngine::onOpenConvertSession -- FwdLockConv_OpenSession failed.");
             delete newSession;
         }
     }
@@ -383,7 +405,7 @@ DrmConvertedStatus* FwdLockEngine::onCloseConvertSession(int uniqueId,
     DrmBuffer *convResult = new DrmBuffer(NULL, 0);
     int offset = -1;
 
-    LOGD("FwdLockEngine::onCloseConvertSession");
+    LOG_DEBUG("FwdLockEngine::onCloseConvertSession");
 
     if (convertSessionMap.isCreated(convertId)) {
         ConvertSession *convSession = convertSessionMap.getValue(convertId);
@@ -424,14 +446,14 @@ status_t FwdLockEngine::onOpenDecryptSession(int uniqueId,
     status_t result = DRM_ERROR_CANNOT_HANDLE;
     int fileDesc = -1;
 
-    LOGD("FwdLockEngine::onOpenDecryptSession");
+    LOG_DEBUG("FwdLockEngine::onOpenDecryptSession");
 
     if ((-1 < fd) &&
         (NULL != decryptHandle) &&
         (!decodeSessionMap.isCreated(decryptHandle->decryptId))) {
         fileDesc = dup(fd);
     } else {
-        LOGD("FwdLockEngine::onOpenDecryptSession parameter error");
+        LOG_DEBUG("FwdLockEngine::onOpenDecryptSession parameter error");
         return result;
     }
 
@@ -453,14 +475,17 @@ status_t FwdLockEngine::onOpenDecryptSession(int uniqueId,
             decryptHandle->decryptInfo = NULL;
             result = DRM_NO_ERROR;
         } else {
-            LOGD("FwdLockEngine::onOpenDecryptSession Integrity Check failed for the fd");
+            LOG_DEBUG("FwdLockEngine::onOpenDecryptSession Integrity Check failed for the fd");
             FwdLockFile_detach(fileDesc);
             ::close(fileDesc);
             delete decodeSession;
         }
     }
+    if (DRM_NO_ERROR != result && -1 < fileDesc) {
+        ::close(fileDesc);
+    }
 
-    LOGD("FwdLockEngine::onOpenDecryptSession Exit. result = %d", result);
+    LOG_DEBUG("FwdLockEngine::onOpenDecryptSession Exit. result = %d", result);
 
     return result;
 }
@@ -497,7 +522,7 @@ status_t FwdLockEngine::onOpenDecryptSession(int uniqueId,
 status_t FwdLockEngine::onCloseDecryptSession(int uniqueId,
                                               DecryptHandle* decryptHandle) {
     status_t result = DRM_ERROR_UNKNOWN;
-    LOGD("FwdLockEngine::onCloseDecryptSession");
+    LOG_DEBUG("FwdLockEngine::onCloseDecryptSession");
 
     if (NULL != decryptHandle && decodeSessionMap.isCreated(decryptHandle->decryptId)) {
         DecodeSession* session = decodeSessionMap.getValue(decryptHandle->decryptId);
@@ -509,7 +534,7 @@ status_t FwdLockEngine::onCloseDecryptSession(int uniqueId,
         }
     }
 
-    LOGD("FwdLockEngine::onCloseDecryptSession Exit");
+    LOG_DEBUG("FwdLockEngine::onCloseDecryptSession Exit");
     return result;
 }
 
@@ -517,13 +542,13 @@ status_t FwdLockEngine::onInitializeDecryptUnit(int uniqueId,
                                                 DecryptHandle* decryptHandle,
                                                 int decryptUnitId,
                                                 const DrmBuffer* headerInfo) {
-    LOGD("FwdLockEngine::onInitializeDecryptUnit");
+    LOG_DEBUG("FwdLockEngine::onInitializeDecryptUnit");
     return DRM_ERROR_UNKNOWN;
 }
 
 status_t FwdLockEngine::onDecrypt(int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId,
             const DrmBuffer* encBuffer, DrmBuffer** decBuffer, DrmBuffer* IV) {
-    LOGD("FwdLockEngine::onDecrypt");
+    LOG_DEBUG("FwdLockEngine::onDecrypt");
     return DRM_ERROR_UNKNOWN;
 }
 
@@ -532,14 +557,14 @@ status_t FwdLockEngine::onDecrypt(int uniqueId,
                                   int decryptUnitId,
                                   const DrmBuffer* encBuffer,
                                   DrmBuffer** decBuffer) {
-    LOGD("FwdLockEngine::onDecrypt");
+    LOG_DEBUG("FwdLockEngine::onDecrypt");
     return DRM_ERROR_UNKNOWN;
 }
 
 status_t FwdLockEngine::onFinalizeDecryptUnit(int uniqueId,
                                               DecryptHandle* decryptHandle,
                                               int decryptUnitId) {
-    LOGD("FwdLockEngine::onFinalizeDecryptUnit");
+    LOG_DEBUG("FwdLockEngine::onFinalizeDecryptUnit");
     return DRM_ERROR_UNKNOWN;
 }
 
@@ -617,11 +642,11 @@ ssize_t FwdLockEngine::onPread(int uniqueId,
         if (((off_t)-1) != decoderSession->offset) {
             bytesRead = onRead(uniqueId, decryptHandle, buffer, numBytes);
             if (bytesRead < 0) {
-                LOGD("FwdLockEngine::onPread error reading");
+                LOG_DEBUG("FwdLockEngine::onPread error reading");
             }
         }
     } else {
-        LOGD("FwdLockEngine::onPread decryptId not found");
+        LOG_DEBUG("FwdLockEngine::onPread decryptId not found");
     }
 
     return bytesRead;
