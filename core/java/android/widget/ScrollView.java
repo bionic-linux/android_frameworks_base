@@ -478,6 +478,10 @@ public class ScrollView extends FrameLayout {
                 }
 
                 final int pointerIndex = ev.findPointerIndex(activePointerId);
+                if (pointerIndex == -1) {
+                    break;
+                }
+
                 final int y = (int) ev.getY(pointerIndex);
                 final int yDiff = Math.abs(y - mLastMotionY);
                 if (yDiff > mTouchSlop) {
@@ -585,6 +589,10 @@ public class ScrollView extends FrameLayout {
             }
             case MotionEvent.ACTION_MOVE:
                 final int activePointerIndex = ev.findPointerIndex(mActivePointerId);
+                if (activePointerIndex == -1) {
+                    break;
+                }
+
                 final int y = (int) ev.getY(activePointerIndex);
                 int deltaY = mLastMotionY - y;
                 if (!mIsBeingDragged && Math.abs(deltaY) > mTouchSlop) {

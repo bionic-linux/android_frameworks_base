@@ -456,6 +456,10 @@ public class HorizontalScrollView extends FrameLayout {
                 }
 
                 final int pointerIndex = ev.findPointerIndex(activePointerId);
+                if (pointerIndex == -1) {
+                    break;
+                }
+
                 final int x = (int) ev.getX(pointerIndex);
                 final int xDiff = (int) Math.abs(x - mLastMotionX);
                 if (xDiff > mTouchSlop) {
@@ -557,6 +561,10 @@ public class HorizontalScrollView extends FrameLayout {
             }
             case MotionEvent.ACTION_MOVE:
                 final int activePointerIndex = ev.findPointerIndex(mActivePointerId);
+                if (activePointerIndex == -1) {
+                    break;
+                }
+
                 final int x = (int) ev.getX(activePointerIndex);
                 int deltaX = mLastMotionX - x;
                 if (!mIsBeingDragged && Math.abs(deltaX) > mTouchSlop) {
