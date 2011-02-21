@@ -18,6 +18,7 @@ package android.widget.scroll;
 
 import android.widget.scroll.ScrollViewButtonsAndLabels;
 
+import android.os.SystemClock;
 import android.test.ActivityInstrumentationTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.MediumTest;
@@ -25,7 +26,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.view.KeyEvent;
-
+import android.view.MotionEvent;
+import android.view.MotionEvent.PointerCoords;
 
 public class ScrollViewButtonsAndLabelsTest
         extends ActivityInstrumentationTestCase<ScrollViewButtonsAndLabels> {
@@ -159,6 +161,32 @@ public class ScrollViewButtonsAndLabelsTest
         assertEquals("top of top button should be at top of screen; no need to take"
                 + " into account vertical fading edge.",
                 mScreenTop, buttonLoc[1]);
+    }
+
+    @LargeTest
+    public void testScrollWithBadEvents() {
+        boolean crashed = false;
+        // Send an ACTION_DOWN to start dragging
+        MotionEvent ev = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+                                                    MotionEvent.ACTION_DOWN, 0, 0, 0);
+        mScrollView.onTouchEvent(ev);
+
+        try {
+            // Create a MotionEvent with no pointers
+            PointerCoords[] pointerCoords = null;
+            int[] pointerIds = {0};
+            ev = MotionEvent.obtain(SystemClock.uptimeMillis(),
+                    SystemClock.uptimeMillis(),
+                    MotionEvent.ACTION_MOVE, 0,
+                    pointerIds, pointerCoords,
+                    0, 0, 0, 0, 0, 0, 0);
+            mScrollView.onTouchEvent(ev);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            crashed = true;
+        }
+
+        assertFalse("must survive bad MotionEvents ",
+                crashed);
     }
 
     private int goToBottomButton() {
