@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//38g\u003d",
+        "filename": "core/tests/coretests/src/android/widget/scroll/ScrollViewButtonsAndLabelsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-02-22T19:30:40Z",
+      "side": 1,
+      "message": "This is a bad test.\nIt should not be possible to construct a MotionEvent with 0 pointers!\n\nIn fact, you really can\u0027t (we check this) in our internal master as of last week.",
+      "revId": "e6181707ec940fa00a51c4b7433f086e20c6a1f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
