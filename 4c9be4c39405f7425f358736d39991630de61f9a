@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//3sM\u003d",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1005792
+      },
+      "writtenOn": "2011-02-23T20:06:55Z",
+      "side": 1,
+      "message": "hal.. right now is returning 0 when init() succeeds, looks like this function will always return false even though hal init was Ok.\nlet me know if it make more sense for hal to return 1(TRUE) on success? I can change that.",
+      "revId": "4c9be4c39405f7425f358736d39991630de61f9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
