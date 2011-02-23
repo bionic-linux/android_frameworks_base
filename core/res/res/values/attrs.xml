@@ -953,6 +953,11 @@
         <enum name="KEYCODE_BUTTON_START" value="108" />
         <enum name="KEYCODE_BUTTON_SELECT" value="109" />
         <enum name="KEYCODE_BUTTON_MODE" value="110" />
+        <enum name="KEYCODE_QUESTION" value="111" />
+        <enum name="KEYCODE_SCREAMER" value="112" />
+        <enum name="KEYCODE_LANGUAGE_SWITCH" value="113" />
+        <enum name="KEYCODE_MANNER_MODE" value="114" />
+        <enum name="KEYCODE_3D_MODE" value="115" />
     </attr>
 
     <!-- ***************************************************************** -->
