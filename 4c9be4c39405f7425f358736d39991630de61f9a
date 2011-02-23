@@ -16,6 +16,24 @@
       "revId": "4c9be4c39405f7425f358736d39991630de61f9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//3r8\u003d",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000830
+      },
+      "writtenOn": "2011-02-23T20:46:44Z",
+      "side": 1,
+      "message": "Oops, no, the HAL should continue to return 0 for success and I\u0027ll fix the code here.  I\u0027m not sure why it didn\u0027t show up when I tested this change, but we should continue to keep the HAL API the same.",
+      "parentUuid": "AAAA+3//3sM\u003d",
+      "revId": "4c9be4c39405f7425f358736d39991630de61f9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
