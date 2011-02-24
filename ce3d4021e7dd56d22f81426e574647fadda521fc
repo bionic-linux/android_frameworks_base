@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//3kk\u003d",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-02-24T19:23:26Z",
+      "side": 1,
+      "message": "New public APIs need documentation",
+      "revId": "ce3d4021e7dd56d22f81426e574647fadda521fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//3kg\u003d",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-02-24T19:23:26Z",
+      "side": 1,
+      "message": "Remove trailing spaces/tabs",
+      "revId": "ce3d4021e7dd56d22f81426e574647fadda521fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
