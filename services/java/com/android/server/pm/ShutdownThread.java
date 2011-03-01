@@ -44,7 +44,7 @@ import android.os.storage.IMountShutdownObserver;
 
 import com.android.internal.telephony.ITelephony;
 import com.android.server.PowerManagerService;
-
+import android.util.EventLog;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -268,6 +268,7 @@ public final class ShutdownThread extends Thread {
      * Shuts off power regardless of radio and bluetooth state if the alloted time has passed.
      */
     public void run() {
+        final long startTime = SystemClock.elapsedRealtime();
         BroadcastReceiver br = new BroadcastReceiver() {
             @Override public void onReceive(Context context, Intent intent) {
                 // We don't allow apps to cancel this, so ignore the result.
@@ -367,6 +368,9 @@ public final class ShutdownThread extends Thread {
             }
         }
 
+        final long curTime = SystemClock.elapsedRealtime();
+        EventLog.writeEvent(2731, "system", "shutdown", curTime - startTime);
+
         rebootOrShutdown(mReboot, mRebootReason);
     }
 
@@ -377,6 +381,7 @@ public final class ShutdownThread extends Thread {
         final boolean[] done = new boolean[1];
         Thread t = new Thread() {
             public void run() {
+                final long startTime = System.currentTimeMillis();
                 boolean nfcOff;
                 boolean bluetoothOff;
                 boolean radioOff;

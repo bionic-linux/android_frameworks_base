@@ -4,6 +4,10 @@ option java_package com.android.server.am
 
 2719 configuration_changed (config mask|1|5)
 2721 cpu (total|1|6),(user|1|6),(system|1|6),(iowait|1|6),(irq|1|6),(softirq|1|6)
+# Key Performance Indicator, tag for events recording time measurements
+#  name can be a component name for applications and service name for system parts
+#  action is the name of task where it can be "shutdown", "application start", etc.
+2731 kpi (name|3),(action|3),(value|1|3)
 
 # ActivityManagerService.systemReady() starts:
 3040 boot_progress_ams_ready (time|2|3)
