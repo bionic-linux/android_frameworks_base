@@ -180,7 +180,8 @@ public:
                                     uint32_t samplingRate,
                                     uint32_t format,
                                     uint32_t channels,
-                                    AudioSystem::audio_in_acoustics acoustics)
+                                    AudioSystem::audio_in_acoustics acoustics,
+                                    AudioSystem::audio_input_clients *inputClientId)
     {
         Parcel data, reply;
         data.writeInterfaceToken(IAudioPolicyService::getInterfaceDescriptor());
@@ -189,6 +190,7 @@ public:
         data.writeInt32(static_cast <uint32_t>(format));
         data.writeInt32(channels);
         data.writeInt32(static_cast <uint32_t>(acoustics));
+        data.writeIntPtr((intptr_t)inputClientId);
         remote()->transact(GET_INPUT, data, &reply);
         return static_cast <audio_io_handle_t> (reply.readInt32());
     }
@@ -417,11 +419,14 @@ status_t BnAudioPolicyService::onTransact(
             uint32_t channels = data.readInt32();
             AudioSystem::audio_in_acoustics acoustics =
                     static_cast <AudioSystem::audio_in_acoustics>(data.readInt32());
+            AudioSystem::audio_input_clients *inputClientId =
+                    (AudioSystem::audio_input_clients*) data.readIntPtr();
             audio_io_handle_t input = getInput(inputSource,
                                                samplingRate,
                                                format,
                                                channels,
-                                               acoustics);
+                                               acoustics,
+                                               inputClientId);
             reply->writeInt32(static_cast <int>(input));
             return NO_ERROR;
         } break;

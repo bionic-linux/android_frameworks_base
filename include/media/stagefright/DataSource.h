@@ -60,6 +60,22 @@ public:
         return 0;
     }
 
+    virtual uint32_t getBufferSize() {
+        return 0;
+    }
+
+    virtual uint32_t getNumChannels() {
+        return 0;
+    }
+
+    virtual uint32_t getSampleRate() {
+        return 0;
+    }
+
+    virtual uint32_t getFormat() {
+        return 0;
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     bool sniff(String8 *mimeType, float *confidence, sp<AMessage> *meta);
