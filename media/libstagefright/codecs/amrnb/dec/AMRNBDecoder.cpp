@@ -123,7 +123,11 @@ status_t AMRNBDecoder::read(
 
         mNumSamplesOutput = 0;
 
-        if (mInputBuffer) {
+	// Reset the decoder before seeking - The first frame after seek,
+       // should not be dependent on current frame states.
+       Speech_Decode_Frame_reset(mState);
+
+	if (mInputBuffer) {
             mInputBuffer->release();
             mInputBuffer = NULL;
         }
