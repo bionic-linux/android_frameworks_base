@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA/X///jQ\u003d",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000319
+      },
+      "writtenOn": "2011-03-17T18:35:45Z",
+      "side": 1,
+      "message": "Done\n\nThanks for spotting this.",
+      "parentUuid": "AAAA/X///lo\u003d",
+      "revId": "e78a9417a4d6d613b7f10acaa34a2517239dae06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/X///lk\u003d",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2011-03-17T13:31:28Z",
       "side": 1,
       "message": "Misspelled transmitter.",
+      "revId": "e78a9417a4d6d613b7f10acaa34a2517239dae06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X///jM\u003d",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000319
+      },
+      "writtenOn": "2011-03-17T18:35:45Z",
+      "side": 1,
+      "message": "Done\n\nThanks for spotting this.",
+      "parentUuid": "AAAA/X///lk\u003d",
       "revId": "e78a9417a4d6d613b7f10acaa34a2517239dae06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
