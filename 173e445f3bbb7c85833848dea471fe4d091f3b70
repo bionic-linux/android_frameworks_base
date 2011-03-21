@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X///O8\u003d",
+        "filename": "core/jni/android_server_BluetoothService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2011-03-21T16:36:50Z",
+      "side": 1,
+      "message": "You need to change this",
+      "revId": "173e445f3bbb7c85833848dea471fe4d091f3b70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
