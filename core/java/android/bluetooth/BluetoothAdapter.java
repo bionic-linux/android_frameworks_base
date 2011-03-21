@@ -898,6 +898,27 @@ public final class BluetoothAdapter {
         return socket;
     }
 
+     /**
+     * Construct an encrypted, but not authenticated link key, RFCOMM server socket.
+     * Call #accept to retrieve connections to this socket.
+     * @return An RFCOMM BluetoothServerSocket
+     * @throws IOException On error, for example Bluetooth not available, or
+     *                     insufficient permissions.
+     * @hide
+     */
+    public BluetoothServerSocket listenUsingEncryptedRfcommOn(int port) throws IOException {
+        BluetoothServerSocket socket = new BluetoothServerSocket(
+                BluetoothSocket.TYPE_RFCOMM, false, true, port);
+        int errno = socket.mSocket.bindListen();
+        if (errno != 0) {
+            try {
+                socket.close();
+            } catch (IOException e) {}
+            socket.mSocket.throwErrnoNative(errno);
+        }
+        return socket;
+    }
+
     /**
      * Construct a SCO server socket.
      * Call #accept to retrieve connections to this socket.
