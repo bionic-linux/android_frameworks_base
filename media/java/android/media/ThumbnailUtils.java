@@ -123,6 +123,8 @@ public class ThumbnailUtils {
                 bitmap = BitmapFactory.decodeFileDescriptor(fd, null, options);
             } catch (IOException ex) {
                 Log.e(TAG, "", ex);
+            } catch (OutOfMemoryError oom) {
+                Log.e(TAG, "Unable to decode file " + filePath + ". OutOfMemoryError.");
             }
         }
 
