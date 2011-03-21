@@ -6935,13 +6935,25 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 mLayout != null;
 
         if (!mInsertionControllerEnabled) {
-            mInsertionPointCursorController = null;
+            if (mInsertionPointCursorController != null) {
+                final ViewTreeObserver observer = getViewTreeObserver();
+                if (observer != null) {
+                    observer.removeOnTouchModeChangeListener(mInsertionPointCursorController);
+                }
+                mInsertionPointCursorController = null;
+            }
         }
 
         if (!mSelectionControllerEnabled) {
             // Stop selection mode if the controller becomes unavailable.
             stopTextSelectionMode();
-            mSelectionModifierCursorController = null;
+            if (mSelectionModifierCursorController != null) {
+                final ViewTreeObserver observer = getViewTreeObserver();
+                if (observer != null) {
+                    observer.removeOnTouchModeChangeListener(mSelectionModifierCursorController);
+                }
+                mSelectionModifierCursorController = null;
+            }
         }
     }
 
