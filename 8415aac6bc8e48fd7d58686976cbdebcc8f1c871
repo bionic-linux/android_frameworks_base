@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X///P4\u003d",
+        "filename": "media/java/android/media/ThumbnailUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-21T15:08:31Z",
+      "side": 1,
+      "message": "Bitmap, or null on failures.",
+      "revId": "8415aac6bc8e48fd7d58686976cbdebcc8f1c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
