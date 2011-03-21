@@ -38,6 +38,16 @@ ifeq ($(TARGET_SIMULATOR),true)
     LOCAL_LDLIBS += -lpthread
 endif
 
+ifeq ($(TARGET_BUILD_VARIANT), user)
+    LOCAL_CFLAGS += -DBUILD_VARIANT_TYPE_USER
+else ifeq ($(TARGET_BUILD_VARIANT), userdebug)
+    LOCAL_CFLAGS += -DBUILD_VARIANT_TYPE_USERDEBUG
+else ifeq ($(TARGET_BUILD_VARIANT), eng)
+    LOCAL_CFLAGS += -DBUILD_VARIANT_TYPE_ENG
+else
+    $(error "TARGET_BUILD_VARIANT not set correctly: $(TARGET_BUILD_VARIANT)")
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
 

@@ -565,6 +565,50 @@ private:
         }
     };
 
+    class LogWaitingTimeANR {
+    public:
+        LogWaitingTimeANR(InputDispatcher* parent);
+        ~LogWaitingTimeANR();
+
+        struct Data {
+            unsigned long elapsedTime;
+            unsigned long timeoutTime;
+            int           lineno;  // for debugging the code, can be removed later
+        };
+
+        struct DataArray {
+            String8       focusedApplicationName;
+            String8       focusedWindowName;
+            Vector<Data>  array;
+
+            void writeToEventLog();
+            void add(unsigned long elapsedTime, unsigned long timeoutTime, int lineno);
+        };
+
+        struct DataArrays {
+            Vector<DataArray>   arrays;
+
+            unsigned int size() const;
+            void writeToEventLog();
+            void add(const char* focusedApplicationName, const char* focusedWindowName,
+                unsigned long elapsedTime, unsigned long timeoutTime, int lineno);
+            bool changedAppOrWin(const char* focusedApplicationName,
+                const char* focusedWindowName) const;
+        };
+
+        void log(nsecs_t currentTime, int lineno);
+        void writeToEventLog();
+
+        nsecs_t           mNextWriteToEventLog;
+        DataArrays        mDataArrays;
+        InputDispatcher*  mParent;
+    };
+    LogWaitingTimeANR   mLogWaitingTimeANR;
+
+    static InputDispatcher* mInstance;
+
+    static void flushEventLog();
+
     // A command entry captures state and behavior for an action to be performed in the
     // dispatch loop after the initial processing has taken place.  It is essentially
     // a kind of continuation used to postpone sensitive policy interactions to a point
@@ -983,15 +1027,15 @@ private:
     bool mInputTargetWaitTimeoutExpired;
 
     // Finding targets for input events.
-    void resetTargetsLocked();
+    void resetTargetsLocked(nsecs_t currentTime, int lineno);
     void commitTargetsLocked();
     int32_t handleTargetsNotReadyLocked(nsecs_t currentTime, const EventEntry* entry,
             const InputApplication* application, const InputWindow* window,
-            nsecs_t* nextWakeupTime);
+            nsecs_t* nextWakeupTime, int lineno);
     void resumeAfterTargetsNotReadyTimeoutLocked(nsecs_t newTimeout,
             const sp<InputChannel>& inputChannel);
     nsecs_t getTimeSpentWaitingForApplicationLocked(nsecs_t currentTime);
-    void resetANRTimeoutsLocked();
+    void resetANRTimeoutsLocked(nsecs_t currentTime, int lineno);
 
     int32_t findFocusedWindowTargetsLocked(nsecs_t currentTime, const EventEntry* entry,
             nsecs_t* nextWakeupTime);

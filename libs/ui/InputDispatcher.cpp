@@ -34,6 +34,15 @@
 // Log debug messages about input focus tracking.
 #define DEBUG_FOCUS 0
 
+// Log debug messages about LogWaitingTimeANR
+#define DEBUG_LOG_WAITING_TIME_ANR 0
+
+#if defined(BUILD_VARIANT_TYPE_USERDEBUG) || defined(BUILD_VARIANT_TYPE_ENG)
+  #define ENABLE_LOG_WAITING_TIME_ANR 1
+#else
+  #define ENABLE_LOG_WAITING_TIME_ANR 0
+#endif
+
 // Log debug messages about the app switch latency optimization.
 #define DEBUG_APP_SWITCH 0
 
@@ -163,7 +172,10 @@ bool InputWindow::isTrustedOverlay() const {
 
 // --- InputDispatcher ---
 
+InputDispatcher* InputDispatcher::mInstance = NULL;
+
 InputDispatcher::InputDispatcher(const sp<InputDispatcherPolicyInterface>& policy) :
+    mLogWaitingTimeANR(this),
     mPolicy(policy),
     mPendingEvent(NULL), mAppSwitchDueTime(LONG_LONG_MAX),
     mDispatchEnabled(true), mDispatchFrozen(false),
@@ -187,6 +199,8 @@ InputDispatcher::InputDispatcher(const sp<InputDispatcherPolicyInterface>& polic
     mThrottleState.minTimeBetweenEvents = 1000000000LL / maxEventsPerSecond;
     mThrottleState.lastDeviceId = -1;
 
+    mInstance = this;
+
 #if DEBUG_THROTTLING
     mThrottleState.originalSampleCount = 0;
     LOGD("Throttling - Max events per second = %d", maxEventsPerSecond);
@@ -197,6 +211,8 @@ InputDispatcher::~InputDispatcher() {
     { // acquire lock
         AutoMutex _l(mLock);
 
+        mInstance = NULL;
+
         resetKeyRepeatLocked();
         releasePendingEventLocked();
         drainInboundQueueLocked();
@@ -204,6 +220,17 @@ InputDispatcher::~InputDispatcher() {
 
     while (mConnectionsByReceiveFd.size() != 0) {
         unregisterInputChannel(mConnectionsByReceiveFd.valueAt(0)->inputChannel);
+    }
+}
+
+void InputDispatcher::flushEventLog() {
+    if (mInstance != NULL) {
+#if ENABLE_LOG_WAITING_TIME_ANR
+        // acquire lock
+        AutoMutex _l(mInstance->mLock);
+
+        mInstance->mLogWaitingTimeANR.writeToEventLog();
+#endif // ENABLE_LOG_WAITING_TIME_ANR
     }
 }
 
@@ -646,7 +673,8 @@ bool InputDispatcher::dispatchKeyLocked(
         }
 
         entry->dispatchInProgress = true;
-        resetTargetsLocked();
+        mInputTargetWaitStartTime = currentTime;  // Reset start time to avoid logging long time delay
+        resetTargetsLocked(currentTime, 0/*__LINE__*/);
 
         logOutboundKeyDetailsLocked("dispatchKey - ", entry);
     }
@@ -673,7 +701,7 @@ bool InputDispatcher::dispatchKeyLocked(
 
     // Clean up if dropping the event.
     if (*dropReason != DROP_REASON_NOT_DROPPED) {
-        resetTargetsLocked();
+        resetTargetsLocked(currentTime, __LINE__);
         setInjectionResultLocked(entry, *dropReason == DROP_REASON_POLICY
                 ? INPUT_EVENT_INJECTION_SUCCEEDED : INPUT_EVENT_INJECTION_FAILED);
         return true;
@@ -718,14 +746,15 @@ bool InputDispatcher::dispatchMotionLocked(
     // Preprocessing.
     if (! entry->dispatchInProgress) {
         entry->dispatchInProgress = true;
-        resetTargetsLocked();
+        mInputTargetWaitStartTime = currentTime;  // Reset start time to avoid logging long time delay
+        resetTargetsLocked(currentTime, 0/*__LINE__*/);
 
         logOutboundMotionDetailsLocked("dispatchMotion - ", entry);
     }
 
     // Clean up if dropping the event.
     if (*dropReason != DROP_REASON_NOT_DROPPED) {
-        resetTargetsLocked();
+        resetTargetsLocked(currentTime, __LINE__);
         setInjectionResultLocked(entry, *dropReason == DROP_REASON_POLICY
                 ? INPUT_EVENT_INJECTION_SUCCEEDED : INPUT_EVENT_INJECTION_FAILED);
         return true;
@@ -831,7 +860,240 @@ void InputDispatcher::dispatchEventToCurrentInputTargetsLocked(nsecs_t currentTi
     }
 }
 
-void InputDispatcher::resetTargetsLocked() {
+#if ENABLE_LOG_WAITING_TIME_ANR
+
+static unsigned char* eventLogWriteInt(unsigned char* c, unsigned int intvalue) {
+    *c++ = EVENT_TYPE_INT;
+    memcpy(c, &intvalue, sizeof(intvalue));
+    c += sizeof(intvalue);
+    return c;
+}
+
+static unsigned int eventLogIntLen() {
+    return 1 + sizeof(unsigned int);
+}
+
+static unsigned char* eventLogWriteLong(unsigned char* c, unsigned long long longvalue) {
+    *c++ = EVENT_TYPE_LONG;
+    memcpy(c, &longvalue, sizeof(longvalue));
+    c += sizeof(longvalue);
+    return c;
+}
+
+static unsigned int eventLogLongLen() {
+    return 1 + sizeof(unsigned long long);
+}
+
+static unsigned char* eventLogWriteString(unsigned char* c, const char* stringvalue) {
+    unsigned int len = strlen(stringvalue);
+    *c++ = EVENT_TYPE_STRING;
+    memcpy(c, &len, sizeof(len));
+    c += sizeof(len);
+    memcpy(c, stringvalue, len);
+    c += len;
+    return c;
+}
+
+static unsigned int eventLogStringLen(const char* stringvalue) {
+    return 1 + sizeof(unsigned int) + strlen(stringvalue);
+}
+
+static unsigned char* eventLogWriteList(unsigned char* c, unsigned int itemcount) {
+    *c++ = EVENT_TYPE_LIST;
+    *c++ = itemcount;
+    return c;
+}
+
+static unsigned int eventLogListLen(const char* stringvalue) {
+    return 2;
+}
+#endif // ENABLE_LOG_WAITING_TIME_ANR
+
+void InputDispatcher::LogWaitingTimeANR::DataArray::add(
+        unsigned long elapsedTime, unsigned long timeoutTime, int lineno) {
+#if ENABLE_LOG_WAITING_TIME_ANR
+    Data data;
+    data.elapsedTime = elapsedTime;
+    data.timeoutTime = timeoutTime;
+    data.lineno      = lineno;
+    array.push(data);
+#endif
+}
+
+void InputDispatcher::LogWaitingTimeANR::DataArray::writeToEventLog()
+{
+#if ENABLE_LOG_WAITING_TIME_ANR
+    static const unsigned int EVENT_LOG_TAG_waiting_time_anr = 80000;
+    static const unsigned int VALUES_PER_ITEM = 3;  // elapsedTime, timeoutTime, lineno
+    int status;
+
+    if (array.isEmpty()) {
+        return;
+    }
+
+    unsigned int itemCount = array.size();
+    unsigned int eventBufLen =
+        1 +  // Item count
+        (eventLogStringLen(focusedApplicationName) +
+         eventLogStringLen(focusedWindowName) +
+         eventLogIntLen() * 2
+        ) +
+        (itemCount * VALUES_PER_ITEM) * eventLogIntLen() +
+        1;  // '\n'
+    unsigned char* eventBuf = new unsigned char[eventBufLen];
+    if (eventBuf == NULL) {
+        return;
+    }
+    unsigned char* c = eventBuf;
+    *c++ = 4 + itemCount * VALUES_PER_ITEM;  // Item count
+    c = eventLogWriteString(c, focusedApplicationName);
+    c = eventLogWriteString(c, focusedWindowName);
+    c = eventLogWriteInt(c, itemCount);
+    c = eventLogWriteInt(c, VALUES_PER_ITEM);
+
+    unsigned int i;
+    for (i = 0; i < itemCount; i++) {
+        c = eventLogWriteInt(c, array[i].elapsedTime);
+        if (VALUES_PER_ITEM >= 2) {  // Log timeout time enabled?
+            c = eventLogWriteInt(c, array[i].timeoutTime);
+        }
+        if (VALUES_PER_ITEM >= 3) {  // Log line numbers (debug info) enabled?
+            c = eventLogWriteInt(c, array[i].lineno);
+        }
+    }
+
+    *c++ = '\n';
+    status = android_btWriteLog(EVENT_LOG_TAG_waiting_time_anr, EVENT_TYPE_LIST, eventBuf, c - eventBuf/*len*/);
+//  LOGI("Status 1=%d", status);
+#if DEBUG_LOG_WAITING_TIME_ANR >= 2
+    LOGI("LogWaitingTimeANR::DataArray::writeToEventLog: Writing head %u items", itemCount);
+#endif
+    array.clear();
+    delete eventBuf;
+#endif // ENABLE_LOG_WAITING_TIME_ANR
+}
+
+unsigned int InputDispatcher::LogWaitingTimeANR::DataArrays::size() const {
+    unsigned int size = 0;
+#if ENABLE_LOG_WAITING_TIME_ANR
+    unsigned int i;
+    for (i = 0; i < arrays.size(); i++) {
+        size += arrays[i].array.size();
+    }
+#endif
+    return size;
+}
+
+void InputDispatcher::LogWaitingTimeANR::DataArrays::writeToEventLog() {
+#if ENABLE_LOG_WAITING_TIME_ANR
+    unsigned int i;
+    for (i = 0; i < arrays.size(); i++) {
+        arrays.editItemAt(i).writeToEventLog();
+    }
+    arrays.clear();
+#endif
+}
+
+void InputDispatcher::LogWaitingTimeANR::DataArrays::add(
+        const char* focusedApplicationName, const char* focusedWindowName,
+        unsigned long elapsedTime, unsigned long timeoutTime, int lineno) {
+#if ENABLE_LOG_WAITING_TIME_ANR
+    // Check if app & window were the same at the top. If not, we need to create a new entry.
+    if (changedAppOrWin(focusedApplicationName, focusedWindowName)) {
+        // Does not exist yet. Create new entry.
+        arrays.push();
+        arrays.editTop().focusedApplicationName = focusedApplicationName;
+        arrays.editTop().focusedWindowName      = focusedWindowName;
+    }
+
+    // Add data to top
+    arrays.editTop().add(elapsedTime, timeoutTime, lineno);
+#endif
+}
+
+bool InputDispatcher::LogWaitingTimeANR::DataArrays::changedAppOrWin(
+        const char* focusedApplicationName, const char* focusedWindowName) const {
+    if (arrays.isEmpty() ||
+        arrays.top().focusedApplicationName != focusedApplicationName ||
+        arrays.top().focusedWindowName      != focusedWindowName)
+    {
+        return true;
+    }
+    return false;
+}
+
+static const nsecs_t WRITE_TO_EVENT_LOG_DELAY = 300LL * 1000LL * 1000000LL;  // 300 seconds
+
+InputDispatcher::LogWaitingTimeANR::LogWaitingTimeANR(InputDispatcher* parent) :
+    mNextWriteToEventLog(0),
+    mParent(parent) {
+}
+
+InputDispatcher::LogWaitingTimeANR::~LogWaitingTimeANR() {
+}
+
+void InputDispatcher::LogWaitingTimeANR::log(nsecs_t currentTime,
+        int lineno/*for debugging the code, can be removed later*/) {
+#if ENABLE_LOG_WAITING_TIME_ANR
+    static const unsigned int BUFFER_SIZE = 200;  // max number of delays in buffer
+    static const unsigned long MIN_TIME_TO_REPORT = 50; // ms
+    unsigned long elapsedTime = (currentTime - mParent->mInputTargetWaitStartTime) / 1000000L;  // ms
+    unsigned long timeoutTime =
+        (mParent->mInputTargetWaitTimeoutTime - mParent->mInputTargetWaitStartTime) / 1000000L;  // ms
+
+    if (mNextWriteToEventLog == 0) {  // First time?
+        mNextWriteToEventLog = now() + WRITE_TO_EVENT_LOG_DELAY;
+    }
+
+    if (lineno != 0 && elapsedTime >= MIN_TIME_TO_REPORT) {
+        const char* focusedApplicationName =
+            (mParent->mFocusedApplication == NULL) ? "<unavailable application>" :
+                                                     mParent->mFocusedApplication->name;
+        const char* focusedWindowName =
+            (mParent->mFocusedWindow == NULL) ? "<unavailable window>" :
+                                                mParent->mFocusedWindow->name;
+
+#if DEBUG_LOG_WAITING_TIME_ANR >= 1
+        LOGI("LogWaitingTimeANR::log(%d): '%s' '%s' elapsed=%lu timeout=%lu current=%lu",
+             lineno, focusedApplicationName, focusedWindowName, elapsedTime, timeoutTime,
+             (unsigned long)(currentTime / 1000000L));
+#endif
+
+        if (mDataArrays.changedAppOrWin(focusedApplicationName, focusedWindowName)) {
+            writeToEventLog();
+        }
+
+        mDataArrays.add(focusedApplicationName, focusedWindowName, elapsedTime,
+            timeoutTime, lineno);
+    }
+
+#if DEBUG_LOG_WAITING_TIME_ANR >= 2
+    LOGI("LogWaitingTimeANR::log: current=%lu", (unsigned long)(currentTime / 1000000L));
+#endif
+    if (currentTime >= mNextWriteToEventLog || mDataArrays.size() >= BUFFER_SIZE)
+    {
+        writeToEventLog();
+    }
+#endif // ENABLE_LOG_WAITING_TIME_ANR
+}
+
+void InputDispatcher::LogWaitingTimeANR::writeToEventLog() {
+#if ENABLE_LOG_WAITING_TIME_ANR
+    mDataArrays.writeToEventLog();
+    mNextWriteToEventLog = now() + WRITE_TO_EVENT_LOG_DELAY;
+#if DEBUG_LOG_WAITING_TIME_ANR >= 2
+    LOGI("LogWaitingTimeANR::writeToEventLog: next=%lu",
+        (unsigned long)(mNextWriteToEventLog / 1000000L));
+#endif
+#endif // ENABLE_LOG_WAITING_TIME_ANR
+}
+
+void InputDispatcher::resetTargetsLocked(nsecs_t currentTime, int lineno) {
+#if ENABLE_LOG_WAITING_TIME_ANR
+    if (mInputTargetWaitCause == INPUT_TARGET_WAIT_CAUSE_APPLICATION_NOT_READY) {
+        mLogWaitingTimeANR.log(currentTime, lineno);
+    }
+#endif
     mCurrentInputTargetsValid = false;
     mCurrentInputTargets.clear();
     mInputTargetWaitCause = INPUT_TARGET_WAIT_CAUSE_NONE;
@@ -843,7 +1105,7 @@ void InputDispatcher::commitTargetsLocked() {
 
 int32_t InputDispatcher::handleTargetsNotReadyLocked(nsecs_t currentTime,
         const EventEntry* entry, const InputApplication* application, const InputWindow* window,
-        nsecs_t* nextWakeupTime) {
+        nsecs_t* nextWakeupTime, int lineno) {
     if (application == NULL && window == NULL) {
         if (mInputTargetWaitCause != INPUT_TARGET_WAIT_CAUSE_SYSTEM_NOT_READY) {
 #if DEBUG_FOCUS
@@ -875,6 +1137,9 @@ int32_t InputDispatcher::handleTargetsNotReadyLocked(nsecs_t currentTime,
     }
 
     if (currentTime >= mInputTargetWaitTimeoutTime) {
+#if ENABLE_LOG_WAITING_TIME_ANR
+        mLogWaitingTimeANR.log(currentTime, lineno);  // ANR!
+#endif
         onANRLocked(currentTime, application, window, entry->eventTime, mInputTargetWaitStartTime);
 
         // Force poll loop to wake up immediately on next iteration once we get the
@@ -923,9 +1188,14 @@ nsecs_t InputDispatcher::getTimeSpentWaitingForApplicationLocked(
     return 0;
 }
 
-void InputDispatcher::resetANRTimeoutsLocked() {
+void InputDispatcher::resetANRTimeoutsLocked(nsecs_t currentTime, int lineno) {
 #if DEBUG_FOCUS
         LOGD("Resetting ANR timeouts.");
+#endif
+#if ENABLE_LOG_WAITING_TIME_ANR
+    if (mInputTargetWaitCause == INPUT_TARGET_WAIT_CAUSE_APPLICATION_NOT_READY) {
+        mLogWaitingTimeANR.log(currentTime, lineno);
+    }
 #endif
 
     // Reset input target wait timeout.
@@ -948,7 +1218,7 @@ int32_t InputDispatcher::findFocusedWindowTargetsLocked(nsecs_t currentTime,
                     getApplicationWindowLabelLocked(mFocusedApplication, NULL).string());
 #endif
             injectionResult = handleTargetsNotReadyLocked(currentTime, entry,
-                    mFocusedApplication, NULL, nextWakeupTime);
+                    mFocusedApplication, NULL, nextWakeupTime, __LINE__);
             goto Unresponsive;
         }
 
@@ -969,7 +1239,7 @@ int32_t InputDispatcher::findFocusedWindowTargetsLocked(nsecs_t currentTime,
         LOGD("Waiting because focused window is paused.");
 #endif
         injectionResult = handleTargetsNotReadyLocked(currentTime, entry,
-                mFocusedApplication, mFocusedWindow, nextWakeupTime);
+                mFocusedApplication, mFocusedWindow, nextWakeupTime, __LINE__);
         goto Unresponsive;
     }
 
@@ -979,7 +1249,7 @@ int32_t InputDispatcher::findFocusedWindowTargetsLocked(nsecs_t currentTime,
         LOGD("Waiting because focused window still processing previous input.");
 #endif
         injectionResult = handleTargetsNotReadyLocked(currentTime, entry,
-                mFocusedApplication, mFocusedWindow, nextWakeupTime);
+                mFocusedApplication, mFocusedWindow, nextWakeupTime, __LINE__);
         goto Unresponsive;
     }
 
@@ -993,6 +1263,11 @@ Unresponsive:
     nsecs_t timeSpentWaitingForApplication = getTimeSpentWaitingForApplicationLocked(currentTime);
     updateDispatchStatisticsLocked(currentTime, entry,
             injectionResult, timeSpentWaitingForApplication);
+#if ENABLE_LOG_WAITING_TIME_ANR
+    if (injectionResult == INPUT_EVENT_INJECTION_SUCCEEDED) {
+        mLogWaitingTimeANR.log(currentTime, __LINE__);
+    }
+#endif
 #if DEBUG_FOCUS
     LOGD("findFocusedWindow finished: injectionResult=%d, "
             "timeSpendWaitingForApplication=%0.1fms",
@@ -1107,7 +1382,7 @@ int32_t InputDispatcher::findTouchedWindowTargetsLocked(nsecs_t currentTime,
             LOGD("Waiting because system error window is pending.");
 #endif
             injectionResult = handleTargetsNotReadyLocked(currentTime, entry,
-                    NULL, NULL, nextWakeupTime);
+                    NULL, NULL, nextWakeupTime, __LINE__);
             injectionPermission = INJECTION_PERMISSION_UNKNOWN;
             goto Unresponsive;
         }
@@ -1133,7 +1408,7 @@ int32_t InputDispatcher::findTouchedWindowTargetsLocked(nsecs_t currentTime,
                         getApplicationWindowLabelLocked(mFocusedApplication, NULL).string());
 #endif
                 injectionResult = handleTargetsNotReadyLocked(currentTime, entry,
-                        mFocusedApplication, NULL, nextWakeupTime);
+                        mFocusedApplication, NULL, nextWakeupTime, __LINE__);
                 goto Unresponsive;
             }
 
@@ -1206,7 +1481,7 @@ int32_t InputDispatcher::findTouchedWindowTargetsLocked(nsecs_t currentTime,
                 LOGD("Waiting because touched window is paused.");
 #endif
                 injectionResult = handleTargetsNotReadyLocked(currentTime, entry,
-                        NULL, touchedWindow.window, nextWakeupTime);
+                        NULL, touchedWindow.window, nextWakeupTime, __LINE__);
                 goto Unresponsive;
             }
 
@@ -1216,7 +1491,7 @@ int32_t InputDispatcher::findTouchedWindowTargetsLocked(nsecs_t currentTime,
                 LOGD("Waiting because touched window still processing previous input.");
 #endif
                 injectionResult = handleTargetsNotReadyLocked(currentTime, entry,
-                        NULL, touchedWindow.window, nextWakeupTime);
+                        NULL, touchedWindow.window, nextWakeupTime, __LINE__);
                 goto Unresponsive;
             }
         }
@@ -1308,6 +1583,11 @@ Unresponsive:
     nsecs_t timeSpentWaitingForApplication = getTimeSpentWaitingForApplicationLocked(currentTime);
     updateDispatchStatisticsLocked(currentTime, entry,
             injectionResult, timeSpentWaitingForApplication);
+#if ENABLE_LOG_WAITING_TIME_ANR
+    if (injectionResult == INPUT_EVENT_INJECTION_SUCCEEDED) {
+        mLogWaitingTimeANR.log(currentTime, __LINE__);
+    }
+#endif
 #if DEBUG_FOCUS
     LOGD("findTouchedWindow finished: injectionResult=%d, injectionPermission=%d, "
             "timeSpentWaitingForApplication=%0.1fms",
@@ -2604,7 +2884,7 @@ void InputDispatcher::setInputDispatchMode(bool enabled, bool frozen) {
 
         if (mDispatchEnabled != enabled || mDispatchFrozen != frozen) {
             if (mDispatchFrozen && !frozen) {
-                resetANRTimeoutsLocked();
+                resetANRTimeoutsLocked(now(), __LINE__);
             }
 
             if (mDispatchEnabled && !enabled) {
@@ -2639,7 +2919,7 @@ void InputDispatcher::resetAndDropEverythingLocked(const char* reason) {
     resetKeyRepeatLocked();
     releasePendingEventLocked();
     drainInboundQueueLocked();
-    resetTargetsLocked();
+    resetTargetsLocked(now(), __LINE__);
 
     mTouchState.reset();
 }
