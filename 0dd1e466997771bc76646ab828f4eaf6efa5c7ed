@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X///OQ\u003d",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2011-03-21T17:17:24Z",
+      "side": 1,
+      "message": "Can we add with service record variant too ?\n\nAlso, can we rename this to mention \"unauthenticated link key\" in the function name ? else it might be confusing",
+      "revId": "0dd1e466997771bc76646ab828f4eaf6efa5c7ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
