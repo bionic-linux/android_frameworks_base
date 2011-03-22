@@ -16,6 +16,24 @@
       "revId": "173e445f3bbb7c85833848dea471fe4d091f3b70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X///GM\u003d",
+        "filename": "core/jni/android_server_BluetoothService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2011-03-22T06:43:32Z",
+      "side": 1,
+      "message": "It is already declared to return a boolean here \"()Z\", this was actually an error before, but correct now. Compare it to startDiscoveryNative. Or was it something else you were thinking of?",
+      "parentUuid": "AAAA/X///O8\u003d",
+      "revId": "173e445f3bbb7c85833848dea471fe4d091f3b70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
