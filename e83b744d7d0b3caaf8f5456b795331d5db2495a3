@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X///D4\u003d",
+        "filename": "obex/javax/obex/ObexHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2011-03-22T16:58:45Z",
+      "side": 1,
+      "message": "Instead of harcoding for everybody, we have the ability to have blacklists. Can you please add one blacklist.conf file - parse it and read it in here ?",
+      "revId": "e83b744d7d0b3caaf8f5456b795331d5db2495a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
