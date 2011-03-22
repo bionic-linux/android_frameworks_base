@@ -399,4 +399,7 @@
     <!-- Do not translate. Defines the slots is Two Digit Number for dialing normally not USSD -->
     <string-array name="config_twoDigitNumberPattern">
     </string-array>
+
+    <!-- The default value if the special temporary CLIP/CLIR or not -->
+    <bool name="config_special_temporary_clip_clir">false</bool>
 </resources>

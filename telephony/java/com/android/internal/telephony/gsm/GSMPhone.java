@@ -730,6 +730,8 @@ public class GSMPhone extends PhoneBase {
 
         if (mmi == null) {
             return mCT.dial(newDialString, uusInfo);
+        } else if (mmi.isSpecialTemporaryModeCLIRCLIP()) {
+            return mCT.dial(newDialString, uusInfo);
         } else if (mmi.isTemporaryModeCLIR()) {
             return mCT.dial(mmi.dialingNumber, mmi.getCLIRMode(), uusInfo);
         } else {
