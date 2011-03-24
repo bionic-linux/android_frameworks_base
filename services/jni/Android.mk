@@ -25,6 +25,8 @@ LOCAL_SHARED_LIBRARIES := \
     libsystem_server \
 	libutils \
 	libui \
+	libdl \
+	libmedia \
     libsurfaceflinger_client
 
 ifeq ($(TARGET_SIMULATOR),true)

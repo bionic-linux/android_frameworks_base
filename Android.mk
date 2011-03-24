@@ -191,7 +191,21 @@ LOCAL_SRC_FILES += \
 	vpn/java/android/net/vpn/IVpnService.aidl \
 	voip/java/android/net/sip/ISipSession.aidl \
 	voip/java/android/net/sip/ISipSessionListener.aidl \
-	voip/java/android/net/sip/ISipService.aidl
+	voip/java/android/net/sip/ISipService.aidl \
+	fmradio/java/android/hardware/fm/IFmReceiver.aidl \
+    fmradio/java/android/hardware/fm/IFmTransmitter.aidl \
+    fmradio/java/android/hardware/fm/IOnStateChangedListener.aidl \
+    fmradio/java/android/hardware/fm/IOnStartedListener.aidl \
+    fmradio/java/android/hardware/fm/IOnErrorListener.aidl \
+    fmradio/java/android/hardware/fm/IOnScanListener.aidl \
+    fmradio/java/android/hardware/fm/IOnForcedPauseListener.aidl \
+    fmradio/java/android/hardware/fm/IOnForcedResetListener.aidl \
+    fmradio/java/android/hardware/fm/IOnBlockScanListener.aidl \
+    fmradio/java/android/hardware/fm/IOnRDSDataFoundListener.aidl \
+    fmradio/java/android/hardware/fm/IOnSignalStrengthListener.aidl \
+    fmradio/java/android/hardware/fm/IOnStereoListener.aidl \
+    fmradio/java/android/hardware/fm/IOnExtraCommandListener.aidl \
+    fmradio/java/android/hardware/fm/IOnAutomaticSwitchListener.aidl
 #
 
 

@@ -40,6 +40,7 @@
 #include <hardware_legacy/AudioHardwareInterface.h>
 
 #include "AudioBufferProvider.h"
+#include "StreamSplitManagement.h"
 
 namespace android {
 
@@ -67,6 +68,8 @@ class AudioFlinger :
     friend class BinderService<AudioFlinger>;
 public:
     static char const* getServiceName() { return "media.audio_flinger"; }
+
+    int getNbrOfClients(AudioStreamIn* input);
 
     virtual     status_t    dump(int fd, const Vector<String16>& args);
 
@@ -136,9 +139,12 @@ public:
                             uint32_t *pSamplingRate,
                             uint32_t *pFormat,
                             uint32_t *pChannels,
-                            uint32_t acoustics);
+                            uint32_t acoustics,
+                            uint32_t *pInputClientId = NULL);
 
-    virtual status_t closeInput(int input);
+    virtual status_t closeInput(int input, uint32_t *inputClientId = NULL);
+
+    virtual size_t readInput(uint32_t *input, uint32_t inputClientId, void *buffer, uint32_t bytes);
 
     virtual status_t setStreamOutput(uint32_t stream, int output);
 
@@ -861,7 +867,8 @@ private:
                         AudioStreamIn *input,
                         uint32_t sampleRate,
                         uint32_t channels,
-                        int id);
+                        int id,
+                        AudioSystem::audio_input_clients pInputClientId);
                 ~RecordThread();
 
         virtual bool        threadLoop();
@@ -894,6 +901,7 @@ private:
                 int                                 mReqChannelCount;
                 uint32_t                            mReqSampleRate;
                 ssize_t                             mBytesRead;
+                AudioSystem::audio_input_clients    mInputClientId;
     };
 
     class RecordHandle : public android::BnAudioRecord {
@@ -1189,6 +1197,7 @@ private:
                 int mLifeVibesClientPid;
 #endif
                 uint32_t mMode;
+                StreamSplitManagement*              mStreamSplitManagement;
 
 };
 

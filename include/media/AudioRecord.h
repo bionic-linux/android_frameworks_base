@@ -382,6 +382,7 @@ private:
     uint32_t                mChannels;
     audio_io_handle_t       mInput;
     int                     mSessionId;
+    AudioSystem::audio_input_clients     mInputClientId;
 };
 
 }; // namespace android

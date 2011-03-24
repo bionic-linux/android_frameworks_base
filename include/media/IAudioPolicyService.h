@@ -64,7 +64,8 @@ public:
                                     uint32_t samplingRate = 0,
                                     uint32_t format = AudioSystem::FORMAT_DEFAULT,
                                     uint32_t channels = 0,
-                                    AudioSystem::audio_in_acoustics acoustics = (AudioSystem::audio_in_acoustics)0) = 0;
+                                    AudioSystem::audio_in_acoustics acoustics = (AudioSystem::audio_in_acoustics)0,
+                                    AudioSystem::audio_input_clients *inputClientId = NULL) = 0;
     virtual status_t startInput(audio_io_handle_t input) = 0;
     virtual status_t stopInput(audio_io_handle_t input) = 0;
     virtual void releaseInput(audio_io_handle_t input) = 0;

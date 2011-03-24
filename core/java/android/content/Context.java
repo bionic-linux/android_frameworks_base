@@ -1212,6 +1212,12 @@ public abstract class Context {
      * <dd> An {@link android.app.UiModeManager} for controlling UI modes.
      * <dt> {@link #DOWNLOAD_SERVICE} ("download")
      * <dd> A {@link android.app.DownloadManager} for requesting HTTP downloads
+     * <dt> {@link #RADIO_FM_RECEIVER_SERVICE} ("fm_receiver")
+     * <dd> An {@link android.hardware.fm.FmReceiver FmReceiver} for controlling the reception of
+     * FM radio.
+     * <dt> {@link #RADIO_FM_TRANSMITTER_SERVICE} ("fm_transmitter")
+     * <dd> An {@link android.hardware.fm.FmTransmitter FmTransmitter} for controlling the output
+     * of FM radio from the device.
      * </dl>
      *
      * <p>Note:  System services obtained via this API may be closely associated with
@@ -1261,6 +1267,10 @@ public abstract class Context {
      * @see android.app.UiModeManager
      * @see #DOWNLOAD_SERVICE
      * @see android.app.DownloadManager
+     * @see #RADIO_FM_RECEIVER_SERVICE
+     * @see android.hardware.fm.FmReceiver
+     * @see #RADIO_FM_TRANSMITTER_SERVICE
+     * @see android.hardware.fm.FmTransmitter
      */
     public abstract Object getSystemService(String name);
 
@@ -1548,6 +1558,24 @@ public abstract class Context {
      * @see #getSystemService
      */
     public static final String DOWNLOAD_SERVICE = "download";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a {@link
+     * android.hardware.fm.FmReceiver} that controls the reception of FM radio.
+     *
+     * @see #getSystemService
+     * @see android.hardware.fm.FmReceiver
+     */
+    public static final String RADIO_FM_RECEIVER_SERVICE = "fm_receiver";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a {@link
+     * android.hardware.fm.FmTransmitter} that controls the output of FM radio.
+     *
+     * @see #getSystemService
+     * @see android.hardware.fm.FmTransmitter
+     */
+    public static final String RADIO_FM_TRANSMITTER_SERVICE = "fm_transmitter";
 
     /**
      * Use with {@link #getSystemService} to retrieve a

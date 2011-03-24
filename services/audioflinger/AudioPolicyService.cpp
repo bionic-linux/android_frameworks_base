@@ -264,13 +264,14 @@ audio_io_handle_t AudioPolicyService::getInput(int inputSource,
                                     uint32_t samplingRate,
                                     uint32_t format,
                                     uint32_t channels,
-                                    AudioSystem::audio_in_acoustics acoustics)
+                                    AudioSystem::audio_in_acoustics acoustics,
+                                    AudioSystem::audio_input_clients *inputClientId)
 {
     if (mpPolicyManager == NULL) {
         return 0;
     }
     Mutex::Autolock _l(mLock);
-    return mpPolicyManager->getInput(inputSource, samplingRate, format, channels, acoustics);
+    return mpPolicyManager->getInput(inputSource, samplingRate, format, channels, acoustics, inputClientId);
 }
 
 status_t AudioPolicyService::startInput(audio_io_handle_t input)
@@ -546,7 +547,8 @@ audio_io_handle_t AudioPolicyService::openInput(uint32_t *pDevices,
                                 uint32_t *pSamplingRate,
                                 uint32_t *pFormat,
                                 uint32_t *pChannels,
-                                uint32_t acoustics)
+                                uint32_t acoustics,
+                                uint32_t *pInputClientId)
 {
     sp<IAudioFlinger> af = AudioSystem::get_audio_flinger();
     if (af == 0) {
@@ -554,15 +556,15 @@ audio_io_handle_t AudioPolicyService::openInput(uint32_t *pDevices,
         return 0;
     }
 
-    return af->openInput(pDevices, pSamplingRate, (uint32_t *)pFormat, pChannels, acoustics);
+    return af->openInput(pDevices, pSamplingRate, (uint32_t *)pFormat, pChannels, acoustics, pInputClientId);
 }
 
-status_t AudioPolicyService::closeInput(audio_io_handle_t input)
+status_t AudioPolicyService::closeInput(audio_io_handle_t input, uint32_t *inputClientId)
 {
     sp<IAudioFlinger> af = AudioSystem::get_audio_flinger();
     if (af == 0) return PERMISSION_DENIED;
 
-    return af->closeInput(input);
+    return af->closeInput(input, inputClientId);
 }
 
 status_t AudioPolicyService::setStreamVolume(AudioSystem::stream_type stream,

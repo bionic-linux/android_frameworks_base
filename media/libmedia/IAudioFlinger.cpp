@@ -70,7 +70,8 @@ enum {
     QUERY_EFFECT,
     GET_EFFECT_DESCRIPTOR,
     CREATE_EFFECT,
-    MOVE_EFFECTS
+    MOVE_EFFECTS,
+    READ_INPUT
 };
 
 class BpAudioFlinger : public BpInterface<IAudioFlinger>
@@ -442,7 +443,8 @@ public:
                             uint32_t *pSamplingRate,
                             uint32_t *pFormat,
                             uint32_t *pChannels,
-                            uint32_t acoustics)
+                            uint32_t acoustics,
+                            uint32_t *pInputClientId)
     {
         Parcel data, reply;
         uint32_t devices = pDevices ? *pDevices : 0;
@@ -456,6 +458,7 @@ public:
         data.writeInt32(format);
         data.writeInt32(channels);
         data.writeInt32(acoustics);
+        data.writeIntPtr((intptr_t)pInputClientId);
         remote()->transact(OPEN_INPUT, data, &reply);
         int input = reply.readInt32();
         devices = reply.readInt32();
@@ -469,11 +472,12 @@ public:
         return input;
     }
 
-    virtual status_t closeInput(int input)
+    virtual status_t closeInput(int input, uint32_t *inputClientId)
     {
         Parcel data, reply;
         data.writeInterfaceToken(IAudioFlinger::getInterfaceDescriptor());
         data.writeInt32(input);
+        data.writeIntPtr((intptr_t) inputClientId);
         remote()->transact(CLOSE_INPUT, data, &reply);
         return reply.readInt32();
     }
@@ -523,6 +527,18 @@ public:
         data.writeInterfaceToken(IAudioFlinger::getInterfaceDescriptor());
         data.writeInt32(ioHandle);
         remote()->transact(GET_INPUT_FRAMES_LOST, data, &reply);
+        return reply.readInt32();
+    }
+
+    virtual size_t readInput(uint32_t *input, uint32_t inputClientId, void *buffer, uint32_t bytes)
+    {
+        Parcel data, reply;
+        data.writeInterfaceToken(IAudioFlinger::getInterfaceDescriptor());
+        data.writeIntPtr((intptr_t) input);
+        data.writeInt32(inputClientId);
+        data.writeIntPtr((intptr_t) buffer);
+        data.writeInt32(bytes);
+        remote()->transact(READ_INPUT, data, &reply);
         return reply.readInt32();
     }
 
@@ -913,12 +929,14 @@ status_t BnAudioFlinger::onTransact(
             uint32_t format = data.readInt32();
             uint32_t channels = data.readInt32();
             uint32_t acoutics = data.readInt32();
+            uint32_t *inputClientId = (uint32_t*) data.readIntPtr();
 
             int input = openInput(&devices,
                                      &samplingRate,
                                      &format,
                                      &channels,
-                                     acoutics);
+                                     acoutics,
+                                     inputClientId);
             reply->writeInt32(input);
             reply->writeInt32(devices);
             reply->writeInt32(samplingRate);
@@ -928,7 +946,9 @@ status_t BnAudioFlinger::onTransact(
         } break;
         case CLOSE_INPUT: {
             CHECK_INTERFACE(IAudioFlinger, data, reply);
-            reply->writeInt32(closeInput(data.readInt32()));
+            uint32_t input = data.readInt32();
+            uint32_t *inputClientId = (uint32_t*) data.readIntPtr();
+            reply->writeInt32(closeInput(input, inputClientId));
             return NO_ERROR;
         } break;
         case SET_STREAM_OUTPUT: {
@@ -1042,6 +1062,15 @@ status_t BnAudioFlinger::onTransact(
             int srcOutput = data.readInt32();
             int dstOutput = data.readInt32();
             reply->writeInt32(moveEffects(session, srcOutput, dstOutput));
+            return NO_ERROR;
+        } break;
+        case READ_INPUT: {
+            CHECK_INTERFACE(IAudioFlinger, data, reply);
+            uint32_t* input = (uint32_t*) data.readIntPtr();
+            uint32_t inputClientId = data.readInt32();
+            void* buffer = (void*) data.readIntPtr();
+            uint32_t bytes = data.readInt32();
+            reply->writeInt32(readInput(input, inputClientId, buffer, bytes));
             return NO_ERROR;
         } break;
         default:

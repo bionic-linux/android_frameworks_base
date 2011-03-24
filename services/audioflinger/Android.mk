@@ -80,7 +80,8 @@ LOCAL_SRC_FILES:=               \
     AudioResampler.cpp.arm      \
     AudioResamplerSinc.cpp.arm  \
     AudioResamplerCubic.cpp.arm \
-    AudioPolicyService.cpp
+    AudioPolicyService.cpp      \
+    StreamSplitManagement.cpp
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

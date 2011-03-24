@@ -619,11 +619,12 @@ audio_io_handle_t AudioSystem::getInput(int inputSource,
                                     uint32_t samplingRate,
                                     uint32_t format,
                                     uint32_t channels,
-                                    audio_in_acoustics acoustics)
+                                    audio_in_acoustics acoustics,
+                                    audio_input_clients *inputClientId)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
     if (aps == 0) return 0;
-    return aps->getInput(inputSource, samplingRate, format, channels, acoustics);
+    return aps->getInput(inputSource, samplingRate, format, channels, acoustics, inputClientId);
 }
 
 status_t AudioSystem::startInput(audio_io_handle_t input)

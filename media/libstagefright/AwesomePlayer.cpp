@@ -37,6 +37,7 @@
 #include <media/stagefright/AudioPlayer.h>
 #include <media/stagefright/DataSource.h>
 #include <media/stagefright/FileSource.h>
+#include <media/stagefright/FMRadioDataSource.h>
 #include <media/stagefright/MediaBuffer.h>
 #include <media/stagefright/MediaDefs.h>
 #include <media/stagefright/MediaExtractor.h>
@@ -1497,6 +1498,7 @@ status_t AwesomePlayer::prepareAsync_l() {
 
 status_t AwesomePlayer::finishSetDataSource_l() {
     sp<DataSource> dataSource;
+    char *mime = NULL;
 
     if (!strncasecmp("http://", mUri.string(), 7)) {
         mConnectingDataSource = new NuHTTPDataSource;
@@ -1696,7 +1698,18 @@ status_t AwesomePlayer::finishSetDataSource_l() {
 
         sp<MediaExtractor> extractor = mRTSPController.get();
         return setDataSource_l(extractor);
-    } else {
+    } else if (!strncasecmp("fmradio://rx", mUri.string(), 12)) {
+        mime = (char*) MEDIA_MIMETYPE_AUDIO_RAW;
+        dataSource = new FMRadioDataSource();
+        status_t err = dataSource->initCheck();
+
+        if (err != OK) {
+            LOGE("dataSource->initCheck() returned %d", err);
+            return err;
+        }
+    }
+
+    else {
         dataSource = DataSource::CreateFromURI(mUri.string(), &mUriHeaders);
     }
 
@@ -1704,7 +1717,7 @@ status_t AwesomePlayer::finishSetDataSource_l() {
         return UNKNOWN_ERROR;
     }
 
-    sp<MediaExtractor> extractor = MediaExtractor::Create(dataSource);
+    sp<MediaExtractor> extractor = MediaExtractor::Create(dataSource,mime);
 
     if (extractor == NULL) {
         return UNKNOWN_ERROR;

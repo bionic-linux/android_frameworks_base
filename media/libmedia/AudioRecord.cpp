@@ -156,8 +156,10 @@ status_t AudioRecord::set(
 
     int channelCount = AudioSystem::popCount(channels);
 
+    mInputClientId = AudioSystem::AUDIO_INPUT_CLIENT_RECORD;
+
     audio_io_handle_t input = AudioSystem::getInput(inputSource,
-                                    sampleRate, format, channels, (AudioSystem::audio_in_acoustics)flags);
+                                    sampleRate, format, channels, (AudioSystem::audio_in_acoustics)flags, &mInputClientId);
     if (input == 0) {
         LOGE("Could not get audio input for record source %d", inputSource);
         return BAD_VALUE;

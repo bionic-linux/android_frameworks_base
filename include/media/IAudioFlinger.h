@@ -129,8 +129,9 @@ public:
                                     uint32_t *pSamplingRate,
                                     uint32_t *pFormat,
                                     uint32_t *pChannels,
-                                    uint32_t acoustics) = 0;
-    virtual status_t closeInput(int input) = 0;
+                                    uint32_t acoustics,
+                                    uint32_t *pInputClientId = NULL) = 0;
+    virtual status_t closeInput(int input, uint32_t* inputClientId = NULL) = 0;
 
     virtual status_t setStreamOutput(uint32_t stream, int output) = 0;
 
@@ -163,6 +164,8 @@ public:
                                     int *enabled) = 0;
 
     virtual status_t moveEffects(int session, int srcOutput, int dstOutput) = 0;
+
+    virtual size_t readInput(uint32_t *input, uint32_t inputClientId, void *buffer, uint32_t bytes) = 0;
 };
 
 

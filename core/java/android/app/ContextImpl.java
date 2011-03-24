@@ -58,6 +58,12 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.hardware.fm.IFmReceiver;
+import android.hardware.fm.IFmTransmitter;
+import android.hardware.fm.FmReceiver;
+import android.hardware.fm.FmTransmitter;
+import android.hardware.fm.FmReceiverImpl;
+import android.hardware.fm.FmTransmitterImpl;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.hardware.SensorManager;
@@ -196,6 +202,8 @@ class ContextImpl extends Context {
     private StatusBarManager mStatusBarManager = null;
     private TelephonyManager mTelephonyManager = null;
     private ClipboardManager mClipboardManager = null;
+    private FmReceiver mFmReceiver = null;
+    private FmTransmitter mFmTransmitter = null;
     private boolean mRestricted;
     private AccountManager mAccountManager; // protected by mSync
     private DropBoxManager mDropBoxManager = null;
@@ -973,6 +981,10 @@ class ContextImpl extends Context {
             return getClipboardManager();
         } else if (WALLPAPER_SERVICE.equals(name)) {
             return getWallpaperManager();
+        } else if (RADIO_FM_RECEIVER_SERVICE.equals(name)) {
+            return getFmReceiver();
+        } else if (RADIO_FM_TRANSMITTER_SERVICE.equals(name)) {
+            return getFmTransmitter();
         } else if (DROPBOX_SERVICE.equals(name)) {
             return getDropBoxManager();
         } else if (DEVICE_POLICY_SERVICE.equals(name)) {
@@ -1176,6 +1188,28 @@ class ContextImpl extends Context {
             mAudioManager = new AudioManager(this);
         }
         return mAudioManager;
+    }
+
+    private FmReceiver getFmReceiver() {
+        synchronized (mSync) {
+            if (mFmReceiver == null) {
+                 IBinder b = ServiceManager.getService(RADIO_FM_RECEIVER_SERVICE);
+                 IFmReceiver service = IFmReceiver.Stub.asInterface(b);
+                 mFmReceiver = new FmReceiverImpl(service);
+            }
+        }
+        return mFmReceiver;
+    }
+
+    private FmTransmitter getFmTransmitter() {
+        synchronized (mSync) {
+            if (mFmTransmitter == null) {
+                IBinder b = ServiceManager.getService(RADIO_FM_TRANSMITTER_SERVICE);
+                IFmTransmitter service = IFmTransmitter.Stub.asInterface(b);
+                mFmTransmitter = new FmTransmitterImpl(service);
+            }
+        }
+        return mFmTransmitter;
     }
 
     /* package */ static DropBoxManager createDropBoxManager() {

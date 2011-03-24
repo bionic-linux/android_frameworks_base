@@ -18,6 +18,8 @@ page.title=Audio and Video
     <ol>
       <li><a href="#playraw">Playing from a Raw Resource</li>
       <li><a href="#playfile">Playing from a File or Stream</li>
+      <li><a href="#playfmradio">Playing FM Radio</li>
+      <li><a href="#transmitfmradio">Transmitting FM Radio</li>
       <li><a href="#jet">Playing JET Content</li>
     </ol>
 </li>
@@ -123,6 +125,53 @@ above.</p>
 <p class="note"><strong>Note:</strong>
 If you're passing a URL to an online media file, the file must be capable of 
 progressive download.</p>
+
+<h3 id="playfmradio">Playing FM Radio</h3>
+<p>You can play FM Radio by using the <code>FmReceiver</code> to control the reception
+and the <code>MediaPlayer</code> to play the FM Radio stream.</p>
+<ol>
+  <li>Retrieve an instance of the <code>FmReceiver</code> by using <code>getSystemService</code></li>
+  <li>Call {@link android.hardware.fm.FmReceiver#start start()}
+    with the <code>FmBand</code> to use for the FM reception</li>
+  <li>Create an instance of the <code>MediaPlayer</code> using <code>new</code></li>
+  <li>Call {@link android.media.MediaPlayer#setDataSource setDataSource()}
+    with a String containing the data source for FM Radio reception</li>
+  <li>First {@link android.media.MediaPlayer#prepare prepare()} then
+  {@link android.media.MediaPlayer#start() start()} on the instance:</li>
+</ol>
+<pre>
+    FmReceiver fmr = (FmReceiver) getSystemService(Context.RADIO_FM_RECEIVER_SERVICE);
+    fmr.start(new FmBand(FmBand.BAND_EU));
+
+    MediaPlayer mp = new MediaPlayer();
+    mp.setDataSource("fmradio://rx");
+    mp.prepare();
+    mp.start();
+</pre>
+
+<h3 id="transmitfmradio">Transmitting FM Radio</h3>
+<p>You can transmit FM Radio by using the <code>FmTransmitter</code> to control the output
+and the <code>MediaPlayer</code> to select the audio stream that will be transmitted.</p>
+<ol>
+  <li>Retrieve an instance of the <code>FmTransmitter</code> by using <code>getSystemService</code></li>
+  <li>Call {@link android.hardware.fm.FmTransmitter#start start()}
+    with the <code>FmBand</code> to use for the FM transmission</li>
+  <li>Create an instance of the <code>MediaPlayer</code> using <code>new</code></li>
+  <li>Call {@link android.media.MediaPlayer#setDataSource setDataSource()}
+    with a String containing the path (local filesystem or URL)
+    to the file you want to play</li>
+  <li>First {@link android.media.MediaPlayer#prepare prepare()} then
+  {@link android.media.MediaPlayer#start() start()} on the instance:</li>
+</ol>
+<pre>
+    FmTransmitter fmt = (FmTransmitter) getSystemService(Context.RADIO_FM_TRANSMITTER_SERVICE);
+    fmt.start(new FmBand(FmBand.BAND_EU));
+
+    MediaPlayer mp = new MediaPlayer();
+    mp.setDataSource(PATH_TO_FILE);
+    mp.prepare();
+    mp.start();
+</pre>
 
 <h3 id="jet">Playing JET content</h3>
 <p>The Android platform includes a JET engine that lets you add interactive playback of JET audio content in your applications. You can create JET content for interactive playback using the JetCreator authoring application that ships with the SDK. To play and manage JET content from your application, use the {@link android.media.JetPlayer JetPlayer} class.</p>
