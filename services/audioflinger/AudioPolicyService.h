@@ -69,7 +69,8 @@ public:
                                     uint32_t format = AudioSystem::FORMAT_DEFAULT,
                                     uint32_t channels = 0,
                                     AudioSystem::audio_in_acoustics acoustics =
-                                            (AudioSystem::audio_in_acoustics)0);
+                                            (AudioSystem::audio_in_acoustics)0,
+                                    AudioSystem::audio_input_clients *inputClientId = NULL);
     virtual status_t startInput(audio_io_handle_t input);
     virtual status_t stopInput(audio_io_handle_t input);
     virtual void releaseInput(audio_io_handle_t input);
@@ -116,8 +117,9 @@ public:
                                     uint32_t *pSamplingRate,
                                     uint32_t *pFormat,
                                     uint32_t *pChannels,
-                                    uint32_t acoustics);
-    virtual status_t closeInput(audio_io_handle_t input);
+                                    uint32_t acoustics,
+                                    uint32_t *pInputClientId = NULL);
+    virtual status_t closeInput(audio_io_handle_t input, uint32_t *inputClientId = NULL);
     virtual status_t setStreamVolume(AudioSystem::stream_type stream,
                                      float volume,
                                      audio_io_handle_t output,
