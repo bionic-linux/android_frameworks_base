@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X///GE\u003d",
+        "filename": "api/current.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 46712,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-03-24T07:32:04Z",
+      "side": 1,
+      "message": "Aren\u0027t these two feature names also duplicates, similar to my comment on previous patch set?",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X///Fc\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-03-24T07:32:04Z",
+      "side": 1,
+      "message": "For testing purposes, I think it would be great if this class could be extended and mocked. Currently it cannot, because the one single constructor is hidden and it also takes a parameter of a hidden type. \nWould it be possible to move the implementation into a sub-class and make this one an abstract super-class? Alternatively if a public default constructor was added, but that seems less clean.\n\nIf this was done, test code could mock the hardware easier by implementing a sub-class of it.",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+0s\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-03-24T07:32:04Z",
+      "side": 1,
+      "message": "I have a feeling all these private classes could be private static classes?",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+0o\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmTransmitter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-03-24T07:32:04Z",
+      "side": 1,
+      "message": "Same comment as on FmReceiver - would be great if this class could be mocked easily.",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
