@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA/X//+zs\u003d",
+        "filename": "api/current.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 46712,
+      "author": {
+        "id": 1005982
+      },
+      "writtenOn": "2011-03-24T12:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA/X///GE\u003d",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/X///Fc\u003d",
         "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2011-03-24T07:32:04Z",
       "side": 1,
       "message": "For testing purposes, I think it would be great if this class could be extended and mocked. Currently it cannot, because the one single constructor is hidden and it also takes a parameter of a hidden type. \nWould it be possible to move the implementation into a sub-class and make this one an abstract super-class? Alternatively if a public default constructor was added, but that seems less clean.\n\nIf this was done, test code could mock the hardware easier by implementing a sub-class of it.",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+zo\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1005982
+      },
+      "writtenOn": "2011-03-24T12:08:58Z",
+      "side": 1,
+      "message": "We believe that constructor must be hidden because internal implementation classes will creates the object at Android boot and the constructor must not be visible from an application context. This is also how it\u0027s done in other system services like WifiManager, LocationManager, TelephoneManager, ConnectivityManager and BluetoothAdapter.",
+      "parentUuid": "AAAA/X///Fc\u003d",
       "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA/X//+zk\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1005982
+      },
+      "writtenOn": "2011-03-24T12:08:58Z",
+      "side": 1,
+      "message": "We looked at a few other services like LocationManager and are following the way it\u0027s done there. What would be the benefit of this change?",
+      "parentUuid": "AAAA/X//+0s\u003d",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/X//+0o\u003d",
         "filename": "fmradio/java/android/hardware/fm/FmTransmitter.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2011-03-24T07:32:04Z",
       "side": 1,
       "message": "Same comment as on FmReceiver - would be great if this class could be mocked easily.",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+zg\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmTransmitter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1005982
+      },
+      "writtenOn": "2011-03-24T12:08:58Z",
+      "side": 1,
+      "message": "See FmReceiver answer.",
+      "parentUuid": "AAAA/X//+0o\u003d",
       "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
