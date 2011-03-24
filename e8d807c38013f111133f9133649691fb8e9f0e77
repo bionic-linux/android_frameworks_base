@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA/X//+zM\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-03-24T12:23:29Z",
+      "side": 1,
+      "message": "Yes, but if the implementation is moved down into a completely hidden sub-class such as \"FmReceiverImpl\", it would still not be visible from an application context?\n\nAll the application would see would be an abstract class with a protected default constructor and all abstract methods. Application\u0027s would still have to acquire an instance via Context.getSystemService().",
+      "parentUuid": "AAAA/X//+zo\u003d",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/X//+0s\u003d",
         "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "We looked at a few other services like LocationManager and are following the way it\u0027s done there. What would be the benefit of this change?",
       "parentUuid": "AAAA/X//+0s\u003d",
+      "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+zE\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-03-24T12:23:29Z",
+      "side": 1,
+      "message": "Well, it\u0027s good practice (and more memory efficient etc) to make inner classes that do not explicitly need to reference any instance of the enclosing class static. \nNot critical of course though. Just a tip.",
+      "parentUuid": "AAAA/X//+zk\u003d",
       "revId": "e8d807c38013f111133f9133649691fb8e9f0e77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
