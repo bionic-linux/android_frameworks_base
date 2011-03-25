@@ -34,6 +34,24 @@
       "revId": "0dd1e466997771bc76646ab828f4eaf6efa5c7ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+r4\u003d",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2011-03-25T16:26:37Z",
+      "side": 1,
+      "message": "I think the current name is good enough. Lets explain it better in the java doc.\n\nPlease upload the service record variant.",
+      "parentUuid": "AAAA/X//+tc\u003d",
+      "revId": "0dd1e466997771bc76646ab828f4eaf6efa5c7ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
