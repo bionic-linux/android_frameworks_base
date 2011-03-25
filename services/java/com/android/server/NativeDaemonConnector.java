@@ -90,6 +90,7 @@ final class NativeDaemonConnector implements Runnable {
 
     private void listenToSocket() throws IOException {
         LocalSocket socket = null;
+        if (LOCAL_LOGD) Slog.d(TAG, String.format("listenToSocket"));
 
         try {
             socket = new LocalSocket();
@@ -125,6 +126,7 @@ final class NativeDaemonConnector implements Runnable {
 
                             if (code >= ResponseCode.UnsolicitedInformational) {
                                 try {
+                                    if (LOCAL_LOGD) Slog.d(TAG, String.format("EVT <- {%s}", event));
                                     if (!mCallbacks.onEvent(code, event, tokens)) {
                                         Slog.w(TAG, String.format(
                                                 "Unhandled event (%s)", event));
@@ -135,6 +137,7 @@ final class NativeDaemonConnector implements Runnable {
                                 }
                             } else {
                                 try {
+                                    if (LOCAL_LOGD) Slog.d(TAG, String.format("RSP <- {%s}", event));
                                     mResponseQueue.put(event);
                                 } catch (InterruptedException ex) {
                                     Slog.e(TAG, "Failed to put response onto queue", ex);
@@ -232,7 +235,6 @@ final class NativeDaemonConnector implements Runnable {
             try {
                 // TODO - this should not block forever
                 String line = mResponseQueue.take();
-                if (LOCAL_LOGD) Slog.d(TAG, String.format("RSP <- {%s}", line));
                 String[] tokens = line.split(" ");
                 try {
                     code = Integer.parseInt(tokens[0]);
