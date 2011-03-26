@@ -1525,14 +1525,14 @@
 
     <!-- For the unlock screen, Information message shown in dialog when user has too many failed attempts -->
     <string name="lockscreen_too_many_failed_attempts_dialog_message">
-        You have incorrectly drawn your unlock pattern <xliff:g id="number">%d</xliff:g> times.
+        You have incorrectly entered your unlock code or pattern <xliff:g id="number">%d</xliff:g> times.
         \n\nPlease try again in <xliff:g id="number">%d</xliff:g> seconds.
     </string>
 
     <!-- For the unlock screen, Information message shown in dialog when user is almost at the limit
          where they will be locked out and may have to enter an alternate username/password to unlock the phone -->
     <string name="lockscreen_failed_attempts_almost_glogin">
-        You have incorrectly drawn your unlock pattern <xliff:g id="number">%d</xliff:g> times.
+        You have incorrectly entered your unlock code or pattern <xliff:g id="number">%d</xliff:g> times.
        After <xliff:g id="number">%d</xliff:g> more unsuccessful attempts,
        you will be asked to unlock your phone using your Google sign-in.\n\n
        Please try again in <xliff:g id="number">%d</xliff:g> seconds.
