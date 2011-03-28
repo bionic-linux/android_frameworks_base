@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X//+kI\u003d",
+        "filename": "media/java/android/media/ThumbnailUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-03-28T06:15:56Z",
+      "side": 1,
+      "message": "Could you add the exception to the log please? Log.e(TAG, message, oom).",
+      "revId": "4ca491ea24a18d51e5df5256cbc6cbf8a9e67af5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
