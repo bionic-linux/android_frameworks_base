@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X//+F4\u003d",
+        "filename": "include/ui/InputDispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "Yes, please do drop this, or consider replacing it with \"const char* reason\".  A string would be more descriptive for debugging anyways.  Line numbers change often.",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+GA\u003d",
+        "filename": "include/ui/InputDispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "Remove this field.",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+F8\u003d",
+        "filename": "include/ui/InputDispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "Make this non-static.\n\nThe code that calls this should go through the InputManager class instead.\n\nIn particular, InputManager.java\u0027s JNI counterpart owns the InputManager singleton which owns the InputDispatcher.  So if you call in through that point then there should be no guessing involved as to how to obtain the instance.",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+F0\u003d",
+        "filename": "include/ui/InputDispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "Drop lineno or use something like const char* reason instead.",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+GM\u003d",
+        "filename": "libs/ui/InputDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "Please remove mInstance.  There should be no need for it.",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+Fw\u003d",
+        "filename": "libs/ui/InputDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "That\u0027s what resetTargetsLocked is supposed to take care of.  I don\u0027t want mInputTargetWaitStateTime being accessed or modified anywhere outside of that chunk of code.\n\nYou could pass in a flag to resetTargetsLocked to better describe why the targets are being reset so you can log the timing accordingly.",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+Fs\u003d",
+        "filename": "libs/ui/InputDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "Don\u0027t do this.",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+GE\u003d",
+        "filename": "libs/ui/InputDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "This code should be moved to the end of the file.  The code for each nested class is collected together and should follow a fold similar to // --- InputDispatcher::Class ---",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+GI\u003d",
+        "filename": "libs/ui/InputDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-04-01T23:34:41Z",
+      "side": 1,
+      "message": "line length \u003c 100",
+      "revId": "fd42b097f82466454bd3a2d0a0505f639517a0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
