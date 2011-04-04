@@ -197,6 +197,10 @@ private:
         // This function keeps trying to grab mLock, or give up if the message
         // is found to be disabled. It returns true if mLock is grabbed.
         bool                    lockIfMessageWanted(int32_t msgType);
+
+        // This function is called internally to release recording frame.
+        // This is called on camera hardware process when mMsgEnabled is false.
+        void                    releaseRecordingFrameInternal(const sp<IMemory>& mem);
     };
 };
 
