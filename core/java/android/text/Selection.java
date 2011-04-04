@@ -71,11 +71,47 @@ public class Selection {
         int oend = getSelectionEnd(text);
     
         if (ostart != start || oend != stop) {
+            // Adjust the selection edges to avoid cutting any surrogate pair
+            // characters in half
+            final boolean cursorAdjustment = start == stop;
+            start = getAdjustedSelectStart(text, start);
+            if (!cursorAdjustment) {
+                // Normal selection
+                stop = getAdjustedSelectStop(text, stop);
+            } else {
+                // This is a cursor adjustment, length of selection is zero
+                stop = start;
+            }
+
             text.setSpan(SELECTION_START, start, start,
                          Spanned.SPAN_POINT_POINT|Spanned.SPAN_INTERMEDIATE);
             text.setSpan(SELECTION_END, stop, stop,
                          Spanned.SPAN_POINT_POINT);
         }
+    }
+
+    /**
+     * Get a selection start edge that considers surrogate pairs. Encountered
+     * surrogate pair will be included in the selection
+     */
+    private static int getAdjustedSelectStart(Spannable text, int position) {
+        if (position > 0 && position < text.length()
+                && Character.isSurrogatePair(text.charAt(position - 1), text.charAt(position))) {
+            position--;
+        }
+        return position;
+    }
+
+    /**
+     * Get a selection end edge that considers surrogate pairs. Encountered
+     * surrogate pair will be included in the selection
+     */
+    private static int getAdjustedSelectStop(Spannable text, int position) {
+        if (position > 0 && position < text.length()
+                && Character.isSurrogatePair(text.charAt(position-1), text.charAt(position))) {
+            position++;
+        }
+        return position;
     }
 
     /**
