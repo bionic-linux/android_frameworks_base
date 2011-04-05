@@ -1766,6 +1766,8 @@ EGLBoolean eglMakeCurrent(  EGLDisplay dpy, EGLSurface draw,
             
             if (c->draw) {
                 egl_surface_t* s = reinterpret_cast<egl_surface_t*>(c->draw);
+                if (!s->isValid())
+                    return setError(EGL_BAD_SURFACE, EGL_FALSE);
                 s->disconnect();
             }
             if (c->read) {
@@ -1807,11 +1809,15 @@ EGLBoolean eglMakeCurrent(  EGLDisplay dpy, EGLSurface draw,
                 egl_surface_t* d = (egl_surface_t*)c->draw;
                 egl_surface_t* r = (egl_surface_t*)c->read;
                 if (d) {
+                    if (!d->isValid())
+                        return setError(EGL_BAD_SURFACE, EGL_FALSE);
                     c->draw = 0;
                     d->ctx = EGL_NO_CONTEXT;
                     d->disconnect();
                 }
                 if (r) {
+                    if (!r->isValid())
+                        return setError(EGL_BAD_SURFACE, EGL_FALSE);
                     c->read = 0;
                     r->ctx = EGL_NO_CONTEXT;
                     // FIXME: unlock/disconnect the read surface too 
