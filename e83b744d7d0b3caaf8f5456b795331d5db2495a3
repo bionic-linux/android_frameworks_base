@@ -16,6 +16,24 @@
       "revId": "e83b744d7d0b3caaf8f5456b795331d5db2495a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/n///1M\u003d",
+        "filename": "obex/javax/obex/ObexHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1006036
+      },
+      "writtenOn": "2011-04-05T13:31:56Z",
+      "side": 1,
+      "message": "What do you suggest the blacklisting should be based on? \n\nI expect that nor name neither bd_addr can be used to identify a Win7 device because user may change the name and it may run on many types of hardware. I assume dynamic blacklisting could be an option, but I am not sure we can isolate this case from other transfer failures and implementation would only be slightly better than \"hardcoding for all\".",
+      "parentUuid": "AAAA/X///D4\u003d",
+      "revId": "e83b744d7d0b3caaf8f5456b795331d5db2495a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
