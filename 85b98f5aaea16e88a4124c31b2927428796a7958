@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/n///r4\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmBand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1006036
+      },
+      "writtenOn": "2011-04-06T07:20:17Z",
+      "side": 1,
+      "message": "The channels in US have an offset of 100KHz, so the actual frequencies are 87.9, 88.1, 88.3 etc [MHz]. So the max frequency should be 107900 and min freq should be 87900. See http://en.wikipedia.org/wiki/FM_broadcast_band for more information.",
+      "revId": "85b98f5aaea16e88a4124c31b2927428796a7958",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/n///r8\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmBand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1006036
+      },
+      "writtenOn": "2011-04-06T07:20:17Z",
+      "side": 1,
+      "message": "This will fail with the updated US band definition, ((frequency-mMinFrequency) % mChannelOffset !\u003d 0) should work.",
+      "revId": "85b98f5aaea16e88a4124c31b2927428796a7958",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
