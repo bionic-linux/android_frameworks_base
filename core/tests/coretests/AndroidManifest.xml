@@ -94,6 +94,9 @@
     <uses-permission android:name="android.permission.ASEC_RENAME" />
     <uses-permission android:name="android.permission.SHUTDOWN" />
 
+    <!-- appwidget testpermissions -->
+    <uses-permission android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
+
     <application android:theme="@style/Theme">
         <uses-library android:name="android.test.runner" />
         <activity android:name="android.view.ViewAttachTestActivity" android:label="View Attach Test">
@@ -1213,6 +1216,17 @@
         <provider android:name="android.app.SuggestionProvider"
                 android:authorities="android.app.SuggestionProvider">
         </provider>
+
+        <!-- Application components used for appwidget tests -->
+        <receiver
+            android:name="android.appwidget.TestWidget"
+            android:label="@string/test_widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/test_widget" />
+        </receiver>
 
     </application>
 

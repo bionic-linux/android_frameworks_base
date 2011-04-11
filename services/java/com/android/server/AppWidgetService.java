@@ -145,6 +145,7 @@ class AppWidgetService extends IAppWidgetService.Stub
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_PACKAGE_ADDED);
         filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
         filter.addDataScheme("package");
         mContext.registerReceiver(mBroadcastReceiver, filter);
         // Register for events related to sdcard installation.
@@ -1093,6 +1094,19 @@ class AppWidgetService extends IAppWidgetService.Stub
                         }
                         saveStateLocked();
                     }
+                }
+            } else if (Intent.ACTION_PACKAGE_CHANGED.equals(action)) {
+                Uri uri = intent.getData();
+                if (uri == null) {
+                    return;
+                }
+                String pkgName = uri.getSchemeSpecificPart();
+                if (pkgName == null) {
+                    return;
+                }
+                synchronized (mAppWidgetIds) {
+                    updateProvidersForPackageLocked(pkgName);
+                    saveStateLocked();
                 }
             } else {
                 boolean added = false;
