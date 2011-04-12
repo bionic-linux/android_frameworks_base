@@ -19,7 +19,7 @@ package com.android.server.am;
 import android.content.pm.ApplicationInfo;
 
 /** @hide */
-class BackupRecord {
+final class BackupRecord {
     // backup/restore modes
     public static final int BACKUP_NORMAL = 0;
     public static final int BACKUP_FULL = 1;
@@ -28,13 +28,14 @@ class BackupRecord {
     String stringName;                     // cached toString() output
     final ApplicationInfo appInfo;         // information about BackupAgent's app
     final int backupMode;                  // full backup / incremental / restore
-    ProcessRecord app;                     // where this agent is running or null
+    final ProcessRecord app;                     // where this agent is running or null
 
     // ----- Implementation -----
 
-    BackupRecord(ApplicationInfo _appInfo, int _backupMode) {
+    BackupRecord(ApplicationInfo _appInfo, int _backupMode, ProcessRecord app) {
         appInfo = _appInfo;
         backupMode = _backupMode;
+        this.app = app;
     }
 
     public String toString() {

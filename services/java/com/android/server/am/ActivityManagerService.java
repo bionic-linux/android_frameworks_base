@@ -9860,17 +9860,16 @@ public final class ActivityManagerService extends ActivityManagerNative
 
         synchronized(this) {
             // !!! TODO: currently no check here that we're already bound
-            BackupRecord r = new BackupRecord(app, backupMode);
             ComponentName hostingName = new ComponentName(app.packageName, app.backupAgentName);
             // startProcessLocked() returns existing proc's record if it's already running
             ProcessRecord proc = startProcessLocked(app.processName, app,
                     false, 0, "backup", hostingName, false);
+            final BackupRecord r = new BackupRecord(app, backupMode, proc);
             if (proc == null) {
                 Slog.e(TAG, "Unable to start backup agent process " + r);
                 return false;
             }
 
-            r.app = proc;
             mBackupTarget = r;
             mBackupAppName = app.packageName;
 
