@@ -16,14 +16,15 @@
 
 package com.android.server.am;
 
+import android.app.IApplicationThread;
 import android.content.pm.ApplicationInfo;
 
 /** @hide */
 final class BackupRecord {
-    // backup/restore modes
-    public static final int BACKUP_NORMAL = 0;
-    public static final int BACKUP_FULL = 1;
-    public static final int RESTORE = 2;
+
+    static final int BACKUP_INCREMENTAL = IApplicationThread.BACKUP_MODE_INCREMENTAL;
+    static final int BACKUP_FULL = IApplicationThread.BACKUP_MODE_FULL;
+    static final int RESTORE = IApplicationThread.BACKUP_MODE_RESTORE;
     
     final ApplicationInfo appInfo;         // information about BackupAgent's app
     final int backupMode;                  // full backup / incremental / restore
