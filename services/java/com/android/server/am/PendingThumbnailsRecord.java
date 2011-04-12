@@ -21,19 +21,37 @@ import android.app.IThumbnailReceiver;
 import java.util.HashSet;
 
 /**
- * This class keeps track of calls to getTasks() that are still
- * waiting for thumbnail images.
+ * This class keeps track of calls to {@code getTasks()}
+ * that are still waiting for thumbnail images.
  */
-class PendingThumbnailsRecord
-{
-    final IThumbnailReceiver receiver;   // who is waiting.
-    HashSet pendingRecords; // HistoryRecord objects we still wait for.
-    boolean finished;       // Is pendingRecords empty?
+final class PendingThumbnailsRecord {
 
-    PendingThumbnailsRecord(IThumbnailReceiver _receiver)
-    {
-        receiver = _receiver;
-        pendingRecords = new HashSet();
-        finished = false;
+    /**
+     * Who is waiting.
+     */
+    final IThumbnailReceiver receiver;
+
+    /**
+     * HistoryRecord objects we still wait for.
+     */
+    final HashSet pendingRecords = new HashSet();
+
+    /**
+     * A flag indicating that records were processed.
+     */
+    volatile boolean finished;
+
+    /**
+     * Creates a new pending thumbnail record for given receiver.
+     *
+     * @param receiver a thumbnail receiver.
+     * @throws IllegalArgumentException if {@code receiver} is {@code null}.
+     */
+    PendingThumbnailsRecord(final IThumbnailReceiver receiver) {
+        if (receiver == null) {
+            throw new IllegalArgumentException();
+        }
+        this.receiver = receiver;
     }
+
 }
