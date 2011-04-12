@@ -9864,7 +9864,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             // startProcessLocked() returns existing proc's record if it's already running
             ProcessRecord proc = startProcessLocked(app.processName, app,
                     false, 0, "backup", hostingName, false);
-            final BackupRecord r = new BackupRecord(app, backupMode, proc);
+            final BackupRecord r = new BackupRecord(backupMode, app, proc);
             if (proc == null) {
                 Slog.e(TAG, "Unable to start backup agent process " + r);
                 return false;
