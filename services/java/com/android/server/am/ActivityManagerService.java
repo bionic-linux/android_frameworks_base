@@ -9860,13 +9860,7 @@ public final class ActivityManagerService extends ActivityManagerNative
 
         synchronized(this) {
             // !!! TODO: currently no check here that we're already bound
-            BatteryStatsImpl.Uid.Pkg.Serv ss = null;
-            BatteryStatsImpl stats = mBatteryStatsService.getActiveStatistics();
-            synchronized (stats) {
-                ss = stats.getServiceStatsLocked(app.uid, app.packageName, app.name);
-            }
-
-            BackupRecord r = new BackupRecord(ss, app, backupMode);
+            BackupRecord r = new BackupRecord(app, backupMode);
             ComponentName hostingName = new ComponentName(app.packageName, app.backupAgentName);
             // startProcessLocked() returns existing proc's record if it's already running
             ProcessRecord proc = startProcessLocked(app.processName, app,

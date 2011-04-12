@@ -16,8 +16,6 @@
 
 package com.android.server.am;
 
-import com.android.internal.os.BatteryStatsImpl;
-
 import android.content.pm.ApplicationInfo;
 
 /** @hide */
@@ -27,7 +25,6 @@ class BackupRecord {
     public static final int BACKUP_FULL = 1;
     public static final int RESTORE = 2;
     
-    final BatteryStatsImpl.Uid.Pkg.Serv stats;
     String stringName;                     // cached toString() output
     final ApplicationInfo appInfo;         // information about BackupAgent's app
     final int backupMode;                  // full backup / incremental / restore
@@ -35,9 +32,7 @@ class BackupRecord {
 
     // ----- Implementation -----
 
-    BackupRecord(BatteryStatsImpl.Uid.Pkg.Serv _agentStats, ApplicationInfo _appInfo,
-            int _backupMode) {
-        stats = _agentStats;
+    BackupRecord(ApplicationInfo _appInfo, int _backupMode) {
         appInfo = _appInfo;
         backupMode = _backupMode;
     }
