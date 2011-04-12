@@ -25,7 +25,6 @@ final class BackupRecord {
     public static final int BACKUP_FULL = 1;
     public static final int RESTORE = 2;
     
-    String stringName;                     // cached toString() output
     final ApplicationInfo appInfo;         // information about BackupAgent's app
     final int backupMode;                  // full backup / incremental / restore
     final ProcessRecord app;                     // where this agent is running or null
@@ -39,15 +38,12 @@ final class BackupRecord {
     }
 
     public String toString() {
-        if (stringName != null) {
-            return stringName;
-        }
-        StringBuilder sb = new StringBuilder(128);
+        final StringBuilder sb = new StringBuilder(128);
         sb.append("BackupRecord{")
             .append(Integer.toHexString(System.identityHashCode(this)))
             .append(' ').append(appInfo.packageName)
             .append(' ').append(appInfo.name)
             .append(' ').append(appInfo.backupAgentName).append('}');
-        return stringName = sb.toString();
+        return sb.toString();
     }
 }
