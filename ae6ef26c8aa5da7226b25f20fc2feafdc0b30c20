@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/n//+1Y\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2011-04-12T06:39:00Z",
+      "side": 1,
+      "message": "Perhaps isApiSupported was better as static? Currently you have to instantiate the service in order to ask if it exists? Since it\u0027s just a handy convenience wrapper for a call to the PackageManager without any dependencies to the internal implementation details, perhaps the implementation of this method could be kept in this class and the method static?",
+      "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
