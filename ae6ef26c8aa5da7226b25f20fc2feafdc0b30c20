@@ -16,6 +16,24 @@
       "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/n//+0k\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1006175
+      },
+      "writtenOn": "2011-04-12T09:05:40Z",
+      "side": 1,
+      "message": "I agree. It works just fine to move the implementation back to this file and make the method static. It will be fixed in the next patch set for both FmReceiver and FmTransmitter.",
+      "parentUuid": "AAAA/n//+1Y\u003d",
+      "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
