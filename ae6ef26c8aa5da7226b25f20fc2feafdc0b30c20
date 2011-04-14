@@ -51,6 +51,24 @@
       "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/n//+i4\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiverService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1006175
+      },
+      "writtenOn": "2011-04-14T13:43:33Z",
+      "side": 1,
+      "message": "The implementation for this method has been removed and it will be removed from the API in the next patch set",
+      "parentUuid": "AAAA/n//+q0\u003d",
+      "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
