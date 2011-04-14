@@ -16,6 +16,24 @@
       "revId": "08d9d9a46250c4fad66e9b637e8898a3524c4286",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/n//+kg\u003d",
+        "filename": "services/java/com/android/server/am/BackupRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1005471
+      },
+      "writtenOn": "2011-04-14T05:16:43Z",
+      "side": 0,
+      "message": "Heh, that future maybe never happens. See what it costs to keep the code here \"just for case\": several calls on several different methods using synchronized blocks. Is it really worth to have this, if the only real effect is confused developer, larger memory fooprint and worse performance?",
+      "parentUuid": "AAAA/n//+m4\u003d",
+      "revId": "08d9d9a46250c4fad66e9b637e8898a3524c4286",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
