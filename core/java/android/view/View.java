@@ -1868,10 +1868,15 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
      *
      * @param context The Context the view is running in, through which it can
      *        access the current theme, resources, etc.
+     *
+     *  @throws  IllegalArgumentException if {@code context} is {@code null}.
      */
     public View(Context context) {
+        if (context == null) {
+            throw new IllegalArgumentException();
+        }
         mContext = context;
-        mResources = context != null ? context.getResources() : null;
+        mResources = context.getResources();
         mViewFlags = SOUND_EFFECTS_ENABLED | HAPTIC_FEEDBACK_ENABLED;
         // Used for debug only
         //++sInstanceCount;
