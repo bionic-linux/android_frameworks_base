@@ -16,6 +16,7 @@
 
 package com.android.server.am;
 
+import android.app.IApplicationThread;
 import com.android.internal.os.BatteryStatsImpl;
 
 import android.content.pm.ApplicationInfo;
@@ -23,9 +24,9 @@ import android.content.pm.ApplicationInfo;
 /** @hide */
 class BackupRecord {
     // backup/restore modes
-    public static final int BACKUP_NORMAL = 0;
-    public static final int BACKUP_FULL = 1;
-    public static final int RESTORE = 2;
+    public static final int BACKUP_NORMAL = IApplicationThread.BACKUP_MODE_INCREMENTAL;
+    public static final int BACKUP_FULL = IApplicationThread.BACKUP_MODE_FULL;
+    public static final int RESTORE = IApplicationThread.BACKUP_MODE_RESTORE;
     
     final BatteryStatsImpl.Uid.Pkg.Serv stats;
     String stringName;                     // cached toString() output
