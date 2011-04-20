@@ -2579,7 +2579,7 @@ public final class ViewRoot extends Handler implements ViewParent,
 
                     if (direction != 0) {
 
-                        View focused = mView != null ? mView.findFocus() : null;
+                        final View focused = mView.findFocus();
                         if (focused != null) {
                             View v = focused.focusSearch(direction);
                             boolean focusPassed = false;
