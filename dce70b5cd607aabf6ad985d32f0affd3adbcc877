@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/3///uM\u003d",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2011-04-27T16:51:26Z",
+      "side": 1,
+      "message": "Need to distinguish with the insecure version because when its made a pubic API ppl are not confused.",
+      "revId": "dce70b5cd607aabf6ad985d32f0affd3adbcc877",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
