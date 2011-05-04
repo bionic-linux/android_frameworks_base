@@ -152,6 +152,8 @@ LOCAL_SRC_FILES += \
 	core/java/android/speech/tts/ITts.aidl \
 	core/java/android/speech/tts/ITtsCallback.aidl \
 	core/java/com/android/internal/app/IBatteryStats.aidl \
+	core/java/android/smartcard/ISmartcardService.aidl \
+	core/java/android/smartcard/ISmartcardServiceCallback.aidl \
 	core/java/com/android/internal/app/IUsageStats.aidl \
 	core/java/com/android/internal/app/IMediaContainerService.aidl \
 	core/java/com/android/internal/appwidget/IAppWidgetService.aidl \
