@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/3//+sk\u003d",
+        "filename": "services/camera/libcameraservice/CameraService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2011-05-06T14:17:50Z",
+      "side": 0,
+      "message": "lockIfMessageWanted() is not an \"extra safety check\". It acquires the mLock unless the message is no longer wanted by the user. The lock is needed to access member variables in Client. The handleGenericNotify() and handleGenericDataTimestamp() calls below both assume the lock is acquired. This is explained in the comments above CameraService::Client::notifyCallback().\n\nThanks,\nChih-Chung Chang",
+      "revId": "9c4ba2580e2ef582747cce2960804a2a5e4b776e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
