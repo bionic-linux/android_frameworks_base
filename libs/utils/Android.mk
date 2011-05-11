@@ -57,7 +57,7 @@ LOCAL_SRC_FILES:= $(commonSources)
 
 LOCAL_MODULE:= libutils
 
-LOCAL_CFLAGS += -DLIBUTILS_NATIVE=1 $(TOOL_CFLAGS)
+LOCAL_CFLAGS += -DLIBUTILS_NATIVE=1 $(TOOL_CFLAGS) -fpermissive
 LOCAL_C_INCLUDES += external/zlib
 
 ifeq ($(HOST_OS),windows)
@@ -92,6 +92,7 @@ ifeq ($(TARGET_OS),linux)
 LOCAL_LDLIBS += -lrt -ldl
 endif
 
+LOCAL_CFLAGS += -fpermissive
 LOCAL_C_INCLUDES += \
 		external/zlib \
 		external/icu4c/common
@@ -116,6 +117,7 @@ include $(BUILD_SHARED_LIBRARY)
 ifneq ($(TARGET_SIMULATOR),true)
 ifeq ($(TARGET_OS),linux)
 include $(CLEAR_VARS)
+LOCAL_CFLAGS += -fpermissive
 LOCAL_C_INCLUDES += external/zlib external/icu4c/common
 LOCAL_LDLIBS := -lrt -ldl -lpthread
 LOCAL_MODULE := libutils
