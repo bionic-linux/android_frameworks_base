@@ -16,6 +16,9 @@
 
 package android.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.util.AndroidRuntimeException;
@@ -320,6 +323,15 @@ public class WindowManagerImpl implements WindowManager {
     
     public void closeAll() {
         closeAll(null, null, null);
+    }
+    
+    /**
+     * @return List<Views>
+     */
+    public List<View> getViews() {
+    	List<View> target  = new ArrayList<View>();
+    	target = java.util.Arrays.asList(mViews);
+    	return target;
     }
     
     public Display getDefaultDisplay() {

@@ -33,6 +33,7 @@ import android.text.method.TextKeyListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManagerImpl;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -131,11 +132,26 @@ public class PasswordUnlockScreen extends LinearLayout implements KeyguardScreen
 
     /** {@inheritDoc} */
     public void onPause() {
-
+    	setCharPickerVisible(false);
+    }
+    
+	/**
+     * Set visibility to CharacterPickerDialog instance (if exists)
+     * @see {@link PasswordUnlockScreen.onPause()}
+     * @see issue16080
+     */    
+    private void setCharPickerVisible(boolean visibility){
+    	WindowManagerImpl wManImp = (WindowManagerImpl) mContext.getSystemService(Context.WINDOW_SERVICE);
+    	View charPickerDialog = wManImp.getSubWindow();
+    	if (charPickerDialog != null) {
+    		charPickerDialog.setVisibility(visibility ? VISIBLE : INVISIBLE);
+    	}    	
     }
 
     /** {@inheritDoc} */
     public void onResume() {
+    	setCharPickerVisible(true);   	
+    	
         // start fresh
         mPasswordEntry.setText("");
         mPasswordEntry.requestFocus();
