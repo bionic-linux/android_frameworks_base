@@ -53,6 +53,9 @@ public class Resources {
     private static final boolean DEBUG_CONFIG = false;
     private static final boolean TRACE_FOR_PRELOAD = false;
 
+    // Corresponds to ResourcesTypes.h#SHIFT_NAVHIDDEN
+    private static final int SHIFT_NAVHIDDEN = 2;
+
     // Use the current SDK version code.  If we are a development build,
     // also allow the previous SDK version + 1.
     private static final int sSdkVersion = Build.VERSION.SDK_INT
@@ -1298,11 +1301,15 @@ public class Resources {
                             == Configuration.HARDKEYBOARDHIDDEN_YES) {
                 keyboardHidden = Configuration.KEYBOARDHIDDEN_SOFT;
             }
+
+            // Combine keyboardHidden and navigationHidden as expected by lower layers.
+            int inputFlags = keyboardHidden | (mConfiguration.navigationHidden << SHIFT_NAVHIDDEN);
+
             mAssets.setConfiguration(mConfiguration.mcc, mConfiguration.mnc,
                     locale, mConfiguration.orientation,
                     mConfiguration.touchscreen,
                     (int)(mMetrics.density*160), mConfiguration.keyboard,
-                    keyboardHidden, mConfiguration.navigation, width, height,
+                    inputFlags, mConfiguration.navigation, width, height,
                     mConfiguration.screenLayout, mConfiguration.uiMode, sSdkVersion);
 
             clearDrawableCache(mDrawableCache, configChanges);

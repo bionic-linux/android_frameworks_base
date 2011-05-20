@@ -651,7 +651,7 @@ public final class AssetManager {
      */
     public native final void setConfiguration(int mcc, int mnc, String locale,
             int orientation, int touchscreen, int density, int keyboard,
-            int keyboardHidden, int navigation, int screenWidth, int screenHeight,
+            int inputFlags, int navigation, int screenWidth, int screenHeight,
             int screenLayout, int uiMode, int majorVersion);
 
     /**

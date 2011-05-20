@@ -529,7 +529,7 @@ static void android_content_AssetManager_setConfiguration(JNIEnv* env, jobject c
                                                           jint mcc, jint mnc,
                                                           jstring locale, jint orientation,
                                                           jint touchscreen, jint density,
-                                                          jint keyboard, jint keyboardHidden,
+                                                          jint keyboard, jint inputFlags,
                                                           jint navigation,
                                                           jint screenWidth, jint screenHeight,
                                                           jint screenLayout, jint uiMode,
@@ -551,7 +551,7 @@ static void android_content_AssetManager_setConfiguration(JNIEnv* env, jobject c
     config.touchscreen = (uint8_t)touchscreen;
     config.density = (uint16_t)density;
     config.keyboard = (uint8_t)keyboard;
-    config.inputFlags = (uint8_t)keyboardHidden;
+    config.inputFlags = (uint8_t)inputFlags;
     config.navigation = (uint8_t)navigation;
     config.screenWidth = (uint16_t)screenWidth;
     config.screenHeight = (uint16_t)screenHeight;
