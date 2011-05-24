@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AAABBn///5w\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1006036
+      },
+      "writtenOn": "2011-05-24T14:35:35Z",
+      "side": 1,
+      "message": "Is it not better to let the implementation decide on a default value instead of specifying it here?",
+      "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/n//+q0\u003d",
         "filename": "fmradio/java/android/hardware/fm/FmReceiverService.java",
         "patchSetId": 5
@@ -66,6 +83,23 @@
       "side": 1,
       "message": "The implementation for this method has been removed and it will be removed from the API in the next patch set",
       "parentUuid": "AAAA/n//+q0\u003d",
+      "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABBn///50\u003d",
+        "filename": "fmradio/jni/android_fmradio.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1006036
+      },
+      "writtenOn": "2011-05-24T14:35:35Z",
+      "side": 1,
+      "message": "It should probably be session_p-\u003estate instead of oldState here, right?",
       "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
