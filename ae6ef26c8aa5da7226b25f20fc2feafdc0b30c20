@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAABBn///bs\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1006175
+      },
+      "writtenOn": "2011-05-30T14:41:00Z",
+      "side": 1,
+      "message": "It seems reasonable. The sentence will be removed in next upload.",
+      "parentUuid": "AAABBn///5w\u003d",
+      "revId": "ae6ef26c8aa5da7226b25f20fc2feafdc0b30c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/n//+q0\u003d",
         "filename": "fmradio/java/android/hardware/fm/FmReceiverService.java",
         "patchSetId": 5
