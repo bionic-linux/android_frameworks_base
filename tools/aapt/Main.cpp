@@ -475,6 +475,15 @@ int main(int argc, char* const argv[])
                         goto bail;
                     }
                     bundle.setCustomPackage(argv[0]);
+                } else if (strcmp(cp, "-extra-packages") == 0) {
+                    argc--;
+                    argv++;
+                    if (!argc) {
+                        fprintf(stderr, "ERROR: No argument supplied for '--extra-packages' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
+                    bundle.setExtraPackages(argv[0]);
                 } else if (strcmp(cp, "-utf16") == 0) {
                     bundle.setWantUTF16(true);
                 } else if (strcmp(cp, "-rename-manifest-package") == 0) {
