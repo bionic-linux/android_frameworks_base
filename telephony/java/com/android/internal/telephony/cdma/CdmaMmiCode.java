@@ -44,7 +44,10 @@ public final class CdmaMmiCode  extends Handler implements MmiCode {
     static final String ACTION_REGISTER = "**";
 
     // Supp Service codes from TS 22.030 Annex B
+    static final String SC_PIN          = "04";
+    static final String SC_PIN2         = "042";
     static final String SC_PUK          = "05";
+    static final String SC_PUK2         = "052";
 
     // Event Constant
 
@@ -174,8 +177,9 @@ public final class CdmaMmiCode  extends Handler implements MmiCode {
     /**
      * @return true if the Service Code is PIN/PIN2/PUK/PUK2-related
      */
-    boolean isPukCommand() {
-        return sc != null && sc.equals(SC_PUK);
+    boolean isPinCommand() {
+        return sc != null && (sc.equals(SC_PIN) || sc.equals(SC_PIN2)
+                              || sc.equals(SC_PUK) || sc.equals(SC_PUK2));
      }
 
     boolean isRegister() {
@@ -191,8 +195,8 @@ public final class CdmaMmiCode  extends Handler implements MmiCode {
     void
     processCode () {
         try {
-            if (isPukCommand()) {
-                // sia = old PUK
+            if (isPinCommand()) {
+                // sia = old PIN or PUK
                 // sib = new PIN
                 // sic = new PIN
                 String oldPinOrPuk = sia;
@@ -206,8 +210,21 @@ public final class CdmaMmiCode  extends Handler implements MmiCode {
                         // invalid length
                         handlePasswordError(com.android.internal.R.string.invalidPin);
                     } else {
-                        phone.mCM.supplyIccPuk(oldPinOrPuk, newPin,
-                                obtainMessage(EVENT_SET_COMPLETE, this));
+                        if (sc.equals(SC_PIN)) {
+                            phone.mCM.changeIccPin(oldPinOrPuk, newPin,
+                                        obtainMessage(EVENT_SET_COMPLETE, this));
+                        } else if (sc.equals(SC_PIN2)) {
+                            phone.mCM.changeIccPin2(oldPinOrPuk, newPin,
+                                        obtainMessage(EVENT_SET_COMPLETE, this));
+                        } else if (sc.equals(SC_PUK)) {
+                            phone.mCM.supplyIccPuk(oldPinOrPuk, newPin,
+                                        obtainMessage(EVENT_SET_COMPLETE, this));
+                        } else if (sc.equals(SC_PUK2)) {
+                            phone.mCM.supplyIccPuk2(oldPinOrPuk, newPin,
+                                        obtainMessage(EVENT_SET_COMPLETE, this));
+                        } else {
+                            throw new RuntimeException ("Invalid or Unsupported MMI Code");
+                        }
                     }
                 } else {
                     throw new RuntimeException ("Invalid or Unsupported MMI Code");
@@ -246,7 +263,7 @@ public final class CdmaMmiCode  extends Handler implements MmiCode {
 
     private CharSequence getScString() {
         if (sc != null) {
-            if (isPukCommand()) {
+            if (isPinCommand()) {
                 return context.getText(com.android.internal.R.string.PinMmi);
             }
         }
@@ -264,7 +281,7 @@ public final class CdmaMmiCode  extends Handler implements MmiCode {
             if (ar.exception instanceof CommandException) {
                 CommandException.Error err = ((CommandException)(ar.exception)).getCommandError();
                 if (err == CommandException.Error.PASSWORD_INCORRECT) {
-                    if (isPukCommand()) {
+                    if (isPinCommand()) {
                         sb.append(context.getText(
                                 com.android.internal.R.string.badPuk));
                     } else {
