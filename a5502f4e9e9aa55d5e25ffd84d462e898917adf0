@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABCH///jE\u003d",
+        "filename": "tools/aapt/Main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001414
+      },
+      "writtenOn": "2011-06-09T23:23:01Z",
+      "side": 1,
+      "message": "Missing help text associated with the new option.",
+      "revId": "a5502f4e9e9aa55d5e25ffd84d462e898917adf0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
