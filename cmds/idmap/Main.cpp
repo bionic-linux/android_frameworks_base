@@ -144,7 +144,7 @@ namespace {
     }
 
     int create_idmap(const char* orig_apk_path, const char* skin_apk_path,
-            uint32_t** data, size_t* size)
+            uint32_t orig_pkg_id, uint32_t** data, size_t* size)
     {
         uint32_t orig_crc, skin_crc;
         if (get_zip_entry_crc(orig_apk_path, RESOURCES_FILENAME, &orig_crc) == -1) {
@@ -156,7 +156,8 @@ namespace {
 
         // Assets are only accessible via AssetManager, so offload logic to the latter
         AssetManager am;
-        bool b = am.createIdmap(orig_apk_path, skin_apk_path, orig_crc, skin_crc, data, size);
+        bool b = am.createIdmap(orig_apk_path, skin_apk_path, orig_pkg_id, orig_crc, skin_crc,
+                data, size);
         return b ? 0 : -1;
     }
 
@@ -201,12 +202,19 @@ fail:
         }
         return -1;
     }
+
+    int parse_int(const char* str, uint32_t* i)
+    {
+        char* endptr;
+        *i = strtol(str, &endptr, 0);
+        return (*str != '\0' && *endptr == '\0') ? 0 : -1;
+    }
 }
 
 /*
  * Expected arguments:
- *   idmap --path orig_apk_path skin_apk_path idmap_path
- *   idmap --fd   orig_apk_path skin_apk_path idmap_fd
+ *   idmap --path orig_apk_path orig_pkg_id skin_apk_path idmap_path
+ *   idmap --fd   orig_apk_path orig_pkg_id skin_apk_path idmap_fd
  * where
  *   idmap         : binary name
  *   orig_apk_path : path, original apk
@@ -219,8 +227,9 @@ int main(int argc, char* argv[])
     const char* mode, *orig_apk_path, *skin_apk_path;
     uint32_t* data = NULL;
     size_t size;
+    uint32_t orig_pkg_id;
 
-    if (argc != 5) {
+    if (argc != 6) {
         goto usage;
     }
     mode = argv[1];
@@ -232,16 +241,26 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Error: failed to read original apk %s\n", orig_apk_path);
         goto fail;
     }
-    skin_apk_path = argv[3];
+    if (parse_int(argv[3], &orig_pkg_id) == -1) {
+        fprintf(stderr, "Error: failed to parse package id %s, not an integer\n", argv[3]);
+        goto fail;
+    }
+
+    skin_apk_path = argv[4];
     if (verify_apk_readable(skin_apk_path) == -1) {
         fprintf(stderr, "Error: failed to read skin apk %s\n", orig_apk_path);
         goto fail;
     }
 
+#if 0
+    printf("idmap mode=%s orig_apk_path=%s orig_pkg_id=0x%02x skin_apk_path=%s argv[5]=%s\n",
+            mode, orig_apk_path, orig_pkg_id, skin_apk_path, argv[5]);
+#endif
+
     if (!strcmp(mode, "--path")) {
-        const char* idmap_path = argv[4];
+        const char* idmap_path = argv[5];
         if (is_idmap_stale_path(orig_apk_path, skin_apk_path, idmap_path)) {
-            if (create_idmap(orig_apk_path, skin_apk_path, &data, &size) == -1) {
+            if (create_idmap(orig_apk_path, skin_apk_path, orig_pkg_id, &data, &size) == -1) {
                 fprintf(stderr, "Error: failed to create idmap file %s\n", idmap_path);
                 goto fail;
             }
@@ -254,13 +273,13 @@ int main(int argc, char* argv[])
         }
     } else if (!strcmp(mode, "--fd")) {
         char* endptr;
-        int idmap_fd = strtol(argv[4], &endptr, 10);
+        int idmap_fd = strtol(argv[5], &endptr, 10);
         if (*endptr != '\0') {
-            fprintf(stderr, "Error: failed to read file descriptor argument %s\n", argv[4]);
+            fprintf(stderr, "Error: failed to read file descriptor argument %s\n", argv[5]);
             goto fail;
         }
         if (is_idmap_stale_fd(orig_apk_path, skin_apk_path, idmap_fd)) {
-            if (create_idmap(orig_apk_path, skin_apk_path, &data, &size) == -1) {
+            if (create_idmap(orig_apk_path, skin_apk_path, orig_pkg_id, &data, &size) == -1) {
                 fprintf(stderr, "Error: failed to create idmap\n");
                 goto fail;
             }

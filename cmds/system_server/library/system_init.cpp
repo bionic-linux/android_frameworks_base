@@ -55,10 +55,12 @@ namespace {
     void exec_idmap() {
         static const char* IDMAP_BIN = "/system/bin/idmap";
         static const char* ORIG_APK = "/system/framework/framework-res.apk";
+        static const char* ORIG_PKG_ID = "0x01";
         static const char* SKIN_APK = "/vendor/overlay/framework/framework-res.apk";
         static const char* IDMAP_FILE =
             "/data/resource-cache/vendor@overlay@framework@framework-res.apk@idmap";
-        execl(IDMAP_BIN, IDMAP_BIN, "--path", ORIG_APK, SKIN_APK, IDMAP_FILE, (char*)NULL);
+        execl(IDMAP_BIN, IDMAP_BIN, "--path", ORIG_APK, ORIG_PKG_ID, SKIN_APK, IDMAP_FILE,
+                (char*)NULL);
         LOGE("execl(%s) failed: %s\n", IDMAP_BIN, strerror(errno));
     }
 

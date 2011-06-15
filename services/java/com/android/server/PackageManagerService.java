@@ -185,6 +185,7 @@ class PackageManagerService extends IPackageManager.Stub {
     static final int SCAN_NEW_INSTALL = 1<<4;
     static final int SCAN_NO_PATHS = 1<<5;
     static final int SCAN_UPDATE_TIME = 1<<6;
+    static final int SCAN_IS_OVERLAY = 1<<7;
 
     static final int REMOVE_CHATTY = 1<<16;
 
@@ -229,6 +230,9 @@ class PackageManagerService extends IPackageManager.Stub {
     // This is the object monitoring the system app dir.
     final FileObserver mVendorInstallObserver;
 
+    // This is the object monitoring the vendor overlay package dir.
+    final FileObserver mVendorOverlayInstallObserver;
+
     // This is the object monitoring mAppInstallDir.
     final FileObserver mAppInstallObserver;
 
@@ -242,8 +246,12 @@ class PackageManagerService extends IPackageManager.Stub {
     final File mFrameworkDir;
     final File mSystemAppDir;
     final File mVendorAppDir;
+    final File mVendorOverlayDir;
     final File mAppInstallDir;
     final File mDalvikCacheDir;
+
+    // Tracks available original packages -> overlay packages pairs.
+    HashMap<String, String> mOverlayMap = new HashMap<String, String>();
 
     // Directory containing the private parts (e.g. code and non-resource assets) of forward-locked
     // apps.
@@ -931,6 +939,15 @@ class PackageManagerService extends IPackageManager.Stub {
                     | PackageParser.PARSE_IS_SYSTEM_DIR,
                     scanMode | SCAN_NO_DEX, 0);
             
+            // Collect all vendor overlay packages.
+            // (Do this before scanning any apps.)
+            mVendorOverlayDir = new File("/vendor/overlay/app");
+            mVendorOverlayInstallObserver = new AppDirObserver(
+                mVendorOverlayDir.getPath(), OBSERVER_EVENTS, true);
+            mVendorOverlayInstallObserver.startWatching();
+            scanDirLI(mVendorOverlayDir, PackageParser.PARSE_IS_SYSTEM
+                    | PackageParser.PARSE_IS_SYSTEM_DIR, scanMode | SCAN_IS_OVERLAY, 0);
+
             // Collect all system packages.
             mSystemAppDir = new File(Environment.getRootDirectory(), "app");
             mSystemInstallObserver = new AppDirObserver(
@@ -2774,6 +2791,17 @@ class PackageManagerService extends IPackageManager.Stub {
                 //error from installer
                 return DEX_OPT_FAILED;
             }
+
+            // Create idmap. This code should first call a function like
+            // isDexOptNeeded to verify the idmap file is not already
+            // up-to-date. Note we cannot rely on isDexOptNeeded, as
+            // that function only looks at one of the two packages
+            // involved in idmap.
+            String overlay = mOverlayMap.get(pkg.mScanPath);
+            if (overlay != null) {
+                if (mInstaller.idmap(pkg.mScanPath, overlay, pkg.applicationInfo.uid) != 0) {
+                }
+            }
         }
 
         return performed ? DEX_OPT_PERFORMED : DEX_OPT_SKIPPED;
@@ -2812,6 +2840,14 @@ class PackageManagerService extends IPackageManager.Stub {
     
     private PackageParser.Package scanPackageLI(PackageParser.Package pkg,
             int parseFlags, int scanMode, long currentTime) {
+
+        if ((scanMode & SCAN_IS_OVERLAY) != 0) {
+            String regex = "^" + mVendorOverlayDir.getPath();
+            String overlay = pkg.mScanPath;
+            String orig = overlay.replaceAll(regex, "/system/app");
+            mOverlayMap.put(orig, overlay);
+        }
+
         File scanFile = new File(pkg.mScanPath);
         if (scanFile == null || pkg.applicationInfo.sourceDir == null ||
                 pkg.applicationInfo.publicSourceDir == null) {

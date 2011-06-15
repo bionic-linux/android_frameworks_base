@@ -176,14 +176,18 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
         *cookie = (void*)mAssetPaths.size();
     }
 
-    // add overlay packages for /system/framework; apps are handled by the
-    // (Java) package manager
-    if (strncmp(path.string(), "/system/framework/", 18) == 0) {
+    // Add overlay packages for /system.
+    //
+    // By convention, the corresponding overlay package for a (regular) package
+    // /system/<foo/bar.apk> is named /vendor/overlay/<foo/bar.apk>. Only packages
+    // in /system may be subject to overlay.
+    if (strncmp(path.string(), "/system/", 8) == 0) {
         // When there is an environment variable for /vendor, this
         // should be changed to something similar to how ANDROID_ROOT
         // and ANDROID_DATA are used in this file.
-        String8 overlayPath("/vendor/overlay/framework/");
-        overlayPath.append(path.getPathLeaf());
+        String8 overlayPath("/vendor/overlay/");
+        overlayPath.appendPath(path.getPathDir().getPathLeaf()); // "framework" or "app"
+        overlayPath.appendPath(path.getPathLeaf());
         if (TEMP_FAILURE_RETRY(access(overlayPath.string(), R_OK)) == 0) {
             asset_path oap;
             oap.path = overlayPath;
@@ -200,8 +204,9 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
 }
 
 bool AssetManager::createIdmap(const char* origApkPath, const char* skinApkPath,
-                               uint32_t origCrc, uint32_t skinCrc,
-                               uint32_t** outData, uint32_t* outSize)
+        uint32_t packageId,
+        uint32_t origCrc, uint32_t skinCrc,
+        uint32_t** outData, uint32_t* outSize)
 {
     AutoMutex _l(mLock);
     const String8 paths[2] = { String8(origApkPath), String8(skinApkPath) };
@@ -219,7 +224,8 @@ bool AssetManager::createIdmap(const char* origApkPath, const char* skinApkPath,
         tables[i].add(ass, (void*)1, false);
     }
 
-    return tables[0].createIdmap(tables[1], origCrc, skinCrc, (void**)outData, outSize) == NO_ERROR;
+    return tables[0].createIdmap(tables[1], packageId, origCrc, skinCrc,
+            (void**)outData, outSize) == NO_ERROR;
 }
 
 bool AssetManager::addDefaultAssets()

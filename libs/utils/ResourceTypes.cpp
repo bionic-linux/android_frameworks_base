@@ -4166,23 +4166,30 @@ status_t ResTable::parsePackage(const ResTable_package* const pkg,
     return NO_ERROR;
 }
 
-status_t ResTable::createIdmap(const ResTable& overlay, uint32_t originalCrc, uint32_t overlayCrc,
-                               void** outData, size_t* outSize) const
+status_t ResTable::createIdmap(const ResTable& overlay, uint32_t packageId,
+        uint32_t originalCrc, uint32_t overlayCrc,
+        void** outData, size_t* outSize) const
 {
     // see README for details on the format of map
     if (mPackageGroups.size() == 0) {
         return UNKNOWN_ERROR;
     }
-    if (mPackageGroups[0]->packages.size() == 0) {
+    const int packageIndex = mPackageMap[packageId] - 1;
+    if (packageIndex == -1) {
+        LOGV("idmap: no package group with id=0x%02x in original package\n", packageId);
+        return UNKNOWN_ERROR;
+    }
+    if (mPackageGroups[packageIndex]->packages.size() == 0) {
         return UNKNOWN_ERROR;
     }
 
     Vector<Vector<uint32_t> > map;
-    const PackageGroup* pg = mPackageGroups[0];
+    const PackageGroup* pg = mPackageGroups[packageIndex];
     const Package* pkg = pg->packages[0];
     size_t typeCount = pkg->types.size();
     // starting size is header + first item (number of types in map)
     *outSize = (IDMAP_HEADER_SIZE + 1) * sizeof(uint32_t);
+    // overlay packages are assumed to contain only one package group
     const String16 overlayPackage(overlay.mPackageGroups[0]->packages[0]->package->name);
     const uint32_t pkg_id = pkg->package->id << 24;
 

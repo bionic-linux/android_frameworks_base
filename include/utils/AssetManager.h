@@ -221,8 +221,8 @@ public:
      * Generate idmap data to translate resources IDs between a package and a
      * corresponding skin package.
      */
-    bool createIdmap(const char* origApkPath, const char* skinApkPath, uint32_t origCrc,
-        uint32_t skinCrc, uint32_t** outData, uint32_t* outSize);
+    bool createIdmap(const char* origApkPath, const char* skinApkPath, uint32_t packageId,
+        uint32_t origCrc, uint32_t skinCrc, uint32_t** outData, uint32_t* outSize);
 
 private:
     struct asset_path

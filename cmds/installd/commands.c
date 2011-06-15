@@ -1090,12 +1090,15 @@ out:
 static void run_idmap(const char *orig_apk, const char *skin_apk, int idmap_fd)
 {
     static const char *IDMAP_BIN = "/system/bin/idmap";
+    // This assumes PackageManagerService is only responsible for creating idmap files
+    // for the application package group (0x7f).
+    static const char *ORIG_PKG_ID = "0x7f";
     static const size_t MAX_INT_LEN = 32;
     char idmap_str[MAX_INT_LEN];
 
     snprintf(idmap_str, sizeof(idmap_str), "%d", idmap_fd);
 
-    execl(IDMAP_BIN, IDMAP_BIN, "--fd", orig_apk, skin_apk, idmap_str, (char*)NULL);
+    execl(IDMAP_BIN, IDMAP_BIN, "--fd", orig_apk, ORIG_PKG_ID, skin_apk, idmap_str, (char*)NULL);
     LOGE("execl(%s) failed: %s\n", IDMAP_BIN, strerror(errno));
 }
 
