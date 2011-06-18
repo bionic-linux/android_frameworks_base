@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABDX///zc\u003d",
+        "filename": "tools/layoutlib/create/src/com/android/tools/layoutlib/create/DelegateClassAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001414
+      },
+      "writtenOn": "2011-06-18T00:28:59Z",
+      "side": 1,
+      "message": "The access should be public or at least default, otherwise the delegate won\u0027t be able to call it back.",
+      "revId": "33e2d8e3bd87978c118e11ba5410190f924aa90d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
