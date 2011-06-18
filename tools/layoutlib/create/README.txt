@@ -63,7 +63,7 @@ with their dependencies and then only keep the ones we want.
 
 To do that, the analyzer is created with a list of base classes to keep -- everything
 that derives from these is kept. Currently the one such class is android.view.View:
-since we want to render layouts, anything that is sort of the view needs to be kept.
+since we want to render layouts, anything that is sort of a view needs to be kept.
 
 The analyzer is also given a list of class names to keep in the output.
 This is done using shell-like glob patterns that filter on the fully-qualified
