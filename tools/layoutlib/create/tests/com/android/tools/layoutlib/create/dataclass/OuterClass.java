@@ -39,7 +39,7 @@ public class OuterClass {
         public InnerClass() {
         }
 
-        // Inner.get returns 1+2=3 + a + b
+        // Inner.get returns 2 + 1 + a + b
         public int get(int a, long b) {
             return 2 + mOuterValue + a + (int) b;
         }
