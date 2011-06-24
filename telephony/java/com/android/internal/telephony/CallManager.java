@@ -258,7 +258,8 @@ public final class CallManager {
      */
 
     public int getServiceState() {
-        int resultState = ServiceState.STATE_OUT_OF_SERVICE;
+        // initialize the service state to the lowest priority value
+        int resultState = ServiceState.STATE_POWER_OFF;
 
         for (Phone phone : mPhones) {
             int serviceState = phone.getServiceState().getState();
