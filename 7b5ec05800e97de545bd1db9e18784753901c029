@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABEX////w\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/FwdLockEngine/src/FwdLockEngine.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1004305
+      },
+      "writtenOn": "2011-06-27T17:42:26Z",
+      "side": 1,
+      "message": "We cannot use LOGD. Do you mind to define LOG_VERBOSE for LOGV and change LOG_DEBUG in FwdLockEngine.cpp\nto LOG_VERBOSE?",
+      "revId": "7b5ec05800e97de545bd1db9e18784753901c029",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
