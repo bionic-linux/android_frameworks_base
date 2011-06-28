@@ -2991,7 +2991,11 @@ void InputDispatcher::updateDispatchStatisticsLocked(nsecs_t currentTime, const 
 
 void InputDispatcher::dump(String8& dump) {
     dump.append("Input Dispatcher State:\n");
-    dumpDispatchStateLocked(dump);
+
+    { // acquire lock
+        AutoMutex l(mLock);
+        dumpDispatchStateLocked(dump);
+    } // release lock
 }
 
 
