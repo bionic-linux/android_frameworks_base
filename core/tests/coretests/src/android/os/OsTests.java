@@ -26,6 +26,7 @@ public class OsTests {
     public static TestSuite suite() {
         TestSuite suite = new TestSuite(OsTests.class.getName());
 
+        suite.addTestSuite(ParcelFileDescriptorTest.class);
         suite.addTestSuite(AidlTest.class);
         suite.addTestSuite(BroadcasterTest.class);
         suite.addTestSuite(FileObserverTest.class);

@@ -316,7 +316,7 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
             // If this is a proxy to another file descriptor, just call through to its
             // close method.
             mParcelDescriptor.close();
-        } else {
+        } else if (mFileDescriptor != null ) {
             Parcel.closeFileDescriptor(mFileDescriptor);
         }
     }
