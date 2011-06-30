@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABEX///MY\u003d",
+        "filename": "drm/libdrmframework/plugins/common/util/include/SessionMap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "this line is not needed.",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///MU\u003d",
+        "filename": "drm/libdrmframework/plugins/common/util/include/SessionMap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "why lock is not needed here?",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///Mo\u003d",
+        "filename": "drm/libdrmframework/plugins/common/util/src/MimeTypeUtil.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "same comment applies here.",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///Mk\u003d",
+        "filename": "drm/libdrmframework/plugins/common/util/src/MimeTypeUtil.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "don\u0027t we have defined these somewhere already?\nalso, could we use UPPER case for these constants, or use a variable name starting with letter \"k\"?\nIt is difficult to tell these from local variables.",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///MQ\u003d",
+        "filename": "drm/libdrmframework/plugins/common/util/src/MimeTypeUtil.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "null won\u0027t be returned.\nthe interface of this method has been changed:\n1. if mimeType \u003d\u003d null, mime_type_unsupported is returned\n2. if mimeType is not mapped successfully, mimeType is returned\n3. if mimetype is mapped successfully, the mapped mime type is returned.",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///Ms\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/FwdLockEngine/src/FwdLockEngine.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "Please log the errors explicitly...",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///MI\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/FwdLockEngine/src/FwdLockEngine.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "LOGV will be a no-op if LOG_NDEBUG is not defined to 0",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///M0\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/converter/FwdLockConv.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "why don\u0027t we use standard lib for this purpose? is this alnum() different from isalnum() in \u003cctype.h\u003e\nIf there are different, please use some other method name, instead of this function name. It is misleading.",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///Mw\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/converter/FwdLockConv.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "why?",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///M8\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/decoder/FwdLockFile.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "why?",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///M4\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/decoder/FwdLockFile.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1005614
+      },
+      "writtenOn": "2011-06-30T20:24:10Z",
+      "side": 1,
+      "message": "why?",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
