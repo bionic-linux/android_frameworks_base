@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "AAABEX//+zA\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/converter/FwdLockConv.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1006837
+      },
+      "writtenOn": "2011-07-04T08:54:55Z",
+      "side": 1,
+      "message": "I\u0027m sorry, but you must be reading it wrong somehow. This is a function called FwdLockConv_IsBoundaryChar() that indeed uses standard-library isalnum() in its implementation.",
+      "parentUuid": "AAABEX///M0\u003d",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAABEX///Mw\u003d",
         "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/converter/FwdLockConv.c",
         "patchSetId": 4
@@ -149,6 +167,24 @@
       "writtenOn": "2011-06-30T20:24:10Z",
       "side": 1,
       "message": "why?",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX//+y0\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/converter/FwdLockConv.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1006837
+      },
+      "writtenOn": "2011-07-04T08:54:55Z",
+      "side": 1,
+      "message": "Because unsigned int is the exact type used in the definition of HMAC_Final().",
+      "parentUuid": "AAABEX///Mw\u003d",
       "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -172,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "AAABEX//+y4\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/decoder/FwdLockFile.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1006837
+      },
+      "writtenOn": "2011-07-04T08:54:55Z",
+      "side": 1,
+      "message": "Because unsigned int is the exact type used in the definition of HMAC_Final().",
+      "parentUuid": "AAABEX///M8\u003d",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAABEX///M4\u003d",
         "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/decoder/FwdLockFile.c",
         "patchSetId": 4
@@ -183,6 +237,24 @@
       "writtenOn": "2011-06-30T20:24:10Z",
       "side": 1,
       "message": "why?",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX//+y8\u003d",
+        "filename": "drm/libdrmframework/plugins/forward-lock/internal-format/decoder/FwdLockFile.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1006837
+      },
+      "writtenOn": "2011-07-04T08:54:55Z",
+      "side": 1,
+      "message": "Because unsigned int is the exact type used in the definition of HMAC_Final().",
+      "parentUuid": "AAABEX///M4\u003d",
       "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
