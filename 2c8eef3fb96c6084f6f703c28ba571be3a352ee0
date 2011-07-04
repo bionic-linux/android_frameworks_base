@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "AAABEX//+yM\u003d",
+        "filename": "drm/libdrmframework/plugins/common/util/src/MimeTypeUtil.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2011-07-04T10:58:15Z",
+      "side": 1,
+      "message": "They are defined in MediaDefs.cpp but that means we have to be dependent on that library and the case could be changed but I\u0027m following the current style of the code.",
+      "parentUuid": "AAABEX///Mk\u003d",
+      "revId": "2c8eef3fb96c6084f6f703c28ba571be3a352ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAABEX///MQ\u003d",
         "filename": "drm/libdrmframework/plugins/common/util/src/MimeTypeUtil.cpp",
         "patchSetId": 4
