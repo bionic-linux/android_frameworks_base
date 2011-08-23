@@ -1307,6 +1307,32 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
     }
 
+    public void setDnsIfaceForPid(String iface, int pid) throws IllegalStateException {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.CHANGE_NETWORK_STATE,
+                "NetworkManagementService");
+        try {
+            String cmd = "resolver setifaceforpid " + iface + " " + pid;
+
+            mConnector.doCommand(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            throw new IllegalStateException(
+                    "Error communicating with native deamon to set interface for pid" + iface, e);
+        }
+    }
+
+    public void clearDnsIfaceForPid(int pid) throws IllegalStateException {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.CHANGE_NETWORK_STATE,
+                "NetworkManagementService");
+        try {
+            String cmd = "resolver clearifaceforpid " + pid;
+
+            mConnector.doCommand(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            throw new IllegalStateException(
+                    "Error communicating with native deamon to clear interface for pid " + pid, e);
+        }
+    }
+
     /** {@inheritDoc} */
     public void monitor() {
         if (mConnector != null) {
