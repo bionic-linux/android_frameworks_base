@@ -604,7 +604,6 @@ public class SipManager {
         @Override
         public void onRegistrationDone(ISipSession session, int duration) {
             long expiryTime = duration;
-            if (duration > 0) expiryTime += System.currentTimeMillis();
             mListener.onRegistrationDone(getUri(session), expiryTime);
         }
 
