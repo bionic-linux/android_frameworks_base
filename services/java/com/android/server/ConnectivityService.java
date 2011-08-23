@@ -1306,6 +1306,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             if (usedNetworkType != networkType) {
                 Integer currentPid = new Integer(pid);
                 mNetRequestersPids[usedNetworkType].remove(currentPid);
+                clearDnsIfaceForPid(pid);
                 reassessPidDns(pid, true);
                 if (mNetRequestersPids[usedNetworkType].size() != 0) {
                     if (VDBG) {
@@ -2427,11 +2428,18 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                         if (doBump) {
                             bumpDns();
                         }
+
+                        try {
+                            mNetd.setDnsIfaceForPid(p.getInterfaceName(), pid);
+                        } catch (Exception e) {
+                            Slog.e(TAG, "exception reasseses pid dns: " + e);
+                        }
                         return;
                     }
                 }
            }
         }
+        clearDnsIfaceForPid(myPid);
         // nothing found - delete
         for (int i = 1; ; i++) {
             String prop = "net.dns" + i + "." + myPid;
@@ -2439,9 +2447,17 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 if (doBump) {
                     bumpDns();
                 }
-                return;
+                break;
             }
             SystemProperties.set(prop, "");
+        }
+    }
+
+    private void clearDnsIfaceForPid(int pid) {
+        try {
+            mNetd.clearDnsIfaceForPid(pid);
+        } catch (Exception e) {
+            Slog.e(TAG, "exception clear interface from pid: " + e);
         }
     }
 
@@ -2570,6 +2586,13 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 for (int y=0; y< pids.size(); y++) {
                     Integer pid = (Integer)pids.get(y);
                     changed = writePidDns(dnses, pid.intValue());
+
+                    // attach the secondary net to its nets associated dns cache
+                    try {
+                        mNetd.setDnsIfaceForPid(p.getInterfaceName(), pid);
+                    } catch (Exception e) {
+                        Slog.e(TAG, "exception set interface for pid: " + e);
+                    }
                 }
             }
             if (changed) bumpDns();
