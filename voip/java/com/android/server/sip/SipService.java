@@ -445,7 +445,7 @@ public final class SipService extends ISipService.Stub {
                 return true;
             }
         } catch (UnknownHostException e) {
-            Log.e(TAG, "isBehindAT()" + address, e);
+            Log.e(TAG, "isBehindNAT()" + address, e);
         }
         return false;
     }
@@ -794,6 +794,7 @@ public final class SipService extends ISipService.Stub {
         private int mBackoff = 1;
         private boolean mRegistered;
         private long mExpiryTime;
+        private int mDesignatedDuration;
         private int mErrorCode;
         private String mErrorMessage;
         private boolean mRunning = false;
@@ -811,7 +812,10 @@ public final class SipService extends ISipService.Stub {
                 mSession = (SipSessionGroup.SipSessionImpl)
                         group.createSession(this);
                 // return right away if no active network connection.
-                if (mSession == null) return;
+                if (mSession == null) {
+                    mRunning = false; /* reset status */
+                    return;
+                }
 
                 // start unregistration to clear up old registration at server
                 // TODO: when rfc5626 is deployed, use reg-id and sip.instance
@@ -902,8 +906,9 @@ public final class SipService extends ISipService.Stub {
         public void stop() {
             if (!mRunning) return;
             mRunning = false;
-            mMyWakeLock.release(mSession);
+
             if (mSession != null) {
+                mMyWakeLock.release(mSession);
                 mSession.setListener(null);
                 if (mConnected && mRegistered) mSession.unregister();
             }
@@ -930,6 +935,10 @@ public final class SipService extends ISipService.Stub {
             synchronized (SipService.this) {
                 mProxy.setListener(listener);
 
+                if (!mRunning) {
+                    /* Suppress calling callback functions at false timing */
+                    return;
+                }
                 try {
                     int state = (mSession == null)
                             ? SipSession.State.READY_TO_CALL
@@ -981,8 +990,11 @@ public final class SipService extends ISipService.Stub {
                 mErrorMessage = null;
                 if (DEBUG) Log.d(TAG, "registering");
                 if (mConnected) {
+                    int duration =
+                        ((mDesignatedDuration > 0) ?
+                            mDesignatedDuration : EXPIRY_TIME);
                     mMyWakeLock.acquire(mSession);
-                    mSession.register(EXPIRY_TIME);
+                    mSession.register(duration);
                 }
             }
         }
@@ -1029,9 +1041,10 @@ public final class SipService extends ISipService.Stub {
             synchronized (SipService.this) {
                 if (notCurrentSession(session)) return;
 
-                mProxy.onRegistrationDone(session, duration);
-
                 if (duration > 0) {
+                    mProxy.onRegistrationDone(session, duration);
+                    mDesignatedDuration = duration;
+
                     mExpiryTime = SystemClock.elapsedRealtime()
                             + (duration * 1000);
 
@@ -1051,9 +1064,18 @@ public final class SipService extends ISipService.Stub {
                         }
                     }
                     mMyWakeLock.release(session);
+                } else if (duration < 0) {
+                    /* "423 Interval Too Brief" case */
+                    mDesignatedDuration = -duration;
+                    restartLater();
                 } else {
+                    /* DEREGISTER case */
                     mRegistered = false;
                     mExpiryTime = -1L;
+
+                    mProxy.onRegistrationDone(session, 0);
+                    mDesignatedDuration = 0;
+
                     if (DEBUG) Log.d(TAG, "Refresh registration immediately");
                     run();
                 }
