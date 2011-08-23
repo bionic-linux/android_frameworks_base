@@ -899,14 +899,32 @@ class SipSessionGroup implements SipListener {
             if (time <= 0) {
                 time = EXPIRY_TIME;
             }
+
+            /*
+             * Min-Expires header exists only in REGISTER response
+             * with error code 423 (Interval Too Brief).
+             * [c.f.] RFC3271, Table 2
+             *
             expires = (ExpiresHeader) response.getHeader(MinExpiresHeader.NAME);
             if (expires != null && time < expires.getExpires()) {
                 time = expires.getExpires();
             }
+             *//* Don't use the Min-Expires header here */
+
             if (DEBUG) {
                 Log.v(TAG, "Expiry time = " + time);
             }
             return time;
+        }
+
+        private int getMinExpiryTime(Response response) {
+            int expires = -1;
+            ExpiresHeader expiresHeader = (ExpiresHeader)
+                    response.getHeader(MinExpiresHeader.NAME);
+            if (expiresHeader != null) {
+                expires = expiresHeader.getExpires();
+            }
+            return expires;
         }
 
         private boolean registeringToReady(EventObject evt)
@@ -921,20 +939,43 @@ class SipSessionGroup implements SipListener {
                     int state = mState;
                     onRegistrationDone((state == SipSession.State.REGISTERING)
                             ? getExpiryTime(((ResponseEvent) evt).getResponse())
-                            : -1);
+                            : 0);
                     return true;
                 case Response.UNAUTHORIZED:
                 case Response.PROXY_AUTHENTICATION_REQUIRED:
                     handleAuthentication(event);
                     return true;
+                case Response.INTERVAL_TOO_BRIEF:
+                    handleIntervalTooBrief(event);
+                    return true;
                 default:
-                    if (statusCode >= 500) {
+                    if (statusCode >= 400) {
                         onRegistrationFailed(response);
                         return true;
                     }
                 }
             }
             return false;
+        }
+
+        private void handleIntervalTooBrief(ResponseEvent event) {
+            int minExpire = getMinExpiryTime(event.getResponse());
+            if (minExpire < 0) {
+                onError(SipErrorCode.SERVER_ERROR,
+                        "Missing Min-Expires header on 423 response");
+            } else if (minExpire == 0) {
+                onError(SipErrorCode.SERVER_ERROR,
+                        "Invalid Min-Expires value on 423 response");
+            } else {
+                /*
+                 * We should not simply call register(minExpire) here.
+                 * Instead, call mProxy.onRegistrationDone() to pass
+                 * designated minExpire value for the regsitration
+                 * process, as well as taking pause to avoid flooding.
+                 */
+                onRegistrationDone(-minExpire);
+            }
+            return;
         }
 
         private boolean handleAuthentication(ResponseEvent event)
