@@ -331,4 +331,14 @@ interface INetworkManagementService
      * Flush the DNS cache associated with the specified interface.
      */
     void flushInterfaceDnsCache(String iface);
+
+    /**
+     * Set a process (pid) to use the name servers associated with the specified interface.
+     */
+    void setDnsIfaceForPid(String iface, int pid);
+
+    /**
+     * Clear a process (pid) from being associated with an interface.
+     */
+    void clearDnsIfaceForPid(int pid);
 }
