@@ -1161,6 +1161,7 @@ private NetworkStateTracker makeWimaxStateTracker() {
             if (usedNetworkType != networkType) {
                 Integer currentPid = new Integer(pid);
                 mNetRequestersPids[usedNetworkType].remove(currentPid);
+                detachPidFromDnsCache(tracker.getLinkProperties(), pid);
                 reassessPidDns(pid, true);
                 if (mNetRequestersPids[usedNetworkType].size() != 0) {
                     if (VDBG) {
@@ -2132,6 +2133,14 @@ private NetworkStateTracker makeWimaxStateTracker() {
                         if (doBump) {
                             bumpDns();
                         }
+
+                        try {
+                            mNetd.setDnsServersForInterface(p.getInterfaceName(),
+                                    NetworkUtils.makeStrings(dnses));
+                            mNetd.attachPidToDnsCache(p.getInterfaceName(), pid);
+                        } catch (Exception e) {
+                            Slog.e(TAG, "exception reasseses pid dns: " + e);
+                        }
                         return;
                     }
                 }
@@ -2144,9 +2153,30 @@ private NetworkStateTracker makeWimaxStateTracker() {
                 if (doBump) {
                     bumpDns();
                 }
-                return;
+                break;
             }
             SystemProperties.set(prop, "");
+        }
+
+        // detach pid from the net it's attached to
+        for (int i : mPriorityList) {
+            List pids = mNetRequestersPids[i];
+            for (int j = 0; j < pids.size(); j++) {
+                Integer pid = (Integer) pids.get(j);
+                if (pid.intValue() == myPid) {
+                    detachPidFromDnsCache(mNetTrackers[i].getLinkProperties(), myPid);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void detachPidFromDnsCache(LinkProperties lp, int pid) {
+        if (lp == null) return;
+        try {
+            mNetd.detachPidFromDnsCache(lp.getInterfaceName(), pid);
+        } catch (Exception e) {
+            Slog.e(TAG, "exception detach pid from dns interface: " + e);
         }
     }
 
@@ -2269,6 +2299,13 @@ private NetworkStateTracker makeWimaxStateTracker() {
                 for (int y=0; y< pids.size(); y++) {
                     Integer pid = (Integer)pids.get(y);
                     changed = writePidDns(dnses, pid.intValue());
+
+                    // attach the secondary net to its nets associated dns cache
+                    try {
+                        mNetd.attachPidToDnsCache(p.getInterfaceName(), pid);
+                    } catch (Exception e) {
+                        Slog.e(TAG, "exception attach pid to dns interface: " + e);
+                    }
                 }
             }
             if (changed) bumpDns();

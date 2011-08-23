@@ -330,4 +330,14 @@ interface INetworkManagementService
      * Flush the DNS cache associated with the specified interface.
      */
     void flushInterfaceDnsCache(String iface);
+
+    /**
+     * Attach a process to the DNS cache that is associated with the specified interface.
+     */
+    void attachPidToDnsCache(String iface, int pid);
+
+    /**
+     * Detach a process from the DNS cache that is associated with the specified interface.
+     */
+    void detachPidFromDnsCache(String iface, int pid);
 }

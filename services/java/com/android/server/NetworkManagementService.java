@@ -1496,4 +1496,32 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             pw.println("]");
         }
     }
+
+    public void attachPidToDnsCache(String iface, int pid) throws IllegalStateException {
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.CHANGE_NETWORK_STATE, "NetworkManagementService");
+        try {
+            String cmd = "resolver attachpid " + iface + " " + pid;
+
+            mConnector.doCommand(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            throw new IllegalStateException(
+                    "Error communicating with native deamon to attach pid to interface " + iface
+                    , e);
+        }
+    }
+
+    public void detachPidFromDnsCache(String iface, int pid) throws IllegalStateException {
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.CHANGE_NETWORK_STATE, "NetworkManagementService");
+        try {
+            String cmd = "resolver detachpid " + iface + " " + pid;
+
+            mConnector.doCommand(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            throw new IllegalStateException(
+                    "Error communicating with native deamon to detach pid from interface " + iface
+                    , e);
+        }
+    }
 }
