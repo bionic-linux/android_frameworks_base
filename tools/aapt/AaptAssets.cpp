@@ -913,7 +913,7 @@ bool AaptGroupEntry::getMncName(const char* name,
                                     ResTable_config* out)
 {
     if (strcmp(name, kWildcardName) == 0) {
-        if (out) out->mcc = 0;
+        if (out) out->mnc = ACONFIGURATION_MNC_UNDEFINED;
         return true;
     }
     const char* c = name;
@@ -1496,7 +1496,7 @@ const ResTable_config& AaptGroupEntry::toParams() const
 
     mParamsChanged = false;
     ResTable_config& params(mParams);
-    memset(&params, 0, sizeof(params));
+    params.clear();
     getMccName(mcc.string(), &params);
     getMncName(mnc.string(), &params);
     getLocaleName(locale.string(), &params);

@@ -816,7 +816,7 @@ struct ResTable_config
         struct {
             // Mobile country code (from SIM).  0 means "any".
             uint16_t mcc;
-            // Mobile network code (from SIM).  0 means "any".
+            // Mobile network code (from SIM).  ACONFIGURATION_MNC_UNDEFINED means "any".
             uint16_t mnc;
         };
         uint32_t imsi;
@@ -1000,6 +1000,10 @@ struct ResTable_config
         };
         uint32_t screenSizeDp;
     };
+
+    // Clears the contents of this ResTable_config and sets default values
+    // to all of its members.
+    void clear();
 
     void copyFromDeviceNoSwap(const ResTable_config& o);
     

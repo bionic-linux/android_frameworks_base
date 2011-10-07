@@ -54,10 +54,17 @@ public final class Configuration implements Parcelable, Comparable<Configuration
     /**
      * IMSI MNC (Mobile Network Code), corresponding to
      * <a href="{@docRoot}guide/topics/resources/providing-resources.html#MccQualifier">mnc</a>
-     * resource qualifier.  0 if undefined.
+     * resource qualifier. {@link #MNC_UNDEFINED} if undefined.
      */
-    public int mnc;
-    
+    public int mnc = MNC_UNDEFINED;
+
+    /**
+     * Constant for {@link #mnc}: a value indicating that mnc is undefined. In earlier versions
+     * zero was considered undefined. There are however valid networks where mnc is zero so this
+     * has been changed.
+     */
+    public static final int MNC_UNDEFINED = 0xffff;
+
     /**
      * Current user preference for the locale, corresponding to
      * <a href="{@docRoot}guide/topics/resources/providing-resources.html#LocaleQualifier">locale</a>
@@ -591,7 +598,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         } else {
             sb.append("?mcc");
         }
-        if (mnc != 0) {
+        if (mnc != MNC_UNDEFINED) {
             sb.append(mnc);
             sb.append("mnc");
         } else {
@@ -722,7 +729,8 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      */
     public void setToDefaults() {
         fontScale = 1;
-        mcc = mnc = 0;
+        mcc = 0;
+        mnc = MNC_UNDEFINED;
         locale = null;
         userSetLocale = false;
         touchscreen = TOUCHSCREEN_UNDEFINED;
@@ -764,7 +772,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
             changed |= ActivityInfo.CONFIG_MCC;
             mcc = delta.mcc;
         }
-        if (delta.mnc != 0 && mnc != delta.mnc) {
+        if (delta.mnc != MNC_UNDEFINED && mnc != delta.mnc) {
             changed |= ActivityInfo.CONFIG_MNC;
             mnc = delta.mnc;
         }
@@ -916,7 +924,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         if (delta.mcc != 0 && mcc != delta.mcc) {
             changed |= ActivityInfo.CONFIG_MCC;
         }
-        if (delta.mnc != 0 && mnc != delta.mnc) {
+        if (delta.mnc != MNC_UNDEFINED && mnc != delta.mnc) {
             changed |= ActivityInfo.CONFIG_MNC;
         }
         if (delta.locale != null

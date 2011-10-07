@@ -1393,6 +1393,11 @@ status_t ResXMLTree::validateNode(const ResXMLTree_node* node) const
 // --------------------------------------------------------------------
 // --------------------------------------------------------------------
 
+void ResTable_config::clear() {
+    memset(this, 0, sizeof(ResTable_config));
+    mnc = ACONFIGURATION_MNC_UNDEFINED;
+}
+
 void ResTable_config::copyFromDeviceNoSwap(const ResTable_config& o) {
     const size_t size = dtohl(o.size);
     if (size >= sizeof(ResTable_config)) {
@@ -1683,8 +1688,8 @@ bool ResTable_config::isBetterThan(const ResTable_config& o,
                 return (mcc);
             }
 
-            if ((mnc != o.mnc) && requested->mnc) {
-                return (mnc);
+            if (mnc != o.mnc && requested->mnc != ACONFIGURATION_MNC_UNDEFINED) {
+                return mnc != ACONFIGURATION_MNC_UNDEFINED;
             }
         }
 
@@ -1905,6 +1910,7 @@ bool ResTable_config::isBetterThan(const ResTable_config& o,
 
         return false;
     }
+
     return isMoreSpecificThan(o);
 }
 
@@ -1913,7 +1919,7 @@ bool ResTable_config::match(const ResTable_config& settings) const {
         if (mcc != 0 && mcc != settings.mcc) {
             return false;
         }
-        if (mnc != 0 && mnc != settings.mnc) {
+        if (mnc != ACONFIGURATION_MNC_UNDEFINED && mnc != settings.mnc) {
             return false;
         }
     }
@@ -2050,7 +2056,7 @@ String8 ResTable_config::toString() const {
         if (res.size() > 0) res.append("-");
         res.appendFormat("%dmcc", dtohs(mcc));
     }
-    if (mnc != 0) {
+    if (mnc != ACONFIGURATION_MNC_UNDEFINED) {
         if (res.size() > 0) res.append("-");
         res.appendFormat("%dmnc", dtohs(mnc));
     }
@@ -2719,7 +2725,7 @@ void ResTable::Theme::dumpToLog() const
 ResTable::ResTable()
     : mError(NO_INIT)
 {
-    memset(&mParams, 0, sizeof(mParams));
+    mParams.clear();
     memset(mPackageMap, 0, sizeof(mPackageMap));
     //ALOGI("Creating ResTable %p\n", this);
 }
@@ -2727,7 +2733,7 @@ ResTable::ResTable()
 ResTable::ResTable(const void* data, size_t size, void* cookie, bool copyData)
     : mError(NO_INIT)
 {
-    memset(&mParams, 0, sizeof(mParams));
+    mParams.clear();
     memset(mPackageMap, 0, sizeof(mPackageMap));
     add(data, size, cookie, copyData);
     LOG_FATAL_IF(mError != NO_ERROR, "Error parsing resource table");
@@ -3023,7 +3029,7 @@ ssize_t ResTable::getResource(uint32_t resID, Res_value* outValue, bool mayBeBag
     const Res_value* bestValue = NULL;
     const Package* bestPackage = NULL;
     ResTable_config bestItem;
-    memset(&bestItem, 0, sizeof(bestItem)); // make the compiler shut up
+    bestItem.clear();
 
     if (outSpecFlags != NULL) *outSpecFlags = 0;
 
@@ -3324,7 +3330,7 @@ ssize_t ResTable::getBagLocked(uint32_t resID, const bag_entry** outBag,
     TABLE_NOISY(ALOGI("Building bag: %p\n", (void*)resID));
     
     ResTable_config bestConfig;
-    memset(&bestConfig, 0, sizeof(bestConfig));
+    bestConfig.clear();
 
     // Now collect all bag attributes from all packages.
     size_t ip = grp->packages.size();
@@ -4866,7 +4872,7 @@ ssize_t ResTable::getEntry(
     const ResTable_type* type = NULL;
     uint32_t offset = ResTable_type::NO_ENTRY;
     ResTable_config bestConfig;
-    memset(&bestConfig, 0, sizeof(bestConfig)); // make the compiler shut up
+    bestConfig.clear();
     
     const size_t NT = allTypes->configs.size();
     for (size_t i=0; i<NT; i++) {

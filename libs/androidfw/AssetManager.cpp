@@ -137,6 +137,7 @@ AssetManager::AssetManager(CacheMode cacheMode)
     int count = android_atomic_inc(&gCount)+1;
     //ALOGI("Creating AssetManager %p #%d\n", this, count);
     memset(mConfig, 0, sizeof(ResTable_config));
+    mConfig->mnc = ACONFIGURATION_MNC_UNDEFINED;
 }
 
 AssetManager::~AssetManager(void)

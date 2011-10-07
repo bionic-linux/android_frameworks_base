@@ -26,6 +26,7 @@ using namespace android;
 AConfiguration* AConfiguration_new() {
     AConfiguration* config = new AConfiguration;
     memset(config, 0, sizeof(AConfiguration));
+    config->mnc = ACONFIGURATION_MNC_UNDEFINED;
     return config;
 }
 

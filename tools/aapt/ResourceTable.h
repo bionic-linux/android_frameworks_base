@@ -79,6 +79,7 @@ public:
     struct ConfigDescription : public ResTable_config {
         ConfigDescription() {
             memset(this, 0, sizeof(*this));
+            mnc = ACONFIGURATION_MNC_UNDEFINED;
             size = sizeof(ResTable_config);
         }
         ConfigDescription(const ResTable_config&o) {
