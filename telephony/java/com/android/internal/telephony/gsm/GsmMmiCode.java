@@ -64,6 +64,10 @@ public final class GsmMmiCode extends Handler implements MmiCode {
     static final String SC_CLIP    = "30";
     static final String SC_CLIR    = "31";
 
+    // SKT Called line presentation
+    static final String SC_SKT_CLIP = "230";
+    static final String SC_SKT_CLIR = "23";
+
     // Call Forwarding
     static final String SC_CFU     = "21";
     static final String SC_CFB     = "67";
@@ -550,6 +554,28 @@ public final class GsmMmiCode extends Handler implements MmiCode {
         return sc != null && (sc.equals(SC_PIN) || sc.equals(SC_PIN2)
                               || sc.equals(SC_PUK) || sc.equals(SC_PUK2));
      }
+
+    /**
+     * SKT special requirement for CLIP and CLIR
+     *
+     * @return true if dialing number is SKT special number for CLIP or CLIR
+     */
+    boolean isSktTemporaryModeClirClip() {
+        if (!context.getResources().getBoolean(
+                com.android.internal.R.bool.config_skt_temporary_clip_clir)) {
+            return false;
+        }
+        if (null == sc || null == dialingNumber || phone.getServiceState().getRoaming()) {
+            return false;
+        }
+        if ((sc.equals(SC_SKT_CLIP) || sc.equals(SC_SKT_CLIR)) && isActivate()) {
+            Log.d(LOG_TAG, "SKT temporary CLIP or CLIR");
+            return true;
+        } else if (isTemporaryModeCLIR()) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * See TS 22.030 Annex B.

@@ -759,4 +759,7 @@
          [bootmode]:[original USB mode]:[USB mode used]-->
     <integer-array translatable="false" name="config_oemUsbModeOverride">
     </integer-array>
+
+    <!-- The default value of if SKT CLIP/CLIR is used or not -->
+    <bool name="config_skt_temporary_clip_clir">false</bool>
 </resources>
