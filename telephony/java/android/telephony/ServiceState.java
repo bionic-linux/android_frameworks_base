@@ -165,6 +165,7 @@ public class ServiceState implements Parcelable {
 
     private int mVoiceRegState = STATE_OUT_OF_SERVICE;
     private int mDataRegState = STATE_OUT_OF_SERVICE;
+
     private boolean mRoaming;
     private String mOperatorAlphaLong;
     private String mOperatorAlphaShort;
@@ -181,7 +182,7 @@ public class ServiceState implements Parcelable {
     private int mSystemId;
     private int mCdmaRoamingIndicator;
     private int mCdmaDefaultRoamingIndicator;
-    private int mCdmaEriIconIndex;
+    private int mCdmaEriIconIndex = 1; //EriInfo.ROAMING_INDICATOR_OFF;
     private int mCdmaEriIconMode;
 
     /**
@@ -565,6 +566,7 @@ public class ServiceState implements Parcelable {
         if (DBG) Rlog.d(LOG_TAG, "[ServiceState] setNullState=" + state);
         mVoiceRegState = state;
         mDataRegState = state;
+
         mRoaming = false;
         mOperatorAlphaLong = null;
         mOperatorAlphaShort = null;
