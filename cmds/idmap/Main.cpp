@@ -16,6 +16,7 @@
 
 #include <utils/AssetManager.h>
 #include <utils/ResourceTypes.h>
+#include <utils/String8.h>
 #include <utils/ZipFileRO.h>
 
 #include <private/android_filesystem_config.h> // for AID_SYSTEM
@@ -113,7 +114,16 @@ namespace {
         }
 
         uint32_t cached_orig_crc, cached_overlay_crc;
-        if (!ResTable::getIdmapInfo(buf, N, &cached_orig_crc, &cached_overlay_crc)) {
+        String8 cached_orig_path, cached_overlay_path;
+        if (!ResTable::getIdmapInfo(buf, N, &cached_orig_crc, &cached_overlay_crc,
+                    &cached_orig_path, &cached_overlay_path)) {
+            return true;
+        }
+
+        if (cached_orig_path != orig_apk_path) {
+            return true;
+        }
+        if (cached_overlay_path != overlay_apk_path) {
             return true;
         }
 
