@@ -42,6 +42,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.DatagramSocket;
 import java.net.UnknownHostException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.HashMap;
@@ -65,6 +66,7 @@ import javax.sip.SipFactory;
 import javax.sip.SipListener;
 import javax.sip.SipProvider;
 import javax.sip.SipStack;
+import javax.sip.Timeout;
 import javax.sip.TimeoutEvent;
 import javax.sip.Transaction;
 import javax.sip.TransactionState;
@@ -77,6 +79,7 @@ import javax.sip.header.CSeqHeader;
 import javax.sip.header.ContactHeader;
 import javax.sip.header.ExpiresHeader;
 import javax.sip.header.FromHeader;
+import javax.sip.header.Header;
 import javax.sip.header.HeaderAddress;
 import javax.sip.header.MinExpiresHeader;
 import javax.sip.header.ReferToHeader;
@@ -549,6 +552,7 @@ class SipSessionGroup implements SipListener {
         boolean mInCall;
         SessionTimer mSessionTimer;
         int mAuthenticationRetryCount;
+        SipRedirection mSipRedirection;
 
         private KeepAliveProcess mKeepAliveProcess;
 
@@ -579,7 +583,24 @@ class SipSessionGroup implements SipListener {
 
             private void timeout() {
                 synchronized (SipSessionGroup.this) {
-                    onError(SipErrorCode.TIME_OUT, "Session timed out!");
+                    /*
+                     * For unified event handling, raise a pseudo timeout
+                     * event as if it has notified from the SIP stack.
+                     */
+                    TimeoutEvent event = null;
+                    if (mClientTransaction != null) {
+                        event = new TimeoutEvent(this/*placeholder*/,
+                                    mClientTransaction, Timeout.TRANSACTION);
+                    } else if (mServerTransaction != null) {
+                        event = new TimeoutEvent(this/*placeholder*/,
+                                    mServerTransaction, Timeout.TRANSACTION);
+                    }
+                    if (event != null) {
+                        processTimeout(event);
+                        event = null;
+                    } else {
+                        onError(SipErrorCode.TIME_OUT, "Session timed out!");
+                    }
                 }
             }
 
@@ -594,13 +615,18 @@ class SipSessionGroup implements SipListener {
 
         public SipSessionImpl(ISipSessionListener listener) {
             setListener(listener);
+
+            /* Prepare for the redirection handler for this session. */
+            mSipRedirection =
+                new SipRedirection(
+                    SipSessionGroup.this, SipSessionImpl.this, mSipHelper);
         }
 
         SipSessionImpl duplicate() {
             return new SipSessionImpl(mProxy.getListener());
         }
 
-        private void reset() {
+        public void reset() {
             mInCall = false;
             removeSipSession(this);
             mPeerProfile = null;
@@ -691,8 +717,23 @@ class SipSessionGroup implements SipListener {
 
         public void makeCall(SipProfile peerProfile, String sessionDescription,
                 int timeout) {
+            /* Keep parameters to be prepared for redirection */
+            mSipRedirection.init(peerProfile, sessionDescription, timeout);
+
             doCommandAsync(new MakeCallCommand(peerProfile, sessionDescription,
                     timeout));
+        }
+
+        public void makeRedirectedCall(
+                SipProfile peerProfile,
+                String sessionDescription,
+                int timeout,
+                EventObject evt,
+                ArrayList<Header> customHeaders) {
+            doCommandAsync(
+                new MakeCallCommand(
+                    peerProfile, sessionDescription, timeout,
+                        evt, customHeaders));
         }
 
         public void answerCall(String sessionDescription, int timeout) {
@@ -898,8 +939,14 @@ class SipSessionGroup implements SipListener {
                     break;
                 case SipSession.State.INCOMING_CALL:
                 case SipSession.State.INCOMING_CALL_ANSWERING:
+                    onError(SipErrorCode.TIME_OUT, event.toString());
+                    break;
                 case SipSession.State.OUTGOING_CALL:
                 case SipSession.State.OUTGOING_CALL_CANCELING:
+                    if (mSipRedirection.tryNextCandidate((EventObject)event)) {
+                        /* New INVITE has sent to the new destination */
+                        break;
+                    }
                     onError(SipErrorCode.TIME_OUT, event.toString());
                     break;
 
@@ -1091,13 +1138,27 @@ class SipSessionGroup implements SipListener {
                 mState = SipSession.State.OUTGOING_CALL;
                 MakeCallCommand cmd = (MakeCallCommand) evt;
                 mPeerProfile = cmd.getPeerProfile();
-                if (mReferSession != null) {
-                    mSipHelper.sendReferNotify(mReferSession.mDialog,
-                            getResponseString(Response.TRYING));
-                }
-                mClientTransaction = mSipHelper.sendInvite(
-                        mLocalProfile, mPeerProfile, cmd.getSessionDescription(),
+                String offer = cmd.getSessionDescription();
+                ArrayList<Header> customHeaders = cmd.getCustomHeaders();
+
+                EventObject savedEvent = cmd.getEvent();
+                if (savedEvent != null) {
+                    /*
+                     * This is the case for redirected INVITE, triggered
+                     * by ResponseEvent or TimeoutEvent.
+                     */
+                    mClientTransaction = mSipHelper.sendRedirectedInvite(
+                        mPeerProfile, offer, savedEvent, customHeaders);
+                } else {
+                    /* This is the case for initial INVITE */
+                    if (mReferSession != null) {
+                        mSipHelper.sendReferNotify(mReferSession.mDialog,
+                                getResponseString(Response.TRYING));
+                    }
+                    mClientTransaction = mSipHelper.sendInvite(
+                        mLocalProfile, mPeerProfile, offer,
                         generateTag(), mReferredBy, mReplaces);
+                }
                 mDialog = mClientTransaction.getDialog();
                 addSipSession(this);
                 startSessionTimer(cmd.getTimeout());
@@ -1185,6 +1246,7 @@ class SipSessionGroup implements SipListener {
                 mState = SipSession.State.OUTGOING_CALL_CANCELING;
                 mSipHelper.sendCancel(mClientTransaction, 0/*statusCode*/);
                 startSessionTimer(CANCEL_CALL_TIMER);
+                mSipRedirection.reset();
                 return true;
             } else if (isRequestEvent(Request.INVITE, evt)) {
                 // Call self? Send BUSY HERE so server may redirect the call to
@@ -1192,6 +1254,7 @@ class SipSessionGroup implements SipListener {
                 RequestEvent event = (RequestEvent) evt;
                 mSipHelper.sendInviteBusyHere(event,
                         event.getServerTransaction());
+                mSipRedirection.reset();
                 return true;
             }
             return false;
@@ -1370,7 +1433,7 @@ class SipSessionGroup implements SipListener {
                 establishCall(true);
                 break;
             case 3:
-                // TODO: handle 3xx (redirect)
+                mSipRedirection.handleRedirect(evt);
                 break;
             default:
                 switch (statusCode) {
@@ -1387,6 +1450,10 @@ class SipSessionGroup implements SipListener {
                     /* FALLTHROUGH *//* Treat as an error, for now */
                 default:
                     // error: an ack is sent automatically by the stack
+                    if (mSipRedirection.tryNextCandidate(evt)) {
+                        /* New INVITE has sent to the new destination */
+                        break;
+                    }
                     if (mReferSession != null) {
                         mSipHelper.sendReferNotify(mReferSession.mDialog,
                                 getResponseString(Response.SERVICE_UNAVAILABLE));
@@ -1457,7 +1524,7 @@ class SipSessionGroup implements SipListener {
             mProxy.onCallBusy(this);
         }
 
-        private void onError(int errorCode, String message) {
+        public void onError(int errorCode, String message) {
             cancelSessionTimer();
             switch (mState) {
                 case SipSession.State.REGISTERING:
@@ -1465,19 +1532,21 @@ class SipSessionGroup implements SipListener {
                     onRegistrationFailed(errorCode, message);
                     break;
                 default:
+                    mSipRedirection.reset();
                     endCallOnError(errorCode, message);
                     break;
             }
         }
 
-        private void onError(Throwable exception) {
+        public void onError(Throwable exception) {
             exception = getRootCause(exception);
             onError(getErrorCode(exception), exception.toString());
         }
 
-        private void onError(Response response) {
+        public void onError(Response response) {
             int statusCode = response.getStatusCode();
             if (!mInCall && (statusCode == Response.BUSY_HERE)) {
+                mSipRedirection.reset();
                 endCallOnBusy();
             } else {
                 onError(getErrorCode(statusCode), createErrorMessage(response));
@@ -1738,7 +1807,7 @@ class SipSessionGroup implements SipListener {
      * @return true if the event is a response event and the CSeqHeader method
      * match the given arguments; false otherwise
      */
-    private static boolean expectResponse(
+    public boolean expectResponse(
             String expectedMethod, EventObject evt) {
         if (evt instanceof ResponseEvent) {
             ResponseEvent event = (ResponseEvent) evt;
@@ -1752,7 +1821,7 @@ class SipSessionGroup implements SipListener {
      * @return true if the event is a response event and the response code and
      *      CSeqHeader method match the given arguments; false otherwise
      */
-    private static boolean expectResponse(
+    public boolean expectResponse(
             int responseCode, String expectedMethod, EventObject evt) {
         if (evt instanceof ResponseEvent) {
             ResponseEvent event = (ResponseEvent) evt;
@@ -1843,6 +1912,8 @@ class SipSessionGroup implements SipListener {
     private class MakeCallCommand extends EventObject {
         private String mSessionDescription;
         private int mTimeout; // in seconds
+        private EventObject mEvent; /* for redirection */
+        private ArrayList<Header> mHeaders; /* for custom headers */
 
         public MakeCallCommand(SipProfile peerProfile,
                 String sessionDescription) {
@@ -1851,9 +1922,17 @@ class SipSessionGroup implements SipListener {
 
         public MakeCallCommand(SipProfile peerProfile,
                 String sessionDescription, int timeout) {
+            this(peerProfile, sessionDescription, timeout, null, null);
+        }
+
+        public MakeCallCommand(SipProfile peerProfile,
+                String sessionDescription, int timeout,
+                EventObject evt, ArrayList<Header> customHeaders) {
             super(peerProfile);
             mSessionDescription = sessionDescription;
             mTimeout = timeout;
+            mEvent = evt;
+            mHeaders = customHeaders;
         }
 
         public SipProfile getPeerProfile() {
@@ -1866,6 +1945,14 @@ class SipSessionGroup implements SipListener {
 
         public int getTimeout() {
             return mTimeout;
+        }
+
+        public EventObject getEvent() {
+            return mEvent;
+        }
+
+        public ArrayList<Header> getCustomHeaders() {
+            return mHeaders;
         }
     }
 

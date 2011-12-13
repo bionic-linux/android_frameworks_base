@@ -31,12 +31,15 @@ import android.util.Log;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.regex.Pattern;
 
 import javax.sip.ClientTransaction;
 import javax.sip.Dialog;
+import javax.sip.DialogState;
 import javax.sip.DialogTerminatedEvent;
 import javax.sip.InvalidArgumentException;
 import javax.sip.ListeningPoint;
@@ -48,6 +51,7 @@ import javax.sip.SipException;
 import javax.sip.SipFactory;
 import javax.sip.SipProvider;
 import javax.sip.SipStack;
+import javax.sip.TimeoutEvent;
 import javax.sip.Transaction;
 import javax.sip.TransactionAlreadyExistsException;
 import javax.sip.TransactionDoesNotExistException;
@@ -58,6 +62,7 @@ import javax.sip.address.Address;
 import javax.sip.address.AddressFactory;
 import javax.sip.address.SipURI;
 import javax.sip.header.AllowHeader;
+import javax.sip.header.AuthorizationHeader;
 import javax.sip.header.CSeqHeader;
 import javax.sip.header.CallIdHeader;
 import javax.sip.header.ContactHeader;
@@ -66,6 +71,7 @@ import javax.sip.header.FromHeader;
 import javax.sip.header.Header;
 import javax.sip.header.HeaderFactory;
 import javax.sip.header.MaxForwardsHeader;
+import javax.sip.header.ProxyAuthorizationHeader;
 import javax.sip.header.ReasonHeader;
 import javax.sip.header.ToHeader;
 import javax.sip.header.UserAgentHeader;
@@ -109,6 +115,11 @@ class SipHelper {
     /*-----------------------------------------------------------------*
      * Create various headers
      *-----------------------------------------------------------------*/
+
+    public Header createGenericHeader(String name, String value)
+            throws ParseException {
+        return mHeaderFactory.createHeader(name, value);
+    }
 
     private AllowHeader createAllowHeader()
             throws ParseException {
@@ -328,6 +339,114 @@ class SipHelper {
         } catch (TransactionUnavailableException e) {
             /* Provider.getNewClientTransaction() */
             throw new SipException("sendInvite()", e);
+        }
+    }
+
+    public ClientTransaction sendRedirectedInvite(
+            SipProfile peerProfile,
+            String sessionDescription,
+            EventObject evt,
+            ArrayList<Header> customHeaders) throws SipException {
+        /*
+         * There are some cases that trigger redirection process.
+         */
+        ClientTransaction tid = null;
+        if (evt instanceof ResponseEvent) {
+            tid = ((ResponseEvent)evt).getClientTransaction();
+        } else if (evt instanceof TimeoutEvent) {
+            tid = ((TransactionTerminatedEvent)evt).getClientTransaction();
+        }
+        if (tid == null) {
+            throw new SipException("Original transaction is unavailable");
+        }
+
+        /* Get original request from the transaction. */
+        SIPRequest prevRequest = (SIPRequest)tid.getRequest();
+        Request nextRequest = null;
+
+        /*
+         * Some of code in this method have copied from:
+         *     javax.sip.SipProvider.
+         *     getNewClientTransaction(javax.sip.message.Request)
+         */
+        if (prevRequest.getToTag() != null
+        ||  tid.getDialog() == null
+        ||  tid.getDialog().getState() != DialogState.CONFIRMED)  {
+            /* Reuse original request as a template */
+            if (DEBUG) {
+                Log.d(TAG, "sendRedirectedInvite: Reuse original request");
+            }
+            nextRequest = (Request)prevRequest.clone();
+
+            /*
+             * TODO:
+             * If previous INVITE request has built with custom headers,
+             * those should be removed before adding new ones, so that
+             * not to send garbage headers unintentionally.
+             */
+        } else {
+            if (DEBUG) {
+                Log.d(TAG, "sendRedirectedInvite: Going to recreate request");
+            }
+            nextRequest = tid.getDialog().createRequest(Request.INVITE);
+            Iterator<String> headerNames = prevRequest.getHeaderNames();
+            while (headerNames.hasNext()) {
+                String headerName = headerNames.next();
+                if (nextRequest.getHeader(headerName) != null) {
+                    ListIterator<Header> iterator =
+                        nextRequest.getHeaders(headerName);
+                    while (iterator.hasNext()) {
+                        nextRequest.addHeader(iterator.next());
+                    }
+                }
+            }
+            if (sessionDescription != null) {
+                setSdpMessage((Message)nextRequest, sessionDescription);
+            }
+        }
+
+        /* Reinitialize branches */
+        ViaHeader viaHeader =
+            (ViaHeader) nextRequest.getHeader(ViaHeader.NAME);
+        viaHeader.removeParameter("branch");
+
+        /* Reinitialize authorization status. */
+        nextRequest.removeHeader(AuthorizationHeader.NAME);
+        nextRequest.removeHeader(ProxyAuthorizationHeader.NAME);
+
+        /* Replace the RURI */
+        nextRequest.setRequestURI(peerProfile.getUri());
+
+        /* Add custom headers passed by 3xx response Contact, if any. */
+        if (customHeaders != null) {
+            for (int i = 0, n = customHeaders.size(); i < n; i++) {
+                /* Replace the existing ones. */
+                nextRequest.setHeader(customHeaders.get(i));
+            }
+        }
+
+        /* Increment Cseq value */
+        CSeqHeader cSeq =
+            (CSeqHeader) nextRequest.getHeader(CSeqHeader.NAME);
+        try {
+            cSeq.setSeqNumber(cSeq.getSeqNumber() + 1l);
+        } catch (InvalidArgumentException ex1) {
+            throw new SipException("Invalid CSeq -- could not increment : "
+                    + cSeq.getSeqNumber());
+        }
+
+        if (DEBUG) {
+            Log.d(TAG, "Going to send Redirected-INVITE: " + nextRequest);
+        }
+
+        try {
+            ClientTransaction clientTransaction =
+                mSipProvider.getNewClientTransaction(nextRequest);
+            clientTransaction.sendRequest();
+            return clientTransaction;
+        } catch (TransactionUnavailableException e) {
+            /* Provider.getNewClientTransaction() */
+            throw new SipException("sendRedirectedInvite()", e);
         }
     }
 
