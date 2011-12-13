@@ -124,6 +124,21 @@ class SipSessionListenerProxy extends ISipSessionListener.Stub {
         });
     }
 
+    public void onSdpNegotiate(final ISipSession session,
+            final String sessionDescription, final boolean isAnswer) {
+        if (mListener == null) return;
+        proxy(new Runnable() {
+            public void run() {
+                try {
+                    mListener.onSdpNegotiate(
+                        session, sessionDescription, isAnswer);
+                } catch (Throwable t) {
+                    handle(t, "onSdpNegotiate()");
+                }
+            }
+        });
+    }
+
     public void onCallBusy(final ISipSession session) {
         if (mListener == null) return;
         proxy(new Runnable() {
