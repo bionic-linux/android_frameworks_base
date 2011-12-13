@@ -78,7 +78,11 @@ public class SimpleSessionDescription {
      *
      * @throws IllegalArgumentException if message is invalid.
      */
-    public SimpleSessionDescription(String message) {
+    public SimpleSessionDescription(String message)
+            throws IllegalArgumentException {
+        if (message == null) {
+            throw new IllegalArgumentException("Null message?");
+        }
         String[] lines = message.trim().replaceAll(" +", " ").split("[\r\n]+");
         Fields fields = mFields;
 

@@ -145,4 +145,23 @@ interface ISipSession {
      *        established within {@code timeout} seconds
      */
     void changeCall(String sessionDescription, int timeout);
+
+    /**
+     * Reject the SDP offer contained in an INVITE, UPDATE or PRACK, etc.
+     * The action triggered by this method depends on the context.
+     *
+     * 1) Incoming INVITE:
+     *     The offer carried by incoming INVITE request is unnaceptable.
+     *     Send a 488 (Not Acceptable Here) response with a appropriate
+     *     Warning header to the UAC.
+     *
+     * 2) Outgoing bodyless INVITE:
+     *     The offer carried by 2xx INVITE response is unnaceptable.
+     *     Send an ACK with proper answer to the UAS, followed by BYE.
+     *
+     * @param sessionDescription the local session description of this call
+     * @param warningCode the warning code (3xx) to be carried by Warning
+     *        header; See {@link http://www.iana.org/assignments/sip-parameters}
+     */
+    void rejectSdp(String sessionDescription, int warningCode);
 }

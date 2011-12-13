@@ -16,6 +16,8 @@
 
 package android.net.sip;
 
+import com.android.server.sip.SipWarning; /* For rejecting incoming SDP */
+
 import android.content.Context;
 import android.media.AudioManager;
 import android.net.rtp.AudioCodec;
@@ -197,6 +199,8 @@ public class SipAudioCall {
 
     private int mErrorCode = SipErrorCode.NO_ERROR;
     private String mErrorMessage;
+
+    private int mWarningCode = 0;
 
     /**
      * Creates a call object with the local SIP profile.
@@ -421,8 +425,9 @@ public class SipAudioCall {
 
                     // session changing request
                     try {
-                        String answer = createAnswer(sessionDescription).encode();
-                        mSipSession.answerCall(answer, SESSION_TIMEOUT);
+                        mSipSession.answerCall(
+                            createOfferOrAnswer(sessionDescription),
+                            SESSION_TIMEOUT);
                     } catch (Throwable e) {
                         Log.e(TAG, "onRinging()", e);
                         session.endCall();
@@ -550,12 +555,61 @@ public class SipAudioCall {
                         newSession.makeCall(newSession.getPeerProfile(),
                                 createOffer().encode(), TRANSFER_TIMEOUT);
                     } else {
-                        String answer = createAnswer(sessionDescription).encode();
-                        newSession.answerCall(answer, SESSION_TIMEOUT);
+                        mSipSession.answerCall(
+                            createOfferOrAnswer(sessionDescription),
+                            SESSION_TIMEOUT);
                     }
                 } catch (Throwable e) {
                     Log.e(TAG, "onCallTransferring()", e);
                     newSession.endCall();
+                }
+            }
+
+            @Override
+            public void onSdpNegotiate(SipSession session,
+                    String sessionDescription, boolean isAnswer) {
+                Log.d(TAG, "onSdpNegotiate(isAnswer=" + isAnswer + "): " + session);
+                synchronized (SipAudioCall.this) {
+                    if ((mSipSession == null)
+                            || !session.getCallId().equals(
+                                    mSipSession.getCallId())) {
+                        // should not happen
+                        session.endCall();
+                        return;
+                    }
+
+                    String sdp;
+                    if (! isValidSdpMessage(sessionDescription)) {
+                        Log.w(TAG, "onSdpNegotiate(): reject invalid SDP");
+                        if (isAnswer) {
+                            /* Nothing to do with this invalid answer. */
+                            sdp = null;
+                        } else {
+                            /*
+                             * Generate my own valid answer, without
+                             * referring to the given invalid offer.
+                             */
+                            sdp = createOfferOrAnswer(null);
+                        }
+                        session.rejectSdp(sdp, mWarningCode);
+                        return;
+                    }
+
+                    try {
+                        if (isAnswer) {
+                            /* Ok, take this SDP message as a valid answer. */
+                            sdp = sessionDescription;
+                        } else {
+                            /*
+                             * Generate an answer which corresponds to
+                             * the given offer.
+                             */
+                            sdp = createOfferOrAnswer(sessionDescription);
+                        }
+                        session.answerCall(sdp, 0);
+                    } catch (Throwable e) {
+                        Log.e(TAG, "onSdpNegotiate()", e);
+                    }
                 }
             }
         };
@@ -598,8 +652,18 @@ public class SipAudioCall {
         }
 
         synchronized (this) {
+            /*
+             * Initial INVITE may or may not have carried an offer
+             * from the UAS. It is possible that the given
+             * sessionDescription is non-null but unacceptable.
+             */
+            if (! isValidSdpMessage(sessionDescription)) {
+                Log.w(TAG, "attachCall(): reject invalid SDP");
+                session.rejectSdp(null, mWarningCode);
+                throw new SipException("Invalid SDP offer");
+            }
             mSipSession = session;
-            mPeerSd = sessionDescription;
+            mPeerSd = sessionDescription; /* may be null */
             Log.v(TAG, "attachCall()" + mPeerSd);
             try {
                 session.setListener(createListener());
@@ -637,8 +701,19 @@ public class SipAudioCall {
                 mAudioStream = new AudioStream(InetAddress.getByName(
                         getLocalIp()));
                 sipSession.setListener(createListener());
-                sipSession.makeCall(peerProfile, createOffer().encode(),
-                        timeout);
+/*
+ * NOTYET
+ * Give user an option to issue a bodyless initial INVITE.
+ *
+                String sdpMessage = null;
+                if (peerProfile.sendBodylessInitialInvite()) {
+                    sdpMessage = null;
+                } else {
+                    sdpMessage = createOffer().encode();
+                }
+***/
+                String sdpMessage = createOffer().encode();
+                sipSession.makeCall(peerProfile, sdpMessage, timeout);
             } catch (IOException e) {
                 throw new SipException("makeCall()", e);
             }
@@ -699,10 +774,11 @@ public class SipAudioCall {
             if (mSipSession == null) {
                 throw new SipException("No call to answer");
             }
+            /* Validity of mPeerSd has already checked at attachCall(). */
             try {
                 mAudioStream = new AudioStream(InetAddress.getByName(
                         getLocalIp()));
-                mSipSession.answerCall(createAnswer(mPeerSd).encode(), timeout);
+                mSipSession.answerCall(createOfferOrAnswer(mPeerSd), timeout);
             } catch (IOException e) {
                 throw new SipException("answerCall()", e);
             }
@@ -730,6 +806,71 @@ public class SipAudioCall {
         }
     }
 
+    private boolean isValidSdpMessage(String sessionDescription) {
+        boolean isValid = true;
+        mWarningCode = 0;
+        if (sessionDescription != null) {
+            SimpleSessionDescription probe =
+                new SimpleSessionDescription(sessionDescription);
+            AudioCodec codec = lookupAudioCodec(probe);
+            if (codec == null) {
+                isValid = false;
+            }
+            probe = null;
+        } else {
+            ; /* Treat null sessionDescription as valid */
+        }
+        return isValid;
+    }
+
+    private AudioCodec lookupAudioCodec(SimpleSessionDescription probe) {
+        mWarningCode = 0;
+        boolean audioSeen = false;
+        for (Media media : probe.getMedia()) {
+            if (media.getPort() <= 0) {
+                continue;
+            }
+            if ("audio".equals(media.getType())
+            &&  "RTP/AVP".equals(media.getProtocol())) {
+                // Find the first audio codec we supported.
+                for (int type : media.getRtpPayloadTypes()) {
+                    AudioCodec codec =
+                        AudioCodec.getCodec(
+                            type, media.getRtpmap(type), media.getFmtp(type));
+                    if (codec != null) {
+                        /* Ok, we got one */
+                        return codec;
+                    }
+                }
+                audioSeen = true;
+            }
+        }
+
+        /* Supporting Audio codec is not found */
+        mWarningCode = (audioSeen ?
+            SipWarning.INCOMPATIBLE_MEDIA_FORMAT:
+            SipWarning.MEDIA_TYPE_NOT_AVAILABLE);
+
+        return null;
+    }
+
+    private String createOfferOrAnswer(String sessionDescription) {
+        /*
+         * Remote peer (= UAC) may or may not have sent a SDP message.
+         * As the UAS, generate a proper offer or answer depending on
+         * whether the UAC has provided a SDP message or not.
+         */
+        SimpleSessionDescription ssd;
+        if (sessionDescription != null) {
+            /* UAC is the offer; create an answer */
+            ssd = createAnswer(sessionDescription);
+        } else {
+            /* UAS (= myself) initiates the offer. */
+            ssd = createOffer();
+        }
+        return (ssd != null ? ssd.encode() : null);
+    }
+
     private SimpleSessionDescription createOffer() {
         SimpleSessionDescription offer =
                 new SimpleSessionDescription(mSessionId, getLocalIp());
@@ -744,7 +885,15 @@ public class SipAudioCall {
     }
 
     private SimpleSessionDescription createAnswer(String offerSd) {
-        if (TextUtils.isEmpty(offerSd)) return createOffer();
+        if (TextUtils.isEmpty(offerSd)) {
+            /*
+             * It's possible that given offerSd can be null, which is
+             * one of the SIP offer/answer model defined in RFC3261.
+             * If so, it's better to return null here, rather than
+             * calling createOffer(), to avoid confusion.
+             */
+            return null;
+        }
         SimpleSessionDescription offer =
                 new SimpleSessionDescription(offerSd);
         SimpleSessionDescription answer =
@@ -797,7 +946,11 @@ public class SipAudioCall {
                 reply.setFormat(format, null);
             }
         }
+        offer = null;
         if (codec == null) {
+            /* There should be no cases to reach here. */
+            answer = null;
+            mWarningCode = SipWarning.MEDIA_TYPE_NOT_AVAILABLE;
             throw new IllegalStateException("Reject SDP: no suitable codecs");
         }
         return answer;
@@ -815,7 +968,9 @@ public class SipAudioCall {
         Media media = offer.newMedia(
                 "audio", mAudioStream.getLocalPort(), 1, "RTP/AVP");
         AudioCodec codec = mAudioStream.getCodec();
-        media.setRtpPayload(codec.type, codec.rtpmap, codec.fmtp);
+        if (codec != null) {
+            media.setRtpPayload(codec.type, codec.rtpmap, codec.fmtp);
+        }
         int dtmfType = mAudioStream.getDtmfType();
         if (dtmfType != -1) {
             media.setRtpPayload(dtmfType, "telephone-event/8000", "0-15");
@@ -1061,7 +1216,10 @@ public class SipAudioCall {
                 }
             }
         }
+        offer = null;
         if (codec == null) {
+            /* There should be no cases to reach here. */
+            mWarningCode = SipWarning.MEDIA_TYPE_NOT_AVAILABLE;
             throw new IllegalStateException("Reject SDP: no suitable codecs");
         }
 

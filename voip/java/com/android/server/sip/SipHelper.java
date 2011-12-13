@@ -123,7 +123,7 @@ class SipHelper {
 
     private AllowHeader createAllowHeader()
             throws ParseException {
-        String methods = "ACK,BYE,CANCEL,INVITE,OPTIONS,REGISTER,NOTIFY,REFER";
+        String methods = SipFeature.getAllowedMethods();
         return mHeaderFactory.createAllowHeader(methods);
     }
 
@@ -484,11 +484,19 @@ class SipHelper {
      */
     public void sendInviteAck(ResponseEvent event, Dialog dialog)
             throws SipException {
+        sendInviteAck(event, dialog, null);
+    }
+
+    public void sendInviteAck(ResponseEvent event, Dialog dialog,
+            String sessionDescription) throws SipException {
         try {
             Response response = event.getResponse();
             long cseq = ((CSeqHeader) response.getHeader(CSeqHeader.NAME))
                     .getSeqNumber();
             Request request = dialog.createAck(cseq);
+            if (sessionDescription != null) {
+                setSdpMessage((Message)request, sessionDescription);
+            }
             if (DEBUG) Log.d(TAG, "send ACK: " + request);
             dialog.sendAck(request);
         } catch (InvalidArgumentException e) {
