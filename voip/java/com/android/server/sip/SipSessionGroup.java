@@ -395,7 +395,7 @@ class SipSessionGroup implements SipListener {
         }
     }
 
-    private String extractContent(Message message) {
+    public String extractContent(Message message) {
         // Currently we do not support secure MIME bodies.
         byte[] bytes = message.getRawContent();
         if (bytes != null) {
@@ -447,8 +447,6 @@ class SipSessionGroup implements SipListener {
         newSession.mInviteReceived = event;
         newSession.mPeerProfile = createPeerProfile((HeaderAddress)
                 event.getRequest().getHeader(FromHeader.NAME));
-        newSession.mPeerSessionDescription =
-                extractContent(event.getRequest());
         return newSession;
     }
 
@@ -485,9 +483,15 @@ class SipSessionGroup implements SipListener {
 
         private void processNewInviteRequest(RequestEvent event)
                 throws SipException {
-            ReplacesHeader replaces = (ReplacesHeader) event.getRequest()
-                    .getHeader(ReplacesHeader.NAME);
+            Request request = event.getRequest();
+            ReplacesHeader replaces = (ReplacesHeader)
+                    request.getHeader(ReplacesHeader.NAME);
             SipSessionImpl newSession = null;
+            ServerTransaction serverTransaction = null;
+
+            /* Incoming INVITE may not have a SDP message. */
+            String offer = mSipOfferAnswer.getSdpMessage((Message)request);
+
             if (replaces != null) {
                 int response = processInviteWithReplaces(event, replaces);
                 if (DEBUG) {
@@ -502,18 +506,39 @@ class SipSessionGroup implements SipListener {
                             replacedSession.mProxy.getListener(),
                             mSipHelper.getServerTransaction(event),
                             SipSession.State.INCOMING_CALL);
-                    newSession.mProxy.onCallTransferring(newSession,
-                            newSession.mPeerSessionDescription);
+                    newSession.mSipOfferAnswer.setOffer(offer, false/*sent*/);
+                    newSession.mProxy.onCallTransferring(newSession, offer);
                 } else {
                     mSipHelper.sendResponse(event, response);
                 }
             } else {
                 // New Incoming call.
+                String toTag = generateTag();
+
+                serverTransaction = mSipHelper.sendRinging(event, toTag);
+                if (serverTransaction == null) {
+                    /*
+                     * Failed to send a 1xx response to the UAC.
+                     * This incoming call attempt will be ignored
+                     * without alerting the user.
+                     */
+                    toTag = null;
+                    return;
+                }
                 newSession = createNewSession(event, mProxy,
-                        mSipHelper.sendRinging(event, generateTag()),
+                        serverTransaction,
                         SipSession.State.INCOMING_CALL);
-                mProxy.onRinging(newSession, newSession.mPeerProfile,
-                        newSession.mPeerSessionDescription);
+                newSession.mSipOfferAnswer.setOffer(offer, false/*sent*/);
+                /*
+                 * [NB]
+                 * Different from the case of a Re-Invite reception,
+                 * mProxy.onRinging() calls SipService.onRinging(),
+                 * in which generates an Intent to be broadcasted to
+                 * the registered application.
+                 * Therefore, validity of the initial offer, if it
+                 * exists, will be checked at SipAudioCall.attachCall().
+                 */
+                mProxy.onRinging(newSession, newSession.mPeerProfile, offer);
             }
             if (newSession != null) addSipSession(newSession);
         }
@@ -522,6 +547,14 @@ class SipSessionGroup implements SipListener {
             if (isLoggable(this, evt)) Log.d(TAG, " ~~~~~   " + this + ": "
                     + SipSession.State.toString(mState) + ": processing "
                     + log(evt));
+            /*
+             * Drop any request which does not comform to
+             * RFC3261, section 8.2.
+             */
+            if ((evt instanceof RequestEvent) && screeningTest(evt)) {
+                return true;
+            }
+
             if (isRequestEvent(Request.INVITE, evt)) {
                 processNewInviteRequest((RequestEvent) evt);
                 return true;
@@ -545,13 +578,14 @@ class SipSessionGroup implements SipListener {
         SipSessionListenerProxy mProxy = new SipSessionListenerProxy();
         int mState = SipSession.State.READY_TO_CALL;
         RequestEvent mInviteReceived;
+        ResponseEvent mInviteResponse;
         Dialog mDialog;
         ServerTransaction mServerTransaction;
         ClientTransaction mClientTransaction;
-        String mPeerSessionDescription;
         boolean mInCall;
         SessionTimer mSessionTimer;
         int mAuthenticationRetryCount;
+        SipOfferAnswer mSipOfferAnswer;
         SipRedirection mSipRedirection;
 
         private KeepAliveProcess mKeepAliveProcess;
@@ -616,6 +650,11 @@ class SipSessionGroup implements SipListener {
         public SipSessionImpl(ISipSessionListener listener) {
             setListener(listener);
 
+            /* Prepare for the offer/answer handler for this session. */
+            mSipOfferAnswer =
+                new SipOfferAnswer(
+                    SipSessionGroup.this, mSipHelper, mLocalProfile);
+
             /* Prepare for the redirection handler for this session. */
             mSipRedirection =
                 new SipRedirection(
@@ -632,7 +671,8 @@ class SipSessionGroup implements SipListener {
             mPeerProfile = null;
             mState = SipSession.State.READY_TO_CALL;
             mInviteReceived = null;
-            mPeerSessionDescription = null;
+            mInviteResponse = null;
+            mSipOfferAnswer.reset();
             mAuthenticationRetryCount = 0;
             mReferSession = null;
             mReferredBy = null;
@@ -756,6 +796,14 @@ class SipSessionGroup implements SipListener {
             }
         }
 
+        public void rejectSdp(String sessionDescription, int warningCode) {
+            synchronized (SipSessionGroup.this) {
+                if (mPeerProfile == null) return;
+                doCommandAsync(new RejectSdpCommand(
+                        sessionDescription, warningCode));
+            }
+        }
+
         public void register(int duration) {
             doCommandAsync(new RegisterCommand(duration));
         }
@@ -808,6 +856,14 @@ class SipSessionGroup implements SipListener {
                     extractExternalAddress((ResponseEvent) evt);
                 }
                 if (dialog != null) mDialog = dialog;
+
+                /*
+                 * Drop any request which does not comform to
+                 * RFC3261, section 8.2.
+                 */
+                if ((evt instanceof RequestEvent) && screeningTest(evt)) {
+                    return true;
+                }
 
                 boolean processed;
 
@@ -1139,6 +1195,7 @@ class SipSessionGroup implements SipListener {
                 MakeCallCommand cmd = (MakeCallCommand) evt;
                 mPeerProfile = cmd.getPeerProfile();
                 String offer = cmd.getSessionDescription();
+                mSipOfferAnswer.setOffer(offer, true/*sent*/);
                 ArrayList<Header> customHeaders = cmd.getCustomHeaders();
 
                 EventObject savedEvent = cmd.getEvent();
@@ -1188,14 +1245,31 @@ class SipSessionGroup implements SipListener {
         private boolean incomingCall(EventObject evt) throws SipException {
             // expect MakeCallCommand(answering) , END_CALL cmd , Cancel
             if (evt instanceof MakeCallCommand) {
+                /*
+                 * 2xx response for INVITE request may include
+                 * either offer or answer, depending on whether
+                 * the UAC has set an offer in the INVITE or not.
+                 */
+                String sdp = ((MakeCallCommand) evt).getSessionDescription();
+                mSipOfferAnswer.setAnswerOrLocalOffer(sdp);
+
                 // answer call
                 mState = SipSession.State.INCOMING_CALL_ANSWERING;
                 mSipHelper.sendInviteOk(mInviteReceived,
                         mLocalProfile,
-                        ((MakeCallCommand) evt).getSessionDescription(),
+                        sdp,
                         mServerTransaction,
                         mExternalIp, mExternalPort);
                 startSessionTimer(((MakeCallCommand) evt).getTimeout());
+                return true;
+            } else if (evt instanceof RejectSdpCommand) {
+                /*
+                 * Initial INVITE has an unacceptable SDP offer.
+                 * Send 488 response to terminate the call.
+                 */
+                int warningCode = ((RejectSdpCommand) evt).getWarningCode();
+                mSipOfferAnswer.rejectBadOffer(mInviteReceived, warningCode);
+                endCallNormally();
                 return true;
             } else if (END_CALL == evt) {
                 mSipHelper.sendInviteBusyHere(mInviteReceived,
@@ -1220,13 +1294,50 @@ class SipSessionGroup implements SipListener {
                 throws SipException {
             // expect ACK, CANCEL request
             if (isRequestEvent(Request.ACK, evt)) {
-                String sdp = extractContent(((RequestEvent) evt).getRequest());
-                if (sdp != null) mPeerSessionDescription = sdp;
-                if (mPeerSessionDescription == null) {
-                    onError(SipErrorCode.CLIENT_ERROR, "peer sdp is empty");
-                } else {
-                    establishCall(false);
+                if (mSipOfferAnswer.getRemoteSdpMessage() == null) {
+                    /*
+                     * This is the case that UAS (= myself) has sent an
+                     * offer; there must be an answer to the offer sent
+                     * by 2xx INVITE response.
+                     */
+                    RequestEvent event = (RequestEvent)evt;
+                    Request request = event.getRequest();
+                    String sdp =
+                        mSipOfferAnswer.getSdpMessage((Message)request);
+                    if (sdp == null) {
+                        Log.w(TAG, "incomingCallToInCall(): No answer in ACK");
+                        abortInviteSession();
+                        return true;
+                    }
+                    mSipOfferAnswer.setAnswer(sdp);
+
+                    /*
+                     * So far, both offer and answer exists but we have
+                     * no further knowledge about the contents.
+                     * Malformed answer will be checked per media basis.
+                     */
+                    mProxy.onSdpNegotiate(
+                        this, sdp, mSipOfferAnswer.isCompleted());
+                    return true;
                 }
+
+                /* Ok, let's alert to user */
+                establishCall(false);
+                return true;
+            } else if (evt instanceof MakeCallCommand) {
+                /*
+                 * Received ACK has an acceptable SDP answer.
+                 * Ok, let's alert to user.
+                 */
+                establishCall(true);
+                return true;
+            } else if (evt instanceof RejectSdpCommand) {
+                /*
+                 * Received ACK has an unacceptable SDP answer.
+                 * Now that the offer/answer negotiation has failed,
+                 * we need to abort this session.
+                 */
+                abortInviteSession();
                 return true;
             } else if (isRequestEvent(Request.CANCEL, evt)) {
                 // http://tools.ietf.org/html/rfc3261#section-9.2
@@ -1255,6 +1366,44 @@ class SipSessionGroup implements SipListener {
                 mSipHelper.sendInviteBusyHere(event,
                         event.getServerTransaction());
                 mSipRedirection.reset();
+                return true;
+            } else if (evt instanceof MakeCallCommand) {
+                /*
+                 * This is a case that offer/answer negotiation has
+                 * successfully completed, or an offer from the UAS
+                 * has accepted.
+                 *
+                 * If the UAC (= myself) has sent a bodyless INVITE,
+                 * a proper answer which corresponds to the offer
+                 * should have passed from user.
+                 */
+                String answer =
+                    ((MakeCallCommand) evt).getSessionDescription();
+                mSipOfferAnswer.setAnswer(answer);
+                mSipHelper.sendInviteAck(mInviteResponse, mDialog, answer);
+
+                /* Ok, let's alert to user */
+                establishCall(true);
+                return true;
+            } else if (evt instanceof RejectSdpCommand) {
+                /*
+                 * The SDP received from the UAS, which is either an
+                 * offer or an answer, is unacceptable.
+                 *
+                 * Even if the SDP is an invalid offer, the UAC need to
+                 * send a proper answer with an ACK, followed by BYE.
+                 * If the SDP is an invalid answer, just send a bodyless
+                 * ACK, followed by BYE.
+                 */
+                String answer =
+                    ((RejectSdpCommand)evt).getSessionDescription();
+                mSipHelper.sendInviteAck(mInviteResponse, mDialog, answer);
+
+                /*
+                 * Now that the offer/answer negotiation has failed,
+                 * we need to abort this session.
+                 */
+                abortInviteSession();
                 return true;
             }
             return false;
@@ -1340,13 +1489,23 @@ class SipSessionGroup implements SipListener {
                 mProxy.onCallEnded(this);
                 startSessionTimer(END_CALL_TIMER);
                 return true;
+            } else if (evt instanceof RejectSdpCommand) {
+                /*
+                 * This is a case that UAS (= myself) got a bodyless
+                 * INVITE and sent an offer by 2xx INVITE response.
+                 * However, the answer carried by ACK is unacceptable.
+                 */
+                abortInviteSession();
+                return true;
             } else if (isRequestEvent(Request.INVITE, evt)) {
                 // got Re-INVITE
                 mState = SipSession.State.INCOMING_CALL;
                 RequestEvent event = mInviteReceived = (RequestEvent) evt;
-                mPeerSessionDescription = extractContent(event.getRequest());
+                Request request = event.getRequest();
+                String offer = mSipOfferAnswer.getSdpMessage((Message)request);
+                mSipOfferAnswer.setOffer(offer, false/*sent*/);
                 mServerTransaction = null;
-                mProxy.onRinging(this, mPeerProfile, mPeerSessionDescription);
+                mProxy.onRinging(this, mPeerProfile, offer);
                 return true;
             } else if (isRequestEvent(Request.BYE, evt)) {
                 mSipHelper.sendResponse((RequestEvent) evt, Response.OK);
@@ -1357,8 +1516,9 @@ class SipSessionGroup implements SipListener {
             } else if (evt instanceof MakeCallCommand) {
                 // to change call
                 mState = SipSession.State.OUTGOING_CALL;
-                mClientTransaction = mSipHelper.sendReinvite(mDialog,
-                        ((MakeCallCommand) evt).getSessionDescription());
+                String offer = ((MakeCallCommand)evt).getSessionDescription();
+                mSipOfferAnswer.setOffer(offer, true/*sent*/);
+                mClientTransaction = mSipHelper.sendReinvite(mDialog, offer);
                 startSessionTimer(((MakeCallCommand) evt).getTimeout());
                 return true;
             } else if (evt instanceof ResponseEvent) {
@@ -1424,13 +1584,37 @@ class SipSessionGroup implements SipListener {
                 }
 
                 /*
-                 * RFC3261 section 13.2.2.4:
-                 * Every 2xx response must be ack'ed.
+                 * There must be a remote SDP message.
+                 * If UAC (= myself) has sent an offer, there must be
+                 * an answer in this 2xx response. Otherwise, UAS must
+                 * have set an offer in this 2xx respose and UAC must
+                 * return an answer by ACK.
                  */
-                mSipHelper.sendInviteAck(event, mDialog);
+                String sdp = mSipOfferAnswer.getSdpMessage((Message)response);
+                if (sdp == null) {
+                    Log.w(TAG, "handleInviteResponse(): No offer/answer in 2xx INVITE response");
 
-                mPeerSessionDescription = extractContent(response);
-                establishCall(true);
+                    /*
+                     * RFC3261 section 13.2.2.4:
+                     * Every 2xx response must be ack'ed.
+                     */
+                    mSipHelper.sendInviteAck(event, mDialog);
+
+                    /*
+                     * Now that the offer/answer negotiation has failed,
+                     * we need to abort this session.
+                     */
+                    abortInviteSession();
+                    break;
+                }
+                mSipOfferAnswer.setAnswerOrRemoteOffer(sdp);
+
+                /*
+                 * Run offer/answer negotiation per media basis.
+                 */
+                mProxy.onSdpNegotiate(
+                    this, sdp, mSipOfferAnswer.isCompleted());
+                mInviteResponse = event;
                 break;
             case 3:
                 mSipRedirection.handleRedirect(evt);
@@ -1464,6 +1648,22 @@ class SipSessionGroup implements SipListener {
                 break;
             }
             return true;
+        }
+
+        private void abortInviteSession() {
+            try {
+                /*
+                 * Dialog has already established; send a BYE
+                 * instead of 4xx-6xx error.
+                 */
+                mState = SipSession.State.ENDING_CALL;
+                mSipHelper.sendBye(mDialog, Response.NOT_ACCEPTABLE_HERE);
+                mProxy.onCallEnded(this);
+                startSessionTimer(END_CALL_TIMER);
+            } catch (SipException e) {
+                Log.w(TAG, "abortInviteSession: ", e);
+            }
+            return;
         }
 
         // timeout in seconds
@@ -1506,7 +1706,8 @@ class SipSessionGroup implements SipListener {
             cancelSessionTimer();
             if (!mInCall && enableKeepAlive) enableKeepAlive();
             mInCall = true;
-            mProxy.onCallEstablished(this, mPeerSessionDescription);
+            String sdpMessage = mSipOfferAnswer.getRemoteSdpMessage();
+            mProxy.onCallEstablished(this, sdpMessage);
         }
 
         private void endCallNormally() {
@@ -1611,6 +1812,34 @@ class SipSessionGroup implements SipListener {
             int statusCode = response.getStatusCode();
             onRegistrationFailed(getErrorCode(statusCode),
                     createErrorMessage(response));
+        }
+
+        public boolean screeningTest(EventObject evt) throws SipException {
+            /*
+             * Note that some basic checks such as Method or Header
+             * inspection has already done at SIP stack.
+             */
+            RequestEvent event = (RequestEvent)evt;
+
+            /* RFC3261, section 8.2.2.1 */
+            if (rejectUnsupportedMethod(event)) {
+                return true;
+            }
+
+            if (DEBUG) {
+                Log.d(TAG, "screeningTest: PASS");
+            }
+            return false;
+        }
+
+        private boolean rejectUnsupportedMethod(RequestEvent event)
+                throws SipException {
+            String method = event.getRequest().getMethod();
+            if (! SipFeature.isSupportedMethod(method)) {
+                mSipHelper.sendResponse(event, Response.METHOD_NOT_ALLOWED);
+                return true;
+            }
+            return false;
         }
 
         // Notes: SipSessionListener will be replaced by the keepalive process
@@ -1893,6 +2122,26 @@ class SipSessionGroup implements SipListener {
             return ((ResponseEvent) evt).getResponse().toString();
         } else {
             return evt.toString();
+        }
+    }
+
+    private class RejectSdpCommand extends EventObject {
+        private String mSessionDescription;
+        private int mWarningCode;
+
+        public RejectSdpCommand(
+                String sessionDescription, int warningCode) {
+            super(SipSessionGroup.this);
+            mSessionDescription = sessionDescription;
+            mWarningCode = warningCode;
+        }
+
+        public String getSessionDescription() {
+            return mSessionDescription;
+        }
+
+        public int getWarningCode() {
+            return mWarningCode;
         }
     }
 

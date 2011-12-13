@@ -174,6 +174,18 @@ public final class SipSession {
         }
 
         /**
+         * Called when the SDP is to be negotiated.
+         *
+         * @hide
+         * @param session the session object that carries out the transaction
+         * @param sessionDescription the peer's session description; may be null
+         * @param isAnswer true if the target SDP message is an answer
+         */
+        public void onSdpNegotiate(SipSession session,
+                String sessionDescription, boolean isAnswer) {
+        }
+
+        /**
          * Called when an error occurs during session initialization and
          * termination.
          *
@@ -457,6 +469,32 @@ public final class SipSession {
         }
     }
 
+    /**
+     * Reject the SDP offer contained in an INVITE, UPDATE or PRACK, etc.
+     * The action triggered by this method depends on the context.
+     *
+     * 1) Incoming INVITE:
+     *     The offer carried by incoming INVITE request is unnaceptable.
+     *     Send a 488 (Not Acceptable Here) response with a appropriate
+     *     Warning header to the UAC.
+     *
+     * 2) Outgoing bodyless INVITE:
+     *     The offer carried by 2xx INVITE response is unnaceptable.
+     *     Send an ACK with proper answer to the UAS, followed by BYE.
+     *
+     * @param sessionDescription the local session description of this call
+     * @param warningCode the warning code (3xx) to be carried by Warning
+     *        header; See {@link http://www.iana.org/assignments/sip-parameters}
+     * @hide
+     */
+    public void rejectSdp(String sessionDescription, int warningCode) {
+        try {
+            mSession.rejectSdp(sessionDescription, warningCode);
+        } catch (RemoteException e) {
+            Log.e(TAG, "rejectSdp(): " + e);
+        }
+    }
+
     ISipSession getRealSession() {
         return mSession;
     }
@@ -510,6 +548,14 @@ public final class SipSession {
                             new SipSession(session, SipSession.this.mListener),
                             sessionDescription);
 
+                }
+            }
+
+            public void onSdpNegotiate(ISipSession session,
+                    String sessionDescription, boolean isAnswer) {
+                if (mListener != null) {
+                    mListener.onSdpNegotiate(SipSession.this,
+                            sessionDescription, isAnswer);
                 }
             }
 

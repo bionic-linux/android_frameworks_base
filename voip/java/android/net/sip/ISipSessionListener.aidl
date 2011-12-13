@@ -80,6 +80,16 @@ interface ISipSessionListener {
     void onCallTransferring(in ISipSession newSession, String sessionDescription);
 
     /**
+     * Called when the SDP is to be negotiated.
+     *
+     * @param session the session object that carries out the transaction
+     * @param sessionDescription the peer's session description, may be null
+     * @param isAnswer true if the target SDP message is an answer
+     */
+    void onSdpNegotiate(in ISipSession session, String sessionDescription,
+            boolean isAnswer);
+
+    /**
      * Called when an error occurs during session initialization and
      * termination.
      *

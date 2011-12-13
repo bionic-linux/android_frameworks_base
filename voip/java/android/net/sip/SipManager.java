@@ -381,11 +381,8 @@ public class SipManager {
             throw new SipException("Call ID missing in incoming call intent");
         }
 
+        /* Incoming INVITE may not have a SDP message. */
         String offerSd = getOfferSessionDescription(incomingCallIntent);
-        if (offerSd == null) {
-            throw new SipException("Session description missing in incoming "
-                    + "call intent");
-        }
 
         try {
             ISipSession session = mSipService.getPendingSession(callId);
@@ -409,10 +406,7 @@ public class SipManager {
      * @return true if the intent is an incoming call broadcast intent
      */
     public static boolean isIncomingCallIntent(Intent intent) {
-        if (intent == null) return false;
-        String callId = getCallId(intent);
-        String offerSd = getOfferSessionDescription(intent);
-        return ((callId != null) && (offerSd != null));
+        return (intent != null && getCallId(intent) != null);
     }
 
     /**
@@ -448,8 +442,12 @@ public class SipManager {
     public static Intent createIncomingCallBroadcast(String callId,
             String sessionDescription) {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_CALL_ID, callId);
-        intent.putExtra(EXTRA_OFFER_SD, sessionDescription);
+        if (callId != null) {
+            intent.putExtra(EXTRA_CALL_ID, callId);
+        }
+        if (sessionDescription != null) {
+            intent.putExtra(EXTRA_OFFER_SD, sessionDescription);
+        }
         return intent;
     }
 

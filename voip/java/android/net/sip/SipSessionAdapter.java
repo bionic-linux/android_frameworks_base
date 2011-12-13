@@ -46,6 +46,10 @@ public class SipSessionAdapter extends ISipSessionListener.Stub {
             String sessionDescription) {
     }
 
+    public void onSdpNegotiate(ISipSession session,
+            String sessionDescription, boolean isAnswer) {
+    }
+
     public void onCallChangeFailed(ISipSession session, int errorCode,
             String message) {
     }
