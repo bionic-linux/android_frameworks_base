@@ -56,6 +56,7 @@ import javax.sip.IOExceptionEvent;
 import javax.sip.InvalidArgumentException;
 import javax.sip.ListeningPoint;
 import javax.sip.ObjectInUseException;
+import javax.sip.PeerUnavailableException;
 import javax.sip.RequestEvent;
 import javax.sip.ResponseEvent;
 import javax.sip.ServerTransaction;
@@ -69,6 +70,7 @@ import javax.sip.Transaction;
 import javax.sip.TransactionState;
 import javax.sip.TransactionTerminatedEvent;
 import javax.sip.TransactionUnavailableException;
+import javax.sip.TransportNotSupportedException;
 import javax.sip.address.Address;
 import javax.sip.address.SipURI;
 import javax.sip.header.CSeqHeader;
@@ -154,7 +156,16 @@ class SipSessionGroup implements SipListener {
 
     synchronized void reset(String localIp) throws SipException, IOException {
         mLocalIp = localIp;
-        if (localIp == null) return;
+        if (localIp == null) {
+            /*
+             * This is the only case that the SipSessionGroup class
+             * is being created while the localIp has not determined.
+             * Even so, once the localIp has determined by monitoring
+             * the connectivity, SipService will call this method with
+             * non-null localIp.
+             */
+            return;
+        }
 
         SipProfile myself = mLocalProfile;
         SipFactory sipFactory = SipFactory.getInstance();
@@ -168,17 +179,29 @@ class SipSessionGroup implements SipListener {
             properties.setProperty("javax.sip.OUTBOUND_PROXY", outboundProxy
                     + ":" + myself.getPort() + "/" + myself.getProtocol());
         }
-        SipStack stack = mSipStack = sipFactory.createSipStack(properties);
 
+        SipStack stack;
         try {
+            stack = mSipStack = sipFactory.createSipStack(properties);
             SipProvider provider = stack.createSipProvider(
                     stack.createListeningPoint(localIp, allocateLocalPort(),
                             myself.getProtocol()));
             provider.addSipListener(this);
             mSipHelper = new SipHelper(stack, provider);
+        } catch (PeerUnavailableException e) {
+            /* SipFactory.createSipStack() */
+            throw new SipException("SipSessionGroup constructor", e);
+        } catch (ObjectInUseException e) {
+            /* SipStack.createSipProvider() */
+            throw new SipException("SipSessionGroup constructor", e);
+        } catch (TransportNotSupportedException e) {
+            /* SipStack.createListeningPoint() */
+            throw new IOException(e.getMessage());
         } catch (InvalidArgumentException e) {
+            /* SipStack.createListeningPoint() */
             throw new IOException(e.getMessage());
         } catch (TooManyListenersException e) {
+            /* SipProvider.addSipListener() */
             // must never happen
             throw new SipException("SipSessionGroup constructor", e);
         }
@@ -1106,7 +1129,7 @@ class SipSessionGroup implements SipListener {
             if (evt instanceof MakeCallCommand) {
                 // answer call
                 mState = SipSession.State.INCOMING_CALL_ANSWERING;
-                mServerTransaction = mSipHelper.sendInviteOk(mInviteReceived,
+                mSipHelper.sendInviteOk(mInviteReceived,
                         mLocalProfile,
                         ((MakeCallCommand) evt).getSessionDescription(),
                         mServerTransaction,
@@ -1119,10 +1142,13 @@ class SipSessionGroup implements SipListener {
                 endCallNormally();
                 return true;
             } else if (isRequestEvent(Request.CANCEL, evt)) {
+                /* Send 200 response for CANCEL */
                 RequestEvent event = (RequestEvent) evt;
                 mSipHelper.sendResponse(event, Response.OK);
+
+                /* Send 487 response for INVITE */
                 mSipHelper.sendInviteRequestTerminated(
-                        mInviteReceived.getRequest(), mServerTransaction);
+                        mInviteReceived, mServerTransaction);
                 endCallNormally();
                 return true;
             }
@@ -1151,66 +1177,13 @@ class SipSessionGroup implements SipListener {
 
         private boolean outgoingCall(EventObject evt) throws SipException {
             if (expectResponse(Request.INVITE, evt)) {
-                ResponseEvent event = (ResponseEvent) evt;
-                Response response = event.getResponse();
-
-                int statusCode = response.getStatusCode();
-                switch (statusCode) {
-                case Response.RINGING:
-                case Response.CALL_IS_BEING_FORWARDED:
-                case Response.QUEUED:
-                case Response.SESSION_PROGRESS:
-                    // feedback any provisional responses (except TRYING) as
-                    // ring back for better UX
-                    if (mState == SipSession.State.OUTGOING_CALL) {
-                        mState = SipSession.State.OUTGOING_CALL_RING_BACK;
-                        cancelSessionTimer();
-                        mProxy.onRingingBack(this);
-                    }
-                    return true;
-                case Response.OK:
-                    if (mReferSession != null) {
-                        mSipHelper.sendReferNotify(mReferSession.mDialog,
-                                getResponseString(Response.OK));
-                        // since we don't need to remember the session anymore.
-                        mReferSession = null;
-                    }
-                    mSipHelper.sendInviteAck(event, mDialog);
-                    mPeerSessionDescription = extractContent(response);
-                    establishCall(true);
-                    return true;
-                case Response.UNAUTHORIZED:
-                case Response.PROXY_AUTHENTICATION_REQUIRED:
-                    if (handleAuthentication(event)) {
-                        addSipSession(this);
-                    }
-                    return true;
-                case Response.REQUEST_PENDING:
-                    // TODO:
-                    // rfc3261#section-14.1; re-schedule invite
-                    return true;
-                default:
-                    if (mReferSession != null) {
-                        mSipHelper.sendReferNotify(mReferSession.mDialog,
-                                getResponseString(Response.SERVICE_UNAVAILABLE));
-                    }
-                    if (statusCode >= 400) {
-                        // error: an ack is sent automatically by the stack
-                        onError(response);
-                        return true;
-                    } else if (statusCode >= 300) {
-                        // TODO: handle 3xx (redirect)
-                    } else {
-                        return true;
-                    }
-                }
-                return false;
+                return handleInviteResponse(evt);
             } else if (END_CALL == evt) {
                 // RFC says that UA should not send out cancel when no
                 // response comes back yet. We are cheating for not checking
                 // response.
                 mState = SipSession.State.OUTGOING_CALL_CANCELING;
-                mSipHelper.sendCancel(mClientTransaction);
+                mSipHelper.sendCancel(mClientTransaction, 0/*statusCode*/);
                 startSessionTimer(CANCEL_CALL_TIMER);
                 return true;
             } else if (isRequestEvent(Request.INVITE, evt)) {
@@ -1300,7 +1273,7 @@ class SipSessionGroup implements SipListener {
             if (END_CALL == evt) {
                 // rfc3261#section-15.1.1
                 mState = SipSession.State.ENDING_CALL;
-                mSipHelper.sendBye(mDialog);
+                mSipHelper.sendBye(mDialog, 0/*statusCode*/);
                 mProxy.onCallEnded(this);
                 startSessionTimer(END_CALL_TIMER);
                 return true;
@@ -1351,6 +1324,79 @@ class SipSessionGroup implements SipListener {
                 return true;
             }
             return false;
+        }
+
+        private boolean handleInviteResponse(EventObject evt)
+                throws SipException {
+            ResponseEvent event = (ResponseEvent)evt;
+            Response response = event.getResponse();
+
+            int statusCode = response.getStatusCode();
+            switch (statusCode/100) {
+            case 1:
+                // feedback any provisional responses (except TRYING) as
+                // ring back for better UX
+                if (statusCode == Response.TRYING) {
+                    /* Nothing to do at UAC */
+                    break;
+                }
+                if (mState == SipSession.State.OUTGOING_CALL) {
+                    mState = SipSession.State.OUTGOING_CALL_RING_BACK;
+                    cancelSessionTimer();
+                    mProxy.onRingingBack(this);
+                }
+                break;
+            case 2:
+                /*
+                 * RFC5359 section 2.4:
+                 * If we got a 2xx response from refer target, send NOTIFY
+                 * to the referrer if the subscription created by REFER
+                 * still exists.
+                 */
+                if (mReferSession != null) {
+                    mSipHelper.sendReferNotify(mReferSession.mDialog,
+                            getResponseString(Response.OK));
+                    // since we don't need to remember the session anymore.
+                    mReferSession = null;
+                }
+
+                /*
+                 * RFC3261 section 13.2.2.4:
+                 * Every 2xx response must be ack'ed.
+                 */
+                mSipHelper.sendInviteAck(event, mDialog);
+
+                mPeerSessionDescription = extractContent(response);
+                establishCall(true);
+                break;
+            case 3:
+                // TODO: handle 3xx (redirect)
+                break;
+            default:
+                switch (statusCode) {
+                case Response.UNAUTHORIZED:
+                case Response.PROXY_AUTHENTICATION_REQUIRED:
+                    if (handleAuthentication(event)) {
+                        addSipSession(this);
+                    }
+                    /* onError() has called upon Authenticatoin failure */
+                    break;
+                case Response.REQUEST_PENDING:
+                    // TODO:
+                    // rfc3261#section-14.1; re-schedule invite
+                    /* FALLTHROUGH *//* Treat as an error, for now */
+                default:
+                    // error: an ack is sent automatically by the stack
+                    if (mReferSession != null) {
+                        mSipHelper.sendReferNotify(mReferSession.mDialog,
+                                getResponseString(Response.SERVICE_UNAVAILABLE));
+                    }
+                    onError(response);
+                    break;
+                }
+                break;
+            }
+            return true;
         }
 
         // timeout in seconds
@@ -1420,9 +1466,9 @@ class SipSessionGroup implements SipListener {
                     break;
                 default:
                     endCallOnError(errorCode, message);
+                    break;
             }
         }
-
 
         private void onError(Throwable exception) {
             exception = getRootCause(exception);
