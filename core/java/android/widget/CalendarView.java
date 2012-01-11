@@ -241,7 +241,12 @@ public class CalendarView extends FrameLayout {
     /**
      * Which month should be displayed/highlighted [0-11].
      */
-    private int mCurrentMonthDisplayed;
+    private int mCurrentMonthDisplayed = -1;
+
+    /**
+     * Which year should be displayed/highlighted.
+     */
+    private int mCurrentYearDisplayed = -1;
 
     /**
      * Used for tracking during a scroll.
@@ -935,8 +940,11 @@ public class CalendarView extends FrameLayout {
      */
     private void setMonthDisplayed(Calendar calendar) {
         final int newMonthDisplayed = calendar.get(Calendar.MONTH);
-        if (mCurrentMonthDisplayed != newMonthDisplayed) {
+        final int newYearDisplayed = calendar.get(Calendar.YEAR);
+
+        if (mCurrentMonthDisplayed != newMonthDisplayed || mCurrentYearDisplayed != newYearDisplayed) {
             mCurrentMonthDisplayed = newMonthDisplayed;
+            mCurrentYearDisplayed = newYearDisplayed;
             mAdapter.setFocusMonth(mCurrentMonthDisplayed);
             final int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_MONTH_DAY
                     | DateUtils.FORMAT_SHOW_YEAR;
