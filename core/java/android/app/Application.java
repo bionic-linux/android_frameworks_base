@@ -64,8 +64,11 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
     }
 
     /**
-     * Called when the application is starting, before any other application
-     * objects have been created.  Implementations should be as quick as
+     * Called when the application is starting, before any activity, service, 
+     * or receiver objects have been created. 
+     * Note that content providers are created before the application object
+     * (see http://code.google.com/p/android/issues/detail?id=8727).
+     * Implementations should be as quick as
      * possible (for example using lazy initialization of state) since the time
      * spent in this function directly impacts the performance of starting the
      * first activity, service, or receiver in a process.
