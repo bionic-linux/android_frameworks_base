@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAB93////I\u003d",
+        "filename": "core/java/android/app/Application.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-01-13T01:05:06Z",
+      "side": 1,
+      "message": "No need to reference the issue.",
+      "revId": "2bea866542c95eb0558004a64c9a2fd74aeff35b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
