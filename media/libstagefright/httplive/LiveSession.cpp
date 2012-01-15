@@ -866,16 +866,18 @@ status_t LiveSession::decryptBuffer(
     size_t n = buffer->size();
     CHECK_GT(n, 0u);
 
-    size_t pad = buffer->data()[n - 1];
+    if (n%16) {
+      size_t pad = buffer->data()[n - 1];
 
-    CHECK_GT(pad, 0u);
-    CHECK_LE(pad, 16u);
-    CHECK_GE((size_t)n, pad);
-    for (size_t i = 0; i < pad; ++i) {
+      CHECK_GT(pad, 0u);
+      CHECK_LE(pad, 16u);
+      CHECK_GE((size_t)n, pad);
+      for (size_t i = 0; i < pad; ++i) {
         CHECK_EQ((unsigned)buffer->data()[n - 1 - i], pad);
-    }
+      }
 
-    n -= pad;
+      n -= pad;
+    }
 
     buffer->setRange(buffer->offset(), n);
 
