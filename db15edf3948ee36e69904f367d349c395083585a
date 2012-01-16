@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACEH////8\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1010166
+      },
+      "writtenOn": "2012-01-16T05:05:11Z",
+      "side": 1,
+      "message": "Isn\u0027t \u0027\u0026\u0026 noMedia\u0027 redundant? noMedia can only be true inside the if block.",
+      "revId": "db15edf3948ee36e69904f367d349c395083585a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
