@@ -16,6 +16,24 @@
       "revId": "db15edf3948ee36e69904f367d349c395083585a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACEX////8\u003d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1003245
+      },
+      "writtenOn": "2012-01-16T14:08:08Z",
+      "side": 1,
+      "message": "Thanks Emilio! My bad :D",
+      "parentUuid": "AAACEH////8\u003d",
+      "revId": "db15edf3948ee36e69904f367d349c395083585a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
