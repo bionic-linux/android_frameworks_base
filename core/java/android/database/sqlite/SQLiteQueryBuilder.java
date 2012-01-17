@@ -552,12 +552,29 @@ public class SQLiteQueryBuilder
         int subQueryCount = subQueries.length;
         String unionOperator = mDistinct ? " UNION " : " UNION ALL ";
 
+		/* d.bulashevich@gmail.com 
+		 *
+		 * Due to unknown reasons SQLite can't compile statements like
+		 * SELECT * FROM a
+		 * UNION
+		 * SELECT * FROM b
+		 * ORDER BY some_function(col)
+		 *
+		 * The most elegant workaround I found is rewriting statement to the form of
+		 * SELECT * FROM
+		 * 		(SELECT * FROM a
+		 * 		 UNION
+		 * 		 SELECT * FROM b)
+		 * ORDER BY some_function(col)
+		 */
+        query.append("SELECT * FROM(");
         for (int i = 0; i < subQueryCount; i++) {
             if (i > 0) {
                 query.append(unionOperator);
             }
             query.append(subQueries[i]);
         }
+        query.append(")");
         appendClause(query, " ORDER BY ", sortOrder);
         appendClause(query, " LIMIT ", limit);
         return query.toString();
