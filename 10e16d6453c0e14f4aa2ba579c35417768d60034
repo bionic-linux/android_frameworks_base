@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACCX///3U\u003d",
+        "filename": "include/media/stagefright/SurfaceMediaSource.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-01-18T01:17:11Z",
+      "side": 1,
+      "message": "This suggests that a similar definition might exist elsewhere. Is there any risk that the two might be incompatible?\n\nI guess it\u0027d be good to have a quick mention about the reasoning behind this part of the change, as it\u0027s not obvious to the uninitiated how it relates to gcc 4.6.",
+      "revId": "10e16d6453c0e14f4aa2ba579c35417768d60034",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
