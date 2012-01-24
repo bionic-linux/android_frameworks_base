@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACV3////4\u003d",
+        "filename": "core/java/android/widget/CalendarView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-01-24T22:20:25Z",
+      "side": 1,
+      "message": "Please wrap this line to 100 characters, with the second half indented by 8 spaces from the first half.",
+      "revId": "b9c1fd1a5104b9e5f5d3c01d6a45ae34966f2154",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
