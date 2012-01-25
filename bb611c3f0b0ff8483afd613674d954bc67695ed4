@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACWX////A\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteQueryBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-01-25T18:02:11Z",
+      "side": 1,
+      "message": "Don\u0027t include your email address here. It\u0027s already in the change description.",
+      "revId": "bb611c3f0b0ff8483afd613674d954bc67695ed4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACWX///+4\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteQueryBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-01-25T18:02:11Z",
+      "side": 1,
+      "message": "Please replace all tabs with spaces",
+      "revId": "bb611c3f0b0ff8483afd613674d954bc67695ed4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACWX///+8\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteQueryBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-01-25T18:02:11Z",
+      "side": 1,
+      "message": "A better comment would describe this code in an absolute way, not the way you came up with it (that\u0027s what the commit description is for, where you already have it).",
+      "revId": "bb611c3f0b0ff8483afd613674d954bc67695ed4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
