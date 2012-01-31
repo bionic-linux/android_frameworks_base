@@ -49,6 +49,8 @@ public class DrmManagerClient {
      */
     public static final int ERROR_UNKNOWN = -2000;
 
+    HandlerThread mInfoThread;
+    HandlerThread mEventThread;
     private static final String TAG = "DrmManagerClient";
 
     static {
@@ -239,21 +241,63 @@ public class DrmManagerClient {
     public DrmManagerClient(Context context) {
         mContext = context;
 
-        HandlerThread infoThread = new HandlerThread("DrmManagerClient.InfoHandler");
-        infoThread.start();
-        mInfoHandler = new InfoHandler(infoThread.getLooper());
-
-        HandlerThread eventThread = new HandlerThread("DrmManagerClient.EventHandler");
-        eventThread.start();
-        mEventHandler = new EventHandler(eventThread.getLooper());
-
         // save the unique id
-        mUniqueId = _initialize(new WeakReference<DrmManagerClient>(this));
+        mUniqueId = _initialize();
     }
 
     protected void finalize() {
+        if (mInfoThread != null) {
+            Log.w(TAG, "You should have called release()");
+            mInfoThread.quit();
+        }
+        if (mEventThread != null) {
+            Log.w(TAG, "You should have called release()");
+            mEventThread.quit();
+        }
         _finalize(mUniqueId);
     }
+
+    /**
+     * Releases resources associated with the current session of DrmManagerClient.
+     *
+     * It is advisible for applications to call this method to release resources
+     * before terminating current {@link DrmManagerClient} Object.
+     * Current implementation is to clear all the listeners when not used
+     * after usage of methods {@link #setOnInfoListener(OnInfoListener)},
+     * {@link #setOnEventListener(OnEventListener)} or {@link #setOnErrorListener(OnErrorListener)}
+     * So, in case of using a listener, this method should be called after usage of the callback
+     * is over.
+     *
+     */
+    public void release() {
+        if (mEventHandler != null && mInfoHandler != null) {
+            mInfoThread.quit();
+            mEventThread.quit();
+            mInfoThread = null;
+            mEventThread = null;
+            mEventHandler = null;
+            mInfoHandler = null;
+            mOnEventListener = null;
+            mOnInfoListener = null;
+            mOnErrorListener = null;
+            _release(mUniqueId);
+        }
+    }
+
+
+    private void createListeners() {
+        if (mEventHandler == null && mInfoHandler == null) {
+            mInfoThread = new HandlerThread("DrmManagerClient.InfoHandler");
+            mInfoThread.start();
+            mInfoHandler = new InfoHandler(mInfoThread.getLooper());
+
+            mEventThread = new HandlerThread("DrmManagerClient.EventHandler");
+            mEventThread.start();
+            mEventHandler = new EventHandler(mEventThread.getLooper());
+            _setListeners(mUniqueId, new WeakReference<DrmManagerClient>(this));
+        }
+    }
+
 
     /**
      * Registers an {@link DrmManagerClient.OnInfoListener} callback, which is invoked when the 
@@ -263,6 +307,7 @@ public class DrmManagerClient {
      */
     public synchronized void setOnInfoListener(OnInfoListener infoListener) {
         if (null != infoListener) {
+            createListeners();
             mOnInfoListener = infoListener;
         }
     }
@@ -275,6 +320,7 @@ public class DrmManagerClient {
      */
     public synchronized void setOnEventListener(OnEventListener eventListener) {
         if (null != eventListener) {
+            createListeners();
             mOnEventListener = eventListener;
         }
     }
@@ -288,6 +334,7 @@ public class DrmManagerClient {
     public synchronized void setOnErrorListener(OnErrorListener errorListener) {
         if (null != errorListener) {
             mOnErrorListener = errorListener;
+            createListeners();
         }
     }
 
@@ -792,7 +839,11 @@ public class DrmManagerClient {
     }
 
     // private native interfaces
-    private native int _initialize(Object weak_this);
+    private native int _initialize();
+
+    private native void _setListeners(int uniqueId, Object weak_this);
+
+    private native void _release(int uniqueId);
 
     private native void _finalize(int uniqueId);
 
