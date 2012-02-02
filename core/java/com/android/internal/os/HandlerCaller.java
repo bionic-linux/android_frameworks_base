@@ -45,6 +45,13 @@ public class HandlerCaller {
         public int argi4;
         public int argi5;
         public int argi6;
+
+        /*package*/ void clearForRecycle() {
+             arg1 = null;
+             arg2 = null;
+             arg3 = null;
+             arg4 = null;
+        }
     }
     
     static final int ARGS_POOL_MAX_SIZE = 10;
@@ -96,6 +103,7 @@ public class HandlerCaller {
     public void recycleArgs(SomeArgs args) {
         synchronized (mH) {
             if (mArgsPoolSize < ARGS_POOL_MAX_SIZE) {
+                args.clearForRecycle();
                 args.next = mArgsPool;
                 mArgsPool = args;
                 mArgsPoolSize++;
