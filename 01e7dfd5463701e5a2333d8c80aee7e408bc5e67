@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACqn////o\u003d",
+        "filename": "services/java/com/android/server/WallpaperManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-02-07T21:30:24Z",
+      "side": 1,
+      "message": "The space should be before the parenthesis, not after",
+      "revId": "01e7dfd5463701e5a2333d8c80aee7e408bc5e67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACqn////k\u003d",
+        "filename": "services/java/com/android/server/WallpaperManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-02-07T21:30:24Z",
+      "side": 1,
+      "message": "Space before the (",
+      "revId": "01e7dfd5463701e5a2333d8c80aee7e408bc5e67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
