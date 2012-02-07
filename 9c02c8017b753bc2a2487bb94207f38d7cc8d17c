@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACt3////0\u003d",
+        "filename": "policy/src/com/android/internal/policy/impl/KeyguardScreen.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2012-02-07T23:22:06Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned about adding a method to everything that\u0027s just used in SIM/PUK unlock. At a minimum, I suggest the name should be more generic, perhaps suspendRecreate().",
+      "revId": "9c02c8017b753bc2a2487bb94207f38d7cc8d17c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACt3////4\u003d",
+        "filename": "policy/src/com/android/internal/policy/impl/LockPatternKeyguardView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2012-02-07T23:22:06Z",
+      "side": 1,
+      "message": "Line too long (\u003e 100 chars). Please split into multiple lines.",
+      "revId": "9c02c8017b753bc2a2487bb94207f38d7cc8d17c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACt3////o\u003d",
+        "filename": "policy/src/com/android/internal/policy/impl/SimUnlockScreen.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2012-02-07T23:22:06Z",
+      "side": 1,
+      "message": "Suggest more descriptive name, maybe mSimCheckInProgress.",
+      "revId": "9c02c8017b753bc2a2487bb94207f38d7cc8d17c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
