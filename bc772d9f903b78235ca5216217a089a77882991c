@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACt3///+4\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1004649
+      },
+      "writtenOn": "2012-02-08T16:15:42Z",
+      "side": 1,
+      "message": "null is the default value for uninitialized members of Object type",
+      "revId": "bc772d9f903b78235ca5216217a089a77882991c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACt3///+w\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1004649
+      },
+      "writtenOn": "2012-02-08T16:15:42Z",
+      "side": 1,
+      "message": "It would be useful to issue a warning log if finalize occurs without release() being called earlier.",
+      "revId": "bc772d9f903b78235ca5216217a089a77882991c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACt3///+s\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1004649
+      },
+      "writtenOn": "2012-02-08T16:15:42Z",
+      "side": 1,
+      "message": "I\u0027m surprised that the code for finalize is not closer to release(). It seems like they should be more similar.",
+      "revId": "bc772d9f903b78235ca5216217a089a77882991c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACt3///+0\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1004649
+      },
+      "writtenOn": "2012-02-08T16:15:42Z",
+      "side": 1,
+      "message": "we usually call this release()",
+      "revId": "bc772d9f903b78235ca5216217a089a77882991c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
