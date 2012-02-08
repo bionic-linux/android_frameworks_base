@@ -1456,7 +1456,7 @@ class MountService extends IMountService.Stub
         warnOnNotMounted();
 
         int rc = StorageResultCode.OperationSucceeded;
-        String cmd = String.format("asec create %s %d %s %s %d", id, sizeMb, fstype, key, ownerUid);
+        String cmd = "asec create " + id + " " + sizeMb + " " + fstype + " " + key + " " + ownerUid;
         try {
             mConnector.doCommand(cmd);
         } catch (NativeDaemonConnectorException e) {
