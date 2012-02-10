@@ -268,17 +268,24 @@ static jobject android_drm_DrmManagerClient_getConstraintsFromContent(
                 const char* value = pConstraints->getAsByteArray(&key);
                 if (NULL != value) {
                     jbyteArray dataArray = env->NewByteArray(strlen(value));
+                    jstring keyString = env->NewStringUTF(key.string());
                     env->SetByteArrayRegion(dataArray, 0, strlen(value), (jbyte*)value);
                     env->CallVoidMethod(
                         constraints, env->GetMethodID(localRef, "put", "(Ljava/lang/String;[B)V"),
-                                     env->NewStringUTF(key.string()), dataArray);
+                                     keyString, dataArray);
+                    env->DeleteLocalRef(keyString);
+                    env->DeleteLocalRef(dataArray);
                 }
             } else {
                 String8 value = pConstraints->get(key);
+                jstring keyString = env->NewStringUTF(key.string());
+                jstring valueString = env->NewStringUTF(value.string());
                 env->CallVoidMethod(
                     constraints,
                     env->GetMethodID(localRef, "put", "(Ljava/lang/String;Ljava/lang/String;)V"),
-                env->NewStringUTF(key.string()), env->NewStringUTF(value.string()));
+                        keyString, valueString);
+                env->DeleteLocalRef(keyString);
+                env->DeleteLocalRef(valueString);
             }
         }
     }
@@ -313,9 +320,13 @@ static jobject android_drm_DrmManagerClient_getMetadataFromContent(
                     // insert the entry<constraintKey, constraintValue>
                     // to newly created java object
                     String8 value = pMetadata->get(key);
+                    jstring keyString = env->NewStringUTF(key.string());
+                    jstring valueString = env->NewStringUTF(value.string());
                     env->CallVoidMethod(metadata, env->GetMethodID(localRef, "put",
                             "(Ljava/lang/String;Ljava/lang/String;)V"),
-                    env->NewStringUTF(key.string()), env->NewStringUTF(value.string()));
+                            keyString, valueString);
+                    env->DeleteLocalRef(keyString);
+                    env->DeleteLocalRef(valueString);
                 }
             }
         }
@@ -452,6 +463,10 @@ static jobject android_drm_DrmManagerClient_processDrmInfo(
         ALOGV("Key: %s | Value: %s", keyString.string(), valueString.string());
 
         drmInfo.put(keyString, valueString);
+
+        env->DeleteLocalRef(key);
+        env->DeleteLocalRef(valueObject);
+        env->DeleteLocalRef(valString);
     }
 
     DrmInfoStatus* pDrmInfoStatus
@@ -525,6 +540,9 @@ static jobject android_drm_DrmManagerClient_acquireDrmInfo(
         ALOGV("Key: %s | Value: %s", keyString.string(), valueString.string());
 
         drmInfoReq.put(keyString, valueString);
+
+        env->DeleteLocalRef(key);
+        env->DeleteLocalRef(value);
     }
 
     DrmInfo* pDrmInfo = getDrmManagerClientImpl(env, thiz)->acquireDrmInfo(uniqueId, &drmInfoReq);
@@ -552,9 +570,12 @@ static jobject android_drm_DrmManagerClient_acquireDrmInfo(
             while (it.hasNext()) {
                 String8 key = it.next();
                 String8 value = pDrmInfo->get(key);
-
+                jstring keyString = env->NewStringUTF(key.string());
+                jstring valueString = env->NewStringUTF(value.string());
                 env->CallVoidMethod(drmInfoObject, putMethodId,
-                    env->NewStringUTF(key.string()), env->NewStringUTF(value.string()));
+                    keyString, valueString);
+                env->DeleteLocalRef(keyString);
+                env->DeleteLocalRef(valueString);
             }
         }
         delete [] pDrmInfo->getData().data;
