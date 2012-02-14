@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAC5H///+w\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-02-14T20:25:57Z",
+      "side": 0,
+      "message": "_finalize() and its JNI counterpart are not needed and thus could be removed, right?",
+      "revId": "472512f6970fa170e2e1a3e1c24ac2b742e2e6b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAC5H///+s\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-02-14T20:25:57Z",
+      "side": 1,
+      "message": "please remove the extra space at the end of the line.",
+      "revId": "b56ae37b4218800f77315b79f871cf9555f7ad95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
