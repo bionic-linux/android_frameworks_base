@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAC6n////4\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-02-14T19:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAC2H////E\u003d",
+      "revId": "228cde05f753a6af04e5f72101ca0e9970ed13c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAC2H////0\u003d",
         "filename": "drm/java/android/drm/DrmManagerClient.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-02-13T23:38:25Z",
       "side": 1,
       "message": "it is not clear what you meant by \"terminating\" current DrmManagerClient. Could you please change this to something like, \"It is considered good practice to call this method when the DrmManagerClient is no longer needed in your application. After release() is called, DrmManagerClient is no longer usable since it has lost all of its required resource.\"\n\nPlease also remove implementation related comment.",
+      "revId": "228cde05f753a6af04e5f72101ca0e9970ed13c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAC6n////0\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-02-14T19:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAC2H////0\u003d",
       "revId": "228cde05f753a6af04e5f72101ca0e9970ed13c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -81,6 +117,24 @@
       "writtenOn": "2012-02-13T23:38:25Z",
       "side": 1,
       "message": "release() should be the same as finalize, shouldn\u0027t it?",
+      "revId": "228cde05f753a6af04e5f72101ca0e9970ed13c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAC6n////8\u003d",
+        "filename": "drm/jni/android_drm_DrmManagerClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-02-14T19:26:07Z",
+      "side": 1,
+      "message": "I moved all the code in finalize() to release(). When the user didn\u0027t call release(), finalize() calls release().",
+      "parentUuid": "AAAC2H///+8\u003d",
       "revId": "228cde05f753a6af04e5f72101ca0e9970ed13c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
