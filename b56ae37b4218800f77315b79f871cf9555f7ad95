@@ -16,6 +16,24 @@
       "revId": "b56ae37b4218800f77315b79f871cf9555f7ad95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAC6n////o\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-02-15T02:27:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAC5H///+s\u003d",
+      "revId": "b56ae37b4218800f77315b79f871cf9555f7ad95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

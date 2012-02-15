@@ -16,6 +16,24 @@
       "revId": "472512f6970fa170e2e1a3e1c24ac2b742e2e6b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAC6n////k\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-02-15T02:27:35Z",
+      "side": 0,
+      "message": "Right, because we moved all the code of _finalize() to _release().",
+      "parentUuid": "AAAC5H///+w\u003d",
+      "revId": "472512f6970fa170e2e1a3e1c24ac2b742e2e6b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
