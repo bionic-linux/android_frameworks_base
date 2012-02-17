@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,9 @@ public class TestPhoneNotifier implements PhoneNotifier {
     }
 
     public void notifyPhoneState(Phone sender) {
+    }
+
+    public void notifyPreciseCallStateChanged(Phone sender) {
     }
 
     public void notifyServiceState(Phone sender) {

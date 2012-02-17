@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package com.android.internal.telephony;
 
+import java.util.List;
+
 import android.net.LinkCapabilities;
 import android.net.LinkProperties;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
+import android.telephony.PreciseCallState;
 import android.util.Log;
 
 import com.android.internal.telephony.ITelephonyRegistry;
@@ -34,6 +37,7 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
 
     static final String LOG_TAG = "GSM";
     private static final boolean DBG = true;
+    public static final String UNKNOWN_ADDRESS = "";
     private ITelephonyRegistry mRegistry;
 
     /*package*/
@@ -52,6 +56,27 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
             mRegistry.notifyCallState(convertCallState(sender.getState()), incomingNumber);
         } catch (RemoteException ex) {
             // system process is dead
+        }
+    }
+
+    public void notifyPreciseCallStateChanged(Phone sender) {
+        Call ringingCall = sender.getRingingCall();
+        Call foregroundCall = sender.getForegroundCall();
+        Call backgroundCall = sender.getBackgroundCall();
+        int currentRingingCallState = convertPreciseCallState(ringingCall.getState());
+        int currentForegroundCallState = convertPreciseCallState(foregroundCall.getState());
+        int currentBackgroundCallState = convertPreciseCallState(backgroundCall.getState());
+
+        try {
+            mRegistry.notifyPreciseCallState(
+                    new PreciseCallState(currentRingingCallState,
+                            getAddressesFromCall(ringingCall)),
+                    new PreciseCallState(currentForegroundCallState,
+                            getAddressesFromCall(foregroundCall)),
+                    new PreciseCallState(currentBackgroundCallState,
+                            getAddressesFromCall(backgroundCall)));
+        } catch (RemoteException ex) {
+          // system process is dead
         }
     }
 
@@ -199,6 +224,33 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
     }
 
     /**
+     * Convert the {@link Call.State} enum into the TelephonyManager.CALL_DETAILED_STATE_* constants
+     * for the public API.
+     */
+    public static int convertPreciseCallState(Call.State state) {
+        switch (state) {
+            case ACTIVE:
+                return TelephonyManager.CALL_PRECISE_STATE_ACTIVE;
+            case HOLDING:
+                return TelephonyManager.CALL_PRECISE_STATE_HOLDING;
+            case DIALING:
+                return TelephonyManager.CALL_PRECISE_STATE_DIALING;
+            case ALERTING:
+                return TelephonyManager.CALL_PRECISE_STATE_ALERTING;
+            case INCOMING:
+                return TelephonyManager.CALL_PRECISE_STATE_INCOMING;
+            case WAITING:
+                return TelephonyManager.CALL_PRECISE_STATE_WAITING;
+            case DISCONNECTED:
+                return TelephonyManager.CALL_PRECISE_STATE_DISCONNECTED;
+            case DISCONNECTING:
+                return TelephonyManager.CALL_PRECISE_STATE_DISCONNECTING;
+            default:
+                return TelephonyManager.CALL_PRECISE_STATE_IDLE;
+        }
+    }
+
+    /**
      * Convert the {@link DataState} enum into the TelephonyManager.DATA_* constants
      * for the public API.
      */
@@ -267,6 +319,30 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
                 return Phone.DataActivityState.DORMANT;
             default:
                 return Phone.DataActivityState.NONE;
+        }
+    }
+
+    /**
+     * Get connection addresses from a call. If no address is
+     * specified, returns a zero element array. If an address is
+     * null, an {@link UNKNOWN_ADDRESS} constant inserted into
+     * the array for the address.
+     */
+    private String[] getAddressesFromCall (Call call) {
+        List<Connection> connections = call.getConnections();
+        if (connections == null || connections.size() == 0) {
+            return new String[0];
+        } else {
+            String[] addresses = new String[connections.size()];
+            for (int i = 0; i != connections.size(); i++) {
+                String address = connections.get(i).getAddress();
+                if(address == null) {
+                    addresses[i] = UNKNOWN_ADDRESS;
+                } else {
+                    addresses[i] = address;
+                }
+            }
+            return addresses;
         }
     }
 }

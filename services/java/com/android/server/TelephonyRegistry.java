@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
+import android.telephony.PreciseCallState;
 import android.text.TextUtils;
 import android.util.Slog;
 
@@ -74,6 +75,15 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     private final IBatteryStats mBatteryStats;
 
     private int mCallState = TelephonyManager.CALL_STATE_IDLE;
+
+    private PreciseCallState mFgPreciseCallState = new PreciseCallState(
+            TelephonyManager.CALL_PRECISE_STATE_IDLE, new String[0]);
+
+    private PreciseCallState mBgPreciseCallState = new PreciseCallState(
+            TelephonyManager.CALL_PRECISE_STATE_IDLE, new String[0]);
+
+    private PreciseCallState mRingingPreciseCallState = new PreciseCallState(
+            TelephonyManager.CALL_PRECISE_STATE_IDLE, new String[0]);
 
     private String mCallIncomingNumber = "";
 
@@ -207,6 +217,24 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             remove(r.binder);
                         }
                     }
+                    if ((events & PhoneStateListener.LISTEN_PRECISE_CALL_STATE) != 0) {
+                        try {
+                            if (mRingingPreciseCallState.state !=
+                                        TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+                                r.callback.onPreciseCallStateChanged(mRingingPreciseCallState);
+                            }
+                            if (mFgPreciseCallState.state !=
+                                        TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+                                r.callback.onPreciseCallStateChanged(mFgPreciseCallState);
+                            }
+                            if (mBgPreciseCallState.state !=
+                                        TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+                                r.callback.onPreciseCallStateChanged(mBgPreciseCallState);
+                            }
+                        } catch (RemoteException ex) {
+                            remove(r.binder);
+                        }
+                    }
                     if ((events & PhoneStateListener.LISTEN_DATA_CONNECTION_STATE) != 0) {
                         try {
                             r.callback.onDataConnectionStateChanged(mDataConnectionState,
@@ -274,6 +302,53 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             handleRemoveListLocked();
         }
         broadcastCallStateChanged(state, incomingNumber);
+    }
+
+    public void notifyPreciseCallState(PreciseCallState ringingState, 
+            PreciseCallState fgState, PreciseCallState bgState) {
+        if (!checkNotifyPermission("notifyCallState()")) {
+            return;
+        }
+        synchronized (mRecords) {
+            for (Record r : mRecords) {
+                if ((r.events & PhoneStateListener.LISTEN_PRECISE_CALL_STATE) != 0) {
+                    try {
+                        if (ringingState.state != mRingingPreciseCallState.state
+                                && ringingState.state != TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+                            r.callback.onPreciseCallStateChanged(ringingState);
+                        }
+                        if (fgState.state != mFgPreciseCallState.state
+                                && fgState.state != TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+                            r.callback.onPreciseCallStateChanged(fgState);
+                        }
+                        if (bgState.state != mBgPreciseCallState.state
+                                && bgState.state != TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+                            r.callback.onPreciseCallStateChanged(bgState);
+                        }
+                    } catch (RemoteException ex) {
+                        mRemoveList.add(r.binder);
+                    }
+                }
+            }
+            mRingingPreciseCallState = ringingState;
+            mFgPreciseCallState = fgState;
+            mBgPreciseCallState = bgState;
+            handleRemoveListLocked();
+        }
+    }
+
+    public PreciseCallState[] getPreciseCallState() {
+        ArrayList<PreciseCallState> state = new ArrayList<PreciseCallState>();
+        if (mBgPreciseCallState.state != TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+            state.add(mBgPreciseCallState);
+        }
+        if (mFgPreciseCallState.state != TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+            state.add(mFgPreciseCallState);
+        }
+        if (mRingingPreciseCallState.state != TelephonyManager.CALL_PRECISE_STATE_IDLE) {
+            state.add(mRingingPreciseCallState);
+        }
+        return (PreciseCallState[]) (state.toArray(new PreciseCallState[state.size()]));
     }
 
     public void notifyServiceState(ServiceState state) {
