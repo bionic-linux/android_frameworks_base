@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -278,5 +278,40 @@ interface ITelephony {
      * or {@link PHone#LTE_ON_CDMA_TRUE}
      */
     int getLteOnCdmaMode();
-}
 
+    /**
+     * Starts sending a DTMF tone to the specified target address.
+     * @param address has to be the address of the active and
+     * foreground call.
+     * @param c the telephone key code of the DTMF tone to send.
+     * Only characters '0' - '9', '*' and '#' may be sent, invalid characters
+     * will be ignored.
+     * @return status code for DTMF tone start.
+     *
+     * @see TelephonyManager#startDtmf(String, char)
+     */
+    int startDtmf(String address, char c);
+
+    /**
+     * Stops sending a DTMF tone to the specified target address.
+     * @param address has to be the address of the active and
+     * foreground call.
+     * @return status code for DTMF tone stop.
+     *
+     * @see TelephonyManager#stopDtmf(String)
+     */
+    int stopDtmf(String address);
+
+    /**
+     * Sends a DTMF tone to the specified target address.
+     * @param address has to be the address of the active and
+     * foreground call.
+     * @param c the telephone key code of the DTMF tone to send.
+     * Only characters '0' - '9', '*' and '#' may be sent, invalid characters
+     * will be ignored.
+     * @return status code for DTMF tone send.
+     *
+     * @see TelephonyManager#sendDtmf(String, char)
+     */
+    int sendDtmf(String address, char c);
+}

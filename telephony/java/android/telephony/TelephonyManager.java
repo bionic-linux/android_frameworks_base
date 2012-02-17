@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1005,6 +1005,58 @@ public class TelephonyManager {
         }
     }
 
+    /** Device call precise state: Idle
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_IDLE = 0;
+    /** Device call precise state: Active
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_ACTIVE = 1;
+    /** Device call precise state: Holding
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_HOLDING = 2;
+    /** Device call precise state: Dialing
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_DIALING = 3;
+    /** Device call precise state: Alerting
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_ALERTING = 4;
+    /** Device call precise state: Incoming
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_INCOMING = 5;
+    /** Device call precise state: Waiting
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_WAITING = 6;
+    /** Device call precise state: Disconnected
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_DISCONNECTED = 7;
+    /** Device call precise state: Disconnecting
+     * @see getPreciseCallState */
+    public static final int CALL_PRECISE_STATE_DISCONNECTING = 8;
+
+    /**
+     * Returns a constant indicating the exact current call state.
+     *
+     * @see CALL_PRECISE_STATE_IDLE
+     * @see CALL_PRECISE_STATE_ACTIVE
+     * @see CALL_PRECISE_STATE_HOLDING
+     * @see CALL_PRECISE_STATE_DIALING
+     * @see CALL_PRECISE_STATE_ALERTING
+     * @see CALL_PRECISE_STATE_INCOMING
+     * @see CALL_PRECISE_STATE_WAITING
+     * @see CALL_PRECISE_STATE_DISCONNECTED
+     * @see CALL_PRECISE_STATE_DISCONNECTING
+     */
+    public PreciseCallState[] getPreciseCallState() {
+        try {
+            return sRegistry.getPreciseCallState();
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+            return new PreciseCallState[0];
+        } catch (NullPointerException ex) {
+            return new PreciseCallState[0];
+        }
+    }
+
     private ITelephony getITelephony() {
         return ITelephony.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_SERVICE));
     }
@@ -1137,5 +1189,116 @@ public class TelephonyManager {
         if (sContext == null) return true;
         return sContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_sms_capable);
+    }
+
+    /** Status OK code for DTMF calls.
+     */
+    public static final int DTMF_STATUS_OK = 0;
+    /** Status error code for DTMF calls when given address
+     * is differs from the active call's address.
+     */
+    public static final int DTMF_STATUS_INVALID_ADDRESS = 1;
+    /** Status error code for DTMF calls when connection
+     * is missing from the call.
+     */
+    public static final int DTMF_STATUS_NO_CONNECTION = 2;
+    /** Status error code for DTMF calls when call
+     * has multiple connections.
+     */
+    public static final int DTMF_STATUS_MULTIPLE_CONNECTIONS = 3;
+    /** Status error code for DTMF calls when there is no active call.
+     */
+    public static final int DTMF_STATUS_NO_ACTIVE_CALL = 4;
+    /** Status error code for DTMF calls when DTMF character
+     * is invalid.
+     */
+    public static final int DTMF_STATUS_INVALID_DTMF_CHARACTER = 5;
+    /** Status error code for DTMF calls when general error
+     * occured.
+     */
+    public static final int DTMF_STATUS_GENERAL_ERROR = 6;
+
+    /**
+     * Starts sending a DTMF tone to the specified address if there is an
+     * active call. This method will block the calling thread.
+     *
+     * @param address has to be the address of the active and
+     * foreground call.
+     * @param c the telephone key code of the DTMF tone to send.
+     * Only characters '0' - '9', '*' and '#' may be sent, invalid characters
+     * will be ignored.
+     *
+     * @return status code for DTMF tone start.
+     *
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     *
+     * @see #getCallDetailedState()
+     */
+    public int startDtmf(String address, char c) {
+        int result = DTMF_STATUS_OK;
+        try {
+           result = getITelephony().startDtmf(address, c);
+        } catch (RemoteException ex) {
+            // Phone process is restarting
+            result = DTMF_STATUS_GENERAL_ERROR;
+        } catch (NullPointerException ex) {
+            result = DTMF_STATUS_GENERAL_ERROR;
+        }
+        return result;
+    }
+
+    /**
+     * Stops sending the current DTMF tone if there is an active call.
+     * Given address must match with the address of the call.
+     * This method will block the calling thread.
+     *
+     * @param address target of DTMF tone to stop.
+     * @return status code for DTMF tone start.
+     *
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     *
+     * @see #getPreciseCallState()
+     */
+    public int stopDtmf(String address) {
+        int result = DTMF_STATUS_OK;
+        try {
+             result = getITelephony().stopDtmf(address);
+        } catch (RemoteException ex) {
+            // Phone process is restarting
+            result = DTMF_STATUS_GENERAL_ERROR;
+        } catch (NullPointerException ex) {
+            result = DTMF_STATUS_GENERAL_ERROR;
+        }
+        return result;
+    }
+
+    /**
+     * Sends a DTMF tone to the specified address if there is an active call.
+     *
+     * @param address has to be the address of the active and
+     * foreground call.
+     * @param c the telephone key code of the DTMF tone to send.
+     * Only characters '0' - '9', '*' and '#' may be sent, invalid characters
+     * will be ignored.
+     * @return status code for DTMF sending.
+     *
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     *
+     * @see #getPreciseCallState()
+     */
+    public int sendDtmf(String address, char c) {
+        int result = DTMF_STATUS_OK;
+        try {
+            result = getITelephony().sendDtmf(address, c);
+        } catch (RemoteException ex) {
+            // Phone process is restarting
+            result = DTMF_STATUS_GENERAL_ERROR;
+        } catch (NullPointerException ex) {
+            result = DTMF_STATUS_GENERAL_ERROR;
+        }
+        return result;
     }
 }

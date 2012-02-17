@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.android.internal.telephony;
 
 import android.os.Bundle;
+import android.telephony.PreciseCallState;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 
@@ -29,6 +30,7 @@ oneway interface IPhoneStateListener {
     // we use bundle here instead of CellLocation so it can get the right subclass
     void onCellLocationChanged(in Bundle location);
     void onCallStateChanged(int state, String incomingNumber);
+    void onPreciseCallStateChanged(in PreciseCallState state);
     void onDataConnectionStateChanged(int state, int networkType);
     void onDataActivity(int direction);
     void onSignalStrengthsChanged(in SignalStrength signalStrength);

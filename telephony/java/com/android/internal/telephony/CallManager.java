@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.RegistrantList;
 import android.os.Registrant;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -960,6 +962,35 @@ public final class CallManager {
     }
 
     /**
+     * Play a DTMF tone on the active call, if the address in the parameter
+     * is the same as in the call.
+     *
+     * @param address to check before send DTMF
+     * @param c should be one of 0-9, '*' or '#'. Other values will be
+     * silently ignored.
+     * @return status code for DTMF sending.
+     */
+    public int sendDtmf(String address, char c) {
+        if (VDBG) {
+            Log.d(LOG_TAG, "sendDtmf(" + address + ", " + c + ")");
+            Log.d(LOG_TAG, this.toString());
+        }
+
+        Call call = getActiveFgCall();
+
+        int result = checkDtmfRequest(call, address, new Character(c));
+        if (result == TelephonyManager.DTMF_STATUS_OK) {
+            call.getPhone().sendDtmf(c);
+        }
+
+        if (VDBG) {
+            Log.d(LOG_TAG, "End sendDtmf(" + address + ", " + c + ")");
+            Log.d(LOG_TAG, this.toString());
+        }
+        return result;
+    }
+
+    /**
      * Start to paly a DTMF tone on the active call.
      * or there is a playing DTMF tone.
      * @param c should be one of 0-9, '*' or '#'. Other values will be
@@ -990,6 +1021,40 @@ public final class CallManager {
     }
 
     /**
+     * Start to play a DTMF tone on the active call.
+     * @param c should be one of 0-9, '*' or '#'. Other values will be
+     * silently ignored.
+     *
+     * @return DTMF status code.
+     * @see TelephonyManager#DTMF_STATUS_OK
+     * @see TelephonyManager#DTMF_STATUS_INVALID_ADDRESS
+     * @see TelephonyManager#DTMF_STATUS_NO_CONNECTION
+     * @see TelephonyManager#DTMF_STATUS_MULTIPLE_CONNECTIONS
+     * @see TelephonyManager#DTMF_STATUS_NO_ACTIVE_CALL
+     * @see TelephonyManager#DTMF_STATUS_INVALID_DTMF_CHARACTER
+     * @see TelephonyManager#DTMF_STATUS_GENERAL_ERROR
+     */
+    public int startDtmf(String address, char c) {
+        if (VDBG) {
+            Log.d(LOG_TAG, "startDtmf(" + address + ", " + c + ")");
+            Log.d(LOG_TAG, this.toString());
+        }
+
+        Call call = getActiveFgCall();
+
+        int result = checkDtmfRequest(call, address, c);
+        if (result == TelephonyManager.DTMF_STATUS_OK) {
+            call.getPhone().startDtmf(c);
+        }
+
+        if (VDBG) {
+            Log.d(LOG_TAG, "End startDtmf(" + address + ", " + c + ")");
+            Log.d(LOG_TAG, this.toString());
+        }
+        return result;
+    }
+
+    /**
      * Stop the playing DTMF tone. Ignored if there is no playing DTMF
      * tone or no active call.
      */
@@ -1005,6 +1070,79 @@ public final class CallManager {
             Log.d(LOG_TAG, "End stopDtmf()");
             Log.d(LOG_TAG, this.toString());
         }
+    }
+
+    /**
+     * Stop the playing DTMF tone to the specified address.
+     * Ignored if there is no playing DTMF tone, call address
+     * mismatch or no active call.
+     * @param address target of DTMF tone to stop
+     *
+     * @return DTMF status code.
+     * @see TelephonyManager#DTMF_STATUS_OK
+     * @see TelephonyManager#DTMF_STATUS_INVALID_ADDRESS
+     * @see TelephonyManager#DTMF_STATUS_NO_CONNECTION
+     * @see TelephonyManager#DTMF_STATUS_MULTIPLE_CONNECTIONS
+     * @see TelephonyManager#DTMF_STATUS_NO_ACTIVE_CALL
+     * @see TelephonyManager#DTMF_STATUS_INVALID_DTMF_CHARACTER
+     * @see TelephonyManager#DTMF_STATUS_GENERAL_ERROR
+     */
+    public int stopDtmf(String address) {
+        if (VDBG) {
+            Log.d(LOG_TAG, "stopDtmf(" + address + ")");
+            Log.d(LOG_TAG, this.toString());
+        }
+
+        Call call = getActiveFgCall();
+
+        int result = checkDtmfRequest(call, address, null);
+        if (result == TelephonyManager.DTMF_STATUS_OK) {
+            call.getPhone().stopDtmf();
+        }
+
+        if (VDBG) {
+            Log.d(LOG_TAG, "End stopDtmf(" + address + ")");
+            Log.d(LOG_TAG, this.toString());
+        }
+        return result;
+    }
+
+    private int checkDtmfRequest(Call call, String address, Character c) {
+        if (address == null || address.trim().length() == 0) {
+            Log.w(LOG_TAG, "Cannot send DTMF, invalid address provided");
+            return TelephonyManager.DTMF_STATUS_INVALID_ADDRESS;
+        }
+
+        if (c != null && !PhoneNumberUtils.is12Key(c)) {
+            Log.w(LOG_TAG, "Cannot send DTMF, invalid DTMF character");
+            return TelephonyManager.DTMF_STATUS_INVALID_DTMF_CHARACTER;
+        }
+
+        if (call == null || call.getState() == Call.State.IDLE) {
+            Log.w(LOG_TAG, "Cannot send DTMF, no active call");
+            return TelephonyManager.DTMF_STATUS_NO_ACTIVE_CALL;
+        }
+
+        {
+            List<Connection> conns = call.getConnections();
+            if (conns == null || conns.size() == 0) {
+                Log.w(LOG_TAG, "Cannot send DTMF, no connections for call");
+                return TelephonyManager.DTMF_STATUS_NO_CONNECTION;
+            }
+
+            if (conns.size() != 1) {
+                Log.w(LOG_TAG, "Cannot send DTMF, multiple connections");
+                return TelephonyManager.DTMF_STATUS_MULTIPLE_CONNECTIONS;
+            }
+
+            String connAddress = conns.get(0).getAddress();
+            if (connAddress == null || !address.equals(connAddress)) {
+                Log.w(LOG_TAG, "Cannot send DTMF, address mismatch");
+                return TelephonyManager.DTMF_STATUS_INVALID_ADDRESS;
+            }
+        }
+
+        return TelephonyManager.DTMF_STATUS_OK;
     }
 
     /**
