@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -156,6 +156,15 @@ public class PhoneStateListener {
      */
     public static final int LISTEN_OTASP_CHANGED                            = 0x00000200;
 
+    /**
+     * Listen for changes to precise call states of the device.
+     * {@more}
+     * Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE
+     * READ_PHONE_STATE}
+     * @see #onPreciseCallStateChanged
+     */
+    public static final int LISTEN_PRECISE_CALL_STATE                       = 0x00000400;
+
     public PhoneStateListener() {
     }
 
@@ -214,6 +223,24 @@ public class PhoneStateListener {
      * @see TelephonyManager#CALL_STATE_OFFHOOK
      */
     public void onCallStateChanged(int state, String incomingNumber) {
+        // default implementation empty
+    }
+
+    /**
+     * Callback invoked when device precise call state changes.
+     * Addresses contains the connection addresses for the concerned
+     * call.
+     * @see TelephonyManager#CALL_PRECISE_STATE_IDLE
+     * @see TelephonyManager#CALL_PRECISE_STATE_ACTIVE
+     * @see TelephonyManager#CALL_PRECISE_STATE_HOLDING
+     * @see TelephonyManager#CALL_PRECISE_STATE_DIALING
+     * @see TelephonyManager#CALL_PRECISE_STATE_ALERTING
+     * @see TelephonyManager#CALL_PRECISE_STATE_INCOMING
+     * @see TelephonyManager#CALL_PRECISE_STATE_WAITING
+     * @see TelephonyManager#CALL_PRECISE_STATE_DISCONNECTED
+     * @see TelephonyManager#CALL_PRECISE_STATE_DISCONNECTING
+     */
+    public void onPreciseCallStateChanged(PreciseCallState state) {
         // default implementation empty
     }
 
@@ -307,6 +334,10 @@ public class PhoneStateListener {
             Message.obtain(mHandler, LISTEN_CALL_STATE, state, 0, incomingNumber).sendToTarget();
         }
 
+        public void onPreciseCallStateChanged(PreciseCallState state) {
+            Message.obtain(mHandler, LISTEN_PRECISE_CALL_STATE, 0, 0, state).sendToTarget();
+        }
+
         public void onDataConnectionStateChanged(int state, int networkType) {
             Message.obtain(mHandler, LISTEN_DATA_CONNECTION_STATE, state, networkType).
                     sendToTarget();
@@ -346,6 +377,9 @@ public class PhoneStateListener {
                     break;
                 case LISTEN_CALL_STATE:
                     PhoneStateListener.this.onCallStateChanged(msg.arg1, (String)msg.obj);
+                    break;
+                case LISTEN_PRECISE_CALL_STATE:
+                    PhoneStateListener.this.onPreciseCallStateChanged((PreciseCallState)msg.obj);
                     break;
                 case LISTEN_DATA_CONNECTION_STATE:
                     PhoneStateListener.this.onDataConnectionStateChanged(msg.arg1, msg.arg2);

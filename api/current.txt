@@ -19083,6 +19083,7 @@ package android.telephony {
     method public void onDataConnectionStateChanged(int);
     method public void onDataConnectionStateChanged(int, int);
     method public void onMessageWaitingIndicatorChanged(boolean);
+    method public void onPreciseCallStateChanged(android.telephony.PreciseCallState);
     method public void onServiceStateChanged(android.telephony.ServiceState);
     method public deprecated void onSignalStrengthChanged(int);
     method public void onSignalStrengthsChanged(android.telephony.SignalStrength);
@@ -19093,9 +19094,20 @@ package android.telephony {
     field public static final int LISTEN_DATA_CONNECTION_STATE = 64; // 0x40
     field public static final int LISTEN_MESSAGE_WAITING_INDICATOR = 4; // 0x4
     field public static final int LISTEN_NONE = 0; // 0x0
+    field public static final int LISTEN_PRECISE_CALL_STATE = 1024; // 0x400
     field public static final int LISTEN_SERVICE_STATE = 1; // 0x1
     field public static final deprecated int LISTEN_SIGNAL_STRENGTH = 2; // 0x2
     field public static final int LISTEN_SIGNAL_STRENGTHS = 256; // 0x100
+  }
+
+  public class PreciseCallState implements android.os.Parcelable {
+    ctor public PreciseCallState(int, java.lang.String[]);
+    ctor public PreciseCallState(android.os.Parcel);
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator CREATOR;
+    field public java.lang.String[] addresses;
+    field public int state;
   }
 
   public class ServiceState implements android.os.Parcelable {
@@ -19226,6 +19238,7 @@ package android.telephony {
     method public java.lang.String getNetworkOperatorName();
     method public int getNetworkType();
     method public int getPhoneType();
+    method public android.telephony.PreciseCallState[] getPreciseCallState();
     method public java.lang.String getSimCountryIso();
     method public java.lang.String getSimOperator();
     method public java.lang.String getSimOperatorName();
@@ -19237,7 +19250,19 @@ package android.telephony {
     method public boolean hasIccCard();
     method public boolean isNetworkRoaming();
     method public void listen(android.telephony.PhoneStateListener, int);
+    method public int sendDtmf(java.lang.String, char);
+    method public int startDtmf(java.lang.String, char);
+    method public int stopDtmf(java.lang.String);
     field public static final java.lang.String ACTION_PHONE_STATE_CHANGED = "android.intent.action.PHONE_STATE";
+    field public static final int CALL_PRECISE_STATE_ACTIVE = 1; // 0x1
+    field public static final int CALL_PRECISE_STATE_ALERTING = 4; // 0x4
+    field public static final int CALL_PRECISE_STATE_DIALING = 3; // 0x3
+    field public static final int CALL_PRECISE_STATE_DISCONNECTED = 7; // 0x7
+    field public static final int CALL_PRECISE_STATE_DISCONNECTING = 8; // 0x8
+    field public static final int CALL_PRECISE_STATE_HOLDING = 2; // 0x2
+    field public static final int CALL_PRECISE_STATE_IDLE = 0; // 0x0
+    field public static final int CALL_PRECISE_STATE_INCOMING = 5; // 0x5
+    field public static final int CALL_PRECISE_STATE_WAITING = 6; // 0x6
     field public static final int CALL_STATE_IDLE = 0; // 0x0
     field public static final int CALL_STATE_OFFHOOK = 2; // 0x2
     field public static final int CALL_STATE_RINGING = 1; // 0x1
@@ -19250,6 +19275,13 @@ package android.telephony {
     field public static final int DATA_CONNECTING = 1; // 0x1
     field public static final int DATA_DISCONNECTED = 0; // 0x0
     field public static final int DATA_SUSPENDED = 3; // 0x3
+    field public static final int DTMF_STATUS_GENERAL_ERROR = 6; // 0x6
+    field public static final int DTMF_STATUS_INVALID_ADDRESS = 1; // 0x1
+    field public static final int DTMF_STATUS_INVALID_DTMF_CHARACTER = 5; // 0x5
+    field public static final int DTMF_STATUS_MULTIPLE_CONNECTIONS = 3; // 0x3
+    field public static final int DTMF_STATUS_NO_ACTIVE_CALL = 4; // 0x4
+    field public static final int DTMF_STATUS_NO_CONNECTION = 2; // 0x2
+    field public static final int DTMF_STATUS_OK = 0; // 0x0
     field public static final java.lang.String EXTRA_INCOMING_NUMBER = "incoming_number";
     field public static final java.lang.String EXTRA_STATE = "state";
     field public static final java.lang.String EXTRA_STATE_IDLE;
