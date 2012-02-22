@@ -2033,4 +2033,95 @@ public class StorageManager {
     public static final String PATTERN_VISIBLE_KEY = "PatternVisible";
     /** @hide */
     public static final String PASSWORD_VISIBLE_KEY = "PasswordVisible";
+
+    /**
+     * The type of a given storage volume
+     *
+     * @hide
+     */
+    public enum StorageType {
+        /** An internal volume, e.g. built-in eMMC, adopted shared storage */
+        INTERNAL,
+
+        /** An external card such as SD card or memory stick */
+        EXTERNAL_CARD,
+
+        /** An external USB disk device */
+        EXTERNAL_USB,
+
+        /** Unknown device */
+        UNKNOWN
+    }
+
+    /**
+     * Get the type of the storage volume with the given volume/disk info
+     *
+     * @param mountPoint Path to volume/disk info
+     * @return Storage volume type, or null if there is no such storage
+     *
+     * @hide
+     */
+    public StorageType getVolumeType(StorageVolume volume) {
+        VolumeInfo vol = findVolumeById(volume.getId());
+        if (vol != null) {
+            String id = vol.getId();
+            if (VolumeInfo.ID_PRIVATE_INTERNAL.equals(id) ||
+                    VolumeInfo.ID_EMULATED_INTERNAL.equals(id) ||
+                    vol.getType() == VolumeInfo.TYPE_EMULATED) {
+                return StorageType.INTERNAL;
+            }
+
+            if (vol.disk != null) {
+                if (vol.disk.isSd()) {
+                    return StorageType.EXTERNAL_CARD;
+                }
+                if (vol.disk.isUsb()) {
+                    return StorageType.EXTERNAL_USB;
+                }
+            }
+        }
+        return StorageType.UNKNOWN;
+    }
+
+    /**
+     * Get the type of the storage volume with the given mount point
+     *
+     * @param mountPoint Path to mount point
+     * @return Storage volume type, or null if there is no such storage
+     * @throws FileNotFoundException if no such volume is available on the
+     *             device
+     * @hide
+     */
+    public StorageType getVolumeType(String mountPoint) throws FileNotFoundException {
+        for (StorageVolume volume : getVolumeList()) {
+            if (volume.getPath().equals(mountPoint)) {
+                return getVolumeType(volume);
+            }
+        }
+
+        throw new FileNotFoundException("No such storage volume");
+    }
+
+    /**
+     * Get the mount point of the storage volume with the given type. If several
+     * volumes of the same type exists, the first one found will be returned.
+     * Clients needing to query for multiple volumes of the same type should use
+     * {@link #getVolumePaths()} in combination with
+     * {@link #getVolumeType(String)} to iterate through volumes.
+     *
+     * @param type Storage volume type
+     * @return Path to mount point
+     * @throws FileNotFoundException if no such volume is available on the
+     *             device
+     * @hide
+     */
+    public String getVolumePath(StorageType type) throws FileNotFoundException {
+        for (StorageVolume volume : getVolumeList()) {
+            if (type.equals(getVolumeType(volume))) {
+                return volume.getPath();
+            }
+        }
+
+        throw new FileNotFoundException("No such storage volume");
+    }
 }
