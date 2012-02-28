@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADS3///9k\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-02-28T19:09:44Z",
+      "side": 1,
+      "message": "I\u0027ll strongly advocate that those should be kept ordered. Otherwise, we\u0027ll end up with duplicates.",
+      "revId": "d6af608d3fbfcc6dce438a609688df8d333e4f57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADS3///9g\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-02-28T19:09:44Z",
+      "side": 1,
+      "message": "We already have a 27 in the internal Google master tree. To avoid confusion, we should skip 27 in AOSP and use 28 and 29.",
+      "revId": "d6af608d3fbfcc6dce438a609688df8d333e4f57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
