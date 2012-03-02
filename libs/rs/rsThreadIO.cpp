@@ -118,8 +118,11 @@ void ThreadIO::setTimoutCallback(void (*cb)(void *), void *dat, uint64_t timeout
 
 
 bool ThreadIO::playCoreCommands(Context *con, bool waitForCommand, uint64_t timeToWait) {
+    //timeToWait==0 && waitForCommand==true means wait forever
+    //timeTowait>0 && waitForCommand==true means wait for given time
     bool ret = false;
     uint64_t startTime = con->getTime();
+    bool wait_forever = (timeToWait == 0);
 
     while (!mToCore.isEmpty() || waitForCommand) {
         uint32_t cmdID = 0;
@@ -136,7 +139,9 @@ bool ThreadIO::playCoreCommands(Context *con, bool waitForCommand, uint64_t time
                 delay = 0;
             }
         }
-        const void * data = mToCore.get(&cmdID, &cmdSize, delay);
+        const void * data = NULL;
+        if(delay>0 || wait_forever || !mToCore.isEmpty())
+            data = mToCore.get(&cmdID, &cmdSize, delay);
         if (!cmdSize) {
             // exception or timeout occurred.
             return false;
