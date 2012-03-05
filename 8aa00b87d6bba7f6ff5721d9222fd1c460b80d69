@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADi3////k\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4144,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-03-05T18:30:07Z",
+      "side": 1,
+      "message": "Not deleting package or group?",
+      "revId": "8aa00b87d6bba7f6ff5721d9222fd1c460b80d69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
