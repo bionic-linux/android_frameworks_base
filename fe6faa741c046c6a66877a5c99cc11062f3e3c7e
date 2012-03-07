@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADqn////U\u003d",
+        "filename": "cmds/idmap/Main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-03-07T18:06:02Z",
+      "side": 1,
+      "message": "You shouldn\u0027t wrap close() with TEMP_FAILURE_RETRY. The state of the fd is unspecified if close returns something.",
+      "revId": "fe6faa741c046c6a66877a5c99cc11062f3e3c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADqn////Q\u003d",
+        "filename": "cmds/idmap/Main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-03-07T18:06:02Z",
+      "side": 1,
+      "message": "It should be:\n\n  ssize_t w \u003d ...\n\nShould handle the case where w \u003c 0",
+      "revId": "fe6faa741c046c6a66877a5c99cc11062f3e3c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADqn////E\u003d",
+        "filename": "cmds/idmap/Main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-03-07T18:06:02Z",
+      "side": 1,
+      "message": "This should check if UID \u003d\u003d system and exit with a message otherwise.\n\nI don\u0027t think the entire program should run as root just for sanity sake. For testing, we should do \"su system idmap --path ...\"",
+      "revId": "fe6faa741c046c6a66877a5c99cc11062f3e3c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADqn////g\u003d",
+        "filename": "cmds/installd/commands.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-03-07T18:06:02Z",
+      "side": 1,
+      "message": "Perhaps should add:\n\n  || *skin_path !\u003d \u0027/\u0027)\n\nto be explicit that this expects an absolute path for the skin.",
+      "revId": "fe6faa741c046c6a66877a5c99cc11062f3e3c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADqn////Y\u003d",
+        "filename": "cmds/installd/commands.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-03-07T18:06:02Z",
+      "side": 1,
+      "message": "Do you need this open? We have O_CLOEXEC. This isn\u0027t multithreaded, but might as well do it if you don\u0027t need it open in the parent.",
+      "revId": "fe6faa741c046c6a66877a5c99cc11062f3e3c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADqn////I\u003d",
+        "filename": "cmds/system_server/library/system_init.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-03-07T18:06:02Z",
+      "side": 1,
+      "message": "Print a log warning message here.",
+      "revId": "fe6faa741c046c6a66877a5c99cc11062f3e3c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADqn////A\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4321,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-03-07T18:06:02Z",
+      "side": 1,
+      "message": "These should probably log an error since it should be exceptional, correct?",
+      "revId": "fe6faa741c046c6a66877a5c99cc11062f3e3c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADqn///+8\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4324,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-03-07T18:06:02Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "fe6faa741c046c6a66877a5c99cc11062f3e3c7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
