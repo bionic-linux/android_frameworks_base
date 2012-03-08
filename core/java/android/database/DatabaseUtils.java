@@ -40,6 +40,7 @@ import java.io.PrintStream;
 import java.text.Collator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Locale;
 
 /**
  * Static utility methods for dealing with databases and {@link Cursor}s.
@@ -1318,7 +1319,7 @@ public class DatabaseUtils {
         if (sql.length() < 3) {
             return STATEMENT_OTHER;
         }
-        String prefixSql = sql.substring(0, 3).toUpperCase();
+        String prefixSql = sql.substring(0, 3).toUpperCase(Locale.US);
         if (prefixSql.equals("SEL")) {
             return STATEMENT_SELECT;
         } else if (prefixSql.equals("INS") ||
