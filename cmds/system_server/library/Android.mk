@@ -12,6 +12,7 @@ LOCAL_C_INCLUDES := \
 	$(base)/services/surfaceflinger \
 	$(base)/services/sensorservice \
 	$(base)/media/libmediaplayerservice \
+	external/zlib \
 	$(JNI_H_INCLUDE)
 
 LOCAL_SHARED_LIBRARIES := \
