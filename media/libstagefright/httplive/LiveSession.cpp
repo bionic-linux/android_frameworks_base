@@ -484,7 +484,9 @@ rinse_repeat:
 
     if (mLastPlaylistFetchTimeUs < 0
             || (ssize_t)bandwidthIndex != mPrevBandwidthIndex
-            || (!mPlaylist->isComplete() && timeToRefreshPlaylist(nowUs))) {
+            || (!mPlaylist->isComplete()
+                    && (mPlaylist->meta() != NULL)
+                    && timeToRefreshPlaylist(nowUs))) {
         AString url;
         if (mBandwidthItems.size() > 0) {
             url = mBandwidthItems.editItemAt(bandwidthIndex).mURI;
