@@ -29,7 +29,8 @@ LOCAL_C_INCLUDES := \
     $(TOP)/frameworks/base/media/libstagefright/include
 
 LOCAL_CFLAGS := \
-    -D__arm__ \
     -DOSCL_IMPORT_REF= -DOSCL_UNUSED_ARG= -DOSCL_EXPORT_REF=
+
+LOCAL_ARM_MODE := arm
 
 include $(BUILD_STATIC_LIBRARY)

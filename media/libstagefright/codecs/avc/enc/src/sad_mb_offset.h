@@ -16,7 +16,7 @@
  * -------------------------------------------------------------------
  */
 
-#if defined(__GNUC__) && defined(__arm__) /* ARM GNU COMPILER  */
+#if (!defined(__GNUC__) || !defined(__arm__)) && !defined(__CC_ARM) /* Generic C version */
 
 #if (NUMBER==3)
 __inline int32 sad_mb_offset3(uint8 *ref, uint8 *blk, int lx, int dmin)

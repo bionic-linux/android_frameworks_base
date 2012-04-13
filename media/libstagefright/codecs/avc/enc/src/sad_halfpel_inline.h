@@ -24,7 +24,7 @@ extern "C"
 {
 #endif
 
-#if defined(__GNUC__) && defined(__arm__) /* ARM GNU COMPILER  */
+#if (!defined(__GNUC__) || !defined(__arm__)) && !defined(__CC_ARM) /* Generic C version */
 
     __inline int32 INTERP1_SUB_SAD(int32 sad, int32 tmp, int32 tmp2)
     {
