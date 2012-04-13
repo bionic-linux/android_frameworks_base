@@ -24,7 +24,10 @@ extern "C"
 {
 #endif
 
-#if (!defined(__GNUC__) || !defined(__arm__)) && !defined(__CC_ARM) /* Generic C version */
+/* Intentionally not using the gcc asm version, since it appears to be
+ * slightly slower than the plain C version, on GCC 4.6.3, Linaro
+ * GCC 2012.02, on a Pandaboard. */
+#if !defined(__CC_ARM) /* Generic C version */
 
     __inline int32 INTERP1_SUB_SAD(int32 sad, int32 tmp, int32 tmp2)
     {

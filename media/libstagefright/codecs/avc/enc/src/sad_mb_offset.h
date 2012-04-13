@@ -16,7 +16,10 @@
  * -------------------------------------------------------------------
  */
 
-#if (!defined(__GNUC__) || !defined(__arm__)) && !defined(__CC_ARM) /* Generic C version */
+/* Intentionally not using the gcc asm version, since it appears to be
+ * slightly slower than the plain C version, on GCC 4.6.3, Linaro
+ * GCC 2012.02, on a Pandaboard. */
+#if !defined(__CC_ARM) /* Generic C version */
 
 #if (NUMBER==3)
 __inline int32 sad_mb_offset3(uint8 *ref, uint8 *blk, int lx, int dmin)
