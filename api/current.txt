@@ -15492,6 +15492,7 @@ package android.preference {
     method public void loadHeadersFromResource(int, java.util.List<android.preference.PreferenceActivity.Header>);
     method public void onBuildHeaders(java.util.List<android.preference.PreferenceActivity.Header>);
     method public android.content.Intent onBuildStartFragmentIntent(java.lang.String, android.os.Bundle, int, int);
+    method public android.content.Intent onBuildStartFragmentIntent(java.lang.String, android.os.Bundle, java.lang.CharSequence, java.lang.CharSequence);
     method public android.preference.PreferenceActivity.Header onGetInitialHeader();
     method public android.preference.PreferenceActivity.Header onGetNewHeader();
     method public void onHeaderClick(android.preference.PreferenceActivity.Header, int);
@@ -15507,13 +15508,16 @@ package android.preference {
     method public void startPreferencePanel(java.lang.String, android.os.Bundle, int, java.lang.CharSequence, android.app.Fragment, int);
     method public void startWithFragment(java.lang.String, android.os.Bundle, android.app.Fragment, int);
     method public void startWithFragment(java.lang.String, android.os.Bundle, android.app.Fragment, int, int, int);
+    method public void startWithFragment(java.lang.String, android.os.Bundle, android.app.Fragment, int, java.lang.CharSequence, java.lang.CharSequence);
     method public void switchToHeader(java.lang.String, android.os.Bundle);
     method public void switchToHeader(android.preference.PreferenceActivity.Header);
     field public static final java.lang.String EXTRA_NO_HEADERS = ":android:no_headers";
     field public static final java.lang.String EXTRA_SHOW_FRAGMENT = ":android:show_fragment";
     field public static final java.lang.String EXTRA_SHOW_FRAGMENT_ARGUMENTS = ":android:show_fragment_args";
     field public static final java.lang.String EXTRA_SHOW_FRAGMENT_SHORT_TITLE = ":android:show_fragment_short_title";
+    field public static final java.lang.String EXTRA_SHOW_FRAGMENT_SHORT_TITLE_TEXT = ":android:show_fragment_short_title_text";
     field public static final java.lang.String EXTRA_SHOW_FRAGMENT_TITLE = ":android:show_fragment_title";
+    field public static final java.lang.String EXTRA_SHOW_FRAGMENT_TITLE_TEXT = ":android:show_fragment_title_text";
     field public static final long HEADER_ID_UNDEFINED = -1L; // 0xffffffffffffffffL
   }
 
