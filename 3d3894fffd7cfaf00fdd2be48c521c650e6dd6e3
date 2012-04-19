@@ -16,6 +16,24 @@
       "revId": "3d3894fffd7cfaf00fdd2be48c521c650e6dd6e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE2X////c\u003d",
+        "filename": "media/libstagefright/MPEG2TSWriter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002068
+      },
+      "writtenOn": "2012-04-19T20:26:54Z",
+      "side": 1,
+      "message": "Same as the other change - the padding/stuffing bytes are 0xff according to the spec.",
+      "parentUuid": "AAAE3n////0\u003d",
+      "revId": "3d3894fffd7cfaf00fdd2be48c521c650e6dd6e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
