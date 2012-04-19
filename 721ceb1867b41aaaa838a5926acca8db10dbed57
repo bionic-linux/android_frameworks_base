@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAE3n///9w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-04-19T23:07:50Z",
+      "side": 1,
+      "message": "Remove tabs in change description.",
+      "revId": "721ceb1867b41aaaa838a5926acca8db10dbed57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE3n///90\u003d",
+        "filename": "services/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-04-19T23:07:50Z",
+      "side": 1,
+      "message": "This still isn\u0027t checking for STOPPING...?",
+      "revId": "721ceb1867b41aaaa838a5926acca8db10dbed57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
