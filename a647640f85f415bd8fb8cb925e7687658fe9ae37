@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAE1n///7I\u003d",
+        "filename": "core/java/com/android/internal/view/menu/ActionMenuPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-04-19T02:17:39Z",
+      "side": 1,
+      "message": "Can mMenu.getNonActionItems() ever return null here?",
+      "revId": "a647640f85f415bd8fb8cb925e7687658fe9ae37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
