@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAEyn////g\u003d",
+        "filename": "services/java/com/android/server/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2012-04-19T01:49:01Z",
+      "side": 1,
+      "message": "These calls don\u0027t do the same thing.  As a result, lockNow() must be called unconditionally.",
+      "revId": "b54c2e8a1dafb3619da49e379881a1a8109c0358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
