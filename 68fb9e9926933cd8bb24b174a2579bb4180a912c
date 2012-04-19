@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAE0X///8c\u003d",
+        "filename": "services/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-04-19T01:24:34Z",
+      "side": 1,
+      "message": "Remove tabs.  I also think this should be checking for ActivityState.STOPPING.",
+      "revId": "68fb9e9926933cd8bb24b174a2579bb4180a912c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
