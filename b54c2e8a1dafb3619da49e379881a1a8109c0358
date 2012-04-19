@@ -16,6 +16,24 @@
       "revId": "b54c2e8a1dafb3619da49e379881a1a8109c0358",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE1H////0\u003d",
+        "filename": "services/java/com/android/server/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1011499
+      },
+      "writtenOn": "2012-04-19T08:37:08Z",
+      "side": 1,
+      "message": "When getWindowManager().lockNow() is called, it will eventually call KeyguardViewMediator.doKeyguardTimeout() which will call KeyguardViewMediator.doKeyguardLocked().\n\nWhen the power off display is called, KeyguardViewMediator.onScreenTurnedOff(why) gets called with why \u003d WindowManagerPolicy.OFF_BECAUSE_OF_ADMIN which will cause it to go the else at the end and call KeyguardViewMediator.doKeyguardLocked().\n\nhttps://github.com/android/platform_frameworks_base/blob/master/policy/src/com/android/internal/policy/impl/KeyguardViewMediator.java#L418",
+      "parentUuid": "AAAEyn////g\u003d",
+      "revId": "b54c2e8a1dafb3619da49e379881a1a8109c0358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
