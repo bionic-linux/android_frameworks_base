@@ -1029,6 +1029,26 @@ void AwesomePlayer::notifyVideoSize_l() {
         rotationDegrees = 0;
     }
 
+    int32_t sarIdc, sarWidth, sarHeight;
+    if (mVideoTrack->getFormat()->findInt32(kKeySARIdc, &sarIdc) &&
+            sarIdc != SAR_IDC_UNSPECIFIED) {
+        const char *component;
+        if (meta->findCString(kKeyDecoderComponent, &component) &&
+                     component != NULL &&
+                     strcmp(component, "OMX.TI.DUCATI1.VIDEO.DECODER")) {
+            LOGW("Detected H.264 SAR related properties, but not used. "
+                    "This option should be enabled by vendor");
+        } else if (mVideoTrack->getFormat()->findInt32(kKeySARWidth, &sarWidth) &&
+                mVideoTrack->getFormat()->findInt32(kKeySARHeight, &sarHeight)) {
+            LOGI("Output picture width will be recalculated according to SAR (%d:%d)",
+                    sarWidth, sarHeight);
+            usableWidth = (usableWidth * sarWidth) / sarHeight;
+        } else {
+            LOGW("Property kKeySARWidth or/and kKeySARHeight not defined");
+            mVideoTrack->getFormat()->setInt32(kKeySARIdc, SAR_IDC_UNSPECIFIED);
+        }
+    }
+
     if (rotationDegrees == 90 || rotationDegrees == 270) {
         notifyListener_l(
                 MEDIA_SET_VIDEO_SIZE, usableHeight, usableWidth);
@@ -1478,6 +1498,18 @@ status_t AwesomePlayer::initVideoDecoder(uint32_t flags) {
             NULL, flags, USE_SURFACE_ALLOC ? mNativeWindow : NULL);
 
     if (mVideoSource != NULL) {
+        sp<MetaData> sourceMetadata = mVideoSource->getFormat();
+        int32_t sarIdc, sarWidth, sarHeight;
+        if (sourceMetadata->findInt32(kKeySARIdc, &sarIdc) &&
+                sarIdc != SAR_IDC_UNSPECIFIED &&
+                sourceMetadata->findInt32(kKeySARWidth, &sarWidth) &&
+                sourceMetadata->findInt32(kKeySARHeight, &sarHeight)) {
+            sp<MetaData> trackMetadata = mVideoTrack->getFormat();
+            trackMetadata->setInt32(kKeySARIdc, sarIdc);
+            trackMetadata->setInt32(kKeySARWidth, sarWidth);
+            trackMetadata->setInt32(kKeySARHeight, sarHeight);
+        }
+
         int64_t durationUs;
         if (mVideoTrack->getFormat()->findInt64(kKeyDuration, &durationUs)) {
             Mutex::Autolock autoLock(mMiscStateLock);
