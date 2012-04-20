@@ -48,6 +48,9 @@ enum {
     kKeyBitRate           = 'brte',  // int32_t (bps)
     kKeyESDS              = 'esds',  // raw data
     kKeyAVCC              = 'avcc',  // raw data
+    kKeySARIdc            = 'sari',  // Sample aspect ratio of the luma samples (int32_t)
+    kKeySARWidth          = 'sarw',  // Sample aspect ratio width (int32_t)
+    kKeySARHeight         = 'sarh',  // Sample aspect ratio height (int32_t)
     kKeyD263              = 'd263',  // raw data
     kKeyVorbisInfo        = 'vinf',  // raw data
     kKeyVorbisBooks       = 'vboo',  // raw data
