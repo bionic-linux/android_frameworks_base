@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAE4n///7k\u003d",
+        "filename": "core/java/android/view/VolumePanel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-04-23T17:28:46Z",
+      "side": 1,
+      "message": "Probably belongs in onVolumeChanged() and System.VOLUME_CHANGE_SOUNDS_ENABLED.",
+      "revId": "340f75bc95b5b4a2916000cf80cf9b77c5a77dec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
