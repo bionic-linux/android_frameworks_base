@@ -605,6 +605,14 @@ public abstract class AsyncTask<Params, Progress, Result> {
     }
 
     private static class InternalHandler extends Handler {
+
+        InternalHandler() {
+            if (getLooper() != Looper.getMainLooper()) {
+                throw new IllegalStateException("Only the main "
+                          + "UI thread can create AsyncTasks");
+            }
+        }
+
         @SuppressWarnings({"unchecked", "RawUseOfParameterizedType"})
         @Override
         public void handleMessage(Message msg) {
