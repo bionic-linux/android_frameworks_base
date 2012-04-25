@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAE/n///+o\u003d",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 14316,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-04-25T06:17:11Z",
+      "side": 1,
+      "message": "No need to add new APIs",
+      "revId": "1946928c626b717ae2341282cea0d5ff956654b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE/n///+8\u003d",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-04-25T06:17:11Z",
+      "side": 1,
+      "message": "No need to create a new exception, just use IllegalStateException.",
+      "revId": "1946928c626b717ae2341282cea0d5ff956654b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE/n///+0\u003d",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-04-25T06:17:11Z",
+      "side": 1,
+      "message": "Package visibility is enough",
+      "revId": "1946928c626b717ae2341282cea0d5ff956654b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE/n///+4\u003d",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-04-25T06:17:11Z",
+      "side": 1,
+      "message": "No need to call super()",
+      "revId": "1946928c626b717ae2341282cea0d5ff956654b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE/n///+w\u003d",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-04-25T06:17:11Z",
+      "side": 1,
+      "message": "The problem is that asynctasks can be used from a single looper thread. It doesn\u0027t have to be the main looper.",
+      "revId": "1946928c626b717ae2341282cea0d5ff956654b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE/n///+s\u003d",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-04-25T06:17:11Z",
+      "side": 1,
+      "message": "This change can have important side effects. There\u0027s probably a very good reason it\u0027s not using the main looper.",
+      "revId": "1946928c626b717ae2341282cea0d5ff956654b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
