@@ -14313,6 +14313,10 @@ package android.os {
     field public static final java.util.concurrent.Executor THREAD_POOL_EXECUTOR;
   }
 
+  public static final class AsyncTask.CalledFromWrongThreadException extends android.util.AndroidRuntimeException {
+    ctor public AsyncTask.CalledFromWrongThreadException(java.lang.String);
+  }
+
   public static final class AsyncTask.Status extends java.lang.Enum {
     method public static android.os.AsyncTask.Status valueOf(java.lang.String);
     method public static final android.os.AsyncTask.Status[] values();

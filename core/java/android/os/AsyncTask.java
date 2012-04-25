@@ -16,6 +16,8 @@
 
 package android.os;
 
+import android.util.AndroidRuntimeException;
+
 import java.util.ArrayDeque;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
@@ -604,7 +606,22 @@ public abstract class AsyncTask<Params, Progress, Result> {
         mStatus = Status.FINISHED;
     }
 
+    public static final class CalledFromWrongThreadException extends AndroidRuntimeException {
+        public CalledFromWrongThreadException(String msg) {
+            super(msg);
+        }
+    }
+
     private static class InternalHandler extends Handler {
+
+        public InternalHandler() {
+            super();
+            if (getLooper() != Looper.getMainLooper()) {
+                throw new CalledFromWrongThreadException(
+                        "Only the main UI thread can create AsyncTasks");
+            }
+        }
+
         @SuppressWarnings({"unchecked", "RawUseOfParameterizedType"})
         @Override
         public void handleMessage(Message msg) {
