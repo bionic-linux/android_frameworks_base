@@ -97,6 +97,7 @@ public class UsbHostManager {
     /* Called from JNI in monitorUsbHostBus() to report new USB devices */
     private void usbDeviceAdded(String deviceName, int vendorID, int productID,
             int deviceClass, int deviceSubclass, int deviceProtocol,
+            String manufacturerName, String productName, String serialNumber,
             /* array of quintuples containing id, class, subclass, protocol
                and number of endpoints for each interface */
             int[] interfaceValues,
@@ -152,7 +153,8 @@ public class UsbHostManager {
             }
 
             UsbDevice device = new UsbDevice(deviceName, vendorID, productID,
-                    deviceClass, deviceSubclass, deviceProtocol, interfaces);
+                    deviceClass, deviceSubclass, deviceProtocol,
+                    manufacturerName, productName, serialNumber, interfaces);
             mDevices.put(deviceName, device);
             mSettingsManager.deviceAttached(device);
         }
