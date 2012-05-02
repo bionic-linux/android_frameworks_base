@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFK3///tI\u003d",
+        "filename": "services/java/com/android/server/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-02T21:30:44Z",
+      "side": 1,
+      "message": "You probably want a comment explaining why those exceptions are getting swallowed.",
+      "revId": "3d9a9d6edd28e06e163fc85c91bf9b6cc0aa7859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
