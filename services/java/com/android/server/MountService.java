@@ -651,6 +651,7 @@ class MountService extends IMountService.Stub
                 /**
                  * Determine media state and UMS detection status
                  */
+                String path = null;
                 try {
                     final String[] vols = NativeDaemonEvent.filterMessageList(
                             mConnector.executeForList("volume", "list"),
@@ -658,7 +659,7 @@ class MountService extends IMountService.Stub
                     for (String volstr : vols) {
                         String[] tok = volstr.split(" ");
                         // FMT: <label> <mountpoint> <state>
-                        String path = tok[1];
+                        path = tok[1];
                         String state = Environment.MEDIA_REMOVED;
 
                         int st = Integer.parseInt(tok[2]);
@@ -683,7 +684,8 @@ class MountService extends IMountService.Stub
                     }
                 } catch (Exception e) {
                     Slog.e(TAG, "Error processing initial volume state", e);
-                    updatePublicVolumeState(mExternalStoragePath, Environment.MEDIA_REMOVED);
+                    if (path != null)
+                        updatePublicVolumeState(path, Environment.MEDIA_REMOVED);
                 }
 
                 /*
