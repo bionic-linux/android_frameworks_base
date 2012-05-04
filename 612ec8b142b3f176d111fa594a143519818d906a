@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFQ3///9M\u003d",
+        "filename": "core/java/com/android/internal/os/HandlerCaller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-05-04T00:58:45Z",
+      "side": 1,
+      "message": "It is good to clear the object arguments, but there is no need to clear the integer arguments.",
+      "revId": "612ec8b142b3f176d111fa594a143519818d906a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
