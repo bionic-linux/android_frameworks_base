@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFT3///0s\u003d",
+        "filename": "fmradio/java/android/hardware/fm/FmBand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T22:51:12Z",
+      "side": 1,
+      "message": "Let\u0027s move those to the commit message.",
+      "revId": "6963a24ab861df47c36d4a80da4653a1ae3991ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
