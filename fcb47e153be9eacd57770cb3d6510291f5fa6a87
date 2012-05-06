@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFUH///ms\u003d",
+        "filename": "libs/binder/Parcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T15:28:45Z",
+      "side": 1,
+      "message": "This comment isn\u0027t necessary",
+      "revId": "fcb47e153be9eacd57770cb3d6510291f5fa6a87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFUH///mo\u003d",
+        "filename": "libs/binder/Parcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T15:28:45Z",
+      "side": 1,
+      "message": "Use spaces instead of tabs",
+      "revId": "fcb47e153be9eacd57770cb3d6510291f5fa6a87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFUH///mk\u003d",
+        "filename": "libs/binder/Parcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T15:28:45Z",
+      "side": 1,
+      "message": "This empty comment isn\u0027t necessary",
+      "revId": "fcb47e153be9eacd57770cb3d6510291f5fa6a87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
