@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFT3///14\u003d",
+        "filename": "services/java/com/android/server/location/BTGPSService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T19:15:33Z",
+      "side": 1,
+      "message": "Use \"Copyright 2011 The Android Open Source Project\"",
+      "revId": "4c6067b5a145c5ed2207d8d54fcde16dc23e8509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFUH///lo\u003d",
+        "filename": "services/java/com/android/server/location/BTGpsLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T19:15:33Z",
+      "side": 1,
+      "message": "Use \"Copyright 2011 The Android Open Source Project\"",
+      "revId": "4c6067b5a145c5ed2207d8d54fcde16dc23e8509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFUH///lk\u003d",
+        "filename": "services/java/com/android/server/location/NMEAParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T19:15:33Z",
+      "side": 1,
+      "message": "Use \"Copyright 2011 The Android Open Source Project\"",
+      "revId": "4c6067b5a145c5ed2207d8d54fcde16dc23e8509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFUH///lg\u003d",
+        "filename": "services/java/com/android/server/location/NMEAParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T19:15:33Z",
+      "side": 1,
+      "message": "I thin java.* includes come after the android.* ones, but I\u0027m not 100% sure.",
+      "revId": "4c6067b5a145c5ed2207d8d54fcde16dc23e8509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
