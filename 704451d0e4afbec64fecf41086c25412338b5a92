@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFUX///28\u003d",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T21:05:17Z",
+      "side": 1,
+      "message": "We\u0027re now using ALOGD here.",
+      "revId": "704451d0e4afbec64fecf41086c25412338b5a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFT3///1U\u003d",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-06T21:05:17Z",
+      "side": 1,
+      "message": "Please use the new style ALOG_ASSERT",
+      "revId": "704451d0e4afbec64fecf41086c25412338b5a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
