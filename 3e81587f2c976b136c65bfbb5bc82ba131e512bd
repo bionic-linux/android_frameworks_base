@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFXH////0\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1012283
+      },
+      "writtenOn": "2012-05-07T17:18:44Z",
+      "side": 1,
+      "message": "You need to call .start() to run this in the new thread.",
+      "revId": "3e81587f2c976b136c65bfbb5bc82ba131e512bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFXH////w\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1012283
+      },
+      "writtenOn": "2012-05-07T17:18:44Z",
+      "side": 1,
+      "message": "You need to call .start() to run this in the new thread.",
+      "revId": "3e81587f2c976b136c65bfbb5bc82ba131e512bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
