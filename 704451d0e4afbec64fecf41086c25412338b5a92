@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAFX3///Nk\u003d",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2012-05-14T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAFUX///28\u003d",
+      "revId": "704451d0e4afbec64fecf41086c25412338b5a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAFT3///1U\u003d",
         "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-05-06T21:05:17Z",
       "side": 1,
       "message": "Please use the new style ALOG_ASSERT",
+      "revId": "704451d0e4afbec64fecf41086c25412338b5a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFbX///18\u003d",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2012-05-14T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAFT3///1U\u003d",
       "revId": "704451d0e4afbec64fecf41086c25412338b5a92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
