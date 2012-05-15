@@ -820,9 +820,8 @@ class AlarmManagerService extends IAlarmManager.Stub {
             final long currentTime = System.currentTimeMillis();
             calendar.setTimeInMillis(currentTime);
             calendar.add(Calendar.MINUTE, 1);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-
+            calendar.add(Calendar.SECOND, -calendar.get(Calendar.SECOND));
+            calendar.add(Calendar.MILLISECOND, -calendar.get(Calendar.MILLISECOND));
             // Schedule this event for the amount of time that it would take to get to
             // the top of the next minute.
             final long tickEventDelay = calendar.getTimeInMillis() - currentTime;
