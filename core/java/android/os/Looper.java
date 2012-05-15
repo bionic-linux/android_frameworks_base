@@ -24,6 +24,10 @@ import android.util.Printer;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 /**
   * Class used to run a message loop for a thread.  Threads by default do
   * not have a message loop associated with them; to create one, call
@@ -66,6 +70,14 @@ public final class Looper {
      */
 
     private static final String TAG = "Looper";
+    private static final String CMDLINE = "/proc/self/cmdline";
+
+    // Main loop latency measurement (Latency)
+    private static boolean sLatencyEnabled = false;
+    private static int sLatencyCountFast;
+    private static long sLatencySumFast;
+    private static int sLatencyCountSlow;
+    private static long sLatencySumSlow;
 
     // sThreadLocal.get() will return null unless you've called prepare().
     static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
@@ -111,6 +123,17 @@ public final class Looper {
             }
             sMainLooper = myLooper();
         }
+        // If we are running a non USER build, we will initialize the
+        // sLatencyEnabled if necessary.
+        if (!"user".equals(Build.TYPE)) {
+            if (!sLatencyEnabled) {
+                sLatencySumFast = 0;
+                sLatencyCountFast = 0;
+                sLatencySumSlow = 0;
+                sLatencyCountSlow = 0;
+                sLatencyEnabled = true;
+            }
+        }
     }
 
     /**
@@ -120,6 +143,55 @@ public final class Looper {
         synchronized (Looper.class) {
             return sMainLooper;
         }
+    }
+
+    /**
+     * Get the process name from /proc/self/cmdline
+     */
+    private static String getProcessName() {
+        // ugly hack to disable StrictMode while reading process name
+        // procfs shouldn't block reading variably
+        StrictMode.ThreadPolicy policy = StrictMode.getThreadPolicy();
+        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.LAX);
+        FileInputStream fis = null;
+        try {
+            byte arr[] = new byte[64];
+            File f = new File (CMDLINE);
+            fis = new FileInputStream(f);
+            int n = fis.read(arr);
+            int j = 0;
+            while ((j < n) && (arr[j] >= ' ')) {
+                j++;
+            }
+            return new String(arr, 0, j);
+        } catch (IOException | OutOfMemoryError | ArrayIndexOutOfBoundsException e) {
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                }
+            }
+            StrictMode.setThreadPolicy(policy);
+        }
+        return "unreadable";
+    }
+
+    /**
+     * Get action detail for the Message
+     */
+    private static void outputMessageLatencyLog(String kind, Message msg, int latency) {
+        String msgStr;
+        if (null == msg) {
+            msgStr = "";
+        } else {
+            msgStr = "Message " + msg.toString();
+        }
+        EventLogTags.writeMessageLatency(kind,
+                                         getProcessName(),
+                                         Thread.currentThread().getName(),
+                                         msgStr,
+                                         latency);
     }
 
     /**
@@ -158,11 +230,13 @@ public final class Looper {
             if (traceTag != 0 && Trace.isTagEnabled(traceTag)) {
                 Trace.traceBegin(traceTag, msg.target.getTraceName(msg));
             }
-            final long start = (slowDispatchThresholdMs == 0) ? 0 : SystemClock.uptimeMillis();
+            final long start = (slowDispatchThresholdMs == 0 && !sLatencyEnabled)
+                    ? 0 : SystemClock.uptimeMillis();
             final long end;
             try {
                 msg.target.dispatchMessage(msg);
-                end = (slowDispatchThresholdMs == 0) ? 0 : SystemClock.uptimeMillis();
+                end = (slowDispatchThresholdMs == 0 && !sLatencyEnabled)
+                        ? 0 : SystemClock.uptimeMillis();
             } finally {
                 if (traceTag != 0) {
                     Trace.traceEnd(traceTag);
@@ -174,6 +248,36 @@ public final class Looper {
                     Slog.w(TAG, "Dispatch took " + time + "ms on "
                             + Thread.currentThread().getName() + ", h=" +
                             msg.target + " cb=" + msg.callback + " msg=" + msg.what);
+                }
+            }
+            // sLatencyEnabled is only initialized for non USER builds
+            // (e.g., USERDEBUG and ENG)
+            if (sLatencyEnabled) {
+                final long time = end - start;
+                if (time < 50) {
+                    // We don't care about these from a latency perspective
+                } else if ((time < 250) && (me == sMainLooper)) {
+                    // Fast response that usually has low impact on user experience
+                    sLatencyCountFast++;
+                    sLatencySumFast += time;
+                    if (sLatencyCountFast >= 100) {
+                        long avg = sLatencySumFast / sLatencyCountFast;
+                        outputMessageLatencyLog("mainloop_latency1", msg, (int)avg);
+                        sLatencyCountFast = 0;
+                        sLatencySumFast = 0;
+                    }
+                } else if ((time < 1000) && (me == sMainLooper)) {
+                    sLatencyCountSlow++;
+                    sLatencySumSlow += time;
+                    if (sLatencyCountSlow >= 10) {
+                        long avg = sLatencySumSlow / sLatencyCountSlow;
+                        outputMessageLatencyLog("mainloop_latency2", msg, (int)avg);
+                        sLatencyCountSlow = 0;
+                        sLatencySumSlow = 0;
+                    }
+                } else if (time >= 1000) {
+                    String namePrif = (me == sMainLooper) ? "mainloop" : "subloop";
+                    outputMessageLatencyLog(namePrif + "_bad", msg, (int)time);
                 }
             }
 

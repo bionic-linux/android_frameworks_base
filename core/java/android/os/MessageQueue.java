@@ -23,11 +23,15 @@ import android.util.Log;
 import android.util.Printer;
 import android.util.SparseArray;
 import android.util.proto.ProtoOutputStream;
+import android.util.TimeUtils;
 
 import java.io.FileDescriptor;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Low-level class holding the list of messages to be dispatched by a
@@ -40,6 +44,14 @@ import java.util.ArrayList;
 public final class MessageQueue {
     private static final String TAG = "MessageQueue";
     private static final boolean DEBUG = false;
+    private static final boolean DEBUG_MESSAGES = !Build.TYPE.equals("user");
+
+    // Log for timeout messages are output if amount of messages are more than this threshold.
+    private static final int TIMEOUT_MESSAGES_LOG_COUNT_THRESHOLD = 35;
+    // Event log is output if front message is delayed from this threshold.
+    // For outputting log for "Input ANR" investigation, this delay should be
+    // shorter than DEFAULT_INPUT_DISPATCHING_TIMEOUT.
+    private static final int TIMEOUT_MESSAGES_EVENT_LOG_TIME_THRESHOLD = -2000;
 
     // True if the message queue can be quit.
     private final boolean mQuitAllowed;
@@ -59,6 +71,40 @@ public final class MessageQueue {
     // The next barrier token.
     // Barriers are indicated by messages with a null target whose arg1 field carries the token.
     private int mNextBarrierToken;
+
+    private Message mLastTimeoutMessage;
+    private long mLastTimeoutMessageWhen = Long.MAX_VALUE;
+    private final Map<Message, TimeoutMessageInfo> mTimeoutMessageMap = new TreeMap<>(
+            new Comparator<Message>() {
+                @Override
+                public int compare(Message message1, Message message2) {
+                    if (message1.target != null && message2.target != null) {
+                        String targetName1 = message1.target.getClass().getName();
+                        String targetName2 = message2.target.getClass().getName();
+                        int targetNameCompare = targetName1.compareTo(targetName2);
+                        if (targetNameCompare != 0) {
+                            return targetNameCompare;
+                        } else {
+                            if (message1.callback != null && message2.callback != null) {
+                                return message1.callback.getClass().getName().compareTo(
+                                        message2.callback.getClass().getName());
+                            } else if (message1.callback == null && message2.callback == null) {
+                                return message1.what - message2.what;
+                            } else if (message1.callback == null) {
+                                return 1;
+                            } else {
+                                return -1;
+                            }
+                        }
+                    } else if (message1.target == null && message2.target == null) {
+                        return message1.arg1 - message2.arg1;
+                    } else if (message1.target == null) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }
+            });
 
     private native static long nativeInit();
     private native static void nativeDestroy(long ptr);
@@ -341,6 +387,49 @@ public final class MessageQueue {
                         // Next message is not ready.  Set a timeout to wake up when it is ready.
                         nextPollTimeoutMillis = (int) Math.min(msg.when - now, Integer.MAX_VALUE);
                     } else {
+                        if (DEBUG_MESSAGES) {
+                            /**
+                             * If mLastTimeoutMessage isn't found after msg,
+                             * it is msg itself or already removed.
+                             */
+                            if (mLastTimeoutMessage != null &&
+                                    mLastTimeoutMessageWhen <= msg.when) {
+                                boolean found = false;
+                                Message m = msg.next;
+                                while (m != null && mLastTimeoutMessageWhen == m.when) {
+                                    if (mLastTimeoutMessage == m) {
+                                        found = true;
+                                        break;
+                                    }
+                                    m = m.next;
+                                }
+                                if (!found) {
+                                    mLastTimeoutMessage = null;
+                                    mLastTimeoutMessageWhen = Long.MAX_VALUE;
+                                }
+                            }
+
+                            if (mLastTimeoutMessage == null) {
+                                boolean isSyncBarrier = (msg.target == null);
+                                Message lastTimeoutMessage = null;
+                                int numTimeoutMessages = 0;
+                                for (Message m = mMessages; m != null &&
+                                        m.when <= now; m = m.next) {
+                                    // During SyncBarrier, only asynchronous messages are counted.
+                                    if (!isSyncBarrier || m.isAsynchronous()) {
+                                        numTimeoutMessages++;
+                                        lastTimeoutMessage = m;
+                                    }
+                                }
+
+                                if (numTimeoutMessages > TIMEOUT_MESSAGES_LOG_COUNT_THRESHOLD) {
+                                    OutputTimeoutMessagesLog(now, numTimeoutMessages);
+                                    mLastTimeoutMessage = lastTimeoutMessage;
+                                    mLastTimeoutMessageWhen = lastTimeoutMessage.when;
+                                }
+                            }
+                        }
+
                         // Got a message.
                         mBlocked = false;
                         if (prevMsg != null) {
@@ -803,6 +892,46 @@ public final class MessageQueue {
         proto.end(messageQueueToken);
     }
 
+    private void OutputTimeoutMessagesLog(long now, int numTimeoutMessages) {
+        Log.w(TAG, "Timeout messages: " + numTimeoutMessages);
+        long delay = mMessages.when - now;
+        TimeoutMessageInfo maxMessageInfo = null;
+        int n = 0;
+        for (Message m = mMessages; m != null && m.when <= now; m = m.next) {
+            String messageLog = m.toString(now);
+            Log.w(TAG, "  Message " + n + ": " + messageLog);
+
+            // Sum up messages and find the most numerous message.
+            if (delay < TIMEOUT_MESSAGES_EVENT_LOG_TIME_THRESHOLD) {
+                TimeoutMessageInfo messageInfo = mTimeoutMessageMap.get(m);
+                if (messageInfo == null) {
+                    messageInfo = new TimeoutMessageInfo(messageLog);
+                    mTimeoutMessageMap.put(m, messageInfo);
+                }
+                messageInfo.increment();
+                if (maxMessageInfo == null ||
+                        messageInfo.getCounter() > maxMessageInfo.getCounter()) {
+                    maxMessageInfo = messageInfo;
+                }
+            }
+
+            n++;
+        }
+        mTimeoutMessageMap.clear();
+
+        // Event log is output only when front message is delayed more than threshold.
+        // The log is collected via IDD so that it should be reduced as few as possible.
+        // Basically, short delayed messages aren't important because they don't block
+        // other messages. They can be ignored.
+        if (delay < TIMEOUT_MESSAGES_EVENT_LOG_TIME_THRESHOLD) {
+            StringBuilder delayStr = new StringBuilder();
+            TimeUtils.formatDuration(delay, delayStr);
+            EventLogTags.writeTimeoutMessages(Thread.currentThread().getName(),
+                    numTimeoutMessages, delayStr.toString(),
+                    maxMessageInfo.getCounter(), maxMessageInfo.getFirstMessageLog());
+        }
+    }
+
     /**
      * Callback interface for discovering when a thread is going to block
      * waiting for more messages.
@@ -900,6 +1029,27 @@ public final class MessageQueue {
             mDescriptor = descriptor;
             mEvents = events;
             mListener = listener;
+        }
+    }
+
+    private static final class TimeoutMessageInfo {
+        private final String mFirstMessageLog;
+        private int mCounter;
+
+        public TimeoutMessageInfo(String firstMessageLog) {
+            mFirstMessageLog = firstMessageLog;
+        }
+
+        public final void increment() {
+            mCounter++;
+        }
+
+        public final String getFirstMessageLog() {
+            return mFirstMessageLog;
+        }
+
+        public final int getCounter() {
+            return mCounter;
         }
     }
 }

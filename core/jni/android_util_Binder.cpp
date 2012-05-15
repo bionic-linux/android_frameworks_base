@@ -1107,7 +1107,11 @@ static bool push_eventlog_int(char** pos, const char* end, jint val) {
 
 // From frameworks/base/core/java/android/content/EventLogTags.logtags:
 
+#ifdef ENABLE_BINDER_SAMPLE
+static const bool kEnableBinderSample = true;
+#else
 static const bool kEnableBinderSample = false;
+#endif
 
 #define LOGTAG_BINDER_OPERATION 52004
 

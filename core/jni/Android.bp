@@ -288,4 +288,10 @@ cc_library_shared {
         // GraphicsJNI.h includes hwui headers
         "libhwui",
     ],
+
+    product_variables: {
+        debuggable: {
+            cflags: ["-DENABLE_BINDER_SAMPLE"]
+        },
+    },
 }

@@ -1,0 +1,7 @@
+# See system/core/logcat/event.logtags for a description of the format of this file.
+
+option java_package android.os;
+
+# Message handling
+50200 message_latency (kind|3),(process name|3),(thread name|3),(message|3),(latency|1|3)
+50201 timeout_messages (thread name|3),(num|1|1),(delay|3),(numerous message num|1|1),(numerous message info|3)
