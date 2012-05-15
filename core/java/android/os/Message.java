@@ -109,6 +109,9 @@ public final class Message implements Parcelable {
     // sometimes we store linked lists of these things
     /*package*/ Message next;
 
+    /** @hide */
+    /*package*/ long enqueuedTime;
+
     private static final Object sPoolSync = new Object();
     private static Message sPool;
     private static int sPoolSize = 0;
@@ -304,6 +307,7 @@ public final class Message implements Parcelable {
         target = null;
         callback = null;
         data = null;
+        enqueuedTime = 0;
 
         synchronized (sPoolSync) {
             if (sPoolSize < MAX_POOL_SIZE) {

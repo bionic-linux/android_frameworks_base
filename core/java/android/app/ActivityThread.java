@@ -189,6 +189,9 @@ public final class ActivityThread {
     private static final boolean DEBUG_PROVIDER = false;
     private static final boolean DEBUG_ORDER = false;
     private static final long MIN_TIME_BETWEEN_GCS = 5*1000;
+    private static final long SLOW_DISPATCH_THRESHOLD_MS = 0;
+    private static final int TIMEOUT_MESSAGES_COUNT_THRESHOLD = 0;
+    private static final long TIMEOUT_MESSAGES_DELAY_THRESHOLD_MS = 0;
     private static final int SQLITE_MEM_RELEASED_EVENT_LOG_TAG = 75003;
     private static final int LOG_AM_ON_PAUSE_CALLED = 30021;
     private static final int LOG_AM_ON_RESUME_CALLED = 30022;
@@ -909,6 +912,19 @@ public final class ActivityThread {
             if (services != null) {
                 // Setup the service cache in the ServiceManager
                 ServiceManager.initServiceCache(services);
+            }
+
+            // If the process is bundled app, show slow dispatch log and timeout messages log
+            // on its main looper.
+            if (appInfo.isSystemApp() && !appInfo.isUpdatedSystemApp()) {
+                if (SLOW_DISPATCH_THRESHOLD_MS > 0) {
+                    Looper.getMainLooper().setSlowDispatchThresholdMs(SLOW_DISPATCH_THRESHOLD_MS);
+                }
+                if (TIMEOUT_MESSAGES_COUNT_THRESHOLD > 0) {
+                    Looper.getMainLooper().getQueue().setTimeoutLogThreshold(
+                            TIMEOUT_MESSAGES_COUNT_THRESHOLD,
+                            TIMEOUT_MESSAGES_DELAY_THRESHOLD_MS);
+                }
             }
 
             setCoreSettings(coreSettings);
@@ -6406,6 +6422,15 @@ public final class ActivityThread {
         }
         ActivityThread thread = new ActivityThread();
         thread.attach(true);
+        if (SLOW_DISPATCH_THRESHOLD_MS > 0) {
+            // Show slow dispatch log on system main looper.
+            Looper.getMainLooper().setSlowDispatchThresholdMs(SLOW_DISPATCH_THRESHOLD_MS);
+        }
+        if (TIMEOUT_MESSAGES_COUNT_THRESHOLD > 0) {
+            // Show timeout messages log on system main looper.
+            Looper.getMainLooper().getQueue().setTimeoutLogThreshold(
+                    TIMEOUT_MESSAGES_COUNT_THRESHOLD, TIMEOUT_MESSAGES_DELAY_THRESHOLD_MS);
+        }
         return thread;
     }
 
