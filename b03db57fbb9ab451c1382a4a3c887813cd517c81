@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFYH//+us\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Style: trailing whitespace",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFbX///nw\u003d",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year.",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFbX///nY\u003d",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "We\u0027re already using this bit in Google\u0027s internal tree. Please use the next highest one, which is available.",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFX3//+zA\u003d",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Trailing whitespace (and more further below in this file).",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFbX///nk\u003d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFYH//+uo\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/CallManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFYH//+uw\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/DefaultPhoneNotifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year.",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFbX///ng\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IPhoneStateListener.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFYH//+uk\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFYH//+ug\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFYH//+uc\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFbX///nc\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFX3//+y8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneNotifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFX3//+y4\u003d",
+        "filename": "telephony/tests/telephonytests/src/com/android/internal/telephony/TestPhoneNotifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-17T20:31:55Z",
+      "side": 1,
+      "message": "Don\u0027t change the year",
+      "revId": "b03db57fbb9ab451c1382a4a3c887813cd517c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
