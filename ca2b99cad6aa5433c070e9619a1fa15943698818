@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFjX///14\u003d",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-05-21T17:25:05Z",
+      "side": 1,
+      "message": "I think this is an invalid assertion.  It\u0027s perfectly ok to use AsyncTask from other loopers that are not the main looper.",
+      "revId": "ca2b99cad6aa5433c070e9619a1fa15943698818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
