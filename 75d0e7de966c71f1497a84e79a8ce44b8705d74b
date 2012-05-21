@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFjH///2k\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-21T17:04:47Z",
+      "side": 1,
+      "message": "Please wrap to about 70 characters.",
+      "revId": "75d0e7de966c71f1497a84e79a8ce44b8705d74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFi3///9s\u003d",
+        "filename": "core/java/android/database/AbstractCursor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-21T17:04:47Z",
+      "side": 1,
+      "message": "This should use spaces instead of tabs (and in the next line as well).",
+      "revId": "75d0e7de966c71f1497a84e79a8ce44b8705d74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
