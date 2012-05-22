@@ -34,6 +34,23 @@
       "revId": "ca2b99cad6aa5433c070e9619a1fa15943698818",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFpH////w\u003d",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-05-22T06:53:27Z",
+      "side": 1,
+      "message": "You cannot do this and it\u0027s unnecessary. AsyncTask can be used from any looper thread. I need to check but I believe we\u0027ve updated the documentation in J to specify this.",
+      "revId": "ca2b99cad6aa5433c070e9619a1fa15943698818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
