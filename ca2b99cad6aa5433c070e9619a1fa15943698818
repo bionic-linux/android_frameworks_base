@@ -16,6 +16,24 @@
       "revId": "ca2b99cad6aa5433c070e9619a1fa15943698818",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFpH////4\u003d",
+        "filename": "core/java/android/os/AsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2012-05-22T06:42:19Z",
+      "side": 1,
+      "message": "The idea was based on the documentation at http://developer.android.com/reference/android/os/AsyncTask.html and was to give an early failure when app developers use AsyncTask to update UI thread but create in a different thread, otherwise it just takes few more debugging cycles.",
+      "parentUuid": "AAAFjX///14\u003d",
+      "revId": "ca2b99cad6aa5433c070e9619a1fa15943698818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
