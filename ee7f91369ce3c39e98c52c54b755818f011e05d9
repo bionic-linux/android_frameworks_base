@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFun///7A\u003d",
+        "filename": "services/jni/com_android_server_UsbHostManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-24T00:53:01Z",
+      "side": 1,
+      "message": "This should be split to less than 100 columns (even though it was already doing things wrong).",
+      "revId": "ee7f91369ce3c39e98c52c54b755818f011e05d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
