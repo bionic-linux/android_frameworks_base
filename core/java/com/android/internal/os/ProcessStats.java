@@ -569,6 +569,10 @@ public class ProcessStats {
             while (st.hasMoreElements()) {
                 String token = st.nextToken();
                 try {
+                    if (out.length == 0) {
+                        tempTimes = new long[MAX_SPEEDS];
+                        tempSpeeds = new long[MAX_SPEEDS];
+                    }
                     long val = Long.parseLong(token);
                     tempSpeeds[speed] = val;
                     token = st.nextToken();
@@ -585,7 +589,7 @@ public class ProcessStats {
                 }
             }
         }
-        if (out == null) {
+        if (out == null || out.length == 0) {
             out = new long[speed];
             mCpuSpeeds = new long[speed];
             System.arraycopy(tempSpeeds, 0, mCpuSpeeds, 0, speed);
