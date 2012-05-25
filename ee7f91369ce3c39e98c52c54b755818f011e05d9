@@ -84,6 +84,24 @@
       "revId": "ee7f91369ce3c39e98c52c54b755818f011e05d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFtn////U\u003d",
+        "filename": "services/jni/com_android_server_UsbHostManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1012107
+      },
+      "writtenOn": "2012-05-25T13:15:59Z",
+      "side": 1,
+      "message": "I considered that but since the last argument is one long string, it did not break in a pleasing fashion.  Would you prefer that I resubmit anyway?",
+      "parentUuid": "AAAFun///7A\u003d",
+      "revId": "ee7f91369ce3c39e98c52c54b755818f011e05d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
