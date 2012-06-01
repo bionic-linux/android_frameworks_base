@@ -1071,6 +1071,9 @@ class MountService extends IMountService.Stub
         int id = com.android.internal.R.xml.storage_list;
         XmlResourceParser parser = resources.getXml(id);
         AttributeSet attrs = Xml.asAttributeSet(parser);
+        mVolumes.clear();
+        mVolumeMap.clear();
+        mPrimaryVolume = null;
 
         try {
             XmlUtils.beginDocument(parser, TAG_STORAGE_LIST);
@@ -1937,6 +1940,7 @@ class MountService extends IMountService.Stub
 
     public Parcelable[] getVolumeList() {
         synchronized(mVolumes) {
+            readStorageList();
             int size = mVolumes.size();
             Parcelable[] result = new Parcelable[size];
             for (int i = 0; i < size; i++) {
