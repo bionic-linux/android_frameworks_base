@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGQX////c\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2012-06-02T05:56:56Z",
+      "side": 1,
+      "message": "Why don\u0027t you just make this take one byte array instead? That simplifies the code, because you can convert the byte array to an InetAddress object, and use the InetAddress version of the function to set the route:\n\n    private void reportAGpsStatus(int type, int status, byte[] ipaddr) {\n\n...\n\n    try {\n        mAGpsDataConnectionAddr \u003d InetAddress.getByAddress(ipaddr);\n    } catch(UnknownHostException) {\n        // Do something here.\n    }\n\n...\n\n    route_result \u003d mConnMgr.requestRouteToHostAddress(\n        ConnectivityManager.TYPE_MOBILE_SUPL,\n        mAGpsDataConnectionAddr);",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///+Q\u003d",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2012-06-02T05:56:56Z",
+      "side": 1,
+      "message": "Why not make this be a byte array regardless of whether it\u0027s IPv4 or IPv6?\n\n    jbyteArray byteArray;\n    if (agps_status-\u003esize \u003e\u003d sizeof(AGpsStatus)) {\n        // IPv4.\n        byteArray \u003d env-\u003eNewByteArray(4);\n        env-\u003eSetByteArrayRegion(byteArray, 0, 4, (const jbyte *) agps_status-\u003eipv4_addr);\n    } else {\n        // IPv6.\n        byteArray \u003d env-\u003eNewByteArray(16);\n        env-\u003eSetByteArrayRegion(byteArray, 0, 16, (const jbyte *) agps_status-\u003eipv6_addr);\n    }\n\n    env-\u003eCallVoidMethod(mCallbacksObj, method_reportAGpsStatus,\n                        agps_status-\u003etype, agps_status-\u003estatus,\n                        byteArray);\n    checkAndClearExceptionFromCallback(env, __FUNCTION__);\n    env-\u003eDeleteLocalRef(byteArray);\n}",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
