@@ -20586,7 +20586,7 @@ package android.speech.tts {
     field public static final int CHECK_VOICE_DATA_MISSING_DATA = -2; // 0xfffffffe
     field public static final int CHECK_VOICE_DATA_MISSING_VOLUME = -3; // 0xfffffffd
     field public static final int CHECK_VOICE_DATA_PASS = 1; // 0x1
-    field public static final int DEFAULT_STREAM = 3; // 0x3
+    field public static final int DEFAULT_STREAM = 9; // 0x9
     field public static final java.lang.String EXTRA_AVAILABLE_VOICES = "availableVoices";
     field public static final java.lang.String EXTRA_CHECK_VOICE_DATA_FOR = "checkVoiceDataFor";
     field public static final java.lang.String EXTRA_TTS_DATA_INSTALLED = "dataInstalled";

@@ -218,7 +218,7 @@ public class TextToSpeech {
         /**
          * Default audio stream used when playing synthesized speech.
          */
-        public static final int DEFAULT_STREAM = AudioManager.STREAM_MUSIC;
+        public static final int DEFAULT_STREAM = AudioManager.STREAM_TTS;
 
         /**
          * Indicates success when checking the installation status of the resources used by the
