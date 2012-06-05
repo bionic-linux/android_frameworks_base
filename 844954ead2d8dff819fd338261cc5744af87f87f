@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGPn///ro\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:35:31Z",
+      "side": 1,
+      "message": "this comment needs update to match code changes below.",
+      "revId": "844954ead2d8dff819fd338261cc5744af87f87f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
