@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGUH///9E\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2012-06-05T22:55:41Z",
+      "side": 1,
+      "message": "All these white space changes were done by a script, which removes trailing white spaces.  If this hasn\u0027t been Android code standard, we can revert them.  If yes, we might as well bit the bullet and accept these white space changes.  But I can accept either way.",
+      "parentUuid": "AAAGPn///tA\u003d",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGPn///s8\u003d",
         "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
         "patchSetId": 3
