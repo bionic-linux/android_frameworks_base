@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGPn///sE\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:25:27Z",
+      "side": 1,
+      "message": "Code change does not match with comment above it.",
+      "revId": "a66b31c408ec9bc9b3af29a0392fce6fe33f94da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
