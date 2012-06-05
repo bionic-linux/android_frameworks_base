@@ -2,6 +2,193 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAGPn///tA\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///s8\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///s4\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "Any specific reason to not continue to use \"if (DEBUG)\" for logging as original code does?",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///s0\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///sw\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///ss\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///so\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///sk\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///sg\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///sY\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "no code change here- pls dont change spacing in lines that have no code changes.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///sc\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGQX////c\u003d",
         "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
         "patchSetId": 3
@@ -13,6 +200,23 @@
       "writtenOn": "2012-06-02T05:56:56Z",
       "side": 1,
       "message": "Why don\u0027t you just make this take one byte array instead? That simplifies the code, because you can convert the byte array to an InetAddress object, and use the InetAddress version of the function to set the route:\n\n    private void reportAGpsStatus(int type, int status, byte[] ipaddr) {\n\n...\n\n    try {\n        mAGpsDataConnectionAddr \u003d InetAddress.getByAddress(ipaddr);\n    } catch(UnknownHostException) {\n        // Do something here.\n    }\n\n...\n\n    route_result \u003d mConnMgr.requestRouteToHostAddress(\n        ConnectivityManager.TYPE_MOBILE_SUPL,\n        mAGpsDataConnectionAddr);",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGPn///sU\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-05T18:21:47Z",
+      "side": 1,
+      "message": "why do blank lines show up as code changes?  Pls avoid this.",
       "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
