@@ -16,6 +16,24 @@
       "revId": "844954ead2d8dff819fd338261cc5744af87f87f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGUH///7g\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2012-06-06T00:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGPn///ro\u003d",
+      "revId": "844954ead2d8dff819fd338261cc5744af87f87f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
