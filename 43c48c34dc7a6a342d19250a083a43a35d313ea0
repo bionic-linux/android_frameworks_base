@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGUX///04\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002121
+      },
+      "writtenOn": "2012-06-06T16:02:26Z",
+      "side": 1,
+      "message": "I see, I didnt realize there is a script running on these changes now.",
+      "parentUuid": "AAAGUH///9E\u003d",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGPn///s8\u003d",
         "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
         "patchSetId": 3
