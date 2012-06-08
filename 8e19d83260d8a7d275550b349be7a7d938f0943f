@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGbn///6I\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-06-08T18:54:01Z",
+      "side": 1,
+      "message": "Style: please wrap this to 70 columns if you have a chance.",
+      "revId": "8e19d83260d8a7d275550b349be7a7d938f0943f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGbX///6Q\u003d",
+        "filename": "core/java/android/content/ContentResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-06-08T18:54:01Z",
+      "side": 1,
+      "message": "This line is gone from Google\u0027s internal master tree, so the change here causes an unnecessary merge conflict. If you have a chance, please don\u0027t change this.",
+      "revId": "8e19d83260d8a7d275550b349be7a7d938f0943f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
