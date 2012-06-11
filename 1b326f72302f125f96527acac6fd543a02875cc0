@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGe3///zU\u003d",
+        "filename": "media/libstagefright/codecs/aacenc/src/adj_thr.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-06-11T17:59:38Z",
+      "side": 1,
+      "message": "could you add a comment here explaining the reason you mentioned in the git comment? In addition, in the git comment, you mentioned in \"some\" env, could you be specific? thanks!",
+      "revId": "1b326f72302f125f96527acac6fd543a02875cc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
