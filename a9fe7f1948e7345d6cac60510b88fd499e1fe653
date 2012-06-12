@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGfX///ic\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-06-12T23:42:11Z",
+      "side": 1,
+      "message": "This should probably be wrapped to 100 columns",
+      "revId": "a9fe7f1948e7345d6cac60510b88fd499e1fe653",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///iY\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-06-12T23:42:11Z",
+      "side": 1,
+      "message": "100 columns",
+      "revId": "a9fe7f1948e7345d6cac60510b88fd499e1fe653",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
