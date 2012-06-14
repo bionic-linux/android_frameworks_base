@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGln///4E\u003d",
+        "filename": "policy/src/com/android/internal/policy/impl/LockPatternKeyguardView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2012-06-14T20:45:54Z",
+      "side": 1,
+      "message": "Style guide: please remove tabs.",
+      "revId": "2e3fd362e390fea280d52e0990f120fe9020bb59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
