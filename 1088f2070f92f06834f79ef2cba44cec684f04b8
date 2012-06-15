@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGlH///yI\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1006257
+      },
+      "writtenOn": "2012-06-15T18:17:02Z",
+      "side": 1,
+      "message": "This case doesn\u0027t exist anymore",
+      "revId": "1088f2070f92f06834f79ef2cba44cec684f04b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
