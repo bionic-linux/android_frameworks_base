@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGon///3I\u003d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2012-06-16T02:06:01Z",
+      "side": 1,
+      "message": "implemented per your suggestion, need to get it tested before uploading it.  Version 4 isn\u0027t the one.",
+      "parentUuid": "AAAGQX////c\u003d",
+      "revId": "43c48c34dc7a6a342d19250a083a43a35d313ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGPn///sU\u003d",
         "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
         "patchSetId": 3
