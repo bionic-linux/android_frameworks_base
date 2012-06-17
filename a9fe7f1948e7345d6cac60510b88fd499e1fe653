@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGqX////w\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1012107
+      },
+      "writtenOn": "2012-06-17T17:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///ic\u003d",
+      "revId": "a9fe7f1948e7345d6cac60510b88fd499e1fe653",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///iY\u003d",
         "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-12T23:42:11Z",
       "side": 1,
       "message": "100 columns",
+      "revId": "a9fe7f1948e7345d6cac60510b88fd499e1fe653",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGqX////s\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1012107
+      },
+      "writtenOn": "2012-06-17T17:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///iY\u003d",
       "revId": "a9fe7f1948e7345d6cac60510b88fd499e1fe653",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
