@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAG3n///zs\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-06-22T16:47:02Z",
+      "side": 1,
+      "message": "This should just be a HashMap that is protected by the same lock as everything else.",
+      "revId": "6446c0dbe7118e21d262da5f1d749cb479da38a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG3n///zo\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-06-22T16:47:02Z",
+      "side": 1,
+      "message": "It would be better to do this filtering up higher where this call is being made, instead of needing complicated data structures here to generally handle anything it receives.  Is this not possible?",
+      "revId": "6446c0dbe7118e21d262da5f1d749cb479da38a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
