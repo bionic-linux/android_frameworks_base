@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAG/3////U\u003d",
+        "filename": "core/java/android/widget/TextView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8261,
+      "author": {
+        "id": 1005346
+      },
+      "writtenOn": "2012-06-26T18:04:48Z",
+      "side": 1,
+      "message": "Can be removed. Move comment up.",
+      "revId": "3c75ed28cfa0107069e066a834cfc36ec5c47050",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
