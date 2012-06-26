@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAG7n///v8\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1006698
+      },
+      "writtenOn": "2012-06-26T15:59:59Z",
+      "side": 1,
+      "message": "Agree. Will change it.",
+      "parentUuid": "AAAG3n///zs\u003d",
+      "revId": "6446c0dbe7118e21d262da5f1d749cb479da38a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAG3n///zo\u003d",
         "filename": "services/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-22T16:47:02Z",
       "side": 1,
       "message": "It would be better to do this filtering up higher where this call is being made, instead of needing complicated data structures here to generally handle anything it receives.  Is this not possible?",
+      "revId": "6446c0dbe7118e21d262da5f1d749cb479da38a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7n///v4\u003d",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1006698
+      },
+      "writtenOn": "2012-06-26T15:59:59Z",
+      "side": 1,
+      "message": "We have considered alternatives to move the logic up into DefaultPhoneNotifier.java or DataConnectionTracker. However, there are some issues as below.\n1\u003eChange in DefaultPhoneNotifier.java\ni\u003e The logic may not be simpler as we still need a hashmap to save the previous notification for each type.\nii\u003e There may be more broadcast messages in some cases when there is a switch between different phone types. For example, phone type is cdma as default when boot, then it switches to gsm immediately. As each phone instance has its own phoneNotifier instance, and the new instance (of gsm) is not able to compare the data state with what\u0027s broadcast by the instance of cdma, it may broadcast the intents even when there is no any change.\n2\u003eChange in DataConnectionTracker.java, GsmDataConnectionTracker.java, CdmaDataConnectionTracker.java, and ApnContext.java.\ni\u003e As there are many points to call notifyDataConnection, the change is decentralized.\nii\u003e LTE/CDMA phone needs to switch between GsmDataConnectionTracker and CdmaDataConnectionTracker often. In this case, there will be more redundant notification as it is hard to store the state of notification from previous tracker.",
+      "parentUuid": "AAAG3n///zo\u003d",
       "revId": "6446c0dbe7118e21d262da5f1d749cb479da38a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
