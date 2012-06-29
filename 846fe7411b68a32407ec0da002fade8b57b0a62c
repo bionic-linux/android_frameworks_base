@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHFn///4E\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-06-29T22:16:33Z",
+      "side": 1,
+      "message": "Be more descriptive. \"problem\" is way to generic. Most changes will be \"fix problem\". So ... E.g.\n\"\"\"\nConnectivitySevice: Fix dns property numbering.\n\nThe net.dns\u003cnum\u003e.\u003cpid\u003e property would get incorrectly numbered: If only the last entry changed, then it would clobber the 1st one.\n\"\"\"",
+      "revId": "846fe7411b68a32407ec0da002fade8b57b0a62c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHFn///4I\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2161,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-06-29T22:16:33Z",
+      "side": 1,
+      "message": "dnsString is dns.getHostAddress().",
+      "revId": "846fe7411b68a32407ec0da002fade8b57b0a62c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
