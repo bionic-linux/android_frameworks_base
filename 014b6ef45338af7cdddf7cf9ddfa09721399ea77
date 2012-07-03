@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHIX///70\u003d",
+        "filename": "core/java/android/app/DownloadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2012-07-03T17:22:19Z",
+      "side": 1,
+      "message": "the current ToT behavior will successfully use the bluetooth network if you don\u0027t call setAllowedNetworkTypes(), right?\n\nis there a specific use-case for only allowing bluetooth (and disallowing wifi+mobile)?",
+      "revId": "014b6ef45338af7cdddf7cf9ddfa09721399ea77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
