@@ -16,6 +16,24 @@
       "revId": "1088f2070f92f06834f79ef2cba44cec684f04b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHIX///7s\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/SMSDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1010410
+      },
+      "writtenOn": "2012-07-03T17:31:47Z",
+      "side": 1,
+      "message": "per Conley\u0027s comment in patch 2, got rid of the change in patch 3 to avoid the conflict in google\u0027s internal source tree.",
+      "parentUuid": "AAAGlH///yI\u003d",
+      "revId": "1088f2070f92f06834f79ef2cba44cec684f04b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
