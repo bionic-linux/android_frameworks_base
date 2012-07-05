@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHJX///40\u003d",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-07-05T20:13:34Z",
+      "side": 1,
+      "message": "USER_BOOTANIMATION_FILE",
+      "revId": "77c96b23c01793e3a3211d8dd56ce3b1ada97111",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///4w\u003d",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-07-05T20:13:34Z",
+      "side": 1,
+      "message": "bla_blabla_FILE",
+      "revId": "77c96b23c01793e3a3211d8dd56ce3b1ada97111",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///4s\u003d",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-07-05T20:13:34Z",
+      "side": 1,
+      "message": "* This mZip is unrelated to mZipFd above.\n* Your code does open() whereas mZip does zip.open() which might fail due to bad zip contents.",
+      "revId": "77c96b23c01793e3a3211d8dd56ce3b1ada97111",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///4k\u003d",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-07-05T20:13:34Z",
+      "side": 1,
+      "message": "* The passed in mZipFd is unrelated to the mp3Map which comes from the zip.\n* How are compressed vs uncompressed entries handled?",
+      "revId": "77c96b23c01793e3a3211d8dd56ce3b1ada97111",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///4U\u003d",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-07-05T20:13:34Z",
+      "side": 1,
+      "message": "How does this work with an encrypted filesystem?",
+      "revId": "77c96b23c01793e3a3211d8dd56ce3b1ada97111",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///4Y\u003d",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-07-05T20:13:34Z",
+      "side": 1,
+      "message": "ZipFileRO only supports one open at a time.\nThere is already an mZip.open() around line 370.",
+      "revId": "77c96b23c01793e3a3211d8dd56ce3b1ada97111",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
