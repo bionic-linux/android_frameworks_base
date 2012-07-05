@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHJ3///98\u003d",
+        "filename": "core/java/android/database/AbstractCursor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-07-05T19:37:57Z",
+      "side": 1,
+      "message": "Please protect the call with if (!mClosed). There\u0027s no reason to call the code twice and possibly generate an exception in the common case where the cursor is properly closed by the app.",
+      "revId": "7e2f96e36e9340ebcb225e0ce79ddbc322338327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
