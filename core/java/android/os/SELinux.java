@@ -1,5 +1,9 @@
 package android.os;
 
+import android.util.Slog;
+
+import java.io.IOException;
+import java.io.File;
 import java.io.FileDescriptor;
 
 /**
@@ -8,6 +12,8 @@ import java.io.FileDescriptor;
  * {@hide}
  */
 public class SELinux {
+
+    private static final String TAG = "SELinux";
 
     /**
      * Determine whether SELinux is disabled or enabled.
@@ -102,4 +108,35 @@ public class SELinux {
      * @return a boolean indicating whether permission was granted.
      */
     public static final native boolean checkSELinuxAccess(String scon, String tcon, String tclass, String perm);
+
+    /**
+     * Restores a file to its default SELinux security context.
+     * If the system is not compiled with SELinux, then true
+     *  is automatically returned.
+     * If SELinux is compiled in, but disabled, then true is
+     *  returned.
+     *
+     * @param pathname The pathname of the file to be relabeled.
+     * @return a boolean indicating whether the relabeling succeeded.
+     */
+    public static native boolean restorecon(String pathname);
+
+    /**
+     * Restores a file to its default SELinux security context.
+     * If the system is not compiled with SELinux, then true
+     *  is automatically returned.
+     * If SELinux is compiled in, but disabled, then true is
+     *  returned.
+     *
+     * @param file The File object representing the path to be relabeled.
+     * @return a boolean indicating whether the relabeling succeeded.
+     */
+    public static boolean restorecon(File file) {
+        try {
+            return restorecon(file.getCanonicalPath());
+        } catch (IOException e) {
+            Slog.e(TAG, "Trouble getting canoncical path for restorecon.", e);
+            return false;
+        }
+    }
 }
