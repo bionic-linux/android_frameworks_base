@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHMX///40\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2012-07-10T23:18:35Z",
+      "side": 1,
+      "message": "The ro.build.selinux change to AOSP was made after this initial scan policy change and thought was never given to this added protection because of that. I like this new addition.",
+      "parentUuid": "AAAHMH///40\u003d",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHMH///44\u003d",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-07-10T21:15:32Z",
       "side": 1,
       "message": "These functions should live in another class, maybe SELinux class, rather then having the Package Manager know how to scan for the policy files. Also, it pushes all the XML parsing out of this, so future XML changes only require changes in the library and not the PackageManager service.",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHMX///4c\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2012-07-10T23:18:35Z",
+      "side": 1,
+      "message": "I would think we need to be careful not to push it too far away from the PMS. We need the code within the system server somewhere. If it\u0027s not attached to the PMS then we need it in another service, either a new one or an existing one. Having these changes within an existing service should create the same set of comments you have just given. But then creating a new service seems like a lot of extra work for this functionality. Although, maybe this could be the start of a device admin service to handle such actions.",
+      "parentUuid": "AAAHMH///44\u003d",
       "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
