@@ -69,6 +69,24 @@
       "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHMH///4U\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-07-10T23:35:47Z",
+      "side": 1,
+      "message": "Why cant it be part of a library for handling SEAndroid tasks? For instance, parsing the mac_permision.xml can be moved elsewhere, or is their some reason that I am missing. I agree that the PMS needs to check in order to do the enforcement. But changes to PMS will be under much more scrutiny than updating a separate library when the XML format changes, and thus updates may be much easier to integrate further down the road.",
+      "parentUuid": "AAAHMX///4c\u003d",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
