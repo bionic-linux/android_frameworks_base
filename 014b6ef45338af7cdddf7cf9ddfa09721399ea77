@@ -16,6 +16,24 @@
       "revId": "014b6ef45338af7cdddf7cf9ddfa09721399ea77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHKH///80\u003d",
+        "filename": "core/java/android/app/DownloadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2012-07-10T13:01:29Z",
+      "side": 1,
+      "message": "There could be a case where you would like to disallow mobile, but allow bluetooth and wifi, which is not possible without this fix.",
+      "parentUuid": "AAAHIX///70\u003d",
+      "revId": "014b6ef45338af7cdddf7cf9ddfa09721399ea77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
