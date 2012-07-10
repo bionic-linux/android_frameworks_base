@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHMH///40\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-07-10T21:15:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t scan policy also check ro.build.selinux? What would happen if I had a non-seandroid build and places policy files on that path?",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHMH///44\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-07-10T21:15:32Z",
+      "side": 1,
+      "message": "These functions should live in another class, maybe SELinux class, rather then having the Package Manager know how to scan for the policy files. Also, it pushes all the XML parsing out of this, so future XML changes only require changes in the library and not the PackageManager service.",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
