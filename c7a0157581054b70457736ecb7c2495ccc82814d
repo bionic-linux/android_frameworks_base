@@ -105,6 +105,24 @@
       "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHMX///4M\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2012-07-11T00:36:18Z",
+      "side": 1,
+      "message": "I would certainly agree with that characterization. My apologies, i actually thought your original message meant move the code outside of the service itself and not just to another file. I now like this approach.",
+      "parentUuid": "AAAHMH///4M\u003d",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
