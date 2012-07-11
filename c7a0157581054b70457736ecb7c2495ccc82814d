@@ -87,6 +87,24 @@
       "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHMH///4M\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-07-11T00:34:05Z",
+      "side": 1,
+      "message": "To clarify further, I mean move the code to a different file, for instance into Android.os.SELinux and have PMS import android.os.selinux. That way a change to the logic doesn\u0027t require us to submit patches to PMS. Then the only patches to PMS would be on major API changes or additional features. Other patches, to update schema, fix bugs, etc can be sent to frameworks base.\n\nI would imagine that changes to a core service should be minimized and anything that could be broken out to a lib should be (IMHO) as core services, are well core and probably undergo a lot of scrutiny.",
+      "parentUuid": "AAAHMH///4U\u003d",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
