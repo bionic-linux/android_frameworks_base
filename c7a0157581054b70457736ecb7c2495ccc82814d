@@ -159,6 +159,24 @@
       "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHMH///2w\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-07-11T20:35:28Z",
+      "side": 1,
+      "message": "If this evolves into more then install time checks, the code for parsing and handling the logic should be moved or else it would need to be duplicated across the system. But Ill agree to that argument, lets see what the general consensus from Google is on this feature.",
+      "parentUuid": "AAAHMH///30\u003d",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
