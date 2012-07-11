@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHMH///34\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2012-07-11T12:24:24Z",
+      "side": 1,
+      "message": "An open question is whether we should support enabling the middleware MAC functionality even without the SELinux functionality, as it will work and provides a way to enforce mandatory restrictions over the Android permissions model even if you don\u0027t want the kernel level mandatory controls.",
+      "parentUuid": "AAAHMX///40\u003d",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHMH///44\u003d",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 1
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "I would certainly agree with that characterization. My apologies, i actually thought your original message meant move the code outside of the service itself and not just to another file. I now like this approach.",
       "parentUuid": "AAAHMH///4M\u003d",
+      "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHMH///30\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2012-07-11T12:24:24Z",
+      "side": 1,
+      "message": "I have mixed feelings about moving the logic out to a separate file.  Technically, the code is \"security-critical\" wrt enforcing the middleware MAC (although it should never weaken the existing permissions model) and thus any changes to it ought to be strictly reviewed.  Keeping all of the security logic in one place has an advantage of ensuring such review and ensuring that there aren\u0027t any unexpected interactions introduced by a change to either one.  I think we\u0027re willing to move it if that is the consensus view, but don\u0027t want to move it and then be told by someone else that they want it moved back.",
+      "parentUuid": "AAAHMX///4M\u003d",
       "revId": "c7a0157581054b70457736ecb7c2495ccc82814d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
