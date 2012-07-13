@@ -545,7 +545,7 @@ static void nativeSetPosition(JNIEnv* env, jobject surfaceObj, jfloat x, jfloat 
     sp<SurfaceControl> surface(getSurfaceControl(env, surfaceObj));
     if (surface == NULL) return;
 
-    status_t err = surface->setPosition(x, y);
+    status_t err = surface->setPosition(floorf(x + 0.5f), floorf(y + 0.5f));
     if (err < 0 && err != NO_INIT) {
         doThrowIAE(env);
     }
