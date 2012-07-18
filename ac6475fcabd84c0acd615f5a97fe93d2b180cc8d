@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AAAHe3///2w\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1013034
+      },
+      "writtenOn": "2012-07-18T23:25:44Z",
+      "side": 1,
+      "message": "Fix spelling of \"successfully\"",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHZn///5g\u003d",
         "filename": "core/jni/android_os_SELinux.cpp",
         "patchSetId": 3
@@ -101,6 +118,41 @@
       "side": 1,
       "message": "In my mind it does succeed, its setting the context to NULL. Plus it follows convention established through these bindings. I also agree with the above statements too. The biggest benefit is NO-OP and makes the java code much simpler.",
       "parentUuid": "AAAHZn///5o\u003d",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHe3///20\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1013034
+      },
+      "writtenOn": "2012-07-18T23:25:44Z",
+      "side": 1,
+      "message": "After discussion with nnk and gcondra, here is a solution the 3 of us are happy with.\n\nThrow an IllegalStateException when restorecon is called with SELinux disabled (either compiled in but disabled or not compiled in at all).  The caller can either (a) check whether SELinux is disabled before calling restorecon, or (b) try calling restorecon and catch the exception.\n\nIn the current implementation, a caller may think SELinux is enabled when it is actually not, see a successful restorecon, and have no idea that the restorecon actually did nothing.  The implementation outlined above addresses this problem because the caller will see the exception.",
+      "parentUuid": "AAAHfn////s\u003d",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHe3///3U\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7408,
+      "author": {
+        "id": 1013034
+      },
+      "writtenOn": "2012-07-18T23:25:44Z",
+      "side": 1,
+      "message": "Indent 4 chars instead of 2.",
       "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
