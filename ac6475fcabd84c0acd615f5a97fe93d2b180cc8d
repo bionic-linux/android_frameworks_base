@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAHsn///+Q\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-19T23:25:12Z",
+      "side": 1,
+      "message": "Please document the behavior of this method when:\n\n1) The system is not compiled with SELinux.\n\n2) SELinux is compiled in, but disabled.\n\nAlso, a newline is needed between the javadoc description and the first \"@\" line.",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHZn///5k\u003d",
         "filename": "core/java/android/os/SELinux.java",
         "patchSetId": 3
@@ -30,6 +47,23 @@
       "writtenOn": "2012-07-18T23:25:44Z",
       "side": 1,
       "message": "Fix spelling of \"successfully\"",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHsn///+o\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-19T23:25:12Z",
+      "side": 1,
+      "message": "please throw a NullPointerException.",
       "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -172,6 +206,41 @@
       "side": 1,
       "message": "I would also argue that if SE Linux is disabled, then the \"default SELinux security context\" is restored by doing nothing, so returning true is logically the correct behavior.",
       "parentUuid": "AAAHf3///8I\u003d",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHsn///+w\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-19T23:25:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure I agree with this, but in the interests of moving forward, let\u0027s keep the code the way it\u0027s currently written. \n\nCan we please address the other comments in this change?",
+      "parentUuid": "AAAHhX///2g\u003d",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHsn///+k\u003d",
+        "filename": "services/java/com/android/server/WallpaperManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-19T23:25:12Z",
+      "side": 1,
+      "message": "Should we be checking the return value here?",
       "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
