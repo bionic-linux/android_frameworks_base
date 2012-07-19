@@ -125,6 +125,11 @@ class BatteryService extends Binder {
 
     private boolean mSentLowBatteryBroadcast = false;
 
+    // Variables used to check if battery is discharging, by taking voltage samples
+    private static int dischargeCount = 0;
+    private static int voltPrev = -1;
+    private static final int MAX_DISCHARGE_COUNT = 3;
+
     public BatteryService(Context context, LightsService lights) {
         mContext = context;
         mLed = new Led(context, lights);
@@ -146,6 +151,19 @@ class BatteryService extends Binder {
 
         // set initial status
         update();
+    }
+
+    private final boolean isDischarging() {
+        // If the voltage is dropping during consecutive readings, report that battery is discharging.
+        // Reset the discharge count if the current voltage is greater than the previous voltage
+        if ((mBatteryVoltage < voltPrev) && (voltPrev != -1)) {
+            dischargeCount++;
+        } else if (mBatteryVoltage > voltPrev) {
+            dischargeCount = 0;
+        }
+
+        voltPrev = mBatteryVoltage;
+        return (dischargeCount >= MAX_DISCHARGE_COUNT);
     }
 
     final boolean isPowered() {
@@ -206,9 +224,10 @@ class BatteryService extends Binder {
     }
 
     private final void shutdownIfNoPower() {
-        // shut down gracefully if our battery is critically low and we are not powered.
+        // shut down gracefully if our battery is critically low and we are not powered, or
+        // if platform consuming more than what is being supplied at 0% battery capacity.
         // wait until the system has booted before attempting to display the shutdown dialog.
-        if (mBatteryLevel == 0 && !isPowered() && ActivityManagerNative.isSystemReady()) {
+        if (mBatteryLevel == 0 && (!isPowered() || isDischarging()) && ActivityManagerNative.isSystemReady()) {
             Intent intent = new Intent(Intent.ACTION_REQUEST_SHUTDOWN);
             intent.putExtra(Intent.EXTRA_KEY_CONFIRM, false);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
