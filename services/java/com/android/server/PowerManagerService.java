@@ -112,7 +112,7 @@ public class PowerManagerService extends IPowerManager.Stub
     private static final int LONG_DIM_TIME = 7000;              // t+N-5 sec
 
     // How long to wait to debounce light sensor changes in milliseconds
-    private static final int LIGHT_SENSOR_DELAY = 2000;
+    private static final int LIGHT_SENSOR_DELAY = 1000;
 
     // light sensor events rate in microseconds
     private static final int LIGHT_SENSOR_RATE = 1000000;
@@ -281,6 +281,7 @@ public class PowerManagerService extends IPowerManager.Stub
     private int mScreenBrightnessDim;
     private boolean mUseSoftwareAutoBrightness;
     private boolean mAutoBrightessEnabled;
+    private boolean mAutoButtonBrightessEnabled;
     private int[] mAutoBrightnessLevels;
     private int[] mLcdBacklightValues;
     private int[] mButtonBacklightValues;
@@ -644,6 +645,8 @@ public class PowerManagerService extends IPowerManager.Stub
         mUseSoftwareAutoBrightness = resources.getBoolean(
                 com.android.internal.R.bool.config_automatic_brightness_available);
         if (mUseSoftwareAutoBrightness) {
+            mAutoButtonBrightessEnabled = resources.getBoolean(
+                com.android.internal.R.bool.config_button_automatic_brightness_available);
             mAutoBrightnessLevels = resources.getIntArray(
                     com.android.internal.R.array.config_autoBrightnessLevels);
             mLcdBacklightValues = resources.getIntArray(
@@ -1240,6 +1243,7 @@ public class PowerManagerService extends IPowerManager.Stub
                     + " mLightSensorKeyboardBrightness=" + mLightSensorKeyboardBrightness);
             pw.println("  mUseSoftwareAutoBrightness=" + mUseSoftwareAutoBrightness);
             pw.println("  mAutoBrightessEnabled=" + mAutoBrightessEnabled);
+            pw.println("  mAutoButtonBrightessEnabled=" + mAutoButtonBrightessEnabled);
             mScreenBrightnessAnimator.dump(pw, "mScreenBrightnessAnimator: ");
 
             int N = mLocks.size();
@@ -2607,6 +2611,11 @@ public class PowerManagerService extends IPowerManager.Stub
             // This is the range of brightness values that we can use.
             final int minval = values[0];
             final int maxval = values[mAutoBrightnessLevels.length];
+
+            // if array value is not increased, return index value
+            if (maxval < minval)
+                return values[i];
+
             // This is the range we will be scaling.  We put some padding
             // at the low and high end to give the adjustment a little better
             // impact on the actual observed value.
@@ -2924,7 +2933,8 @@ public class PowerManagerService extends IPowerManager.Stub
             if (mUseSoftwareAutoBrightness && mAutoBrightessEnabled != enabled) {
                 mAutoBrightessEnabled = enabled;
                 // This will get us a new value
-                enableLightSensorLocked(mAutoBrightessEnabled && isScreenOn());
+                enableLightSensorLocked((mAutoBrightessEnabled || mAutoButtonBrightessEnabled)
+                                        && isScreenOn());
             }
         }
     }
@@ -3093,7 +3103,8 @@ public class PowerManagerService extends IPowerManager.Stub
             Slog.d(TAG, "system ready!");
             mDoneBooting = true;
 
-            enableLightSensorLocked(mUseSoftwareAutoBrightness && mAutoBrightessEnabled);
+            enableLightSensorLocked(mUseSoftwareAutoBrightness &&
+                        (mAutoBrightessEnabled || mAutoButtonBrightessEnabled));
 
             long identity = Binder.clearCallingIdentity();
             try {
@@ -3270,9 +3281,10 @@ public class PowerManagerService extends IPowerManager.Stub
             Slog.d(TAG, "enableLightSensorLocked enable=" + enable
                     + " mLightSensorEnabled=" + mLightSensorEnabled
                     + " mAutoBrightessEnabled=" + mAutoBrightessEnabled
+                    + " mAutoButtonBrightessEnabled=" + mAutoButtonBrightessEnabled
                     + " mWaitingForFirstLightSensor=" + mWaitingForFirstLightSensor);
         }
-        if (!mAutoBrightessEnabled) {
+        if (!mAutoBrightessEnabled && !mAutoButtonBrightessEnabled) {
             enable = false;
         }
         if (mSensorManager != null && mLightSensorEnabled != enable) {
