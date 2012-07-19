@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHf3///8I\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2012-07-19T12:58:34Z",
+      "side": 1,
+      "message": "If we take that approach, then callers must always wrap calls to the SELinux APIs with either a prior check of isSELinuxEnabled() or an exception handler.  And in almost every case, they will simply skip the API call if SELinux is disabled or ignore the exception.  By returning success in the SELinux-disabled case, we avoid this ugliness in every caller, while still allowing callers who care about SELinux-enabled status to explicitly check using isSELinuxEnabled().\nConsider the SELinux.checkSELinuxAccess() calls in ZygoteConnection.java as an example.  At the moment, we can unconditionally call them without needing a prior check of isSELinuxEnabled or an exception handler for the SELinux-disabled case, knowing that they will always return true (i.e. allowed) if SELinux was disabled at build time or runtime.  If we switch to this model, we have to wrap them all, and we\u0027ll just end up doing the same thing at each call site.",
+      "parentUuid": "AAAHe3///20\u003d",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHe3///3U\u003d",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 3
