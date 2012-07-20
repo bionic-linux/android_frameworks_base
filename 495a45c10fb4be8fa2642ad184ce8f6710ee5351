@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHtH///nw\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1013034
+      },
+      "writtenOn": "2012-07-20T18:21:00Z",
+      "side": 1,
+      "message": "Throws: NullPointerException if passed a null pathname",
+      "revId": "495a45c10fb4be8fa2642ad184ce8f6710ee5351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHtH///n0\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1013034
+      },
+      "writtenOn": "2012-07-20T18:21:00Z",
+      "side": 1,
+      "message": "This return statement is dead code.",
+      "revId": "495a45c10fb4be8fa2642ad184ce8f6710ee5351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
