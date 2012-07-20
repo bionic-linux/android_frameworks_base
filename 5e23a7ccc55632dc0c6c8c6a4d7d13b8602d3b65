@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHtX///aw\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T22:51:44Z",
+      "side": 1,
+      "message": "Per http://source.android.com/source/code-style.html , Android follows the standard Sun javadoc conventions.  You can see examples in the standard at \n\nhttp://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#format\nhttp://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#examples\n\nIn no case do the examples contain a sentence where the continuing line is indented relative to the preceding line.  \n\nSimilarly, the Android standards have no examples of the type above.\n\nhttp://source.android.com/source/code-style.html#use-javadoc-standard-comments\n\nAs William pointed out, this non-standard indention is distracts from the actual code, and I tend to agree with him.",
+      "parentUuid": "AAAHuX///7c\u003d",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHtX///gk\u003d",
         "filename": "core/java/android/os/SELinux.java",
         "patchSetId": 5
