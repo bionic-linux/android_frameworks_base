@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAHtX///pw\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T21:33:19Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be a copyright statement at the top of this file?",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHtX///go\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T21:33:19Z",
+      "side": 1,
+      "message": "{@code true}",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHrn///8A\u003d",
         "filename": "core/java/android/os/SELinux.java",
         "patchSetId": 5
@@ -31,6 +65,92 @@
       "side": 1,
       "message": "It was intentional.",
       "parentUuid": "AAAHrn///8A\u003d",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHtX///gs\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T21:33:19Z",
+      "side": 1,
+      "message": "Please fix this.  Consistency with other parts of Android code is a good thing.",
+      "parentUuid": "AAAHsH///7I\u003d",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHtX///gk\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T21:33:19Z",
+      "side": 1,
+      "message": "{@code true}",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHtX///fI\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T21:33:19Z",
+      "side": 1,
+      "message": "You had it right before. You need a return after this line.  throw_NullPointerException is just a function call in C. \n\nHaving said that, it would be better to throw the NullPointerException from java code, as well as do other checks in java.  We should make the JNI calls as simple as possible. The impedance mismatch between java and C make it harder for someone who\u0027s not familiar with the code to understand what the code is doing.\n\nFor example:\n\npublic class SELinux {\n  private static native boolean native_restorecon(String pathname);\n  public static boolean restorecon(String pathname) {\n    if (pathname \u003d\u003d null) { throw new NullPointerException(); }\n    if (!SELinux.isSELinuxEnabled()) { return true; }\n    return native_restorecon(pathname);\n  }\n}\n\nand strip out the unnecessary C code and rename this C function to be restorecon_native().",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHtX///gc\u003d",
+        "filename": "services/java/com/android/server/WallpaperManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T21:33:19Z",
+      "side": 1,
+      "message": "Please log an error message here, to be consistent with how we handle a FileNotFoundException.",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHtX///gY\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7408,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T21:33:19Z",
+      "side": 1,
+      "message": "please also log an error message here",
       "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
