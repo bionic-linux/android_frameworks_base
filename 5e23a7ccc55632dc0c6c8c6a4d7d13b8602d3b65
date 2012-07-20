@@ -123,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHtX///eg\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-07-20T21:40:15Z",
+      "side": 1,
+      "message": "static jboolean native_restorecon(JNIEnv *env, jobject clazz, jstring pathname) {\n#ifdef HAVE_SELINUX\n  const char *file \u003d const_cast\u003cchar *\u003e(env-\u003eGetStringUTFChars(pathname, NULL));\n  int ret \u003d selinux_android_restorecon(file);\n  env-\u003eReleaseStringUTFChars(pathname, file);\n  return (ret \u003d\u003d 0);\n#else\t\n  return true;\n#endif\n}",
+      "parentUuid": "AAAHtX///fI\u003d",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHtX///gc\u003d",
         "filename": "services/java/com/android/server/WallpaperManagerService.java",
         "patchSetId": 5
