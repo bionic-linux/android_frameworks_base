@@ -3804,7 +3804,7 @@ public class PackageManagerService extends IPackageManager.Stub {
 
                             // And now re-install the app.
                             ret = mInstaller.install(pkgName, pkg.applicationInfo.uid,
-                                    pkg.applicationInfo.uid);
+                                    pkg.applicationInfo.uid, pkg.applicationInfo.seinfo);
                             if (ret == -1) {
                                 // Ack should not happen!
                                 msg = prefix + pkg.packageName
@@ -3854,7 +3854,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                 }
                 //invoke installer to do the actual installation
                 int ret = mInstaller.install(pkgName, pkg.applicationInfo.uid,
-                        pkg.applicationInfo.uid);
+                        pkg.applicationInfo.uid, pkg.applicationInfo.seinfo);
                 if (ret < 0) {
                     // Error from installer
                     mLastScanError = PackageManager.INSTALL_FAILED_INSUFFICIENT_STORAGE;
