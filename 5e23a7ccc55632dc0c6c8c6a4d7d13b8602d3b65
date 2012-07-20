@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHuX///7c\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1010466
+      },
+      "writtenOn": "2012-07-20T22:23:45Z",
+      "side": 1,
+      "message": "I think the current indention is consistent with normal Android code.  The comment indention at the top of the file is for the entire class.  The indention of comments for functions and variables inside the class is indented the the same level as the function declaration.\n\nSo I don\u0027t think anything needs to be done to make it consistent.",
+      "parentUuid": "AAAHtX///gs\u003d",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHtX///gk\u003d",
         "filename": "core/java/android/os/SELinux.java",
         "patchSetId": 5
