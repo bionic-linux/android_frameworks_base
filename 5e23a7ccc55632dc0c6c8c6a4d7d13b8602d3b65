@@ -16,6 +16,24 @@
       "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHsH///7I\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2012-07-20T21:11:31Z",
+      "side": 1,
+      "message": "It was intentional.",
+      "parentUuid": "AAAHrn///8A\u003d",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
