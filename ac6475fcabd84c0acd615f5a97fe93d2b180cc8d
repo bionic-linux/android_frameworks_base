@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHrn///+w\u003d",
+        "filename": "services/java/com/android/server/WallpaperManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-07-20T06:07:12Z",
+      "side": 1,
+      "message": "It would be nice to know if it failed, even a LOGE here would be better than nothing.",
+      "parentUuid": "AAAHsn///+k\u003d",
+      "revId": "ac6475fcabd84c0acd615f5a97fe93d2b180cc8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHe3///3U\u003d",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 3
