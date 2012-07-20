@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHrn///8A\u003d",
+        "filename": "core/java/android/os/SELinux.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-07-20T19:06:15Z",
+      "side": 1,
+      "message": "These multi-line comments have a different indentation style then the multi-level comment on line 9-13. If the purpose is to draw my attention to them it worked, if not please make the style consistent.",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
