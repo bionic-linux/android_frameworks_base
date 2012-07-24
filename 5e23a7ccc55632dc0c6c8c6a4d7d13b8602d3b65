@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHsH///0g\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2012-07-24T13:18:57Z",
+      "side": 1,
+      "message": "I\u0027m sorta concerned that when we build with HAVE_SELINUX :\u003d false that we return true in your function because of \"!SELinux.isSELinuxEnabled\" and not because of the return true that is found within the \"native_restorecon\" function which is the correct return statement. There is no notion of HAVE_SELINUX at the java layer, unless we make use of the ro.build.selinux system property.  While the result is the same, I worry that this could become a bit confusing if we change any of the disabled/enabled return possibilities.",
+      "parentUuid": "AAAHtX///fI\u003d",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHtX///gc\u003d",
         "filename": "services/java/com/android/server/WallpaperManagerService.java",
         "patchSetId": 5
@@ -223,6 +241,24 @@
       "writtenOn": "2012-07-20T21:33:19Z",
       "side": 1,
       "message": "please also log an error message here",
+      "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHsH///0k\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7408,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2012-07-24T13:18:57Z",
+      "side": 1,
+      "message": "An error message is already logged via the selinux_android_restorecon function within libselinux. All restorecon calls eventually make it to that libselinux function. Inside android_os_SELinux.cpp we have a userspace callback facility setup to directly print all SELinux log messages to logcat. If I add another error message here it would essentially be a duplicate. This comment also holds for the other comments made about needing logcat prints on restorecon errors.",
+      "parentUuid": "AAAHtX///gY\u003d",
       "revId": "5e23a7ccc55632dc0c6c8c6a4d7d13b8602d3b65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
