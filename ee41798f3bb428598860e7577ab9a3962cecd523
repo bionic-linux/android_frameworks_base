@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAH3n//+1E\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1004957
+      },
+      "writtenOn": "2012-07-27T20:17:09Z",
+      "side": 1,
+      "message": "This will NPE if manufacturer, product or serial number is null.",
+      "revId": "ee41798f3bb428598860e7577ab9a3962cecd523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
