@@ -16,6 +16,24 @@
       "revId": "ee41798f3bb428598860e7577ab9a3962cecd523",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH43///vI\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1012107
+      },
+      "writtenOn": "2012-07-28T15:29:37Z",
+      "side": 1,
+      "message": "Doesn\u0027t the if statement above prevent a null getting to this point?",
+      "parentUuid": "AAAH3n//+1E\u003d",
+      "revId": "ee41798f3bb428598860e7577ab9a3962cecd523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
