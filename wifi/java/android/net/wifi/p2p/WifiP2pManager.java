@@ -990,12 +990,31 @@ public class WifiP2pManager {
      *
      * <p> Application can request for the group details with {@link #requestGroupInfo}.
      *
+     * <p> If a credential of persistent p2p group is/are in the system settings,
+     * then a first one of the credential list will be used.
+     *
      * @param c is the channel created at {@link #initialize}
      * @param listener for callbacks on success or failure. Can be null.
      */
     public void createGroup(Channel c, ActionListener listener) {
         checkChannel(c);
-        c.mAsyncChannel.sendMessage(CREATE_GROUP, 0, c.putListener(listener));
+        c.mAsyncChannel.sendMessage(CREATE_GROUP, WifiP2pGroup.PERSISTNET_NET_ID,
+                c.putListener(listener));
+    }
+
+    /**
+     * Create a p2p group with the current device as the group owner.
+     *
+     * @param c is the channel created at {@link #initialize}
+     * @param persistent create persistent group if true.
+     * @param listener for callbacks on success or failure. Can be null.
+     * @hide
+     */
+    public void createGroup(Channel c, boolean persistent, ActionListener listener) {
+        checkChannel(c);
+        c.mAsyncChannel.sendMessage(CREATE_GROUP,
+                persistent ? WifiP2pGroup.PERSISTNET_NET_ID : WifiP2pGroup.TEMPORARY_NET_ID,
+                c.putListener(listener));
     }
 
     /**
