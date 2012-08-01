@@ -8406,7 +8406,7 @@ public final class ContactsContract {
                         sb.append(markedToken);
                         if (i < lastToken - 1) {
                             // Add the characters that appeared between this token and the next.
-                            sb.append(contentLine.substring(
+                            sb.append(contentLine.trim().substring(
                                     tokenOffsets.get(i) + originalToken.length(),
                                     tokenOffsets.get(i + 1)));
                         }
