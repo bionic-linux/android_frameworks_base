@@ -134,9 +134,15 @@ public class CamcorderProfile
      */
     public static final int QUALITY_TIME_LAPSE_QVGA = 1007;
 
+    /**
+     * Time lapse quality level corresponding to the VGA (640 x 480) resolution.
+     */
+    public static final int QUALITY_TIME_LAPSE_VGA = 1008;
+
+
     // Start and end of timelapse quality list
     private static final int QUALITY_TIME_LAPSE_LIST_START = QUALITY_TIME_LAPSE_LOW;
-    private static final int QUALITY_TIME_LAPSE_LIST_END = QUALITY_TIME_LAPSE_QVGA;
+    private static final int QUALITY_TIME_LAPSE_LIST_END = QUALITY_TIME_LAPSE_VGA;
 
     /**
      * Default recording duration in seconds before the session is terminated.
