@@ -34,6 +34,24 @@
       "revId": "ee41798f3bb428598860e7577ab9a3962cecd523",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAICX////4\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1004957
+      },
+      "writtenOn": "2012-08-03T21:41:44Z",
+      "side": 1,
+      "message": "Could device.getManufacturerName() be null?",
+      "parentUuid": "AAAH43///vI\u003d",
+      "revId": "ee41798f3bb428598860e7577ab9a3962cecd523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
