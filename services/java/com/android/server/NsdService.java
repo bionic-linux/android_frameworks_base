@@ -388,8 +388,10 @@ public class NsdService extends INsdManager.Stub {
                         break;
                     case NsdManager.NATIVE_DAEMON_EVENT:
                         NativeEvent event = (NativeEvent) msg.obj;
-                        handleNativeEvent(event.code, event.raw,
-                                NativeDaemonEvent.unescapeArgs(event.raw));
+                        if (!handleNativeEvent(event.code, event.raw,
+                                NativeDaemonEvent.unescapeArgs(event.raw))) {
+                            result = NOT_HANDLED;
+                        }
                         break;
                     default:
                         result = NOT_HANDLED;
@@ -482,8 +484,8 @@ public class NsdService extends INsdManager.Stub {
     }
 
     private class NativeEvent {
-        int code;
-        String raw;
+        final int code;
+        final String raw;
 
         NativeEvent(int code, String raw) {
             this.code = code;
@@ -505,13 +507,15 @@ public class NsdService extends INsdManager.Stub {
         }
     }
 
-    private void handleNativeEvent(int code, String raw, String[] cooked) {
+    private boolean handleNativeEvent(int code, String raw, String[] cooked) {
+        boolean handled = true;
         NsdServiceInfo servInfo;
         int id = Integer.parseInt(cooked[1]);
         ClientInfo clientInfo = mIdToClientInfoMap.get(id);
         if (clientInfo == null) {
             Slog.e(TAG, "Unique id with no client mapping: " + id);
-            return;
+            handled = false;
+            return handled;
         }
 
         /* This goes in response as msg.arg2 */
@@ -580,7 +584,7 @@ public class NsdService extends INsdManager.Stub {
                 if (!getAddrInfo(id, cooked[3])) {
                     clientInfo.mChannel.sendMessage(NsdManager.RESOLVE_SERVICE_FAILED,
                             NsdManager.FAILURE_INTERNAL_ERROR, clientId);
-                    mIdToClientInfoMap.remove(id);
+                    removeRequestMap(clientId, id, clientInfo);
                     clientInfo.mResolvedService = null;
                 }
                 break;
@@ -588,7 +592,7 @@ public class NsdService extends INsdManager.Stub {
                 /* NNN resolveId errorCode */
                 if (DBG) Slog.d(TAG, "SERVICE_RESOLVE_FAILED Raw: " + raw);
                 stopResolveService(id);
-                mIdToClientInfoMap.remove(id);
+                removeRequestMap(clientId, id, clientInfo);
                 clientInfo.mResolvedService = null;
                 clientInfo.mChannel.sendMessage(NsdManager.RESOLVE_SERVICE_FAILED,
                         NsdManager.FAILURE_INTERNAL_ERROR, clientId);
@@ -596,7 +600,7 @@ public class NsdService extends INsdManager.Stub {
             case NativeResponseCode.SERVICE_GET_ADDR_FAILED:
                 /* NNN resolveId errorCode */
                 stopGetAddrInfo(id);
-                mIdToClientInfoMap.remove(id);
+                removeRequestMap(clientId, id, clientInfo);
                 clientInfo.mResolvedService = null;
                 if (DBG) Slog.d(TAG, "SERVICE_RESOLVE_FAILED Raw: " + raw);
                 clientInfo.mChannel.sendMessage(NsdManager.RESOLVE_SERVICE_FAILED,
@@ -614,12 +618,14 @@ public class NsdService extends INsdManager.Stub {
                             NsdManager.FAILURE_INTERNAL_ERROR, clientId);
                 }
                 stopGetAddrInfo(id);
-                mIdToClientInfoMap.remove(id);
+                removeRequestMap(clientId, id, clientInfo);
                 clientInfo.mResolvedService = null;
                 break;
             default:
+                handled = false;
                 break;
         }
+        return handled;
     }
 
     private boolean startMDnsDaemon() {
@@ -800,8 +806,8 @@ public class NsdService extends INsdManager.Stub {
     private class ClientInfo {
 
         private static final int MAX_LIMIT = 10;
-        private AsyncChannel mChannel;
-        private Messenger mMessenger;
+        private final AsyncChannel mChannel;
+        private final Messenger mMessenger;
         /* Remembers a resolved service until getaddrinfo completes */
         private NsdServiceInfo mResolvedService;
 
