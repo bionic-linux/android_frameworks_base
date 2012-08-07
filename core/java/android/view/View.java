@@ -1982,7 +1982,7 @@ public class View implements Drawable.Callback, Drawable.Callback2, KeyEvent.Cal
     static final int TEXT_DIRECTION_RESOLVED_DEFAULT =
             TEXT_DIRECTION_FIRST_STRONG << TEXT_DIRECTION_RESOLVED_MASK_SHIFT;
 
-    /*
+    /**
      * Default text alignment. The text alignment of this View is inherited from its parent.
      * Use with {@link #setTextAlignment(int)}
      * @hide
