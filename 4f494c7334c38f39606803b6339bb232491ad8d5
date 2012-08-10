@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINH///pc\u003d",
+        "filename": "keystore/tests/src/android/security/KeyStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-08-10T20:37:57Z",
+      "side": 1,
+      "message": "Oh, I should probably fix this comment.",
+      "revId": "4f494c7334c38f39606803b6339bb232491ad8d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAINH///pY\u003d",
+        "filename": "keystore/tests/src/android/security/SystemKeyStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-08-10T20:37:57Z",
+      "side": 1,
+      "message": "This one, too.",
+      "revId": "4f494c7334c38f39606803b6339bb232491ad8d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
