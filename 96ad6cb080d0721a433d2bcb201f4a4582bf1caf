@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINX///cg\u003d",
+        "filename": "keystore/tests/src/android/security/KeyStoreTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002621
+      },
+      "writtenOn": "2012-08-10T23:27:25Z",
+      "side": 1,
+      "message": "FYI runtest --path frameworks/base/keystore/tests/ also works to run all the tests",
+      "revId": "96ad6cb080d0721a433d2bcb201f4a4582bf1caf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
