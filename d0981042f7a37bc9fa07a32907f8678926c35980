@@ -34,6 +34,24 @@
       "revId": "d0981042f7a37bc9fa07a32907f8678926c35980",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIM3///jY\u003d",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-10T18:24:21Z",
+      "side": 1,
+      "message": "You shouldn\u0027t have these checks.  If there is no data available, the reader functions return a default value (such as 0 for integer).",
+      "parentUuid": "AAAIJH///r0\u003d",
+      "revId": "d0981042f7a37bc9fa07a32907f8678926c35980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
