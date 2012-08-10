@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.security.tests;
+package android.security;
 
 import android.app.Activity;
 import android.security.KeyStore;
