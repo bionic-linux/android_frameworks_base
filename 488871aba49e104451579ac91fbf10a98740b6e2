@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAISH///Tw\u003d",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "PERSISTENT_NET_ID",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAISH///M8\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "Lets change this comment to:\n\n\"If a matching persistent profile is found, use it. Otherwise, create a new persistent profile\"",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIaH////8\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "Why do you think we need a temporary option for createGroup ?\n\nFor now,  lets go with persistent as the only option with the existing API",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIQ3///70\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "CONNECT_FAILURE \u0026 CONNECT_SUCCESS",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIQ3///74\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "can you look at using a LruCache  ? It will have the advantage of being a map and providing us with a cache which can remove the least recently used network ?\n\nPerhaps, the group owner address should be the key",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIaX///uA\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "This seems to be breaking the API to hide dialogs for apps that set it.\n\nWe are setting the config here before calling connect() which is checking for the difference between config \u0026 mSavedPeerConfig which will not exist since they are same",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIaX///t4\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "allignment",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIaX///r8\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "shouldnt we be checking if we exceeded the persistent group list size at this point ?",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAISH///OQ\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "long line",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIQ3///7g\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1672,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "Should be part of WifiP2pDeviceList",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIQ3///7o\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "use mPeers.updateStatus() ?",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIQ3///7k\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "This should also go in WifiP2pDeviceList",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIQ3///7w\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "mPeers already includes a get() funciton for deviceAddress",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIaX///s0\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "mPeers.get() ?",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIaX///sw\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "has reached the limit",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIaX///sI\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-14T20:50:41Z",
+      "side": 1,
+      "message": "How can the groups size increase at this point ? It seems we only do mGroups.add() in updatePersistentNetworks()",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
