@@ -327,6 +327,11 @@ public final class BatteryStatsService extends IBatteryStats.Stub {
 
     public void noteBluetoothOff() {
         enforceCallingPermission();
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if (adapter != null) {
+            adapter.closeProfileProxy(BluetoothProfile.HEADSET,
+                                      mBluetoothHeadset);
+        }
         synchronized (mStats) {
             mBluetoothPendingStats = false;
             mStats.noteBluetoothOffLocked();

@@ -426,6 +426,7 @@ public class BluetoothService extends IBluetooth.Stub {
      * Local clean up after broadcasting STATE_OFF intent
      */
     synchronized void cleanupAfterFinishDisable() {
+        mAdapter.closeProfileProxy(BluetoothProfile.HEADSET,mHeadsetProxy);
         mAdapterProperties.clear();
 
         for (Integer srHandle : mServiceRecordToPid.keySet()) {
