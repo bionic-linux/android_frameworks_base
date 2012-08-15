@@ -61,6 +61,11 @@ public class PowerProfile {
     public static final String POWER_CPU_ACTIVE = "cpu.active";
 
     /**
+     * Power consumption when CPU is woken from sleep.
+     */
+    public static final String POWER_CPU_WAKEUP = "cpu.wakeup";
+
+    /**
      * Power consumption when WiFi driver is scanning for networks.
      */
     public static final String POWER_WIFI_SCAN = "wifi.scan";

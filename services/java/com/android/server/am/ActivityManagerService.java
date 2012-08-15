@@ -7525,7 +7525,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
         BatteryStatsImpl stats = mBatteryStatsService.getActiveStatistics();
         synchronized (stats) {
-            if (mBatteryStatsService.isOnBattery()) {
+            if (mBatteryStatsService.isOnBattery() && !stats.isScreenOn()) {
                 mBatteryStatsService.enforceCallingPermission();
                 PendingIntentRecord rec = (PendingIntentRecord)sender;
                 int MY_UID = Binder.getCallingUid();
