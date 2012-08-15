@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIcX///0A\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "OK, so far I don\u0027t have a clear usecase for temporary group. Let\u0027s remove this.\n\nBTW, do you think delete/clear function is needed ??\nIf user connected to the other device wrongly, user would like to clear own profile probably.",
+      "parentUuid": "AAAIaH////8\u003d",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIQ3///70\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIcX///z0\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "Thanks for your information, I\u0027ll try to use LruCache.\nBut it should be noted that we cannot store LRU information into wpa_supplicant.conf at default. In other words, once wifi is disabled, LRU info will be deleted.\n\nIf you want to use LRU perfectly, we must sort wpa_supplicant\u0027s profiles when wifi is disabled. Do you want me to implement this ?",
+      "parentUuid": "AAAIQ3///74\u003d",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIaX///uA\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -98,6 +134,24 @@
       "writtenOn": "2012-08-14T20:50:41Z",
       "side": 1,
       "message": "This seems to be breaking the API to hide dialogs for apps that set it.\n\nWe are setting the config here before calling connect() which is checking for the difference between config \u0026 mSavedPeerConfig which will not exist since they are same",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIcX///zw\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll delete this line and change the argument of connect().\n\nIn connect(), I checked the difference between config \u0026 mSavedPeerConfig.",
+      "parentUuid": "AAAIaX///uA\u003d",
       "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -138,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIcX///zk\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "I check the size before creating p2p group, so it is unnecessary to check it here.",
+      "parentUuid": "AAAIaX///r8\u003d",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAISH///OQ\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -172,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIcX///zM\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1672,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "Sorry. This function is NOT used now. I\u0027ll delete it.",
+      "parentUuid": "AAAIQ3///7g\u003d",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIQ3///7o\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -183,6 +273,24 @@
       "writtenOn": "2012-08-14T20:50:41Z",
       "side": 1,
       "message": "use mPeers.updateStatus() ?",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIcX///zQ\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "Sorry. This function is NOT used now. I\u0027ll delete it.",
+      "parentUuid": "AAAIQ3///7o\u003d",
       "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -206,6 +314,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIcX///zU\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "Sorry. This function is NOT used now. I\u0027ll delete it.",
+      "parentUuid": "AAAIQ3///7k\u003d",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIQ3///7w\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -217,6 +343,24 @@
       "writtenOn": "2012-08-14T20:50:41Z",
       "side": 1,
       "message": "mPeers already includes a get() funciton for deviceAddress",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIcX///zY\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll use get() in mPeers.",
+      "parentUuid": "AAAIQ3///7w\u003d",
       "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -268,6 +412,24 @@
       "writtenOn": "2012-08-14T20:50:41Z",
       "side": 1,
       "message": "How can the groups size increase at this point ? It seems we only do mGroups.add() in updatePersistentNetworks()",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIcX///zE\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:19:51Z",
+      "side": 1,
+      "message": "Now, I check the size before creating group.\n\n\u003e It seems we only do mGroups.add() in updatePersistentNetworks()\n\nYes. updatePersistentNetworks() is called in start-up and the case when the persistent group is created.",
+      "parentUuid": "AAAIaX///sI\u003d",
       "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
