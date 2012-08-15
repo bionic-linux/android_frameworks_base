@@ -123,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIcX///y8\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T11:55:01Z",
+      "side": 1,
+      "message": "I saw LruCache, but it\u0027s a little difficult to use it for this because we may want to get the profile by network id or p2p device or \"p2p device and ssid\", and LruCache needs one key.\nSo, if you make wifiP2pGroupList LRU, we have to add LRU information to the list by myself.\nDo you want me to modify WifiP2pGroupList like this ??",
+      "parentUuid": "AAAIcX///z0\u003d",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIaX///uA\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
