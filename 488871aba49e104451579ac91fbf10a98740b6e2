@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIcX///xw\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T23:13:36Z",
+      "side": 1,
+      "message": "Do you mean we need hidden APIs for obtaining/deleting the persistent group ?",
+      "parentUuid": "AAAIbn///xk\u003d",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIQ3///70\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "True. I thought LruCache has a values() that we could use to fall back on looking up on a different key.\n\nHow about having a HashMap and then using the dominant key (appears to be network id ?) for quick look up and then using values() to get all elements whenever we want to look up by something else like device address",
       "parentUuid": "AAAIcX///y8\u003d",
+      "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIcX///xs\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-15T23:13:36Z",
+      "side": 1,
+      "message": "I found the snapshot() in LruCache.\nThis returns a copy of the current contents of the cache, so we could look up on a different key.",
+      "parentUuid": "AAAIbn///wE\u003d",
       "revId": "488871aba49e104451579ac91fbf10a98740b6e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
