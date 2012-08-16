@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIf3///wo\u003d",
+        "filename": "drm/jni/android_drm_DrmManagerClient.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-08-16T17:22:28Z",
+      "side": 1,
+      "message": "personally, i use ScopedLocalRef. seeing a raw jobject should be like seeing a raw pointer in C++.",
+      "revId": "b83fc7c32eae7ae5aea725d37bf2923ae73d545c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///w0\u003d",
+        "filename": "drm/jni/android_drm_DrmManagerClient.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-08-16T17:22:28Z",
+      "side": 1,
+      "message": "calling FindClass inside a loop seems like a bad idea for performance. plus that\u0027s another local reference.",
+      "revId": "b83fc7c32eae7ae5aea725d37bf2923ae73d545c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///ww\u003d",
+        "filename": "drm/jni/android_drm_DrmManagerClient.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-08-16T17:22:28Z",
+      "side": 1,
+      "message": "here too.\n\nwhy don\u0027t you look up the jmethodIDs above the loops? (there\u0027s not [currently] a local reference there, and the lookups aren\u0027t as expensive as class lookups, but they\u0027re not free.)",
+      "revId": "b83fc7c32eae7ae5aea725d37bf2923ae73d545c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
