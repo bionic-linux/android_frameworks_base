@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIfn///8Q\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3038,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-08-16T05:33:22Z",
+      "side": 1,
+      "message": "style nit: space between \"if\" and \"(\"",
+      "revId": "4339fdc72fa30a7742300c055322c9ed38743e74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIfn///8M\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3147,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-08-16T05:33:22Z",
+      "side": 1,
+      "message": "style nit: space between \"if\" and \"(\"",
+      "revId": "4339fdc72fa30a7742300c055322c9ed38743e74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
