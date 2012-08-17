@@ -14,11 +14,9 @@
 # limitations under the License.
 #
 
-$(call inherit-product, frameworks/base/data/sounds/OriginalAudio.mk)
-$(call inherit-product, frameworks/base/data/sounds/AudioPackage2.mk)
-$(call inherit-product, frameworks/base/data/sounds/AudioPackage3.mk)
-$(call inherit-product, frameworks/base/data/sounds/AudioPackage4.mk)
-$(call inherit-product, frameworks/base/data/sounds/AudioPackage5.mk)
-$(call inherit-product, frameworks/base/data/sounds/AudioPackage6.mk)
-$(call inherit-product, frameworks/base/data/sounds/AudioPackage7.mk)
-$(call inherit-product, frameworks/base/data/sounds/AudioPackage7alt.mk)
+ifeq ($(OLD_AUDIO_PACKAGE),true)
+$(call inherit-product, frameworks/base/data/sounds/OldAudio.mk)
+else
+$(call inherit-product, frameworks/base/data/sounds/NewAudio.mk)
+endif
+$(call inherit-product, frameworks/base/data/sounds/NewWavelabs.mk)
