@@ -50,6 +50,24 @@
       "revId": "ff43ede9e29f2622b2c6f24c90aa9ab80c2b4c38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///v4\u003d",
+        "filename": "services/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-17T18:28:38Z",
+      "side": 1,
+      "message": "I would like to make sure that is the only change and the curent diff on gerrit does not allow me to see that.",
+      "parentUuid": "AAAIk3///8M\u003d",
+      "revId": "ff43ede9e29f2622b2c6f24c90aa9ab80c2b4c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
