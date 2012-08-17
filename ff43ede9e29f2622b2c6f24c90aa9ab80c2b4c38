@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIk3///8M\u003d",
+        "filename": "services/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2012-08-17T06:35:48Z",
+      "side": 1,
+      "message": "The only change is invoking removeRequestMap() instead of mIdToClientInfoMap.remove(id);",
+      "revId": "ff43ede9e29f2622b2c6f24c90aa9ab80c2b4c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
