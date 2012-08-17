@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIlH///vA\u003d",
+        "filename": "core/jni/android_os_FileUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-08-17T18:09:16Z",
+      "side": 1,
+      "message": "ah, this was your ioctl.",
+      "revId": "0dcf4229cb079227892e5e87ef6c3df09c1e436d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
