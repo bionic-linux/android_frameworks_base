@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGXn///5A\u003d",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-08-17T17:02:57Z",
+      "side": 1,
+      "message": "setDnsIfaceForPid?\n\nFrom the callers point of view the cache is immaterial.  We want the dns to use the dns servers configured for an interface.  A secondary effect is we want the caches to be distinct.",
+      "revId": "9e092e0d60044a8c30387745769acd2b14b6d8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///4w\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-08-17T17:02:57Z",
+      "side": 1,
+      "message": "won\u0027t this be handled by reassessPidDns?",
+      "revId": "9e092e0d60044a8c30387745769acd2b14b6d8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///44\u003d",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-08-17T17:02:57Z",
+      "side": 1,
+      "message": "put above dump for organization",
+      "revId": "9e092e0d60044a8c30387745769acd2b14b6d8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///40\u003d",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-08-17T17:02:57Z",
+      "side": 1,
+      "message": "if we switch to a single pid-\u003eiface list then this becomes a clear(pid) type function.",
+      "revId": "9e092e0d60044a8c30387745769acd2b14b6d8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
