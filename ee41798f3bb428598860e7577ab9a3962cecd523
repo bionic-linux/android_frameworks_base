@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAIu3////8\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-18T14:58:30Z",
+      "side": 1,
+      "message": "Style: use braces for multi line conditionals",
+      "revId": "ee41798f3bb428598860e7577ab9a3962cecd523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3////4\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-18T14:58:30Z",
+      "side": 1,
+      "message": "Braces",
+      "revId": "ee41798f3bb428598860e7577ab9a3962cecd523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3////0\u003d",
+        "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-18T14:58:30Z",
+      "side": 1,
+      "message": "Braces",
+      "revId": "ee41798f3bb428598860e7577ab9a3962cecd523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+1E\u003d",
         "filename": "services/java/com/android/server/usb/UsbSettingsManager.java",
         "patchSetId": 3
