@@ -22,6 +22,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Process;
 
 /**
  * IntentService is a base class for {@link Service}s that handle asynchronous
@@ -54,6 +55,7 @@ public abstract class IntentService extends Service {
     private volatile ServiceHandler mServiceHandler;
     private String mName;
     private boolean mRedelivery;
+    private int mPriority = Process.THREAD_PRIORITY_DEFAULT;
 
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -104,7 +106,7 @@ public abstract class IntentService extends Service {
         // method that would launch the service & hand off a wakelock.
 
         super.onCreate();
-        HandlerThread thread = new HandlerThread("IntentService[" + mName + "]");
+        HandlerThread thread = new HandlerThread("IntentService[" + mName + "]", mPriority);
         thread.start();
 
         mServiceLooper = thread.getLooper();
@@ -144,6 +146,17 @@ public abstract class IntentService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    /**
+     * This method sets the priority of the IntentService. To work it must be called in  
+     * your subclass's constructor.
+     * 
+     * @param priority The priority to run the IntentService. The value supplied must be 
+     * from {@link android.os.Process}
+     */
+    protected final void setPriority(int priority) {
+        mPriority = priority;
     }
 
     /**
