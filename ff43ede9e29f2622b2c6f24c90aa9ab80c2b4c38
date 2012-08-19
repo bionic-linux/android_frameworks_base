@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIu3///68\u003d",
+        "filename": "services/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2012-08-19T02:02:03Z",
+      "side": 1,
+      "message": "Yes, to pass unhandled native events to the Default state of the SM, which at this point is just to log but should it change in future, it would support unhandled native events too.",
+      "parentUuid": "AAAIk3///xM\u003d",
+      "revId": "ff43ede9e29f2622b2c6f24c90aa9ab80c2b4c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIk3///xU\u003d",
         "filename": "services/java/com/android/server/NsdService.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-17T18:03:17Z",
       "side": 1,
       "message": "can you please keep this function at its original location below NativeEvent class.\n\nI cannot see what changes you have made to this function right now",
+      "revId": "ff43ede9e29f2622b2c6f24c90aa9ab80c2b4c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3///64\u003d",
+        "filename": "services/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2012-08-19T02:02:03Z",
+      "side": 1,
+      "message": "I had to reduce the scope of handleNativeEvent() to that of EnabledState to use removeRequestMap() in handleNativeEvent. But if you just want to look at the change to handleNativeEvent, please refer to patchset1 of this change requst.",
+      "parentUuid": "AAAIk3///xU\u003d",
       "revId": "ff43ede9e29f2622b2c6f24c90aa9ab80c2b4c38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "I would like to make sure that is the only change and the curent diff on gerrit does not allow me to see that.",
       "parentUuid": "AAAIk3///8M\u003d",
+      "revId": "ff43ede9e29f2622b2c6f24c90aa9ab80c2b4c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3///60\u003d",
+        "filename": "services/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2012-08-19T02:02:03Z",
+      "side": 1,
+      "message": "I understand, please refer to patchset1 of this change request for the changes made to handleNativeEvent. However, patchset2 should be merged (as patchset1 would fail on compilation).",
+      "parentUuid": "AAAIk3///v4\u003d",
       "revId": "ff43ede9e29f2622b2c6f24c90aa9ab80c2b4c38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
