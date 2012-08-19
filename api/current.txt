@@ -3638,6 +3638,7 @@ package android.app {
     method public android.os.IBinder onBind(android.content.Intent);
     method protected abstract void onHandleIntent(android.content.Intent);
     method public void setIntentRedelivery(boolean);
+    method protected final void setPriority(int);
   }
 
   public class KeyguardManager {
