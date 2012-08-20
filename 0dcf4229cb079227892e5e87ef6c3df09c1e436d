@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAIu3///kM\u003d",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2012-08-20T18:38:52Z",
+      "side": 1,
+      "message": "I thought wildcard imports were discouraged.",
+      "revId": "0dcf4229cb079227892e5e87ef6c3df09c1e436d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///vA\u003d",
         "filename": "core/jni/android_os_FileUtils.cpp",
         "patchSetId": 1
