@@ -16,6 +16,23 @@
       "revId": "3d9501266cddb1e248d06dce96ec3246134f1074",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIrn///ls\u003d",
+        "filename": "core/jni/android/graphics/YuvToJpegEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2012-08-20T18:58:52Z",
+      "side": 1,
+      "message": "Just as a note - this implicitly assumes that there\u0027s at least 15 bytes of allocated data past the end of each Y row, which is true even for the last row of Y as long as (width * height / 2) \u003e 15, because it\u0027ll just go into the UV data.  Given that\u0027s true for any image bigger than 5x6 pixels, I\u0027m not sure it\u0027s a big usability issue, but since we\u0027re fixing segfaults, it\u0027d be nice to close that off too.\n\nIn fact, we don\u0027t technically need special handling for Y padding as long as there\u0027s enough UV rows after the Y rows, although I don\u0027t know if the padding influences the quality of compression on the last block. If it does, presumably duplicating the last row of data would provide better values for compression than random UV data.",
+      "revId": "3d9501266cddb1e248d06dce96ec3246134f1074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
