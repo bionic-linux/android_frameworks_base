@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIsH///EA\u003d",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-08-20T23:16:20Z",
+      "side": 1,
+      "message": "Log an error when this happens.",
+      "revId": "07dfaa796d61ac85bf6ad88cb19de45db2361f8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///Dw\u003d",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-08-20T23:16:20Z",
+      "side": 1,
+      "message": "Log an error when this happens.",
+      "revId": "07dfaa796d61ac85bf6ad88cb19de45db2361f8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///D8\u003d",
+        "filename": "core/java/android/widget/ScrollView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-08-20T23:16:20Z",
+      "side": 1,
+      "message": "Log an error when this happens.",
+      "revId": "07dfaa796d61ac85bf6ad88cb19de45db2361f8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///D0\u003d",
+        "filename": "core/java/android/widget/ScrollView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-08-20T23:16:20Z",
+      "side": 1,
+      "message": "Log an error when this happens.",
+      "revId": "07dfaa796d61ac85bf6ad88cb19de45db2361f8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
