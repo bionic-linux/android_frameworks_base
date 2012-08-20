@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIrn///pE\u003d",
+        "filename": "core/jni/android/graphics/YuvToJpegEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2012-08-20T18:31:36Z",
+      "side": 1,
+      "message": "Since yRows is just for padding, and isn\u0027t even initialized to anything, why not just use a single row of pixels that\u0027s (( width + 15 ) \u0026 ~15) long - is there some reason each y[i] needs to be unique? \n\nIn fact, couldn\u0027t all the overflow rows be pointed to some line of yPlanar, and we could avoid allocating yRows entirely? So this line would become just\n\ny[i] \u003d yPlanar + (height - 1) * fStrides[0]\n\nor just y[i] \u003d yPlanar, although the above is probably cache-happier.",
+      "revId": "3d9501266cddb1e248d06dce96ec3246134f1074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
