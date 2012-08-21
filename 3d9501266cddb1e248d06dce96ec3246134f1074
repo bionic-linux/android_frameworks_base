@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAIw3///v0\u003d",
+        "filename": "core/jni/android/graphics/YuvToJpegEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T19:16:55Z",
+      "side": 1,
+      "message": "Standard Android code style mandates braces around conditionals that don\u0027t fit on a single line (here and 3 more instances in this file).",
+      "revId": "3d9501266cddb1e248d06dce96ec3246134f1074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIrn///pE\u003d",
         "filename": "core/jni/android/graphics/YuvToJpegEncoder.cpp",
         "patchSetId": 1
