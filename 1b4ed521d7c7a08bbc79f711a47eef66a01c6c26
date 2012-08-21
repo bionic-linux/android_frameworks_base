@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIw3///uM\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2215,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-08-21T20:02:16Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to set servers per interface here.  That should be set update DNS (called from handleConnectivityChange)",
+      "revId": "1b4ed521d7c7a08bbc79f711a47eef66a01c6c26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///uo\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2239,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-08-21T20:02:16Z",
+      "side": 1,
+      "message": "why do you need this loop?  The code above (right below \"nothing found\" comment already knows the pid that needs to be cleared.  Add to it with clearDnsIfaceForPid(myPid) and you\u0027re done, right?\n\nWe can leave off removing the use of system properties for now - it makes the change too big.",
+      "revId": "1b4ed521d7c7a08bbc79f711a47eef66a01c6c26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///uI\u003d",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-08-21T20:02:16Z",
+      "side": 1,
+      "message": "This should have CONNECTIVITY_INTERNAL permission.  While we may expose an API, we can\u0027t let others pass in the PID to control..",
+      "revId": "1b4ed521d7c7a08bbc79f711a47eef66a01c6c26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///uE\u003d",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-08-21T20:02:16Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "1b4ed521d7c7a08bbc79f711a47eef66a01c6c26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
