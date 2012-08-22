@@ -25,6 +25,7 @@ import android.content.ContentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageManager;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.media.AudioService;
 import android.net.wifi.p2p.WifiP2pService;
@@ -239,10 +240,20 @@ class ServerThread extends Thread {
             // Skip Bluetooth if we have an emulator kernel
             // TODO: Use a more reliable check to see if this product should
             // support Bluetooth - see bug 988521
+
+
+            boolean hasBluetooth  = true;
+            try {
+                hasBluetooth = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH);
+            } catch (RemoteException e) {
+                Slog.i(TAG,"I do not know the Bluetooth is whether there ");
+            }
             if (SystemProperties.get("ro.kernel.qemu").equals("1")) {
                 Slog.i(TAG, "No Bluetooh Service (emulator)");
             } else if (factoryTest == SystemServer.FACTORY_TEST_LOW_LEVEL) {
                 Slog.i(TAG, "No Bluetooth Service (factory test)");
+            } else if (!hasBluetooth) {
+                Slog.i(TAG, "No Bluetooth Service (No Bluetooth device)");
             } else {
                 Slog.i(TAG, "Bluetooth Service");
                 bluetooth = new BluetoothService(context);
