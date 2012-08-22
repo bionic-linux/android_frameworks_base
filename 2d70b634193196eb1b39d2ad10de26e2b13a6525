@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI13///b4\u003d",
+        "filename": "media/java/android/media/MediaRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-22T15:42:01Z",
+      "side": 1,
+      "message": "Let\u0027s use the opportunity to re-indent this to 8 spaces.",
+      "revId": "2d70b634193196eb1b39d2ad10de26e2b13a6525",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
