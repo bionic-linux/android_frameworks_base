@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI2X//+ao\u003d",
+        "filename": "core/java/android/app/IntentService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-23T21:06:52Z",
+      "side": 1,
+      "message": "Please make this public.  Protected scope is evil.  Also, I would like this to throw an exception if it is called after the value will be used.\n\nIn fact, how about doing this as just a new constructor?  We already have a constructor for the thread name, and the priority should be handled the same way.  We can just have one new constructor, taking a name and priority.",
+      "revId": "2f6034c57a665272cea4434e12b410fad632b7c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
