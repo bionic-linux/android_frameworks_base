@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI2X//9h4\u003d",
+        "filename": "core/java/com/android/internal/os/storage/ExternalStorageFormatter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-24T21:29:05Z",
+      "side": 1,
+      "message": "need braces",
+      "revId": "1b97f1a5a14d4d7a186d5cd00ceae23f9a9e7231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
