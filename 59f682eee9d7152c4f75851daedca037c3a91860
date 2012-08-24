@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI2X//9zc\u003d",
+        "filename": "core/jni/android/graphics/YuvToJpegEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-24T16:31:01Z",
+      "side": 1,
+      "message": "100 columns",
+      "revId": "59f682eee9d7152c4f75851daedca037c3a91860",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
