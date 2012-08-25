@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAI4H///4w\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2012-08-25T14:35:56Z",
+      "side": 1,
+      "message": "Naming: mDischargeCount.  Make non-static to conform with rest of class.",
+      "revId": "4800eff9a2222bd29cd35cdebcbac3f0f59217af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI4H///4s\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2012-08-25T14:35:56Z",
+      "side": 1,
+      "message": "Why not use mLastBatteryVoltage ?",
+      "revId": "4800eff9a2222bd29cd35cdebcbac3f0f59217af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI4H///4o\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2012-08-25T14:35:56Z",
+      "side": 1,
+      "message": "Move up to the top of the file with the rest of the constants.",
+      "revId": "4800eff9a2222bd29cd35cdebcbac3f0f59217af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI4H///4g\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2012-08-25T14:35:56Z",
+      "side": 1,
+      "message": "This useful method should be public.  The computation itself should be done during processValues.  Otherwise this will only be called when battery level is 0.  The method body then only consists of:  return mDischargeCount \u003e\u003d MAX_DISCHARGE_COUNT;",
+      "revId": "4800eff9a2222bd29cd35cdebcbac3f0f59217af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI2X//9hk\u003d",
         "filename": "services/java/com/android/server/BatteryService.java",
         "patchSetId": 1
@@ -13,6 +81,23 @@
       "writtenOn": "2012-08-24T21:31:03Z",
       "side": 1,
       "message": "100 columnds",
+      "revId": "4800eff9a2222bd29cd35cdebcbac3f0f59217af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI4H///4k\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2012-08-25T14:35:56Z",
+      "side": 1,
+      "message": "platform -\u003e the platform is",
       "revId": "4800eff9a2222bd29cd35cdebcbac3f0f59217af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
