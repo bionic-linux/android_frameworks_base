@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "AAAI63///4M\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:08:32Z",
+      "side": 1,
+      "message": "I don\u0027t like this constant being used to determine the behavior.  It will only give consistent behavior if all devices are reporting battery changes at the same rate, which I wouldn\u0027t assume.  In fact, won\u0027t just plugging and unplugging cause additional reports causing this to trigger too early?  I think there should be a clear amount of time until deciding it is discharging.",
+      "revId": "4800eff9a2222bd29cd35cdebcbac3f0f59217af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI4H///4g\u003d",
         "filename": "services/java/com/android/server/BatteryService.java",
         "patchSetId": 1
