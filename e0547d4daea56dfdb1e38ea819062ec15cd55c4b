@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI63///4E\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Please put the important in the appropriate ordering with the rest of the imports.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///4A\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Why is this only being done for non-user builds?",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///38\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Please don\u0027t change indentation; the old indentationis correct.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///34\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Put import in the correct location with rest of imports.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///30\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3266,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Also why is this not for user builds?  And this looks like a copy of the code in Watchdog.java; we shouldn\u0027t be copy pasting code like this.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///3w\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3312,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Put indentation back to the correct level.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///3c\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8209,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "From what I can tell, the stackname variable passed to here is just the path to a file where stacks have been written?  Is that right?  If so, what is the purpose of just writing the file path here?  I don\u0027t see how that is useful.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///3s\u003d",
+        "filename": "services/java/com/android/server/am/DebugAnr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "No copyright notice.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///3o\u003d",
+        "filename": "services/java/com/android/server/am/DebugAnr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Put space before brace.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///3k\u003d",
+        "filename": "services/java/com/android/server/am/DebugAnr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Why is this logging?",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63///3g\u003d",
+        "filename": "services/java/com/android/server/am/DebugAnr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-27T00:17:13Z",
+      "side": 1,
+      "message": "Where is the code for this?  I don\u0027t see it in the change?  Also I would really prefer we not have this in some separate static library; native code can be put with the rest of the JNI code for the services.",
+      "revId": "e0547d4daea56dfdb1e38ea819062ec15cd55c4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
