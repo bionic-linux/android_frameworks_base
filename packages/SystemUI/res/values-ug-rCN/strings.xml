@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_label">ھالەت بالدىقى</string>
+    <string name="status_bar_clear_all_button">تازىلاش</string>
+    <string name="status_bar_no_notifications_title">ئۇقتۇرۇش يوق</string>
+    <string name="status_bar_ongoing_events_title">ئىجرا قىلىۋاتقىنى</string>
+    <string name="status_bar_latest_events_title">ئۇقتۇرۇش</string>
+    <string name="battery_low_title">زەرەتلىگۈچنى ئۇلاڭ</string>
+    <string name="battery_low_subtitle">توك ئاز قاپتۇ：</string>
+    <string name="battery_low_percent_format">توك <xliff:g id="number">%d%%</xliff:g> ياكى ئۇنىڭدىنمۇ ئاز قاپتۇ</string>
+    <string name="battery_low_why">توك ئىشلىتىش ئەھۋالى</string>
+    <string name="sim_switch_tip">بۇ SIM كارتا <xliff:g>%s</xliff:g> نىڭ كۆڭۈلدىكى كارتىسى قىلىپ تەڭشەلدى. ئۇنى ئۆزگەرتىش ئۈچۈن ھالەت بالدىقىنى تۆۋەنگە سېيرىڭ.</string>
+    <string name="remind_next_time">كېيىنكى قېتىمدا ئەسكەرتىش</string>
+    <string name="voice_call_service">ئۈنخەت مۇلازىمىتى</string>
+    <string name="messages_service">ئۇچۇر مۇلازىمىتى</string>
+    <string name="data_connection_service">سانلىق مەلۇمات ئۇلىنىش مۇلازىمىتى</string>
+    <string name="wifi">WLAN</string>
+    <string name="wimax">Wimax</string>
+    <string name="bluetooth">كۆكچىش</string>
+    <string name="mobile">كۆچمە تور</string>
+    <string name="gps">GPS</string>
+    <string name="autorotate">ئايلاندۇرۇش</string>
+    <string name="normal">نورمال</string>
+    <string name="meeting">يىغىندا</string>
+    <string name="mute">تىنچ</string>
+    <string name="outdoor">سىرتتا</string>
+    <string name="offline">ئۇچۇش ھالىتى</string>
+    <string name="brightness">يورۇقلۇق</string>
+    <string name="timeout">مۇددەت</string>
+    <string name="data_connection_attach_timeout_error_msg">سانلىق مەلۇمات ئۇلىنىشى مەغلۇب بولدى ياكى نۆۋەتتە تور بەت ئالدىراش.</string>
+    <string name="data_connection_dettach_timeout_error_msg">سانلىق مەلۇمات ئۇلىنىشىنى ئۈزۈش مەغلۇب بولدى.</string>
+    <string name="data_connection_connected">[<xliff:g>%s</xliff:g>] SIM كارتا سانلىق مەلۇمات ئۇلىنىشى قوزغىتىلدى</string>
+    <string name="gemini_intenet_call">تور تېلېفونى</string>  
+    <string name="gemini_default_sim_never">تاقاش</string>
+    <string name="gemini_3g_disable_warning">3G مۇلازىمەتنى تاللانغان SIM كارتىدا ئىشلەتكىلى بولمايدۇ. بۇنىڭدا بەلكىم سانلىق مەلۇمات يۈكلىشى ئاستىراق بولىشى مۇمكىن. 3G مۇلازىمەتنى «تەڭشەك»-«سىمسىز تور ۋە تور»- «كەزمە تورلار» دىن تەڭشىيەلەيسىز.</string>
+    <string name="gemini_3g_disable_warning_cu">3G service is not available with this selected SIM. This may load data slower. You can change the 3G service setting under Settings &gt; SIM management.</string>
+    <string name="confirm_radio_title">SIM كارتا تاقالدى</string>
+    <string name="confirm_radio_msg">
+		<xliff:g example="CMCC" id="operator_name">%1$s</xliff:g>
+		تاقالدى. ئۇنى قوزغىتامسىز؟
+    </string>
+    <string name="confirm_radio_msg_single">
+ئۇچۇش ھالىتى قوزغىتىلدى. ئۇنى تاقامسىز؟ </string>
+		<string name="confirm_radio_lbutton">قوزغىتىش</string>
+    <string name="builtin_installer_title_message">Built-in CD-ROM</string>
+    <string name="builtin_installer_dlg_message">Turn on Built-in CD-ROM?</string>
+    <string name="builtin_installer_always_allowed">Dont show next time</string>
+    <string name="dlg_no">NO</string>
+    <string name="dlg_yes">YES</string>
+    <string name="title_usb_accessory">USB ئۈسكىنە</string>
+    <string name="label_view">كۆرۈپ بېقىش</string>
+    <string name="always_use_accessory">نورمال ئەھۋالدا مەزكۇر USB ئىشلىتىلىدۇ</string>
+    <string name="lockscreen">ئېكران قۇلۇپى</string>
+    <string name="medianext">مېدىئا تېكىستى</string>
+    <string name="mediaprevious">ئالدىنقىسى</string>
+    <string name="mediapause">توختىتىش</string>
+    <string name="mediaplay">قويۇش</string>
+    <string name="network_2g_3g">2g 3g</string>
+    <string name="sleep">ئۇخلىتىش</string>
+    <string name="sound">ئاۋاز</string>
+    <string name="sync">ماسقەدەم</string>
+    <string name="wifiap">قىزىق نۇقتا</string>
+    <string name="settings">تەڭشەك</string>
+    <string name="flashlight">چاقماق چىراق</string>
+    <string name="screen_timeout">ئېكران مۇددىتى:</string>
+    <string name="notice">Notice</string>
+    <string name="quicksettings">Quick Settings</string>
+    <string name="app_name">QuickSettings</string>
+    <string name="wifienable">Wi-Fi</string>
+    <string name="wifi_in_airplane_mode">In airplane mode</string>
+    <string name="wifi_error">Error</string>
+    <string name="wifi_starting">Turning on\u2026</string>
+    <string name="wifi_stopping">Turning off\u2026</string>
+    <string name="Btenable">Bluetooth</string>
+    <string name="wifi_tether_enabled_subtext">Portable hotspot <xliff:g id="network_ssid">%1$s</xliff:g> active</string>
+    <string name="wifiapenable">Wi-Fi Hotspot</string>
+    <string name="gpsenable">GPS</string>
+    <string name="mobile_net">Mobile Networks</string>
+    <string name="gemini_data_connection">سانلىق مەلۇمات ئۇلىنىشى</string>
+    <string name="apn_not_set">&lt;Not set&gt;</string>
+    <string name="gemini_data_connection_progress_message">Please wait...</string>
+    <string name="link_setting">All Settings</string>
+    <string name="total_memory">Total Memory: </string>
+    <string name="used">Used: </string>
+    <string name="free">  Free: </string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">ok</string>
+    <string name="quick_settings">Quick Settings</string>
+    <string name="quick_setting_on">ON</string>
+    <string name="quick_setting_off">OFF</string>
+    <string-array name="timeout_tags">
+        <item>سېكۇنت</item>
+        <item>مىنۇت</item>
+        <item>سائەت</item>
+    </string-array>
+    <string name="audio_profile_general">نورمال</string>
+    <string name="audio_profile_silent">تىنچ</string>
+    <string name="audio_profile_meeting">يىغىن</string>
+    <string name="audio_profile_outdoor">سىرت</string>
+    <string name="audio_profile_custom">ئۆزلەشتۈرۈش</string>
+</resources>
