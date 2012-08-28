@@ -57,6 +57,7 @@ public class SipProfile implements Parcelable, Serializable, Cloneable {
     private String mProtocol = UDP;
     private String mProfileName;
     private String mAuthUserName;
+    private String mUserAgent;
     private int mPort = DEFAULT_PORT;
     private boolean mSendKeepAlive = false;
     private boolean mAutoRegistration = true;
@@ -82,6 +83,7 @@ public class SipProfile implements Parcelable, Serializable, Cloneable {
         private SipURI mUri;
         private String mDisplayName;
         private String mProxyAddress;
+        private String mUserAgentString;
 
         {
             try {
@@ -108,6 +110,7 @@ public class SipProfile implements Parcelable, Serializable, Cloneable {
             mDisplayName = profile.getDisplayName();
             mProxyAddress = profile.getProxyAddress();
             mProfile.mPort = profile.getPort();
+            mUserAgentString = profile.getUserAgent();
         }
 
         /**
@@ -270,6 +273,18 @@ public class SipProfile implements Parcelable, Serializable, Cloneable {
             mProfile.mAutoRegistration = flag;
             return this;
         }
+        
+        /**
+         * Sets the User-Agent string to be used in SIP transactions associated
+         * with this SipProfile.
+         * 
+         * @param userAgent the user agent string
+         * @return this builder object
+         */
+        public Builder setUserAgent(String userAgent) {
+            mUserAgentString = userAgent;
+            return this;
+        }
 
         /**
          * Builds and returns the SIP profile object.
@@ -292,6 +307,11 @@ public class SipProfile implements Parcelable, Serializable, Cloneable {
                     if (mProfile.mPort != DEFAULT_PORT) {
                         mUri.setPort(mProfile.mPort);
                     }
+                }
+                if(!TextUtils.isEmpty(mUserAgentString)) {
+                    mProfile.mUserAgent = mUserAgentString;
+                } else {
+                    mProfile.mUserAgent = "SIPAUA/0.1.001";
                 }
                 mProfile.mAddress = mAddressFactory.createAddress(
                         mDisplayName, mUri);
@@ -320,6 +340,7 @@ public class SipProfile implements Parcelable, Serializable, Cloneable {
         mCallingUid = in.readInt();
         mPort = in.readInt();
         mAuthUserName = in.readString();
+        mUserAgent = in.readString();
     }
 
     @Override
@@ -335,6 +356,7 @@ public class SipProfile implements Parcelable, Serializable, Cloneable {
         out.writeInt(mCallingUid);
         out.writeInt(mPort);
         out.writeString(mAuthUserName);
+        out.writeString(mUserAgent);
     }
 
     @Override
@@ -492,6 +514,15 @@ public class SipProfile implements Parcelable, Serializable, Cloneable {
      */
     public int getCallingUid() {
         return mCallingUid;
+    }
+    
+    /**
+     * Gets the User-Agent string to use for this profile.
+     * 
+     * @return the User-Agent string
+     */
+    public String getUserAgent() {
+        return mUserAgent;
     }
 
     private Object readResolve() throws ObjectStreamException {

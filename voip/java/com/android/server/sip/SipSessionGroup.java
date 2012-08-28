@@ -488,12 +488,12 @@ class SipSessionGroup implements SipListener {
                     newSession.mProxy.onCallTransferring(newSession,
                             newSession.mPeerSessionDescription);
                 } else {
-                    mSipHelper.sendResponse(event, response);
+                    mSipHelper.sendResponse(mLocalProfile, event, response);
                 }
             } else {
                 // New Incoming call.
                 newSession = createNewSession(event, mProxy,
-                        mSipHelper.sendRinging(event, generateTag()),
+                        mSipHelper.sendRinging(mLocalProfile, event, generateTag()),
                         SipSession.State.INCOMING_CALL);
                 mProxy.onRinging(newSession, newSession.mPeerProfile,
                         newSession.mPeerSessionDescription);
@@ -509,7 +509,7 @@ class SipSessionGroup implements SipListener {
                 processNewInviteRequest((RequestEvent) evt);
                 return true;
             } else if (isRequestEvent(Request.OPTIONS, evt)) {
-                mSipHelper.sendResponse((RequestEvent) evt, Response.OK);
+                mSipHelper.sendResponse(mLocalProfile, (RequestEvent) evt, Response.OK);
                 return true;
             } else {
                 return false;
@@ -793,11 +793,11 @@ class SipSessionGroup implements SipListener {
         private boolean processExceptions(EventObject evt) throws SipException {
             if (isRequestEvent(Request.BYE, evt)) {
                 // terminate the call whenever a BYE is received
-                mSipHelper.sendResponse((RequestEvent) evt, Response.OK);
+                mSipHelper.sendResponse(mLocalProfile, (RequestEvent) evt, Response.OK);
                 endCallNormally();
                 return true;
             } else if (isRequestEvent(Request.CANCEL, evt)) {
-                mSipHelper.sendResponse((RequestEvent) evt,
+                mSipHelper.sendResponse(mLocalProfile, (RequestEvent) evt,
                         Response.CALL_OR_TRANSACTION_DOES_NOT_EXIST);
                 return true;
             } else if (evt instanceof TransactionTerminatedEvent) {
@@ -811,7 +811,7 @@ class SipSessionGroup implements SipListener {
                     return true;
                 }
             } else if (isRequestEvent(Request.OPTIONS, evt)) {
-                mSipHelper.sendResponse((RequestEvent) evt, Response.OK);
+                mSipHelper.sendResponse(mLocalProfile, (RequestEvent) evt, Response.OK);
                 return true;
             } else if (evt instanceof DialogTerminatedEvent) {
                 processDialogTerminated((DialogTerminatedEvent) evt);
@@ -1037,7 +1037,7 @@ class SipSessionGroup implements SipListener {
                 MakeCallCommand cmd = (MakeCallCommand) evt;
                 mPeerProfile = cmd.getPeerProfile();
                 if (mReferSession != null) {
-                    mSipHelper.sendReferNotify(mReferSession.mDialog,
+                    mSipHelper.sendReferNotify(mLocalProfile, mReferSession.mDialog,
                             getResponseString(Response.TRYING));
                 }
                 mClientTransaction = mSipHelper.sendInvite(
@@ -1082,14 +1082,14 @@ class SipSessionGroup implements SipListener {
                 startSessionTimer(((MakeCallCommand) evt).getTimeout());
                 return true;
             } else if (END_CALL == evt) {
-                mSipHelper.sendInviteBusyHere(mInviteReceived,
+                mSipHelper.sendInviteBusyHere(mLocalProfile, mInviteReceived,
                         mServerTransaction);
                 endCallNormally();
                 return true;
             } else if (isRequestEvent(Request.CANCEL, evt)) {
                 RequestEvent event = (RequestEvent) evt;
-                mSipHelper.sendResponse(event, Response.OK);
-                mSipHelper.sendInviteRequestTerminated(
+                mSipHelper.sendResponse(mLocalProfile, event, Response.OK);
+                mSipHelper.sendInviteRequestTerminated(mLocalProfile,
                         mInviteReceived.getRequest(), mServerTransaction);
                 endCallNormally();
                 return true;
@@ -1138,12 +1138,13 @@ class SipSessionGroup implements SipListener {
                     return true;
                 case Response.OK:
                     if (mReferSession != null) {
-                        mSipHelper.sendReferNotify(mReferSession.mDialog,
+                        mSipHelper.sendReferNotify(mLocalProfile,
+                                mReferSession.mDialog,
                                 getResponseString(Response.OK));
                         // since we don't need to remember the session anymore.
                         mReferSession = null;
                     }
-                    mSipHelper.sendInviteAck(event, mDialog);
+                    mSipHelper.sendInviteAck(mLocalProfile, event, mDialog);
                     mPeerSessionDescription = extractContent(response);
                     establishCall(true);
                     return true;
@@ -1159,7 +1160,8 @@ class SipSessionGroup implements SipListener {
                     return true;
                 default:
                     if (mReferSession != null) {
-                        mSipHelper.sendReferNotify(mReferSession.mDialog,
+                        mSipHelper.sendReferNotify(mLocalProfile,
+                                mReferSession.mDialog,
                                 getResponseString(Response.SERVICE_UNAVAILABLE));
                     }
                     if (statusCode >= 400) {
@@ -1178,14 +1180,15 @@ class SipSessionGroup implements SipListener {
                 // response comes back yet. We are cheating for not checking
                 // response.
                 mState = SipSession.State.OUTGOING_CALL_CANCELING;
-                mSipHelper.sendCancel(mClientTransaction);
+                mSipHelper.sendCancel(mLocalProfile, mClientTransaction);
                 startSessionTimer(CANCEL_CALL_TIMER);
                 return true;
             } else if (isRequestEvent(Request.INVITE, evt)) {
                 // Call self? Send BUSY HERE so server may redirect the call to
                 // voice mailbox.
                 RequestEvent event = (RequestEvent) evt;
-                mSipHelper.sendInviteBusyHere(event,
+                mSipHelper.sendInviteBusyHere(mLocalProfile,
+                        event,
                         event.getServerTransaction());
                 return true;
             }
@@ -1240,11 +1243,11 @@ class SipSessionGroup implements SipListener {
                 String replacesHeader = uri.getHeader(ReplacesHeader.NAME);
                 String username = uri.getUser();
                 if (username == null) {
-                    mSipHelper.sendResponse(event, Response.BAD_REQUEST);
+                    mSipHelper.sendResponse(mLocalProfile, event, Response.BAD_REQUEST);
                     return false;
                 }
                 // send notify accepted
-                mSipHelper.sendResponse(event, Response.ACCEPTED);
+                mSipHelper.sendResponse(mLocalProfile, event, Response.ACCEPTED);
                 SipSessionImpl newSession = createNewSession(event,
                         this.mProxy.getListener(),
                         mSipHelper.getServerTransaction(event),
@@ -1268,7 +1271,7 @@ class SipSessionGroup implements SipListener {
             if (END_CALL == evt) {
                 // rfc3261#section-15.1.1
                 mState = SipSession.State.ENDING_CALL;
-                mSipHelper.sendBye(mDialog);
+                mSipHelper.sendBye(mLocalProfile, mDialog);
                 mProxy.onCallEnded(this);
                 startSessionTimer(END_CALL_TIMER);
                 return true;
@@ -1281,7 +1284,7 @@ class SipSessionGroup implements SipListener {
                 mProxy.onRinging(this, mPeerProfile, mPeerSessionDescription);
                 return true;
             } else if (isRequestEvent(Request.BYE, evt)) {
-                mSipHelper.sendResponse((RequestEvent) evt, Response.OK);
+                mSipHelper.sendResponse(mLocalProfile, (RequestEvent) evt, Response.OK);
                 endCallNormally();
                 return true;
             } else if (isRequestEvent(Request.REFER, evt)) {
@@ -1289,7 +1292,7 @@ class SipSessionGroup implements SipListener {
             } else if (evt instanceof MakeCallCommand) {
                 // to change call
                 mState = SipSession.State.OUTGOING_CALL;
-                mClientTransaction = mSipHelper.sendReinvite(mDialog,
+                mClientTransaction = mSipHelper.sendReinvite(mLocalProfile, mDialog,
                         ((MakeCallCommand) evt).getSessionDescription());
                 startSessionTimer(((MakeCallCommand) evt).getTimeout());
                 return true;

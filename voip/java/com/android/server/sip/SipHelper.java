@@ -200,7 +200,7 @@ class SipHelper {
             Request request = (caller == callee)
                     ? createRequest(Request.OPTIONS, caller, tag)
                     : createRequest(Request.OPTIONS, caller, callee, tag);
-
+                    
             ClientTransaction clientTransaction =
                     mSipProvider.getNewClientTransaction(request);
             clientTransaction.sendRequest();
@@ -249,7 +249,7 @@ class SipHelper {
                 requestType, callIdHeader, cSeqHeader, fromHeader,
                 toHeader, viaHeaders, maxForwards);
         Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
-                "SIPAUA/0.1.001");
+                userProfile.getUserAgent());
         request.addHeader(userAgentHeader);
         return request;
     }
@@ -281,6 +281,10 @@ class SipHelper {
         Request request = mMessageFactory.createRequest(requestURI,
                 requestType, callIdHeader, cSeqHeader, fromHeader,
                 toHeader, viaHeaders, maxForwards);
+        
+        Header userAgentHeader = mHeaderFactory.createHeader("User-Agent", 
+                caller.getUserAgent());
+        request.addHeader(userAgentHeader);
 
         request.addHeader(createContactHeader(caller));
         return request;
@@ -296,6 +300,10 @@ class SipHelper {
                 request.addHeader(mHeaderFactory.createHeader(
                         ReplacesHeader.NAME, replaces));
             }
+            
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent", 
+                    caller.getUserAgent());
+            request.addHeader(userAgentHeader);
             request.setContent(sessionDescription,
                     mHeaderFactory.createContentTypeHeader(
                             "application", "sdp"));
@@ -309,14 +317,19 @@ class SipHelper {
         }
     }
 
-    public ClientTransaction sendReinvite(Dialog dialog,
-            String sessionDescription) throws SipException {
+    public ClientTransaction sendReinvite(SipProfile userProfile,
+            Dialog dialog, String sessionDescription) throws SipException {
         try {
             Request request = dialog.createRequest(Request.INVITE);
+            
             request.setContent(sessionDescription,
                     mHeaderFactory.createContentTypeHeader(
                             "application", "sdp"));
 
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent", 
+                    userProfile.getUserAgent());
+            request.addHeader(userAgentHeader);
+            
             // Adding rport argument in the request could fix some SIP servers
             // in resolving the initiator's NAT port mapping for relaying the
             // response message from the other end.
@@ -348,7 +361,7 @@ class SipHelper {
     /**
      * @param event the INVITE request event
      */
-    public ServerTransaction sendRinging(RequestEvent event, String tag)
+    public ServerTransaction sendRinging(SipProfile userProfile, RequestEvent event, String tag)
             throws SipException {
         try {
             Request request = event.getRequest();
@@ -360,6 +373,10 @@ class SipHelper {
             ToHeader toHeader = (ToHeader) response.getHeader(ToHeader.NAME);
             toHeader.setTag(tag);
             response.addHeader(toHeader);
+            
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            response.addHeader(userAgentHeader);
             if (DEBUG) Log.d(TAG, "send RINGING: " + response);
             transaction.sendResponse(response);
             return transaction;
@@ -371,7 +388,7 @@ class SipHelper {
     /**
      * @param event the INVITE request event
      */
-    public ServerTransaction sendInviteOk(RequestEvent event,
+    public ServerTransaction sendInviteOk( RequestEvent event,
             SipProfile localProfile, String sessionDescription,
             ServerTransaction inviteTransaction, String externalIp,
             int externalPort) throws SipException {
@@ -381,6 +398,10 @@ class SipHelper {
                     request);
             response.addHeader(createContactHeader(localProfile, externalIp,
                     externalPort));
+            
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    localProfile.getUserAgent());
+            response.addHeader(userAgentHeader);
             response.setContent(sessionDescription,
                     mHeaderFactory.createContentTypeHeader(
                             "application", "sdp"));
@@ -400,13 +421,17 @@ class SipHelper {
         }
     }
 
-    public void sendInviteBusyHere(RequestEvent event,
+    public void sendInviteBusyHere(SipProfile userProfile, RequestEvent event,
             ServerTransaction inviteTransaction) throws SipException {
         try {
             Request request = event.getRequest();
             Response response = mMessageFactory.createResponse(
                     Response.BUSY_HERE, request);
 
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            response.addHeader(userAgentHeader);
+            
             if (inviteTransaction == null) {
                 inviteTransaction = getServerTransaction(event);
             }
@@ -423,30 +448,58 @@ class SipHelper {
     /**
      * @param event the INVITE ACK request event
      */
-    public void sendInviteAck(ResponseEvent event, Dialog dialog)
+    public void sendInviteAck(SipProfile userProfile, ResponseEvent event, Dialog dialog)
             throws SipException {
         Response response = event.getResponse();
         long cseq = ((CSeqHeader) response.getHeader(CSeqHeader.NAME))
                 .getSeqNumber();
         Request ack = dialog.createAck(cseq);
+        try {
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            ack.addHeader(userAgentHeader);
+        } catch (ParseException e) {
+            throw new SipException("sendInviteAck()", e);
+        }
         if (DEBUG) Log.d(TAG, "send ACK: " + ack);
         dialog.sendAck(ack);
     }
 
-    public void sendBye(Dialog dialog) throws SipException {
+    public void sendBye(SipProfile userProfile, Dialog dialog) throws SipException {
         Request byeRequest = dialog.createRequest(Request.BYE);
+        try {
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            byeRequest.addHeader(userAgentHeader);
+        } catch (ParseException e) {
+            throw new SipException("sendInviteAck()", e);
+        }
         if (DEBUG) Log.d(TAG, "send BYE: " + byeRequest);
         dialog.sendRequest(mSipProvider.getNewClientTransaction(byeRequest));
     }
 
-    public void sendCancel(ClientTransaction inviteTransaction)
+    public void sendCancel(SipProfile userProfile, ClientTransaction inviteTransaction)
             throws SipException {
         Request cancelRequest = inviteTransaction.createCancel();
+        try {
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            cancelRequest.addHeader(userAgentHeader);
+        } catch (ParseException e) {
+            throw new SipException("sendBye()", e);
+        }
         if (DEBUG) Log.d(TAG, "send CANCEL: " + cancelRequest);
+        try {
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            cancelRequest.addHeader(userAgentHeader);
+        } catch (ParseException e) {
+            throw new SipException("sendBye()", e);
+        }
         mSipProvider.getNewClientTransaction(cancelRequest).sendRequest();
     }
 
-    public void sendResponse(RequestEvent event, int responseCode)
+    public void sendResponse(SipProfile userProfile, RequestEvent event, int responseCode)
             throws SipException {
         try {
             Request request = event.getRequest();
@@ -456,13 +509,18 @@ class SipHelper {
                     || DEBUG_PING)) {
                 Log.d(TAG, "send response: " + response);
             }
+            
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            request.addHeader(userAgentHeader);
+            
             getServerTransaction(event).sendResponse(response);
         } catch (ParseException e) {
             throw new SipException("sendResponse()", e);
         }
     }
 
-    public void sendReferNotify(Dialog dialog, String content)
+    public void sendReferNotify(SipProfile userProfile, Dialog dialog, String content)
             throws SipException {
         try {
             Request request = dialog.createRequest(Request.NOTIFY);
@@ -474,6 +532,9 @@ class SipHelper {
                             "message", "sipfrag"));
             request.addHeader(mHeaderFactory.createEventHeader(
                     ReferencesHeader.REFER));
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            request.addHeader(userAgentHeader);
             if (DEBUG) Log.d(TAG, "send NOTIFY: " + request);
             dialog.sendRequest(mSipProvider.getNewClientTransaction(request));
         } catch (ParseException e) {
@@ -481,11 +542,15 @@ class SipHelper {
         }
     }
 
-    public void sendInviteRequestTerminated(Request inviteRequest,
+    public void sendInviteRequestTerminated(SipProfile userProfile, Request inviteRequest,
             ServerTransaction inviteTransaction) throws SipException {
         try {
             Response response = mMessageFactory.createResponse(
                     Response.REQUEST_TERMINATED, inviteRequest);
+            
+            Header userAgentHeader = mHeaderFactory.createHeader("User-Agent",
+                    userProfile.getUserAgent());
+            response.addHeader(userAgentHeader);
             if (DEBUG) Log.d(TAG, "send response: " + response);
             inviteTransaction.sendResponse(response);
         } catch (ParseException e) {
