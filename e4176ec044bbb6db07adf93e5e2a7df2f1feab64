@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//+ho\u003d",
+        "filename": "voip/java/android/net/sip/SipProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-28T20:25:18Z",
+      "side": 1,
+      "message": "extra spaces should be removed",
+      "revId": "e4176ec044bbb6db07adf93e5e2a7df2f1feab64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//+fI\u003d",
+        "filename": "voip/java/android/net/sip/SipProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-28T20:25:18Z",
+      "side": 1,
+      "message": "extra space",
+      "revId": "e4176ec044bbb6db07adf93e5e2a7df2f1feab64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//+hk\u003d",
+        "filename": "voip/java/android/net/sip/SipProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-28T20:25:18Z",
+      "side": 1,
+      "message": "extra space",
+      "revId": "e4176ec044bbb6db07adf93e5e2a7df2f1feab64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//+fE\u003d",
+        "filename": "voip/java/android/net/sip/SipProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-28T20:25:18Z",
+      "side": 1,
+      "message": "extra space",
+      "revId": "e4176ec044bbb6db07adf93e5e2a7df2f1feab64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
