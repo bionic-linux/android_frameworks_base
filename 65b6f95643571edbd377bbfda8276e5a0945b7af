@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n//+gs\u003d",
+        "filename": "voip/java/android/net/sip/SipProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-29T15:51:07Z",
+      "side": 1,
+      "message": "Please add a space after \"if\".",
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//+Dg\u003d",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-29T15:51:07Z",
+      "side": 1,
+      "message": "Lots of extra whitespace in this file (shows up in bright red)",
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
