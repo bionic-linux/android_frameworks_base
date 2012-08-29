@@ -38,6 +38,7 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Slog;
 
+import com.android.internal.telephony.HacIntent;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.TelephonyIntents;
@@ -132,6 +133,9 @@ public class PhoneStatusBarPolicy {
             else if (action.equals(TtyIntent.TTY_ENABLED_CHANGE_ACTION)) {
                 updateTTY(intent);
             }
+            else if (action.equals(HacIntent.HAC_ENABLED_CHANGE_ACTION)) {
+                updateHAC(intent);
+            }
         }
     };
 
@@ -189,6 +193,10 @@ public class PhoneStatusBarPolicy {
         mService.setIcon("volume", R.drawable.stat_sys_ringer_silent, 0, null);
         mService.setIconVisibility("volume", false);
         updateVolume();
+
+        // HAC
+        mService.setIcon("hac", R.drawable.stat_sys_hac_on, 0, null);
+        mService.setIconVisibility("hac", false);
     }
 
     private final void updateAlarm(Intent intent) {
@@ -297,5 +305,12 @@ public class PhoneStatusBarPolicy {
             if (false) Slog.v(TAG, "updateTTY: set TTY off");
             mService.setIconVisibility("tty", false);
         }
+    }
+
+    private final void updateHAC(Intent intent) {
+        final boolean enabled = intent.getBooleanExtra(HacIntent.HAC_ENABLED, false);
+
+        if (false) Slog.v(TAG, "updateHAC: enabled: " + enabled);
+        mService.setIconVisibility("hac", enabled);
     }
 }
