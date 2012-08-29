@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n//+hk\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1014629
+      },
+      "writtenOn": "2012-08-29T15:12:16Z",
+      "side": 1,
+      "message": "Do these really want to be deprecated? Or just discouraged?\n\nI can imagine reasonable applications that would want to use this. For example, applications that need to format a date for a third party that doesn\u0027t much care what the user\u0027s preference is.",
+      "revId": "22cafabfe2024d8c869747d34625d2a11db2d342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+hg\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1014629
+      },
+      "writtenOn": "2012-08-29T15:12:16Z",
+      "side": 1,
+      "message": "hilarious",
+      "revId": "22cafabfe2024d8c869747d34625d2a11db2d342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
