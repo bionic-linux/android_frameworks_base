@@ -1140,6 +1140,25 @@ public class AudioManager {
         }
      }
 
+    /**
+     * Broadcast intent action indicating that the HAC has either been
+     * enabled or disabled. An intent extra provides this state as a
+     * boolean, where {@code true} means enabled.
+     *
+     * @see #EXTRA_HAC_ENABLED
+     * @hide
+     */
+    public static final String HAC_ENABLED_CHANGE_ACTION =
+            "android.media.HAC_ENABLED_CHANGE";
+
+    /**
+     * The lookup key for a boolean that indicates whether HAC mode is enabled
+     * or disabled. {@code true} means HAC mode is enabled. Retrieve it with
+     * {@link android.content.Intent#getBooleanExtra(String,boolean)}.
+     * @hide
+     */
+    public static final String EXTRA_HAC_ENABLED = "android.media.EXTRA_HAC_ENABLED";
+
     //====================================================================
     // Bluetooth SCO control
     /**
