@@ -26,6 +26,7 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.util.Log;
 
+import android.media.AudioManager;
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.cdma.TtyIntent;
@@ -99,6 +100,9 @@ public class PhoneStatusBarPolicy {
             else if (action.equals(TtyIntent.TTY_ENABLED_CHANGE_ACTION)) {
                 updateTTY(intent);
             }
+            else if (action.equals(AudioManager.HAC_ENABLED_CHANGE_ACTION)) {
+                updateHAC(intent);
+            }
         }
     };
 
@@ -150,6 +154,10 @@ public class PhoneStatusBarPolicy {
         mService.setIcon("volume", R.drawable.stat_sys_ringer_silent, 0, null);
         mService.setIconVisibility("volume", false);
         updateVolume();
+
+        // HAC
+        mService.setIcon("hac", R.drawable.stat_sys_hac_on, 0, null);
+        mService.setIconVisibility("hac", false);
     }
 
     private final void updateAlarm(Intent intent) {
@@ -255,5 +263,12 @@ public class PhoneStatusBarPolicy {
             if (false) Log.v(TAG, "updateTTY: set TTY off");
             mService.setIconVisibility("tty", false);
         }
+    }
+
+    private final void updateHAC(Intent intent) {
+        final boolean enabled = intent.getBooleanExtra(AudioManager.EXTRA_HAC_ENABLED, false);
+
+        if (false) Log.v(TAG, "updateHAC: enabled: " + enabled);
+        mService.setIconVisibility("hac", enabled);
     }
 }
