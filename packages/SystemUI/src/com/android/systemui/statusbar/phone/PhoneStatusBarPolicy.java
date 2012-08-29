@@ -30,6 +30,7 @@ import android.provider.Settings.Global;
 import android.telecom.TelecomManager;
 import android.util.Log;
 
+import android.media.AudioManager;
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.systemui.R;
@@ -99,6 +100,9 @@ public class PhoneStatusBarPolicy {
             else if (action.equals(Intent.ACTION_USER_SWITCHED)) {
                 updateAlarm();
             }
+            else if (action.equals(AudioManager.HAC_ENABLED_CHANGE_ACTION)) {
+                updateHAC(intent);
+            }
         }
     };
 
@@ -152,6 +156,10 @@ public class PhoneStatusBarPolicy {
         mService.setIcon(SLOT_CAST, R.drawable.stat_sys_cast, 0, null);
         mService.setIconVisibility(SLOT_CAST, false);
         mCast.addCallback(mCastCallback);
+
+        // HAC
+        mService.setIcon("hac", R.drawable.stat_sys_hac_on, 0, null);
+        mService.setIconVisibility("hac", false);
     }
 
     public void setZenMode(int zen) {
@@ -306,4 +314,11 @@ public class PhoneStatusBarPolicy {
             updateCast();
         }
     };
+
+    private final void updateHAC(Intent intent) {
+        final boolean enabled = intent.getBooleanExtra(AudioManager.EXTRA_HAC_ENABLED, false);
+
+        if (DEBUG) Log.v(TAG, "updateHAC: enabled: " + enabled);
+        mService.setIconVisibility("hac", enabled);
+    }
 }
