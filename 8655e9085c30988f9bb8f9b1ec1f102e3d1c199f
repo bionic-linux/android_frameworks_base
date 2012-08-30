@@ -16,6 +16,24 @@
       "revId": "8655e9085c30988f9bb8f9b1ec1f102e3d1c199f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9Ho\u003d",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2012-08-30T17:58:51Z",
+      "side": 1,
+      "message": "As that is a different issue, I\u0027ll fix that myself in a different patch.",
+      "parentUuid": "AAAI6n//9s0\u003d",
+      "revId": "8655e9085c30988f9bb8f9b1ec1f102e3d1c199f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
