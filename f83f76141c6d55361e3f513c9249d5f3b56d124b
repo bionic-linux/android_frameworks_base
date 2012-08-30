@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X///t4\u003d",
+        "filename": "core/jni/android/graphics/YuvToJpegEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2012-08-30T17:15:50Z",
+      "side": 1,
+      "message": "I don\u0027t think the (height \u0026 0xf) conditional is necessary - if it\u0027s false, then next_scanline + i should never be \u003e\u003d than height.\n\nBut it\u0027s not a big issue - the logic works fine.",
+      "revId": "f83f76141c6d55361e3f513c9249d5f3b56d124b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
