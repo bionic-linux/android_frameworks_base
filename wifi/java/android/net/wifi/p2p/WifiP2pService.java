@@ -1792,8 +1792,8 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             return CONNECT_FAILURE;
         }
 
-        boolean isResp = (mSavedPeerConfig != null &&
-                config.deviceAddress.equals(mSavedPeerConfig.deviceAddress));
+        boolean isNewRequest = (mSavedPeerConfig == null ||
+                !config.deviceAddress.equals(mSavedPeerConfig.deviceAddress));
         mSavedPeerConfig = config;
 
         WifiP2pDevice dev = mPeers.get(config.deviceAddress);
@@ -1857,7 +1857,8 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
         //Stop discovery before issuing connect
         mWifiNative.p2pStopFind();
 
-        if (!isResp) {
+        // in join case, we send provisioning request in wpa_supplicant state.
+        if (isNewRequest && !join) {
             return NEEDS_PROVISION_REQ;
         }
 
