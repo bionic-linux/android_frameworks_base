@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n//9rg\u003d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarPolicy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-30T17:56:49Z",
+      "side": 1,
+      "message": "in theory, \"}\" and \"else\" on the same line. I see it wasn\u0027t done that way above, though. No worry.",
+      "revId": "6ed821357c894864d9ee81d245f48be11af9b95f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//89Y\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/HacIntent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-30T17:56:49Z",
+      "side": 1,
+      "message": "4 more spaces here",
+      "revId": "6ed821357c894864d9ee81d245f48be11af9b95f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
