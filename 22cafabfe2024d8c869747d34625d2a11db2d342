@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI6n//92g\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1014629
+      },
+      "writtenOn": "2012-08-30T03:26:37Z",
+      "side": 1,
+      "message": "Alright, SimpleDateFormat works for me. This is one of those weird classes that duplicates code from libcore. It might be worthwhile (eventually) documenting when to use which.\n\n(My advice is to use this when you want to consult the user\u0027s preferences, and SimpleDateFormat when you don\u0027t.)",
+      "parentUuid": "AAAI6X//9/g\u003d",
+      "revId": "22cafabfe2024d8c869747d34625d2a11db2d342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6n//+hg\u003d",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 1
