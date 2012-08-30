@@ -16,6 +16,23 @@
       "revId": "a4a7d8c9079b120b88e93435b6359520936b1d7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9C8\u003d",
+        "filename": "core/java/android/widget/SearchView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2012-08-30T18:47:02Z",
+      "side": 1,
+      "message": "And remove the \"this.\" in 2 places.",
+      "revId": "a4a7d8c9079b120b88e93435b6359520936b1d7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
