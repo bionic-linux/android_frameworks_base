@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n//9s0\u003d",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-08-30T17:41:03Z",
+      "side": 1,
+      "message": "These listeners won\u0027t catch all cases of dismissal, the way this should be done is with an OnDismissListener. Unfortunately there isn\u0027t a .setOnDismissListener on AlertDialog.Builder, but one can be added by calling .create() on the builder, .setOnDismissListener on the resulting Dialog instance, and then .show() on that same Dialog instance.",
+      "revId": "8655e9085c30988f9bb8f9b1ec1f102e3d1c199f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
