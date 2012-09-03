@@ -38,6 +38,7 @@ import android.os.Parcel;
 import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
+import android.os.SELinux;
 import android.os.UserHandle;
 import android.util.Pair;
 import android.util.Slog;
@@ -64,6 +65,7 @@ public class ClipboardService extends IClipboard.Stub {
                 = new RemoteCallbackList<IOnPrimaryClipChangedListener>();
 
         ClipData primaryClip;
+        String securityLabel;
 
         final HashSet<String> activePermissionOwners
                 = new HashSet<String>();
@@ -146,6 +148,8 @@ public class ClipboardService extends IClipboard.Stub {
             clearActiveOwnersLocked();
             PerUserClipboard clipboard = getClipboard();
             clipboard.primaryClip = clip;
+            clipboard.securityLabel = SELinux.getPidContext(Binder.getCallingPid());
+            Slog.i(TAG, "Got clip for securityLabel=" + clipboard.securityLabel);
             final int n = clipboard.primaryClipListeners.beginBroadcast();
             for (int i = 0; i < n; i++) {
                 try {
@@ -163,6 +167,12 @@ public class ClipboardService extends IClipboard.Stub {
     public ClipData getPrimaryClip(String pkg) {
         synchronized (this) {
             addActiveOwnerLocked(Binder.getCallingUid(), pkg);
+
+            // Did not add this to addActiveOwnerLocked because throwing an exception
+            // for an SELinux violation kills the app and is generally not desirable
+            if (!checkSELinuxAccess())
+                return null;
+
             return getClipboard().primaryClip;
         }
     }
@@ -170,12 +180,18 @@ public class ClipboardService extends IClipboard.Stub {
     public ClipDescription getPrimaryClipDescription() {
         synchronized (this) {
             PerUserClipboard clipboard = getClipboard();
+
+            if (!checkSELinuxAccess())
+                return null;
+
             return clipboard.primaryClip != null ? clipboard.primaryClip.getDescription() : null;
         }
     }
 
     public boolean hasPrimaryClip() {
         synchronized (this) {
+            if (!checkSELinuxAccess())
+                return false;
             return getClipboard().primaryClip != null;
         }
     }
@@ -194,6 +210,8 @@ public class ClipboardService extends IClipboard.Stub {
 
     public boolean hasClipboardText() {
         synchronized (this) {
+            if (!checkSELinuxAccess())
+                return false;
             PerUserClipboard clipboard = getClipboard();
             if (clipboard.primaryClip != null) {
                 CharSequence text = clipboard.primaryClip.getItemAt(0).getText();
@@ -316,4 +334,11 @@ public class ClipboardService extends IClipboard.Stub {
             revokeItemLocked(clipboard.primaryClip.getItemAt(i));
         }
     }
+
+    private final boolean checkSELinuxAccess() {
+            String securityLabel = SELinux.getPidContext(Binder.getCallingPid());
+            Slog.i(TAG, "Get clip for securityLabel=" + securityLabel);
+            return SELinux.checkSELinuxAccess(securityLabel, getClipboard().securityLabel, "x_application_data", "paste");
+    }
+
 }
