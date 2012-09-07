@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI83///TQ\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3582,
+      "author": {
+        "id": 1015624
+      },
+      "writtenOn": "2012-09-07T21:03:41Z",
+      "side": 1,
+      "message": "pkg.mSignatures",
+      "parentUuid": "AAAI83///gE\u003d",
+      "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83///gA\u003d",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 1
@@ -101,6 +119,42 @@
       "side": 1,
       "message": "Within our mac_permissions.xml policy file we allow a \u0027default\u0027 stanza. This of course performs the function of applying a policy and labeling when none of the other stanzas match. Since I was using a hashmap for all the non null signatures found within policy, the null key was available for use. So the idea was to not create another structure just for the default policy case.  The idea of the logic was to just grab the null key. If it was found, then we have a default policy in place and a non null seinfo label would be returned. If the null key wasn\u0027t found (no default policy stanza) then a null value would be returned.",
       "parentUuid": "AAAI83///gA\u003d",
+      "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83///TA\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3602,
+      "author": {
+        "id": 1015624
+      },
+      "writtenOn": "2012-09-07T21:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83///gA\u003d",
+      "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83///SU\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3602,
+      "author": {
+        "id": 1015624
+      },
+      "writtenOn": "2012-09-07T21:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI3n///Ng\u003d",
       "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false

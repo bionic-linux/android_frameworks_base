@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI83///SM\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3446,
+      "author": {
+        "id": 1015624
+      },
+      "writtenOn": "2012-09-07T21:03:41Z",
+      "side": 0,
+      "message": "Slog.w",
+      "revId": "2c932143ffe865d49c741e466b425bdbabbd1f2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
