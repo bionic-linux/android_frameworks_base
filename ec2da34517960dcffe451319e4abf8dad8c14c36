@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI83///gM\u003d",
+        "filename": "services/java/com/android/server/pm/Installer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-09-07T15:55:19Z",
+      "side": 1,
+      "message": "This should use some other empty marker like \u0027!\u0027 used below.",
+      "revId": "ec2da34517960dcffe451319e4abf8dad8c14c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
