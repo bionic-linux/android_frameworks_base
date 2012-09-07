@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI83///f4\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-09-07T16:01:20Z",
+      "side": 1,
+      "message": "Do we really need this? PackageManagerService is already the largest data structure in the system_server. I\u0027d rather not make it larger.",
+      "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83///gE\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3582,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-09-07T16:01:20Z",
+      "side": 1,
+      "message": "None of the other PackageManagerService policy uses a single signature. It always matches all the signatures, so this seems wrong.",
+      "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83///gA\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3602,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-09-07T16:01:20Z",
+      "side": 1,
+      "message": "Using .get(null) is also strange. Why not just set it to null?",
+      "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
