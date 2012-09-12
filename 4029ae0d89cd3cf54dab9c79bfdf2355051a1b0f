@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI/H///7U\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3582,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2012-09-12T19:07:21Z",
+      "side": 1,
+      "message": "I think this was inspired by packages/apps/Nfc/src/com/android/nfc/NfceeAccessControl.java and  packages/apps/Nfc/etc/sample_nfcee_access.xml.  We aren\u0027t comparing the signatures of two packages but are instead matching on signature in the configuration.  Not sure what it would look like to specify multiple signers in such a configuration.  AOSP seems to allow multiple signers per package but unclear how/whether this is used in practice and what it actually means.",
+      "parentUuid": "AAAI83///gE\u003d",
+      "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83///gA\u003d",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 1
