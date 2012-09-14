@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJGH///VU\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-09-14T22:52:59Z",
+      "side": 1,
+      "message": "Let\u0027s not admit our mistakes in public.\n\n/** @deprecated Do not use. */",
+      "revId": "f3e4e23e33bb488867abf679229854a5abf65beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
