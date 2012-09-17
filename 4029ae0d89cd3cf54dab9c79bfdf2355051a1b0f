@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AAAJJX///do\u003d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-09-17T19:04:47Z",
+      "side": 1,
+      "message": "This is Java, so you know the size of the array. In fact, you can move this array out to the package-level and make them static final",
+      "revId": "4029ae0d89cd3cf54dab9c79bfdf2355051a1b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83///gE\u003d",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 1
