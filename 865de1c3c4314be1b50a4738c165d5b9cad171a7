@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJJn///eY\u003d",
+        "filename": "core/java/android/net/DhcpInfoInternal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-09-17T22:03:46Z",
+      "side": 1,
+      "message": "this happens often (it\u0027s the default case) so we shouldn\u0027t write to the log here.",
+      "revId": "865de1c3c4314be1b50a4738c165d5b9cad171a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
