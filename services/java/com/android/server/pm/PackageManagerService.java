@@ -74,6 +74,7 @@ import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
+import android.content.pm.SELinuxMMAC;
 import android.content.pm.ServiceInfo;
 import android.content.pm.Signature;
 import android.content.pm.UserInfo;
@@ -325,6 +326,9 @@ public class PackageManagerService extends IPackageManager.Stub {
     // etc/permissions.xml file.
     final HashMap<String, FeatureInfo> mAvailableFeatures =
             new HashMap<String, FeatureInfo>();
+
+    // If mac_permissions.xml was found for seinfo labeling.
+    boolean mFoundPolicyFile;
 
     // All available activities, for your resolving pleasure.
     final ActivityIntentResolver mActivities =
@@ -1041,6 +1045,13 @@ public class PackageManagerService extends IPackageManager.Stub {
                     }
                 }
             }
+
+            // Find potential SELinux install policy
+            long startPolicyTime = SystemClock.uptimeMillis();
+            mFoundPolicyFile = SELinuxMMAC.readInstallPolicy();
+            Slog.i(TAG, "Time to scan SELinux install policy: "
+                   + ((SystemClock.uptimeMillis()-startPolicyTime)/1000f)
+                   + " seconds");
 
             // Find base frameworks (resource packages without code).
             mFrameworkInstallObserver = new AppDirObserver(
@@ -3450,6 +3461,10 @@ public class PackageManagerService extends IPackageManager.Stub {
             return null;
         }
         mScanningPath = scanFile;
+
+        if (mFoundPolicyFile) {
+            SELinuxMMAC.assignSeinfoValue(pkg);
+        }
 
         if ((parseFlags&PackageParser.PARSE_IS_SYSTEM) != 0) {
             pkg.applicationInfo.flags |= ApplicationInfo.FLAG_SYSTEM;
