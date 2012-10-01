@@ -275,4 +275,14 @@ public class TelephonyIntents {
     public static final String EXTRA_PLMN       = "plmn";
     public static final String EXTRA_SHOW_SPN   = "showSpn";
     public static final String EXTRA_SPN        = "spn";
+
+    /**
+     * Broadcast Action: The default subscription has changed.  This has the following
+     * extra values:</p>
+     * <ul>
+     *   <li><em>subscription</em> - A int, the current default subscription.</li>
+     * </ul>
+     */
+    public static final String ACTION_DEFAULT_SUBSCRIPTION_CHANGED
+            = "android.intent.action.ACTION_DEFAULT_SUBSCRIPTION_CHANGED";
 }

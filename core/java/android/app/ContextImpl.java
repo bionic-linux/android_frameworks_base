@@ -86,6 +86,7 @@ import android.os.ServiceManager;
 import android.os.UserId;
 import android.os.SystemVibrator;
 import android.os.storage.StorageManager;
+import android.telephony.MSimTelephonyManager;
 import android.telephony.TelephonyManager;
 import android.content.ClipboardManager;
 import android.util.AndroidRuntimeException;
@@ -436,6 +437,13 @@ class ContextImpl extends Context {
                 public Object createService(ContextImpl ctx) {
                     return new TelephonyManager(ctx.getOuterContext());
                 }});
+
+        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
+            registerService(MSIM_TELEPHONY_SERVICE, new ServiceFetcher() {
+                    public Object createService(ContextImpl ctx) {
+                        return new MSimTelephonyManager(ctx.getOuterContext());
+                    }});
+        }
 
         registerService(THROTTLE_SERVICE, new StaticServiceFetcher() {
                 public Object createStaticService() {

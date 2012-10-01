@@ -187,4 +187,20 @@ public interface TelephonyProperties
      * Ignore RIL_UNSOL_NITZ_TIME_RECEIVED completely, used for debugging/testing.
      */
     static final String PROPERTY_IGNORE_NITZ = "telephony.test.ignore.nitz";
+
+    /**
+     * Property to set multi sim feature.
+     * Type:  String(dsds, dsda)
+     */
+    static final String PROPERTY_MULTI_SIM_CONFIG = "persist.multisim.config";
+
+    /**
+     * Property to start two ril daemons in case of multi sim.
+     */
+    static final String PROPERTY_MULTI_RILD = "ro.multi.rild";
+
+    /**
+     * Property to store default subscription.
+     */
+    static final String PROPERTY_DEFAULT_SUBSCRIPTION = "persist.default.subscription";
 }

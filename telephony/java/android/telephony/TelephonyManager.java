@@ -24,6 +24,8 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.util.Log;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 
 import com.android.internal.telephony.IPhoneSubInfo;
 import com.android.internal.telephony.ITelephony;
@@ -519,7 +521,35 @@ public class TelephonyManager {
      * on a CDMA network).
      */
     public String getNetworkCountryIso() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY);
+        return getTelephonyProperty(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY,
+                getDefaultSubscription(), "");
+    }
+
+    /**
+     * Gets the telephony Default Subscription.
+     *
+     * @hide
+     */
+    public static int getDefaultSubscription() {
+        return  SystemProperties.getInt(TelephonyProperties.PROPERTY_DEFAULT_SUBSCRIPTION, 0);
+    }
+
+
+    /**
+     * Gets the telephony property.
+     *
+     * @hide
+     */
+    public static String getTelephonyProperty(String property, int index, String defaultVal) {
+        String propVal = null;
+        String prop = SystemProperties.get(property);
+         if ((prop != null) && (prop.length() > 0)) {
+            String values[] = prop.split(",");
+            if ((index >= 0) && (index < values.length) && (values[index] != null)) {
+                propVal = values[index];
+            }
+        }
+        return propVal == null ? defaultVal : propVal;
     }
 
     /** Network type is unknown */
