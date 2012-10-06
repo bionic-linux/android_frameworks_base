@@ -140,7 +140,7 @@ char *build_string3(char *s1, char *s2, char *s3);
 
 /* commands.c */
 
-int install(const char *pkgname, uid_t uid, gid_t gid);
+int install(const char *pkgname, uid_t uid, gid_t gid, const char *seinfo);
 int uninstall(const char *pkgname, uid_t persona);
 int renamepkg(const char *oldpkgname, const char *newpkgname);
 int fix_uid(const char *pkgname, uid_t uid, gid_t gid);
