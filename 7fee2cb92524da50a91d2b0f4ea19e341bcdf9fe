@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ63//90w\u003d",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1010669
+      },
+      "writtenOn": "2012-10-09T04:18:03Z",
+      "side": 1,
+      "message": "What is the need or use case for this?\n\nIt doesn\u0027t appear to be used in any build script on wip-mips-ics-mr1.1",
+      "revId": "7fee2cb92524da50a91d2b0f4ea19e341bcdf9fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
