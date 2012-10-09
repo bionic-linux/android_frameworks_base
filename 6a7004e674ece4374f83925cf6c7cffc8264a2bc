@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ8H///2g\u003d",
+        "filename": "core/java/android/content/pm/SELinuxMMAC.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-10-09T21:36:36Z",
+      "side": 1,
+      "message": "Don\u0027t need the NULL",
+      "revId": "6a7004e674ece4374f83925cf6c7cffc8264a2bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ8H///2c\u003d",
+        "filename": "core/java/android/content/pm/SELinuxMMAC.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2012-10-09T21:36:36Z",
+      "side": 1,
+      "message": "Use array length instead of null...",
+      "revId": "6a7004e674ece4374f83925cf6c7cffc8264a2bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
