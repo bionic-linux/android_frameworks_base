@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKbn///6U\u003d",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2012-10-17T23:36:14Z",
+      "side": 1,
+      "message": "Roger that. I\u0027ll look into using PackageParser.Package and change the necessary code.",
+      "parentUuid": "AAAKdn///pM\u003d",
+      "revId": "bb4a3670815a144a35d72a27863b618f3f4b5c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKdn///pg\u003d",
         "filename": "core/java/android/content/pm/SELinuxMMAC.java",
         "patchSetId": 6
