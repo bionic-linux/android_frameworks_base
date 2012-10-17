@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKdn///pM\u003d",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-17T20:07:35Z",
+      "side": 1,
+      "message": "I don\u0027t like this in ApplicationInfo.\n\nPackageParser.Package is for items that are only needed from parsing the package which appears to satisfy this case.\n\nPackageSetting is for items that need to be persisted across reboots and remembered if the package file disappears.\n\nApplicationInfo is for things that need to be passed to other applications.",
+      "revId": "bb4a3670815a144a35d72a27863b618f3f4b5c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKdn///pg\u003d",
+        "filename": "core/java/android/content/pm/SELinuxMMAC.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-17T20:07:35Z",
+      "side": 1,
+      "message": "These should be \"sSigSeinfo\" since they\u0027re static and not constant",
+      "revId": "bb4a3670815a144a35d72a27863b618f3f4b5c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKdn///pY\u003d",
+        "filename": "core/java/android/content/pm/SELinuxMMAC.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-17T20:07:35Z",
+      "side": 1,
+      "message": "sPackageSeinfo",
+      "revId": "bb4a3670815a144a35d72a27863b618f3f4b5c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKdn///pU\u003d",
+        "filename": "core/java/android/content/pm/SELinuxMMAC.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-17T20:07:35Z",
+      "side": 1,
+      "message": "Any line continuations should be double-indented (8 spaces). See development/ide/eclipse/android-formatting.xml",
+      "revId": "bb4a3670815a144a35d72a27863b618f3f4b5c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
