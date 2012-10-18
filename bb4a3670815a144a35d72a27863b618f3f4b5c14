@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKbn///5E\u003d",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2012-10-18T01:44:34Z",
+      "side": 1,
+      "message": "Hrm. Within the ActivityManagerService.java changes of this patch set we easily just call \u0027app.info.seinfo\u0027 to grab the seinfo value (where app is the ProcessRecord). Now that we\u0027re heading towards PackageParser.Package I\u0027m not sure of a clean way to go from the ProcessRecord object we have to the PackageParser.Package we\u0027ll need. Any thoughts on a quick solution? Other then that the new patch is ready to go.",
+      "parentUuid": "AAAKbn///6U\u003d",
+      "revId": "bb4a3670815a144a35d72a27863b618f3f4b5c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKdn///pg\u003d",
         "filename": "core/java/android/content/pm/SELinuxMMAC.java",
         "patchSetId": 6
