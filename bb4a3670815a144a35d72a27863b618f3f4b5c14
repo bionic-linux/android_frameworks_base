@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKgX///3w\u003d",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-19T17:01:21Z",
+      "side": 1,
+      "message": "My main concern is putting things only used in one place in ApplicationInfo. It will get marshalled over the Binder even if we don\u0027t use it outside of system_server, so it\u0027s just wasting CPU cycles and memory.\n\nBut, this looks like it\u0027s not used very much, so maybe it\u0027s not a big deal.\n\nWhy don\u0027t you fix the other comments in SELinuxMMAC and I\u0027ll take this without you changing this part.",
+      "parentUuid": "AAAKin////w\u003d",
+      "revId": "bb4a3670815a144a35d72a27863b618f3f4b5c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKdn///pg\u003d",
         "filename": "core/java/android/content/pm/SELinuxMMAC.java",
         "patchSetId": 6
