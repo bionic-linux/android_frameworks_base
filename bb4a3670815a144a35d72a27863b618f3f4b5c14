@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKin////w\u003d",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2012-10-19T10:07:11Z",
+      "side": 1,
+      "message": "Just to further clarify the above remarks. We need the seinfo tag to be accessible within AMS for proper process labeling. By placing the seinfo var inside PMS we are losing the ability to access that value. We would then need to expose the seinfo value via binder. Are we gaining much by moving it? Is the concern about third party apps being privy to the labels of others?",
+      "parentUuid": "AAAKbn///5E\u003d",
+      "revId": "bb4a3670815a144a35d72a27863b618f3f4b5c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKdn///pg\u003d",
         "filename": "core/java/android/content/pm/SELinuxMMAC.java",
         "patchSetId": 6
