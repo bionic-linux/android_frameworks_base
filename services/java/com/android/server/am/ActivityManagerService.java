@@ -1008,9 +1008,9 @@ public final class ActivityManagerService extends ActivityManagerNative
             case SERVICE_TIMEOUT_MSG: {
                 if (mDidDexOpt) {
                     mDidDexOpt = false;
-                    Message nmsg = mHandler.obtainMessage(SERVICE_TIMEOUT_MSG);
+                    Message nmsg = obtainMessage(SERVICE_TIMEOUT_MSG);
                     nmsg.obj = msg.obj;
-                    mHandler.sendMessageDelayed(nmsg, SERVICE_TIMEOUT);
+                    sendMessageDelayed(nmsg, SERVICE_TIMEOUT);
                     return;
                 }
                 serviceTimeout((ProcessRecord)msg.obj);
@@ -1080,7 +1080,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                     d.setTitle(title);
                     d.setMessage(text);
                     d.setButton(DialogInterface.BUTTON_POSITIVE, "I'm Feeling Lucky",
-                            mHandler.obtainMessage(IM_FEELING_LUCKY_MSG));
+                            obtainMessage(IM_FEELING_LUCKY_MSG));
                     mUidAlert = d;
                     d.show();
                 }
@@ -1094,9 +1094,9 @@ public final class ActivityManagerService extends ActivityManagerNative
             case PROC_START_TIMEOUT_MSG: {
                 if (mDidDexOpt) {
                     mDidDexOpt = false;
-                    Message nmsg = mHandler.obtainMessage(PROC_START_TIMEOUT_MSG);
+                    Message nmsg = obtainMessage(PROC_START_TIMEOUT_MSG);
                     nmsg.obj = msg.obj;
-                    mHandler.sendMessageDelayed(nmsg, PROC_START_TIMEOUT);
+                    sendMessageDelayed(nmsg, PROC_START_TIMEOUT);
                     return;
                 }
                 ProcessRecord app = (ProcessRecord)msg.obj;

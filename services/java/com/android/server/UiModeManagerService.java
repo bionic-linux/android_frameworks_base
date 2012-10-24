@@ -747,9 +747,9 @@ class UiModeManagerService extends IUiModeManager.Stub {
                         }
                         Bundle bundle = new Bundle();
                         bundle.putLong(KEY_LAST_UPDATE_INTERVAL, interval);
-                        Message newMsg = mHandler.obtainMessage(MSG_ENABLE_LOCATION_UPDATES);
+                        Message newMsg = obtainMessage(MSG_ENABLE_LOCATION_UPDATES);
                         newMsg.setData(bundle);
-                        mHandler.sendMessageDelayed(newMsg, interval);
+                        sendMessageDelayed(newMsg, interval);
                     }
                     break;
             }

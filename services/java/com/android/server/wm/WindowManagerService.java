@@ -7195,7 +7195,7 @@ public class WindowManagerService extends IWindowManager.Stub
                         if (mAnimationScheduled) {
                             // If we are animating, don't do the gc now but
                             // delay a bit so we don't interrupt the animation.
-                            mH.sendMessageDelayed(mH.obtainMessage(H.FORCE_GC),
+                            sendMessageDelayed(obtainMessage(FORCE_GC),
                                     2000);
                             return;
                         }
@@ -7342,7 +7342,7 @@ public class WindowManagerService extends IWindowManager.Stub
                         }
 
                         if (doRequest) {
-                            mH.sendEmptyMessage(CLEAR_PENDING_ACTIONS);
+                            sendEmptyMessage(CLEAR_PENDING_ACTIONS);
                             performLayoutAndPlaceSurfacesLocked();
                         }
                     }

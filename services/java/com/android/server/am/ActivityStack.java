@@ -335,9 +335,9 @@ final class ActivityStack {
                 case IDLE_TIMEOUT_MSG: {
                     if (mService.mDidDexOpt) {
                         mService.mDidDexOpt = false;
-                        Message nmsg = mHandler.obtainMessage(IDLE_TIMEOUT_MSG);
+                        Message nmsg = obtainMessage(IDLE_TIMEOUT_MSG);
                         nmsg.obj = msg.obj;
-                        mHandler.sendMessageDelayed(nmsg, IDLE_TIMEOUT);
+                        sendMessageDelayed(nmsg, IDLE_TIMEOUT);
                         return;
                     }
                     // We don't at this point know if the activity is fullscreen,
@@ -369,8 +369,8 @@ final class ActivityStack {
                 case LAUNCH_TIMEOUT_MSG: {
                     if (mService.mDidDexOpt) {
                         mService.mDidDexOpt = false;
-                        Message nmsg = mHandler.obtainMessage(LAUNCH_TIMEOUT_MSG);
-                        mHandler.sendMessageDelayed(nmsg, LAUNCH_TIMEOUT);
+                        Message nmsg = obtainMessage(LAUNCH_TIMEOUT_MSG);
+                        sendMessageDelayed(nmsg, LAUNCH_TIMEOUT);
                         return;
                     }
                     synchronized (mService) {
