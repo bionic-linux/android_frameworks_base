@@ -523,7 +523,26 @@ class MountService extends IMountService.Stub
         }
     }
 
+    private class StorageIntent {
+        final String mAction;
+        final StorageVolume mVolume;
+        final UserHandle mUser;
+
+        StorageIntent(String action, StorageVolume volume, UserHandle user) {
+            mAction = action;
+            mVolume = volume;
+            mUser = user;
+        }
+    }
+
+    private ArrayList<StorageIntent> mPendingStorageIntents = new ArrayList<StorageIntent>();
+
     private void handleSystemReady() {
+        for (StorageIntent intent : mPendingStorageIntents) {
+            sendStorageIntent(intent.mAction, intent.mVolume, intent.mUser);
+        }
+        mPendingStorageIntents.clear();
+
         // Snapshot current volume states since it's not safe to call into vold
         // while holding locks.
         final HashMap<String, String> snapshot;
@@ -877,7 +896,7 @@ class MountService extends IMountService.Stub
                 /* Send the media unmounted event first */
                 if (DEBUG_EVENTS) Slog.i(TAG, "Sending unmounted event first");
                 updatePublicVolumeState(volume, Environment.MEDIA_UNMOUNTED);
-                sendStorageIntent(Environment.MEDIA_UNMOUNTED, volume, UserHandle.ALL);
+                sendStorageIntent(Intent.ACTION_MEDIA_UNMOUNTED, volume, UserHandle.ALL);
 
                 if (DEBUG_EVENTS) Slog.i(TAG, "Sending media removed");
                 updatePublicVolumeState(volume, Environment.MEDIA_REMOVED);
@@ -1162,6 +1181,11 @@ class MountService extends IMountService.Stub
     }
 
     private void sendStorageIntent(String action, StorageVolume volume, UserHandle user) {
+        if (!mSystemReady) {
+            // Device is not booted up completely. Not allowed to send broadcasts yet.
+            mPendingStorageIntents.add(new StorageIntent(action, volume, user));
+            return;
+        }
         final Intent intent = new Intent(action, Uri.parse("file://" + volume.getPath()));
         intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME, volume);
         Slog.d(TAG, "sendStorageIntent " + intent + " to " + user);
