@@ -16,6 +16,23 @@
       "revId": "1154f689e3b2a3a7b3d527ca666ab6ce5eea8717",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALBn////g\u003d",
+        "filename": "media/java/android/media/videoeditor/MediaArtistNativeHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2195,
+      "author": {
+        "id": 1014554
+      },
+      "writtenOn": "2012-10-27T19:13:36Z",
+      "side": 1,
+      "message": "You are right. I think it is a typo. If you don\u0027t mind I\u0027ll drop this patch.",
+      "revId": "1154f689e3b2a3a7b3d527ca666ab6ce5eea8717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
