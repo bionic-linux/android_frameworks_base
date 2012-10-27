@@ -391,7 +391,7 @@ public class TimePicker extends FrameLayout {
      */
     public void setCurrentHour(Integer currentHour) {
         // why was Integer used in the first place?
-        if (currentHour == null || currentHour == getCurrentHour()) {
+        if (currentHour == null || currentHour.equals(getCurrentHour())) {
             return;
         }
         if (!is24HourView()) {
