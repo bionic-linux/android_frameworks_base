@@ -9455,8 +9455,8 @@ public class PackageManagerService extends IPackageManager.Stub {
             for (Entry<String, PackageSetting> entry : entries) {
                 entry.getValue().removeUser(userId);
             }
-            if (mDirtyUsers.remove(userId));
-            mSettings.removeUserLPr(userId);
+            if (mDirtyUsers.remove(userId))
+                mSettings.removeUserLPr(userId);
         }
     }
 
