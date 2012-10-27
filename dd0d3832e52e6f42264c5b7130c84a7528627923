@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALCn////k\u003d",
+        "filename": "services/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2249,
+      "author": {
+        "id": 1016818
+      },
+      "writtenOn": "2012-10-27T19:12:08Z",
+      "side": 1,
+      "message": "Maybe it would be better if you use the \"remove\" here instead of \"get\".",
+      "revId": "dd0d3832e52e6f42264c5b7130c84a7528627923",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
