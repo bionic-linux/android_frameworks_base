@@ -2252,7 +2252,7 @@ public class LocationManagerService extends ILocationManager.Stub implements Run
             }
             long identity = Binder.clearCallingIdentity();
             removeProvider(mProvidersByName.get(provider));
-            mMockProviders.remove(mockProvider);
+            mMockProviders.remove(provider);
             // reinstall real provider if we were mocking GPS or network provider
             if (LocationManager.GPS_PROVIDER.equals(provider) &&
                     mGpsLocationProvider != null) {
