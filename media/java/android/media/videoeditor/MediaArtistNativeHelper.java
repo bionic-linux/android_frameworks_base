@@ -2191,7 +2191,7 @@ class MediaArtistNativeHelper {
                 && ((lEffect.startTime + lEffect.duration) <= endCutTime)) {
             effectStartTime = lEffect.startTime - beginCutTime;
             lEffect.startTime = effectStartTime;
-            lEffect.duration = lEffect.duration;
+            lEffect.duration = effectDuration;
             return;
         }
 
