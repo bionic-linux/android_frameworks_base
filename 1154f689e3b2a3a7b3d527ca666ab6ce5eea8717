@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALCn////w\u003d",
+        "filename": "media/java/android/media/videoeditor/MediaArtistNativeHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1016818
+      },
+      "writtenOn": "2012-10-27T18:55:11Z",
+      "side": 1,
+      "message": "What is the value of effectDuration here? It is 0 but it has to be equals of lEffect.duration as you can see the comment above (the timeline comment). I think the original code is good, but maybe it is misleading.",
+      "revId": "1154f689e3b2a3a7b3d527ca666ab6ce5eea8717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
