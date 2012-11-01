@@ -229,7 +229,7 @@ public class KeyguardViewManager implements KeyguardWindowController {
 
             // Caller should wait for this window to be shown before turning
             // on the screen.
-            if (mKeyguardHost.getVisibility() == View.VISIBLE) {
+            if (mKeyguardHost.getVisibility() != View.VISIBLE) {
                 // Keyguard may be in the process of being shown, but not yet
                 // updated with the window manager...  give it a chance to do so.
                 mKeyguardHost.post(new Runnable() {
@@ -242,7 +242,7 @@ public class KeyguardViewManager implements KeyguardWindowController {
                     }
                 });
             } else {
-                showListener.onShown(null);
+                showListener.onShown(mKeyguardHost.getWindowToken());
             }
         } else {
             showListener.onShown(null);
