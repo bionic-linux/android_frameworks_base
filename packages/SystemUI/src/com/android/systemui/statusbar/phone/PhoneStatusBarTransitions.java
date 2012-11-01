@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.telephony.TelephonyManager;
 import android.view.View;
 
 import com.android.systemui.R;
