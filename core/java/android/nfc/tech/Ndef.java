@@ -272,12 +272,11 @@ public final class Ndef extends BasicTagTechnology {
                 throw new IOException("Mock tags don't support this operation.");
             }
             int serviceHandle = mTag.getServiceHandle();
+            if (!tagService.isPresent(serviceHandle)) {
+                throw new TagLostException();
+            }
             if (tagService.isNdef(serviceHandle)) {
-                NdefMessage msg = tagService.ndefRead(serviceHandle);
-                if (msg == null && !tagService.isPresent(serviceHandle)) {
-                    throw new TagLostException();
-                }
-                return msg;
+                return tagService.ndefRead(serviceHandle);
             } else {
                 return null;
             }
