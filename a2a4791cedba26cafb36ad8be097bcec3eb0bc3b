@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALjH///48\u003d",
+        "filename": "policy/src/com/android/internal/policy/impl/KeyguardViewManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2012-11-13T23:18:43Z",
+      "side": 1,
+      "message": "Sorry, but this is not correct.  PhoneWindowManager uses this mechanism to determine if it should wait for the view to be drawn.  Since mKeyguardHostView persists, it will only be visible if keyguard is visible.  This would hang the system in certain cases where keyguard isn\u0027t visible.",
+      "revId": "a2a4791cedba26cafb36ad8be097bcec3eb0bc3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
