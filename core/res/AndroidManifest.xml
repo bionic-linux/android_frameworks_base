@@ -2112,7 +2112,7 @@
     <permission android:name="android.permission.UPDATE_LOCK"
         android:label="@string/permlab_updateLock"
         android:description="@string/permdesc_updateLock"
-        android:protectionLevel="signatureOrSystem" />
+        android:protectionLevel="signature|system" />
 
     <!-- The system process is explicitly the only one allowed to launch the
          confirmation UI for full backup/restore -->
