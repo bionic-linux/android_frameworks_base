@@ -1321,11 +1321,14 @@ public class KeyguardViewMediator {
                 if (!isAssistantAvailable()) {
                     flags |= StatusBarManager.DISABLE_SEARCH;
                 }
+                if (DEBUG) {
+                    Log.d(TAG, "adjustStatusBarLocked isSecure=" + isSecure());
+                }
             }
 
             if (DEBUG) {
                 Log.d(TAG, "adjustStatusBarLocked: mShowing=" + mShowing + " mHidden=" + mHidden
-                        + " isSecure=" + isSecure() + " --> flags=0x" + Integer.toHexString(flags));
+                        + " --> flags=0x" + Integer.toHexString(flags));
             }
 
             if (!(mContext instanceof Activity)) {
