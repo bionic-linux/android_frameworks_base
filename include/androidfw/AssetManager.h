@@ -93,6 +93,7 @@ public:
      * newly-added asset source.
      */
     bool addAssetPath(const String8& path, void** cookie);
+    bool addOverlayPath(const String8& path, void** cookie);
 
     /*                                                                       
      * Convenience for adding the standard system assets.  Uses the
@@ -271,19 +272,13 @@ private:
     void setLocaleLocked(const char* locale);
     void updateResourceParamsLocked() const;
 
-    bool createIdmapFileLocked(const String8& originalPath, const String8& overlayPath,
-                               const String8& idmapPath);
-
-    bool isIdmapStaleLocked(const String8& originalPath, const String8& overlayPath,
-                            const String8& idmapPath);
-
     Asset* openIdmapLocked(const struct asset_path& ap) const;
-
-    bool getZipEntryCrcLocked(const String8& zipPath, const char* entryFilename, uint32_t* pCrc);
+    void addSystemOverlays(const char* pathOverlaysList, const String8& targetPackagePath,
+            ResTable* sharedRes, size_t offset) const;
 
     class SharedZip : public RefBase {
     public:
-        static sp<SharedZip> get(const String8& path);
+        static sp<SharedZip> get(const String8& path, bool createIfNotPresent = true);
 
         ZipFileRO* getZip();
 
@@ -294,7 +289,10 @@ private:
         ResTable* setResourceTable(ResTable* res);
         
         bool isUpToDate();
-        
+
+        void addOverlay(const asset_path& ap);
+        bool getOverlay(size_t idx, asset_path* out) const;
+
     protected:
         ~SharedZip();
 
@@ -308,6 +306,8 @@ private:
 
         Asset* mResourceTableAsset;
         ResTable* mResourceTable;
+
+        Vector<asset_path> mOverlays;
 
         static Mutex gLock;
         static DefaultKeyedVector<String8, wp<SharedZip> > gOpen;
@@ -341,6 +341,9 @@ private:
         static String8 getPathName(const char* path);
 
         bool isUpToDate();
+
+        void addOverlay(const String8& path, const asset_path& overlay);
+        bool getOverlay(const String8& path, size_t idx, asset_path* out) const;
         
     private:
         void closeZip(int idx);
