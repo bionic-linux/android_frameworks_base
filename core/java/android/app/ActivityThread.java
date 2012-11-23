@@ -1687,6 +1687,17 @@ public final class ActivityThread {
             return null;
         }
 
+        try {
+            String[] overlays = getPackageManager().getOverlaysForPackage(resDir);
+            if (overlays != null) {
+                for (String idmapPath : overlays) {
+                    assets.addOverlayPath(idmapPath);
+                }
+            }
+        } catch (RemoteException e) {
+            Log.d(TAG, "Failed to get list of overlay packages for " + resDir, e);
+        }
+
         //Slog.i(TAG, "Resource: key=" + key + ", display metrics=" + metrics);
         DisplayMetrics dm = getDisplayMetricsLocked(displayId, null);
         Configuration config;
