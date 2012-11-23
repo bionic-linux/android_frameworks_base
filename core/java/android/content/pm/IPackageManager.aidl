@@ -385,4 +385,6 @@ interface IPackageManager {
 
     /** Reflects current DeviceStorageMonitorService state */
     boolean isStorageLow();
+
+    String[] getOverlaysForPackage(String pkgName);
 }
