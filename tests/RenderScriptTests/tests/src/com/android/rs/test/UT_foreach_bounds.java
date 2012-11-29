@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 The Android Open Source Project
+ * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,48 +20,42 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.renderscript.*;
 
-public class UT_alloc extends UnitTest {
+public class UT_foreach_bounds extends UnitTest {
     private Resources mRes;
+    private Allocation A;
 
-    protected UT_alloc(RSTestCore rstc, Resources res, Context ctx) {
-        super(rstc, "Alloc", ctx);
+    protected UT_foreach_bounds(RSTestCore rstc, Resources res, Context ctx) {
+        super(rstc, "ForEach (bounds)", ctx);
         mRes = res;
     }
 
-    private void initializeGlobals(RenderScript RS, ScriptC_alloc s) {
+    private void initializeGlobals(RenderScript RS, ScriptC_foreach_bounds s) {
         Type.Builder typeBuilder = new Type.Builder(RS, Element.I32(RS));
         int X = 5;
         int Y = 7;
-        int Z = 0;
         s.set_dimX(X);
         s.set_dimY(Y);
-        s.set_dimZ(Z);
         typeBuilder.setX(X).setY(Y);
-        Allocation A = Allocation.createTyped(RS, typeBuilder.create());
-        s.bind_a(A);
+        A = Allocation.createTyped(RS, typeBuilder.create());
         s.set_aRaw(A);
-
-        typeBuilder = new Type.Builder(RS, Element.I32(RS));
-        typeBuilder.setX(X).setY(Y).setFaces(true);
-        Allocation AFaces = Allocation.createTyped(RS, typeBuilder.create());
-        s.set_aFaces(AFaces);
-        typeBuilder.setFaces(false).setMipmaps(true);
-        Allocation ALOD = Allocation.createTyped(RS, typeBuilder.create());
-        s.set_aLOD(ALOD);
-        typeBuilder.setFaces(true).setMipmaps(true);
-        Allocation AFacesLOD = Allocation.createTyped(RS, typeBuilder.create());
-        s.set_aFacesLOD(AFacesLOD);
+        s.set_s(s);
+        s.set_ain(A);
+        s.set_aout(A);
+        s.set_xStart(2);
+        s.set_xEnd(5);
+        s.set_yStart(3);
+        s.set_yEnd(6);
+        s.forEach_zero(A);
 
         return;
     }
 
     public void run() {
         RenderScript pRS = RenderScript.create(mCtx);
-        ScriptC_alloc s = new ScriptC_alloc(pRS);
+        ScriptC_foreach_bounds s = new ScriptC_foreach_bounds(pRS);
         pRS.setMessageHandler(mRsMessage);
         initializeGlobals(pRS, s);
-        s.forEach_root(s.get_aRaw());
-        s.invoke_alloc_test();
+        s.invoke_foreach_bounds_test();
         pRS.finish();
         waitForMessage();
         pRS.destroy();
