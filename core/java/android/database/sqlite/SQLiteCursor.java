@@ -149,6 +149,7 @@ public class SQLiteCursor extends AbstractWindowedCursor {
             int startPos = DatabaseUtils.cursorPickFillWindowStartPosition(requiredPos,
                     mCursorWindowCapacity);
             mQuery.fillWindow(mWindow, startPos, requiredPos, false);
+            mCursorWindowCapacity = mWindow.getNumRows();
         }
     }
 
