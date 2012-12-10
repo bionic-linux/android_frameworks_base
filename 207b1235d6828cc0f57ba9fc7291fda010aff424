@@ -16,6 +16,23 @@
       "revId": "207b1235d6828cc0f57ba9fc7291fda010aff424",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M18PVMeg",
+        "filename": "core/java/android/widget/HeaderViewListAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-12-10T19:19:40Z",
+      "side": 1,
+      "message": "+8-space indent for line continuations.",
+      "revId": "207b1235d6828cc0f57ba9fc7291fda010aff424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
