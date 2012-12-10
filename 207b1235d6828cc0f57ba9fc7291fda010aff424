@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "M1Sq3pvM",
+        "filename": "core/java/android/widget/HeaderViewListAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-12-10T17:56:18Z",
+      "side": 1,
+      "message": "Remove the space after and before ( and )",
+      "revId": "207b1235d6828cc0f57ba9fc7291fda010aff424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
