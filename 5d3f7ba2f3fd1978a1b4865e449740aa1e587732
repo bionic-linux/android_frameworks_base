@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "M1x2-kWM",
+        "filename": "core/java/android/database/sqlite/SQLiteCursor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-12-11T01:46:16Z",
+      "side": 1,
+      "message": "This is wrong.\n\nSuppose the window we just filled was the last window.  In this case, the window might only contain a few rows because there are none left.  So we will end up assuming that the capacity of the window is much smaller than it truly is.\n\nPlease understand that the capacity is only an optimization.  It is not needed for correctness.  Under ideal conditions all of the rows should fit within one window anyhow.  If the windows are getting too full then the schema or query should probably be redesigned.",
+      "revId": "5d3f7ba2f3fd1978a1b4865e449740aa1e587732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M112A.Zg",
+        "filename": "core/jni/android_database_SQLiteConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-12-11T01:46:16Z",
+      "side": 1,
+      "message": "Ahh.  Yes, this is a bug...",
+      "revId": "5d3f7ba2f3fd1978a1b4865e449740aa1e587732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
