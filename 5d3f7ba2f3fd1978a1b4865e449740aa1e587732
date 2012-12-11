@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "M5uZFz0U",
+        "filename": "core/java/android/database/sqlite/SQLiteCursor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1017805
+      },
+      "writtenOn": "2012-12-11T04:46:08Z",
+      "side": 1,
+      "message": "You are right for the situation.\r\nBut basically capacity is for locality to enhance performance, and if a row size is fluctuating and capacity is fixed as the first value, cursor window could hold more old rows other than new rows. Then it could query more often for new rows and lower performance.\r\nAnd because the defect is in Native Contacts Application,\r\nif we try to change schema, it would be a bigger job.\r\n(There is a blob field for photo in Contacts. A row size could be fluctuating by the field.)\r\nPlease review this again.",
+      "parentUuid": "M1x2-kWM",
+      "revId": "5d3f7ba2f3fd1978a1b4865e449740aa1e587732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "M112A.Zg",
         "filename": "core/jni/android_database_SQLiteConnection.cpp",
         "patchSetId": 2
