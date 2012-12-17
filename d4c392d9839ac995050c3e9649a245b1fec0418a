@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "M1D25hss",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2012-12-17T18:33:02Z",
+      "side": 1,
+      "message": "Please add and else clause:\n\n  if (network.reconnect()) {\n    return PhoneConstants.APN_REQUEST_STARTED;\n  } else {\n    return PhoneConstants.APN_REQUEST_FAILED;\n  }",
+      "revId": "d4c392d9839ac995050c3e9649a245b1fec0418a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
