@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "NFdsPlT4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-12-21T07:11:02Z",
+      "side": 1,
+      "message": "Excellent working title",
+      "revId": "08a87b7a61a2cf3014a532e701ef50c6e58dda37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
