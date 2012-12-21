@@ -10,6 +10,7 @@ page.title=Permissions
 <li><a href="#signing">Application Signing</a></li>
 <li><a href="#userid">User IDs and File Access</a></li>
 <li><a href="#permissions">Using Permissions</a></li>
+<li><a href="#choosing">Permissions vs. Built-In Activities</a></li>
 <li><a href="#declaring">Declaring and Enforcing Permissions</a>
 	<ol>
 	<li><a href="#manifest">...in AndroidManifest.xml</a></li>
@@ -145,6 +146,14 @@ being delivered to each receiver, after the method call has returned, so you
 will not receive an exception if there are permission failures. In almost all
 cases, however, a permission failure will be printed to the system log.</p>
 
+<p>Your application should have only the permissions that it needs to work.
+Unnecessary permissions might needlessly worry users when they see the
+permission warnings in the Play Store. Users will have more confidence in your
+application if you only ask for permissions that relate to your application's
+functionality. You can avoid unnecessary permissions by only adding permissions
+to your manifest if your application has a permission failure during
+testing.</p>
+
 <p>The permissions provided by the Android system can be found at {@link
 android.Manifest.permission}. Any application may also define and enforce its
 own permissions, so this is not a comprehensive list of all possible
@@ -162,6 +171,57 @@ activities of other applications.</li>
 your broadcast or who can send a broadcast to you.</li>
 <li>When accessing and operating on a content provider.</li>
 <li>Binding to or starting a service.</li>
+</ul>
+
+
+<a name="choosing"></a>
+<h2>Permissions vs. Built-In Activities</h2>
+
+<p>In some cases, developers can avoid asking for permissions by using Intents
+to open built-in Activities. For example, there are two ways to take a
+photo:</p>
+
+<ul>
+<li>Open the Camera app with an {@link android.provider.MediaStore#ACTION_IMAGE_CAPTURE}
+Intent. The Camera app will help the user take a photo, and the photo will be
+returned to your app. This does not require any permissions.</li>
+<li>Use the {@link android.hardware.Camera}</code> API to directly take a
+photograph. You will have to create your own Activity to show the preview
+screen, create a camera button, and handle other camera logistics. Your application 
+will need the
+<code>{@link android.Manifest.permission#CAMERA CAMERA}</code> permission.</li>
+</ul>
+
+<p>When possible, you should use build-in Activities instead of using permissions
+to make direct API calls. Your application won't need to ask for as many
+permissions, which will increase the odds that users install your application.
+It makes your application easier to use because users are already familiar with
+the existing built-in Activities' UIs. Furthermore, using a built-in Activity
+will save development time because you don't need to build a new UI for your
+application.</p>
+
+<p>Built-in Activities are opened with <a
+href="http://developer.android.com/reference/android/content/Intent.html">Intents</a>.
+In addition to the Camera example above, here are some common built-in Activities
+that you can take advantage of:</p>
+
+<ul>
+<li>Open a web page in the browser by sending an Intent with the action
+{@link android.content.Intent#ACTION_VIEW}. Set the data URI to be the web URL.
+</li>
+<li>Send e-mail by sending an Intent with the action
+{@link android.content.Intent#ACTION_SENDTO}. You can specify the recipient and
+subject with a data URI in the format
+<code>mailto:email@email.com?subject=abcd</code>. You can also specify the body
+of the e-mail by setting the extra {@link android.content.Intent#EXTRA_TEXT}.
+Make sure the subject and body are URL encoded.</li>
+<li>Dial a phone call by sending an Intent with the action
+{@link android.content.Intent#ACTION_DIAL}. Specify the phone number with a data
+URI in the format <code>tel:12341234</code>.</li>
+<li>Send a text message by sending an Intent with the action
+{@link android.content.Intent#ACTION_SENDTO}. You can specify the recipient with a
+data URI in the format <code>sms:12341234</code> and the message with the extra
+<code>sms_body</code>.</li>
 </ul>
 
 

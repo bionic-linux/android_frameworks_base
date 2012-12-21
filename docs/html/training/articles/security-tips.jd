@@ -269,13 +269,26 @@ environments.  The key consideration is making sure that appropriate protocols
 are used for sensitive data, such as {@link javax.net.ssl.HttpsURLConnection} for
 secure web traffic.   We prefer use of HTTPS over HTTP anywhere that HTTPS is
 supported on the server, because mobile devices frequently connect on networks
-that are not secured, such as public Wi-Fi hotspots.</p>
+that are not secured, such as public Wi-Fi hotspots.  HTTPS will protect the
+privacy of user data that your app sends or receives.  If possible, you should
+use HTTPS even when the data itself does not need to be kept private; attackers
+on compromised networks can modify HTTP data to exploit weaknesses in apps.</p>
 
 <p>Authenticated, encrypted socket-level communication can be easily
 implemented using the {@link javax.net.ssl.SSLSocket}
 class.  Given the frequency with which Android devices connect to unsecured
 wireless networks using Wi-Fi, the use of secure networking is strongly
 encouraged for all applications that communicate over the network.</p>
+
+<p>If you use SSL, you might decide to use a {@link
+org.apache.http.conn.ssl.SSLSocketFactory} or implement your own {@link
+javax.net.ssl.X509TrustManager}. It is important to check that SSL certificates
+have valid hostnames and are signed by appropriate certificate authorities. If
+you do not check, an attacker could supply an invalid certificate and thereby
+circumvent your use of SSL. With {@link
+org.apache.http.conn.ssl.SSLSocketFactory}, you should not use {@link
+org.apache.http.conn.ssl.AllowAllHostnameVerifier} unless you are testing
+your application; that verifier turns hostname verification off.</p>
 
 <p>We have seen some applications use <a
 href="http://en.wikipedia.org/wiki/Localhost">localhost</a> network ports for
