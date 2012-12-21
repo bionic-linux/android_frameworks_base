@@ -399,8 +399,8 @@ using external storage, store data in your application directory.</p>
 there has been quite a bit of research into the frequency of over-requesting
 permissions. If you’re interested in the subject you might start with this
 research paper published by U.C. Berkeley: <a
-href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2011/EECS-2011-48.pdf">
-http://www.eecs.berkeley.edu/Pubs/TechRpts/2011/EECS-2011-48.pdf</a></p>
+href="http://www.cs.berkeley.edu/~afelt/android_permissions.pdf">
+http://www.cs.berkeley.edu/~afelt/android_permissions.pdf</a></p>
 
 <p>In addition to requesting permissions, your application can use <a
 href="{@docRoot}guide/topics/manifest/permission-element.html">permissions</a>
