@@ -98,6 +98,7 @@ public abstract class WindowOrientationListener {
             if (LOG) {
                 Log.d(TAG, "WindowOrientationListener enabled");
             }
+            mSensorEventListener.reset();
             mSensorManager.registerListener(mSensorEventListener, mSensor, mRate);
             mEnabled = true;
         }
@@ -637,7 +638,7 @@ public abstract class WindowOrientationListener {
             return true;
         }
 
-        private void reset() {
+        public void reset() {
             mLastFilteredTimestampNanos = Long.MIN_VALUE;
             mProposedRotation = -1;
             mFlatTimestampNanos = Long.MIN_VALUE;
