@@ -2193,6 +2193,12 @@ public final class Settings {
         public static final String VIBRATE_WHEN_RINGING = "vibrate_when_ringing";
 
         /**
+         * Whether the ringtone volume played on incoming call should increase when user
+         * does not answer. The value is boolean (1 or 0).
+         */
+        public static final String INCREASING_RINGTONE = "increasing_ringtone";
+
+        /**
          * Whether the audible DTMF tones are played by the dialer when dialing. The value is
          * boolean (1 or 0).
          */
