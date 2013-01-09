@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "N8mQp0oc",
+        "filename": "core/java/android/view/WindowOrientationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1005875
+      },
+      "writtenOn": "2013-01-09T02:31:41Z",
+      "side": 1,
+      "message": "As I know, an outer class method is able to call a private method of inner class.\nSo, how about letting this be as private?",
+      "revId": "18eba9a399eab65cccce95650dace3c9bc12942f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
