@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "OAyW.es0",
+        "filename": "services/java/com/android/server/ClipboardService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2013-01-09T20:45:37Z",
+      "side": 1,
+      "message": "Can we fix up this comment, \"got clip\" is a bit weird to me.",
+      "revId": "24e32fc790ea806a927b45d38e29b74c34d7a7fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OAwWjdrU",
+        "filename": "services/java/com/android/server/ClipboardService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2013-01-09T20:45:37Z",
+      "side": 1,
+      "message": "Again with the debug log",
+      "revId": "24e32fc790ea806a927b45d38e29b74c34d7a7fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OA.Wfcmk",
+        "filename": "services/java/com/android/server/ClipboardService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2013-01-09T20:45:37Z",
+      "side": 1,
+      "message": "Since we don\u0027t have x is x_application_data the best class name?",
+      "revId": "24e32fc790ea806a927b45d38e29b74c34d7a7fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
