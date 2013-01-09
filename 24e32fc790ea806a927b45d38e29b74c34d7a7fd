@@ -50,6 +50,24 @@
       "revId": "24e32fc790ea806a927b45d38e29b74c34d7a7fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OBFh2BYY",
+        "filename": "services/java/com/android/server/ClipboardService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1013498
+      },
+      "writtenOn": "2013-01-09T20:49:30Z",
+      "side": 1,
+      "message": "the x_application_data object class already exists and Stephen wanted to avoid adding a new object class if this would eventually be migrated to a framework security server anyway.",
+      "parentUuid": "OA.Wfcmk",
+      "revId": "24e32fc790ea806a927b45d38e29b74c34d7a7fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
