@@ -209,8 +209,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
             @Override
             protected void changeStateFromPress(boolean buttonOn) {
-                if (!mHasTelephony) return;
-
                 // In ECM mode airplane state cannot be changed
                 if (!(Boolean.parseBoolean(
                         SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE)))) {
@@ -835,7 +833,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
         @Override
         public void onServiceStateChanged(ServiceState serviceState) {
-            if (!mHasTelephony) return;
             final boolean inAirplaneMode = serviceState.getState() == ServiceState.STATE_POWER_OFF;
             mAirplaneState = inAirplaneMode ? ToggleAction.State.On : ToggleAction.State.Off;
             mAirplaneModeOn.updateState(mAirplaneState);
@@ -885,8 +882,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private void onAirplaneModeChanged() {
         // Let the service state callbacks handle the state.
-        if (mHasTelephony) return;
-
         boolean airplaneModeOn = Settings.Global.getInt(
                 mContext.getContentResolver(),
                 Settings.Global.AIRPLANE_MODE_ON,
@@ -907,9 +902,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
         intent.putExtra("state", on);
         mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
-        if (!mHasTelephony) {
-            mAirplaneState = on ? ToggleAction.State.On : ToggleAction.State.Off;
-        }
+        mAirplaneState = on ? ToggleAction.State.On : ToggleAction.State.Off;
     }
 
     private static final class GlobalActionsDialog extends Dialog implements DialogInterface {
