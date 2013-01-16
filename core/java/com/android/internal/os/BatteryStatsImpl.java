@@ -4424,7 +4424,7 @@ public final class BatteryStatsImpl extends BatteryStats {
                 mHistoryCur.batteryStatus = (byte)status;
                 mHistoryCur.batteryHealth = (byte)health;
                 mHistoryCur.batteryPlugType = (byte)plugType;
-                mHistoryCur.batteryTemperature = (char)temp;
+                mHistoryCur.batteryTemperature = (byte)temp;
                 mHistoryCur.batteryVoltage = (char)volt;
                 setOnBatteryLocked(onBattery, oldStatus, level);
             } else {
@@ -4447,7 +4447,7 @@ public final class BatteryStatsImpl extends BatteryStats {
                 }
                 if (temp >= (mHistoryCur.batteryTemperature+10)
                         || temp <= (mHistoryCur.batteryTemperature-10)) {
-                    mHistoryCur.batteryTemperature = (char)temp;
+                    mHistoryCur.batteryTemperature = (byte)temp;
                     changed = true;
                 }
                 if (volt > (mHistoryCur.batteryVoltage+20)
