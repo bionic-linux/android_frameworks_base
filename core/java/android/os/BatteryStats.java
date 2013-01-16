@@ -430,7 +430,7 @@ public abstract class BatteryStats implements Parcelable {
         public byte batteryHealth;
         public byte batteryPlugType;
         
-        public char batteryTemperature;
+        public short batteryTemperature;
         public char batteryVoltage;
         
         // Constants from SCREEN_BRIGHTNESS_*
@@ -507,7 +507,7 @@ public abstract class BatteryStats implements Parcelable {
             batteryHealth = (byte)((bat>>20)&0xf);
             batteryPlugType = (byte)((bat>>24)&0xf);
             bat = src.readInt();
-            batteryTemperature = (char)(bat&0xffff);
+            batteryTemperature = (short)(bat&0xffff);
             batteryVoltage = (char)((bat>>16)&0xffff);
             states = src.readInt();
         }
@@ -520,7 +520,7 @@ public abstract class BatteryStats implements Parcelable {
         // Part of initial delta int holding the command code.
         static final int DELTA_CMD_MASK = 0x3;
         static final int DELTA_CMD_SHIFT = 18;
-        // Flag in delta int: a new battery level int follows.
+        // Flag in delta long: a new battery level long follows.
         static final int DELTA_BATTERY_LEVEL_FLAG = 1<<20;
         // Flag in delta int: a new full state and battery status int follows.
         static final int DELTA_STATE_FLAG = 1<<21;
@@ -534,7 +534,7 @@ public abstract class BatteryStats implements Parcelable {
             }
             
             final long deltaTime = time - last.time;
-            final int lastBatteryLevelInt = last.buildBatteryLevelInt();
+            final long lastBatteryLevelLong = last.buildBatteryLevelLong();
             final int lastStateInt = last.buildStateInt();
             
             int deltaTimeToken;
@@ -548,9 +548,9 @@ public abstract class BatteryStats implements Parcelable {
             int firstToken = deltaTimeToken
                     | (cmd<<DELTA_CMD_SHIFT)
                     | (states&DELTA_STATE_MASK);
-            final int batteryLevelInt = buildBatteryLevelInt();
-            final boolean batteryLevelIntChanged = batteryLevelInt != lastBatteryLevelInt;
-            if (batteryLevelIntChanged) {
+            final long batteryLevelLong = buildBatteryLevelLong();
+            final boolean batteryLevelLongChanged = batteryLevelLong != lastBatteryLevelLong;
+            if (batteryLevelLongChanged) {
                 firstToken |= DELTA_BATTERY_LEVEL_FLAG;
             }
             final int stateInt = buildStateInt();
@@ -571,12 +571,12 @@ public abstract class BatteryStats implements Parcelable {
                     dest.writeLong(deltaTime);
                 }
             }
-            if (batteryLevelIntChanged) {
-                dest.writeInt(batteryLevelInt);
+            if (batteryLevelLongChanged) {
+                dest.writeLong(batteryLevelLong);
                 if (DEBUG) Slog.i(TAG, "WRITE DELTA: batteryToken=0x"
-                        + Integer.toHexString(batteryLevelInt)
+                        + Long.toHexString(batteryLevelLong)
                         + " batteryLevel=" + batteryLevel
-                        + " batteryTemp=" + (int)batteryTemperature
+                        + " batteryTemp=" + batteryTemperature
                         + " batteryVolt=" + (int)batteryVoltage);
             }
             if (stateIntChanged) {
@@ -590,10 +590,10 @@ public abstract class BatteryStats implements Parcelable {
             }
         }
         
-        private int buildBatteryLevelInt() {
-            return ((((int)batteryLevel)<<24)&0xff000000)
-                    | ((((int)batteryTemperature)<<14)&0x00ffc000)
-                    | (((int)batteryVoltage)&0x00003fff);
+        private long buildBatteryLevelLong() {
+            return (((((long)batteryTemperature)<<32)&0x0000ffff00000000L)
+                    | (((long)batteryLevel)<<24)&0x000000ff000000L)
+                    | (((long)batteryVoltage)&0x0000000000003fffL);
         }
         
         private int buildStateInt() {
@@ -627,14 +627,14 @@ public abstract class BatteryStats implements Parcelable {
             }
             
             if ((firstToken&DELTA_BATTERY_LEVEL_FLAG) != 0) {
-                int batteryLevelInt = src.readInt();
-                batteryLevel = (byte)((batteryLevelInt>>24)&0xff);
-                batteryTemperature = (char)((batteryLevelInt>>14)&0x3ff);
-                batteryVoltage = (char)(batteryLevelInt&0x3fff);
+                long batteryLevelLong = src.readLong();
+                batteryTemperature = (short)((batteryLevelLong>>32)&0xffff);
+                batteryLevel = (byte)((batteryLevelLong>>24)&0xff);
+                batteryVoltage = (char)(batteryLevelLong&0x3fff);
                 if (DEBUG) Slog.i(TAG, "READ DELTA: batteryToken=0x"
-                        + Integer.toHexString(batteryLevelInt)
+                        + Long.toHexString(batteryLevelLong)
                         + " batteryLevel=" + batteryLevel
-                        + " batteryTemp=" + (int)batteryTemperature
+                        + " batteryTemp=" + batteryTemperature
                         + " batteryVolt=" + (int)batteryVoltage);
             }
             
