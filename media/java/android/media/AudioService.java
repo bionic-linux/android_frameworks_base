@@ -4897,6 +4897,7 @@ public class AudioService extends IAudioService.Stub implements OnFinished {
      * precondition: pi != null
      */
     private void removeMediaButtonReceiver(PendingIntent pi) {
+        RemoteControlStackEntry oldTop = mRCStack.peek();
         Iterator<RemoteControlStackEntry> stackIterator = mRCStack.iterator();
         while(stackIterator.hasNext()) {
             RemoteControlStackEntry rcse = (RemoteControlStackEntry)stackIterator.next();
@@ -4905,6 +4906,20 @@ public class AudioService extends IAudioService.Stub implements OnFinished {
                 rcse.unlinkToRcClientDeath();
                 break;
             }
+        }
+
+        // need to update the system settings when PendingIntent contained in the TOP of stack.
+        if (mRCStack.empty()) {
+            // no saved media button receiver
+            mAudioHandler.sendMessage(
+                      mAudioHandler.obtainMessage(MSG_PERSIST_MEDIABUTTONRECEIVER, 0, 0,
+                                    null));
+        } else if (oldTop != mRCStack.peek()) {
+            // the top of the stack has changed, save it in the system settings
+            // by posting a message to persist it
+            mAudioHandler.sendMessage(
+                    mAudioHandler.obtainMessage(MSG_PERSIST_MEDIABUTTONRECEIVER, 0, 0,
+                            mRCStack.peek().mReceiverComponent));
         }
     }
 
