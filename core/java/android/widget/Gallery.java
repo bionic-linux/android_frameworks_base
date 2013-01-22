@@ -1210,13 +1210,13 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         switch (keyCode) {
             
         case KeyEvent.KEYCODE_DPAD_LEFT:
-            if (movePrevious()) {
+            if (moveDirection(-1)) {
                 playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
                 return true;
             }
             break;
         case KeyEvent.KEYCODE_DPAD_RIGHT:
-            if (moveNext()) {
+            if (moveDirection(1)) {
                 playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
                 return true;
             }
@@ -1256,18 +1256,12 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         return super.onKeyUp(keyCode, event);
     }
     
-    boolean movePrevious() {
-        if (mItemCount > 0 && mSelectedPosition > 0) {
-            scrollToChild(mSelectedPosition - mFirstPosition - 1);
-            return true;
-        } else {
-            return false;
-        }
-    }
+    boolean moveDirection(int direction) {
+        direction = isLayoutRtl() ? -direction : direction;
+        int postMove = mSelectedPosition + direction;
 
-    boolean moveNext() {
-        if (mItemCount > 0 && mSelectedPosition < mItemCount - 1) {
-            scrollToChild(mSelectedPosition - mFirstPosition + 1);
+        if (mItemCount > 0 && postMove >= 0 && postMove < mItemCount) {
+            scrollToChild(mSelectedPosition - mFirstPosition + direction);
             return true;
         } else {
             return false;
