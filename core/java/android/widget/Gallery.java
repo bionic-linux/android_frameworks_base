@@ -1207,16 +1207,17 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean isLtr = getLayoutDirection() == View.LAYOUT_DIRECTION_LTR;
         switch (keyCode) {
             
         case KeyEvent.KEYCODE_DPAD_LEFT:
-            if (movePrevious()) {
+            if ((isLtr && movePrevious()) || (!isLtr && moveNext())) {
                 playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
                 return true;
             }
             break;
         case KeyEvent.KEYCODE_DPAD_RIGHT:
-            if (moveNext()) {
+            if ((isLtr && moveNext()) || (!isLtr && movePrevious())) {
                 playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
                 return true;
             }
