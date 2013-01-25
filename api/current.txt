@@ -8495,6 +8495,7 @@ package android.drm {
     field public static final int TYPE_REMOVE_ALL_RIGHTS_FAILED = 2007; // 0x7d7
     field public static final int TYPE_RIGHTS_NOT_INSTALLED = 2001; // 0x7d1
     field public static final int TYPE_RIGHTS_RENEWAL_NOT_ALLOWED = 2002; // 0x7d2
+    field public static final int TYPE_VENDOR_SPECIFIC_ERROR = 2009; // 0x7d9
   }
 
   public class DrmEvent {
@@ -8530,6 +8531,7 @@ package android.drm {
     field public static final int TYPE_REMOVE_RIGHTS = 2; // 0x2
     field public static final int TYPE_RIGHTS_INSTALLED = 3; // 0x3
     field public static final int TYPE_RIGHTS_REMOVED = 6; // 0x6
+    field public static final int TYPE_VENDOR_SPECIFIC = 7; // 0x7
     field public static final int TYPE_WAIT_FOR_RIGHTS = 4; // 0x4
   }
 
@@ -8547,6 +8549,7 @@ package android.drm {
     field public static final int TYPE_RIGHTS_ACQUISITION_INFO = 3; // 0x3
     field public static final int TYPE_RIGHTS_ACQUISITION_PROGRESS_INFO = 4; // 0x4
     field public static final int TYPE_UNREGISTRATION_INFO = 2; // 0x2
+    field public static final int TYPE_VENDOR_SPECIFIC_INFO = 5; // 0x5
   }
 
   public class DrmInfoStatus {
