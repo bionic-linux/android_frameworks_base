@@ -259,7 +259,8 @@ public class DrmManagerClient {
                 case DrmInfoEvent.TYPE_RIGHTS_INSTALLED:
                 case DrmInfoEvent.TYPE_WAIT_FOR_RIGHTS:
                 case DrmInfoEvent.TYPE_ACCOUNT_ALREADY_REGISTERED:
-                case DrmInfoEvent.TYPE_RIGHTS_REMOVED: {
+                case DrmInfoEvent.TYPE_RIGHTS_REMOVED:
+                case DrmInfoEvent.TYPE_VENDOR_SPECIFIC: {
                     info = (DrmInfoEvent)msg.obj;
                     break;
                 }
@@ -832,6 +833,7 @@ public class DrmManagerClient {
         case DrmInfoRequest.TYPE_REGISTRATION_INFO:
         case DrmInfoRequest.TYPE_UNREGISTRATION_INFO:
         case DrmInfoRequest.TYPE_RIGHTS_ACQUISITION_INFO:
+        case DrmInfoRequest.TYPE_VENDOR_SPECIFIC_INFO:
             eventType = DrmEvent.TYPE_DRM_INFO_PROCESSED;
             break;
         }
@@ -845,6 +847,7 @@ public class DrmManagerClient {
         case DrmInfoRequest.TYPE_REGISTRATION_INFO:
         case DrmInfoRequest.TYPE_UNREGISTRATION_INFO:
         case DrmInfoRequest.TYPE_RIGHTS_ACQUISITION_INFO:
+        case DrmInfoRequest.TYPE_VENDOR_SPECIFIC_INFO:
             error = DrmErrorEvent.TYPE_PROCESS_DRM_INFO_FAILED;
             break;
         }
