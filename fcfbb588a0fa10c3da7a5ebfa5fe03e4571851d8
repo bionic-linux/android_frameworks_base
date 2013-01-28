@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "O2Litu6A",
+        "filename": "core/java/android/webkit/HTML5Audio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1010553
+      },
+      "writtenOn": "2013-01-28T18:13:48Z",
+      "side": 1,
+      "message": "I will probably share the code with pause()\nlike pause(int newState); \nto avoid duplicating code.",
+      "revId": "fcfbb588a0fa10c3da7a5ebfa5fe03e4571851d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
