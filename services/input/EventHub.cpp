@@ -1015,6 +1015,12 @@ status_t EventHub::openDeviceLocked(const char *devicePath) {
     identifier.vendor = inputId.vendor;
     identifier.version = inputId.version;
 
+    // Disable key repeats from kernel, key repeats are generated in InputDispatcher
+    int repeat_off[2] = {0, 0};
+    if (ioctl(fd, EVIOCSREP, repeat_off)) {
+        ALOGW("Unable to disable key repeats for %s, %s\n", devicePath, strerror(errno));
+    }
+
     // Get device physical location.
     if(ioctl(fd, EVIOCGPHYS(sizeof(buffer) - 1), &buffer) < 1) {
         //fprintf(stderr, "could not get location for %s, %s\n", devicePath, strerror(errno));
