@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PXsSoHo8",
+        "filename": "keystore/java/android/security/AndroidKeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-02-04T22:51:02Z",
+      "side": 1,
+      "message": "Maybe this should be in the KeyStore class itself.",
+      "revId": "388a4f5c60f16b6d4c7cd6a91786ac8310a297c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
