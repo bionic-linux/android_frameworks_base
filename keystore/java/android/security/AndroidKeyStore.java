@@ -163,12 +163,12 @@ public class AndroidKeyStore extends KeyStoreSpi {
     }
 
     private Date getModificationDate(String alias) {
-        final long epochMillis = mKeyStore.getmtime(alias);
-        if (epochMillis == -1L) {
+        final long epochSeconds = mKeyStore.getmtime(alias);
+        if (epochSeconds == -1L) {
             return null;
         }
 
-        return new Date(epochMillis);
+        return new Date(epochSeconds * 1000L);
     }
 
     @Override
