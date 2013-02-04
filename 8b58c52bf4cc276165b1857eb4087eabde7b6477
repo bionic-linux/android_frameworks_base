@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PXsSz-uY",
+        "filename": "keystore/tests/src/android/security/AndroidKeyStoreTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-02-04T22:59:32Z",
+      "side": 1,
+      "message": "gerrit is showing very weird code here:\n\n\"() throws Exception {    public void testKeyStore_DeleteEntry_EmptyStore_Success\"\n\nwhats up with that?",
+      "revId": "8b58c52bf4cc276165b1857eb4087eabde7b6477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
