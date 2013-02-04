@@ -16,6 +16,24 @@
       "revId": "8b58c52bf4cc276165b1857eb4087eabde7b6477",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PXuTPGlE",
+        "filename": "keystore/tests/src/android/security/AndroidKeyStoreTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-02-04T23:01:01Z",
+      "side": 1,
+      "message": "That\u0027s new syntax!\n\nNo, I think it\u0027s Gerrit going crazy.",
+      "parentUuid": "PXsSz-uY",
+      "revId": "8b58c52bf4cc276165b1857eb4087eabde7b6477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
