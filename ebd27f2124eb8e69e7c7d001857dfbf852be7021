@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Pbd7.WSg",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1010082
+      },
+      "writtenOn": "2013-02-05T16:14:12Z",
+      "side": 1,
+      "message": "This is a little confusing. How about (if I understand right):\n\nCurrently, audio will resume playing after a phone call or notification even if the user had manually paused playback. This patch addresses that by introducing a new player state to distinguish the user pausing playback and the browser losing audio focus for some other reason. Audio will only resume if the browser temporarily lost audio focus and not when the user has manually paused playback.",
+      "revId": "ebd27f2124eb8e69e7c7d001857dfbf852be7021",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
