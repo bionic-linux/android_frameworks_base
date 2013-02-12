@@ -124,7 +124,7 @@ public final class Proxy {
             ProxyProperties proxyProperties = sConnectivityManager.getProxy();
 
             if (proxyProperties != null) {
-                if (!proxyProperties.isExcluded(host)) {
+                if (!proxyProperties.isExcluded(url)) {
                     return proxyProperties.makeProxy();
                 }
             }
