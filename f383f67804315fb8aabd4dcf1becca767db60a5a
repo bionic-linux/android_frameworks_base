@@ -70,6 +70,24 @@
       "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P30Vw82Q",
+        "filename": "telephony/java/com/android/internal/telephony/HacIntent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-02-20T21:32:41Z",
+      "side": 1,
+      "message": "How are other modules solving this?\n\nIf it \"must\" be in telephony then this needs to moved to frameworks/opt/telephony which is where TtyIntent is.\n\nNote: TtyIntent shouldn\u0027t be in internal telephony either, so hopefully we can have both of them moved to the right place.",
+      "parentUuid": "P5ho3I.A",
+      "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
