@@ -16,6 +16,24 @@
       "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P9hvc59w",
+        "filename": "telephony/java/com/android/internal/telephony/HacIntent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2013-02-20T10:34:30Z",
+      "side": 1,
+      "message": "Implementation analogous to Tty.",
+      "parentUuid": "P3bpUayA",
+      "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
