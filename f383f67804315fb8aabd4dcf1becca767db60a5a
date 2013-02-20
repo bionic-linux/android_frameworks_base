@@ -52,6 +52,24 @@
       "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P5ho3I.A",
+        "filename": "telephony/java/com/android/internal/telephony/HacIntent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003403
+      },
+      "writtenOn": "2013-02-20T20:38:59Z",
+      "side": 1,
+      "message": "Those modules can\u0027t see each other, though. We need a shared header file for this.",
+      "parentUuid": "P33Nk2j8",
+      "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
