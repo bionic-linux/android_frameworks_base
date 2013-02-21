@@ -88,6 +88,24 @@
       "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QBP4CYRU",
+        "filename": "telephony/java/com/android/internal/telephony/HacIntent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2013-02-21T08:18:32Z",
+      "side": 1,
+      "message": "It must be in the framework for sure to be available to both SystemUI and Phone app (and everyone else needing it). Traditionally, TTY and HAC are telephony technologies intended to provide phone access to the hearing impaired, hence their placement and usage. I could move HacIntent.java to frameworks/opt/telephony, though.\n\nThoughts from Eric and Jake?",
+      "parentUuid": "P30Vw82Q",
+      "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
