@@ -106,6 +106,24 @@
       "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P-0bQVPE",
+        "filename": "telephony/java/com/android/internal/telephony/HacIntent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-02-21T14:02:05Z",
+      "side": 1,
+      "message": "First both HacIntent and TtyIntent are defined in the package com.android.internal.telephony, which means they really shouldn\u0027t be used outsiders. And in our code base they are only used by PhoneStatusBarPolicy and the Phone application.\n\nIf these are supposed to be public then it would seem they should be defined in android.content.Intent which is where many of the SystemUI intents are defined. If it should be \"private\" then it would seem that it should be defined in SystemUI which is the only consumer. If SystemUI isn\u0027t possible then the Phone app or android.content.Intent would seem to be the best place.",
+      "parentUuid": "QBP4CYRU",
+      "revId": "f383f67804315fb8aabd4dcf1becca767db60a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
