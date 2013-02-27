@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.Rlog;
+import android.content.res.Resources;
 
 /**
  * Contains phone signal strength related information.
@@ -745,13 +746,22 @@ public class SignalStrength implements Parcelable {
          * = -10log P1/P2 dB
          */
         int rssiIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, rsrpIconLevel = -1, snrIconLevel = -1;
+        
+        int rsrpThreshType = Resources.getSystem().getInteger(com.android.internal.R.integer.config_LTE_RSRP_threshold_type);
+        int[] threshRsrp = new int[6];
+        if (rsrpThreshType == 0){
+            threshRsrp = new int[]{-140,-115,-105,-95,-85,-44};
+        } 
+        else if (rsrpThreshType == 1){
+            threshRsrp = new int[]{-140,-128,-118,-108,-98,-44};
+        }
 
-        if (mLteRsrp > -44) rsrpIconLevel = -1;
-        else if (mLteRsrp >= -85) rsrpIconLevel = SIGNAL_STRENGTH_GREAT;
-        else if (mLteRsrp >= -95) rsrpIconLevel = SIGNAL_STRENGTH_GOOD;
-        else if (mLteRsrp >= -105) rsrpIconLevel = SIGNAL_STRENGTH_MODERATE;
-        else if (mLteRsrp >= -115) rsrpIconLevel = SIGNAL_STRENGTH_POOR;
-        else if (mLteRsrp >= -140) rsrpIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        if (mLteRsrp > threshRsrp[5]) rsrpIconLevel = -1;
+        else if (mLteRsrp >= threshRsrp[4]) rsrpIconLevel = SIGNAL_STRENGTH_GREAT;
+        else if (mLteRsrp >= threshRsrp[3]) rsrpIconLevel = SIGNAL_STRENGTH_GOOD;
+        else if (mLteRsrp >= threshRsrp[2]) rsrpIconLevel = SIGNAL_STRENGTH_MODERATE;
+        else if (mLteRsrp >= threshRsrp[1]) rsrpIconLevel = SIGNAL_STRENGTH_POOR;
+        else if (mLteRsrp >= threshRsrp[0]) rsrpIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
 
         /*
          * Values are -200 dB to +300 (SNR*10dB) RS_SNR >= 13.0 dB =>4 bars 4.5
@@ -790,6 +800,7 @@ public class SignalStrength implements Parcelable {
         else if (mLteSignalStrength >= 8) rssiIconLevel = SIGNAL_STRENGTH_GOOD;
         else if (mLteSignalStrength >= 5) rssiIconLevel = SIGNAL_STRENGTH_MODERATE;
         else if (mLteSignalStrength >= 0) rssiIconLevel = SIGNAL_STRENGTH_POOR;
+
         if (DBG) log("getLTELevel - rssi:" + mLteSignalStrength + " rssiIconLevel:"
                 + rssiIconLevel);
         return rssiIconLevel;
