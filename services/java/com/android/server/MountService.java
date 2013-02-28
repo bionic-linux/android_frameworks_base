@@ -202,6 +202,7 @@ class MountService extends IMountService.Stub
             new ArrayList<MountServiceBinderListener>();
     private final CountDownLatch mConnectedSignal = new CountDownLatch(1);
     private final CountDownLatch mAsecsScanned = new CountDownLatch(1);
+    private CountDownLatch                        mListenerAdded = new CountDownLatch(1);
     private boolean                               mSendUmsConnectedOnBoot = false;
 
     /**
@@ -496,6 +497,10 @@ class MountService extends IMountService.Stub
         waitForLatch(mConnectedSignal);
     }
 
+    private void waitForListener() {
+        waitForLatch(mListenerAdded);
+    }
+
     private void waitForLatch(CountDownLatch latch) {
         for (;;) {
             try {
@@ -512,6 +517,9 @@ class MountService extends IMountService.Stub
     }
 
     private void handleSystemReady() {
+        if ("0".equals(SystemProperties.get("ro.config.headless", "0"))) {
+            waitForListener();
+        }
         // Snapshot current volume states since it's not safe to call into vold
         // while holding locks.
         final HashMap<String, String> snapshot;
@@ -1338,6 +1346,10 @@ class MountService extends IMountService.Stub
             } catch (RemoteException rex) {
                 Slog.e(TAG, "Failed to link to listener death");
             }
+        }
+        if (mListenerAdded != null) {
+            mListenerAdded.countDown();
+            mListenerAdded = null;
         }
     }
 
