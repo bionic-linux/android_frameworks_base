@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QidmuE5I",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1866,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2013-03-01T16:55:07Z",
+      "side": 1,
+      "message": "Why not reset FORCE_SPEAKER here?",
+      "revId": "6c56b588dfd96e8ff2428c976fc710f2644c3906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
