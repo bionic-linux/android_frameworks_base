@@ -371,7 +371,7 @@ public class NotificationManagerService extends INotificationManager.Stub
                 + Integer.toHexString(System.identityHashCode(this))
                 + " pkg=" + pkg
                 + " id=" + Integer.toHexString(id)
-                + " tag=" + tag 
+                + " tag=" + tag
                 + " score=" + score
                 + "}";
         }
@@ -519,7 +519,7 @@ public class NotificationManagerService extends INotificationManager.Stub
 
             boolean queryRestart = false;
             boolean packageChanged = false;
-            
+
             if (action.equals(Intent.ACTION_PACKAGE_REMOVED)
                     || action.equals(Intent.ACTION_PACKAGE_RESTARTED)
                     || (packageChanged=action.equals(Intent.ACTION_PACKAGE_CHANGED))
@@ -541,11 +541,15 @@ public class NotificationManagerService extends INotificationManager.Stub
                     }
                     if (packageChanged) {
                         // We cancel notifications for packages which have just been disabled
+                        try {
                         final int enabled = mContext.getPackageManager()
                                 .getApplicationEnabledSetting(pkgName);
                         if (enabled == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
                                 || enabled == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
                             return;
+                        }
+                        } catch (IllegalArgumentException e) {
+                            Slog.e(TAG, "The package was removed, We will cancel notifications - " + e);
                         }
                     }
                     pkgList = new String[]{pkgName};
@@ -904,7 +908,7 @@ public class NotificationManagerService extends INotificationManager.Stub
         enqueueNotificationInternal(pkg, Binder.getCallingUid(), Binder.getCallingPid(),
                 tag, id, notification, idOut, userId);
     }
-    
+
     private final static int clamp(int x, int low, int high) {
         return (x < low) ? low : ((x > high) ? high : x);
     }
@@ -974,7 +978,7 @@ public class NotificationManagerService extends INotificationManager.Stub
             if (notification.priority < Notification.PRIORITY_HIGH) notification.priority = Notification.PRIORITY_HIGH;
         }
 
-        // 1. initial score: buckets of 10, around the app 
+        // 1. initial score: buckets of 10, around the app
         int score = notification.priority * NOTIFICATION_PRIORITY_MULTIPLIER; //[-20..20]
 
         // 2. Consult external heuristics (TBD)
@@ -1000,7 +1004,7 @@ public class NotificationManagerService extends INotificationManager.Stub
         final boolean canInterrupt = (score >= SCORE_INTERRUPTION_THRESHOLD);
 
         synchronized (mNotificationList) {
-            NotificationRecord r = new NotificationRecord(pkg, tag, id, 
+            NotificationRecord r = new NotificationRecord(pkg, tag, id,
                     callingUid, callingPid, userId,
                     score,
                     notification);
