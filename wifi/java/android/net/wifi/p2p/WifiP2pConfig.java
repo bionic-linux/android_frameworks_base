@@ -33,6 +33,12 @@ public class WifiP2pConfig implements Parcelable {
     public String deviceAddress;
 
     /**
+      * Invited operating Frequency
+      * @hide
+      */
+    public int mFreq = 0;
+
+    /**
      * Wi-Fi Protected Setup information
      */
     public WpsInfo wps;
