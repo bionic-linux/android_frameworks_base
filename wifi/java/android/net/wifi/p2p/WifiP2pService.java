@@ -1042,6 +1042,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
 
                     mSavedPeerConfig = new WifiP2pConfig();
                     mSavedPeerConfig.deviceAddress = group.getOwner().deviceAddress;
+                    mSavedPeerConfig.mFreq = group.mInvitedFreq;
 
                     //Check if we have the owner in peer list and use appropriate
                     //wps method. Default is to use PBC.
@@ -1079,9 +1080,9 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         // check if the go persistent group is present.
                         netId = mGroups.getNetworkId(mThisDevice.deviceAddress);
                         if (netId != -1) {
-                            ret = mWifiNative.p2pGroupAdd(netId);
+                            ret = mWifiNative.p2pGroupAdd(netId, 0);
                         } else {
-                            ret = mWifiNative.p2pGroupAdd(true);
+                                ret = mWifiNative.p2pGroupAdd(true);
                         }
                     } else {
                         ret = mWifiNative.p2pGroupAdd(false);
@@ -2097,7 +2098,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             loge("config is null");
             return CONNECT_FAILURE;
         }
-
+        boolean ret = false;
         boolean isResp = (mSavedPeerConfig != null &&
                 config.deviceAddress.equals(mSavedPeerConfig.deviceAddress));
         mSavedPeerConfig = config;
@@ -2120,12 +2121,19 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             join = false;
         } else if (join) {
             int netId = mGroups.getNetworkId(dev.deviceAddress, ssid);
-            if (netId >= 0) {
-                // Skip WPS and start 4way handshake immediately.
-                if (!mWifiNative.p2pGroupAdd(netId)) {
-                    return CONNECT_FAILURE;
-                }
+            if (netId != -1) {
+                  if (mSavedPeerConfig.mFreq! = 0) {
+                       if (DBG) logd("mSavedPeerConfig.mFreq=" + mSavedPeerConfig.mFreq);
+                       ret = mWifiNative.p2pGroupAdd(netId, mSavedPeerConfig.mFreq);
+                  }
+                  else {
+                       ret = mWifiNative.p2pGroupAdd(netId, 0);
+                  }
+            }
+            if (ret) {
                 return CONNECT_SUCCESS;
+            } else {
+                return CONNECT_FAILURE;
             }
         }
 
