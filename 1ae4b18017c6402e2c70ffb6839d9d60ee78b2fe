@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QvAw7G9k",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-05T19:21:48Z",
+      "side": 1,
+      "message": "We should not remember it like this. This should be instead be passed from the invitation procedure to the group creation.\n\nIt needs to be remembered as part of mSavedPeerConfig. see my comments in WifiP2pService",
+      "revId": "1ae4b18017c6402e2c70ffb6839d9d60ee78b2fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QvExYMzk",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-05T19:21:48Z",
+      "side": 1,
+      "message": "In this path, lets copy the frequency passed from the supplicant and remember it as part of \"mSavedPeerConfig\"",
+      "revId": "1ae4b18017c6402e2c70ffb6839d9d60ee78b2fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QvOyPn3A",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-05T19:21:48Z",
+      "side": 1,
+      "message": "Here, lets pass the frequency remembered as part of \"mSavedPeerConfig\" if any",
+      "revId": "1ae4b18017c6402e2c70ffb6839d9d60ee78b2fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
