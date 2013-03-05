@@ -631,8 +631,11 @@ public class WifiNative {
         return doBooleanCommand("P2P_GROUP_ADD");
     }
 
-    public boolean p2pGroupAdd(int netId) {
-        return doBooleanCommand("P2P_GROUP_ADD persistent=" + netId);
+    public boolean p2pGroupAdd(int netId, int pref_freq) {
+        if(pref_freq !=0 )
+             return doBooleanCommand("P2P_GROUP_ADD persistent=" + netId + " " + "freq=" + pref_freq);
+        else
+             return doBooleanCommand("P2P_GROUP_ADD persistent=" + netId);
     }
 
     public boolean p2pGroupRemove(String iface) {
