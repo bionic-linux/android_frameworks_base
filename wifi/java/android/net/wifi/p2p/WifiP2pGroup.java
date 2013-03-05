@@ -63,6 +63,10 @@ public class WifiP2pGroup implements Parcelable {
     /** The network id in the wpa_supplicant */
     private int mNetId;
 
+   /** Invited operating Frequency.
+   * {@hide} */
+    public static int mInvitedFreq;
+
     /** P2P group started string pattern */
     private static final Pattern groupStartedPattern = Pattern.compile(
         "ssid=\"(.+)\" " +
@@ -145,9 +149,15 @@ public class WifiP2pGroup implements Parcelable {
 
                 if (nameValue[0].equals("persistent")) {
                     mOwner = new WifiP2pDevice(sa);
-                    mNetId = Integer.parseInt(nameValue[1]);
+                    mNetId = Integer.parseInt(nameValue[0]);
                     continue;
                 }
+
+                if (nameValue[0].equals("freq")) {
+                    mInvitedFreq = Integer.parseInt(nameValue[0]);
+                    continue;
+                }
+
             }
         } else {
             throw new IllegalArgumentException("Malformed supplicant event");

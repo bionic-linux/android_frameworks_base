@@ -1066,10 +1066,14 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         if (netId != -1) {
                             ret = mWifiNative.p2pGroupAdd(netId);
                         } else {
-                            ret = mWifiNative.p2pGroupAdd(true);
+                             if(WifiP2pGroup.mInvitedFreq != 0) {
+                                 ret = mWifiNative.p2pGroupAdd(true,WifiP2pGroup.mInvitedFreq);
+                             } else {
+                                ret = mWifiNative.p2pGroupAdd(true, 0);
+                             }
                         }
                     } else {
-                        ret = mWifiNative.p2pGroupAdd(false);
+                        ret = mWifiNative.p2pGroupAdd(false, 0);
                     }
 
                     if (ret) {

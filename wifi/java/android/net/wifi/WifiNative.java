@@ -624,9 +624,12 @@ public class WifiNative {
         return false;
     }
 
-    public boolean p2pGroupAdd(boolean persistent) {
+    public boolean p2pGroupAdd(boolean persistent, int pref_freq) {
         if (persistent) {
-            return doBooleanCommand("P2P_GROUP_ADD persistent");
+            if(pref_freq != 0)
+                 return doBooleanCommand("P2P_GROUP_ADD persistent " + pref_freq);
+            else
+                 return doBooleanCommand("P2P_GROUP_ADD persistent");
         }
         return doBooleanCommand("P2P_GROUP_ADD");
     }
