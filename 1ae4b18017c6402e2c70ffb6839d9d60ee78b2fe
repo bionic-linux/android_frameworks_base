@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "Q-SWxjh8",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-06T15:56:14Z",
+      "side": 1,
+      "message": "Well, we already track device address, you should add frequency info. to it. This would be the right way to do this. Tracking frequency as a global static is the wrong thing to do both in terms of how the code is written and what it will do.One device sends invitiation and you could end up creating group on that frequency for something else as a result of that.\n\nThe frequency selection should only affect for the invitation received.",
+      "parentUuid": "Q8rDduGU",
+      "revId": "1ae4b18017c6402e2c70ffb6839d9d60ee78b2fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QvOyPn3A",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
