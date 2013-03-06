@@ -306,8 +306,8 @@ public class SizeAdaptiveLayout extends ViewGroup {
      *
      * TODO extend to width and height
      *
-     * @attr ref android.R.styleable#SizeAdaptiveLayout_Layout_layout_minHeight
-     * @attr ref android.R.styleable#SizeAdaptiveLayout_Layout_layout_maxHeight
+     * // @attr ref android.R.styleable#SizeAdaptiveLayout_Layout_layout_minHeight
+     * // @attr ref android.R.styleable#SizeAdaptiveLayout_Layout_layout_maxHeight
      */
     public static class LayoutParams extends ViewGroup.LayoutParams {
 
