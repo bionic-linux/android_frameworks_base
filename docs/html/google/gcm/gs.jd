@@ -184,7 +184,7 @@ if (regId.equals("")) {
 
 <p>To write the server-side application:</p>
 <ol>
-  <li> Copy the <code>gcm-server.jar</code> file from the SDK's <code>gcm-server/dist</code> directory to your server classpath.</li>
+  <li> Copy the <code>gcm-server.jar</code> file from the SDK's <code>gcm-server/dist</code> directory and the <code>json_simple-1.1.jar</code> file from the SDK's <code>gcm-server/lib</code> directory to your server classpath.</li>
   <li>Create a servlet (or other server-side mechanism) that can be used by the Android application to send the registration ID received by GCM . The application might also need to send other information&mdash;such as the user's email address or username&mdash;so that the server can associate the registration ID with the user owning the device.</li>
   <li>Similarly, create a servlet used to unregister registration IDs.<br>
     </li>
