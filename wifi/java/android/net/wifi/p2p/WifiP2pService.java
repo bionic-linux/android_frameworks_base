@@ -217,6 +217,9 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
     /* the package name of foreground application. */
     private String mForegroundAppPkgName;
 
+    /**@hide*/
+    public static boolean mIsGroupOwner = false;
+
     /* Is chosen as a unique range to avoid conflict with
        the range defined in Tethering.java */
     private static final String[] DHCP_RANGE = {"192.168.49.2", "192.168.49.254"};
@@ -1332,6 +1335,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         //failure during 4-way Handshake.
                         mWifiNative.setP2pGroupIdle(mGroup.getInterface(), GROUP_IDLE_TIME_S);
                         startDhcpServer(mGroup.getInterface());
+                        mIsGroupOwner = true;
                     } else {
                         mWifiNative.setP2pGroupIdle(mGroup.getInterface(), GROUP_IDLE_TIME_S);
                         mDhcpStateMachine = DhcpStateMachine.makeDhcpStateMachine(mContext,
@@ -1599,6 +1603,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         replyToMessage(message, WifiP2pManager.REMOVE_GROUP_FAILED,
                                 WifiP2pManager.ERROR);
                     }
+                    mIsGroupOwner = false;
                     break;
                 /* We do not listen to NETWORK_DISCONNECTION_EVENT for group removal
                  * handling since supplicant actually tries to reconnect after a temporary

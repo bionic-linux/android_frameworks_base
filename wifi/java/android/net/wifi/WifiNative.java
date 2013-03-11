@@ -48,6 +48,8 @@ public class WifiNative {
     static final int BLUETOOTH_COEXISTENCE_MODE_DISABLED = 1;
     static final int BLUETOOTH_COEXISTENCE_MODE_SENSE = 2;
 
+    static final int P2P_SEARCH_DELAY_MSECS = 100;
+
     String mInterface = "";
     private boolean mSuspendOptEnabled = false;
 
@@ -411,12 +413,12 @@ public class WifiNative {
 
     public boolean startWpsPinKeypad(String pin) {
         if (TextUtils.isEmpty(pin)) return false;
-        return doBooleanCommand("WPS_PIN any " + pin);
+          return doBooleanCommand("WPS_PIN any " + pin);
     }
 
     public boolean startWpsPinKeypad(String iface, String pin) {
         if (TextUtils.isEmpty(pin)) return false;
-        return doBooleanCommand("WPS_PIN interface=" + iface + " any " + pin);
+           return doBooleanCommand("WPS_PIN interface=" + iface + " any " + pin);
     }
 
 
@@ -520,14 +522,20 @@ public class WifiNative {
     }
 
     public boolean p2pFind() {
-        return doBooleanCommand("P2P_FIND");
+        if (WifiP2pService.mIsGroupOwner)
+            return doBooleanCommand("P2P_FIND" + " delay=" + P2P_SEARCH_DELAY_MSECS);
+        else
+            return doBooleanCommand("P2P_FIND");
     }
 
     public boolean p2pFind(int timeout) {
         if (timeout <= 0) {
             return p2pFind();
         }
-        return doBooleanCommand("P2P_FIND " + timeout);
+        if (WifiP2pService.mIsGroupOwner)
+            return doBooleanCommand("P2P_FIND " + timeout + " delay=" + P2P_SEARCH_DELAY_MSECS);
+        else
+            return doBooleanCommand("P2P_FIND " + timeout);
     }
 
     public boolean p2pStopFind() {
