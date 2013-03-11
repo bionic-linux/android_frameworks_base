@@ -830,4 +830,9 @@ public class WifiNative {
     public boolean p2pServDiscCancelReq(String id) {
         return doBooleanCommand("P2P_SERV_DISC_CANCEL_REQ " + id);
     }
+
+    public boolean setP2pDiscInterval(int minDisc, int maxDisc, int maxTus) {
+      return doBooleanCommand("P2P_SET disc_int=" + minDisc + " " + maxDisc + " " + maxTus);
+    }
+
 }

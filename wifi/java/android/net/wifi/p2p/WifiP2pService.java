@@ -1336,6 +1336,8 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         mWifiNative.setP2pGroupIdle(mGroup.getInterface(), GROUP_IDLE_TIME_S);
                         startDhcpServer(mGroup.getInterface());
                         mIsGroupOwner = true;
+                        mWifiNative.setP2pDiscInterval(2, 3, 40);
+
                     } else {
                         mWifiNative.setP2pGroupIdle(mGroup.getInterface(), GROUP_IDLE_TIME_S);
                         mDhcpStateMachine = DhcpStateMachine.makeDhcpStateMachine(mContext,
@@ -1604,6 +1606,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                                 WifiP2pManager.ERROR);
                     }
                     mIsGroupOwner = false;
+                    mWifiNative.setP2pDiscInterval(2, 3, -1);
                     break;
                 /* We do not listen to NETWORK_DISCONNECTION_EVENT for group removal
                  * handling since supplicant actually tries to reconnect after a temporary
