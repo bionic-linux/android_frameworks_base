@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "RgSS4PGA",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-12T15:46:07Z",
+      "side": 1,
+      "message": "Please address Jouni\u0027s comment of including \"freq\u003d\".\n\nAlso, follow this format with braces:\n\nif () {\n              \n} else {\n}",
+      "revId": "cfb4d0aeb3d841936beeaef5adc0511a73af95b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RgeR21Os",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-12T15:46:07Z",
+      "side": 1,
+      "message": "This should not be static, the frequency selection has to be done per device.",
+      "revId": "cfb4d0aeb3d841936beeaef5adc0511a73af95b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RgaSAzIA",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-12T15:46:07Z",
+      "side": 1,
+      "message": "Please fix format\n\n/** Invited operating frequency @hide */",
+      "revId": "cfb4d0aeb3d841936beeaef5adc0511a73af95b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RgUSQ4M4",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-12T15:46:07Z",
+      "side": 1,
+      "message": "Why did this change ? This seems like a bug",
+      "revId": "cfb4d0aeb3d841936beeaef5adc0511a73af95b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RgSSN3LI",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-12T15:46:07Z",
+      "side": 1,
+      "message": "This also should be nameValue[1]",
+      "revId": "cfb4d0aeb3d841936beeaef5adc0511a73af95b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
