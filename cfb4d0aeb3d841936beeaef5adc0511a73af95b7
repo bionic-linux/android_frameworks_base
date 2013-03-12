@@ -84,6 +84,40 @@
       "revId": "cfb4d0aeb3d841936beeaef5adc0511a73af95b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RgOh2p.s",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1019876
+      },
+      "writtenOn": "2013-03-12T15:53:45Z",
+      "side": 1,
+      "message": "revert whitespace change",
+      "revId": "cfb4d0aeb3d841936beeaef5adc0511a73af95b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RgMh749E",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1019876
+      },
+      "writtenOn": "2013-03-12T15:53:45Z",
+      "side": 1,
+      "message": "else should \"cuddle\" both braces",
+      "revId": "cfb4d0aeb3d841936beeaef5adc0511a73af95b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
