@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Rf3KfRlI",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-03-12T20:27:31Z",
+      "side": 1,
+      "message": "Please do:\nif (condition) {\n} else {\n}\n\nAlso, split it over two lines when it exceeds 100 characters.",
+      "revId": "60c05b195c0adf4430dab8b9e852f711693bb212",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
