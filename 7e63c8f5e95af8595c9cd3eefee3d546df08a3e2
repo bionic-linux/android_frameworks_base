@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Rx34XrV8",
+        "filename": "core/java/android/content/pm/SELinuxMMAC.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-03-16T00:50:22Z",
+      "side": 1,
+      "message": "Could we please move this file over to the package manager service package?  I don\u0027t think there is any need to have this in the framework library?",
+      "revId": "7e63c8f5e95af8595c9cd3eefee3d546df08a3e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Rx.FjIu8",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-03-16T00:50:22Z",
+      "side": 1,
+      "message": "I think this should be done up earlier in the boot, where the package manager reads its other configuration data -- see the call to readPermissions().",
+      "revId": "7e63c8f5e95af8595c9cd3eefee3d546df08a3e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RxwFGDmU",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-03-16T00:50:22Z",
+      "side": 1,
+      "message": "Please remove this log.  If you really need a log to identify performance issues during boot, you can do this as an event log like the other boot stage logs.",
+      "revId": "7e63c8f5e95af8595c9cd3eefee3d546df08a3e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ry5dApEs",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3646,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-03-16T00:50:22Z",
+      "side": 1,
+      "message": "This is going to apply whatever policies are configured to all regular third party apps as well as system apps.  We don\u0027t want this -- third party applications must all be treated equally.\n\nI\u0027d suggest making your SELinuxMMAC class keep track of a single policy that applies to all third party apps.  If this package is not a system package, just always use that.  Otherwise use the definitions here to assign the policy.  Note that you will need to move this assign to a little later in the function, to after we have determined if this is an update to a system apk (system updated system apks should also get the same policy as when they are actually on the system image).",
+      "revId": "7e63c8f5e95af8595c9cd3eefee3d546df08a3e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
