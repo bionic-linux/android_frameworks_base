@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "R57sb534",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2013-03-18T22:38:54Z",
+      "side": 1,
+      "message": "Should be private.",
+      "revId": "542d0dfdf36e47baa1ac94ea91b093338e206b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "R53sJXzY",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2013-03-18T22:38:54Z",
+      "side": 1,
+      "message": "invalid space",
+      "revId": "542d0dfdf36e47baa1ac94ea91b093338e206b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "R55sWK1g",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2013-03-18T22:38:54Z",
+      "side": 1,
+      "message": "To be simple, remove \"ret\".\n\nif (!mWifiNative.p2pGroupAdd(netId, mSavedPeerConfig.mFreq) {\n    return CONNECT_FAILURE;\n}\nreturn CONNECT_SUCCESS;",
+      "revId": "542d0dfdf36e47baa1ac94ea91b093338e206b52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
