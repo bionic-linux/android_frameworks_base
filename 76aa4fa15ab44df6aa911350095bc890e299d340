@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SGXjBzU4",
+        "filename": "core/java/android/widget/TimePicker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1010257
+      },
+      "writtenOn": "2013-03-20T23:01:36Z",
+      "side": 1,
+      "message": "No need for the null checks. These are final fields that are initialized in the ctor and also accessed after the init. If they are null it will crash in the ctor. Note that these widgets are guaranteed to be in the layout file.",
+      "revId": "76aa4fa15ab44df6aa911350095bc890e299d340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
