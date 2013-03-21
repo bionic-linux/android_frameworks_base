@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SVwvGvWc",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-03-21T23:59:41Z",
+      "side": 1,
+      "message": "This still needs to apply only a single policy to all third party apps.  This function is called for every apk, both on the system image and third party apps in /data.  However, in the platform we do not allow different policies to be applied to different third party apps based on hard-coded (or configured) certificates or package names in the platform.\n\nSo, this function needs to first check whether this is not a system app (if FLAG_SYSTEM is not set) and, in that case, apply a single policy that has been set for all third party apps, not going through the checks against signatures and package names here.\n\nThis is also why I said in the previous comments at the call point of this function that it should be moved to later after FLAG_SYSTEM has been correctly determined, based on whether the apk being installed is an update to a system app.",
+      "revId": "1b833651662bfef0b1dadd419c41b09f6f6e0b99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
