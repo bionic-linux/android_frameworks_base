@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SYgCk5vM",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2013-03-22T01:40:04Z",
+      "side": 1,
+      "message": "Hang on.. logic might not be good here.",
+      "revId": "726dd4fa32275bdf324ca942c9d0bbc31500d2c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
