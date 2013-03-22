@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SYsCAPjk",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2013-03-22T01:55:23Z",
+      "side": 1,
+      "message": "Assuming we want to use the key matching on:\n\nA \u003d pkg.applicationInfo.flags \u0026 ApplicationInfo.FLAG_SYSTEM\nB \u003d pkg.applicationInfo.flags \u0026 ApplicationInfo.FLAG_UPDATED_SYSTEM_APP\n\nwe want to enter the if statement on condition false false (Not system or system update ... something else)\n\nKarnaugh Map with 0\u0027s looping gives:\n!A and !B\n\nApply DeMorgans:\n!(A || B)\n\nI have not tested this patch, no AOSP devices handy.",
+      "revId": "9d6cec3e6f9b59124ff8d287360b4e1303116b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
