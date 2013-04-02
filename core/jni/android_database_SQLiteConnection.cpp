@@ -752,8 +752,8 @@ static jlong nativeExecuteForCursorWindow(JNIEnv* env, jclass clazz,
     sqlite3_reset(statement);
 
     // Report the total number of rows on request.
-    if (startPos > totalRows) {
-        ALOGE("startPos %d > actual rows %d", startPos, totalRows);
+    if (startPos >= totalRows) {
+        ALOGE("startPos %d >= actual rows %d", startPos, totalRows);
     }
     jlong result = jlong(startPos) << 32 | jlong(totalRows);
     return result;
