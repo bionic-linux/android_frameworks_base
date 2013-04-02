@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "S75Mf-Mo",
+        "filename": "services/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9415,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2013-04-02T01:36:36Z",
+      "side": 1,
+      "message": "Do the  assignments of reportDraw and newConfig before checking (win.mClient instanceof IWindow.Stub). Then use them in both calls to resized().\n\nPlease limit line lengths to 100 characters (three places).",
+      "revId": "834ab960b033a984a760b5543acefb52c73ed04b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S7-MecMs",
+        "filename": "services/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9420,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2013-04-02T01:36:36Z",
+      "side": 1,
+      "message": "As you point out, RemoteException can\u0027t be thrown, and it\u0027s already in a larger try/catch(RemoteException) block, so leave out the new try/catch.",
+      "revId": "834ab960b033a984a760b5543acefb52c73ed04b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
