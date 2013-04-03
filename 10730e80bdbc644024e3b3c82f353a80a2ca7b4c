@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "S8nZXyNM",
+        "filename": "media/java/android/media/MiniThumbFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2013-04-03T17:41:49Z",
+      "side": 1,
+      "message": "I know you modeled this after the existing method, but I would prefer this to return a status code, rather than the value of mMiniThumbIndexFile, since that\u0027s all the return value is ever used for anyway.",
+      "revId": "10730e80bdbc644024e3b3c82f353a80a2ca7b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8tahVKM",
+        "filename": "media/java/android/media/MiniThumbFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2013-04-03T17:41:49Z",
+      "side": 1,
+      "message": "line too long",
+      "revId": "10730e80bdbc644024e3b3c82f353a80a2ca7b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8pbArE0",
+        "filename": "media/java/android/media/MiniThumbFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2013-04-03T17:41:49Z",
+      "side": 1,
+      "message": "line too long",
+      "revId": "10730e80bdbc644024e3b3c82f353a80a2ca7b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8nYJiOE",
+        "filename": "media/java/android/media/MiniThumbFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2013-04-03T17:41:49Z",
+      "side": 1,
+      "message": "line too long",
+      "revId": "10730e80bdbc644024e3b3c82f353a80a2ca7b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8paSbEk",
+        "filename": "media/java/android/media/MiniThumbFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2013-04-03T17:41:49Z",
+      "side": 1,
+      "message": "at this point the file does exist, otherwise you wouldn\u0027t be in this branch of the \"if (r !\u003d null)\", but it\u0027s empty.",
+      "revId": "10730e80bdbc644024e3b3c82f353a80a2ca7b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8jYPAOo",
+        "filename": "media/java/android/media/MiniThumbFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2013-04-03T17:41:49Z",
+      "side": 1,
+      "message": "you\u0027re comparing the number of bytes written (which should be 8 if there was no error) to the file version (which is currently 3)",
+      "revId": "10730e80bdbc644024e3b3c82f353a80a2ca7b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8lYMhPI",
+        "filename": "media/java/android/media/MiniThumbFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2013-04-03T17:41:49Z",
+      "side": 1,
+      "message": "tabs",
+      "revId": "10730e80bdbc644024e3b3c82f353a80a2ca7b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
