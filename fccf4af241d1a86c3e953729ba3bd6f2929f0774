@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TBb3rv50",
+        "filename": "cmds/input/src/com/android/commands/input/Input.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2013-04-04T18:21:40Z",
+      "side": 1,
+      "message": "I see what you\u0027re doing here, but I think it\u0027s simpler to just say \"input keyevent [\u003ckey code number or name\u003e...]\".\n\nAlso, line length.",
+      "revId": "fccf4af241d1a86c3e953729ba3bd6f2929f0774",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
