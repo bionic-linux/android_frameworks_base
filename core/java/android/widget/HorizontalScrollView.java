@@ -29,6 +29,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.View.OnLayoutChangeListener;
 import android.view.ViewConfiguration;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
@@ -82,6 +83,10 @@ public class HorizontalScrollView extends FrameLayout {
      * Ideally the view hierarchy would keep track of this for us.
      */
     private boolean mIsLayoutDirty = true;
+
+    private boolean mScrollXIsMirrored = false;
+
+    private OnLayoutChangeListener mChildOnLayoutListener = null;
 
     /**
      * The child to give focus to in the event that a child has requested focus while the
@@ -239,6 +244,67 @@ public class HorizontalScrollView extends FrameLayout {
         }
 
         super.addView(child, index, params);
+    }
+
+    @Override
+    public void removeView(View view) {
+        removeChildOnLayoutListener(view);
+        super.removeView(view);
+    }
+
+    @Override
+    public void removeViewAt(int index) {
+        View view = getChildAt(index);
+        if (view != null) {
+            removeChildOnLayoutListener(view);
+        }
+        super.removeViewAt(index);
+    }
+
+    @Override
+    public void removeViewInLayout(View view) {
+        removeChildOnLayoutListener(view);
+        super.removeViewInLayout(view);
+    }
+
+    @Override
+    public void removeViews(int start, int count) {
+        View view = getChildAt(start);
+        if (view != null) {
+            removeChildOnLayoutListener(view);
+        }
+        super.removeViews(start, count);
+    }
+
+    @Override
+    public void removeViewsInLayout(int start, int count) {
+        View view = getChildAt(start);
+        if (view != null) {
+            removeChildOnLayoutListener(view);
+        }
+        super.removeViewsInLayout(start, count);
+    }
+
+    private void ensureChildOnLayoutListener(View view) {
+        if (mChildOnLayoutListener == null) {
+            mChildOnLayoutListener = new OnLayoutChangeListener() {
+
+                public void onLayoutChange(View view, int left, int top, int right, int bottom,
+                        int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    adjustChildPositionIfNeeded(view);
+                }
+
+            };
+            view.addOnLayoutChangeListener(mChildOnLayoutListener);
+        }
+    }
+
+    private void removeChildOnLayoutListener(View view) {
+        if (view != getChildAt(0)) return;
+        if (mChildOnLayoutListener != null) {
+            view.removeOnLayoutChangeListener(mChildOnLayoutListener);
+            mChildOnLayoutListener = null;
+        }
     }
 
     /**
@@ -1449,6 +1515,30 @@ public class HorizontalScrollView extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
+        final View child = getChildAt(0);
+        if (child != null) {
+            if (getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+                adjustChildPositionIfNeeded(child);
+                ensureChildOnLayoutListener(child);
+            } else {
+                removeChildOnLayoutListener(child);
+            }
+            // When both the HorizontalScrollView and the child has layout direction RTL mScrollX
+            // should mirror (mScrollX is per default 0, which is natural in an LTR perspective)
+            final boolean parentIsRtl = getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+            final boolean childIsRtl = child.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+            boolean shouldMirror = parentIsRtl && childIsRtl;
+            if (shouldMirror != mScrollXIsMirrored) {
+                final int width = getWidth();
+                final int padding = getPaddingLeftWithForeground()
+                        + getPaddingRightWithForeground();
+                if (child.getWidth() > width - padding) {
+                    mScrollX = child.getRight() - width - mScrollX +
+                            getPaddingRightWithForeground();
+                }
+                mScrollXIsMirrored = shouldMirror;
+            }
+        }
         mIsLayoutDirty = false;
         // Give a child focus if it needs it
         if (mChildToScrollTo != null && isViewDescendantOf(mChildToScrollTo, this)) {
@@ -1458,6 +1548,21 @@ public class HorizontalScrollView extends FrameLayout {
 
         // Calling this with the present values causes it to re-claim them
         scrollTo(mScrollX, mScrollY);
+    }
+
+    /**
+     * This method adjusts the child position within the HorizontalScrollView if it has been
+     * misplaced in {@link FrameViews#onLayout} (happens if the layoutDirection is RTL)
+     */
+    private void adjustChildPositionIfNeeded(View child) {
+        final int left = getPaddingLeftWithForeground();
+        final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+        if (child.getLeft() < left + lp.leftMargin) {
+            final int childLeft = left + lp.leftMargin;
+            final int childRight = childLeft + child.getWidth();
+            child.setLeft(childLeft);
+            child.setRight(childRight);
+        }
     }
 
     @Override

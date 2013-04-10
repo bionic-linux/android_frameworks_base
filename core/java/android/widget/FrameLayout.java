@@ -267,12 +267,12 @@ public class FrameLayout extends ViewGroup {
         return mForeground;
     }
 
-    private int getPaddingLeftWithForeground() {
+    int getPaddingLeftWithForeground() {
         return mForegroundInPadding ? Math.max(mPaddingLeft, mForegroundPaddingLeft) :
             mPaddingLeft + mForegroundPaddingLeft;
     }
 
-    private int getPaddingRightWithForeground() {
+    int getPaddingRightWithForeground() {
         return mForegroundInPadding ? Math.max(mPaddingRight, mForegroundPaddingRight) :
             mPaddingRight + mForegroundPaddingRight;
     }
