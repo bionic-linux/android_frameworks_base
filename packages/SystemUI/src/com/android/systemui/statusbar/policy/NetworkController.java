@@ -861,7 +861,7 @@ public class NetworkController extends BroadcastReceiver {
         } else if (action.equals(WifiManager.RSSI_CHANGED_ACTION)) {
             mWifiRssi = intent.getIntExtra(WifiManager.EXTRA_NEW_RSSI, -200);
             mWifiLevel = WifiManager.calculateSignalLevel(
-                    mWifiRssi, WifiIcons.WIFI_LEVEL_COUNT);
+                    mWifiRssi, WifiIcons.WIFI_LEVEL_COUNT - 1);
         }
 
         updateWifiIcons();
@@ -869,7 +869,7 @@ public class NetworkController extends BroadcastReceiver {
 
     private void updateWifiIcons() {
         if (mWifiConnected) {
-            mWifiIconId = WifiIcons.WIFI_SIGNAL_STRENGTH[mInetCondition][mWifiLevel];
+            mWifiIconId = WifiIcons.WIFI_SIGNAL_STRENGTH[mInetCondition][mWifiLevel + 1];
             mQSWifiIconId = WifiIcons.QS_WIFI_SIGNAL_STRENGTH[mInetCondition][mWifiLevel];
             mContentDescriptionWifi = mContext.getString(
                     AccessibilityContentDescriptions.WIFI_CONNECTION_STRENGTH[mWifiLevel]);
@@ -1494,5 +1494,4 @@ public class NetworkController extends BroadcastReceiver {
             return "(null)";
         }
     }
-
 }
