@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ToAUa9Hk",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-04-19T14:35:14Z",
+      "side": 1,
+      "message": "Please indicate what the problem with the existing code is ?\n\nWhy is it important to only handle pin display mode like this ?",
+      "revId": "012d54e5ac71495fc44d4f2b88bc2f67d393ad55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
