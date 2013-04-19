@@ -49,8 +49,9 @@ public class WifiP2pGroup implements Parcelable {
     /** Group owner */
     private WifiP2pDevice mOwner;
 
-    /** Device is group owner */
-    private boolean mIsGroupOwner;
+    /** Device is group owner.
+     * {@hide} */
+    public boolean mIsGroupOwner;
 
     /** Group clients */
     private List<WifiP2pDevice> mClients = new ArrayList<WifiP2pDevice>();
