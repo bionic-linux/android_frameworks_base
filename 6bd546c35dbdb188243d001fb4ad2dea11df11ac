@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TvUth.bc",
+        "filename": "cmds/installd/installd.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000413
+      },
+      "writtenOn": "2013-04-22T19:51:53Z",
+      "side": 1,
+      "message": "can we fix is_selinux_enabled() to return a boolean, so we can stop this \u003e0 madness? Same with other functions that are really meant to take boolean true/false but are  taking integers 1/0 right now?",
+      "revId": "6bd546c35dbdb188243d001fb4ad2dea11df11ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
