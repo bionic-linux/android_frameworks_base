@@ -16,6 +16,24 @@
       "revId": "6bd546c35dbdb188243d001fb4ad2dea11df11ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TwsPCaH0",
+        "filename": "cmds/installd/installd.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2013-04-22T20:36:32Z",
+      "side": 1,
+      "message": "Only if you are ok with diverging from the upstream libselinux APIs.\nObviously could wrap them with Android-specific ones.",
+      "parentUuid": "TvUth.bc",
+      "revId": "6bd546c35dbdb188243d001fb4ad2dea11df11ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
