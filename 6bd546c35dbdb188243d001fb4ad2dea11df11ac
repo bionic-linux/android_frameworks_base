@@ -87,6 +87,24 @@
       "revId": "6bd546c35dbdb188243d001fb4ad2dea11df11ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "T9uziC5Y",
+        "filename": "cmds/installd/installd.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000413
+      },
+      "writtenOn": "2013-04-24T07:19:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we fix libselinux to do that?",
+      "parentUuid": "TwuOgTJg",
+      "revId": "6bd546c35dbdb188243d001fb4ad2dea11df11ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
