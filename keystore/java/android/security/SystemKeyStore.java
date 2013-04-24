@@ -120,6 +120,11 @@ public class SystemKeyStore {
         if (!keyFile.exists()) {
             return null;
         }
+	/*Sometimes AppsOnSD.sks is broken, its size is 0B, while user install apk the phone restart.*/
+	if(keyFile.length()==0){
+		keyFile.delete();
+		return null;
+	}
         return IoUtils.readFileAsByteArray(keyFile.toString());
     }
 
