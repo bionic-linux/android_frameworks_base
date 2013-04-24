@@ -105,6 +105,24 @@
       "revId": "6bd546c35dbdb188243d001fb4ad2dea11df11ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UAz8tZ2k",
+        "filename": "cmds/installd/installd.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2013-04-24T15:06:13Z",
+      "side": 1,
+      "message": "Yes, we can do that as well, although selinux_log() only gets limited usage within libselinux, primarily in the label back-ends and the policy loading code where we want/need more verbose error reporting than we can get via simple return code.",
+      "parentUuid": "T9uziC5Y",
+      "revId": "6bd546c35dbdb188243d001fb4ad2dea11df11ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
