@@ -56,6 +56,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+
+/*Fixed the problem that a crash occured when user calls a third-party applications which is already uninstalled*/
+import android.content.pm.PackageInfo;
+import android.widget.Toast;
+
+
 /**
  * This activity is displayed when the system attempts to start an Intent for
  * which there is more than one matching activity, allowing the user to decide
@@ -368,6 +374,27 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
         }
 
         if (intent != null) {
+
+/*Fixed the problem that a crash occured when user calls a third-party applications which is already uninstalled.
+
+
+Steps: 1. Install the third-party applications(e.g. HuaQinMusic.apk).
+       2. Open ES File Explorer and select a music file(e.g. love.mp3). Long press the icon of the music file, now  the phone  pops a ResolverActivity which there is more than one matching activity, allowing the user to decide which to go to. Now press the key "HOME" and uninstall the HuaQinMusic.apk.
+       3.Back to the ResolverActivity and select HuaQinMusic to play the music, and then the phone will crash and reboot.
+
+Solutions: Before we execute the method onClick() in ResolveActivity, judge the applications is uninstalled or not.*/
+	    try{
+        	Log.w("ResolverActivity", "packagename : "+ri.activityInfo.packageName);
+        	PackageInfo pInfo= mPm.getPackageInfo(ri.activityInfo.packageName, 0);	
+        	if(pInfo == null){
+        		Log.w("ResolverActivity", "package is uninstall");
+        		return;
+        	}
+            }catch(Exception e){
+        	Log.w("ResolverActivity", "Exception:"+e.getMessage());
+        	
+        	return ;
+            }
             startActivity(intent);
         }
     }
