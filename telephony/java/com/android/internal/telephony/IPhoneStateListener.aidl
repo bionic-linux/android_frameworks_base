@@ -35,5 +35,11 @@ oneway interface IPhoneStateListener {
     void onSignalStrengthsChanged(in SignalStrength signalStrength);
     void onOtaspChanged(in int otaspMode);
     void onCellInfoChanged(in List<CellInfo> cellInfo);
+    void onPreciseCallStateChanged(int ringingCallState, int foregroundCallState, int backgroundCallState);
+    void onDisconnectCause(int disconnectCause);
+    void onPreciseDisconnectCause(int preciseCause);
+    void onPreciseDataConnectionStateChanged(int state, int networkType, String apnType, String apn, String reason, String iface, String link);
+    void onDataConnectionFailed(String reason, String apnType);
+    void onPreciseDataConnectionFailed(String reason, String apnType, String apn, String failCause);
 }
 

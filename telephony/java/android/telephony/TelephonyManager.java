@@ -167,6 +167,386 @@ public class TelephonyManager {
      */
     public static final String EXTRA_INCOMING_NUMBER = "incoming_number";
 
+    /**
+     * Broadcast intent action indicating that a precise call state 
+     * (cellular) on the device has changed.
+     *
+     * <p>
+     * The {@link #EXTRA_RC_STATE} extra indicates the ringing call state.
+     * The {@link #EXTRA_FC_STATE} extra indicates the foreground call state.
+     * The {@link #EXTRA_BC_STATE} extra indicates the background call state.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_RC_STATE
+     * @see #EXTRA_FC_STATE
+     * @see #EXTRA_BC_STATE
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PRECISE_CALL_STATE_CHANGED =
+            "android.intent.action.PRECISE_CALL_STATE";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the new ringing call state.
+     *
+     * @see TelephonyManager#PRECISE_CALL_STATE_IDLE
+     * @see TelephonyManager#PRECISE_CALL_STATE_ACTIVE
+     * @see TelephonyManager#PRECISE_CALL_STATE_HOLDING
+     * @see TelephonyManager#PRECISE_CALL_STATE_DIALING
+     * @see TelephonyManager#PRECISE_CALL_STATE_ALERTING
+     * @see TelephonyManager#PRECISE_CALL_STATE_INCOMING
+     * @see TelephonyManager#PRECISE_CALL_STATE_WAITING
+     * @see TelephonyManager#PRECISE_CALL_STATE_DISCONNECTED
+     * @see TelephonyManager#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_RC_STATE = "ringing_state";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the new foreground call state.
+     *
+     * @see TelephonyManager#PRECISE_CALL_STATE_IDLE
+     * @see TelephonyManager#PRECISE_CALL_STATE_ACTIVE
+     * @see TelephonyManager#PRECISE_CALL_STATE_HOLDING
+     * @see TelephonyManager#PRECISE_CALL_STATE_DIALING
+     * @see TelephonyManager#PRECISE_CALL_STATE_ALERTING
+     * @see TelephonyManager#PRECISE_CALL_STATE_INCOMING
+     * @see TelephonyManager#PRECISE_CALL_STATE_WAITING
+     * @see TelephonyManager#PRECISE_CALL_STATE_DISCONNECTED
+     * @see TelephonyManager#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_FC_STATE = "foreground_state";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the new background call state.
+     *
+     * @see TelephonyManager#PRECISE_CALL_STATE_IDLE
+     * @see TelephonyManager#PRECISE_CALL_STATE_ACTIVE
+     * @see TelephonyManager#PRECISE_CALL_STATE_HOLDING
+     * @see TelephonyManager#PRECISE_CALL_STATE_DIALING
+     * @see TelephonyManager#PRECISE_CALL_STATE_ALERTING
+     * @see TelephonyManager#PRECISE_CALL_STATE_INCOMING
+     * @see TelephonyManager#PRECISE_CALL_STATE_WAITING
+     * @see TelephonyManager#PRECISE_CALL_STATE_DISCONNECTED
+     * @see TelephonyManager#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_BC_STATE = "background_state";
+
+    /**
+     * Broadcast intent action indicating that a phone call (cellular)
+     * have disconnected.
+     *
+     * <p>
+     * The {@link #EXTRA_CALL_DISCONNECT_CAUSE} extra indicates the disconnect cause.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_CALL_DISCONNECT_CAUSE
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_CALL_DISCONNECT =
+            "android.intent.action.CALL_DISCONNECT";
+
+    /**
+     * The lookup key used with the {@link #ACTION_CALL_DISCONNECT} broadcast
+     * for an integer containing the disconnect cause.
+     *
+     * @see TelephonyManager#DISCONNECT_CAUSE_NOT_DISCONNECTED
+     * @see TelephonyManager#DISCONNECT_CAUSE_INCOMING_MISSED
+     * @see TelephonyManager#DISCONNECT_CAUSE_NORMAL
+     * @see TelephonyManager#DISCONNECT_CAUSE_LOCAL
+     * @see TelephonyManager#DISCONNECT_CAUSE_BUSY
+     * @see TelephonyManager#DISCONNECT_CAUSE_CONGESTION
+     * @see TelephonyManager#DISCONNECT_CAUSE_MMI
+     * @see TelephonyManager#DISCONNECT_CAUSE_INVALID_NUMBER
+     * @see TelephonyManager#DISCONNECT_CAUSE_NUMBER_UNREACHABLE
+     * @see TelephonyManager#DISCONNECT_CAUSE_SERVER_UNREACHABLE
+     * @see TelephonyManager#DISCONNECT_CAUSE_INVALID_CREDENTIALS
+     * @see TelephonyManager#DISCONNECT_CAUSE_OUT_OF_NETWORK
+     * @see TelephonyManager#DISCONNECT_CAUSE_SERVER_ERROR
+     * @see TelephonyManager#DISCONNECT_CAUSE_TIMED_OUT
+     * @see TelephonyManager#DISCONNECT_CAUSE_LOST_SIGNAL
+     * @see TelephonyManager#DISCONNECT_CAUSE_LIMIT_EXCEEDED
+     * @see TelephonyManager#DISCONNECT_CAUSE_INCOMING_REJECTED
+     * @see TelephonyManager#DISCONNECT_CAUSE_POWER_OFF
+     * @see TelephonyManager#DISCONNECT_CAUSE_OUT_OF_SERVICE
+     * @see TelephonyManager#DISCONNECT_CAUSE_ICC_ERROR
+     * @see TelephonyManager#DISCONNECT_CAUSE_CALL_BARRED
+     * @see TelephonyManager#DISCONNECT_CAUSE_FDN_BLOCKED
+     * @see TelephonyManager#DISCONNECT_CAUSE_CS_RESTRICTED
+     * @see TelephonyManager#DISCONNECT_CAUSE_CS_RESTRICTED_NORMAL
+     * @see TelephonyManager#DISCONNECT_CAUSE_CS_RESTRICTED_EMERGENCY
+     * @see TelephonyManager#DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_DROP
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_INTERCEPT
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_REORDER
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_SO_REJECT
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_RETRY_ORDER
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_PREEMPTED
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED
+     * @see TelephonyManager#DISCONNECT_CAUSE_ERROR_UNSPECIFIED
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_CALL_DISCONNECT_CAUSE = "disconnect_cause";
+
+    /**
+     * Broadcast intent action indicating that a phone call (cellular)
+     * have disconnected.
+     *
+     * <p>
+     * The {@link #EXTRA_PRECISE_CALL_DISCONNECT_CAUSE} extra indicates the disconnect cause.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_CALL_DISCONNECT_CAUSE
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PRECISE_CALL_DISCONNECT =
+            "android.intent.action.PRECISE_CALL_DISCONNECT";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_DISCONNECT} broadcast
+     * for an integer containing the disconnect cause.
+     *
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NO_DISCONNECT_CAUSE_AVAILABLE
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NORMAL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_BUSY
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NUMBER_CHANGED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_STATUS_ENQUIRY
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NORMAL_UNSPECIFIED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NO_CIRCUIT_AVAIL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_TEMPORARY_FAILURE
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_SWITCHING_CONGESTION
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CHANNEL_NOT_AVAIL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_QOS_NOT_AVAIL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_BEARER_NOT_AVAIL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_ACM_LIMIT_EXCEEDED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CALL_BARRED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_FDN_BLOCKED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_IMSI_UNKNOWN_IN_VLR
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_IMEI_NOT_ACCEPTED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_DROP
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_INTERCEPT
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_REORDER
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_SO_REJECT
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_RETRY_ORDER
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_PREEMPTED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_ERROR_UNSPECIFIED
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_PRECISE_CALL_DISCONNECT_CAUSE = "precise_disconnect_cause";
+
+    /**
+     * Broadcast intent action indicating a data connection has changed,
+     * providing precise information about the connection.
+     *
+     * <p>
+     * The {@link #EXTRA_DATA_STATE} extra indicates the connection state.
+     * The {@link #EXTRA_DATA_NETWORK_TYPE} extra indicates the connection network type.
+     * The {@link #EXTRA_DATA_APN_TYPE} extra indicates the APN type.
+     * The {@link #EXTRA_DATA_APN} extra indicates the APN.
+     * The {@link #EXTRA_DATA_CHANGE_REASON} extra indicates the connection change reason.
+     * The {@link #EXTRA_DATA_IFACE} extra indicates the connection interface.
+     * The {@link #EXTRA_DATA_LINK} extra indicates the link capabilities.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_DATA_STATE
+     * @see #EXTRA_DATA_NETWORK_TYPE
+     * @see #EXTRA_DATA_APN_TYPE
+     * @see #EXTRA_DATA_APN
+     * @see #EXTRA_DATA_CHANGE_REASON
+     * @see #EXTRA_DATA_IFACE
+     * @see #EXTRA_DATA_LINK
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED =
+            "android.intent.action.PRECISE_DATA_CONNECTION_STATE_CHANGED";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an integer containing the new data connection state.
+     *
+     * @see TelephonyManager#DATA_DISCONNECTED
+     * @see TelephonyManager#DATA_CONNECTING
+     * @see TelephonyManager#DATA_CONNECTED
+     * @see TelephonyManager#DATA_SUSPENDED
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_DATA_STATE = PhoneConstants.STATE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an integer containing the network type.
+     *
+     * @see TelephonyManager#NETWORK_TYPE_UNKNOWN
+     * @see TelephonyManager#NETWORK_TYPE_GPRS
+     * @see TelephonyManager#NETWORK_TYPE_EDGE
+     * @see TelephonyManager#NETWORK_TYPE_UMTS
+     * @see TelephonyManager#NETWORK_TYPE_CDMA
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_0
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_A
+     * @see TelephonyManager#NETWORK_TYPE_1xRTT
+     * @see TelephonyManager#NETWORK_TYPE_HSDPA
+     * @see TelephonyManager#NETWORK_TYPE_HSUPA
+     * @see TelephonyManager#NETWORK_TYPE_HSPA
+     * @see TelephonyManager#NETWORK_TYPE_IDEN
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_B
+     * @see TelephonyManager#NETWORK_TYPE_LTE
+     * @see TelephonyManager#NETWORK_TYPE_EHRPD
+     * @see TelephonyManager#NETWORK_TYPE_HSPAP
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_DATA_NETWORK_TYPE = PhoneConstants.DATA_NETWORK_TYPE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED},
+     * {@link #ACTION_DATA_CONNECTION_FAILED} and {@link #ACTION_PRECISE_DATA_CONNECTION_FAILED}
+     * broadcasts for an String containing the data APN type.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_APN_TYPE = PhoneConstants.DATA_APN_TYPE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} and
+     * {@link #ACTION_PRECISE_DATA_CONNECTION_FAILED} broadcasts for an String containing
+     * the data APN.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_APN = PhoneConstants.DATA_APN_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String representation of the change reason.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_CHANGE_REASON = PhoneConstants.STATE_CHANGE_REASON_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String representation of the data interface.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_IFACE = PhoneConstants.DATA_IFACE_NAME_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String representation of the link capabilities.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_LINK = PhoneConstants.DATA_LINK_CAPABILITIES_KEY;
+
+    /**
+     * Broadcast intent action indicating a failure on the data connection.
+     *
+     * <p>
+     * The {@link #EXTRA_FAILURE_REASON} extra indicates the failure reason.
+     * The {@link #EXTRA_DATA_APN_TYPE} extra indicates the apn type that has failed.
+     *
+     * <p class="note">
+     * Requires the READ_PHONE_STATE permission.
+     *
+     * @see #EXTRA_FAILURE_REASON
+     * @see #EXTRA_DATA_APN_TYPE
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_DATA_CONNECTION_FAILED =
+            "android.intent.action.DATA_CONNECTION_FAILED";
+
+    /**
+     * Broadcast intent action indicating a precise failure on the data connection.
+     *
+     * <p>
+     * The {@link #EXTRA_FAILURE_REASON} extra indicates the failure reason.
+     * The {@link #EXTRA_DATA_APN_TYPE} extra indicates the apn type that has failed.
+     * The {@link #EXTRA_DATA_APN} extra indicates the apn that has failed.
+     * The {@link #EXTRA_DATA_FAILURE_CAUSE} extra indicates the connection fail cause.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_FAILURE_REASON
+     * @see #EXTRA_DATA_APN_TYPE
+     * @see #EXTRA_DATA_APN
+     * @see #EXTRA_DATA_FAILURE_CAUSE
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PRECISE_DATA_CONNECTION_FAILED =
+            "android.intent.action.PRECISE_DATA_CONNECTION_FAILED";
+
+    /**
+     * The lookup key used with the {@link #ACTION_DATA_CONNECTION_FAILED} and
+     * broadcast {@link #ACTION_PRECISE_DATA_CONNECTION_FAILED} for an String
+     * representation of the failure reason.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_FAILURE_REASON = PhoneConstants.FAILURE_REASON_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_FAILED} broadcast
+     * for the connection fail cause.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_FAILURE_CAUSE = PhoneConstants.DATA_FAILURE_CAUSE_KEY;
 
     //
     //
@@ -1284,4 +1664,130 @@ public class TelephonyManager {
             return null;
         }
     }
+
+    /** Call state: No activity. */
+    public static final int PRECISE_CALL_STATE_IDLE =           0;
+    /** Call state: Active. */
+    public static final int PRECISE_CALL_STATE_ACTIVE =         1;
+    /** Call state: On hold. */
+    public static final int PRECISE_CALL_STATE_HOLDING =        2;
+    /** Call state: Dialing. */
+    public static final int PRECISE_CALL_STATE_DIALING =        3;
+    /** Call state: Alerting. */
+    public static final int PRECISE_CALL_STATE_ALERTING =       4;
+    /** Call state: Incoming. */
+    public static final int PRECISE_CALL_STATE_INCOMING =       5;
+    /** Call state: Waiting. */
+    public static final int PRECISE_CALL_STATE_WAITING =        6;
+    /** Call state: Disconnected. */
+    public static final int PRECISE_CALL_STATE_DISCONNECTED =   7;
+    /** Call state: Disconnecting. */
+    public static final int PRECISE_CALL_STATE_DISCONNECTING =  8;
+
+    /** Has not yet disconnected */
+    public static final int DISCONNECT_CAUSE_NOT_DISCONNECTED               = 0;
+    /** An incoming call that was missed and never answered */
+    public static final int DISCONNECT_CAUSE_INCOMING_MISSED                = 1;
+    /** Normal; Remote hangup*/
+    public static final int DISCONNECT_CAUSE_NORMAL                         = 2;
+    /** Normal; Local hangup */
+    public static final int DISCONNECT_CAUSE_LOCAL                          = 3;
+    /** Outgoing call to busy line */
+    public static final int DISCONNECT_CAUSE_BUSY                           = 4;
+    /** Outgoing call to congested network */
+    public static final int DISCONNECT_CAUSE_CONGESTION                     = 5;
+    /** Not presently used */
+    public static final int DISCONNECT_CAUSE_MMI                            = 6;
+    /** Invalid dial string */
+    public static final int DISCONNECT_CAUSE_INVALID_NUMBER                 = 7;
+    /** Cannot reach the peer */
+    public static final int DISCONNECT_CAUSE_NUMBER_UNREACHABLE             = 8;
+    /** Cannot reach the server */
+    public static final int DISCONNECT_CAUSE_SERVER_UNREACHABLE             = 9;
+    /** Invalid credentials */
+    public static final int DISCONNECT_CAUSE_INVALID_CREDENTIALS            = 10;
+    /** Calling from out of network is not allowed */
+    public static final int DISCONNECT_CAUSE_OUT_OF_NETWORK                 = 11;
+    /** Server error */
+    public static final int DISCONNECT_CAUSE_SERVER_ERROR                   = 12;
+    /** Client timed out */
+    public static final int DISCONNECT_CAUSE_TIMED_OUT                      = 13;
+    /** Client went out of network range */
+    public static final int DISCONNECT_CAUSE_LOST_SIGNAL                    = 14;
+    /** GSM or CDMA ACM limit exceeded */
+    public static final int DISCONNECT_CAUSE_LIMIT_EXCEEDED                 = 15;
+    /** An incoming call that was rejected */
+    public static final int DISCONNECT_CAUSE_INCOMING_REJECTED              = 16;
+    /** Radio is turned off explicitly */
+    public static final int DISCONNECT_CAUSE_POWER_OFF                      = 17;
+    /** Out of service */
+    public static final int DISCONNECT_CAUSE_OUT_OF_SERVICE                 = 18;
+    /** No ICC, ICC locked, or other ICC error */
+    public static final int DISCONNECT_CAUSE_ICC_ERROR                      = 19;
+    /** Call was blocked by call barring */
+    public static final int DISCONNECT_CAUSE_CALL_BARRED                    = 20;
+    /** Call was blocked by fixed dial number */
+    public static final int DISCONNECT_CAUSE_FDN_BLOCKED                    = 21;
+    /** Call was blocked by restricted all voice access */
+    public static final int DISCONNECT_CAUSE_CS_RESTRICTED                  = 22;
+    /** Call was blocked by restricted normal voice access */
+    public static final int DISCONNECT_CAUSE_CS_RESTRICTED_NORMAL           = 23;
+    /** Call was blocked by restricted emergency voice access */
+    public static final int DISCONNECT_CAUSE_CS_RESTRICTED_EMERGENCY        = 24;
+    /** Unassigned number */
+    public static final int DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER            = 25;
+    /** MS is locked until next power cycle */
+    public static final int DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE  = 26;
+    /** */
+    public static final int DISCONNECT_CAUSE_CDMA_DROP                      = 27;
+    /** INTERCEPT order received, MS state idle entered */
+    public static final int DISCONNECT_CAUSE_CDMA_INTERCEPT                 = 28;
+    /** MS has been redirected, call is cancelled */
+    public static final int DISCONNECT_CAUSE_CDMA_REORDER                   = 29;
+    /** Service option rejection */
+    public static final int DISCONNECT_CAUSE_CDMA_SO_REJECT                 = 30;
+    /** Requested service is rejected, retry delay is set */
+    public static final int DISCONNECT_CAUSE_CDMA_RETRY_ORDER               = 31;
+    /** */
+    public static final int DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE            = 32;
+    /** */
+    public static final int DISCONNECT_CAUSE_CDMA_PREEMPTED                 = 33;
+    /** Not an emergency call */
+    public static final int DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY             = 34;
+    /** Access Blocked by CDMA network */
+    public static final int DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED            = 35;
+    /** Unknown error or not specified */
+    public static final int DISCONNECT_CAUSE_ERROR_UNSPECIFIED              = 36;
+
+    /* Codes obtained from ril.h RIL_LastCallFailCause and CallFailCause */
+    /** No disconnect cause provided. Generally a local disconnect or an incoming missed call */
+    public static final int PRECISE_DISCONNECT_CAUSE_NO_DISCONNECT_CAUSE_AVAILABLE  = 0;
+    public static final int PRECISE_DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER            = 1;
+    public static final int PRECISE_DISCONNECT_CAUSE_NORMAL                         = 16;
+    public static final int PRECISE_DISCONNECT_CAUSE_BUSY                           = 17;
+    public static final int PRECISE_DISCONNECT_CAUSE_NUMBER_CHANGED                 = 22;
+    public static final int PRECISE_DISCONNECT_CAUSE_STATUS_ENQUIRY                 = 30;
+    public static final int PRECISE_DISCONNECT_CAUSE_NORMAL_UNSPECIFIED             = 31;
+    public static final int PRECISE_DISCONNECT_CAUSE_NO_CIRCUIT_AVAIL               = 34;
+    public static final int PRECISE_DISCONNECT_CAUSE_TEMPORARY_FAILURE              = 41;
+    public static final int PRECISE_DISCONNECT_CAUSE_SWITCHING_CONGESTION           = 42;
+    public static final int PRECISE_DISCONNECT_CAUSE_CHANNEL_NOT_AVAIL              = 44;
+    public static final int PRECISE_DISCONNECT_CAUSE_QOS_NOT_AVAIL                  = 49;
+    public static final int PRECISE_DISCONNECT_CAUSE_BEARER_NOT_AVAIL               = 58;
+    public static final int PRECISE_DISCONNECT_CAUSE_ACM_LIMIT_EXCEEDED             = 68;
+    public static final int PRECISE_DISCONNECT_CAUSE_CALL_BARRED                    = 240;
+    public static final int PRECISE_DISCONNECT_CAUSE_FDN_BLOCKED                    = 241;
+    public static final int PRECISE_DISCONNECT_CAUSE_IMSI_UNKNOWN_IN_VLR            = 242;
+    public static final int PRECISE_DISCONNECT_CAUSE_IMEI_NOT_ACCEPTED              = 243;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE  = 1000;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_DROP                      = 1001;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_INTERCEPT                 = 1002;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_REORDER                   = 1003;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_SO_REJECT                 = 1004;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_RETRY_ORDER               = 1005;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE            = 1006;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_PREEMPTED                 = 1007;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY             = 1008;
+    public static final int PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED            = 1009;
+    public static final int PRECISE_DISCONNECT_CAUSE_ERROR_UNSPECIFIED              = 0xffff;
 }

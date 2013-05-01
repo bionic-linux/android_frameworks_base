@@ -26,6 +26,7 @@ import android.telephony.CellInfo;
 import android.telephony.Rlog;
 
 import com.android.internal.telephony.IPhoneStateListener;
+import com.android.internal.telephony.PhoneConstants;
 
 import java.util.List;
 
@@ -165,6 +166,60 @@ public class PhoneStateListener {
      */
     public static final int LISTEN_CELL_INFO = 0x00000400;
 
+    /**
+     * Listen for precise changes to the device call states.
+     * {@more}
+     * Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
+     * READ_PRECISE_PHONE_STATE}
+     */
+    public static final int LISTEN_PRECISE_CALL_STATE                       = 0x00000800;
+
+    /**
+     * Listen for device call (cellular) disconnect cause.
+     * {@more}
+     * Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE
+     * READ_PHONE_STATE}
+     */
+    public static final int LISTEN_DISCONNECT_CAUSE                         = 0x00001000;
+
+    /**
+     * Listen for device call (cellular) precise disconnect cause.
+     * {@more}
+     * Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
+     * READ_PRECISE_PHONE_STATE}
+     */
+    public static final int LISTEN_PRECISE_DISCONNECT_CAUSE                 = 0x00002000;
+
+    /**
+     * Listen for precise changes on the data connection (cellular).
+     * {@more}
+     * Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
+     * READ_PRECISE_PHONE_STATE}
+     * 
+     * @see #onPreciseDataConnectionStateChanged
+     */
+    public static final int LISTEN_PRECISE_DATA_CONNECTION_STATE            = 0x00004000;
+
+    /**
+     * Listen for connection errors on the data connection (cellular).
+     * {@more}
+     * Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE
+     * READ_PHONE_STATE}
+     * 
+     * @see #onDataConnectionFailed
+     */
+    public static final int LISTEN_DATA_CONNECTION_FAILED                   = 0x00008000;
+
+    /**
+     * Listen for precise connection errors on the data connection (cellular).
+     * {@more}
+     * Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
+     * READ_PRECISE_PHONE_STATE}
+     * 
+     * @see #onPreciseDataConnectionFailed
+     */
+    public static final int LISTEN_PRECISE_DATA_CONNECTION_FAILED           = 0x00010000;
+
     public PhoneStateListener() {
     }
 
@@ -293,6 +348,134 @@ public class PhoneStateListener {
     }
 
     /**
+     * Callback invoked when precise device call state changes.
+     *
+     * @see TelephonyManager#PRECISE_CALL_STATE_IDLE
+     * @see TelephonyManager#PRECISE_CALL_STATE_ACTIVE
+     * @see TelephonyManager#PRECISE_CALL_STATE_HOLDING
+     * @see TelephonyManager#PRECISE_CALL_STATE_DIALING
+     * @see TelephonyManager#PRECISE_CALL_STATE_ALERTING
+     * @see TelephonyManager#PRECISE_CALL_STATE_INCOMING
+     * @see TelephonyManager#PRECISE_CALL_STATE_WAITING
+     * @see TelephonyManager#PRECISE_CALL_STATE_DISCONNECTED
+     * @see TelephonyManager#PRECISE_CALL_STATE_DISCONNECTING
+     */
+    public void onPreciseCallStateChanged(int ringingCallState, int foregroundCallState, int backgroundCallState) {
+        // default implementation empty
+    }
+
+    /**
+     * Callback invoked when device call (cellular) is disconnected.
+     *
+     * @see TelephonyManager#DISCONNECT_CAUSE_NOT_DISCONNECTED
+     * @see TelephonyManager#DISCONNECT_CAUSE_INCOMING_MISSED
+     * @see TelephonyManager#DISCONNECT_CAUSE_NORMAL
+     * @see TelephonyManager#DISCONNECT_CAUSE_LOCAL
+     * @see TelephonyManager#DISCONNECT_CAUSE_BUSY
+     * @see TelephonyManager#DISCONNECT_CAUSE_CONGESTION
+     * @see TelephonyManager#DISCONNECT_CAUSE_MMI
+     * @see TelephonyManager#DISCONNECT_CAUSE_INVALID_NUMBER
+     * @see TelephonyManager#DISCONNECT_CAUSE_NUMBER_UNREACHABLE
+     * @see TelephonyManager#DISCONNECT_CAUSE_SERVER_UNREACHABLE
+     * @see TelephonyManager#DISCONNECT_CAUSE_INVALID_CREDENTIALS
+     * @see TelephonyManager#DISCONNECT_CAUSE_OUT_OF_NETWORK
+     * @see TelephonyManager#DISCONNECT_CAUSE_SERVER_ERROR
+     * @see TelephonyManager#DISCONNECT_CAUSE_TIMED_OUT
+     * @see TelephonyManager#DISCONNECT_CAUSE_LOST_SIGNAL
+     * @see TelephonyManager#DISCONNECT_CAUSE_LIMIT_EXCEEDED
+     * @see TelephonyManager#DISCONNECT_CAUSE_INCOMING_REJECTED
+     * @see TelephonyManager#DISCONNECT_CAUSE_POWER_OFF
+     * @see TelephonyManager#DISCONNECT_CAUSE_OUT_OF_SERVICE
+     * @see TelephonyManager#DISCONNECT_CAUSE_ICC_ERROR
+     * @see TelephonyManager#DISCONNECT_CAUSE_CALL_BARRED
+     * @see TelephonyManager#DISCONNECT_CAUSE_FDN_BLOCKED
+     * @see TelephonyManager#DISCONNECT_CAUSE_CS_RESTRICTED
+     * @see TelephonyManager#DISCONNECT_CAUSE_CS_RESTRICTED_NORMAL
+     * @see TelephonyManager#DISCONNECT_CAUSE_CS_RESTRICTED_EMERGENCY
+     * @see TelephonyManager#DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_DROP
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_INTERCEPT
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_REORDER
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_SO_REJECT
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_RETRY_ORDER
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_PREEMPTED
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY
+     * @see TelephonyManager#DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED
+     * @see TelephonyManager#DISCONNECT_CAUSE_ERROR_UNSPECIFIED
+     */
+    public void onDisconnectCause(int disconnectCause) {
+        // default implementation empty
+    }
+
+    /**
+     * Callback invoked when device call (cellular) is disconnected
+     * with a detailed disconnect cause.
+     *
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NO_DISCONNECT_CAUSE_AVAILABLE
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NORMAL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_BUSY
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NUMBER_CHANGED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_STATUS_ENQUIRY
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NORMAL_UNSPECIFIED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_NO_CIRCUIT_AVAIL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_TEMPORARY_FAILURE
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_SWITCHING_CONGESTION
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CHANNEL_NOT_AVAIL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_QOS_NOT_AVAIL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_BEARER_NOT_AVAIL
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_ACM_LIMIT_EXCEEDED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CALL_BARRED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_FDN_BLOCKED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_IMSI_UNKNOWN_IN_VLR
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_IMEI_NOT_ACCEPTED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_DROP
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_INTERCEPT
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_REORDER
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_SO_REJECT
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_RETRY_ORDER
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_PREEMPTED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED
+     * @see TelephonyManager#PRECISE_DISCONNECT_CAUSE_ERROR_UNSPECIFIED
+     */
+    public void onPreciseDisconnectCause(int preciseCause) {
+        // default implementation empty
+    }
+
+    /**
+     * Callback invoked when precise data connection state changes.
+     * Provides the connection state, network type, affected apn type and name, change reason,
+     * and string representaions of the link properties and capabilities.
+     *
+     * @see TelephonyManager#DATA_DISCONNECTED
+     * @see TelephonyManager#DATA_CONNECTING
+     * @see TelephonyManager#DATA_CONNECTED
+     * @see TelephonyManager#DATA_SUSPENDED
+     */
+    public void onPreciseDataConnectionStateChanged(int state, int networkType, String apnType, String apn, String reason, String iface, String link) {
+        // default implementation empty
+    }
+
+    /**
+     * Callback invoked when data connection fails.
+     */
+    public void onDataConnectionFailed(String reason, String apnType) {
+        // default implementation empty
+    }
+
+    /**
+     * Callback invoked when data connection fails with precise information.
+     */
+    public void onPreciseDataConnectionFailed(String reason, String apnType, String apn, String failCause) {
+        // default implementation empty
+    }
+
+    /**
      * The callback methods need to be called on the handler thread where
      * this object was created.  If the binder did that for us it'd be nice.
      */
@@ -344,6 +527,57 @@ public class PhoneStateListener {
         public void onCellInfoChanged(List<CellInfo> cellInfo) {
             Message.obtain(mHandler, LISTEN_CELL_INFO, 0, 0, cellInfo).sendToTarget();
         }
+
+        public void onPreciseCallStateChanged(int ringingCallState, int foregroundCallState, int backgroundCallState) {
+            Bundle data = new Bundle();
+            data.putIntArray(PhoneConstants.STATE_KEY, new int[] { ringingCallState, foregroundCallState, backgroundCallState });
+            Message m = Message.obtain(mHandler, LISTEN_PRECISE_CALL_STATE);
+            m.setData(data);
+            m.sendToTarget();
+        }
+
+        public void onDisconnectCause(int disconnectCause) {
+            Message.obtain(mHandler, LISTEN_DISCONNECT_CAUSE, disconnectCause, 0).sendToTarget();
+        }
+
+        public void onPreciseDisconnectCause(int preciseCause) {
+            Message.obtain(mHandler, LISTEN_PRECISE_DISCONNECT_CAUSE, preciseCause, 0).sendToTarget();
+        }
+
+        public void onPreciseDataConnectionStateChanged(int state, int networkType, String apnType,
+                String apn, String reason, String iface, String link) {
+            Bundle data = new Bundle();
+            data.putInt(PhoneConstants.STATE_KEY, state);
+            data.putInt(PhoneConstants.DATA_NETWORK_TYPE_KEY, networkType);
+            data.putString(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
+            data.putString(PhoneConstants.DATA_APN_KEY, apn);
+            data.putString(PhoneConstants.STATE_CHANGE_REASON_KEY, reason);
+            data.putString(PhoneConstants.DATA_IFACE_NAME_KEY, iface);
+            data.putString(PhoneConstants.DATA_LINK_CAPABILITIES_KEY, link);
+            Message m = Message.obtain(mHandler, LISTEN_PRECISE_DATA_CONNECTION_STATE);
+            m.setData(data);
+            m.sendToTarget();
+        }
+
+        public void onDataConnectionFailed(String reason, String apnType) {
+            Bundle data = new Bundle();
+            data.putString(PhoneConstants.FAILURE_REASON_KEY, reason);
+            data.putString(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
+            Message m = Message.obtain(mHandler, LISTEN_DATA_CONNECTION_FAILED);
+            m.setData(data);
+            m.sendToTarget();
+        }
+
+        public void onPreciseDataConnectionFailed(String reason, String apnType, String apn, String failCause) {
+            Bundle data = new Bundle();
+            data.putString(PhoneConstants.FAILURE_REASON_KEY, reason);
+            data.putString(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
+            data.putString(PhoneConstants.DATA_APN_KEY, apn);
+            data.putString(PhoneConstants.DATA_FAILURE_CAUSE_KEY, failCause);
+            Message m = Message.obtain(mHandler, LISTEN_PRECISE_DATA_CONNECTION_FAILED);
+            m.setData(data);
+            m.sendToTarget();
+        }
     };
 
     Handler mHandler = new Handler() {
@@ -383,6 +617,39 @@ public class PhoneStateListener {
                     break;
                 case LISTEN_CELL_INFO:
                     PhoneStateListener.this.onCellInfoChanged((List<CellInfo>)msg.obj);
+                    break;
+                case LISTEN_PRECISE_CALL_STATE:
+                    int[] callStates = msg.getData().getIntArray(PhoneConstants.STATE_KEY);
+                    PhoneStateListener.this.onPreciseCallStateChanged(callStates[0], callStates[1], callStates[2]);
+                    break;
+                case LISTEN_DISCONNECT_CAUSE:
+                    PhoneStateListener.this.onDisconnectCause(msg.arg1);
+                    break;
+                case LISTEN_PRECISE_DISCONNECT_CAUSE:
+                    PhoneStateListener.this.onPreciseDisconnectCause(msg.arg1);
+                    break;
+                case LISTEN_PRECISE_DATA_CONNECTION_STATE:
+                    Bundle data = msg.getData();
+                    PhoneStateListener.this.onPreciseDataConnectionStateChanged(
+                            data.getInt(PhoneConstants.STATE_KEY),
+                            data.getInt(PhoneConstants.DATA_NETWORK_TYPE_KEY),
+                            data.getString(PhoneConstants.DATA_APN_TYPE_KEY),
+                            data.getString(PhoneConstants.DATA_APN_KEY),
+                            data.getString(PhoneConstants.STATE_CHANGE_REASON_KEY),
+                            data.getString(PhoneConstants.DATA_IFACE_NAME_KEY),
+                            data.getString(PhoneConstants.DATA_LINK_CAPABILITIES_KEY));
+                    break;
+                case LISTEN_DATA_CONNECTION_FAILED:
+                    PhoneStateListener.this.onDataConnectionFailed(
+                            msg.getData().getString(PhoneConstants.FAILURE_REASON_KEY),
+                            msg.getData().getString(PhoneConstants.DATA_APN_TYPE_KEY));
+                    break;
+                case LISTEN_PRECISE_DATA_CONNECTION_FAILED:
+                    PhoneStateListener.this.onPreciseDataConnectionFailed(
+                            msg.getData().getString(PhoneConstants.FAILURE_REASON_KEY),
+                            msg.getData().getString(PhoneConstants.DATA_APN_TYPE_KEY),
+                            msg.getData().getString(PhoneConstants.DATA_APN_KEY),
+                            msg.getData().getString(PhoneConstants.DATA_FAILURE_CAUSE_KEY));
             }
         }
     };
