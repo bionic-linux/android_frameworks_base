@@ -293,12 +293,12 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         });
         // Change some window properties
         Window window = mDialog.getWindow();
-        window.setGravity(Gravity.TOP);
+        window.setGravity(Gravity.BOTTOM);
         LayoutParams lp = window.getAttributes();
         lp.token = null;
         // Offset from the top
         lp.y = mContext.getResources().getDimensionPixelOffset(
-                com.android.internal.R.dimen.volume_panel_top);
+                com.android.internal.R.dimen.volume_panel_bottom);
         lp.type = LayoutParams.TYPE_VOLUME_OVERLAY;
         lp.width = LayoutParams.WRAP_CONTENT;
         lp.height = LayoutParams.WRAP_CONTENT;
