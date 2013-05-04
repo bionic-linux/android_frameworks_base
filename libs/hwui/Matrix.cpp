@@ -27,6 +27,22 @@
 #include "utils/Compare.h"
 #include "Matrix.h"
 
+#if defined(__mips__)
+/*
+ * Workaround for GCC 4.7 Bug with Optimization.
+ * Without this workaround the MIPS Ingenic tablets
+ * don't show the Icons. Using -O1 in the Android.mk
+ * seem to work but below it seems like -O0 seems to
+ * be needed.
+ *
+ * Next step is to use attributes on individual functsions.
+ * Ex:
+ *     int foo(int i) __attribute__((optimize("-O3")));
+ */
+#pragma GCC push_options
+#pragma GCC optimize ("0")
+#endif
+
 namespace android {
 namespace uirenderer {
 
@@ -386,3 +402,7 @@ void Matrix4::dump() const {
 
 }; // namespace uirenderer
 }; // namespace android
+
+#if defined(__mips__)
+// #pragma GCC pop_options       /* Doesn't currently seem to be supported. */
+#endif
