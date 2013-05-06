@@ -798,4 +798,8 @@ public class WifiNative {
     public boolean p2pServDiscCancelReq(String id) {
         return doBooleanCommand("P2P_SERV_DISC_CANCEL_REQ " + id);
     }
+
+    public boolean p2pDisallowfreq(String startfreq, String endfreq) {
+        return doBooleanCommand("P2P_SET disallow_freq=" + startfreq + "-" + endfreq);
+    }
 }
