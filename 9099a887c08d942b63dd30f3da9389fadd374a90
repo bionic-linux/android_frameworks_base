@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "VA6hLf2I",
+        "filename": "core/java/com/android/internal/app/ResolverActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-05-26T07:13:54Z",
+      "side": 1,
+      "message": "Don\u0027t put these imports separately with this irrelevant commentary about the change that happened to bring them in; just put them up with the rest of the imports.",
+      "revId": "9099a887c08d942b63dd30f3da9389fadd374a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VA4iOe3k",
+        "filename": "core/java/com/android/internal/app/ResolverActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-05-26T07:13:54Z",
+      "side": 1,
+      "message": "You don\u0027t need to restate the change description here.  We already have it in source control, and if someone wants to see this level of detail of why this check is here, they can use git blame to identify the change that added it and look at it from there.",
+      "revId": "9099a887c08d942b63dd30f3da9389fadd374a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VA2iTN6U",
+        "filename": "core/java/com/android/internal/app/ResolverActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-05-26T07:13:54Z",
+      "side": 1,
+      "message": "Don\u0027t use tabs for indentation, use spaces.",
+      "revId": "9099a887c08d942b63dd30f3da9389fadd374a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VA0iYc70",
+        "filename": "core/java/com/android/internal/app/ResolverActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-05-26T07:13:54Z",
+      "side": 1,
+      "message": "Don\u0027t spew in the log for normal code paths.",
+      "revId": "9099a887c08d942b63dd30f3da9389fadd374a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VAyidL60",
+        "filename": "core/java/com/android/internal/app/ResolverActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-05-26T07:13:54Z",
+      "side": 1,
+      "message": "Is there also a problem that we aren\u0027t watching for package change broadcasts and so not updating our list of matching activities?",
+      "revId": "9099a887c08d942b63dd30f3da9389fadd374a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VAwiia.c",
+        "filename": "core/java/com/android/internal/app/ResolverActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-05-26T07:13:54Z",
+      "side": 1,
+      "message": "Write it like this: Log.w(TAG, \"Package \" + ri.activityInfo.packageName + \" no longer exists\");",
+      "revId": "9099a887c08d942b63dd30f3da9389fadd374a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VA.ieJ6c",
+        "filename": "core/java/com/android/internal/app/ResolverActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-05-26T07:13:54Z",
+      "side": 1,
+      "message": "Write like this: Log.w(TAG, \"Failed looking up package\", e);",
+      "revId": "9099a887c08d942b63dd30f3da9389fadd374a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
