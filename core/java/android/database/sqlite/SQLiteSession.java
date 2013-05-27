@@ -168,6 +168,7 @@ public final class SQLiteSession {
     private int mConnectionUseCount;
     private Transaction mTransactionPool;
     private Transaction mTransactionStack;
+    private String mOuterSavepointName = null;
 
     /**
      * Transaction mode: Deferred.
@@ -445,6 +446,147 @@ public final class SQLiteSession {
 
         if (listenerException != null) {
             throw listenerException;
+        }
+    }
+
+    /**
+     * Sets a savepoint.
+     * <p>
+     * Savepoints may nest.  If the savepoint is not in progress,
+     * then a database connection is obtained and a new savepoint is started.
+     * Otherwise, a nested savepoint is started.
+     * </p><p>
+     * Each call to {@link #setSavepoint} must be matched exactly by a call
+     * to {@link #releaseSavepoint}.
+     * If the transaction is not successful,
+     * The changes can be rolled back by calling rollbackToSavepoint.
+     * </p>
+     *
+     * @param name The savepoint name.
+     * @param transactionMode The transaction mode.  One of: {@link #TRANSACTION_MODE_DEFERRED},
+     * {@link #TRANSACTION_MODE_IMMEDIATE}, or {@link #TRANSACTION_MODE_EXCLUSIVE}.
+     * Ignored when creating a nested transaction.
+     * @param transactionListener The transaction listener, or null if none.
+     * @param connectionFlags The connection flags to use if a connection must be
+     * acquired by this operation.  Refer to {@link SQLiteConnectionPool}.
+     * @param cancellationSignal A signal to cancel the operation in progress, or null if none.
+     *
+     * @throws IllegalStateException if {@link #setTransactionSuccessful} has already been
+     * called for the current transaction.
+     * @throws SQLiteException if an error occurs.
+     * @throws OperationCanceledException if the operation was canceled.
+     *
+     * @see #rollbackToSavepoint
+     * @see #releaseSavepoint
+     */
+    public void setSavepoint(String name, int transactionMode,
+            SQLiteTransactionListener transactionListener, int connectionFlags,
+            CancellationSignal cancellationSignal) {
+        throwIfTransactionMarkedSuccessful();
+        setSavepointUnchecked(name, transactionMode, transactionListener, connectionFlags,
+                cancellationSignal);
+    }
+
+    private void setSavepointUnchecked(String name, int transactionMode,
+            SQLiteTransactionListener transactionListener, int connectionFlags,
+            CancellationSignal cancellationSignal) {
+        if (cancellationSignal != null) {
+            cancellationSignal.throwIfCanceled();
+        }
+        
+        assert mConnection != null;
+
+        if (mTransactionStack == null) {
+            acquireConnection(null, connectionFlags, cancellationSignal); // might throw
+            
+            Transaction transaction = obtainTransaction(transactionMode, transactionListener);
+            transaction.mParent = mTransactionStack;
+            mTransactionStack = transaction;
+            mOuterSavepointName = name;
+        }
+        try {
+            // Execute SQL might throw a runtime exception.
+            mConnection.execute("SAVEPOINT '" + name + "';", null, cancellationSignal); // might throw
+        } finally {
+            if (mTransactionStack == null) {
+                releaseConnection(); // might throw
+            }
+        }
+    }
+
+    /**
+     * Rollbacks the savepoint.
+     * <p>
+     * This method makes the changes be rolled back.
+     * </p><p>
+     * This method can be called between {@link #setSavepoint} and {@link #releaseSavepoint}
+     * If this method is called, the changes will be rolled back.
+     * After this, {@link #releaseSavepoint} must be called to release savepoint.
+     * </p>
+     *
+     * @param cancellationSignal A signal to cancel the operation in progress, or null if none.
+     *
+     * @throws IllegalStateException if there is no current transaction.
+     * @throws SQLiteException if an error occurs.
+     * @throws OperationCanceledException if the operation was canceled.
+     *
+     * @see #setSavepoint
+     * @see #releaseSavepoint
+     */
+    public void rollbackToSavepoint(String name, CancellationSignal cancellationSignal) {
+        throwIfNoTransaction();
+        assert mConnection != null;
+
+        rollbackToSavepointUnchecked(name, cancellationSignal);
+    }
+
+    private void rollbackToSavepointUnchecked(String name, CancellationSignal cancellationSignal) {
+        if (cancellationSignal != null) {
+            cancellationSignal.throwIfCanceled();
+        }
+        
+        mConnection.execute("ROLLBACK TO '" + name + "';", null, cancellationSignal); // might throw
+    }
+
+    /**
+     * Releases the savepoint.
+     * <p>
+     * This method releases(commits) the changes.
+     * </p><p>
+     * This method must be called exactly once for each call to {@link #setSavepoint}.
+     * </p>
+     *
+     * @param cancellationSignal A signal to cancel the operation in progress, or null if none.
+     *
+     * @throws IllegalStateException if there is no current transaction.
+     * @throws SQLiteException if an error occurs.
+     * @throws OperationCanceledException if the operation was canceled.
+     *
+     * @see #setSavepoint
+     * @see #rollbackToSavepoint
+     */
+    public void releaseSavepoint(String name, CancellationSignal cancellationSignal) {
+        throwIfNoTransaction();
+        assert mConnection != null;
+
+        releaseSavepointUnchecked(name, cancellationSignal);
+    }
+
+    private void releaseSavepointUnchecked(String name, CancellationSignal cancellationSignal) {
+        if (cancellationSignal != null) {
+            cancellationSignal.throwIfCanceled();
+        }
+
+        mConnection.execute("RELEASE '" + name + "';", null, cancellationSignal); // might throw
+
+        if (mOuterSavepointName != null && mOuterSavepointName.equals(name)) {
+            final Transaction top = mTransactionStack;
+            
+            mTransactionStack = top.mParent;
+            recycleTransaction(top);
+            
+            mOuterSavepointName = null;
+            releaseConnection(); // might throw
         }
     }
 
