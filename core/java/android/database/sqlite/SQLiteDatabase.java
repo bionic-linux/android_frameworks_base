@@ -558,6 +558,97 @@ public final class SQLiteDatabase extends SQLiteClosable {
     }
 
     /**
+     * Sets a savepoint in DEFERRED mode.
+     * <p>
+     * Savepoints can be nested.
+     * When the outer savepoint is ended all of the work done in that savepoint and
+     * each nested savepoints will be released(committed) or rolled back.
+     * The changes will be rolled back if rollbackToSavepoint is called explicitly.
+     * Otherwise they will be released(committed).
+     * </p>
+     * <p>Here is the standard idiom for savepoint:
+     *
+     * <pre>
+     *   db.setSavepoint("a");
+     *   try {
+     *     ...
+     *     db.setSavepoint("b");
+     *     try {
+     *       ...
+     *     } catch (SQLiteException e) {
+     *       db.rollbackToSavepoint("b");
+     *     } finally {
+     *       db.releaseSavepoint("b");
+     *     }
+     *   } catch (SQLiteException e) {
+     *     db.rollbackToSavepoint("a");
+     *   } finally {
+     *     db.releaseSavepoint("a");
+     *   }
+     * </pre>
+     * @hide
+     */
+    public void setSavepoint(String name) {
+        acquireReference();
+        try {
+            getThreadSession().setSavepoint(name,
+                    getThreadDefaultConnectionFlags(false /*readOnly*/), null);
+        } finally {
+            releaseReference();
+        }
+    }
+
+    /**
+     * Rollbacks the savepoint.
+     * <p>
+     * This methods reverts the state of the database back to the savepoint.
+     * </p>
+     * <p>Here is the standard idiom for rollbackToSavepoint:
+     *
+     * <pre>
+     *   db.setSavepoint("a");
+     *   try {
+     *     ...
+     *     db.setSavepoint("b");
+     *     try {
+     *       ...
+     *     } catch (SQLiteException e) {
+     *       db.rollbackToSavepoint("b");
+     *     } finally {
+     *       db.releaseSavepoint("b");
+     *     }
+     *   } catch (SQLiteException e) {
+     *     db.rollbackToSavepoint("a");
+     *   } finally {
+     *     db.releaseSavepoint("a");
+     *   }
+     * </pre>
+     * @hide
+     */
+    public void rollbackToSavepoint(String name) {
+        acquireReference();
+        try {
+            getThreadSession().rollbackToSavepoint(name, null);
+        } finally {
+            releaseReference();
+        }
+    }
+
+    /**
+     * Releases a savepoint. See setSavepoint for notes about how to use this and when savepoints
+     * are released(committed) and rolled back.
+     * @hide
+     */
+    public void releaseSavepoint(String name) {
+        acquireReference();
+        try {
+            getThreadSession().releaseSavepoint(name, null);
+        } finally {
+            releaseReference();
+        }
+    }
+
+    /**
      * Returns true if the current thread is holding an active connection to the database.
      * <p>
      * The name of this method comes from a time when having an active connection
