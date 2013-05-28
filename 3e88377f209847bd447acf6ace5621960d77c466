@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "VA.5Rjxg",
+        "filename": "core/java/android/os/BatteryStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-05-28T20:38:50Z",
+      "side": 1,
+      "message": "This is a bit confusing.  Try this instead:\n\n  // extract and sign extend 11 bits\n  batteryTemperature \u003d (short)((batteryLevelInt \u003c\u003c 7) \u003e\u003e 21);",
+      "revId": "3e88377f209847bd447acf6ace5621960d77c466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
