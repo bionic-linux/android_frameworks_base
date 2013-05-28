@@ -170,18 +170,18 @@ public class VibratorService extends IVibratorService.Stub
             throw new SecurityException("Requires VIBRATE permission");
         }
         int uid = Binder.getCallingUid();
-        // We're running in the system server so we cannot crash. Check for a
-        // timeout of 0 or negative. This will ensure that a vibration has
-        // either a timeout of > 0 or a non-null pattern.
-        if (milliseconds <= 0 || (mCurrentVibration != null
-                && mCurrentVibration.hasLongerTimeout(milliseconds))) {
-            // Ignore this vibration since the current vibration will play for
-            // longer than milliseconds.
-            return;
-        }
-
-        Vibration vib = new Vibration(token, milliseconds, uid);
         synchronized (mVibrations) {
+            // We're running in the system server so we cannot crash. Check for a
+            // timeout of 0 or negative. This will ensure that a vibration has
+            // either a timeout of > 0 or a non-null pattern.
+            if (milliseconds <= 0 || (mCurrentVibration != null
+                    && mCurrentVibration.hasLongerTimeout(milliseconds))) {
+                // Ignore this vibration since the current vibration will play for
+                // longer than milliseconds.
+                return;
+            }
+
+            Vibration vib = new Vibration(token, milliseconds, uid);
             removeVibrationLocked(token);
             doCancelVibrateLocked();
             mCurrentVibration = vib;
