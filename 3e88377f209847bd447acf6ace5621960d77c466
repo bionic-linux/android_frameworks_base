@@ -16,6 +16,24 @@
       "revId": "3e88377f209847bd447acf6ace5621960d77c466",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dced94c_0c42b755",
+        "filename": "core/java/android/os/BatteryStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-05-29T03:01:52Z",
+      "side": 1,
+      "message": "you\u0027re right!!",
+      "parentUuid": "VA.5Rjxg",
+      "revId": "3e88377f209847bd447acf6ace5621960d77c466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
