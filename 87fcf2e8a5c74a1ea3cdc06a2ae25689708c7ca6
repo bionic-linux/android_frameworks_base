@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4915a3_bb3547b3",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2013-05-30T00:12:12Z",
+      "side": 1,
+      "message": "if (isLayoutRtl()) {\n...\n}",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_bb5ee7f6",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2013-05-30T00:12:12Z",
+      "side": 1,
+      "message": "this could be moved just after \"if (child !\u003d null) {\" and use the \"isLayoutRtl()\" call.",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_fe917d47",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2013-05-30T00:12:12Z",
+      "side": 1,
+      "message": "final boolean shouldMirror",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_db55b3d3",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2013-05-30T00:12:12Z",
+      "side": 1,
+      "message": "one line is ok.",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_3bf017cc",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2013-05-30T00:12:12Z",
+      "side": 1,
+      "message": "one line is ok",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_3b22d77b",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2013-05-30T00:12:12Z",
+      "side": 1,
+      "message": "final int newLeft \u003d left + lp.leftMargin;\n\nif (child.getLeft() \u003c newLeft) {\nfinal int childLeft \u003d newLeft;\n...\n}",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
