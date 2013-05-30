@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4915a3_217c6a7e",
+        "filename": "core/java/android/widget/AbsSeekBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2013-05-30T00:29:30Z",
+      "side": 1,
+      "message": "Please use \"final boolean isLayoutRtl \u003d isLayoutRtl()\"",
+      "revId": "05fdbfef84fe6c554993a7a0cdcbcdaf5645640a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
