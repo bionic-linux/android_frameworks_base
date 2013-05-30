@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d4915a3_81bf3eea",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2013-05-30T00:59:49Z",
+      "side": 1,
+      "message": "Correct positioning of children should happen in onLayout, not in a listener.",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d4915a3_bb3547b3",
         "filename": "core/java/android/widget/HorizontalScrollView.java",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2013-05-30T00:12:12Z",
       "side": 1,
       "message": "this could be moved just after \"if (child !\u003d null) {\" and use the \"isLayoutRtl()\" call.",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_61c4b288",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2013-05-30T00:59:49Z",
+      "side": 1,
+      "message": "Why is the parent\u0027s layout affected by the child\u0027s layout direction?",
       "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -81,6 +115,23 @@
       "writtenOn": "2013-05-30T00:12:12Z",
       "side": 1,
       "message": "one line is ok",
+      "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_21caaa95",
+        "filename": "core/java/android/widget/HorizontalScrollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2013-05-30T00:59:49Z",
+      "side": 1,
+      "message": "What is FrameViews? FrameLayout? If FrameLayout has bugs in RTL layout let\u0027s fix it there instead of putting fixup methods in subclasses.",
       "revId": "87fcf2e8a5c74a1ea3cdc06a2ae25689708c7ca6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
