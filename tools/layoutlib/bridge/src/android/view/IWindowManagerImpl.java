@@ -453,6 +453,11 @@ public class IWindowManagerImpl implements IWindowManager {
     }
 
     @Override
+    public boolean isHdmiPlugged() {
+        return false;
+    }
+
+    @Override
     public void showAssistant() {
 
     }

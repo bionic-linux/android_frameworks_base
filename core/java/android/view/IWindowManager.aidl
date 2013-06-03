@@ -261,6 +261,11 @@ interface IWindowManager
     boolean isSafeModeEnabled();
 
     /**
+     * HDMI is plugged on device.
+     */
+    boolean isHdmiPlugged();
+
+    /**
      * Tell keyguard to show the assistant (Intent.ACTION_ASSIST) after asking for the user's
      * credentials.
      */

@@ -10418,6 +10418,10 @@ public class WindowManagerService extends IWindowManager.Stub
         return mSafeMode;
     }
 
+    public boolean isHdmiPlugged() {
+        return mPolicy.isHdmiPlugged();
+    }
+
     public void showAssistant() {
         // TODO: What permission?
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.DEVICE_POWER)

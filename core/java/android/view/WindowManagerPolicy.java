@@ -1142,4 +1142,9 @@ public interface WindowManagerPolicy {
      * {@link android.content.Intent#ACTION_ASSIST}
      */
     public void showAssistant();
+
+    /**
+     * HDMI is plugged on device.
+     */
+    public boolean isHdmiPlugged();
 }

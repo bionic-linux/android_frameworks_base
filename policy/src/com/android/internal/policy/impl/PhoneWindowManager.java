@@ -3196,6 +3196,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    public boolean isHdmiPlugged() {
+        return mHdmiPlugged;
+    }
+
     void setHdmiPlugged(boolean plugged) {
         if (mHdmiPlugged != plugged) {
             mHdmiPlugged = plugged;
