@@ -42,7 +42,7 @@ for more on dynamically created receivers.
 <dt><a name="enabled"></a>{@code android:enabled}</dt>
 <dd>Whether or not the broadcast receiver can be instantiated by the system &mdash; 
 "{@code true}" if it can be, and "{@code false}" if not.  The default value 
-is "{@code true}".
+is "{@code true}". This may also be a reference to a resource (in the form "{@code @[package:]type:name}").
 
 <p>
 The <code><a href="{@docRoot}guide/topics/manifest/application-element.html">&lt;application&gt;</a></code> element has its own 
