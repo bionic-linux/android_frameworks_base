@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd62183_b08de07f",
+        "filename": "drm/java/android/drm/DrmInfoRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2013-06-11T14:44:51Z",
+      "side": 1,
+      "message": "Since new public constant is added here, we need to perform \"make update-api\" to include this constant into current.txt",
+      "revId": "0e09e1ce530efe05f562573b4c6fa1d36bd9d514",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
