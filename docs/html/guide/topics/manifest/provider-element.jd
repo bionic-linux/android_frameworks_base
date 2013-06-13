@@ -288,7 +288,14 @@ See also the <code><a href="#prmsn">permission</a></code> and
 <dt><a name="sync"></a>{@code android:syncable}</dt>
 <dd>Whether or not the data under the content provider's control 
 is to be synchronized with data on a server &mdash; "{@code true}" 
-if it is to be synchronized, and "{@code false}" if not.</dd>
+if it is to be synchronized, and "{@code false}" if not.
+
+<p>
+<em>This attribute was deprecated in API level 5. This flag is now being ignored. 
+The current way to make a provider syncable is to provide a SyncAdapter service 
+for a given provider/account type.</em>
+</p>
+</dd>
 
 <dt><a name="wprmsn"></a>{@code android:writePermission}</dt>
 <dd>A permission that clients must have to make changes to the data 
