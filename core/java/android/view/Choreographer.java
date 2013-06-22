@@ -138,6 +138,7 @@ public final class Choreographer {
     private final CallbackQueue[] mCallbackQueues;
 
     private boolean mFrameScheduled;
+    private boolean mScheduleFrameAfterCallbacks;
     private boolean mCallbacksRunning;
     private long mLastFrameTimeNanos;
     private long mFrameIntervalNanos;
@@ -471,6 +472,11 @@ public final class Choreographer {
 
     private void scheduleFrameLocked(long now) {
         if (!mFrameScheduled) {
+            if (mCallbacksRunning) {
+                mScheduleFrameAfterCallbacks = true;
+                return;
+            }
+
             mFrameScheduled = true;
             if (USE_VSYNC) {
                 if (DEBUG) {
@@ -542,6 +548,13 @@ public final class Choreographer {
         doCallbacks(Choreographer.CALLBACK_INPUT, frameTimeNanos);
         doCallbacks(Choreographer.CALLBACK_ANIMATION, frameTimeNanos);
         doCallbacks(Choreographer.CALLBACK_TRAVERSAL, frameTimeNanos);
+
+        synchronized (mLock) {
+            if (mScheduleFrameAfterCallbacks) {
+                scheduleFrameLocked(frameTimeNanos);
+                mScheduleFrameAfterCallbacks = false;
+            }
+        }
 
         if (DEBUG) {
             final long endNanos = System.nanoTime();
