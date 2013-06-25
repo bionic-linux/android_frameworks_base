@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8afc21ee_df835f90",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2013-06-25T20:50:11Z",
+      "side": 1,
+      "message": "Add a comment indicating that noway can the audio.mp3 be compressed within the zip file.",
+      "revId": "e5387e23599d16fe5915e37e77df842c54c2c46b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8afc21ee_054738d7",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2013-06-25T20:50:11Z",
+      "side": 1,
+      "message": "Meh.\nWould be nice if the user can bypass the audio via any key press.\n\nIf the device ends up crashing for some reason, or is stuck in a reboot loop, then you have this noisy device until the user figures out how to fastboot and then power-off.",
+      "revId": "e5387e23599d16fe5915e37e77df842c54c2c46b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8afc21ee_7fb84b5d",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2013-06-25T20:50:11Z",
+      "side": 1,
+      "message": "No need. This just wastes memory.\n\nUse getEntryInfo() to extract the pUncompLen and pOffset, then use those instead of getDataLength() and getDataOffset().",
+      "revId": "e5387e23599d16fe5915e37e77df842c54c2c46b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
