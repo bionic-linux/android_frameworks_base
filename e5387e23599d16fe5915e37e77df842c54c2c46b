@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ab7514d_59b777db",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2013-06-26T10:12:24Z",
+      "side": 1,
+      "message": "As this applies to the whole zip file I have just added a generic comment.",
+      "parentUuid": "8afc21ee_df835f90",
+      "revId": "e5387e23599d16fe5915e37e77df842c54c2c46b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8afc21ee_054738d7",
         "filename": "cmds/bootanimation/BootAnimation.cpp",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aa9d65d5_0de49109",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2013-06-26T10:12:24Z",
+      "side": 1,
+      "message": "We have been using this patch for over 2 years and have yet to encounter this issue. When we get the phone into the hand of end user it should never loop crash, I think this is a issue during development only.",
+      "parentUuid": "8afc21ee_054738d7",
+      "revId": "e5387e23599d16fe5915e37e77df842c54c2c46b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8afc21ee_7fb84b5d",
         "filename": "cmds/bootanimation/BootAnimation.cpp",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2013-06-25T20:50:11Z",
       "side": 1,
       "message": "No need. This just wastes memory.\n\nUse getEntryInfo() to extract the pUncompLen and pOffset, then use those instead of getDataLength() and getDataOffset().",
+      "revId": "e5387e23599d16fe5915e37e77df842c54c2c46b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa9d65d5_6df1d5c7",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2013-06-26T10:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8afc21ee_7fb84b5d",
       "revId": "e5387e23599d16fe5915e37e77df842c54c2c46b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
