@@ -25186,6 +25186,7 @@ package android.view {
     method public void setNextFocusUpId(int);
     method public void setOnClickListener(android.view.View.OnClickListener);
     method public void setOnCreateContextMenuListener(android.view.View.OnCreateContextMenuListener);
+    method public void setOnDoubleClickListener(android.view.View.OnDoubleClickListener);
     method public void setOnDragListener(android.view.View.OnDragListener);
     method public void setOnFocusChangeListener(android.view.View.OnFocusChangeListener);
     method public void setOnGenericMotionListener(android.view.View.OnGenericMotionListener);
@@ -25376,6 +25377,11 @@ package android.view {
     field public static final android.os.Parcelable.Creator CREATOR;
   }
 
+  public class View.DoSingleClick implements java.lang.Runnable {
+    ctor public View.DoSingleClick(android.view.View);
+    method public void run();
+  }
+
   public static class View.DragShadowBuilder {
     ctor public View.DragShadowBuilder(android.view.View);
     ctor public View.DragShadowBuilder();
@@ -25406,6 +25412,11 @@ package android.view {
 
   public static abstract interface View.OnCreateContextMenuListener {
     method public abstract void onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo);
+  }
+
+  public static abstract interface View.OnDoubleClickListener {
+    method public abstract void onDoubleClick(android.view.View);
+    method public abstract void onSingleClick(android.view.View);
   }
 
   public static abstract interface View.OnDragListener {
