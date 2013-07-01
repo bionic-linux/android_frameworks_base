@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a2cb179_32e70d12",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5207,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2013-07-01T19:15:01Z",
+      "side": 1,
+      "message": "Nit: non-debug logging from system services should use Slog.w(...), not Log.w(...).",
+      "revId": "c7a8a492a45969814fc6afe5c30b5666bf8f8579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
