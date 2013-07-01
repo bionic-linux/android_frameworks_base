@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a2cb179_5d6ad7f0",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2544,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "This field should start \"m\".",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_3d6d2308",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2545,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "This should be final and the name should be more descriptive. However, it is a waste to create a new Handler for *every* view, even those who won\u0027t use double click. If you need a Handler, use what\u0027s provided through the AttachInfo.",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_bd4bd393",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2967,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "Can be private instead.",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_9d460f8b",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4199,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "What if the listener is null?",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_1d3bfff4",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "See comments below",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_fd554b2b",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4255,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "There is a weird side effect here: calling this method twice in a row will perform a double click instead of doing two single clicks like it used to. This breaks existing behavior and the new behavior is not documented.",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_dd50873e",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4274,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "Is a new allocation necessary every time? Also, it should be removed when the view is detached if the message hasn\u0027t be processed yet.",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_3d38c3f5",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17574,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "Please remove names/dates, esp. in public documentation.",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_5d457778",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17583,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "Why does OnDoubleClickListener specify onSingleClick()? The existing OnClickListener should be used always for single clicks.",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_7d423b73",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18474,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "Use the m preview, use a more descriptive name",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2cb179_9d2d2fb7",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18479,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-01T03:30:25Z",
+      "side": 1,
+      "message": "This intermediate variable is unnecessary.",
+      "revId": "479b92eb182d1c22ea4fd8daf786dad16ed1ed98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
