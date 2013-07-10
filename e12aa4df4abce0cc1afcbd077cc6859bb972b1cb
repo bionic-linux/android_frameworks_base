@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27c53079_dc9a8165",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2545,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-10T18:44:44Z",
+      "side": 1,
+      "message": "This should only be allocated when needed.",
+      "revId": "e12aa4df4abce0cc1afcbd077cc6859bb972b1cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27c53079_5c87910c",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4268,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-10T18:44:44Z",
+      "side": 1,
+      "message": "Callbacks need to be removed in onDetachedFromWindow",
+      "revId": "e12aa4df4abce0cc1afcbd077cc6859bb972b1cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27c53079_3c94dd33",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4273,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-10T18:44:44Z",
+      "side": 1,
+      "message": "When a double click is set this means that single clicks will always be delayed by 250ms, thus being inconsistent with the rest of the system.",
+      "revId": "e12aa4df4abce0cc1afcbd077cc6859bb972b1cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27c53079_7c8a5516",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17580,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-10T18:44:44Z",
+      "side": 1,
+      "message": "Double click listeners should only handle double clicks, not single clicks. That\u0027s what the OnClickListener is for.",
+      "revId": "e12aa4df4abce0cc1afcbd077cc6859bb972b1cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27c53079_bc9fcd53",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18470,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-10T18:44:44Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be public, and should be static.",
+      "revId": "e12aa4df4abce0cc1afcbd077cc6859bb972b1cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27c53079_9ca409a7",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18471,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-07-10T18:44:44Z",
+      "side": 1,
+      "message": "This should be a weak reference",
+      "revId": "e12aa4df4abce0cc1afcbd077cc6859bb972b1cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
