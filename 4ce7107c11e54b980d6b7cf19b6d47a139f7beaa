@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0764ac98_b1c58287",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1015528
+      },
+      "writtenOn": "2013-07-11T04:19:00Z",
+      "side": 1,
+      "message": "As per the guidelines mentioned above in this file should the property be named like this:\nconfig_stkNoAlphaUserConf",
+      "revId": "4ce7107c11e54b980d6b7cf19b6d47a139f7beaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
