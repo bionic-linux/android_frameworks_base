@@ -503,8 +503,8 @@ public class WifiManager {
     private final SparseArray mListenerMap = new SparseArray();
     private final Object mListenerMapLock = new Object();
 
-    private AsyncChannel mAsyncChannel = new AsyncChannel();
-    private ServiceHandler mHandler;
+    private static AsyncChannel mAsyncChannel;
+    private static ServiceHandler mHandler;
     private Messenger mWifiServiceMessenger;
     private final CountDownLatch mConnected = new CountDownLatch(1);
 
@@ -525,6 +525,9 @@ public class WifiManager {
     public WifiManager(Context context, IWifiManager service) {
         mContext = context;
         mService = service;
+        if (mAsyncChannel == null) {
+            mAsyncChannel = new AsyncChannel();
+        }
         init();
     }
 
@@ -1376,12 +1379,15 @@ public class WifiManager {
             }
         }
 
-        mHandler = new ServiceHandler(sHandlerThread.getLooper());
-        mAsyncChannel.connect(mContext, mHandler, mWifiServiceMessenger);
-        try {
-            mConnected.await();
-        } catch (InterruptedException e) {
-            Log.e(TAG, "interrupted wait at init");
+        if (mHandler == null) {
+            mHandler = new ServiceHandler(sHandlerThread.getLooper());
+            mAsyncChannel.connect(mContext, mHandler, mWifiServiceMessenger);
+
+            try {
+                mConnected.await();
+            } catch (InterruptedException e) {
+                Log.e(TAG, "interrupted wait at init");
+            }
         }
     }
 
