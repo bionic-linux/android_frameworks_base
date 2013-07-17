@@ -16,6 +16,24 @@
       "revId": "6c56b588dfd96e8ff2428c976fc710f2644c3906",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53882be2_011fca71",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1866,
+      "author": {
+        "id": 1022890
+      },
+      "writtenOn": "2013-07-17T13:48:13Z",
+      "side": 1,
+      "message": "Don\u0027t see a need to check for FORCE_SPEAKER here as the update is sent below through sendMsg.\n\nThe reason for the handling in the corresponding if-statement in setSpeakerPhoneOn is because in that case otherwise only FOR_COMMUNICATION would be touched and not FOR_RECORD.",
+      "parentUuid": "QidmuE5I",
+      "revId": "6c56b588dfd96e8ff2428c976fc710f2644c3906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
