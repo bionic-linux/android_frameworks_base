@@ -1797,6 +1797,7 @@ class ContextImpl extends Context {
         c.init(mPackageInfo, null, mMainThread);
         c.mResources = mMainThread.getTopLevelResources(
                 mPackageInfo.getResDir(),
+                mPackageInfo.getOverlayDirs(),
                 getDisplayId(), overrideConfiguration,
                 mResources.getCompatibilityInfo());
         return c;
@@ -1819,7 +1820,7 @@ class ContextImpl extends Context {
         context.init(mPackageInfo, null, mMainThread);
         context.mDisplay = display;
         context.mResources = mMainThread.getTopLevelResources(
-                mPackageInfo.getResDir(), displayId, null, ci);
+                mPackageInfo.getResDir(), mPackageInfo.getOverlayDirs(),displayId, null, ci);
         return context;
     }
 
@@ -1906,8 +1907,8 @@ class ContextImpl extends Context {
                         " compatiblity info:" + container.getDisplayMetrics());
             }
             mResources = mainThread.getTopLevelResources(
-                    mPackageInfo.getResDir(), Display.DEFAULT_DISPLAY,
-                    null, container.getCompatibilityInfo());
+                    mPackageInfo.getResDir(), mPackageInfo.getOverlayDirs(),
+                    Display.DEFAULT_DISPLAY, null, container.getCompatibilityInfo());
         }
         mMainThread = mainThread;
         mActivityToken = activityToken;

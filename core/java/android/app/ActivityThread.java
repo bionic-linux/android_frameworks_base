@@ -1679,10 +1679,11 @@ public final class ActivityThread {
      * Creates the top level Resources for applications with the given compatibility info.
      *
      * @param resDir the resource directory.
+     * @param overlayDirs Extra resources (overlays) directories
      * @param compInfo the compability info. It will use the default compatibility info when it's
      * null.
      */
-    Resources getTopLevelResources(String resDir,
+    Resources getTopLevelResources(String resDir, String[] overlayDirs,
             int displayId, Configuration overrideConfiguration,
             CompatibilityInfo compInfo) {
         ResourcesKey key = new ResourcesKey(resDir,
@@ -1715,6 +1716,12 @@ public final class ActivityThread {
         AssetManager assets = new AssetManager();
         if (assets.addAssetPath(resDir) == 0) {
             return null;
+        }
+
+        if (overlayDirs != null) {
+            for (String idmapPath : overlayDirs) {
+                assets.addOverlayPath(idmapPath);
+            }
         }
 
         //Slog.i(TAG, "Resource: key=" + key + ", display metrics=" + metrics);
@@ -1758,10 +1765,10 @@ public final class ActivityThread {
     /**
      * Creates the top level resources for the given package.
      */
-    Resources getTopLevelResources(String resDir,
+    Resources getTopLevelResources(String resDir, String[] overlayDirs,
             int displayId, Configuration overrideConfiguration,
             LoadedApk pkgInfo) {
-        return getTopLevelResources(resDir, displayId, overrideConfiguration,
+        return getTopLevelResources(resDir, overlayDirs, displayId, overrideConfiguration,
                 pkgInfo.mCompatibilityInfo.get());
     }
 
