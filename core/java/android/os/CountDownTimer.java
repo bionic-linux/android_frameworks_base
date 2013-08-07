@@ -56,6 +56,11 @@ public abstract class CountDownTimer {
     private final long mCountdownInterval;
 
     private long mStopTimeInFuture;
+    
+    /**
+    * boolean representing if the timer was cancelled
+    */
+    private boolean mCancelled = false;
 
     /**
      * @param millisInFuture The number of millis in the future from the call
@@ -74,6 +79,7 @@ public abstract class CountDownTimer {
      */
     public final void cancel() {
         mHandler.removeMessages(MSG);
+        mCancelled = true;
     }
 
     /**
@@ -86,6 +92,7 @@ public abstract class CountDownTimer {
         }
         mStopTimeInFuture = SystemClock.elapsedRealtime() + mMillisInFuture;
         mHandler.sendMessage(mHandler.obtainMessage(MSG));
+        mCancelled = false;
         return this;
     }
 
@@ -130,7 +137,9 @@ public abstract class CountDownTimer {
                     // complete, skip to next interval
                     while (delay < 0) delay += mCountdownInterval;
 
-                    sendMessageDelayed(obtainMessage(MSG), delay);
+                    if (!mCancelled) {
+                        sendMessageDelayed(obtainMessage(MSG), delay);
+                    }
                 }
             }
         }
