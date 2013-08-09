@@ -26,79 +26,60 @@
 #include "wifi.h"
 
 #define WIFI_PKG_NAME "android/net/wifi/WifiNative"
-#define BUF_SIZE 256
+#define REPLY_BUF_SIZE 4096 // wpa_supplicant's maximum size.
 #define EVENT_BUF_SIZE 2048
 
 namespace android {
 
 static jint DBG = false;
 
-static int doCommand(const char *ifname, const char *cmd, char *replybuf, int replybuflen)
-{
-    size_t reply_len = replybuflen - 1;
-
-    if (::wifi_command(ifname, cmd, replybuf, &reply_len) != 0)
-        return -1;
-    else {
-        // Strip off trailing newline
-        if (reply_len > 0 && replybuf[reply_len-1] == '\n')
-            replybuf[reply_len-1] = '\0';
-        else
-            replybuf[reply_len] = '\0';
-        return 0;
+static bool doCommand(const ScopedUtfChars& if_name, const ScopedUtfChars& cmd, char* reply, size_t reply_len) {
+    if (DBG) {
+        ALOGD("doCommand(if=%s): %s", if_name.c_str(), cmd.c_str());
     }
+
+    if (if_name.c_str() == NULL || cmd.c_str() == NULL) {
+        return false; // We already threw.
+    }
+
+    --reply_len; // Ensure we have room to add NUL termination.
+    if (::wifi_command(if_name.c_str(), cmd.c_str(), reply, &reply_len) != 0) {
+        return false;
+    }
+
+    // Strip off trailing newline.
+    if (reply_len > 0 && reply[reply_len-1] == '\n') {
+        reply[reply_len-1] = '\0';
+    } else {
+        reply[reply_len] = '\0';
+    }
+    return true;
 }
 
-static jint doIntCommand(const char *ifname, const char* fmt, ...)
-{
-    char buf[BUF_SIZE];
-    va_list args;
-    va_start(args, fmt);
-    int byteCount = vsnprintf(buf, sizeof(buf), fmt, args);
-    va_end(args);
-    if (byteCount < 0 || byteCount >= BUF_SIZE) {
-        return -1;
-    }
-    char reply[BUF_SIZE];
-    if (doCommand(ifname, buf, reply, sizeof(reply)) != 0) {
+static jint doIntCommand(const ScopedUtfChars& if_name, const ScopedUtfChars& cmd) {
+    char reply[REPLY_BUF_SIZE];
+    if (!doCommand(if_name, cmd, reply, sizeof(reply))) {
         return -1;
     }
     return static_cast<jint>(atoi(reply));
 }
 
-static jboolean doBooleanCommand(const char *ifname, const char* expect, const char* fmt, ...)
-{
-    char buf[BUF_SIZE];
-    va_list args;
-    va_start(args, fmt);
-    int byteCount = vsnprintf(buf, sizeof(buf), fmt, args);
-    va_end(args);
-    if (byteCount < 0 || byteCount >= BUF_SIZE) {
+static jboolean doBooleanCommand(const ScopedUtfChars& if_name, const ScopedUtfChars& cmd) {
+    char reply[REPLY_BUF_SIZE];
+    if (!doCommand(if_name, cmd, reply, sizeof(reply))) {
         return JNI_FALSE;
     }
-    char reply[BUF_SIZE];
-    if (doCommand(ifname, buf, reply, sizeof(reply)) != 0) {
-        return JNI_FALSE;
-    }
-    return (strcmp(reply, expect) == 0);
+    return (strcmp(reply, "OK") == 0);
 }
 
 // Send a command to the supplicant, and return the reply as a String
-static jstring doStringCommand(JNIEnv* env, const char *ifname, const char* fmt, ...) {
-    char buf[BUF_SIZE];
-    va_list args;
-    va_start(args, fmt);
-    int byteCount = vsnprintf(buf, sizeof(buf), fmt, args);
-    va_end(args);
-    if (byteCount < 0 || byteCount >= BUF_SIZE) {
-        return NULL;
-    }
-    char reply[4096];
-    if (doCommand(ifname, buf, reply, sizeof(reply)) != 0) {
+static jstring doStringCommand(JNIEnv* env, const ScopedUtfChars& if_name, const ScopedUtfChars& cmd) {
+    char reply[REPLY_BUF_SIZE];
+    if (!doCommand(if_name, cmd, reply, sizeof(reply))) {
         return NULL;
     }
     // TODO: why not just NewStringUTF?
-    String16 str((char *)reply);
+    String16 str(reply);
     return env->NewString((const jchar *)str.string(), str.size());
 }
 
@@ -129,21 +110,21 @@ static jboolean android_net_wifi_killSupplicant(JNIEnv* env, jobject, jboolean p
 
 static jboolean android_net_wifi_connectToSupplicant(JNIEnv* env, jobject, jstring jIface)
 {
-    ScopedUtfChars ifname(env, jIface);
-    return (jboolean)(::wifi_connect_to_supplicant(ifname.c_str()) == 0);
+    ScopedUtfChars if_name(env, jIface);
+    return (jboolean)(::wifi_connect_to_supplicant(if_name.c_str()) == 0);
 }
 
 static void android_net_wifi_closeSupplicantConnection(JNIEnv* env, jobject, jstring jIface)
 {
-    ScopedUtfChars ifname(env, jIface);
-    ::wifi_close_supplicant_connection(ifname.c_str());
+    ScopedUtfChars if_name(env, jIface);
+    ::wifi_close_supplicant_connection(if_name.c_str());
 }
 
 static jstring android_net_wifi_waitForEvent(JNIEnv* env, jobject, jstring jIface)
 {
     char buf[EVENT_BUF_SIZE];
-    ScopedUtfChars ifname(env, jIface);
-    int nread = ::wifi_wait_for_event(ifname.c_str(), buf, sizeof buf);
+    ScopedUtfChars if_name(env, jIface);
+    int nread = ::wifi_wait_for_event(if_name.c_str(), buf, sizeof buf);
     if (nread > 0) {
         return env->NewStringUTF(buf);
     } else {
@@ -154,40 +135,37 @@ static jstring android_net_wifi_waitForEvent(JNIEnv* env, jobject, jstring jIfac
 static jboolean android_net_wifi_doBooleanCommand(JNIEnv* env, jobject, jstring jIface,
         jstring jCommand)
 {
-    ScopedUtfChars ifname(env, jIface);
+    ScopedUtfChars if_name(env, jIface);
     ScopedUtfChars command(env, jCommand);
 
     if (command.c_str() == NULL) {
         return JNI_FALSE;
     }
-    if (DBG) ALOGD("doBoolean: %s", command.c_str());
-    return doBooleanCommand(ifname.c_str(), "OK", "%s", command.c_str());
+    return doBooleanCommand(if_name, command);
 }
 
 static jint android_net_wifi_doIntCommand(JNIEnv* env, jobject, jstring jIface,
         jstring jCommand)
 {
-    ScopedUtfChars ifname(env, jIface);
+    ScopedUtfChars if_name(env, jIface);
     ScopedUtfChars command(env, jCommand);
 
     if (command.c_str() == NULL) {
         return -1;
     }
-    if (DBG) ALOGD("doInt: %s", command.c_str());
-    return doIntCommand(ifname.c_str(), "%s", command.c_str());
+    return doIntCommand(if_name, command);
 }
 
 static jstring android_net_wifi_doStringCommand(JNIEnv* env, jobject, jstring jIface,
         jstring jCommand)
 {
-    ScopedUtfChars ifname(env, jIface);
+    ScopedUtfChars if_name(env, jIface);
 
     ScopedUtfChars command(env, jCommand);
     if (command.c_str() == NULL) {
         return NULL;
     }
-    if (DBG) ALOGD("doString: %s", command.c_str());
-    return doStringCommand(env, ifname.c_str(), "%s", command.c_str());
+    return doStringCommand(env, if_name, command);
 }
 
 
