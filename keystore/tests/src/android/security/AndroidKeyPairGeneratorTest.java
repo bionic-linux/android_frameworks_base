@@ -118,6 +118,8 @@ public class AndroidKeyPairGeneratorTest extends AndroidTestCase {
         mGenerator.initialize(
                 new KeyPairGeneratorSpec.Builder(getContext())
                         .setAlias(TEST_ALIAS_1)
+                        .setKeyType("RSA")
+                        .setKeySize(1024)
                         .setSubject(TEST_DN_1)
                         .setSerialNumber(TEST_SERIAL_1)
                         .setStartDate(NOW)
@@ -142,10 +144,45 @@ public class AndroidKeyPairGeneratorTest extends AndroidTestCase {
         final KeyPair pair = mGenerator.generateKeyPair();
         assertNotNull("The KeyPair returned should not be null", pair);
 
-        assertKeyPairCorrect(pair, TEST_ALIAS_1, TEST_DN_1, TEST_SERIAL_1, NOW, NOW_PLUS_10_YEARS);
+        assertKeyPairCorrect(pair, TEST_ALIAS_1, "RSA", TEST_DN_1, TEST_SERIAL_1, NOW,
+                NOW_PLUS_10_YEARS);
     }
 
-    public void testKeyPairGenerator_GenerateKeyPair_Unencrypted_Success() throws Exception {
+    public void testKeyPairGenerator_GenerateKeyPair_DSA_Unencrypted_Success() throws Exception {
+        mGenerator.initialize(new KeyPairGeneratorSpec.Builder(getContext())
+                .setAlias(TEST_ALIAS_1)
+                .setKeyType("DSA")
+                .setSubject(TEST_DN_1)
+                .setSerialNumber(TEST_SERIAL_1)
+                .setStartDate(NOW)
+                .setEndDate(NOW_PLUS_10_YEARS)
+                .build());
+
+        final KeyPair pair = mGenerator.generateKeyPair();
+        assertNotNull("The KeyPair returned should not be null", pair);
+
+        assertKeyPairCorrect(pair, TEST_ALIAS_1, "DSA", TEST_DN_1, TEST_SERIAL_1, NOW,
+                NOW_PLUS_10_YEARS);
+    }
+
+    public void testKeyPairGenerator_GenerateKeyPair_EC_Unencrypted_Success() throws Exception {
+        mGenerator.initialize(new KeyPairGeneratorSpec.Builder(getContext())
+                .setAlias(TEST_ALIAS_1)
+                .setKeyType("EC")
+                .setSubject(TEST_DN_1)
+                .setSerialNumber(TEST_SERIAL_1)
+                .setStartDate(NOW)
+                .setEndDate(NOW_PLUS_10_YEARS)
+                .build());
+
+        final KeyPair pair = mGenerator.generateKeyPair();
+        assertNotNull("The KeyPair returned should not be null", pair);
+
+        assertKeyPairCorrect(pair, TEST_ALIAS_1, "EC", TEST_DN_1, TEST_SERIAL_1, NOW,
+                NOW_PLUS_10_YEARS);
+    }
+
+    public void testKeyPairGenerator_GenerateKeyPair_RSA_Unencrypted_Success() throws Exception {
         mGenerator.initialize(new KeyPairGeneratorSpec.Builder(getContext())
                 .setAlias(TEST_ALIAS_1)
                 .setSubject(TEST_DN_1)
@@ -157,7 +194,8 @@ public class AndroidKeyPairGeneratorTest extends AndroidTestCase {
         final KeyPair pair = mGenerator.generateKeyPair();
         assertNotNull("The KeyPair returned should not be null", pair);
 
-        assertKeyPairCorrect(pair, TEST_ALIAS_1, TEST_DN_1, TEST_SERIAL_1, NOW, NOW_PLUS_10_YEARS);
+        assertKeyPairCorrect(pair, TEST_ALIAS_1, "RSA", TEST_DN_1, TEST_SERIAL_1, NOW,
+                NOW_PLUS_10_YEARS);
     }
 
     public void testKeyPairGenerator_GenerateKeyPair_Replaced_Success() throws Exception {
@@ -172,7 +210,7 @@ public class AndroidKeyPairGeneratorTest extends AndroidTestCase {
                     .build());
             final KeyPair pair1 = mGenerator.generateKeyPair();
             assertNotNull("The KeyPair returned should not be null", pair1);
-            assertKeyPairCorrect(pair1, TEST_ALIAS_1, TEST_DN_1, TEST_SERIAL_1, NOW,
+            assertKeyPairCorrect(pair1, TEST_ALIAS_1, "RSA", TEST_DN_1, TEST_SERIAL_1, NOW,
                     NOW_PLUS_10_YEARS);
         }
 
@@ -187,7 +225,7 @@ public class AndroidKeyPairGeneratorTest extends AndroidTestCase {
                     .build());
             final KeyPair pair2 = mGenerator.generateKeyPair();
             assertNotNull("The KeyPair returned should not be null", pair2);
-            assertKeyPairCorrect(pair2, TEST_ALIAS_2, TEST_DN_2, TEST_SERIAL_2, NOW,
+            assertKeyPairCorrect(pair2, TEST_ALIAS_2, "RSA", TEST_DN_2, TEST_SERIAL_2, NOW,
                     NOW_PLUS_10_YEARS);
         }
     }
@@ -205,7 +243,7 @@ public class AndroidKeyPairGeneratorTest extends AndroidTestCase {
                     .build());
             final KeyPair pair1 = mGenerator.generateKeyPair();
             assertNotNull("The KeyPair returned should not be null", pair1);
-            assertKeyPairCorrect(pair1, TEST_ALIAS_1, TEST_DN_1, TEST_SERIAL_1, NOW,
+            assertKeyPairCorrect(pair1, TEST_ALIAS_1, "RSA", TEST_DN_1, TEST_SERIAL_1, NOW,
                     NOW_PLUS_10_YEARS);
         }
 
@@ -230,18 +268,20 @@ public class AndroidKeyPairGeneratorTest extends AndroidTestCase {
 
             final KeyPair pair2 = mGenerator.generateKeyPair();
             assertNotNull("The KeyPair returned should not be null", pair2);
-            assertKeyPairCorrect(pair2, TEST_ALIAS_1, TEST_DN_2, TEST_SERIAL_2, NOW,
+            assertKeyPairCorrect(pair2, TEST_ALIAS_1, "RSA", TEST_DN_2, TEST_SERIAL_2, NOW,
                     NOW_PLUS_10_YEARS);
         }
     }
 
-    private void assertKeyPairCorrect(KeyPair pair, String alias, X500Principal dn,
+    private void assertKeyPairCorrect(KeyPair pair, String alias, String keyType, X500Principal dn,
             BigInteger serial, Date start, Date end) throws Exception {
         final PublicKey pubKey = pair.getPublic();
         assertNotNull("The PublicKey for the KeyPair should be not null", pubKey);
+        assertEquals(keyType, pubKey.getAlgorithm());
 
         final PrivateKey privKey = pair.getPrivate();
         assertNotNull("The PrivateKey for the KeyPair should be not null", privKey);
+        assertEquals(keyType, privKey.getAlgorithm());
 
         final byte[] userCertBytes = mAndroidKeyStore.get(Credentials.USER_CERTIFICATE + alias);
         assertNotNull("The user certificate should exist for the generated entry", userCertBytes);
