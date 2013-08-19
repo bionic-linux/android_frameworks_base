@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4bc472_64048a68",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-08-19T15:51:42Z",
+      "side": 1,
+      "message": "This will make operators happy what used to be POOR is not GREAT. I have heard complaints that our current values tend to show to few bars compared to other phones, is everyone happy with these?",
+      "revId": "32d709a19ecd4dbd6975bc878ee9fe2221b245bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
