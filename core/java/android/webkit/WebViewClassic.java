@@ -5171,8 +5171,20 @@ public final class WebViewClassic implements WebViewProvider, WebViewProvider.Sc
                 && mInitialHitTestResult != null
                 && mInitialHitTestResult.getType() == HitTestResult.PHONE_TYPE) {
             String text = mInitialHitTestResult.getExtra();
+            final String prefix = "tel:";
+
+            if (!TextUtils.isEmpty(text) && !text.startsWith(prefix)) {
+                text = new StringBuffer(prefix).append(text).toString();
+            }
+
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(text));
-            mContext.startActivity(intent);
+
+            if (mContext.getPackageManager().resolveActivity(intent, 0) != null) {
+                mContext.startActivity(intent);
+            } else {
+                Log.d(LOGTAG, "Intent cannot be resolved, intent = " + intent.toString());
+            }
+
             return true;
         }
 
