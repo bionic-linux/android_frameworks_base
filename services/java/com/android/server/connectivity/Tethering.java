@@ -1354,10 +1354,10 @@ public class Tethering extends INetworkManagementEventObserver.Stub {
                             linkProperties.getAllRoutes(), Inet4Address.ANY);
                         if (ipv4Default != null) {
                             iface = ipv4Default.getInterface();
-                            Log.i(TAG, "Found interface " + ipv4Default.getInterface());
                         } else {
-                            Log.i(TAG, "No IPv4 upstream interface, giving up.");
+                            iface = linkProperties.getInterfaceName();
                         }
+                        Log.i(TAG, "Found interface " + iface);
                     }
 
                     if (iface != null) {
