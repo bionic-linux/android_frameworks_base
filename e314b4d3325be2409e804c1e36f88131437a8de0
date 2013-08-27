@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd18f82e_d5ba1cb4",
+        "filename": "services/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2013-08-27T07:43:08Z",
+      "side": 1,
+      "message": "I don\u0027t understand. If ipv4Default is null, then there is no default route for IPv4. If there is no default route for IPv4, then tethering won\u0027t work, because the packets can\u0027t go anywhere. So there is no point enabling tethering.\n\nWhat is the network configuration you are trying to fix? Why does the interface not have a default IPv4 route in the LinkProperties?",
+      "revId": "e314b4d3325be2409e804c1e36f88131437a8de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
