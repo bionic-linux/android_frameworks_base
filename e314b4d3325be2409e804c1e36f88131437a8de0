@@ -34,6 +34,24 @@
       "revId": "e314b4d3325be2409e804c1e36f88131437a8de0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd18f82e_f5fd9825",
+        "filename": "services/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2013-08-27T11:49:12Z",
+      "side": 1,
+      "message": "You\u0027re not supposed to set the default route in the RIL. If you look at ril.h, in the documentation for SETUP DATA CALL you\u0027ll see a comment that says \"Must NOT change the linux routing table.\"\n\nInstead, you should return the gateway in the response to SETUP_DATA_CALL, without changing the routing. That way, the Android framework will see the response and configure routing itself.",
+      "parentUuid": "ed1bfc25_99ebbf9c",
+      "revId": "e314b4d3325be2409e804c1e36f88131437a8de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
