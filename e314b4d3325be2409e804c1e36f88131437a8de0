@@ -16,6 +16,24 @@
       "revId": "e314b4d3325be2409e804c1e36f88131437a8de0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed1bfc25_99ebbf9c",
+        "filename": "services/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1014499
+      },
+      "writtenOn": "2013-08-27T09:12:01Z",
+      "side": 1,
+      "message": "HI, Lorenzo,\nOur 3G mobile is setting its route through the following code directly:\n rt.rt_dst.sa_family \u003d AF_INET;\n    ((struct sockaddr_in *)\u0026rt.rt_dst)-\u003esin_addr.s_addr \u003d INADDR_ANY;\n\n    rt.rt_genmask.sa_family \u003d AF_INET;\n    ((struct sockaddr_in *)\u0026rt.rt_genmask)-\u003esin_addr.s_addr \u003d INADDR_ANY;\nIt can get IP not through DHCP server. \nSo our 3G LinkPropertities\u0027s route is NULL.\nBut for wifi and ethernet, they will add their route through LinkPropertities.addRoute when finishing dhcp.\nI don\u0027t know how Nexus4 add its route for 3G. Any better way in framework to do it?",
+      "parentUuid": "cd18f82e_d5ba1cb4",
+      "revId": "e314b4d3325be2409e804c1e36f88131437a8de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
