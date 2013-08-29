@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b27965b7_b7c7422e",
+        "filename": "keystore/java/android/security/AndroidKeyPairGenerator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-08-29T06:22:46Z",
+      "side": 1,
+      "message": "leaving sha1 behind?",
+      "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b27965b7_17f07683",
+        "filename": "keystore/tests/src/android/security/AndroidKeyPairGeneratorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-08-29T06:22:46Z",
+      "side": 1,
+      "message": "want to test minimum key size? default?\n\nshould signature algorithm be an option?",
+      "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b27965b7_97e326bf",
+        "filename": "keystore/tests/src/android/security/AndroidKeyStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2603,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-08-29T06:22:46Z",
+      "side": 1,
+      "message": "you seemed to have a lot more cases that are using RSA. are they mostly just generic tests that aren\u0027t key specific? are there more non-RSA cases that should be considered?",
+      "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b27965b7_570fceb4",
+        "filename": "keystore/tests/src/android/security/KeyPairGeneratorSpecTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-08-29T06:22:46Z",
+      "side": 1,
+      "message": "can I pass -1 in here for defaulting as well?",
+      "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
