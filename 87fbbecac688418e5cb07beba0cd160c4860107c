@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b27965b7_9a14ad02",
+        "filename": "keystore/java/android/security/AndroidKeyPairGenerator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-08-29T15:50:56Z",
+      "side": 1,
+      "message": "Do you think I should be conservative here? Most CAs issue SHA-256 with RSA certs now. Note that I left DSA as is because of DSS compatibility.",
+      "parentUuid": "b27965b7_b7c7422e",
+      "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b27965b7_17f07683",
         "filename": "keystore/tests/src/android/security/AndroidKeyPairGeneratorTest.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-08-29T06:22:46Z",
       "side": 1,
       "message": "want to test minimum key size? default?\n\nshould signature algorithm be an option?",
+      "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b27965b7_7acd117a",
+        "filename": "keystore/tests/src/android/security/AndroidKeyPairGeneratorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-08-29T15:50:56Z",
+      "side": 1,
+      "message": "Yeah, I was thinking of testing default values, but then I\u0027ll have defaults spread across system/security/keystore and somewhere in here. I guess I can just put a note that they should be kept in sync.",
+      "parentUuid": "b27965b7_17f07683",
       "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b27965b7_3ad7990a",
+        "filename": "keystore/tests/src/android/security/AndroidKeyStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2603,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-08-29T15:50:56Z",
+      "side": 1,
+      "message": "They\u0027re mostly generic. I wish I had JUnit 4 so I could just parameterize it, but I\u0027ll see if there is more I can add here.",
+      "parentUuid": "b27965b7_97e326bf",
+      "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b27965b7_570fceb4",
         "filename": "keystore/tests/src/android/security/KeyPairGeneratorSpecTest.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-08-29T06:22:46Z",
       "side": 1,
       "message": "can I pass -1 in here for defaulting as well?",
+      "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b27965b7_fad84136",
+        "filename": "keystore/tests/src/android/security/KeyPairGeneratorSpecTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-08-29T15:50:56Z",
+      "side": 1,
+      "message": "Yes, but I might make the defaults show up so people can just .getKeySize() and know the defaults.",
+      "parentUuid": "b27965b7_570fceb4",
       "revId": "87fbbecac688418e5cb07beba0cd160c4860107c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
