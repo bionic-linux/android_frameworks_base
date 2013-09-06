@@ -181,8 +181,6 @@ public final class ContentService extends IContentService.Stub {
         synchronized (mRootNode) {
             mRootNode.addObserverLocked(uri, observer, notifyForDescendants, mRootNode,
                     Binder.getCallingUid(), Binder.getCallingPid(), userHandle);
-            if (false) Log.v(TAG, "Registered observer " + observer + " at " + uri +
-                    " with notifyForDescendants " + notifyForDescendants);
         }
     }
 
@@ -736,8 +734,16 @@ public final class ContentService extends IContentService.Stub {
                 int uid, int pid, int userHandle) {
             // If this is the leaf node add the observer
             if (index == countUriSegments(uri)) {
+                for (int i=0; i<mObservers.size(); i++) {
+                    if (mObservers.get(i).observer.asBinder() == observer.asBinder()) {
+                        Log.w(TAG, "Observer " + observer + " is already registered.");
+                        return;
+                    }
+                }
                 mObservers.add(new ObserverEntry(observer, notifyForDescendants, observersLock,
                         uid, pid, userHandle));
+                if (false) Log.v(TAG, "Registered observer " + observer + " at " + uri +
+                        " with notifyForDescendants " + notifyForDescendants);
                 return;
             }
 
