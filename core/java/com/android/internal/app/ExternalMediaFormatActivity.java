@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.storage.StorageVolume;
 import android.util.Log;
 
 /**
@@ -93,8 +94,10 @@ public class ExternalMediaFormatActivity extends AlertActivity implements Dialog
     public void onClick(DialogInterface dialog, int which) {
 
         if (which == POSITIVE_BUTTON) {
+            final StorageVolume volume = getIntent().getParcelableExtra(StorageVolume.EXTRA_STORAGE_VOLUME);
             Intent intent = new Intent(ExternalStorageFormatter.FORMAT_ONLY);
             intent.setComponent(ExternalStorageFormatter.COMPONENT_NAME);
+            intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME, volume);
             startService(intent);
         }
 

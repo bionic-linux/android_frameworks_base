@@ -599,6 +599,19 @@ public class StorageManager {
     }
 
     /** {@hide} */
+    public StorageVolume getVolumeByPath(String path) {
+        StorageVolume[] volumes = getVolumeList();
+        for (StorageVolume volume : volumes)
+        {
+            if (volume.getPath().equals(path)) {
+                return volume;
+            }
+        }
+
+        return null;
+    }
+
+    /** {@hide} */
     public StorageVolume getPrimaryVolume() {
         return getPrimaryVolume(getVolumeList());
     }
