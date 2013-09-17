@@ -427,13 +427,16 @@ public class SettingsProvider extends ContentProvider {
     }
 
     private void fullyPopulateCaches(final int userHandle) {
-        DatabaseHelper dbHelper = mOpenHelpers.get(userHandle);
-        // Only populate the globals cache once, for the owning user
-        if (userHandle == UserHandle.USER_OWNER) {
-            fullyPopulateCache(dbHelper, TABLE_GLOBAL, sGlobalCache);
+        synchronized (this) {
+           DatabaseHelper dbHelper = mOpenHelpers.get(userHandle);
+           if(dbHelper == null) return;
+           // Only populate the globals cache once, for the owning user
+           if (userHandle == UserHandle.USER_OWNER) {
+               fullyPopulateCache(dbHelper, TABLE_GLOBAL, sGlobalCache);
+           }
+           fullyPopulateCache(dbHelper, TABLE_SECURE, sSecureCaches.get(userHandle));
+           fullyPopulateCache(dbHelper, TABLE_SYSTEM, sSystemCaches.get(userHandle));
         }
-        fullyPopulateCache(dbHelper, TABLE_SECURE, sSecureCaches.get(userHandle));
-        fullyPopulateCache(dbHelper, TABLE_SYSTEM, sSystemCaches.get(userHandle));
     }
 
     // Slurp all values (if sane in number & size) into cache.
