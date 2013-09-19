@@ -34,6 +34,24 @@
       "revId": "d0826d2bcdd2168b3604e6a89f796c39af9cfe97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c47c57a6_15b154f6",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-09-19T23:36:50Z",
+      "side": 1,
+      "message": "This is internal, please remove the backward compatible version and then change the few uses internally.\n\nAlso, the same misspelling is in Phone.java, please fix that value also:\n\n      int NT_MODE_LTE_CMDA_EVDO_GSM_WCDMA  \u003d RILConstants.NETWORK_MODE_LTE_CMDA_EVDO_GSM_WCDMA;",
+      "parentUuid": "448867e2_e18f4629",
+      "revId": "d0826d2bcdd2168b3604e6a89f796c39af9cfe97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
