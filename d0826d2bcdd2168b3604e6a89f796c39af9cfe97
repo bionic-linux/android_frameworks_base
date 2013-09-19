@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0444af55_b8a2983a",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-19T20:26:50Z",
+      "side": 1,
+      "message": "I\u0027d rather not have the backwards compatibility stuff.  Is it really needed?",
+      "revId": "d0826d2bcdd2168b3604e6a89f796c39af9cfe97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
