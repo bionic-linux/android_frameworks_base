@@ -16,6 +16,24 @@
       "revId": "d0826d2bcdd2168b3604e6a89f796c39af9cfe97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "448867e2_e18f4629",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-09-19T21:32:17Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/65815\n\nBecause many apps could be already used previous one. So I think backward compatibility is needed.",
+      "parentUuid": "0444af55_b8a2983a",
+      "revId": "d0826d2bcdd2168b3604e6a89f796c39af9cfe97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
