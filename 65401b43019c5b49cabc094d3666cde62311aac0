@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64d1ebe1_72fd589a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2013-09-20T01:32:01Z",
+      "side": 1,
+      "message": "Not very helpful.\n\nThe 1st line of the commit message should actually summarize what the change is about without having to lookup anything else.\n\"Fix typo in DevicePolicyManager documentation\" makes more sense.",
+      "revId": "65401b43019c5b49cabc094d3666cde62311aac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
