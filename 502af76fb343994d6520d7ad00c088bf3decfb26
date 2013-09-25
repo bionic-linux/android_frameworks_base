@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a82f8f_bef26516",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-25T21:09:09Z",
+      "side": 1,
+      "message": "mmc \u003d\u003e mcc",
+      "revId": "502af76fb343994d6520d7ad00c088bf3decfb26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
