@@ -16,6 +16,24 @@
       "revId": "7ce0b1f68a93208d5119bd7ab362bfa18b4e3ee4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44c5c777_791f0775",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-09-25T19:57:11Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "24a373b4_b96363b1",
+      "revId": "7ce0b1f68a93208d5119bd7ab362bfa18b4e3ee4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
