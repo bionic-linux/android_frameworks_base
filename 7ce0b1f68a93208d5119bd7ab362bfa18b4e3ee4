@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a373b4_b96363b1",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-25T19:30:29Z",
+      "side": 1,
+      "message": "May want to say \"Uses \"startsWith\" so you can use a leading substring like the mcc or use the complete mmc+mnc string.\"  It\u0027s not strictly mcc or mcc+mnc and that could cause confusion.",
+      "revId": "7ce0b1f68a93208d5119bd7ab362bfa18b4e3ee4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
