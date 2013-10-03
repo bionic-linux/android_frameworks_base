@@ -42,7 +42,9 @@ import android.os.Vibrator;
 import android.os.SystemVibrator;
 import android.os.storage.IMountService;
 import android.os.storage.IMountShutdownObserver;
+import android.telephony.MSimTelephonyManager;
 
+import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.ITelephony;
 
 import android.util.Log;
@@ -415,10 +417,28 @@ public final class ShutdownThread extends Thread {
                 }
 
                 try {
-                    radioOff = phone == null || !phone.isRadioOn();
-                    if (!radioOff) {
-                        Log.w(TAG, "Turning off radio...");
-                        phone.setRadio(false);
+                    radioOff = true;
+                    if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
+                        final ITelephony mphone = ITelephony.Stub.asInterface(
+                                ServiceManager.checkService("phone"));
+                        if (mphone != null) {
+                            //radio off indication should be sent for both subscriptions
+                            //in case of DSDS.
+                            for (int i = 0; i < MSimTelephonyManager.getDefault().
+                                    getPhoneCount(); i++) {
+                                radioOff = radioOff && !mphone.isRadioOnOnSubscription(i);
+                                if (mphone.isRadioOnOnSubscription(i)) {
+                                    Log.w(TAG, "Turning off radio on Subscription :" + i);
+                                    mphone.setRadioOnSubscription(false, i);
+                                }
+                            }
+                        }
+                    } else {
+                        radioOff = phone == null || !phone.isRadioOn();
+                        if (!radioOff) {
+                            Log.w(TAG, "Turning off radio...");
+                            phone.setRadio(false);
+                        }
                     }
                 } catch (RemoteException ex) {
                     Log.e(TAG, "RemoteException during radio shutdown", ex);
@@ -441,7 +461,18 @@ public final class ShutdownThread extends Thread {
                     }
                     if (!radioOff) {
                         try {
-                            radioOff = !phone.isRadioOn();
+                            boolean subRadioOff = true;
+                            if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
+                                final ITelephony mphone = ITelephony.Stub.asInterface(
+                                        ServiceManager.checkService("phone"));
+                                for (int i = 0; i < MSimTelephonyManager.getDefault().
+                                        getPhoneCount(); i++) {
+                                    subRadioOff = subRadioOff && !mphone.isRadioOnOnSubscription(i);
+                                }
+                                radioOff = subRadioOff;
+                            } else {
+                                radioOff = !phone.isRadioOn();
+                            }
                         } catch (RemoteException ex) {
                             Log.e(TAG, "RemoteException during radio shutdown", ex);
                             radioOff = true;
