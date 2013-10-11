@@ -3738,6 +3738,20 @@ public final class rsMath {
     }
 
     /**
+     * Return NaN of UInt.
+     *
+     * @param data
+     * @return
+     */
+    public static float nan(UInt data ) {
+
+        int or = (int)(data.getValue() | 0x7FC00000);
+        float dr = java.lang.Float.intBitsToFloat(or);
+
+        return dr;
+    }
+
+    /**
      * Return vector data ^ n of Float2.
      *
      * @param data
@@ -5338,6 +5352,68 @@ public final class rsMath {
     }
 
     /**
+     * Return the bigger one between UByte.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UByte max(UByte a, UByte b) {
+
+        UByte dx = new UByte(a.getValue() > b.getValue() ? a.getValue() : b.getValue());
+
+        return new UByte(dx);
+    }
+
+    /**
+     * Return the bigger one between UByte2.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UByte2 max(UByte2 a, UByte2 b) {
+
+        UByte dx = new UByte(max(a.x, b.x));
+        UByte dy = new UByte(max(a.y, b.y));
+
+        return new UByte2(dx, dy);
+    }
+
+    /**
+     * Return the bigger one between UByte3.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UByte3 max(UByte3 a, UByte3 b) {
+
+        UByte dx = new UByte(max(a.x, b.x));
+        UByte dy = new UByte(max(a.y, b.y));
+        UByte dz = new UByte(max(a.z, b.z));
+
+        return new UByte3(dx, dy, dz);
+    }
+
+    /**
+     * Return the bigger one between UByte4.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UByte4 max(UByte4 a, UByte4 b) {
+
+        UByte dx = new UByte(max(a.x, b.x));
+        UByte dy = new UByte(max(a.y, b.y));
+        UByte dz = new UByte(max(a.z, b.z));
+        UByte dw = new UByte(max(a.w, b.w));
+
+        return new UByte4(dx, dy, dz, dw);
+    }
+
+    /**
      * Return the bigger one between byte.
      *
      * @param a
@@ -5403,6 +5479,67 @@ public final class rsMath {
         return new Byte4(dx, dy, dz, dw);
     }
 
+    /**
+     * Return the bigger one between UShort.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UShort max(UShort a, UShort b) {
+
+        UShort dx = new UShort(a.getValue() > b.getValue() ? a.getValue() : b.getValue());
+
+        return new UShort(dx);
+    }
+
+    /**
+     * Return the bigger one between UShort2.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UShort2 max(UShort2 a, UShort2 b) {
+
+        UShort dx = new UShort(max(a.x, b.x));
+        UShort dy = new UShort(max(a.y, b.y));
+
+        return new UShort2(dx, dy);
+    }
+
+    /**
+     * Return the bigger one between UShort3.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UShort3 max(UShort3 a, UShort3 b) {
+
+        UShort dx = new UShort(max(a.x, b.x));
+        UShort dy = new UShort(max(a.y, b.y));
+        UShort dz = new UShort(max(a.z, b.z));
+
+        return new UShort3(dx, dy, dz);
+    }
+
+    /**
+     * Return the bigger one between UShort4.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UShort4 max(UShort4 a, UShort4 b) {
+
+        UShort dx = new UShort(max(a.x, b.x));
+        UShort dy = new UShort(max(a.y, b.y));
+        UShort dz = new UShort(max(a.z, b.z));
+        UShort dw = new UShort(max(a.w, b.w));
+
+        return new UShort4(dx, dy, dz, dw);
+    }
 
     /**
      * Return the bigger one between Short2.
@@ -5454,6 +5591,76 @@ public final class rsMath {
 
         return new Short4(dx, dy, dz, dw);
     }
+
+    /**
+     * Return the bigger one between UInt.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UInt max(UInt a, UInt b) {
+
+        UInt dx = new UInt(a.getValue() > b.getValue() ? a.getValue() : b.getValue());
+
+        return new UInt(dx);
+    }
+
+    /**
+     * Return the bigger one between UInt2.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UInt2 max(UInt2 a, UInt2 b) {
+
+        UInt dx = new UInt(max(a.x, b.x));
+        UInt dy = new UInt(max(a.y, b.y));
+
+        return new UInt2(dx, dy);
+    }
+
+    /**
+     * Return the bigger one between UInt3.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UInt3 max(UInt3 a, UInt3 b) {
+
+        UInt dx = new UInt(max(a.x, b.x));
+        UInt dy = new UInt(max(a.y, b.y));
+        UInt dz = new UInt(max(a.z, b.z));
+
+        return new UInt3(dx, dy, dz);
+    }
+
+    /**
+     * Return the bigger one between UInt4.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UInt4 max(UInt4 a, UInt4 b) {
+
+        UInt dx = new UInt(max(a.x, b.x));
+        UInt dy = new UInt(max(a.y, b.y));
+        UInt dz = new UInt(max(a.z, b.z));
+        UInt dw = new UInt(max(a.w, b.w));
+
+        return new UInt4(dx, dy, dz, dw);
+    }
+
+    /**
+     * Return the bigger one between UInt.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
 
     /**
      * Return the bigger one between Int2.
@@ -5613,6 +5820,68 @@ public final class rsMath {
     }
 
     /**
+     * Return the smaller one between UByte.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UByte min(UByte a, UByte b) {
+
+        UByte dx = new UByte(a.getValue() < b.getValue() ? a.getValue() : b.getValue());
+
+        return new UByte(dx);
+    }
+
+    /**
+     * Return the smaller one between UByte2.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UByte2 min(UByte2 a, UByte2 b) {
+
+        UByte dx = new UByte(min(a.x, b.x));
+        UByte dy = new UByte(min(a.y, b.y));
+
+        return new UByte2(dx, dy);
+    }
+
+    /**
+     * Return the smaller one between UByte3.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UByte3 min(UByte3 a, UByte3 b) {
+
+        UByte dx = new UByte(min(a.x, b.x));
+        UByte dy = new UByte(min(a.y, b.y));
+        UByte dz = new UByte(min(a.z, b.z));
+
+        return new UByte3(dx, dy, dz);
+    }
+
+    /**
+     * Return the smaller one between UByte4.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UByte4 min(UByte4 a, UByte4 b) {
+
+        UByte dx = new UByte(min(a.x, b.x));
+        UByte dy = new UByte(min(a.y, b.y));
+        UByte dz = new UByte(min(a.z, b.z));
+        UByte dw = new UByte(min(a.w, b.w));
+
+        return new UByte4(dx, dy, dz, dw);
+    }
+
+    /**
      * Return the smaller one between Char.
      *
      * @param a
@@ -5679,6 +5948,68 @@ public final class rsMath {
     }
 
     /**
+     * Return the smaller one between UShort.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UShort min(UShort a, UShort b) {
+
+        UShort dx = new UShort(a.getValue() < b.getValue() ? a.getValue() : b.getValue());
+
+        return new UShort(dx);
+    }
+
+    /**
+     * Return the smaller one between UShort2.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UShort2 min(UShort2 a, UShort2 b) {
+
+        UShort dx = new UShort(min(a.x, b.x));
+        UShort dy = new UShort(min(a.y, b.y));
+
+        return new UShort2(dx, dy);
+    }
+
+    /**
+     * Return the smaller one between UShort3.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UShort3 min(UShort3 a, UShort3 b) {
+
+        UShort dx = new UShort(min(a.x, b.x));
+        UShort dy = new UShort(min(a.y, b.y));
+        UShort dz = new UShort(min(a.z, b.z));
+
+        return new UShort3(dx, dy, dz);
+    }
+
+    /**
+     * Return the smaller one between UShort4.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UShort4 min(UShort4 a, UShort4 b) {
+
+        UShort dx = new UShort(min(a.x, b.x));
+        UShort dy = new UShort(min(a.y, b.y));
+        UShort dz = new UShort(min(a.z, b.z));
+        UShort dw = new UShort(min(a.w, b.w));
+
+        return new UShort4(dx, dy, dz, dw);
+    }
+
+    /**
      * Return the smaller one between Short2.
      *
      * @param a
@@ -5727,6 +6058,68 @@ public final class rsMath {
         dw = a.w < b.w ? a.w : b.w;
 
         return new Short4(dx, dy, dz, dw);
+    }
+
+    /**
+     * Return the smaller one between UInt.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UInt min(UInt a, UInt b) {
+
+        UInt dx = new UInt(a.getValue() < b.getValue() ? a.getValue() : b.getValue());
+
+        return new UInt(dx);
+    }
+
+    /**
+     * Return the smaller one between UInt2.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UInt2 min(UInt2 a, UInt2 b) {
+
+        UInt dx = new UInt(min(a.x, b.x));
+        UInt dy = new UInt(min(a.y, b.y));
+
+        return new UInt2(dx, dy);
+    }
+
+    /**
+     * Return the smaller one between UInt3.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UInt3 min(UInt3 a, UInt3 b) {
+
+        UInt dx = new UInt(min(a.x, b.x));
+        UInt dy = new UInt(min(a.y, b.y));
+        UInt dz = new UInt(min(a.z, b.z));
+
+        return new UInt3(dx, dy, dz);
+    }
+
+    /**
+     * Return the smaller one between UInt4.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static UInt4 min(UInt4 a, UInt4 b) {
+
+        UInt dx = new UInt(min(a.x, b.x));
+        UInt dy = new UInt(min(a.y, b.y));
+        UInt dz = new UInt(min(a.z, b.z));
+        UInt dw = new UInt(min(a.w, b.w));
+
+        return new UInt4(dx, dy, dz, dw);
     }
 
     /**
@@ -6223,6 +6616,68 @@ public final class rsMath {
     }
 
     /**
+     * Return the bigger one between ULong.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static ULong max(ULong a, ULong b) {
+
+        ULong dx = new ULong(a.getValue() > b.getValue() ? a.getValue() : b.getValue());
+
+        return new ULong(dx);
+    }
+
+    /**
+     * Return the bigger one between ULong2.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static ULong2 max(ULong2 a, ULong2 b) {
+
+        ULong dx = new ULong(max(a.x, b.x));
+        ULong dy = new ULong(max(a.y, b.y));
+
+        return new ULong2(dx, dy);
+    }
+
+    /**
+     * Return the bigger one between ULong3.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static ULong3 max(ULong3 a, ULong3 b) {
+
+        ULong dx = new ULong(max(a.x, b.x));
+        ULong dy = new ULong(max(a.y, b.y));
+        ULong dz = new ULong(max(a.z, b.z));
+
+        return new ULong3(dx, dy, dz);
+    }
+
+    /**
+     * Return the bigger one between ULong4.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static ULong4 max(ULong4 a, ULong4 b) {
+
+        ULong dx = new ULong(max(a.x, b.x));
+        ULong dy = new ULong(max(a.y, b.y));
+        ULong dz = new ULong(max(a.z, b.z));
+        ULong dw = new ULong(max(a.w, b.w));
+
+        return new ULong4(dx, dy, dz, dw);
+    }
+
+    /**
      * Return the smaller one between Long2.
      *
      * @param a
@@ -6271,6 +6726,68 @@ public final class rsMath {
         dw = a.w > b.w ? a.w : b.w;
 
         return new Long4(dx, dy, dz, dw);
+    }
+
+    /**
+     * Return the smaller one between ULong.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static ULong min(ULong a, ULong b) {
+
+        ULong dx = new ULong(a.getValue() < b.getValue() ? a.getValue() : b.getValue());
+
+        return new ULong(dx);
+    }
+
+    /**
+     * Return the smaller one between ULong2.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static ULong2 min(ULong2 a, ULong2 b) {
+
+        ULong dx = new ULong(min(a.x, b.x));
+        ULong dy = new ULong(min(a.y, b.y));
+
+        return new ULong2(dx, dy);
+    }
+
+    /**
+     * Return the smaller one between ULong3.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static ULong3 min(ULong3 a, ULong3 b) {
+
+        ULong dx = new ULong(min(a.x, b.x));
+        ULong dy = new ULong(min(a.y, b.y));
+        ULong dz = new ULong(min(a.z, b.z));
+
+        return new ULong3(dx, dy, dz);
+    }
+
+    /**
+     * Return the smaller one between ULong4.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static ULong4 min(ULong4 a, ULong4 b) {
+
+        ULong dx = new ULong(min(a.x, b.x));
+        ULong dy = new ULong(min(a.y, b.y));
+        ULong dz = new ULong(min(a.z, b.z));
+        ULong dw = new ULong(min(a.w, b.w));
+
+        return new ULong4(dx, dy, dz, dw);
     }
 
     /**
@@ -6513,4 +7030,195 @@ public final class rsMath {
         return new Byte4(dx, dy, dz, dw);
     }
 
+    /**
+     * Returns the number of leading 0-bits in UByte.
+     *
+     * @param data
+     * @return
+     */
+    public static UByte clz(UByte data) {
+        char dx = 0;
+        char temp = data.getValue();
+        for (int i = 1; i <= 8; i++) {
+            if ((temp & 0x1) == 0) {
+                dx++;
+            }
+            temp = (char)(temp >> 1);
+        }
+
+        return new UByte(dx);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UByte2.
+     *
+     * @param data
+     * @return
+     */
+    public static UByte2 clz(UByte2 data) {
+        UByte dx, dy;
+        dx = clz(data.x);
+        dy = clz(data.y);
+
+        return new UByte2(dx, dy);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UByte3.
+     *
+     * @param data
+     * @return
+     */
+    public static UByte3 clz(UByte3 data) {
+        UByte dx, dy, dz;
+        dx = clz(data.x);
+        dy = clz(data.y);
+        dz = clz(data.z);
+
+        return new UByte3(dx, dy, dz);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UByte4.
+     *
+     * @param data
+     * @return
+     */
+    public static UByte4 clz(UByte4 data) {
+        UByte dx, dy, dz, dw;
+        dx = clz(data.x);
+        dy = clz(data.y);
+        dz = clz(data.z);
+        dw = clz(data.w);
+
+        return new UByte4(dx, dy, dz, dw);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UInt.
+     *
+     * @param data
+     * @return
+     */
+    public static UInt clz(UInt data) {
+        long dx = 0;
+        long temp = data.getValue();
+        for (int i = 1; i <= 32; i++) {
+            if ((temp & 0x1) == 0) {
+                dx++;
+            }
+            temp = temp >> 1;
+        }
+
+        return new UInt(dx);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UInt2.
+     *
+     * @param data
+     * @return
+     */
+    public static UInt2 clz(UInt2 data) {
+        UInt dx, dy;
+        dx = clz(data.x);
+        dy = clz(data.y);
+
+        return new UInt2(dx, dy);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UInt3.
+     *
+     * @param data
+     * @return
+     */
+    public static UInt3 clz(UInt3 data) {
+        UInt dx, dy, dz;
+        dx = clz(data.x);
+        dy = clz(data.y);
+        dz = clz(data.z);
+
+        return new UInt3(dx, dy, dz);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UInt4.
+     *
+     * @param data
+     * @return
+     */
+    public static UInt4 clz(UInt4 data) {
+        UInt dx, dy, dz, dw;
+        dx = clz(data.x);
+        dy = clz(data.y);
+        dz = clz(data.z);
+        dw = clz(data.w);
+
+        return new UInt4(dx, dy, dz, dw);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UShort.
+     *
+     * @param data
+     * @return
+     */
+    public static UShort clz(UShort data) {
+        int dx = 0;
+        int temp = data.getValue();
+        for (int i = 1; i <= 16; i++) {
+            if ((temp & 0x1) == 0) {
+                dx++;
+            }
+            temp = temp >> 1;
+        }
+
+        return new UShort(dx);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UShort2.
+     *
+     * @param data
+     * @return
+     */
+    public static UShort2 clz(UShort2 data) {
+        UShort dx, dy;
+        dx = clz(data.x);
+        dy = clz(data.y);
+
+        return new UShort2(dx, dy);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UShort3.
+     *
+     * @param data
+     * @return
+     */
+    public static UShort3 clz(UShort3 data) {
+        UShort dx, dy, dz;
+        dx = clz(data.x);
+        dy = clz(data.y);
+        dz = clz(data.z);
+
+        return new UShort3(dx, dy, dz);
+    }
+
+    /**
+     * Returns the number of leading 0-bits in UShort4.
+     *
+     * @param data
+     * @return
+     */
+    public static UShort4 clz(UShort4 data) {
+        UShort dx, dy, dz, dw;
+        dx = clz(data.x);
+        dy = clz(data.y);
+        dz = clz(data.z);
+        dw = clz(data.w);
+
+        return new UShort4(dx, dy, dz, dw);
+    }
 }
