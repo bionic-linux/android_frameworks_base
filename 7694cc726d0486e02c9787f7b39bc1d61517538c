@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4e9480_a25147e4",
+        "filename": "graphics/java/android/renderscript/Long2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1004537
+      },
+      "writtenOn": "2013-10-14T22:41:28Z",
+      "side": 1,
+      "message": "I think the name of this and \"set\" later may prove confusing. I think calling this method \"set\" would be better.",
+      "revId": "7694cc726d0486e02c9787f7b39bc1d61517538c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_02625bb0",
+        "filename": "graphics/java/android/renderscript/Long2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1004537
+      },
+      "writtenOn": "2013-10-14T22:41:28Z",
+      "side": 1,
+      "message": "Rename to \"setAt\" to match \"addAt\" below.  I\u0027m worried about developers calling myVec.set(0,0) and not getting what they expect.",
+      "revId": "7694cc726d0486e02c9787f7b39bc1d61517538c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
