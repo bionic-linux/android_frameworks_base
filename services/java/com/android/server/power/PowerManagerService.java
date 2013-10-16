@@ -16,16 +16,6 @@
 
 package com.android.server.power;
 
-import com.android.internal.app.IBatteryStats;
-import com.android.server.BatteryService;
-import com.android.server.EventLogTags;
-import com.android.server.LightsService;
-import com.android.server.TwilightService;
-import com.android.server.Watchdog;
-import com.android.server.am.ActivityManagerService;
-import com.android.server.display.DisplayManagerService;
-import com.android.server.dreams.DreamManagerService;
-
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -60,12 +50,22 @@ import android.util.Slog;
 import android.util.TimeUtils;
 import android.view.WindowManagerPolicy;
 
+import com.android.internal.app.IBatteryStats;
+import com.android.server.BatteryService;
+import com.android.server.EventLogTags;
+import com.android.server.LightsService;
+import com.android.server.TwilightService;
+import com.android.server.Watchdog;
+import com.android.server.am.ActivityManagerService;
+import com.android.server.display.DisplayManagerService;
+import com.android.server.dreams.DreamManagerService;
+
+import libcore.util.Objects;
+
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
-import libcore.util.Objects;
 
 /**
  * The power manager service is responsible for coordinating power management
@@ -240,16 +240,10 @@ public final class PowerManagerService extends IPowerManager.Stub
     // a wake lock.
     private final SuspendBlocker mWakeLockSuspendBlocker;
 
-    // True if the wake lock suspend blocker has been acquired.
-    private boolean mHoldingWakeLockSuspendBlocker;
-
     // The suspend blocker used to keep the CPU alive when the display is on, the
     // display is getting ready or there is user activity (in which case the display
     // must be on).
     private final SuspendBlocker mDisplaySuspendBlocker;
-
-    // True if the display suspend blocker has been acquired.
-    private boolean mHoldingDisplaySuspendBlocker;
 
     // The screen on blocker used to keep the screen from turning on while the lock
     // screen is coming up.
@@ -375,10 +369,9 @@ public final class PowerManagerService extends IPowerManager.Stub
 
     public PowerManagerService() {
         synchronized (mLock) {
-            mWakeLockSuspendBlocker = createSuspendBlockerLocked("PowerManagerService.WakeLocks");
-            mDisplaySuspendBlocker = createSuspendBlockerLocked("PowerManagerService.Display");
+            mWakeLockSuspendBlocker = createStateSuspendBlockerLocked("PowerManagerService.WakeLocks");
+            mDisplaySuspendBlocker = createStateSuspendBlockerLocked("PowerManagerService.Display");
             mDisplaySuspendBlocker.acquire();
-            mHoldingDisplaySuspendBlocker = true;
 
             mScreenOnBlocker = new ScreenOnBlockerImpl();
             mDisplayBlanker = new DisplayBlankerImpl();
@@ -1097,6 +1090,16 @@ public final class PowerManagerService extends IPowerManager.Stub
             return;
         }
 
+        // Current execution should be synchronized to prevent race conditions,
+        // exception is logged in the case this test fails, so we can trace
+        // which execution path was responsible.
+        // There is no need to synchronize the rest of the call because the
+        // damage is already done (mDirty and other members are already altered)
+        // and wake lock suspend blocker should be correctly released.
+        if (!Thread.holdsLock(mLock)) {
+            Log.wtf(TAG, new Exception("Current thread does not hold the synchronization lock..."));
+        }
+        
         // Phase 0: Basic state updates.
         updateIsPoweredLocked(mDirty);
         updateStayOnLocked(mDirty);
@@ -1702,24 +1705,30 @@ public final class PowerManagerService extends IPowerManager.Stub
             new DisplayPowerController.Callbacks() {
         @Override
         public void onStateChanged() {
-            mDirty |= DIRTY_ACTUAL_DISPLAY_POWER_STATE_UPDATED;
-            updatePowerStateLocked();
+            synchronized (mLock) {
+                mDirty |= DIRTY_ACTUAL_DISPLAY_POWER_STATE_UPDATED;
+                updatePowerStateLocked();
+            }
         }
 
         @Override
         public void onProximityPositive() {
-            mProximityPositive = true;
-            mDirty |= DIRTY_PROXIMITY_POSITIVE;
-            updatePowerStateLocked();
+            synchronized (mLock) {
+                mProximityPositive = true;
+                mDirty |= DIRTY_PROXIMITY_POSITIVE;
+                updatePowerStateLocked();
+            }
         }
 
         @Override
         public void onProximityNegative() {
-            mProximityPositive = false;
-            mDirty |= DIRTY_PROXIMITY_POSITIVE;
-            userActivityNoUpdateLocked(SystemClock.uptimeMillis(),
-                    PowerManager.USER_ACTIVITY_EVENT_OTHER, 0, Process.SYSTEM_UID);
-            updatePowerStateLocked();
+            synchronized (mLock) {
+                mProximityPositive = false;
+                mDirty |= DIRTY_PROXIMITY_POSITIVE;
+                userActivityNoUpdateLocked(SystemClock.uptimeMillis(),
+                        PowerManager.USER_ACTIVITY_EVENT_OTHER, 0, Process.SYSTEM_UID);
+                updatePowerStateLocked();
+            }
         }
     };
 
@@ -1739,23 +1748,19 @@ public final class PowerManagerService extends IPowerManager.Stub
                 || !mDisplayReady || !mBootCompleted);
 
         // First acquire suspend blockers if needed.
-        if (needWakeLockSuspendBlocker && !mHoldingWakeLockSuspendBlocker) {
+        if (needWakeLockSuspendBlocker) {
             mWakeLockSuspendBlocker.acquire();
-            mHoldingWakeLockSuspendBlocker = true;
         }
-        if (needDisplaySuspendBlocker && !mHoldingDisplaySuspendBlocker) {
+        if (needDisplaySuspendBlocker) {
             mDisplaySuspendBlocker.acquire();
-            mHoldingDisplaySuspendBlocker = true;
         }
 
         // Then release suspend blockers if needed.
-        if (!needWakeLockSuspendBlocker && mHoldingWakeLockSuspendBlocker) {
+        if (!needWakeLockSuspendBlocker) {
             mWakeLockSuspendBlocker.release();
-            mHoldingWakeLockSuspendBlocker = false;
         }
-        if (!needDisplaySuspendBlocker && mHoldingDisplaySuspendBlocker) {
+        if (!needDisplaySuspendBlocker) {
             mDisplaySuspendBlocker.release();
-            mHoldingDisplaySuspendBlocker = false;
         }
     }
 
@@ -2226,8 +2231,6 @@ public final class PowerManagerService extends IPowerManager.Stub
             pw.println("  mLastUserActivityTimeNoChangeLights="
                     + TimeUtils.formatUptime(mLastUserActivityTimeNoChangeLights));
             pw.println("  mDisplayReady=" + mDisplayReady);
-            pw.println("  mHoldingWakeLockSuspendBlocker=" + mHoldingWakeLockSuspendBlocker);
-            pw.println("  mHoldingDisplaySuspendBlocker=" + mHoldingDisplaySuspendBlocker);
 
             pw.println();
             pw.println("Settings and Configuration:");
@@ -2295,6 +2298,12 @@ public final class PowerManagerService extends IPowerManager.Stub
 
     private SuspendBlocker createSuspendBlockerLocked(String name) {
         SuspendBlocker suspendBlocker = new SuspendBlockerImpl(name);
+        mSuspendBlockers.add(suspendBlocker);
+        return suspendBlocker;
+    }
+    
+    private SuspendBlocker createStateSuspendBlockerLocked(String name) {
+        SuspendBlocker suspendBlocker = new StateSuspendBlockerImpl(name);
         mSuspendBlockers.add(suspendBlocker);
         return suspendBlocker;
     }
@@ -2557,6 +2566,64 @@ public final class PowerManagerService extends IPowerManager.Stub
         public String toString() {
             synchronized (this) {
                 return mName + ": ref count=" + mReferenceCount;
+            }
+        }
+    }
+    
+    private final class StateSuspendBlockerImpl implements SuspendBlocker {
+        private final String mName;
+        private boolean mAcquired = false;
+        
+        public StateSuspendBlockerImpl(String name) {
+            this.mName = name;
+        }
+        
+        @Override
+        public void acquire() {
+            synchronized (this) {
+                if (!mAcquired) {
+                    if (DEBUG_SPEW) {
+                        Slog.d(TAG, "Acquiring suspend blocker \"" + mName + "\".");
+                    }
+                    
+                    nativeAcquireSuspendBlocker(mName);
+                    mAcquired = true;
+                }
+            }
+        }
+        
+        @Override
+        public void release() {
+            synchronized (this) {
+                if (mAcquired) {
+                    if (DEBUG_SPEW) {
+                        Slog.d(TAG, "Releasing suspend blocker \"" + mName + "\".");
+                    }
+                    
+                    nativeReleaseSuspendBlocker(mName);
+                    mAcquired = false;
+                }
+            }
+        }
+        
+        @Override
+        protected void finalize() throws Throwable {
+            try {
+                if (mAcquired) {
+                    Log.wtf(TAG, "Suspend blocker \"" + mName
+                            + "\" was finalized without being released!");
+                    nativeReleaseSuspendBlocker(mName);
+                    mAcquired = false;
+                }
+            } finally {
+                super.finalize();
+            }
+        }
+        
+        @Override
+        public String toString() {
+            synchronized (this) {
+                return mName + ": acquired=" + mAcquired;
             }
         }
     }
