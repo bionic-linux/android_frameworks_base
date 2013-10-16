@@ -401,7 +401,7 @@ Menu &gt; Settings &gt; Locale &amp; text &gt; Select locale). </p>
 
 <h3 id="emulator">Testing on an Emulator</h3>
 
-<p>For details about using the emulator, see See <a
+<p>For details about using the emulator, see <a
 href="{@docRoot}tools/help/emulator.html">Android Emulator</a>.</p>
 <h4>Creating and using a custom locale</h4>
 

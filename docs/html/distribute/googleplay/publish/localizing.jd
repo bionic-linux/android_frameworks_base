@@ -245,7 +245,7 @@ less flexible than if it were a text box. </li>
 
 <h4 id="xliff">Mark message parts that should not be translated</h4>
 
-<p>Often strings contain contain text that should not be translated to other
+<p>Often strings contain text that should not be translated to other
 languages. Common examples might be a piece of code, a placeholder for a value,
 a special symbol, or a name. As you prepare you strings for translation, look
 for and mark text that should remain as-is, without translation, so that

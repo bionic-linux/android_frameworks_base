@@ -85,7 +85,7 @@ Android application,  which has full control of how to handle it. For example, t
 application might post a notification, display a custom user interface, or 
 silently sync data.</li>
   <li>It requires devices running Android 2.2 or higher that also have the
-Google Play Store application installed, or or an emulator running Android 2.2 with Google APIs. However, you are not limited to deploying your
+Google Play Store application installed, or an emulator running Android 2.2 with Google APIs. However, you are not limited to deploying your
 Android applications through Google Play Store.</li>
   <li>It uses an existing connection for Google services. For pre-3.0 devices, this requires users to
 set up their Google account on their mobile devices. A Google account is not a requirement on devices running Android 4.0.4 or higher.</li>
