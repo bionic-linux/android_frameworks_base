@@ -16,6 +16,24 @@
       "revId": "727dea1bf3a443b11d43720a027a60a823575357",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe62ccbe_cca2aba4",
+        "filename": "core/java/android/content/ContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-10-28T16:17:50Z",
+      "side": 1,
+      "message": "there is no such method.\n\nalso, this is still misspelled; it should be \"notifyChange\"",
+      "parentUuid": "1e5ec0fd_827b1b78",
+      "revId": "727dea1bf3a443b11d43720a027a60a823575357",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
