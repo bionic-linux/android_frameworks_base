@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e49184c_9522666c",
+        "filename": "docs/html/guide/topics/ui/drag-drop.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2013-10-28T18:05:09Z",
+      "side": 1,
+      "message": "Actually, while you\u0027re cleaning this up please just eliminate the \u0027else\u0027 clause and move the \u0027return(false);\u0027 and its comment out, like this:\n\nif (we can handle this clip content) {\n    // example of what your application might do, etc....\n    return(true);\n}\n// this view will not receive events again, etc.\nreturn(false);",
+      "revId": "8ebee415e61cfc0a402dd07eea60ea5e9765e085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_750ee2f6",
+        "filename": "docs/html/guide/topics/ui/drag-drop.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2013-10-28T18:05:09Z",
+      "side": 1,
+      "message": "Leave the \u0027break;\u0027 in place for the default case, and move this explicit return(false) outside the switch() to be the fallback behavior for the entire onDrag() method.",
+      "revId": "8ebee415e61cfc0a402dd07eea60ea5e9765e085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
