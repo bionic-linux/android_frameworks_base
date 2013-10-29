@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e49184c_322625c6",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:55:57Z",
+      "side": 1,
+      "message": "Don\u0027t need to assign to null since that\u0027s the default.\n\nThis value should be stored as a field of the Transaction object.  Make sure to clear that field in recycleTransaction().\n\nYou should make it clear that endTransaction() is also a legitimate way to end a transaction started by SAVEPOINT and will automatically rollback or release depending on whether the transaction was marked successful.",
+      "revId": "31ac52780ceb0ef20c9c1a4c239b893fae0eae35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_f2549d02",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:55:57Z",
+      "side": 1,
+      "message": "The SQLite docs say that issuing SAVEPOINT outside of an existing transaction is equivalent to BEGIN DEFERRED.\n\nSo we can remove the transactionMode argument and assume TRANSACTION_MODE_DEFERRED when creating the transaction stack.",
+      "revId": "31ac52780ceb0ef20c9c1a4c239b893fae0eae35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e5ec0fd_797eb16a",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:55:57Z",
+      "side": 1,
+      "message": "Let\u0027s nuke the transaction listener.  Assume it\u0027s always null for savepoints.  The listener doesn\u0027t actually make much sense here anyhow.",
+      "revId": "31ac52780ceb0ef20c9c1a4c239b893fae0eae35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_9246f154",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:55:57Z",
+      "side": 1,
+      "message": "obtainTransaction(TRANSACTION_MODE_DEFERRED, null);",
+      "revId": "31ac52780ceb0ef20c9c1a4c239b893fae0eae35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e5ec0fd_193215d2",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:55:57Z",
+      "side": 1,
+      "message": "transaction.mOuterSavepoint \u003d name;",
+      "revId": "31ac52780ceb0ef20c9c1a4c239b893fae0eae35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e5ec0fd_3922796b",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:55:57Z",
+      "side": 1,
+      "message": "throwIfNoSavepoint();",
+      "revId": "31ac52780ceb0ef20c9c1a4c239b893fae0eae35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_b25055e0",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:55:57Z",
+      "side": 1,
+      "message": "throwIfNoSavepoint();",
+      "revId": "31ac52780ceb0ef20c9c1a4c239b893fae0eae35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe62ccbe_8995fb8b",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:55:57Z",
+      "side": 1,
+      "message": "final Transaction top \u003d mTransactionStack;\nif (top.mOuterSavepoint.equals(name)) {\n   finish it...\n}",
+      "revId": "31ac52780ceb0ef20c9c1a4c239b893fae0eae35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
