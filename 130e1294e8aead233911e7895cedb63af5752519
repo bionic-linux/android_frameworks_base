@@ -16,6 +16,24 @@
       "revId": "130e1294e8aead233911e7895cedb63af5752519",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bec694d7_4e4fa7e1",
+        "filename": "docs/html/guide/topics/ui/drag-drop.jd",
+        "patchSetId": 5
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2013-10-29T22:02:05Z",
+      "side": 1,
+      "message": "Good question.  We should remove them.",
+      "parentUuid": "fe62ccbe_e58a1ddf",
+      "revId": "130e1294e8aead233911e7895cedb63af5752519",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
