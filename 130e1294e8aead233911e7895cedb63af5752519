@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe62ccbe_e58a1ddf",
+        "filename": "docs/html/guide/topics/ui/drag-drop.jd",
+        "patchSetId": 5
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:04:23Z",
+      "side": 1,
+      "message": "Silly question, but why do we have parentheses around return values in this sample?  That\u0027s not part of the Android style.",
+      "revId": "130e1294e8aead233911e7895cedb63af5752519",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
