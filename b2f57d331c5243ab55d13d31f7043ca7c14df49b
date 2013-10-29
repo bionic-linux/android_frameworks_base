@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe62ccbe_65760dd4",
+        "filename": "core/java/android/view/inputmethod/InputMethodManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:34:02Z",
+      "side": 1,
+      "message": "This change is fine but looks like a no-op to me.  Since res.sequence cannot be -1, whenever mBindSequence is -1 this condition will pass.\n\nSo it\u0027s true we can remove the mBindSequence \u003c 0 condition but it doesn\u0027t make any difference.",
+      "revId": "b2f57d331c5243ab55d13d31f7043ca7c14df49b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_321d457a",
+        "filename": "services/java/com/android/server/InputMethodManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-10-29T20:34:02Z",
+      "side": 1,
+      "message": "This is unnecessary.  The range of sequence numbers does not need to be reset.  If it is necessary then there is a deeper problem here.",
+      "revId": "b2f57d331c5243ab55d13d31f7043ca7c14df49b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
