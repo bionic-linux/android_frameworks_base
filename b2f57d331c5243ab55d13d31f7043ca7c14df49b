@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe89eca8_4214b405",
+        "filename": "core/java/android/view/inputmethod/InputMethodManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1029429
+      },
+      "writtenOn": "2013-10-30T02:31:22Z",
+      "side": 1,
+      "message": "It makes difference that when InputMethod process is killed by lowmemorykiller or we kill it arbitrarily. mBindSequence will be -1 when InputMethod process restarts.  So if mBindSequence \u003c 0, the condition will pass. mCurMethod will be null then, that could cause Back/Volume key won\u0027t take effect.\n\nSo remove mBindSequence \u003c 0 to avoid entering the condition.",
+      "parentUuid": "fe62ccbe_65760dd4",
+      "revId": "b2f57d331c5243ab55d13d31f7043ca7c14df49b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e49184c_321d457a",
         "filename": "services/java/com/android/server/InputMethodManagerService.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-29T20:34:02Z",
       "side": 1,
       "message": "This is unnecessary.  The range of sequence numbers does not need to be reset.  If it is necessary then there is a deeper problem here.",
+      "revId": "b2f57d331c5243ab55d13d31f7043ca7c14df49b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e85e089_a6b832bb",
+        "filename": "services/java/com/android/server/InputMethodManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1029429
+      },
+      "writtenOn": "2013-10-30T02:31:22Z",
+      "side": 1,
+      "message": "mCurSeq will maintain the positive value even InputMethod(IME) process is killed. mCurSeq is res.sequence which InputMethodManagerService passes to InputMethodManager. When InputMethod process restarts, MSG_BIND is handled in InputMethodManager, to jump the conditon mBindSequence !\u003d res.sequence, mCurSeq should equal to mBindSequence, which is -1 then. So mCurSeq should reset to -1.\n\nTo make mBindSequence equal to res.sequence, mCurMethod would be assigned. Back/Volume key could take effect when InputMethod process retarts, or the keys no response even InputMethod process restarts.",
+      "parentUuid": "5e49184c_321d457a",
       "revId": "b2f57d331c5243ab55d13d31f7043ca7c14df49b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
