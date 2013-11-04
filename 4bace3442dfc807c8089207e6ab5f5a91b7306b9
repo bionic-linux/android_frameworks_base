@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e3704c5_2b65d8b8",
+        "filename": "libs/hwui/OpenGLRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1010334
+      },
+      "writtenOn": "2013-11-04T17:42:47Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to use the current-\u003eflags here, since matrix/layer/ortho don\u0027t need to be restored when alpha is all you care about. pass 0.\n\nalso, please put a comment here, along the lines of:\n\n// the layer contains screen buffer content that shouldn\u0027t be alpha modulated (and any necessary alpha modulation was handled drawing into the layer)",
+      "revId": "4bace3442dfc807c8089207e6ab5f5a91b7306b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
