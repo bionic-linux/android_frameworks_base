@@ -1000,7 +1000,12 @@ void OpenGLRenderer::composeLayer(sp<Snapshot> current, sp<Snapshot> previous) {
         }
     } else if (!rect.isEmpty()) {
         dirtyLayer(rect.left, rect.top, rect.right, rect.bottom);
+
+        save(current->flags);
+        mSnapshot->alpha = 1.0f;
+
         composeLayerRect(layer, rect, true);
+        restore();
     }
 
     dirtyClip();
