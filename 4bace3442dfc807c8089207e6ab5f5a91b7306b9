@@ -16,6 +16,24 @@
       "revId": "4bace3442dfc807c8089207e6ab5f5a91b7306b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de4b4972_c48b3e51",
+        "filename": "libs/hwui/OpenGLRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1030989
+      },
+      "writtenOn": "2013-11-05T03:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3704c5_2b65d8b8",
+      "revId": "4bace3442dfc807c8089207e6ab5f5a91b7306b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
