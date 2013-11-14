@@ -3807,7 +3807,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         public void clearMarkedForwarding(String interfaze) {
             try {
                 mNetd.clearMarkedForwarding(interfaze);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
             }
         }
 
