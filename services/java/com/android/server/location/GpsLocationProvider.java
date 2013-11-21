@@ -83,6 +83,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * A GPS implementation of LocationProvider used by LocationManager.
@@ -157,6 +159,12 @@ public class GpsLocationProvider implements LocationProviderInterface {
     // these need to match AGpsType enum in gps.h
     private static final int AGPS_TYPE_SUPL = 1;
     private static final int AGPS_TYPE_C2K = 2;
+
+    // this must match the definition of gps.h
+    private static final int BEARER_INVALID = -1;
+    private static final int BEARER_IPV4 = 0;
+    private static final int BEARER_IPV6 = 1;
+    private static final int BEARER_IPV4V6 = 2;
 
     // for mAGpsDataConnectionState
     private static final int AGPS_DATA_CONNECTION_CLOSED = 0;
@@ -313,7 +321,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
     private String mAGpsApn;
     private int mAGpsDataConnectionState;
-    private int mAGpsDataConnectionIpAddr;
+    private InetAddress mAGpsDataConnectionAddr;
     private final ConnectivityManager mConnMgr;
     private final GpsNetInitiatedHandler mNIHandler;
 
@@ -596,6 +604,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
         if (info != null && info.getType() == ConnectivityManager.TYPE_MOBILE_SUPL
                 && mAGpsDataConnectionState == AGPS_DATA_CONNECTION_OPENING) {
             String apnName = info.getExtraInfo();
+            int bearerType = getBearerType(apnName);
             if (mNetworkAvailable) {
                 if (apnName == null) {
                     /* Assign a dummy value in the case of C2K as otherwise we will have a runtime
@@ -603,16 +612,9 @@ public class GpsLocationProvider implements LocationProviderInterface {
                     apnName = "dummy-apn";
                 }
                 mAGpsApn = apnName;
-                if (DEBUG) Log.d(TAG, "mAGpsDataConnectionIpAddr " + mAGpsDataConnectionIpAddr);
-                if (mAGpsDataConnectionIpAddr != 0xffffffff) {
-                    boolean route_result;
-                    if (DEBUG) Log.d(TAG, "call requestRouteToHost");
-                    route_result = mConnMgr.requestRouteToHost(ConnectivityManager.TYPE_MOBILE_SUPL,
-                        mAGpsDataConnectionIpAddr);
-                    if (route_result == false) Log.d(TAG, "call requestRouteToHost failed");
-                }
+                setRouting();
                 if (DEBUG) Log.d(TAG, "call native_agps_data_conn_open");
-                native_agps_data_conn_open(apnName);
+                native_agps_data_conn_open(apnName, bearerType);
                 mAGpsDataConnectionState = AGPS_DATA_CONNECTION_OPEN;
             } else {
                 if (DEBUG) Log.d(TAG, "call native_agps_data_conn_failed");
@@ -1323,7 +1325,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
     /**
      * called from native code to update AGPS status
      */
-    private void reportAGpsStatus(int type, int status, int ipaddr) {
+    private void reportAGpsStatus(int type, int status, byte[] ipAddr) {
         switch (status) {
             case GPS_REQUEST_AGPS_DATA_CONN:
                 if (DEBUG) Log.d(TAG, "GPS_REQUEST_AGPS_DATA_CONN");
@@ -1332,20 +1334,21 @@ public class GpsLocationProvider implements LocationProviderInterface {
                 mAGpsDataConnectionState = AGPS_DATA_CONNECTION_OPENING;
                 int result = mConnMgr.startUsingNetworkFeature(
                         ConnectivityManager.TYPE_MOBILE, Phone.FEATURE_ENABLE_SUPL);
-                mAGpsDataConnectionIpAddr = ipaddr;
+
+                mAGpsDataConnectionAddr = null;
+                if (ipAddr != null) {
+                    try {
+                        mAGpsDataConnectionAddr = InetAddress.getByAddress(ipAddr);
+                    } catch(UnknownHostException uhe) {
+                        if (DEBUG) Log.d(TAG, "bad ipaddress");
+                    }
+                }
+
                 if (result == PhoneConstants.APN_ALREADY_ACTIVE) {
                     if (DEBUG) Log.d(TAG, "PhoneConstants.APN_ALREADY_ACTIVE");
                     if (mAGpsApn != null) {
-                        Log.d(TAG, "mAGpsDataConnectionIpAddr " + mAGpsDataConnectionIpAddr);
-                        if (mAGpsDataConnectionIpAddr != 0xffffffff) {
-                            boolean route_result;
-                            if (DEBUG) Log.d(TAG, "call requestRouteToHost");
-                            route_result = mConnMgr.requestRouteToHost(
-                                ConnectivityManager.TYPE_MOBILE_SUPL,
-                                mAGpsDataConnectionIpAddr);
-                            if (route_result == false) Log.d(TAG, "call requestRouteToHost failed");
-                        }
-                        native_agps_data_conn_open(mAGpsApn);
+                        setRouting();
+                        native_agps_data_conn_open(mAGpsApn, getBearerType(mAGpsApn));
                         mAGpsDataConnectionState = AGPS_DATA_CONNECTION_OPEN;
                     } else {
                         Log.e(TAG, "mAGpsApn not set when receiving PhoneConstants.APN_ALREADY_ACTIVE");
@@ -1369,6 +1372,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
                             ConnectivityManager.TYPE_MOBILE, Phone.FEATURE_ENABLE_SUPL);
                     native_agps_data_conn_closed();
                     mAGpsDataConnectionState = AGPS_DATA_CONNECTION_CLOSED;
+                    mAGpsDataConnectionAddr = null;
                 }
                 break;
             case GPS_AGPS_DATA_CONNECTED:
@@ -1837,6 +1841,56 @@ public class GpsLocationProvider implements LocationProviderInterface {
         return apn;
     }
 
+    private int getBearerType(String apn) {
+        int bearerType = BEARER_INVALID;
+
+        if (null != apn) {
+            String ipProtocol = null;
+            String selection = String.format("current = 1 and apn = '%s' and carrier_enabled = 1", apn);
+
+            Cursor cursor = mContext.getContentResolver()
+                                    .query(Carriers.CONTENT_URI,
+                                           new String[] {Carriers.PROTOCOL},
+                                           selection,
+                                           null,
+                                           Carriers.DEFAULT_SORT_ORDER);
+
+            if (null != cursor) {
+                try {
+                    if (cursor.moveToFirst()) {
+                        ipProtocol = cursor.getString(0);
+                    }
+                } finally {
+                    cursor.close();
+                }
+            }
+
+            if (null == ipProtocol) {
+                bearerType = BEARER_IPV4;
+            } else if (ipProtocol.equals("IPV6")) {
+                bearerType = BEARER_IPV6;
+            } else if (ipProtocol.equals("IPV4V6")) {
+                bearerType = BEARER_IPV4V6;
+            } else {
+                bearerType = BEARER_IPV4;
+            }
+        }
+
+        return bearerType;
+    }
+
+    private void setRouting() {
+        if (mAGpsDataConnectionAddr != null) {
+            boolean result;
+            result = mConnMgr.requestRouteToHostAddress(ConnectivityManager.TYPE_MOBILE_SUPL,
+                                                        mAGpsDataConnectionAddr);
+            if (DEBUG) {
+                Log.d(TAG, "requestRouteToHostAddress for " + mAGpsDataConnectionAddr.toString()
+                      + (result ? " succeeded" : " failed"));
+            }
+        }
+    }
+
     @Override
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         StringBuilder s = new StringBuilder();
@@ -1896,7 +1950,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private native String native_get_internal_state();
 
     // AGPS Support
-    private native void native_agps_data_conn_open(String apn);
+    private native void native_agps_data_conn_open(String apn, int bearerType);
     private native void native_agps_data_conn_closed();
     private native void native_agps_data_conn_failed();
     private native void native_agps_ni_message(byte [] msg, int length);
