@@ -10836,7 +10836,9 @@ public class WindowManagerService extends IWindowManager.Stub
     private void handleDisplayAddedLocked(int displayId) {
         final Display display = mDisplayManager.getDisplay(displayId);
         if (display != null) {
-            createDisplayContentLocked(display);
+            if (getDisplayContentLocked(displayId) == null) {
+                createDisplayContentLocked(display);
+            }
             displayReady(displayId);
         }
     }
