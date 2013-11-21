@@ -226,8 +226,17 @@ public class WifiEnterpriseConfig implements Parcelable {
         public static final int TTLS    = 2;
         /** EAP-Password */
         public static final int PWD     = 3;
+        /** EAP-SIM */
+        /** {@hide} */
+        public static final int SIM     = 4;
+        /** EAP-AKA */
+        /** {@hide} */
+        public static final int AKA     = 5;
+        /** EAP-SIM/AKA */
+        /** {@hide} */
+        public static final int SIM_AKA = 6;
         /** @hide */
-        public static final String[] strings = { "PEAP", "TLS", "TTLS", "PWD" };
+        public static final String[] strings = { "PEAP", "TLS", "TTLS", "PWD", "SIM", "AKA", "SIM AKA" };
 
         /** Prevent initialization */
         private Eap() {}
@@ -266,8 +275,8 @@ public class WifiEnterpriseConfig implements Parcelable {
 
     /**
      * Set the EAP authentication method.
-     * @param  eapMethod is one {@link Eap#PEAP}, {@link Eap#TLS}, {@link Eap#TTLS} or
-     *                   {@link Eap#PWD}
+     * @param  eapMethod is one {@link Eap#PEAP}, {@link Eap#TLS}, {@link Eap#TTLS},
+     *                   {@link Eap#PWD}, {@link Eap#SIM}, {@link Eap#AKA} or {@link Eap#SIM_AKA}
      * @throws IllegalArgumentException on an invalid eap method
      */
     public void setEapMethod(int eapMethod) {
@@ -277,6 +286,9 @@ public class WifiEnterpriseConfig implements Parcelable {
             case Eap.PWD:
             case Eap.TLS:
             case Eap.TTLS:
+            case Eap.SIM:
+            case Eap.AKA:
+            case Eap.SIM_AKA:
                 mFields.put(EAP_KEY, Eap.strings[eapMethod]);
                 mFields.put(OPP_KEY_CACHING, "1");
                 break;
