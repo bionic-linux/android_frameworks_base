@@ -363,7 +363,9 @@ public class StaticLayout extends Layout {
                                 // Ideographs are class ID: breakpoints when adjacent, except for NS
                                 // (non-starters), which can be broken after but not before
                                 (c >= CHAR_FIRST_CJK && isIdeographic(c, true) &&
-                                j + 1 < spanEnd && isIdeographic(chs[j + 1 - paraStart], false));
+                                j + 1 < spanEnd && isIdeographic(chs[j + 1 - paraStart], false)) ||
+                                // Allow breaking after close punctuation
+                                isClosePunctuation(c);
 
                         if (isLineBreak) {
                             okWidth = w;
@@ -580,6 +582,29 @@ public class StaticLayout extends Layout {
         }
 
         return false;
+    }
+
+    /**
+     * Returns true if the specified character is one of those specified
+     * as being Close Punctuation (class CL) by the Unicode Line Breaking Algorithm
+     * (http://www.unicode.org/unicode/reports/tr14/).
+     */
+    private static final boolean isClosePunctuation(char c) {
+        switch (c) {
+            case '\u3001': // IDEOGRAPHIC COMMA
+            case '\u3002': // IDEOGRAPHIC FULL STOP
+            case '\ufe11': // PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA
+            case '\ufe12': // PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC FULL STOP
+            case '\ufe50': // SMALL COMMA
+            case '\ufe52': // SMALL FULL STOP
+            case '\uff0c': // FULLWIDTH COMMA
+            case '\uff0e': // FULLWIDTH FULL STOP
+            case '\uff61': // HALFWIDTH IDEOGRAPHIC FULL STOP
+            case '\uff64': // HALFWIDTH IDEOGRAPHIC COMMA
+                return true;
+            default:
+                return false;
+        }
     }
 
     private int out(CharSequence text, int start, int end,
