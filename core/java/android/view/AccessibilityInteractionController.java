@@ -877,7 +877,7 @@ final class AccessibilityInteractionController {
                         if (outInfos.size() >= MAX_ACCESSIBILITY_NODE_INFO_BATCH_SIZE) {
                             return;
                         }
-                        final long childNodeId = childNodeIds.get(i);
+                        final long childNodeId = childNodeIds.valueAt(i);
                         if (childNodeId != current.getSourceNodeId()) {
                             final int childVirtualDescendantId =
                                 AccessibilityNodeInfo.getVirtualDescendantId(childNodeId);
@@ -903,7 +903,7 @@ final class AccessibilityInteractionController {
                 if (outInfos.size() >= MAX_ACCESSIBILITY_NODE_INFO_BATCH_SIZE) {
                     return;
                 }
-                final long childNodeId = childNodeIds.get(i);
+                final long childNodeId = childNodeIds.valueAt(i);
                 AccessibilityNodeInfo child = provider.createAccessibilityNodeInfo(
                         AccessibilityNodeInfo.getVirtualDescendantId(childNodeId));
                 if (child != null) {
