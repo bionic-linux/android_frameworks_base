@@ -361,11 +361,18 @@ public class ConnectivityManager {
      */
     public static final int TYPE_MOBILE_IA = 14;
 
-    /** {@hide} */
-    public static final int MAX_RADIO_TYPE   = TYPE_MOBILE_IA;
+    /**
+     * The PHS data connection.  When active, all data traffic
+     * will use this network type's interface by default
+     * (it has a default route)
+     */
+    public static final int TYPE_PHS       = 15;
 
     /** {@hide} */
-    public static final int MAX_NETWORK_TYPE = TYPE_MOBILE_IA;
+    public static final int MAX_RADIO_TYPE   = TYPE_PHS;
+
+    /** {@hide} */
+    public static final int MAX_NETWORK_TYPE = TYPE_PHS;
 
     /**
      * If you want to set the default network preference,you can directly
@@ -444,6 +451,8 @@ public class ConnectivityManager {
                 return "WIFI_P2P";
             case TYPE_MOBILE_IA:
                 return "MOBILE_IA";
+            case TYPE_PHS:
+                return "PHS";
             default:
                 return Integer.toString(type);
         }
