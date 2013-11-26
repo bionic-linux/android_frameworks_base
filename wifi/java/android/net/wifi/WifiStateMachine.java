@@ -2450,6 +2450,18 @@ public class WifiStateMachine extends StateMachine {
         }).start();
     }
 
+    private boolean isAirplaneSensitive() {
+        String airplaneModeRadios = Settings.Global.getString(mContext.getContentResolver(),
+                Settings.Global.AIRPLANE_MODE_RADIOS);
+        return airplaneModeRadios == null
+            || airplaneModeRadios.contains(Settings.Global.RADIO_WIFI);
+    }
+
+    private boolean isAirplaneModeOn() {
+        return isAirplaneSensitive() && Settings.Global.getInt(mContext.getContentResolver(),
+                Settings.Global.AIRPLANE_MODE_ON, 0) == 1;
+    }
+
     /********************************************************
      * HSM states
      *******************************************************/
@@ -2768,6 +2780,22 @@ public class WifiStateMachine extends StateMachine {
                     mWifiInfo.setMacAddress(mWifiNative.getMacAddress());
                     mWifiConfigStore.loadAndEnableAllNetworks();
                     initializeWpsDetails();
+
+                    if (isAirplaneModeOn()) {
+                        List<WifiConfiguration> networks = mWifiConfigStore.getConfiguredNetworks();
+                        if (null != networks) {
+                           for (WifiConfiguration network : networks) {
+                                int value = network.enterpriseConfig.getEapMethod();
+                                log("EAP value:" + value);
+                                if (value == WifiEnterpriseConfig.Eap.SIM || value == WifiEnterpriseConfig.Eap.AKA) {
+                                    mWifiConfigStore.disableNetwork(network.networkId,
+                                        WifiConfiguration.DISABLED_UNKNOWN_REASON);
+                                }
+                            }
+                        } else {
+                            log("Check for EAP-SIM/AKA, networks is null!");
+                        }
+                    }
 
                     sendSupplicantConnectionChangedBroadcast(true);
                     transitionTo(mDriverStartedState);
