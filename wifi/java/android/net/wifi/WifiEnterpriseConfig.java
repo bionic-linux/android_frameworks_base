@@ -89,6 +89,8 @@ public class WifiEnterpriseConfig implements Parcelable {
     private static final String ENGINE_ID_KEY       = "engine_id";
     private static final String PRIVATE_KEY_ID_KEY  = "key_id";
     private static final String OPP_KEY_CACHING     = "proactive_key_caching";
+    private static final String SIMSLOT_KEY         = "sim_slot";
+    private static final String IMSI_KEY            = "imsi";
 
     private HashMap<String, String> mFields = new HashMap<String, String>();
     private X509Certificate mCaCert;
@@ -226,8 +228,18 @@ public class WifiEnterpriseConfig implements Parcelable {
         public static final int TTLS    = 2;
         /** EAP-Password */
         public static final int PWD     = 3;
+        /**
+         * EAP-SIM
+         * @hide
+         */
+        public static final int SIM     = 4;
+        /**
+         * EAP-AKA
+         * @hide
+         */
+        public static final int AKA     = 5;
         /** @hide */
-        public static final String[] strings = { "PEAP", "TLS", "TTLS", "PWD" };
+        public static final String[] strings = { "PEAP", "TLS", "TTLS", "PWD", "SIM", "AKA" };
 
         /** Prevent initialization */
         private Eap() {}
@@ -261,7 +273,7 @@ public class WifiEnterpriseConfig implements Parcelable {
     static String[] getSupplicantKeys() {
         return new String[] { EAP_KEY, PHASE2_KEY, IDENTITY_KEY, ANON_IDENTITY_KEY, PASSWORD_KEY,
                 CLIENT_CERT_KEY, CA_CERT_KEY, SUBJECT_MATCH_KEY, ENGINE_KEY, ENGINE_ID_KEY,
-                PRIVATE_KEY_ID_KEY };
+                PRIVATE_KEY_ID_KEY, SIMSLOT_KEY, IMSI_KEY};
     }
 
     /**
@@ -277,6 +289,8 @@ public class WifiEnterpriseConfig implements Parcelable {
             case Eap.PWD:
             case Eap.TLS:
             case Eap.TTLS:
+            case Eap.SIM:
+            case Eap.AKA:
                 mFields.put(EAP_KEY, Eap.strings[eapMethod]);
                 mFields.put(OPP_KEY_CACHING, "1");
                 break;
@@ -634,6 +648,42 @@ public class WifiEnterpriseConfig implements Parcelable {
      */
     public String getSubjectMatch() {
         return getFieldValue(SUBJECT_MATCH_KEY, "");
+    }
+
+    /**
+     * Set the imsi.
+     * @param imsi the imsi
+     * @hide
+     */
+    public void setImsi(String imsi) {
+        setFieldValue(IMSI_KEY, imsi, "");
+    }
+
+    /**
+     * Get the imsi.
+     * @return the imsi
+     * @hide
+     */
+    public String getImsi() {
+        return getFieldValue(IMSI_KEY, "");
+    }
+
+    /**
+     * Set the sim slot.
+     * @param simSlot the sim slot
+     * @hide
+     */
+    public void setSimSlot(String simSlot) {
+        setFieldValue(SIMSLOT_KEY, simSlot, "");
+    }
+
+    /**
+     * Get the sim slot.
+     * @return the sim slot
+     * @hide
+     */
+    public String getSimSlot() {
+        return getFieldValue(SIMSLOT_KEY, "");
     }
 
     /** See {@link WifiConfiguration#getKeyIdForCredentials} @hide */
