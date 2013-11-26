@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea77522_c6125ade",
+        "filename": "core/java/android/view/AccessibilityInteractionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1010257
+      },
+      "writtenOn": "2013-11-26T00:46:02Z",
+      "side": 0,
+      "message": "The child nodes SparseLongArray is a mapping from the node index to the child. Hence, using  childNodeIds.get() and  childNodeIds.valueAt() does the same thing. AccessibilityNodeInfo#addChild() does something like that:\n\nfinal int index \u003d mChildNodeIds.size();\n\n. . .\n\nmChildNodeIds.put(index, childNodeId);\n\nAlso our latest internal code does not use a sparse array anymore. The SparseLongArray is used to avoid auto-boxing.\n\nIs this fixing a bug?",
+      "revId": "a4c8fabfbb0bf5bf9da5267c13230c5169b5943d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ed03988_bd692957",
+        "filename": "core/java/android/view/AccessibilityInteractionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1010257
+      },
+      "writtenOn": "2013-11-26T00:46:02Z",
+      "side": 0,
+      "message": "Same as above.",
+      "revId": "a4c8fabfbb0bf5bf9da5267c13230c5169b5943d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
