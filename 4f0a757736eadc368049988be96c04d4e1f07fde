@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63dba606_707f9090",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-11-26T16:25:51Z",
+      "side": 1,
+      "message": "First, we are considering revamping using a static list of network types as we\u0027ve had many requests for adding them and its not workable.\n\nSecondly, if we do need to make a new network types, we need documentation of what PHS is and some explanation of why it needs to be a network type. An alternative would be possibly to use TYPE_MOBILE_CBS.",
+      "revId": "4f0a757736eadc368049988be96c04d4e1f07fde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
