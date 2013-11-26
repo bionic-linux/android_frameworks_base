@@ -433,6 +433,8 @@ public class WifiStateMachine extends StateMachine {
     /* Reload all networks and reconnect */
     static final int CMD_RELOAD_TLS_AND_RECONNECT         = BASE + 142;
 
+    static final int CMD_UPDATE_EAP_SIM_AKA_NETWORK       = BASE + 143;
+
     /* Wifi state machine modes of operation */
     /* CONNECT_MODE - connect to any 'known' AP when it becomes available */
     public static final int CONNECT_MODE                   = 1;
@@ -771,6 +773,24 @@ public class WifiStateMachine extends StateMachine {
                     }
                 },
                 new IntentFilter(Intent.ACTION_BOOT_COMPLETED));
+
+        mContext.registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        String iccState = intent.getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE);
+                        log("Received ACTION_SIM_STATE_CHANGED, iccState:" + iccState);
+                        if (IccCardConstants.INTENT_VALUE_ICC_READY.equals(iccState)) {
+                            sendMessage(CMD_UPDATE_EAP_SIM_AKA_NETWORK, 1);
+                        } else if (IccCardConstants.INTENT_VALUE_ICC_UNKNOWN.equals(iccState)
+                                    || IccCardConstants.INTENT_VALUE_ICC_NOT_READY.equals(iccState)
+                                    || IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(iccState)
+                                    || IccCardConstants.INTENT_VALUE_ICC_LOCKED.equals(iccState)) {
+                            sendMessage(CMD_UPDATE_EAP_SIM_AKA_NETWORK, 0);
+                        }
+                    }
+                },
+                new IntentFilter(TelephonyIntents.ACTION_SIM_STATE_CHANGED));
 
         mScanResultCache = new LruCache<String, ScanResult>(SCAN_RESULT_CACHE_SIZE);
 
@@ -2859,6 +2879,43 @@ public class WifiStateMachine extends StateMachine {
                     break;
                 case CMD_SET_OPERATIONAL_MODE:
                     mOperationalMode = message.arg1;
+                    break;
+                case CMD_UPDATE_EAP_SIM_AKA_NETWORK:
+                    log("Update EAP-SIM/AKA networks, operation:" + (message.arg1 == 1 ? "enable" : "disable")
+                        + ", mLastNetworkId:" + mLastNetworkId);
+                    List<WifiConfiguration> networks = mWifiConfigStore.getConfiguredNetworks();
+                    if (null != networks) {
+                        if (0 == message.arg1) {
+                            for (WifiConfiguration network : networks) {
+                                int value = network.enterpriseConfig.getEapMethod();
+                                if (DBG) {
+                                    log("Network " + network.networkId + ", eap value:" + value
+                                        + ", status:" + network.status);
+                                }
+                                if ((WifiEnterpriseConfig.Eap.SIM == value || WifiEnterpriseConfig.Eap.AKA == value)
+                                    && WifiConfiguration.Status.DISABLED != network.status
+                                    && network.networkId != mLastNetworkId) {
+                                    mWifiConfigStore.disableNetwork(network.networkId,
+                                        WifiConfiguration.DISABLED_UNKNOWN_REASON);
+                                }
+                            }
+                        } else {
+                            for (WifiConfiguration network : networks) {
+                                int value = network.enterpriseConfig.getEapMethod();
+                                if (DBG) {
+                                    log("Network " + network.networkId + ", eap value:" + value
+                                        + ", status:" + network.status + ", reason:" + network.disableReason);
+                                }
+                                if ((WifiEnterpriseConfig.Eap.SIM == value || WifiEnterpriseConfig.Eap.AKA == value)
+                                    && WifiConfiguration.Status.DISABLED == network.status
+                                    && WifiConfiguration.DISABLED_UNKNOWN_REASON == network.disableReason) {
+                                    mWifiConfigStore.enableNetwork(network.networkId, false);
+                                }
+                            }
+                        }
+                    } else {
+                        log("Update EAP-SIM/AKA networks, networks is null!");
+                    }
                     break;
                 default:
                     return NOT_HANDLED;

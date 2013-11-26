@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.UserHandle;
 import android.security.KeyStore;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.LocalLog;
 import android.util.Log;
@@ -219,13 +220,52 @@ class WifiConfigStore {
      */
     void enableAllNetworks() {
         boolean networkEnabledStateChanged = false;
-        for(WifiConfiguration config : mConfiguredNetworks.values()) {
-            if(config != null && config.status == Status.DISABLED) {
-                if(mWifiNative.enableNetwork(config.networkId, false)) {
-                    networkEnabledStateChanged = true;
-                    config.status = Status.ENABLED;
-                } else {
-                    loge("Enable network failed on " + config.networkId);
+        TelephonyManager tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        int simState = TelephonyManager.SIM_STATE_UNKNOWN;
+        if (null != tm) {
+            simState = tm.getSimState();
+        }
+        log("enableAllNetworks, simState:" + simState);
+        for (WifiConfiguration config : mConfiguredNetworks.values()) {
+            if (config != null) {
+                int value = config.enterpriseConfig.getEapMethod();
+                if (DBG) {
+                    log("Network " + config.networkId + ", eap value:" + value
+                        + ", status:" + config.status);
+                }
+                if (config.status == Status.DISABLED) {
+                    if (WifiEnterpriseConfig.Eap.SIM == value || WifiEnterpriseConfig.Eap.AKA == value) {
+                        if (TelephonyManager.SIM_STATE_READY != simState) {
+                            log("SIM state is not ready, no need to enable the EAP-SIM/AKA network!");
+                            continue;
+                        } else {
+                            if (mWifiNative.enableNetwork(config.networkId, false)) {
+                                networkEnabledStateChanged = true;
+                                config.status = Status.ENABLED;
+                            } else {
+                                loge("Enable network failed on " + config.networkId);
+                            }
+                        }
+                    } else {
+                        if (mWifiNative.enableNetwork(config.networkId, false)) {
+                            networkEnabledStateChanged = true;
+                            config.status = Status.ENABLED;
+                        } else {
+                            loge("Enable network failed on " + config.networkId);
+                        }
+                    }
+                } else if (config.status == Status.ENABLED) {
+                    if ((WifiEnterpriseConfig.Eap.SIM == value || WifiEnterpriseConfig.Eap.AKA == value)
+                        && TelephonyManager.SIM_STATE_READY != simState) {
+                        log("SIM state is not ready, disable the EAP-SIM/AKA network!");
+                        if (mWifiNative.disableNetwork(config.networkId)) {
+                            networkEnabledStateChanged = true;
+                            config.status = Status.DISABLED;
+                            config.disableReason = WifiConfiguration.DISABLED_UNKNOWN_REASON;
+                        } else {
+                            loge("Disable network failed on " + config.networkId);
+                        }
+                    }
                 }
             }
         }
