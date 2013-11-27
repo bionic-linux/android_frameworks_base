@@ -345,6 +345,15 @@ public class VibratorService extends IVibratorService.Stub
                 if (mode == AppOpsManager.MODE_ERRORED) {
                     Slog.w(TAG, "Would be an error: vibrate from uid " + vib.mUid);
                 }
+                /*
+                 * Remove the entry from mVibration to make sure it doesn't get
+                 * picked up by the next iteration of vibration runnable.
+                 */
+                if (mVibrations.contains(vib)) {
+                    mVibrations.remove(vib);
+                    unlinkVibration(vib);
+                }
+                mCurrentVibration = null;
                 mH.post(mVibrationRunnable);
                 return;
             }
