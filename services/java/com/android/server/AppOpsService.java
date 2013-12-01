@@ -367,9 +367,7 @@ public class AppOpsService extends IAppOpsService.Stub {
                     op.mode = mode;
                     ArrayList<Callback> cbs = mOpModeWatchers.get(code);
                     if (cbs != null) {
-                        if (repCbs == null) {
-                            repCbs = new ArrayList<Callback>();
-                        }
+                        repCbs = new ArrayList<Callback>();
                         repCbs.addAll(cbs);
                     }
                     cbs = mPackageModeWatchers.get(packageName);
@@ -806,8 +804,8 @@ public class AppOpsService extends IAppOpsService.Stub {
                         }
 
                         String tagName = parser.getName();
-                        if (tagName.equals("pkg")) {
-                            readPackage(parser);
+                        if (tagName.equals("uid")) {
+                            readUid(parser);
                         } else {
                             Slog.w(TAG, "Unknown element under <app-ops>: "
                                     + parser.getName());
@@ -840,29 +838,7 @@ public class AppOpsService extends IAppOpsService.Stub {
         }
     }
 
-    void readPackage(XmlPullParser parser) throws NumberFormatException,
-            XmlPullParserException, IOException {
-        String pkgName = parser.getAttributeValue(null, "n");
-        int outerDepth = parser.getDepth();
-        int type;
-        while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
-                && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
-            if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
-                continue;
-            }
-
-            String tagName = parser.getName();
-            if (tagName.equals("uid")) {
-                readUid(parser, pkgName);
-            } else {
-                Slog.w(TAG, "Unknown element under <pkg>: "
-                        + parser.getName());
-                XmlUtils.skipCurrentTag(parser);
-            }
-        }
-    }
-
-    void readUid(XmlPullParser parser, String pkgName) throws NumberFormatException,
+    void readUid(XmlPullParser parser) throws NumberFormatException,
             XmlPullParserException, IOException {
         int uid = Integer.parseInt(parser.getAttributeValue(null, "n"));
         int outerDepth = parser.getDepth();
@@ -874,41 +850,69 @@ public class AppOpsService extends IAppOpsService.Stub {
             }
 
             String tagName = parser.getName();
-            if (tagName.equals("op")) {
-                Op op = new Op(uid, pkgName, Integer.parseInt(parser.getAttributeValue(null, "n")));
-                String mode = parser.getAttributeValue(null, "m");
-                if (mode != null) {
-                    op.mode = Integer.parseInt(mode);
-                }
-                String time = parser.getAttributeValue(null, "t");
-                if (time != null) {
-                    op.time = Long.parseLong(time);
-                }
-                time = parser.getAttributeValue(null, "r");
-                if (time != null) {
-                    op.rejectTime = Long.parseLong(time);
-                }
-                String dur = parser.getAttributeValue(null, "d");
-                if (dur != null) {
-                    op.duration = Integer.parseInt(dur);
-                }
-                HashMap<String, Ops> pkgOps = mUidOps.get(uid);
-                if (pkgOps == null) {
-                    pkgOps = new HashMap<String, Ops>();
-                    mUidOps.put(uid, pkgOps);
-                }
-                Ops ops = pkgOps.get(pkgName);
-                if (ops == null) {
-                    ops = new Ops(pkgName, uid);
-                    pkgOps.put(pkgName, ops);
-                }
-                ops.put(op.op, op);
+            if (tagName.equals("pkg")) {
+                readPackage(parser, uid);
             } else {
                 Slog.w(TAG, "Unknown element under <pkg>: "
                         + parser.getName());
                 XmlUtils.skipCurrentTag(parser);
             }
         }
+
+    }
+
+    void readPackage(XmlPullParser parser, int uid) throws NumberFormatException,
+            XmlPullParserException, IOException {
+        String pkgName = parser.getAttributeValue(null, "n");
+        int outerDepth = parser.getDepth();
+        int type;
+        while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
+                && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
+            if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
+                continue;
+            }
+
+            String tagName = parser.getName();
+            if (tagName.equals("op")) {
+                readOp(parser, pkgName, uid);
+            } else {
+                Slog.w(TAG, "Unknown element under <pkg>: "
+                        + parser.getName());
+                XmlUtils.skipCurrentTag(parser);
+            }
+        }
+    }
+
+
+    void readOp(XmlPullParser parser, String pkgName, int uid) {
+        Op op = new Op(uid, pkgName, Integer.parseInt(parser.getAttributeValue(null, "n")));
+        String mode = parser.getAttributeValue(null, "m");
+        if (mode != null) {
+            op.mode = Integer.parseInt(mode);
+        }
+        String time = parser.getAttributeValue(null, "t");
+        if (time != null) {
+            op.time = Long.parseLong(time);
+        }
+        time = parser.getAttributeValue(null, "r");
+        if (time != null) {
+            op.rejectTime = Long.parseLong(time);
+        }
+        String dur = parser.getAttributeValue(null, "d");
+        if (dur != null) {
+            op.duration = Integer.parseInt(dur);
+        }
+        HashMap<String, Ops> pkgOps = mUidOps.get(uid);
+        if (pkgOps == null) {
+            pkgOps = new HashMap<String, Ops>();
+            mUidOps.put(uid, pkgOps);
+        }
+        Ops ops = pkgOps.get(pkgName);
+        if (ops == null) {
+            ops = new Ops(pkgName, uid);
+            pkgOps.put(pkgName, ops);
+        }
+        ops.put(op.op, op);
     }
 
     void writeState() {
@@ -931,8 +935,26 @@ public class AppOpsService extends IAppOpsService.Stub {
 
                 if (allOps != null) {
                     String lastPkg = null;
+                    int lastUid = -1;
                     for (int i=0; i<allOps.size(); i++) {
                         AppOpsManager.PackageOps pkg = allOps.get(i);
+
+                        if (pkg.getUid() != lastUid) {
+                            if (lastUid != -1) {
+                                /*
+                                 * Done with current uid and its last package.
+                                 * Write closing tag for package and uid and
+                                 * update lastPkg as null for the new uid.
+                                 */
+                                out.endTag(null, "pkg");
+                                out.endTag(null, "uid");
+                                lastPkg = null;
+                            }
+                            lastUid = pkg.getUid();
+                            out.startTag(null, "uid");
+                            out.attribute(null, "n", Integer.toString(lastUid));
+                        }
+
                         if (!pkg.getPackageName().equals(lastPkg)) {
                             if (lastPkg != null) {
                                 out.endTag(null, "pkg");
@@ -941,8 +963,6 @@ public class AppOpsService extends IAppOpsService.Stub {
                             out.startTag(null, "pkg");
                             out.attribute(null, "n", lastPkg);
                         }
-                        out.startTag(null, "uid");
-                        out.attribute(null, "n", Integer.toString(pkg.getUid()));
                         List<AppOpsManager.OpEntry> ops = pkg.getOps();
                         for (int j=0; j<ops.size(); j++) {
                             AppOpsManager.OpEntry op = ops.get(j);
@@ -965,10 +985,10 @@ public class AppOpsService extends IAppOpsService.Stub {
                             }
                             out.endTag(null, "op");
                         }
-                        out.endTag(null, "uid");
                     }
                     if (lastPkg != null) {
                         out.endTag(null, "pkg");
+                        out.endTag(null, "uid");
                     }
                 }
 
