@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "632006df_7c0741e2",
+        "filename": "policy/src/com/android/internal/policy/impl/GlobalActions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-12-02T21:42:06Z",
+      "side": 1,
+      "message": "volatile",
+      "revId": "92b872359872aa9aba0ac05ead20fb9ffd4eaedc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
