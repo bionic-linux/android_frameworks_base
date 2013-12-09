@@ -678,6 +678,15 @@ public class Handler {
         return mQueue.hasMessages(this, r, null);
     }
 
+    /**
+     * Check if there are any pending posts of messages in the message queue.
+     *
+     * @hide
+     */
+    public final boolean hasMessages() {
+        return mQueue.isEmpty(this);
+    }
+
     // if we can get rid of this method, the handler need not remember its loop
     // we could instead export a getMessageQueue() method... 
     public final Looper getLooper() {
