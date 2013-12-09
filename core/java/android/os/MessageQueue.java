@@ -405,6 +405,26 @@ public final class MessageQueue {
         return !mQuitting && nativeIsIdling(mPtr);
      }
 
+    final boolean isEmpty(Handler h) {
+        if (h == null) {
+            return false;
+        }
+
+        synchronized (this) {
+            Message p = mMessages;
+
+            while (p != null) {
+                if (p.target == h) {
+                    return false;
+                }
+                p = p.next;
+            }
+        }
+
+        return true;
+    }
+
+
     void removeMessages(Handler h, int what, Object object) {
         if (h == null) {
             return;
