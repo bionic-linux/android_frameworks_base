@@ -23,8 +23,10 @@
 #include <utils/misc.h>
 
 #include <fcntl.h>
+#include <poll.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/timerfd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -37,7 +39,125 @@
 
 namespace android {
 
-static jint android_server_AlarmManagerService_setKernelTimezone(JNIEnv*, jobject, jint, jint minswest)
+static const size_t N_ANDROID_TIMERFDS = ANDROID_ALARM_TYPE_COUNT + 1;
+static const clockid_t android_alarm_to_clockid[N_ANDROID_TIMERFDS] = {
+    CLOCK_REALTIME_ALARM,
+    CLOCK_REALTIME,
+    CLOCK_BOOTTIME_ALARM,
+    CLOCK_BOOTTIME,
+    CLOCK_MONOTONIC,
+    CLOCK_REALTIME,
+};
+/* to match the legacy alarm driver implementation, we need an extra
+   CLOCK_REALTIME fd which exists specifically to be canceled on RTC changes */
+
+class AlarmImpl
+{
+public:
+    AlarmImpl(int *fds, size_t n_fds);
+    virtual ~AlarmImpl();
+
+    virtual int set(int type, struct timespec *ts) = 0;
+    virtual int waitForAlarm() = 0;
+
+protected:
+    int *fds;
+    size_t n_fds;
+};
+
+class AlarmImplAlarmDriver : public AlarmImpl
+{
+public:
+    AlarmImplAlarmDriver(int fd) : AlarmImpl(&fd, 1) { }
+
+    int set(int type, struct timespec *ts);
+    int waitForAlarm();
+};
+
+class AlarmImplTimerFd : public AlarmImpl
+{
+public:
+    AlarmImplTimerFd(int fds[N_ANDROID_TIMERFDS]) :
+        AlarmImpl(fds, N_ANDROID_TIMERFDS) { }
+
+    int set(int type, struct timespec *ts);
+    int waitForAlarm();
+};
+
+AlarmImpl::AlarmImpl(int *fds_, size_t n_fds) : fds(new int[n_fds]),
+        n_fds(n_fds)
+{
+    memcpy(fds, fds_, n_fds * sizeof(fds[0]));
+}
+
+AlarmImpl::~AlarmImpl()
+{
+    for (size_t i = 0; i < n_fds; i++)
+        close(fds[i]);
+    delete [] fds;
+}
+
+int AlarmImplAlarmDriver::set(int type, struct timespec *ts)
+{
+    return ioctl(fds[0], ANDROID_ALARM_SET(type), ts);
+}
+
+int AlarmImplAlarmDriver::waitForAlarm()
+{
+    return ioctl(fds[0], ANDROID_ALARM_WAIT);
+}
+
+int AlarmImplTimerFd::set(int type, struct timespec *ts)
+{
+    if (type > ANDROID_ALARM_TYPE_COUNT) {
+        errno = EINVAL;
+        return -1;
+    }
+
+    if (!ts->tv_nsec && !ts->tv_sec)
+        ts->tv_nsec = 1;
+    /* timerfd interprets 0 = disarm, so replace with a practically
+       equivalent deadline of 1 ns */
+
+    struct itimerspec spec;
+    memset(&spec, 0, sizeof(spec));
+    memcpy(&spec.it_value, ts, sizeof(spec.it_value));
+
+    return timerfd_settime(fds[type], TFD_TIMER_ABSTIME, &spec, NULL);
+}
+
+int AlarmImplTimerFd::waitForAlarm()
+{
+    pollfd pollfds[N_ANDROID_TIMERFDS];
+    for (size_t i = 0; i < N_ANDROID_TIMERFDS; i++) {
+        pollfds[i].fd = fds[i];
+        pollfds[i].events = POLLIN;
+    }
+
+    int err = poll(pollfds, N_ANDROID_TIMERFDS, -1);
+    if (err < 0)
+        return err;
+
+    int result = 0;
+    for (size_t i = 0; i < N_ANDROID_TIMERFDS; i++) {
+        if (pollfds[i].revents & POLLIN) {
+            uint64_t unused;
+            ssize_t err = read(fds[i], &unused, sizeof(unused));
+            if (err < 0) {
+                if (i == ANDROID_ALARM_TYPE_COUNT && errno == ECANCELED)
+                    result |= ANDROID_ALARM_TIME_CHANGE_MASK;
+                else
+                    return err;
+            } else {
+                result |= (1 << i);
+            }
+        }
+    }
+
+    return result;
+}
+
+static jint android_server_AlarmManagerService_setKernelTimezone(JNIEnv*, jobject, jlong, jint minswest)
 {
     struct timezone tz;
 
@@ -55,36 +175,88 @@ static jint android_server_AlarmManagerService_setKernelTimezone(JNIEnv*, jobjec
     return 0;
 }
 
-static jint android_server_AlarmManagerService_init(JNIEnv*, jobject)
+static jlong init_alarm_driver()
 {
-    return open("/dev/alarm", O_RDWR);
+    int fd = open("/dev/alarm", O_RDWR);
+    if (fd < 0) {
+        ALOGV("opening alarm driver failed: %s", strerror(errno));
+        return 0;
+    }
+
+    AlarmImpl *ret = new AlarmImplAlarmDriver(fd);
+    return reinterpret_cast<jlong>(ret);
 }
 
-static void android_server_AlarmManagerService_close(JNIEnv*, jobject, jint fd)
+static jlong init_timerfd()
 {
-    close(fd);
+    int fds[N_ANDROID_TIMERFDS];
+
+    for (size_t i = 0; i < N_ANDROID_TIMERFDS; i++) {
+        fds[i] = timerfd_create(android_alarm_to_clockid[i], 0);
+        if (fds[i] < 0) {
+            ALOGV("timerfd_create(%u) failed: %s",  android_alarm_to_clockid[i],
+                    strerror(errno));
+            for (size_t j = 0; j < i; j++)
+                close(fds[j]);
+            return 0;
+        }
+    }
+
+    AlarmImpl *ret = new AlarmImplTimerFd(fds);
+
+    struct itimerspec spec;
+    memset(&spec, 0, sizeof(spec));
+    /* 0 = disarmed; the timerfd doesn't need to be armed to get
+       RTC change notifications, just set up as cancelable */
+
+    int err = timerfd_settime(fds[ANDROID_ALARM_TYPE_COUNT],
+            TFD_TIMER_ABSTIME | TFD_TIMER_CANCEL_ON_SET, &spec, NULL);
+    if (err < 0) {
+        ALOGV("timerfd_settime() failed: %s", strerror(errno));
+        delete ret;
+        return 0;
+    }
+
+    return reinterpret_cast<jlong>(ret);
 }
 
-static void android_server_AlarmManagerService_set(JNIEnv*, jobject, jint fd, jint type, jlong seconds, jlong nanoseconds)
+static jlong android_server_AlarmManagerService_init(JNIEnv*, jobject)
 {
+    jlong ret = init_alarm_driver();
+    if (ret)
+        return ret;
+
+    return init_timerfd();
+}
+
+static void android_server_AlarmManagerService_close(JNIEnv*, jobject, jlong nativeData)
+{
+    AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
+    delete impl;
+}
+
+static void android_server_AlarmManagerService_set(JNIEnv*, jobject, jlong nativeData, jint type, jlong seconds, jlong nanoseconds)
+{
+    AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
     struct timespec ts;
     ts.tv_sec = seconds;
     ts.tv_nsec = nanoseconds;
 
-    int result = ioctl(fd, ANDROID_ALARM_SET(type), &ts);
+    int result = impl->set(type, &ts);
     if (result < 0)
     {
         ALOGE("Unable to set alarm to %lld.%09lld: %s\n", seconds, nanoseconds, strerror(errno));
     }
 }
 
-static jint android_server_AlarmManagerService_waitForAlarm(JNIEnv*, jobject, jint fd)
+static jint android_server_AlarmManagerService_waitForAlarm(JNIEnv*, jobject, jlong nativeData)
 {
+    AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
     int result = 0;
 
     do
     {
-        result = ioctl(fd, ANDROID_ALARM_WAIT);
+        result = impl->waitForAlarm();
     } while (result < 0 && errno == EINTR);
 
     if (result < 0)
@@ -98,11 +270,11 @@ static jint android_server_AlarmManagerService_waitForAlarm(JNIEnv*, jobject, ji
 
 static JNINativeMethod sMethods[] = {
      /* name, signature, funcPtr */
-    {"init", "()I", (void*)android_server_AlarmManagerService_init},
-    {"close", "(I)V", (void*)android_server_AlarmManagerService_close},
-    {"set", "(IIJJ)V", (void*)android_server_AlarmManagerService_set},
-    {"waitForAlarm", "(I)I", (void*)android_server_AlarmManagerService_waitForAlarm},
-    {"setKernelTimezone", "(II)I", (void*)android_server_AlarmManagerService_setKernelTimezone},
+    {"init", "()J", (void*)android_server_AlarmManagerService_init},
+    {"close", "(J)V", (void*)android_server_AlarmManagerService_close},
+    {"set", "(JIJJ)V", (void*)android_server_AlarmManagerService_set},
+    {"waitForAlarm", "(J)I", (void*)android_server_AlarmManagerService_waitForAlarm},
+    {"setKernelTimezone", "(JI)I", (void*)android_server_AlarmManagerService_setKernelTimezone},
 };
 
 int register_android_server_AlarmManagerService(JNIEnv* env)
