@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8cbbb64_c27042b3",
+        "filename": "core/java/android/os/Handler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-12-13T06:04:47Z",
+      "side": 1,
+      "message": "I think this should be called hasMessages().\n\nThis method will also need to be declared @hide because it\u0027s not possible to commit APIs directly to AOSP outside of a platform release.  We\u0027ll need to unhide the API when it is merged into our external master so that it can become part of the next major release.",
+      "revId": "ed8ad99b44bd7cbd0eef018f6d6db5025b9701bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
