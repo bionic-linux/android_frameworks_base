@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "28ab4b9f_3e1a89c6",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1004277
+      },
+      "writtenOn": "2013-12-13T23:36:38Z",
+      "side": 1,
+      "message": "I don\u0027t know how Android alarm handlers are invoked vs. when waitForAlarm() is called.  If it is possible that alarm handler threads are waiting to be scheduled, and have not taken the userspace wakelocks grabbed by the handlers, by the time waitForAlarm() is called again, then this code probably needs to take a timed wakelock to prevent suspend until the handler threads have a decent chance to run.",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "e91f2bfa43afa2ab669e01b879a27d2add3c59f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ab4b9f_7e8ff1d1",
         "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
         "patchSetId": 1
