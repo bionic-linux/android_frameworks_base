@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c86c6f4a_c9021566",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2013-12-14T01:33:58Z",
+      "side": 1,
+      "message": "Yes.  If the Alarm Manager has decided to fire a \"guaranteed awake until the recipient app has finished processing it\" alarm notification, then by the time it returns to waitForAlarm() there will be a [separate] userspace wake lock held for the purpose.  The actual dispatch mechanism is single-threaded / synchronous in this respect.",
+      "parentUuid": "28ab4b9f_e1124021",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "e91f2bfa43afa2ab669e01b879a27d2add3c59f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ab4b9f_7e8ff1d1",
         "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
         "patchSetId": 1
