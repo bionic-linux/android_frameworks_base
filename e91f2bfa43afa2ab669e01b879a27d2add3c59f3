@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "28ab4b9f_e1124021",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1004277
+      },
+      "writtenOn": "2013-12-14T00:31:51Z",
+      "side": 1,
+      "message": "Just to clarify: if the Alarm Manager Service decides to fire an alarm, will the wakelock for that alarm definitely be held by the time waitForAlarm() is re-entered?  If grabbing the wakelock may occur asynchronously with re-entering waitForAlarm(), a timed wakelock should be held prior to returning from waitForAlarm().",
+      "parentUuid": "08d1273f_b5ab60a3",
+      "range": {
+        "startLine": 129,
+        "startChar": 22,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "e91f2bfa43afa2ab669e01b879a27d2add3c59f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ab4b9f_7e8ff1d1",
         "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
         "patchSetId": 1
