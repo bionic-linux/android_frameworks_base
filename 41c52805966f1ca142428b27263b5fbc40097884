@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "68baa3ef_db9cc757",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1015340
+      },
+      "writtenOn": "2013-12-17T00:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a80e5bb3_6ac1771b",
+      "revId": "41c52805966f1ca142428b27263b5fbc40097884",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a80e5bb3_8abb8ba8",
         "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
         "patchSetId": 2
@@ -42,6 +60,24 @@
         "endLine": 146,
         "endChar": 23
       },
+      "revId": "41c52805966f1ca142428b27263b5fbc40097884",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08a847a1_e0b11cca",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1015340
+      },
+      "writtenOn": "2013-12-17T00:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a80e5bb3_8abb8ba8",
       "revId": "41c52805966f1ca142428b27263b5fbc40097884",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -112,6 +148,24 @@
         "endLine": 215,
         "endChar": 25
       },
+      "revId": "41c52805966f1ca142428b27263b5fbc40097884",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68baa3ef_fb978b30",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1015340
+      },
+      "writtenOn": "2013-12-17T00:24:41Z",
+      "side": 1,
+      "message": "Handled in the AlarmImplTimerFd destructor",
+      "parentUuid": "c86c6f4a_426fd788",
       "revId": "41c52805966f1ca142428b27263b5fbc40097884",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
