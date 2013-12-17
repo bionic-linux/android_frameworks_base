@@ -55,16 +55,16 @@
     <string name="keyboard_layout_italian">Italian</string>
 
     <!-- Danish keyboard layout label. [CHAR LIMIT=35] -->
-    <string name="keyboard_layout_danish">Danish</string>
+    <string name="keyboard_layout_danish">Danish (with Sami)</string>
 
     <!-- Norwegian keyboard layout label. [CHAR LIMIT=35] -->
-    <string name="keyboard_layout_norwegian">Norwegian</string>
+    <string name="keyboard_layout_norwegian">Norwegian (with Sami)</string>
 
     <!-- Swedish keyboard layout label. [CHAR LIMIT=35] -->
-    <string name="keyboard_layout_swedish">Swedish</string>
+    <string name="keyboard_layout_swedish">Swedish (with Sami)</string>
 
     <!-- Finnish keyboard layout label. [CHAR LIMIT=35] -->
-    <string name="keyboard_layout_finnish">Finnish</string>
+    <string name="keyboard_layout_finnish">Finnishi (with Sami)</string>
 
     <!-- Croatian keyboard layout label. [CHAR LIMIT=35] -->
     <string name="keyboard_layout_croatian">Croatian</string>
