@@ -45,6 +45,52 @@
       "revId": "41c52805966f1ca142428b27263b5fbc40097884",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c86c6f4a_3d875fb5",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1004277
+      },
+      "writtenOn": "2013-12-17T00:14:38Z",
+      "side": 1,
+      "message": "needs retabbing",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 151,
+        "endChar": 20
+      },
+      "revId": "41c52805966f1ca142428b27263b5fbc40097884",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c86c6f4a_426fd788",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1004277
+      },
+      "writtenOn": "2013-12-17T00:14:38Z",
+      "side": 1,
+      "message": "close of epollfd and the timerfd\u0027s needed for other error cases below?",
+      "range": {
+        "startLine": 215,
+        "startChar": 22,
+        "endLine": 215,
+        "endChar": 25
+      },
+      "revId": "41c52805966f1ca142428b27263b5fbc40097884",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
