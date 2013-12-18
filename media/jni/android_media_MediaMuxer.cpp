@@ -31,7 +31,6 @@
 namespace android {
 
 struct fields_t {
-    jfieldID context;
     jmethodID arrayID;
 };
 
@@ -254,9 +253,6 @@ int register_android_media_MediaMuxer(JNIEnv *env) {
 
     jclass clazz = env->FindClass("android/media/MediaMuxer");
     CHECK(clazz != NULL);
-
-    gFields.context = env->GetFieldID(clazz, "mNativeContext", "J");
-    CHECK(gFields.context != NULL);
 
     jclass byteBufClass = env->FindClass("java/nio/ByteBuffer");
     CHECK(byteBufClass != NULL);
