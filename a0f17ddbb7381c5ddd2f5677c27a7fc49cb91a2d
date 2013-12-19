@@ -22,6 +22,24 @@
       "revId": "a0f17ddbb7381c5ddd2f5677c27a7fc49cb91a2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "884ef754_b15a2041",
+        "filename": "packages/InputDevices/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1017523
+      },
+      "writtenOn": "2013-12-19T10:53:26Z",
+      "side": 1,
+      "message": "\"Finnish\". Fixed. Some vim leftover ;)\n\nI removed the \"(with Sami)\" on the new patch set. The initial idea was to inform the user that these keyboard layouts have been extended with Sami, but we understand maybe it\u0027s not the right place to do so. Would you know of another way of doing that (ChangeLog, etc.)?",
+      "parentUuid": "e89853f7_3c20b1b2",
+      "revId": "a0f17ddbb7381c5ddd2f5677c27a7fc49cb91a2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
