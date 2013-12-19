@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89853f7_7c2a3994",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_latvian.kcm",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-12-19T02:28:38Z",
+      "side": 1,
+      "message": "Need to remap this key to G",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 6
+      },
+      "revId": "c493c9c5b8463262974a415a9456e47c0beeabbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e89853f7_9c554514",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_latvian.kcm",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-12-19T02:28:38Z",
+      "side": 1,
+      "message": "Remap to J",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 5
+      },
+      "revId": "c493c9c5b8463262974a415a9456e47c0beeabbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "886997a4_f9873747",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_latvian.kcm",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-12-19T02:28:38Z",
+      "side": 1,
+      "message": "Remap to M",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 5
+      },
+      "revId": "c493c9c5b8463262974a415a9456e47c0beeabbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8954fbe_7b2a3f94",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_latvian.kcm",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-12-19T02:28:38Z",
+      "side": 1,
+      "message": "Remap to V, etc below...",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 5
+      },
+      "revId": "c493c9c5b8463262974a415a9456e47c0beeabbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
