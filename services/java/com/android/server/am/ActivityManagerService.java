@@ -9119,8 +9119,13 @@ public final class ActivityManagerService extends ActivityManagerNative
 
     static final int LAST_DONE_VERSION = 10000;
 
-    private static ArrayList<ComponentName> readLastDonePreBootReceivers() {
-        ArrayList<ComponentName> lastDoneReceivers = new ArrayList<ComponentName>();
+    static class LastDonePreBootReceivers {
+        ArrayList<ComponentName> receivers = new ArrayList<ComponentName>();
+        boolean broadcastDone = false;
+    }
+
+    private static LastDonePreBootReceivers readLastDonePreBootReceivers() {
+        LastDonePreBootReceivers lastDoneReceivers = new LastDonePreBootReceivers();
         File file = getCalledPreBootReceiversFile();
         FileInputStream fis = null;
         try {
@@ -9139,7 +9144,10 @@ public final class ActivityManagerService extends ActivityManagerNative
                         num--;
                         String pkg = dis.readUTF();
                         String cls = dis.readUTF();
-                        lastDoneReceivers.add(new ComponentName(pkg, cls));
+                        lastDoneReceivers.receivers.add(new ComponentName(pkg, cls));
+                    }
+                    if (dis.available() > 0) {
+                        lastDoneReceivers.broadcastDone = dis.readBoolean();
                     }
                 }
             }
@@ -9157,7 +9165,8 @@ public final class ActivityManagerService extends ActivityManagerNative
         return lastDoneReceivers;
     }
     
-    private static void writeLastDonePreBootReceivers(ArrayList<ComponentName> list) {
+    private static void writeLastDonePreBootReceivers(ArrayList<ComponentName> list,
+                        boolean broadcastDone) {
         File file = getCalledPreBootReceiversFile();
         FileOutputStream fos = null;
         DataOutputStream dos = null;
@@ -9174,6 +9183,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                 dos.writeUTF(list.get(i).getPackageName());
                 dos.writeUTF(list.get(i).getClassName());
             }
+            dos.writeBoolean(broadcastDone);
         } catch (IOException e) {
             Slog.w(TAG, "Failure writing last done pre-boot receivers", e);
             file.delete();
@@ -9218,27 +9228,27 @@ public final class ActivityManagerService extends ActivityManagerNative
                     }
                     intent.addFlags(Intent.FLAG_RECEIVER_BOOT_UPGRADE);
 
-                    ArrayList<ComponentName> lastDoneReceivers = readLastDonePreBootReceivers();
+                    LastDonePreBootReceivers lastDoneReceivers = readLastDonePreBootReceivers();
 
                     final ArrayList<ComponentName> doneReceivers = new ArrayList<ComponentName>();
                     for (int i=0; i<ris.size(); i++) {
                         ActivityInfo ai = ris.get(i).activityInfo;
                         ComponentName comp = new ComponentName(ai.packageName, ai.name);
-                        if (lastDoneReceivers.contains(comp)) {
+                        if (lastDoneReceivers.receivers.contains(comp)) {
                             ris.remove(i);
                             i--;
+                            doneReceivers.add(comp);
                         }
                     }
-
                     final int[] users = getUsersLocked();
-                    for (int i=0; i<ris.size(); i++) {
-                        ActivityInfo ai = ris.get(i).activityInfo;
+                    if (ris.size() > 0 && !lastDoneReceivers.broadcastDone) {
+                        ActivityInfo ai = ris.get(0).activityInfo;
                         ComponentName comp = new ComponentName(ai.packageName, ai.name);
                         doneReceivers.add(comp);
                         intent.setComponent(comp);
                         for (int j=0; j<users.length; j++) {
                             IIntentReceiver finisher = null;
-                            if (i == ris.size()-1 && j == users.length-1) {
+                            if (ris.size() == 1 && j == users.length-1) {
                                 finisher = new IIntentReceiver.Stub() {
                                     public void performReceive(Intent intent, int resultCode,
                                             String data, Bundle extras, boolean ordered,
@@ -9251,10 +9261,23 @@ public final class ActivityManagerService extends ActivityManagerNative
                                                 synchronized (ActivityManagerService.this) {
                                                     mDidUpdate = true;
                                                 }
-                                                writeLastDonePreBootReceivers(doneReceivers);
+                                                writeLastDonePreBootReceivers(doneReceivers, true);
                                                 showBootMessage(mContext.getText(
                                                         R.string.android_upgrading_complete),
                                                         false);
+                                                systemReady(goingCallback);
+                                            }
+                                        });
+                                    }
+                                };
+                            } else if (j == users.length-1) {
+                                finisher = new IIntentReceiver.Stub() {
+                                    public void performReceive(Intent intent, int resultCode,
+                                            String data, Bundle extras, boolean ordered,
+                                            boolean sticky, int sendingUser) {
+                                        mHandler.post(new Runnable() {
+                                            public void run() {
+                                                writeLastDonePreBootReceivers(doneReceivers, false);
                                                 systemReady(goingCallback);
                                             }
                                         });
@@ -9267,10 +9290,11 @@ public final class ActivityManagerService extends ActivityManagerNative
                                     0, null, null, null, AppOpsManager.OP_NONE,
                                     true, false, MY_PID, Process.SYSTEM_UID,
                                     users[j]);
-                            if (finisher != null) {
-                                mWaitingUpdate = true;
-                            }
                         }
+                        if (ris.size() > 1) {
+                            return;
+                        }
+                        mWaitingUpdate = true;
                     }
                 }
                 if (mWaitingUpdate) {
