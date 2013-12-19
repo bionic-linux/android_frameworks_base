@@ -22,6 +22,24 @@
       "revId": "f277628705f2045325084921e3b78928c00e5f46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8438f32_ab08e944",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_czech.kcm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1017523
+      },
+      "writtenOn": "2013-12-19T11:05:46Z",
+      "side": 1,
+      "message": "Fixed. Reverted with old value in all files.",
+      "parentUuid": "886997a4_5944a361",
+      "revId": "f277628705f2045325084921e3b78928c00e5f46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
