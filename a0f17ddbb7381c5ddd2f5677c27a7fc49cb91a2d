@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89853f7_3c20b1b2",
+        "filename": "packages/InputDevices/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-12-19T02:21:02Z",
+      "side": 1,
+      "message": "Did you mean to say Finnishi?\n\nIs it important to actually append (with Sami) on these?",
+      "range": {
+        "startLine": 67,
+        "startChar": 43,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "a0f17ddbb7381c5ddd2f5677c27a7fc49cb91a2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
