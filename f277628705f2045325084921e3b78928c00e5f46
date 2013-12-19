@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "886997a4_5944a361",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_czech.kcm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-12-19T02:22:38Z",
+      "side": 1,
+      "message": "Don\u0027t change copyright dates.",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "f277628705f2045325084921e3b78928c00e5f46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
