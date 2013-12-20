@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "685e23ff_8d2a7191",
+        "filename": "core/java/android/net/Proxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-12-20T21:11:55Z",
+      "side": 1,
+      "message": "I think I\u0027d rather check the result of getHost above and say\nif (TextUtil.isEmpty(host)) host \u003d url\nor something.  It seems odd to me that URI can\u0027t do a better job finding the host in \"www.cnn.com\" - perhaps it needs a lenient mode to be more useful.\n\n\nActually - digging in a little it seems alot of callers are doing getProxy(ctx, foo.getHostName()) on a HttpHost.  These should be using toURI.\n\nRather than making the API less precise and predictable, can we try to fix the call sites that are using it incorrectly?  Perhaps we should throw an exception if the url is not valid?",
+      "range": {
+        "startLine": 127,
+        "startChar": 53,
+        "endLine": 127,
+        "endChar": 54
+      },
+      "revId": "37cdc0e46edc86631466b253a831e4579922c912",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
