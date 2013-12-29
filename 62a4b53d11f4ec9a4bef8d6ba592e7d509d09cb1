@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dec497b_84b0a8e7",
+        "filename": "libs/hwui/OpenGLRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2224,
+      "author": {
+        "id": 1010118
+      },
+      "writtenOn": "2013-12-29T05:57:02Z",
+      "side": 1,
+      "message": "whitespace around \u003d\nIt\u0027d be nice if this were a unique_ptr.. but that\u0027s not being used elsewhere in the code :-(",
+      "range": {
+        "startLine": 2224,
+        "startChar": 28,
+        "endLine": 2224,
+        "endChar": 29
+      },
+      "revId": "62a4b53d11f4ec9a4bef8d6ba592e7d509d09cb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
