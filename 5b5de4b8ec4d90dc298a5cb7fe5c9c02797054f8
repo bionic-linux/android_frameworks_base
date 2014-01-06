@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d80bdc3_3021f832",
+        "filename": "wifi/java/android/net/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2457,
+      "author": {
+        "id": 1030484
+      },
+      "writtenOn": "2014-01-06T23:51:47Z",
+      "side": 1,
+      "message": "Should it be \"airplaneModeRadios !\u003d null \u0026\u0026\" ?",
+      "range": {
+        "startLine": 2456,
+        "startChar": 15,
+        "endLine": 2457,
+        "endChar": 14
+      },
+      "revId": "5b5de4b8ec4d90dc298a5cb7fe5c9c02797054f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d7db99f_8a42172b",
+        "filename": "wifi/java/android/net/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2784,
+      "author": {
+        "id": 1030484
+      },
+      "writtenOn": "2014-01-06T23:51:47Z",
+      "side": 1,
+      "message": "Just asked @wink about this, and he told me when in airplane mode, the SIM might still remain on depending on implementations.\n\nEven though we can\u0027t access the SIM under airplane, this implementation is incomplete:\n1. Do we need to re-enable those networks when airport mode is off?\n2. What if airplane mode is turn on while we are in SupplicantStartedState?",
+      "range": {
+        "startLine": 2784,
+        "startChar": 24,
+        "endLine": 2784,
+        "endChar": 42
+      },
+      "revId": "5b5de4b8ec4d90dc298a5cb7fe5c9c02797054f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
