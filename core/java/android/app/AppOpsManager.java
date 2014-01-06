@@ -453,6 +453,25 @@ public class AppOpsManager {
             AppOpsManager.MODE_ALLOWED,
     };
 
+    private static HashMap<String, Integer> nameToOp = new HashMap<String, Integer>();
+    static {
+        for (int i = 0; i < _NUM_OP; i++) {
+            nameToOp.put(sOpNames[i], sOpToSwitch[i]);
+        }
+    }
+
+    /**
+     * Retrieve the op switch for the given operation name.
+     * @hide
+     */
+    public static int nameToSwitch(String name) {
+        int ret = OP_NONE;
+        if (nameToOp.containsKey(name)) {
+            ret = nameToOp.get(name);
+        }
+        return ret;
+    }
+
     /**
      * This specifies whether each option is allowed to be reset
      * when resetting all app preferences.  Disable reset for
