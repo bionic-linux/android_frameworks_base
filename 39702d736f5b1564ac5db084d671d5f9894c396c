@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "ad266df6_3327ba4b",
+        "filename": "core/java/android/os/CountDownTimer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2014-01-07T19:05:32Z",
+      "side": 1,
+      "message": "Set mCancelled \u003d false *before* sending the first message to the handler.",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 18
+      },
+      "revId": "39702d736f5b1564ac5db084d671d5f9894c396c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb4adde_7a04792e",
         "filename": "core/java/android/os/CountDownTimer.java",
         "patchSetId": 1
