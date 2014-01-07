@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4db331fa_77f570ab",
+        "filename": "services/jni/com_android_server_LightsService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-07T13:22:20Z",
+      "side": 1,
+      "message": "why do you need two levels of casting ?\n\nDevices* devices \u003d (Devices*) ptr;\n\nshould be sufficient, shouldn\u0027t it ?",
+      "range": {
+        "startLine": 98,
+        "startChar": 35,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "60547ba91f798ec8d731c9a2ebf919e2bdb75591",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adb4adde_3a9e814e",
+        "filename": "services/jni/com_android_server_LightsService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-07T13:22:20Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 109,
+        "startChar": 13,
+        "endLine": 109,
+        "endChar": 20
+      },
+      "revId": "60547ba91f798ec8d731c9a2ebf919e2bdb75591",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
