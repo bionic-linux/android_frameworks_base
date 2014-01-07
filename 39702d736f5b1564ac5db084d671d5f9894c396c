@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dae3595_b8ec5938",
+        "filename": "core/java/android/os/CountDownTimer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-07T09:38:42Z",
+      "side": 1,
+      "message": "This change isn\u0027t correct in terms of thread safety. You\u0027ll either need to make mCancelled volatile or synchronize cancel() so that all reads \u0026 writes to mCancelled are guarded by CountDownTimer.this",
+      "revId": "39702d736f5b1564ac5db084d671d5f9894c396c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adb4adde_7a04792e",
+        "filename": "core/java/android/os/CountDownTimer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-07T09:38:42Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this need an mCancelled guard too ?",
+      "range": {
+        "startLine": 128,
+        "startChar": 20,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "39702d736f5b1564ac5db084d671d5f9894c396c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
