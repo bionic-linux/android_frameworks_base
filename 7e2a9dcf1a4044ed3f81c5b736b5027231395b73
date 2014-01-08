@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad974d5d_22cb8e5b",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-08T12:24:28Z",
+      "side": 1,
+      "message": "damn it, I missed this bug in my review. I\u0027ll submit a follow up.",
+      "range": {
+        "startLine": 420,
+        "startChar": 11,
+        "endLine": 420,
+        "endChar": 20
+      },
+      "revId": "7e2a9dcf1a4044ed3f81c5b736b5027231395b73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
