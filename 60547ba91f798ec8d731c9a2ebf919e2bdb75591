@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "0d73f924_854ac26e",
+        "filename": "services/jni/com_android_server_LightsService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-08T10:34:44Z",
+      "side": 1,
+      "message": "If I am not mistaken, jlong will always be 64-bit. However pointer size can be 32-bit or 64-bit, depending on the platform. \nWe get compiler error or warning, if we cast an integer to a pointer, if size of that integer is different from size of a pointer.\nHence double cast, first jlong to an uintptr_t and then to to desired pointer type.",
+      "parentUuid": "4db331fa_77f570ab",
+      "revId": "60547ba91f798ec8d731c9a2ebf919e2bdb75591",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb4adde_3a9e814e",
         "filename": "services/jni/com_android_server_LightsService.cpp",
         "patchSetId": 1
