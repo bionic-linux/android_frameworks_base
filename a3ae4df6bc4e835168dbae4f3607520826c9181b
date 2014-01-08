@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd1393f_b5b920d2",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-01-08T21:43:16Z",
+      "side": 1,
+      "message": "could you make this a \"private static class\" to avoid holding the implicit reference to the outer class?",
+      "revId": "a3ae4df6bc4e835168dbae4f3607520826c9181b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdcac190_f3ab305b",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-01-08T21:43:16Z",
+      "side": 1,
+      "message": "this needs synchronization; it\u0027s going to be examined by both MountServiceHandler and the NDC event handler thread.  adding a field like this would be enough:\n\n  private final Object mPendingLock \u003d new Object();\n\n  @GuardedBy(\"mPendingLock\")\n  private ArrayList ...\n\nalso, could you keep the list null by default, since it will only rarely be needed?",
+      "revId": "a3ae4df6bc4e835168dbae4f3607520826c9181b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
