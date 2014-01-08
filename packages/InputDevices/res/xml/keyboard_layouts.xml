@@ -104,6 +104,10 @@
             android:label="@string/keyboard_layout_brazilian"
             android:keyboardLayout="@raw/keyboard_layout_brazilian" />
 
+    <keyboard-layout android:name="keyboard_layout_lithuanian"
+            android:label="@string/keyboard_layout_lithuanian"
+            android:keyboardLayout="@raw/keyboard_layout_lithuanian" />
+
     <keyboard-layout android:name="keyboard_layout_portuguese"
             android:label="@string/keyboard_layout_portuguese"
             android:keyboardLayout="@raw/keyboard_layout_portuguese" />
