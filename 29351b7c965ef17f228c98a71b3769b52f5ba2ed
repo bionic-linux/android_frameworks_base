@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd1393f_2f29359d",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-01-09T18:41:42Z",
+      "side": 1,
+      "message": "so you added the @GuardedBy annotation, but that\u0027s just documentation; you actually need to synchronize on that lock when accessing the data structure  ;)\n\n  synchronized (mPendingLock) {\n    ...\n  }",
+      "revId": "29351b7c965ef17f228c98a71b3769b52f5ba2ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
