@@ -511,6 +511,10 @@ public class WifiStateMachine extends StateMachine {
     private static final int MIN_RSSI = -200;
     private static final int MAX_RSSI = 256;
 
+    private static final int WIFI_MODE_STA     = 0;
+    private static final int WIFI_MODE_AP      = 1;
+    private static final int WIFI_MODE_P2P_STA = 2;
+
     /* Default parent state */
     private State mDefaultState = new DefaultState();
     /* Temporary initial state */
@@ -2291,11 +2295,21 @@ public class WifiStateMachine extends StateMachine {
         mLastNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
     }
 
+    private void handleHostapdConnectionLoss() {
+        /* Socket connection can be lost when we do a graceful shutdown
+        * or when the driver is hung. Ensure supplicant is stopped here.
+        */
+        mWifiMonitor.killSupplicant(WIFI_MODE_AP);
+        mWifiNative.closeSupplicantConnection();
+        sendSupplicantConnectionChangedBroadcast(false);
+        setWifiApState(WIFI_STATE_DISABLED);
+    }
+
     private void handleSupplicantConnectionLoss() {
         /* Socket connection can be lost when we do a graceful shutdown
         * or when the driver is hung. Ensure supplicant is stopped here.
         */
-        mWifiMonitor.killSupplicant(mP2pSupported);
+        mWifiMonitor.killSupplicant(mP2pSupported ? WIFI_MODE_P2P_STA : WIFI_MODE_STA);
         mWifiNative.closeSupplicantConnection();
         sendSupplicantConnectionChangedBroadcast(false);
         setWifiState(WIFI_STATE_DISABLED);
@@ -2433,22 +2447,53 @@ public class WifiStateMachine extends StateMachine {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    mNwService.startAccessPoint(config, mInterfaceName);
+                    mNwService.wifiFirmwareReload(mInterfaceName, "AP");
                 } catch (Exception e) {
-                    loge("Exception in softap start " + e);
-                    try {
-                        mNwService.stopAccessPoint(mInterfaceName);
-                        mNwService.startAccessPoint(config, mInterfaceName);
-                    } catch (Exception e1) {
-                        loge("Exception in softap re-start " + e1);
-                        sendMessage(CMD_START_AP_FAILURE);
-                        return;
-                    }
+                    loge("Failed to reload softap firmware " + e);
                 }
-                if (DBG) log("Soft AP start successful");
-                sendMessage(CMD_START_AP_SUCCESS);
+
+                try {
+                    mNwService.setAccessPoint(config, mInterfaceName);
+                } catch (Exception e) {
+                    loge("Failed to set softap configuration " + e);
+                }
+
+                try {
+                    //A runtime crash can leave the interface up and
+                    //this affects connectivity when supplicant starts up.
+                    //Ensure interface is down before a supplicant start.
+                    mNwService.setInterfaceDown(mInterfaceName);
+                    //Set privacy extensions
+                    mNwService.setInterfaceIpv6PrivacyExtensions(mInterfaceName, true);
+                } catch (RemoteException re) {
+                    loge("Unable to change interface settings: " + re);
+                } catch (IllegalStateException ie) {
+                    loge("Unable to change interface settings: " + ie);
+                }
+
+                if(mWifiNative.startSupplicant(WIFI_MODE_AP)) {
+                    if (DBG) log("Hostapd start successful");
+                    mWifiMonitor.startMonitoring();
+                    if (DBG) log("Soft AP start successful");
+                    sendMessage(CMD_START_AP_SUCCESS);
+                } else {
+                    loge("Failed to start hostapd!");
+                    sendMessage(CMD_START_AP_FAILURE);
+                }
             }
         }).start();
+    }
+
+    private void stopSoftAp() {
+        mWifiMonitor.killSupplicant(WIFI_MODE_AP);
+        mWifiNative.closeSupplicantConnection();
+        /* shut down the interface, to make sure unload driver successfully */
+        try {
+            mNwService.setInterfaceDown(mInterfaceName);
+            mNwService.wifiFirmwareReload(mInterfaceName, "STA");
+        } catch (Exception e) {
+            loge("Failed to stop Soft Ap " + e);
+        }
     }
 
     /********************************************************
@@ -2693,8 +2738,9 @@ public class WifiStateMachine extends StateMachine {
                         * Avoids issues with drivers that do not handle interface down
                         * on a running supplicant properly.
                         */
-                        mWifiMonitor.killSupplicant(mP2pSupported);
-                        if(mWifiNative.startSupplicant(mP2pSupported)) {
+                        mWifiMonitor.killSupplicant(mP2pSupported ? WIFI_MODE_P2P_STA : WIFI_MODE_STA);
+                        mWifiMonitor.killSupplicant(WIFI_MODE_AP);
+                        if(mWifiNative.startSupplicant(mP2pSupported ? WIFI_MODE_P2P_STA : WIFI_MODE_STA)) {
                             setWifiState(WIFI_STATE_ENABLING);
                             if (DBG) log("Supplicant start successful");
                             mWifiMonitor.startMonitoring();
@@ -2713,6 +2759,7 @@ public class WifiStateMachine extends StateMachine {
                     } else {
                         loge("Failed to load driver for softap");
                     }
+                    break;
                 default:
                     return NOT_HANDLED;
             }
@@ -2776,7 +2823,7 @@ public class WifiStateMachine extends StateMachine {
                 case WifiMonitor.SUP_DISCONNECTION_EVENT:
                     if (++mSupplicantRestartCount <= SUPPLICANT_RESTART_TRIES) {
                         loge("Failed to setup control channel, restart supplicant");
-                        mWifiMonitor.killSupplicant(mP2pSupported);
+                        mWifiMonitor.killSupplicant(mP2pSupported ? WIFI_MODE_P2P_STA : WIFI_MODE_STA);
                         transitionTo(mInitialState);
                         sendMessageDelayed(CMD_START_SUPPLICANT, SUPPLICANT_RESTART_INTERVAL_MSECS);
                     } else {
@@ -4225,8 +4272,24 @@ public class WifiStateMachine extends StateMachine {
                     }
                     break;
                 case CMD_START_AP_SUCCESS:
+                    mWifiMonitor.startMonitoring();
+                    break;
+                case WifiMonitor.SUP_CONNECTION_EVENT:
+                    if (DBG) log("Hostapd connection established");
+                    mSupplicantRestartCount = 0;
                     setWifiApState(WIFI_AP_STATE_ENABLED);
                     transitionTo(mSoftApStartedState);
+                    break;
+                case WifiMonitor.SUP_DISCONNECTION_EVENT:
+                    if (++mSupplicantRestartCount <= SUPPLICANT_RESTART_TRIES) {
+                        loge("Failed to setup control channel, connect to hostapd");
+                        sendMessageDelayed(CMD_START_AP_SUCCESS, SUPPLICANT_RESTART_INTERVAL_MSECS);
+                    } else {
+                        loge("Failed " + mSupplicantRestartCount + " times to reconnect hostapd");
+                        mSupplicantRestartCount = 0;
+                        setWifiApState(WIFI_AP_STATE_FAILED);
+                        transitionTo(mInitialState);
+                    }
                     break;
                 case CMD_START_AP_FAILURE:
                     setWifiApState(WIFI_AP_STATE_FAILED);
@@ -4246,11 +4309,7 @@ public class WifiStateMachine extends StateMachine {
                 case CMD_STOP_AP:
                     if (DBG) log("Stopping Soft AP");
                     /* We have not tethered at this point, so we just shutdown soft Ap */
-                    try {
-                        mNwService.stopAccessPoint(mInterfaceName);
-                    } catch(Exception e) {
-                        loge("Exception in stopAccessPoint()");
-                    }
+                    stopSoftAp();
                     setWifiApState(WIFI_AP_STATE_DISABLED);
                     transitionTo(mInitialState);
                     break;
@@ -4266,6 +4325,25 @@ public class WifiStateMachine extends StateMachine {
                     TetherStateChange stateChange = (TetherStateChange) message.obj;
                     if (startTethering(stateChange.available)) {
                         transitionTo(mTetheringState);
+                    }
+                    break;
+                case WifiMonitor.SUP_DISCONNECTION_EVENT:  /* Hostapd connection lost */
+                    loge("Connection lost, restart hostapd");
+                    handleHostapdConnectionLoss();
+                    transitionTo(mInitialState);
+                    sendMessageDelayed(CMD_START_AP, SUPPLICANT_RESTART_INTERVAL_MSECS);
+                    break;
+                case WifiMonitor.AP_STA_CONNECTED_EVENT:
+                    WifiP2pDevice connected_device = (WifiP2pDevice) message.obj;
+                    logi("AP_STA_CONNECTED_EVENT : " + connected_device.toString());
+                    mPeers.updateSupplicantDetails(connected_device);
+                    sendWifiApClientChangedBroadcast();
+                    break;
+                case WifiMonitor.AP_STA_DISCONNECTED_EVENT:
+                    WifiP2pDevice disconnected_device = (WifiP2pDevice) message.obj;
+                    logi("AP_STA_DISCONNECTED_EVENT : " + disconnected_device.toString());
+                    if (mPeers.remove(disconnected_device)) {
+                        sendWifiApClientChangedBroadcast();
                     }
                     break;
                 default:

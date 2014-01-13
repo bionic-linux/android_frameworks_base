@@ -379,8 +379,8 @@ public class WifiMonitor {
         WifiMonitorSingleton.getMonitor().stopSupplicant();
     }
 
-    public void killSupplicant(boolean p2pSupported) {
-        WifiMonitorSingleton.getMonitor().killSupplicant(p2pSupported);
+    public void killSupplicant(int wifiMode) {
+        WifiMonitorSingleton.getMonitor().killSupplicant(wifiMode);
     }
 
     private static class WifiMonitorSingleton {
@@ -469,8 +469,8 @@ public class WifiMonitor {
             mWifiNative.stopSupplicant();
         }
 
-        public synchronized void killSupplicant(boolean p2pSupported) {
-            mWifiNative.killSupplicant(p2pSupported);
+        public synchronized void killSupplicant(int wifiMode) {
+            mWifiNative.killSupplicant(wifiMode);
             mConnected = false;
             Iterator<Map.Entry<String, WifiMonitor>> it = mIfaceMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -525,8 +525,8 @@ public class WifiMonitor {
                         eventStr = eventStr.substring(space + 1);
                     }
                 } else {
-                    // events without prefix belong to p2p0 monitor
-                    m = mWifiMonitorSingleton.getMonitor("p2p0");
+                    // leave mStateMachine to be null, then the events
+                    // without prefix will be sent to all the monitors
                 }
 
                 if (m != null) {
