@@ -22,6 +22,30 @@
       "revId": "3fa2ee3cefde6e3f1cbffe1dae17f9f1b66eeabf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "addf4d7e_e25fa61d",
+        "filename": "core/java/android/content/res/AssetManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-01-14T20:01:46Z",
+      "side": 1,
+      "message": "me too.",
+      "parentUuid": "ed7ea524_cc518f50",
+      "range": {
+        "startLine": 546,
+        "startChar": 26,
+        "endLine": 546,
+        "endChar": 38
+      },
+      "revId": "3fa2ee3cefde6e3f1cbffe1dae17f9f1b66eeabf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
