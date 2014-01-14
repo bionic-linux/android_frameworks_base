@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed7ea524_cc518f50",
+        "filename": "core/java/android/content/res/AssetManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-14T19:33:06Z",
+      "side": 1,
+      "message": "I\u0027d prefer a more descriptive name, like getNativeAsset() or getNativePtr(). \n\nLike the previous API, the current name leaves callers guessing about what the method returns...",
+      "range": {
+        "startLine": 546,
+        "startChar": 26,
+        "endLine": 546,
+        "endChar": 38
+      },
+      "revId": "3fa2ee3cefde6e3f1cbffe1dae17f9f1b66eeabf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
