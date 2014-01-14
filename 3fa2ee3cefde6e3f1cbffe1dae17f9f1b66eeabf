@@ -46,6 +46,24 @@
       "revId": "3fa2ee3cefde6e3f1cbffe1dae17f9f1b66eeabf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7ba135_ab8e69a3",
+        "filename": "core/java/android/content/res/AssetManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-14T20:33:28Z",
+      "side": 1,
+      "message": "I prefer the name getNativeAsset. Will submit a patch with changed name soon.",
+      "parentUuid": "addf4d7e_e25fa61d",
+      "revId": "3fa2ee3cefde6e3f1cbffe1dae17f9f1b66eeabf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
