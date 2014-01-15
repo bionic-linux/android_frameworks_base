@@ -76,7 +76,7 @@ public final class PrintManagerService extends IPrintManager.Stub {
     public PrintManagerService(Context context) {
         mContext = context;
         registerContentObservers();
-        registerBoradcastReceivers();
+        registerBroadcastReceivers();
     }
 
     public void systemRuning() {
@@ -396,7 +396,7 @@ public final class PrintManagerService extends IPrintManager.Stub {
                 false, observer, UserHandle.USER_ALL);
     }
 
-    private void registerBoradcastReceivers() {
+    private void registerBroadcastReceivers() {
         PackageMonitor monitor = new PackageMonitor() {
             @Override
             public boolean onPackageChanged(String packageName, int uid, String[] components) {
@@ -438,7 +438,6 @@ public final class PrintManagerService extends IPrintManager.Stub {
                     int uid, boolean doit) {
                 synchronized (mLock) {
                     UserState userState = getOrCreateUserStateLocked(getChangingUserId());
-                    boolean stoppedSomePackages = false;
                     Iterator<ComponentName> iterator = userState.getEnabledServices().iterator();
                     while (iterator.hasNext()) {
                         ComponentName componentName = iterator.next();
@@ -448,13 +447,10 @@ public final class PrintManagerService extends IPrintManager.Stub {
                                 if (!doit) {
                                     return true;
                                 }
-                                stoppedSomePackages = true;
-                                break;
+                                userState.updateIfNeededLocked();
+                                return false;
                             }
                         }
-                    }
-                    if (stoppedSomePackages) {
-                        userState.updateIfNeededLocked();
                     }
                     return false;
                 }
@@ -540,13 +536,8 @@ public final class PrintManagerService extends IPrintManager.Stub {
                 return;
             }
             mCurrentUserId = newUserId;
-            userState = mUserStates.get(mCurrentUserId);
-            if (userState == null) {
-                userState = getCurrentUserStateLocked();
-                userState.updateIfNeededLocked();
-            } else {
-                userState.updateIfNeededLocked();
-            }
+            userState = getCurrentUserStateLocked();
+            userState.updateIfNeededLocked();
         }
         // This is the first time we switch to this user after boot, so
         // now is the time to remove obsolete print jobs since they
