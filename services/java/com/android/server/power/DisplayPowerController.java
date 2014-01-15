@@ -731,8 +731,13 @@ final class DisplayPowerController {
         // Report whether the display is ready for use.
         // We mostly care about the screen state here, ignoring brightness changes
         // which will be handled asynchronously.
+
+        //if press onkey very quick to resume, then suspend, unBlockScreen will not be called to
+        //set mScreenOnWasBlocked to false, then sendOnStateChangedWithWakelock cannot be called,
+        //mDisplaySuspendBlocker cannot be released, system fails to enter suspend
+        //if screen is going to turn off, don't check mScreenOnWasBlocked
         if (mustNotify
-                && !mScreenOnWasBlocked
+                && && (!mScreenOnWasBlocked || !wantScreenOn(mPowerRequest.screenState))
                 && !mElectronBeamOnAnimator.isStarted()
                 && !mElectronBeamOffAnimator.isStarted()
                 && mPowerState.waitUntilClean(mCleanListener)) {

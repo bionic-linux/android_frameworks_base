@@ -303,10 +303,14 @@ final class DisplayPowerState {
             mScreenUpdatePending = false;
 
             int brightness = mScreenOn && mElectronBeamLevel > 0f ? mScreenBrightness : 0;
-            if (mPhotonicModulator.setState(mScreenOn, brightness)) {
-                mScreenReady = true;
-                invokeCleanListenerIfNeeded();
-            }
+
+            //if press onkey very quick to resume, then suspend, setScreenOn will set
+            //mScreenOn to true, then false before screenUpdateRunnable is run.
+            //When the runnable runs, it finds mScreenOn still false, then here
+            //mScreenReady cannot be set to true, waitUntilClean always returns false
+            //mDisplaySuspendBlocker not released, system fails to enter suspend
+            mScreenReady = true;
+            invokeCleanListenerIfNeeded();
         }
     };
 
