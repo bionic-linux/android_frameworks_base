@@ -28,6 +28,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -206,6 +207,7 @@ public class NavigationBarView extends LinearLayout {
         mVertical = false;
         mShowMenu = false;
         mDelegateHelper = new DelegateViewHelper(this);
+        mDelegateHelper.setSwapXY(res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
 
         getIcons(res);
 
@@ -519,6 +521,12 @@ public class NavigationBarView extends LinearLayout {
 
         if (DEBUG) {
             Log.d(TAG, "reorient(): rot=" + mDisplay.getRotation());
+        }
+
+        // swap to x coordinate if orientation is in landscape
+        if (mDelegateHelper != null) {
+            mDelegateHelper.setSwapXY(mContext.getResources().getConfiguration().orientation
+                    == Configuration.ORIENTATION_LANDSCAPE);
         }
 
         setNavigationIconHints(mNavigationIconHints, true);
