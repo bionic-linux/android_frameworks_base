@@ -37,7 +37,7 @@ import java.nio.ShortBuffer;
  * @hide
  */
 public final class LargeBitmap {
-    private int mNativeLargeBitmap;
+    private long mNativeLargeBitmap;
     private boolean mRecycled;
 
     /*  Private constructor that must received an already allocated native
@@ -45,7 +45,7 @@ public final class LargeBitmap {
 
         This can be called from JNI code.
     */
-    private LargeBitmap(int lbm) {
+    private LargeBitmap(long lbm) {
         mNativeLargeBitmap = lbm;
         mRecycled = false;
     }
@@ -119,10 +119,10 @@ public final class LargeBitmap {
         recycle();
     }
 
-    private static native Bitmap nativeDecodeRegion(int lbm,
+    private static native Bitmap nativeDecodeRegion(long lbm,
             int start_x, int start_y, int width, int height,
             BitmapFactory.Options options);
-    private static native int nativeGetWidth(int lbm);
-    private static native int nativeGetHeight(int lbm);
-    private static native void nativeClean(int lbm);
+    private static native int nativeGetWidth(long lbm);
+    private static native int nativeGetHeight(long lbm);
+    private static native void nativeClean(long lbm);
 }
