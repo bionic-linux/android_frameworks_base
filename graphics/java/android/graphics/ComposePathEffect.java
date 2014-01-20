@@ -27,6 +27,6 @@ public class ComposePathEffect extends PathEffect {
                                        innerpe.native_instance);
     }
     
-    private static native int nativeCreate(int outerpe, int innerpe);
+    private static native long nativeCreate(long outerpe, long innerpe);
 }
 
