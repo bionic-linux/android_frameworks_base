@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "728d36f2_205f6a61",
+        "filename": "core/java/android/animation/PropertyValuesHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-21T12:22:23Z",
+      "side": 1,
+      "message": "Could you please fix up the name of this variable ? Just call it \"jniSetter\" (without the \"m\" since it isn\u0027t a field, and without the \"Long\" because the suffix doesn\u0027t add any value)",
+      "revId": "0db5e377fc9d5c0654b9e8db5ef5a09f402b2c46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32973e04_c1f244b5",
+        "filename": "core/java/android/animation/PropertyValuesHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-21T12:22:23Z",
+      "side": 1,
+      "message": "Why are methoIDs long ?",
+      "revId": "0db5e377fc9d5c0654b9e8db5ef5a09f402b2c46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
