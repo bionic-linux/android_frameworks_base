@@ -69,6 +69,24 @@
       "revId": "0db5e377fc9d5c0654b9e8db5ef5a09f402b2c46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5292f212_3f6d4718",
+        "filename": "core/java/android/animation/PropertyValuesHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-21T15:38:35Z",
+      "side": 1,
+      "message": "You\u0027re right - sorry about that.",
+      "parentUuid": "728d36f2_231d344f",
+      "revId": "0db5e377fc9d5c0654b9e8db5ef5a09f402b2c46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
