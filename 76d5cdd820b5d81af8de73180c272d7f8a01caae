@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23206f0_12350c59",
+        "filename": "core/java/android/nfc/tech/Ndef.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2014-01-21T17:21:41Z",
+      "side": 0,
+      "message": "wouldn\u0027t the same exception be thrown here? Or are you seeing tagService.ndefRead() returns a cached message?",
+      "revId": "76d5cdd820b5d81af8de73180c272d7f8a01caae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
