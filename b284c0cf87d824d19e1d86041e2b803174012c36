@@ -34,6 +34,24 @@
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_3ff92769",
+        "filename": "services/java/com/android/server/AssetAtlasService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T15:04:06Z",
+      "side": 1,
+      "message": "Planning to add the comment above the changed line.  // TODO: Change mAtlasMap to long[] to support 64-bit systems. Let me know if you are okay with the change.",
+      "parentUuid": "12407a74_3d9e4f56",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
