@@ -2,6 +2,190 @@
   "comments": [
     {
       "key": {
+        "uuid": "523e72eb_7f30cf69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2014-01-23T16:19:23Z",
+      "side": 1,
+      "message": "I don\u0027t know much about JNI to know whether it is possible but it seems as though in the C++ code we should have a typedef to differentiate between jlong being used for passing numeric data and jlong being used for passing reference to a native object. e.g. replace the latter with jnativeref or something, where jnativeref is:\n    typedef jlong jnativeref;\nIt doesn\u0027t add anything to the work that is being done but it does make it a lot easier to see how it is being used.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_bebed993",
+        "filename": "core/jni/android/graphics/Canvas.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2014-01-23T16:19:23Z",
+      "side": 1,
+      "message": "Could you use a static_cast here?",
+      "range": {
+        "startLine": 1094,
+        "startChar": 35,
+        "endLine": 1094,
+        "endChar": 44
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_df0abba7",
+        "filename": "core/jni/android/graphics/Matrix.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2014-01-23T16:19:23Z",
+      "side": 1,
+      "message": "As per previous comment can\u0027t this be static_cast\u003cjboolean\u003e",
+      "range": {
+        "startLine": 288,
+        "startChar": 15,
+        "endLine": 288,
+        "endChar": 21
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12407a74_1dfef350",
+        "filename": "core/jni/android/graphics/NinePatch.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2014-01-23T16:19:23Z",
+      "side": 1,
+      "message": "static_cast\u003cjboolean\u003e",
+      "range": {
+        "startLine": 59,
+        "startChar": 45,
+        "endLine": 59,
+        "endChar": 53
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_7e03b1a0",
+        "filename": "graphics/java/android/graphics/AvoidXfermode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2014-01-23T16:19:23Z",
+      "side": 1,
+      "message": "formatting",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 43
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_9ee95d94",
+        "filename": "graphics/java/android/graphics/Canvas.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2014-01-23T16:19:23Z",
+      "side": 1,
+      "message": "trailing whitespace - highlighted by review pretty printer",
+      "range": {
+        "startLine": 1845,
+        "startChar": 67,
+        "endLine": 1845,
+        "endChar": 68
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_5f350b58",
+        "filename": "graphics/java/android/graphics/Typeface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2014-01-23T16:19:23Z",
+      "side": 1,
+      "message": "This should be LongSparseArray\u003cSparseArray\u003cTypeface\u003e as the inner array is still being indexed by an int.",
+      "range": {
+        "startLine": 48,
+        "startChar": 41,
+        "endLine": 48,
+        "endChar": 56
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_1e254d39",
+        "filename": "graphics/java/android/graphics/Typeface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2014-01-23T16:19:23Z",
+      "side": 1,
+      "message": "No need to make this a LongSparseArray, it is still being indexed by an int.",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "523e72eb_9f5cb3e1",
         "filename": "services/java/com/android/server/AssetAtlasService.java",
         "patchSetId": 1
