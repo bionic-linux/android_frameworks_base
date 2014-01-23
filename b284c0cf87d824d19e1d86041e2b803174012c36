@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "523e72eb_9f5cb3e1",
+        "filename": "services/java/com/android/server/AssetAtlasService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-23T14:22:32Z",
+      "side": 1,
+      "message": "If you\u0027re changing atlasMap in a separate patch, then please leave a TODO here.",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
