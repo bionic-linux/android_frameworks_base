@@ -165,6 +165,24 @@
     },
     {
       "key": {
+        "uuid": "12407a74_7d30d769",
+        "filename": "graphics/java/android/graphics/AvoidXfermode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T16:49:00Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "3243be82_7e03b1a0",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_9ee95d94",
         "filename": "graphics/java/android/graphics/Canvas.java",
         "patchSetId": 1
@@ -182,6 +200,24 @@
         "endLine": 1845,
         "endChar": 68
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_df975be8",
+        "filename": "graphics/java/android/graphics/Canvas.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T16:49:00Z",
+      "side": 1,
+      "message": "Will fix",
+      "parentUuid": "3243be82_9ee95d94",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -211,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "523e72eb_3f8487b1",
+        "filename": "graphics/java/android/graphics/Typeface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T16:49:00Z",
+      "side": 1,
+      "message": "Will fix.",
+      "parentUuid": "523e72eb_5f350b58",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_1e254d39",
         "filename": "graphics/java/android/graphics/Typeface.java",
         "patchSetId": 1
@@ -228,6 +282,24 @@
         "endLine": 114,
         "endChar": 23
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12407a74_9d4683dc",
+        "filename": "graphics/java/android/graphics/Typeface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T16:49:00Z",
+      "side": 1,
+      "message": "Will fix.",
+      "parentUuid": "3243be82_1e254d39",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
