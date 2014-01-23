@@ -16,6 +16,24 @@
       "revId": "76d5cdd820b5d81af8de73180c272d7f8a01caae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_5fdceb59",
+        "filename": "core/java/android/nfc/tech/Ndef.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1005450
+      },
+      "writtenOn": "2014-01-23T10:01:47Z",
+      "side": 0,
+      "message": "if tag has left the field, isNdef() will return false, resulting in getNdefMessage() returning null. With patch, TagLostException is thrown.",
+      "parentUuid": "f23206f0_12350c59",
+      "revId": "76d5cdd820b5d81af8de73180c272d7f8a01caae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
