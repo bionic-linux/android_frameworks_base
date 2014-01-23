@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "3243be82_de6e4540",
+        "filename": "core/jni/android/graphics/Paint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Yes, Will fix it.",
+      "parentUuid": "523e72eb_bf9097f4",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_be62596c",
         "filename": "core/jni/android/graphics/PathEffect.cpp",
         "patchSetId": 1
@@ -206,6 +224,24 @@
         "endLine": 15,
         "endChar": 60
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_9fc833eb",
+        "filename": "core/jni/android/graphics/PathEffect.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Will fix",
+      "parentUuid": "3243be82_be62596c",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -235,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "12407a74_dd148b9f",
+        "filename": "core/jni/android/graphics/PathEffect.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Will fix",
+      "parentUuid": "12407a74_1d3b9351",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_9e5f9dac",
         "filename": "core/jni/android/graphics/Region.cpp",
         "patchSetId": 1
@@ -252,6 +306,24 @@
         "endLine": 59,
         "endChar": 28
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_bf9a57e3",
+        "filename": "core/jni/android/graphics/Region.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3243be82_9e5f9dac",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -281,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "3243be82_3ee3e987",
+        "filename": "core/jni/android_view_SurfaceControl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3243be82_9e467ddc",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_de4005c1",
         "filename": "core/jni/android_view_TextureView.cpp",
         "patchSetId": 1
@@ -298,6 +388,24 @@
         "endLine": 68,
         "endChar": 16
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_1ee8ad60",
+        "filename": "core/jni/android_view_TextureView.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Based on my search, it looks like this macro is used in 3 files within frameworks/base. If we decide on a common location, then I could change it, possibly in another patch.",
+      "parentUuid": "3243be82_de4005c1",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -368,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "523e72eb_ffc5ffd0",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "3243be82_5e5eb5b3",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12407a74_3d364f69",
         "filename": "graphics/java/android/graphics/Bitmap.java",
         "patchSetId": 1
@@ -385,6 +511,24 @@
         "endLine": 1617,
         "endChar": 46
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_7eed7170",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12407a74_3d364f69",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -414,6 +558,24 @@
     },
     {
       "key": {
+        "uuid": "3243be82_5ef23552",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Based on my understanding, ni stands for native instance. Other classes too have ni() method. If we want to change the name to something more meaningful,  then I would prefer submitting another patch, once we agree on the new name.",
+      "parentUuid": "523e72eb_1fa26349",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12407a74_dd692b51",
         "filename": "graphics/java/android/graphics/BitmapFactory.java",
         "patchSetId": 1
@@ -437,6 +599,24 @@
     },
     {
       "key": {
+        "uuid": "3243be82_bef6d942",
+        "filename": "graphics/java/android/graphics/BitmapFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12407a74_dd692b51",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_7e59f1c9",
         "filename": "graphics/java/android/graphics/Canvas.java",
         "patchSetId": 1
@@ -454,6 +634,24 @@
         "endLine": 1717,
         "endChar": 67
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_9ef31d53",
+        "filename": "graphics/java/android/graphics/Canvas.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3243be82_7e59f1c9",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -570,6 +768,24 @@
     },
     {
       "key": {
+        "uuid": "523e72eb_dfc2bbc6",
+        "filename": "graphics/java/android/graphics/ComposePathEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12407a74_bd625f6c",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_de0ac5a7",
         "filename": "graphics/java/android/graphics/LargeBitmap.java",
         "patchSetId": 1
@@ -587,6 +803,24 @@
         "endLine": 48,
         "endChar": 32
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_3e0ac97f",
+        "filename": "graphics/java/android/graphics/LargeBitmap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3243be82_de0ac5a7",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -616,6 +850,24 @@
     },
     {
       "key": {
+        "uuid": "523e72eb_9f9793bb",
+        "filename": "graphics/java/android/graphics/LargeBitmap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3243be82_3e4f6901",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "523e72eb_9f4673dc",
         "filename": "graphics/java/android/graphics/LargeBitmap.java",
         "patchSetId": 1
@@ -633,6 +885,24 @@
         "endLine": 125,
         "endChar": 53
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_1e0f0d90",
+        "filename": "graphics/java/android/graphics/LargeBitmap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "523e72eb_9f4673dc",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -662,6 +932,24 @@
     },
     {
       "key": {
+        "uuid": "523e72eb_ffa4df21",
+        "filename": "graphics/java/android/graphics/LargeBitmap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "523e72eb_ff433fca",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_1e542d92",
         "filename": "graphics/java/android/graphics/LargeBitmap.java",
         "patchSetId": 1
@@ -679,6 +967,24 @@
         "endLine": 127,
         "endChar": 51
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_dfa11b10",
+        "filename": "graphics/java/android/graphics/LargeBitmap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3243be82_1e542d92",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -708,6 +1014,24 @@
     },
     {
       "key": {
+        "uuid": "523e72eb_1f8c23b1",
+        "filename": "graphics/java/android/graphics/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3243be82_9e103ddc",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12407a74_1d543392",
         "filename": "graphics/java/android/graphics/Matrix.java",
         "patchSetId": 1
@@ -725,6 +1049,24 @@
         "endLine": 847,
         "endChar": 68
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3243be82_defda51f",
+        "filename": "graphics/java/android/graphics/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12407a74_1d543392",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -754,6 +1096,24 @@
     },
     {
       "key": {
+        "uuid": "3243be82_fe006161",
+        "filename": "graphics/java/android/graphics/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3243be82_fe0d01c2",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12407a74_7d59f7c9",
         "filename": "graphics/java/android/graphics/Matrix.java",
         "patchSetId": 1
@@ -771,6 +1131,24 @@
         "endLine": 868,
         "endChar": 80
       },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_3f876790",
+        "filename": "graphics/java/android/graphics/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12407a74_7d59f7c9",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -853,6 +1231,23 @@
       "side": 1,
       "message": "Will fix.",
       "parentUuid": "3243be82_1e254d39",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12407a74_7dbbb757",
+        "filename": "graphics/java/android/graphics/Typeface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T20:15:58Z",
+      "side": 1,
+      "message": "Will change this to SparseArray as well.",
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
