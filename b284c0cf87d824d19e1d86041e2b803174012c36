@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "523e72eb_df40fbc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-23T16:32:37Z",
+      "side": 1,
+      "message": "That\u0027s certainly a good idea, but for it to work seamlessly, it needs support on the JLS side.",
+      "parentUuid": "523e72eb_7f30cf69",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_bebed993",
         "filename": "core/jni/android/graphics/Canvas.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2014-01-23T16:19:23Z",
       "side": 1,
       "message": "Could you use a static_cast here?",
+      "range": {
+        "startLine": 1094,
+        "startChar": 35,
+        "endLine": 1094,
+        "endChar": 44
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_7fa72f59",
+        "filename": "core/jni/android/graphics/Canvas.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-23T16:32:37Z",
+      "side": 1,
+      "message": "That isn\u0027t guaranteed to work :( . JNI_TRUE / JNI_FALSE are allowed to differ from true / false.\n\n(In theory, the compiler could translate between the two - but then the compiler needs to know about the JNI specification in use, which seems like a weird dependency)",
+      "parentUuid": "3243be82_bebed993",
       "range": {
         "startLine": 1094,
         "startChar": 35,
