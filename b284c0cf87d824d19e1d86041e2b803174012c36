@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "523e72eb_df6e3b40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1037216
+      },
+      "writtenOn": "2014-01-23T17:05:05Z",
+      "side": 1,
+      "message": "It\u0027s an interesting idea. There isn\u0027t a type in the language/VM that would match it though.\nIf we used C++, I might suggest using something like:\n JNIFunction(...   jnativeref\u003cNativeStructure*\u003e parameter)\n\nNativeStructure *native(parameter);\n\nto help clarify things.",
+      "parentUuid": "523e72eb_df40fbc0",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3243be82_bebed993",
         "filename": "core/jni/android/graphics/Canvas.cpp",
         "patchSetId": 1
