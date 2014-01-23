@@ -16,6 +16,24 @@
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12407a74_3d9e4f56",
+        "filename": "services/java/com/android/server/AssetAtlasService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-23T14:26:31Z",
+      "side": 1,
+      "message": "Will submit changed patch with a TODO here.",
+      "parentUuid": "523e72eb_9f5cb3e1",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
