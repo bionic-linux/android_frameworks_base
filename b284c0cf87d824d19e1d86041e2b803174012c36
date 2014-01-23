@@ -52,6 +52,24 @@
       "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "523e72eb_7f03afa0",
+        "filename": "services/java/com/android/server/AssetAtlasService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-23T15:04:57Z",
+      "side": 1,
+      "message": "Yes, that\u0027s fine.",
+      "parentUuid": "523e72eb_3ff92769",
+      "revId": "b284c0cf87d824d19e1d86041e2b803174012c36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
