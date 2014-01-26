@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d536ff_c0403e53",
+        "filename": "telephony/java/android/telephony/MSimTelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-01-26T18:37:43Z",
+      "side": 1,
+      "message": "this to be removed?",
+      "revId": "7bb3c450e9b1a0503cfdc4f52a99f0249dd27340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92d0ea10_41843249",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-01-26T18:37:43Z",
+      "side": 1,
+      "message": "Not require to be overloaded.",
+      "revId": "7bb3c450e9b1a0503cfdc4f52a99f0249dd27340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
