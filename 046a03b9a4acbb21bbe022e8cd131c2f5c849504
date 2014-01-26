@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92b9cada_59fc23df",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1004552
+      },
+      "writtenOn": "2014-01-26T17:00:11Z",
+      "side": 1,
+      "message": "notifyDataActivity also to be overloaded with sub?",
+      "revId": "046a03b9a4acbb21bbe022e8cd131c2f5c849504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
