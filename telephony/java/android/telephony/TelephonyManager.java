@@ -24,6 +24,8 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.telephony.Rlog;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 
 import com.android.internal.telephony.IPhoneSubInfo;
 import com.android.internal.telephony.ITelephony;
@@ -244,13 +246,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getDeviceId() {
-        try {
-            return getSubscriberInfo().getDeviceId();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return getDeviceId(getDefaultSubscription());
     }
 
     /**
@@ -359,23 +355,7 @@ public class TelephonyManager {
      * {@hide}
      */
     public int getCurrentPhoneType() {
-        try{
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                return telephony.getActivePhoneType();
-            } else {
-                // This can happen when the ITelephony interface is not up yet.
-                return getPhoneTypeFromProperty();
-            }
-        } catch (RemoteException ex) {
-            // This shouldn't happen in the normal case, as a backup we
-            // read from the system property.
-            return getPhoneTypeFromProperty();
-        } catch (NullPointerException ex) {
-            // This shouldn't happen in the normal case, as a backup we
-            // read from the system property.
-            return getPhoneTypeFromProperty();
-        }
+        return getCurrentPhoneType(getDefaultSubscription());
     }
 
     /**
@@ -388,27 +368,15 @@ public class TelephonyManager {
      * @see #PHONE_TYPE_SIP
      */
     public int getPhoneType() {
-        if (!isVoiceCapable()) {
-            return PHONE_TYPE_NONE;
-        }
-        return getCurrentPhoneType();
+        return getPhoneType(getDefaultSubscription());
     }
 
     private int getPhoneTypeFromProperty() {
-        int type =
-            SystemProperties.getInt(TelephonyProperties.CURRENT_ACTIVE_PHONE,
-                    getPhoneTypeFromNetworkType());
-        return type;
+        return getPhoneTypeFromProperty(getDefaultSubscription());
     }
 
     private int getPhoneTypeFromNetworkType() {
-        // When the system property CURRENT_ACTIVE_PHONE, has not been set,
-        // use the system property for default network type.
-        // This is a fail safe, and can only happen at first boot.
-        int mode = SystemProperties.getInt("ro.telephony.default_network", -1);
-        if (mode == -1)
-            return PHONE_TYPE_NONE;
-        return getPhoneType(mode);
+        return getPhoneTypeFromNetworkType(getDefaultSubscription());
     }
 
     /**
@@ -543,7 +511,7 @@ public class TelephonyManager {
      * on a CDMA network).
      */
     public String getNetworkOperatorName() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_ALPHA);
+        return getNetworkOperatorName(getDefaultSubscription());
     }
 
     /**
@@ -554,7 +522,7 @@ public class TelephonyManager {
      * on a CDMA network).
      */
     public String getNetworkOperator() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_NUMERIC);
+        return getNetworkOperator(getDefaultSubscription());
     }
 
     /**
@@ -564,7 +532,7 @@ public class TelephonyManager {
      * Availability: Only when user registered to a network.
      */
     public boolean isNetworkRoaming() {
-        return "true".equals(SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_ISROAMING));
+        return isNetworkRoaming(getDefaultSubscription());
     }
 
     /**
@@ -576,7 +544,38 @@ public class TelephonyManager {
      * on a CDMA network).
      */
     public String getNetworkCountryIso() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY);
+        return getNetworkCountryIso(getDefaultSubscription());
+    }
+
+    /**
+     * Returns Default subscription.
+     * Returns default value 0, if default subscription is not available
+     */
+    public int getDefaultSubscription() {
+        try {
+            return getITelephony().getDefaultSubscription();
+        } catch (RemoteException ex) {
+            return MSimConstants.DEFAULT_SUBSCRIPTION;
+        } catch (NullPointerException ex) {
+            return MSimConstants.DEFAULT_SUBSCRIPTION;
+        }
+    }
+
+    /**
+     * Gets the telephony property.
+     *
+     * @hide
+     */
+    public static String getTelephonyProperty(String property, int index, String defaultVal) {
+        String propVal = null;
+        String prop = SystemProperties.get(property);
+         if ((prop != null) && (prop.length() > 0)) {
+            String values[] = prop.split(",");
+            if ((index >= 0) && (index < values.length) && (values[index] != null)) {
+                propVal = values[index];
+            }
+        }
+        return propVal == null ? defaultVal : propVal;
     }
 
     /** Network type is unknown */
@@ -616,7 +615,7 @@ public class TelephonyManager {
      * @return the NETWORK_TYPE_xxxx for current data connection.
      */
     public int getNetworkType() {
-        return getDataNetworkType();
+        return getNetworkType(getDefaultSubscription());
     }
 
     /**
@@ -644,21 +643,7 @@ public class TelephonyManager {
      * @hide
      */
     public int getDataNetworkType() {
-        try{
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                return telephony.getDataNetworkType();
-            } else {
-                // This can happen when the ITelephony interface is not up yet.
-                return NETWORK_TYPE_UNKNOWN;
-            }
-        } catch(RemoteException ex) {
-            // This shouldn't happen in the normal case
-            return NETWORK_TYPE_UNKNOWN;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return NETWORK_TYPE_UNKNOWN;
-        }
+          return getDataNetworkType(getDefaultSubscription());
     }
 
     /**
@@ -667,21 +652,7 @@ public class TelephonyManager {
      * @hide
      */
     public int getVoiceNetworkType() {
-        try{
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                return telephony.getVoiceNetworkType();
-            } else {
-                // This can happen when the ITelephony interface is not up yet.
-                return NETWORK_TYPE_UNKNOWN;
-            }
-        } catch(RemoteException ex) {
-            // This shouldn't happen in the normal case
-            return NETWORK_TYPE_UNKNOWN;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return NETWORK_TYPE_UNKNOWN;
-        }
+         return getVoiceNetworkType(getDefaultSubscription());
     }
 
     /** Unknown network class. {@hide} */
@@ -799,15 +770,7 @@ public class TelephonyManager {
      * @return true if a ICC card is present
      */
     public boolean hasIccCard() {
-        try {
-            return getITelephony().hasIccCard();
-        } catch (RemoteException ex) {
-            // Assume no ICC card if remote exception which shouldn't happen
-            return false;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return false;
-        }
+        return hasIccCard(getDefaultSubscription());
     }
 
     /**
@@ -822,25 +785,7 @@ public class TelephonyManager {
      * @see #SIM_STATE_READY
      */
     public int getSimState() {
-        String prop = SystemProperties.get(TelephonyProperties.PROPERTY_SIM_STATE);
-        if ("ABSENT".equals(prop)) {
-            return SIM_STATE_ABSENT;
-        }
-        else if ("PIN_REQUIRED".equals(prop)) {
-            return SIM_STATE_PIN_REQUIRED;
-        }
-        else if ("PUK_REQUIRED".equals(prop)) {
-            return SIM_STATE_PUK_REQUIRED;
-        }
-        else if ("NETWORK_LOCKED".equals(prop)) {
-            return SIM_STATE_NETWORK_LOCKED;
-        }
-        else if ("READY".equals(prop)) {
-            return SIM_STATE_READY;
-        }
-        else {
-            return SIM_STATE_UNKNOWN;
-        }
+        return getSimState(getDefaultSubscription());
     }
 
     /**
@@ -852,7 +797,7 @@ public class TelephonyManager {
      * @see #getSimState
      */
     public String getSimOperator() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC);
+        return getSimOperator(getDefaultSubscription());
     }
 
     /**
@@ -863,14 +808,14 @@ public class TelephonyManager {
      * @see #getSimState
      */
     public String getSimOperatorName() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA);
+        return getSimOperatorName(getDefaultSubscription());
     }
 
     /**
      * Returns the ISO country code equivalent for the SIM provider's country code.
      */
     public String getSimCountryIso() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY);
+        return getSimCountryIso(getDefaultSubscription());
     }
 
     /**
@@ -881,14 +826,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getSimSerialNumber() {
-        try {
-            return getSubscriberInfo().getIccSerialNumber();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return null;
-        }
+        return getSimSerialNumber(getDefaultSubscription());
     }
 
     /**
@@ -902,15 +840,7 @@ public class TelephonyManager {
      * @hide
      */
     public int getLteOnCdmaMode() {
-        try {
-            return getITelephony().getLteOnCdmaMode();
-        } catch (RemoteException ex) {
-            // Assume no ICC card if remote exception which shouldn't happen
-            return PhoneConstants.LTE_ON_CDMA_UNKNOWN;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return PhoneConstants.LTE_ON_CDMA_UNKNOWN;
-        }
+        return getLteOnCdmaMode(getDefaultSubscription());
     }
 
     //
@@ -927,14 +857,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getSubscriberId() {
-        try {
-            return getSubscriberInfo().getSubscriberId();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return null;
-        }
+        return getSubscriberId(getDefaultSubscription());
     }
 
     /**
@@ -963,14 +886,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getLine1Number() {
-        try {
-            return getSubscriberInfo().getLine1Number();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return null;
-        }
+        return getLine1Number(getDefaultSubscription());
     }
 
     /**
@@ -983,14 +899,7 @@ public class TelephonyManager {
      * nobody seems to call this.
      */
     public String getLine1AlphaTag() {
-        try {
-            return getSubscriberInfo().getLine1AlphaTag();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return null;
-        }
+        return getLine1AlphaTag(getDefaultSubscription());
     }
 
     /**
@@ -1003,14 +912,7 @@ public class TelephonyManager {
      * @hide
      */
     public String getMsisdn() {
-        try {
-            return getSubscriberInfo().getMsisdn();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return null;
-        }
+        return getMsisdn(getDefaultSubscription());
     }
 
     /**
@@ -1020,14 +922,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getVoiceMailNumber() {
-        try {
-            return getSubscriberInfo().getVoiceMailNumber();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return null;
-        }
+        return getVoiceMailNumber(getDefaultSubscription());
     }
 
     /**
@@ -1039,14 +934,7 @@ public class TelephonyManager {
      * @hide
      */
     public String getCompleteVoiceMailNumber() {
-        try {
-            return getSubscriberInfo().getCompleteVoiceMailNumber();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return null;
-        }
+        return getCompleteVoiceMailNumber(getDefaultSubscription());
     }
 
     /**
@@ -1057,14 +945,7 @@ public class TelephonyManager {
      * @hide
      */
     public int getVoiceMessageCount() {
-        try {
-            return getITelephony().getVoiceMessageCount();
-        } catch (RemoteException ex) {
-            return 0;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return 0;
-        }
+        return getVoiceMessageCount(getDefaultSubscription());
     }
 
     /**
@@ -1075,14 +956,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getVoiceMailAlphaTag() {
-        try {
-            return getSubscriberInfo().getVoiceMailAlphaTag();
-        } catch (RemoteException ex) {
-            return null;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
-            return null;
-        }
+        return getVoiceMailAlphaTag(getDefaultSubscription());
     }
 
     /**
@@ -1134,7 +1008,7 @@ public class TelephonyManager {
         }
     }
 
-    private IPhoneSubInfo getSubscriberInfo() {
+    protected IPhoneSubInfo getSubscriberInfo() {
         // get it each time because that process crashes a lot
         return IPhoneSubInfo.Stub.asInterface(ServiceManager.getService("iphonesubinfo"));
     }
@@ -1155,15 +1029,7 @@ public class TelephonyManager {
      * Returns a constant indicating the call state (cellular) on the device.
      */
     public int getCallState() {
-        try {
-            return getITelephony().getCallState();
-        } catch (RemoteException ex) {
-            // the phone process is restarting.
-            return CALL_STATE_IDLE;
-        } catch (NullPointerException ex) {
-          // the phone process is restarting.
-          return CALL_STATE_IDLE;
-      }
+        return getCallState(getDefaultSubscription());
     }
 
     /** Data connection activity: No traffic. */
@@ -1237,7 +1103,7 @@ public class TelephonyManager {
         }
     }
 
-    private ITelephony getITelephony() {
+    protected ITelephony getITelephony() {
         return ITelephony.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_SERVICE));
     }
 
@@ -1273,8 +1139,9 @@ public class TelephonyManager {
     public void listen(PhoneStateListener listener, int events) {
         String pkgForDebug = mContext != null ? mContext.getPackageName() : "<unknown>";
         try {
-            Boolean notifyNow = true;
-            sRegistry.listen(pkgForDebug, listener.callback, events, notifyNow);
+            Boolean notifyNow = (getITelephony() != null);
+            sRegistry.listenOnSubscription(pkgForDebug, listener.callback, events, notifyNow,
+                                       listener.mSubscription);
         } catch (RemoteException ex) {
             // system process dead
         } catch (NullPointerException ex) {
@@ -1288,14 +1155,7 @@ public class TelephonyManager {
      * @hide
      */
     public int getCdmaEriIconIndex() {
-        try {
-            return getITelephony().getCdmaEriIconIndex();
-        } catch (RemoteException ex) {
-            // the phone process is restarting.
-            return -1;
-        } catch (NullPointerException ex) {
-            return -1;
-        }
+        return getCdmaEriIconIndex(getDefaultSubscription());
     }
 
     /**
@@ -1306,14 +1166,7 @@ public class TelephonyManager {
      * @hide
      */
     public int getCdmaEriIconMode() {
-        try {
-            return getITelephony().getCdmaEriIconMode();
-        } catch (RemoteException ex) {
-            // the phone process is restarting.
-            return -1;
-        } catch (NullPointerException ex) {
-            return -1;
-        }
+        return getCdmaEriIconMode(getDefaultSubscription());
     }
 
     /**
@@ -1322,14 +1175,7 @@ public class TelephonyManager {
      * @hide
      */
     public String getCdmaEriText() {
-        try {
-            return getITelephony().getCdmaEriText();
-        } catch (RemoteException ex) {
-            // the phone process is restarting.
-            return null;
-        } catch (NullPointerException ex) {
-            return null;
-        }
+        return getCdmaEriText(getDefaultSubscription());
     }
 
     /**
@@ -1439,4 +1285,5 @@ public class TelephonyManager {
         return mContext.getResources().getString(
                 com.android.internal.R.string.config_mms_user_agent_profile_url);
     }
+
 }
