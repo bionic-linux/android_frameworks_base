@@ -27,18 +27,30 @@ import com.android.internal.telephony.IPhoneStateListener;
 
 interface ITelephonyRegistry {
     void listen(String pkg, IPhoneStateListener callback, int events, boolean notifyNow);
-
+    void listen(String pkg, IPhoneStateListener callback, int events, boolean notifyNow,
+            int subscription);
     void notifyCallState(int state, String incomingNumber);
+    void notifyCallState(int state, String incomingNumber, in int subscription);
     void notifyServiceState(in ServiceState state);
+    void notifyServiceState(in ServiceState state, in int subscription);
     void notifySignalStrength(in SignalStrength signalStrength);
+    void notifySignalStrength(in SignalStrength signalStrength, in int subscription);
     void notifyMessageWaitingChanged(boolean mwi);
+    void notifyMessageWaitingChanged(boolean mwi, in int subscription);
     void notifyCallForwardingChanged(boolean cfi);
+    void notifyCallForwardingChanged(boolean cfi, in int subscription);
     void notifyDataActivity(int state);
     void notifyDataConnection(int state, boolean isDataConnectivityPossible,
             String reason, String apn, String apnType, in LinkProperties linkProperties,
             in LinkCapabilities linkCapabilities, int networkType, boolean roaming);
+    void notifyDataConnection(int state, boolean isDataConnectivityPossible,
+            String reason, String apn, String apnType, in LinkProperties linkProperties,
+            in LinkCapabilities linkCapabilities, int networkType, boolean roaming, int subscription);
     void notifyDataConnectionFailed(String reason, String apnType);
+    void notifyDataConnectionFailed(String reason, String apnType, int subscription);
     void notifyCellLocation(in Bundle cellLocation);
+    void notifyCellLocation(in Bundle cellLocation, in int subscription);
     void notifyOtaspChanged(in int otaspMode);
     void notifyCellInfo(in List<CellInfo> cellInfo);
+    void notifyCellInfo(in List<CellInfo> cellInfo, in int subscription);
 }
