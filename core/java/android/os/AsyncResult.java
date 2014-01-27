@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* This is a test */
+
 package android.os;
 
 import android.os.Message;
