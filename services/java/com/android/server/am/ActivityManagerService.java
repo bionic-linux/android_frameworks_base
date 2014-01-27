@@ -3788,7 +3788,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         try {
             File tracesDir = tracesFile.getParentFile();
             if (!tracesDir.exists()) {
-                tracesFile.mkdirs();
+                tracesDir.mkdirs();
                 if (!SELinux.restorecon(tracesDir)) {
                     return null;
                 }
@@ -3898,7 +3898,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             final File tracesTmp = new File(tracesDir, "__tmp__");
             try {
                 if (!tracesDir.exists()) {
-                    tracesFile.mkdirs();
+                    tracesDir.mkdirs();
                     if (!SELinux.restorecon(tracesDir.getPath())) {
                         return;
                     }
