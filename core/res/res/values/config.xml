@@ -1304,4 +1304,12 @@
         <item>333</item>
         <item>353</item>
     </string-array>
+
+    <!-- short code exception list.
+         Some carrier can define which number should not be one short code,
+         and list it here so that it will be treated as non-short code, such
+         as 112 for Carrier USC and Sprint, so it can pass CTS test
+         android.telephony.cts.SmsUsageMonitorShortCodeTest#testSmsUsageMonitor -->
+    <string-array name="config_sms_short_code_exception_list">
+    </string-array>
 </resources>
