@@ -34,6 +34,8 @@ public class IccCardConstants {
     public static final String INTENT_VALUE_ICC_READY = "READY";
     /* IMSI means ICC IMSI is ready in property */
     public static final String INTENT_VALUE_ICC_IMSI = "IMSI";
+    /* ICCID means ICC ID is ready */
+    public static final String INTENT_VALUE_ICC_ICCID = "ICCID";
     /* LOADED means all ICC records, including IMSI, are loaded */
     public static final String INTENT_VALUE_ICC_LOADED = "LOADED";
     /* The extra data for broacasting intent INTENT_ICC_STATE_CHANGE */

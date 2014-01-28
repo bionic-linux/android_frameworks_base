@@ -17,6 +17,7 @@
 package android.net;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
+import com.android.internal.telephony.PhoneConstants;
 
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
@@ -27,6 +28,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 
 import java.net.InetAddress;
 
@@ -739,13 +741,59 @@ public class ConnectivityManager {
      * always indicates failure.
      */
     public int startUsingNetworkFeature(int networkType, String feature) {
+        return startUsingNetworkFeature(networkType, feature,
+                TelephonyManager.getDefaultSim());
+    }
+
+    /**
+     * Tells the underlying networking system that the caller wants to
+     * begin using the named feature. The interpretation of {@code feature}
+     * is completely up to each networking implementation.
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE}.
+     * @param networkType specifies which network the request pertains to
+     * @param feature the name of the feature to be used
+     * @param simId specifies the SIM card the networking system based on
+     * @return an integer value representing the outcome of the request.
+     * The interpretation of this value is specific to each networking
+     * implementation+feature combination, except that the value {@code -1}
+     * always indicates failure.
+     * @hide
+     */
+    public int startUsingNetworkFeature(int networkType, String feature,
+            int simId) {
         try {
             return mService.startUsingNetworkFeature(networkType, feature,
-                    new Binder());
+                    simId, new Binder());
         } catch (RemoteException e) {
             return -1;
         }
     }
+
+    /**
+     * Tells the underlying networking system that the caller wants to
+     * begin using the named feature. The interpretation of {@code feature}
+     * is completely up to each networking implementation.
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE}.
+     * @param networkType specifies which network the request pertains to
+     * @param feature the name of the feature to be used
+     * @param simId specifies the SIM card the networking system based on
+     * @return an integer value representing the outcome of the request.
+     * The interpretation of this value is specific to each networking
+     * implementation+feature combination, except that the value {@code -1}
+     * always indicates failure.
+     * @hide
+     */
+    public int startUsingNetworkFeature(int networkType, String feature,
+            long subId) {
+        try {
+            return mService.startUsingNetworkFeature(networkType, feature,
+                    subId, new Binder());
+        } catch (RemoteException e) {
+            return -1;
+        }    
+    }    
 
     /**
      * Tells the underlying networking system that the caller is finished
@@ -761,12 +809,59 @@ public class ConnectivityManager {
      * always indicates failure.
      */
     public int stopUsingNetworkFeature(int networkType, String feature) {
+        return stopUsingNetworkFeature(networkType, feature,
+                TelephonyManager.getDefaultSim());
+    }
+
+    /**
+     * Tells the underlying networking system that the caller is finished
+     * using the named feature. The interpretation of {@code feature}
+     * is completely up to each networking implementation.
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE}.
+     * @param networkType specifies which network the request pertains to
+     * @param feature the name of the feature that is no longer needed
+     * @param simId specifies the SIM card the networking system based on
+     * @return an integer value representing the outcome of the request.
+     * The interpretation of this value is specific to each networking
+     * implementation+feature combination, except that the value {@code -1}
+     * always indicates failure.
+     * @hide
+     */
+    public int stopUsingNetworkFeature(int networkType, String feature,
+            int simId) {
         try {
-            return mService.stopUsingNetworkFeature(networkType, feature);
+            return mService.stopUsingNetworkFeature(networkType, feature,
+                    simId);
         } catch (RemoteException e) {
             return -1;
         }
     }
+
+    /**
+     * Tells the underlying networking system that the caller is finished
+     * using the named feature. The interpretation of {@code feature}
+     * is completely up to each networking implementation.
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE}.
+     * @param networkType specifies which network the request pertains to
+     * @param feature the name of the feature that is no longer needed
+     * @param simId specifies the SIM card the networking system based on
+     * @return an integer value representing the outcome of the request.
+     * The interpretation of this value is specific to each networking
+     * implementation+feature combination, except that the value {@code -1}
+     * always indicates failure.
+     * @hide
+     */
+    public int stopUsingNetworkFeature(int networkType, String feature,
+            long subId) {
+        try {
+            return mService.stopUsingNetworkFeature(networkType, feature,
+                    subId);
+        } catch (RemoteException e) {
+            return -1;
+        }    
+    }    
 
     /**
      * Ensure that a network route exists to deliver traffic to the specified
@@ -874,11 +969,44 @@ public class ConnectivityManager {
      * @hide
      */
     public boolean getMobileDataEnabled() {
+        return getMobileDataEnabled(PhoneConstants.SIM_ID_1);
+    }
+
+    /**
+     * Gets the value of the setting for enabling Mobile data.
+     *
+     * @param simId specifies the SIM card the networking system based on
+     * @return Whether mobile data is enabled.
+     *
+     * <p>This method requires the call to hold the permission
+     * {@link android.Manifest.permission#ACCESS_NETWORK_STATE}.
+     * @hide
+     */
+    public boolean getMobileDataEnabled(int simId) {
         try {
-            return mService.getMobileDataEnabled();
+            return mService.getMobileDataEnabled(simId);
         } catch (RemoteException e) {
             return true;
         }
+    }
+
+    /**
+     * Gets the value of the setting for enabling Mobile data.
+     *
+     * @param simId specifies the SIM card the networking system based on
+     * @return Whether mobile data is enabled.
+     *
+     * <p>This method requires the call to hold the permission
+     * {@link android.Manifest.permission#ACCESS_NETWORK_STATE}.
+     * @hide
+     */
+    public boolean getMobileDataEnabled(long subId) {
+        try {
+            return mService.getMobileDataEnabled(subId);
+        } catch (RemoteException e) {
+            return true;
+        }
+
     }
 
     /**
@@ -889,11 +1017,43 @@ public class ConnectivityManager {
      * @hide
      */
     public void setMobileDataEnabled(boolean enabled) {
+        setMobileDataEnabled(enabled, PhoneConstants.SIM_ID_1);
+    }
+
+    /**
+     * Sets the persisted value for enabling/disabling Mobile data.
+     *
+     * @param simId specifies the SIM card the networking system based on
+     * @param enabled Whether the user wants the mobile data connection used
+     *            or not.
+     * @param simId specifies the SIM card the networking system based on.
+                  if enabled is false, simId would be ignored.
+     * @hide
+     */
+    public void setMobileDataEnabled(boolean enabled, int simId) {
         try {
-            mService.setMobileDataEnabled(enabled);
+            mService.setMobileDataEnabled(enabled, simId);
         } catch (RemoteException e) {
         }
     }
+
+    /**
+     * Sets the persisted value for enabling/disabling Mobile data.
+     *
+     * @param simId specifies the SIM card the networking system based on
+     * @param enabled Whether the user wants the mobile data connection used
+     *            or not.
+     * @param simId specifies the SIM card the networking system based on.
+                  if enabled is false, simId would be ignored.
+     * @hide
+     */
+    public void setMobileDataEnabled(boolean enabled, long subId) {
+        try {
+            mService.setMobileDataEnabled(enabled, subId);
+        } catch (RemoteException e) {
+        }        
+    }
+
 
     /**
      * {@hide}

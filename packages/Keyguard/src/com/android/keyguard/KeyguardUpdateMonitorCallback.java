@@ -52,8 +52,9 @@ class KeyguardUpdateMonitorCallback {
      * @param plmn The operator name of the registered network.  May be null if it shouldn't
      *   be displayed.
      * @param spn The service provider name.  May be null if it shouldn't be displayed.
+     * @param simId Which sim card 's spn changed.
      */
-    void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn) { }
+    void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn, int simId) { }
 
     /**
      * Called when the ringer mode changes.
@@ -115,8 +116,9 @@ class KeyguardUpdateMonitorCallback {
     /**
      * Called when the SIM state changes.
      * @param simState
+     * @param simId Which sim card 's spn changed.
      */
-    void onSimStateChanged(IccCardConstants.State simState) { }
+    void onSimStateChanged(IccCardConstants.State simState, int simId) {}
 
     /**
      * Called when a user is removed.
@@ -172,4 +174,15 @@ class KeyguardUpdateMonitorCallback {
      *   {@link WindowManagerPolicy#OFF_BECAUSE_OF_PROX_SENSOR}.
      */
     public void onScreenTurnedOff(int why) { }
+
+    
+    /**
+     * Called when the SubInfo content changed
+     * @param subId the subscription controller record index which is updated
+     * @param column the column name which is updated
+     * @param sValue the new string if the colum value is string
+     * @param iValue the new integer if the colum value is integer
+     */
+    public void onSubInfoContentChanged(long subId, String column, 
+                                String sValue, int iValue) { }
 }

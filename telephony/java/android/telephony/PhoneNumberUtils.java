@@ -39,6 +39,7 @@ import android.util.SparseIntArray;
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY;
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_IDP_STRING;
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY;
+import static com.android.internal.telephony.PhoneConstants.SUB_ID_KEY;
 
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -166,7 +167,13 @@ public class PhoneNumberUtils
         // TODO: We don't check for SecurityException here (requires
         // CALL_PRIVILEGED permission).
         if (scheme.equals("voicemail")) {
-            return TelephonyManager.getDefault().getCompleteVoiceMailNumber();
+            long subId = SubscriptionManager.getDefaultSubId();
+            subId = intent.getLongExtra(SUB_ID_KEY, subId);
+            
+            try {
+               return TelephonyManager.getDefault().getVoiceMailNumber(subId);
+            } catch (Exception e) {
+            }
         }
 
         if (context == null) {
@@ -1833,6 +1840,38 @@ public class PhoneNumberUtils
         try {
             vmNumber = TelephonyManager.getDefault().getVoiceMailNumber();
         } catch (SecurityException ex) {
+            return false;
+        }
+
+        // Strip the separators from the number before comparing it
+        // to the list.
+        number = extractNetworkPortionAlt(number);
+
+        // compare tolerates null so we need to make sure that we
+        // don't return true when both are null.
+        return !TextUtils.isEmpty(number) && compare(number, vmNumber);
+    }
+
+    /**
+     * isVoiceMailNumber: checks a given number against the voicemail
+     *   number provided by the RIL and SIM card. The caller must have
+     *   the READ_PHONE_STATE credential.
+     *
+     * @param number the number to look up.
+     * @param simId the SIM card ID.
+     * @return true if the number is in the list of voicemail. False
+     * otherwise, including if the caller does not have the permission
+     * to read the VM number.
+     * @hide TODO: pending API Council approval
+     */
+    public static boolean isVoiceMailNumber(String number, long subId) {
+        String vmNumber;
+
+        log("number " + number + " subId: " + subId);
+
+        try {
+            vmNumber = TelephonyManager.getDefault().getVoiceMailNumber(subId);
+        } catch (Exception ex) {
             return false;
         }
 
