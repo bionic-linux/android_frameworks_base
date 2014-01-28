@@ -262,6 +262,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
     DisplayMetrics mDisplayMetrics = new DisplayMetrics();
 
+    private boolean mPhoneInUse = false;	// Shower add.  20130725
+    private static final String PHONE = "com.android.dialer";
+
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
         ? new GestureRecorder("/sdcard/statusbar_gestures.dat")
@@ -937,7 +940,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             }
         } else {
             // usual case: status bar visible & not immersive
-
+	    // Shower add status bar highlight.  20130202
+        	if(!mPhoneInUse){	// Dont set color if phone is highlighting.
+        		mStatusBarContents.setBackgroundColor(notification.getNotification().ledARGB);
+        	}
+        	if(notification.getPackageName().equals(PHONE)){	
+            	mPhoneInUse = true;	// Phone notification is set
+            }
+            // end
             // show the ticker if there isn't already a heads up
             if (mInterruptingNotificationEntry == null) {
                 tick(null, notification, true);
@@ -961,6 +971,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     public void removeNotification(IBinder key) {
         StatusBarNotification old = removeNotificationViews(key);
         if (SPEW) Log.d(TAG, "removeNotification key=" + key + " old=" + old);
+        
+	if(old.getPackageName().equals(PHONE)){	// Clear phone notification
+        	mPhoneInUse = false;
+        }
+	
+	// Shower add for status bar highlight.  20130202
+        if(!mPhoneInUse){	// Dont clear phone notification color
+        	mStatusBarContents.setBackgroundColor(0);
+        }
 
         if (old != null) {
             // Cancel the ticker if it's still running
