@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2f7c297_20411079",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1032328
+      },
+      "writtenOn": "2014-01-28T05:56:46Z",
+      "side": 1,
+      "message": "it should be ACQUIRE_MAX_IMAGES.",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 29
+      },
+      "revId": "fa67271d07104d4db67494feefd5958b425df421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2fa0681_b640a551",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1032328
+      },
+      "writtenOn": "2014-01-28T05:56:46Z",
+      "side": 1,
+      "message": "add a space before \"The\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "fa67271d07104d4db67494feefd5958b425df421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
