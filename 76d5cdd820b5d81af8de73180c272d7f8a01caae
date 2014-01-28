@@ -34,6 +34,41 @@
       "revId": "76d5cdd820b5d81af8de73180c272d7f8a01caae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12eebac6_a21a24ca",
+        "filename": "core/java/android/nfc/tech/Ndef.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2014-01-28T01:25:35Z",
+      "side": 0,
+      "message": "Ah okay. In that case, I think it makes more sense to keep the original code and add this code to the else branch of .isNdef() (also see below).\n\nif (!tagService.isPresent(serviceHandle))\n    throw new TagLostException();\nelse\n    return null;\n\nBecause with the patch as proposed, there is stil a possible race condition: even after you check that the tag is still present, the tag could be removed right after that and you could return a null message without throwing a tag lost exception. The only safe way is to check for presence after either isNdef returns false or ndefRead returns null.",
+      "parentUuid": "523e72eb_5fdceb59",
+      "revId": "76d5cdd820b5d81af8de73180c272d7f8a01caae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2f7c297_e5a1da0f",
+        "filename": "core/java/android/nfc/tech/Ndef.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2014-01-28T01:25:35Z",
+      "side": 0,
+      "message": "if (!tagService.isPresent(serviceHandle))\n    throw new TagLostException();\nelse\n    return null;",
+      "revId": "76d5cdd820b5d81af8de73180c272d7f8a01caae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
