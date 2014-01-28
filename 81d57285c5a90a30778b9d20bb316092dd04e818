@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b226cef6_f0c518d1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2014-01-28T15:26:35Z",
+      "side": 1,
+      "message": "This is not needed, reorient is called during init.",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 23
+      },
+      "revId": "81d57285c5a90a30778b9d20bb316092dd04e818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7220d6de_d1f576f6",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2014-01-28T15:26:35Z",
+      "side": 1,
+      "message": "Please use mVertical as the indicator instead.",
+      "range": {
+        "startLine": 528,
+        "startChar": 12,
+        "endLine": 528,
+        "endChar": 27
+      },
+      "revId": "81d57285c5a90a30778b9d20bb316092dd04e818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
