@@ -122,6 +122,8 @@ class MountService extends IMountService.Stub
 
     private static final String VOLD_TAG = "VoldConnector";
 
+    private static final int FORMAT_TIMEOUT = 2 * 60 * 1000; /* 2 minutes */
+
     /** Maximum number of ASEC containers allowed to be mounted. */
     private static final int MAX_CONTAINERS = 250;
 
@@ -1102,7 +1104,7 @@ class MountService extends IMountService.Stub
 
     private int doFormatVolume(String path) {
         try {
-            mConnector.execute("volume", "format", path);
+            mConnector.execute(FORMAT_TIMEOUT, "volume", "format", path);
             return StorageResultCode.OperationSucceeded;
         } catch (NativeDaemonConnectorException e) {
             int code = e.getCode();
