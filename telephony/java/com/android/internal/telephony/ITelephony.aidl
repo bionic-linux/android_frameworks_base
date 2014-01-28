@@ -45,6 +45,13 @@ interface ITelephony {
     void call(String callingPackage, String number);
 
     /**
+     * Place a call to the specified number on specific subscription.
+     * @param subId The indicated subscription id.
+     * @param number the number to be called.
+     */
+    void callUsingSub(String callingPackage, String number, long subId);
+
+    /**
      * If there is currently a call in progress, show the call screen.
      * The DTMF dialpad may or may not be visible initially, depending on
      * whether it was up when the user last exited the InCallScreen.
@@ -72,6 +79,14 @@ interface ITelephony {
      * @return whether it hung up
      */
     boolean endCall();
+
+    /**
+     * End call on specific subscription if there is a call in progress, otherwise does nothing.
+     *
+     * @param subId The indicated subscription id.
+     * @return whether it hung up
+     */
+    boolean endCallUsingSub(long subId);
 
     /**
      * Answer the currently-ringing call.
@@ -122,10 +137,38 @@ interface ITelephony {
     boolean isIdle();
 
     /**
+     * Check if the phone which the specific subscription at is in either an active or holding call
+     * @param subId The indicated subscription id.
+     * @return true if the phone state is OFFHOOK.
+     */
+    boolean isOffhookUsingSub(long subId);
+
+    /**
+     * Check if the phone which the specific subscription at has an incoming phone call is ringing or call waiting.
+     * @param subId The indicated subscription id.
+     * @return true if the phone state is RINGING.
+     */
+    boolean isRingingUsingSub(long subId);
+
+    /**
+     * Check if the phone which the specific subscription at is idle.
+     * @param subId The indicated subscription id.
+     * @return true if the phone state is IDLE.
+     */
+    boolean isIdleUsingSub(long subId);
+
+    /**
      * Check to see if the radio is on or not.
      * @return returns true if the radio is on.
      */
     boolean isRadioOn();
+
+    /**
+     * Check to see if the radio is on or not.
+     * @param simId The sim id.
+     * @return returns true if the radio is on.
+     */
+    boolean isRadioOnUsingSim(int simId);
 
     /**
      * Check if the SIM pin lock is enabled.
@@ -146,6 +189,14 @@ interface ITelephony {
     boolean supplyPin(String pin);
 
     /**
+     * Supply a pin to unlock the SIM.  Blocks until a result is determined.
+     * @param pin The pin to check.
+     *        subId The indicated subscription id.
+     * @return whether the operation was a success.
+     */
+    boolean supplyPinUsingSub(String pin, long subId);
+
+    /**
      * Supply puk to unlock the SIM and set SIM pin to new pin.
      *  Blocks until a result is determined.
      * @param puk The puk to check.
@@ -155,6 +206,16 @@ interface ITelephony {
     boolean supplyPuk(String puk, String pin);
 
     /**
+     * Supply puk to unlock the SIM and set SIM pin to new pin.
+     *  Blocks until a result is determined.
+     * @param puk The puk to check.
+     *        pin The new pin to be set in SIM
+     *        subId The indicated subscription id.
+     * @return whether the operation was a success.
+     */
+    boolean supplyPukUsingSub(String puk, String pin, long subId);
+
+    /**
      * Supply a pin to unlock the SIM.  Blocks until a result is determined.
      * Returns a specific success/error code.
      * @param pin The pin to check.
@@ -162,6 +223,16 @@ interface ITelephony {
      *         retValue[1] = number of attempts remaining if known otherwise -1
      */
     int[] supplyPinReportResult(String pin);
+
+    /**
+     * Supply a pin to unlock the SIM.  Blocks until a result is determined.
+     * Returns a specific success/error code.
+     * @param pin The pin to check.
+     *        subId The indicated subscription id.
+     * @return retValue[0] = Phone.PIN_RESULT_SUCCESS on success. Otherwise error code
+     *         retValue[1] = number of attempts remaining if known otherwise -1
+     */
+    int[] supplyPinReportResultUsingSub(String pin, long subId);
 
     /**
      * Supply puk to unlock the SIM and set SIM pin to new pin.
@@ -175,6 +246,18 @@ interface ITelephony {
     int[] supplyPukReportResult(String puk, String pin);
 
     /**
+     * Supply puk to unlock the SIM and set SIM pin to new pin.
+     * Blocks until a result is determined.
+     * Returns a specific success/error code
+     * @param puk The puk to check
+     *        pin The pin to check.
+     *        subId The indicated subscription id.
+     * @return retValue[0] = Phone.PIN_RESULT_SUCCESS on success. Otherwise error code
+     *         retValue[1] = number of attempts remaining if known otherwise -1
+     */
+    int[] supplyPukReportResultUsingSub(String puk, String pin, long subId);
+
+    /**
      * Handles PIN MMI commands (PIN/PIN2/PUK/PUK2), which are initiated
      * without SEND (so <code>dial</code> is not appropriate).
      *
@@ -184,9 +267,25 @@ interface ITelephony {
     boolean handlePinMmi(String dialString);
 
     /**
+     * Handles PIN MMI commands (PIN/PIN2/PUK/PUK2), which are initiated
+     * without SEND (so <code>dial</code> is not appropriate).
+     *
+     * @param dialString the MMI command to be executed.
+     *        subId The indicated subscription id.
+     * @return true if MMI command is executed.
+     */
+    boolean handlePinMmiUsingSub(String dialString, long subId);
+
+    /**
      * Toggles the radio on or off.
      */
     void toggleRadioOnOff();
+
+    /**
+     * Toggles the radio on or off.
+     * @param simId The sim id.
+     */
+    void toggleRadioOnOffUsingSim(int simId);
 
     /**
      * Set the radio to on or off
@@ -194,9 +293,21 @@ interface ITelephony {
     boolean setRadio(boolean turnOn);
 
     /**
+     * Set the radio to on or off
+     * @param simId The sim id.
+     */
+    boolean setRadioUsingSim(boolean turnOn, int simId);
+
+    /**
      * Set the radio to on or off unconditionally
      */
     boolean setRadioPower(boolean turnOn);
+
+    /**
+     * Set the radio to on or off unconditionally
+     * @param simId The sim id.
+     */
+    boolean setRadioPowerUsingSim(boolean turnOn, int simId);
 
     /**
      * Request to update location information in service state
@@ -204,9 +315,21 @@ interface ITelephony {
     void updateServiceLocation();
 
     /**
+     * Request to update location information in service state
+     * @param simId The sim id.
+     */
+    void updateServiceLocationUsingSim(int simId);
+
+    /**
      * Enable location update notifications.
      */
     void enableLocationUpdates();
+
+    /**
+     * Enable location update notifications.
+     * @param simId The sim id.
+     */
+    void enableLocationUpdatesUsingSim(int simId);
 
     /**
      * Disable location update notifications.
@@ -214,47 +337,80 @@ interface ITelephony {
     void disableLocationUpdates();
 
     /**
+     * Disable location update notifications.
+     * @param simId The sim id.
+     */
+    void disableLocationUpdatesUsingSim(int simId);
+
+    /**
      * Enable a specific APN type.
      */
-    int enableApnType(String type);
+    int enableApnType(String type, int simId);
 
     /**
      * Disable a specific APN type.
      */
-    int disableApnType(String type);
+    int disableApnType(String type, int simId);
 
     /**
      * Allow mobile data connections.
      */
-    boolean enableDataConnectivity();
+    boolean enableDataConnectivity(int simId);
 
     /**
      * Disallow mobile data connections.
      */
-    boolean disableDataConnectivity();
+    boolean disableDataConnectivity(int simId);
 
     /**
      * Report whether data connectivity is possible.
      */
-    boolean isDataConnectivityPossible();
+    boolean isDataConnectivityPossible(int simId);
 
+    /**
+     * Returns Cell Location
+     */
     Bundle getCellLocation();
+
+    /**
+     * Returns Cell Location
+     * @param simId The sim id.
+     */
+    Bundle getCellLocationUsingSim(int simId);
 
     /**
      * Returns the neighboring cell information of the device.
      */
     List<NeighboringCellInfo> getNeighboringCellInfo(String callingPkg);
 
+     /**
+      * Returns the neighboring cell information of the device.
+      * @param simId The sim id.
+      */
+     List<NeighboringCellInfo> getNeighboringCellInfoUsingSim(String callingPkg, int simId);
+
      int getCallState();
-     int getDataActivity();
-     int getDataState();
+     int getDataActivity(int simId);
+     int getDataState(int simId);
 
     /**
      * Returns the current active phone type as integer.
      * Returns TelephonyManager.PHONE_TYPE_CDMA if RILConstants.CDMA_PHONE
      * and TelephonyManager.PHONE_TYPE_GSM if RILConstants.GSM_PHONE
+     *
+     * @return the active phone type.
      */
     int getActivePhoneType();
+    
+    /**
+     * Returns the current active phone type as integer.
+     * Returns TelephonyManager.PHONE_TYPE_CDMA if RILConstants.CDMA_PHONE
+     * and TelephonyManager.PHONE_TYPE_GSM if RILConstants.GSM_PHONE
+     *
+     * @param simId The indicated sim id.
+     * @return the active phone type.
+     */
+    int getActivePhoneTypeUsingSim(int simId);
 
     /**
      * Returns the CDMA ERI icon index to display
@@ -281,9 +437,21 @@ interface ITelephony {
     boolean needsOtaServiceProvisioning();
 
     /**
+     * Returns true if OTA service provisioning needs to run.
+     * Only relevant on some technologies, others will always
+     * return false.
+     */
+    boolean needsOtaServiceProvisioningUsingSub(long subId);
+
+    /**
       * Returns the unread count of voicemails
       */
     int getVoiceMessageCount();
+
+    /**
+      * Returns the unread count of voicemails
+      */
+    int getVoiceMessageCountUsingSub(long subId);
 
     /**
       * Returns the network type for data transmission
@@ -292,8 +460,20 @@ interface ITelephony {
 
     /**
       * Returns the network type for data transmission
+      * @param simId The sim id.
+      */
+    int getNetworkTypeUsingSim(int simId);
+
+    /**
+      * Returns the network type for data transmission
       */
     int getDataNetworkType();
+
+    /**
+      * Returns the network type for data transmission
+      * @param simId The sim id.
+      */
+    int getDataNetworkTypeUsingSim(int simId);
 
     /**
       * Returns the network type for voice
@@ -301,9 +481,21 @@ interface ITelephony {
     int getVoiceNetworkType();
 
     /**
+      * Returns the network type for voice
+      * @param simId The sim id.
+      */
+    int getVoiceNetworkTypeUsingSim(int simId);
+
+    /**
      * Return true if an ICC card is present
      */
     boolean hasIccCard();
+
+    /**
+     * Return true if an ICC card is present
+     */
+    boolean hasIccCardUsingSim(int simId);
+
 
     /**
      * Return if the current radio is LTE on CDMA. This
@@ -316,13 +508,41 @@ interface ITelephony {
     int getLteOnCdmaMode();
 
     /**
+     * Return if the current radio is LTE on CDMA. This
+     * is a tri-state return value as for a period of time
+     * the mode may be unknown.
+     *
+     * @return {@link Phone#LTE_ON_CDMA_UNKNOWN}, {@link Phone#LTE_ON_CDMA_FALSE}
+     * or {@link PHone#LTE_ON_CDMA_TRUE}
+     */
+    int getLteOnCdmaModeUsingSub(long subId);
+
+    /**
      * Returns the all observed cell information of the device.
      */
     List<CellInfo> getAllCellInfo();
 
     /**
+     * Returns the all observed cell information of the device.
+     * @param simId The sim id.
+     */
+    List<CellInfo> getAllCellInfoUsingSim(int simId);
+
+    /**
      * Sets minimum time in milli-seconds between onCellInfoChanged
      */
     void setCellInfoListRate(int rateInMillis);
+
+    /**
+     * Sets minimum time in milli-seconds between onCellInfoChanged
+     * @param simId The sim id.
+     */
+    void setCellInfoListRateUsingSim(int rateInMillis, int simId);
+
+    /**
+     *
+     * Sets if policy data enabled
+     */
+    void setPolicyDataEnable(boolean enabled, int simId); 
 }
 

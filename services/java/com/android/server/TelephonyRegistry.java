@@ -37,10 +37,6 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.CellInfo;
 import android.telephony.TelephonyManager;
-import android.telephony.DisconnectCause;
-import android.telephony.PreciseCallState;
-import android.telephony.PreciseDataConnectionState;
-import android.telephony.PreciseDisconnectCause;
 import android.text.TextUtils;
 import android.util.Slog;
 
@@ -66,6 +62,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     private static final String TAG = "TelephonyRegistry";
     private static final boolean DBG = false;
     private static final boolean DBG_LOC = false;
+    private int mSimId;
 
     private static class Record {
         String pkgForDebug;
@@ -129,27 +126,12 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private List<CellInfo> mCellInfo = null;
 
-    private int mRingingCallState = PreciseCallState.PRECISE_CALL_STATE_IDLE;
-
-    private int mForegroundCallState = PreciseCallState.PRECISE_CALL_STATE_IDLE;
-
-    private int mBackgroundCallState = PreciseCallState.PRECISE_CALL_STATE_IDLE;
-
-    private PreciseCallState mPreciseCallState = new PreciseCallState();
-
-    private PreciseDataConnectionState mPreciseDataConnectionState =
-                new PreciseDataConnectionState();
-
     static final int PHONE_STATE_PERMISSION_MASK =
                 PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR |
                 PhoneStateListener.LISTEN_CALL_STATE |
                 PhoneStateListener.LISTEN_DATA_ACTIVITY |
                 PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
                 PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR;
-
-    static final int PRECISE_PHONE_STATE_PERMISSION_MASK =
-                PhoneStateListener.LISTEN_PRECISE_CALL_STATE |
-                PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE;
 
     private static final int MSG_USER_SWITCHED = 1;
 
@@ -184,6 +166,10 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     // calls go through a oneway interface and local calls going through a
     // handler before they get to app code.
 
+    TelephonyRegistry(Context context, int simId) {
+        this(context);
+        mSimId = simId; 
+    }
     TelephonyRegistry(Context context) {
         CellLocation  location = CellLocation.getEmpty();
 
@@ -195,6 +181,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mContext = context;
         mBatteryStats = BatteryStatsService.getService();
         mConnectedApns = new ArrayList<String>();
+        mSimId = 0;//PhoneConstants.SIM_ID_1;
     }
 
     public void systemRunning() {
@@ -320,21 +307,6 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                         try {
                             if (DBG_LOC) Slog.d(TAG, "listen: mCellInfo=" + mCellInfo);
                             r.callback.onCellInfoChanged(mCellInfo);
-                        } catch (RemoteException ex) {
-                            remove(r.binder);
-                        }
-                    }
-                    if ((events & PhoneStateListener.LISTEN_PRECISE_CALL_STATE) != 0) {
-                        try {
-                            r.callback.onPreciseCallStateChanged(mPreciseCallState);
-                        } catch (RemoteException ex) {
-                            remove(r.binder);
-                        }
-                    }
-                    if ((events & PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE) != 0) {
-                        try {
-                            r.callback.onPreciseDataConnectionStateChanged(
-                                    mPreciseDataConnectionState);
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -567,47 +539,30 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 }
                 handleRemoveListLocked();
             }
-            mPreciseDataConnectionState = new PreciseDataConnectionState(state, networkType,
-                    apnType, apn, reason, linkProperties, "");
-            for (Record r : mRecords) {
-                if ((r.events & PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE) != 0) {
-                    try {
-                        r.callback.onPreciseDataConnectionStateChanged(mPreciseDataConnectionState);
-                    } catch (RemoteException ex) {
-                        mRemoveList.add(r.binder);
-                    }
-                }
-            }
-            handleRemoveListLocked();
         }
         broadcastDataConnectionStateChanged(state, isDataConnectivityPossible, reason, apn,
                 apnType, linkProperties, linkCapabilities, roaming);
-        broadcastPreciseDataConnectionStateChanged(state, networkType, apnType, apn, reason,
-                linkProperties, "");
     }
 
     public void notifyDataConnectionFailed(String reason, String apnType) {
         if (!checkNotifyPermission("notifyDataConnectionFailed()")) {
             return;
         }
+        /*
+         * This is commented out because there is no onDataConnectionFailed callback
+         * in PhoneStateListener. There should be.
         synchronized (mRecords) {
-            mPreciseDataConnectionState = new PreciseDataConnectionState(
-                    TelephonyManager.DATA_UNKNOWN,TelephonyManager.NETWORK_TYPE_UNKNOWN,
-                    apnType, "", reason, null, "");
-            for (Record r : mRecords) {
-                if ((r.events & PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE) != 0) {
-                    try {
-                        r.callback.onPreciseDataConnectionStateChanged(mPreciseDataConnectionState);
-                    } catch (RemoteException ex) {
-                        mRemoveList.add(r.binder);
-                    }
+            mDataConnectionFailedReason = reason;
+            final int N = mRecords.size();
+            for (int i=N-1; i>=0; i--) {
+                Record r = mRecords.get(i);
+                if ((r.events & PhoneStateListener.LISTEN_DATA_CONNECTION_FAILED) != 0) {
+                    // XXX
                 }
             }
-            handleRemoveListLocked();
         }
+        */
         broadcastDataConnectionFailed(reason, apnType);
-        broadcastPreciseDataConnectionStateChanged(TelephonyManager.DATA_UNKNOWN,
-                TelephonyManager.NETWORK_TYPE_UNKNOWN, apnType, "", reason, null, "");
     }
 
     public void notifyCellLocation(Bundle cellLocation) {
@@ -651,81 +606,6 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             }
             handleRemoveListLocked();
         }
-    }
-
-    public void notifyPreciseCallState(int ringingCallState, int foregroundCallState,
-            int backgroundCallState) {
-        if (!checkNotifyPermission("notifyPreciseCallState()")) {
-            return;
-        }
-        synchronized (mRecords) {
-            mRingingCallState = ringingCallState;
-            mForegroundCallState = foregroundCallState;
-            mBackgroundCallState = backgroundCallState;
-            mPreciseCallState = new PreciseCallState(ringingCallState, foregroundCallState,
-                    backgroundCallState,
-                    DisconnectCause.NOT_VALID,
-                    PreciseDisconnectCause.NOT_VALID);
-            for (Record r : mRecords) {
-                if ((r.events & PhoneStateListener.LISTEN_PRECISE_CALL_STATE) != 0) {
-                    try {
-                        r.callback.onPreciseCallStateChanged(mPreciseCallState);
-                    } catch (RemoteException ex) {
-                        mRemoveList.add(r.binder);
-                    }
-                }
-            }
-            handleRemoveListLocked();
-        }
-        broadcastPreciseCallStateChanged(ringingCallState, foregroundCallState, backgroundCallState,
-                DisconnectCause.NOT_VALID,
-                PreciseDisconnectCause.NOT_VALID);
-    }
-
-    public void notifyDisconnectCause(int disconnectCause, int preciseDisconnectCause) {
-        if (!checkNotifyPermission("notifyDisconnectCause()")) {
-            return;
-        }
-        synchronized (mRecords) {
-            mPreciseCallState = new PreciseCallState(mRingingCallState, mForegroundCallState,
-                    mBackgroundCallState, disconnectCause, preciseDisconnectCause);
-            for (Record r : mRecords) {
-                if ((r.events & PhoneStateListener.LISTEN_PRECISE_CALL_STATE) != 0) {
-                    try {
-                        r.callback.onPreciseCallStateChanged(mPreciseCallState);
-                    } catch (RemoteException ex) {
-                        mRemoveList.add(r.binder);
-                    }
-                }
-            }
-            handleRemoveListLocked();
-        }
-        broadcastPreciseCallStateChanged(mRingingCallState, mForegroundCallState,
-                mBackgroundCallState, disconnectCause, preciseDisconnectCause);
-    }
-
-    public void notifyPreciseDataConnectionFailed(String reason, String apnType,
-            String apn, String failCause) {
-        if (!checkNotifyPermission("notifyPreciseDataConnectionFailed()")) {
-            return;
-        }
-        synchronized (mRecords) {
-            mPreciseDataConnectionState = new PreciseDataConnectionState(
-                    TelephonyManager.DATA_UNKNOWN, TelephonyManager.NETWORK_TYPE_UNKNOWN,
-                    apnType, apn, reason, null, failCause);
-            for (Record r : mRecords) {
-                if ((r.events & PhoneStateListener.LISTEN_PRECISE_DATA_CONNECTION_STATE) != 0) {
-                    try {
-                        r.callback.onPreciseDataConnectionStateChanged(mPreciseDataConnectionState);
-                    } catch (RemoteException ex) {
-                        mRemoveList.add(r.binder);
-                    }
-                }
-            }
-            handleRemoveListLocked();
-        }
-        broadcastPreciseDataConnectionStateChanged(TelephonyManager.DATA_UNKNOWN,
-                TelephonyManager.NETWORK_TYPE_UNKNOWN, apnType, apn, reason, null, failCause);
     }
 
     @Override
@@ -776,6 +656,17 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
 
         Intent intent = new Intent(TelephonyIntents.ACTION_SERVICE_STATE_CHANGED);
+        
+        /* For multiple SIM, use the same Intent, do not replace previous */
+        if (TelephonyManager.from(mContext).getSimCount() == 1) {
+            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        }
+        
+        /* Add one field for receiver to identify this Service State changed is triggered by which sim */
+        if (TelephonyManager.from(mContext).getSimCount() > 1) {
+            intent.putExtra(PhoneConstants.SIM_ID_KEY, mSimId);
+        }
+                
         Bundle data = new Bundle();
         state.fillInNotifierBundle(data);
         intent.putExtras(data);
@@ -793,7 +684,17 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
 
         Intent intent = new Intent(TelephonyIntents.ACTION_SIGNAL_STRENGTH_CHANGED);
+
+        /* For multiple SIM, use the same Intent, do not replace previous */
+        if (TelephonyManager.from(mContext).getSimCount() == 1) {
         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        }
+
+        /* Add one field for receiver to identify this Signal Strength changed is triggered by which sim */
+        if (TelephonyManager.from(mContext).getSimCount() > 1) {
+            intent.putExtra(PhoneConstants.SIM_ID_KEY, mSimId);
+        }
+                
         Bundle data = new Bundle();
         signalStrength.fillInNotifierBundle(data);
         intent.putExtras(data);
@@ -854,6 +755,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
         intent.putExtra(PhoneConstants.DATA_APN_KEY, apn);
         intent.putExtra(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
+        intent.putExtra(PhoneConstants.SIM_ID_KEY, mSimId);
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
     }
 
@@ -861,34 +763,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         Intent intent = new Intent(TelephonyIntents.ACTION_DATA_CONNECTION_FAILED);
         intent.putExtra(PhoneConstants.FAILURE_REASON_KEY, reason);
         intent.putExtra(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
+        intent.putExtra(PhoneConstants.SIM_ID_KEY, mSimId);
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
-    }
-
-    private void broadcastPreciseCallStateChanged(int ringingCallState, int foregroundCallState,
-            int backgroundCallState, int disconnectCause, int preciseDisconnectCause) {
-        Intent intent = new Intent(TelephonyManager.ACTION_PRECISE_CALL_STATE_CHANGED);
-        intent.putExtra(TelephonyManager.EXTRA_RINGING_CALL_STATE, ringingCallState);
-        intent.putExtra(TelephonyManager.EXTRA_FOREGROUND_CALL_STATE, foregroundCallState);
-        intent.putExtra(TelephonyManager.EXTRA_BACKGROUND_CALL_STATE, backgroundCallState);
-        intent.putExtra(TelephonyManager.EXTRA_DISCONNECT_CAUSE, disconnectCause);
-        intent.putExtra(TelephonyManager.EXTRA_PRECISE_DISCONNECT_CAUSE, preciseDisconnectCause);
-        mContext.sendBroadcastAsUser(intent, UserHandle.ALL,
-                android.Manifest.permission.READ_PRECISE_PHONE_STATE);
-    }
-
-    private void broadcastPreciseDataConnectionStateChanged(int state, int networkType,
-            String apnType, String apn, String reason, LinkProperties linkProperties, String failCause) {
-        Intent intent = new Intent(TelephonyManager.ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED);
-        intent.putExtra(PhoneConstants.STATE_KEY, state);
-        intent.putExtra(PhoneConstants.DATA_NETWORK_TYPE_KEY, networkType);
-        if (reason != null) intent.putExtra(PhoneConstants.STATE_CHANGE_REASON_KEY, reason);
-        if (apnType != null) intent.putExtra(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
-        if (apn != null) intent.putExtra(PhoneConstants.DATA_APN_KEY, apn);
-        if (linkProperties != null) intent.putExtra(PhoneConstants.DATA_LINK_PROPERTIES_KEY, linkProperties);
-        if (failCause != null) intent.putExtra(PhoneConstants.DATA_FAILURE_CAUSE_KEY, failCause);
-
-        mContext.sendBroadcastAsUser(intent, UserHandle.ALL,
-                android.Manifest.permission.READ_PRECISE_PHONE_STATE);
     }
 
     private boolean checkNotifyPermission(String method) {
@@ -918,12 +794,6 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         if ((events & PHONE_STATE_PERMISSION_MASK) != 0) {
             mContext.enforceCallingOrSelfPermission(
                     android.Manifest.permission.READ_PHONE_STATE, null);
-        }
-
-        if ((events & PRECISE_PHONE_STATE_PERMISSION_MASK) != 0) {
-            mContext.enforceCallingOrSelfPermission(
-                    android.Manifest.permission.READ_PRECISE_PHONE_STATE, null);
-
         }
     }
 

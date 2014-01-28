@@ -42,7 +42,6 @@ import android.os.Vibrator;
 import android.os.SystemVibrator;
 import android.os.storage.IMountService;
 import android.os.storage.IMountShutdownObserver;
-
 import com.android.internal.telephony.ITelephony;
 
 import android.util.Log;

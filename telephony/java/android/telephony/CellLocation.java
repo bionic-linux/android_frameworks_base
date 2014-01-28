@@ -27,6 +27,7 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.PhoneConstants;
+import android.telephony.TelephonyManager;
 
 /**
  * Abstract class that represents the location of the device.  {@more}
