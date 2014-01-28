@@ -37,6 +37,9 @@ import com.android.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
 import com.android.i18n.phonenumbers.NumberParseException;
 import com.android.i18n.phonenumbers.PhoneNumberUtil;
 import com.android.i18n.phonenumbers.Phonenumber.PhoneNumber;
+import android.telephony.SubscriptionManager;
+
+import android.telephony.TelephonyManager;
 
 import java.util.Locale;
 
@@ -233,6 +236,7 @@ public class CallerInfo {
                 info.contactExists = true;
             }
             cursor.close();
+	    cursor = null;
         }
 
         info.needUpdate = false;
@@ -269,6 +273,12 @@ public class CallerInfo {
     public static CallerInfo getCallerInfo(Context context, String number) {
         if (VDBG) Rlog.v(TAG, "getCallerInfo() based on number...");
 
+        long subId = SubscriptionManager.getDefaultSubId();
+        return getCallerInfo(context, number, subId);
+    }
+
+    public static CallerInfo getCallerInfo(Context context, String number, long subId) {
+
         if (TextUtils.isEmpty(number)) {
             return null;
         }
@@ -278,7 +288,7 @@ public class CallerInfo {
         // shortcut and skip the query.
         if (PhoneNumberUtils.isLocalEmergencyNumber(number, context)) {
             return new CallerInfo().markAsEmergency(context);
-        } else if (PhoneNumberUtils.isVoiceMailNumber(number)) {
+        } else if (PhoneNumberUtils.isVoiceMailNumber(number, subId)) {
             return new CallerInfo().markAsVoiceMail();
         }
 
@@ -400,10 +410,17 @@ public class CallerInfo {
     // TODO: As in the emergency number handling, we end up writing a
     // string in the phone number field.
     /* package */ CallerInfo markAsVoiceMail() {
+
+        long simId = SubscriptionManager.getDefaultSubId();
+        return markAsVoiceMail(simId);
+
+    }
+
+    /* package */ CallerInfo markAsVoiceMail(long subId) {
         mIsVoiceMail = true;
 
         try {
-            String voiceMailLabel = TelephonyManager.getDefault().getVoiceMailAlphaTag();
+            String voiceMailLabel = TelephonyManager.getDefault().getVoiceMailAlphaTag(subId);
 
             phoneNumber = voiceMailLabel;
         } catch (SecurityException se) {

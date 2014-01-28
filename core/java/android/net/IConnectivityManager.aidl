@@ -66,20 +66,20 @@ interface IConnectivityManager
 
     boolean setRadio(int networkType, boolean turnOn);
 
-    int startUsingNetworkFeature(int networkType, in String feature,
-            in IBinder binder);
+    int startUsingNetworkFeature(int networkType, in String feature, long subId, in IBinder binder);
 
-    int stopUsingNetworkFeature(int networkType, in String feature);
+    int stopUsingNetworkFeature(int networkType, in String feature, long subId);
 
     boolean requestRouteToHost(int networkType, int hostAddress);
 
     boolean requestRouteToHostAddress(int networkType, in byte[] hostAddress);
 
-    boolean getMobileDataEnabled();
-    void setMobileDataEnabled(boolean enabled);
+    boolean getMobileDataEnabled(long subId);
+
+    void setMobileDataEnabled(boolean enabled, long subId);
 
     /** Policy control over specific {@link NetworkStateTracker}. */
-    void setPolicyDataEnable(int networkType, boolean enabled);
+    void setPolicyDataEnable(int networkType, boolean enabled, long subId);
 
     int tether(String iface);
 
