@@ -113,6 +113,7 @@ import android.os.Message;
 import android.os.MessageQueue.IdleHandler;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -128,11 +129,16 @@ import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.util.TrustedTime;
 import android.util.Xml;
+import android.text.TextUtils;
 
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.telephony.IccCardConstants;
+import com.android.internal.telephony.TelephonyProperties;
+import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.internal.util.Objects;
 import com.google.android.collect.Lists;
 import com.google.android.collect.Maps;
 import com.google.android.collect.Sets;
@@ -154,10 +160,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import libcore.io.IoUtils;
-
+import com.android.internal.telephony.PhoneConstants;
 /**
  * Service that maintains low-level network policy rules, using
  * {@link NetworkStatsService} statistics to drive those rules.
@@ -278,6 +283,12 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
     private final AtomicFile mPolicyFile;
 
+    private int mNumberOfSimSupported;
+    private boolean[] mIsSlotEnable;
+    private boolean[] mIsInSlot;
+    private String[] mSubscriberId;
+    private int mDataActiveSlot;
+
     // TODO: keep whitelist of system-critical services that should never have
     // rules enforced, such as system, phone, and radio UIDs.
 
@@ -312,6 +323,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         mSuppressDefaultPolicy = suppressDefaultPolicy;
 
         mPolicyFile = new AtomicFile(new File(systemDir, "netpolicy.xml"));
+
+        mNumberOfSimSupported = SystemProperties.getInt(TelephonyProperties.PROPERTY_SIM_COUNT, 1);
+        Slog.v(TAG, "NetworkPolicyManagerService PROPERTY_SIM_COUNT="+mNumberOfSimSupported);
+        mIsSlotEnable = new boolean[mNumberOfSimSupported];
+        mIsInSlot = new boolean[mNumberOfSimSupported];
+        mSubscriberId = new String[mNumberOfSimSupported];
+        Arrays.fill(mIsSlotEnable, false);
+        Arrays.fill(mIsInSlot, false);
     }
 
     public void bindConnectivityManager(IConnectivityManager connManager) {
@@ -400,7 +419,34 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         mContext.registerReceiver(
                 mWifiStateReceiver, wifiStateFilter, CONNECTIVITY_INTERNAL, mHandler);
 
+        // listen for SIM  state changes 
+        final IntentFilter mSimFilter = new IntentFilter(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+        mContext.registerReceiver(mSimStateReceiver, mSimFilter);
+
     }
+
+    private final BroadcastReceiver mSimStateReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(action)) {
+                String simState = intent.getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE);
+                if(IccCardConstants.INTENT_VALUE_ICC_LOADED.equals(simState) ||
+                    IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(simState)) {
+                    Slog.v(TAG,"receive ACTION_SIM_STATE_CHANGED");
+                    updateDataUsageSimInsert();
+                    updateDataUsageSimIMSI(); 
+                    updateMobileDataEnableStatus(); 
+
+                    maybeRefreshTrustedTime();
+                    synchronized (mRulesLock) {                
+                        ensureActiveMobilePolicyLocked();
+                        updateNetworkEnabledLocked();
+                        updateNotificationsLocked();
+                    }
+    }
+            }
+        }
+    };
 
     private IProcessObserver mProcessObserver = new IProcessObserver.Stub() {
         @Override
@@ -633,9 +679,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         // examine stats for each active policy
         final long currentTime = currentTimeMillis();
+
+        for (int i=0; i<mNumberOfSimSupported; i++) {
         for (NetworkPolicy policy : mNetworkPolicy.values()) {
             // ignore policies that aren't relevant to user
-            if (!isTemplateRelevant(policy.template)) continue;
+                if (!isTemplateRelevant(policy.template, i)) continue;
             if (!policy.hasCycle()) continue;
 
             final long start = computeLastCycleBoundary(currentTime, policy);
@@ -658,6 +706,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 }
             }
         }
+        }
 
         // ongoing notification when restricting background data
         if (mRestrictBackground) {
@@ -678,7 +727,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
      * {@link TelephonyManager#getSubscriberId()} matches. This is regardless of
      * data connection status.
      */
-    private boolean isTemplateRelevant(NetworkTemplate template) {
+    private boolean isTemplateRelevant(NetworkTemplate template, int simId) {
         final TelephonyManager tele = TelephonyManager.from(mContext);
 
         switch (template.getMatchRule()) {
@@ -687,8 +736,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             case MATCH_MOBILE_ALL:
                 // mobile templates are relevant when SIM is ready and
                 // subscriberId matches.
-                if (tele.getSimState() == SIM_STATE_READY) {
-                    return Objects.equals(tele.getSubscriberId(), template.getSubscriberId());
+                if (tele.getSimState(simId) == SIM_STATE_READY) {
+                    return Objects.equal(tele.getSubscriberId(simId), template.getSubscriberId());
                 } else {
                     return false;
                 }
@@ -945,17 +994,20 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             case MATCH_MOBILE_ALL:
                 // TODO: offer more granular control over radio states once
                 // 4965893 is available.
-                if (tele.getSimState() == SIM_STATE_READY
-                        && Objects.equals(tele.getSubscriberId(), template.getSubscriberId())) {
-                    setPolicyDataEnable(TYPE_MOBILE, enabled);
-                    setPolicyDataEnable(TYPE_WIMAX, enabled);
+                mNumberOfSimSupported = SystemProperties.getInt(TelephonyProperties.PROPERTY_SIM_COUNT, 1);
+                for (int i = 0; i<mNumberOfSimSupported; i++) {
+                    if (tele.getSimState(i) == SIM_STATE_READY
+                            && Objects.equal(tele.getSubscriberId(i), template.getSubscriberId())) {
+                        setPolicyDataEnable(TYPE_MOBILE, enabled, i);
+                        setPolicyDataEnable(TYPE_WIMAX, enabled, 0);
+                    }
                 }
                 break;
             case MATCH_WIFI:
-                setPolicyDataEnable(TYPE_WIFI, enabled);
+                setPolicyDataEnable(TYPE_WIFI, enabled, 0);
                 break;
             case MATCH_ETHERNET:
-                setPolicyDataEnable(TYPE_ETHERNET, enabled);
+                setPolicyDataEnable(TYPE_ETHERNET, enabled, 0);
                 break;
             default:
                 throw new IllegalArgumentException("unexpected template");
@@ -1098,11 +1150,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         if (mSuppressDefaultPolicy) return;
 
         final TelephonyManager tele = TelephonyManager.from(mContext);
+        mNumberOfSimSupported = SystemProperties.getInt(TelephonyProperties.PROPERTY_SIM_COUNT, 1);
+
+        for (int i=0; i<mNumberOfSimSupported; i++) {
 
         // avoid creating policy when SIM isn't ready
-        if (tele.getSimState() != SIM_STATE_READY) return;
+            if (tele.getSimState(i) != SIM_STATE_READY) return;
 
-        final String subscriberId = tele.getSubscriberId();
+            final String subscriberId = tele.getSubscriberId(i);
         final NetworkIdentity probeIdent = new NetworkIdentity(
                 TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false);
 
@@ -1133,6 +1188,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     warningBytes, LIMIT_DISABLED, SNOOZE_NEVER, SNOOZE_NEVER, true, true);
             addNetworkPolicyLocked(policy);
         }
+    }
     }
 
     private void readPolicyLocked() {
@@ -1985,9 +2041,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     /**
      * Control {@link IConnectivityManager#setPolicyDataEnable(int, boolean)}.
      */
-    private void setPolicyDataEnable(int networkType, boolean enabled) {
+    private void setPolicyDataEnable(int networkType, boolean enabled, int simId) {
         try {
-            mConnManager.setPolicyDataEnable(networkType, enabled);
+            mConnManager.setPolicyDataEnable(networkType, enabled, simId);
         } catch (RemoteException e) {
             // ignored; service lives in system_server
         }
@@ -2086,4 +2142,60 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
         fout.print("]");
     }
+
+    private void updateDataUsageSimInsert() {
+        Slog.v(TAG, "updateDataUsageSimInsert");
+
+        final TelephonyManager tele = TelephonyManager.from(mContext);
+        mNumberOfSimSupported = SystemProperties.getInt(TelephonyProperties.PROPERTY_SIM_COUNT, 1);
+
+        for (int i=0; i<mNumberOfSimSupported; i++) {
+            mIsSlotEnable[i] = false;
+            if(tele.hasIccCard(i) == true){
+                mIsInSlot[i] = true;
+                Slog.v(TAG, "updateDataUsageSimInsert hasIccCard(" + i + ") is inserted");
+            }
+        }
+    }
+
+    private void updateDataUsageSimIMSI(){
+        Slog.v(TAG, "updateDataUsageSimIMSI");
+
+        final TelephonyManager tele = TelephonyManager.from(mContext);
+        mNumberOfSimSupported = SystemProperties.getInt(TelephonyProperties.PROPERTY_SIM_COUNT, 1);
+
+        for(int i=0; i<mNumberOfSimSupported; i++) {
+            if ( mIsInSlot[i] == true){
+                mSubscriberId[i] = tele.getSubscriberId(i);
+
+                if(TextUtils.isEmpty(mSubscriberId[i])) {
+                    mIsSlotEnable[i] = false;
+                } else {
+                    mIsSlotEnable[i] = true;
+                }
+
+                Slog.v(TAG,"updateDataUsageSimIMSI mSubscriberId["+i+"]="+mSubscriberId[i]);
+            }
+        }
+    }
+
+    private void updateMobileDataEnableStatus(){
+        Slog.v(TAG, "updateMobileDataEnableStatus");
+        mNumberOfSimSupported = SystemProperties.getInt(TelephonyProperties.PROPERTY_SIM_COUNT, 1);
+
+        try {
+            mDataActiveSlot = -1;
+            for (int i=0; i<mNumberOfSimSupported; i++) {
+                if (mIsInSlot[i] == true) {
+                    if(mConnManager.getMobileDataEnabled(i) == true){
+                        mDataActiveSlot = i;
+                        Slog.v(TAG, "updateMobileDataEnableStatus mDataActiveSlot="+mDataActiveSlot);
+                    }
+                }
+            }
+        } catch (RemoteException e) {
+            Slog.w(TAG, "updateMobileDataEnableStatus mConnManager is not ready");
+        }
+    }
+
 }

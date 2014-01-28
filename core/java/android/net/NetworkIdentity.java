@@ -26,7 +26,9 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
-import java.util.Objects;
+import com.android.internal.util.Objects;
+
+import static android.net.wifi.WifiInfo.removeDoubleQuotes;
 
 /**
  * Network definition that includes strong identity. Analogous to combining
@@ -60,7 +62,7 @@ public class NetworkIdentity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(mType, mSubType, mSubscriberId, mNetworkId, mRoaming);
+        return Objects.hashCode(mType, mSubType, mSubscriberId, mNetworkId, mRoaming);
     }
 
     @Override
@@ -68,8 +70,8 @@ public class NetworkIdentity {
         if (obj instanceof NetworkIdentity) {
             final NetworkIdentity ident = (NetworkIdentity) obj;
             return mType == ident.mType && mSubType == ident.mSubType && mRoaming == ident.mRoaming
-                    && Objects.equals(mSubscriberId, ident.mSubscriberId)
-                    && Objects.equals(mNetworkId, ident.mNetworkId);
+                    && Objects.equal(mSubscriberId, ident.mSubscriberId)
+                    && Objects.equal(mNetworkId, ident.mNetworkId);
         }
         return false;
     }
@@ -154,7 +156,8 @@ public class NetworkIdentity {
             if (state.subscriberId != null) {
                 subscriberId = state.subscriberId;
             } else {
-                subscriberId = telephony.getSubscriberId();
+                int simId = state.networkInfo.getSimId();
+                subscriberId = telephony.getSubscriberId(simId);
             }
 
         } else if (type == TYPE_WIFI) {
@@ -164,7 +167,7 @@ public class NetworkIdentity {
                 final WifiManager wifi = (WifiManager) context.getSystemService(
                         Context.WIFI_SERVICE);
                 final WifiInfo info = wifi.getConnectionInfo();
-                networkId = info != null ? info.getSSID() : null;
+                networkId = info != null ? removeDoubleQuotes(info.getSSID()) : null;
             }
         }
 
