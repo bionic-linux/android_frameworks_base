@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92d0ea10_2ab703de",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1004511
+      },
+      "writtenOn": "2014-01-28T21:01:46Z",
+      "side": 1,
+      "message": "routing to msim api is not possible from here. Need to override getCurrentPhoneType() in derived class and then route it to getCurrentPhoneType(default sub);",
+      "revId": "c14f3328bd59dc5d7290c5b2d768e1fa976adb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
