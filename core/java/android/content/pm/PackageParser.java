@@ -484,6 +484,7 @@ public class PackageParser {
     public final static int PARSE_ON_SDCARD = 1<<5;
     public final static int PARSE_IS_SYSTEM_DIR = 1<<6;
     public final static int PARSE_IS_PRIVILEGED = 1<<7;
+    public final static int PARSE_IS_VENDOR_3RDPARTY = 1<<8;
 
     public int getParseError() {
         return mParseError;

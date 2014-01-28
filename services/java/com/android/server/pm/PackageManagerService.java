@@ -305,6 +305,9 @@ public class PackageManagerService extends IPackageManager.Stub {
     // This is the object monitoring the vendor overlay package dir.
     final FileObserver mVendorOverlayInstallObserver;
 
+    // This is the object monitoring the vendor 3rdparty app dir.
+    final FileObserver mVendor3rdPartyInstallObserver;
+
     // This is the object monitoring mAppInstallDir.
     final FileObserver mAppInstallObserver;
 
@@ -1337,6 +1340,14 @@ public class PackageManagerService extends IPackageManager.Stub {
                 vendorAppDir.getPath(), OBSERVER_EVENTS, true, false);
             mVendorInstallObserver.startWatching();
             scanDirLI(vendorAppDir, PackageParser.PARSE_IS_SYSTEM
+                    | PackageParser.PARSE_IS_SYSTEM_DIR, scanMode, 0);
+
+            // Collect all vendor 3rdparty packages.
+            File vendor3rdPartyAppDir = new File("/vendor/3rdpartyapp");
+            mVendor3rdPartyInstallObserver = new AppDirObserver(
+                vendor3rdPartyAppDir.getPath(), OBSERVER_EVENTS, true, false, true);
+            mVendor3rdPartyInstallObserver.startWatching();
+            scanDirLI(vendor3rdPartyAppDir, PackageParser.PARSE_IS_SYSTEM
                     | PackageParser.PARSE_IS_SYSTEM_DIR, scanMode, 0);
 
             if (DEBUG_UPGRADE) Log.v(TAG, "Running installd update commands");
@@ -4240,6 +4251,10 @@ public class PackageManagerService extends IPackageManager.Stub {
             pkg.applicationInfo.flags |= ApplicationInfo.FLAG_PRIVILEGED;
         }
 
+        if ((parseFlags&PackageParser.PARSE_IS_VENDOR_3RDPARTY) != 0) {
+            pkg.applicationInfo.flags |= ApplicationInfo.FLAG_VENDOR_3RDPARTY;
+        }
+
         if (mCustomResolverComponentName != null &&
                 mCustomResolverComponentName.getPackageName().equals(pkg.packageName)) {
             setUpCustomResolverActivity(pkg);
@@ -4676,7 +4691,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                 File nativeLibraryDir = new File(pkg.applicationInfo.nativeLibraryDir);
                 final String dataPathString = dataPath.getCanonicalPath();
 
-                if (isSystemApp(pkg) && !isUpdatedSystemApp(pkg)) {
+                if (isSystemApp(pkg) && !isUpdatedSystemApp(pkg) && !isVendor3rdPartyApp(pkg)) {
                     /*
                      * Upgrading from a previous version of the OS sometimes
                      * leaves native libraries in the /data/data/<app>/lib
@@ -4689,7 +4704,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                                 + path);
                     }
                 } else {
-                    if (!isForwardLocked(pkg) && !isExternal(pkg)) {
+                    if ((!isForwardLocked(pkg) && !isExternal(pkg)) || isVendor3rdPartyApp(pkg)) {
                         /*
                          * Update native library dir if it starts with
                          * /data/data
@@ -6494,11 +6509,18 @@ public class PackageManagerService extends IPackageManager.Stub {
     }
     
     private final class AppDirObserver extends FileObserver {
+        boolean mIsVendor3rdParty = false;
+
         public AppDirObserver(String path, int mask, boolean isrom, boolean isPrivileged) {
             super(path, mask);
             mRootDir = path;
             mIsRom = isrom;
             mIsPrivileged = isPrivileged;
+        }
+
+        public AppDirObserver(String path, int mask, boolean isrom, boolean isPrivileged, boolean isVendor3rdParty) {
+            this(path, mask, isrom, isPrivileged);
+            mIsVendor3rdParty = isVendor3rdParty;
         }
 
         public void onEvent(int event, String path) {
@@ -6567,6 +6589,11 @@ public class PackageManagerService extends IPackageManager.Stub {
                                 flags |= PackageParser.PARSE_IS_PRIVILEGED;
                             }
                         }
+
+                        if (mIsVendor3rdParty) {
+                            flags |= PackageParser.PARSE_IS_VENDOR_3RDPARTY;
+                        }
+
                         p = scanPackageLI(fullPath, flags,
                                 SCAN_MONITOR | SCAN_NO_PATHS | SCAN_UPDATE_TIME,
                                 System.currentTimeMillis(), UserHandle.ALL);
@@ -9239,6 +9266,10 @@ public class PackageManagerService extends IPackageManager.Stub {
 
     private static boolean isUpdatedSystemApp(PackageParser.Package pkg) {
         return (pkg.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
+    }
+
+    private static boolean isVendor3rdPartyApp(PackageParser.Package pkg) {
+        return (pkg.applicationInfo.flags & ApplicationInfo.FLAG_VENDOR_3RDPARTY) != 0;
     }
 
     private int packageFlagsToInstallFlags(PackageSetting ps) {

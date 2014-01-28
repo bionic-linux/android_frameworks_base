@@ -353,6 +353,12 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public static final int FLAG_BLOCKED = 1<<27;
 
     /**
+     * Value for {@link #flags}: true if the application is prebuild app from 3rd party.
+     * {@hide}
+     */
+    public static final int FLAG_VENDOR_3RDPARTY = 1<<26;
+
+    /**
      * Flags associated with the application.  Any combination of
      * {@link #FLAG_SYSTEM}, {@link #FLAG_DEBUGGABLE}, {@link #FLAG_HAS_CODE},
      * {@link #FLAG_PERSISTENT}, {@link #FLAG_FACTORY_TEST}, and
