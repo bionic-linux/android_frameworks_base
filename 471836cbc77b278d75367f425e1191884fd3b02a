@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52a672d4_df883bc8",
+        "filename": "telephony/java/android/telephony/MSimTelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1004552
+      },
+      "writtenOn": "2014-01-29T15:38:22Z",
+      "side": 1,
+      "message": "we can use getITelephony() directly?",
+      "revId": "471836cbc77b278d75367f425e1191884fd3b02a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
