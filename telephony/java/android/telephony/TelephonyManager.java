@@ -78,7 +78,7 @@ public class TelephonyManager {
     }
 
     /** @hide */
-    private TelephonyManager() {
+    protected TelephonyManager() {
         mContext = null;
     }
 
@@ -87,7 +87,7 @@ public class TelephonyManager {
     /** @hide
     /* @deprecated - use getSystemService as described above */
     public static TelephonyManager getDefault() {
-        return sInstance;
+          return MSimTelephonyManager.getDefault();
     }
 
     /** {@hide} */
@@ -1134,11 +1134,13 @@ public class TelephonyManager {
         }
     }
 
-    private IPhoneSubInfo getSubscriberInfo() {
+   /**
+    @hide
+    */
+    protected IPhoneSubInfo getSubscriberInfo() {
         // get it each time because that process crashes a lot
         return IPhoneSubInfo.Stub.asInterface(ServiceManager.getService("iphonesubinfo"));
     }
-
 
     /** Device call state: No activity. */
     public static final int CALL_STATE_IDLE = 0;
@@ -1237,7 +1239,10 @@ public class TelephonyManager {
         }
     }
 
-    private ITelephony getITelephony() {
+   /**
+    @hide
+    */
+    protected ITelephony getITelephony() {
         return ITelephony.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_SERVICE));
     }
 
