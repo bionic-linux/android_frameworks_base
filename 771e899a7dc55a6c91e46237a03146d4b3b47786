@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72a1b6b9_20414ac3",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1004552
+      },
+      "writtenOn": "2014-01-29T13:04:36Z",
+      "side": 1,
+      "message": "may be we can override these function.",
+      "revId": "771e899a7dc55a6c91e46237a03146d4b3b47786",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
