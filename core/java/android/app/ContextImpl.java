@@ -96,6 +96,7 @@ import android.os.storage.IMountService;
 import android.os.storage.StorageManager;
 import android.print.IPrintManager;
 import android.print.PrintManager;
+import android.telephony.MSimTelephonyManager;
 import android.telephony.TelephonyManager;
 import android.content.ClipboardManager;
 import android.util.AndroidRuntimeException;
@@ -499,7 +500,22 @@ class ContextImpl extends Context {
 
         registerService(TELEPHONY_SERVICE, new ServiceFetcher() {
                 public Object createService(ContextImpl ctx) {
-                    return new TelephonyManager(ctx.getOuterContext());
+                   // return new TelephonyManager(ctx.getOuterContext());
+                   //Always return MSimTelephonyManager which handle single sim cases as well.
+                   //As MSimTelephonyManager extended from TelephonyManager, apps referring
+                   //context.getSystemService("phone") get reference of MSimTelephonyManager
+                   //and those apps can invoke legacy TelephonyManager apis retaining backward
+                   //compatibility. MSim specific app can use MSimTelephonyManager instance
+                   //and call sub sepecific apis.
+                   //Here we are avoiding creating new service for MSIM "phone" using existing
+                   //phone service and still retaining backward compatibility.
+
+                    return new MSimTelephonyManager(ctx.getOuterContext());
+                }});
+
+        registerService(MSIM_TELEPHONY_SERVICE, new ServiceFetcher() {
+                public Object createService(ContextImpl ctx) {
+                    return new MSimTelephonyManager(ctx.getOuterContext());
                 }});
 
         registerService(UI_MODE_SERVICE, new ServiceFetcher() {
