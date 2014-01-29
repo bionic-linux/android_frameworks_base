@@ -16,6 +16,24 @@
       "revId": "a0398430fcf365fba6e42ad0bdca2fbf45ed6fe0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2b1820e_db17332e",
+        "filename": "core/jni/android_view_TextureView.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-29T12:19:42Z",
+      "side": 1,
+      "message": "Yes, you are right.",
+      "parentUuid": "929c6a85_2145ce2e",
+      "revId": "a0398430fcf365fba6e42ad0bdca2fbf45ed6fe0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
