@@ -68,7 +68,6 @@ public class MSimPhoneFactory extends PhoneFactory {
     static private SubscriptionManager mSubscriptionManager;
     static private MSimUiccController mUiccController;
 
-    static private DefaultPhoneProxy sDefaultPhoneProxy = null;
 
     //***** Class Methods
 
@@ -177,10 +176,6 @@ public class MSimPhoneFactory extends PhoneFactory {
                     }
                     Rlog.i(LOG_TAG, "Creating Phone with type = " + phoneType + " sub = " + i);
 
-                    if (sDefaultPhoneProxy == null) {
-                        sDefaultPhoneProxy = new DefaultPhoneProxy(phone);
-                    }
-
                     sProxyPhones[i] = new MSimPhoneProxy(phone);
                 }
                 mMSimProxyManager = MSimProxyManager.getInstance(context, sProxyPhones,
@@ -192,9 +187,6 @@ public class MSimPhoneFactory extends PhoneFactory {
                 sProxyPhone = sProxyPhones[MSimConstants.DEFAULT_SUBSCRIPTION];
                 sCommandsInterface = sCommandsInterfaces[MSimConstants.DEFAULT_SUBSCRIPTION];
                 sMadeDefaults = true;
-
-                sDefaultPhoneProxy.updateDefaultPhoneInSubInfo(sProxyPhone);
-                sDefaultPhoneProxy.updateDefaultSMSIntfManager(getSMSSubscription());
 
                 // Ensure that we have a default SMS app. Requesting the app with
                 // updateIfNeeded set to true is enough to configure a default SMS app.
@@ -262,9 +254,6 @@ public class MSimPhoneFactory extends PhoneFactory {
             sCommandsInterface = sCommandsInterfaces[subscription];
             sMadeDefaults = true;
         }
-
-        // Update the subinfo corresponds to the current defaut phone
-        sDefaultPhoneProxy.updatePhoneSubInfo(sProxyPhone.getPhoneSubInfo());
 
         // Update MCC MNC device configuration information
         String defaultMccMnc = MSimTelephonyManager.getDefault().getSimOperator(subscription);
@@ -432,7 +421,6 @@ public class MSimPhoneFactory extends PhoneFactory {
 
         // Change occured in SMS preferred sub, update the default
         // SMS interface Manager object with the new SMS preferred subscription.
-        sDefaultPhoneProxy.updateDefaultSMSIntfManager(subscription);
         Rlog.d(LOG_TAG, "setSMSSubscription : " + subscription);
     }
 }
