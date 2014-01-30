@@ -743,7 +743,7 @@ public final class ActivityThread {
             setCoreSettings(coreSettings);
 
             // Tell the VMRuntime about the application.
-            VMRuntime.registerAppInfo(appInfo.dataDir, appInfo.processName);
+            VMRuntime.registerAppInfo(appInfo.packageName, appInfo.dataDir, appInfo.processName);
 
             AppBindData data = new AppBindData();
             data.processName = processName;

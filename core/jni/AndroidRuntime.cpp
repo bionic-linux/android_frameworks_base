@@ -761,6 +761,37 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     }
 
     /*
+     * Set profiler options
+     */
+    {
+      char period[sizeof("-Xprofile-period:") + PROPERTY_VALUE_MAX];
+      char duration[sizeof("-Xprofile-duration:") + PROPERTY_VALUE_MAX];
+      char interval[sizeof("-Xprofile-interval:") + PROPERTY_VALUE_MAX];
+      char backoff[sizeof("-Xprofile-backoff:") + PROPERTY_VALUE_MAX];
+
+      strcpy(period, "-Xprofile-period:");
+      property_get("dalvik.vm.profile.period", period+17, "10");
+      opt.optionString = period;
+      mOptions.add(opt);
+
+      strcpy(duration, "-Xprofile-duration:");
+      property_get("dalvik.vm.profile.duration", duration+19, "30");
+      opt.optionString = duration;
+      mOptions.add(opt);
+
+
+      strcpy(interval, "-Xprofile-interval:");
+      property_get("dalvik.vm.profile.interval", interval+19, "10000");
+      opt.optionString = interval;
+      mOptions.add(opt);
+
+      strcpy(backoff, "-Xprofile-backoff:");
+      property_get("dalvik.vm.profile.backoff", backoff+18, "2.0");
+      opt.optionString = backoff;
+      mOptions.add(opt);
+    }
+
+    /*
      * We don't have /tmp on the device, but we often have an SD card.  Apps
      * shouldn't use this, but some test suites might want to exercise it.
      */
