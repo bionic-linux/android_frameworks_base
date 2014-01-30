@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "929c6a85_016e4a17",
+        "filename": "core/jni/android_view_Surface.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-30T09:47:18Z",
+      "side": 1,
+      "message": "This caused a terrible bug that took us several hours to track down.\n\nThe issue is that on 32 bit systems, surface.get() is will be a type that\u0027s 4 bytes wide. This is a varargs call on a constructor that\u0027s declared to take long, so the VM code will call the equivalent of va_arg(list, int64_t). Things will then blow up later because we\u0027ve just stuffed 4 bogus bytes into our long field.\n\nDavid, Ashok : Can we both independently audit all our calls to NewObject and CallXXXXXMethod to make sure this same error isn\u0027t repeated again ?",
+      "revId": "a0398430fcf365fba6e42ad0bdca2fbf45ed6fe0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929c6a85_2145ce2e",
         "filename": "core/jni/android_view_TextureView.cpp",
         "patchSetId": 6
