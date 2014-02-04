@@ -107,6 +107,17 @@ void PatchCache::clearCache() {
     mFreeBlocks = NULL;
 }
 
+bool PatchCache::hasItem(Vector<patch_pair_t>& patchesToRemove, Res_png_9patch* patch) {
+    for (size_t i = 0; i < patchesToRemove.size(); i++) {
+        const patch_pair_t& pair = patchesToRemove[i];
+        const PatchDescription& key = *pair.getFirst();
+        if (key.getPatch() == patch) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void PatchCache::remove(Vector<patch_pair_t>& patchesToRemove, Res_png_9patch* patch) {
     LruCache<PatchDescription, Patch*>::Iterator i(mCache);
     while (i.next()) {
@@ -130,7 +141,9 @@ void PatchCache::clearGarbage() {
         size_t count = mGarbage.size();
         for (size_t i = 0; i < count; i++) {
             Res_png_9patch* patch = mGarbage[i];
-            remove(patchesToRemove, patch);
+            if (!hasItem(patchesToRemove, patch)) {
+                remove(patchesToRemove, patch);
+            }
             // A Res_png_9patch is actually an array of byte that's larger
             // than sizeof(Res_png_9patch). It must be freed as an array.
             delete[] (int8_t*) patch;
@@ -143,8 +156,8 @@ void PatchCache::clearGarbage() {
     for (size_t i = 0; i < patchesToRemove.size(); i++) {
         const patch_pair_t& pair = patchesToRemove[i];
 
-        // Add a new free block to the list
-        const Patch* patch = pair.getSecond();
+        // Release the patch and mark the space in the free list
+        Patch* patch = pair.getSecond();
         BufferBlock* block = new BufferBlock(patch->offset, patch->getSize());
         block->next = mFreeBlocks;
         mFreeBlocks = block;
@@ -152,6 +165,7 @@ void PatchCache::clearGarbage() {
         mSize -= patch->getSize();
 
         mCache.remove(*pair.getFirst());
+        delete patch;
     }
 
 #if DEBUG_PATCHES
@@ -216,6 +230,7 @@ void PatchCache::setupMesh(Patch* newMesh, TextureVertex* vertices) {
         } else {
             mFreeBlocks = block->next;
         }
+        delete block;
     } else {
         // Resize the block now that it's occupied
         block->offset += size;
