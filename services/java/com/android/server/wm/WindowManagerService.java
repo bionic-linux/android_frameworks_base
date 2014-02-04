@@ -10106,6 +10106,11 @@ public class WindowManagerService extends IWindowManager.Stub
                 // We are only interested in differences of one of the
                 // clearable flags...
                 diff &= View.SYSTEM_UI_CLEARABLE_FLAGS;
+                // in immersive sticky mode, reasonable that clearable flags are restored
+                if ((curValue & View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) != 0) {
+                    diff &= ~(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
+                }
+
                 // ...if it has actually been cleared.
                 diff &= ~visibility;
                 int newValue = (curValue&~diff) | (visibility&diff);
