@@ -412,7 +412,8 @@ public class NavigationBarView extends LinearLayout {
     }
 
     public void setSlippery(boolean newSlippery) {
-        WindowManager.LayoutParams lp = (WindowManager.LayoutParams) getLayoutParams();
+        View root = (View)getParent();
+        WindowManager.LayoutParams lp = (WindowManager.LayoutParams) root.getLayoutParams();
         if (lp != null) {
             boolean oldSlippery = (lp.flags & WindowManager.LayoutParams.FLAG_SLIPPERY) != 0;
             if (!oldSlippery && newSlippery) {
@@ -423,7 +424,7 @@ public class NavigationBarView extends LinearLayout {
                 return;
             }
             WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
-            wm.updateViewLayout(this, lp);
+            wm.updateViewLayout(root, lp);
         }
     }
 

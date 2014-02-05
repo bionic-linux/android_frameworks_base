@@ -236,6 +236,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
     // on-screen navigation buttons
     private NavigationBarView mNavigationBarView = null;
+    private FrameLayout mNavigationBarViewRoot = null;
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
     // the tracker view
@@ -261,6 +262,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     int mSystemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE;
 
     DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+
+    // Current layout direction (LAYOUT_DIRECTION_LTR or LAYOUT_DIRECTION_RTL)
+    private int mLayoutDirection;
 
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
@@ -342,6 +346,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
     @Override
     public void start() {
+        mLayoutDirection = mContext.getResources().getConfiguration().getLayoutDirection();
+
         mDisplay = ((WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay();
         updateDisplaySize();
@@ -427,25 +433,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         updateShowSearchHoldoff();
 
-        try {
-            boolean showNav = mWindowManagerService.hasNavigationBar();
-            if (DEBUG) Log.v(TAG, "hasNavigationBar=" + showNav);
-            if (showNav) {
-                mNavigationBarView =
-                    (NavigationBarView) View.inflate(context, R.layout.navigation_bar, null);
-
-                mNavigationBarView.setDisabledFlags(mDisabled);
-                mNavigationBarView.setBar(this);
-                mNavigationBarView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        checkUserAutohide(v, event);
-                        return false;
-                    }});
-            }
-        } catch (RemoteException ex) {
-            // no window manager? good luck with that
-        }
+        inflateNavigationBar();
 
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;
@@ -651,6 +639,47 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         return mStatusBarView;
     }
 
+    private void inflateNavigationBar() {
+        try {
+            boolean showNav = mWindowManagerService.hasNavigationBar();
+            if (DEBUG) Log.v(TAG, "hasNavigationBar=" + showNav);
+            if (showNav) {
+                if (mNavigationBarViewRoot == null) {
+                    mNavigationBarViewRoot = new FrameLayout(mContext);
+                } else {
+                    mNavigationBarViewRoot.removeAllViews();
+                }
+
+                View.inflate(mContext, R.layout.navigation_bar, mNavigationBarViewRoot);
+                mNavigationBarView = (NavigationBarView)mNavigationBarViewRoot.getChildAt(0);
+
+                mNavigationBarView.setDisabledFlags(mDisabled);
+                mNavigationBarView.setBar(this);
+                mNavigationBarView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        checkUserAutohide(v, event);
+                        return false;
+                    }});
+            }
+        } catch (RemoteException ex) {
+            // no window manager? good luck with that
+        }
+    }
+
+    /**
+     * Reinflates the navigation bar, and re-does everything that is dependent on that
+     *
+     * Needed when layout direction has changed
+     */
+    private void reInflateNavigationBar() {
+        if (mNavigationBarView != null) {
+            inflateNavigationBar();
+            addNavigationBar();
+            checkBarModes();
+        }
+    }
+
     @Override
     protected void onShowSearchPanel() {
         if (mNavigationBarView != null) {
@@ -709,22 +738,22 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         // we want to freeze the sysui state wherever it is
         mSearchPanelView.setSystemUiVisibility(mSystemUiVisibility);
 
-        if (mNavigationBarView != null) {
+        if (mNavigationBarViewRoot != null) {
             WindowManager.LayoutParams lp =
-                (android.view.WindowManager.LayoutParams) mNavigationBarView.getLayoutParams();
+                (android.view.WindowManager.LayoutParams) mNavigationBarViewRoot.getLayoutParams();
             lp.flags &= ~WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-            mWindowManager.updateViewLayout(mNavigationBarView, lp);
+            mWindowManager.updateViewLayout(mNavigationBarViewRoot, lp);
         }
     }
 
     @Override
     public void hideSearchPanel() {
         super.hideSearchPanel();
-        if (mNavigationBarView != null) {
+        if (mNavigationBarViewRoot != null) {
             WindowManager.LayoutParams lp =
-                (android.view.WindowManager.LayoutParams) mNavigationBarView.getLayoutParams();
+                (android.view.WindowManager.LayoutParams) mNavigationBarViewRoot.getLayoutParams();
             lp.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-            mWindowManager.updateViewLayout(mNavigationBarView, lp);
+            mWindowManager.updateViewLayout(mNavigationBarViewRoot, lp);
         }
     }
 
@@ -803,15 +832,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         prepareNavigationBarView();
 
-        mWindowManager.addView(mNavigationBarView, getNavigationBarLayoutParams());
+        if (!mNavigationBarViewRoot.isAttachedToWindow()) {
+            mWindowManager.addView(mNavigationBarViewRoot, getNavigationBarLayoutParams());
+        }
     }
 
     private void repositionNavigationBar() {
-        if (mNavigationBarView == null || !mNavigationBarView.isAttachedToWindow()) return;
+        if (mNavigationBarViewRoot == null || !mNavigationBarViewRoot.isAttachedToWindow()) return;
 
         prepareNavigationBarView();
 
-        mWindowManager.updateViewLayout(mNavigationBarView, getNavigationBarLayoutParams());
+        mWindowManager.updateViewLayout(mNavigationBarViewRoot, getNavigationBarLayoutParams());
     }
 
     private void notifyNavigationBarScreenOn(boolean screenOn) {
@@ -2490,6 +2521,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     // SystemUIService notifies SystemBars of configuration changes, which then calls down here
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
+        int layoutDirection = newConfig.getLayoutDirection();
+        if (layoutDirection != mLayoutDirection) {
+            mLayoutDirection = layoutDirection;
+            // Need to inflate another layout for navbar - there is one LTR and one RTL version
+            reInflateNavigationBar();
+        }
+
         super.onConfigurationChanged(newConfig); // calls refreshLayout
 
         if (DEBUG) {
@@ -2724,8 +2762,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         if (mStatusBarWindow != null) {
             mWindowManager.removeViewImmediate(mStatusBarWindow);
         }
-        if (mNavigationBarView != null) {
-            mWindowManager.removeViewImmediate(mNavigationBarView);
+        if (mNavigationBarViewRoot != null) {
+            mWindowManager.removeViewImmediate(mNavigationBarViewRoot);
         }
         mContext.unregisterReceiver(mBroadcastReceiver);
     }
