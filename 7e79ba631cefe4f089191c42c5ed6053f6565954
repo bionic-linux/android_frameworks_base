@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2496e4f_12b20ce1",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-02-06T20:56:46Z",
+      "side": 1,
+      "message": "indent 2 more, to be consistent with the surrounding code.",
+      "revId": "7e79ba631cefe4f089191c42c5ed6053f6565954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "924e2a55_9107dce5",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-02-06T20:56:46Z",
+      "side": 1,
+      "message": "indent 2 more.",
+      "revId": "7e79ba631cefe4f089191c42c5ed6053f6565954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
