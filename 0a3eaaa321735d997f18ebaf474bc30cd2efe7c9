@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "323d7e9f_b10e9a90",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T18:41:38Z",
+      "side": 1,
+      "message": "There shouldn\u0027t be any need to reassign hasPrimaryAbi here anymore if we performed the check correctly in the first place above.",
+      "revId": "0a3eaaa321735d997f18ebaf474bc30cd2efe7c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
