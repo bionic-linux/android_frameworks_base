@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "123a3aa9_d3032c67",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "\u003c/p\u003e\u003cp\u003e\n  This method cannot be used if the transaction was started by a call to {@link #setSavepoint}.\n  \u003c/p\u003e",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_53181cd3",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "throwIfTransactionStartedBySavepoint();",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_33a2b026",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "\u003c/p\u003e\u003cp\u003e\n  This method cannot be used if the transaction was started by a call to {@link #setSavepoint}.\n  \u003c/p\u003e",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_93b0c475",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "throwIfTransactionStartedBySavepoint();",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_b23a184b",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "\u003c/p\u003e\u003cp\u003e\n  This method cannot be used if the transaction was started by a call to {@link #setSavepoint}.\n  \u003c/p\u003e",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_924efc01",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "throwIfTransactionStartedBySavepoint();",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_7480a0df",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "Remove \"If the transaction is not successful\"",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_14ed9c9e",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "\u003c/p\u003e\u003cp\u003e\n  Savepoints can be created within transactions but not within nested transactions.  It is also not possible to nest transactions within savepoints.\n  \u003c/p\u003e",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_97b34e18",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "if (name \u003d\u003d null) {\n   throw new IllegalArgumentException(\"name must not be null\");\n}",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_944eec01",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "throwIfNestedTransaction();",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_12912cf8",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "// If the transaction is being started by setSavepoint, then remember the\n  // name of the outermost savepoint so that a call to releaseSavepoint\n  // will be able to end the transaction.",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_74f42069",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "Move this line before we modify the transaction stack.  We need to ensure the command was successful before we modify the state of the session, otherwise we\u0027ll leave things in a dirty state.\n\n  \ntry {\n  if (mTransactionStack \u003d\u003d null) {\n    acquireConnection();\n  }\n\n  mConnection.execute(...); // might throw\n\n  // rememeber the name of the outermost savepoint\n  if (mTransactionStack \u003d\u003d null) {\n     Transaction transaction \u003d ...\n  }\n} finally {\n   if (mTransactionStack \u003d\u003d null) {\n     releaseConnection();\n   }\n}\n\nThe order matters here in case the call to execute() fails.  We need to ensure that we release the connection if we acquired it.  We also must defer bookkeeping updates until we know the operation was successful.",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_17c11e6e",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "if (name \u003d\u003d null) {\n   throw new IllegalArgumentException(\"name must not be null\");\n}",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_779a62a4",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "throwIfNoTransaction();",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_b22db8ab",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "Need an extra space.\n\n\"This method releases (commits) the changes.\"",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_f7dbb260",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "if (name \u003d\u003d null) {\n   throw new IllegalArgumentException(\"name must not be null\");\n}",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_d367ac36",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "throwIfNoTransaction();",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_337f10c2",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "order matters here, this must be done after updating the bookkeeping in case an error occurs we still want to end the transaction and release the connection.\n\nfinal Transaction top \u003d mTransactionStack;\nif (top.mOuterSavepointName !\u003d null \u0026\u0026 top.mOutersavepointName.equals(name)) {\n   // releasing outermost savepoint ends the transaction\n   mTransactionStack \u003d null;\n   recycleTransaction(top);\n}\n\ntry {\n    mConnection.execute(...); // might throw\n} finally {\n   if (mTransactionStack \u003d\u003d null) {\n      releaseConnection(); // might throw\n   }\n}",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_b3d14045",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "Remove this condition.",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_d4979434",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "throwIfTransactionStartedBySavepoint();",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_7327d8db",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:10:18Z",
+      "side": 1,
+      "message": "We don\u0027t need this method but we do need the following:\n\nprivate void throwIfTransactionStartedBySavepoint() {\n   if (mTransactionStack !\u003d null \u0026\u0026 mTransactionStack.mOuterSavepointName !\u003d null) {\n     throw new IllegalStateException(\"Cannot perform this operation within a transaction started by a savepoint\");\n   }\n}",
+      "revId": "6203bf6cff58c50b4eb4603aec37301702916c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
