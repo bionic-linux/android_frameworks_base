@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "123a3aa9_edabe522",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-02-08T00:31:43Z",
+      "side": 1,
+      "message": "remove trailing ws",
+      "range": {
+        "startLine": 1293,
+        "startChar": 91,
+        "endLine": 1293,
+        "endChar": 92
+      },
+      "revId": "8846bd7c92df4c12df62b45626198479fa2d07c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_6c57fbb9",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-02-08T00:31:43Z",
+      "side": 1,
+      "message": "remove ws here an below.",
+      "range": {
+        "startLine": 749,
+        "startChar": 0,
+        "endLine": 749,
+        "endChar": 8
+      },
+      "revId": "8846bd7c92df4c12df62b45626198479fa2d07c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_6e6a8f46",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-02-08T00:31:43Z",
+      "side": 1,
+      "message": "long line.",
+      "revId": "8846bd7c92df4c12df62b45626198479fa2d07c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf1ab966_13d86cbb",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-02-08T00:31:43Z",
+      "side": 1,
+      "message": "Instead of returning 0 or 1 it should actually contain the array of values.",
+      "range": {
+        "startLine": 752,
+        "startChar": 12,
+        "endLine": 752,
+        "endChar": 26
+      },
+      "revId": "8846bd7c92df4c12df62b45626198479fa2d07c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
