@@ -291,6 +291,51 @@ iterateOverNativeFiles(JNIEnv *env, jstring javaFilePath, jstring javaCpuAbi, js
     }
 
     ZipEntryRO entry = NULL;
+    //scan apk to check whether there is primary abi lib
+    while ((entry = zipFile->nextEntry(cookie)) != NULL) {
+        // Make sure this entry has a filename.
+        if (zipFile->getEntryFileName(entry, fileName, sizeof(fileName))) {
+            continue;
+        }
+
+        // Make sure we're in the lib directory of the ZIP.
+        if (strncmp(fileName, APK_LIB, APK_LIB_LEN)) {
+            continue;
+        }
+
+        // Make sure the filename is at least to the minimum library name size.
+        const size_t fileNameLen = strlen(fileName);
+        static const size_t minLength = APK_LIB_LEN + 2 + LIB_PREFIX_LEN + 1 + LIB_SUFFIX_LEN;
+        if (fileNameLen < minLength) {
+            continue;
+        }
+
+        const char* lastSlash = strrchr(fileName, '/');
+        ALOG_ASSERT(lastSlash != NULL, "last slash was null somehow for %s\n", fileName);
+
+        // Check to make sure the CPU ABI of this file is one we support.
+        const char* cpuAbiOffset = fileName + APK_LIB_LEN;
+        const size_t cpuAbiRegionSize = lastSlash - cpuAbiOffset;
+
+        ALOGV("Comparing Primary ABIs %s versus %s\n", cpuAbi.c_str(), cpuAbiOffset);
+        if (cpuAbi.size() == cpuAbiRegionSize
+                && *(cpuAbiOffset + cpuAbi.size()) == '/'
+                && !strncmp(cpuAbiOffset, cpuAbi.c_str(), cpuAbiRegionSize)) {
+            ALOGV("Finding primary ABI %s\n", cpuAbi.c_str());
+            hasPrimaryAbi = true;
+            break;
+        }
+    }
+    zipFile->endIteration(cookie);
+
+    //If hasPrimaryABI == true after above scan, we can make sure secondary abi lib won't be copied into device
+    //to avoid mix ABI libs copyied into device
+    cookie = NULL;
+    if (!zipFile->startIteration(&cookie)) {
+        ALOGI("Couldn't iterate over APK%s\n", filePath.c_str());
+        return INSTALL_FAILED_INVALID_APK;
+    }
+    entry = NULL;
     while ((entry = zipFile->nextEntry(cookie)) != NULL) {
         // Make sure this entry has a filename.
         if (zipFile->getEntryFileName(entry, fileName, sizeof(fileName))) {
@@ -321,7 +366,6 @@ iterateOverNativeFiles(JNIEnv *env, jstring javaFilePath, jstring javaCpuAbi, js
                 && *(cpuAbiOffset + cpuAbi.size()) == '/'
                 && !strncmp(cpuAbiOffset, cpuAbi.c_str(), cpuAbiRegionSize)) {
             ALOGV("Using primary ABI %s\n", cpuAbi.c_str());
-            hasPrimaryAbi = true;
         } else if (cpuAbi2.size() == cpuAbiRegionSize
                 && *(cpuAbiOffset + cpuAbi2.size()) == '/'
                 && !strncmp(cpuAbiOffset, cpuAbi2.c_str(), cpuAbiRegionSize)) {
