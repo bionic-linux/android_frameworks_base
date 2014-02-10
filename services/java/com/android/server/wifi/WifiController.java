@@ -471,6 +471,9 @@ class WifiController extends StateMachine {
                         } else {
                             transitionTo(mApStaDisabledState);
                         }
+                    } else if (mWifiStateMachine.syncGetWifiState() == WifiManager.WIFI_STATE_DISABLED) {
+                        deferMessage(msg);
+                        transitionTo(mApStaDisabledState);
                     }
                     break;
                 case CMD_AIRPLANE_TOGGLED:
