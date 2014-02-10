@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa05d5c_fff91b9b",
+        "filename": "libs/hwui/utils/TinyHashMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-02-10T19:44:08Z",
+      "side": 0,
+      "message": "Damn, this was a very misleading comment. hash_t( ) was a compiler generated cast and not a function as this comment implies.",
+      "revId": "449273e2d575041ffe1a5d435666d36923de888b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
