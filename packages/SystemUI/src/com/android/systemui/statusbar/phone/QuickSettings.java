@@ -429,46 +429,21 @@ class QuickSettings {
         parent.addView(wifiTile);
 
         if (mModel.deviceHasMobileData()) {
-            // RSSI
-            QuickSettingsTileView rssiTile = (QuickSettingsTileView)
-                    inflater.inflate(R.layout.quick_settings_tile, parent, false);
-            rssiTile.setContent(R.layout.quick_settings_tile_rssi, inflater);
-            rssiTile.setOnClickListener(new View.OnClickListener() {
+            // Data Usage
+            QuickSettingsBasicTile datausageTile = new QuickSettingsBasicTile(mContext);
+            datausageTile.setImageResource(R.drawable.ic_qs_data_usage);
+            datausageTile.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                    public void onClick(View v) {
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName(
-                            "com.android.settings",
-                            "com.android.settings.Settings$DataUsageSummaryActivity"));
+                        "com.android.settings","com.android.settings.Settings$DataUsageSummaryActivity"));
                     startSettingsActivity(intent);
                 }
             });
-            mModel.addRSSITile(rssiTile, new NetworkActivityCallback() {
-                @Override
-                public void refreshView(QuickSettingsTileView view, State state) {
-                    RSSIState rssiState = (RSSIState) state;
-                    ImageView iv = (ImageView) view.findViewById(R.id.rssi_image);
-                    ImageView iov = (ImageView) view.findViewById(R.id.rssi_overlay_image);
-                    TextView tv = (TextView) view.findViewById(R.id.rssi_textview);
-                    // Force refresh
-                    iv.setImageDrawable(null);
-                    iv.setImageResource(rssiState.signalIconId);
-
-                    if (rssiState.dataTypeIconId > 0) {
-                        iov.setImageResource(rssiState.dataTypeIconId);
-                    } else {
-                        iov.setImageDrawable(null);
-                    }
-                    setActivity(view, rssiState);
-
-                    tv.setText(state.label);
-                    view.setContentDescription(mContext.getResources().getString(
-                            R.string.accessibility_quick_settings_mobile,
-                            rssiState.signalContentDescription, rssiState.dataContentDescription,
-                            state.label));
-                }
-            });
-            parent.addView(rssiTile);
+            mModel.addDataUsageTile(datausageTile,
+                    new QuickSettingsModel.BasicRefreshCallback(datausageTile));
+            parent.addView(datausageTile);
         }
 
         // Rotation Lock
