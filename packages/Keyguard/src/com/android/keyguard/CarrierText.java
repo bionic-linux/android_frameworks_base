@@ -17,10 +17,14 @@
 package com.android.keyguard;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.text.method.SingleLineTransformationMethod;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.internal.telephony.IccCardConstants;
@@ -28,36 +32,47 @@ import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.widget.LockPatternUtils;
 
 import java.util.Locale;
+import android.util.Log;
 
-public class CarrierText extends TextView {
+public class CarrierText extends LinearLayout {
+    private static final String TAG = "CarrierText";
+    private static final boolean DEBUG = KeyguardViewMediator.DEBUG;
     private static CharSequence mSeparator;
 
     private LockPatternUtils mLockPatternUtils;
 
-    private KeyguardUpdateMonitorCallback mCallback = new KeyguardUpdateMonitorCallback() {
-        private CharSequence mPlmn;
-        private CharSequence mSpn;
-        private State mSimState;
+    private KeyguardUpdateMonitor mUpdateMonitor;
+    private int mNumOfSim;
+    private TextView mCarrierView[];
+    private TextView mCarrierDivider[];
+    private CharSequence mPlmn[];
+    private CharSequence mSpn[];
+    private State mSimState[];
 
+    private KeyguardUpdateMonitorCallback mCallback = new KeyguardUpdateMonitorCallback() {
         @Override
-        public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn) {
-            mPlmn = plmn;
-            mSpn = spn;
-            updateCarrierText(mSimState, mPlmn, mSpn);
+        public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn, int simId) {
+            mPlmn[simId] = plmn;
+            mSpn[simId] = spn;
+            updateCarrierText(mSimState[simId], mPlmn[simId], mSpn[simId], simId);
         }
 
         @Override
-        public void onSimStateChanged(IccCardConstants.State simState) {
-            mSimState = simState;
-            updateCarrierText(mSimState, mPlmn, mSpn);
+        public void onSimStateChanged(IccCardConstants.State simState, int simId) {
+            mSimState[simId] = simState;
+            updateCarrierText(mSimState[simId], mPlmn[simId], mSpn[simId], simId);
         }
 
         public void onScreenTurnedOff(int why) {
-            setSelected(false);
+            for (int i = 0; i < mNumOfSim; i++) {
+                mCarrierView[i].setSelected(false);
+            }
         };
 
         public void onScreenTurnedOn() {
-            setSelected(true);
+            for (int i = 0; i < mNumOfSim; i++) {
+                mCarrierView[i].setSelected(true);
+            }
         };
     };
     /**
@@ -80,13 +95,32 @@ public class CarrierText extends TextView {
 
     public CarrierText(Context context, AttributeSet attrs) {
         super(context, attrs);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+            inflater.inflate(R.layout.keyguard_carrier_text_view, this, true);
+        
         mLockPatternUtils = new LockPatternUtils(mContext);
-        boolean useAllCaps = mContext.getResources().getBoolean(R.bool.kg_use_all_caps);
-        setTransformationMethod(new CarrierTextTransformationMethod(mContext, useAllCaps));
+        mUpdateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
+        mNumOfSim = mUpdateMonitor.getNumOfPhone();
+
+        // the carrier and carrier divider number is defined in layout: keyguard_carrier_text_view.xml
+        mCarrierView = new TextView[4];
+        mCarrierDivider = new TextView[3];
+        mSimState = new State[mNumOfSim];
+        mPlmn = new CharSequence[mNumOfSim];
+        mSpn = new CharSequence[mNumOfSim];
     }
 
-    protected void updateCarrierText(State simState, CharSequence plmn, CharSequence spn) {
-        setText(getCarrierTextForSimState(simState, plmn, spn));
+    protected void updateCarrierText(State simState, CharSequence plmn, CharSequence spn, int simId) {
+        Log.d(TAG, "updateCarrierText, simState=" + simState + " plmn=" + plmn + " spn=" + spn +" simId=" + simId);
+        
+        CharSequence text = getCarrierTextForSimState(simState, plmn, spn);
+        TextView updateCarrierView = mCarrierView[simId];
+        if (mContext.getResources().getBoolean(R.bool.kg_use_all_caps)) {
+            updateCarrierView.setText(text != null ? text.toString().toUpperCase() : null);
+        } else {
+            updateCarrierView.setText(text != null ? text.toString() : null);
+        }
     }
 
     @Override
@@ -95,6 +129,32 @@ public class CarrierText extends TextView {
         mSeparator = getResources().getString(R.string.kg_text_message_separator);
         final boolean screenOn = KeyguardUpdateMonitor.getInstance(mContext).isScreenOn();
         setSelected(screenOn); // Allow marquee to work.
+
+        mCarrierView[0] = (TextView) findViewById(R.id.carrier_1);
+        mCarrierView[1] = (TextView) findViewById(R.id.carrier_2);
+        mCarrierView[2] = (TextView) findViewById(R.id.carrier_3);
+        mCarrierView[3] = (TextView) findViewById(R.id.carrier_4);
+        mCarrierDivider[0] = (TextView) findViewById(R.id.carrier_divider_1);
+        mCarrierDivider[1] = (TextView) findViewById(R.id.carrier_divider_2);
+        mCarrierDivider[2] = (TextView) findViewById(R.id.carrier_divider_3);
+        mCarrierView[0].setSelected(true);
+        mCarrierView[1].setSelected(true);
+        mCarrierView[2].setSelected(true);
+        mCarrierView[3].setSelected(true);
+
+        for (int i = 0; i < mNumOfSim; i++) {
+            mCarrierView[i].setVisibility(View.VISIBLE);
+            if (i < mNumOfSim-1) {
+                mCarrierDivider[i].setVisibility(View.VISIBLE);
+                mCarrierDivider[i].setText("|");
+            }
+        
+        }
+        
+        if (mNumOfSim == 2) {
+            mCarrierView[0].setGravity(Gravity.END);
+            mCarrierView[1].setGravity(Gravity.START);
+        }
     }
 
     @Override
@@ -122,6 +182,7 @@ public class CarrierText extends TextView {
             CharSequence plmn, CharSequence spn) {
         CharSequence carrierText = null;
         StatusMode status = getStatusForIccState(simState);
+        if(DEBUG) Log.d(TAG, "getCarrierTextForSimState: status=" + status + " plmn=" + plmn + " spn=" + spn);
         switch (status) {
             case Normal:
                 carrierText = concatenate(plmn, spn);
@@ -170,6 +231,7 @@ public class CarrierText extends TextView {
                 break;
         }
 
+        if(DEBUG) Log.d(TAG, "getCarrierTextForSimState: carrierText=" + carrierText);
         return carrierText;
     }
 
@@ -265,24 +327,4 @@ public class CarrierText extends TextView {
         return mContext.getText(carrierHelpTextId);
     }
 
-    private class CarrierTextTransformationMethod extends SingleLineTransformationMethod {
-        private final Locale mLocale;
-        private final boolean mAllCaps;
-
-        public CarrierTextTransformationMethod(Context context, boolean allCaps) {
-            mLocale = context.getResources().getConfiguration().locale;
-            mAllCaps = allCaps;
-        }
-
-        @Override
-        public CharSequence getTransformation(CharSequence source, View view) {
-            source = super.getTransformation(source, view);
-
-            if (mAllCaps && source != null) {
-                source = source.toString().toUpperCase(mLocale);
-            }
-
-            return source;
-        }
-    }
 }

@@ -117,7 +117,7 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
         }
 
         @Override
-        public void onSimStateChanged(State simState) {
+        public void onSimStateChanged(State simState, int simId) {
             updateTargets();
         }
     };

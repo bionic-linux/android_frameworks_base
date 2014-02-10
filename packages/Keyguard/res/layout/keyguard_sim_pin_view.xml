@@ -29,14 +29,51 @@
     android:gravity="center_horizontal">
 
     <ImageView
+        android:id="@+id/sim_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_lockscreen_sim"/>
+        android:src="@drawable/ic_lockscreen_sim"
+        />
 
     <include layout="@layout/keyguard_message_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+    />
+
+    <LinearLayout
+        android:id="@+id/sim_info_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/for_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textDirection = "locale"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" 
+            />
+        <TextView
+            android:id="@+id/sim_card_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="middle"
+            android:maxWidth="110dip"
+            android:singleLine="true"
+            android:textDirection = "locale"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" 
+            />
+    </LinearLayout>
+
     <LinearLayout
        android:id="@+id/keyguard_bouncer_frame"
        android:background="@drawable/kg_bouncer_bg_white"
@@ -192,10 +229,13 @@
            android:layout_weight="1"
            android:orientation="horizontal"
            >
-           <Space
+           <Button
+               android:id="@+id/key_dismiss"
+               style="@style/DismissPadKey"
                android:layout_width="0px"
                android:layout_height="match_parent"
                android:layout_weight="1"
+               android:visibility="invisible"
                />
            <view class="com.android.keyguard.NumPadKey"
                android:id="@+id/key0"
