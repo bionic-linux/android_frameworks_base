@@ -20,9 +20,8 @@
 
 <com.android.systemui.statusbar.SignalClusterView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:gravity="center"
     android:orientation="horizontal"
     >
     <FrameLayout
@@ -39,10 +38,16 @@
             android:layout_centerVertical="true"
             android:scaleType="center"
             />
+        <ImageView
+            android:id="@+id/wifi_inout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center|bottom"
+            />
     </FrameLayout>
     <View
-        android:layout_height="6dp"
-        android:layout_width="6dp"
+        android:layout_height="8dp"
+        android:layout_width="8dp"
         android:visibility="gone"
         android:id="@+id/spacer"
         />
@@ -62,15 +67,21 @@
             />
     </FrameLayout>
     -->
-    <FrameLayout
+
+    <LinearLayout
+        android:id="@+id/signal_cluster_combo"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         >
-        <View
-            android:layout_height="6dp"
-            android:layout_width="6dp"
-            android:visibility="invisible"
+        <!-- network type configuration start -->
+        <ImageView
+            android:id="@+id/network_type"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
             />
+        <!-- network type configuration end -->
+
         <FrameLayout
             android:id="@+id/mobile_combo"
             android:layout_width="wrap_content"
@@ -80,14 +91,221 @@
                 android:id="@+id/mobile_signal"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                />
+                /> 
             <ImageView
                 android:id="@+id/mobile_type"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 />
+            <ImageView
+                android:id="@+id/mobile_roaming"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                />
+            <ImageView
+                android:id="@+id/mobile_inout"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end|bottom"
+                /> 
         </FrameLayout>
-    </FrameLayout>
+    </LinearLayout>
+
+    <!-- the 2nd sim card start -->
+    <View
+        android:layout_height="1dp"
+        android:layout_width="1dp"
+        android:tag="spacer_2"
+        android:visibility="gone"
+        android:id="@+id/spacer_2"
+        />
+    <View
+        android:layout_height="1dp"
+        android:layout_width="1dp"
+        android:visibility="invisible"
+        />
+    <LinearLayout
+        android:id="@+id/signal_cluster_combo_2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:tag="signal_cluster_combo_2"
+        >
+        <!--network type configuration start -->
+        <ImageView
+            android:id="@+id/network_type_2"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:tag="network_type_2"
+            />
+        <!--network type configuration end -->
+
+        <FrameLayout
+            android:id="@+id/mobile_combo_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="mobile_combo_2"
+            >
+            <ImageView
+                android:id="@+id/mobile_signal_2"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:tag="mobile_signal_2"
+                /> 
+            <ImageView
+                android:id="@+id/mobile_type_2"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:tag="mobile_type_2"
+                />
+            <ImageView
+                android:id="@+id/mobile_roaming_2"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:tag="mobile_roaming_2"
+                />
+            <ImageView
+                android:id="@+id/mobile_inout_2"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:tag="mobile_inout_2"
+                /> 
+        </FrameLayout>
+    </LinearLayout>
+    <!-- the 2nd sim card end -->
+    
+    <!-- the 3rd sim card start -->
+    <View
+        android:layout_height="1dp"
+        android:layout_width="1dp"
+        android:visibility="gone"
+        android:id="@+id/spacer_3"
+        android:tag="spacer_3"
+        />
+    <View
+        android:layout_height="1dp"
+        android:layout_width="1dp"
+        android:visibility="invisible"
+        />
+    <LinearLayout
+        android:id="@+id/signal_cluster_combo_3"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:tag="signal_cluster_combo_3"
+        >
+        <!--network type configuration start -->
+        <ImageView
+            android:id="@+id/network_type_3"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:tag="network_type_3"
+            />
+        <!--network type configuration end -->
+
+        <FrameLayout
+            android:id="@+id/mobile_combo_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="mobile_combo_3"
+            >
+            <ImageView
+                android:id="@+id/mobile_signal_3"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:tag="mobile_signal_3"
+                /> 
+            <ImageView
+                android:id="@+id/mobile_type_3"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:tag="mobile_type_3"
+                />
+            <ImageView
+                android:id="@+id/mobile_roaming_3"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:tag="mobile_roaming_3"
+                />
+            <ImageView
+                android:id="@+id/mobile_inout_3"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:tag="mobile_inout_3"
+                /> 
+        </FrameLayout>
+    </LinearLayout>
+    <!-- the 3rd sim card end -->
+    
+    
+    <!-- the 4th sim card start -->
+    <View
+        android:layout_height="1dp"
+        android:layout_width="1dp"
+        android:visibility="gone"
+        android:id="@+id/spacer_4"
+        android:tag="spacer_4"
+        />
+    <View
+        android:layout_height="1dp"
+        android:layout_width="1dp"
+        android:visibility="invisible"
+        />
+    <LinearLayout
+        android:id="@+id/signal_cluster_combo_4"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:tag="signal_cluster_combo_4"
+        >
+        <!--network type configuration start -->
+        <ImageView
+            android:id="@+id/network_type_4"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:tag="network_type_4"
+            />
+        <!--network type configuration end -->
+
+        <FrameLayout
+            android:id="@+id/mobile_combo_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="mobile_combo_4"
+            >
+            <ImageView
+                android:id="@+id/mobile_signal_4"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:tag="mobile_signal_4"
+                /> 
+            <ImageView
+                android:id="@+id/mobile_type_4"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:tag="mobile_type_4"
+                />
+            <ImageView
+                android:id="@+id/mobile_roaming_4"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:tag="mobile_roaming_4"
+                />
+            <ImageView
+                android:id="@+id/mobile_inout_4"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:tag="mobile_inout_4"
+                /> 
+        </FrameLayout>
+    </LinearLayout>
     <ImageView
         android:id="@+id/airplane"
         android:layout_height="wrap_content"
