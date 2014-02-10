@@ -19,20 +19,42 @@ package com.android.systemui.statusbar.policy;
 import com.android.systemui.R;
 
 class TelephonyIcons {
+    public static final int Type_1X = 0;
+    public static final int Type_3G = 1;
+    public static final int Type_4G = 2;
+    public static final int Type_E = 3;
+    public static final int Type_G = 4;
+    public static final int Type_H = 5;
+    public static final int Type_H_PLUS = 6;
+
+
     //***** Signal strength icons
+    public static int[] getTelephonySignalStrengthIconList(int simColorId) {
+        return TELEPHONY_SIGNAL_STRENGTH[simColorId];
+    }
 
     //GSM/UMTS
     static final int[][] TELEPHONY_SIGNAL_STRENGTH = {
-        { R.drawable.stat_sys_signal_0_fully,
-          R.drawable.stat_sys_signal_1_fully,
-          R.drawable.stat_sys_signal_2_fully,
-          R.drawable.stat_sys_signal_3_fully,
-          R.drawable.stat_sys_signal_4_fully },
-        { R.drawable.stat_sys_signal_0_fully,
-          R.drawable.stat_sys_signal_1_fully,
-          R.drawable.stat_sys_signal_2_fully,
-          R.drawable.stat_sys_signal_3_fully,
-          R.drawable.stat_sys_signal_4_fully }
+        { R.drawable.stat_sys_sim_signal_0,
+            R.drawable.stat_sys_sim_signal_1_blue,
+            R.drawable.stat_sys_sim_signal_2_blue,
+            R.drawable.stat_sys_sim_signal_3_blue,
+            R.drawable.stat_sys_sim_signal_4_blue },
+          { R.drawable.stat_sys_sim_signal_0,
+            R.drawable.stat_sys_sim_signal_1_orange,
+            R.drawable.stat_sys_sim_signal_2_orange,
+            R.drawable.stat_sys_sim_signal_3_orange,
+            R.drawable.stat_sys_sim_signal_4_orange },
+          { R.drawable.stat_sys_sim_signal_0,
+            R.drawable.stat_sys_sim_signal_1_green,
+            R.drawable.stat_sys_sim_signal_2_green,
+            R.drawable.stat_sys_sim_signal_3_green,
+            R.drawable.stat_sys_sim_signal_4_green },
+          { R.drawable.stat_sys_sim_signal_0,
+            R.drawable.stat_sys_sim_signal_1_purple,
+            R.drawable.stat_sys_sim_signal_2_purple,
+            R.drawable.stat_sys_sim_signal_3_purple,
+            R.drawable.stat_sys_sim_signal_4_purple }
     };
 
     static final int[][] QS_TELEPHONY_SIGNAL_STRENGTH = {
@@ -49,16 +71,26 @@ class TelephonyIcons {
     };
 
     static final int[][] TELEPHONY_SIGNAL_STRENGTH_ROAMING = {
-        { R.drawable.stat_sys_signal_0_fully,
-          R.drawable.stat_sys_signal_1_fully,
-          R.drawable.stat_sys_signal_2_fully,
-          R.drawable.stat_sys_signal_3_fully,
-          R.drawable.stat_sys_signal_4_fully },
-        { R.drawable.stat_sys_signal_0_fully,
-          R.drawable.stat_sys_signal_1_fully,
-          R.drawable.stat_sys_signal_2_fully,
-          R.drawable.stat_sys_signal_3_fully,
-          R.drawable.stat_sys_signal_4_fully }
+        { R.drawable.stat_sys_sim_signal_0,
+            R.drawable.stat_sys_sim_signal_1_blue,
+            R.drawable.stat_sys_sim_signal_2_blue,
+            R.drawable.stat_sys_sim_signal_3_blue,
+            R.drawable.stat_sys_sim_signal_4_blue },
+          { R.drawable.stat_sys_sim_signal_0,
+            R.drawable.stat_sys_sim_signal_1_orange,
+            R.drawable.stat_sys_sim_signal_2_orange,
+            R.drawable.stat_sys_sim_signal_3_orange,
+            R.drawable.stat_sys_sim_signal_4_orange },
+          { R.drawable.stat_sys_sim_signal_0,
+            R.drawable.stat_sys_sim_signal_1_green,
+            R.drawable.stat_sys_sim_signal_2_green,
+            R.drawable.stat_sys_sim_signal_3_green,
+            R.drawable.stat_sys_sim_signal_4_green },
+          { R.drawable.stat_sys_sim_signal_0,
+            R.drawable.stat_sys_sim_signal_1_purple,
+            R.drawable.stat_sys_sim_signal_2_purple,
+            R.drawable.stat_sys_sim_signal_3_purple,
+            R.drawable.stat_sys_sim_signal_4_purple }
     };
 
     static final int[] QS_DATA_R = {
@@ -71,64 +103,60 @@ class TelephonyIcons {
     //***** Data connection icons
 
     //GSM/UMTS
-    static final int[][] DATA_G = {
-            { R.drawable.stat_sys_data_fully_connected_g,
-              R.drawable.stat_sys_data_fully_connected_g,
-              R.drawable.stat_sys_data_fully_connected_g,
-              R.drawable.stat_sys_data_fully_connected_g },
-            { R.drawable.stat_sys_data_fully_connected_g,
-              R.drawable.stat_sys_data_fully_connected_g,
-              R.drawable.stat_sys_data_fully_connected_g,
-              R.drawable.stat_sys_data_fully_connected_g }
-        };
+    static final int[] DATA_G = {
+        R.drawable.stat_sys_sim_data_connected_g_blue,
+        R.drawable.stat_sys_sim_data_connected_g_orange,
+        R.drawable.stat_sys_sim_data_connected_g_green,
+        R.drawable.stat_sys_sim_data_connected_g_purple,
+        R.drawable.stat_sys_sim_data_connected_g_blue
+    };
 
     static final int[] QS_DATA_G = {
         R.drawable.ic_qs_signal_g,
         R.drawable.ic_qs_signal_full_g
     };
 
-    static final int[][] DATA_3G = {
-            { R.drawable.stat_sys_data_fully_connected_3g,
-              R.drawable.stat_sys_data_fully_connected_3g,
-              R.drawable.stat_sys_data_fully_connected_3g,
-              R.drawable.stat_sys_data_fully_connected_3g },
-            { R.drawable.stat_sys_data_fully_connected_3g,
-              R.drawable.stat_sys_data_fully_connected_3g,
-              R.drawable.stat_sys_data_fully_connected_3g,
-              R.drawable.stat_sys_data_fully_connected_3g }
-        };
+    static final int[] DATA_3G = {
+        R.drawable.stat_sys_sim_data_connected_3g_blue,
+        R.drawable.stat_sys_sim_data_connected_3g_orange,
+        R.drawable.stat_sys_sim_data_connected_3g_green,
+        R.drawable.stat_sys_sim_data_connected_3g_purple,
+        R.drawable.stat_sys_sim_data_connected_3g_blue
+    };
 
     static final int[] QS_DATA_3G = {
         R.drawable.ic_qs_signal_3g,
         R.drawable.ic_qs_signal_full_3g
     };
 
-    static final int[][] DATA_E = {
-            { R.drawable.stat_sys_data_fully_connected_e,
-              R.drawable.stat_sys_data_fully_connected_e,
-              R.drawable.stat_sys_data_fully_connected_e,
-              R.drawable.stat_sys_data_fully_connected_e },
-            { R.drawable.stat_sys_data_fully_connected_e,
-              R.drawable.stat_sys_data_fully_connected_e,
-              R.drawable.stat_sys_data_fully_connected_e,
-              R.drawable.stat_sys_data_fully_connected_e }
-        };
-
+    static final int[] DATA_E = {
+        R.drawable.stat_sys_sim_data_connected_e_blue,
+        R.drawable.stat_sys_sim_data_connected_e_orange,
+        R.drawable.stat_sys_sim_data_connected_e_green,
+        R.drawable.stat_sys_sim_data_connected_e_purple,
+        R.drawable.stat_sys_sim_data_connected_e_blue
+    };
     static final int[] QS_DATA_E = {
         R.drawable.ic_qs_signal_e,
         R.drawable.ic_qs_signal_full_e
     };
 
+    //3.5G    
+    static final int[] DATA_H = {
+        R.drawable.stat_sys_sim_data_connected_h_blue,
+        R.drawable.stat_sys_sim_data_connected_h_orange,
+        R.drawable.stat_sys_sim_data_connected_h_green,
+        R.drawable.stat_sys_sim_data_connected_h_purple,
+        R.drawable.stat_sys_sim_data_connected_h_blue
+    };
+
     //3.5G
-    static final int[][] DATA_H = {
-            { R.drawable.stat_sys_data_fully_connected_h,
-              R.drawable.stat_sys_data_fully_connected_h,
-              R.drawable.stat_sys_data_fully_connected_h,
-              R.drawable.stat_sys_data_fully_connected_h },
-            { R.drawable.stat_sys_data_fully_connected_h,
-              R.drawable.stat_sys_data_fully_connected_h,
-              R.drawable.stat_sys_data_fully_connected_h,
-              R.drawable.stat_sys_data_fully_connected_h }
+    static final int[] DATA_H_PLUS = {
+        R.drawable.stat_sys_sim_data_connected_h_plus_blue,
+        R.drawable.stat_sys_sim_data_connected_h_plus_orange,
+        R.drawable.stat_sys_sim_data_connected_h_plus_green,
+        R.drawable.stat_sys_sim_data_connected_h_plus_purple,
+        R.drawable.stat_sys_sim_data_connected_h_plus_blue
     };
 
     static final int[] QS_DATA_H = {
@@ -138,16 +166,13 @@ class TelephonyIcons {
 
     //CDMA
     // Use 3G icons for EVDO data and 1x icons for 1XRTT data
-    static final int[][] DATA_1X = {
-            { R.drawable.stat_sys_data_fully_connected_1x,
-              R.drawable.stat_sys_data_fully_connected_1x,
-              R.drawable.stat_sys_data_fully_connected_1x,
-              R.drawable.stat_sys_data_fully_connected_1x },
-            { R.drawable.stat_sys_data_fully_connected_1x,
-              R.drawable.stat_sys_data_fully_connected_1x,
-              R.drawable.stat_sys_data_fully_connected_1x,
-              R.drawable.stat_sys_data_fully_connected_1x }
-            };
+    static final int[] DATA_1X = {
+        R.drawable.stat_sys_sim_data_connected_1x_blue,
+        R.drawable.stat_sys_sim_data_connected_1x_orange,
+        R.drawable.stat_sys_sim_data_connected_1x_green,
+        R.drawable.stat_sys_sim_data_connected_1x_purple,
+        R.drawable.stat_sys_sim_data_connected_1x_blue
+    };
 
     static final int[] QS_DATA_1X = {
         R.drawable.ic_qs_signal_1x,
@@ -155,16 +180,13 @@ class TelephonyIcons {
     };
 
     // LTE and eHRPD
-    static final int[][] DATA_4G = {
-            { R.drawable.stat_sys_data_fully_connected_4g,
-              R.drawable.stat_sys_data_fully_connected_4g,
-              R.drawable.stat_sys_data_fully_connected_4g,
-              R.drawable.stat_sys_data_fully_connected_4g },
-            { R.drawable.stat_sys_data_fully_connected_4g,
-              R.drawable.stat_sys_data_fully_connected_4g,
-              R.drawable.stat_sys_data_fully_connected_4g,
-              R.drawable.stat_sys_data_fully_connected_4g }
-        };
+    static final int[] DATA_4G = {
+        R.drawable.stat_sys_sim_data_connected_4g_blue,
+        R.drawable.stat_sys_sim_data_connected_4g_orange,
+        R.drawable.stat_sys_sim_data_connected_4g_green,
+        R.drawable.stat_sys_sim_data_connected_4g_purple,
+        R.drawable.stat_sys_sim_data_connected_4g_blue
+    };
 
     static final int[] QS_DATA_4G = {
         R.drawable.ic_qs_signal_4g,
@@ -188,5 +210,98 @@ class TelephonyIcons {
         R.drawable.ic_qs_signal_full_lte
     };
 
+    static final int[][] DATA = {
+        DATA_1X,
+        DATA_3G,
+        DATA_4G,
+        DATA_E,
+        DATA_G,
+        DATA_H,
+        DATA_H_PLUS,
+    };
+
+    static final int[] DATA_1X_ROAM = {
+        R.drawable.stat_sys_sim_data_connected_1x_blue_roam,
+        R.drawable.stat_sys_sim_data_connected_1x_orange_roam,
+        R.drawable.stat_sys_sim_data_connected_1x_green_roam,
+        R.drawable.stat_sys_sim_data_connected_1x_purple_roam,
+        R.drawable.stat_sys_sim_data_connected_1x_blue_roam
+    };
+    
+    static final int[] DATA_3G_ROAM = {
+        R.drawable.stat_sys_sim_data_connected_3g_blue_roam,
+        R.drawable.stat_sys_sim_data_connected_3g_orange_roam,
+        R.drawable.stat_sys_sim_data_connected_3g_green_roam,
+        R.drawable.stat_sys_sim_data_connected_3g_purple_roam,
+        R.drawable.stat_sys_sim_data_connected_3g_blue_roam
+    };
+    
+    static final int[] DATA_4G_ROAM = {
+        R.drawable.stat_sys_sim_data_connected_4g_blue_roam,
+        R.drawable.stat_sys_sim_data_connected_4g_orange_roam,
+        R.drawable.stat_sys_sim_data_connected_4g_green_roam,
+        R.drawable.stat_sys_sim_data_connected_4g_purple_roam,
+        R.drawable.stat_sys_sim_data_connected_4g_blue_roam
+    };
+    
+    static final int[] DATA_E_ROAM = {
+        R.drawable.stat_sys_sim_data_connected_e_blue_roam,
+        R.drawable.stat_sys_sim_data_connected_e_orange_roam,
+        R.drawable.stat_sys_sim_data_connected_e_green_roam,
+        R.drawable.stat_sys_sim_data_connected_e_purple_roam,
+        R.drawable.stat_sys_sim_data_connected_e_blue_roam
+    };
+    
+    static final int[] DATA_G_ROAM = {
+        R.drawable.stat_sys_sim_data_connected_g_blue_roam,
+        R.drawable.stat_sys_sim_data_connected_g_orange_roam,
+        R.drawable.stat_sys_sim_data_connected_g_green_roam,
+        R.drawable.stat_sys_sim_data_connected_g_purple_roam,
+        R.drawable.stat_sys_sim_data_connected_g_blue_roam
+    };
+    
+    static final int[] DATA_H_ROAM = {
+        R.drawable.stat_sys_sim_data_connected_h_blue_roam,
+        R.drawable.stat_sys_sim_data_connected_h_orange_roam,
+        R.drawable.stat_sys_sim_data_connected_h_green_roam,
+        R.drawable.stat_sys_sim_data_connected_h_purple_roam,
+        R.drawable.stat_sys_sim_data_connected_h_blue_roam
+    };
+
+    static final int[] DATA_H_PLUS_ROAM = {
+        R.drawable.stat_sys_sim_data_connected_h_plus_blue_roam,
+        R.drawable.stat_sys_sim_data_connected_h_plus_orange_roam,
+        R.drawable.stat_sys_sim_data_connected_h_plus_green_roam,
+        R.drawable.stat_sys_sim_data_connected_h_plus_purple_roam,
+        R.drawable.stat_sys_sim_data_connected_h_plus_blue_roam
+    };
+
+    static final int[][] DATA_ROAM = {
+        DATA_1X_ROAM,
+        DATA_3G_ROAM,
+        DATA_4G_ROAM,
+        DATA_E_ROAM,
+        DATA_G_ROAM,
+        DATA_H_ROAM,
+        DATA_H_PLUS_ROAM,
+    };
+
+    static final int[] ROAMING = {
+        R.drawable.stat_sys_sim_data_connected_roam_blue,
+        R.drawable.stat_sys_sim_data_connected_roam_orange,
+        R.drawable.stat_sys_sim_data_connected_roam_green,
+        R.drawable.stat_sys_sim_data_connected_roam_purple,
+        R.drawable.stat_sys_sim_data_connected_roam_blue
+    };
+
+    public static int getDataTypeId(int typeId, int simColorId, boolean roaming) {
+        if (roaming) {
+            int [] iconList = DATA_ROAM[typeId];
+            return iconList[simColorId];
+        } else {
+            int [] iconList = DATA[typeId];
+            return iconList[simColorId];
+        }
+    }
 }
 

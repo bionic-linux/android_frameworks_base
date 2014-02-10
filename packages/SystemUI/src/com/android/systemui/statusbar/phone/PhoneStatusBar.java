@@ -215,7 +215,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     ImageView mSettingsButton, mNotificationButton;
 
     // carrier/wifi label
-    private TextView mCarrierLabel;
+    private LinearLayout mCarrierLabel;
     private boolean mCarrierLabelVisible = false;
     private int mCarrierLabelHeight;
     private TextView mEmergencyCallLabel;
@@ -543,7 +543,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         signalCluster.setNetworkController(mNetworkController);
 
         final boolean isAPhone = mNetworkController.hasVoiceCallingFeature();
-        if (isAPhone) {
+        if (false) {
             mEmergencyCallLabel =
                     (TextView) mStatusBarWindow.findViewById(R.id.emergency_calls_only);
             if (mEmergencyCallLabel != null) {
@@ -559,18 +559,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             }
         }
 
-        mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
+        mCarrierLabel = (LinearLayout)mStatusBarWindow.findViewById(R.id.carrier_label_layout);
         mShowCarrierInPanel = (mCarrierLabel != null);
         if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" + mShowCarrierInPanel);
         if (mShowCarrierInPanel) {
+            final TextView mCarrier1 = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
             mCarrierLabel.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.INVISIBLE);
 
             // for mobile devices, we always show mobile connection info here (SPN/PLMN)
             // for other devices, we show whatever network is connected
             if (mNetworkController.hasMobileDataFeature()) {
-                mNetworkController.addMobileLabelView(mCarrierLabel);
+                mNetworkController.setCarrierView(mCarrierLabel);
             } else {
-                mNetworkController.addCombinedLabelView(mCarrierLabel);
+                mNetworkController.addCombinedLabelView(mCarrier1);
             }
 
             // set up the dynamic hide/show of the label
