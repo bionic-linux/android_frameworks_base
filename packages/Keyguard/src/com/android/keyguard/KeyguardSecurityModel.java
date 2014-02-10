@@ -21,6 +21,7 @@ import android.telephony.TelephonyManager;
 
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.widget.LockPatternUtils;
+import com.android.internal.telephony.PhoneConstants;
 
 public class KeyguardSecurityModel {
     /**
@@ -75,8 +76,16 @@ public class KeyguardSecurityModel {
 
     SecurityMode getSecurityMode() {
         KeyguardUpdateMonitor updateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
-        final IccCardConstants.State simState = updateMonitor.getSimState();
+        IccCardConstants.State simState = updateMonitor.getSimState();
         SecurityMode mode = SecurityMode.None;
+        for (int i = 0; i < updateMonitor.getNumOfSubscription(); i++) {
+            simState = updateMonitor.getSimState(i);
+            if (simState == IccCardConstants.State.PIN_REQUIRED
+                || simState == IccCardConstants.State.PUK_REQUIRED) {
+                break;
+            }
+        }
+        
         if (simState == IccCardConstants.State.PIN_REQUIRED) {
             mode = SecurityMode.SimPin;
         } else if (simState == IccCardConstants.State.PUK_REQUIRED

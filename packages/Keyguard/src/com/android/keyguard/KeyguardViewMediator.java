@@ -55,6 +55,7 @@ import android.view.WindowManager;
 import android.view.WindowManagerPolicy;
 
 import com.android.internal.telephony.IccCardConstants;
+import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.widget.LockPatternUtils;
 
 
@@ -378,8 +379,8 @@ public class KeyguardViewMediator {
         }
 
         @Override
-        public void onSimStateChanged(IccCardConstants.State simState) {
-            if (DEBUG) Log.d(TAG, "onSimStateChanged: " + simState);
+        public void onSimStateChanged(IccCardConstants.State simState, int simId) {
+            if (DEBUG) Log.d(TAG, "onSimStateChanged: " + simState + ", simId=" + simId);
 
             switch (simState) {
                 case NOT_READY:
@@ -402,6 +403,7 @@ public class KeyguardViewMediator {
                 case PIN_REQUIRED:
                 case PUK_REQUIRED:
                     synchronized (this) {
+                        mUpdateMonitor.setSimLockDismissFlag(simId, false);
                         if (!isShowing()) {
                             if (DEBUG) Log.d(TAG, "INTENT_VALUE_ICC_LOCKED and keygaurd isn't "
                                     + "showing; need to show keyguard so user can enter sim pin");
@@ -906,11 +908,13 @@ public class KeyguardViewMediator {
         final boolean requireSim = !SystemProperties.getBoolean("keyguard.no_require_sim",
                 false);
         final boolean provisioned = mUpdateMonitor.isDeviceProvisioned();
-        final IccCardConstants.State state = mUpdateMonitor.getSimState();
-        final boolean lockedOrMissing = state.isPinLocked()
-                || ((state == IccCardConstants.State.ABSENT
-                || state == IccCardConstants.State.PERM_DISABLED)
-                && requireSim);
+        boolean lockedOrMissing = false;
+        for (int i = 0; i < mUpdateMonitor.getNumOfSubscription(); i++) {
+            if (isSimLockedOrMissing(i, requireSim)) {
+                lockedOrMissing = true;
+                break;
+            }
+        }
 
         if (!lockedOrMissing && !provisioned) {
             if (DEBUG) Log.d(TAG, "doKeyguard: not showing because device isn't provisioned"
@@ -927,6 +931,15 @@ public class KeyguardViewMediator {
         if (DEBUG) Log.d(TAG, "doKeyguard: showing the lock screen");
         showLocked(options);
     }
+
+    private boolean isSimLockedOrMissing (int simId, boolean requireSim) {
+        IccCardConstants.State state = mUpdateMonitor.getSimState(simId);
+        boolean simLockedOrMissing = state.isPinLocked()
+                || ((state == IccCardConstants.State.ABSENT
+                || state == IccCardConstants.State.PERM_DISABLED)
+                && requireSim);
+        return simLockedOrMissing;
+    }    
 
     /**
      * Dismiss the keyguard through the security layers.
