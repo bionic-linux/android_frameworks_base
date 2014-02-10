@@ -299,6 +299,10 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     private RefreshCallback mSslCaCertWarningCallback;
     private State mSslCaCertWarningState = new State();
 
+    private QuickSettingsTileView mDataUsageTile;
+    private RefreshCallback mDataUsageCallback;
+    private State mDataUsageState = new State();
+
     private RotationLockController mRotationLockController;
 
     public QuickSettingsModel(Context context) {
@@ -345,6 +349,7 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         refreshRotationLockTile();
         refreshRssiTile();
         refreshLocationTile();
+        refreshDataUsageTile();
     }
 
     // Settings
@@ -514,7 +519,7 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
             boolean enabled, int mobileSignalIconId, String signalContentDescription,
             int dataTypeIconId, boolean activityIn, boolean activityOut,
             String dataContentDescription,String enabledDesc) {
-        if (deviceHasMobileData()) {
+        if (deviceHasMobileData() && mRSSITile != null) {
             // TODO: If view is in awaiting state, disable
             Resources r = mContext.getResources();
             mRSSIState.signalIconId = enabled && (mobileSignalIconId > 0)
@@ -692,14 +697,8 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         } else {
             connectedRoute = null;
             connecting = false;
-            final int count = mMediaRouter.getRouteCount();
-            for (int i = 0; i < count; i++) {
-                MediaRouter.RouteInfo route = mMediaRouter.getRouteAt(i);
-                if (route.matchesTypes(MediaRouter.ROUTE_TYPE_REMOTE_DISPLAY)) {
-                    enabled = true;
-                    break;
-                }
-            }
+            enabled = mMediaRouter.isRouteAvailable(MediaRouter.ROUTE_TYPE_REMOTE_DISPLAY,
+                    MediaRouter.AVAILABILITY_FLAG_IGNORE_DEFAULT_ROUTE);
         }
 
         mRemoteDisplayState.enabled = enabled;
@@ -870,5 +869,19 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         }
         mSslCaCertWarningState.label = r.getString(R.string.ssl_ca_cert_warning);
         mSslCaCertWarningCallback.refreshView(mSslCaCertWarningTile, mSslCaCertWarningState);
+    }
+
+    // Data usage
+    void addDataUsageTile(QuickSettingsTileView view, RefreshCallback cb) {
+        mDataUsageTile = view;
+        mDataUsageCallback = cb;
+        refreshDataUsageTile();
+    }
+    void refreshDataUsageTile() {
+        if (mDataUsageTile != null) {
+            Resources r = mContext.getResources();
+            mDataUsageState.label = r.getString(R.string.data_usage);
+            mDataUsageCallback.refreshView(mDataUsageTile, mDataUsageState);
+        }
     }
 }
