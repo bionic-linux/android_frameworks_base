@@ -106,7 +106,7 @@
     </string>
 
     <!-- Separator for PLMN and SPN in network name. -->
-    <string name="status_bar_network_name_separator" translatable="false">|</string>
+    <string name="status_bar_network_name_separator" translatable="false">" \u2014 "</string>
 
     <!-- Network connection string for Bluetooth Reverse Tethering -->
     <string name="bluetooth_tethered">Bluetooth tethered</string>
@@ -506,5 +506,5 @@
          If the text fits on one line (~14 chars), it should start with a
          linebreak to position it correctly.  [CHAR LIMIT=45] -->
     <string name="ssl_ca_cert_warning">Network may\nbe monitored</string>
-
+    <string name="data_usage">Data usage</string>
 </resources>
