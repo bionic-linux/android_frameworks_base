@@ -375,4 +375,13 @@
         This is displayed if the phone is not connected to a carrier.-->
     <string name="keyguard_carrier_default">No service.</string>
 
+    <!-- Dismiss button text in SIM pin/puk unlock view -->
+    <string name="kg_dismiss">Dismiss</string>
+    <!-- Slot id in SIM pin/puk unlock view -->
+    <string name="kg_slot_id">Slot <xliff:g id="number">%d</xliff:g>:\u0020</string>
+    <!-- New SIM card string in SIM pin/puk unlock view -->
+    <string name="kg_new_simcard">New SIM card</string>
+    <!-- SIM card name detecting string in When get SIM display name  -->
+    <string name="kg_detecting_simcard">Detecting...</string>
+
 </resources>
