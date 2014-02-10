@@ -2747,9 +2747,11 @@ public class WifiStateMachine extends StateMachine {
                             transitionTo(mSupplicantStartingState);
                         } else {
                             loge("Failed to start supplicant!");
+                            setWifiState(WIFI_STATE_DISABLED);
                         }
                     } else {
                         loge("Failed to load driver");
+                        setWifiState(WIFI_STATE_DISABLED);
                     }
                     break;
                 case CMD_START_AP:
