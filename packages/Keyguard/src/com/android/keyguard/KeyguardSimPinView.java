@@ -18,6 +18,7 @@ package com.android.keyguard;
 
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.PhoneConstants;
+import com.android.internal.telephony.IccCardConstants;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,6 +39,8 @@ import android.view.View;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Button;
+
 
 /**
  * Displays a PIN pad for unlocking.
@@ -52,6 +55,9 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
     private CheckSimPin mCheckSimPinThread;
 
     private AlertDialog mRemainingAttemptsDialog;
+    KeyguardUpdateMonitor mUpdateMonitor;
+    private int mSimId = -1;
+    private String slotInfo = "";
 
     public KeyguardSimPinView(Context context) {
         this(context, null);
@@ -59,10 +65,16 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
 
     public KeyguardSimPinView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mUpdateMonitor = KeyguardUpdateMonitor.getInstance(getContext());
+        mSimId = mUpdateMonitor.getSimLockSimId();
+        if ( mUpdateMonitor.getNumOfSim() > 1 ) {
+            slotInfo = mContext.getString(R.string.slot_id, mSimId + 1);
+        }
     }
 
     public void resetState() {
-        mSecurityMessageDisplay.setMessage(R.string.kg_sim_pin_instructions, true);
+        String instructions = mContext.getString(R.string.kg_sim_pin_instructions);
+        mSecurityMessageDisplay.setMessage(slotInfo+instructions, true);
         mPasswordEntry.setEnabled(true);
     }
 
@@ -132,6 +144,28 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
             });
         }
 
+        final Button dismissButton = (Button)findViewById(R.id.key_dismiss);
+        if (dismissButton != null) {
+            dismissButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    doHapticKeyClick();
+                    mUpdateMonitor.setSimLockDismissFlag(mSimId, true);
+                    mUpdateMonitor.reportSimUnlocked(mSimId);
+                    mCallback.dismiss(true);
+                }
+            });
+            dismissButton.setText(R.string.dismiss);
+
+            // At least one SIM card needs to be authenticated, so the dismiss button shows
+            // if it is not the last one which needs to pass pin or puk authentication.
+            int enabledSimCards = mUpdateMonitor.getEnabledSimCardCount();
+            int dismissedSimcardCount = mUpdateMonitor.getDismissedSimCardCount();
+            if (dismissedSimcardCount < enabledSimCards -1 ) {
+                dismissButton.setVisibility(View.VISIBLE);
+            }
+        }
+
         mPasswordEntry.setKeyListener(DigitsKeyListener.getInstance());
         mPasswordEntry.setInputType(InputType.TYPE_CLASS_NUMBER
                 | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
@@ -172,7 +206,7 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
             try {
                 Log.v(TAG, "call supplyPinReportResult()");
                 final int[] result = ITelephony.Stub.asInterface(ServiceManager
-                        .checkService("phone")).supplyPinReportResult(mPin);
+                        .checkService("phone")).supplyPinReportResult(mPin, mSimId);
                 Log.v(TAG, "supplyPinReportResult returned: " + result[0] + " " + result[1]);
                 post(new Runnable() {
                     public void run() {
@@ -225,7 +259,8 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
 
         if (entry.length() < 4) {
             // otherwise, display a message to the user, and don't submit.
-            mSecurityMessageDisplay.setMessage(R.string.kg_invalid_sim_pin_hint, true);
+            String hint = mContext.getString(R.string.kg_invalid_sim_pin_hint);
+            mSecurityMessageDisplay.setMessage(slotInfo+hint, true);
             mPasswordEntry.setText("");
             mCallback.userActivity(0);
             return;
@@ -242,7 +277,7 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
                                 mSimUnlockProgressDialog.hide();
                             }
                             if (result == PhoneConstants.PIN_RESULT_SUCCESS) {
-                                KeyguardUpdateMonitor.getInstance(getContext()).reportSimUnlocked();
+                                mUpdateMonitor.reportSimUnlocked(mSimId);
                                 mCallback.dismiss(true);
                             } else {
                                 if (result == PhoneConstants.PIN_PASSWORD_INCORRECT) {
@@ -252,12 +287,12 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
                                     } else {
                                         // show message
                                         mSecurityMessageDisplay.setMessage(
-                                                getPinPasswordErrorMessage(attemptsRemaining), true);
+                                                slotInfo+getPinPasswordErrorMessage(attemptsRemaining), true);
                                     }
                                 } else {
                                     // "PIN operation failed!" - no idea what this was and no way to
                                     // find out. :/
-                                    mSecurityMessageDisplay.setMessage(getContext().getString(
+                                    mSecurityMessageDisplay.setMessage(slotInfo+getContext().getString(
                                             R.string.kg_password_pin_failed), true);
                                 }
                                 if (DEBUG) Log.d(LOG_TAG, "verifyPasswordAndUnlock "
@@ -274,5 +309,6 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
             mCheckSimPinThread.start();
         }
     }
+
 }
 

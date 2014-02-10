@@ -33,9 +33,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Button;
 
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.PhoneConstants;
+import com.android.internal.telephony.IccCardConstants;
 
 
 /**
@@ -53,6 +55,9 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
     private String mPinText;
     private StateMachine mStateMachine = new StateMachine();
     private AlertDialog mRemainingAttemptsDialog;
+    KeyguardUpdateMonitor mUpdateMonitor;
+    private int mSimId = -1;
+    private String slotInfo = "";
 
     private class StateMachine {
         final int ENTER_PUK = 0;
@@ -89,7 +94,8 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
             }
             mPasswordEntry.setText(null);
             if (msg != 0) {
-                mSecurityMessageDisplay.setMessage(msg, true);
+                String instructions = mContext.getString(msg);
+                mSecurityMessageDisplay.setMessage(slotInfo+instructions, true);
             }
         }
 
@@ -97,7 +103,8 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
             mPinText="";
             mPukText="";
             state = ENTER_PUK;
-            mSecurityMessageDisplay.setMessage(R.string.kg_puk_enter_puk_hint, true);
+            String instructions = mContext.getString(R.string.kg_puk_enter_puk_hint);
+            mSecurityMessageDisplay.setMessage(slotInfo+instructions, true);
             mPasswordEntry.requestFocus();
         }
     }
@@ -125,6 +132,11 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
 
     public KeyguardSimPukView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mUpdateMonitor = KeyguardUpdateMonitor.getInstance(getContext());
+        mSimId = mUpdateMonitor.getSimLockSimId();
+        if ( mUpdateMonitor.getNumOfSim() > 1 ) {
+            slotInfo = mContext.getString(R.string.slot_id, mSimId + 1);
+        }
     }
 
     public void resetState() {
@@ -181,6 +193,28 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
             });
         }
 
+        final Button dismissButton = (Button)findViewById(R.id.key_dismiss);
+        if (dismissButton != null) {
+            dismissButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    doHapticKeyClick();
+                    mUpdateMonitor.setSimLockDismissFlag(mSimId, true);
+                    mUpdateMonitor.reportSimUnlocked(mSimId);
+                    mCallback.dismiss(true);
+                }
+            });
+            dismissButton.setText(R.string.dismiss);
+
+            // At least one SIM card needs to be authenticated, so the dismiss button shows
+            // if it is not the last one which needs to pass pin or puk authentication.
+            int enabledSimCards = mUpdateMonitor.getEnabledSimCardCount();
+            int dismissedSimcardCount = mUpdateMonitor.getDismissedSimCardCount();
+            if (dismissedSimcardCount < enabledSimCards -1 ) {
+                dismissButton.setVisibility(View.VISIBLE);
+            }
+        }
+
         mPasswordEntry.setKeyListener(DigitsKeyListener.getInstance());
         mPasswordEntry.setInputType(InputType.TYPE_CLASS_NUMBER
                 | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
@@ -223,7 +257,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
             try {
                 Log.v(TAG, "call supplyPukReportResult()");
                 final int[] result = ITelephony.Stub.asInterface(ServiceManager
-                        .checkService("phone")).supplyPukReportResult(mPuk, mPin);
+                        .checkService("phone")).supplyPukReportResult(mPuk, mPin, mSimId);
                 Log.v(TAG, "supplyPukReportResult returned: " + result[0] + " " + result[1]);
                 post(new Runnable() {
                     public void run() {
@@ -274,7 +308,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
 
     private boolean checkPuk() {
         // make sure the puk is at least 8 digits long.
-        if (mPasswordEntry.getText().length() == 8) {
+        if (mPasswordEntry.getText().length() >= 8) {
             mPukText = mPasswordEntry.getText().toString();
             return true;
         }
@@ -307,7 +341,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
                                 mSimUnlockProgressDialog.hide();
                             }
                             if (result == PhoneConstants.PIN_RESULT_SUCCESS) {
-                                KeyguardUpdateMonitor.getInstance(getContext()).reportSimUnlocked();
+                                mUpdateMonitor.reportSimUnlocked(mSimId);
                                 mCallback.dismiss(true);
                             } else {
                                 if (result == PhoneConstants.PIN_PASSWORD_INCORRECT) {
@@ -317,10 +351,10 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
                                     } else {
                                         // show message
                                         mSecurityMessageDisplay.setMessage(
-                                                getPukPasswordErrorMessage(attemptsRemaining), true);
+                                                slotInfo+getPukPasswordErrorMessage(attemptsRemaining), true);
                                     }
                                 } else {
-                                    mSecurityMessageDisplay.setMessage(getContext().getString(
+                                    mSecurityMessageDisplay.setMessage(slotInfo+getContext().getString(
                                             R.string.kg_password_puk_failed), true);
                                 }
                                 if (DEBUG) Log.d(LOG_TAG, "verifyPasswordAndUnlock "
@@ -341,6 +375,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
     protected void verifyPasswordAndUnlock() {
         mStateMachine.next();
     }
+
 }
 
 

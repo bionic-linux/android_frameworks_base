@@ -192,10 +192,13 @@
            android:layout_weight="1"
            android:orientation="horizontal"
            >
-           <Space
+           <Button
+               android:id="@+id/key_dismiss"
+               style="@style/DismissPadKey"
                android:layout_width="0px"
                android:layout_height="match_parent"
                android:layout_weight="1"
+               android:visibility="invisible"
                />
            <view class="com.android.keyguard.NumPadKey"
                android:id="@+id/key0"

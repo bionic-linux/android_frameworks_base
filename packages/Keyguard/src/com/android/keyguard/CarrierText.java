@@ -28,27 +28,32 @@ import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.widget.LockPatternUtils;
 
 import java.util.Locale;
+import android.util.Log;
 
 public class CarrierText extends TextView {
+    private static final String TAG = "CarrierText";
+    private static final boolean DEBUG = KeyguardViewMediator.DEBUG;
     private static CharSequence mSeparator;
 
     private LockPatternUtils mLockPatternUtils;
 
-    private KeyguardUpdateMonitorCallback mCallback = new KeyguardUpdateMonitorCallback() {
-        private CharSequence mPlmn;
-        private CharSequence mSpn;
-        private State mSimState;
+    private KeyguardUpdateMonitor mUpdateMonitor;
+    private int mNumOfSim;
+    private CharSequence mPlmn[];
+    private CharSequence mSpn[];
+    private State mSimState[];
 
+    private KeyguardUpdateMonitorCallback mCallback = new KeyguardUpdateMonitorCallback() {
         @Override
-        public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn) {
-            mPlmn = plmn;
-            mSpn = spn;
+        public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn, int simId) {
+            mPlmn[simId] = plmn;
+            mSpn[simId] = spn;
             updateCarrierText(mSimState, mPlmn, mSpn);
         }
 
         @Override
-        public void onSimStateChanged(IccCardConstants.State simState) {
-            mSimState = simState;
+        public void onSimStateChanged(IccCardConstants.State simState, int simId) {
+            mSimState[simId] = simState;
             updateCarrierText(mSimState, mPlmn, mSpn);
         }
 
@@ -83,10 +88,33 @@ public class CarrierText extends TextView {
         mLockPatternUtils = new LockPatternUtils(mContext);
         boolean useAllCaps = mContext.getResources().getBoolean(R.bool.kg_use_all_caps);
         setTransformationMethod(new CarrierTextTransformationMethod(mContext, useAllCaps));
+        mUpdateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
+        mNumOfSim = mUpdateMonitor.getNumOfSim();
+
+        mSimState = new State[mNumOfSim];
+        mPlmn = new CharSequence[mNumOfSim];
+        mSpn = new CharSequence[mNumOfSim];
     }
 
-    protected void updateCarrierText(State simState, CharSequence plmn, CharSequence spn) {
-        setText(getCarrierTextForSimState(simState, plmn, spn));
+    // concatenate the carrier text of each SIM card, such as like "sim1_plmn | sim2_plmn".
+    protected void updateCarrierText(State[] simState, CharSequence[] plmn, CharSequence[] spn) {
+        CharSequence outText = "";
+        
+        for (int i = 0; i < mNumOfSim; i++) {
+            StatusMode status = getStatusForIccState(simState[i]);
+            CharSequence carrierText = getCarrierTextForSimState(simState[i], plmn[i], spn[i]);
+            if(!TextUtils.isEmpty(carrierText)) {
+                outText = TextUtils.isEmpty(outText)? carrierText
+                    : new StringBuilder().append(outText).append(" | ").append(carrierText).toString();
+            }
+        }
+
+        if(DEBUG) Log.d(TAG, "updateCarrierText: mNumOfSim="+ mNumOfSim + " outText=" + outText);
+        if (mContext.getResources().getBoolean(R.bool.kg_use_all_caps)) {
+            setText(outText.toString().toUpperCase());
+        } else {
+            setText(outText);
+        }
     }
 
     @Override
@@ -122,6 +150,7 @@ public class CarrierText extends TextView {
             CharSequence plmn, CharSequence spn) {
         CharSequence carrierText = null;
         StatusMode status = getStatusForIccState(simState);
+        if(DEBUG) Log.d(TAG, "getCarrierTextForSimState: status=" + status + " plmn=" + plmn + " spn=" + spn);
         switch (status) {
             case Normal:
                 carrierText = concatenate(plmn, spn);
@@ -170,6 +199,7 @@ public class CarrierText extends TextView {
                 break;
         }
 
+        if(DEBUG) Log.d(TAG, "getCarrierTextForSimState: carrierText=" + carrierText);
         return carrierText;
     }
 

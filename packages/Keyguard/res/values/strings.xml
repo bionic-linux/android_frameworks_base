@@ -375,4 +375,7 @@
         This is displayed if the phone is not connected to a carrier.-->
     <string name="keyguard_carrier_default">No service.</string>
 
+    <string name="dismiss">Dismiss</string>
+    <string name="slot_id">Slot <xliff:g id="number">%d</xliff:g>:\u0020</string>
+
 </resources>

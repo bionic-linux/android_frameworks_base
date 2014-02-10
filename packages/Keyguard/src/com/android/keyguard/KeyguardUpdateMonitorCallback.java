@@ -52,8 +52,9 @@ class KeyguardUpdateMonitorCallback {
      * @param plmn The operator name of the registered network.  May be null if it shouldn't
      *   be displayed.
      * @param spn The service provider name.  May be null if it shouldn't be displayed.
+     * @param simId Which sim card 's spn changed.
      */
-    void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn) { }
+    void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn, int simId) { }
 
     /**
      * Called when the ringer mode changes.
@@ -115,8 +116,9 @@ class KeyguardUpdateMonitorCallback {
     /**
      * Called when the SIM state changes.
      * @param simState
+     * @param simId Which sim card 's spn changed.
      */
-    void onSimStateChanged(IccCardConstants.State simState) { }
+    void onSimStateChanged(IccCardConstants.State simState, int simId) {}
 
     /**
      * Called when a user is removed.
