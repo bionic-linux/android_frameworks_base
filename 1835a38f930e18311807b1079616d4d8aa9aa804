@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f3ec9eb_85374613",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1036486
+      },
+      "writtenOn": "2014-02-11T23:07:22Z",
+      "side": 1,
+      "message": "The issue is that we need to create a single profile file for an apk because dex2oat is run once on an apk by installd.  There may be multiple processes running using the same apk, and therefore the same profile file.  Each processes needs to know the profile file name (or be able to derive it) in order to read/write it.  The reason for installd creating the profile file is security.  It used to be in the /data/data directory but dex2oat can\u0027t read it (selinux config).\n\nI understand your point about multiple packages in one process though.  Have to figure out how to deal with that one...",
+      "parentUuid": "8fbfe18b_fdc6ef55",
+      "revId": "1835a38f930e18311807b1079616d4d8aa9aa804",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efce9d4a_9b481749",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 1
