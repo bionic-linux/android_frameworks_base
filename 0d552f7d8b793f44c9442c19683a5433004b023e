@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fabf157_65a10645",
+        "filename": "services/jni/com_android_server_ConsumerIrService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-02-11T14:28:25Z",
+      "side": 1,
+      "message": "Actually, this should be a static_cast, not a reinterpret_cast. I\u0027ll fix this up.",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "0d552f7d8b793f44c9442c19683a5433004b023e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
