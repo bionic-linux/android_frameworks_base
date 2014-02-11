@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8fbfe18b_fdc6ef55",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2014-02-11T22:56:22Z",
+      "side": 1,
+      "message": "Are you sure you want to pass in package name here?  Note that when multiple applications run in one process, it is essentially arbitrary which of those will appear first, making the package name questionable.  I would really prefer that when we are dealing with processes we stick only to process names to avoid such ambiguity.",
+      "revId": "1835a38f930e18311807b1079616d4d8aa9aa804",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efce9d4a_9b481749",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 1
