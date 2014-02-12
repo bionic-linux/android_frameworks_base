@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "efce9d4a_068fee62",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2014-02-12T00:11:46Z",
+      "side": 1,
+      "message": "It seems to me this needs to be done for each app that is loaded into the process, not at the initial bind point?  I\u0027m not sure what this function is intended to do, but the fact that it is passing in a data dir for the first app in and using that for the whole process is the same problem.  If there is something that is set up with app-specific data like the package name or data dir, it probably be done somewhere like the includeCode path of getPackageInfo(), where we actually load each app\u0027s code in to the process.",
+      "parentUuid": "4f3ec9eb_85374613",
+      "revId": "1835a38f930e18311807b1079616d4d8aa9aa804",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efce9d4a_9b481749",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 1
