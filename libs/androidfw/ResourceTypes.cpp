@@ -172,6 +172,20 @@ size_t Res_png_9patch::serializedSize()
             + numColors * sizeof(uint32_t);
 }
 
+#ifdef __LP64__
+size_t Res_png_9patch::extra64BitStorageSize()
+{
+    // The size of this struct is 48 bytes on the 64-bit target system
+    // 4 * int8_t
+    // 4 * int32_t
+    // 3 * pointer
+    // padding
+
+    //Extra storage is 48 bytes - 32 bytes (for 32bit system)
+    return 16;
+}
+#endif
+
 void* Res_png_9patch::serialize()
 {
     // Use calloc since we're going to leave a few holes in the data
@@ -197,10 +211,32 @@ void Res_png_9patch::serialize(void * outData)
 
 static void deserializeInternal(const void* inData, Res_png_9patch* outData) {
     char* patch = (char*) inData;
+#ifdef __LP64__
+    if (inData != outData) {
+        memmove(&outData->wasDeserialized, patch, 4);     // copy  wasDeserialized, numXDivs, numYDivs, numColors
+    }
+    outData->wasDeserialized = true;
+
+    //A deserialize from 32bit store to 64bit means having to move main data away from header
+    size_t xDivsDataSize = outData->numXDivs * sizeof(int32_t);
+    size_t yDivsDataSize = outData->numYDivs * sizeof(int32_t);
+    size_t totalDataSize = xDivsDataSize + yDivsDataSize + outData->numColors * sizeof(int32_t);
+    char* outPatch = (char*) outData + 48;
+    memmove(outPatch, patch + 32, totalDataSize);  //move main data futher down storage
+    //Now can fill remaining header
+    memmove(&outData->paddingLeft, patch + 12, 16);  //copy padding values in
+
+    outData->xDivs = (int32_t*) outPatch;
+    outPatch += xDivsDataSize;
+    outData->yDivs = (int32_t*) outPatch;
+    outPatch += yDivsDataSize;
+    outData->colors = (uint32_t*) outPatch;
+#else
     if (inData != outData) {
         memmove(&outData->wasDeserialized, patch, 4);     // copy  wasDeserialized, numXDivs, numYDivs, numColors
         memmove(&outData->paddingLeft, patch + 12, 4);     // copy  wasDeserialized, numXDivs, numYDivs, numColors
     }
+
     outData->wasDeserialized = true;
     char* data = (char*)outData;
     data +=  sizeof(Res_png_9patch);
@@ -209,6 +245,7 @@ static void deserializeInternal(const void* inData, Res_png_9patch* outData) {
     outData->yDivs = (int32_t*) data;
     data +=  outData->numYDivs * sizeof(int32_t);
     outData->colors = (uint32_t*) data;
+#endif
 }
 
 static bool assertIdmapHeader(const uint32_t* map, size_t sizeBytes)
@@ -314,10 +351,6 @@ static status_t getIdmapPackageId(const uint32_t* map, size_t mapSize, uint32_t 
 
 Res_png_9patch* Res_png_9patch::deserialize(const void* inData)
 {
-    if (sizeof(void*) != sizeof(int32_t)) {
-        ALOGE("Cannot deserialize on non 32-bit system\n");
-        return NULL;
-    }
     deserializeInternal(inData, (Res_png_9patch*) inData);
     return (Res_png_9patch*) inData;
 }

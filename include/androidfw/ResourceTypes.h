@@ -144,6 +144,9 @@ struct Res_png_9patch
     static Res_png_9patch* deserialize(const void* data);
     // Compute the size of the serialized data structure
     size_t serializedSize();
+#ifdef __LP64__
+    static size_t extra64BitStorageSize();
+#endif
 };
 
 /** ********************************************************************

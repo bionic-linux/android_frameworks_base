@@ -26,7 +26,11 @@ bool NinePatchPeeker::peek(const char tag[], const void* data, size_t length) {
         size_t patchSize = patch->serializedSize();
         assert(length == patchSize);
         // You have to copy the data because it is owned by the png reader
+#ifdef __LP64__
+        Res_png_9patch* patchNew = (Res_png_9patch*) malloc(patchSize + Res_png_9patch::extra64BitStorageSize());
+#else
         Res_png_9patch* patchNew = (Res_png_9patch*) malloc(patchSize);
+#endif
         memcpy(patchNew, patch, patchSize);
         // this relies on deserialization being done in place
         Res_png_9patch::deserialize(patchNew);

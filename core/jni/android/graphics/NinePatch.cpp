@@ -68,7 +68,11 @@ public:
             return NULL;
         }
 
+#ifdef __LP64__
+        int8_t* storage = new int8_t[chunkSize + Res_png_9patch::extra64BitStorageSize()];
+#else
         int8_t* storage = new int8_t[chunkSize];
+#endif
         // This call copies the content of the jbyteArray
         env->GetByteArrayRegion(obj, 0, chunkSize, reinterpret_cast<jbyte*>(storage));
         // Deserialize in place, return the array we just allocated

@@ -693,12 +693,12 @@ getout:
 
 static void checkNinePatchSerialization(Res_png_9patch* inPatch,  void * data)
 {
-    if (sizeof(void*) != sizeof(int32_t)) {
-        // can't deserialize on a non-32 bit system
-        return;
-    }
     size_t patchSize = inPatch->serializedSize();
+#ifdef __LP64__
+    void * newData = malloc(patchSize + Res_png_9patch::extra64BitStorageSize());
+#else
     void * newData = malloc(patchSize);
+#endif
     memcpy(newData, data, patchSize);
     Res_png_9patch* outPatch = inPatch->deserialize(newData);
     // deserialization is done in place, so outPatch == newData
