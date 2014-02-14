@@ -682,9 +682,13 @@ class LoaderManagerImpl extends LoaderManager {
                         if (DEBUG) Log.v(TAG, "  Current loader is running; attempting to cancel");
                         info.cancel();
 
-                        // info.cancel() may have changed the currently active loader so update our reference.
-                        info = mLoaders.get(id);
-
+                        // info.cancel() may have changed the currently active 
+                        // loader. If it has, we must start over.
+                        if(info != mLoaders.get(id)) {
+                            if (DEBUG) Log.v(TAG, "  Active loader change; restartLoader again");
+                            return restartLoader(id, args, callback);
+                        }
+                        
                         if (info.mPendingLoader != null) {
                             if (DEBUG) Log.v(TAG, "  Removing pending loader: " + info.mPendingLoader);
                             info.mPendingLoader.destroy();
