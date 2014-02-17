@@ -2398,6 +2398,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                // Before fully collapsed, user drag the panel would lead to
+                                // clean up runnble not executed. So we just run it first.
+                                if (mPostCollapseCleanup != null) {
+                                    mPostCollapseCleanup.run();
+                                    mPostCollapseCleanup = null;
+                                }
+
                                 animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
                             }
                         }, totalDelay + 225);
