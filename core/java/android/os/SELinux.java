@@ -32,6 +32,38 @@ public class SELinux {
     private static final String TAG = "SELinux";
 
     /**
+     * Flag parameter for {@link #restorecon(String, int)} or {@link #restorecon(File, int)}
+     * to indicate that you don't want the file labels to change.
+     */
+    public static final int SELINUX_ANDROID_RESTORECON_NOCHANGE = 1;
+
+    /**
+     * Flag parameter for {@link #restorecon(String, int)} or {@link #restorecon(File, int)}
+     * to indicate verbose mode. This will show changes with the file labels.
+     */
+    public static final int SELINUX_ANDROID_RESTORECON_VERBOSE  = 2;
+
+    /**
+     * Flag parameter for {@link #restorecon(String, int)} or {@link #restorecon(File, int)}
+     * to indicate that you want to change files and directory labels recursively.
+     */
+    public static final int SELINUX_ANDROID_RESTORECON_RECURSE  = 4;
+
+    /**
+     * Flag parameter for {@link #restorecon(String, int)} or {@link #restorecon(File, int)}
+     * to indicate that you want to force a reset of the context.
+     */
+    public static final int SELINUX_ANDROID_RESTORECON_FORCE    = 8;
+
+    /**
+     * Flag parameter for {@link #restorecon(String, int)} or {@link #restorecon(File, int)}
+     * to indicate that you want the /data/data or /data/user directories to be relabeled.
+     * This flag is almost always used with the {@link SELINUX_ANDROID_RESTORECON_RECURSE}
+     * flag to recursively relabel those directories.
+     */
+    public static final int SELINUX_ANDROID_RESTORECON_DATADATA = 16;
+
+    /**
      * Determine whether SELinux is disabled or enabled.
      * @return a boolean indicating whether SELinux is enabled.
      */
@@ -135,8 +167,7 @@ public class SELinux {
      * @exception NullPointerException if the pathname is a null object.
      */
     public static boolean restorecon(String pathname) throws NullPointerException {
-        if (pathname == null) { throw new NullPointerException(); }
-        return native_restorecon(pathname);
+        return restorecon(pathname, 0);
     }
 
     /**
@@ -147,9 +178,27 @@ public class SELinux {
      * returned.
      *
      * @param pathname The pathname of the file to be relabeled.
+     * @param flags Additional option flags.
+     * @return a boolean indicating whether the relabeling succeeded.
+     * @exception NullPointerException if the pathname is a null object.
+     */
+    public static boolean restorecon(String pathname, int flags) throws NullPointerException {
+        if (pathname == null) { throw new NullPointerException(); }
+        return native_restorecon(pathname, flags);
+    }
+
+    /**
+     * Restores a file to its default SELinux security context.
+     * If the system is not compiled with SELinux, then {@code true}
+     * is automatically returned.
+     * If SELinux is compiled in, but disabled, then {@code true} is
+     * returned.
+     *
+     * @param pathname The pathname of the file to be relabeled.
+     * @param flags Additional option flags.
      * @return a boolean indicating whether the relabeling succeeded.
      */
-    private static native boolean native_restorecon(String pathname);
+    private static native boolean native_restorecon(String pathname, int flags);
 
     /**
      * Restores a file to its default SELinux security context.
@@ -163,8 +212,24 @@ public class SELinux {
      * @exception NullPointerException if the file is a null object.
      */
     public static boolean restorecon(File file) throws NullPointerException {
+        return restorecon(file, 0);
+    }
+
+    /**
+     * Restores a file to its default SELinux security context.
+     * If the system is not compiled with SELinux, then {@code true}
+     * is automatically returned.
+     * If SELinux is compiled in, but disabled, then {@code true} is
+     * returned.
+     *
+     * @param file The File object representing the path to be relabeled.
+     * @param flags Additional option flags.
+     * @return a boolean indicating whether the relabeling succeeded.
+     * @exception NullPointerException if the file is a null object.
+     */
+    public static boolean restorecon(File file, int flags) throws NullPointerException {
         try {
-            return native_restorecon(file.getCanonicalPath());
+            return native_restorecon(file.getCanonicalPath(), flags);
         } catch (IOException e) {
             Slog.e(TAG, "Error getting canonical path. Restorecon failed for " +
                    file.getPath(), e);

@@ -1486,6 +1486,14 @@ public class PackageManagerService extends IPackageManager.Stub {
             // can downgrade to reader
             mSettings.writeLPr();
 
+            // Relabel SELinux context for /data/data
+            SELinux.restorecon(mAppDataDir, SELinux.SELINUX_ANDROID_RESTORECON_RECURSE |
+                    SELinux.SELINUX_ANDROID_RESTORECON_DATADATA);
+
+            // Relabel SELinux context for /data/user
+            SELinux.restorecon(mUserAppDataDir, SELinux.SELINUX_ANDROID_RESTORECON_RECURSE |
+                    SELinux.SELINUX_ANDROID_RESTORECON_DATADATA);
+
             EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_PMS_READY,
                     SystemClock.uptimeMillis());
 
