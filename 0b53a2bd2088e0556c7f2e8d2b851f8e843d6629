@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f696973_f025363a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-02-19T19:44:23Z",
+      "side": 1,
+      "message": "Use the change-id here not the git commit hash,\nI77bf2a0c4c34b1feef6fdf4d6c3bd92dbf32f4a1",
+      "revId": "0b53a2bd2088e0556c7f2e8d2b851f8e843d6629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f5bf1e1_ce50972b",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-02-19T19:44:23Z",
+      "side": 1,
+      "message": "Is this called after all seinfo values have been computed and written out to packages.list?\n\nAt present, this will happen exactly once per unique file_contexts, so it will not take into account any further changes in packages.list assignments or seapp_contexts without a corresponding file_contexts change.",
+      "revId": "0b53a2bd2088e0556c7f2e8d2b851f8e843d6629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
