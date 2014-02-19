@@ -33,6 +33,24 @@
       "revId": "0b53a2bd2088e0556c7f2e8d2b851f8e843d6629",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f696973_d036f268",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-02-19T19:49:32Z",
+      "side": 1,
+      "message": "If we can detect that this is the first boot and only call restorecon in that case, then it may be better to pass SELINUX_ANDROID_RESTORECON_FORCE here.  Or amend restorecon to not set the restorecon_last flag on /data/data and /data/user at all.",
+      "parentUuid": "0f5bf1e1_ce50972b",
+      "revId": "0b53a2bd2088e0556c7f2e8d2b851f8e843d6629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
