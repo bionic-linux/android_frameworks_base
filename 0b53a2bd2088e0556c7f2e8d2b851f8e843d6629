@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6fb70d4d_d0aa1c1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-02-20T11:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f696973_f025363a",
+      "revId": "0b53a2bd2088e0556c7f2e8d2b851f8e843d6629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f5bf1e1_ce50972b",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 3
@@ -47,6 +65,42 @@
       "writtenOn": "2014-02-19T19:49:32Z",
       "side": 1,
       "message": "If we can detect that this is the first boot and only call restorecon in that case, then it may be better to pass SELINUX_ANDROID_RESTORECON_FORCE here.  Or amend restorecon to not set the restorecon_last flag on /data/data and /data/user at all.",
+      "parentUuid": "0f5bf1e1_ce50972b",
+      "revId": "0b53a2bd2088e0556c7f2e8d2b851f8e843d6629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fbc0932_2f1509cd",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-02-20T11:55:09Z",
+      "side": 1,
+      "message": "Not sure there is a way to determine if we have a \"first\" boot scenario. And by first boot I mean after an OTA.",
+      "parentUuid": "4f696973_d036f268",
+      "revId": "0b53a2bd2088e0556c7f2e8d2b851f8e843d6629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fbc0932_ef1ae1fd",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-02-20T11:55:09Z",
+      "side": 1,
+      "message": "The mSettings.writeLPr() call a couple of lines up is what scribbles out the entries to packages.list; mSettings var is an instance of the Settings class which sits in the PMS and is responsible for holding information regarding dynamic settings. The two calls to restorecon are after all apps, both system and third party ones, have been installed and their respective seinfo tags determined from the SELinuxMMAC engine. Those seinfo assignments happen farther up in this same block of code.",
       "parentUuid": "0f5bf1e1_ce50972b",
       "revId": "0b53a2bd2088e0556c7f2e8d2b851f8e843d6629",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
