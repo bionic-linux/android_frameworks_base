@@ -1486,6 +1486,10 @@ public class PackageManagerService extends IPackageManager.Stub {
             // can downgrade to reader
             mSettings.writeLPr();
 
+            // Relabel SELinux contexts. Need this to happen after all seinfo
+            // values have been computed and written out to packages.list.
+            SystemProperties.set("selinux.restorecondatadata", "1");
+
             EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_PMS_READY,
                     SystemClock.uptimeMillis());
 
