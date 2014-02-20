@@ -1486,6 +1486,9 @@ public class PackageManagerService extends IPackageManager.Stub {
             // can downgrade to reader
             mSettings.writeLPr();
 
+            // Relabel SELinux contexts
+            mInstaller.restoreconData();
+
             EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_PMS_READY,
                     SystemClock.uptimeMillis());
 
