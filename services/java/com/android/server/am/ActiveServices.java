@@ -2033,10 +2033,6 @@ public final class ActiveServices {
             synchronized (sr.stats.getBatteryStats()) {
                 sr.stats.stopLaunchedLocked();
             }
-            if (sr.app != null) {
-                sr.app.services.remove(sr);
-            }
-            sr.app = null;
             sr.isolatedProc = null;
             sr.executeNesting = 0;
             sr.forceClearTracker();
@@ -2075,6 +2071,11 @@ public final class ActiveServices {
                 app.services.removeAt(i);
                 continue;
             }
+
+            if (sr.app != null && !sr.app.persistent) {
+                 sr.app.services.remove(sr);
+            }
+            sr.app = null;
 
             // Any services running in the application may need to be placed
             // back in the pending list.
