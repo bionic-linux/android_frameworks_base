@@ -415,11 +415,16 @@ public final class BroadcastQueue {
             Intent intent, int resultCode, String data, Bundle extras,
             boolean ordered, boolean sticky, int sendingUser) throws RemoteException {
         // Send the intent to the receiver asynchronously using one-way binder calls.
-        if (app != null && app.thread != null) {
-            // If we have an app thread, do the call through that so it is
-            // correctly ordered with other one-way calls.
-            app.thread.scheduleRegisteredReceiver(receiver, intent, resultCode,
-                    data, extras, ordered, sticky, sendingUser, app.repProcState);
+        if (app != null) {
+            if (app.thread != null) {
+                // If we have an app thread, do the call through that so it is
+                // correctly ordered with other one-way calls.
+                app.thread.scheduleRegisteredReceiver(receiver, intent, resultCode,
+                        data, extras, ordered, sticky, sendingUser, app.repProcState);
+            } else {
+                // Application was died. Receiver doesn't exist.
+                throw new RemoteException("app.thread must not be null");
+            }
         } else {
             receiver.performReceive(intent, resultCode, data, extras, ordered,
                     sticky, sendingUser);
