@@ -5226,7 +5226,6 @@ ssize_t ResTable::getEntry(
     const Type** outTypeClass) const
 {
     ALOGV("Getting entry from package %p\n", package);
-    const ResTable_package* const pkg = package->package;
 
     const Type* allTypes = package->getType(typeIndex);
     ALOGV("allTypes=%p\n", allTypes);
