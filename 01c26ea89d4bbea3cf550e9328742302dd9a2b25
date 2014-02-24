@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cf6894a_4280549d",
+        "filename": "core/jni/android_opengl_GLES11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-24T21:12:55Z",
+      "side": 1,
+      "message": "Casting jint to void* seems wrong, but jessehall says this is actually the expected behavior.  In theory we should add a new 64-bit binding.\n\nI filed a bug to track it (b/13171733).",
+      "range": {
+        "startLine": 581,
+        "startChar": 8,
+        "endLine": 581,
+        "endChar": 42
+      },
+      "revId": "01c26ea89d4bbea3cf550e9328742302dd9a2b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
