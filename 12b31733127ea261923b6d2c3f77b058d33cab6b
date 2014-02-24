@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf9559be_ded2619f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-02-24T14:41:46Z",
+      "side": 1,
+      "message": "This is important information! I\u0027d move this to be the beginning of the commit message.",
+      "revId": "12b31733127ea261923b6d2c3f77b058d33cab6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
