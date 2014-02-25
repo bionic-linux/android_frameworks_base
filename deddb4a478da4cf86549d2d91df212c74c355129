@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c0f6924_9dc92398",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-02-25T17:24:47Z",
+      "side": 1,
+      "message": "Might want to note that this must occur after updating packages.list here.\nAlso we should update services/java/com/android/server/pm/Settings.java to reference external/libselinux/src/android.c in addition to system/core/run-as/run-as.c and sdcard/sdcard.c as code affected by any format changes to packages.list.",
+      "revId": "deddb4a478da4cf86549d2d91df212c74c355129",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
