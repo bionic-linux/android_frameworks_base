@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc32ddef_2c1b135b",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "use bearerType",
+      "range": {
+        "startLine": 607,
+        "startChar": 16,
+        "endLine": 607,
+        "endChar": 24
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc32ddef_6c38fbb2",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "use camel case",
+      "range": {
+        "startLine": 616,
+        "startChar": 28,
+        "endLine": 616,
+        "endChar": 40
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bce78593_1180566a",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "The coding guideline is not to have a new line after the opening bracket",
+      "range": {
+        "startLine": 615,
+        "startChar": 53,
+        "endLine": 616,
+        "endChar": 27
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc32ddef_0c0977f9",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "do we need this code block? it seems he guard clause should be if (DEBUG \u0026\u0026 mAgpsDataConnectionAddr !\u003d null)",
+      "range": {
+        "startLine": 617,
+        "startChar": 20,
+        "endLine": 620,
+        "endChar": 99
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc32ddef_ccd36f24",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "if (DEBUG \u0026\u0026 !routeResult)",
+      "range": {
+        "startLine": 620,
+        "startChar": 24,
+        "endLine": 620,
+        "endChar": 45
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bce78593_3c3a11e1",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "can you abstract this into a separate method? is being used in two places",
+      "range": {
+        "startLine": 1356,
+        "startChar": 14,
+        "endLine": 1365,
+        "endChar": 86
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc32ddef_2cbf93b3",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1865,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "it might be better to use String.format for this",
+      "range": {
+        "startLine": 1863,
+        "startChar": 12,
+        "endLine": 1865,
+        "endChar": 52
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bce78593_bcc98197",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "this will just get more complicated, can we change the definition of AGpsStatus to version? have AGpsStatus_v1, v2 and now v3 and introduce typedef AGpsStatus \u003d AGpsStatus_v3, then you can also have a mask to identify if the address is ipv4 or v6, so here you can use if agps_status-\u003esize \u003d\u003d sizeof(AGpsStatus_v1) and so on?",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 65
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bce78593_7cbbf9ee",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "you cannot continue after this point, byteArray is not valid, alog_assert is stripped out from release builds AFAIK,",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 73
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc35c5d3_26b56ef7",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-02-27T20:31:39Z",
+      "side": 1,
+      "message": "would it be better to have only one field byte[16] ipaddr and an additional field storing the type or length of the address?",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 65
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
