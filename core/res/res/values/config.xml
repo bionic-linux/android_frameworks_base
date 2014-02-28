@@ -1304,4 +1304,14 @@
         <item>333</item>
         <item>353</item>
     </string-array>
+
+    <!-- default telephony hardware configuration for this platform.
+    -->
+    <string-array translatable="false" name="config_telephonyHardware">
+        <!-- modem -->
+        <item>"0,modem,0,0,0,1,1,1"</item>
+        <!-- sim -->
+        <item>"1,sim,0,modem"</item>
+    </string-array>
+
 </resources>
