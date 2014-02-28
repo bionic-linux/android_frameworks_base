@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c58ad41_ee1bbbcd",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000205
+      },
+      "writtenOn": "2014-02-28T02:20:35Z",
+      "side": 1,
+      "message": "I know this is an existing error, but I think ALOGE would make more sense here.",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 13
+      },
+      "revId": "e0b0c00fbe0185ad006451b8083b0575b8045d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c58ad41_6eb34b7f",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000205
+      },
+      "writtenOn": "2014-02-28T02:20:35Z",
+      "side": 1,
+      "message": "... and here",
+      "range": {
+        "startLine": 191,
+        "startChar": 8,
+        "endLine": 191,
+        "endChar": 13
+      },
+      "revId": "e0b0c00fbe0185ad006451b8083b0575b8045d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c58ad41_2ebd5349",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000205
+      },
+      "writtenOn": "2014-02-28T02:20:35Z",
+      "side": 1,
+      "message": "... and here",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 208,
+        "endChar": 13
+      },
+      "revId": "e0b0c00fbe0185ad006451b8083b0575b8045d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c58ad41_ee4a9b9c",
+        "filename": "services/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000205
+      },
+      "writtenOn": "2014-02-28T02:20:35Z",
+      "side": 1,
+      "message": "The /dev file is created from the DEVNAME entry in uevent, not from the directory name here. Are you sure they always match?",
+      "revId": "e0b0c00fbe0185ad006451b8083b0575b8045d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
