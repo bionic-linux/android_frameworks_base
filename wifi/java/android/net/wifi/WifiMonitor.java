@@ -433,7 +433,11 @@ public class WifiMonitor {
                         } catch (InterruptedException ignore) {
                         }
                     } else {
-                        mIfaceMap.remove(iface);
+                        //if interface is removed, startingMonitor will always be failed
+                        //for unknown iface, since interfaces are only added when
+                        //WifiMonitor is created, if interfaces are removed, android
+                        //left no chance to re-add removeded interfaces, WifiStateMachine
+                        //will get stuck for no WifiMonitor could be started
                         m.mWifiStateMachine.sendMessage(SUP_DISCONNECTION_EVENT);
                         Log.e(TAG, "startMonitoring(" + iface + ") failed!");
                         break;
