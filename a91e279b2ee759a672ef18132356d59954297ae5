@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c52b523_9087b900",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-01T08:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc32ddef_2c1b135b",
+      "range": {
+        "startLine": 607,
+        "startChar": 16,
+        "endLine": 607,
+        "endChar": 24
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc32ddef_6c38fbb2",
         "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
         "patchSetId": 7
@@ -59,6 +83,30 @@
       "writtenOn": "2014-02-27T20:31:39Z",
       "side": 1,
       "message": "The coding guideline is not to have a new line after the opening bracket",
+      "range": {
+        "startLine": 615,
+        "startChar": 53,
+        "endLine": 616,
+        "endChar": 27
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c58ad41_fea6bed2",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-01T08:06:41Z",
+      "side": 1,
+      "message": "I assume you meant a line between 615 / 616.  There is actually not a line there.",
+      "parentUuid": "bce78593_1180566a",
       "range": {
         "startLine": 615,
         "startChar": 53,
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "9c8801e4_7bd0bfe5",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-01T08:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc32ddef_0c0977f9",
+      "range": {
+        "startLine": 617,
+        "startChar": 20,
+        "endLine": 620,
+        "endChar": 99
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bce78593_3c3a11e1",
         "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
         "patchSetId": 7
@@ -128,6 +200,30 @@
       "writtenOn": "2014-02-27T20:31:39Z",
       "side": 1,
       "message": "can you abstract this into a separate method? is being used in two places",
+      "range": {
+        "startLine": 1356,
+        "startChar": 14,
+        "endLine": 1365,
+        "endChar": 86
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c52b523_708c3d24",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-01T08:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce78593_3c3a11e1",
       "range": {
         "startLine": 1356,
         "startChar": 14,
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "9c8801e4_9bd583d7",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1865,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-01T08:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc32ddef_2cbf93b3",
+      "range": {
+        "startLine": 1863,
+        "startChar": 12,
+        "endLine": 1865,
+        "endChar": 52
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bce78593_bcc98197",
         "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
         "patchSetId": 7
@@ -174,6 +294,30 @@
       "writtenOn": "2014-02-27T20:31:39Z",
       "side": 1,
       "message": "this will just get more complicated, can we change the definition of AGpsStatus to version? have AGpsStatus_v1, v2 and now v3 and introduce typedef AGpsStatus \u003d AGpsStatus_v3, then you can also have a mask to identify if the address is ipv4 or v6, so here you can use if agps_status-\u003esize \u003d\u003d sizeof(AGpsStatus_v1) and so on?",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 65
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c8801e4_fbe36fba",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-01T08:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce78593_bcc98197",
       "range": {
         "startLine": 177,
         "startChar": 4,
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "3c52b523_50914136",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-01T08:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce78593_7cbbf9ee",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 73
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc35c5d3_26b56ef7",
         "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
         "patchSetId": 7
@@ -220,6 +388,30 @@
       "writtenOn": "2014-02-27T20:31:39Z",
       "side": 1,
       "message": "would it be better to have only one field byte[16] ipaddr and an additional field storing the type or length of the address?",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 65
+      },
+      "revId": "a91e279b2ee759a672ef18132356d59954297ae5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c58ad41_bea046b5",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-01T08:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc35c5d3_26b56ef7",
       "range": {
         "startLine": 185,
         "startChar": 0,
