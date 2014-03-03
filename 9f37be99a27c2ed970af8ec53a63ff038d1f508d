@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3c971504_7e73d16d",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-03T13:58:41Z",
+      "side": 1,
+      "message": "Again, can you guarantee that this is called only on a 32 bit target ?",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c971504_3e9b0962",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 1
@@ -31,6 +48,40 @@
       "side": 1,
       "message": "Actually, this code is never used. deserializeInternal is only called in this file and is always passed with same parameter for both inData and outData.",
       "parentUuid": "3c971504_3e9b0962",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0a6d15_df9aeca0",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-03T13:58:41Z",
+      "side": 1,
+      "message": "What is 48 ?",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0a6d15_bf973877",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-03T13:58:41Z",
+      "side": 1,
+      "message": "Same objection as above.",
       "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
