@@ -389,10 +389,6 @@ public class GpsLocationProvider implements LocationProviderInterface {
         return mGpsStatusProvider;
     }
 
-    public IGpsGeofenceHardware getGpsGeofenceProxy() {
-        return mGpsGeofenceBinder;
-    }
-
     private final BroadcastReceiver mBroadcastReciever = new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -972,30 +968,33 @@ public class GpsLocationProvider implements LocationProviderInterface {
         return result;
     }
 
-    private IGpsGeofenceHardware mGpsGeofenceBinder = new IGpsGeofenceHardware.Stub() {
-        public boolean isHardwareGeofenceSupported() {
-            return native_is_geofence_supported();
-        }
+    public static IGpsGeofenceHardware createGpsGeofenceProxy() {
+        return new IGpsGeofenceHardware.Stub() {
+            public boolean isHardwareGeofenceSupported() {
+                return native_is_geofence_supported();
+            }
 
-        public boolean addCircularHardwareGeofence(int geofenceId, double latitude,
-                double longitude, double radius, int lastTransition, int monitorTransitions,
-                int notificationResponsiveness, int unknownTimer) {
-            return native_add_geofence(geofenceId, latitude, longitude, radius,
-                    lastTransition, monitorTransitions, notificationResponsiveness, unknownTimer);
-        }
+            public boolean addCircularHardwareGeofence(int geofenceId, double latitude,
+                    double longitude, double radius, int lastTransition, int monitorTransitions,
+                    int notificationResponsiveness, int unknownTimer) {
+                return native_add_geofence(geofenceId, latitude, longitude, radius,
+                        lastTransition, monitorTransitions, notificationResponsiveness,
+                        unknownTimer);
+            }
 
-        public boolean removeHardwareGeofence(int geofenceId) {
-            return native_remove_geofence(geofenceId);
-        }
+            public boolean removeHardwareGeofence(int geofenceId) {
+                return native_remove_geofence(geofenceId);
+            }
 
-        public boolean pauseHardwareGeofence(int geofenceId) {
-            return native_pause_geofence(geofenceId);
-        }
+            public boolean pauseHardwareGeofence(int geofenceId) {
+                return native_pause_geofence(geofenceId);
+            }
 
-        public boolean resumeHardwareGeofence(int geofenceId, int monitorTransition) {
-            return native_resume_geofence(geofenceId, monitorTransition);
-        }
-    };
+            public boolean resumeHardwareGeofence(int geofenceId, int monitorTransition) {
+                return native_resume_geofence(geofenceId, monitorTransition);
+            }
+        };
+    }
 
     private boolean deleteAidingData(Bundle extras) {
         int flags;
