@@ -16,6 +16,24 @@
       "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0a6d15_1f918485",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-03-03T13:39:01Z",
+      "side": 1,
+      "message": "Actually, this code is never used. deserializeInternal is only called in this file and is always passed with same parameter for both inData and outData.",
+      "parentUuid": "3c971504_3e9b0962",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
