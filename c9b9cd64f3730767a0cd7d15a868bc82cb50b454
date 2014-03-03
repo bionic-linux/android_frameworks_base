@@ -22,6 +22,30 @@
       "revId": "c9b9cd64f3730767a0cd7d15a868bc82cb50b454",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c52b523_34f59236",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2014-03-03T22:45:35Z",
+      "side": 1,
+      "message": "As far as I can tell, that NTP request (done by NtpTrustedTime) returns the \"precise\" time for solving GPS equation, and never changes system state.  It\u0027s a private member of GpsLocationProvider and doesn\u0027t expose to geofence and others.",
+      "parentUuid": "dc0199f4_2461d36b",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "c9b9cd64f3730767a0cd7d15a868bc82cb50b454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
