@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "7c0a6d15_7fd40031",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-03-03T14:21:28Z",
+      "side": 1,
+      "message": "48 is maximum size of Res_png_9patch with padding on LP64. It does not matter if size is less than 48, however there is no check to see if it more than 48.",
+      "parentUuid": "7c0a6d15_df9aeca0",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0a6d15_bf973877",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 1
@@ -82,6 +100,41 @@
       "writtenOn": "2014-03-03T13:58:41Z",
       "side": 1,
       "message": "Same objection as above.",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc0199f4_30946eb6",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-03-03T14:21:28Z",
+      "side": 1,
+      "message": "There is an assumption here that all padding elements will be contiguous.",
+      "parentUuid": "7c0a6d15_bf973877",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0a6d15_5fd93c67",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-03-03T14:21:28Z",
+      "side": 1,
+      "message": "While you are looking at it, I want to highlight what I think is a bug. The above line copies 4 bytes for padding. It should be 16 at a minimum for 32-bit systems too.",
       "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
