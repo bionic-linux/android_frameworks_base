@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c971504_3e9b0962",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-03T13:26:55Z",
+      "side": 1,
+      "message": "Does this really work as expected ? There\u0027s no guarantee that the compiler generated layout for the structure places these in contiguous memory locations (unless you add an __attribute__((packed)).\n\nYour comment indicates that the compiler does in fact add 4 bytes of padding to this structure on LP64. Do you know what the layout is ?",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
