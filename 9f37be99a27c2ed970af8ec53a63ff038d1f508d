@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dc0199f4_7071d6f3",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-03T14:25:42Z",
+      "side": 1,
+      "message": "Right, though aapt isn\u0027t run on device (yet), it\u0027s only run during compilation. I do believe we want to support true 64 bit compiles, but that isn\u0027t being conflated with 64 bit target work as far as I can tell.",
+      "parentUuid": "3c971504_5ed055e5",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c971504_3e9b0962",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 1
