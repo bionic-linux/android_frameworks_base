@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fc32ddef_756e7a8b",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-03-03T18:14:52Z",
+      "side": 1,
+      "message": "(64-bit host tools is being worked on.)",
+      "parentUuid": "dc0199f4_7071d6f3",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c971504_3e9b0962",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 1
