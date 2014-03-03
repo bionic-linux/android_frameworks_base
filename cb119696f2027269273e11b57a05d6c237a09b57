@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c920913_536b6406",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-03T20:02:46Z",
+      "side": 1,
+      "message": "looking at this again, I think it would be simpler to do this check in PatchCache::removeDeferred(), so that mGarbage and  patchesToRemove both never have duplicates.",
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c52b523_77b8af59",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-03T20:02:46Z",
+      "side": 1,
+      "message": "This delete (which is new because of the rebase) is the reason I suggested the above - protecting against duplicates in patchesToRemove is good, but avoiding duplicates in the first place avoids a double delete here.\n\n(This could just be put in the if statement, but I think it\u0027s cleaner to just always avoid duplicates).",
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
