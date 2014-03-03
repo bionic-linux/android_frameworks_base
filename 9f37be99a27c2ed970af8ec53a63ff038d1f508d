@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c971504_5ed055e5",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-03-03T14:24:27Z",
+      "side": 1,
+      "message": "Nope, As far as I can see, it is called from write_png function in frameworks/base/tools/aapt/Images.cpp. This has to be changed for 64-bit as well.",
+      "parentUuid": "3c971504_7e73d16d",
+      "revId": "9f37be99a27c2ed970af8ec53a63ff038d1f508d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c971504_3e9b0962",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 1
