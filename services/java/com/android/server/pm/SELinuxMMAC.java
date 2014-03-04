@@ -25,11 +25,15 @@ import android.util.Xml;
 
 import com.android.internal.util.XmlUtils;
 
+import libcore.io.IoUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
 
 import java.util.HashMap;
 
@@ -59,6 +63,14 @@ public final class SELinuxMMAC {
         new File(Environment.getDataDirectory(), "security/mac_permissions.xml"),
         new File(Environment.getRootDirectory(), "etc/security/mac_permissions.xml"),
         null};
+
+    // Locations of seapp_contexts policy files.
+    private static final File[] SEAPP_CONTEXTS_FILE = {
+        new File(Environment.getDataDirectory(), "security/current/seapp_contexts"),
+        new File("/seapp_contexts")};
+
+    // Stores the hash of the last used seapp_contexts file.
+    private static final File SEAPP_HASH_FILE =  new File("/data/system/seapp_hash");
 
     // Signature policy stanzas
     static class Policy {
@@ -390,5 +402,88 @@ public final class SELinuxMMAC {
                    + (sDefaultSeinfo == null ? "null" : sDefaultSeinfo));
 
         return (sDefaultSeinfo != null);
+    }
+
+    /**
+     * Determines if a recursive restorecon on /data/data and
+     * /data/user is needed.
+     * @return boolean which determines if the restorecon
+     *         should occur.
+     */
+    public static boolean shouldRestoreconDataData() {
+        // First determine which seapp_contexts file will be hashed
+        File seapp_contexts = null;
+        for (final File file : SEAPP_CONTEXTS_FILE) {
+            if (file.exists() && file.canRead()) {
+                seapp_contexts = file;
+                break;
+            }
+        }
+
+        // Any error with the seapp_contexts file should be fatal
+        byte[] currentHash = null;
+        try {
+            currentHash = returnHash(seapp_contexts, true);
+        } catch (Exception e) {
+            Slog.e(TAG, "Error with hashing " + seapp_contexts, e);
+            return false;
+        }
+
+        // Push past any error with the stored hash file
+        byte[] storedHash = null;
+        try {
+            storedHash = returnHash(SEAPP_HASH_FILE, false);
+        } catch (Exception e) {
+            Slog.e(TAG, "Error with opening " + SEAPP_HASH_FILE, e);
+        }
+
+        if (storedHash == null || !MessageDigest.isEqual(storedHash, currentHash)) {
+            dumpHash(SEAPP_HASH_FILE, currentHash);
+        }
+
+        return true;
+    }
+
+    /**
+     * Dump the contents of a byte array to a specified file.
+     * @param File the file that receives the byte array content.
+     * @param byte[] the content that will be written.
+     */
+    private static void dumpHash(File file, byte[] content) {
+        FileOutputStream fos = null;
+        File tmp = null;
+        try {
+            tmp = File.createTempFile("seapp_hash", ".journal", file.getParentFile());
+            tmp.setReadable(true);
+            fos = new FileOutputStream(tmp);
+            fos.write(content);
+            fos.getFD().sync();
+            tmp.renameTo(file);
+        } catch (Exception e) {
+            Slog.e(TAG, "Error with writing hash to " + file, e);
+        } finally {
+            if (tmp != null) {
+                tmp.delete();
+            }
+            IoUtils.closeQuietly(fos);
+        }
+    }
+
+    /**
+     * Return the contents of a file or the SHA-1 of the file.
+     * @param File the file to digest.
+     * @param boolean indicate whether the contents of the file
+     *        should be hashed using SHA-1.
+     * @return byte[] the content of the file or the SHA-1 digest
+     *         of the file.
+     * @throws Exception if any exception results from reading or
+     *         hashing the file.
+     */
+    private static byte[] returnHash(File file, boolean takeDigest) throws Exception {
+        byte[] contents = IoUtils.readFileAsByteArray(file.getPath());
+        if (takeDigest) {
+            contents = MessageDigest.getInstance("SHA-1").digest(contents);
+        }
+        return contents;
     }
 }

@@ -383,4 +383,8 @@ public final class Installer {
 
         return execute(builder.toString());
     }
+
+    public int restoreconData() {
+        return execute("restorecondata");
+    }
 }
