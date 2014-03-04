@@ -16,6 +16,41 @@
       "revId": "e2b5fb7206f5e45c0f75e0a69c968d2ef66a6579",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c6be9dc_dabc619d",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-03-04T17:26:43Z",
+      "side": 1,
+      "message": "Sure, I can make that change.",
+      "parentUuid": "5c6be9dc_ba588de8",
+      "revId": "e2b5fb7206f5e45c0f75e0a69c968d2ef66a6579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c80f5c3_962b2cab",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-03-04T17:26:43Z",
+      "side": 1,
+      "message": "Notice, I\u0027m not dumping the ASCII version of the binary data. I\u0027m just dumping the binary. So we\u0027ll get the binary version of the SAH-1",
+      "revId": "e2b5fb7206f5e45c0f75e0a69c968d2ef66a6579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
