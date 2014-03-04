@@ -25,11 +25,16 @@ import android.util.Xml;
 
 import com.android.internal.util.XmlUtils;
 
+import libcore.io.IoUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import java.util.HashMap;
 
@@ -59,6 +64,13 @@ public final class SELinuxMMAC {
         new File(Environment.getDataDirectory(), "security/mac_permissions.xml"),
         new File(Environment.getRootDirectory(), "etc/security/mac_permissions.xml"),
         null};
+
+    // Location of seapp_contexts policy file.
+    private static final File SEAPP_CONTEXTS_FILE = new File("/seapp_contexts");
+
+    // Stores the hash of the last used seapp_contexts file.
+    private static final File SEAPP_HASH_FILE =
+        new File(Environment.getDataDirectory(), "system/seapp_hash");
 
     // Signature policy stanzas
     static class Policy {
@@ -390,5 +402,106 @@ public final class SELinuxMMAC {
                    + (sDefaultSeinfo == null ? "null" : sDefaultSeinfo));
 
         return (sDefaultSeinfo != null);
+    }
+
+    /**
+     * Determines if a recursive restorecon on /data/data and
+     * /data/user is needed. It does this by comparing the SHA-1
+     * of the seapp_contexts file against the stored hash at
+     * /data/system/seapp_hash.
+     * @return boolean which determines if the restorecon
+     *         should occur.
+     */
+    public static boolean shouldRestorecon() {
+        // Any error with the seapp_contexts file should be fatal
+        byte[] currentHash = null;
+        try {
+            currentHash = returnHash(SEAPP_CONTEXTS_FILE, true);
+        } catch (IOException ioe) {
+            Slog.e(TAG, "Error with hashing seapp_contexts.", ioe);
+            return false;
+        } catch (NoSuchAlgorithmException nsae) {
+            Slog.e(TAG, "Error with hashing seapp_contexts.", nsae);
+            return false;
+        }
+
+        // Push past any error with the stored hash file
+        byte[] storedHash = null;
+        try {
+            storedHash = returnHash(SEAPP_HASH_FILE, false);
+        } catch (IOException ioe) {
+            Slog.e(TAG, "Error opening " + SEAPP_HASH_FILE + ". Assuming first boot.", ioe);
+        } catch (NoSuchAlgorithmException nsae) {
+            // won't happen, omit response
+        }
+
+        return (storedHash == null || !MessageDigest.isEqual(storedHash, currentHash));
+    }
+
+    /**
+     * Stores the SHA-1 of the seapp_contexts to /data/system/seapp_hash.
+     * @return boolean indicating if the hash was successfully saved to disk.
+     */
+    public static boolean setRestoreconDone() {
+        boolean ret = true;
+        try {
+            final byte[] currentHash = returnHash(SEAPP_CONTEXTS_FILE, true);
+            dumpHash(SEAPP_HASH_FILE, currentHash);
+        } catch (IOException ioe) {
+            Slog.e(TAG, "Error with saving hash to " + SEAPP_HASH_FILE, ioe);
+            ret = false;
+        } catch (NoSuchAlgorithmException nsae) {
+            Slog.e(TAG, "Error with saving hash to " + SEAPP_HASH_FILE, nsae);
+            ret = false;
+        }
+        return ret;
+    }
+
+    /**
+     * Dump the contents of a byte array to a specified file.
+     * @param File the file that receives the byte array content.
+     * @param byte[] the content that will be written.
+     * @throws IOException if any failed I/O operation occured.
+     *         Included is the failure to atomically rename the tmp
+     *         file used in the process.
+     */
+    private static void dumpHash(File file, byte[] content) throws IOException {
+        FileOutputStream fos = null;
+        File tmp = null;
+        try {
+            tmp = File.createTempFile("seapp_hash", ".journal", file.getParentFile());
+            tmp.setReadable(true);
+            fos = new FileOutputStream(tmp);
+            fos.write(content);
+            fos.getFD().sync();
+            if (!tmp.renameTo(file)) {
+                throw new IOException("Failure renaming " + file.getCanonicalPath());
+            }
+        } finally {
+            if (tmp != null) {
+                tmp.delete();
+            }
+            IoUtils.closeQuietly(fos);
+        }
+    }
+
+    /**
+     * Return the contents of a file or the SHA-1 of the file.
+     * @param File the file to digest.
+     * @param boolean indicate whether the contents of the file
+     *        should be hashed using SHA-1.
+     * @return byte[] the content of the file or the SHA-1 digest
+     *         of the file.
+     * @throws IOException if any failed I/O operations occured.
+     * @throws NoSuchAlgorithmException if the SHA-1 crypto algorithm
+     *         is not available.
+     */
+    private static byte[] returnHash(File file, boolean takeDigest) throws IOException,
+            NoSuchAlgorithmException {
+        byte[] contents = IoUtils.readFileAsByteArray(file.getPath());
+        if (takeDigest) {
+            contents = MessageDigest.getInstance("SHA-1").digest(contents);
+        }
+        return contents;
     }
 }
