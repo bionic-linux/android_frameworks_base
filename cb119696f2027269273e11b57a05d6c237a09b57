@@ -19,6 +19,139 @@
     },
     {
       "key": {
+        "uuid": "dccb593b_ab3ee936",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-05T14:22:58Z",
+      "side": 1,
+      "message": "This was seen as the \"minimal change\" to allow for contribution and review. \n\nThough the patch has my name, this filtering part was actually added by another developer here. I\u0027m however very interested in why there are duplicates to begin with and to learn more of the original design ideas. \n\nI will add some of my comments/questions in the review, but feel free to email me if that is more convenient for discussions. Those questions are intended for the reviewers, rather than to the submitter. :)",
+      "parentUuid": "5c920913_536b6406",
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dccb593b_ceeca337",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-05T14:22:58Z",
+      "side": 1,
+      "message": "As far as I\u0027ve seen these lists are fairly short. Still I would hesitate to add more list iteration. \n\nIt would be possible to remove the iteration for duplicates if the patch had a flag (e.g. mDead) to signal if it was \"already garbage\" or not. I assume this is an unwanted exposure of the cache. But in cache there are other containers, such as patch_pair_t, that could possibly have the flag if wanted.",
+      "range": {
+        "startLine": 111,
+        "startChar": 27,
+        "endLine": 111,
+        "endChar": 42
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc2511e_70430e84",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-05T14:22:58Z",
+      "side": 1,
+      "message": "It\u0027s sad to see the LruCache iterated when there is an index in it. Problem is that each \"patch\" may be cached as several sizes, so patch can not be the key. \n\nThis loop is responsible to identify each of those references (in mCache) and add them to patchesToRemove. \n\nIs this the correct interpretation?",
+      "range": {
+        "startLine": 123,
+        "startChar": 13,
+        "endLine": 123,
+        "endChar": 17
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc2511e_30b586f7",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-05T14:22:58Z",
+      "side": 1,
+      "message": "I find this function elegant and quick in current implementation (as long as there is room in the Vector and the mLock is available).\n\nWas the suggestion to rebrand and modify hasItem() to iterate mGarbage and call it from here? Or would you suggest another collection type for mGarbage?",
+      "range": {
+        "startLine": 133,
+        "startChar": 13,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc2511e_cdcd89fe",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-05T14:22:58Z",
+      "side": 1,
+      "message": "Is it entirely sure that all \"removeGarbage\" are called before \"clearGarbage\" or is there a risk that one of the (several) references to a patch is still \"out there\" - possibly coming in later on and thus not detected as duplicate/already freed? (In the best of worlds remove() would then not find any match, but...)",
+      "range": {
+        "startLine": 136,
+        "startChar": 17,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc2511e_f0a37e29",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-05T14:22:58Z",
+      "side": 1,
+      "message": "mLock seems to protect mGarbage only. Is mCache accessed only from single thread?\n\nMy assumption is that the use of patchesToRemove instead of doing the changes (e.g. mCache and mFreeBlocks) immediately in this loop is to keep the mLock scope short. \n\nIs the hasItem search ok to have in that scope? (Regardless if here or in removeDeferred.)",
+      "range": {
+        "startLine": 140,
+        "startChar": 26,
+        "endLine": 140,
+        "endChar": 27
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c52b523_77b8af59",
         "filename": "libs/hwui/PatchCache.cpp",
         "patchSetId": 4
@@ -30,6 +163,47 @@
       "writtenOn": "2014-03-03T20:02:46Z",
       "side": 1,
       "message": "This delete (which is new because of the rebase) is the reason I suggested the above - protecting against duplicates in patchesToRemove is good, but avoiding duplicates in the first place avoids a double delete here.\n\n(This could just be put in the if statement, but I think it\u0027s cleaner to just always avoid duplicates).",
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc2511e_d090c283",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-05T14:22:58Z",
+      "side": 1,
+      "message": "Another way could be to move delete[] into the remove-function. If it\u0027s called \"remove\" at least it should remove something. :)",
+      "parentUuid": "3c52b523_77b8af59",
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcce5d4a_ef2e3dbc",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-05T14:22:58Z",
+      "side": 1,
+      "message": "For future review: Is it the \"patchesToRemove\" or mFreeBlocks that should be sorted?",
+      "range": {
+        "startLine": 154,
+        "startChar": 27,
+        "endLine": 154,
+        "endChar": 42
+      },
       "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
