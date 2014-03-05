@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c80f5c3_9c5b4de5",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-03-05T02:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cd641da_d17f64be",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cb929a9_aac34f24",
         "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2014-03-05T01:04:31Z",
       "side": 1,
       "message": "\"should\" style functions shouldn\u0027t have side effects. In this case, the side effect is rewriting the SEAPP_HASH_FILE file.\n\nInstead, you should have two functions, once which does the query, and one which writes the new hash. Then, PackageManagerService.java, you have something like:\n\nif (SELinuxMMAC.shouldRestoreconDataData()) {\n  Slog.i(TAG, \"Relabeling of /data/data and /data/user issued.\");\n  mInstaller.restoreconData();\n  // SUCCESS! \n  SELinuxMMAC.setRestoreconDone();\n}",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c6be9dc_602b289a",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-03-05T02:39:46Z",
+      "side": 1,
+      "message": "Doing so would result in computing the hash of /seapp_contexts twice. Not sure if saving the hash somewhere is really acceptable and returning the byte[] from shouldRestoreconDataData seems incompatible with a \"should\" function. I\u0027ll make the change, but computing the hash twice just seems wrong. I guess one benefit of this split is that we can use the return value from installd and only change the saved hash if the recursive restorecon really happened...",
+      "parentUuid": "5cb929a9_aac34f24",
       "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5c6be9dc_c0979476",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-03-05T02:39:46Z",
+      "side": 1,
+      "message": "Regardless of the exception caught I would think we want to return false. Is not catching the generic base class here so that some of the unchecked exceptions bubble up?",
+      "parentUuid": "9cd641da_14571a96",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd641da_745226a7",
         "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2014-03-05T01:04:31Z",
       "side": 1,
       "message": "avoid catching generic Exception.",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc79fdb5_1ad97d68",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-03-05T02:39:46Z",
+      "side": 1,
+      "message": "I would think that regardless of the exception caught here we should push past and force a recursive call. Again, is not catching the generic base class here so that some of the unchecked exceptions bubble up?",
+      "parentUuid": "9cd641da_745226a7",
       "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fc79fdb5_3adeb951",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-03-05T02:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cd641da_544da207",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd641da_b40c0ec7",
         "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 14
@@ -98,6 +188,24 @@
       "writtenOn": "2014-03-05T01:04:31Z",
       "side": 1,
       "message": "Can we throw a more specific exception than \"Exception\"? IOException seems appropriate to throw here.\n\nThrowing and catching \"Exception\" suppresses too many errors. For example, if we get a NoSuchAlgorithmException exception, that should be fatal (and should never happen absent a programming bug).",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c6be9dc_c03c74d2",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-03-05T02:39:46Z",
+      "side": 1,
+      "message": "Being more explicit with the thrown exceptions is fine but we\u0027ll be achieving the same results either way.\n\nAny exception that is thrown from this function when computing the /seapp_contexts hash should be fatal to the caller. The exception is being logged and we\u0027re returning false (no recursive_restorecon call should happen). Is adding the exact exception class adding anything? Throwing IOException or NoSuchAlgorithmException will still need to be handled by the caller as fatal in the context of hashing /seapp_contexts. \n\nIn addition, any exception that is thrown from this function when reading /data/system/seapp_hash should be logged and then ignored which is currently happening.  \n\nSince there are only two callers of this function it seemed fine to me to coalesce the exceptions. I\u0027ll change it; maybe the function will be called from someone else in the future where the distinctions are important...",
+      "parentUuid": "9cd641da_b40c0ec7",
       "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
