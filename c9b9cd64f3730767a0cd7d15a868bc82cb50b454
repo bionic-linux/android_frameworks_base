@@ -69,6 +69,30 @@
       "revId": "c9b9cd64f3730767a0cd7d15a868bc82cb50b454",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc76f9c4_a18cd524",
+        "filename": "services/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2014-03-05T18:46:51Z",
+      "side": 1,
+      "message": "Right, seems like it\u0027s possible to support only geofence but not GPS.  But still, geofence can be initialized independently.\n\nI reshaped the code a little bit, but please let me know if the code doesn\u0027t look placed in the right place or something (for example, I could put the geofence proxy into mRealProviders like others, but I\u0027m not sure it\u0027s the right thing to do).",
+      "parentUuid": "dccb593b_ce24a396",
+      "range": {
+        "startLine": 442,
+        "startChar": 20,
+        "endLine": 442,
+        "endChar": 27
+      },
+      "revId": "c9b9cd64f3730767a0cd7d15a868bc82cb50b454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
