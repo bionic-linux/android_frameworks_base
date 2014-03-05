@@ -46,6 +46,29 @@
       "revId": "c9b9cd64f3730767a0cd7d15a868bc82cb50b454",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dccb593b_ce24a396",
+        "filename": "services/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1018045
+      },
+      "writtenOn": "2014-03-05T00:26:56Z",
+      "side": 1,
+      "message": "No geofence service will be available. How the geofence  clients will be blocked?",
+      "range": {
+        "startLine": 442,
+        "startChar": 20,
+        "endLine": 442,
+        "endChar": 27
+      },
+      "revId": "c9b9cd64f3730767a0cd7d15a868bc82cb50b454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
