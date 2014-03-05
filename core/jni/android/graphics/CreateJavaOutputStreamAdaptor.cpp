@@ -68,7 +68,7 @@ private:
                 requested = fCapacity;
 
             jint n = env->CallIntMethod(fJavaInputStream,
-                                        gInputStream_readMethodID, fJavaByteArray, 0, requested);
+                                        gInputStream_readMethodID, fJavaByteArray, 0, (jint)requested);
             if (env->ExceptionCheck()) {
                 env->ExceptionDescribe();
                 env->ExceptionClear();
@@ -194,7 +194,7 @@ public:
             }
 
             fEnv->CallVoidMethod(fJavaOutputStream, gOutputStream_writeMethodID,
-                                 storage, 0, requested);
+                                 storage, 0, (jint)requested);
             if (env->ExceptionCheck()) {
                 env->ExceptionDescribe();
                 env->ExceptionClear();
