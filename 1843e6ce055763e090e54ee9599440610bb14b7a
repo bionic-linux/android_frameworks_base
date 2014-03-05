@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cd641da_d17f64be",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-05T01:04:31Z",
+      "side": 1,
+      "message": "For now, can you please remove this line? The files in /data/security aren\u0027t versioned, and they\u0027re not safe to use in the event of an OTA.\n\nThis has already bricked devices, and the code which references /data/security has been pulled from Google\u0027s internal tree.\n\nThis is being tracked within Google as:\n* b/12706189\n* b/12613118\n* b/8841348\n* b/12705948\n* b/12706963",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cb929a9_aac34f24",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-05T01:04:31Z",
+      "side": 1,
+      "message": "\"should\" style functions shouldn\u0027t have side effects. In this case, the side effect is rewriting the SEAPP_HASH_FILE file.\n\nInstead, you should have two functions, once which does the query, and one which writes the new hash. Then, PackageManagerService.java, you have something like:\n\nif (SELinuxMMAC.shouldRestoreconDataData()) {\n  Slog.i(TAG, \"Relabeling of /data/data and /data/user issued.\");\n  mInstaller.restoreconData();\n  // SUCCESS! \n  SELinuxMMAC.setRestoreconDone();\n}",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_14571a96",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-05T01:04:31Z",
+      "side": 1,
+      "message": "avoid catching generic Exception.",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_745226a7",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-05T01:04:31Z",
+      "side": 1,
+      "message": "avoid catching generic Exception.",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_544da207",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-05T01:04:31Z",
+      "side": 1,
+      "message": "avoid catching generic Exception.",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_b40c0ec7",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-05T01:04:31Z",
+      "side": 1,
+      "message": "Can we throw a more specific exception than \"Exception\"? IOException seems appropriate to throw here.\n\nThrowing and catching \"Exception\" suppresses too many errors. For example, if we get a NoSuchAlgorithmException exception, that should be fatal (and should never happen absent a programming bug).",
+      "revId": "1843e6ce055763e090e54ee9599440610bb14b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
