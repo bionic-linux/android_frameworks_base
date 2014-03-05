@@ -1,0 +1,284 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cd641da_174cfc91",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Overall notes for this, they don\u0027t need to be done now, can be done after initial integration.\n\n1) Add java docs to public\u0027s\n2) I worry about the \"set\" methods, need to understand why these are public. If they are really needed they\u0027ll need to have a strong permission.",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cab3158_055e122a",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "fix white space here and else where.",
+      "range": {
+        "startLine": 142,
+        "startChar": 44,
+        "endLine": 142,
+        "endChar": 48
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_f710586a",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Lets create mISub and get the \"isub\" service in the constructor, if for some reason thats not viable then lets make this a method to minimize code duplication.\n\nThis can be done later if we\u0027re ready to integrate.",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_970d4c55",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "I assume if the string is zero length its also invalid, change to:\n\n  if (TextUtils.isEmpty(iccId)) {",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_7730e800",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Have you considered returning an empty List\u003cxxxx\u003e here and else where instead of null, it can make the callers code potentially simpler?",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cab3158_65d4a631",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Feels funny that we\u0027re allowing applications to add records, why do we need this?",
+      "range": {
+        "startLine": 300,
+        "startChar": 22,
+        "endLine": 300,
+        "endChar": 38
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cb929a9_6d05712e",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Change to subId here and else where.",
+      "range": {
+        "startLine": 320,
+        "startChar": 24,
+        "endLine": 320,
+        "endChar": 37
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cb929a9_2dff79d2",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "subscription identifier here and else where.",
+      "range": {
+        "startLine": 323,
+        "startChar": 31,
+        "endLine": 323,
+        "endChar": 62
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cb929a9_8d0d4555",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Why does the application need to do this?",
+      "range": {
+        "startLine": 397,
+        "startChar": 22,
+        "endLine": 397,
+        "endChar": 38
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_b725f0be",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "I assume there are standard methods for displaying phone number that we should use and not invent our own.",
+      "range": {
+        "startLine": 426,
+        "startChar": 22,
+        "endLine": 426,
+        "endChar": 44
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cab3158_85cc42a8",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Again why is this exposed to applications?",
+      "range": {
+        "startLine": 455,
+        "startChar": 22,
+        "endLine": 455,
+        "endChar": 36
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd641da_5752842f",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "If we need this it would seem it should be \"SlotId \u0026 AID\".\n\nAlso all public methods, constants and variables need java doc comments.",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cb929a9_8d28e597",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Probably not static?",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cab3158_85a3e2c1",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-05T17:54:26Z",
+      "side": 1,
+      "message": "Why do apps need this?",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
