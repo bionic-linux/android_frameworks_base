@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cc2511e_960f92bb",
+        "filename": "core/jni/android/graphics/CreateJavaOutputStreamAdaptor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-06T15:36:56Z",
+      "side": 1,
+      "message": "My point really was that requested and fCapacity should be jint (or int32_t).\n\nNote that\n- requested is capped to fCapacity\n- fCapacity is the return value of GetArrayLength, which is jsize, aka jint.",
+      "revId": "5feea674562aed8951ad8e9c0ed4713b48e60db4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
