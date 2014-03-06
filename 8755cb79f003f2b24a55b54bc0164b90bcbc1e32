@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "1c7df19f_ac6360ec",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T08:09:28Z",
+      "side": 1,
+      "message": "Thank you for good suggestions.",
+      "parentUuid": "9cd641da_f710586a",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd641da_970d4c55",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 5
@@ -93,6 +111,24 @@
     },
     {
       "key": {
+        "uuid": "1c7df19f_ec6958d0",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T08:09:28Z",
+      "side": 1,
+      "message": "If so, callers may need check the count for List\u003cxxx\u003e either, but it can prevent from null pointer exceptions definitely.",
+      "parentUuid": "9cd641da_7730e800",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cab3158_65d4a631",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 5
@@ -104,6 +140,30 @@
       "writtenOn": "2014-03-05T17:54:26Z",
       "side": 1,
       "message": "Feels funny that we\u0027re allowing applications to add records, why do we need this?",
+      "range": {
+        "startLine": 300,
+        "startChar": 22,
+        "endLine": 300,
+        "endChar": 38
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dca43989_cc7fc3be",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T08:09:28Z",
+      "side": 1,
+      "message": "We have an handler to listen on the SIM cards change(plug-in and plug out) status now. And it will invoke this method to update the current usage subInfo in db.",
+      "parentUuid": "1cab3158_65d4a631",
       "range": {
         "startLine": 300,
         "startChar": 22,
@@ -185,6 +245,30 @@
     },
     {
       "key": {
+        "uuid": "1c7df19f_4c916c84",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T08:09:28Z",
+      "side": 1,
+      "message": "Settings applications can set subInfo appearance(display number by user own) by invoking this method.",
+      "parentUuid": "5cb929a9_8d0d4555",
+      "range": {
+        "startLine": 397,
+        "startChar": 22,
+        "endLine": 397,
+        "endChar": 38
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd641da_b725f0be",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 5
@@ -208,6 +292,30 @@
     },
     {
       "key": {
+        "uuid": "fca73d88_1e2e5d10",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T08:09:28Z",
+      "side": 1,
+      "message": "Settings applications can set subInfo appearance(display number format, such as pre-4-digit/last-4-digit/etc..) by invoking this method.",
+      "parentUuid": "9cd641da_b725f0be",
+      "range": {
+        "startLine": 426,
+        "startChar": 22,
+        "endLine": 426,
+        "endChar": 44
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cab3158_85cc42a8",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 5
@@ -219,6 +327,30 @@
       "writtenOn": "2014-03-05T17:54:26Z",
       "side": 1,
       "message": "Again why is this exposed to applications?",
+      "range": {
+        "startLine": 455,
+        "startChar": 22,
+        "endLine": 455,
+        "endChar": 36
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c7df19f_58612b1c",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T08:09:28Z",
+      "side": 1,
+      "message": "Settings applications can set the sub appearance(color/display number/number format/etc) and roam-able.",
+      "parentUuid": "1cab3158_85cc42a8",
       "range": {
         "startLine": 455,
         "startChar": 22,
@@ -276,6 +408,24 @@
       "writtenOn": "2014-03-05T17:54:26Z",
       "side": 1,
       "message": "Why do apps need this?",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c7df19f_8c87844e",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T08:09:28Z",
+      "side": 1,
+      "message": "We have an handler to listen on the SIM cards change(plug-in and plug out) status now. And it will invoke this method to clear the previous usage subInfo for hashmap.",
+      "parentUuid": "1cab3158_85a3e2c1",
       "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
