@@ -16,6 +16,24 @@
       "revId": "5feea674562aed8951ad8e9c0ed4713b48e60db4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcce5d4a_7539ba54",
+        "filename": "core/jni/android/graphics/CreateJavaOutputStreamAdaptor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-03-06T15:58:24Z",
+      "side": 1,
+      "message": "Sure, I can change the requested and fCapacity to int32_t.",
+      "parentUuid": "1cc2511e_960f92bb",
+      "revId": "5feea674562aed8951ad8e9c0ed4713b48e60db4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
