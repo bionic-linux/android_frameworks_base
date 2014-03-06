@@ -152,7 +152,8 @@ class WifiController extends StateMachine {
             addState(mStaDisabledWithScanState, mDefaultState);
             addState(mApEnabledState, mDefaultState);
             addState(mEcmState, mDefaultState);
-        if (mSettingsStore.isScanAlwaysAvailable()) {
+        if (mSettingsStore.isScanAlwaysAvailable() &&
+                !mSettingsStore.isAirplaneModeOn()) {
             setInitialState(mStaDisabledWithScanState);
         } else {
             setInitialState(mApStaDisabledState);
@@ -409,6 +410,8 @@ class WifiController extends StateMachine {
                         } else {
                             checkLocksAndTransitionWhenDeviceIdle();
                         }
+                    } else if (mSettingsStore.isScanAlwaysAvailable()) {
+                        transitionTo(mStaDisabledWithScanState);
                     }
                     break;
                 case CMD_SCAN_ALWAYS_MODE_CHANGED:
