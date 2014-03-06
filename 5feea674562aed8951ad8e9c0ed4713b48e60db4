@@ -34,6 +34,41 @@
       "revId": "5feea674562aed8951ad8e9c0ed4713b48e60db4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dccb593b_34b816a7",
+        "filename": "core/jni/android/graphics/CreateJavaOutputStreamAdaptor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-03-06T16:14:48Z",
+      "side": 1,
+      "message": "To think of it, both requested and fCapacity cannot be negative. I will change them to uint32_t.",
+      "parentUuid": "fcce5d4a_7539ba54",
+      "revId": "5feea674562aed8951ad8e9c0ed4713b48e60db4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dccb593b_d4bc329d",
+        "filename": "core/jni/android/graphics/CreateJavaOutputStreamAdaptor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-03-06T16:14:48Z",
+      "side": 1,
+      "message": "The above code will change to \n\n            uint32_t requested;\n            if (size \u003e fCapacity) {\n                requested \u003d fCapacity;\n            } else {\n                requested \u003d size;\n            }\n\nto take care of situation where size may not fit in uint32_t.",
+      "revId": "5feea674562aed8951ad8e9c0ed4713b48e60db4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
