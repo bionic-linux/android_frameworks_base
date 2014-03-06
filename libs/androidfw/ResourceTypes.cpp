@@ -126,6 +126,13 @@ inline void Res_value::copyFrom_dtoh(const Res_value& src)
     data = dtohl(src.data);
 }
 
+size_t Res_png_9patch_compat::dataSize()
+{
+    return numXDivs * sizeof(int32_t) +
+           numYDivs * sizeof(int32_t) +
+           numColors * sizeof(uint32_t);
+}
+
 void Res_png_9patch::deviceToFile()
 {
     for (int i = 0; i < numXDivs; i++) {
@@ -314,10 +321,6 @@ static status_t getIdmapPackageId(const uint32_t* map, size_t mapSize, uint32_t 
 
 Res_png_9patch* Res_png_9patch::deserialize(const void* inData)
 {
-    if (sizeof(void*) != sizeof(int32_t)) {
-        ALOGE("Cannot deserialize on non 32-bit system\n");
-        return NULL;
-    }
     deserializeInternal(inData, (Res_png_9patch*) inData);
     return (Res_png_9patch*) inData;
 }

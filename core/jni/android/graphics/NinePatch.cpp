@@ -48,12 +48,12 @@ public:
         if (NULL == obj) {
             return JNI_FALSE;
         }
-        if (env->GetArrayLength(obj) < (int)sizeof(Res_png_9patch)) {
+        if (env->GetArrayLength(obj) < (int)sizeof(Res_png_9patch_compat)) {
             return JNI_FALSE;
         }
         const jbyte* array = env->GetByteArrayElements(obj, 0);
         if (array != NULL) {
-            const Res_png_9patch* chunk = reinterpret_cast<const Res_png_9patch*>(array);
+            const Res_png_9patch_compat* chunk = reinterpret_cast<const Res_png_9patch_compat*>(array);
             int8_t wasDeserialized = chunk->wasDeserialized;
             env->ReleaseByteArrayElements(obj, const_cast<jbyte*>(array), JNI_ABORT);
             return (wasDeserialized != -1) ? JNI_TRUE : JNI_FALSE;
@@ -63,15 +63,56 @@ public:
 
     static jlong validateNinePatchChunk(JNIEnv* env, jobject, jlong, jbyteArray obj) {
         size_t chunkSize = env->GetArrayLength(obj);
-        if (chunkSize < (int) (sizeof(Res_png_9patch))) {
+        if (chunkSize < (int) (sizeof(Res_png_9patch_compat))) {
             jniThrowRuntimeException(env, "Array too small for chunk.");
             return NULL;
         }
 
         int8_t* storage = new int8_t[chunkSize];
+        if (storage == NULL) return NULL;
+
         // This call copies the content of the jbyteArray
         env->GetByteArrayRegion(obj, 0, chunkSize, reinterpret_cast<jbyte*>(storage));
-        // Deserialize in place, return the array we just allocated
+#ifdef  __LP64__
+        // When aapt is 32bit on build host and the target is 64bit. There is 32/64
+        // compatiblility issue for NinePatch.
+        Res_png_9patch_compat* patch = (Res_png_9patch_compat*) storage;
+        // For new Res_png_9patch size
+        size_t data_size = patch->dataSize();
+        size_t patchSize = sizeof(Res_png_9patch) + data_size;
+        size_t patchSize_compat = sizeof(Res_png_9patch_compat) + data_size;
+        assert(chunkSize == patchSize_compat);
+
+        // You have to copy the data because it is owned by the png reader
+        // On 32bit, this is like just copy between patchNew and patch directl
+        // On 64bit, fields need be assigned one by one and data could be
+        // copied directly.
+        int8_t* patchMem = new int8_t[patchSize];
+        if (patchMem == NULL) {
+            delete[] storage;
+            return NULL;
+        }
+
+        Res_png_9patch* patchNew =
+            reinterpret_cast<Res_png_9patch*>(patchMem);
+        patchNew->wasDeserialized = patch->wasDeserialized;
+        patchNew->numXDivs = patch->numXDivs;
+        patchNew->numYDivs = patch->numYDivs;
+        patchNew->numColors = patch->numColors;
+        patchNew->paddingLeft = patch->paddingLeft;
+        patchNew->paddingRight = patch->paddingRight;
+        patchNew->paddingTop = patch->paddingTop;
+        patchNew->paddingBottom = patch->paddingBottom;
+        void *src, *dst;
+        src = reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(patch) +
+            sizeof(Res_png_9patch_compat));
+        dst = reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(patchNew) +
+            sizeof(Res_png_9patch));
+        memcpy(dst, src, data_size);
+        delete[] storage;
+        storage = reinterpret_cast<int8_t*>(patchNew);
+#endif
+
         return reinterpret_cast<jlong>(Res_png_9patch::deserialize(storage));
     }
 

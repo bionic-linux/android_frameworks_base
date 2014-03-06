@@ -101,6 +101,25 @@ namespace android {
  *
  * The PNG chunk type is "npTc".
  */
+
+// It's really ugly to embedded the pointer to the data structure.
+// We need this compat stucture here for 32bit compatbile at 64bit
+// environment.
+struct Res_png_9patch_compat {
+    int8_t wasDeserialized;
+    int8_t numXDivs;
+    int8_t numYDivs;
+    int8_t numColors;
+
+    int32_t xDivs;
+    int32_t yDivs;
+
+    int32_t paddingLeft, paddingRight;
+    int32_t paddingTop, paddingBottom;
+    uint32_t colors;
+    size_t dataSize();
+};
+
 struct Res_png_9patch
 {
     Res_png_9patch() : wasDeserialized(false), xDivs(NULL),
