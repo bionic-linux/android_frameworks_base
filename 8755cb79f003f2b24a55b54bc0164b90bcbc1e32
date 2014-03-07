@@ -380,6 +380,23 @@
     },
     {
       "key": {
+        "uuid": "fc4c9db4_1c05552f",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1023068
+      },
+      "writtenOn": "2014-03-07T01:44:10Z",
+      "side": 1,
+      "message": "The mapping of the color to the resource should probably be maintained at a higher (UI)layer.",
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cb929a9_8d28e597",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 5
