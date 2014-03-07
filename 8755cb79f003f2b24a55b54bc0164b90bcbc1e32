@@ -397,6 +397,29 @@
     },
     {
       "key": {
+        "uuid": "9c348108_36166e32",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1023068
+      },
+      "writtenOn": "2014-03-07T01:45:41Z",
+      "side": 1,
+      "message": "We are getting compile errors after picking only subscriptionController changes, due to absence of these resource IDs.",
+      "range": {
+        "startLine": 526,
+        "startChar": 24,
+        "endLine": 526,
+        "endChar": 31
+      },
+      "revId": "8755cb79f003f2b24a55b54bc0164b90bcbc1e32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cb929a9_8d28e597",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 5
