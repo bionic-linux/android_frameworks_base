@@ -2,12 +2,12 @@
 
 using namespace std;
 
-// String basis to generate expansion
+// String basis to generate expansion.
 static const string k_expansion_string = string("one two three ") +
     "four five six seven eight nine ten eleven twelve thirteen " +
     "fourteen fiveteen sixteen seventeen nineteen twenty";
 
-// Special unicode characters to override directionality of the words
+// Special unicode characters to override directionality of the words.
 static const char* k_rlm = "\xe2\x80\x8f";
 static const char* k_rlo = "\xE2\x80\xae";
 static const char* k_pdf = "\xE2\x80\xac";
