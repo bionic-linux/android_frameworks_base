@@ -83,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "dcf7d997_f42509be",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-10T23:30:52Z",
+      "side": 1,
+      "message": "This loop identifies each Description/Patch pair that comes from the about-to-be-deleted Res_png_9_patch, and adds them to patchesToRemove.\n\nRes_png_9_patch as you say, can\u0027t be the key, since multiple instances of those will come with multiple sizes.",
+      "parentUuid": "1cc2511e_70430e84",
+      "range": {
+        "startLine": 123,
+        "startChar": 13,
+        "endLine": 123,
+        "endChar": 17
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cc2511e_30b586f7",
         "filename": "libs/hwui/PatchCache.cpp",
         "patchSetId": 4
@@ -94,6 +118,30 @@
       "writtenOn": "2014-03-05T14:22:58Z",
       "side": 1,
       "message": "I find this function elegant and quick in current implementation (as long as there is room in the Vector and the mLock is available).\n\nWas the suggestion to rebrand and modify hasItem() to iterate mGarbage and call it from here? Or would you suggest another collection type for mGarbage?",
+      "range": {
+        "startLine": 133,
+        "startChar": 13,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf7d997_20df50a8",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-10T23:30:52Z",
+      "side": 1,
+      "message": "I retract my earlier comment - duplicates aren\u0027t from this function getting called multiple times, but rather from multiple entries of the same Res_png_9_patch pointed to by Description/Patch pairs in the hashmap. This is fine as is.",
+      "parentUuid": "1cc2511e_30b586f7",
       "range": {
         "startLine": 133,
         "startChar": 13,
@@ -129,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "9c2ba1c2_5e0a31b7",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-10T23:30:52Z",
+      "side": 1,
+      "message": "sorry, I don\u0027t follow - removeGarbage?\n\nThe design is that mGarbage contains patches that *only* the PatchCache has a reference to, and which are referenced no where else (since both Java and the DisplayLists have given up all references).",
+      "parentUuid": "1cc2511e_cdcd89fe",
+      "range": {
+        "startLine": 136,
+        "startChar": 17,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cc2511e_f0a37e29",
         "filename": "libs/hwui/PatchCache.cpp",
         "patchSetId": 4
@@ -140,6 +212,30 @@
       "writtenOn": "2014-03-05T14:22:58Z",
       "side": 1,
       "message": "mLock seems to protect mGarbage only. Is mCache accessed only from single thread?\n\nMy assumption is that the use of patchesToRemove instead of doing the changes (e.g. mCache and mFreeBlocks) immediately in this loop is to keep the mLock scope short. \n\nIs the hasItem search ok to have in that scope? (Regardless if here or in removeDeferred.)",
+      "range": {
+        "startLine": 140,
+        "startChar": 26,
+        "endLine": 140,
+        "endChar": 27
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf7d997_4057fc46",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-10T23:30:52Z",
+      "side": 1,
+      "message": "mCache is only accessed from the rendering thread, mGarbage is the only thing accessed from multiple threads.",
+      "parentUuid": "1cc2511e_f0a37e29",
       "range": {
         "startLine": 140,
         "startChar": 26,
@@ -187,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "dc10b997_06e87cd2",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-10T23:30:52Z",
+      "side": 1,
+      "message": "Let\u0027s just leave it as is for now - this way at least the object isn\u0027t destroyed until it\u0027s no longer held.",
+      "parentUuid": "1cc2511e_d090c283",
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcce5d4a_ef2e3dbc",
         "filename": "libs/hwui/PatchCache.cpp",
         "patchSetId": 4
@@ -198,6 +312,30 @@
       "writtenOn": "2014-03-05T14:22:58Z",
       "side": 1,
       "message": "For future review: Is it the \"patchesToRemove\" or mFreeBlocks that should be sorted?",
+      "range": {
+        "startLine": 154,
+        "startChar": 27,
+        "endLine": 154,
+        "endChar": 42
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf1d5a2_6321602c",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-10T23:30:52Z",
+      "side": 1,
+      "message": "the TODO here sounds like it may be referring to mFreeBlocks, but actually sorting both would simplify the process of merging blocks.\n\nEither way, merging blocks isn\u0027t very high priority since we get very good reuse due to many patches using the same block size.",
+      "parentUuid": "fcce5d4a_ef2e3dbc",
       "range": {
         "startLine": 154,
         "startChar": 27,
