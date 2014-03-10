@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcf7d997_ea0c02c8",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "I\u0027d store these as Strings instead of File objects. The only method you ever use from the File object is getPath().",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf7d997_4a4d5608",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "String instead of file.",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf1d5a2_8b02a264",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "Can you please not prematurely wrap lines. Comments can extend all the way to 80 characters; wrapping them earlier only makes this harder to read (IMHO).",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c2ba1c2_480a72f2",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "newlines between line 411 and 412.",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c2ba1c2_e8dd2631",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "Not a valid @return line. See http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#@return",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf7d997_ea67e27b",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "This is the wrong behavior if the algorithm doesn\u0027t exist. We shouldn\u0027t continue on for an unrecoverable error. Rather, we should die hard and fast. See my comments in returnHash().",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf7d997_0aaa2e67",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "storedHash \u003d IoUtils.readFileAsByteArray(SEAPP_HASH_FILE);",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf1d5a2_eb3c06d2",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "newline between lines 442 and 443. See examples at http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#examples",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf7d997_8de3d845",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "Nobody ever checks this return value. I\u0027m not sure what it accomplishes. I\u0027d just remove the return value, and change this to a void function.",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c2ba1c2_a8484e4c",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "newline between line 461 and 462.",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c2ba1c2_4838b2b2",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "This isn\u0027t a valid javadoc statement.\n\n@param should be followed by the NAME of the variable, not it\u0027s type.\n\nhttp://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#@param",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf7d997_ea3ec237",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "There\u0027s only one caller which sets takeDigest \u003d\u003d false. We should just inline line 501 into the caller, and avoid the complexity of passing an additional argument. See comment on line 431.",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf1d5a2_4b6efa8a",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "Not a valid @return line. See http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#@return",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf1d5a2_4bcf1aa2",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "once line 431 is inlined, you don\u0027t need the \"takeDigest\" argument.",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf1d5a2_78f0ee46",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-03-10T23:48:59Z",
+      "side": 1,
+      "message": "NoSuchAlgorithmException will never occur unless SHA-1 ceases to exist. This should be a fatal error, a RuntimeException.\n\ntry {\n  byte[] contents \u003d ...;\n  return MessageDigest.getInstance(\"SHA-1\").digest(contents);\n} catch (NoSuchAlgorithmException e) {\n  throw new RuntimeException(e);  // impossible\n}",
+      "revId": "2fec970d565813a7c78c870472aec7e6d2e4d2ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
