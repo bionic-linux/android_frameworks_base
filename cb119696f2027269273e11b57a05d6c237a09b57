@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "dce519f4_1bda9bb7",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-11T15:28:41Z",
+      "side": 1,
+      "message": "Your comment had merit regardless of that.\n\nThis patch was prepared without knowing of\nhttps://android-review.googlesource.com/#/c/74220\n\nMy interpretation of the explanation to that patch is that mGarbage did have duplicate entries from multiple calls here. The interesting part was that this was not intended as duplicates, given that they were actually different objects that just happened to get the same address.\n\nIf that patch correctly prevents duplicates in mGarbage the hasItem() filter may not be needed. Do you happen to have any test cases that can be used to verify this? Or should an assert be added to secure the design requirement?",
+      "parentUuid": "dcf7d997_20df50a8",
+      "range": {
+        "startLine": 133,
+        "startChar": 13,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cc2511e_cdcd89fe",
         "filename": "libs/hwui/PatchCache.cpp",
         "patchSetId": 4
@@ -189,6 +213,30 @@
       "side": 1,
       "message": "sorry, I don\u0027t follow - removeGarbage?\n\nThe design is that mGarbage contains patches that *only* the PatchCache has a reference to, and which are referenced no where else (since both Java and the DisplayLists have given up all references).",
       "parentUuid": "1cc2511e_cdcd89fe",
+      "range": {
+        "startLine": 136,
+        "startChar": 17,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c1ab5b4_8c1beb85",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-11T15:28:41Z",
+      "side": 1,
+      "message": "My bad - replace \"removeGarbage\" with \"removeDeferred\". \n\nI now understand that the design does rule out any reference \"still out there\". Any \"risk\" of double free based on that scenario would thus be a bug that would be beneficial to find rather than to protect from.",
+      "parentUuid": "9c2ba1c2_5e0a31b7",
       "range": {
         "startLine": 136,
         "startChar": 17,
@@ -241,6 +289,29 @@
         "startChar": 26,
         "endLine": 140,
         "endChar": 27
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c1ab5b4_8ce92b26",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-11T15:28:41Z",
+      "side": 1,
+      "message": "Chris Craik said on review cover note something I summarize like this:\n\n\u003e I\u0027m not seeing the point of the hasItem() function, one\n\u003e Res_png_9_patch is used on the background of several \n\u003e Description/Patch pair, and we\u0027ll still want to delete \n\u003e all of those in mCache.\n\n\nMaybe I\u0027m misunderstanding the question, but let me explain my view.\n\nfor (size_t i \u003d 0; i \u003c count; i++) {\n  if (!hasItem(patchesToRemove, mGarbage[i]))\n    remove(patchesToRemove, mGarbage[i]);\n}\n\nThe iteration is over every Res_png_9_patch* in mGarbage. remove() will make sure that EVERY matching Description/Patch pair in mCache is listed in patchesToRemove (as a patch_pair_t). \n\nWhat hasItem() does is to look if there are ANY patch_pair_t already in patchesToRemove that is matching the Res_png_9_patch in question. (The PatchDescription has a reference to Res_png_9_patch...)\n\nThis way EVERY matching pair is indeed destroyed once, if ANY of them is. That should cover \"want to delete all of those\".\n\nThe question \"is there a point filtering with hasItem?\"  may have another answer. The filter was added due to double free of Patch (as where before my patch there were no free at all so the problem was fairly undetected). \n\nPatchCache::get() seems to cause a one-to-one relation for Description/Patch. So if that assumption holds the filter is equivalent to filter for duplicate entries in mGarbage. \n\nIf that other patch correctly prevents duplicates in mGarbage the hasItem() filter may not be needed and I would happily remove it. Do you happen to have any test cases that can be used to verify this?",
+      "range": {
+        "startLine": 144,
+        "startChar": 17,
+        "endLine": 144,
+        "endChar": 24
       },
       "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -336,6 +407,30 @@
       "side": 1,
       "message": "the TODO here sounds like it may be referring to mFreeBlocks, but actually sorting both would simplify the process of merging blocks.\n\nEither way, merging blocks isn\u0027t very high priority since we get very good reuse due to many patches using the same block size.",
       "parentUuid": "fcce5d4a_ef2e3dbc",
+      "range": {
+        "startLine": 154,
+        "startChar": 27,
+        "endLine": 154,
+        "endChar": 42
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dce519f4_fb9fafce",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1042369
+      },
+      "writtenOn": "2014-03-11T15:28:41Z",
+      "side": 1,
+      "message": "I agree, still I think it may be a little more efficient to just modify the size of an adjacent block rather than to create and destroy one BufferBlock every time.\n\nBut that\u0027s outside this review, just a thought I had when considering searching patchesToRemove for duplicates.",
+      "parentUuid": "3cf1d5a2_6321602c",
       "range": {
         "startLine": 154,
         "startChar": 27,
