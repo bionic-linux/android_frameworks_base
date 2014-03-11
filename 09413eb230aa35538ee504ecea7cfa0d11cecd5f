@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c2ba1c2_77c47351",
+        "filename": "core/jni/android/graphics/CreateJavaOutputStreamAdaptor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-03-11T16:01:11Z",
+      "side": 1,
+      "message": "an alternative would have been jsize or jint, which might make people less likely to \"fix\" this back to size_t...",
+      "revId": "09413eb230aa35538ee504ecea7cfa0d11cecd5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
