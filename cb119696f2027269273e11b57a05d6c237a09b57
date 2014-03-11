@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "dcf7d997_a607ce74",
+        "filename": "libs/hwui/PatchCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-03-11T20:30:13Z",
+      "side": 1,
+      "message": "Unfortunately I don\u0027t have any tests for this path. I\u0027d prefer an assert LOG_ALWAYS_FATAL_IF() in here to verify there aren\u0027t any duplicates, since the only \"legitimate\" duplicates should no longer exist because of the other patch, as you say.",
+      "parentUuid": "dce519f4_1bda9bb7",
+      "range": {
+        "startLine": 133,
+        "startChar": 13,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "cb119696f2027269273e11b57a05d6c237a09b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cc2511e_cdcd89fe",
         "filename": "libs/hwui/PatchCache.cpp",
         "patchSetId": 4
