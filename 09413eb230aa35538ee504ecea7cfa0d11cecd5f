@@ -16,6 +16,24 @@
       "revId": "09413eb230aa35538ee504ecea7cfa0d11cecd5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcb4e5de_fa51694b",
+        "filename": "core/jni/android/graphics/CreateJavaOutputStreamAdaptor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-12T08:56:17Z",
+      "side": 1,
+      "message": "jint is probably clearer, since the int method that\u0027s called requires it.",
+      "parentUuid": "9c2ba1c2_77c47351",
+      "revId": "09413eb230aa35538ee504ecea7cfa0d11cecd5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
