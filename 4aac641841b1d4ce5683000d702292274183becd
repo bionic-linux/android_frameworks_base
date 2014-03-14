@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb1990e_618e326a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2014-03-14T17:51:52Z",
+      "side": 1,
+      "message": "Useless commit summary.\n\nThe one-line summary should indicate what the commit is about. And when looking at a log of changes, if they all say \"fix issue NNNN\" you\u0027ll have no idea of what has been going on.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "4aac641841b1d4ce5683000d702292274183becd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
