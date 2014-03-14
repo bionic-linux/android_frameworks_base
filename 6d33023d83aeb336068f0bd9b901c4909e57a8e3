@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cbf69de_26fcc81e",
+        "filename": "services/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2014-03-14T22:57:55Z",
+      "side": 1,
+      "message": "Just realized that patchset 2 keeps the wrong one.",
+      "range": {
+        "startLine": 150,
+        "startChar": 26,
+        "endLine": 150,
+        "endChar": 40
+      },
+      "revId": "6d33023d83aeb336068f0bd9b901c4909e57a8e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
