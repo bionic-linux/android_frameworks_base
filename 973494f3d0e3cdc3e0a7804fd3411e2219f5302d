@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fccd7da7_9e7bda4b",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1036868
+      },
+      "writtenOn": "2014-03-18T23:58:02Z",
+      "side": 1,
+      "message": "Isn\u0027t this implemented inside HAL? If so, How do we make sure they are in-sync?",
+      "range": {
+        "startLine": 656,
+        "startChar": 4,
+        "endLine": 656,
+        "endChar": 18
+      },
+      "revId": "973494f3d0e3cdc3e0a7804fd3411e2219f5302d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
