@@ -145,12 +145,14 @@ static void verifySystemIdmaps()
 
                 if (setgid(AID_SYSTEM) != 0) {
                     ALOGE("setgid: %s\n", strerror(errno));
-                    exit(1);
+                    // workaround for b/13303941
+                    // exit(1);
                 }
 
                 if (setuid(AID_SYSTEM) != 0) {
                     ALOGE("setuid: %s\n", strerror(errno));
-                    exit(1);
+                    // workaround for b/13303941
+                    // exit(1);
                 }
 
                 execl(AssetManager::IDMAP_BIN, AssetManager::IDMAP_BIN, "--scan",
