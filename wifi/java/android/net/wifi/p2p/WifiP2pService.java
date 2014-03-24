@@ -113,7 +113,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
     private P2pStateMachine mP2pStateMachine;
     private AsyncChannel mReplyChannel = new AsyncChannel();
     private AsyncChannel mWifiChannel;
-
+    private AlertDialog  mPinEntryDialog;
     private static final Boolean JOIN_GROUP = true;
     private static final Boolean FORM_GROUP = false;
 
@@ -2138,7 +2138,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
 
         final EditText pin = (EditText) textEntryView.findViewById(R.id.wifi_p2p_wps_pin);
 
-        AlertDialog dialog = new AlertDialog.Builder(mContext)
+        mPinEntryDialog = new AlertDialog.Builder(mContext)
             .setTitle(r.getString(R.string.wifi_p2p_invitation_to_connect_title))
             .setView(textEntryView)
             .setPositiveButton(r.getString(R.string.accept), new OnClickListener() {
@@ -2183,7 +2183,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
         if ((r.getConfiguration().uiMode & Configuration.UI_MODE_TYPE_APPLIANCE) ==
                 Configuration.UI_MODE_TYPE_APPLIANCE) {
             // For appliance devices, add a key listener which accepts.
-            dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            mPinEntryDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
 
                 @Override
                 public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -2200,8 +2200,8 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             // TODO: update UI in appliance mode to tell user what to do.
         }
 
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
+        mPinEntryDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        mPinEntryDialog.show();
     }
 
     /**
@@ -2577,6 +2577,9 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
         resetWifiP2pInfo();
         mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.FAILED, null, null);
         sendP2pConnectionChangedBroadcast();
+        if (mPinEntryDialog != null) {
+            mPinEntryDialog.dismiss();
+        }
 
         // Remove only the peer we failed to connect to so that other devices discovered
         // that have not timed out still remain in list for connection
