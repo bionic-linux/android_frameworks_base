@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -2199,8 +2200,13 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             // TODO: add timeout for this dialog.
             // TODO: update UI in appliance mode to tell user what to do.
         }
-
-        mPinEntryDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        //Window of type 'TYPE_SYSTEM_ALERT' can be shown only on primary user. So in case
+        //of secondary user we are modifying the window type.
+        if (ActivityManager.getCurrentUser() == UserHandle.USER_OWNER) {
+            mPinEntryDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        } else {
+            mPinEntryDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG)
+        }
         mPinEntryDialog.show();
     }
 
