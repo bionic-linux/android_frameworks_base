@@ -1233,7 +1233,9 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         transitionTo(mGroupNegotiationState);
                     } else {
                         loge("Unexpected group creation, remove " + mGroup);
-                        mWifiNative.p2pGroupRemove(mGroup.getInterface());
+                        if (mGroup.getNetworkId() != -1) {
+                            mWifiNative.p2pGroupRemove(mGroup.getInterface());
+                        }
                     }
                     break;
                 case WifiP2pManager.START_LISTEN:
