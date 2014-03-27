@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d91a8b66_f3fe1082",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/BaseStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1040203
+      },
+      "writtenOn": "2014-03-27T14:47:07Z",
+      "side": 1,
+      "message": "is there a bug associated with this?  Do we know why we\u0027re ending up here?\n\nIt might be good to add a log statement, possibly even with a stack trace, so we can find the root cause and fix that too.",
+      "range": {
+        "startLine": 845,
+        "startChar": 12,
+        "endLine": 845,
+        "endChar": 18
+      },
+      "revId": "5f3302622178ddd26848df39125a02405c764c41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
