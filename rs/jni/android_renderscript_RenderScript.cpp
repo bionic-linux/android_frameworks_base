@@ -581,6 +581,12 @@ nAllocationIoReceive(JNIEnv *_env, jobject _this, jlong con, jlong alloc)
     rsAllocationIoReceive((RsContext)con, (RsAllocation)alloc);
 }
 
+static void
+nAllocationDestroy(JNIEnv *_env, jobject _this, RsContext con, RsAllocation alloc)
+{
+    LOG_API("nAllocationDestroy, con(%p), alloc(%p)", con, alloc);
+    rsAllocationDestroy(con, alloc);
+}
 
 static void
 nAllocationGenerateMipmaps(JNIEnv *_env, jobject _this, jlong con, jlong alloc)
@@ -749,11 +755,11 @@ nAllocationData3D_alloc(JNIEnv *_env, jobject _this, jlong con,
                         jlong srcAlloc, jint srcXoff, jint srcYoff, jint srcZoff,
                         jint srcMip)
 {
-    LOG_API("nAllocationData3D_alloc, con(%p), dstAlloc(%p), dstXoff(%i), dstYoff(%i),"
-            " dstMip(%i), width(%i), height(%i),"
-            " srcAlloc(%p), srcXoff(%i), srcYoff(%i), srcMip(%i)",
-            (RsContext)con, (RsAllocation)dstAlloc, dstXoff, dstYoff, dstMip,
-            width, height, (RsAllocation)srcAlloc, srcXoff, srcYoff, srcMip);
+    LOG_API("nAllocationData3D_alloc, con(%p), dstAlloc(%p), dstXoff(%i), dstYoff(%i), dstZoff(%i),"
+            " dstMip(%i), width(%i), height(%i), depth(%i),"
+            " srcAlloc(%p), srcXoff(%i), srcYoff(%i), srcZoff(%i), srcMip(%i)",
+            con, (RsAllocation)dstAlloc, dstXoff, dstYoff, dstZoff, dstMip,
+            width, height, depth, (RsAllocation)srcAlloc, srcXoff, srcYoff, srcZoff, srcMip);
 
     rsAllocationCopy3DRange((RsContext)con,
                             (RsAllocation)dstAlloc,
@@ -1626,6 +1632,7 @@ static JNINativeMethod methods[] = {
 {"rsnAllocationSetSurface",          "(JJLandroid/view/Surface;)V",           (void*)nAllocationSetSurface },
 {"rsnAllocationIoSend",              "(JJ)V",                                 (void*)nAllocationIoSend },
 {"rsnAllocationIoReceive",           "(JJ)V",                                 (void*)nAllocationIoReceive },
+{"rsnAllocationDestroy",             "(II)V",                                 (void*)nAllocationDestroy },
 {"rsnAllocationData1D",              "(JJIIILjava/lang/Object;II)V",          (void*)nAllocationData1D },
 {"rsnAllocationElementData1D",       "(JJIII[BI)V",                           (void*)nAllocationElementData1D },
 {"rsnAllocationData2D",              "(JJIIIIIILjava/lang/Object;II)V",       (void*)nAllocationData2D },

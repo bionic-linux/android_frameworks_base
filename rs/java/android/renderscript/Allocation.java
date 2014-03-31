@@ -505,6 +505,12 @@ public class Allocation extends BaseObj {
         Trace.traceEnd(RenderScript.TRACE_TAG);
     }
 
+    public synchronized void destroy() {
+        mRS.validate();
+        mRS.nAllocationDestroy(getID(mRS));
+        super.destroy();
+    }
+
     /**
      * Copy an array of RS objects to the Allocation.
      *
