@@ -41,7 +41,7 @@ namespace uirenderer {
  * Each snapshot has a link to a previous snapshot, indicating the previous
  * state of the renderer.
  */
-class Snapshot: public LightRefBase<Snapshot> {
+class ANDROID_API Snapshot: public LightRefBase<Snapshot> {
 public:
 
     Snapshot();
