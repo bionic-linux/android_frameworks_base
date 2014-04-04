@@ -470,7 +470,8 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         sc.icon.setImageDrawable(null);
         sc.icon.setImageResource(muted ? sc.iconMuteRes : sc.iconRes);
         if (((sc.streamType == AudioManager.STREAM_RING) ||
-                (sc.streamType == AudioManager.STREAM_NOTIFICATION)) &&
+                (sc.streamType == AudioManager.STREAM_NOTIFICATION) ||
+                (sc.streamType == AudioSystem.STREAM_MUSIC && !mVoiceCapable)) &&
                 mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
             sc.icon.setImageResource(R.drawable.ic_audio_ring_notif_vibrate);
         }
@@ -924,7 +925,12 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         if (sc != null) {
             sc.iconRes = resId;
             sc.iconMuteRes = resMuteId;
-            sc.icon.setImageResource(isMuted(sc.streamType) ? sc.iconMuteRes : sc.iconRes);
+            if (mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE
+                    && !mVoiceCapable) {
+                sc.icon.setImageResource(R.drawable.ic_audio_ring_notif_vibrate);
+            } else {
+                sc.icon.setImageResource(isMuted(sc.streamType) ? sc.iconMuteRes : sc.iconRes);
+            }
         }
     }
 
