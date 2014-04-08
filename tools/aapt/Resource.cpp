@@ -1239,10 +1239,11 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets)
             err = compileXmlFile(assets, it.getFile(), &table, xmlFlags);
             if (err != NO_ERROR) {
                 hasErrors = true;
+            } else {
+                ResXMLTree block;
+                block.setTo(it.getFile()->getData(), it.getFile()->getSize(), true);
+                checkForIds(src, block);
             }
-            ResXMLTree block;
-            block.setTo(it.getFile()->getData(), it.getFile()->getSize(), true);
-            checkForIds(src, block);
         }
 
         if (err < NO_ERROR) {
