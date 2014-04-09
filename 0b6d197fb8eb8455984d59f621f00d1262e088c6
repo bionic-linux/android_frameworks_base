@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9e2ef19_d2fee44c",
+        "filename": "cmds/app_process/app_main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-04-09T13:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19734325_bf4507d6",
+      "revId": "0b6d197fb8eb8455984d59f621f00d1262e088c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19734325_ff3f7f31",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-07T15:50:36Z",
       "side": 1,
       "message": "assert !\u003d NULL here too?",
+      "revId": "0b6d197fb8eb8455984d59f621f00d1262e088c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19d6e33f_73abb89d",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-04-09T13:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19734325_ff3f7f31",
       "revId": "0b6d197fb8eb8455984d59f621f00d1262e088c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
