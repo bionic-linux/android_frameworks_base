@@ -197,6 +197,8 @@ public interface WebViewProvider {
 
     public void clearSslPreferences();
 
+    public void clearClientCertPreferences();
+
     public WebBackForwardList copyBackForwardList();
 
     public void setFindListener(WebView.FindListener listener);

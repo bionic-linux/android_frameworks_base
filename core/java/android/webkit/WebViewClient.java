@@ -22,6 +22,8 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.ViewRootImpl;
 
+import java.security.Principal;
+
 public class WebViewClient {
 
     /**
@@ -201,6 +203,37 @@ public class WebViewClient {
      */
     public void onReceivedSslError(WebView view, SslErrorHandler handler,
             SslError error) {
+        handler.cancel();
+    }
+
+    /**
+     * Notify the host application to handle a SSL client certificate
+     * request. The host applic ation is responsible of showing the UI,
+     * if desired and provide the keys. There are three ways to
+     * respond: proceed(), cancel() or ignore(). Webview remembers the
+     * response if proceed() or cancel() is called and does not
+     * call onReceivedClientCertRequest() again for the same host and port
+     * pair. Webview does not remember the response if ignore() is called.
+     *
+     * This method is called on the UI thread. During the callback, the
+     * connection is suspended.
+     *
+     * The default behavior is to cancel, returning no client certificate.
+     *
+     * @param view The WebView that is initiating the callback.
+     * @param handler A ClientCertRequestHandler object that will
+     *            handle the user's response.
+     * @param keyTypes The acceptable types of asymmetric keys (can be null)
+     * @param principals The acceptable certificate issuers for the certificate
+     *            matching the private key (can be null)
+     * @param host The host name of the server requesting the certificate
+     * @param port The port number of the server requesting the certificate
+     *
+     * TODO(sgurun) unhide
+     * @hide
+     */
+    public void onReceivedClientCertRequest(WebView view, ClientCertRequestHandler handler,
+            String[] keyTypes, Principal[] principals, String host, int port) {
         handler.cancel();
     }
 
