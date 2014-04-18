@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "853507d4_08315026",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-04-18T00:21:53Z",
+      "side": 1,
+      "message": "PRIdPTR",
+      "range": {
+        "startLine": 969,
+        "startChar": 52,
+        "endLine": 969,
+        "endChar": 54
+      },
+      "revId": "cfd91e7852bac3f9775cf3d05eedaade070cfecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "853507d4_483f58f7",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-04-18T00:21:53Z",
+      "side": 1,
+      "message": "PRIdPTR",
+      "range": {
+        "startLine": 985,
+        "startChar": 49,
+        "endLine": 985,
+        "endChar": 52
+      },
+      "revId": "cfd91e7852bac3f9775cf3d05eedaade070cfecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
