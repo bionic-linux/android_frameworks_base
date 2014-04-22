@@ -1304,4 +1304,6 @@
         <item>333</item>
         <item>353</item>
     </string-array>
+    <!-- enalbe or disable SIM card hotswap -->
+    <bool name="config_sim_hotswap_supported">true</bool>
 </resources>
