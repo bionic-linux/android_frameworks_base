@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b4efaf_bcd5d9ee",
+        "filename": "core/java/android/view/IWindowSession.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1017038
+      },
+      "writtenOn": "2014-04-22T10:09:58Z",
+      "side": 1,
+      "message": "uploaded AOSP bug(https://code.google.com/p/android/issues/detail?id\u003d68851).",
+      "revId": "2bb499ea1a79a7ade8a50c158041955c481cd1a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
