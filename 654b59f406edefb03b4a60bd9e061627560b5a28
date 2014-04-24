@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c40363_b549c09b",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-04-24T18:08:56Z",
+      "side": 1,
+      "message": "Can you at least put this in alphabetical order, so that the automerger will automatically resolve the merge?",
+      "revId": "654b59f406edefb03b4a60bd9e061627560b5a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
