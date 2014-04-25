@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6587332a_dd372b69",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6003,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2014-04-25T15:42:50Z",
+      "side": 1,
+      "message": "ViewParent#requestSendAccessibilityEvent should be called only if the accessibility is enabled.  If you get here with accessibility off, then the caller is buggy and it should crash so the developer fixes his/her bug. This change will mask the bug and we should not do such things :)",
+      "range": {
+        "startLine": 6003,
+        "startChar": 8,
+        "endLine": 6003,
+        "endChar": 48
+      },
+      "revId": "5725f49ba3a61d6edd6eeac0c40f76d3b1115ac7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
