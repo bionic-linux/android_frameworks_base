@@ -117,6 +117,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
     private AsyncChannel mReplyChannel = new AsyncChannel();
     private AsyncChannel mWifiChannel;
     private AlertDialog  mPinEntryDialog;
+    private Boolean mConnectionUserReject = false;
     private static final Boolean JOIN_GROUP = true;
     private static final Boolean FORM_GROUP = false;
 
@@ -1355,6 +1356,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                    break;
                 case PEER_CONNECTION_USER_REJECT:
                     if (DBG) logd("User rejected negotiation " + mSavedPeerConfig);
+                    mConnectionUserReject = true;
                     handleGroupCreationFailure();
                     transitionTo(mInactiveState);
                     break;
@@ -2605,7 +2607,12 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
 
     private void handleGroupCreationFailure() {
         resetWifiP2pInfo();
-        mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.FAILED, null, null);
+        if (mConnectionUserReject) {
+            mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.FAILED,
+               WifiP2pManager.WIFI_P2P_CONNECTION_USER_REJECT, null);
+        } else {
+            mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.FAILED, null, null);
+        }
         sendP2pConnectionChangedBroadcast();
         if (mPinEntryDialog != null) {
             mPinEntryDialog.dismiss();
