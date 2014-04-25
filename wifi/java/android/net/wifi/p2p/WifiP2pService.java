@@ -61,7 +61,9 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -2141,6 +2143,22 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                 mSavedPeerConfig.deviceAddress));
 
         final EditText pin = (EditText) textEntryView.findViewById(R.id.wifi_p2p_wps_pin);
+        pin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (pin.getText().toString().length() >= 8) {
+                    mPinEntryDialog.getButton(mPinEntryDialog.BUTTON_POSITIVE).setEnabled(true);
+                } else {
+                    mPinEntryDialog.getButton(mPinEntryDialog.BUTTON_POSITIVE).setEnabled(false);
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
 
         mPinEntryDialog = new AlertDialog.Builder(mContext)
             .setTitle(r.getString(R.string.wifi_p2p_invitation_to_connect_title))
@@ -2211,6 +2229,9 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             mPinEntryDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
         }
         mPinEntryDialog.show();
+        if (wps.setup == WpsInfo.KEYPAD) {
+            mPinEntryDialog.getButton(mPinEntryDialog.BUTTON_POSITIVE).setEnabled(false);
+        }
     }
 
     /**
