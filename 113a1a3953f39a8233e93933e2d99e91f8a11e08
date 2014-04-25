@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a593eb68_bf0c1fcb",
+        "filename": "libs/hwui/FontRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1023415
+      },
+      "writtenOn": "2014-04-25T08:15:41Z",
+      "side": 1,
+      "message": "mRs-\u003einit() may failed due to graphics driver initial failure. Please also check one RS patch https://android-review.googlesource.com/#/c/89405/.\n\nYes, we need to clean up the RS object here.",
+      "parentUuid": "c5e8dfcd_c50e9052",
+      "revId": "113a1a3953f39a8233e93933e2d99e91f8a11e08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e5abf4_c1ff6613",
         "filename": "libs/hwui/FontRenderer.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-24T17:43:28Z",
       "side": 1,
       "message": "This doesn\u0027t look like this will work -\n\nWhat happens when the render script init fails, and we come back through here?\n\nmRs !\u003d 0, but it hasn\u0027t been initialized",
+      "revId": "113a1a3953f39a8233e93933e2d99e91f8a11e08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_1f4373cf",
+        "filename": "libs/hwui/FontRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1023415
+      },
+      "writtenOn": "2014-04-25T08:15:41Z",
+      "side": 1,
+      "message": "You are right, we\u0027ll clean up the RS object and upload a new patch set.",
+      "parentUuid": "a5e5abf4_c1ff6613",
       "revId": "113a1a3953f39a8233e93933e2d99e91f8a11e08",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
