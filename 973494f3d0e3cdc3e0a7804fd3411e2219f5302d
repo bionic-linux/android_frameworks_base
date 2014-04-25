@@ -22,6 +22,30 @@
       "revId": "973494f3d0e3cdc3e0a7804fd3411e2219f5302d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "250d3bbc_ea58c76e",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1036868
+      },
+      "writtenOn": "2014-04-25T23:36:01Z",
+      "side": 1,
+      "message": "Kevin, is is possible to check if the underlying sAgpsInterface object support this extra param before making this call?",
+      "parentUuid": "fccd7da7_9e7bda4b",
+      "range": {
+        "startLine": 656,
+        "startChar": 4,
+        "endLine": 656,
+        "endChar": 18
+      },
+      "revId": "973494f3d0e3cdc3e0a7804fd3411e2219f5302d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
