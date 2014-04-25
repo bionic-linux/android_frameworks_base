@@ -1351,6 +1351,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                    break;
                 case PEER_CONNECTION_USER_REJECT:
                     if (DBG) logd("User rejected negotiation " + mSavedPeerConfig);
+                    handleGroupCreationFailure();
                     transitionTo(mInactiveState);
                     break;
                 default:
