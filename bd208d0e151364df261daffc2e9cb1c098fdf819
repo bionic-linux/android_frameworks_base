@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "659c9384_c4f630b2",
+        "filename": "core/java/android/util/EventLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002268
+      },
+      "writtenOn": "2014-04-25T20:38:08Z",
+      "side": 1,
+      "message": "Can we have a comment that mentions system/core/include/log/logger.h, so future generations know where this stuff is defined?",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "bd208d0e151364df261daffc2e9cb1c098fdf819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25a61bd4_82101ce1",
+        "filename": "core/java/android/util/EventLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002268
+      },
+      "writtenOn": "2014-04-25T20:38:08Z",
+      "side": 1,
+      "message": "This is really V1_PAYLOAD_START now, isn\u0027t it?\n\nI don\u0027t think the next two are really necessary any more either:  TAG_OFFSET is really just 0, counting from the start of the payload (wherever that is), and DATA_OFFSET is 4, again from the start of the payload.  I think having those constants would be clearer than these fictitious 20 and 24 values that are only correct for v1.",
+      "range": {
+        "startLine": 67,
+        "startChar": 33,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "bd208d0e151364df261daffc2e9cb1c098fdf819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "659c9384_c40d100a",
+        "filename": "core/java/android/util/EventLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002268
+      },
+      "writtenOn": "2014-04-25T20:38:08Z",
+      "side": 1,
+      "message": "This should just be offset; the tag is always at the start of the payload.",
+      "range": {
+        "startLine": 105,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "bd208d0e151364df261daffc2e9cb1c098fdf819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45a14fb9_e3024c29",
+        "filename": "core/java/android/util/EventLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002268
+      },
+      "writtenOn": "2014-04-25T20:38:08Z",
+      "side": 1,
+      "message": "I\u0027d just make DATA_START be 4, and understand that it\u0027s relative to the start of the payload.",
+      "range": {
+        "startLine": 117,
+        "startChar": 42,
+        "endLine": 117,
+        "endChar": 52
+      },
+      "revId": "bd208d0e151364df261daffc2e9cb1c098fdf819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
