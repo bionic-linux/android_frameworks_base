@@ -56,8 +56,9 @@ public class EventLog {
     public static final class Event {
         private final ByteBuffer mBuffer;
 
-        // Layout of event log entry received from kernel.
+        // Layout of event log entry received from Android logger.
         private static final int LENGTH_OFFSET = 0;
+        private static final int HEADER_SIZE_OFFSET = 2;
         private static final int PROCESS_OFFSET = 4;
         private static final int THREAD_OFFSET = 8;
         private static final int SECONDS_OFFSET = 12;
@@ -97,14 +98,23 @@ public class EventLog {
 
         /** @return the type tag code of the entry */
         public int getTag() {
-            return mBuffer.getInt(TAG_OFFSET);
+            int offset = mBuffer.getShort(HEADER_SIZE_OFFSET);
+            if (offset == 0) {
+                offset = PAYLOAD_START;
+            }
+            return mBuffer.getInt(offset + TAG_OFFSET - PAYLOAD_START);
         }
 
         /** @return one of Integer, Long, String, null, or Object[] of same. */
         public synchronized Object getData() {
             try {
-                mBuffer.limit(PAYLOAD_START + mBuffer.getShort(LENGTH_OFFSET));
-                mBuffer.position(DATA_START);  // Just after the tag.
+                int offset = mBuffer.getShort(HEADER_SIZE_OFFSET);
+                if (offset == 0) {
+                    offset = PAYLOAD_START;
+                }
+                mBuffer.limit(offset + mBuffer.getShort(LENGTH_OFFSET));
+                // Just after the tag.
+                mBuffer.position(offset + DATA_START - PAYLOAD_START);
                 return decodeObject();
             } catch (IllegalArgumentException e) {
                 Log.wtf(TAG, "Illegal entry payload: tag=" + getTag(), e);
