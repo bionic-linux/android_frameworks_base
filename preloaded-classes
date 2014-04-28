@@ -2392,6 +2392,10 @@ libcore.net.url.JarHandler
 libcore.net.url.JarURLConnectionImpl
 libcore.net.url.JarURLConnectionImpl$JarURLConnectionInputStream
 libcore.net.url.UrlUtils
+libcore.util.Base64
+libcore.util.Base64$Coder
+libcore.util.Base64$Decoder
+libcore.util.Base64$Encoder
 libcore.util.BasicLruCache
 libcore.util.CollectionUtils
 libcore.util.CollectionUtils$1
