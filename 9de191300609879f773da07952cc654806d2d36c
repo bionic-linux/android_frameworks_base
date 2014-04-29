@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c5c37fc9_a41e424f",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_czech.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1037918
+      },
+      "writtenOn": "2014-04-29T13:50:18Z",
+      "side": 1,
+      "message": "Correct, qwerty is the correct one.",
+      "parentUuid": "857b475f_c2f36252",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05f3d71b_a7f3e852",
         "filename": "packages/InputDevices/res/raw/keyboard_layout_english_us_intl.kcm",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "05caf7dd_c62d4285",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_english_us_intl.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1037918
+      },
+      "writtenOn": "2014-04-29T13:50:18Z",
+      "side": 1,
+      "message": "Be sure to test that, I think I remember I had to do like that before it did not seem to work.",
+      "parentUuid": "e58b23a1_fdcba7e2",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5fc5fef_657d5cc1",
         "filename": "packages/InputDevices/res/raw/keyboard_layout_swiss_german.kcm",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "The keycodes are different. I guess it\u0027s a mistake and I didn\u0027t change anything here.",
       "parentUuid": "c5fc5fef_657d5cc1",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05caf7dd_663d6eb2",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_swiss_german.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1037918
+      },
+      "writtenOn": "2014-04-29T13:50:18Z",
+      "side": 1,
+      "message": "No, that is correct. In CAPSLOCK should give always the capital letter, and SHIFT (on this key) is used to access the upper character on that key.\n\nnormal: ü\nshift: è\n\nwith CAPSLOCK:\nnormal: Ü\nshift: È",
+      "parentUuid": "a5c04bc0_a3f47a6c",
       "revId": "9de191300609879f773da07952cc654806d2d36c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
