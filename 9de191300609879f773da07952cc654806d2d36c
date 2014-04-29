@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5fc5fef_e53e8cf9",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_czech.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-04-29T01:03:03Z",
+      "side": 1,
+      "message": "I can\u0027t find anything about querty keyboards. Is this just a misspelling?",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05f3d71b_a7f3e852",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_english_us_intl.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-04-29T01:03:03Z",
+      "side": 1,
+      "message": "shift+ralt, capslock+ralt: \u0027\\u00c5\u0027",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5fc5fef_657d5cc1",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_swiss_german.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-04-29T01:03:03Z",
+      "side": 1,
+      "message": "capslock, capslock+shift:",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
