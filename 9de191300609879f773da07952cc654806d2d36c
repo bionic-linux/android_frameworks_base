@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "c5c37fc9_040596dc",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_english_us_intl.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1037918
+      },
+      "writtenOn": "2014-04-29T14:41:54Z",
+      "side": 1,
+      "message": "I\u0027ve tested that right now. it works. this makes sense.",
+      "parentUuid": "05caf7dd_c62d4285",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5fc5fef_657d5cc1",
         "filename": "packages/InputDevices/res/raw/keyboard_layout_swiss_german.kcm",
         "patchSetId": 2
