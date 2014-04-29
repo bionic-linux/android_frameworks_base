@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "857b475f_c2f36252",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_czech.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1017523
+      },
+      "writtenOn": "2014-04-29T13:20:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c5fc5fef_e53e8cf9",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05f3d71b_a7f3e852",
         "filename": "packages/InputDevices/res/raw/keyboard_layout_english_us_intl.kcm",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e58b23a1_fdcba7e2",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_english_us_intl.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1017523
+      },
+      "writtenOn": "2014-04-29T13:20:13Z",
+      "side": 1,
+      "message": "Done here and in the rest of the file.",
+      "parentUuid": "05f3d71b_a7f3e852",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5fc5fef_657d5cc1",
         "filename": "packages/InputDevices/res/raw/keyboard_layout_swiss_german.kcm",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2014-04-29T01:03:03Z",
       "side": 1,
       "message": "capslock, capslock+shift:",
+      "revId": "9de191300609879f773da07952cc654806d2d36c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5c04bc0_a3f47a6c",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_swiss_german.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1017523
+      },
+      "writtenOn": "2014-04-29T13:20:13Z",
+      "side": 1,
+      "message": "The keycodes are different. I guess it\u0027s a mistake and I didn\u0027t change anything here.",
+      "parentUuid": "c5fc5fef_657d5cc1",
       "revId": "9de191300609879f773da07952cc654806d2d36c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
