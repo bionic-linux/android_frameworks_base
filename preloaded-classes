@@ -2074,6 +2074,9 @@ java.util.ArrayList
 java.util.ArrayList$ArrayListIterator
 java.util.Arrays
 java.util.Arrays$ArrayList
+java.util.Base64
+java.util.Base64$Encoder
+java.util.Base64$Decoder
 java.util.BitSet
 java.util.Calendar
 java.util.Collection
