@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a2fd4b4_45153c14",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2014-05-05T17:09:21Z",
+      "side": 1,
+      "message": "should this escape or quote the filename, so names with spaces work?",
+      "revId": "ae37df291fbf1ed4bf71c78760c22f2dc7ffdda6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
