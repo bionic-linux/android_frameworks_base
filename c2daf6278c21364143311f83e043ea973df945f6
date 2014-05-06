@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aba749a_bb24f815",
+        "filename": "data/keyboards/Vendor_045e_Product_0719.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-05-06T01:06:15Z",
+      "side": 1,
+      "message": "nit: 2014",
+      "revId": "c2daf6278c21364143311f83e043ea973df945f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a346007_6a1da6fb",
+        "filename": "data/keyboards/Vendor_045e_Product_0719.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-05-06T01:06:15Z",
+      "side": 1,
+      "message": "nit: XBox 360 Wireless Controller",
+      "revId": "c2daf6278c21364143311f83e043ea973df945f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
