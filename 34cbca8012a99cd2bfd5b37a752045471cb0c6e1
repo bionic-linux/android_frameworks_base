@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a4e2058_9146fc35",
+        "filename": "core/java/android/view/HardwareRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2014-05-14T23:15:03Z",
+      "side": 1,
+      "message": "This is not an appropriate flag to check against. The problem has nothing to do with whether or not nv_profiling is enabled or available.",
+      "range": {
+        "startLine": 1559,
+        "startChar": 16,
+        "endLine": 1559,
+        "endChar": 82
+      },
+      "revId": "34cbca8012a99cd2bfd5b37a752045471cb0c6e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
