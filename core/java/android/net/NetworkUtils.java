@@ -113,10 +113,11 @@ public class NetworkUtils {
      * @param hostAddress an int corresponding to the IPv4 address in network byte order
      */
     public static InetAddress intToInetAddress(int hostAddress) {
-        byte[] addressBytes = { (byte)(0xff & hostAddress),
-                                (byte)(0xff & (hostAddress >> 8)),
+
+        byte[] addressBytes = { (byte)(0xff & (hostAddress >> 24)),
                                 (byte)(0xff & (hostAddress >> 16)),
-                                (byte)(0xff & (hostAddress >> 24)) };
+                                (byte)(0xff & (hostAddress >> 8)),
+                                (byte)(0xff & hostAddress) };
 
         try {
            return InetAddress.getByAddress(addressBytes);
@@ -133,8 +134,8 @@ public class NetworkUtils {
     public static int inetAddressToInt(Inet4Address inetAddr)
             throws IllegalArgumentException {
         byte [] addr = inetAddr.getAddress();
-        return ((addr[3] & 0xff) << 24) | ((addr[2] & 0xff) << 16) |
-                ((addr[1] & 0xff) << 8) | (addr[0] & 0xff);
+        return ((addr[0] & 0xff) << 24) | ((addr[1] & 0xff) << 16) |
+                ((addr[2] & 0xff) << 8) | (addr[3] & 0xff);
     }
 
     /**
