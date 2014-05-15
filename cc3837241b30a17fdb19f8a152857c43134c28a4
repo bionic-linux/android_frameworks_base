@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a78446e_713c0f4f",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5259,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2014-05-15T20:38:28Z",
+      "side": 1,
+      "message": "INSTALL_FAILED_INTERNAL_ERROR is not the right error code to report here.  The OS itself hasn\u0027t gotten into trouble; the problem is that the developer has tried to ship a malformed application.  (It\u0027s important to think of multiple APKs within a single shared-userid regime as being in some essential sense part of the same larger \"application.\")\n\nChange to INSTALL_FAILED_CPU_ABI_INCOMPATIBLE",
+      "range": {
+        "startLine": 5259,
+        "startChar": 52,
+        "endLine": 5259,
+        "endChar": 81
+      },
+      "revId": "cc3837241b30a17fdb19f8a152857c43134c28a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
