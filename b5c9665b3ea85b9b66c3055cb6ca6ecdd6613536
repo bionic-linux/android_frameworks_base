@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a2cfc7a_2bb16520",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2014-05-15T18:24:17Z",
+      "side": 1,
+      "message": "inetAddressToInt(Inet4Address)getNetworkPart(intToInetAddress(0x11223344,8)) \u003d\u003d 0x11000000 never worked??",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 203,
+        "endChar": 9
+      },
+      "revId": "b5c9665b3ea85b9b66c3055cb6ca6ecdd6613536",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
