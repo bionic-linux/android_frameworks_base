@@ -70,6 +70,30 @@
       "revId": "cc3837241b30a17fdb19f8a152857c43134c28a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a3da49e_d19326d6",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5259,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-05-16T09:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a531cfd_532f36c0",
+      "range": {
+        "startLine": 5259,
+        "startChar": 52,
+        "endLine": 5259,
+        "endChar": 81
+      },
+      "revId": "cc3837241b30a17fdb19f8a152857c43134c28a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
