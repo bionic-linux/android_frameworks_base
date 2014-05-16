@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aec607a_ea573bdf",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_danish.kcm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-05-16T23:59:45Z",
+      "side": 1,
+      "message": "Don\u0027t update copyright headers",
+      "revId": "eed8aed88f5e42c6fc13af2cdb290aaa845ca31a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
