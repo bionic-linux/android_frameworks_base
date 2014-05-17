@@ -16,6 +16,24 @@
       "revId": "eed8aed88f5e42c6fc13af2cdb290aaa845ca31a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f0aac14_5e7f05ef",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_danish.kcm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1017523
+      },
+      "writtenOn": "2014-05-17T10:48:13Z",
+      "side": 1,
+      "message": "Fixed (here and in the other kcm).",
+      "parentUuid": "6aec607a_ea573bdf",
+      "revId": "eed8aed88f5e42c6fc13af2cdb290aaa845ca31a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
