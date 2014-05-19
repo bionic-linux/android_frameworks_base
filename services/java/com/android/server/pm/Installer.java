@@ -201,7 +201,7 @@ public final class Installer {
         return execute(builder.toString());
     }
 
-    public int dexopt(String apkPath, int uid, boolean isPublic, String instructionSet) {
+    public int dexopt(String apkPath, int uid, boolean isPublic, String instructionSet, String dexOptFlag) {
         StringBuilder builder = new StringBuilder("dexopt");
         builder.append(' ');
         builder.append(apkPath);
@@ -211,11 +211,13 @@ public final class Installer {
         builder.append(" *");         // No pkgName arg present
         builder.append(' ');
         builder.append(instructionSet);
+        builder.append(' ');
+        builder.append(dexOptFlag);
         return execute(builder.toString());
     }
 
     public int dexopt(String apkPath, int uid, boolean isPublic, String pkgName,
-            String instructionSet) {
+            String instructionSet, String dexOptFlag) {
         StringBuilder builder = new StringBuilder("dexopt");
         builder.append(' ');
         builder.append(apkPath);
@@ -226,6 +228,8 @@ public final class Installer {
         builder.append(pkgName);
         builder.append(' ');
         builder.append(instructionSet);
+        builder.append(' ');
+        builder.append(dexOptFlag);
         return execute(builder.toString());
     }
 
