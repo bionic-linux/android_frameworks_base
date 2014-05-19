@@ -1371,7 +1371,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                                 alreadyDexOpted.add(lib);
 
                                 // The list of "shared libraries" we have at this point is
-                                mInstaller.dexopt(lib, Process.SYSTEM_UID, true, instructionSet);
+                                mInstaller.dexopt(lib, Process.SYSTEM_UID, true, instructionSet, "");
                                 didDexOptLibraryOrTool = true;
                             }
                         } catch (FileNotFoundException e) {
@@ -1419,7 +1419,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                         }
                         try {
                             if (DexFile.isDexOptNeededInternal(path, null, instructionSet, false)) {
-                                mInstaller.dexopt(path, Process.SYSTEM_UID, true, instructionSet);
+                                mInstaller.dexopt(path, Process.SYSTEM_UID, true, instructionSet, "");
                                 didDexOptLibraryOrTool = true;
                             }
                         } catch (FileNotFoundException e) {
@@ -4313,10 +4313,11 @@ public class PackageManagerService extends IPackageManager.Stub {
                     Log.i(TAG, "Running dexopt on: " + pkg.applicationInfo.packageName);
                     final int sharedGid = UserHandle.getSharedAppGid(pkg.applicationInfo.uid);
                     int ret = mInstaller.dexopt(path, sharedGid, !isForwardLocked(pkg),
-                                                pkg.packageName, instructionSet);
+                                                pkg.packageName, instructionSet, "");
                     // Note that we ran dexopt, since rerunning will
                     // probably just result in an error again.
                     pkg.mDexOptNeeded = false;
+                    pkg.mDexOptFlag = "";
                     if (ret < 0) {
                         return DEX_OPT_FAILED;
                     }

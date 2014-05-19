@@ -3537,6 +3537,9 @@ public class PackageParser {
         // For use by package manager to keep track of where it needs to do dexopt.
         public boolean mDexOptNeeded = true;
 
+        // For use by package manager to store dexOpt flags
+        public String mDexOptFlag;
+
         // For use by package manager to keep track of when a package was last used.
         public long mLastPackageUsageTimeInMills;
 
