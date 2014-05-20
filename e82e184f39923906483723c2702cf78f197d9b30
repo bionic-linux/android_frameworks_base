@@ -34,6 +34,24 @@
       "revId": "e82e184f39923906483723c2702cf78f197d9b30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f3a00c6_9af11175",
+        "filename": "core/java/android/app/WallpaperManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-05-20T02:18:02Z",
+      "side": 1,
+      "message": "Assuming you want to scale the image, if you figure out which of the two dimensions is larger then set that one to the max texture size and scale the smaller one (followed by rounding instead of truncation), then you\u0027ll get significantly better results in terms of being close to the correct aspect ratio for the image. The current way you\u0027ll increase the error due to floating point precision, and the initial truncation can lose a lot of data if the height is the larger of the two size (and remains larger after the initial scaling).\n\nI thought I had an example of where you could preserve the aspect ratio with the scaling method I\u0027m suggesting, but I can\u0027t think of it now that I\u0027m at home. Regardless, the error on the current way is significantly higher than necessary and the other way is more obviously correct in my mind.",
+      "parentUuid": "bf1dbc5e_4e6ab700",
+      "revId": "e82e184f39923906483723c2702cf78f197d9b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
