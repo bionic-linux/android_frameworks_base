@@ -16,6 +16,24 @@
       "revId": "e82e184f39923906483723c2702cf78f197d9b30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf1dbc5e_4e6ab700",
+        "filename": "core/java/android/app/WallpaperManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1017038
+      },
+      "writtenOn": "2014-05-20T00:30:04Z",
+      "side": 1,
+      "message": "could you explain a little bit more? I am not fully sure the problem that you pointed out. thanks.",
+      "parentUuid": "9f1ab865_e783eab1",
+      "revId": "e82e184f39923906483723c2702cf78f197d9b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
