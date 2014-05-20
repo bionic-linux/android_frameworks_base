@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f440856_b28e3e6a",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3541,
+      "author": {
+        "id": 1013849
+      },
+      "writtenOn": "2014-05-20T16:48:10Z",
+      "side": 1,
+      "message": "we want to pass compiler filter value based on package usage stats such as lastResumeTime avaialable with package manager.",
+      "parentUuid": "4a531cfd_ca2fe713",
+      "revId": "97d09112dddf277abf2531c500a922c4099b00b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a58a819_2913217f",
         "filename": "services/java/com/android/server/pm/Installer.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-05-20T15:37:46Z",
       "side": 1,
       "message": "I\u0027d rename this dexOptFlags",
+      "revId": "97d09112dddf277abf2531c500a922c4099b00b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f1ab865_f29a818d",
+        "filename": "services/java/com/android/server/pm/Installer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1013849
+      },
+      "writtenOn": "2014-05-20T16:48:10Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "2a58a819_2913217f",
       "revId": "97d09112dddf277abf2531c500a922c4099b00b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
