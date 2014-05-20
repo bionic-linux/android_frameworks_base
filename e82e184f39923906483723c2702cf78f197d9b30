@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f1ab865_e783eab1",
+        "filename": "core/java/android/app/WallpaperManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-05-20T00:08:44Z",
+      "side": 1,
+      "message": "Just calculate the scale first then apply it. Doing it this way can alter the aspect ratio a tiny bit, even in case where it\u0027s perfectly preservable.",
+      "revId": "e82e184f39923906483723c2702cf78f197d9b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
