@@ -101,6 +101,7 @@ public class WallpaperCropActivity extends Activity {
         // Show the custom action bar view
         final ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.actionbar_set_wallpaper);
+        actionBar.getCustomView().setVisibility(View.INVISIBLE);
         actionBar.getCustomView().setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -148,6 +149,7 @@ public class WallpaperCropActivity extends Activity {
                         if (moveToLeft) {
                             mCropView.moveToLeft();
                         }
+                        getActionBar().getCustomView().setVisibility(View.VISIBLE);
                     }
                 }
                 if (postExecute != null) {
