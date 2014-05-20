@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0a3da49e_bd458b7b",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3541,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-05-20T17:19:54Z",
+      "side": 1,
+      "message": "There has been some interest in adding a instruction-set-features flag as well, and in the future we might want to add other flags. Is a free-form string (mDexOptFlags) really the best way to represent this ?",
+      "parentUuid": "1f440856_b28e3e6a",
+      "revId": "97d09112dddf277abf2531c500a922c4099b00b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a58a819_2913217f",
         "filename": "services/java/com/android/server/pm/Installer.java",
         "patchSetId": 2
