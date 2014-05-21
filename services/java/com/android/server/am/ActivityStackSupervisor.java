@@ -2306,6 +2306,7 @@ public final class ActivityStackSupervisor {
         final boolean homeInFront = stack.isHomeStack();
         moveHomeStack(homeInFront);
         mWindowManager.moveTaskToTop(stack.topTask().taskId);
+        mService.setFocusedStack(restoreStackId);
         return homeInFront;
     }
 
