@@ -31,8 +31,7 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:listSelector="@android:color/transparent" />
+        android:layout_height="match_parent" />
 
     <GridView
         android:id="@+id/grid"
@@ -44,7 +43,6 @@
         android:paddingBottom="@dimen/grid_padding"
         android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay"
-        android:listSelector="@android:color/transparent"
         android:visibility="gone" />
 
 </com.android.documentsui.DirectoryView>
