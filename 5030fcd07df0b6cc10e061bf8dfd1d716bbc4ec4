@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fb968aa_76769eb3",
+        "filename": "docs/html/guide/topics/resources/string-resource.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2014-05-24T01:12:40Z",
+      "side": 1,
+      "message": "Lint currently warns you when you define a quantity in a locale where that quantity does not apply (this is only an unused warning, as opposed to the error severity for missing quantities). \n\nThe rationale, besides generally trying to avoid resource bloat, is that I\u0027m not certain all translators will know that a given quantity doesn\u0027t apply (do they all understand the plurals concept?), and perhaps more importantly, by seeing that some plurals are unused this may help developers understand more what\u0027s going on. \"Oh, \"zero\" and \"one\" doesn\u0027t apply in Chinese? Only \"other\" ? Hmmm I\u0027ve gotta rethink my \"no new e-mail\" string approach\".)",
+      "range": {
+        "startLine": 351,
+        "startChar": 13,
+        "endLine": 353,
+        "endChar": 39
+      },
+      "revId": "5030fcd07df0b6cc10e061bf8dfd1d716bbc4ec4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
