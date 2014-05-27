@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ffd0472_6ce4b749",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-05-27T21:11:34Z",
+      "side": 1,
+      "message": "we shouldn\u0027t do this, if the struct is v1 we do nothing, if the struct is v2, we read ipaddr, if it is v3 we read addr even if it contains an IPv4",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 54
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ff71899_f4ad0e8c",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-05-27T21:11:34Z",
+      "side": 1,
+      "message": "unable to allocate byte array for IPv4 address",
+      "range": {
+        "startLine": 207,
+        "startChar": 19,
+        "endLine": 207,
+        "endChar": 47
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfed10cb_817baa98",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-05-27T21:11:34Z",
+      "side": 1,
+      "message": "there is a chance byteArray is null at the end, I don\u0027t think we should invoke the callback in that case, it is useless for the client, and they will have to do work to discard it",
+      "range": {
+        "startLine": 224,
+        "startChar": 24,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfed10cb_e1e9cece",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-05-27T21:11:34Z",
+      "side": 1,
+      "message": "please align the parameter in the way as in line645",
+      "range": {
+        "startLine": 658,
+        "startChar": 69,
+        "endLine": 658,
+        "endChar": 73
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
