@@ -22,6 +22,23 @@
       "revId": "5030fcd07df0b6cc10e061bf8dfd1d716bbc4ec4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fb968aa_6d225199",
+        "filename": "docs/html/guide/topics/resources/string-resource.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1015078
+      },
+      "writtenOn": "2014-05-28T22:06:25Z",
+      "side": 1,
+      "message": "Perhaps be more explicit with \u0027\"one\" doesn\u0027t mean 1\u0027. How about \u0027\"one\" can mean 1, 21, 31, ..., 101, etc. in the target language.\u0027?",
+      "revId": "5030fcd07df0b6cc10e061bf8dfd1d716bbc4ec4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
