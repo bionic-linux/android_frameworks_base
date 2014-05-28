@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3fa38cb4_131e0ef8",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-05-28T22:55:27Z",
+      "side": 1,
+      "message": "we pass INADDR_NONE in the case of v1, not nothing.  V2 and V3 work as you said.  This might be a little convoluted, I will try to push a more readable implementation.",
+      "parentUuid": "7ffd0472_6ce4b749",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 54
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ff71899_f4ad0e8c",
         "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2014-05-27T21:11:34Z",
       "side": 1,
       "message": "unable to allocate byte array for IPv4 address",
+      "range": {
+        "startLine": 207,
+        "startChar": 19,
+        "endLine": 207,
+        "endChar": 47
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa38cb4_936d9e47",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-05-28T22:55:27Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "9ff71899_f4ad0e8c",
       "range": {
         "startLine": 207,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1fa8888f_92411a4e",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-05-28T22:55:27Z",
+      "side": 1,
+      "message": "you are right.  Will do",
+      "parentUuid": "dfed10cb_817baa98",
+      "range": {
+        "startLine": 224,
+        "startChar": 24,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfed10cb_e1e9cece",
         "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2014-05-27T21:11:34Z",
       "side": 1,
       "message": "please align the parameter in the way as in line645",
+      "range": {
+        "startLine": 658,
+        "startChar": 69,
+        "endLine": 658,
+        "endChar": 73
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff8c944a_f11ee2bf",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-05-28T22:55:27Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "dfed10cb_e1e9cece",
       "range": {
         "startLine": 658,
         "startChar": 69,
