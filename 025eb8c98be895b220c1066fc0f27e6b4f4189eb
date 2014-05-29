@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f816817_47f9ae9f",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-05-29T02:01:59Z",
+      "side": 1,
+      "message": "When can this be null? If it can never be null you\u0027d be able to get rid of a lot of the code in getBearerType.",
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f97c45e_02588a31",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-05-29T02:01:59Z",
+      "side": 1,
+      "message": "You don\u0027t need this, since it\u0027s covered in the else clause below.",
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f816817_27491a48",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-05-29T02:01:59Z",
+      "side": 1,
+      "message": "This nested if statement is hard to read, and the code for creating the array is duplicated. Why not use local variables, like so?\n\n    jbyteArray byteArray \u003d NULL;\n    void *addr \u003d NULL;\n    int addrlen \u003d 0;\n\n    if (agps_status-\u003esize \u003e\u003d sizeof(AGpsStatus_v3)) {\n        switch (agps_status-\u003eaddr.ss_family) {\n            case AF_INET: {\n                struct sockaddr_in *sin \u003d (struct sockaddr_in *) \u0026agps_status-\u003eaddr;\n                addr \u003d \u0026sin-\u003esin_addr.s_addr;\n                addrlen \u003d 4;\n                break;\n            }\n            case AF_INET6: {\n                struct sockaddr_in6 *sin6 \u003d (struct sockaddr_in6 *) \u0026agps_status-\u003eaddr;\n                addr \u003d \u0026sin-\u003esin6_addr.s6_addr;\n                addrlen \u003d 16;\n                break;\n            }\n           default:\n                break;\n        }\n    } else if (agps_status-\u003esize \u003e\u003d sizeof(AGpsStatus_v2)) {\n        AGpsStatus_v2 *agps_status_v2 \u003d (AGpsStatus_v2*)agps_status;\n        addr \u003d \u0026agps_status_v2-\u003eipaddr;\n        addrlen \u003d 4;\n    }\n\n    if (addr) {\n        byteArray \u003d env-\u003eNewByteArray(addrlen);\n        if (!byteArray) {\n            // Log error.\n            return;\n        }\n        ...\n        env-\u003eSetByteArrayRegion(byteArray, 0, addrlen, (const jbyte *) addr);\n        ....\n    }\n\n    // Call callback.\n\nIf the int in the v2 structure is in host byte order you\u0027ll have to convert it using ntohl.",
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ffd0472_6ce4b749",
         "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
         "patchSetId": 11
