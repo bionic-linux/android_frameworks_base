@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1fa8888f_d590ecf5",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-05-29T00:23:23Z",
+      "side": 1,
+      "message": "wait, it will work if v1 passes NULL",
+      "parentUuid": "3fa38cb4_131e0ef8",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 54
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ff71899_f4ad0e8c",
         "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
         "patchSetId": 11
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "you are right.  Will do",
       "parentUuid": "dfed10cb_817baa98",
+      "range": {
+        "startLine": 224,
+        "startChar": 24,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "025eb8c98be895b220c1066fc0f27e6b4f4189eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fa8888f_f564105f",
+        "filename": "services/jni/com_android_server_location_GpsLocationProvider.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-05-29T00:23:23Z",
+      "side": 1,
+      "message": "this byteArray actually can be NULL",
+      "parentUuid": "1fa8888f_92411a4e",
       "range": {
         "startLine": 224,
         "startChar": 24,
