@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_ab940d2c",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2014-05-30T15:43:09Z",
+      "side": 1,
+      "message": "I thought it was not mandated any more to delete local refs in Android JNI unless you are in a loop.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 4
+      },
+      "revId": "b637ccffd856ba911c1527077cec3abff39035f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
