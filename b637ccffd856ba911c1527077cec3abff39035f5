@@ -22,6 +22,30 @@
       "revId": "b637ccffd856ba911c1527077cec3abff39035f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f33447f_057674b1",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-05-30T16:10:04Z",
+      "side": 1,
+      "message": "i suspect you are in a loop somewhere higher up the call stack. this isn\u0027t a native method; this is a helper function. so unless you can guarantee that it\u0027s never called within a loop, you need to clean up after yourself. an alternative here would be to have something like gMyClass \u003d NewGlobalRef(FindClass()) in your register_* function and just use gMyClass here. in that case, you can assume that the caller will clean up for you (probably with PushLocalFrame/PopLocalFrame around the call to your register_* function).",
+      "parentUuid": "dffef0bb_ab940d2c",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 4
+      },
+      "revId": "b637ccffd856ba911c1527077cec3abff39035f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
