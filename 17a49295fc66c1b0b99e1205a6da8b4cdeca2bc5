@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df4350e0_405c70a7",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1036868
+      },
+      "writtenOn": "2014-06-02T22:59:23Z",
+      "side": 1,
+      "message": "Should this check happen even before line 607?",
+      "revId": "17a49295fc66c1b0b99e1205a6da8b4cdeca2bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df4350e0_205fe49e",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1036868
+      },
+      "writtenOn": "2014-06-02T22:59:23Z",
+      "side": 1,
+      "message": "Can we add more detailed info in the log, like APN name, IP Type, IP address, etc?",
+      "range": {
+        "startLine": 616,
+        "startChar": 0,
+        "endLine": 616,
+        "endChar": 73
+      },
+      "revId": "17a49295fc66c1b0b99e1205a6da8b4cdeca2bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfcdbca8_c5fa9ddc",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1036868
+      },
+      "writtenOn": "2014-06-02T22:59:23Z",
+      "side": 1,
+      "message": "print ipAddr too.",
+      "revId": "17a49295fc66c1b0b99e1205a6da8b4cdeca2bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fbfa8df_a5da05a6",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1036868
+      },
+      "writtenOn": "2014-06-02T22:59:23Z",
+      "side": 1,
+      "message": "Instead of calling it here, can we call getApnIpType() right after we set mAGpsApn?",
+      "range": {
+        "startLine": 1351,
+        "startChar": 61,
+        "endLine": 1351,
+        "endChar": 73
+      },
+      "revId": "17a49295fc66c1b0b99e1205a6da8b4cdeca2bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
