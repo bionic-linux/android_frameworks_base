@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_c74a95e3",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-06-02T23:39:19Z",
+      "side": 1,
+      "message": "we should use the cached value in mApnIpType",
+      "range": {
+        "startLine": 1354,
+        "startChar": 61,
+        "endLine": 1354,
+        "endChar": 73
+      },
+      "revId": "4bf62536bc1dd35a94099290e54b9539abd45e48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f33447f_a24c53ac",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1847,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-06-02T23:39:19Z",
+      "side": 1,
+      "message": "I\u0027d rather log Log.e(TAG, \"Error encountered on APN query\", e);",
+      "range": {
+        "startLine": 1847,
+        "startChar": 0,
+        "endLine": 1847,
+        "endChar": 58
+      },
+      "revId": "4bf62536bc1dd35a94099290e54b9539abd45e48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f33447f_622debc8",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1895,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-06-02T23:39:19Z",
+      "side": 1,
+      "message": "we should log in this case",
+      "range": {
+        "startLine": 1895,
+        "startChar": 0,
+        "endLine": 1895,
+        "endChar": 41
+      },
+      "revId": "4bf62536bc1dd35a94099290e54b9539abd45e48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_0728ad0f",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1898,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-06-02T23:39:19Z",
+      "side": 1,
+      "message": "not needed, the caller will do the assignment",
+      "range": {
+        "startLine": 1898,
+        "startChar": 0,
+        "endLine": 1898,
+        "endChar": 39
+      },
+      "revId": "4bf62536bc1dd35a94099290e54b9539abd45e48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
