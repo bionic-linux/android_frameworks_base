@@ -190,6 +190,15 @@ public class Gravity
                 outRect.left = container.left
                         + ((container.right - container.left - w)/2) + xAdj;
                 outRect.right = outRect.left + w;
+                if (outRect.right < outRect.left) {
+                    if (xAdj > 0) {
+                        outRect.left = Integer.MAX_VALUE - w;
+                        outRect.right = Integer.MAX_VALUE;
+                    } else {
+                        outRect.left = Integer.MIN_VALUE;
+                        outRect.right = Integer.MIN_VALUE + w;
+                    }
+                }
                 if ((gravity&(AXIS_CLIP<<AXIS_X_SHIFT))
                         == (AXIS_CLIP<<AXIS_X_SHIFT)) {
                     if (outRect.left < container.left) {
@@ -203,6 +212,10 @@ public class Gravity
             case AXIS_PULL_BEFORE<<AXIS_X_SHIFT:
                 outRect.left = container.left + xAdj;
                 outRect.right = outRect.left + w;
+                if (outRect.right < outRect.left) {
+                    outRect.left = Integer.MAX_VALUE - w;
+                    outRect.right = Integer.MAX_VALUE;
+                }
                 if ((gravity&(AXIS_CLIP<<AXIS_X_SHIFT))
                         == (AXIS_CLIP<<AXIS_X_SHIFT)) {
                     if (outRect.right > container.right) {
@@ -213,6 +226,15 @@ public class Gravity
             case AXIS_PULL_AFTER<<AXIS_X_SHIFT:
                 outRect.right = container.right - xAdj;
                 outRect.left = outRect.right - w;
+                if (outRect.right < outRect.left) {
+                    if (xAdj > 0) {
+                        outRect.left = Integer.MIN_VALUE;
+                        outRect.right = Integer.MIN_VALUE + w;
+                    } else {
+                        outRect.left = Integer.MAX_VALUE - w;
+                        outRect.right = Integer.MAX_VALUE;
+                    }
+                }
                 if ((gravity&(AXIS_CLIP<<AXIS_X_SHIFT))
                         == (AXIS_CLIP<<AXIS_X_SHIFT)) {
                     if (outRect.left < container.left) {
@@ -223,6 +245,10 @@ public class Gravity
             default:
                 outRect.left = container.left + xAdj;
                 outRect.right = container.right + xAdj;
+                if (outRect.right < outRect.left) {
+                    outRect.left = Integer.MAX_VALUE - container.right + container.left;
+                    outRect.right = Integer.MAX_VALUE;
+                }
                 break;
         }
         
@@ -231,6 +257,15 @@ public class Gravity
                 outRect.top = container.top
                         + ((container.bottom - container.top - h)/2) + yAdj;
                 outRect.bottom = outRect.top + h;
+                if (outRect.bottom < outRect.top) {
+                    if (yAdj > 0) {
+                        outRect.top = Integer.MAX_VALUE - h;
+                        outRect.bottom = Integer.MAX_VALUE;
+                    } else {
+                        outRect.top = Integer.MIN_VALUE;
+                        outRect.bottom = Integer.MIN_VALUE + h;
+                    }
+                }
                 if ((gravity&(AXIS_CLIP<<AXIS_Y_SHIFT))
                         == (AXIS_CLIP<<AXIS_Y_SHIFT)) {
                     if (outRect.top < container.top) {
@@ -244,6 +279,10 @@ public class Gravity
             case AXIS_PULL_BEFORE<<AXIS_Y_SHIFT:
                 outRect.top = container.top + yAdj;
                 outRect.bottom = outRect.top + h;
+                if (outRect.bottom < outRect.top) {
+                    outRect.top = Integer.MAX_VALUE - h;
+                    outRect.bottom = Integer.MAX_VALUE;
+                }
                 if ((gravity&(AXIS_CLIP<<AXIS_Y_SHIFT))
                         == (AXIS_CLIP<<AXIS_Y_SHIFT)) {
                     if (outRect.bottom > container.bottom) {
@@ -254,6 +293,15 @@ public class Gravity
             case AXIS_PULL_AFTER<<AXIS_Y_SHIFT:
                 outRect.bottom = container.bottom - yAdj;
                 outRect.top = outRect.bottom - h;
+                if (outRect.bottom < outRect.top) {
+                    if (yAdj > 0) {
+                        outRect.top = Integer.MIN_VALUE;
+                        outRect.bottom = Integer.MIN_VALUE + h;
+                    } else {
+                        outRect.top = Integer.MAX_VALUE - h;
+                        outRect.bottom = Integer.MAX_VALUE;
+                    }
+                }
                 if ((gravity&(AXIS_CLIP<<AXIS_Y_SHIFT))
                         == (AXIS_CLIP<<AXIS_Y_SHIFT)) {
                     if (outRect.top < container.top) {
@@ -264,6 +312,10 @@ public class Gravity
             default:
                 outRect.top = container.top + yAdj;
                 outRect.bottom = container.bottom + yAdj;
+                if (outRect.bottom < outRect.top) {
+                    outRect.top = Integer.MAX_VALUE - container.bottom + container.top;
+                    outRect.bottom = Integer.MAX_VALUE;
+                }
                 break;
         }
     }
