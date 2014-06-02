@@ -46,6 +46,30 @@
       "revId": "b637ccffd856ba911c1527077cec3abff39035f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fea00f0_377e40be",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1005472
+      },
+      "writtenOn": "2014-06-02T07:32:37Z",
+      "side": 1,
+      "message": "We were running MTBF tests and, because of some problems we have in audio driver, media server was crashing. For each crash this function was called, then media server was restarted. After several hours of running the tests (40-60 hours), system server crashed because of this.\nThe problem is that it\u0027s enough to have this error_callback called once in a while and sooner or later system server will crash, which is not desirable.",
+      "parentUuid": "7f33447f_057674b1",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 4
+      },
+      "revId": "b637ccffd856ba911c1527077cec3abff39035f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
