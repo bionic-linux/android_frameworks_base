@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfcdbca8_054655df",
+        "filename": "tools/aapt/Main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2014-06-03T00:51:15Z",
+      "side": 1,
+      "message": "4 space indent",
+      "revId": "07e2e0d355837bddfe7c5e17f09b5e17eb84daed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
