@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc5a077_0da433d8",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1036486
+      },
+      "writtenOn": "2014-06-03T01:11:04Z",
+      "side": 1,
+      "message": "These don\u0027t seem to be in parsed_options.cc.  Are they part of another CL?  And what will read them?  Is something going to change the startup behavior of the profiler based on these values?",
+      "range": {
+        "startLine": 817,
+        "startChar": 4,
+        "endLine": 827,
+        "endChar": 9
+      },
+      "revId": "2d941f765f84eafc891aa4cb3c365f225ed052af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fc5a077_0d52f310",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1036486
+      },
+      "writtenOn": "2014-06-03T01:11:04Z",
+      "side": 1,
+      "message": "Duplicated",
+      "range": {
+        "startLine": 829,
+        "startChar": 4,
+        "endLine": 841,
+        "endChar": 9
+      },
+      "revId": "2d941f765f84eafc891aa4cb3c365f225ed052af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
