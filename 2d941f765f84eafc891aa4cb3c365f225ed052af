@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfe21c19_8087e6bf",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-06-03T09:39:32Z",
+      "side": 1,
+      "message": "Yep, the other CL is this one: https://android-review.googlesource.com/#/c/96421/",
+      "parentUuid": "5fc5a077_0da433d8",
+      "range": {
+        "startLine": 817,
+        "startChar": 4,
+        "endLine": 827,
+        "endChar": 9
+      },
+      "revId": "2d941f765f84eafc891aa4cb3c365f225ed052af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fc5a077_0d52f310",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2014-06-03T01:11:04Z",
       "side": 1,
       "message": "Duplicated",
+      "range": {
+        "startLine": 829,
+        "startChar": 4,
+        "endLine": 841,
+        "endChar": 9
+      },
+      "revId": "2d941f765f84eafc891aa4cb3c365f225ed052af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_6084faba",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-06-03T09:39:32Z",
+      "side": 1,
+      "message": "oups.",
+      "parentUuid": "5fc5a077_0d52f310",
       "range": {
         "startLine": 829,
         "startChar": 4,
