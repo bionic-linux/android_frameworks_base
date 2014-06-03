@@ -16,6 +16,24 @@
       "revId": "07e2e0d355837bddfe7c5e17f09b5e17eb84daed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fef0c01_6a25fb11",
+        "filename": "tools/aapt/Main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1045708
+      },
+      "writtenOn": "2014-06-03T19:11:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfcdbca8_054655df",
+      "revId": "07e2e0d355837bddfe7c5e17f09b5e17eb84daed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
