@@ -12771,6 +12771,7 @@ package android.media {
 
   public static abstract class MediaRouter.Callback {
     ctor public MediaRouter.Callback();
+    method public abstract void onDisconnectPresentationDisplay();
     method public abstract void onRouteAdded(android.media.MediaRouter, android.media.MediaRouter.RouteInfo);
     method public abstract void onRouteChanged(android.media.MediaRouter, android.media.MediaRouter.RouteInfo);
     method public abstract void onRouteGrouped(android.media.MediaRouter, android.media.MediaRouter.RouteInfo, android.media.MediaRouter.RouteGroup, int);
@@ -12830,6 +12831,7 @@ package android.media {
 
   public static class MediaRouter.SimpleCallback extends android.media.MediaRouter.Callback {
     ctor public MediaRouter.SimpleCallback();
+    method public void onDisconnectPresentationDisplay();
     method public void onRouteAdded(android.media.MediaRouter, android.media.MediaRouter.RouteInfo);
     method public void onRouteChanged(android.media.MediaRouter, android.media.MediaRouter.RouteInfo);
     method public void onRouteGrouped(android.media.MediaRouter, android.media.MediaRouter.RouteInfo, android.media.MediaRouter.RouteGroup, int);

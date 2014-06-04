@@ -144,6 +144,8 @@ public class MediaRouter {
                     new IntentFilter(DisplayManager.ACTION_WIFI_DISPLAY_STATUS_CHANGED));
             appContext.registerReceiver(new VolumeChangeReceiver(),
                     new IntentFilter(AudioManager.VOLUME_CHANGED_ACTION));
+            appContext.registerReceiver(new WifiDisplayDisconnectionReceiver(),
+                    new IntentFilter(DisplayManager.ACTION_WIFI_DISPLAY_DISCONNECTION));
 
             mDisplayService.registerDisplayListener(this, mHandler);
 
@@ -1267,6 +1269,12 @@ public class MediaRouter {
             if (cbi.filterRouteEvent(info)) {
                 cbi.cb.onRoutePresentationDisplayChanged(cbi.router, info);
             }
+        }
+    }
+
+    static void dispatchDisconnectPresentationDisplay() {
+        for (CallbackInfo cbi : sStatic.mCallbacks) {
+            cbi.cb.onDisconnectPresentationDisplay();
         }
     }
 
@@ -2698,6 +2706,12 @@ public class MediaRouter {
         public abstract void onRouteVolumeChanged(MediaRouter router, RouteInfo info);
 
         /**
+         * Called when user actively disconnect wifi display.
+         *
+         */
+        public abstract void onDisconnectPresentationDisplay();
+
+        /**
          * Called when a route's presentation display changes.
          * <p>
          * This method is called whenever the route's presentation display becomes
@@ -2752,6 +2766,11 @@ public class MediaRouter {
         @Override
         public void onRouteVolumeChanged(MediaRouter router, RouteInfo info) {
         }
+
+        @Override
+        public void onDisconnectPresentationDisplay() {
+        }
+
     }
 
     static class VolumeCallbackInfo {
@@ -2808,6 +2827,15 @@ public class MediaRouter {
                 if (newVolume != oldVolume) {
                     systemVolumeChanged(newVolume);
                 }
+            }
+        }
+    }
+
+    static class WifiDisplayDisconnectionReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(DisplayManager.ACTION_WIFI_DISPLAY_DISCONNECTION)) {
+                dispatchDisconnectPresentationDisplay();
             }
         }
     }

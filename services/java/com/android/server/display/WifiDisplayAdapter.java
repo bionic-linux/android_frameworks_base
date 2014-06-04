@@ -72,6 +72,7 @@ final class WifiDisplayAdapter extends DisplayAdapter {
 
     private static final int MSG_SEND_STATUS_CHANGE_BROADCAST = 1;
     private static final int MSG_UPDATE_NOTIFICATION = 2;
+    private static final int MSG_SEND_DISCONNECTION_BROADCAST = 3;
 
     private static final String ACTION_DISCONNECT = "android.server.display.wfd.DISCONNECT";
 
@@ -236,7 +237,7 @@ final class WifiDisplayAdapter extends DisplayAdapter {
         if (DEBUG) {
             Slog.d(TAG, "requestDisconnectedLocked");
         }
-
+        DisconnectBroadcastLocked();
         getHandler().post(new Runnable() {
             @Override
             public void run() {
@@ -413,6 +414,10 @@ final class WifiDisplayAdapter extends DisplayAdapter {
         }
     }
 
+    private void DisconnectBroadcastLocked() {
+            mHandler.sendEmptyMessage(MSG_SEND_DISCONNECTION_BROADCAST);
+    }
+
     private void scheduleStatusChangedBroadcastLocked() {
         mCurrentStatus = null;
         if (!mPendingStatusChangeBroadcast) {
@@ -428,6 +433,18 @@ final class WifiDisplayAdapter extends DisplayAdapter {
         }
     }
 
+    // Runs on the handler.
+    private void handleSendDisconnectionBroadcast() {
+        final Intent intent;
+        synchronized (getSyncRoot()) {
+
+            intent = new Intent(DisplayManager.ACTION_WIFI_DISPLAY_DISCONNECTION);
+            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
+        }
+
+        // Send protected broadcast about wifi display action to registered receivers.
+        getContext().sendBroadcastAsUser(intent, UserHandle.ALL);
+    }
     // Runs on the handler.
     private void handleSendStatusChangeBroadcast() {
         final Intent intent;
@@ -749,6 +766,10 @@ final class WifiDisplayAdapter extends DisplayAdapter {
             switch (msg.what) {
                 case MSG_SEND_STATUS_CHANGE_BROADCAST:
                     handleSendStatusChangeBroadcast();
+                    break;
+
+                case MSG_SEND_DISCONNECTION_BROADCAST:
+                    handleSendDisconnectionBroadcast();
                     break;
 
                 case MSG_UPDATE_NOTIFICATION:
