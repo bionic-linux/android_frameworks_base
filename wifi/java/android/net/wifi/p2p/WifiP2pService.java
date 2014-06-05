@@ -329,6 +329,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
     public void connectivityServiceReady() {
         IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
         mNwService = INetworkManagementService.Stub.asInterface(b);
+        mP2pStateMachine.sendMessage(WifiStateMachine.CMD_CONNECTIVITY_AVAILABLE);
     }
 
     private void enforceAccessPermission() {
@@ -397,6 +398,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
     private class P2pStateMachine extends StateMachine {
 
         private DefaultState mDefaultState = new DefaultState();
+        private P2pNascentState mP2pNascentState = new P2pNascentState();
         private P2pNotSupportedState mP2pNotSupportedState = new P2pNotSupportedState();
         private P2pDisablingState mP2pDisablingState = new P2pDisablingState();
         private P2pDisabledState mP2pDisabledState = new P2pDisabledState();
@@ -455,6 +457,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             super(name);
 
             addState(mDefaultState);
+                addState(mP2pNascentState, mDefaultState);
                 addState(mP2pNotSupportedState, mDefaultState);
                 addState(mP2pDisablingState, mDefaultState);
                 addState(mP2pDisabledState, mDefaultState);
@@ -472,7 +475,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         addState(mOngoingGroupRemovalState, mGroupCreatedState);
 
             if (p2pSupported) {
-                setInitialState(mP2pDisabledState);
+                setInitialState(mP2pNascentState);
             } else {
                 setInitialState(mP2pNotSupportedState);
             }
@@ -794,6 +797,23 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
         @Override
         public void exit() {
             mWifiChannel.sendMessage(WifiStateMachine.CMD_DISABLE_P2P_RSP);
+        }
+    }
+
+    class P2pNascentState extends State {
+        @Override
+        public void enter() {
+            if (DBG) logd(getName());
+        }
+
+        @Override
+        public boolean processMessage(Message message) {
+            if (DBG) logd(getName() + message.toString());
+            if (message.what == WifiStateMachine.CMD_CONNECTIVITY_AVAILABLE)
+                transitionTo(mP2pDisabledState);
+            else
+                deferMessage(message);
+            return HANDLED;
         }
     }
 

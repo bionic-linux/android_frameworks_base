@@ -411,6 +411,8 @@ public class WifiStateMachine extends StateMachine {
     static final int CMD_RESET_SUPPLICANT_STATE           = BASE + 111;
 
     /* P2p commands */
+    public static final int CMD_CONNECTIVITY_AVAILABLE    = BASE + 130;
+
     /* We are ok with no response here since we wont do much with it anyway */
     public static final int CMD_ENABLE_P2P                = BASE + 131;
     /* In order to shut down supplicant cleanly, we wait till p2p has
