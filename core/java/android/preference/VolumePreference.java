@@ -230,6 +230,7 @@ public class VolumePreference extends SeekBarDialogPreference implements
 
         private AudioManager mAudioManager;
         private int mStreamType;
+        private int mOriginalRingerMode;
         private int mOriginalStreamVolume;
         private Ringtone mRingtone;
 
@@ -272,6 +273,7 @@ public class VolumePreference extends SeekBarDialogPreference implements
 
         private void initSeekBar(SeekBar seekBar, Uri defaultUri) {
             seekBar.setMax(mAudioManager.getStreamMaxVolume(mStreamType));
+            mOriginalRingerMode = mAudioManager.getRingerMode();
             mOriginalStreamVolume = mAudioManager.getStreamVolume(mStreamType);
             seekBar.setProgress(mOriginalStreamVolume);
             seekBar.setOnSeekBarChangeListener(this);
@@ -350,6 +352,7 @@ public class VolumePreference extends SeekBarDialogPreference implements
         }
 
         public void revertVolume() {
+            mAudioManager.setRingerMode(mOriginalRingerMode);
             mAudioManager.setStreamVolume(mStreamType, mOriginalStreamVolume, 0);
         }
 
