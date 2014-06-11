@@ -1126,8 +1126,9 @@ public class GpsLocationProvider implements LocationProviderInterface {
      */
     private void reportLocation(int flags, double latitude, double longitude, double altitude,
             float speed, float bearing, float accuracy, long timestamp) {
-        if (VERBOSE) Log.v(TAG, "reportLocation lat: " + latitude + " long: " + longitude +
-                " timestamp: " + timestamp);
+        Log.w(TAG, "reportLocation lat: " + latitude + " long: " + longitude +
+                " timestamp: " + timestamp + " altitude: " + altitude +
+                " speed: " + speed + " bearing: " + bearing + " accuracy: " + accuracy);
 
         synchronized (mLocation) {
             mLocationFlags = flags;
