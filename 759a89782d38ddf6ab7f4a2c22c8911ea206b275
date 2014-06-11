@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f804079_f599006e",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2014-06-11T06:24:46Z",
+      "side": 0,
+      "message": "i think some form of the comment should remain, it really is about the condition of calling pruneDexFiles and should go there.",
+      "range": {
+        "startLine": 1665,
+        "startChar": 0,
+        "endLine": 1681,
+        "endChar": 1
+      },
+      "revId": "759a89782d38ddf6ab7f4a2c22c8911ea206b275",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
