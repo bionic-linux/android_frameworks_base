@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2492a112_d463dae4",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5411,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-06-18T15:11:02Z",
+      "side": 1,
+      "message": "Do we know that group has passed ownership into the object as part of mPackageGroups or not based on the error? I would assume not, so delete group may also be relevant here.",
+      "range": {
+        "startLine": 5411,
+        "startChar": 16,
+        "endLine": 5411,
+        "endChar": 31
+      },
+      "revId": "af52dbbc76dca371b6e0ecd096fc9ce019849a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2492a112_741c4e56",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5414,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-06-18T15:11:02Z",
+      "side": 1,
+      "message": "Need to understand from a higher power than I whether this constitutes ownership of package in group, or do we require group-\u003epackages.add(package) to mean so?\n\nI believe the answer is partial, so we need a cleanup gesture on error if we can not add package to the list.",
+      "range": {
+        "startLine": 5414,
+        "startChar": 0,
+        "endLine": 5414,
+        "endChar": 41
+      },
+      "revId": "af52dbbc76dca371b6e0ecd096fc9ce019849a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64d659dd_60d49c57",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5425,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-06-18T15:11:02Z",
+      "side": 1,
+      "message": "Similarly here, error implies the final integration of packages into groups and alongside the object has not been made. groups has no ownership of the package.\n\ndelete package;\n\nAnd perhaps (depending on answer to above), the cleanup (only if a fresh group):\n\nif (package \u003d\u003d group-\u003ebasePackage) { group-\u003ebasePackage \u003d NULL; }",
+      "range": {
+        "startLine": 5425,
+        "startChar": 27,
+        "endLine": 5425,
+        "endChar": 29
+      },
+      "revId": "af52dbbc76dca371b6e0ecd096fc9ce019849a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
