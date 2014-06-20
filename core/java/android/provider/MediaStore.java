@@ -40,6 +40,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 /**
  * The Media provider contains meta data for all available media on both internal
@@ -655,6 +656,7 @@ public final class MediaStore {
                         if (sThumbBuf == null) {
                             sThumbBuf = new byte[MiniThumbFile.BYTES_PER_MINTHUMB];
                         }
+                        Arrays.fill(sThumbBuf, (byte)0);
                         if (thumbFile.getMiniThumbFromFile(origId, sThumbBuf) != null) {
                             bitmap = BitmapFactory.decodeByteArray(sThumbBuf, 0, sThumbBuf.length);
                             if (bitmap == null) {
@@ -669,7 +671,6 @@ public final class MediaStore {
                 } else {
                     throw new IllegalArgumentException("Unsupported kind: " + kind);
                 }
-
                 // We probably run out of space, so create the thumbnail in memory.
                 if (bitmap == null) {
                     Log.v(TAG, "Create the thumbnail in memory: origId=" + origId
