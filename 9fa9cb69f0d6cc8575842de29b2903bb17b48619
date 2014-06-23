@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c40963_8428100e",
+        "filename": "rs/java/android/renderscript/ScriptIntrinsic.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1017430
+      },
+      "writtenOn": "2014-06-23T20:40:53Z",
+      "side": 1,
+      "message": "should we have an intrinsic-specific error",
+      "revId": "9fa9cb69f0d6cc8575842de29b2903bb17b48619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
