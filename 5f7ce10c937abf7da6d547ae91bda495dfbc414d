@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4e8e5cd_62e13262",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5419,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-06-23T14:59:46Z",
+      "side": 1,
+      "message": "I strongly believe the answer to the following question is yes, just wanting to make sure you have checked this.\n\ndelete group, has it been confirmed that it also deletes the resources associated with package?",
+      "range": {
+        "startLine": 5419,
+        "startChar": 16,
+        "endLine": 5419,
+        "endChar": 29
+      },
+      "revId": "5f7ce10c937abf7da6d547ae91bda495dfbc414d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
