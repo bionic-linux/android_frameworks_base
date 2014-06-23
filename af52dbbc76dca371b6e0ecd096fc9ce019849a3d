@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "e416c98e_e8608b8c",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5411,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2014-06-23T12:23:28Z",
+      "side": 1,
+      "message": "After checking closer, the errors returned from Vector.add() is either BAD_INDEX, or NO_MEMORY, in which the group has not been added.\n\npackage should also be deleted in this case as you suggest, I\u0027ll update the commit.",
+      "parentUuid": "2492a112_d463dae4",
+      "revId": "af52dbbc76dca371b6e0ecd096fc9ce019849a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2492a112_741c4e56",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 1
