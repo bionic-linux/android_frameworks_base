@@ -574,6 +574,7 @@ public class BitmapDrawable extends Drawable {
         mBitmapState.mBitmap = bitmap;
         setBitmap(bitmap);
         setTargetDensity(r.getDisplayMetrics());
+        mBitmapState.mTargetDensity = mTargetDensity;
         setMipMap(a.getBoolean(com.android.internal.R.styleable.BitmapDrawable_mipMap,
                 bitmap.hasMipMap()));
         setAutoMirrored(a.getBoolean(com.android.internal.R.styleable.BitmapDrawable_autoMirrored,
