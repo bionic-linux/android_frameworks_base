@@ -373,6 +373,17 @@ final class TaskRecord extends ThumbnailHolder {
         return mTaskType == ActivityRecord.APPLICATION_ACTIVITY_TYPE;
     }
 
+    /** @return true if all activities of this task are finishing */
+    boolean isFinishing() {
+        int activityNdx = mActivities.size() - 1;
+        for (; activityNdx >= 0; --activityNdx) {
+            if (!mActivities.get(activityNdx).finishing) {
+                break;
+            }
+        }
+        return activityNdx < 0;
+    }
+
     public TaskAccessInfo getTaskAccessInfoLocked(boolean inclThumbs) {
         final TaskAccessInfo thumbs = new TaskAccessInfo();
         // How many different sub-thumbnails?
