@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4462542_325628e3",
+        "filename": "services/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-07-07T16:05:14Z",
+      "side": 1,
+      "message": "No need to create a new method in TaskRecord, instead use (task.getTopActivity() \u003d\u003d null) and add a comment inside block: \"// All activities in task are finishing\".",
+      "range": {
+        "startLine": 1700,
+        "startChar": 20,
+        "endLine": 1700,
+        "endChar": 38
+      },
+      "revId": "8845922031bc9503fecfa1b9f77f6f0c20915261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
