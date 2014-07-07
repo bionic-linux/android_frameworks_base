@@ -32,6 +32,7 @@ import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -846,7 +847,12 @@ final class ActivityRecord {
                 Log.i(ActivityManagerService.TAG, sb.toString());
             }
             if (totalTime > 0) {
-                service.mUsageStatsService.noteFullyDrawnTime(realActivity, (int) totalTime);
+                final long callerId = Binder.clearCallingIdentity();
+                try {
+                    service.mUsageStatsService.noteFullyDrawnTime(realActivity, (int) totalTime);
+                } finally {
+                    Binder.restoreCallingIdentity(callerId);
+                }
             }
             fullyDrawnStartTime = 0;
             stack.mFullyDrawnStartTime = 0;
@@ -878,7 +884,12 @@ final class ActivityRecord {
         }
         mStackSupervisor.reportActivityLaunchedLocked(false, this, thisTime, totalTime);
         if (totalTime > 0) {
-            service.mUsageStatsService.noteLaunchTime(realActivity, (int)totalTime);
+            final long callerId = Binder.clearCallingIdentity();
+            try {
+                service.mUsageStatsService.noteLaunchTime(realActivity, (int)totalTime);
+            } finally {
+                Binder.restoreCallingIdentity(callerId);
+            }
         }
         displayStartTime = 0;
         stack.mLaunchStartTime = 0;
