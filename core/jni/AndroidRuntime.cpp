@@ -552,7 +552,10 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     char dex2oatXmsFlagsBuf[sizeof("-Xms")-1 + PROPERTY_VALUE_MAX];
     char dex2oatXmxFlagsBuf[sizeof("-Xmx")-1 + PROPERTY_VALUE_MAX];
     char dex2oatFlagsBuf[PROPERTY_VALUE_MAX];
+    char dex2oatFlagsBuf2[PROPERTY_VALUE_MAX];
     char dex2oatImageFlagsBuf[PROPERTY_VALUE_MAX];
+    char vtunePkgBuf[sizeof("-Xvtune-package:")-1 + PROPERTY_VALUE_MAX];
+    char vtuneMapBuf[sizeof("-Xvtune-map:")-1 + PROPERTY_VALUE_MAX];
     char extraOptsBuf[PROPERTY_VALUE_MAX];
     enum {
       kEMDefault,
@@ -797,6 +800,24 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
                                    "-Xmx", "-Xcompiler-option");
         property_get("dalvik.vm.dex2oat-flags", dex2oatFlagsBuf, "");
         parseExtraOpts(dex2oatFlagsBuf, "-Xcompiler-option");
+
+        // Developer options for DexClassLoader.
+        property_get("persist.sys.dalvik.vm.oat", dex2oatFlagsBuf2, "");
+        parseExtraOpts(dex2oatFlagsBuf2, "-Xcompiler-option");
+        
+        // Developer options for VTune: package
+        strcpy(vtunePkgBuf, "-Xvtune-package:");
+        if (property_get("persist.sys.dalvik.vm.vtune.pkg", vtunePkgBuf+16, NULL) > 0) {
+           opt.optionString = vtunePkgBuf;
+           mOptions.add(opt);
+        }
+
+        // Developer options for VTune: source map type
+        strcpy(vtuneMapBuf, "-Xvtune-map:");
+        if (property_get("persist.sys.dalvik.vm.vtune.map", vtuneMapBuf+12, NULL) > 0) {
+           opt.optionString = vtuneMapBuf;
+           mOptions.add(opt);
+        }
     }
 
     /* extra options; parse this late so it overrides others */
