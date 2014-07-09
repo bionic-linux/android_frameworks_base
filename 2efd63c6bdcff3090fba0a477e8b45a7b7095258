@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59f1404f_e057628a",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1036869
+      },
+      "writtenOn": "2014-07-09T13:53:05Z",
+      "side": 1,
+      "message": "remove tab/spaces.",
+      "revId": "2efd63c6bdcff3090fba0a477e8b45a7b7095258",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
