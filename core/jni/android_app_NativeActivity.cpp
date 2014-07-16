@@ -38,6 +38,8 @@
 #include "android_view_InputChannel.h"
 #include "android_view_KeyEvent.h"
 
+#include "NativeBridge.h"
+
 #define LOG_TRACE(...)
 //#define LOG_TRACE(...) ALOG(LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 
@@ -251,15 +253,26 @@ loadNativeCode_native(JNIEnv* env, jobject clazz, jstring path, jstring funcName
 
     const char* pathStr = env->GetStringUTFChars(path, NULL);
     NativeCode* code = NULL;
-    
+    bool needNativeBridge = false;
+
     void* handle = dlopen(pathStr, RTLD_LAZY);
-    
+    if (handle == NULL) {
+        if (NativeBridge::IsSupported(pathStr)) {
+            handle = NativeBridge::LoadLibrary(pathStr, RTLD_LAZY);
+            needNativeBridge = true;
+        }
+    }
     env->ReleaseStringUTFChars(path, pathStr);
     
     if (handle != NULL) {
+        void* funPtr = NULL;
         const char* funcStr = env->GetStringUTFChars(funcName, NULL);
-        code = new NativeCode(handle, (ANativeActivity_createFunc*)
-                dlsym(handle, funcStr));
+        if (needNativeBridge)
+            funPtr = NativeBridge::GetTrampoline(handle, funcStr, NULL, 0);
+        else
+            funPtr = dlsym(handle, funcStr);
+
+        code = new NativeCode(handle, (ANativeActivity_createFunc*)funPtr);
         env->ReleaseStringUTFChars(funcName, funcStr);
         
         if (code->createActivityFunc == NULL) {
