@@ -919,7 +919,7 @@ public class AudioService extends IAudioService.Stub {
             if ((direction == AudioManager.ADJUST_RAISE) &&
                     !checkSafeMediaVolume(streamTypeAlias, aliasIndex + step, device)) {
                 Log.e(TAG, "adjustStreamVolume() safe volume index = "+oldIndex);
-                mVolumePanel.postDisplaySafeVolumeWarning(flags);
+                mVolumePanel.postDisplaySafeVolumeWarning(flags | AudioManager.FLAG_SHOW_UI);
             } else if (streamState.adjustIndex(direction * step, device)) {
                 // Post message to set system volume (it in turn will post a message
                 // to persist). Do not change volume if stream is muted.
@@ -1047,7 +1047,7 @@ public class AudioService extends IAudioService.Stub {
             }
 
             if (!checkSafeMediaVolume(streamTypeAlias, index, device)) {
-                mVolumePanel.postDisplaySafeVolumeWarning(flags);
+                mVolumePanel.postDisplaySafeVolumeWarning(flags | AudioManager.FLAG_SHOW_UI);
                 mPendingVolumeCommand = new StreamVolumeCommand(
                                                     streamType, index, flags, device);
             } else {
