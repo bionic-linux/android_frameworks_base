@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d91530f5_b70fa206",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:17:58Z",
+      "side": 1,
+      "message": "might have been more useful to have a non-English locale as the alternative to en_US.",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9123c0c_b31178be",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:17:58Z",
+      "side": 1,
+      "message": "yeah, seems like a bug.",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d91530f5_17dad634",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:17:58Z",
+      "side": 1,
+      "message": "i assume you plan on uncommenting these later?",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d91530f5_d70e9e07",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:17:58Z",
+      "side": 1,
+      "message": "oh. is there any value to the en_GB test given en_US and fr_FR? is the en_GB test even right? looks the same as the en_US one by eye? shouldn\u0027t day-of-month and month-of-year be in a different order?",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d91530f5_17d01602",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:17:58Z",
+      "side": 1,
+      "message": "(i\u0027ll grant you non-ASCII is useful, but now you\u0027ve got me wondering how useful the fr_FR test is given ja_JP!)",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "191c281e_3f688b6e",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:17:58Z",
+      "side": 1,
+      "message": "did you fix the documentation? (i assume you checked the RFC?)",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
