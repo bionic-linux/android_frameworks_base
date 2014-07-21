@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1975083e_76cb72dd",
+        "filename": "services/java/com/android/server/am/BroadcastQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-07-21T01:31:53Z",
+      "side": 1,
+      "message": "Please rephrase as \"Application has died.\" or \"Application died.\"",
+      "range": {
+        "startLine": 425,
+        "startChar": 19,
+        "endLine": 425,
+        "endChar": 39
+      },
+      "revId": "3dbd4667ff6ccfa552489eb5369c7b022aad860a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "790d24e9_d67b2c97",
+        "filename": "services/java/com/android/server/am/BroadcastQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-07-21T01:31:53Z",
+      "side": 1,
+      "message": "In the catch block for processNextBroadcast() where the RemoteException is caught, please set r.resultTo \u003d null;",
+      "range": {
+        "startLine": 426,
+        "startChar": 16,
+        "endLine": 426,
+        "endChar": 41
+      },
+      "revId": "3dbd4667ff6ccfa552489eb5369c7b022aad860a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
