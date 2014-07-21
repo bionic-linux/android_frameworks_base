@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d91530f5_77098a94",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:47:58Z",
+      "side": 1,
+      "message": "\u0027this\u0027? \"See the wikipedia article on the \u003c\u003cYear 2038 problem\u003e\u003e for details.\"?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d91530f5_77206afc",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:47:58Z",
+      "side": 1,
+      "message": "in what time zone?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195ee8cf_4c0cb3ce",
         "filename": "core/java/android/text/format/Time.java",
         "patchSetId": 2
@@ -19,6 +53,58 @@
     },
     {
       "key": {
+        "uuid": "191c281e_3fad2b1f",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:47:58Z",
+      "side": 1,
+      "message": "he\u0027s spent too much time with the public domain tzcode :-)",
+      "parentUuid": "195ee8cf_4c0cb3ce",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9123c0c_f6f2beb9",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:47:58Z",
+      "side": 1,
+      "message": "(\"String is too short: \" + s)?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9123c0c_16dada34",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:47:58Z",
+      "side": 1,
+      "message": "(\"String too short: \" + s)?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195ee8cf_6c096fbd",
         "filename": "core/java/android/text/format/Time.java",
         "patchSetId": 2
@@ -30,6 +116,57 @@
       "writtenOn": "2014-07-21T12:53:04Z",
       "side": 1,
       "message": "same comment about the name.",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "191c281e_3fa36b24",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:47:58Z",
+      "side": 1,
+      "message": "AssertionError?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "191c281e_7fade30b",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:47:58Z",
+      "side": 1,
+      "message": "likewise.",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "191c281e_7f84c383",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-21T17:47:58Z",
+      "side": 1,
+      "message": "move the \"Otherwise...\" into the else?\n\n(i always assume readers will skip around following the control flow rather than read every single line. especially if they\u0027re in the debugger :-) )",
       "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
