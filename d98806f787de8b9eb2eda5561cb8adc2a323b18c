@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "195ee8cf_4c0cb3ce",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-07-21T12:53:04Z",
+      "side": 1,
+      "message": "parseImpl or parseInternal ?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_6c096fbd",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-07-21T12:53:04Z",
+      "side": 1,
+      "message": "same comment about the name.",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
