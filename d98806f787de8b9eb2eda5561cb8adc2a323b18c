@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "195ee8cf_95f38e06",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91530f5_77098a94",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d91530f5_77206afc",
         "filename": "core/java/android/text/format/Time.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-07-21T17:47:58Z",
       "side": 1,
       "message": "in what time zone?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f95af4db_7435b60d",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91530f5_77206afc",
       "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -71,6 +107,42 @@
     },
     {
       "key": {
+        "uuid": "f95af4db_d45caa66",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191c281e_3fad2b1f",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_7a35a10d",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195ee8cf_4c0cb3ce",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9123c0c_f6f2beb9",
         "filename": "core/java/android/text/format/Time.java",
         "patchSetId": 2
@@ -82,6 +154,24 @@
       "writtenOn": "2014-07-21T17:47:58Z",
       "side": 1,
       "message": "(\"String is too short: \" + s)?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f95af4db_54519a46",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9123c0c_f6f2beb9",
       "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "f95af4db_b46b2ef4",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9123c0c_16dada34",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195ee8cf_6c096fbd",
         "filename": "core/java/android/text/format/Time.java",
         "patchSetId": 2
@@ -116,6 +224,24 @@
       "writtenOn": "2014-07-21T12:53:04Z",
       "side": 1,
       "message": "same comment about the name.",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d957f0b2_18327527",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195ee8cf_6c096fbd",
       "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "f95af4db_3f05d72e",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195ee8cf_da1135bd",
+      "range": {
+        "startLine": 750,
+        "startChar": 19,
+        "endLine": 750,
+        "endChar": 25
+      },
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191c281e_3fa36b24",
         "filename": "core/java/android/text/format/Time.java",
         "patchSetId": 2
@@ -156,6 +306,24 @@
       "writtenOn": "2014-07-21T17:47:58Z",
       "side": 1,
       "message": "AssertionError?",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_d547c664",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191c281e_3fa36b24",
       "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "d957f0b2_131fb67c",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191c281e_7fade30b",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191c281e_7f84c383",
         "filename": "core/java/android/text/format/Time.java",
         "patchSetId": 2
@@ -190,6 +376,24 @@
       "writtenOn": "2014-07-21T17:47:58Z",
       "side": 1,
       "message": "move the \"Otherwise...\" into the else?\n\n(i always assume readers will skip around following the control flow rather than read every single line. especially if they\u0027re in the debugger :-) )",
+      "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_f54c428b",
+        "filename": "core/java/android/text/format/Time.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T15:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191c281e_7f84c383",
       "revId": "d98806f787de8b9eb2eda5561cb8adc2a323b18c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
