@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79b2845d_60927c93",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2014-07-22T21:08:06Z",
+      "side": 1,
+      "message": "Should probably be destroyHardwareResources(mView) instead?",
+      "range": {
+        "startLine": 1569,
+        "startChar": 54,
+        "endLine": 1569,
+        "endChar": 67
+      },
+      "revId": "42239932fe4daf462f55c29202b1d5c0f399c63d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
