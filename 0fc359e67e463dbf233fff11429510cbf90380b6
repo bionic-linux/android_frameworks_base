@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "195ee8cf_5adea5f2",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T12:27:58Z",
+      "side": 1,
+      "message": "I felt I could verify this one, US and French (just) with some confidence. I was slightly curious what the differences were.\n\nJapan is mostly to document what it does.",
+      "parentUuid": "d91530f5_b70fa206",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9123c0c_b31178be",
         "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "f95af4db_34be5e9b",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T12:27:58Z",
+      "side": 1,
+      "message": "Yes. Though I\u0027m not 100% convinced the new version behaves as it should because I have nothing to compare it with. It appears to work the same as the docs suggest it should.\n\n%Z - \"The timezone or name or abbreviation\"\n\nThe %+ does look right from what I can tell (stupid character issues aside).",
+      "parentUuid": "d91530f5_17dad634",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d91530f5_d70e9e07",
         "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
         "patchSetId": 3
@@ -64,6 +100,24 @@
       "writtenOn": "2014-07-21T17:17:58Z",
       "side": 1,
       "message": "oh. is there any value to the en_GB test given en_US and fr_FR? is the en_GB test even right? looks the same as the en_US one by eye? shouldn\u0027t day-of-month and month-of-year be in a different order?",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d957f0b2_f880b9a6",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T12:27:58Z",
+      "side": 1,
+      "message": "I assume you\u0027re talking about \"%D\". \n\nThe test is a combination of locale and TZ. You\u0027re right we have quite a lot of coverage already.\n\nMy purpose was in checking the new code works the same as the old and one thing I wanted to demonstrate was this very point:\n\nWith the current implementation only %x, %X and %c actually localize the format (as opposed to the tokens). US and UK are similar but not identical, but only really due to the locale data strings being different from what I can see.\n\nThe android docs simply say \"See man strftime for what means what\"), and \"%D\" on linux is defined as:\n\n\"Equivalent to %m/%d/%y.  (Yecch—for Americans only.  Americans should note that in other countries %d/%m/%y is rather common.  This means that in international context this format is  ambiguous and should not be used.) (SU)\"",
+      "parentUuid": "d91530f5_d70e9e07",
       "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "195ee8cf_faef5160",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T12:27:58Z",
+      "side": 1,
+      "message": "True. Was definitely going for \"more is better\" and trying to cover a variety of timezones and locales.",
+      "parentUuid": "d91530f5_17d01602",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191c281e_3f688b6e",
         "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
         "patchSetId": 3
@@ -98,6 +170,24 @@
       "writtenOn": "2014-07-21T17:17:58Z",
       "side": 1,
       "message": "did you fix the documentation? (i assume you checked the RFC?)",
+      "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d957f0b2_182035fb",
+        "filename": "core/tests/coretests/src/android/text/format/TimeTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-07-22T12:27:58Z",
+      "side": 1,
+      "message": "Not yet, but I will.",
+      "parentUuid": "191c281e_3f688b6e",
       "revId": "0fc359e67e463dbf233fff11429510cbf90380b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
