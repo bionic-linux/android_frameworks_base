@@ -1273,6 +1273,10 @@ public final class ActivityStackSupervisor {
 
     ActivityStack adjustStackFocus(ActivityRecord r) {
         final TaskRecord task = r.task;
+
+        if (r.isApplicationActivity() && task != null && task.stack != null && task.stack.isHomeStack())
+            return mHomeStack;
+
         if (r.isApplicationActivity() || (task != null && task.isApplicationTask())) {
             if (task != null) {
                 final ActivityStack taskStack = task.stack;
