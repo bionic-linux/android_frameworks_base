@@ -432,10 +432,9 @@ public class StaticLayout extends Layout {
                             spanEnd = here;
                             break;
                         }
-
-                        if (mLineCount >= mMaximumVisibleLineCount) {
-                            break;
-                        }
+                    }
+                    if (mLineCount >= mMaximumVisibleLineCount) {
+                        break;
                     }
                 }
             }
