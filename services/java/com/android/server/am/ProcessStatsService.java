@@ -427,12 +427,12 @@ public final class ProcessStatsService extends IProcessStats.Stub {
         mAm.mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.PACKAGE_USAGE_STATS, null);
         Parcel current = Parcel.obtain();
+        synchronized (mAm) {
+            mProcessStats.mTimePeriodEndRealtime = SystemClock.elapsedRealtime();
+            mProcessStats.writeToParcel(current, 0);
+        }
         mWriteLock.lock();
         try {
-            synchronized (mAm) {
-                mProcessStats.mTimePeriodEndRealtime = SystemClock.elapsedRealtime();
-                mProcessStats.writeToParcel(current, 0);
-            }
             if (historic != null) {
                 ArrayList<String> files = getCommittedFiles(0, false, true);
                 if (files != null) {
@@ -456,16 +456,16 @@ public final class ProcessStatsService extends IProcessStats.Stub {
     public ParcelFileDescriptor getStatsOverTime(long minTime) {
         mAm.mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.PACKAGE_USAGE_STATS, null);
+        Parcel current = Parcel.obtain();
+        long curTime;
+        synchronized (mAm) {
+            mProcessStats.mTimePeriodEndRealtime = SystemClock.elapsedRealtime();
+            mProcessStats.writeToParcel(current, 0);
+            curTime = mProcessStats.mTimePeriodEndRealtime
+                    - mProcessStats.mTimePeriodStartRealtime;
+        }
         mWriteLock.lock();
         try {
-            Parcel current = Parcel.obtain();
-            long curTime;
-            synchronized (mAm) {
-                mProcessStats.mTimePeriodEndRealtime = SystemClock.elapsedRealtime();
-                mProcessStats.writeToParcel(current, 0);
-                curTime = mProcessStats.mTimePeriodEndRealtime
-                        - mProcessStats.mTimePeriodStartRealtime;
-            }
             if (curTime < minTime) {
                 // Need to add in older stats to reach desired time.
                 ArrayList<String> files = getCommittedFiles(0, false, true);
