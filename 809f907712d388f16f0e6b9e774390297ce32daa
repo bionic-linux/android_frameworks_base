@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16295785_f42dd07e",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3366,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-07-31T02:56:42Z",
+      "side": 1,
+      "message": "Since the order of mRecentTasks doesn\u0027t matter please change to the pattern:\n\n    for (int i \u003d mRecentTasks.size() - 1; i \u003e\u003d 0; --i) {\n        ...\n    }\n\nThe advantage is we don\u0027t need N and we don\u0027t need to make adjustments to i and N after removing each entry.",
+      "range": {
+        "startLine": 3365,
+        "startChar": 0,
+        "endLine": 3366,
+        "endChar": 37
+      },
+      "revId": "809f907712d388f16f0e6b9e774390297ce32daa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1624f7a2_78776b14",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3371,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-07-31T02:56:42Z",
+      "side": 1,
+      "message": "Please preface with:\n\n    if (DEBUG_TASKS) Slog.i(...\n\nwe don\u0027t want so much information in the logs.",
+      "range": {
+        "startLine": 3371,
+        "startChar": 16,
+        "endLine": 3371,
+        "endChar": 59
+      },
+      "revId": "809f907712d388f16f0e6b9e774390297ce32daa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
