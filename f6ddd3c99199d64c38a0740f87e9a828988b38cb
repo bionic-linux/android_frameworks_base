@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "763a93c6_1a5abcb4",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3368,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-07-31T04:49:36Z",
+      "side": 1,
+      "message": "line length \u003e 100 characters.",
+      "range": {
+        "startLine": 3368,
+        "startChar": 0,
+        "endLine": 3368,
+        "endChar": 105
+      },
+      "revId": "f6ddd3c99199d64c38a0740f87e9a828988b38cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
