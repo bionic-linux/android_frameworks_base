@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f76345_2cd3fb43",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4323,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-07-31T10:16:39Z",
+      "side": 1,
+      "message": "I\u0027m having some trouble understanding how this flow works.\n\nDoes mInstaller.dexopt() handle patching as well ? I.e, under what circumstances do we only patch but not compile ?",
+      "revId": "172d2811c43343da0ffde386314170c06ca3a31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
