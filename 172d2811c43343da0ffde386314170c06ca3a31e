@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "56390f00_2082aaae",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4321,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-08-05T09:17:41Z",
+      "side": 1,
+      "message": "Stale comment, please remove.",
+      "revId": "172d2811c43343da0ffde386314170c06ca3a31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f76345_2cd3fb43",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 3
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "We only patch when we have a file that matches the checksum of the current image but not it\u0027s base address. This is the case when we have dexpreopt and moved the image on first boot.\n\nPatching is done by mInstaller.patchoat",
       "parentUuid": "f6f76345_2cd3fb43",
+      "revId": "172d2811c43343da0ffde386314170c06ca3a31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f63f63e6_1dd0b3de",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4323,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-08-05T09:17:41Z",
+      "side": 1,
+      "message": "Please add a comment to this effect somewhere here, perhaps near the call to isDexOptNeededInternal. This isn\u0027t very obvious.",
+      "parentUuid": "1624f7a2_ebcba030",
       "revId": "172d2811c43343da0ffde386314170c06ca3a31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
