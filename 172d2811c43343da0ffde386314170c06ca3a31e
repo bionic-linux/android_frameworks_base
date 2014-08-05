@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6a7bf88_8750c8eb",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4321,
+      "author": {
+        "id": 1047769
+      },
+      "writtenOn": "2014-08-05T16:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56390f00_2082aaae",
+      "revId": "172d2811c43343da0ffde386314170c06ca3a31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f76345_2cd3fb43",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Please add a comment to this effect somewhere here, perhaps near the call to isDexOptNeededInternal. This isn\u0027t very obvious.",
       "parentUuid": "1624f7a2_ebcba030",
+      "revId": "172d2811c43343da0ffde386314170c06ca3a31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6a7bf88_a74dc450",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4323,
+      "author": {
+        "id": 1047769
+      },
+      "writtenOn": "2014-08-05T16:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f63f63e6_1dd0b3de",
       "revId": "172d2811c43343da0ffde386314170c06ca3a31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
