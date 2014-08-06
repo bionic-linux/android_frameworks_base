@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16431782_54484944",
+        "filename": "libs/hwui/OpenGLRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2259,
+      "author": {
+        "id": 1040058
+      },
+      "writtenOn": "2014-08-06T16:49:59Z",
+      "side": 1,
+      "message": "Since we are on the change here. \nMaybe adding some more visual comments will be helpful like:\n\nb --- c          \u003c- (v1)\n\n|  ....  |\n\na --- d          \u003c- (v2)\n\n\n^ .... ^\n\n(u1) (u2)",
+      "revId": "e530bc808d0b204db55955bffce643934f0fa479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16431782_94293175",
+        "filename": "libs/hwui/OpenGLRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2274,
+      "author": {
+        "id": 1040058
+      },
+      "writtenOn": "2014-08-06T16:49:59Z",
+      "side": 1,
+      "message": "u , v coordinates are reset for each (x, y) pair, but here, you only update u2 here.\nRemember to run the test //frameworks/base/tests/HwAccelerationTest/src/com/android/test/hwui/BitmapMeshLayerActivity.java to make sure there is no regression. Because this change break that.",
+      "revId": "e530bc808d0b204db55955bffce643934f0fa479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
