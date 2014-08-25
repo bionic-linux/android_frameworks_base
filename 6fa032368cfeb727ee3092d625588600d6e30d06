@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "138de944_ae295775",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-08-25T18:46:27Z",
+      "side": 1,
+      "message": "Multiple default stanzas legal?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "739e256e_17235cc9",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-08-25T18:46:27Z",
+      "side": 1,
+      "message": "Need to require at least one cert somewhere?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "739e256e_57f24401",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-08-25T18:46:27Z",
+      "side": 1,
+      "message": "Multiple seinfo stanzas legal?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13c88974_6a9e5f5b",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-08-25T18:46:27Z",
+      "side": 1,
+      "message": "Multiple package stanzas with the same name legal?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13c88974_8a9e5b4f",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-08-25T18:46:27Z",
+      "side": 1,
+      "message": "Refuse multiple seinfo stanzas?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "138de944_2ea64798",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-08-25T18:46:27Z",
+      "side": 1,
+      "message": "Refuse multiple seinfo stanzas?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13c88974_6ac2df17",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-08-25T18:46:27Z",
+      "side": 1,
+      "message": "compareSignatures in PackageManagerService.java converts the two Signature arrays to HashSets and then calls the .equals method.  Is this equivalent?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
