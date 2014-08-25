@@ -2447,6 +2447,20 @@ public class SettingsProvider extends ContentProvider {
                     currentVersion = 132;
                 }
 
+                if (currentVersion == 131) {
+                    if (userId == UserHandle.USER_SYSTEM) {
+                        // Add battery plugged sound settings.
+                        final SettingsState systemGlobalSettings = getGlobalSettingsLocked();
+                        systemGlobalSettings.insertSettingLocked(
+                                Settings.Global.BATTERY_PLUGGED_SOUND,
+                                getContext().getResources().getString(
+                                        R.string.def_battery_plugged_sound),
+                                SettingsState.SYSTEM_PACKAGE_NAME);
+                    }
+
+                    currentVersion = 132;
+                }
+
                 if (currentVersion != newVersion) {
                     Slog.wtf("SettingsProvider", "warning: upgrading settings database to version "
                             + newVersion + " left it at "
