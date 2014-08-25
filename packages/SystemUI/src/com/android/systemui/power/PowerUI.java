@@ -220,6 +220,12 @@ public class PowerUI extends SystemUI {
                 } else {
                     mWarnings.updateLowBatteryWarning();
                 }
+
+                if (plugged && !oldPlugged
+                        && (mPlugType == BatteryManager.BATTERY_PLUGGED_AC
+                            || mPlugType == BatteryManager.BATTERY_PLUGGED_USB)) {
+                    mWarnings.notifyBatteryPlugged();
+                }
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
                 mScreenOffTime = SystemClock.elapsedRealtime();
             } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
@@ -377,6 +383,7 @@ public class PowerUI extends SystemUI {
         void update(int batteryLevel, int bucket, long screenOffTime);
         void dismissLowBatteryWarning();
         void showLowBatteryWarning(boolean playSound);
+        void notifyBatteryPlugged();
         void dismissInvalidChargerWarning();
         void showInvalidChargerWarning();
         void updateLowBatteryWarning();
