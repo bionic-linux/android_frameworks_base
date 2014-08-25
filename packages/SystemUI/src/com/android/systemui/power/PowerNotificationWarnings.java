@@ -28,12 +28,16 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.IRingtonePlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Slog;
 
@@ -261,6 +265,44 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
                     if (DEBUG) Slog.d(TAG, "playing sound " + soundUri);
                 }
             }
+        }
+    }
+
+    @Override
+    public void notifyBatteryPlugged() {
+        if (DEBUG) {
+            Slog.d(TAG, "notifyBatteryPlugged");
+        }
+        playBatteryPluggedSound();
+    }
+
+    private void playBatteryPluggedSound() {
+        if (DEBUG) {
+            Slog.d(TAG, "playing battery plugged sound");
+        }
+
+        AudioManager audioMan = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        final int mode = audioMan.getRingerModeInternal();
+        if (mode == AudioManager.RINGER_MODE_NORMAL) {
+            final ContentResolver cr = mContext.getContentResolver();
+            // TODO: Change this sound after a suitable sound has been added.
+            final String soundPath = Settings.Global.getString(cr,
+                    Settings.Global.WIRELESS_CHARGING_STARTED_SOUND);
+            if (soundPath != null) {
+                final Uri soundUri = Uri.parse("file://" + soundPath);
+                if (soundUri != null) {
+                    try {
+                        final IRingtonePlayer player  = audioMan.getRingtonePlayer();
+                        if (player != null) {
+                            player.playAsync(soundUri, UserHandle.SYSTEM, false, AUDIO_ATTRIBUTES);
+                        }
+                    } catch (RemoteException e) {
+                    }
+                }
+            }
+        } else if (mode == AudioManager.RINGER_MODE_VIBRATE) {
+            Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(new long[]{0, 200L}, -1 /* repeat */);
         }
     }
 
