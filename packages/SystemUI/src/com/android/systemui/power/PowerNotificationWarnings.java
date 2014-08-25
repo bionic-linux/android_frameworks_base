@@ -28,16 +28,22 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Slog;
 import android.view.View;
 
+import com.android.internal.os.BackgroundThread;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
@@ -67,6 +73,8 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     private static final String ACTION_STOP_SAVER = "PNW.stopSaver";
     private static final String ACTION_DISMISSED_WARNING = "PNW.dismissedWarning";
 
+    private static final int MSG_PLAY_BATTERY_PLUGGED_SOUND = 1;
+
     private static final AudioAttributes AUDIO_ATTRIBUTES = new AudioAttributes.Builder()
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -75,10 +83,21 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     private final Context mContext;
     private final NotificationManager mNoMan;
     private final PowerManager mPowerMan;
+    private final AudioManager mAudioMan;
+    private final Vibrator mVibrator;
     private final Handler mHandler = new Handler();
     private final Receiver mReceiver = new Receiver();
     private final Intent mOpenBatterySettings = settings(Intent.ACTION_POWER_USAGE_SUMMARY);
     private final Intent mOpenSaverSettings = settings(Settings.ACTION_BATTERY_SAVER_SETTINGS);
+
+    private final Handler mPlaySoundHandler = new Handler(BackgroundThread.get().getLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == MSG_PLAY_BATTERY_PLUGGED_SOUND) {
+                playBatteryPluggedSound();
+            }
+        }
+    };
 
     private int mBatteryLevel;
     private int mBucket;
@@ -97,6 +116,8 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
         mContext = context;
         mNoMan = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mPowerMan = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        mAudioMan = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mReceiver.init();
     }
 
@@ -319,6 +340,46 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
                 if (soundUri != null) {
                     b.setSound(soundUri, AUDIO_ATTRIBUTES);
                     if (DEBUG) Slog.d(TAG, "playing sound " + soundUri);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void notifyBatteryPlugged() {
+        if (DEBUG) {
+            Slog.d(TAG, "notifyBatteryPlugged");
+        }
+        Message msg = mPlaySoundHandler.obtainMessage(MSG_PLAY_BATTERY_PLUGGED_SOUND);
+        mPlaySoundHandler.sendMessage(msg);
+        return;
+    }
+
+    private void playBatteryPluggedSound() {
+        final ContentResolver cr = mContext.getContentResolver();
+        if (DEBUG) {
+            Slog.d(TAG, "playing battery plugged sound");
+        }
+
+        boolean convertSoundToVibration =
+            mAudioMan.getRingerModeInternal() == AudioManager.RINGER_MODE_VIBRATE;
+        if (convertSoundToVibration) {
+            mVibrator.vibrate(new long[]{0, 200L}, -1 /* repeat */);
+            return;
+        }
+
+        final boolean enabled = Settings.Global.getInt(cr,
+                Settings.Global.POWER_SOUNDS_ENABLED, 1) != 0;
+        // TODO: Change this sound after a suitable sound has been added.
+        final String soundPath = Settings.Global.getString(cr,
+                Settings.Global.WIRELESS_CHARGING_STARTED_SOUND);
+        if (enabled && soundPath != null) {
+            final Uri soundUri = Uri.parse("file://" + soundPath);
+            if (soundUri != null) {
+                final Ringtone sfx = RingtoneManager.getRingtone(mContext, soundUri);
+                if (sfx != null) {
+                    sfx.setStreamType(AudioManager.STREAM_SYSTEM);
+                    sfx.play();
                 }
             }
         }
