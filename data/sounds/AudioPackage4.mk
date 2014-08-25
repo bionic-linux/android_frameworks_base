@@ -42,6 +42,7 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/effects/VideoStop.ogg:system/media/audio/ui/VideoStop.ogg \
 	$(LOCAL_PATH)/effects/camera_click.ogg:system/media/audio/ui/camera_click.ogg \
 	$(LOCAL_PATH)/effects/LowBattery.ogg:system/media/audio/ui/LowBattery.ogg \
+	$(LOCAL_PATH)/effects/ogg/BatteryPlugged.ogg:system/media/audio/ui/BatteryPlugged.ogg \
 	$(LOCAL_PATH)/effects/Dock.ogg:system/media/audio/ui/Dock.ogg \
 	$(LOCAL_PATH)/effects/Undock.ogg:system/media/audio/ui/Undock.ogg \
 	$(LOCAL_PATH)/effects/Lock.ogg:system/media/audio/ui/Lock.ogg \
