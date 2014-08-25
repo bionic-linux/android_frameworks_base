@@ -54,11 +54,13 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     private static final int SHOWING_NOTHING = 0;
     private static final int SHOWING_WARNING = 1;
     private static final int SHOWING_INVALID_CHARGER = 3;
+    private static final int SHOWING_BATTERY_PLUGGED = 4;
     private static final String[] SHOWING_STRINGS = {
         "SHOWING_NOTHING",
         "SHOWING_WARNING",
         "SHOWING_SAVER",
         "SHOWING_INVALID_CHARGER",
+        "SHOWING_BATTERY_PLUGGED",
     };
 
     private static final String ACTION_SHOW_BATTERY_SETTINGS = "PNW.batterySettings";
@@ -87,6 +89,7 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     private boolean mWarning;
     private boolean mPlaySound;
     private boolean mInvalidCharger;
+    private boolean mBatteryPlugged;
     private SystemUIDialog mSaverConfirmation;
 
     public PowerNotificationWarnings(Context context, PhoneStatusBar phoneStatusBar) {
@@ -101,6 +104,7 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
         pw.print("mWarning="); pw.println(mWarning);
         pw.print("mPlaySound="); pw.println(mPlaySound);
         pw.print("mInvalidCharger="); pw.println(mInvalidCharger);
+        pw.print("mBatteryPlugged="); pw.println(mBatteryPlugged);
         pw.print("mShowing="); pw.println(SHOWING_STRINGS[mShowing]);
         pw.print("mSaverConfirmation="); pw.println(mSaverConfirmation != null ? "not null" : null);
     }
@@ -119,13 +123,19 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
 
     private void updateNotification() {
         if (DEBUG) Slog.d(TAG, "updateNotification mWarning=" + mWarning + " mPlaySound="
-                + mPlaySound + " mInvalidCharger=" + mInvalidCharger);
+                + mPlaySound + " mInvalidCharger=" + mInvalidCharger
+                + " mBatteryPlugged=" + mBatteryPlugged);
         if (mInvalidCharger) {
             showInvalidChargerNotification();
             mShowing = SHOWING_INVALID_CHARGER;
         } else if (mWarning) {
             showWarningNotification();
             mShowing = SHOWING_WARNING;
+        } else if (mBatteryPlugged) {
+            if (mShowing != SHOWING_BATTERY_PLUGGED) {
+                showBatteryPluggedNotification();
+                mShowing = SHOWING_BATTERY_PLUGGED;
+            }
         } else {
             mNoMan.cancelAsUser(TAG_NOTIFICATION, R.id.notification_power, UserHandle.ALL);
             mShowing = SHOWING_NOTHING;
@@ -179,6 +189,23 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
         mNoMan.notifyAsUser(TAG_NOTIFICATION, R.id.notification_power, nb.build(), UserHandle.ALL);
     }
 
+    private void showBatteryPluggedNotification() {
+        final Notification.Builder nb = new Notification.Builder(mContext)
+                .setSmallIcon(R.drawable.ic_power)
+                .setWhen(0)
+                .setShowWhen(false)
+                .setOngoing(true)
+                .setContentTitle(mContext.getString(R.string.battery_plugged_title))
+                .setPriority(Notification.PRIORITY_MAX)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setColor(mContext.getColor(
+                        com.android.internal.R.color.system_notification_accent_color));
+        attachBatteryPluggedSound(nb);
+        SystemUI.overrideNotificationAppName(mContext, nb);
+        final Notification n = nb.build();
+        mNoMan.notifyAsUser(TAG_NOTIFICATION, R.id.notification_power, n, UserHandle.ALL);
+    }
+
     private PendingIntent pendingActivity(Intent intent) {
         return PendingIntent.getActivityAsUser(mContext,
                 0, intent, 0, null, UserHandle.CURRENT);
@@ -200,6 +227,11 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     @Override
     public boolean isInvalidChargerWarningShowing() {
         return mInvalidCharger;
+    }
+
+    @Override
+    public boolean isLowBatteryWarningShowing() {
+        return mWarning;
     }
 
     @Override
@@ -279,6 +311,43 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     public void showInvalidChargerWarning() {
         mInvalidCharger = true;
         updateNotification();
+    }
+
+    @Override
+    public void dismissBatteryPlugged() {
+        if (mBatteryPlugged) Slog.i(TAG, "dismissing battery plugged notification");
+        mBatteryPlugged = false;
+        updateNotification();
+    }
+
+    @Override
+    public void showBatteryPlugged() {
+        mBatteryPlugged = true;
+        updateNotification();
+    }
+
+    private void attachBatteryPluggedSound(Notification.Builder b) {
+        final ContentResolver cr = mContext.getContentResolver();
+        final boolean enabled = Settings.Global.getInt(cr,
+                Settings.Global.CHARGING_SOUNDS_ENABLED, 1) != 0;
+        if (!enabled) {
+            return;
+        }
+
+        if (DEBUG) {
+            Slog.d(TAG, "playing battery plugged sound");
+        }
+
+        // TODO: Change this sound after a suitable sound has been added.
+        final String soundPath = Settings.Global.getString(cr,
+                Settings.Global.WIRELESS_CHARGING_STARTED_SOUND);
+        if (soundPath != null) {
+            final Uri soundUri = Uri.parse("file://" + soundPath);
+            if (soundUri != null) {
+                b.setSound(soundUri, AUDIO_ATTRIBUTES);
+                if (DEBUG) Slog.d(TAG, "playing sound " + soundUri);
+            }
+        }
     }
 
     @Override

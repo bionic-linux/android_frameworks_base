@@ -81,6 +81,9 @@
     <!-- Second line of invalid_charger, used in the notification form.  [CHAR LIMIT=NONE]-->
     <string name="invalid_charger_text">Use only the supplied charger.</string>
 
+    <!-- Title of the notification when plugged in to a power source. [CHAR LIMIT=NONE]-->
+    <string name="battery_plugged_title">Plugged in to power source</string>
+
     <!-- When the battery is low, this is the label of the button to go to the
          power usage activity to find out what drained the battery.  [CHAR LIMIT=30] -->
     <string name="battery_low_why">Settings</string>

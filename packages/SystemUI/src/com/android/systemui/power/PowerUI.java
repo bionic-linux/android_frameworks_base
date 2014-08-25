@@ -192,10 +192,20 @@ public class PowerUI extends SystemUI {
                     // only play SFX when the dialog comes up or the bucket changes
                     final boolean playSound = bucket != oldBucket || oldPlugged;
                     mWarnings.showLowBatteryWarning(playSound);
-                } else if (isPowerSaver || plugged || (bucket > oldBucket && bucket > 0)) {
-                    mWarnings.dismissLowBatteryWarning();
-                } else {
-                    mWarnings.updateLowBatteryWarning();
+                    return;
+                } else if (mWarnings.isLowBatteryWarningShowing()) {
+                    if (isPowerSaver || plugged || (bucket > oldBucket && bucket > 0)) {
+                        mWarnings.dismissLowBatteryWarning();
+                    } else {
+                        mWarnings.updateLowBatteryWarning();
+                        return;
+                    }
+                }
+
+                if (plugged && !oldPlugged) {
+                    mWarnings.showBatteryPlugged();
+                } else if (!plugged && oldPlugged) {
+                    mWarnings.dismissBatteryPlugged();
                 }
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
                 mScreenOffTime = SystemClock.elapsedRealtime();
@@ -243,9 +253,12 @@ public class PowerUI extends SystemUI {
         void dismissLowBatteryWarning();
         void showLowBatteryWarning(boolean playSound);
         void dismissInvalidChargerWarning();
+        boolean isLowBatteryWarningShowing();
         void showInvalidChargerWarning();
         void updateLowBatteryWarning();
         boolean isInvalidChargerWarningShowing();
+        void dismissBatteryPlugged();
+        void showBatteryPlugged();
         void dump(PrintWriter pw);
         void userSwitched();
     }
