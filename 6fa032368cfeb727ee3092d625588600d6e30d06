@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9397195e_227f0eb6",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-08-26T10:22:58Z",
+      "side": 1,
+      "message": "The behavior is the same as with prior iterations with this code. Albeit, i\u0027m now taking a fail-fast approach in other areas so, if wanted, we can replicate that here too.",
+      "parentUuid": "138de944_ae295775",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739e256e_17235cc9",
         "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-08-25T18:46:27Z",
       "side": 1,
       "message": "Need to require at least one cert somewhere?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53a121b9_e0eda26c",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-08-26T10:22:58Z",
+      "side": 1,
+      "message": "The Policy.PolicyBuilder \u0027build\u0027 method ensures that a certain set of invariants are in place before a valid Policy object is returned (consult pb.build() in this function as well as the build method at the  bottom of this file). One of those logical assertions is that at least one signature must be present. So if a cert is missing an IllegalStateException will be tossed.",
+      "parentUuid": "739e256e_17235cc9",
       "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -115,6 +151,24 @@
       "writtenOn": "2014-08-25T18:46:27Z",
       "side": 1,
       "message": "compareSignatures in PackageManagerService.java converts the two Signature arrays to HashSets and then calls the .equals method.  Is this equivalent?",
+      "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9397195e_e263661e",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2014-08-26T10:22:58Z",
+      "side": 1,
+      "message": "This function is just a bi-directional set inclusion test just like compareSignatures. Albeit, the \u0027areExactMatch\u0027 one has a more explicit name concerning its purpose, doesn\u0027t first convert the lists to sets, and passes back a boolean instead of an int.",
+      "parentUuid": "13c88974_6ac2df17",
       "revId": "6fa032368cfeb727ee3092d625588600d6e30d06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
