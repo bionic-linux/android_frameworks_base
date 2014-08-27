@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9333997e_8556048c",
+        "filename": "core/java/android/text/format/TimeFormatter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-08-27T17:52:00Z",
+      "side": 1,
+      "message": "give an example of the difference? (i can\u0027t think why you\u0027d want to treat this as bytes rather than characters.)",
+      "revId": "9f58ea490ed666bc39cafea03c2a282cc4b60b26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
