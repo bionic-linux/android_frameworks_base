@@ -16,6 +16,24 @@
       "revId": "9f58ea490ed666bc39cafea03c2a282cc4b60b26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3fe95bb_c5829aaf",
+        "filename": "core/java/android/text/format/TimeFormatter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-08-28T10:17:58Z",
+      "side": 1,
+      "message": "My motivation was to stay close to the original implementation to avoid any unintended changes (I put this problem down to having not followed closely enough).\n\nYou\u0027re right though: it is reasonable to make different changes. I was worried about UTF-8 issues, but I\u0027d forgotten UTF-8 byte sequences guarantee you cannot, by design, mistake trailing bytes for ASCII chars.\n\nI think the tests are fairly comprehensive so should catch obvious problems.",
+      "parentUuid": "9333997e_8556048c",
+      "revId": "9f58ea490ed666bc39cafea03c2a282cc4b60b26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
