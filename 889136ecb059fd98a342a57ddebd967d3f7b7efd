@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "531681dd_121f9cf7",
+        "filename": "core/java/android/text/format/TimeFormatter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-08-28T16:49:53Z",
+      "side": 1,
+      "message": "do we even need this special case? seems like this will never actually happen, and even if it does, we\u0027ll just do nothing in the loop below?",
+      "revId": "889136ecb059fd98a342a57ddebd967d3f7b7efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
