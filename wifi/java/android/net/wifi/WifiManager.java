@@ -1674,27 +1674,31 @@ public class WifiManager {
      *
      * @param config WPS configuration
      * @param listener for callbacks on success or failure. Can be null.
+     * @return a key that identifies the listener, for use with {@link #cancelWps(int)}
      * @throws IllegalStateException if the WifiManager instance needs to be
      * initialized again
      * @hide
      */
-    public void startWps(WpsInfo config, WpsListener listener) {
+    public int startWps(WpsInfo config, WpsListener listener) {
         if (config == null) throw new IllegalArgumentException("config cannot be null");
         validateChannel();
-        sAsyncChannel.sendMessage(START_WPS, 0, putListener(listener), config);
+        int listenerKey = putListener(listener);
+        sAsyncChannel.sendMessage(START_WPS, 0, listenerKey, config);
+        return listenerKey;
     }
 
     /**
      * Cancel any ongoing Wi-fi Protected Setup
      *
-     * @param listener for callbacks on success or failure. Can be null.
+     * @param listenerKey the key returned from {@link #startWps(WpsInfo, WpsListener)}
      * @throws IllegalStateException if the WifiManager instance needs to be
      * initialized again
      * @hide
      */
-    public void cancelWps(ActionListener listener) {
+    public void cancelWps(int listenerKey) {
         validateChannel();
-        sAsyncChannel.sendMessage(CANCEL_WPS, 0, putListener(listener));
+        removeListener(listenerKey);
+        sAsyncChannel.sendMessage(CANCEL_WPS, 0, INVALID_KEY);
     }
 
     /**
