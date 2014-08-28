@@ -16,6 +16,24 @@
       "revId": "ce9319a286cc28a7d8d520d7dc9adbcaa9f45e01",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "530841ab_6b3a9d01",
+        "filename": "core/java/android/text/format/TimeFormatter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-08-28T16:44:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "538be16f_70fab020",
+      "revId": "ce9319a286cc28a7d8d520d7dc9adbcaa9f45e01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
