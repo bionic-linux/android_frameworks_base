@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "538be16f_70fab020",
+        "filename": "core/java/android/text/format/TimeFormatter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-08-28T15:44:49Z",
+      "side": 1,
+      "message": "you can wrap(CharSequence), so there\u0027s no need for the explicit char[].",
+      "revId": "ce9319a286cc28a7d8d520d7dc9adbcaa9f45e01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
