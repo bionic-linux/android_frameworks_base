@@ -16,6 +16,24 @@
       "revId": "889136ecb059fd98a342a57ddebd967d3f7b7efd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5364c199_083787cd",
+        "filename": "core/java/android/text/format/TimeFormatter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2014-08-29T08:18:48Z",
+      "side": 1,
+      "message": "I agree it\u0027s not needed. Will remove.",
+      "parentUuid": "531681dd_121f9cf7",
+      "revId": "889136ecb059fd98a342a57ddebd967d3f7b7efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
