@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d371918d_dac18513",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-09-02T16:34:57Z",
+      "side": 1,
+      "message": "Not sure if you would rather me throw a NullPointerException here or not. You mentioned, in a prior patch, that you like failing fast and hard.",
+      "revId": "abfbd7736dc838d7ec15f71303ff49924b65d409",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
