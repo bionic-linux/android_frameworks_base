@@ -16,6 +16,24 @@
       "revId": "abfbd7736dc838d7ec15f71303ff49924b65d409",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b395fdbe_35a280c9",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-09-02T16:39:34Z",
+      "side": 1,
+      "message": "ya, let\u0027s throw a NPE please.",
+      "parentUuid": "d371918d_dac18513",
+      "revId": "abfbd7736dc838d7ec15f71303ff49924b65d409",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
