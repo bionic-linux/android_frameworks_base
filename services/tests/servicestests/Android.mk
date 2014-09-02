@@ -1,4 +1,5 @@
-LOCAL_PATH:= $(call my-dir)
+LOCAL_PATH := $(call my-dir)
+
 include $(CLEAR_VARS)
 
 # We only want this apk build for tests.
@@ -18,5 +19,6 @@ LOCAL_PACKAGE_NAME := FrameworksServicesTests
 
 LOCAL_CERTIFICATE := platform
 
-include $(BUILD_PACKAGE)
+LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
 
+include $(BUILD_PACKAGE)
