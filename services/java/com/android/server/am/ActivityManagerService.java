@@ -2786,11 +2786,16 @@ public final class ActivityManagerService extends ActivityManagerNative
                 requiredAbi = Build.SUPPORTED_ABIS[0];
             }
 
+            String[] extraArgs = null;
+            if (app.info.initializeNativeBridge) {
+                extraArgs = new String[] { "--initialize-native-bridge=true" };
+            }
+
             // Start the process.  It will either succeed and return a result containing
             // the PID of the new process, or else throw a RuntimeException.
             Process.ProcessStartResult startResult = Process.start("android.app.ActivityThread",
                     app.processName, uid, uid, gids, debugFlags, mountExternal,
-                    app.info.targetSdkVersion, app.info.seinfo, requiredAbi, null);
+                    app.info.targetSdkVersion, app.info.seinfo, requiredAbi, extraArgs);
 
             BatteryStatsImpl bs = mBatteryStatsService.getActiveStatistics();
             synchronized (bs) {

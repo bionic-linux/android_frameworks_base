@@ -75,21 +75,26 @@ public final class Zygote {
      * file descriptor numbers that are to be closed by the child
      * (and replaced by /dev/null) after forking.  An integer value
      * of -1 in any entry in the array means "ignore this one".
+     * @param initializeNativeBridge whether to initialize or unload a native bridge, if
+     * available.
      *
      * @return 0 if this is the child, pid of the child
      * if this is the parent, or -1 on error.
      */
     public static int forkAndSpecialize(int uid, int gid, int[] gids, int debugFlags,
-          int[][] rlimits, int mountExternal, String seInfo, String niceName, int[] fdsToClose) {
+          int[][] rlimits, int mountExternal, String seInfo, String niceName, int[] fdsToClose,
+          boolean initializeNativeBridge) {
         VM_HOOKS.preFork();
         int pid = nativeForkAndSpecialize(
-                  uid, gid, gids, debugFlags, rlimits, mountExternal, seInfo, niceName, fdsToClose);
+                  uid, gid, gids, debugFlags, rlimits, mountExternal, seInfo, niceName, fdsToClose,
+                  initializeNativeBridge);
         VM_HOOKS.postForkCommon();
         return pid;
     }
 
     native private static int nativeForkAndSpecialize(int uid, int gid, int[] gids,int debugFlags,
-          int[][] rlimits, int mountExternal, String seInfo, String niceName, int[] fdsToClose);
+          int[][] rlimits, int mountExternal, String seInfo, String niceName, int[] fdsToClose,
+          boolean initialize_native_bridge);
 
     /**
      * Special method to start the system server process. In addition to the
@@ -126,8 +131,8 @@ public final class Zygote {
     native private static int nativeForkSystemServer(int uid, int gid, int[] gids, int debugFlags,
             int[][] rlimits, long permittedCapabilities, long effectiveCapabilities);
 
-    private static void callPostForkChildHooks(int debugFlags) {
-        VM_HOOKS.postForkChild(debugFlags);
+    private static void callPostForkChildHooks(int debugFlags, boolean initializeNativeBridge) {
+        VM_HOOKS.postForkChild(debugFlags, initializeNativeBridge);
     }
 
 

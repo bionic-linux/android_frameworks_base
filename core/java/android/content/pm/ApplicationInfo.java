@@ -450,6 +450,13 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public String cpuAbi;
 
     /**
+     * Whether a native bridge should be initialized for this app.
+     *
+     * {@hide}
+     */
+    public boolean initializeNativeBridge;
+
+    /**
      * The kernel user-ID that has been assigned to this application;
      * currently this is not a unique ID (multiple applications can have
      * the same uid).
@@ -580,6 +587,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         publicSourceDir = orig.publicSourceDir;
         nativeLibraryDir = orig.nativeLibraryDir;
         cpuAbi = orig.cpuAbi;
+        initializeNativeBridge = orig.initializeNativeBridge;
         resourceDirs = orig.resourceDirs;
         seinfo = orig.seinfo;
         sharedLibraryFiles = orig.sharedLibraryFiles;
@@ -621,6 +629,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         dest.writeString(publicSourceDir);
         dest.writeString(nativeLibraryDir);
         dest.writeString(cpuAbi);
+        dest.writeInt(initializeNativeBridge ? 1 : 0);
         dest.writeStringArray(resourceDirs);
         dest.writeString(seinfo);
         dest.writeStringArray(sharedLibraryFiles);
@@ -661,6 +670,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         publicSourceDir = source.readString();
         nativeLibraryDir = source.readString();
         cpuAbi = source.readString();
+        initializeNativeBridge = source.readInt() != 0;
         resourceDirs = source.readStringArray();
         seinfo = source.readString();
         sharedLibraryFiles = source.readStringArray();

@@ -222,7 +222,7 @@ class ZygoteConnection {
 
             pid = Zygote.forkAndSpecialize(parsedArgs.uid, parsedArgs.gid, parsedArgs.gids,
                     parsedArgs.debugFlags, rlimits, parsedArgs.mountExternal, parsedArgs.seInfo,
-                    parsedArgs.niceName, fdsToClose);
+                    parsedArgs.niceName, fdsToClose, parsedArgs.initializeNativeBridge);
         } catch (IOException ex) {
             logAndPrintError(newStderr, "Exception creating pipe", ex);
         } catch (ErrnoException ex) {
@@ -311,6 +311,8 @@ class ZygoteConnection {
      *      [--] &lt;args for RuntimeInit &gt;
      *   <li> If <code>--runtime-init</code> is absent:
      *      [--] &lt;classname&gt; [args...]
+     *   <li> --initialize-native-bridge=true/false. Whether to initialize or unload
+     * a native bridge, if available.
      * </ul>
      */
     static class Arguments {
@@ -372,6 +374,11 @@ class ZygoteConnection {
          * Whether the current arguments constitute an ABI list query.
          */
         boolean abiListQuery;
+
+        /**
+         * Whether a native bridge should be initialized.
+         */
+        boolean initializeNativeBridge;
 
         /**
          * Constructs instance and parses args
@@ -528,6 +535,9 @@ class ZygoteConnection {
                     mountExternal = Zygote.MOUNT_EXTERNAL_MULTIUSER_ALL;
                 } else if (arg.equals("--query-abi-list")) {
                     abiListQuery = true;
+                } else if (arg.startsWith("--initialize-native-bridge=")) {
+                    initializeNativeBridge = Boolean.parseBoolean(
+                            arg.substring(arg.indexOf('=') + 1));
                 } else {
                     break;
                 }
