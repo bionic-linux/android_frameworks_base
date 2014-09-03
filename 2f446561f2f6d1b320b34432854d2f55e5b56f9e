@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90354fd4_d29f8480",
+        "filename": "services/tests/servicestests/res/raw/mmac_cnsps_ds.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-09-03T15:21:35Z",
+      "side": 1,
+      "message": "Should we support specifying the signatures via tags ala @PLATFORM as we do for external/sepolicy/mac_permissions.xml and auto-generate the final file during build?  So that someone building with non-AOSP keys will get the expected result?",
+      "revId": "2f446561f2f6d1b320b34432854d2f55e5b56f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
