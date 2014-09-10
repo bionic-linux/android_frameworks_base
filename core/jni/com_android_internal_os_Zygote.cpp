@@ -48,6 +48,8 @@
 #include "ScopedPrimitiveArray.h"
 #include "ScopedUtfChars.h"
 
+#include "nativebridge/native_bridge.h"
+
 namespace {
 
 using android::String8;
@@ -246,7 +248,8 @@ static void SetSchedulerPolicy(JNIEnv* env) {
 
 // Create a private mount namespace and bind mount appropriate emulated
 // storage for the given user.
-static bool MountEmulatedStorage(uid_t uid, jint mount_mode) {
+static bool MountEmulatedStorage(uid_t uid, jint mount_mode, bool* have_mount_namespace) {
+  *have_mount_namespace = false;
   if (mount_mode == MOUNT_EXTERNAL_NONE) {
     return true;
   }
@@ -258,6 +261,8 @@ static bool MountEmulatedStorage(uid_t uid, jint mount_mode) {
   if (unshare(CLONE_NEWNS) == -1) {
       ALOGW("Failed to unshare(): %d", errno);
       return false;
+  } else {
+      *have_mount_namespace = true;
   }
 
   // Create bind mounts to expose external storage
@@ -403,7 +408,7 @@ static pid_t ForkAndSpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArra
                                      jint mount_external,
                                      jstring java_se_info, jstring java_se_name,
                                      bool is_system_server, jintArray fdsToClose,
-                                     jstring instructionSet) {
+                                     jstring instructionSet, jstring privateDir) {
   SetSigChldHandler();
 
   pid_t pid = fork();
@@ -422,7 +427,8 @@ static pid_t ForkAndSpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArra
 
     DropCapabilitiesBoundingSet(env);
 
-    if (!MountEmulatedStorage(uid, mount_external)) {
+    bool have_mount_namespace = false;
+    if (!MountEmulatedStorage(uid, mount_external, &have_mount_namespace)) {
       ALOGW("Failed to mount emulated storage: %d", errno);
       if (errno == ENOTCONN || errno == EROFS) {
         // When device is actively encrypting, we get ENOTCONN here
@@ -439,6 +445,12 @@ static pid_t ForkAndSpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArra
     SetGids(env, javaGids);
 
     SetRLimits(env, javaRlimits);
+
+    if (!is_system_server && instructionSet != NULL && privateDir != NULL) {
+      // Set the environment for the apps running with native bridge.
+      ScopedUtfChars private_dir(env, privateDir);
+      android::EarlyInitializeNativeBridge(private_dir.c_str(), have_mount_namespace);
+    }
 
     int rc = setresgid(gid, gid, gid);
     if (rc == -1) {
@@ -525,9 +537,10 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
         JNIEnv* env, jclass, jint uid, jint gid, jintArray gids,
         jint debug_flags, jobjectArray rlimits,
         jint mount_external, jstring se_info, jstring se_name,
-        jintArray fdsToClose, jstring instructionSet) {
+        jintArray fdsToClose, jstring instructionSet, jstring privateDir) {
     return ForkAndSpecializeCommon(env, uid, gid, gids, debug_flags,
-            rlimits, 0, 0, mount_external, se_info, se_name, false, fdsToClose, instructionSet);
+            rlimits, 0, 0, mount_external, se_info, se_name, false, fdsToClose,
+            instructionSet, privateDir);
 }
 
 static jint com_android_internal_os_Zygote_nativeForkSystemServer(
@@ -537,7 +550,8 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
   pid_t pid = ForkAndSpecializeCommon(env, uid, gid, gids,
                                       debug_flags, rlimits,
                                       permittedCapabilities, effectiveCapabilities,
-                                      MOUNT_EXTERNAL_NONE, NULL, NULL, true, NULL, NULL);
+                                      MOUNT_EXTERNAL_NONE, NULL, NULL, true, NULL,
+                                      NULL, NULL);
   if (pid > 0) {
       // The zygote process checks whether the child process has died or not.
       ALOGI("System server process %d has been created", pid);
@@ -556,7 +570,7 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
 
 static JNINativeMethod gMethods[] = {
     { "nativeForkAndSpecialize",
-      "(II[II[[IILjava/lang/String;Ljava/lang/String;[ILjava/lang/String;)I",
+      "(II[II[[IILjava/lang/String;Ljava/lang/String;[ILjava/lang/String;Ljava/lang/String;)I",
       (void *) com_android_internal_os_Zygote_nativeForkAndSpecialize },
     { "nativeForkSystemServer", "(II[II[[IJJ)I",
       (void *) com_android_internal_os_Zygote_nativeForkSystemServer }
