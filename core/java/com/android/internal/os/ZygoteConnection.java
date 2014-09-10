@@ -220,9 +220,12 @@ class ZygoteConnection {
 
             fd = null;
 
+            // FIXME: The null value here is for the path of private dir for native bridge.
+            // PMS should provide its value for the app. But it is not offered so far, and
+            // just keep it as null.
             pid = Zygote.forkAndSpecialize(parsedArgs.uid, parsedArgs.gid, parsedArgs.gids,
                     parsedArgs.debugFlags, rlimits, parsedArgs.mountExternal, parsedArgs.seInfo,
-                    parsedArgs.niceName, fdsToClose, parsedArgs.instructionSet);
+                    parsedArgs.niceName, fdsToClose, parsedArgs.instructionSet, null);
         } catch (IOException ex) {
             logAndPrintError(newStderr, "Exception creating pipe", ex);
         } catch (ErrnoException ex) {
