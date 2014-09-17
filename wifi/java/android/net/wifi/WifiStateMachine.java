@@ -2653,6 +2653,13 @@ public class WifiStateMachine extends StateMachine {
         public void enter() {
             mWifiNative.unloadDriver();
 
+            int wifiState = syncGetWifiState();
+            int wifiApState = syncGetWifiApState();
+            if ((wifiState != WIFI_STATE_DISABLED) && (wifiState != WIFI_STATE_UNKNOWN))
+                setWifiState(WIFI_STATE_DISABLED);
+            if ((wifiApState != WIFI_AP_STATE_DISABLED) && (wifiApState != WIFI_AP_STATE_FAILED))
+                setWifiApState(WIFI_AP_STATE_DISABLED);
+
             if (mWifiP2pChannel == null) {
                 mWifiP2pChannel = new AsyncChannel();
                 mWifiP2pChannel.connect(mContext, getHandler(), mWifiP2pManager.getMessenger());
@@ -2710,9 +2717,11 @@ public class WifiStateMachine extends StateMachine {
                             transitionTo(mSupplicantStartingState);
                         } else {
                             loge("Failed to start supplicant!");
+                            setWifiState(WIFI_STATE_DISABLED);
                         }
                     } else {
                         loge("Failed to load driver");
+                        setWifiState(WIFI_STATE_DISABLED);
                     }
                     break;
                 case CMD_START_AP:
@@ -2721,6 +2730,7 @@ public class WifiStateMachine extends StateMachine {
                         transitionTo(mSoftApStartingState);
                     } else {
                         loge("Failed to load driver for softap");
+                        setWifiApState(WIFI_AP_STATE_FAILED);
                     }
                 default:
                     return NOT_HANDLED;
