@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10d4ff2c_bca8e9aa",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-09-17T13:47:42Z",
+      "side": 1,
+      "message": "I\u0027d call this \"nativeBridgePrivateDir\". A bit longer but more intention revealing imo.",
+      "range": {
+        "startLine": 87,
+        "startChar": 40,
+        "endLine": 87,
+        "endChar": 50
+      },
+      "revId": "5fb782b9aed801981f2e85a99b8d4d3e0b570a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50baf7ee_be78e100",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-09-17T13:47:42Z",
+      "side": 1,
+      "message": "I meant to comment on this before...\n\nI\u0027m not really familiar with the cases when we do this. What I can see is that the original logic was to not a create a private mount namespace when mount_mode is MOUNT_EXTERNAL_NONE. In the presence of a native bridge this behaviour will change, as we will always try to unshare(CLONE_NEWNS).",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 3
+      },
+      "revId": "5fb782b9aed801981f2e85a99b8d4d3e0b570a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
