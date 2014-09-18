@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b04df311_0418bc4b",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-09-18T20:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508bd76f_d08d9c28",
+      "range": {
+        "startLine": 79,
+        "startChar": 14,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "fe02d9ee976f6e1e428aded9057271f9f3fb6d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9081cf4e_920cfc12",
         "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "901c6ffc_e3c8203a",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-09-18T20:58:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9081cf4e_920cfc12",
+      "range": {
+        "startLine": 223,
+        "startChar": 11,
+        "endLine": 225,
+        "endChar": 36
+      },
+      "revId": "fe02d9ee976f6e1e428aded9057271f9f3fb6d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "508bd76f_50820cf7",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2014-09-18T10:51:45Z",
       "side": 1,
       "message": "much better! :)",
+      "range": {
+        "startLine": 251,
+        "startChar": 66,
+        "endLine": 251,
+        "endChar": 87
+      },
+      "revId": "fe02d9ee976f6e1e428aded9057271f9f3fb6d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04df311_a40c6812",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-09-18T20:58:30Z",
+      "side": 1,
+      "message": "Credit goes to jsharkey...",
+      "parentUuid": "508bd76f_50820cf7",
       "range": {
         "startLine": 251,
         "startChar": 66,
