@@ -20,6 +20,8 @@
 #include <stdint.h>
 #include <sys/types.h>
 
+#include <memory>
+
 #include <SkCanvas.h>
 #include <SkTypeface.h>
 
@@ -2239,8 +2241,8 @@ status_t OpenGLRenderer::drawBitmapMesh(SkBitmap* bitmap, int meshWidth, int mes
 
     const uint32_t count = meshWidth * meshHeight * 6;
 
-    ColorTextureVertex mesh[count];
-    ColorTextureVertex* vertex = mesh;
+    std::unique_ptr<ColorTextureVertex[]> mesh(new ColorTextureVertex[count]);
+    ColorTextureVertex* vertex = mesh.get();
 
     bool cleanupColors = false;
     if (!colors) {
