@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "700d3be9_c25d385f",
+        "filename": "services/java/com/android/server/AssetAtlasService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2014-09-22T18:36:58Z",
+      "side": 1,
+      "message": "Padding should work no matter what the size of the packed asset is. The atlas doesn\u0027t contain opaque black in the padded areas, but transparent black. Maybe the problem you ran into is a blending issue with opaque bitmaps stored in the atlas?",
+      "revId": "989f36a59d9f269797b9e2bc2276dd24b5e0e996",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
