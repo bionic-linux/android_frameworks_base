@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e76c92_22330e9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-09-29T13:06:24Z",
+      "side": 1,
+      "message": "would\u0027ve been nice if the commit message mentioned *why* the app directory needs to be added to the process start args.",
+      "revId": "2eacd06bfb82b33dfcbccafbcfc0bf1218484bb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
