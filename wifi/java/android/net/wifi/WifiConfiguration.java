@@ -1132,12 +1132,8 @@ public class WifiConfiguration implements Parcelable {
                 }
             }
         }
-        sbuf.append('\n').append(" PSK: ");
-        if (this.preSharedKey != null) {
-            sbuf.append('*');
-        }
-        sbuf.append("\nEnterprise config:\n");
-        sbuf.append(enterpriseConfig);
+
+        sbuf.append('\n');
 
         sbuf.append("IP config:\n");
         sbuf.append(mIpConfiguration.toString());
