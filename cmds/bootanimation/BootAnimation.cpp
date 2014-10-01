@@ -251,7 +251,7 @@ status_t BootAnimation::readyToRun() {
             EGL_DEPTH_SIZE, 0,
             EGL_NONE
     };
-    EGLint w, h, dummy;
+    EGLint w, h;
     EGLint numConfigs;
     EGLConfig config;
     EGLSurface surface;
@@ -409,7 +409,7 @@ bool BootAnimation::movie()
         return false;
     }
 
-    String8 desString((char const*)descMap->getDataPtr(),
+    String8 desString(reinterpret_cast<char const*>(descMap->getDataPtr()),
             descMap->getDataLength());
     descMap->release();
     char const* s = desString.string();
@@ -507,7 +507,7 @@ bool BootAnimation::movie()
 
     const int xc = (mWidth - animation.width) / 2;
     const int yc = ((mHeight - animation.height) / 2);
-    nsecs_t lastFrame = systemTime();
+    // nsecs_t lastFrame = systemTime();
     nsecs_t frameDuration = s2ns(1) / animation.fps;
 
     Region clearReg(Rect(mWidth, mHeight));
@@ -544,9 +544,9 @@ bool BootAnimation::movie()
                     Region::const_iterator tail(clearReg.end());
                     glEnable(GL_SCISSOR_TEST);
                     while (head != tail) {
-                        const Rect& r(*head++);
-                        glScissor(r.left, mHeight - r.bottom,
-                                r.width(), r.height());
+                        const Rect& r2(*head++);
+                        glScissor(r2.left, mHeight - r2.bottom,
+                                r2.width(), r2.height());
                         glClear(GL_COLOR_BUFFER_BIT);
                     }
                     glDisable(GL_SCISSOR_TEST);

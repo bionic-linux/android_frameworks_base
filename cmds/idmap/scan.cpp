@@ -64,30 +64,6 @@ namespace {
         return String8(tmp);
     }
 
-    int mkdir_p(const String8& path, uid_t uid, gid_t gid)
-    {
-        static const mode_t mode =
-            S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IXOTH;
-        struct stat st;
-
-        if (stat(path.string(), &st) == 0) {
-            return 0;
-        }
-        if (mkdir_p(path.getPathDir(), uid, gid) < 0) {
-            return -1;
-        }
-        if (mkdir(path.string(), 0755) != 0) {
-            return -1;
-        }
-        if (chown(path.string(), uid, gid) == -1) {
-            return -1;
-        }
-        if (chmod(path.string(), mode) == -1) {
-            return -1;
-        }
-        return 0;
-    }
-
     int parse_overlay_tag(const ResXMLTree& parser, const char *target_package_name)
     {
         const size_t N = parser.getAttributeCount();
