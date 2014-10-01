@@ -23,4 +23,6 @@ LOCAL_C_INCLUDES += \
 	external/skia/src/ports \
 	external/skia/include/utils
 
+LOCAL_CFLAGS += -Wall -Werror
+
 include $(BUILD_EXECUTABLE)

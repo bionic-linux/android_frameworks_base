@@ -6,6 +6,8 @@ LOCAL_SRC_FILES:= \
 	BootAnimation.cpp
 
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
+# Pending an update for Skia usage, turn off deprecation warning.
+LOCAL_CFLAGS += -Wall -Werror -Wno-deprecated-declarations
 
 LOCAL_SHARED_LIBRARIES := \
 	libcutils \
