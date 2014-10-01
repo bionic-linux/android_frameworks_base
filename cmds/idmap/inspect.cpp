@@ -58,7 +58,7 @@ namespace {
 
             int next(uint32_t *i, uint32_t *offset) const
             {
-                if (!buf_) {
+                if (buf_ == MAP_FAILED) {
                     printe("failed to read next uint32_t: buffer not initialized\n");
                     return -1;
                 }
@@ -78,7 +78,7 @@ namespace {
 
             int nextPath(char *b, uint32_t *offset_start, uint32_t *offset_end) const
             {
-                if (!buf_) {
+                if (buf_ == MAP_FAILED) {
                     printe("failed to read next path: buffer not initialized\n");
                     return -1;
                 }
@@ -143,13 +143,13 @@ namespace {
             printe("failed to get resource name id=0x%08x\n", res_id);
             return -1;
         }
-        if (package) {
+        if (package != NULL) {
             *package = String8(String16(data.package, data.packageLen));
         }
-        if (type) {
+        if (type != NULL) {
             *type = String8(String16(data.type, data.typeLen));
         }
-        if (name) {
+        if (name != NULL) {
             *name = String8(String16(data.name, data.nameLen));
         }
         return 0;

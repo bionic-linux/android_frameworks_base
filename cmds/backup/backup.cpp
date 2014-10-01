@@ -26,7 +26,7 @@ using namespace android;
 #include <unistd.h>
 
 int
-usage(int argc, const char** argv)
+usage(int /* argc */, const char** argv)
 {
     const char* p = argv[0];
 

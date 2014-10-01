@@ -104,7 +104,7 @@ void BootAnimation::binderDied(const wp<IBinder>&)
 status_t BootAnimation::initTexture(Texture* texture, AssetManager& assets,
         const char* name) {
     Asset* asset = assets.open(name, Asset::ACCESS_BUFFER);
-    if (!asset)
+    if (asset == NULL)
         return NO_INIT;
     SkBitmap bitmap;
     SkImageDecoder::DecodeMemory(asset->getBuffer(false), asset->getLength(),
@@ -163,7 +163,7 @@ status_t BootAnimation::initTexture(const Animation::Frame& frame)
     SkBitmap bitmap;
     SkMemoryStream  stream(frame.map->getDataPtr(), frame.map->getDataLength());
     SkImageDecoder* codec = SkImageDecoder::Factory(&stream);
-    if (codec) {
+    if (codec != NULL) {
         codec->setDitherImage(false);
         codec->decode(&stream, &bitmap,
                 SkBitmap::kARGB_8888_Config,
@@ -251,7 +251,7 @@ status_t BootAnimation::readyToRun() {
             EGL_DEPTH_SIZE, 0,
             EGL_NONE
     };
-    EGLint w, h, dummy;
+    EGLint w, h;
     EGLint numConfigs;
     EGLConfig config;
     EGLSurface surface;
@@ -397,19 +397,19 @@ void BootAnimation::checkExit() {
 bool BootAnimation::movie()
 {
     ZipEntryRO desc = mZip->findEntryByName("desc.txt");
-    ALOGE_IF(!desc, "couldn't find desc.txt");
-    if (!desc) {
+    if (desc == NULL) {
+        ALOGE("couldn't find desc.txt");
         return false;
     }
 
     FileMap* descMap = mZip->createEntryFileMap(desc);
     mZip->releaseEntry(desc);
-    ALOGE_IF(!descMap, "descMap is null");
-    if (!descMap) {
+    if (descMap == NULL) {
+        ALOGE("descMap is null");
         return false;
     }
 
-    String8 desString((char const*)descMap->getDataPtr(),
+    String8 desString(reinterpret_cast<char const*>(descMap->getDataPtr()),
             descMap->getDataLength());
     descMap->release();
     char const* s = desString.string();
@@ -419,7 +419,7 @@ bool BootAnimation::movie()
     // Parse the description file
     for (;;) {
         const char* endl = strstr(s, "\n");
-        if (!endl) break;
+        if (endl == NULL) break;
         String8 line(s, endl - s);
         const char* l = line.string();
         int fps, width, height, count, pause;
@@ -471,7 +471,7 @@ bool BootAnimation::movie()
                     if (mZip->getEntryInfo(entry, &method, NULL, NULL, NULL, NULL, NULL)) {
                         if (method == ZipFileRO::kCompressStored) {
                             FileMap* map = mZip->createEntryFileMap(entry);
-                            if (map) {
+                            if (map != NULL) {
                                 Animation::Frame frame;
                                 frame.name = leaf;
                                 frame.map = map;
@@ -507,7 +507,7 @@ bool BootAnimation::movie()
 
     const int xc = (mWidth - animation.width) / 2;
     const int yc = ((mHeight - animation.height) / 2);
-    nsecs_t lastFrame = systemTime();
+    // nsecs_t lastFrame = systemTime();
     nsecs_t frameDuration = s2ns(1) / animation.fps;
 
     Region clearReg(Rect(mWidth, mHeight));
@@ -544,9 +544,9 @@ bool BootAnimation::movie()
                     Region::const_iterator tail(clearReg.end());
                     glEnable(GL_SCISSOR_TEST);
                     while (head != tail) {
-                        const Rect& r(*head++);
-                        glScissor(r.left, mHeight - r.bottom,
-                                r.width(), r.height());
+                        const Rect& r2(*head++);
+                        glScissor(r2.left, mHeight - r2.bottom,
+                                r2.width(), r2.height());
                         glClear(GL_COLOR_BUFFER_BIT);
                     }
                     glDisable(GL_SCISSOR_TEST);

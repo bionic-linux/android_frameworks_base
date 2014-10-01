@@ -129,7 +129,7 @@ int main(int argc, char** argv)
     argv += optind;
 
     int fd = -1;
-    const char* fn;
+    const char* fn = NULL;
     if (argc == 0) {
         fd = dup(STDOUT_FILENO);
     } else if (argc == 1) {
@@ -153,7 +153,7 @@ int main(int argc, char** argv)
     void const* mapbase = MAP_FAILED;
     ssize_t mapsize = -1;
 
-    void const* base = 0;
+    void const* base = NULL;
     uint32_t w, s, h, f;
     size_t size = 0;
 
@@ -190,7 +190,7 @@ int main(int argc, char** argv)
         }
     }
 
-    if (base) {
+    if (base != NULL) {
         if (png) {
             SkBitmap b;
             b.setConfig(flinger2skia(f), w, h, s*bytesPerPixel(f));
@@ -201,7 +201,9 @@ int main(int argc, char** argv)
             SkData* streamData = stream.copyToData();
             write(fd, streamData->data(), streamData->size());
             streamData->unref();
-            notifyMediaScanner(fn);
+            if (fn != NULL) {
+                notifyMediaScanner(fn);
+            }
         } else {
             write(fd, &w, 4);
             write(fd, &h, 4);
