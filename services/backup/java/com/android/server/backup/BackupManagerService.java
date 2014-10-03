@@ -2218,6 +2218,18 @@ public class BackupManagerService {
     // fire off a backup agent, blocking until it attaches or times out
     IBackupAgent bindToAgentSynchronous(ApplicationInfo app, int mode) {
         IBackupAgent agent = null;
+
+        // Adding shared library file information if not present.
+        if (app.sharedLibraryFiles == null) {
+            try {
+                ApplicationInfo appInfo = mPackageManager.getApplicationInfo(app.packageName,
+                        PackageManager.GET_SHARED_LIBRARY_FILES);
+                app.sharedLibraryFiles = appInfo.sharedLibraryFiles;
+            } catch (NameNotFoundException e) {
+                Slog.w(TAG, "Package no longer found while binding to backup agent.");
+            }
+        }
+
         synchronized(mAgentConnectLock) {
             mConnecting = true;
             mConnectedAgent = null;
