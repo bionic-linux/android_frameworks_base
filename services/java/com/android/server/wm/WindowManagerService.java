@@ -7222,7 +7222,7 @@ public class WindowManagerService extends IWindowManager.Stub
                                 + wtoken + ": startingWindow="
                                 + wtoken.startingWindow + " startingView="
                                 + wtoken.startingView);
-                        if (wtoken.startingWindow != null) {
+                        if (wtoken.startingWindow != null || wtoken.startingData != null) {
                             view = wtoken.startingView;
                             token = wtoken.token;
                             wtoken.startingData = null;
@@ -7256,7 +7256,7 @@ public class WindowManagerService extends IWindowManager.Stub
                                     + ": startingWindow=" + wtoken.startingWindow
                                     + " startingView=" + wtoken.startingView);
 
-                            if (wtoken.startingWindow == null) {
+                            if (wtoken.startingWindow == null && wtoken.startingData == null) {
                                 continue;
                             }
 
