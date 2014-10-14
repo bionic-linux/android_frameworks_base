@@ -489,13 +489,17 @@ static jobject nativeDecodeFileDescriptor(JNIEnv* env, jobject clazz, jobject fi
     // Restore the descriptor's offset on exiting this function.
     AutoFDSeek autoRestore(descriptor);
 
-    FILE* file = fdopen(descriptor, "r");
+    // Duplicate descriptor to be able to release memory allocated for FILE*
+    // structure.
+    FILE* file = fdopen(dup(descriptor), "r");
     if (file == NULL) {
         return nullObjectReturn("Could not open file");
     }
 
+    // Note: Passing ownership of "file" to stream will allow to release FILE*
+    // associated resources at the moment of class descrution.
     SkAutoTUnref<SkFILEStream> fileStream(new SkFILEStream(file,
-                         SkFILEStream::kCallerRetains_Ownership));
+                         SkFILEStream::kCallerPasses_Ownership));
 
     // Use a buffered stream. Although an SkFILEStream can be rewound, this
     // ensures that SkImageDecoder::Factory never rewinds beyond the
