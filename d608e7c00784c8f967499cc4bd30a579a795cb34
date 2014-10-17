@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "505bd8e0_4eda62f8",
+        "filename": "services/input/tests/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-17T00:06:28Z",
+      "side": 1,
+      "message": "This is putting both files into a single test, rather than multiple test files. If that is ok with the project owner, it is fine with me, but you could also keep things creating two separate binaries (but without terrible foreach/eval loops).",
+      "revId": "d608e7c00784c8f967499cc4bd30a579a795cb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
