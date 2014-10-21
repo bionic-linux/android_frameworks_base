@@ -6034,6 +6034,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 // Figure out the part of the screen that is actually the app.
                 appWin = null;
                 final WindowList windows = displayContent.getWindowList();
+                boolean screenshotSurfaceReady = false;
                 for (int i = windows.size() - 1; i >= 0; i--) {
                     WindowState ws = windows.get(i);
                     if (!ws.mHasSurface) {
@@ -6084,6 +6085,10 @@ public class WindowManagerService extends IWindowManager.Stub
                             ws.isDisplayedLw()) {
                         screenshotReady = true;
                     }
+
+                    if (winAnim.mSurfaceShown){
+                        screenshotSurfaceReady = true;
+                    }
                 }
 
                 if (appToken != null && appWin == null) {
@@ -6115,6 +6120,12 @@ public class WindowManagerService extends IWindowManager.Stub
                 if (maxLayer == 0) {
                     if (DEBUG_SCREENSHOT) Slog.i(TAG, "Screenshot of " + appToken
                             + ": returning null maxLayer=" + maxLayer);
+                    return null;
+                }
+
+                if (!screenshotSurfaceReady) {
+                    if (DEBUG_SCREENSHOT || DEBUG_HTC) Slog.i(TAG,
+                            "Screenshot: No surface ready for " + appToken + ", " + appWin);
                     return null;
                 }
 
