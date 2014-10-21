@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "101de04d_6c436f08",
+        "filename": "cmds/bootanimation/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-21T02:56:54Z",
+      "side": 1,
+      "message": "Can you file a bug and/or add the bug number here?",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30202482_b37ea2da",
+        "filename": "cmds/bootanimation/bootanimation_main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-21T02:56:54Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to just remove the args completely?",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "101de04d_4cf4f365",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-21T02:56:54Z",
+      "side": 1,
+      "message": "Can you use NULL instead of 0, since the rest of the file/change uses NULL?",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
