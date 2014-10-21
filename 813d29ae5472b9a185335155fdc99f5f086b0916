@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "f0492c4e_5c082296",
+        "filename": "cmds/bootanimation/bootanimation_main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-10-21T04:26:36Z",
+      "side": 1,
+      "message": "Oh, you mean \"int main().\" Yeah, makes sense.",
+      "parentUuid": "30202482_3e0ef952",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "101de04d_4cf4f365",
         "filename": "cmds/screencap/screencap.cpp",
         "patchSetId": 2
