@@ -16,6 +16,24 @@
       "revId": "6cf84d4e7d370efad0e3f70cd705c4d39f4539eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0492c4e_9cc0cab4",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-10-21T05:16:36Z",
+      "side": 1,
+      "message": "Yes, I checked that when making the change just to be sure. It is managing regions, but is a struct itself.",
+      "parentUuid": "f5e75e92_c223429c",
+      "revId": "6cf84d4e7d370efad0e3f70cd705c4d39f4539eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
