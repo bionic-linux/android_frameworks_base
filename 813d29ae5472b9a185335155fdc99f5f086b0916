@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3072e491_bb9f686c",
+        "filename": "cmds/bootanimation/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-10-21T03:26:34Z",
+      "side": 1,
+      "message": "There is an internal change for this that hasn\u0027t been cherry-picked and fixes other parts of frameworks/base as well. So I wanted to go with the flow of \"fixing\" this when internal goes to AOSP.",
+      "parentUuid": "101de04d_6c436f08",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30202482_b37ea2da",
         "filename": "cmds/bootanimation/bootanimation_main.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3072e491_dba424c3",
+        "filename": "cmds/bootanimation/bootanimation_main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-10-21T03:26:34Z",
+      "side": 1,
+      "message": "For main maybe, I guess. I prefer this style, which I think I saw in the style guide, for expressing what the parameter stands for. An alternative is what the wilhelm people asked: use \"int argc __unused.\"",
+      "parentUuid": "30202482_b37ea2da",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "101de04d_4cf4f365",
         "filename": "cmds/screencap/screencap.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2014-10-21T02:56:54Z",
       "side": 1,
       "message": "Can you use NULL instead of 0, since the rest of the file/change uses NULL?",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3072e491_fb99e087",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-10-21T03:26:34Z",
+      "side": 1,
+      "message": "Crap, that should not be there. This was testing some -Weverything related warning (it thinks w and h are not initialized below, though all the paths satisfying base and png do initialize them).\n\nI might do a style pass and change all such C-style tests, but it\u0027s unrelated to actually fixing triggered warnings.",
+      "parentUuid": "101de04d_4cf4f365",
       "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
