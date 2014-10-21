@@ -5579,6 +5579,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 appWin = null;
                 final WindowList windows = displayContent.getWindowList();
                 final Rect stackBounds = new Rect();
+                boolean screenshotSurfaceReady = false;
                 for (int i = windows.size() - 1; i >= 0; i--) {
                     WindowState ws = windows.get(i);
                     if (!ws.mHasSurface) {
@@ -5633,6 +5634,8 @@ public class WindowManagerService extends IWindowManager.Stub
                             ws.isDisplayedLw()) {
                         screenshotReady = true;
                     }
+
+                    if (winAnim.mSurfaceShown) screenshotSurfaceReady = true;
                 }
 
                 if (appToken != null && appWin == null) {
@@ -5655,6 +5658,12 @@ public class WindowManagerService extends IWindowManager.Stub
                     if (DEBUG_SCREENSHOT) Slog.i(TAG, "Screenshot of " + appToken
                             + ": returning null frame=" + frame.toShortString() + " maxLayer="
                             + maxLayer);
+                    return null;
+                }
+
+                if (!screenshotSurfaceReady) {
+                    if (DEBUG_SCREENSHOT) Slog.i(TAG, "Screenshot: No surface ready for "
+                            + appToken + ", " + appWin);
                     return null;
                 }
 
