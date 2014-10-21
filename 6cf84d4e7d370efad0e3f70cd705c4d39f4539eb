@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5e75e92_c223429c",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-21T04:57:26Z",
+      "side": 1,
+      "message": "I assume this is a regular pointer and not something from an unsanitized mmap call.",
+      "revId": "6cf84d4e7d370efad0e3f70cd705c4d39f4539eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
