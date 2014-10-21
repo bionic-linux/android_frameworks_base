@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f5e75e92_222b0ea9",
+        "filename": "cmds/bootanimation/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-21T03:34:37Z",
+      "side": 1,
+      "message": "No problem. I just wanted to understand more about this in case we need to follow up later.",
+      "parentUuid": "3072e491_bb9f686c",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30202482_b37ea2da",
         "filename": "cmds/bootanimation/bootanimation_main.cpp",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "For main maybe, I guess. I prefer this style, which I think I saw in the style guide, for expressing what the parameter stands for. An alternative is what the wilhelm people asked: use \"int argc __unused.\"",
       "parentUuid": "30202482_b37ea2da",
+      "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30202482_3e0ef952",
+        "filename": "cmds/bootanimation/bootanimation_main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-21T03:34:37Z",
+      "side": 1,
+      "message": "I guess I was just noticing that they don\u0027t use either arg (unlike the other source file in this CL, where argv[0] is used). If there is no argc/argv, it is ok (and cleaner looking IMO) to omit them completely.",
+      "parentUuid": "3072e491_dba424c3",
       "revId": "813d29ae5472b9a185335155fdc99f5f086b0916",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
