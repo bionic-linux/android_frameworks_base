@@ -4365,6 +4365,16 @@ public class WindowManagerService extends IWindowManager.Stub
                     }
                 }
                 return;
+            } else if (wtoken.hiddenRequested != wtoken.hidden && visible != wtoken.hidden) {
+                wtoken.hiddenRequested = !visible;
+                mOpeningApps.remove(wtoken);
+                mClosingApps.remove(wtoken);
+                wtoken.waitingToShow = wtoken.waitingToHide = false;
+                wtoken.inPendingTransaction = false;
+                if (DEBUG_APP_TRANSITIONS) {
+                    Slog.d(TAG, "Cancelled " + (visible ? "closing" : "opening") + " app: " + token
+                            + " because new requested visible=" + visible);
+                }
             }
 
             final long origId = Binder.clearCallingIdentity();
