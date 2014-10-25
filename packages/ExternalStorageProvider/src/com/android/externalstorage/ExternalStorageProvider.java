@@ -146,6 +146,8 @@ public class ExternalStorageProvider extends DocumentsProvider {
                         | Root.FLAG_SUPPORTS_SEARCH;
                 if (ROOT_ID_PRIMARY_EMULATED.equals(rootId)) {
                     root.title = getContext().getString(R.string.root_internal_storage);
+                } else if (volume.getUserLabel() == null && volume.getUuid() != null) {
+                    root.title = volume.getUuid();
                 } else {
                     root.title = volume.getUserLabel();
                 }
