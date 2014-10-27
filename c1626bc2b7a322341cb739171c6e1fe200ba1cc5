@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5359ed2_67fb7024",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-10-27T14:38:56Z",
+      "side": 1,
+      "message": "\"cannot be null.\"",
+      "revId": "c1626bc2b7a322341cb739171c6e1fe200ba1cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
