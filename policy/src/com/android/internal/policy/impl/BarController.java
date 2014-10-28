@@ -178,8 +178,8 @@ public class BarController {
     }
 
     public boolean checkHiddenLw() {
-        if (mWin != null && mWin.hasDrawnLw()) {
-            if (!mWin.isVisibleLw() && !mWin.isAnimatingLw()) {
+        if (mWin != null) {
+            if (mWin.hasDrawnLw() && !mWin.isVisibleLw() && !mWin.isAnimatingLw()) {
                 updateStateLw(StatusBarManager.WINDOW_STATE_HIDDEN);
             }
             if (mTransientBarState == TRANSIENT_BAR_HIDING && !mWin.isVisibleLw()) {
