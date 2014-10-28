@@ -59,6 +59,7 @@ class DragState {
     InputApplicationHandle mDragApplicationHandle;
     InputWindowHandle mDragWindowHandle;
     WindowState mTargetWindow;
+    WindowState mDropTargetWindow;
     ArrayList<WindowState> mNotifiedWindows;
     boolean mDragInProgress;
     Display mDisplay;
@@ -86,6 +87,7 @@ class DragState {
         mData = null;
         mThumbOffsetX = mThumbOffsetY = 0;
         mNotifiedWindows = null;
+        mDropTargetWindow = null;
     }
 
     /**
@@ -363,6 +365,14 @@ class DragState {
             mDragResult = false;
             return true;
         }
+        if (touchedWin != mDropTargetWindow && mDropTargetWindow != null) {
+            if (WindowManagerService.DEBUG_DRAG) {
+                Slog.w(WindowManagerService.TAG, "Skip dispatching drop event to " + touchedWin
+                        + " because we've dispatched the event to " + mDropTargetWindow
+                        + " and now waiting for its respond.");
+            }
+            return false;
+        }
 
         if (WindowManagerService.DEBUG_DRAG) {
             Slog.d(WindowManagerService.TAG, "sending DROP to " + touchedWin);
@@ -373,6 +383,7 @@ class DragState {
                 null, null, mData, false);
         try {
             touchedWin.mClient.dispatchDragEvent(evt);
+            mDropTargetWindow = touchedWin;
 
             // 5 second timeout for this window to respond to the drop
             mService.mH.removeMessages(H.DRAG_END_TIMEOUT, token);
