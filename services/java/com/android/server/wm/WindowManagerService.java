@@ -414,6 +414,7 @@ public class WindowManagerService extends IWindowManager.Stub
     final SurfaceSession mFxSession;
     Watermark mWatermark;
     StrictModeFlash mStrictModeFlash;
+    boolean mStrictModeEnabled = false;
     FocusedStackFrame mFocusedStackFrame;
 
     int mFocusedStackLayer;
@@ -5474,6 +5475,9 @@ public class WindowManagerService extends IWindowManager.Stub
             // which aren't on screen.  (e.g. Broadcast Receivers in
             // the background..)
             if (on) {
+                if (!mStrictModeEnabled) {
+                    return;
+                }
                 boolean isVisible = false;
                 final int numDisplays = mDisplayContents.size();
                 for (int displayNdx = 0; displayNdx < numDisplays; ++displayNdx) {
@@ -5513,6 +5517,14 @@ public class WindowManagerService extends IWindowManager.Stub
     @Override
     public void setStrictModeVisualIndicatorPreference(String value) {
         SystemProperties.set(StrictMode.VISUAL_PROPERTY, value);
+        synchronized(mWindowMap) {
+            mStrictModeEnabled = SystemProperties.getBoolean(StrictMode.VISUAL_PROPERTY,
+                    mStrictModeEnabled);
+            if (!mStrictModeEnabled) {
+                // Hide current strict mode flash in case it is shown
+                showStrictModeViolation(false);
+            }
+        }
     }
 
     /**
@@ -6987,6 +6999,7 @@ public class WindowManagerService extends IWindowManager.Stub
             final DisplayContent displayContent = getDefaultDisplayContentLocked();
             readForcedDisplaySizeAndDensityLocked(displayContent);
             mDisplayReady = true;
+            mStrictModeEnabled = SystemProperties.getBoolean(StrictMode.VISUAL_PROPERTY, false);
         }
 
         try {
