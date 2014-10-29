@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f55e7e2a_81e75e6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2014-10-29T11:12:45Z",
+      "side": 1,
+      "message": "Can you add the bug number here?\n\n   BUG: 18165757",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "b26f8b89d0078d20f6de2d8984b8d2d5a439efcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
