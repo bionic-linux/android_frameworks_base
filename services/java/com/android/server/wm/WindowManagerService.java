@@ -290,6 +290,9 @@ public class WindowManagerService extends IWindowManager.Stub
 
     private static final int MAX_SCREENSHOT_RETRIES = 3;
 
+    private static final int STATUS_OR_NAVIGATION_BAR_TRANSIENT = View.STATUS_BAR_TRANSIENT
+            | View.NAVIGATION_BAR_TRANSIENT;
+
     final private KeyguardDisableHandler mKeyguardDisableHandler;
 
     private final boolean mHeadless;
@@ -10117,9 +10120,12 @@ public class WindowManagerService extends IWindowManager.Stub
         }
 
         synchronized (mWindowMap) {
+            int diff = mLastStatusBarVisibility ^ visibility;
             mLastStatusBarVisibility = visibility;
             visibility = mPolicy.adjustSystemUiVisibilityLw(visibility);
-            updateStatusBarVisibilityLocked(visibility);
+            if ((diff & ~STATUS_OR_NAVIGATION_BAR_TRANSIENT) != 0) {
+                updateStatusBarVisibilityLocked(visibility);
+            }
         }
     }
 
