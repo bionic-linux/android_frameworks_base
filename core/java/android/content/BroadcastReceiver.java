@@ -244,6 +244,7 @@ public abstract class BroadcastReceiver {
         Bundle mResultExtras;
         boolean mAbortBroadcast;
         boolean mFinished;
+        boolean mFgQueue = false;
 
         /** @hide */
         public PendingResult(int resultCode, String resultData, Bundle resultExtras,
@@ -417,11 +418,11 @@ public abstract class BroadcastReceiver {
                     }
                     if (mOrderedHint) {
                         am.finishReceiver(mToken, mResultCode, mResultData, mResultExtras,
-                                mAbortBroadcast);
+                                mAbortBroadcast, mFgQueue);
                     } else {
                         // This broadcast was sent to a component; it is not ordered,
                         // but we still need to tell the activity manager we are done.
-                        am.finishReceiver(mToken, 0, null, null, false);
+                        am.finishReceiver(mToken, 0, null, null, false, mFgQueue);
                     }
                 } catch (RemoteException ex) {
                 }
@@ -444,6 +445,16 @@ public abstract class BroadcastReceiver {
                     "BroadcastReceiver trying to return result during a non-ordered broadcast");
             e.fillInStackTrace();
             Log.e("BroadcastReceiver", e.getMessage(), e);
+        }
+
+        /** @hide */
+        public final void setForegroundQueue(boolean fgQueue) {
+            mFgQueue = fgQueue;
+        }
+
+        /** @hide */
+        public final boolean getForegroundQueue() {
+            return mFgQueue;
         }
     }
     

@@ -796,7 +796,8 @@ public final class LoadedApk {
                         if (extras != null) {
                             extras.setAllowFds(false);
                         }
-                        mgr.finishReceiver(this, resultCode, data, extras, false);
+                        final boolean bIsFg = (intent.getFlags() & Intent.FLAG_RECEIVER_FOREGROUND) != 0;
+                        mgr.finishReceiver(this, resultCode, data, extras, false, bIsFg);
                     } catch (RemoteException e) {
                         Slog.w(ActivityThread.TAG, "Couldn't finish broadcast to unregistered receiver");
                     }
@@ -841,6 +842,8 @@ public final class LoadedApk {
                 
                 final IActivityManager mgr = ActivityManagerNative.getDefault();
                 final Intent intent = mCurIntent;
+                final boolean bIsFg = (intent.getFlags() & Intent.FLAG_RECEIVER_FOREGROUND) != 0;
+                this.setForegroundQueue(bIsFg);
                 mCurIntent = null;
                 
                 if (receiver == null || mForgotten) {

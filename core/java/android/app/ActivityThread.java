@@ -2545,7 +2545,9 @@ public final class ActivityThread {
                 data.info.applicationInfo, data.compatInfo);
 
         IActivityManager mgr = ActivityManagerNative.getDefault();
-
+        //set F/G ordered queue information
+        final boolean bIsFg = (data.intent.getFlags() & Intent.FLAG_RECEIVER_FOREGROUND) != 0;
+        data.setForegroundQueue(bIsFg);
         BroadcastReceiver receiver;
         try {
             java.lang.ClassLoader cl = packageInfo.getClassLoader();

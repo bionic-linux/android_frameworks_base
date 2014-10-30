@@ -406,6 +406,31 @@ public final class ActivityManagerService extends ActivityManagerNative
         return null;
     }
 
+    //override broadcastRecordForReceiverLocked to find out B/G or F/G ordered intent
+    BroadcastRecord broadcastRecordForReceiverLocked(IBinder receiver, boolean bFgQueue) {
+        BroadcastRecord r = null;
+        if (bFgQueue) {
+            //if (DEBUG_BROADCAST) { Slog.i(TAG, "find mFgBroadcastQueue at first."); }
+            r = mFgBroadcastQueue.getMatchingOrderedReceiver(receiver);
+            if (r != null) {
+                return r;
+            } else {
+                //If we can't find record in F/G queue, then we need to check B/G queue again.
+                return mBgBroadcastQueue.getMatchingOrderedReceiver(receiver);
+            }
+        } else {
+            //if (DEBUG_BROADCAST) { Slog.i(TAG, "find mBgBroadcastQueue at first."); }
+            r = mBgBroadcastQueue.getMatchingOrderedReceiver(receiver);
+            if (r != null) {
+                return r;
+            } else {
+                //if (DEBUG_BROADCAST) { Slog.i(TAG, "can't find BgQueue, find mFgBroadcastQueue again: "); }
+                //If we can't find record in B/G queue, then we need to check F/G queue again.
+                return mFgBroadcastQueue.getMatchingOrderedReceiver(receiver);
+            }
+        }
+    }
+
     /**
      * Activity we have told the window manager to have key focus.
      */
@@ -15983,7 +16008,7 @@ public final class ActivityManagerService extends ActivityManagerNative
     }
 
     public void finishReceiver(IBinder who, int resultCode, String resultData,
-            Bundle resultExtras, boolean resultAbort) {
+            Bundle resultExtras, boolean resultAbort, boolean bFgQueue) {
         if (DEBUG_BROADCAST) Slog.v(TAG, "Finish receiver: " + who);
 
         // Refuse possible leaked file descriptors
@@ -15997,7 +16022,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             BroadcastRecord r;
 
             synchronized(this) {
-                r = broadcastRecordForReceiverLocked(who);
+                r = broadcastRecordForReceiverLocked(who, bFgQueue);
                 if (r != null) {
                     doNext = r.queue.finishReceiverLocked(r, resultCode,
                         resultData, resultExtras, resultAbort, true);
