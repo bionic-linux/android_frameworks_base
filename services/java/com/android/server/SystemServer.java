@@ -388,20 +388,6 @@ class ServerThread {
             reportWtf("making display ready", e);
         }
 
-        try {
-            pm.performBootDexOpt();
-        } catch (Throwable e) {
-            reportWtf("performing boot dexopt", e);
-        }
-
-        try {
-            ActivityManagerNative.getDefault().showBootMessage(
-                    context.getResources().getText(
-                            com.android.internal.R.string.android_upgrading_starting_apps),
-                            false);
-        } catch (RemoteException e) {
-        }
-
         if (factoryTest != SystemServer.FACTORY_TEST_LOW_LEVEL) {
             if (!disableStorage &&
                 !"0".equals(SystemProperties.get("system_init.startmountservice"))) {
@@ -417,7 +403,23 @@ class ServerThread {
                     reportWtf("starting Mount Service", e);
                 }
             }
+        }
 
+        try {
+            pm.performBootDexOpt();
+        } catch (Throwable e) {
+            reportWtf("performing boot dexopt", e);
+        }
+
+        try {
+            ActivityManagerNative.getDefault().showBootMessage(
+                    context.getResources().getText(
+                            com.android.internal.R.string.android_upgrading_starting_apps),
+                            false);
+        } catch (RemoteException e) {
+        }
+
+        if (mFactoryTestMode != FactoryTest.FACTORY_TEST_LOW_LEVEL) {
             if (!disableNonCoreServices) {
                 try {
                     Slog.i(TAG,  "LockSettingsService");
