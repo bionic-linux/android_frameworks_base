@@ -831,6 +831,7 @@ public class RenderScript {
     Element mElement_I32;
     Element mElement_U64;
     Element mElement_I64;
+    Element mElement_F16;
     Element mElement_F32;
     Element mElement_F64;
     Element mElement_BOOLEAN;
@@ -853,6 +854,10 @@ public class RenderScript {
     Element mElement_RGBA_5551;
     Element mElement_RGBA_4444;
     Element mElement_RGBA_8888;
+
+    Element mElement_HALF_2;
+    Element mElement_HALF_3;
+    Element mElement_HALF_4;
 
     Element mElement_FLOAT_2;
     Element mElement_FLOAT_3;
