@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753d2e9e_97e6eec1",
+        "filename": "core/java/android/widget/Gallery.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2014-11-07T17:46:51Z",
+      "side": 1,
+      "message": "This is a good minimal change, but it would be cleaner to refactor moveNext and movePrevious into moveDirection(int) and do the LTR checking there to translate a left/right direction into +/- 1 position.",
+      "revId": "02dd360a11477cd76e168c735b8edd83cbeb0a0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
