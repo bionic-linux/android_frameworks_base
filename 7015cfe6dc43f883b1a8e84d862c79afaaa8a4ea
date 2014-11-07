@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1544f239_7a02452e",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-11-07T22:03:29Z",
+      "side": 1,
+      "message": "Do you want to just delete this now?",
+      "revId": "7015cfe6dc43f883b1a8e84d862c79afaaa8a4ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
