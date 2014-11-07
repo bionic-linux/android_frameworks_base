@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753d2e9e_fd8f13b5",
+        "filename": "core/java/android/content/res/StringBlock.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2014-11-07T19:12:40Z",
+      "side": 1,
+      "message": "Should be Color.BLACK to match error return value stated in docs.",
+      "range": {
+        "startLine": 342,
+        "startChar": 24,
+        "endLine": 342,
+        "endChar": 26
+      },
+      "revId": "83c0cc743f665e829733f014625c65c712bf8466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
