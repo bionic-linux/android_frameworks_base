@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a527b24_064f1a84",
+        "filename": "core/java/android/widget/Gallery.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2014-11-10T17:49:05Z",
+      "side": 1,
+      "message": "targetPosition or (something)Position",
+      "range": {
+        "startLine": 1261,
+        "startChar": 12,
+        "endLine": 1261,
+        "endChar": 20
+      },
+      "revId": "67b62809442b8b047e51c304148aad06b5a34a60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a527b24_46551210",
+        "filename": "core/java/android/widget/Gallery.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2014-11-10T17:49:05Z",
+      "side": 1,
+      "message": "postMove - mFirstPosition",
+      "range": {
+        "startLine": 1264,
+        "startChar": 26,
+        "endLine": 1264,
+        "endChar": 73
+      },
+      "revId": "67b62809442b8b047e51c304148aad06b5a34a60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
