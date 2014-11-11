@@ -1822,7 +1822,7 @@ public class ProgressBar extends View {
                 final int count = mRefreshData.size();
                 for (int i = 0; i < count; i++) {
                     final RefreshData rd = mRefreshData.get(i);
-                    doRefreshProgress(rd.id, rd.progress, rd.fromUser, rd.animate);
+                    doRefreshProgress(rd.id, rd.progress, rd.fromUser, true, rd.animate);
                     rd.recycle();
                 }
                 mRefreshData.clear();
