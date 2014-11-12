@@ -25,6 +25,7 @@ import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.Settings.Global;
 import android.util.Slog;
+import java.util.List;
 
 import com.android.internal.app.LocalePicker;
 import com.android.internal.app.LocalePicker.LocaleInfo;
@@ -135,6 +136,27 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
             return;
         }
         addAndStartAction(action);
+    }
+
+    @Override
+    @ServiceThreadOnly
+    protected void sendKeyEvent(int keyCode, boolean isPressed) {
+        assertRunOnServiceThread();
+        if (!HdmiCecKeycode.isSupportedKeycode(keyCode)) {
+            Slog.w(TAG, "Unsupported key: " + keyCode);
+            return;
+        }
+        List<SendKeyAction> action = getActions(SendKeyAction.class);
+        if (!action.isEmpty()) {
+            action.get(0).processKeyEvent(keyCode, isPressed);
+        } else {
+            if (isPressed) {
+                int logicalAddress = Constants.ADDR_TV;
+                addAndStartAction(new SendKeyAction(this, logicalAddress, keyCode));
+            } else {
+                Slog.w(TAG, "Discard key event: " + keyCode + " pressed:" + isPressed);
+            }
+        }
     }
 
     @ServiceThreadOnly
