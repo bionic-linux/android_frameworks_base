@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "da9e076c_f4309608",
+        "filename": "core/jni/android_server_FingerprintManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2014-11-13T22:35:23Z",
+      "side": 1,
+      "message": "Oh... I thought that was supposed to go with your TODO from the commit log.",
+      "parentUuid": "fa990b84_d237241f",
+      "revId": "53e156164e65a328cc2125eb98900cb12c5d10fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa990b84_550f9e23",
         "filename": "core/jni/android_util_AssetManager.cpp",
         "patchSetId": 1
