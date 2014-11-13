@@ -116,6 +116,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import static android.view.WindowManager.LayoutParams.*;
 import static android.view.WindowManagerPolicy.WindowManagerFuncs.LID_ABSENT;
@@ -273,6 +274,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     boolean mSafeMode;
     WindowState mStatusBar = null;
+    HashSet<WindowState> mHeadsUp = null;
     int mStatusBarHeight;
     WindowState mNavigationBar = null;
     boolean mHasNavigationBar = false;
@@ -1939,6 +1941,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mContext.enforceCallingOrSelfPermission(
                         android.Manifest.permission.STATUS_BAR_SERVICE,
                         "PhoneWindowManager");
+                if (mHeadsUp == null) {
+                    mHeadsUp = new HashSet<WindowState>();
+                }
+                mHeadsUp.add(win);
+                if (DEBUG) Slog.i(TAG, "HeadsUp Notification: " + win + " size  = " + mHeadsUp.size());
                 break;
             case TYPE_STATUS_BAR_SUB_PANEL:
                 mContext.enforceCallingOrSelfPermission(
@@ -1969,6 +1976,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } if (mNavigationBar == win) {
             mNavigationBar = null;
             mNavigationBarController.setWindow(null);
+        } if (mHeadsUp !=null && mHeadsUp.contains(win)) {
+            if (DEBUG) Slog.i(TAG, "Removing HeadsUp notfication: " + win + "  count:" + mHeadsUp.size());
+            mHeadsUp.remove(win);
+            if(mHeadsUp.isEmpty()) {
+                mHeadsUp = null;
+            }
         }
     }
 
@@ -2995,12 +3008,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (!isKeyguardShowing) {
                 navTranslucent &= areTranslucentBarsAllowed();
             }
-
+            boolean headsUpVisible = false; //needed for case when Headsup notification is displayed
+            if(mHeadsUp != null ) {
+                Iterator<WindowState> itr = mHeadsUp.iterator();
+                while(itr.hasNext()) {
+                    WindowState headsUpWin = itr.next();
+                    if(headsUpWin.isVisibleLw()) {
+                        Slog.v(TAG," Headsup view is visible dismiss any fake windows");
+                        headsUpVisible = true;
+                    }
+                }
+            }
             // When the navigation bar isn't visible, we put up a fake
             // input window to catch all touch events.  This way we can
             // detect when the user presses anywhere to bring back the nav
             // bar and ensure the application doesn't see the event.
-            if (navVisible || navAllowedHidden) {
+            // Fake window should not be displayed when HeadsUpNotificationView
+            // in the form of HighPriority notifications are displayed
+            if (navVisible || navAllowedHidden || headsUpVisible) {
                 if (mHideNavFakeWindow != null) {
                     mHideNavFakeWindow.dismiss();
                     mHideNavFakeWindow = null;
