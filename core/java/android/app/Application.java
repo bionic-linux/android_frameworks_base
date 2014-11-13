@@ -183,66 +183,38 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
     }
 
     /* package */ void dispatchActivityCreated(Activity activity, Bundle savedInstanceState) {
-        Object[] callbacks = collectActivityLifecycleCallbacks();
-        if (callbacks != null) {
-            for (int i=0; i<callbacks.length; i++) {
-                ((ActivityLifecycleCallbacks)callbacks[i]).onActivityCreated(activity,
-                        savedInstanceState);
-            }
-        }
+        changeState(ActivityState.CREATE, activity, savedInstanceState);
     }
 
     /* package */ void dispatchActivityStarted(Activity activity) {
-        Object[] callbacks = collectActivityLifecycleCallbacks();
-        if (callbacks != null) {
-            for (int i=0; i<callbacks.length; i++) {
-                ((ActivityLifecycleCallbacks)callbacks[i]).onActivityStarted(activity);
-            }
-        }
+        changeState(ActivityState.START, activity, null);
     }
 
     /* package */ void dispatchActivityResumed(Activity activity) {
-        Object[] callbacks = collectActivityLifecycleCallbacks();
-        if (callbacks != null) {
-            for (int i=0; i<callbacks.length; i++) {
-                ((ActivityLifecycleCallbacks)callbacks[i]).onActivityResumed(activity);
-            }
-        }
+        changeState(ActivityState.RESUME, activity, null);
     }
 
     /* package */ void dispatchActivityPaused(Activity activity) {
-        Object[] callbacks = collectActivityLifecycleCallbacks();
-        if (callbacks != null) {
-            for (int i=0; i<callbacks.length; i++) {
-                ((ActivityLifecycleCallbacks)callbacks[i]).onActivityPaused(activity);
-            }
-        }
+        changeState(ActivityState.PAUSE, activity, null);
     }
 
     /* package */ void dispatchActivityStopped(Activity activity) {
-        Object[] callbacks = collectActivityLifecycleCallbacks();
-        if (callbacks != null) {
-            for (int i=0; i<callbacks.length; i++) {
-                ((ActivityLifecycleCallbacks)callbacks[i]).onActivityStopped(activity);
-            }
-        }
+        changeState(ActivityState.STOP, activity, null);
     }
 
     /* package */ void dispatchActivitySaveInstanceState(Activity activity, Bundle outState) {
-        Object[] callbacks = collectActivityLifecycleCallbacks();
-        if (callbacks != null) {
-            for (int i=0; i<callbacks.length; i++) {
-                ((ActivityLifecycleCallbacks)callbacks[i]).onActivitySaveInstanceState(activity,
-                        outState);
-            }
-        }
+        changeState(ActivityState.SAVE_INSTANCE, activity, outState);
     }
 
     /* package */ void dispatchActivityDestroyed(Activity activity) {
+        changeState(ActivityState.DESTROY, activity, null);
+    }
+    
+    private void changeState(ActivityState state, Activity activity, Bundle bundle) {
         Object[] callbacks = collectActivityLifecycleCallbacks();
         if (callbacks != null) {
             for (int i=0; i<callbacks.length; i++) {
-                ((ActivityLifecycleCallbacks)callbacks[i]).onActivityDestroyed(activity);
+                state.exec((ActivityLifecycleCallbacks)callbacks[i], activity, bundle);
             }
         }
     }
@@ -280,5 +252,52 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
                 ((OnProvideAssistDataListener)callbacks[i]).onProvideAssistData(activity, data);
             }
         }
+    }
+    
+    private enum ActivityState {
+    	CREATE {
+            @Override
+            void exec(ActivityLifecycleCallbacks callback, Activity activity, Bundle bundle) {
+                callback.onActivityCreated(activity, bundle);
+            }
+        },
+    	START {
+            @Override
+            void exec(ActivityLifecycleCallbacks callback, Activity activity, Bundle bundle) {
+                callback.onActivityStarted(activity);
+            }
+    	},
+    	RESUME {
+            @Override
+            void exec(ActivityLifecycleCallbacks callback, Activity activity, Bundle bundle) {
+                callback.onActivityResumed(activity);
+            }
+    	},
+    	PAUSE {
+            @Override
+            void exec(ActivityLifecycleCallbacks callback, Activity activity, Bundle bundle) {
+                callback.onActivityPaused(activity);
+            }
+    	},
+    	STOP {
+            @Override
+            void exec(ActivityLifecycleCallbacks callback, Activity activity, Bundle bundle) {
+                callback.onActivityStopped(activity);
+            }
+    	},
+    	SAVE_INSTANCE {
+            @Override
+            void exec(ActivityLifecycleCallbacks callback, Activity activity, Bundle bundle) {
+                callback.onActivitySaveInstanceState(activity, bundle);
+            }
+    	},
+    	DESTROY {
+            @Override
+            void exec(ActivityLifecycleCallbacks callback, Activity activity, Bundle bundle) {
+                callback.onActivityDestroyed(activity);
+            }
+        };
+    	
+        abstract void exec(ActivityLifecycleCallbacks callback, Activity activity, Bundle bundle);
     }
 }
