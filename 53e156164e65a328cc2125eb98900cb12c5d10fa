@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7adfdb23_f81251c3",
+        "filename": "core/jni/android_server_FingerprintManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-13T22:24:01Z",
+      "side": 1,
+      "message": "Sorry, that comment basically just reflects the TODO on line 64. I don\u0027t know how to be more explicit...",
+      "parentUuid": "7adfdb23_18bc5dab",
+      "revId": "53e156164e65a328cc2125eb98900cb12c5d10fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa990b84_550f9e23",
         "filename": "core/jni/android_util_AssetManager.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-11-13T22:17:48Z",
       "side": 1,
       "message": "Is this just some nasty side-effect-tastic constructor, or is this actually unused?",
+      "revId": "53e156164e65a328cc2125eb98900cb12c5d10fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa990b84_f5eed295",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-13T22:24:01Z",
+      "side": 1,
+      "message": "Yeah, getResTable does do work, so I decided to leave it in.",
+      "parentUuid": "fa990b84_550f9e23",
       "revId": "53e156164e65a328cc2125eb98900cb12c5d10fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
