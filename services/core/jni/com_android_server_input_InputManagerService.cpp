@@ -891,7 +891,7 @@ void NativeInputManager::interceptMotionBeforeQueueing(nsecs_t when, uint32_t& p
     }
 }
 
-void NativeInputManager::handleInterceptActions(jint wmActions, nsecs_t when,
+void NativeInputManager::handleInterceptActions(jint wmActions, nsecs_t /*when*/,
         uint32_t& policyFlags) {
     if (wmActions & WM_ACTION_PASS_TO_USER) {
         policyFlags |= POLICY_FLAG_PASS_TO_USER;
@@ -1266,14 +1266,14 @@ static void nativeSetShowTouches(JNIEnv* /* env */,
     im->setShowTouches(enabled);
 }
 
-static void nativeSetInteractive(JNIEnv* env,
-        jclass clazz, jlong ptr, jboolean interactive) {
+static void nativeSetInteractive(JNIEnv* /*env*/,
+        jclass /*clazz*/, jlong ptr, jboolean interactive) {
     NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
 
     im->setInteractive(interactive);
 }
 
-static void nativeReloadCalibration(JNIEnv* env, jclass clazz, jlong ptr) {
+static void nativeReloadCalibration(JNIEnv* /*env*/, jclass /*clazz*/, jlong ptr) {
     NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
     im->reloadCalibration();
 }

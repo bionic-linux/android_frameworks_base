@@ -1270,8 +1270,8 @@ GpsMeasurementCallbacks sGpsMeasurementCallbacks = {
 };
 
 static jboolean android_location_GpsLocationProvider_is_measurement_supported(
-        JNIEnv* env,
-        jclass clazz) {
+        JNIEnv* /*env*/,
+        jclass /*clazz*/) {
     if (sGpsMeasurementInterface != NULL) {
         return JNI_TRUE;
     }
@@ -1279,8 +1279,8 @@ static jboolean android_location_GpsLocationProvider_is_measurement_supported(
 }
 
 static jboolean android_location_GpsLocationProvider_start_measurement_collection(
-        JNIEnv* env,
-        jobject obj) {
+        JNIEnv* /*env*/,
+        jobject /*obj*/) {
     if (sGpsMeasurementInterface == NULL) {
         ALOGE("Measurement interface is not available.");
         return JNI_FALSE;
@@ -1380,8 +1380,8 @@ GpsNavigationMessageCallbacks sGpsNavigationMessageCallbacks = {
 };
 
 static jboolean android_location_GpsLocationProvider_is_navigation_message_supported(
-        JNIEnv* env,
-        jclass clazz) {
+        JNIEnv* /*env*/,
+        jclass /*clazz*/) {
     if(sGpsNavigationMessageInterface != NULL) {
         return JNI_TRUE;
     }
@@ -1389,8 +1389,8 @@ static jboolean android_location_GpsLocationProvider_is_navigation_message_suppo
 }
 
 static jboolean android_location_GpsLocationProvider_start_navigation_message_collection(
-        JNIEnv* env,
-        jobject obj) {
+        JNIEnv* /*env*/,
+        jobject /*obj*/) {
     if (sGpsNavigationMessageInterface == NULL) {
         ALOGE("Navigation Message interface is not available.");
         return JNI_FALSE;
@@ -1406,8 +1406,8 @@ static jboolean android_location_GpsLocationProvider_start_navigation_message_co
 }
 
 static jboolean android_location_GpsLocationProvider_stop_navigation_message_collection(
-        JNIEnv* env,
-        jobject obj) {
+        JNIEnv* /*env*/,
+        jobject /*obj*/) {
     if (sGpsNavigationMessageInterface == NULL) {
         ALOGE("Navigation Message interface is not available.");
         return JNI_FALSE;
@@ -1417,7 +1417,7 @@ static jboolean android_location_GpsLocationProvider_stop_navigation_message_col
     return JNI_TRUE;
 }
 
-static void android_location_GpsLocationProvider_configuration_update(JNIEnv* env, jobject obj,
+static void android_location_GpsLocationProvider_configuration_update(JNIEnv* env, jobject /*obj*/,
         jstring config_content)
 {
     if (!sGnssConfigurationInterface) {

@@ -124,7 +124,7 @@ bool IsJavaInstanceOf(JNIEnv* env, jobject object, const std::string& class_name
 }
 
 template<typename T>
-jobject CreateJObject(JNIEnv* env, const std::string& class_name, const std::string& signature, T value) {
+jobject CreateJObject(JNIEnv* /*env*/, const std::string& /*class_name*/, const std::string& /*signature*/, T /*value*/) {
   jobject result = JNI_NULL;
 
   return result;

@@ -213,7 +213,7 @@ static int check_interface(const char *name)
     return ifr4.ifr_flags;
 }
 
-static bool modifyAddress(JNIEnv *env, jobject thiz, jstring jName, jstring jAddress,
+static bool modifyAddress(JNIEnv *env, jobject /*thiz*/, jstring jName, jstring jAddress,
                           jint jPrefixLength, bool add)
 {
     int error = SYSTEM_ERROR;

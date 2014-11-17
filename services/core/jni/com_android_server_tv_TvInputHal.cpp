@@ -426,7 +426,7 @@ const tv_stream_config_t* JTvInputHal::getStreamConfigs(int deviceId, int* numCo
 
 // static
 void JTvInputHal::notify(
-        tv_input_device_t* dev, tv_input_event_t* event, void* data) {
+        tv_input_device_t* /*dev*/, tv_input_event_t* event, void* data) {
     JTvInputHal* thiz = (JTvInputHal*)data;
     switch (event->type) {
         case TV_INPUT_EVENT_DEVICE_AVAILABLE: {
@@ -555,7 +555,7 @@ static jlong nativeOpen(JNIEnv* env, jobject thiz) {
     return (jlong)JTvInputHal::createInstance(env, thiz);
 }
 
-static int nativeAddStream(JNIEnv* env, jclass clazz,
+static int nativeAddStream(JNIEnv* env, jclass /*clazz*/,
         jlong ptr, jint deviceId, jint streamId, jobject jsurface) {
     JTvInputHal* tvInputHal = (JTvInputHal*)ptr;
     if (!jsurface) {
@@ -565,13 +565,13 @@ static int nativeAddStream(JNIEnv* env, jclass clazz,
     return tvInputHal->addStream(deviceId, streamId, surface);
 }
 
-static int nativeRemoveStream(JNIEnv* env, jclass clazz,
+static int nativeRemoveStream(JNIEnv* /*env*/, jclass /*clazz*/,
         jlong ptr, jint deviceId, jint streamId) {
     JTvInputHal* tvInputHal = (JTvInputHal*)ptr;
     return tvInputHal->removeStream(deviceId, streamId);
 }
 
-static jobjectArray nativeGetStreamConfigs(JNIEnv* env, jclass clazz,
+static jobjectArray nativeGetStreamConfigs(JNIEnv* /*env*/, jclass /*clazz*/,
         jlong ptr, jint deviceId, jint generation) {
     JTvInputHal* tvInputHal = (JTvInputHal*)ptr;
     int numConfigs = 0;
@@ -603,7 +603,7 @@ static jobjectArray nativeGetStreamConfigs(JNIEnv* env, jclass clazz,
     return result;
 }
 
-static void nativeClose(JNIEnv* env, jclass clazz, jlong ptr) {
+static void nativeClose(JNIEnv* /*env*/, jclass /*clazz*/, jlong ptr) {
     JTvInputHal* tvInputHal = (JTvInputHal*)ptr;
     delete tvInputHal;
 }
@@ -631,7 +631,10 @@ static JNINativeMethod gTvInputHalMethods[] = {
         LOG_FATAL_IF(! var, "Unable to find method" methodName)
 
 int register_android_server_tv_TvInputHal(JNIEnv* env) {
-    int res = jniRegisterNativeMethods(env, "com/android/server/tv/TvInputHal",
+#ifndef LOG_NDEBUG
+    int res =
+#endif
+        jniRegisterNativeMethods(env, "com/android/server/tv/TvInputHal",
             gTvInputHalMethods, NELEM(gTvInputHalMethods));
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
 

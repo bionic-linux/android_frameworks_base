@@ -59,7 +59,7 @@ static void wakeup_callback(void)
     }
 }
 
-static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jintArray outIrqs,
+static jint nativeWaitWakeup(JNIEnv *env, jobject /*clazz*/, jintArray outIrqs,
         jobjectArray outReasons)
 {
     bool first_time = false;

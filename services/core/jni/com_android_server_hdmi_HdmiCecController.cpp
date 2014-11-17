@@ -321,7 +321,7 @@ static jlong nativeInit(JNIEnv* env, jclass clazz, jobject callbacksObj,
     return reinterpret_cast<jlong>(controller);
 }
 
-static jint nativeSendCecCommand(JNIEnv* env, jclass clazz, jlong controllerPtr,
+static jint nativeSendCecCommand(JNIEnv* env, jclass /*clazz*/, jlong controllerPtr,
         jint srcAddr, jint dstAddr, jbyteArray body) {
     cec_message_t message;
     message.initiator = static_cast<cec_logical_address_t>(srcAddr);
@@ -337,49 +337,49 @@ static jint nativeSendCecCommand(JNIEnv* env, jclass clazz, jlong controllerPtr,
     return controller->sendMessage(message);
 }
 
-static jint nativeAddLogicalAddress(JNIEnv* env, jclass clazz, jlong controllerPtr,
+static jint nativeAddLogicalAddress(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr,
         jint logicalAddress) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->addLogicalAddress(static_cast<cec_logical_address_t>(logicalAddress));
 }
 
-static void nativeClearLogicalAddress(JNIEnv* env, jclass clazz, jlong controllerPtr) {
+static void nativeClearLogicalAddress(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     controller->clearLogicaladdress();
 }
 
-static jint nativeGetPhysicalAddress(JNIEnv* env, jclass clazz, jlong controllerPtr) {
+static jint nativeGetPhysicalAddress(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->getPhysicalAddress();
 }
 
-static jint nativeGetVersion(JNIEnv* env, jclass clazz, jlong controllerPtr) {
+static jint nativeGetVersion(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->getVersion();
 }
 
-static jint nativeGetVendorId(JNIEnv* env, jclass clazz, jlong controllerPtr) {
+static jint nativeGetVendorId(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->getVendorId();
 }
 
-static jobjectArray nativeGetPortInfos(JNIEnv* env, jclass clazz, jlong controllerPtr) {
+static jobjectArray nativeGetPortInfos(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->getPortInfos();
 }
 
-static void nativeSetOption(JNIEnv* env, jclass clazz, jlong controllerPtr, jint flag, jint value) {
+static void nativeSetOption(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr, jint flag, jint value) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     controller->setOption(flag, value);
 }
 
-static void nativeSetAudioReturnChannel(JNIEnv* env, jclass clazz, jlong controllerPtr,
+static void nativeSetAudioReturnChannel(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr,
         jboolean enabled) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     controller->setAudioReturnChannel(enabled == JNI_TRUE);
 }
 
-static jboolean nativeIsConnected(JNIEnv* env, jclass clazz, jlong controllerPtr, jint port) {
+static jboolean nativeIsConnected(JNIEnv* /*env*/, jclass /*clazz*/, jlong controllerPtr, jint port) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->isConnected(port) ? JNI_TRUE : JNI_FALSE ;
 }
@@ -406,7 +406,10 @@ static JNINativeMethod sMethods[] = {
 #define CLASS_PATH "com/android/server/hdmi/HdmiCecController"
 
 int register_android_server_hdmi_HdmiCecController(JNIEnv* env) {
-    int res = jniRegisterNativeMethods(env, CLASS_PATH, sMethods, NELEM(sMethods));
+#ifndef LOG_NDEBUG
+    int res =
+#endif
+        jniRegisterNativeMethods(env, CLASS_PATH, sMethods, NELEM(sMethods));
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
     return 0;
 }
