@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a47dbec_8137dc00",
+        "filename": "media/mca/filterfw/native/core/shader_program.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2014-11-17T22:37:44Z",
+      "side": 0,
+      "message": "Line 33 should be removed too.",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 16
+      },
+      "revId": "52e2b6f79d44ff289c97653edea0548352c2f55b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
