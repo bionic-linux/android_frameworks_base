@@ -34,6 +34,7 @@
 #include <utils/Vector.h>
 #include <cutils/properties.h>
 
+#include <inttypes.h>
 #include <string.h>
 
 #include "android_runtime/AndroidRuntime.h"
@@ -758,7 +759,7 @@ static status_t generateNoiseProfile(const double* perChannelNoiseProfile, uint8
             }
         }
         if (uninitialized) {
-            ALOGE("%s: No valid NoiseProfile coefficients for color plane %u", __FUNCTION__, p);
+            ALOGE("%s: No valid NoiseProfile coefficients for color plane %zu", __FUNCTION__, p);
             return BAD_VALUE;
         }
     }
@@ -1399,7 +1400,7 @@ static void DngCreator_init(JNIEnv* env, jobject thiz, jobject characteristicsPt
 
         if (entry.count > 0) {
             if (entry.count != numCfaChannels * 2) {
-                ALOGW("%s: Invalid entry count %u for noise profile returned in characteristics,"
+                ALOGW("%s: Invalid entry count %zu for noise profile returned in characteristics,"
                         " no noise profile tag written...", __FUNCTION__, entry.count);
             } else {
                 if ((err = generateNoiseProfile(entry.data.d, cfaOut, numCfaChannels,
@@ -1796,7 +1797,7 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
         jboolean isDirect) {
     ALOGV("%s:", __FUNCTION__);
     ALOGV("%s: nativeWriteImage called with: width=%d, height=%d, rowStride=%d, pixStride=%d,"
-              " offset=%lld", __FUNCTION__, width, height, rowStride, pixStride, offset);
+              " offset=%" PRId64 "d", __FUNCTION__, width, height, rowStride, pixStride, offset);
     uint32_t rStride = static_cast<uint32_t>(rowStride);
     uint32_t pStride = static_cast<uint32_t>(pixStride);
     uint32_t uWidth = static_cast<uint32_t>(width);
@@ -1904,7 +1905,7 @@ static void DngCreator_nativeWriteInputStream(JNIEnv* env, jobject thiz, jobject
     uint64_t uOffset = static_cast<uint32_t>(offset);
 
     ALOGV("%s: nativeWriteInputStream called with: width=%d, height=%d, rowStride=%u,"
-              "pixStride=%u, offset=%lld", __FUNCTION__, width, height, rowStride, pixStride,
+              "pixStride=%u, offset=%" PRId64 "d", __FUNCTION__, width, height, rowStride, pixStride,
               offset);
 
     sp<JniOutputStream> out = new JniOutputStream(env, outStream);

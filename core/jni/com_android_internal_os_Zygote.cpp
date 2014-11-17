@@ -26,6 +26,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <inttypes.h>
 #include <sys/capability.h>
 #include <sys/personality.h>
 #include <sys/prctl.h>
@@ -104,7 +105,7 @@ static void SigChldHandler(int /*signal_number*/) {
     // so that it is restarted by init and system server will be restarted
     // from there.
     if (pid == gSystemServerPid) {
-      ALOGE("Exit zygote because system server (%d) has terminated");
+      ALOGE("Exit zygote because system server (%d) has terminated", pid);
       kill(getpid(), SIGKILL);
     }
   }
@@ -189,7 +190,7 @@ static void SetRLimits(JNIEnv* env, jobjectArray javaRlimits) {
 
     int rc = setrlimit(javaRlimit[0], &rlim);
     if (rc == -1) {
-      ALOGE("setrlimit(%d, {%d, %d}) failed", javaRlimit[0], rlim.rlim_cur, rlim.rlim_max);
+      ALOGE("setrlimit(%d, {%lu, %lu}) failed", javaRlimit[0], rlim.rlim_cur, rlim.rlim_max);
       RuntimeAbort(env);
     }
   }
@@ -235,7 +236,7 @@ static void SetCapabilities(JNIEnv* env, int64_t permitted, int64_t effective) {
   capdata[1].permitted = permitted >> 32;
 
   if (capset(&capheader, &capdata[0]) == -1) {
-    ALOGE("capset(%lld, %lld) failed", permitted, effective);
+    ALOGE("capset(%" PRId64 "d, %" PRId64 "d) failed", permitted, effective);
     RuntimeAbort(env);
   }
 }
