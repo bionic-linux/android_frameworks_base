@@ -1023,7 +1023,7 @@ static jboolean android_content_AssetManager_resolveAttrs(JNIEnv* env, jobject c
     }
 
     if (kDebugStyles) {
-        ALOGI("APPLY STYLE: theme=0x%x defStyleAttr=0x%x defStyleRes=0x%x",
+        ALOGI("APPLY STYLE: theme=0x%llx defStyleAttr=0x%x defStyleRes=0x%x",
                 themeToken, defStyleAttr, defStyleRes);
     }
 
@@ -1230,7 +1230,7 @@ static jboolean android_content_AssetManager_applyStyle(JNIEnv* env, jobject cla
     }
 
     if (kDebugStyles) {
-    ALOGI("APPLY STYLE: theme=0x%x defStyleAttr=0x%x defStyleRes=0x%x xml=0x%x",
+    ALOGI("APPLY STYLE: theme=0x%llx defStyleAttr=0x%x defStyleRes=0x%x xml=0x%x",
           themeToken, defStyleAttr, defStyleRes, xmlParserToken);
     }
 
