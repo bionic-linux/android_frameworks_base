@@ -44,11 +44,9 @@ static void FromColor_D32(void* dst, const SkColor src[], int width,
 static void FromColor_D32_Raw(void* dst, const SkColor src[], int width,
                           int, int) {
     // SkColor's ordering may be different from SkPMColor
-    if (SK_COLOR_MATCHES_PMCOLOR_BYTE_ORDER) {
-        memcpy(dst, src, width * sizeof(SkColor));
-        return;
-    }
-
+#if SK_COLOR_MATCHES_PMCOLOR_BYTE_ORDER
+    memcpy(dst, src, width * sizeof(SkColor));
+#else
     // order isn't same, repack each pixel manually
     SkPMColor* d = (SkPMColor*)dst;
     for (int i = 0; i < width; i++) {
@@ -56,6 +54,7 @@ static void FromColor_D32_Raw(void* dst, const SkColor src[], int width,
         *d++ = SkPackARGB32NoCheck(SkColorGetA(c), SkColorGetR(c),
                                    SkColorGetG(c), SkColorGetB(c));
     }
+#endif
 }
 
 static void FromColor_D565(void* dst, const SkColor src[], int width,
