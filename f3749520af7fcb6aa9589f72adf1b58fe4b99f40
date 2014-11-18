@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a55ffac_23214a3d",
+        "filename": "services/core/jni/com_android_server_hdmi_HdmiCecController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-18T19:30:00Z",
+      "side": 1,
+      "message": "Do not use ifdefs here. This is really horrible style. I am trying to get rid of them as much as I can. Add something like UNUSED(res) (or just (void)res).",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 6
+      },
+      "revId": "f3749520af7fcb6aa9589f72adf1b58fe4b99f40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
