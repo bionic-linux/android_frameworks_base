@@ -52,6 +52,24 @@
       "revId": "3d84047c4e479761feff9cb515ee26d898323fcf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a19372f_bbedcf52",
+        "filename": "core/jni/android_view_GLES20Canvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-19T17:12:17Z",
+      "side": 1,
+      "message": "Except this whole cleanup is going on because contributors do not clean up, and at some point we would all like to see code fitting this century. I\u0027ll put this into a separate CL, though. There are other things I want to convert similarly, anyways, and I can group them...",
+      "parentUuid": "5af0570f_607d4c07",
+      "revId": "3d84047c4e479761feff9cb515ee26d898323fcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
