@@ -46,6 +46,8 @@
 
 #include "MinikinUtils.h"
 
+#include "core_jni_helpers.h"
+
 namespace android {
 
 using namespace uirenderer;
@@ -837,20 +839,25 @@ static void android_view_GLES20Canvas_drawLayer(JNIEnv* env, jobject clazz,
 // Common
 // ----------------------------------------------------------------------------
 
-static jboolean android_view_GLES20Canvas_isAvailable(JNIEnv* env, jobject clazz) {
 #ifdef USE_OPENGL_RENDERER
-    char prop[PROPERTY_VALUE_MAX];
-    if (property_get("ro.kernel.qemu", prop, NULL) == 0) {
-        // not in the emulator
-        return JNI_TRUE;
-    }
-    // In the emulator this property will be set to 1 when hardware GLES is
-    // enabled, 0 otherwise. On old emulator versions it will be undefined.
-    property_get("ro.kernel.qemu.gles", prop, "0");
-    return atoi(prop) == 1 ? JNI_TRUE : JNI_FALSE;
+static const bool kUseOpenGLRenderer = true;
 #else
-    return JNI_FALSE;
+static const bool kUseOpenGLRenderer = false;
 #endif
+
+static jboolean android_view_GLES20Canvas_isAvailable(JNIEnv* env, jobject clazz) {
+    if (kUseOpenGLRenderer) {
+        char prop[PROPERTY_VALUE_MAX];
+        if (property_get("ro.kernel.qemu", prop, NULL) == 0) {
+            // not in the emulator
+            return JNI_TRUE;
+        }
+        // In the emulator this property will be set to 1 when hardware GLES is
+        // enabled, 0 otherwise. On old emulator versions it will be undefined.
+        property_get("ro.kernel.qemu.gles", prop, "0");
+        return atoi(prop) == 1 ? JNI_TRUE : JNI_FALSE;
+    }
+    return JNI_FALSE;
 }
 
 // ----------------------------------------------------------------------------
@@ -859,10 +866,10 @@ static jboolean android_view_GLES20Canvas_isAvailable(JNIEnv* env, jobject clazz
 
 static void
 android_app_ActivityThread_dumpGraphics(JNIEnv* env, jobject clazz, jobject javaFileDescriptor) {
-#ifdef USE_OPENGL_RENDERER
-    int fd = jniGetFDFromFileDescriptor(env, javaFileDescriptor);
-    android::uirenderer::RenderNode::outputLogBuffer(fd);
-#endif // USE_OPENGL_RENDERER
+    if (kUseOpenGLRenderer) {
+        int fd = jniGetFDFromFileDescriptor(env, javaFileDescriptor);
+        android::uirenderer::RenderNode::outputLogBuffer(fd);
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -971,32 +978,19 @@ static JNINativeMethod gActivityThreadMethods[] = {
                                                (void*) android_app_ActivityThread_dumpGraphics }
 };
 
-
-#ifdef USE_OPENGL_RENDERER
-    #define FIND_CLASS(var, className) \
-            var = env->FindClass(className); \
-            LOG_FATAL_IF(! var, "Unable to find class " className);
-
-    #define GET_METHOD_ID(var, clazz, methodName, methodDescriptor) \
-            var = env->GetMethodID(clazz, methodName, methodDescriptor); \
-            LOG_FATAL_IF(! var, "Unable to find method " methodName);
-#else
-    #define FIND_CLASS(var, className)
-    #define GET_METHOD_ID(var, clazz, methodName, methodDescriptor)
-#endif
-
 int register_android_view_GLES20Canvas(JNIEnv* env) {
-    jclass clazz;
-    FIND_CLASS(clazz, "android/graphics/Rect");
-    GET_METHOD_ID(gRectClassInfo.set, clazz, "set", "(IIII)V");
+    if (kUseOpenGLRenderer) {
+        jclass clazz = FindClassOrDie(env, "android/graphics/Rect");
+        gRectClassInfo.set = GetMethodIDOrDie(env, clazz, "set", "(IIII)V");
+    }
 
-    return AndroidRuntime::registerNativeMethods(env, kClassPathName, gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
 }
 
 const char* const kActivityThreadPathName = "android/app/ActivityThread";
 
 int register_android_app_ActivityThread(JNIEnv* env) {
-    return AndroidRuntime::registerNativeMethods(env, kActivityThreadPathName,
+    return RegisterMethodsOrDie(env, kActivityThreadPathName,
             gActivityThreadMethods, NELEM(gActivityThreadMethods));
 }
 
