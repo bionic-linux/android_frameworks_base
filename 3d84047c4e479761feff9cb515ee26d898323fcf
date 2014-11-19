@@ -16,6 +16,24 @@
       "revId": "3d84047c4e479761feff9cb515ee26d898323fcf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fadf4b7d_a9a9fe20",
+        "filename": "core/jni/android_view_GLES20Canvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-19T16:24:24Z",
+      "side": 1,
+      "message": "Not directly. When I see #ifdefs in code that I\u0027m touching (register_android_view_GLES20Canvas), I try to clean this up to more modern code. I can put this into a separate CL if you prefer.",
+      "parentUuid": "5af0570f_60a6ec4e",
+      "revId": "3d84047c4e479761feff9cb515ee26d898323fcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
