@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5af0570f_60a6ec4e",
+        "filename": "core/jni/android_view_GLES20Canvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-19T16:20:11Z",
+      "side": 1,
+      "message": "Is this related to the rest of this change ?",
+      "revId": "3d84047c4e479761feff9cb515ee26d898323fcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
