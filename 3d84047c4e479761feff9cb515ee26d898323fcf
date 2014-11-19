@@ -34,6 +34,24 @@
       "revId": "3d84047c4e479761feff9cb515ee26d898323fcf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5af0570f_607d4c07",
+        "filename": "core/jni/android_view_GLES20Canvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-19T16:31:24Z",
+      "side": 1,
+      "message": "\u003cshrug\u003e i agree with you that it\u0027s better but i tend to avoid \"surrounding cleanup\" in code that I don\u0027t own since it will usually evolve in ways that best suit the most frequent contributors",
+      "parentUuid": "fadf4b7d_a9a9fe20",
+      "revId": "3d84047c4e479761feff9cb515ee26d898323fcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
