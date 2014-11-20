@@ -302,7 +302,6 @@ public class UsbHostManager {
         // clear why this works, or that it can be relied on going forward.  Needs further
         // research.
         AlsaCardsParser cardsParser = new AlsaCardsParser();
-        cardsParser.scan();
         // cardsParser.Log();
 
         // But we need to parse the device to determine its capabilities.
@@ -311,8 +310,8 @@ public class UsbHostManager {
         // devicesParser.Log();
 
         // The protocol for now will be to select the last-connected (highest-numbered)
-        // Alsa Card.
-        mConnectedUsbCard = cardsParser.getNumCardRecords() - 1;
+        // Alsa USB Card.
+        mConnectedUsbCard = cardsParser.scan_usb();
         mConnectedUsbDeviceNum = 0;
 
         mConnectedHasPlayback = devicesParser.hasPlaybackDevices(mConnectedUsbCard);
