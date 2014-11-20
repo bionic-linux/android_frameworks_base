@@ -95,7 +95,35 @@ public class AlsaCardsParser {
           } catch (IOException e) {
               e.printStackTrace();
           }
-      }
+    }
+
+    public int scan_usb() {
+        final File soundFolder = new File("/sys/class/sound");
+        int cardId = -1;
+        for (final File cardEntry : soundFolder.listFiles()) {
+            String cardFolder = cardEntry.getName();
+            if (cardEntry.isDirectory() && cardFolder.startsWith("card")) {
+                String modaliasPath = "/sys/class/sound/" + cardFolder + "/device/modalias";
+                File cardModalias = new File(modaliasPath);
+                try {
+                    FileReader reader = new FileReader(cardModalias);
+                    BufferedReader bufferedReader = new BufferedReader(reader);
+                    String line = bufferedReader.readLine();
+                    bufferedReader.close();
+                    if (line != null && line.startsWith("usb:"))
+                        cardId = Integer.parseInt(cardFolder.replaceAll("[^0-9]", ""));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+        // Return last usb card id or -1 if no card found
+        return cardId;
+    }
 
       public AlsaCardRecord getCardRecordAt(int index) {
           return cardRecords_.get(index);
