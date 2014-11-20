@@ -23,6 +23,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @hide Retrieves information from an ALSA "cards" file.
@@ -95,7 +97,38 @@ public class AlsaCardsParser {
           } catch (IOException e) {
               e.printStackTrace();
           }
-      }
+    }
+
+    public int scan_usb() {
+        final File soundFolder = new File("/sys/class/sound");
+        int cardCount = 0;
+        List<Integer> cardArray = new ArrayList<Integer>();
+        for (final File cardEntry : soundFolder.listFiles()) {
+            String cardFolder = cardEntry.getName();
+            if (cardEntry.isDirectory() && cardFolder.startsWith("card")) {
+                String modaliasPath = "/sys/class/sound/" + cardFolder + "/device/modalias";
+                File cardModalias = new File(modaliasPath);
+                try {
+                    FileReader reader = new FileReader(cardModalias);
+                    BufferedReader bufferedReader = new BufferedReader(reader);
+                    String line = bufferedReader.readLine();
+                    if (line != null && line.startsWith("usb:"))
+                        cardArray.add(new Integer(Integer.parseInt(cardFolder.replaceAll("[^0-9]", ""))));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+        if (cardArray.isEmpty())
+            return -1;
+
+        // Return last usb card id of the card array
+        return cardArray.get(cardArray.size() - 1).intValue();
+    }
 
       public AlsaCardRecord getCardRecordAt(int index) {
           return cardRecords_.get(index);
