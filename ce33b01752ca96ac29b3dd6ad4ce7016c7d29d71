@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f526d24_861e6a4e",
+        "filename": "core/jni/android/graphics/NinePatchImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-21T09:59:49Z",
+      "side": 1,
+      "message": "how can gTrace ever be false here ?",
+      "revId": "ce33b01752ca96ac29b3dd6ad4ce7016c7d29d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f526d24_662dae87",
+        "filename": "core/jni/android/graphics/NinePatchImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-21T09:59:49Z",
+      "side": 1,
+      "message": "same question",
+      "revId": "ce33b01752ca96ac29b3dd6ad4ce7016c7d29d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
