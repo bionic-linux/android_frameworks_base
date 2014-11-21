@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff5e5d2a_d3aade92",
+        "filename": "libs/hwui/OpenGLRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2014-11-21T18:34:04Z",
+      "side": 1,
+      "message": "__unused in the param list?",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff5e5d2a_33c49a6e",
+        "filename": "libs/hwui/Program.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2014-11-21T18:34:04Z",
+      "side": 1,
+      "message": "Why not just __unused in the parameter list?",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff5e5d2a_f3960253",
+        "filename": "libs/hwui/SpotShadow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2014-11-21T18:34:04Z",
+      "side": 1,
+      "message": "__unused?",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf586542_6e510b26",
+        "filename": "libs/hwui/SpotShadow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2014-11-21T18:34:04Z",
+      "side": 1,
+      "message": "__unused?",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff5e5d2a_53094e1d",
+        "filename": "libs/hwui/renderthread/RenderProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2014-11-21T18:34:04Z",
+      "side": 1,
+      "message": "args? Do you mean fence?",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
