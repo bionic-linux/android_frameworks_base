@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf586542_ee961b53",
+        "filename": "libs/hwui/OpenGLRenderer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-21T18:42:02Z",
+      "side": 1,
+      "message": "We are not doing this consistently, so I used the UNUSED pattern.\n\nA follow-up will clean up the #if pattern...",
+      "parentUuid": "ff5e5d2a_d3aade92",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff5e5d2a_33c49a6e",
         "filename": "libs/hwui/Program.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-11-21T18:34:04Z",
       "side": 1,
       "message": "Why not just __unused in the parameter list?",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff5e5d2a_f39cc243",
+        "filename": "libs/hwui/Program.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-21T18:42:02Z",
+      "side": 1,
+      "message": "See other reply.",
+      "parentUuid": "ff5e5d2a_33c49a6e",
       "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf586542_ae902355",
+        "filename": "libs/hwui/SpotShadow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-21T18:42:02Z",
+      "side": 1,
+      "message": "Different CL is gonna refactor this.",
+      "parentUuid": "ff5e5d2a_f3960253",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf586542_6e510b26",
         "filename": "libs/hwui/SpotShadow.cpp",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ff5e5d2a_d399be51",
+        "filename": "libs/hwui/SpotShadow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-21T18:42:02Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "bf586542_6e510b26",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff5e5d2a_53094e1d",
         "filename": "libs/hwui/renderthread/RenderProxy.cpp",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2014-11-21T18:34:04Z",
       "side": 1,
       "message": "args? Do you mean fence?",
+      "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff5e5d2a_337c9a57",
+        "filename": "libs/hwui/renderthread/RenderProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-21T18:42:02Z",
+      "side": 1,
+      "message": "No. CREATE_BRIDGE0 -\u003e CREATE_BRIDGE -\u003e void f(Args args) {",
+      "parentUuid": "ff5e5d2a_53094e1d",
       "revId": "ad1d45bd3aab94a457b2d981cf58762cb312e251",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
