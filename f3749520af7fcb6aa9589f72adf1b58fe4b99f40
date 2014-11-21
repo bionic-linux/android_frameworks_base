@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "7f97cd02_a7adc8fb",
+        "filename": "media/mca/filterfw/jni/jni_util.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-11-21T21:54:46Z",
+      "side": 1,
+      "message": "No.  We will not go around commenting out unused parameters.  This is a waste of time.\n\nPlease disable unused parameter errors if you must.",
+      "revId": "f3749520af7fcb6aa9589f72adf1b58fe4b99f40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f97cd02_c7aa54e1",
+        "filename": "services/core/jni/com_android_server_am_BatteryStatsService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-11-21T21:54:46Z",
+      "side": 1,
+      "message": "disable this warning",
+      "revId": "f3749520af7fcb6aa9589f72adf1b58fe4b99f40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf586542_5c227d19",
+        "filename": "services/core/jni/com_android_server_connectivity_Vpn.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-11-21T21:54:46Z",
+      "side": 1,
+      "message": "disable this warning",
+      "revId": "f3749520af7fcb6aa9589f72adf1b58fe4b99f40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff5e5d2a_f1aa7792",
+        "filename": "services/core/jni/com_android_server_hdmi_HdmiCecController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-11-21T21:54:46Z",
+      "side": 1,
+      "message": "disable this warning",
+      "revId": "f3749520af7fcb6aa9589f72adf1b58fe4b99f40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a55ffac_23214a3d",
         "filename": "services/core/jni/com_android_server_hdmi_HdmiCecController.cpp",
         "patchSetId": 1
