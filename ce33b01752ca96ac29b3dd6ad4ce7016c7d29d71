@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff5e5d2a_4a13d3fe",
+        "filename": "core/jni/android/graphics/NinePatchImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-21T10:03:21Z",
+      "side": 1,
+      "message": "Multi-threading? :-)\n\nOn a serious note, I\u0027ll remove those checks. It doesn\u0027t make sense...",
+      "parentUuid": "7f526d24_861e6a4e",
+      "revId": "ce33b01752ca96ac29b3dd6ad4ce7016c7d29d71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f526d24_662dae87",
         "filename": "core/jni/android/graphics/NinePatchImpl.cpp",
         "patchSetId": 1
