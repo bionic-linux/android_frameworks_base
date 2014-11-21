@@ -112,7 +112,7 @@ public:
 // GraphicBuffer lifecycle
 // ----------------------------------------------------------------------------
 
-static jlong android_view_GraphiceBuffer_create(JNIEnv* env, jobject clazz,
+static jlong android_view_GraphiceBuffer_create(JNIEnv* /* env */, jobject /* clazz */,
         jint width, jint height, jint format, jint usage) {
 
     sp<ISurfaceComposer> composer(ComposerService::getComposerService());
@@ -133,7 +133,7 @@ static jlong android_view_GraphiceBuffer_create(JNIEnv* env, jobject clazz,
     return reinterpret_cast<jlong>(wrapper);
 }
 
-static void android_view_GraphiceBuffer_destroy(JNIEnv* env, jobject clazz,
+static void android_view_GraphiceBuffer_destroy(JNIEnv* /* env */, jobject /* clazz */,
         jlong wrapperHandle) {
     GraphicBufferWrapper* wrapper =
                 reinterpret_cast<GraphicBufferWrapper*>(wrapperHandle);
@@ -236,7 +236,7 @@ static jboolean android_view_GraphicBuffer_unlockCanvasAndPost(JNIEnv* env, jobj
 // Serialization
 // ----------------------------------------------------------------------------
 
-static void android_view_GraphiceBuffer_write(JNIEnv* env, jobject clazz,
+static void android_view_GraphiceBuffer_write(JNIEnv* env, jobject /* clazz */,
         jlong wrapperHandle, jobject dest) {
     GraphicBufferWrapper* wrapper =
                 reinterpret_cast<GraphicBufferWrapper*>(wrapperHandle);
@@ -246,7 +246,7 @@ static void android_view_GraphiceBuffer_write(JNIEnv* env, jobject clazz,
     }
 }
 
-static jlong android_view_GraphiceBuffer_read(JNIEnv* env, jobject clazz,
+static jlong android_view_GraphiceBuffer_read(JNIEnv* env, jobject /* clazz */,
         jobject in) {
 
     Parcel* parcel = parcelForJavaObject(env, in);

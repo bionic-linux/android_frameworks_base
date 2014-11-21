@@ -127,7 +127,7 @@ status_t NativeDisplayEventReceiver::scheduleVsync() {
     return OK;
 }
 
-int NativeDisplayEventReceiver::handleEvent(int receiveFd, int events, void* data) {
+int NativeDisplayEventReceiver::handleEvent(int /* receiveFd */, int events, void* /* data */) {
     if (events & (Looper::EVENT_ERROR | Looper::EVENT_HANGUP)) {
         ALOGE("Display event receiver pipe was closed or an error occurred.  "
                 "events=0x%x", events);
@@ -210,7 +210,7 @@ void NativeDisplayEventReceiver::dispatchHotplug(nsecs_t timestamp, int32_t id, 
 }
 
 
-static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverObj,
+static jlong nativeInit(JNIEnv* env, jclass /* clazz */, jobject receiverObj,
         jobject messageQueueObj) {
     sp<MessageQueue> messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
     if (messageQueue == NULL) {
@@ -232,14 +232,14 @@ static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverObj,
     return reinterpret_cast<jlong>(receiver.get());
 }
 
-static void nativeDispose(JNIEnv* env, jclass clazz, jlong receiverPtr) {
+static void nativeDispose(JNIEnv* /* env */, jclass /* clazz */, jlong receiverPtr) {
     sp<NativeDisplayEventReceiver> receiver =
             reinterpret_cast<NativeDisplayEventReceiver*>(receiverPtr);
     receiver->dispose();
     receiver->decStrong(gDisplayEventReceiverClassInfo.clazz); // drop reference held by the object
 }
 
-static void nativeScheduleVsync(JNIEnv* env, jclass clazz, jlong receiverPtr) {
+static void nativeScheduleVsync(JNIEnv* env, jclass /* clazz */, jlong receiverPtr) {
     sp<NativeDisplayEventReceiver> receiver =
             reinterpret_cast<NativeDisplayEventReceiver*>(receiverPtr);
     status_t status = receiver->scheduleVsync();

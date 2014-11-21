@@ -197,7 +197,7 @@ void android_NativeActivity_hideSoftInput(
 /*
  * Callback for handling native events on the application's main thread.
  */
-static int mainWorkCallback(int fd, int events, void* data) {
+static int mainWorkCallback(int /* fd */, int events, void* data) {
     NativeCode* code = (NativeCode*)data;
     if ((events & POLLIN) == 0) {
         return 1;
@@ -358,7 +358,7 @@ loadNativeCode_native(JNIEnv* env, jobject clazz, jstring path, jstring funcName
 }
 
 static void
-unloadNativeCode_native(JNIEnv* env, jobject clazz, jlong handle)
+unloadNativeCode_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("unloadNativeCode_native");
     if (handle != 0) {
@@ -368,7 +368,7 @@ unloadNativeCode_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static void
-onStart_native(JNIEnv* env, jobject clazz, jlong handle)
+onStart_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("onStart_native");
     if (handle != 0) {
@@ -380,7 +380,7 @@ onStart_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static void
-onResume_native(JNIEnv* env, jobject clazz, jlong handle)
+onResume_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("onResume_native");
     if (handle != 0) {
@@ -392,7 +392,7 @@ onResume_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static jbyteArray
-onSaveInstanceState_native(JNIEnv* env, jobject clazz, jlong handle)
+onSaveInstanceState_native(JNIEnv* env, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("onSaveInstanceState_native");
 
@@ -419,7 +419,7 @@ onSaveInstanceState_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static void
-onPause_native(JNIEnv* env, jobject clazz, jlong handle)
+onPause_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("onPause_native");
     if (handle != 0) {
@@ -431,7 +431,7 @@ onPause_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static void
-onStop_native(JNIEnv* env, jobject clazz, jlong handle)
+onStop_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("onStop_native");
     if (handle != 0) {
@@ -443,7 +443,7 @@ onStop_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static void
-onConfigurationChanged_native(JNIEnv* env, jobject clazz, jlong handle)
+onConfigurationChanged_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("onConfigurationChanged_native");
     if (handle != 0) {
@@ -455,7 +455,7 @@ onConfigurationChanged_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static void
-onLowMemory_native(JNIEnv* env, jobject clazz, jlong handle)
+onLowMemory_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("onLowMemory_native");
     if (handle != 0) {
@@ -467,7 +467,7 @@ onLowMemory_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static void
-onWindowFocusChanged_native(JNIEnv* env, jobject clazz, jlong handle, jboolean focused)
+onWindowFocusChanged_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle, jboolean focused)
 {
     LOG_TRACE("onWindowFocusChanged_native");
     if (handle != 0) {
@@ -479,7 +479,7 @@ onWindowFocusChanged_native(JNIEnv* env, jobject clazz, jlong handle, jboolean f
 }
 
 static void
-onSurfaceCreated_native(JNIEnv* env, jobject clazz, jlong handle, jobject surface)
+onSurfaceCreated_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle, jobject surface)
 {
     LOG_TRACE("onSurfaceCreated_native");
     if (handle != 0) {
@@ -499,8 +499,8 @@ static int32_t getWindowProp(ANativeWindow* window, int what) {
 }
 
 static void
-onSurfaceChanged_native(JNIEnv* env, jobject clazz, jlong handle, jobject surface,
-        jint format, jint width, jint height)
+onSurfaceChanged_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle, jobject surface,
+        jint /* format */, jint /* width */, jint /* height */)
 {
     LOG_TRACE("onSurfaceChanged_native");
     if (handle != 0) {
@@ -540,7 +540,7 @@ onSurfaceChanged_native(JNIEnv* env, jobject clazz, jlong handle, jobject surfac
 }
 
 static void
-onSurfaceRedrawNeeded_native(JNIEnv* env, jobject clazz, jlong handle)
+onSurfaceRedrawNeeded_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle)
 {
     LOG_TRACE("onSurfaceRedrawNeeded_native");
     if (handle != 0) {
@@ -552,7 +552,7 @@ onSurfaceRedrawNeeded_native(JNIEnv* env, jobject clazz, jlong handle)
 }
 
 static void
-onSurfaceDestroyed_native(JNIEnv* env, jobject clazz, jlong handle, jobject surface)
+onSurfaceDestroyed_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle, jobject surface)
 {
     LOG_TRACE("onSurfaceDestroyed_native");
     if (handle != 0) {
@@ -566,7 +566,7 @@ onSurfaceDestroyed_native(JNIEnv* env, jobject clazz, jlong handle, jobject surf
 }
 
 static void
-onInputQueueCreated_native(JNIEnv* env, jobject clazz, jlong handle, jlong queuePtr)
+onInputQueueCreated_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle, jlong queuePtr)
 {
     LOG_TRACE("onInputChannelCreated_native");
     if (handle != 0) {
@@ -579,7 +579,7 @@ onInputQueueCreated_native(JNIEnv* env, jobject clazz, jlong handle, jlong queue
 }
 
 static void
-onInputQueueDestroyed_native(JNIEnv* env, jobject clazz, jlong handle, jlong queuePtr)
+onInputQueueDestroyed_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle, jlong queuePtr)
 {
     LOG_TRACE("onInputChannelDestroyed_native");
     if (handle != 0) {
@@ -592,7 +592,7 @@ onInputQueueDestroyed_native(JNIEnv* env, jobject clazz, jlong handle, jlong que
 }
 
 static void
-onContentRectChanged_native(JNIEnv* env, jobject clazz, jlong handle,
+onContentRectChanged_native(JNIEnv* /* env */, jobject /* clazz */, jlong handle,
         jint x, jint y, jint w, jint h)
 {
     LOG_TRACE("onContentRectChanged_native");

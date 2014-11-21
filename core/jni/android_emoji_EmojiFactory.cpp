@@ -113,7 +113,7 @@ static jobject create_java_EmojiFactory(
 }
 
 static jobject android_emoji_EmojiFactory_newInstance(
-    JNIEnv* env, jobject clazz, jstring name) {
+    JNIEnv* env, jobject /* clazz */, jstring name) {
   if (NULL == name) {
     return NULL;
   }
@@ -134,7 +134,7 @@ static jobject android_emoji_EmojiFactory_newInstance(
 }
 
 static jobject android_emoji_EmojiFactory_newAvailableInstance(
-    JNIEnv* env, jobject clazz) {
+    JNIEnv* env, jobject /* clazz */) {
   pthread_once(&g_once, InitializeCaller);
   if (!lib_emoji_factory_is_ready) {
     return NULL;
@@ -155,7 +155,7 @@ static jobject android_emoji_EmojiFactory_newAvailableInstance(
 }
 
 static jobject android_emoji_EmojiFactory_getBitmapFromAndroidPua(
-    JNIEnv* env, jobject clazz, jlong nativeEmojiFactory, jint pua) {
+    JNIEnv* env, jobject /* clazz */, jlong nativeEmojiFactory, jint pua) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
 
   int size;
@@ -175,7 +175,7 @@ static jobject android_emoji_EmojiFactory_getBitmapFromAndroidPua(
 }
 
 static void android_emoji_EmojiFactory_destructor(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory) {
+    JNIEnv* /* env */, jobject /* obj */, jlong /* nativeEmojiFactory */) {
   /*
   // Must not delete this object!!
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
@@ -184,49 +184,49 @@ static void android_emoji_EmojiFactory_destructor(
 }
 
 static jint android_emoji_EmojiFactory_getAndroidPuaFromVendorSpecificSjis(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory, jchar sjis) {
+    JNIEnv* /* env */, jobject /* obj */, jlong nativeEmojiFactory, jchar sjis) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
   return factory->GetAndroidPuaFromVendorSpecificSjis(sjis);
 }
 
 static jint android_emoji_EmojiFactory_getVendorSpecificSjisFromAndroidPua(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory, jint pua) {
+    JNIEnv* /* env */, jobject /* obj */, jlong nativeEmojiFactory, jint pua) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
   return factory->GetVendorSpecificSjisFromAndroidPua(pua);
 }
 
 static jint android_emoji_EmojiFactory_getAndroidPuaFromVendorSpecificPua(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory, jint vsu) {
+    JNIEnv* /* env */, jobject /* obj */, jlong nativeEmojiFactory, jint vsu) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
   return factory->GetAndroidPuaFromVendorSpecificPua(vsu);
 }
 
 static jint android_emoji_EmojiFactory_getVendorSpecificPuaFromAndroidPua(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory, jint pua) {
+    JNIEnv* /* env */, jobject /* obj */, jlong nativeEmojiFactory, jint pua) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
   return factory->GetVendorSpecificPuaFromAndroidPua(pua);
 }
 
 static jint android_emoji_EmojiFactory_getMaximumVendorSpecificPua(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory) {
+    JNIEnv* /* env */, jobject /* obj */, jlong nativeEmojiFactory) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
   return factory->GetMaximumVendorSpecificPua();
 }
 
 static jint android_emoji_EmojiFactory_getMinimumVendorSpecificPua(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory) {
+    JNIEnv* /* env */, jobject /* obj */, jlong nativeEmojiFactory) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
   return factory->GetMinimumVendorSpecificPua();
 }
 
 static jint android_emoji_EmojiFactory_getMaximumAndroidPua(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory) {
+    JNIEnv* /* env */, jobject /* obj */, jlong nativeEmojiFactory) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
   return factory->GetMaximumAndroidPua();
 }
 
 static jint android_emoji_EmojiFactory_getMinimumAndroidPua(
-    JNIEnv* env, jobject obj, jlong nativeEmojiFactory) {
+    JNIEnv* /* env */, jobject /* obj */, jlong nativeEmojiFactory) {
   EmojiFactory *factory = reinterpret_cast<EmojiFactory *>(nativeEmojiFactory);
   return factory->GetMinimumAndroidPua();
 }

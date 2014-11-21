@@ -73,7 +73,7 @@ static struct {
 } gRectClassInfo;
 
 // Implements SkMallocPixelRef::ReleaseProc, to delete the screenshot on unref.
-void DeleteScreenshot(void* addr, void* context) {
+void DeleteScreenshot(void* /* addr */, void* context) {
     SkASSERT(addr == ((ScreenshotClient*) context)->getPixels());
     delete ((ScreenshotClient*) context);
 }
@@ -90,7 +90,7 @@ static struct {
 
 // ----------------------------------------------------------------------------
 
-static jlong nativeCreate(JNIEnv* env, jclass clazz, jobject sessionObj,
+static jlong nativeCreate(JNIEnv* env, jclass /* clazz */, jobject sessionObj,
         jstring nameStr, jint w, jint h, jint format, jint flags) {
     ScopedUtfChars name(env, nameStr);
     sp<SurfaceComposerClient> client(android_view_SurfaceSession_getClient(env, sessionObj));
@@ -104,18 +104,18 @@ static jlong nativeCreate(JNIEnv* env, jclass clazz, jobject sessionObj,
     return reinterpret_cast<jlong>(surface.get());
 }
 
-static void nativeRelease(JNIEnv* env, jclass clazz, jlong nativeObject) {
+static void nativeRelease(JNIEnv* /* env */, jclass /* clazz */, jlong nativeObject) {
     sp<SurfaceControl> ctrl(reinterpret_cast<SurfaceControl *>(nativeObject));
     ctrl->decStrong((void *)nativeCreate);
 }
 
-static void nativeDestroy(JNIEnv* env, jclass clazz, jlong nativeObject) {
+static void nativeDestroy(JNIEnv* /* env */, jclass /* clazz */, jlong nativeObject) {
     sp<SurfaceControl> ctrl(reinterpret_cast<SurfaceControl *>(nativeObject));
     ctrl->clear();
     ctrl->decStrong((void *)nativeCreate);
 }
 
-static jobject nativeScreenshotBitmap(JNIEnv* env, jclass clazz,
+static jobject nativeScreenshotBitmap(JNIEnv* env, jclass /* clazz */,
         jobject displayTokenObj, jobject sourceCropObj, jint width, jint height,
         jint minLayer, jint maxLayer, bool allLayers, bool useIdentityTransform,
         int rotation) {
@@ -188,7 +188,7 @@ static jobject nativeScreenshotBitmap(JNIEnv* env, jclass clazz,
             GraphicsJNI::kBitmapCreateFlag_Premultiplied, NULL);
 }
 
-static void nativeScreenshot(JNIEnv* env, jclass clazz, jobject displayTokenObj,
+static void nativeScreenshot(JNIEnv* env, jclass /* clazz */, jobject displayTokenObj,
         jobject surfaceObj, jobject sourceCropObj, jint width, jint height,
         jint minLayer, jint maxLayer, bool allLayers, bool useIdentityTransform) {
     sp<IBinder> displayToken = ibinderForJavaObject(env, displayTokenObj);
@@ -213,19 +213,19 @@ static void nativeScreenshot(JNIEnv* env, jclass clazz, jobject displayTokenObj,
     }
 }
 
-static void nativeOpenTransaction(JNIEnv* env, jclass clazz) {
+static void nativeOpenTransaction(JNIEnv* /* env */, jclass /* clazz */) {
     SurfaceComposerClient::openGlobalTransaction();
 }
 
-static void nativeCloseTransaction(JNIEnv* env, jclass clazz) {
+static void nativeCloseTransaction(JNIEnv* /* env */, jclass /* clazz */) {
     SurfaceComposerClient::closeGlobalTransaction();
 }
 
-static void nativeSetAnimationTransaction(JNIEnv* env, jclass clazz) {
+static void nativeSetAnimationTransaction(JNIEnv* /* env */, jclass /* clazz */) {
     SurfaceComposerClient::setAnimationTransaction();
 }
 
-static void nativeSetLayer(JNIEnv* env, jclass clazz, jlong nativeObject, jint zorder) {
+static void nativeSetLayer(JNIEnv* env, jclass /* clazz */, jlong nativeObject, jint zorder) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     status_t err = ctrl->setLayer(zorder);
     if (err < 0 && err != NO_INIT) {
@@ -233,7 +233,8 @@ static void nativeSetLayer(JNIEnv* env, jclass clazz, jlong nativeObject, jint z
     }
 }
 
-static void nativeSetPosition(JNIEnv* env, jclass clazz, jlong nativeObject, jfloat x, jfloat y) {
+static void nativeSetPosition(JNIEnv* env, jclass /* clazz */, jlong nativeObject, jfloat x,
+                              jfloat y) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     status_t err = ctrl->setPosition(x, y);
     if (err < 0 && err != NO_INIT) {
@@ -241,7 +242,7 @@ static void nativeSetPosition(JNIEnv* env, jclass clazz, jlong nativeObject, jfl
     }
 }
 
-static void nativeSetSize(JNIEnv* env, jclass clazz, jlong nativeObject, jint w, jint h) {
+static void nativeSetSize(JNIEnv* env, jclass /* clazz */, jlong nativeObject, jint w, jint h) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     status_t err = ctrl->setSize(w, h);
     if (err < 0 && err != NO_INIT) {
@@ -249,7 +250,8 @@ static void nativeSetSize(JNIEnv* env, jclass clazz, jlong nativeObject, jint w,
     }
 }
 
-static void nativeSetFlags(JNIEnv* env, jclass clazz, jlong nativeObject, jint flags, jint mask) {
+static void nativeSetFlags(JNIEnv* env, jclass /* clazz */, jlong nativeObject, jint flags,
+                           jint mask) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     status_t err = ctrl->setFlags(flags, mask);
     if (err < 0 && err != NO_INIT) {
@@ -257,7 +259,8 @@ static void nativeSetFlags(JNIEnv* env, jclass clazz, jlong nativeObject, jint f
     }
 }
 
-static void nativeSetTransparentRegionHint(JNIEnv* env, jclass clazz, jlong nativeObject, jobject regionObj) {
+static void nativeSetTransparentRegionHint(JNIEnv* env, jclass /* clazz */, jlong nativeObject,
+                                           jobject regionObj) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     SkRegion* region = android_graphics_Region_getSkRegion(env, regionObj);
     if (!region) {
@@ -282,7 +285,7 @@ static void nativeSetTransparentRegionHint(JNIEnv* env, jclass clazz, jlong nati
     }
 }
 
-static void nativeSetAlpha(JNIEnv* env, jclass clazz, jlong nativeObject, jfloat alpha) {
+static void nativeSetAlpha(JNIEnv* env, jclass /* clazz */, jlong nativeObject, jfloat alpha) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     status_t err = ctrl->setAlpha(alpha);
     if (err < 0 && err != NO_INIT) {
@@ -290,7 +293,7 @@ static void nativeSetAlpha(JNIEnv* env, jclass clazz, jlong nativeObject, jfloat
     }
 }
 
-static void nativeSetMatrix(JNIEnv* env, jclass clazz, jlong nativeObject,
+static void nativeSetMatrix(JNIEnv* env, jclass /* clazz */, jlong nativeObject,
         jfloat dsdx, jfloat dtdx, jfloat dsdy, jfloat dtdy) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     status_t err = ctrl->setMatrix(dsdx, dtdx, dsdy, dtdy);
@@ -299,7 +302,7 @@ static void nativeSetMatrix(JNIEnv* env, jclass clazz, jlong nativeObject,
     }
 }
 
-static void nativeSetWindowCrop(JNIEnv* env, jclass clazz, jlong nativeObject,
+static void nativeSetWindowCrop(JNIEnv* env, jclass /* clazz */, jlong nativeObject,
         jint l, jint t, jint r, jint b) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     Rect crop(l, t, r, b);
@@ -309,7 +312,8 @@ static void nativeSetWindowCrop(JNIEnv* env, jclass clazz, jlong nativeObject,
     }
 }
 
-static void nativeSetLayerStack(JNIEnv* env, jclass clazz, jlong nativeObject, jint layerStack) {
+static void nativeSetLayerStack(JNIEnv* env, jclass /* clazz */, jlong nativeObject,
+                                jint layerStack) {
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     status_t err = ctrl->setLayerStack(layerStack);
     if (err < 0 && err != NO_INIT) {
@@ -317,12 +321,12 @@ static void nativeSetLayerStack(JNIEnv* env, jclass clazz, jlong nativeObject, j
     }
 }
 
-static jobject nativeGetBuiltInDisplay(JNIEnv* env, jclass clazz, jint id) {
+static jobject nativeGetBuiltInDisplay(JNIEnv* env, jclass /* clazz */, jint id) {
     sp<IBinder> token(SurfaceComposerClient::getBuiltInDisplay(id));
     return javaObjectForIBinder(env, token);
 }
 
-static jobject nativeCreateDisplay(JNIEnv* env, jclass clazz, jstring nameObj,
+static jobject nativeCreateDisplay(JNIEnv* env, jclass /* clazz */, jstring nameObj,
         jboolean secure) {
     ScopedUtfChars name(env, nameObj);
     sp<IBinder> token(SurfaceComposerClient::createDisplay(
@@ -330,13 +334,13 @@ static jobject nativeCreateDisplay(JNIEnv* env, jclass clazz, jstring nameObj,
     return javaObjectForIBinder(env, token);
 }
 
-static void nativeDestroyDisplay(JNIEnv* env, jclass clazz, jobject tokenObj) {
+static void nativeDestroyDisplay(JNIEnv* env, jclass /* clazz */, jobject tokenObj) {
     sp<IBinder> token(ibinderForJavaObject(env, tokenObj));
     if (token == NULL) return;
     SurfaceComposerClient::destroyDisplay(token);
 }
 
-static void nativeSetDisplaySurface(JNIEnv* env, jclass clazz,
+static void nativeSetDisplaySurface(JNIEnv* env, jclass /* clazz */,
         jobject tokenObj, jlong nativeSurfaceObject) {
     sp<IBinder> token(ibinderForJavaObject(env, tokenObj));
     if (token == NULL) return;
@@ -348,7 +352,7 @@ static void nativeSetDisplaySurface(JNIEnv* env, jclass clazz,
     SurfaceComposerClient::setDisplaySurface(token, bufferProducer);
 }
 
-static void nativeSetDisplayLayerStack(JNIEnv* env, jclass clazz,
+static void nativeSetDisplayLayerStack(JNIEnv* env, jclass /* clazz */,
         jobject tokenObj, jint layerStack) {
     sp<IBinder> token(ibinderForJavaObject(env, tokenObj));
     if (token == NULL) return;
@@ -356,7 +360,7 @@ static void nativeSetDisplayLayerStack(JNIEnv* env, jclass clazz,
     SurfaceComposerClient::setDisplayLayerStack(token, layerStack);
 }
 
-static void nativeSetDisplayProjection(JNIEnv* env, jclass clazz,
+static void nativeSetDisplayProjection(JNIEnv* env, jclass /* clazz */,
         jobject tokenObj, jint orientation,
         jint layerStackRect_left, jint layerStackRect_top, jint layerStackRect_right, jint layerStackRect_bottom,
         jint displayRect_left, jint displayRect_top, jint displayRect_right, jint displayRect_bottom) {
@@ -367,14 +371,14 @@ static void nativeSetDisplayProjection(JNIEnv* env, jclass clazz,
     SurfaceComposerClient::setDisplayProjection(token, orientation, layerStackRect, displayRect);
 }
 
-static void nativeSetDisplaySize(JNIEnv* env, jclass clazz,
+static void nativeSetDisplaySize(JNIEnv* env, jclass /* clazz */,
         jobject tokenObj, jint width, jint height) {
     sp<IBinder> token(ibinderForJavaObject(env, tokenObj));
     if (token == NULL) return;
     SurfaceComposerClient::setDisplaySize(token, width, height);
 }
 
-static jobjectArray nativeGetDisplayConfigs(JNIEnv* env, jclass clazz,
+static jobjectArray nativeGetDisplayConfigs(JNIEnv* env, jclass /* clazz */,
         jobject tokenObj) {
     sp<IBinder> token(ibinderForJavaObject(env, tokenObj));
     if (token == NULL) return NULL;
@@ -410,20 +414,21 @@ static jobjectArray nativeGetDisplayConfigs(JNIEnv* env, jclass clazz,
     return configArray;
 }
 
-static jint nativeGetActiveConfig(JNIEnv* env, jclass clazz, jobject tokenObj) {
+static jint nativeGetActiveConfig(JNIEnv* env, jclass /* clazz */, jobject tokenObj) {
     sp<IBinder> token(ibinderForJavaObject(env, tokenObj));
     if (token == NULL) return -1;
     return static_cast<jint>(SurfaceComposerClient::getActiveConfig(token));
 }
 
-static jboolean nativeSetActiveConfig(JNIEnv* env, jclass clazz, jobject tokenObj, jint id) {
+static jboolean nativeSetActiveConfig(JNIEnv* env, jclass /* clazz */, jobject tokenObj, jint id) {
     sp<IBinder> token(ibinderForJavaObject(env, tokenObj));
     if (token == NULL) return JNI_FALSE;
     status_t err = SurfaceComposerClient::setActiveConfig(token, static_cast<int>(id));
     return err == NO_ERROR ? JNI_TRUE : JNI_FALSE;
 }
 
-static void nativeSetDisplayPowerMode(JNIEnv* env, jclass clazz, jobject tokenObj, jint mode) {
+static void nativeSetDisplayPowerMode(JNIEnv* env, jclass /* clazz */, jobject tokenObj,
+                                      jint mode) {
     sp<IBinder> token(ibinderForJavaObject(env, tokenObj));
     if (token == NULL) return;
 
@@ -431,8 +436,8 @@ static void nativeSetDisplayPowerMode(JNIEnv* env, jclass clazz, jobject tokenOb
     SurfaceComposerClient::setDisplayPowerMode(token, mode);
 }
 
-static jboolean nativeClearContentFrameStats(JNIEnv* env, jclass clazz, jlong nativeObject) {
-    SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
+static jboolean nativeClearContentFrameStats(JNIEnv* env, jclass /* clazz */, jlong nativeObject) {
+        SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
     status_t err = ctrl->clearLayerFrameStats();
 
     if (err < 0 && err != NO_INIT) {
@@ -447,8 +452,8 @@ static jboolean nativeClearContentFrameStats(JNIEnv* env, jclass clazz, jlong na
     return JNI_TRUE;
 }
 
-static jboolean nativeGetContentFrameStats(JNIEnv* env, jclass clazz, jlong nativeObject,
-    jobject outStats) {
+static jboolean nativeGetContentFrameStats(JNIEnv* env, jclass /* clazz */, jlong nativeObject,
+        jobject outStats) {
     FrameStats stats;
 
     SurfaceControl* const ctrl = reinterpret_cast<SurfaceControl *>(nativeObject);
@@ -518,7 +523,7 @@ static jboolean nativeGetContentFrameStats(JNIEnv* env, jclass clazz, jlong nati
     return JNI_TRUE;
 }
 
-static jboolean nativeClearAnimationFrameStats(JNIEnv* env, jclass clazz) {
+static jboolean nativeClearAnimationFrameStats(JNIEnv* env, jclass /* clazz */) {
     status_t err = SurfaceComposerClient::clearAnimationFrameStats();
 
     if (err < 0 && err != NO_INIT) {
@@ -533,7 +538,7 @@ static jboolean nativeClearAnimationFrameStats(JNIEnv* env, jclass clazz) {
     return JNI_TRUE;
 }
 
-static jboolean nativeGetAnimationFrameStats(JNIEnv* env, jclass clazz, jobject outStats) {
+static jboolean nativeGetAnimationFrameStats(JNIEnv* env, jclass /* clazz */, jobject outStats) {
     FrameStats stats;
 
     status_t err = SurfaceComposerClient::getAnimationFrameStats(&stats);

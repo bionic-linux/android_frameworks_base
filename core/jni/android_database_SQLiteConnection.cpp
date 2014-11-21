@@ -111,7 +111,7 @@ static int sqliteProgressHandlerCallback(void* data) {
 }
 
 
-static jlong nativeOpen(JNIEnv* env, jclass clazz, jstring pathStr, jint openFlags,
+static jlong nativeOpen(JNIEnv* env, jclass /* clazz */, jstring pathStr, jint openFlags,
         jstring labelStr, jboolean enableTrace, jboolean enableProfile) {
     int sqliteFlags;
     if (openFlags & SQLiteConnection::CREATE_IF_NECESSARY) {
@@ -175,7 +175,7 @@ static jlong nativeOpen(JNIEnv* env, jclass clazz, jstring pathStr, jint openFla
     return reinterpret_cast<jlong>(connection);
 }
 
-static void nativeClose(JNIEnv* env, jclass clazz, jlong connectionPtr) {
+static void nativeClose(JNIEnv* env, jclass /* clazz */, jlong connectionPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
 
     if (connection) {
@@ -245,7 +245,7 @@ static void sqliteCustomFunctionDestructor(void* data) {
     env->DeleteGlobalRef(functionObjGlobal);
 }
 
-static void nativeRegisterCustomFunction(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeRegisterCustomFunction(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jobject functionObj) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
 
@@ -269,7 +269,7 @@ static void nativeRegisterCustomFunction(JNIEnv* env, jclass clazz, jlong connec
     }
 }
 
-static void nativeRegisterLocalizedCollators(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeRegisterLocalizedCollators(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jstring localeStr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
 
@@ -282,7 +282,7 @@ static void nativeRegisterLocalizedCollators(JNIEnv* env, jclass clazz, jlong co
     }
 }
 
-static jlong nativePrepareStatement(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static jlong nativePrepareStatement(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jstring sqlString) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
 
@@ -313,7 +313,7 @@ static jlong nativePrepareStatement(JNIEnv* env, jclass clazz, jlong connectionP
     return reinterpret_cast<jlong>(statement);
 }
 
-static void nativeFinalizeStatement(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeFinalizeStatement(JNIEnv* /* env */, jclass /* clazz */, jlong connectionPtr,
         jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -325,28 +325,28 @@ static void nativeFinalizeStatement(JNIEnv* env, jclass clazz, jlong connectionP
     sqlite3_finalize(statement);
 }
 
-static jint nativeGetParameterCount(JNIEnv* env, jclass clazz, jlong connectionPtr,
-        jlong statementPtr) {
+static jint nativeGetParameterCount(JNIEnv* /* env */, jclass /* clazz */,
+        jlong /* connectionPtr */, jlong statementPtr) {
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
     return sqlite3_bind_parameter_count(statement);
 }
 
-static jboolean nativeIsReadOnly(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static jboolean nativeIsReadOnly(JNIEnv* /* env */, jclass /* clazz */, jlong /* connectionPtr */,
         jlong statementPtr) {
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
     return sqlite3_stmt_readonly(statement) != 0;
 }
 
-static jint nativeGetColumnCount(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static jint nativeGetColumnCount(JNIEnv* /* env */, jclass /* clazz */, jlong /* connectionPtr */,
         jlong statementPtr) {
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
     return sqlite3_column_count(statement);
 }
 
-static jstring nativeGetColumnName(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static jstring nativeGetColumnName(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jlong statementPtr, jint index) {
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
@@ -361,7 +361,7 @@ static jstring nativeGetColumnName(JNIEnv* env, jclass clazz, jlong connectionPt
     return NULL;
 }
 
-static void nativeBindNull(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeBindNull(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jlong statementPtr, jint index) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -372,7 +372,7 @@ static void nativeBindNull(JNIEnv* env, jclass clazz, jlong connectionPtr,
     }
 }
 
-static void nativeBindLong(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeBindLong(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jlong statementPtr, jint index, jlong value) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -383,7 +383,7 @@ static void nativeBindLong(JNIEnv* env, jclass clazz, jlong connectionPtr,
     }
 }
 
-static void nativeBindDouble(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeBindDouble(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jlong statementPtr, jint index, jdouble value) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -394,7 +394,7 @@ static void nativeBindDouble(JNIEnv* env, jclass clazz, jlong connectionPtr,
     }
 }
 
-static void nativeBindString(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeBindString(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jlong statementPtr, jint index, jstring valueString) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -409,7 +409,7 @@ static void nativeBindString(JNIEnv* env, jclass clazz, jlong connectionPtr,
     }
 }
 
-static void nativeBindBlob(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeBindBlob(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jlong statementPtr, jint index, jbyteArray valueArray) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -423,8 +423,8 @@ static void nativeBindBlob(JNIEnv* env, jclass clazz, jlong connectionPtr,
     }
 }
 
-static void nativeResetStatementAndClearBindings(JNIEnv* env, jclass clazz, jlong connectionPtr,
-        jlong statementPtr) {
+static void nativeResetStatementAndClearBindings(JNIEnv* env, jclass /* clazz */,
+        jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
 
@@ -448,7 +448,7 @@ static int executeNonQuery(JNIEnv* env, SQLiteConnection* connection, sqlite3_st
     return err;
 }
 
-static void nativeExecute(JNIEnv* env, jclass clazz, jlong connectionPtr,
+static void nativeExecute(JNIEnv* env, jclass /* clazz */, jlong connectionPtr,
         jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -456,7 +456,7 @@ static void nativeExecute(JNIEnv* env, jclass clazz, jlong connectionPtr,
     executeNonQuery(env, connection, statement);
 }
 
-static jint nativeExecuteForChangedRowCount(JNIEnv* env, jclass clazz,
+static jint nativeExecuteForChangedRowCount(JNIEnv* env, jclass /* clazz */,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -465,7 +465,7 @@ static jint nativeExecuteForChangedRowCount(JNIEnv* env, jclass clazz,
     return err == SQLITE_DONE ? sqlite3_changes(connection->db) : -1;
 }
 
-static jlong nativeExecuteForLastInsertedRowId(JNIEnv* env, jclass clazz,
+static jlong nativeExecuteForLastInsertedRowId(JNIEnv* env, jclass /* clazz */,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -483,7 +483,7 @@ static int executeOneRowQuery(JNIEnv* env, SQLiteConnection* connection, sqlite3
     return err;
 }
 
-static jlong nativeExecuteForLong(JNIEnv* env, jclass clazz,
+static jlong nativeExecuteForLong(JNIEnv* env, jclass /* clazz */,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -495,7 +495,7 @@ static jlong nativeExecuteForLong(JNIEnv* env, jclass clazz,
     return -1;
 }
 
-static jstring nativeExecuteForString(JNIEnv* env, jclass clazz,
+static jstring nativeExecuteForString(JNIEnv* env, jclass /* clazz */,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -545,7 +545,7 @@ static int createAshmemRegionWithData(JNIEnv* env, const void* data, size_t leng
     return -1;
 }
 
-static jint nativeExecuteForBlobFileDescriptor(JNIEnv* env, jclass clazz,
+static jint nativeExecuteForBlobFileDescriptor(JNIEnv* env, jclass /* clazz */,
         jlong connectionPtr, jlong statementPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     sqlite3_stmt* statement = reinterpret_cast<sqlite3_stmt*>(statementPtr);
@@ -662,7 +662,7 @@ static CopyRowResult copyRow(JNIEnv* env, CursorWindow* window,
     return result;
 }
 
-static jlong nativeExecuteForCursorWindow(JNIEnv* env, jclass clazz,
+static jlong nativeExecuteForCursorWindow(JNIEnv* env, jclass /* clazz */,
         jlong connectionPtr, jlong statementPtr, jlong windowPtr,
         jint startPos, jint requiredPos, jboolean countAllRows) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
@@ -758,7 +758,7 @@ static jlong nativeExecuteForCursorWindow(JNIEnv* env, jclass clazz,
     return result;
 }
 
-static jint nativeGetDbLookaside(JNIEnv* env, jobject clazz, jlong connectionPtr) {
+static jint nativeGetDbLookaside(JNIEnv* /* env */, jobject /* clazz */, jlong connectionPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
 
     int cur = -1;
@@ -767,12 +767,12 @@ static jint nativeGetDbLookaside(JNIEnv* env, jobject clazz, jlong connectionPtr
     return cur;
 }
 
-static void nativeCancel(JNIEnv* env, jobject clazz, jlong connectionPtr) {
+static void nativeCancel(JNIEnv* /* env */, jobject /* clazz */, jlong connectionPtr) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     connection->canceled = true;
 }
 
-static void nativeResetCancel(JNIEnv* env, jobject clazz, jlong connectionPtr,
+static void nativeResetCancel(JNIEnv* /* env */, jobject /* clazz */, jlong connectionPtr,
         jboolean cancelable) {
     SQLiteConnection* connection = reinterpret_cast<SQLiteConnection*>(connectionPtr);
     connection->canceled = false;

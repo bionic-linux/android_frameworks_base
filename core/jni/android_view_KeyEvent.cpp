@@ -105,12 +105,12 @@ status_t android_view_KeyEvent_recycle(JNIEnv* env, jobject eventObj) {
     return OK;
 }
 
-static jstring android_view_KeyEvent_nativeKeyCodeToString(JNIEnv* env, jobject clazz,
+static jstring android_view_KeyEvent_nativeKeyCodeToString(JNIEnv* env, jobject /* clazz */,
         jint keyCode) {
     return env->NewStringUTF(KeyEvent::getLabel(keyCode));
 }
 
-static jint android_view_KeyEvent_nativeKeyCodeFromString(JNIEnv* env, jobject clazz,
+static jint android_view_KeyEvent_nativeKeyCodeFromString(JNIEnv* env, jobject /* clazz */,
         jstring label) {
     ScopedUtfChars keyLabel(env, label);
     return KeyEvent::getKeyCodeFromLabel(keyLabel.c_str());

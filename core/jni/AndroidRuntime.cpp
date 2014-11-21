@@ -194,18 +194,20 @@ static AndroidRuntime* gCurRuntime = NULL;
 /*
  * Code written in the Java Programming Language calls here from main().
  */
-static void com_android_internal_os_RuntimeInit_nativeFinishInit(JNIEnv* env, jobject clazz)
+static void com_android_internal_os_RuntimeInit_nativeFinishInit(JNIEnv* /* env */,
+                                                                 jobject /* clazz */)
 {
     gCurRuntime->onStarted();
 }
 
-static void com_android_internal_os_RuntimeInit_nativeZygoteInit(JNIEnv* env, jobject clazz)
+static void com_android_internal_os_RuntimeInit_nativeZygoteInit(JNIEnv* /* env */,
+                                                                 jobject /* clazz */)
 {
     gCurRuntime->onZygoteInit();
 }
 
-static void com_android_internal_os_RuntimeInit_nativeSetExitWithoutCleanup(JNIEnv* env,
-        jobject clazz, jboolean exitWithoutCleanup)
+static void com_android_internal_os_RuntimeInit_nativeSetExitWithoutCleanup(JNIEnv* /* env */,
+        jobject /* clazz */, jboolean exitWithoutCleanup)
 {
     gCurRuntime->setExitWithoutCleanup(exitWithoutCleanup);
 }
@@ -319,7 +321,7 @@ static void runtime_exit(int code)
  *
  * We ignore "fp" and just write the results to the log file.
  */
-static void runtime_vfprintf(FILE* fp, const char* format, va_list ap)
+static void runtime_vfprintf(FILE* /* fp */, const char* format, va_list ap)
 {
     LOG_PRI_VA(ANDROID_LOG_INFO, "vm-printf", format, ap);
 }
@@ -1057,7 +1059,7 @@ void AndroidRuntime::exit(int code)
     }
 }
 
-void AndroidRuntime::onVmCreated(JNIEnv* env)
+void AndroidRuntime::onVmCreated(JNIEnv* /* env */)
 {
     // If AndroidRuntime had anything to do here, we'd have done it in 'start'.
 }
@@ -1413,7 +1415,7 @@ AndroidRuntime* AndroidRuntime::getRuntime()
  */
 extern "C"
 jint Java_com_android_internal_util_WithFramework_registerNatives(
-        JNIEnv* env, jclass clazz) {
+        JNIEnv* env, jclass /* clazz */) {
     return register_jni_procs(gRegJNI, NELEM(gRegJNI), env);
 }
 
@@ -1421,7 +1423,7 @@ jint Java_com_android_internal_util_WithFramework_registerNatives(
  * Used by LoadClass to register native functions.
  */
 extern "C"
-jint Java_LoadClass_registerNatives(JNIEnv* env, jclass clazz) {
+jint Java_LoadClass_registerNatives(JNIEnv* env, jclass /* clazz */) {
     return register_jni_procs(gRegJNI, NELEM(gRegJNI), env);
 }
 

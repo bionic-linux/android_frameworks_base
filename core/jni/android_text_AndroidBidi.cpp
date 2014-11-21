@@ -25,8 +25,8 @@
 
 namespace android {
 
-static jint runBidi(JNIEnv* env, jobject obj, jint dir, jcharArray chsArray,
-                    jbyteArray infoArray, jint n, jboolean haveInfo)
+static jint runBidi(JNIEnv* env, jobject /* obj */, jint dir, jcharArray chsArray,
+                    jbyteArray infoArray, jint n, jboolean /* haveInfo */)
 {
     // Parameters are checked on java side
     // Failures from GetXXXArrayElements indicate a serious out-of-memory condition

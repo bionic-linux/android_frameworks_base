@@ -195,7 +195,7 @@ InputQueue* InputQueue::createQueue(jobject inputQueueObj, const sp<Looper>& loo
     return new InputQueue(inputQueueObj, looper, pipeFds[0], pipeFds[1]);
 }
 
-static jlong nativeInit(JNIEnv* env, jobject clazz, jobject queueWeak, jobject jMsgQueue) {
+static jlong nativeInit(JNIEnv* env, jobject /* clazz */, jobject queueWeak, jobject jMsgQueue) {
     sp<MessageQueue> messageQueue = android_os_MessageQueue_getMessageQueue(env, jMsgQueue);
     if (messageQueue == NULL) {
         jniThrowRuntimeException(env, "MessageQueue is not initialized.");
@@ -210,13 +210,13 @@ static jlong nativeInit(JNIEnv* env, jobject clazz, jobject queueWeak, jobject j
     return reinterpret_cast<jlong>(queue.get());
 }
 
-static void nativeDispose(JNIEnv* env, jobject clazz, jlong ptr) {
+static void nativeDispose(JNIEnv* /* env */, jobject /* clazz */, jlong ptr) {
     sp<InputQueue> queue = reinterpret_cast<InputQueue*>(ptr);
     queue->detachLooper();
     queue->decStrong(&gInputQueueClassInfo);
 }
 
-static jlong nativeSendKeyEvent(JNIEnv* env, jobject clazz, jlong ptr, jobject eventObj,
+static jlong nativeSendKeyEvent(JNIEnv* env, jobject /* clazz */, jlong ptr, jobject eventObj,
         jboolean predispatch) {
     InputQueue* queue = reinterpret_cast<InputQueue*>(ptr);
     KeyEvent* event = queue->createKeyEvent();
@@ -235,7 +235,7 @@ static jlong nativeSendKeyEvent(JNIEnv* env, jobject clazz, jlong ptr, jobject e
     return reinterpret_cast<jlong>(event);
 }
 
-static jlong nativeSendMotionEvent(JNIEnv* env, jobject clazz, jlong ptr, jobject eventObj) {
+static jlong nativeSendMotionEvent(JNIEnv* env, jobject /* clazz */, jlong ptr, jobject eventObj) {
     sp<InputQueue> queue = reinterpret_cast<InputQueue*>(ptr);
     MotionEvent* originalEvent = android_view_MotionEvent_getNativePtr(env, eventObj);
     if (!originalEvent) {

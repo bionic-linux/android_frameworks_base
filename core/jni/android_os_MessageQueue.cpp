@@ -116,7 +116,7 @@ sp<MessageQueue> android_os_MessageQueue_getMessageQueue(JNIEnv* env, jobject me
     return reinterpret_cast<NativeMessageQueue*>(ptr);
 }
 
-static jlong android_os_MessageQueue_nativeInit(JNIEnv* env, jclass clazz) {
+static jlong android_os_MessageQueue_nativeInit(JNIEnv* env, jclass /* clazz */) {
     NativeMessageQueue* nativeMessageQueue = new NativeMessageQueue();
     if (!nativeMessageQueue) {
         jniThrowRuntimeException(env, "Unable to allocate native queue");
@@ -127,23 +127,24 @@ static jlong android_os_MessageQueue_nativeInit(JNIEnv* env, jclass clazz) {
     return reinterpret_cast<jlong>(nativeMessageQueue);
 }
 
-static void android_os_MessageQueue_nativeDestroy(JNIEnv* env, jclass clazz, jlong ptr) {
+static void android_os_MessageQueue_nativeDestroy(JNIEnv* env, jclass /* clazz */, jlong ptr) {
     NativeMessageQueue* nativeMessageQueue = reinterpret_cast<NativeMessageQueue*>(ptr);
     nativeMessageQueue->decStrong(env);
 }
 
-static void android_os_MessageQueue_nativePollOnce(JNIEnv* env, jclass clazz,
+static void android_os_MessageQueue_nativePollOnce(JNIEnv* env, jclass /* clazz */,
         jlong ptr, jint timeoutMillis) {
     NativeMessageQueue* nativeMessageQueue = reinterpret_cast<NativeMessageQueue*>(ptr);
     nativeMessageQueue->pollOnce(env, timeoutMillis);
 }
 
-static void android_os_MessageQueue_nativeWake(JNIEnv* env, jclass clazz, jlong ptr) {
+static void android_os_MessageQueue_nativeWake(JNIEnv* /* env */, jclass /* clazz */, jlong ptr) {
     NativeMessageQueue* nativeMessageQueue = reinterpret_cast<NativeMessageQueue*>(ptr);
     return nativeMessageQueue->wake();
 }
 
-static jboolean android_os_MessageQueue_nativeIsIdling(JNIEnv* env, jclass clazz, jlong ptr) {
+static jboolean android_os_MessageQueue_nativeIsIdling(JNIEnv* /* env */, jclass /* clazz */,
+                                                       jlong ptr) {
     NativeMessageQueue* nativeMessageQueue = reinterpret_cast<NativeMessageQueue*>(ptr);
     return nativeMessageQueue->getLooper()->isIdling();
 }

@@ -232,7 +232,7 @@ inline float distance(float x, float y, float z) {
 }
 
 static
-void util_computeBoundingSphere(JNIEnv *env, jclass clazz,
+void util_computeBoundingSphere(JNIEnv *env, jclass /* clazz */,
         jfloatArray positions_ref, jint positionsOffset, jint positionsCount,
         jfloatArray sphere_ref, jint sphereOffset) {
     FloatArrayHelper positions(env, positions_ref, positionsOffset, 0);
@@ -389,7 +389,7 @@ static void computeFrustum(const float* m, float* f) {
 }
 
 static
-jint util_frustumCullSpheres(JNIEnv *env, jclass clazz,
+jint util_frustumCullSpheres(JNIEnv *env, jclass /* clazz */,
         jfloatArray mvp_ref, jint mvpOffset,
         jfloatArray spheres_ref, jint spheresOffset, jint spheresCount,
         jintArray results_ref, jint resultsOffset, jint resultsCapacity) {
@@ -436,7 +436,7 @@ jint util_frustumCullSpheres(JNIEnv *env, jclass clazz,
  */
 
 static
-jint util_visibilityTest(JNIEnv *env, jclass clazz,
+jint util_visibilityTest(JNIEnv *env, jclass /* clazz */,
         jfloatArray ws_ref, jint wsOffset,
         jfloatArray positions_ref, jint positionsOffset,
         jcharArray indices_ref, jint indicesOffset, jint indexCount) {
@@ -491,7 +491,7 @@ void multiplyMM(float* r, const float* lhs, const float* rhs)
 }
 
 static
-void util_multiplyMM(JNIEnv *env, jclass clazz,
+void util_multiplyMM(JNIEnv *env, jclass /* clazz */,
     jfloatArray result_ref, jint resultOffset,
     jfloatArray lhs_ref, jint lhsOffset,
     jfloatArray rhs_ref, jint rhsOffset) {
@@ -522,7 +522,7 @@ void multiplyMV(float* r, const float* lhs, const float* rhs)
 }
 
 static
-void util_multiplyMV(JNIEnv *env, jclass clazz,
+void util_multiplyMV(JNIEnv *env, jclass /* clazz */,
     jfloatArray result_ref, jint resultOffset,
     jfloatArray lhs_ref, jint lhsOffset,
     jfloatArray rhs_ref, jint rhsOffset) {
@@ -550,14 +550,14 @@ void util_multiplyMV(JNIEnv *env, jclass clazz,
 
 static jfieldID nativeBitmapID = 0;
 
-void nativeUtilsClassInit(JNIEnv *env, jclass clazz)
+void nativeUtilsClassInit(JNIEnv *env, jclass /* clazz */)
 {
     jclass bitmapClass = env->FindClass("android/graphics/Bitmap");
     nativeBitmapID = env->GetFieldID(bitmapClass, "mNativeBitmap", "J");
 }
 
 extern void setGLDebugLevel(int level);
-void setTracingLevel(JNIEnv *env, jclass clazz, jint level)
+void setTracingLevel(JNIEnv* /* env */, jclass /* clazz */, jint level)
 {
     setGLDebugLevel(level);
 }
@@ -626,7 +626,7 @@ static int getType(SkColorType colorType)
     }
 }
 
-static jint util_getInternalFormat(JNIEnv *env, jclass clazz,
+static jint util_getInternalFormat(JNIEnv *env, jclass /* clazz */,
         jobject jbitmap)
 {
     SkBitmap const * nativeBitmap =
@@ -634,7 +634,7 @@ static jint util_getInternalFormat(JNIEnv *env, jclass clazz,
     return getInternalFormat(nativeBitmap->colorType());
 }
 
-static jint util_getType(JNIEnv *env, jclass clazz,
+static jint util_getType(JNIEnv *env, jclass /* clazz */,
         jobject jbitmap)
 {
     SkBitmap const * nativeBitmap =
@@ -642,7 +642,7 @@ static jint util_getType(JNIEnv *env, jclass clazz,
     return getType(nativeBitmap->colorType());
 }
 
-static jint util_texImage2D(JNIEnv *env, jclass clazz,
+static jint util_texImage2D(JNIEnv *env, jclass /* clazz */,
         jint target, jint level, jint internalformat,
         jobject jbitmap, jint type, jint border)
 {
@@ -691,7 +691,7 @@ error:
     return err;
 }
 
-static jint util_texSubImage2D(JNIEnv *env, jclass clazz,
+static jint util_texSubImage2D(JNIEnv *env, jclass /* clazz */,
         jint target, jint level, jint xoffset, jint yoffset,
         jobject jbitmap, jint format, jint type)
 {
@@ -822,7 +822,7 @@ private:
  * @param out an ETC1 compressed version of the data.
  *
  */
-static void etc1_encodeBlock(JNIEnv *env, jclass clazz,
+static void etc1_encodeBlock(JNIEnv *env, jclass /* clazz */,
         jobject in, jint validPixelMask, jobject out) {
     if (validPixelMask < 0 || validPixelMask > 15) {
         doThrowIAE(env, "validPixelMask");
@@ -851,7 +851,7 @@ static void etc1_encodeBlock(JNIEnv *env, jclass clazz,
  * 4 x 4 square of 3-byte pixels in form R, G, B. Byte (3 * (x + 4 * y) is the R
  * value of pixel (x, y).
  */
-static void etc1_decodeBlock(JNIEnv *env, jclass clazz,
+static void etc1_decodeBlock(JNIEnv *env, jclass /* clazz */,
         jobject in, jobject out){
     BufferHelper inB(env, in);
     BufferHelper outB(env, out);
@@ -870,7 +870,7 @@ static void etc1_decodeBlock(JNIEnv *env, jclass clazz,
 /**
  * Return the size of the encoded image data (does not include size of PKM header).
  */
-static jint etc1_getEncodedDataSize(JNIEnv *env, jclass clazz,
+static jint etc1_getEncodedDataSize(JNIEnv* /* env */, jclass /* clazz */,
         jint width, jint height) {
     return etc1_get_encoded_data_size(width, height);
 }
@@ -881,7 +881,7 @@ static jint etc1_getEncodedDataSize(JNIEnv *env, jclass clazz,
  *           pixel (x,y) is at pIn + pixelSize * x + stride * y + redOffset;
  * @param out pointer to encoded data. Must be large enough to store entire encoded image.
  */
-static void etc1_encodeImage(JNIEnv *env, jclass clazz,
+static void etc1_encodeImage(JNIEnv *env, jclass /* clazz */,
         jobject in, jint width, jint height,
         jint pixelSize, jint stride, jobject out) {
     if (pixelSize < 2 || pixelSize > 3) {
@@ -911,7 +911,7 @@ static void etc1_encodeImage(JNIEnv *env, jclass clazz,
  *            pixel (x,y) is at pIn + pixelSize * x + stride * y. Must be
  *            large enough to store entire image.
  */
-static void etc1_decodeImage(JNIEnv *env, jclass clazz,
+static void etc1_decodeImage(JNIEnv *env, jclass /* clazz */,
         jobject  in, jobject out,
         jint width, jint height,
         jint pixelSize, jint stride) {
@@ -938,7 +938,7 @@ static void etc1_decodeImage(JNIEnv *env, jclass clazz,
 /**
  * Format a PKM header
  */
-static void etc1_formatHeader(JNIEnv *env, jclass clazz,
+static void etc1_formatHeader(JNIEnv *env, jclass /* clazz */,
         jobject header, jint width, jint height) {
     BufferHelper headerB(env, header);
     if (headerB.checkPointer("header") ){
@@ -953,7 +953,7 @@ static void etc1_formatHeader(JNIEnv *env, jclass clazz,
 /**
  * Check if a PKM header is correctly formatted.
  */
-static jboolean etc1_isValid(JNIEnv *env, jclass clazz,
+static jboolean etc1_isValid(JNIEnv *env, jclass /* clazz */,
         jobject header) {
     jboolean result = false;
     BufferHelper headerB(env, header);
@@ -970,7 +970,7 @@ static jboolean etc1_isValid(JNIEnv *env, jclass clazz,
 /**
  * Read the image width from a PKM header
  */
-static jint etc1_getWidth(JNIEnv *env, jclass clazz,
+static jint etc1_getWidth(JNIEnv *env, jclass /* clazz */,
         jobject header) {
     jint result = 0;
     BufferHelper headerB(env, header);
@@ -987,7 +987,7 @@ static jint etc1_getWidth(JNIEnv *env, jclass clazz,
 /**
  * Read the image height from a PKM header
  */
-static jint etc1_getHeight(JNIEnv *env, jclass clazz,
+static jint etc1_getHeight(JNIEnv *env, jclass /* clazz */,
         jobject header) {
     jint result = 0;
     BufferHelper headerB(env, header);

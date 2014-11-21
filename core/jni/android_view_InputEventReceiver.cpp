@@ -156,7 +156,7 @@ void NativeInputEventReceiver::setFdEvents(int events) {
     }
 }
 
-int NativeInputEventReceiver::handleEvent(int receiveFd, int events, void* data) {
+int NativeInputEventReceiver::handleEvent(int /* receiveFd */, int events, void* /* data */) {
     if (events & (ALOOPER_EVENT_ERROR | ALOOPER_EVENT_HANGUP)) {
 #if DEBUG_DISPATCH_CYCLE
         // This error typically occurs when the publisher has closed the input channel
@@ -332,7 +332,7 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
 }
 
 
-static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverWeak,
+static jlong nativeInit(JNIEnv* env, jclass /* clazz */, jobject receiverWeak,
         jobject inputChannelObj, jobject messageQueueObj) {
     sp<InputChannel> inputChannel = android_view_InputChannel_getInputChannel(env,
             inputChannelObj);
@@ -361,14 +361,14 @@ static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverWeak,
     return reinterpret_cast<jlong>(receiver.get());
 }
 
-static void nativeDispose(JNIEnv* env, jclass clazz, jlong receiverPtr) {
+static void nativeDispose(JNIEnv* /* env */, jclass /* clazz */, jlong receiverPtr) {
     sp<NativeInputEventReceiver> receiver =
             reinterpret_cast<NativeInputEventReceiver*>(receiverPtr);
     receiver->dispose();
     receiver->decStrong(gInputEventReceiverClassInfo.clazz); // drop reference held by the object
 }
 
-static void nativeFinishInputEvent(JNIEnv* env, jclass clazz, jlong receiverPtr,
+static void nativeFinishInputEvent(JNIEnv* env, jclass /* clazz */, jlong receiverPtr,
         jint seq, jboolean handled) {
     sp<NativeInputEventReceiver> receiver =
             reinterpret_cast<NativeInputEventReceiver*>(receiverPtr);
@@ -380,7 +380,7 @@ static void nativeFinishInputEvent(JNIEnv* env, jclass clazz, jlong receiverPtr,
     }
 }
 
-static jboolean nativeConsumeBatchedInputEvents(JNIEnv* env, jclass clazz, jlong receiverPtr,
+static jboolean nativeConsumeBatchedInputEvents(JNIEnv* env, jclass /* clazz */, jlong receiverPtr,
         jlong frameTimeNanos) {
     sp<NativeInputEventReceiver> receiver =
             reinterpret_cast<NativeInputEventReceiver*>(receiverPtr);

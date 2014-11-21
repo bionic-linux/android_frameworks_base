@@ -132,7 +132,7 @@ static inline bool isSurfaceValid(const sp<Surface>& sur) {
 
 // ----------------------------------------------------------------------------
 
-static jlong nativeCreateFromSurfaceTexture(JNIEnv* env, jclass clazz,
+static jlong nativeCreateFromSurfaceTexture(JNIEnv* env, jclass /* clazz */,
         jobject surfaceTextureObj) {
     sp<IGraphicBufferProducer> producer(SurfaceTexture_getProducer(env, surfaceTextureObj));
     if (producer == NULL) {
@@ -151,17 +151,17 @@ static jlong nativeCreateFromSurfaceTexture(JNIEnv* env, jclass clazz,
     return jlong(surface.get());
 }
 
-static void nativeRelease(JNIEnv* env, jclass clazz, jlong nativeObject) {
+static void nativeRelease(JNIEnv* /* env */, jclass /* clazz */, jlong nativeObject) {
     sp<Surface> sur(reinterpret_cast<Surface *>(nativeObject));
     sur->decStrong(&sRefBaseOwner);
 }
 
-static jboolean nativeIsValid(JNIEnv* env, jclass clazz, jlong nativeObject) {
+static jboolean nativeIsValid(JNIEnv* /* env */, jclass /* clazz */, jlong nativeObject) {
     sp<Surface> sur(reinterpret_cast<Surface *>(nativeObject));
     return isSurfaceValid(sur) ? JNI_TRUE : JNI_FALSE;
 }
 
-static jboolean nativeIsConsumerRunningBehind(JNIEnv* env, jclass clazz, jlong nativeObject) {
+static jboolean nativeIsConsumerRunningBehind(JNIEnv* env, jclass /* clazz */, jlong nativeObject) {
     sp<Surface> sur(reinterpret_cast<Surface *>(nativeObject));
     if (!isSurfaceValid(sur)) {
         doThrowIAE(env);
@@ -187,7 +187,7 @@ static inline SkColorType convertPixelFormat(PixelFormat format) {
     }
 }
 
-static jlong nativeLockCanvas(JNIEnv* env, jclass clazz,
+static jlong nativeLockCanvas(JNIEnv* env, jclass /* clazz */,
         jlong nativeObject, jobject canvasObj, jobject dirtyRectObj) {
     sp<Surface> surface(reinterpret_cast<Surface *>(nativeObject));
 
@@ -260,7 +260,7 @@ static jlong nativeLockCanvas(JNIEnv* env, jclass clazz,
     return (jlong) lockedSurface.get();
 }
 
-static void nativeUnlockCanvasAndPost(JNIEnv* env, jclass clazz,
+static void nativeUnlockCanvasAndPost(JNIEnv* env, jclass /* clazz */,
         jlong nativeObject, jobject canvasObj) {
     sp<Surface> surface(reinterpret_cast<Surface *>(nativeObject));
     if (!isSurfaceValid(surface)) {
@@ -289,7 +289,7 @@ static void nativeAllocateBuffers(JNIEnv* /* env */ , jclass /* clazz */,
 
 // ----------------------------------------------------------------------------
 
-static jlong nativeCreateFromSurfaceControl(JNIEnv* env, jclass clazz,
+static jlong nativeCreateFromSurfaceControl(JNIEnv* /* env */, jclass /* clazz */,
         jlong surfaceControlNativeObj) {
     /*
      * This is used by the WindowManagerService just after constructing
@@ -305,7 +305,7 @@ static jlong nativeCreateFromSurfaceControl(JNIEnv* env, jclass clazz,
     return reinterpret_cast<jlong>(surface.get());
 }
 
-static jlong nativeReadFromParcel(JNIEnv* env, jclass clazz,
+static jlong nativeReadFromParcel(JNIEnv* env, jclass /* clazz */,
         jlong nativeObject, jobject parcelObj) {
     Parcel* parcel = parcelForJavaObject(env, parcelObj);
     if (parcel == NULL) {
@@ -341,7 +341,7 @@ static jlong nativeReadFromParcel(JNIEnv* env, jclass clazz,
     return jlong(sur.get());
 }
 
-static void nativeWriteToParcel(JNIEnv* env, jclass clazz,
+static void nativeWriteToParcel(JNIEnv* env, jclass /* clazz */,
         jlong nativeObject, jobject parcelObj) {
     Parcel* parcel = parcelForJavaObject(env, parcelObj);
     if (parcel == NULL) {

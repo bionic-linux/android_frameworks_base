@@ -263,7 +263,9 @@ LOCAL_MODULE:= libandroid_runtime
 
 # -Wno-unknown-pragmas: necessary for Clang as the GL bindings need to turn
 #                       off a GCC warning that Clang doesn't know.
-LOCAL_CFLAGS += -Wall -Werror -Wunused -Wunreachable-code -Wno-unknown-pragmas
+LOCAL_CFLAGS += -Wall -Wextra -Werror -Wunused -Wunreachable-code -Wno-unknown-pragmas
+
+LOCAL_CLANG := true
 
 include $(BUILD_SHARED_LIBRARY)
 

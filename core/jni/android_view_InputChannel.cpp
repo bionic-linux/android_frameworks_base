@@ -121,7 +121,7 @@ static jobject android_view_InputChannel_createInputChannel(JNIEnv* env,
 }
 
 static jobjectArray android_view_InputChannel_nativeOpenInputChannelPair(JNIEnv* env,
-        jclass clazz, jstring nameObj) {
+        jclass /* clazz */, jstring nameObj) {
     const char* nameChars = env->GetStringUTFChars(nameObj, NULL);
     String8 name(nameChars);
     env->ReleaseStringUTFChars(nameObj, nameChars);

@@ -51,7 +51,7 @@ static int directionality_map[U_CHAR_DIRECTION_COUNT] = {
 
 namespace android {
 
-static void getDirectionalities(JNIEnv* env, jobject obj, jcharArray srcArray,
+static void getDirectionalities(JNIEnv* env, jobject /* obj */, jcharArray srcArray,
                                 jbyteArray destArray, jint count)
 {
     ScopedCharArrayRO src(env, srcArray);
@@ -93,7 +93,7 @@ static void getDirectionalities(JNIEnv* env, jobject obj, jcharArray srcArray,
     }
 }
 
-static jint getEastAsianWidth(JNIEnv* env, jobject obj, jchar input)
+static jint getEastAsianWidth(JNIEnv* /* env */, jobject /* obj */, jchar input)
 {
     int width = u_getIntPropertyValue(input, UCHAR_EAST_ASIAN_WIDTH);
     if (width < 0 || width >= U_EA_COUNT)
@@ -102,7 +102,7 @@ static jint getEastAsianWidth(JNIEnv* env, jobject obj, jchar input)
     return width;
 }
 
-static void getEastAsianWidths(JNIEnv* env, jobject obj, jcharArray srcArray,
+static void getEastAsianWidths(JNIEnv* env, jobject /* obj */, jcharArray srcArray,
                                jint start, jint count, jbyteArray destArray)
 {
     ScopedCharArrayRO src(env, srcArray);
@@ -145,7 +145,7 @@ static void getEastAsianWidths(JNIEnv* env, jobject obj, jcharArray srcArray,
     }
 }
 
-static jboolean mirror(JNIEnv* env, jobject obj, jcharArray charArray, jint start, jint count)
+static jboolean mirror(JNIEnv* env, jobject /* obj */, jcharArray charArray, jint start, jint count)
 {
     ScopedCharArrayRW data(env, charArray);
     if (data.get() == NULL) {
@@ -173,7 +173,7 @@ static jboolean mirror(JNIEnv* env, jobject obj, jcharArray charArray, jint star
     return ret;
 }
 
-static jchar getMirror(JNIEnv* env, jobject obj, jchar c)
+static jchar getMirror(JNIEnv* /* env */, jobject /* obj */, jchar c)
 {
     return u_charMirror(c);
 }

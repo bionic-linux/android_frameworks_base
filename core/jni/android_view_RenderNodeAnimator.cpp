@@ -98,21 +98,21 @@ static inline CanvasPropertyPaintAnimator::PaintField toPaintField(jint field) {
     return static_cast<CanvasPropertyPaintAnimator::PaintField>(field);
 }
 
-static jlong createAnimator(JNIEnv* env, jobject clazz,
+static jlong createAnimator(JNIEnv* /* env */, jobject /* clazz */,
         jint propertyRaw, jfloat finalValue) {
     RenderPropertyAnimator::RenderProperty property = toRenderProperty(propertyRaw);
     BaseRenderNodeAnimator* animator = new RenderPropertyAnimator(property, finalValue);
     return reinterpret_cast<jlong>( animator );
 }
 
-static jlong createCanvasPropertyFloatAnimator(JNIEnv* env, jobject clazz,
+static jlong createCanvasPropertyFloatAnimator(JNIEnv* /* env */, jobject /* clazz */,
         jlong canvasPropertyPtr, jfloat finalValue) {
     CanvasPropertyPrimitive* canvasProperty = reinterpret_cast<CanvasPropertyPrimitive*>(canvasPropertyPtr);
     BaseRenderNodeAnimator* animator = new CanvasPropertyPrimitiveAnimator(canvasProperty, finalValue);
     return reinterpret_cast<jlong>( animator );
 }
 
-static jlong createCanvasPropertyPaintAnimator(JNIEnv* env, jobject clazz,
+static jlong createCanvasPropertyPaintAnimator(JNIEnv* /* env */, jobject /* clazz */,
         jlong canvasPropertyPtr, jint paintFieldRaw,
         jfloat finalValue) {
     CanvasPropertyPaint* canvasProperty = reinterpret_cast<CanvasPropertyPaint*>(canvasPropertyPtr);
@@ -122,46 +122,50 @@ static jlong createCanvasPropertyPaintAnimator(JNIEnv* env, jobject clazz,
     return reinterpret_cast<jlong>( animator );
 }
 
-static jlong createRevealAnimator(JNIEnv* env, jobject clazz,
+static jlong createRevealAnimator(JNIEnv* /* env */, jobject /* clazz */,
         jint centerX, jint centerY, jfloat startRadius, jfloat endRadius) {
     BaseRenderNodeAnimator* animator = new RevealAnimator(centerX, centerY, startRadius, endRadius);
     return reinterpret_cast<jlong>( animator );
 }
 
-static void setStartValue(JNIEnv* env, jobject clazz, jlong animatorPtr, jfloat startValue) {
+static void setStartValue(JNIEnv* /* env */, jobject /* clazz */, jlong animatorPtr,
+                          jfloat startValue) {
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     animator->setStartValue(startValue);
 }
 
-static void setDuration(JNIEnv* env, jobject clazz, jlong animatorPtr, jlong duration) {
+static void setDuration(JNIEnv* /* env */, jobject /* clazz */, jlong animatorPtr, jlong duration) {
     LOG_ALWAYS_FATAL_IF(duration < 0, "Duration cannot be negative");
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     animator->setDuration(duration);
 }
 
-static jlong getDuration(JNIEnv* env, jobject clazz, jlong animatorPtr) {
+static jlong getDuration(JNIEnv* /* env */, jobject /* clazz */, jlong animatorPtr) {
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     return static_cast<jlong>(animator->duration());
 }
 
-static void setStartDelay(JNIEnv* env, jobject clazz, jlong animatorPtr, jlong startDelay) {
+static void setStartDelay(JNIEnv* /* env */, jobject /* clazz */, jlong animatorPtr,
+                          jlong startDelay) {
     LOG_ALWAYS_FATAL_IF(startDelay < 0, "Start delay cannot be negative");
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     animator->setStartDelay(startDelay);
 }
 
-static void setInterpolator(JNIEnv* env, jobject clazz, jlong animatorPtr, jlong interpolatorPtr) {
+static void setInterpolator(JNIEnv* /* env */, jobject /* clazz */, jlong animatorPtr,
+                            jlong interpolatorPtr) {
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     Interpolator* interpolator = reinterpret_cast<Interpolator*>(interpolatorPtr);
     animator->setInterpolator(interpolator);
 }
 
-static void setAllowRunningAsync(JNIEnv* env, jobject clazz, jlong animatorPtr, jboolean mayRunAsync) {
+static void setAllowRunningAsync(JNIEnv* /* env */, jobject /* clazz */, jlong animatorPtr,
+                                 jboolean mayRunAsync) {
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     animator->setAllowRunningAsync(mayRunAsync);
 }
 
-static void start(JNIEnv* env, jobject clazz, jlong animatorPtr, jobject finishListener) {
+static void start(JNIEnv* env, jobject /* clazz */, jlong animatorPtr, jobject finishListener) {
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     if (finishListener) {
         animator->setListener(new AnimationListenerBridge(env, finishListener));
@@ -169,7 +173,7 @@ static void start(JNIEnv* env, jobject clazz, jlong animatorPtr, jobject finishL
     animator->start();
 }
 
-static void end(JNIEnv* env, jobject clazz, jlong animatorPtr) {
+static void end(JNIEnv* /* env */, jobject /* clazz */, jlong animatorPtr) {
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     animator->end();
 }

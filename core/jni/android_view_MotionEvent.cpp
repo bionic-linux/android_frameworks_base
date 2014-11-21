@@ -331,7 +331,7 @@ static void pointerPropertiesFromNative(JNIEnv* env, const PointerProperties* po
 
 // ----------------------------------------------------------------------------
 
-static jlong android_view_MotionEvent_nativeInitialize(JNIEnv* env, jclass clazz,
+static jlong android_view_MotionEvent_nativeInitialize(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr,
         jint deviceId, jint source, jint action, jint flags, jint edgeFlags,
         jint metaState, jint buttonState,
@@ -383,7 +383,7 @@ Error:
     return 0;
 }
 
-static jlong android_view_MotionEvent_nativeCopy(JNIEnv* env, jclass clazz,
+static jlong android_view_MotionEvent_nativeCopy(JNIEnv* /* env */, jobject /* clazz */,
         jlong destNativePtr, jlong sourceNativePtr, jboolean keepHistory) {
     MotionEvent* destEvent = reinterpret_cast<MotionEvent*>(destNativePtr);
     if (!destEvent) {
@@ -394,13 +394,13 @@ static jlong android_view_MotionEvent_nativeCopy(JNIEnv* env, jclass clazz,
     return reinterpret_cast<jlong>(destEvent);
 }
 
-static void android_view_MotionEvent_nativeDispose(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeDispose(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     delete event;
 }
 
-static void android_view_MotionEvent_nativeAddBatch(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeAddBatch(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jlong eventTimeNanos, jobjectArray pointerCoordsObjArray,
         jint metaState) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
@@ -426,127 +426,127 @@ static void android_view_MotionEvent_nativeAddBatch(JNIEnv* env, jclass clazz,
     event->setMetaState(event->getMetaState() | metaState);
 }
 
-static jint android_view_MotionEvent_nativeGetDeviceId(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetDeviceId(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getDeviceId();
 }
 
-static jint android_view_MotionEvent_nativeGetSource(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetSource(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getSource();
 }
 
-static void android_view_MotionEvent_nativeSetSource(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeSetSource(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr, jint source) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     event->setSource(source);
 }
 
-static jint android_view_MotionEvent_nativeGetAction(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetAction(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getAction();
 }
 
-static void android_view_MotionEvent_nativeSetAction(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeSetAction(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr, jint action) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     event->setAction(action);
 }
 
-static jboolean android_view_MotionEvent_nativeIsTouchEvent(JNIEnv* env, jclass clazz,
+static jboolean android_view_MotionEvent_nativeIsTouchEvent(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->isTouchEvent();
 }
 
-static jint android_view_MotionEvent_nativeGetFlags(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetFlags(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getFlags();
 }
 
-static void android_view_MotionEvent_nativeSetFlags(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeSetFlags(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr, jint flags) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     event->setFlags(flags);
 }
 
-static jint android_view_MotionEvent_nativeGetEdgeFlags(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetEdgeFlags(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getEdgeFlags();
 }
 
-static void android_view_MotionEvent_nativeSetEdgeFlags(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeSetEdgeFlags(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr, jint edgeFlags) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     event->setEdgeFlags(edgeFlags);
 }
 
-static jint android_view_MotionEvent_nativeGetMetaState(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetMetaState(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getMetaState();
 }
 
-static jint android_view_MotionEvent_nativeGetButtonState(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetButtonState(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getButtonState();
 }
 
-static void android_view_MotionEvent_nativeOffsetLocation(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeOffsetLocation(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr, jfloat deltaX, jfloat deltaY) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->offsetLocation(deltaX, deltaY);
 }
 
-static jfloat android_view_MotionEvent_nativeGetXOffset(JNIEnv* env, jclass clazz,
+static jfloat android_view_MotionEvent_nativeGetXOffset(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getXOffset();
 }
 
-static jfloat android_view_MotionEvent_nativeGetYOffset(JNIEnv* env, jclass clazz,
+static jfloat android_view_MotionEvent_nativeGetYOffset(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getYOffset();
 }
 
-static jfloat android_view_MotionEvent_nativeGetXPrecision(JNIEnv* env, jclass clazz,
+static jfloat android_view_MotionEvent_nativeGetXPrecision(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getXPrecision();
 }
 
-static jfloat android_view_MotionEvent_nativeGetYPrecision(JNIEnv* env, jclass clazz,
+static jfloat android_view_MotionEvent_nativeGetYPrecision(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getYPrecision();
 }
 
-static jlong android_view_MotionEvent_nativeGetDownTimeNanos(JNIEnv* env, jclass clazz,
+static jlong android_view_MotionEvent_nativeGetDownTimeNanos(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return event->getDownTime();
 }
 
-static void android_view_MotionEvent_nativeSetDownTimeNanos(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeSetDownTimeNanos(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr, jlong downTimeNanos) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     event->setDownTime(downTimeNanos);
 }
 
-static jint android_view_MotionEvent_nativeGetPointerCount(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetPointerCount(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return jint(event->getPointerCount());
 }
 
-static jint android_view_MotionEvent_nativeGetPointerId(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetPointerId(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jint pointerIndex) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     size_t pointerCount = event->getPointerCount();
@@ -556,7 +556,7 @@ static jint android_view_MotionEvent_nativeGetPointerId(JNIEnv* env, jclass claz
     return event->getPointerId(pointerIndex);
 }
 
-static jint android_view_MotionEvent_nativeGetToolType(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetToolType(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jint pointerIndex) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     size_t pointerCount = event->getPointerCount();
@@ -566,19 +566,19 @@ static jint android_view_MotionEvent_nativeGetToolType(JNIEnv* env, jclass clazz
     return event->getToolType(pointerIndex);
 }
 
-static jint android_view_MotionEvent_nativeFindPointerIndex(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeFindPointerIndex(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr, jint pointerId) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return jint(event->findPointerIndex(pointerId));
 }
 
-static jint android_view_MotionEvent_nativeGetHistorySize(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeGetHistorySize(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     return jint(event->getHistorySize());
 }
 
-static jlong android_view_MotionEvent_nativeGetEventTimeNanos(JNIEnv* env, jclass clazz,
+static jlong android_view_MotionEvent_nativeGetEventTimeNanos(JNIEnv* env, jobject /* clazz */,
         jlong nativePtr, jint historyPos) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     if (historyPos == HISTORY_CURRENT) {
@@ -592,7 +592,7 @@ static jlong android_view_MotionEvent_nativeGetEventTimeNanos(JNIEnv* env, jclas
     }
 }
 
-static jfloat android_view_MotionEvent_nativeGetRawAxisValue(JNIEnv* env, jclass clazz,
+static jfloat android_view_MotionEvent_nativeGetRawAxisValue(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jint axis, jint pointerIndex, jint historyPos) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     size_t pointerCount = event->getPointerCount();
@@ -611,7 +611,7 @@ static jfloat android_view_MotionEvent_nativeGetRawAxisValue(JNIEnv* env, jclass
     }
 }
 
-static jfloat android_view_MotionEvent_nativeGetAxisValue(JNIEnv* env, jclass clazz,
+static jfloat android_view_MotionEvent_nativeGetAxisValue(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jint axis, jint pointerIndex, jint historyPos) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     size_t pointerCount = event->getPointerCount();
@@ -630,7 +630,7 @@ static jfloat android_view_MotionEvent_nativeGetAxisValue(JNIEnv* env, jclass cl
     }
 }
 
-static void android_view_MotionEvent_nativeGetPointerCoords(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeGetPointerCoords(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jint pointerIndex, jint historyPos, jobject outPointerCoordsObj) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     size_t pointerCount = event->getPointerCount();
@@ -653,7 +653,7 @@ static void android_view_MotionEvent_nativeGetPointerCoords(JNIEnv* env, jclass 
             outPointerCoordsObj);
 }
 
-static void android_view_MotionEvent_nativeGetPointerProperties(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeGetPointerProperties(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jint pointerIndex, jobject outPointerPropertiesObj) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     size_t pointerCount = event->getPointerCount();
@@ -666,13 +666,13 @@ static void android_view_MotionEvent_nativeGetPointerProperties(JNIEnv* env, jcl
     pointerPropertiesFromNative(env, pointerProperties, outPointerPropertiesObj);
 }
 
-static void android_view_MotionEvent_nativeScale(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeScale(JNIEnv* /* env */, jobject /* clazz */,
         jlong nativePtr, jfloat scale) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     event->scale(scale);
 }
 
-static void android_view_MotionEvent_nativeTransform(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeTransform(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jobject matrixObj) {
     SkMatrix* matrix = android_graphics_Matrix_getSkMatrix(env, matrixObj);
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
@@ -690,7 +690,7 @@ static void android_view_MotionEvent_nativeTransform(JNIEnv* env, jclass clazz,
     event->transform(m);
 }
 
-static jlong android_view_MotionEvent_nativeReadFromParcel(JNIEnv* env, jclass clazz,
+static jlong android_view_MotionEvent_nativeReadFromParcel(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jobject parcelObj) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     if (!event) {
@@ -710,7 +710,7 @@ static jlong android_view_MotionEvent_nativeReadFromParcel(JNIEnv* env, jclass c
     return reinterpret_cast<jlong>(event);
 }
 
-static void android_view_MotionEvent_nativeWriteToParcel(JNIEnv* env, jclass clazz,
+static void android_view_MotionEvent_nativeWriteToParcel(JNIEnv* env, jclass /* clazz */,
         jlong nativePtr, jobject parcelObj) {
     MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
     Parcel* parcel = parcelForJavaObject(env, parcelObj);
@@ -721,12 +721,12 @@ static void android_view_MotionEvent_nativeWriteToParcel(JNIEnv* env, jclass cla
     }
 }
 
-static jstring android_view_MotionEvent_nativeAxisToString(JNIEnv* env, jclass clazz,
+static jstring android_view_MotionEvent_nativeAxisToString(JNIEnv* env, jclass /* clazz */,
         jint axis) {
     return env->NewStringUTF(MotionEvent::getLabel(static_cast<int32_t>(axis)));
 }
 
-static jint android_view_MotionEvent_nativeAxisFromString(JNIEnv* env, jclass clazz,
+static jint android_view_MotionEvent_nativeAxisFromString(JNIEnv* env, jclass /* clazz */,
         jstring label) {
     ScopedUtfChars axisLabel(env, label);
     return static_cast<jint>(MotionEvent::getAxisFromLabel(axisLabel.c_str()));

@@ -26,7 +26,8 @@
 
 namespace android {
 
-static jobject android_os_MemoryFile_open(JNIEnv* env, jobject clazz, jstring name, jint length)
+static jobject android_os_MemoryFile_open(JNIEnv* env, jobject /* clazz */, jstring name,
+                                          jint length)
 {
     const char* namestr = (name ? env->GetStringUTFChars(name, NULL) : NULL);
 
@@ -43,7 +44,7 @@ static jobject android_os_MemoryFile_open(JNIEnv* env, jobject clazz, jstring na
     return jniCreateFileDescriptor(env, result);
 }
 
-static jlong android_os_MemoryFile_mmap(JNIEnv* env, jobject clazz, jobject fileDescriptor,
+static jlong android_os_MemoryFile_mmap(JNIEnv* env, jobject /* clazz */, jobject fileDescriptor,
         jint length, jint prot)
 {
     int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
@@ -54,14 +55,14 @@ static jlong android_os_MemoryFile_mmap(JNIEnv* env, jobject clazz, jobject file
     return reinterpret_cast<jlong>(result);
 }
 
-static void android_os_MemoryFile_munmap(JNIEnv* env, jobject clazz, jlong addr, jint length)
+static void android_os_MemoryFile_munmap(JNIEnv* env, jobject /* clazz */, jlong addr, jint length)
 {
     int result = munmap(reinterpret_cast<void *>(addr), length);
     if (result < 0)
         jniThrowException(env, "java/io/IOException", "munmap failed");
 }
 
-static void android_os_MemoryFile_close(JNIEnv* env, jobject clazz, jobject fileDescriptor)
+static void android_os_MemoryFile_close(JNIEnv* env, jobject /* clazz */, jobject fileDescriptor)
 {
     int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
     if (fd >= 0) {
@@ -70,7 +71,7 @@ static void android_os_MemoryFile_close(JNIEnv* env, jobject clazz, jobject file
     }
 }
 
-static jint android_os_MemoryFile_read(JNIEnv* env, jobject clazz,
+static jint android_os_MemoryFile_read(JNIEnv* env, jobject /* clazz */,
         jobject fileDescriptor, jlong address, jbyteArray buffer, jint srcOffset, jint destOffset,
         jint count, jboolean unpinned)
 {
@@ -89,7 +90,7 @@ static jint android_os_MemoryFile_read(JNIEnv* env, jobject clazz,
     return count;
 }
 
-static jint android_os_MemoryFile_write(JNIEnv* env, jobject clazz,
+static jint android_os_MemoryFile_write(JNIEnv* env, jobject /* clazz */,
         jobject fileDescriptor, jlong address, jbyteArray buffer, jint srcOffset, jint destOffset,
         jint count, jboolean unpinned)
 {
@@ -108,7 +109,8 @@ static jint android_os_MemoryFile_write(JNIEnv* env, jobject clazz,
     return count;
 }
 
-static void android_os_MemoryFile_pin(JNIEnv* env, jobject clazz, jobject fileDescriptor, jboolean pin)
+static void android_os_MemoryFile_pin(JNIEnv* env, jobject /* clazz */, jobject fileDescriptor,
+                                      jboolean pin)
 {
     int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
     int result = (pin ? ashmem_pin_region(fd, 0, 0) : ashmem_unpin_region(fd, 0, 0));
@@ -117,7 +119,7 @@ static void android_os_MemoryFile_pin(JNIEnv* env, jobject clazz, jobject fileDe
     }
 }
 
-static jint android_os_MemoryFile_get_size(JNIEnv* env, jobject clazz,
+static jint android_os_MemoryFile_get_size(JNIEnv* env, jobject /* clazz */,
         jobject fileDescriptor) {
     int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
     // Use ASHMEM_GET_SIZE to find out if the fd refers to an ashmem region.

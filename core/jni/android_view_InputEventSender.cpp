@@ -153,7 +153,7 @@ status_t NativeInputEventSender::sendMotionEvent(uint32_t seq, const MotionEvent
     return OK;
 }
 
-int NativeInputEventSender::handleEvent(int receiveFd, int events, void* data) {
+int NativeInputEventSender::handleEvent(int /* receiveFd */, int events, void* /* data */) {
     if (events & (ALOOPER_EVENT_ERROR | ALOOPER_EVENT_HANGUP)) {
 #if DEBUG_DISPATCH_CYCLE
         // This error typically occurs when the consumer has closed the input channel
@@ -232,7 +232,7 @@ status_t NativeInputEventSender::receiveFinishedSignals(JNIEnv* env) {
 }
 
 
-static jlong nativeInit(JNIEnv* env, jclass clazz, jobject senderWeak,
+static jlong nativeInit(JNIEnv* env, jclass /* clazz */, jobject senderWeak,
         jobject inputChannelObj, jobject messageQueueObj) {
     sp<InputChannel> inputChannel = android_view_InputChannel_getInputChannel(env,
             inputChannelObj);
@@ -261,14 +261,14 @@ static jlong nativeInit(JNIEnv* env, jclass clazz, jobject senderWeak,
     return reinterpret_cast<jlong>(sender.get());
 }
 
-static void nativeDispose(JNIEnv* env, jclass clazz, jlong senderPtr) {
+static void nativeDispose(JNIEnv* /* env */, jclass /* clazz */, jlong senderPtr) {
     sp<NativeInputEventSender> sender =
             reinterpret_cast<NativeInputEventSender*>(senderPtr);
     sender->dispose();
     sender->decStrong(gInputEventSenderClassInfo.clazz); // drop reference held by the object
 }
 
-static jboolean nativeSendKeyEvent(JNIEnv* env, jclass clazz, jlong senderPtr,
+static jboolean nativeSendKeyEvent(JNIEnv* env, jclass /* clazz */, jlong senderPtr,
         jint seq, jobject eventObj) {
     sp<NativeInputEventSender> sender =
             reinterpret_cast<NativeInputEventSender*>(senderPtr);
@@ -278,7 +278,7 @@ static jboolean nativeSendKeyEvent(JNIEnv* env, jclass clazz, jlong senderPtr,
     return !status;
 }
 
-static jboolean nativeSendMotionEvent(JNIEnv* env, jclass clazz, jlong senderPtr,
+static jboolean nativeSendMotionEvent(JNIEnv* env, jclass /* clazz */, jlong senderPtr,
         jint seq, jobject eventObj) {
     sp<NativeInputEventSender> sender =
             reinterpret_cast<NativeInputEventSender*>(senderPtr);

@@ -39,18 +39,18 @@ sp<SurfaceComposerClient> android_view_SurfaceSession_getClient(
 }
 
 
-static jlong nativeCreate(JNIEnv* env, jclass clazz) {
+static jlong nativeCreate(JNIEnv* /* env */, jclass /* clazz */) {
     SurfaceComposerClient* client = new SurfaceComposerClient();
     client->incStrong((void*)nativeCreate);
     return reinterpret_cast<jlong>(client);
 }
 
-static void nativeDestroy(JNIEnv* env, jclass clazz, jlong ptr) {
+static void nativeDestroy(JNIEnv* /* env */, jclass /* clazz */, jlong ptr) {
     SurfaceComposerClient* client = reinterpret_cast<SurfaceComposerClient*>(ptr);
     client->decStrong((void*)nativeCreate);
 }
 
-static void nativeKill(JNIEnv* env, jclass clazz, jlong ptr) {
+static void nativeKill(JNIEnv* /* env */, jclass /* clazz */, jlong ptr) {
     SurfaceComposerClient* client = reinterpret_cast<SurfaceComposerClient*>(ptr);
     client->dispose();
 }
