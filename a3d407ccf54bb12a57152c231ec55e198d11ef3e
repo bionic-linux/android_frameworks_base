@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc2091f_25b7795c",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6088,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-25T19:15:22Z",
+      "side": 1,
+      "message": "Put on separate line and surround with braces.",
+      "range": {
+        "startLine": 6088,
+        "startChar": 70,
+        "endLine": 6088,
+        "endChar": 77
+      },
+      "revId": "a3d407ccf54bb12a57152c231ec55e198d11ef3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
