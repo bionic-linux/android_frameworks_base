@@ -16,6 +16,24 @@
       "revId": "862f8ea875b8af2cba2d8d4e9fe1213d71939a3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fc2091f_00ca6b58",
+        "filename": "docs/html/training/articles/perf-jni.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-25T19:37:14Z",
+      "side": 1,
+      "message": "Isn\u0027t this a paragraph about classes? So I would not put field here.",
+      "parentUuid": "df3a79c4_6bf45d1a",
+      "revId": "862f8ea875b8af2cba2d8d4e9fe1213d71939a3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
