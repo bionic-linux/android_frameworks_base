@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcc1153_7ff99727",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-25T18:23:09Z",
+      "side": 1,
+      "message": "Limit title of change to 50 characters.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "dfdb5c7890f281edd66fa74beac739cca84dd9a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf394503_2022aa18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-25T18:23:09Z",
+      "side": 1,
+      "message": "Limit comment lines to 70 characters.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "dfdb5c7890f281edd66fa74beac739cca84dd9a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf394503_c0301e5d",
+        "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-25T18:23:09Z",
+      "side": 1,
+      "message": "Limit program lines to 100 characters.",
+      "range": {
+        "startLine": 76,
+        "startChar": 92,
+        "endLine": 76,
+        "endChar": 103
+      },
+      "revId": "dfdb5c7890f281edd66fa74beac739cca84dd9a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
