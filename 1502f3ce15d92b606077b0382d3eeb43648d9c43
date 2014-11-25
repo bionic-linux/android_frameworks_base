@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f3e41e9_ff385f11",
+        "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-25T19:39:36Z",
+      "side": 1,
+      "message": "Move into next conditional as another factor that sets mPointerId to -1.",
+      "range": {
+        "startLine": 59,
+        "startChar": 23,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "1502f3ce15d92b606077b0382d3eeb43648d9c43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcc1153_854c36a0",
+        "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-25T19:39:36Z",
+      "side": 1,
+      "message": "line length.",
+      "revId": "1502f3ce15d92b606077b0382d3eeb43648d9c43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
