@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f3e41e9_bf3ed7fc",
+        "filename": "docs/html/training/articles/perf-jni.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-11-25T19:39:26Z",
+      "side": 1,
+      "message": "the trouble is that the documentation used to be about FindClass and classes but applies equally well (except the ClassLoader part below) to methods and fields. \"get the name right, possibly using javap\" and \"don\u0027t proguard it away\" are the two top tips.\n\ni\u0027m having trouble working out how to fix the title without making it four lines long though...",
+      "revId": "a82856e1442260491d23a5c15a60dd4c11d38cff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
