@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f3395f6_e652c25d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-11-26T04:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fcc1153_7ff99727",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "dfdb5c7890f281edd66fa74beac739cca84dd9a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf394503_2022aa18",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7f298d84_7dff8377",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-11-26T04:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf394503_2022aa18",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "dfdb5c7890f281edd66fa74beac739cca84dd9a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf394503_c0301e5d",
         "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2014-11-25T18:23:09Z",
       "side": 1,
       "message": "Limit program lines to 100 characters.",
+      "range": {
+        "startLine": 76,
+        "startChar": 92,
+        "endLine": 76,
+        "endChar": 103
+      },
+      "revId": "dfdb5c7890f281edd66fa74beac739cca84dd9a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f2689b6_7ce545b8",
+        "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-11-26T04:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf394503_c0301e5d",
       "range": {
         "startLine": 76,
         "startChar": 92,
