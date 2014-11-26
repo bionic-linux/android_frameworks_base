@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "7f298d84_1d887fff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-11-26T04:29:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fcc1153_ff2d8703",
+      "revId": "081989289eba9f913e58ea91b80b51abebe8e261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf394503_c0b93e4f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -48,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7f298d84_fd9c9343",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-11-26T04:29:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf394503_c0b93e4f",
+      "revId": "081989289eba9f913e58ea91b80b51abebe8e261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fc2091f_ca11e2c1",
         "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
         "patchSetId": 3
@@ -65,6 +101,24 @@
         "endLine": 7680,
         "endChar": 92
       },
+      "revId": "081989289eba9f913e58ea91b80b51abebe8e261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f3395f6_e10e2c53",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7680,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-11-26T04:29:33Z",
+      "side": 1,
+      "message": "Thanks for your reminding, it\u0027s a careless typing error, I have corrected it.",
+      "parentUuid": "5fc2091f_ca11e2c1",
       "revId": "081989289eba9f913e58ea91b80b51abebe8e261",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
