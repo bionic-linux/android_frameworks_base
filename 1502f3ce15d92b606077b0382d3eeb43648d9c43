@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f298d84_bd0babc1",
+        "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-11-26T05:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3e41e9_ff385f11",
+      "range": {
+        "startLine": 59,
+        "startChar": 23,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "1502f3ce15d92b606077b0382d3eeb43648d9c43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fcc1153_854c36a0",
         "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2014-11-25T19:39:36Z",
       "side": 1,
       "message": "line length.",
+      "revId": "1502f3ce15d92b606077b0382d3eeb43648d9c43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f2689b6_3cd0dd87",
+        "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-11-26T05:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fcc1153_854c36a0",
       "revId": "1502f3ce15d92b606077b0382d3eeb43648d9c43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
