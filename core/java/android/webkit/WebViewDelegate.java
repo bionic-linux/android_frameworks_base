@@ -150,7 +150,7 @@ public final class WebViewDelegate {
      * Returns the error string for the given {@code errorCode}.
      */
     public String getErrorString(Context context, int errorCode) {
-        return ErrorStrings.getString(errorCode, context);
+        return LegacyErrorStrings.getString(errorCode, context);
     }
 
     /**
