@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf2065df_0877e777",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-11-27T03:53:16Z",
+      "side": 1,
+      "message": "Reword to \"It is possible for StartingData to still be set when the StartingWindow wasn\u0027t added successfully.\"",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "3318d25da2665a7f692fb2ebf9dc9f8c07b1ff06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
