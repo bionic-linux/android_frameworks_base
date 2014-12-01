@@ -16,6 +16,24 @@
       "revId": "51cc0d6477a0f7dd0ab5527f9ce2791d03f9333b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fc2b557_741d6806",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6105,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-12-01T07:37:00Z",
+      "side": 1,
+      "message": "Yes, it\u0027s indeed simpler to add check of surface shown here, but there is a little side effect that it would increase chances of retry times, it means that it would increase method execution time of screenshotApplications() that would impact UI performance such like activity launch time, HOME/BACK key response time.\n\nIt\u0027s a trade-off of performance(UI faster) and user experience(no black thumbnail), so I try to use an another check of screenshotSurfaceReady outside of original retry mechanism to keep retry mechanism as original to make sure not to impact UI performance and just reduce chances that WM return all black bitmap to make user experience better.\n\nHowever, I think this impact of performance would be not serious in most casees, and make code simpler is also important. I will apply your comment in the latest PatchSet and Thanks for your remark.",
+      "parentUuid": "9fdac131_c205a439",
+      "revId": "51cc0d6477a0f7dd0ab5527f9ce2791d03f9333b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
