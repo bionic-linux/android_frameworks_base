@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fdac131_c205a439",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6105,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-12-01T00:38:13Z",
+      "side": 1,
+      "message": "It would be simpler to just add winAnim.mSurfaceShown to this conditional. Do not set screenshotReady true unless mSurfaceShown is also true. There is a chance that on retry the surface will be shown.",
+      "revId": "51cc0d6477a0f7dd0ab5527f9ce2791d03f9333b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
