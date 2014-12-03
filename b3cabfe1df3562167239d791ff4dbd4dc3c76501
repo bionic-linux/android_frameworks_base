@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd68940_d05f02e0",
+        "filename": "core/java/android/alsa/AlsaCardsParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1004957
+      },
+      "writtenOn": "2014-12-03T16:15:36Z",
+      "side": 1,
+      "message": "Why bother with an array? Couldn\u0027t you just keep track of the last value instead?",
+      "revId": "b3cabfe1df3562167239d791ff4dbd4dc3c76501",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
