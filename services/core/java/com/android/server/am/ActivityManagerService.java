@@ -2062,6 +2062,10 @@ public final class ActivityManagerService extends ActivityManagerNative
             // Check the recent tasks and filter out all tasks with components that no longer exist.
             for (int i = recentTaskIntents.size() - 1; i >= 0; i--) {
                 Pair<Intent, Integer> p = recentTaskIntents.get(i);
+                if(p.first == null) {
+                    Log.w(TAG,"If the intent p.first is null in onPackageModified(), then skip.");
+                    continue;
+                }
                 ComponentName cn = p.first.getComponent();
                 if (cn != null && cn.getPackageName().equals(packageName)) {
                     if (componentsKnownToExist.contains(cn)) {
