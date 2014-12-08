@@ -191,7 +191,7 @@ public class TaskStack {
         mTasks.add(stackNdx, task);
 
         task.mStack = this;
-        mDisplayContent.moveStack(this, true);
+        mDisplayContent.moveStack(this, toTop);
         EventLog.writeEvent(EventLogTags.WM_TASK_MOVED, task.taskId, toTop ? 1 : 0, stackNdx);
     }
 
