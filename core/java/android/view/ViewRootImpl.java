@@ -1324,7 +1324,7 @@ public final class ViewRootImpl implements ViewParent,
 
         boolean insetsChanged = false;
 
-        boolean layoutRequested = mLayoutRequested && !mStopped;
+        boolean layoutRequested = mLayoutRequested && (!mStopped || mReportNextDraw);
         if (layoutRequested) {
 
             final Resources res = mView.getContext().getResources();
@@ -1749,7 +1749,7 @@ public final class ViewRootImpl implements ViewParent,
                 }
             }
 
-            if (!mStopped) {
+            if (!mStopped || mReportNextDraw) {
                 boolean focusChangedDueToTouchMode = ensureTouchModeLocally(
                         (relayoutResult&WindowManagerGlobal.RELAYOUT_RES_IN_TOUCH_MODE) != 0);
                 if (focusChangedDueToTouchMode || mWidth != host.getMeasuredWidth()
@@ -1822,7 +1822,7 @@ public final class ViewRootImpl implements ViewParent,
             }
         }
 
-        final boolean didLayout = layoutRequested && !mStopped;
+        final boolean didLayout = layoutRequested && (!mStopped || mReportNextDraw);
         boolean triggerGlobalLayoutListener = didLayout
                 || mAttachInfo.mRecomputeGlobalAttributes;
         if (didLayout) {
