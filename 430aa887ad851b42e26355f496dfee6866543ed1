@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040206f8_01736e55",
+        "filename": "services/core/java/com/android/server/wm/TaskStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-12-09T15:15:27Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to move the stack from it\u0027s current position if it is not been moved to the top. Anyways, https://android-review.googlesource.com/#/c/114833 also fixes the problem and I added you as a reviewer on it.",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 47
+      },
+      "revId": "430aa887ad851b42e26355f496dfee6866543ed1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
