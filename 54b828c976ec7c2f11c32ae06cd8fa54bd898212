@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4ba529b_aae26fd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2014-12-09T20:38:09Z",
+      "side": 1,
+      "message": "Probably we may want to update the CL description to clarify that this change is not specific to disappearance of text in the landscape but fundamentally addresses the lack of startInput() event when returning from sleep mode.\n\nSo the one-line description of this CL should be \"Call startInput#startInput() when returning from sleep mode\" or something.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "54b828c976ec7c2f11c32ae06cd8fa54bd898212",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
