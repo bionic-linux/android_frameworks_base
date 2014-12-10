@@ -16,6 +16,24 @@
       "revId": "fc14b491cf0b41f3a73484b2d6ea3a1aa43b7750",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24a1ca5e_458de012",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1061695
+      },
+      "writtenOn": "2014-12-10T00:30:58Z",
+      "side": 1,
+      "message": "Unfortunately, I don\u0027t have certain reproduction case.\n\nbut, sometimes I can see a status that the phone is a bootloops until draw off battery from the device or force Shut down the phone.\n\nThen, the phone print this crash logs.\n\nAndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: main\nAndroidRuntime: java.lang.RuntimeException: Error receiving broadcast Intent { act\u003dandroid.intent.action.PACKAGE_CHANGED dat\u003dpackage:com.google.android.gms flg\u003d0x4000010 (has extras) } in c\nAndroidRuntime: \tat android.app.LoadedApk$ReceiverDispatcher$Args.run(LoadedApk.java:971)\nAndroidRuntime: \tat android.os.Handler.handleCallback(Handler.java:739)\nAndroidRuntime: \tat android.os.Handler.dispatchMessage(Handler.java:95)\nAndroidRuntime: \tat android.os.Looper.loop(Looper.java:135)\nAndroidRuntime: \tat com.android.server.SystemServer.run(SystemServer.java:288)\nAndroidRuntime: \tat com.android.server.SystemServer.main(SystemServer.java:189)\nAndroidRuntime: \tat java.lang.reflect.Method.invoke(Native Method)\nAndroidRuntime: \tat java.lang.reflect.Method.invoke(Method.java:372)\nAndroidRuntime: \tat com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:903)\nAndroidRuntime: \tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:698)\nAndroidRuntime: Caused by: java.lang.NullPointerException: Attempt to invoke virtual method \u0027android.content.ComponentName android.content.Intent.getComponent()\u0027 on a null object reference\nAndroidRuntime: \tat com.android.server.am.ActivityManagerService$3.onPackageModified(ActivityManagerService.java:2139)\nAndroidRuntime: \tat com.android.server.am.ActivityManagerService$3.onPackageChanged(ActivityManagerService.java:2114)\nAndroidRuntime: \tat com.android.internal.content.PackageMonitor.onReceive(PackageMonitor.java:352)\nAndroidRuntime: \tat android.app.LoadedApk$ReceiverDispatcher$Args.run(LoadedApk.java:961)\nAndroidRuntime: \t... 9 more",
+      "parentUuid": "a48dbaf4_06803e1f",
+      "revId": "fc14b491cf0b41f3a73484b2d6ea3a1aa43b7750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
