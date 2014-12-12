@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e433327d_42ed5292",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-12-12T13:43:39Z",
+      "side": 1,
+      "message": "Please limit the commit message lines to 60 characters or less. See the guideline at  https://source.android.com/source/submit-patches.html",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 75
+      },
+      "revId": "8d50d50ed233351d761a75692141b1e8545cc37b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
