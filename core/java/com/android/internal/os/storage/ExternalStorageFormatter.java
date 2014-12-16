@@ -90,10 +90,10 @@ public class ExternalStorageFormatter extends Service
 
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setCancelable(true);
+            mProgressDialog.setIndeterminate(true);            
             mProgressDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             if (!mAlwaysReset) {
+                mProgressDialog.setCancelable(true);
                 mProgressDialog.setOnCancelListener(this);
             }
             updateProgressState();
