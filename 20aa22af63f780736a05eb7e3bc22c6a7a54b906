@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c19e206c_91b3dc6c",
+        "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-12-18T18:58:03Z",
+      "side": 1,
+      "message": "I\u0027d prefer you added an update method in this class StackTapPointerEventListener to be called every time DisplayContent.setTouchExcludeRegion() is called. Then we can use a local value for mTouchExcludeRegion rather than a reference to DisplayContents.\n\n  final Region mTouchExcludeRegion \u003d new Region();\n\n  setTouchExcludeRegion(Region newRegion) {\n    synchronized (this) {\n       mTouchExcludeRegion.set(newRegion);\n    }\n  }\n\nThen we don\u0027t have to lock out WindowManagerService on every tap. Don\u0027t forget to change the synchronized Object in this method to (this).",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 1
+      },
+      "revId": "20aa22af63f780736a05eb7e3bc22c6a7a54b906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
