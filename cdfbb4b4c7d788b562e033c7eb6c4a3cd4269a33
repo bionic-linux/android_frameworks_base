@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1a3ecb1_f3d42ad0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2014-12-18T17:53:54Z",
+      "side": 1,
+      "message": "method names in commit message don\u0027t reflect the code.",
+      "revId": "cdfbb4b4c7d788b562e033c7eb6c4a3cd4269a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1a3ecb1_93503ed6",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2343,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2014-12-18T17:53:54Z",
+      "side": 1,
+      "message": "remove this comment and fix indentation below",
+      "range": {
+        "startLine": 2343,
+        "startChar": 51,
+        "endLine": 2343,
+        "endChar": 98
+      },
+      "revId": "cdfbb4b4c7d788b562e033c7eb6c4a3cd4269a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c19c6086_6132b612",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2344,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2014-12-18T17:53:54Z",
+      "side": 1,
+      "message": "document lock order in definition",
+      "range": {
+        "startLine": 2344,
+        "startChar": 30,
+        "endLine": 2344,
+        "endChar": 44
+      },
+      "revId": "cdfbb4b4c7d788b562e033c7eb6c4a3cd4269a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e197a45c_0231aa90",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2349,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2014-12-18T17:53:54Z",
+      "side": 1,
+      "message": "remove this line and fix indentation below",
+      "range": {
+        "startLine": 2349,
+        "startChar": 24,
+        "endLine": 2349,
+        "endChar": 127
+      },
+      "revId": "cdfbb4b4c7d788b562e033c7eb6c4a3cd4269a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c19c6086_21feeec1",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2014-12-18T17:53:54Z",
+      "side": 1,
+      "message": "remove this comment and fix indentation below",
+      "range": {
+        "startLine": 2422,
+        "startChar": 51,
+        "endLine": 2422,
+        "endChar": 97
+      },
+      "revId": "cdfbb4b4c7d788b562e033c7eb6c4a3cd4269a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e197a45c_421fb2fa",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2425,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2014-12-18T17:53:54Z",
+      "side": 1,
+      "message": "remove this line",
+      "revId": "cdfbb4b4c7d788b562e033c7eb6c4a3cd4269a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
