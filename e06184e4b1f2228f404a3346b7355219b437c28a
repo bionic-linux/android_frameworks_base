@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01f918d6_4304663d",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-12-19T01:23:24Z",
+      "side": 0,
+      "message": "They are unused in ART.",
+      "parentUuid": "6102d48e_a63a06e9",
+      "range": {
+        "startLine": 529,
+        "startChar": 64,
+        "endLine": 529,
+        "endChar": 64
+      },
+      "revId": "e06184e4b1f2228f404a3346b7355219b437c28a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f918d6_c3ce16c1",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2014-12-19T01:20:13Z",
       "side": 0,
       "message": "or this?",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 5
+      },
+      "revId": "e06184e4b1f2228f404a3346b7355219b437c28a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6102d48e_2665f6fc",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-12-19T01:23:24Z",
+      "side": 0,
+      "message": "This flag isn\u0027t even parsed in parsed_options. Anyone passing this will have problems...",
+      "parentUuid": "01f918d6_c3ce16c1",
       "range": {
         "startLine": 613,
         "startChar": 0,
