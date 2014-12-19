@@ -22,6 +22,24 @@
       "revId": "20aa22af63f780736a05eb7e3bc22c6a7a54b906",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "811b4806_379ad84a",
+        "filename": "services/core/java/com/android/server/wm/StackTapPointerEventListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2014-12-19T06:01:33Z",
+      "side": 1,
+      "message": "Thanks for your reviewing, I have done a revision.",
+      "parentUuid": "c19e206c_91b3dc6c",
+      "revId": "20aa22af63f780736a05eb7e3bc22c6a7a54b906",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
