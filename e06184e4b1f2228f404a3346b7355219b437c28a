@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e16404ca_7aeeb990",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-12-22T22:58:59Z",
+      "side": 0,
+      "message": "Opened a bug for tracking.",
+      "parentUuid": "01f918d6_4304663d",
+      "range": {
+        "startLine": 529,
+        "startChar": 64,
+        "endLine": 529,
+        "endChar": 64
+      },
+      "revId": "e06184e4b1f2228f404a3346b7355219b437c28a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f918d6_c3ce16c1",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 1
@@ -108,6 +132,30 @@
       "side": 0,
       "message": "i think brian\u0027s question was supposed to be \"should this be supported in art ?\" .\n\nthis is mentioned in several places in our documentation, so i think we might want to.\n\nIMO It\u0027s still fine to remove it here, since it can be trivially added back if we decide to support the feature.",
       "parentUuid": "6102d48e_2665f6fc",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 5
+      },
+      "revId": "e06184e4b1f2228f404a3346b7355219b437c28a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1d04c89_0b22c13e",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-12-22T22:58:59Z",
+      "side": 0,
+      "message": "Opened a bug for tracking.",
+      "parentUuid": "4144f0e8_dd2aab6a",
       "range": {
         "startLine": 613,
         "startChar": 0,

@@ -46,6 +46,30 @@
       "revId": "8783518382c4e7e1aa985307863661644a5d80eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e16404ca_ba0cd1e1",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-12-22T22:58:59Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "6102d48e_c6c06260",
+      "range": {
+        "startLine": 644,
+        "startChar": 0,
+        "endLine": 644,
+        "endChar": 63
+      },
+      "revId": "8783518382c4e7e1aa985307863661644a5d80eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
