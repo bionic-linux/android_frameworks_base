@@ -38,11 +38,13 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.content.res.AssetFileDescriptor;
+import android.content.ContentResolver;
 import android.database.AbstractCursor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.database.IContentObserver;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Binder;
@@ -54,6 +56,7 @@ import android.os.Process;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
@@ -257,7 +260,7 @@ public class SettingsProvider extends ContentProvider {
      * contract class uses these to provide client-side caches.)
      * @param uri to send notifications for
      */
-    private void sendNotify(Uri uri, int userHandle) {
+    private void sendNotify(Uri uri, IContentObserver observer, int userHandle) {
         // Update the system property *first*, so if someone is listening for
         // a notification and then using the contract class to get their data,
         // the system property will be updated and they'll get the new data.
@@ -293,7 +296,8 @@ public class SettingsProvider extends ContentProvider {
             final int notifyTarget = isGlobal ? UserHandle.USER_ALL : userHandle;
             final long oldId = Binder.clearCallingIdentity();
             try {
-                getContext().getContentResolver().notifyChange(uri, null, true, notifyTarget);
+                ContentResolver.getContentService().notifyChange(uri, observer, false, true, notifyTarget);
+            } catch(RemoteException e) {
             } finally {
                 Binder.restoreCallingIdentity(oldId);
             }
@@ -576,7 +580,7 @@ public class SettingsProvider extends ContentProvider {
                 final ContentValues values = new ContentValues();
                 values.put(Settings.NameValueTable.NAME, Settings.Secure.ANDROID_ID);
                 values.put(Settings.NameValueTable.VALUE, newAndroidIdValue);
-                final Uri uri = insertForUser(Settings.Secure.CONTENT_URI, values, userHandle);
+                final Uri uri = insertForUser(Settings.Secure.CONTENT_URI, values, null, userHandle);
                 if (uri == null) {
                     Slog.e(TAG, "Unable to generate new ANDROID_ID for user " + userHandle);
                     return false;
@@ -761,6 +765,7 @@ public class SettingsProvider extends ContentProvider {
         final ContentValues values = new ContentValues();
         values.put(Settings.NameValueTable.NAME, request);
         values.put(Settings.NameValueTable.VALUE, newValue);
+        IContentObserver observer = IContentObserver.Stub.asInterface(args.getIBinder("observer"));
         if (Settings.CALL_METHOD_PUT_SYSTEM.equals(method)) {
             if (LOCAL_LOGV) {
                 Slog.v(TAG, "call_put(system:" + request + "=" + newValue + ") for "
@@ -772,7 +777,7 @@ public class SettingsProvider extends ContentProvider {
                 // Don't write these settings, as they are cloned from the parent profile
                 return null;
             }
-            insertForUser(Settings.System.CONTENT_URI, values, callingUser);
+            insertForUser(Settings.System.CONTENT_URI, values, observer, callingUser);
             // Clone the settings to the managed profiles so that notifications can be sent out
             if (callingUser == UserHandle.USER_OWNER && mManagedProfiles != null
                     && sSystemCloneToManagedKeys.contains(request)) {
@@ -784,7 +789,7 @@ public class SettingsProvider extends ContentProvider {
                                     + mManagedProfiles.get(i).id);
                         }
                         insertForUser(Settings.System.CONTENT_URI, values,
-                                mManagedProfiles.get(i).id);
+                                observer, mManagedProfiles.get(i).id);
                     }
                 } finally {
                     Binder.restoreCallingIdentity(token);
@@ -801,7 +806,7 @@ public class SettingsProvider extends ContentProvider {
                 // Don't write these settings, as they are cloned from the parent profile
                 return null;
             }
-            insertForUser(Settings.Secure.CONTENT_URI, values, callingUser);
+            insertForUser(Settings.Secure.CONTENT_URI, values, observer, callingUser);
             // Clone the settings to the managed profiles so that notifications can be sent out
             if (callingUser == UserHandle.USER_OWNER && mManagedProfiles != null
                     && sSecureCloneToManagedKeys.contains(request)) {
@@ -814,7 +819,7 @@ public class SettingsProvider extends ContentProvider {
                         }
                         try {
                             insertForUser(Settings.Secure.CONTENT_URI, values,
-                                    mManagedProfiles.get(i).id);
+                                    observer, mManagedProfiles.get(i).id);
                         } catch (SecurityException e) {
                             // Temporary fix, see b/17450158
                             Slog.w(TAG, "Cannot clone request '" + request + "' with value '"
@@ -831,7 +836,7 @@ public class SettingsProvider extends ContentProvider {
                 Slog.v(TAG, "call_put(global:" + request + "=" + newValue + ") for "
                         + callingUser);
             }
-            insertForUser(Settings.Global.CONTENT_URI, values, callingUser);
+            insertForUser(Settings.Global.CONTENT_URI, values, observer, callingUser);
         } else {
             Slog.w(TAG, "call() with invalid method: " + method);
         }
@@ -992,7 +997,7 @@ public class SettingsProvider extends ContentProvider {
             }
         }
 
-        sendNotify(uri, callingUser);
+        sendNotify(uri, null, callingUser);
         return values.length;
     }
 
@@ -1070,12 +1075,12 @@ public class SettingsProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri url, ContentValues initialValues) {
-        return insertForUser(url, initialValues, UserHandle.getCallingUserId());
+        return insertForUser(url, initialValues, null, UserHandle.getCallingUserId());
     }
 
     // Settings.put*ForUser() always winds up here, so this is where we apply
     // policy around permission to write settings for other users.
-    private Uri insertForUser(Uri url, ContentValues initialValues, int desiredUserHandle) {
+    private Uri insertForUser(Uri url, ContentValues initialValues, IContentObserver observer, int desiredUserHandle) {
         final int callingUser = UserHandle.getCallingUserId();
         if (callingUser != desiredUserHandle) {
             getContext().enforceCallingOrSelfPermission(
@@ -1146,7 +1151,7 @@ public class SettingsProvider extends ContentProvider {
                 + " for user " + desiredUserHandle);
         // Note that we use the original url here, not the potentially-rewritten table name
         url = getUriFor(url, initialValues, rowId);
-        sendNotify(url, desiredUserHandle);
+        sendNotify(url, observer, desiredUserHandle);
         return url;
     }
 
@@ -1179,7 +1184,7 @@ public class SettingsProvider extends ContentProvider {
         }
         if (count > 0) {
             invalidateCache(callingUser, args.table);  // before we notify
-            sendNotify(url, callingUser);
+            sendNotify(url, null, callingUser);
         }
         startAsyncCachePopulation(callingUser);
         if (LOCAL_LOGV) Log.v(TAG, args.table + ": " + count + " row(s) deleted");
@@ -1219,7 +1224,7 @@ public class SettingsProvider extends ContentProvider {
         }
         if (count > 0) {
             invalidateCache(callingUser, args.table);  // before we notify
-            sendNotify(url, callingUser);
+            sendNotify(url, null, callingUser);
         }
         startAsyncCachePopulation(callingUser);
         if (LOCAL_LOGV) Log.v(TAG, args.table + ": " + count + " row(s) <- " + initialValues);

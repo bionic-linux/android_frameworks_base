@@ -34,6 +34,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.IContentObserver;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -1099,6 +1100,24 @@ public final class Settings {
             return true;
         }
 
+        public boolean putStringForUser(ContentResolver cr, String name, String value,
+                IContentObserver observer, final int userHandle) {
+            try {
+                Bundle arg = new Bundle();
+                arg.putString(Settings.NameValueTable.VALUE, value);
+                arg.putInt(CALL_METHOD_USER_KEY, userHandle);
+                if (observer != null) {
+                    arg.putIBinder("observer", observer.asBinder());
+                }
+                IContentProvider cp = lazyGetProvider(cr);
+                cp.call(cr.getPackageName(), mCallSetCommand, name, arg);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't set key " + name + " in " + mUri, e);
+                return false;
+            }
+            return true;
+        }
+
         public String getStringForUser(ContentResolver cr, String name, final int userHandle) {
             final boolean isSelf = (userHandle == UserHandle.myUserId());
             if (isSelf) {
@@ -1360,6 +1379,22 @@ public final class Settings {
                 return false;
             }
             return sNameValueCache.putStringForUser(resolver, name, value, userHandle);
+        }
+
+        /** @hide */
+        public static boolean putStringForUser(ContentResolver resolver, String name, String value,
+                IContentObserver observer, int userHandle) {
+            if (MOVED_TO_SECURE.contains(name)) {
+                Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
+                        + " to android.provider.Settings.Secure, value is unchanged.");
+                return false;
+            }
+            if (MOVED_TO_GLOBAL.contains(name) || MOVED_TO_SECURE_THEN_GLOBAL.contains(name)) {
+                Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.System"
+                        + " to android.provider.Settings.Global, value is unchanged.");
+                return false;
+            }
+            return sNameValueCache.putStringForUser(resolver, name, value, observer, userHandle);
         }
 
         /**
