@@ -100,6 +100,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import libcore.util.Objects;
 
+import com.android.internal.mirrorpowersave.LcdPowerSaveInternal;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
@@ -636,6 +638,8 @@ public final class PowerManagerService extends SystemService
     private static native void nativeSendPowerHint(int hintId, int data);
     private static native void nativeSetFeature(int featureId, int data);
 
+    private LcdPowerSaveInternal mLcdPowerSaveInternal;
+
     public PowerManagerService(Context context) {
         super(context);
         mContext = context;
@@ -732,6 +736,8 @@ public final class PowerManagerService extends SystemService
             mScreenBrightnessForVrSettingDefault = pm.getDefaultScreenBrightnessForVrSetting();
 
             SensorManager sensorManager = new SystemSensorManager(mContext, mHandler.getLooper());
+
+            mLcdPowerSaveInternal = getLocalService(LcdPowerSaveInternal.class);
 
             // The notifier runs on the system server's main looper so as not to interfere
             // with the animations and other critical functions of the power manager.
@@ -1318,6 +1324,7 @@ public final class PowerManagerService extends SystemService
     }
 
     private void userActivityInternal(long eventTime, int event, int flags, int uid) {
+        mLcdPowerSaveInternal.userActivity(eventTime, event);
         synchronized (mLock) {
             if (userActivityNoUpdateLocked(eventTime, event, flags, uid)) {
                 updatePowerStateLocked();
@@ -2491,6 +2498,7 @@ public final class PowerManagerService extends SystemService
                 userActivityNoUpdateLocked(SystemClock.uptimeMillis(),
                         PowerManager.USER_ACTIVITY_EVENT_OTHER, 0, Process.SYSTEM_UID);
                 updatePowerStateLocked();
+                mLcdPowerSaveInternal.interceptProximityWhenLcdOn();
             }
         }
 
