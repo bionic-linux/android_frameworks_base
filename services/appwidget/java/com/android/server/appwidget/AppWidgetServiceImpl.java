@@ -1570,6 +1570,18 @@ class AppWidgetServiceImpl extends IAppWidgetService.Stub implements WidgetBacku
 
     private void handleNotifyAppWidgetViewDataChanged(Host host, IAppWidgetHost callbacks,
             int appWidgetId, int viewId) {
+        synchronized (mLock) {
+            // Before the message MSG_NOTIFY_VIEW_DATA_CHANGED is handled, the host's process may
+            // go away, and then become alive immediately. In this case, we should avoid calling
+            // viewDataChanged() on the callbacks of which the host is dead. Otherwise, the host's
+            // callback would be set to null (catch DeadObjectException), and thus newlay added
+            // app widgets would not be updated anymore.
+            if(host.callbacks != callbacks) {
+                Slog.d(TAG, "Since the host is unavailable, we should skip this notification.");
+                return;
+            }
+        }
+
         try {
             callbacks.viewDataChanged(appWidgetId, viewId);
         } catch (RemoteException re) {
