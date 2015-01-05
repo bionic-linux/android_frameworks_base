@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce3acdc4_374ec08c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-01-05T23:17:57Z",
+      "side": 1,
+      "message": "Please limit the first line of your commit message to 60 characters or less. See https://source.android.com/source/submit-patches.html for the guideline.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 91
+      },
+      "revId": "33d77b34fb9ca44fa5a67bcd88b595371d996122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e26ddb6_4daad965",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-01-05T23:17:57Z",
+      "side": 1,
+      "message": "Reduce this link to https://code.google.com/p/android/issues/detail?id\u003d85758",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 84
+      },
+      "revId": "33d77b34fb9ca44fa5a67bcd88b595371d996122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e29e184_d432d40c",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-01-05T23:17:57Z",
+      "side": 1,
+      "message": "Please use 4 spaces for indentation instead of tab.",
+      "range": {
+        "startLine": 1325,
+        "startChar": 8,
+        "endLine": 1325,
+        "endChar": 9
+      },
+      "revId": "33d77b34fb9ca44fa5a67bcd88b595371d996122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
