@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c180e07b_f58e60bf",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2015-01-05T14:08:17Z",
+      "side": 1,
+      "message": "In on secondaryPointerUp we have this logic to determine the new pointerId: \nfinal int newPointerIndex \u003d pointerIndex \u003d\u003d 0 ? 1 : 0;\nWhich is also used in the normal scrollview.\nThis assumes \n1) that there are multiple pointers on in the touch event when the POINTER_UP occurs\n2) that the other pointers are still on the screen and can be queried.\n\nAdam:\nAre those 2 assumptions always true? Otherwise we might need protect against this in many other locations too.\n\nIf we do this check, we might also want to set the mActivePointerId to INVALID_POINTER and handle the ACTION_UP correctly, where the velocity of the current pointer is querried.",
+      "revId": "4c91b276e25851830dea82be3f11f20027718cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
