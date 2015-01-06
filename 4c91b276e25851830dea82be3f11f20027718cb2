@@ -16,6 +16,24 @@
       "revId": "4c91b276e25851830dea82be3f11f20027718cb2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce3acdc4_e57d1e9f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2015-01-06T00:40:02Z",
+      "side": 1,
+      "message": "ACTION_POINTER_UP means a pointer is leaving the screen and at least one pointer is still in contact with the screen. The pointer index encoded within the action (getActionIndex()) is the index of the pointer that is leaving the screen and that will become invalid after this event is done processing. A MotionEvent always contains data about all pointers currently in contact with the screen; UP events contain the last known data about a pointer leaving.\n\nThis check should be unnecessary as mActivePointerId should be valid after onSecondaryPointerUp, unless the parent view is passing a bad/inconsistent event stream. While some framework widgets defensively account for this in ACTION_MOVE processing, it should be unnecessary in SystemUI. If this is crashing we should find the root cause of the events triggering it rather than patch the symptom here.",
+      "parentUuid": "c180e07b_f58e60bf",
+      "revId": "4c91b276e25851830dea82be3f11f20027718cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
