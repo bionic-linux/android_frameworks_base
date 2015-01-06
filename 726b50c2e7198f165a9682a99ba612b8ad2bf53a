@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee5eb12a_50bee487",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-01-06T16:43:30Z",
+      "side": 1,
+      "message": "Please limit commit message line to 70 characters or less.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 138
+      },
+      "revId": "726b50c2e7198f165a9682a99ba612b8ad2bf53a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
