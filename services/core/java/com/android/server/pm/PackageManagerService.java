@@ -35,6 +35,7 @@ import static android.content.pm.PackageManager.INSTALL_FAILED_INVALID_APK;
 import static android.content.pm.PackageManager.INSTALL_FAILED_INVALID_INSTALL_LOCATION;
 import static android.content.pm.PackageManager.INSTALL_FAILED_MISSING_SHARED_LIBRARY;
 import static android.content.pm.PackageManager.INSTALL_FAILED_PACKAGE_CHANGED;
+import static android.content.pm.PackageManager.INSTALL_FAILED_POLICY_REJECTED_PERMISSION;
 import static android.content.pm.PackageManager.INSTALL_FAILED_REPLACE_COULDNT_DELETE;
 import static android.content.pm.PackageManager.INSTALL_FAILED_SHARED_USER_INCOMPATIBLE;
 import static android.content.pm.PackageManager.INSTALL_FAILED_TEST_ONLY;
@@ -385,9 +386,6 @@ public class PackageManagerService extends IPackageManager.Stub {
     final int[] mGlobalGids;
     final SparseArray<HashSet<String>> mSystemPermissions;
     final HashMap<String, FeatureInfo> mAvailableFeatures;
-
-    // If mac_permissions.xml was found for seinfo labeling.
-    boolean mFoundPolicyFile;
 
     // If a recursive restorecon of /data/data/<pkg> is needed.
     private boolean mShouldRestoreconData = SELinuxMMAC.shouldRestorecon();
@@ -1361,7 +1359,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                         new SharedLibraryEntry(libConfig.valueAt(i), null));
             }
 
-            mFoundPolicyFile = SELinuxMMAC.readInstallPolicy();
+            SELinuxMMAC.readInstallPolicy();
 
             mRestoredSettings = mSettings.readLPw(this, sUserManager.getUsers(false),
                     mSdkVersion, mOnlyCore);
@@ -5381,8 +5379,10 @@ public class PackageManagerService extends IPackageManager.Stub {
                 updateSharedLibrariesLPw(pkg, null);
             }
 
-            if (mFoundPolicyFile) {
-                SELinuxMMAC.assignSeinfoValue(pkg);
+            if (!SELinuxMMAC.assignSeinfoValue(pkg)) {
+                throw new PackageManagerException(INSTALL_FAILED_POLICY_REJECTED_PERMISSION,
+                        "Installing package " + pkg.packageName + " failed due to missing " +
+                        "default seinfo assignment.");
             }
 
             pkg.applicationInfo.uid = pkgSetting.appId;
