@@ -757,7 +757,6 @@ public class LegacyMetadataMapper {
                     CaptureRequest.COLOR_CORRECTION_ABERRATION_MODE,
                     CaptureRequest.CONTROL_AE_ANTIBANDING_MODE,
                     CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION,
-                    CaptureRequest.CONTROL_AE_LOCK,
                     CaptureRequest.CONTROL_AE_MODE,
                     CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE,
                     CaptureRequest.CONTROL_AF_MODE,
@@ -778,7 +777,6 @@ public class LegacyMetadataMapper {
                     CaptureRequest.JPEG_THUMBNAIL_QUALITY,
                     CaptureRequest.JPEG_THUMBNAIL_SIZE,
                     CaptureRequest.LENS_FOCAL_LENGTH,
-                    CaptureRequest.NOISE_REDUCTION_MODE,
                     CaptureRequest.SCALER_CROP_REGION,
                     CaptureRequest.STATISTICS_FACE_DETECT_MODE,
             };
@@ -790,6 +788,11 @@ public class LegacyMetadataMapper {
             }
             if (p.getMaxNumFocusAreas() > 0) {
                 availableKeys.add(CaptureRequest.CONTROL_AF_REGIONS);
+            }
+            //Camera.Parameters does not have API to query NOISE_REDUCTION_MODE
+            if (p.isAutoExposureLockSupported()) {
+                availableKeys.add(CaptureRequest.NOISE_REDUCTION_MODE);
+                availableKeys.add(CaptureRequest.CONTROL_AE_LOCK);
             }
 
             CaptureRequest.Key<?> availableRequestKeys[] =
