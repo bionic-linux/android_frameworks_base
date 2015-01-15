@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b1bf76b_f37f3095",
+        "filename": "keystore/java/android/security/AndroidKeyPairGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-15T09:25:57Z",
+      "side": 1,
+      "message": "maybe you should add an equivalent comment to that file ?",
+      "revId": "21a76df55cf4b956f4d34f57c7b9e694d0363f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b1bf76b_d37c34a3",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-15T09:25:57Z",
+      "side": 1,
+      "message": "this seems like an unrelated change. why was it necessary ? Did you audit all callers ?\n\nIMO. this change makes it easier to screw something up.",
+      "revId": "21a76df55cf4b956f4d34f57c7b9e694d0363f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
