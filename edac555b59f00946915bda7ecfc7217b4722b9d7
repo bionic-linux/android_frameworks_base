@@ -16,6 +16,24 @@
       "revId": "edac555b59f00946915bda7ecfc7217b4722b9d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b7777c2_d6fd223f",
+        "filename": "core/java/android/os/StrictMode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2015-01-15T22:55:04Z",
+      "side": 1,
+      "message": "Yes, it\u0027s fine.  They\u0027re all @hide, and I updated the one place they\u0027re referenced in native code.",
+      "parentUuid": "6b80f3c4_56b83499",
+      "revId": "edac555b59f00946915bda7ecfc7217b4722b9d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
