@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b80f3c4_56b83499",
+        "filename": "core/java/android/os/StrictMode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-01-15T20:46:50Z",
+      "side": 1,
+      "message": "Is it OK to change the values of these public constants?",
+      "revId": "edac555b59f00946915bda7ecfc7217b4722b9d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
