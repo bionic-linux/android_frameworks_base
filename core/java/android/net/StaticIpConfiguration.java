@@ -79,9 +79,18 @@ public class StaticIpConfiguration implements Parcelable {
      * directly-connected route for the IP address's local subnet and a default route.
      */
     public List<RouteInfo> getRoutes(String iface) {
-        List<RouteInfo> routes = new ArrayList<RouteInfo>(2);
+        List<RouteInfo> routes = new ArrayList<RouteInfo>();
         if (ipAddress != null) {
             routes.add(new RouteInfo(ipAddress, null, iface));
+        }
+        // If the gateway is out of the default subnet, need to add a routing rule for it.
+        if (ipAddress != null && gateway != null) {
+            int prefixLength = ipAddress.getPrefixLength();
+            if (!NetworkUtils.getNetworkPart(ipAddress.getAddress(), prefixLength).equals(
+                    NetworkUtils.getNetworkPart(gateway, prefixLength))) {
+                LinkAddress dest = new LinkAddress(gateway, gateway.getAddress().length * 8);
+                routes.add(new RouteInfo(dest, null, iface));
+            }
         }
         if (gateway != null) {
             routes.add(new RouteInfo((LinkAddress) null, gateway, iface));
