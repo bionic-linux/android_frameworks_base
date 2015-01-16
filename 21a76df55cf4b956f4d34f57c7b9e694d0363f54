@@ -69,6 +69,24 @@
       "revId": "21a76df55cf4b956f4d34f57c7b9e694d0363f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbd63fdb_71a9d86d",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-16T11:57:39Z",
+      "side": 1,
+      "message": "Okay. The concern I had this change was that if a caller didn\u0027t check the return value and passed it down to native code, bad things might happen if say, the value is interpreted as a bitmask (or for most things other an equality checks)",
+      "parentUuid": "eb8303c3_a29a9e46",
+      "revId": "21a76df55cf4b956f4d34f57c7b9e694d0363f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
