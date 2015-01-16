@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be0c7b0_8f4c553f",
+        "filename": "core/java/android/os/StrictMode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-16T14:00:43Z",
+      "side": 1,
+      "message": "device is DOA because this \u003e 31 chars in length.\n\nf***ing system properties...",
+      "revId": "605eb79c9519307147fc1795d0eb155638a7f542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
