@@ -1,0 +1,81 @@
+/**
+ * Copyright (c) 2015, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.security;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.ParcelFormatException;
+
+/**
+ * Base class for the Java side of a keymaster_key_param_t.
+ * Serialization code for this and subclasses must be kept in sync with system/security/keystore
+ * and with hardware/libhardware/include/hardware/keymaster_defs.h
+ * @hide
+ */
+public abstract class KeymasterArgument implements Parcelable {
+    public int tag;
+
+    public static final Parcelable.Creator<KeymasterArgument> CREATOR = new
+            Parcelable.Creator<KeymasterArgument>() {
+                public KeymasterArgument createFromParcel(Parcel in) {
+                    final int tag = in.readInt();
+                    switch (KeymasterDefs.getTagType(tag)) {
+                        case KeymasterDefs.KM_ENUM:
+                        case KeymasterDefs.KM_ENUM_REP:
+                        case KeymasterDefs.KM_INT:
+                        case KeymasterDefs.KM_INT_REP:
+                            return new KeymasterIntArgument(tag, in);
+                        case KeymasterDefs.KM_LONG:
+                            return new KeymasterLongArgument(tag, in);
+                        case KeymasterDefs.KM_DATE:
+                            return new KeymasterDateArgument(tag, in);
+                        case KeymasterDefs.KM_BYTES:
+                        case KeymasterDefs.KM_BIGNUM:
+                            return new KeymasterBlobArgument(tag, in);
+                        case KeymasterDefs.KM_BOOL:
+                            return new KeymasterBooleanArgument(tag, in);
+                        default:
+                            throw new ParcelFormatException("Bad tag: " + tag);
+                    }
+                }
+                public KeymasterArgument[] newArray(int size) {
+                    return new KeymasterArgument[size];
+                }
+            };
+    public KeymasterArgument(int tag, Parcel in) {
+        this.tag = tag;
+        readFromParcel(in);
+    }
+
+    protected KeymasterArgument(int tag) {
+        this.tag = tag;
+    }
+
+    public abstract void writeValue(Parcel out);
+
+    public abstract void readFromParcel(Parcel in);
+
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(tag);
+        writeValue(out);
+    }
+}
