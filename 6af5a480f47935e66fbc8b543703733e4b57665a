@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bf447d2_72dcd675",
+        "filename": "core/java/android/security/KeymasterDefs.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2015-01-22T22:44:15Z",
+      "side": 1,
+      "message": "I changed this to a KM_INT, KM_TAG_USES_PER_BOOT.",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 54
+      },
+      "revId": "6af5a480f47935e66fbc8b543703733e4b57665a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bb51bf8_90fe2439",
+        "filename": "core/java/android/security/KeymasterDefs.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2015-01-22T22:44:15Z",
+      "side": 1,
+      "message": "This one is gone.",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 55
+      },
+      "revId": "6af5a480f47935e66fbc8b543703733e4b57665a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
