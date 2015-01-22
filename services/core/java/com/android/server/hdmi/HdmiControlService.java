@@ -1015,6 +1015,10 @@ public final class HdmiControlService extends SystemService {
     private HdmiDeviceInfo createDeviceInfo(int logicalAddress, int deviceType, int powerStatus) {
         // TODO: find better name instead of model name.
         String displayName = Build.MODEL;
+        String osdName = getContext().getResources().getString(com.android.internal.R.string.cec_osd_display_name);
+        if (osdName != null && !osdName.isEmpty()) {
+            displayName = osdName;
+        }
         return new HdmiDeviceInfo(logicalAddress,
                 getPhysicalAddress(), pathToPortId(getPhysicalAddress()), deviceType,
                 getVendorId(), displayName, powerStatus, getCecVersion());
