@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb38ff5e_e1bd86da",
+        "filename": "core/java/android/security/KeymasterDefs.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2015-01-22T22:50:38Z",
+      "side": 1,
+      "message": "Add KM_TAG_NONCE \u003d KM_BYTES | 9;",
+      "revId": "35ab41b171338acf85c9f7f073078b5d00730b93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
