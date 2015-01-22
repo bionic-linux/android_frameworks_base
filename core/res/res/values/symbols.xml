@@ -2793,4 +2793,6 @@
   <java-symbol type="string" name="etws_primary_default_message_test" />
 
   <java-symbol type="string" name="etws_primary_default_message_others" />
+
+  <java-symbol type="string" name="cec_osd_display_name" />
 </resources>
