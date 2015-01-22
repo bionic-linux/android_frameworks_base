@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab082bac_887b97e3",
+        "filename": "core/java/android/security/KeymasterArgument.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-01-22T21:41:20Z",
+      "side": 1,
+      "message": "I suspect this should be a final field (once set in constructor, the tag cannot be changed). If so, make it final and optionally make it private and added a public getter.",
+      "revId": "c5f64987c6fd381a00f951e1f37cb233b3e1670d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb139fda_89fef909",
+        "filename": "core/java/android/security/KeymasterArgument.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-01-22T21:41:20Z",
+      "side": 1,
+      "message": "Nit: Please add an empty line to separate this constructor from the field above.",
+      "revId": "c5f64987c6fd381a00f951e1f37cb233b3e1670d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb139fda_090b2997",
+        "filename": "core/java/android/security/KeymasterArgument.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-01-22T21:41:20Z",
+      "side": 1,
+      "message": "Please add a short Javadoc says what this method is supposed to do or what it\u0027s for. Without that, it\u0027s hard to know whether subclasses implement it correctly.",
+      "revId": "c5f64987c6fd381a00f951e1f37cb233b3e1670d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb139fda_c91d11d6",
+        "filename": "core/java/android/security/KeymasterArgument.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-01-22T21:41:20Z",
+      "side": 1,
+      "message": "Please add a short Javadoc says what this method is supposed to do or what it\u0027s for. Without that, it\u0027s hard to know whether subclasses implement it correctly.",
+      "revId": "c5f64987c6fd381a00f951e1f37cb233b3e1670d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb139fda_49012177",
+        "filename": "core/java/android/security/KeymasterArgument.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-01-22T21:41:20Z",
+      "side": 1,
+      "message": "Missing @Override",
+      "revId": "c5f64987c6fd381a00f951e1f37cb233b3e1670d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
