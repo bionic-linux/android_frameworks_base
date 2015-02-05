@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cc26457_17a0b63d",
+        "filename": "core/java/android/security/keymaster/KeymasterArguments.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-02-05T21:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7db33ac_cc48bf72",
+      "range": {
+        "startLine": 93,
+        "startChar": 77,
+        "endLine": 93,
+        "endChar": 86
+      },
+      "revId": "9e9439165c2e953b6b42fc1b8e791691b14f36e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7db33ac_0c065741",
         "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2015-02-02T22:25:55Z",
       "side": 1,
       "message": "Isn\u0027t this one now KM_TAG_MAX_USES_PER_BOOT?",
+      "revId": "9e9439165c2e953b6b42fc1b8e791691b14f36e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc26457_57830e9d",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-02-05T21:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7db33ac_0c065741",
       "revId": "9e9439165c2e953b6b42fc1b8e791691b14f36e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
