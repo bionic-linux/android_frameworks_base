@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d158b771_1aca7da4",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-02-09T11:02:03Z",
+      "side": 1,
+      "message": "@code or @link",
+      "revId": "ba771968f720c068c3c1e2caac95a5e31b2af370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31f83338_7d3e57ed",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 1
