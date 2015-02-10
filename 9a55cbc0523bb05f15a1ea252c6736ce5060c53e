@@ -16,6 +16,24 @@
       "revId": "9a55cbc0523bb05f15a1ea252c6736ce5060c53e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "711b8b07_b722681c",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1056365
+      },
+      "writtenOn": "2015-02-10T22:44:41Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "71f62b4b_5f95cb1f",
+      "revId": "9a55cbc0523bb05f15a1ea252c6736ce5060c53e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

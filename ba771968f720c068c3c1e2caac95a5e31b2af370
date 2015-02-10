@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9102bfb9_98b73505",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1056365
+      },
+      "writtenOn": "2015-02-10T22:44:41Z",
+      "side": 1,
+      "message": "i added this line to document the behavior the function. don\u0027t think i can point to any @code or @link here.",
+      "parentUuid": "d158b771_1aca7da4",
+      "revId": "ba771968f720c068c3c1e2caac95a5e31b2af370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d158b771_da112578",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d108b7db_3a654184",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1056365
+      },
+      "writtenOn": "2015-02-10T22:44:41Z",
+      "side": 1,
+      "message": "there are (a small set of) CTS tests for this function. most of them are still passing, with only one exception. It requires changing the expected result from \"in 42 secs\" to \"in 42 sec.\". I\u0027ve moved most of the CTS tests into libcore tests.",
+      "parentUuid": "d158b771_da112578",
+      "range": {
+        "startLine": 293,
+        "startChar": 31,
+        "endLine": 293,
+        "endChar": 56
+      },
+      "revId": "ba771968f720c068c3c1e2caac95a5e31b2af370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31f83338_7d3e57ed",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2015-02-07T01:37:42Z",
       "side": 1,
       "message": "is this dead code?",
+      "revId": "ba771968f720c068c3c1e2caac95a5e31b2af370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d17b575e_622b7680",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1056365
+      },
+      "writtenOn": "2015-02-10T22:44:41Z",
+      "side": 1,
+      "message": "no. i\u0027m still seeing it here.\nhttps://cs.corp.google.com/#android/packages/providers/DownloadProvider/src/com/android/providers/downloads/DownloadNotifier.java\u0026l\u003d229",
+      "parentUuid": "31f83338_7d3e57ed",
       "revId": "ba771968f720c068c3c1e2caac95a5e31b2af370",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
