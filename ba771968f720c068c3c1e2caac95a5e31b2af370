@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "760f0125_77c43099",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-02-10T23:52:32Z",
+      "side": 1,
+      "message": "he meant around \"MINUTE_IN_MILLIS\". either {@code MINUTE_IN_MILLIS} or {@link #MINUTE_IN_MILLIS}.",
+      "parentUuid": "9102bfb9_98b73505",
+      "revId": "ba771968f720c068c3c1e2caac95a5e31b2af370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d158b771_da112578",
         "filename": "core/java/android/text/format/DateUtils.java",
         "patchSetId": 1
