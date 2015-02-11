@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36690907_d553bc1e",
+        "filename": "core/java/android/security/keymaster/KeymasterArgument.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-02-11T22:11:56Z",
+      "side": 1,
+      "message": "Is this change intentional? I recall we used it for debugging...",
+      "revId": "9d062366499b4ddb17929c7eef25a8e70bd5df11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
