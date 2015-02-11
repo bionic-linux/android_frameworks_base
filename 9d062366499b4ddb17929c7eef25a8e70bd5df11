@@ -16,6 +16,24 @@
       "revId": "9d062366499b4ddb17929c7eef25a8e70bd5df11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96ae3592_183f05e8",
+        "filename": "core/java/android/security/keymaster/KeymasterArgument.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-02-11T22:16:41Z",
+      "side": 1,
+      "message": "Yes. That throw will only happen if there is a parceling bug anyways so we might as well include the more useful information.",
+      "parentUuid": "36690907_d553bc1e",
+      "revId": "9d062366499b4ddb17929c7eef25a8e70bd5df11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
