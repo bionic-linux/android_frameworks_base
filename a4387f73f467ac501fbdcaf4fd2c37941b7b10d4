@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6834dc3_e56d109d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-02-11T09:24:56Z",
+      "side": 1,
+      "message": "please use an 8 char indent. no need to line up to the \"(\" and no need to limit yourself to one param per line. (here and below)\n\nPS. There\u0027s no question of consistency here because the two calls you\u0027ve added here are the only calls that span a line break.",
+      "revId": "a4387f73f467ac501fbdcaf4fd2c37941b7b10d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
