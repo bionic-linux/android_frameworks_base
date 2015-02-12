@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "365bc9e2_e50b3606",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2015-02-12T06:40:42Z",
+      "side": 1,
+      "message": "This is not as complicated as it might seem, dispatchSessionFinished() caused deadlock, just move it outside the lock. It is called outside a lock in all other locations in this file.\n\nMoreover the variables accessed in DispatchSessionFinished() are either set in this thread or in the constructor of this class, so it should be safe to move this call.",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 8
+      },
+      "revId": "823b26a2f5177299d4be0e56fb0042d7c6ac10f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
