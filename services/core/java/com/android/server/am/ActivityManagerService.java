@@ -16400,27 +16400,15 @@ public final class ActivityManagerService extends ActivityManagerNative
     }
 
     /**
-     * Save the locale. You must be inside a synchronized (this) block.
+     * Save the locale.  You must be inside a synchronized (this) block.
      */
     private void saveLocaleLocked(Locale l, boolean isDiff, boolean isPersist) {
-        final String languageTag = l.toLanguageTag();
-        if (isDiff) {
-            SystemProperties.set("user.locale", languageTag);
-
-            // TODO: Who uses these ? There are no references to these system
-            // properties in documents or code. Did the author intend to call
-            // System.setProperty() instead ? Even that wouldn't have any effect.
+        if(isDiff) {
             SystemProperties.set("user.language", l.getLanguage());
             SystemProperties.set("user.region", l.getCountry());
-        }
+        } 
 
-        if (isPersist) {
-            SystemProperties.set("persist.sys.locale", languageTag);
-
-            // These values are *deprecated*, use persist.sys.locale instead.
-            //
-            // TODO: Stop setting these values once all code that references
-            // them has been removed.
+        if(isPersist) {
             SystemProperties.set("persist.sys.language", l.getLanguage());
             SystemProperties.set("persist.sys.country", l.getCountry());
             SystemProperties.set("persist.sys.localevar", l.getVariant());
