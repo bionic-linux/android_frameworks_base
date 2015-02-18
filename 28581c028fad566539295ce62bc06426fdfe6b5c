@@ -45,6 +45,30 @@
       "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bc4dcd0_a77c8451",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-02-18T19:11:49Z",
+      "side": 1,
+      "message": "Most third-party unbundled stacks (e.g., okhttp, Apache stacks) do not have an Android-specific layer on top of their Android-agnostic layers. Thus, they don\u0027t take a reference to Context. As a result, users of these stacks won\u0027t by default get the benefit of this flag/policy. We\u0027d like to avoid that.\n\nIf we want to make it possible for stacks to auto-configure then they can only use public framework API for that. Thus, libcore/dalvik stuff won\u0027t do because it\u0027s not usually public framework API.",
+      "parentUuid": "6bd55878_ca4c238a",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
