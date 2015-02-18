@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd55878_6a853737",
+        "filename": "core/java/android/security/InsecureNetworkTrafficException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2015-02-18T18:22:04Z",
+      "side": 1,
+      "message": "I think this name is too verbose.  Just kicked off a separate naming thread.",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bd55878_ca4c238a",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2015-02-18T18:22:04Z",
+      "side": 1,
+      "message": "I think this layering is a bit broken.\n\nLook at dalvik.system.SocketTagger, where the system can push down something that provides policy details.  In fact, you might be able to squint hard and add this boolean method onto SocketTagger and be done with it.\n\n(I\u0027m okay telling third-party stacks that they need to get the flag from Context.getApplicationInfo().)",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
