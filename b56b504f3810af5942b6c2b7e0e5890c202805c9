@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8580a72_5ada35ee",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2015-02-19T23:22:24Z",
+      "side": 1,
+      "message": "This value exceeds MAX_INT. Does that work?",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "b56b504f3810af5942b6c2b7e0e5890c202805c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
