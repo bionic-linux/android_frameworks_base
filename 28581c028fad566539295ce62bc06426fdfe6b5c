@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "083302f6_4c153f6f",
+        "filename": "core/java/android/security/InsecureNetworkTrafficException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-02-19T11:10:23Z",
+      "side": 1,
+      "message": "I spoke to Alex and ruminated overnight.\n\nFor a similar change for OkHttp, Alex and Jesse settled on UnknownServiceException.\n\nAlex also mentioned SecurityException. I prefer IOException in this case. On Android, RuntimeExceptions tend to reach the top of the call stack and kill the app. If people right now deal with IOException by reporting a nice error to the user then they will continue to do so.\n\nI am not convinced this feature will \"stick\" or be widely used. I don\u0027t know where it might go next. I want to consider deprecation and evolution.\n\nAlex might want to add extra information to the exception outside of the message: the attempted URL. I am not convinced of the need.\n\nAdding a new exception to Android\u0027s APIs is costly for the value it\u0027s adding. The vast majority of people won\u0027t actually want to catch this or care about it. Throwing any android.* exception form libcore is going to involve reflection. I\u0027m not against reflection if we can\u0027t avoid it but I\u0027d like to try.\n\nMy order of preference:\n\n1) Throwing an existing subclass of IOException (e.g. UnknownServiceException, ProtocolException)\nPros: Avoids adding more cruft to the Android APIs, avoids making 3rd party library code (e.g. http stacks or intermediate layers) know about Android APIs. Future evolution could involve moving to (2) or (3) below.\nCons: Not a 100% fit to our existing comments on those classes. No ability to add extra info.\n\n2) Throwing an Android API subclass of, e.g. UnknownServiceException, ProtocolException.\nPros: People can either code to Android API or java.net APIs if they want.\nCons: Android API grows for a niche feature. Unbundled http-stacks / libs either code to android APIs or do their own thing.\n\n3) Throwing a non-public, immediate subclass of e.g. UnknownServiceException, ProtocolException.\nPros: Can still be named appropriately, but people don\u0027t have to code to Android APIs if they don\u0027t want to.\nCons: No ability to add extra info. Reflection involved from libcore. Unbundled http-stacks have to do their own thing (probably throw UnknownServiceException, ProtocolException or their own subclass).\n\n4) Throwing a non-public, immediate subclass of IOException \nPros: None I can think of.\nCons: No ability for code to catch this case in a \"nice\" way so no decent chance of special handling.",
+      "parentUuid": "6bd55878_6a853737",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd55878_ca4c238a",
         "filename": "core/java/android/security/NetworkSecurityPolicy.java",
         "patchSetId": 4
@@ -65,6 +89,168 @@
         "startChar": 13,
         "endLine": 24,
         "endChar": 34
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48fb3a34_7e9d317f",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-02-19T11:10:23Z",
+      "side": 1,
+      "message": "Alternative suggestion:\n\nTo avoid reflection from external/okhttp, this could just be a public API that delegates to a /libcore class containing the state.\n\nBundled okhttp could go direct to that class (removing the need for reflection), 3rd parties and framework can call this.\n\nIt avoids the \"two sources of truth\", but does complicate matters and double up everything so I\u0027m not convinced it\u0027s a *good* suggestion.\n\n---------------\n\nEven as it stands, this looks like a lot of code for what is a boolean flag. Is there nowhere else appropriate we could put these methods? Do you have plans / ideas to add other methods here?",
+      "parentUuid": "0bc4dcd0_a77c8451",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28f8c637_ddc8cb5a",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-02-19T11:10:23Z",
+      "side": 1,
+      "message": "This comment isn\u0027t really adding anything, IMO.",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28f8c637_1de753ea",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-02-19T11:10:23Z",
+      "side": 1,
+      "message": "Not that this is performance critical, but you can make this volatile and remove the synchronization. Not sure if it would actually buy you anything.",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 43
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "083302f6_0c3857f7",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-02-19T11:10:23Z",
+      "side": 1,
+      "message": "I\u0027m usually in favor of singletons like this because it allows for mocking, alternative implementation, etc. It\u0027s not usually how a lot of the Android APIs are written, though.\n\nIs that why you left NetworkSecurityPolicy non-final?\n\n[You\u0027ve only given it a private constructor which makes conventional subclassing/mocking impossible.]\n\n------\n\nget() and the docs suggests there might be a possibility of swapping out the instance / setting the policy. In actual fact, people can hang onto this. getInstance() or instance() might be more appropriate, and the comment could be made more useful.",
+      "range": {
+        "startLine": 39,
+        "startChar": 38,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "083302f6_ac838334",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-02-19T11:10:23Z",
+      "side": 1,
+      "message": "Remove \"Checks\" ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "083302f6_6c4fdb7f",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-02-19T11:10:23Z",
+      "side": 1,
+      "message": "You can remove the @return. It\u0027s obvious.",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "083302f6_2c143342",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-02-19T11:10:23Z",
+      "side": 1,
+      "message": "Remove \"is method \".\n\nI\u0027d say \"This method is used....\"\n\nThis will remain hidden, right?\n\nIs this is another barrier to subclassing for mocking / testing? It\u0027ll be stripped out of the interface jar if it\u0027s hidden.\n\nAs above, f your use of a singleton is for aiding app testing, then perhaps it should not be hidden but made non-hidden but protected instead. It should be documented that it should not be changed once set.\n\nDid you want to enforce that in this method?",
+      "range": {
+        "startLine": 63,
+        "startChar": 23,
+        "endLine": 63,
+        "endChar": 29
       },
       "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
