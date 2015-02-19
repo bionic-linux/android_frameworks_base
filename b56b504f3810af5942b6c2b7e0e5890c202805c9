@@ -22,6 +22,30 @@
       "revId": "b56b504f3810af5942b6c2b7e0e5890c202805c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8580a72_da3f65fc",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-02-19T23:35:01Z",
+      "side": 1,
+      "message": "The only math operations we perform are bitwise \u0026 and | so it being negative doesn\u0027t matter.",
+      "parentUuid": "c8580a72_5ada35ee",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "b56b504f3810af5942b6c2b7e0e5890c202805c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
