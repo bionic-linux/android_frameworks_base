@@ -70,6 +70,30 @@
       "revId": "b56b504f3810af5942b6c2b7e0e5890c202805c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68571e42_774f50ad",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-02-19T23:53:10Z",
+      "side": 1,
+      "message": "They both chain into Parcel.writeAligned directly which only cares about their sizeof and does a simple *(type*)ptr \u003d val, sign doesn\u0027t matter for serialization.",
+      "parentUuid": "28ee06c7_0df091ea",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "b56b504f3810af5942b6c2b7e0e5890c202805c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
