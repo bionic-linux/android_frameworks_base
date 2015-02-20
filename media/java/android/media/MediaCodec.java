@@ -2501,7 +2501,8 @@ final public class MediaCodec {
     /**
      * Call this after dequeueOutputBuffer signals a format change by returning
      * {@link #INFO_OUTPUT_FORMAT_CHANGED}.
-     * You can also call this after {@link #configure} returns
+     * Since API 21, you can also call this after
+     * {@link #configure} returns
      * successfully to get the output format initially configured
      * for the codec.  Do this to determine what optional
      * configuration parameters were supported by the codec.
