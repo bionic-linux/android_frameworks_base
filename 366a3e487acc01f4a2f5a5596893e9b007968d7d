@@ -22,6 +22,30 @@
       "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5ece17a_a1db9e73",
+        "filename": "core/java/android/app/SharedPreferencesImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-02-23T21:32:49Z",
+      "side": 1,
+      "message": "i think that\u0027s a larger behavioural change. some operations on the return value will now throw an unsupportedoperationexception when they wouldn\u0027t earlier.",
+      "parentUuid": "2823668f_c5bb5a9d",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 66
+      },
+      "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
