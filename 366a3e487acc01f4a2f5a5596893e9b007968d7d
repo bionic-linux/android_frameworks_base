@@ -94,6 +94,30 @@
       "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5e71593_8213fa89",
+        "filename": "core/java/android/app/SharedPreferencesImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-02-23T21:40:16Z",
+      "side": 1,
+      "message": "(no strong opinions though, i\u0027ll leave it up to you, hackbod et al.)",
+      "parentUuid": "a5ece17a_61ed9613",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 66
+      },
+      "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
