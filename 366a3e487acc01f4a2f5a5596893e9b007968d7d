@@ -70,6 +70,30 @@
       "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5ece17a_61ed9613",
+        "filename": "core/java/android/app/SharedPreferencesImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-02-23T21:39:20Z",
+      "side": 1,
+      "message": "I think a targetSdkVersion based check is probably the right way forward.\n\nLuckily, the constructors for this class aren\u0027t public so that should be relatively bullet proof :)",
+      "parentUuid": "08206281_c4035e88",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 66
+      },
+      "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
