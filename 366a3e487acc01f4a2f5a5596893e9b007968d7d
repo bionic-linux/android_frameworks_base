@@ -118,6 +118,30 @@
       "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5e71593_a224bed1",
+        "filename": "core/java/android/app/SharedPreferencesImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1012083
+      },
+      "writtenOn": "2015-02-23T22:20:37Z",
+      "side": 1,
+      "message": "\"to the vast majority of developers using this API correctly\" means that one still have to create a new set allocation to update the property. If it\u0027s properly documented in the API, extra allocations will be saved if the property isn\u0027t updated. Anyway, I\u0027ll wait your decision.",
+      "parentUuid": "c5e71593_8213fa89",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 66
+      },
+      "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
