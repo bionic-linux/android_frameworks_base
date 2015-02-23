@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2823668f_c5bb5a9d",
+        "filename": "core/java/android/app/SharedPreferencesImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-02-23T21:30:36Z",
+      "side": 1,
+      "message": "To avoid the extra allocations of creating a copy, consider wrapping using Collections.unmodifiableSet() instead.",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 66
+      },
+      "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
