@@ -46,6 +46,30 @@
       "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08206281_c4035e88",
+        "filename": "core/java/android/app/SharedPreferencesImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-02-23T21:37:11Z",
+      "side": 1,
+      "message": "Forcing a copy is a penalty to the vast majority of developers using this API correctly.\n\nMaybe copy whatever unmodifiableSet() is doing internally, but silently drop mutations instead of throwing?  (Or if you\u0027re feeling super ambitious, piping in targetApi of the app through the ctor, and throw for newer apps.)",
+      "parentUuid": "a5ece17a_a1db9e73",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 66
+      },
+      "revId": "366a3e487acc01f4a2f5a5596893e9b007968d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
