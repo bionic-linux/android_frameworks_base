@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5022140_11ed4c14",
+        "filename": "core/jni/android_opengl_EGL14.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-02-24T13:02:48Z",
+      "side": 1,
+      "message": "i\u0027m sure we went through this with fadden during the 64 bit transition, where I recommended changning EglNativeDisplayType to \"int\" instead of \"void*\" (see the android specific define in eglplatform.h). \n\nI don\u0027t believe that\u0027s a breaking change but it does need a little bit of code.\n\nI don\u0027t remember why we didn\u0027t do it then.",
+      "revId": "10caf0390d39f0bd46876eee6ab2c9a73d4e1d39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
