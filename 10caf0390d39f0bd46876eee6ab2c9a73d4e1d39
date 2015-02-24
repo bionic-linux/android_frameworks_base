@@ -16,6 +16,24 @@
       "revId": "10caf0390d39f0bd46876eee6ab2c9a73d4e1d39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65dae934_ffdcff95",
+        "filename": "core/jni/android_opengl_EGL14.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2015-02-24T19:22:14Z",
+      "side": 1,
+      "message": "I had wondered about doing that. It seems like it would be cleaner, but isn\u0027t that an ABI breaking change? Are these libraries available to apps?",
+      "parentUuid": "a5022140_11ed4c14",
+      "revId": "10caf0390d39f0bd46876eee6ab2c9a73d4e1d39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
