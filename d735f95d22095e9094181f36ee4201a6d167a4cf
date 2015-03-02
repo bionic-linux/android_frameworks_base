@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f22062e0_488f1f29",
+        "filename": "core/java/android/webkit/WebMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1044956
+      },
+      "writtenOn": "2015-03-02T22:27:00Z",
+      "side": 1,
+      "message": "sent",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f22062e0_e80373be",
+        "filename": "core/java/android/webkit/WebMessagePort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1044956
+      },
+      "writtenOn": "2015-03-02T22:27:00Z",
+      "side": 1,
+      "message": "\"receive messages\"?",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "122a56bf_09fc098b",
+        "filename": "core/java/android/webkit/WebMessagePort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1044956
+      },
+      "writtenOn": "2015-03-02T22:27:00Z",
+      "side": 1,
+      "message": "you mean WebMessageListener?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 12
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "122a56bf_094d294a",
+        "filename": "core/java/android/webkit/WebMessagePort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1044956
+      },
+      "writtenOn": "2015-03-02T22:27:00Z",
+      "side": 1,
+      "message": "This is the handler to invoke the listener on a background thread other than the UI thread.\nA bit more explanation would be good. Developers who try to customize Handler#handleMessage will be surprised that their handleMessage is ignored. All we use the |handler| for is its looper.",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 68
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f22062e0_2848eb39",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1044956
+      },
+      "writtenOn": "2015-03-02T22:27:00Z",
+      "side": 1,
+      "message": "\"represent\"?",
+      "range": {
+        "startLine": 1793,
+        "startChar": 18,
+        "endLine": 1793,
+        "endChar": 24
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "122a56bf_491d6161",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1044956
+      },
+      "writtenOn": "2015-03-02T22:27:00Z",
+      "side": 1,
+      "message": "space after \u0027+\u0027",
+      "range": {
+        "startLine": 1816,
+        "startChar": 73,
+        "endLine": 1816,
+        "endChar": 74
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f22062e0_c8adcf69",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1044956
+      },
+      "writtenOn": "2015-03-02T22:27:00Z",
+      "side": 1,
+      "message": "You only need 1 extra line here",
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
