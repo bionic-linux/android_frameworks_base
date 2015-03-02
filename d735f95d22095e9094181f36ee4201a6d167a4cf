@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2235eea_0712368b",
+        "filename": "core/java/android/webkit/WebMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1010674
+      },
+      "writtenOn": "2015-03-02T22:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f22062e0_488f1f29",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f22062e0_e80373be",
         "filename": "core/java/android/webkit/WebMessagePort.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2015-03-02T22:27:00Z",
       "side": 1,
       "message": "\"receive messages\"?",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f22062e0_a865fb93",
+        "filename": "core/java/android/webkit/WebMessagePort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1010674
+      },
+      "writtenOn": "2015-03-02T22:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f22062e0_e80373be",
       "range": {
         "startLine": 33,
         "startChar": 32,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f22062e0_887bd73f",
+        "filename": "core/java/android/webkit/WebMessagePort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1010674
+      },
+      "writtenOn": "2015-03-02T22:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122a56bf_09fc098b",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 12
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "122a56bf_094d294a",
         "filename": "core/java/android/webkit/WebMessagePort.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2015-03-02T22:27:00Z",
       "side": 1,
       "message": "This is the handler to invoke the listener on a background thread other than the UI thread.\nA bit more explanation would be good. Developers who try to customize Handler#handleMessage will be surprised that their handleMessage is ignored. All we use the |handler| for is its looper.",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 68
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92156685_05c4f28b",
+        "filename": "core/java/android/webkit/WebMessagePort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1010674
+      },
+      "writtenOn": "2015-03-02T22:40:26Z",
+      "side": 1,
+      "message": "perhaps there is some small chance of confusion, I will raise it during API review. note that I don\u0027t think they would even attempt to customize it since there is no way to listen to webmessages that are sent via android.os.Message messages in the API.",
+      "parentUuid": "122a56bf_094d294a",
       "range": {
         "startLine": 84,
         "startChar": 24,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d2235eea_e7c2822b",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1010674
+      },
+      "writtenOn": "2015-03-02T22:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f22062e0_2848eb39",
+      "range": {
+        "startLine": 1793,
+        "startChar": 18,
+        "endLine": 1793,
+        "endChar": 24
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "122a56bf_491d6161",
         "filename": "core/java/android/webkit/WebView.java",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "92156685_45e54a22",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1010674
+      },
+      "writtenOn": "2015-03-02T22:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122a56bf_491d6161",
+      "range": {
+        "startLine": 1816,
+        "startChar": 73,
+        "endLine": 1816,
+        "endChar": 74
+      },
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f22062e0_c8adcf69",
         "filename": "core/java/android/webkit/WebView.java",
         "patchSetId": 1
@@ -151,6 +295,24 @@
       "writtenOn": "2015-03-02T22:27:00Z",
       "side": 1,
       "message": "You only need 1 extra line here",
+      "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2235eea_07f1969a",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1010674
+      },
+      "writtenOn": "2015-03-02T22:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f22062e0_c8adcf69",
       "revId": "d735f95d22095e9094181f36ee4201a6d167a4cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
