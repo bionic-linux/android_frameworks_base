@@ -3575,6 +3575,23 @@ public final class Settings {
         public static final Validator LOCK_TO_APP_ENABLED_VALIDATOR = sBooleanValidator;
 
         /**
+         * HDMI volume type
+         * 0 CEC TV volume control
+         * 1 Variable volume
+         * 2 Fixed volume
+         * @hide
+        */
+        public static final String HDMI_VOLUME_CONTROL = "hdmi_volume_control";
+
+        /**
+         * HDMI CEC one-touch play
+         * 0 Off
+         * 1 On
+         * @hide
+        */
+        public static final String HDMI_ONE_TOUCH_PLAY = "hdmi_one_touch_play";
+
+        /**
          * I am the lolrus.
          * <p>
          * Nonzero values indicate that the user has a bukkit.
@@ -3656,7 +3673,9 @@ public final class Settings {
             RINGTONE,
             LOCK_TO_APP_ENABLED,
             NOTIFICATION_SOUND,
-            ACCELEROMETER_ROTATION
+            ACCELEROMETER_ROTATION,
+            HDMI_VOLUME_CONTROL,
+            HDMI_ONE_TOUCH_PLAY
         };
 
         /**
