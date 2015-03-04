@@ -17711,7 +17711,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         int nextEmptyAdj = curEmptyAdj+2;
         for (int i=N-1; i>=0; i--) {
             ProcessRecord app = mLruProcesses.get(i);
-            if (!app.killedByAm && app.thread != null) {
+            if ((!app.killedByAm && app.thread != null) || app.curAdj >= ProcessList.UNKNOWN_ADJ) {
                 app.procStateChanged = false;
                 computeOomAdjLocked(app, ProcessList.UNKNOWN_ADJ, TOP_APP, true, now);
 
