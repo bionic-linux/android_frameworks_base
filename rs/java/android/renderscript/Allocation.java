@@ -786,6 +786,40 @@ public class Allocation extends BaseObj {
     }
 
     /**
+     * @hide
+     * This is only intended to be used by auto-generated code reflected from
+     * the RenderScript script files and should not be used by developers.
+     *
+     * @param xoff
+     * @param yoff
+     * @param zoff
+     * @param w
+     * @param h
+     * @param d
+     * @param fp
+     */
+    public void setFromFieldPacker(int xoff, int yoff, int zoff, int w, int h, int d, FieldPacker fp) {
+        mRS.validate();
+        int eSize = mType.mElement.getBytesSize();
+        final byte[] data = fp.getData();
+        int data_length = fp.getPos();
+
+        int count = w * h * d;
+        if ((eSize * count) != data_length) {
+            throw new RSIllegalArgumentException("Field packer length " + data_length +
+                                               " not divisible by element size " + eSize + ".");
+        }
+        if (mCurrentDimZ > 0) {
+            copy3DRangeFromUnchecked(xoff, yoff, zoff, w, h, d, data, Element.DataType.SIGNED_8, data.length);
+        } else if (mCurrentDimY > 0) {
+            copy2DRangeFromUnchecked(xoff, yoff, w, h, data, Element.DataType.SIGNED_8, data.length);
+        } else {
+            copy1DRangeFromUnchecked(xoff, w, data);
+        }
+    }
+
+    /**
+     * @hide
      * This is only intended to be used by auto-generated code reflected from
      * the RenderScript script files.
      *
@@ -795,20 +829,6 @@ public class Allocation extends BaseObj {
      */
     public void setFromFieldPacker(int xoff, int component_number, FieldPacker fp) {
         setFromFieldPacker(xoff, 0, 0, component_number, fp);
-    }
-
-    /**
-     * @hide
-     * This is only intended to be used by auto-generated code reflected from
-     * the RenderScript script files.
-     *
-     * @param xoff
-     * @param yoff
-     * @param component_number
-     * @param fp
-     */
-    public void setFromFieldPacker(int xoff, int yoff, int component_number, FieldPacker fp) {
-        setFromFieldPacker(xoff, yoff, 0, component_number, fp);
     }
 
     /**
@@ -1363,35 +1383,41 @@ public class Allocation extends BaseObj {
 
     /**
      * @hide
-     * Copy subelement from the Allocation into an object array.
-     * This is intended to be used with user defined structs
-     *
-     * @param xoff
-     * @param component_number
-     * @param array
-     */
-    public void copyElementTo(int xoff, int component_number, Object array) {
-        copyElementTo(xoff, 0, 0, component_number, array);
-    }
-
-    /**
-     * @hide
-     * Copy subelement from the Allocation into an object array.
-     * This is intended to be used with user defined structs
+     * This is only intended to be used by auto-generated code reflected from
+     * the RenderScript script files and should not be used by developers.
      *
      * @param xoff
      * @param yoff
-     * @param component_number
-     * @param array
+     * @param zoff
+     * @param w
+     * @param h
+     * @param d
+     * @param fp
      */
-    public void copyElementTo(int xoff, int yoff, int component_number, Object array) {
-        copyElementTo(xoff, yoff, 0, component_number, array);
+    public void copyToFieldPacker(int xoff, int yoff, int zoff, int w, int h, int d, FieldPacker fp) {
+        mRS.validate();
+        int eSize = mType.mElement.getBytesSize();
+        final byte[] data = fp.getData();
+        int data_length = fp.getPos();
+
+        int count = w * h * d;
+        if ((eSize * count) != data_length) {
+            throw new RSIllegalArgumentException("Field packer length " + data_length +
+                                               " not divisible by element size " + eSize + ".");
+        }
+        if (mCurrentDimZ > 0) {
+            copy3DRangeToUnchecked(xoff, yoff, zoff, w, h, d, data, Element.DataType.SIGNED_8, data.length);
+        } else if (mCurrentDimY > 0) {
+            copy2DRangeToUnchecked(xoff, yoff, w, h, data, Element.DataType.SIGNED_8, data.length);
+        } else {
+            copy1DRangeToUnchecked(xoff, w, data);
+        }
     }
 
     /**
      * @hide
-     * Copy subelement from the Allocation into an object array.
-     * This is intended to be used with user defined structs
+     * This is only intended to be used by auto-generated code reflected from
+     * the RenderScript script files and should not be used by developers.
      *
      * @param xoff
      * @param yoff
@@ -1399,8 +1425,7 @@ public class Allocation extends BaseObj {
      * @param component_number
      * @param array
      */
-    public void copyElementTo(int xoff, int yoff, int zoff, int component_number, Object array) {
-        Trace.traceBegin(RenderScript.TRACE_TAG, "copyElementTo");
+    public void copyToFieldPacker(int xoff, int yoff, int zoff, int component_number, FieldPacker fp) {
         mRS.validate();
         if (component_number >= mType.mElement.mElements.length) {
             throw new RSIllegalArgumentException("Component_number " + component_number + " out of range.");
@@ -1415,19 +1440,18 @@ public class Allocation extends BaseObj {
             throw new RSIllegalArgumentException("Offset z must be >= 0.");
         }
 
-        Element.DataType dt = validateObjectIsPrimitiveArray(array, false);
-        int array_size = java.lang.reflect.Array.getLength(array) * dt.mSize;
+        final byte[] data = fp.getData();
+        int data_length = fp.getPos();
         int eSize = mType.mElement.mElements[component_number].getBytesSize();
         eSize *= mType.mElement.mArraySizes[component_number];
 
-        if (array_size < eSize) {
-            throw new RSIllegalArgumentException("Array Size (bytes)" + array_size +
-                                               " is smaller than component size " + eSize + ".");
+        if (data_length != eSize) {
+            throw new RSIllegalArgumentException("Field packer sizelength " + data_length +
+                                               " does not match component size " + eSize + ".");
         }
 
         mRS.nAllocationElementRead(getIDSafe(), xoff, yoff, zoff, mSelectedLOD,
-                                   component_number, array, eSize, dt);
-        Trace.traceEnd(RenderScript.TRACE_TAG);
+                                   component_number, data, data_length);
     }
     /**
      * Resize a 1D allocation.  The contents of the allocation are preserved.
