@@ -80,11 +80,13 @@ public class WifiConfiguration implements Parcelable {
           * @hide
           */
         public static final int WPA2_PSK = 4;
+        /** SAE for mesh network */
+        public static final int SAE = 5;
 
         public static final String varName = "key_mgmt";
 
         public static final String[] strings = { "NONE", "WPA_PSK", "WPA_EAP", "IEEE8021X",
-                "WPA2_PSK" };
+                "WPA2_PSK", "SAE" };
     }
 
     /**
@@ -290,6 +292,12 @@ public class WifiConfiguration implements Parcelable {
      * @hide
      */
     public String updateIdentifier;
+
+    /**
+     * This is a Mesh 802.11s network
+     * {@hide}
+     */
+    public boolean isMesh;
 
     /**
      * The set of key management protocols supported by this configuration.
@@ -1259,6 +1267,8 @@ public class WifiConfiguration implements Parcelable {
             return KeyMgmt.WPA_EAP;
         } else if (allowedKeyManagement.get(KeyMgmt.IEEE8021X)) {
             return KeyMgmt.IEEE8021X;
+        } else if (allowedKeyManagement.get(KeyMgmt.SAE)) {
+            return KeyMgmt.SAE;
         }
         return KeyMgmt.NONE;
     }
@@ -1403,6 +1413,7 @@ public class WifiConfiguration implements Parcelable {
             wepTxKeyIndex = source.wepTxKeyIndex;
             priority = source.priority;
             hiddenSSID = source.hiddenSSID;
+            isMesh = source.isMesh;
             allowedKeyManagement   = (BitSet) source.allowedKeyManagement.clone();
             allowedProtocols       = (BitSet) source.allowedProtocols.clone();
             allowedAuthAlgorithms  = (BitSet) source.allowedAuthAlgorithms.clone();
@@ -1494,6 +1505,7 @@ public class WifiConfiguration implements Parcelable {
         dest.writeInt(hiddenSSID ? 1 : 0);
         dest.writeInt(requirePMF ? 1 : 0);
         dest.writeString(updateIdentifier);
+        dest.writeInt(isMesh ? 1 : 0);
 
         writeBitSet(dest, allowedKeyManagement);
         writeBitSet(dest, allowedProtocols);
@@ -1554,6 +1566,7 @@ public class WifiConfiguration implements Parcelable {
                 config.hiddenSSID = in.readInt() != 0;
                 config.requirePMF = in.readInt() != 0;
                 config.updateIdentifier = in.readString();
+                config.isMesh = in.readInt() != 0;
 
                 config.allowedKeyManagement   = readBitSet(in);
                 config.allowedProtocols       = readBitSet(in);
