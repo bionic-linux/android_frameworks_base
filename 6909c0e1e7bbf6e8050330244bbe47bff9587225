@@ -22,6 +22,30 @@
       "revId": "6909c0e1e7bbf6e8050330244bbe47bff9587225",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d73c30f4_df4d9b94",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2015-03-06T01:18:59Z",
+      "side": 1,
+      "message": "I renamed the arg, see\nhttps://android-review.googlesource.com/#/c/138593/",
+      "parentUuid": "d73c30f4_9f6af3e7",
+      "range": {
+        "startLine": 549,
+        "startChar": 4,
+        "endLine": 549,
+        "endChar": 67
+      },
+      "revId": "6909c0e1e7bbf6e8050330244bbe47bff9587225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
