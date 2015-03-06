@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b7d0b3_eaf707db",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1004537
+      },
+      "writtenOn": "2015-03-06T00:20:13Z",
+      "side": 1,
+      "message": "Should\u0027t this also take the component number?",
+      "range": {
+        "startLine": 801,
+        "startChar": 3,
+        "endLine": 801,
+        "endChar": 103
+      },
+      "revId": "e508ad45d10ef137ade5d8ee7a8858c46b388fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
