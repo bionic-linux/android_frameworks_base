@@ -2494,6 +2494,16 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService} to retrieve a {@link
+     * android.net.wifi.mesh.WifiMeshManager} for handling management of
+     * Wi-Fi mesh connections.
+     *
+     * @see #getSystemService
+     * @see android.net.wifi.mesh.WifiMeshManager
+     */
+    public static final String WIFI_MESH_SERVICE = "wifimesh";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a {@link
      * android.net.wifi.WifiScanner} for scanning the wifi universe
      *
      * @see #getSystemService

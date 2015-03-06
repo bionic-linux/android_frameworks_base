@@ -94,6 +94,8 @@ import android.net.wifi.IWifiManager;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.IWifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.net.wifi.mesh.WifiMeshManager;
+import android.net.wifi.mesh.IWifiMeshManager;
 import android.net.wifi.IWifiScanner;
 import android.net.wifi.WifiScanner;
 import android.net.wifi.IRttManager;
@@ -602,6 +604,13 @@ class ContextImpl extends Context {
                     IBinder b = ServiceManager.getService(WIFI_P2P_SERVICE);
                     IWifiP2pManager service = IWifiP2pManager.Stub.asInterface(b);
                     return new WifiP2pManager(service);
+                }});
+
+        registerService(WIFI_MESH_SERVICE, new ServiceFetcher() {
+                public Object createService(ContextImpl ctx) {
+                    IBinder b = ServiceManager.getService(WIFI_MESH_SERVICE);
+                    IWifiMeshManager service = IWifiMeshManager.Stub.asInterface(b);
+                    return new WifiMeshManager(service);
                 }});
 
         registerService(WIFI_SCANNING_SERVICE, new ServiceFetcher() {

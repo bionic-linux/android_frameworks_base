@@ -134,6 +134,8 @@ public final class SystemServer {
             "com.android.server.wifi.WifiService";
     private static final String WIFI_P2P_SERVICE_CLASS =
             "com.android.server.wifi.p2p.WifiP2pService";
+    private static final String WIFI_MESH_SERVICE_CLASS =
+            "com.android.server.wifi.mesh.WifiMeshService";
     private static final String ETHERNET_SERVICE_CLASS =
             "com.android.server.ethernet.EthernetService";
     private static final String JOB_SCHEDULER_SERVICE_CLASS =
@@ -666,6 +668,7 @@ public final class SystemServer {
                 }
 
                 mSystemServiceManager.startService(WIFI_P2P_SERVICE_CLASS);
+                mSystemServiceManager.startService(WIFI_MESH_SERVICE_CLASS);
                 mSystemServiceManager.startService(WIFI_SERVICE_CLASS);
                 mSystemServiceManager.startService(
                             "com.android.server.wifi.WifiScanningService");
