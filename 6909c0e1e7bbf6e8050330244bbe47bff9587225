@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73c30f4_9f6af3e7",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-03-06T01:16:48Z",
+      "side": 1,
+      "message": "This is weird. Why are you adding another command line parameter to ART?\n\nI think it would be easier to read the property, test whether it is 1, and then call addOption(\"-Xjit\").",
+      "range": {
+        "startLine": 549,
+        "startChar": 4,
+        "endLine": 549,
+        "endChar": 67
+      },
+      "revId": "6909c0e1e7bbf6e8050330244bbe47bff9587225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
