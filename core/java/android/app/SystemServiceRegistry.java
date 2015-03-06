@@ -80,6 +80,8 @@ import android.net.wifi.WifiManager;
 import android.net.wifi.WifiScanner;
 import android.net.wifi.p2p.IWifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.net.wifi.mesh.WifiMeshManager;
+import android.net.wifi.mesh.IWifiMeshManager;
 import android.net.wifi.passpoint.IWifiPasspointManager;
 import android.net.wifi.passpoint.WifiPasspointManager;
 import android.nfc.NfcManager;
@@ -497,6 +499,15 @@ final class SystemServiceRegistry {
                 IBinder b = ServiceManager.getService(Context.WIFI_P2P_SERVICE);
                 IWifiP2pManager service = IWifiP2pManager.Stub.asInterface(b);
                 return new WifiP2pManager(service);
+            }});
+
+        registerService(Context.WIFI_MESH_SERVICE, WifiMeshManager.class,
+                new StaticServiceFetcher<WifiMeshManager>() {
+            @Override
+            public WifiMeshManager createService() {
+                IBinder b = ServiceManager.getService(Context.WIFI_MESH_SERVICE);
+                IWifiMeshManager service = IWifiMeshManager.Stub.asInterface(b);
+                return new WifiMeshManager(service);
             }});
 
         registerService(Context.WIFI_SCANNING_SERVICE, WifiScanner.class,

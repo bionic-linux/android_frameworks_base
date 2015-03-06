@@ -410,6 +410,7 @@ LOCAL_SRC_FILES += \
 	wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl \
 	wifi/java/android/net/wifi/IWifiScanner.aidl \
 	wifi/java/android/net/wifi/IRttManager.aidl \
+	wifi/java/android/net/wifi/mesh/IWifiMeshManager.aidl \
 	packages/services/PacProcessor/com/android/net/IProxyService.aidl \
 	packages/services/Proxy/com/android/net/IProxyCallback.aidl \
 	packages/services/Proxy/com/android/net/IProxyPortListener.aidl \

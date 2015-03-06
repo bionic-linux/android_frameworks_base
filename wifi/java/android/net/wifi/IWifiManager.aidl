@@ -110,6 +110,8 @@ interface IWifiManager
 
     void releaseMulticastLock();
 
+    void setWifiMeshEnabled(boolean enable);
+
     void setWifiApEnabled(in WifiConfiguration wifiConfig, boolean enable);
 
     int getWifiApEnabledState();

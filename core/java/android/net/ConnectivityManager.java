@@ -461,11 +461,18 @@ public class ConnectivityManager {
      */
     public static final int TYPE_VPN = 17;
 
-    /** {@hide} */
-    public static final int MAX_RADIO_TYPE   = TYPE_VPN;
+    /**
+     * A Wi-Fi mesh connection. Only requesting processes will have access to
+     * the peers connected.
+     * {@hide}
+     */
+    public static final int TYPE_WIFI_MESH   = 18;
 
     /** {@hide} */
-    public static final int MAX_NETWORK_TYPE = TYPE_VPN;
+    public static final int MAX_RADIO_TYPE   = TYPE_WIFI_MESH;
+
+    /** {@hide} */
+    public static final int MAX_NETWORK_TYPE = TYPE_WIFI_MESH;
 
     /**
      * If you want to set the default network preference,you can directly
@@ -555,6 +562,8 @@ public class ConnectivityManager {
                 return "MOBILE_CBS";
             case TYPE_WIFI_P2P:
                 return "WIFI_P2P";
+            case TYPE_WIFI_MESH:
+                return "WIFI_MESH";
             case TYPE_MOBILE_IA:
                 return "MOBILE_IA";
             case TYPE_MOBILE_EMERGENCY:

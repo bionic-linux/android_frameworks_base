@@ -1518,6 +1518,23 @@ public class WifiManager {
     }
 
     /**
+     * Start Mesh mode.
+     *
+     * @param enabled {@code true} if trying to start mesh mode, {@code false}
+     * if trying to stop mesh mode.
+     * @return {@code true} if the operation succeeds, {@code false} otherwise
+     */
+    public boolean setWifiMeshEnabled(boolean enabled) {
+        try {
+            Log.i(TAG, "call setWifiMeshEnabled() " + enabled);
+            mService.setWifiMeshEnabled(enabled);
+            return true;
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    /**
      * Start AccessPoint mode with the specified
      * configuration. If the radio is already running in
      * AP mode, update the new configuration

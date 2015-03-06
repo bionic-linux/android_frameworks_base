@@ -8033,6 +8033,7 @@ package android.content {
     field public static final java.lang.String USER_SERVICE = "user";
     field public static final java.lang.String VIBRATOR_SERVICE = "vibrator";
     field public static final java.lang.String WALLPAPER_SERVICE = "wallpaper";
+    field public static final java.lang.String WIFI_MESH_SERVICE = "wifimesh";
     field public static final java.lang.String WIFI_P2P_SERVICE = "wifip2p";
     field public static final java.lang.String WIFI_RTT_SERVICE = "rttmanager";
     field public static final java.lang.String WIFI_SCANNING_SERVICE = "wifiscanner";
@@ -9663,6 +9664,7 @@ package android.content.pm {
     field public static final java.lang.String FEATURE_WEBVIEW = "android.software.webview";
     field public static final java.lang.String FEATURE_WIFI = "android.hardware.wifi";
     field public static final java.lang.String FEATURE_WIFI_DIRECT = "android.hardware.wifi.direct";
+    field public static final java.lang.String FEATURE_WIFI_MESH = "android.hardware.wifi.mesh";
     field public static final int GET_ACTIVITIES = 1; // 0x1
     field public static final int GET_CONFIGURATIONS = 16384; // 0x4000
     field public static final int GET_DISABLED_COMPONENTS = 512; // 0x200
@@ -20919,6 +20921,7 @@ package android.net.wifi {
   public static class WifiConfiguration.KeyMgmt {
     field public static final int IEEE8021X = 3; // 0x3
     field public static final int NONE = 0; // 0x0
+    field public static final int SAE = 5; // 0x5
     field public static final int WPA_EAP = 2; // 0x2
     field public static final int WPA_PSK = 1; // 0x1
     field public static final java.lang.String[] strings;
@@ -21293,6 +21296,94 @@ package android.net.wifi {
     field public static final int PBC = 0; // 0x0
     field public java.lang.String pin;
     field public int setup;
+  }
+
+}
+
+package android.net.wifi.mesh {
+
+  public class WifiMeshGroup implements android.os.Parcelable {
+    ctor public WifiMeshGroup();
+    ctor public WifiMeshGroup(java.lang.String);
+    ctor public WifiMeshGroup(android.net.wifi.mesh.WifiMeshGroup);
+    method public int describeContents();
+    method public int getFrequency();
+    method public java.lang.String getMeshId();
+    method public java.lang.String getMeshIdQuote();
+    method public int getNetworkId();
+    method public java.lang.String getPassphrase();
+    method public boolean isSecure();
+    method public void setFrequency(int);
+    method public void setMeshId(java.lang.String);
+    method public void setPassphrase(java.lang.String);
+    method public void setSecure(boolean);
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.net.wifi.mesh.WifiMeshGroup> CREATOR;
+  }
+
+  public class WifiMeshGroupList implements android.os.Parcelable {
+    method public boolean contains(int);
+    method public int describeContents();
+    method public android.net.wifi.mesh.WifiMeshGroup get(int);
+    method public java.util.Collection<android.net.wifi.mesh.WifiMeshGroup> getWifiMeshGroups();
+    method public android.net.wifi.mesh.WifiMeshGroup remove(int);
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.net.wifi.mesh.WifiMeshGroupList> CREATOR;
+  }
+
+  public class WifiMeshManager {
+    method public void connect(android.net.wifi.mesh.WifiMeshManager.Channel, android.net.wifi.mesh.WifiMeshGroup, android.net.wifi.mesh.WifiMeshManager.ActionListener);
+    method public void connect(android.net.wifi.mesh.WifiMeshManager.Channel, int, android.net.wifi.mesh.WifiMeshManager.ActionListener);
+    method public void disconnect(android.net.wifi.mesh.WifiMeshManager.Channel, android.net.wifi.mesh.WifiMeshManager.ActionListener);
+    method public android.net.wifi.mesh.WifiMeshManager.Channel initialize(android.content.Context, android.os.Looper, android.net.wifi.mesh.WifiMeshManager.ChannelListener);
+    method public void requestGroupConfigs(android.net.wifi.mesh.WifiMeshManager.Channel, android.net.wifi.mesh.WifiMeshManager.GroupConfigsListenrer);
+    method public void requestScanResults(android.net.wifi.mesh.WifiMeshManager.Channel, android.net.wifi.mesh.WifiMeshManager.ScanResultsListener);
+    method public void scan(android.net.wifi.mesh.WifiMeshManager.Channel, android.net.wifi.mesh.WifiMeshManager.ActionListener);
+    field public static final int BUSY = 2; // 0x2
+    field public static final int ERROR = 0; // 0x0
+    field public static final java.lang.String EXTRA_WIFI_MESH_ADDR = "wifi_mesh_addr";
+    field public static final java.lang.String EXTRA_WIFI_MESH_GROUP = "wifi_mesh_group";
+    field public static final java.lang.String EXTRA_WIFI_MESH_STATE = "wifi_mesh_state";
+    field public static final int MESH_UNSUPPORTED = 1; // 0x1
+    field public static final java.lang.String WIFI_MESH_CONNECTION_CHANGED_ACTION = "android.net.wifi.mesh.CONNECTION_STATE_CHANGE";
+    field public static final java.lang.String WIFI_MESH_GROUP_CONFIG_AVAILABLE_ACTION = "android.net.wifi.mesh.GROUP_CONFIG_AVAILABLE";
+    field public static final java.lang.String WIFI_MESH_PEER_CONNECTED_ACTION = "android.net.wifi.mesh.PEER_CONNECTED";
+    field public static final java.lang.String WIFI_MESH_PEER_DISCONNECTED_ACTION = "android.net.wifi.mesh.PEER_DISCONNECTED";
+    field public static final java.lang.String WIFI_MESH_SCAN_RESULTS_AVAILABLE_ACTION = "android.net.wifi.mesh.SCAN_RESULTS_AVAILABLE";
+    field public static final java.lang.String WIFI_MESH_STATE_CHANGED_ACTION = "android.net.wifi.mesh.STATE_CHANGED";
+    field public static final int WIFI_MESH_STATE_DISABLED = 2; // 0x2
+    field public static final int WIFI_MESH_STATE_DISABLING = 1; // 0x1
+    field public static final int WIFI_MESH_STATE_ENABLED = 4; // 0x4
+    field public static final int WIFI_MESH_STATE_ENABLING = 3; // 0x3
+    field public static final int WIFI_MESH_STATE_FAILED = 5; // 0x5
+  }
+
+  public static abstract interface WifiMeshManager.ActionListener {
+    method public abstract void onFailure(int);
+    method public abstract void onSuccess();
+  }
+
+  public static class WifiMeshManager.Channel {
+  }
+
+  public static abstract interface WifiMeshManager.ChannelListener {
+    method public abstract void onChannelDisconnected();
+  }
+
+  public static abstract interface WifiMeshManager.GroupConfigsListenrer {
+    method public abstract void onGroupConfigsAvailable(android.net.wifi.mesh.WifiMeshGroupList);
+  }
+
+  public static abstract interface WifiMeshManager.ScanResultsListener {
+    method public abstract void onScanResuls(android.net.wifi.mesh.WifiMeshScanResults);
+  }
+
+  public class WifiMeshScanResults implements android.os.Parcelable {
+    method public int describeContents();
+    method public android.net.wifi.ScanResult get(java.lang.String);
+    method public java.util.Collection<android.net.wifi.ScanResult> getScanResults();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.net.wifi.mesh.WifiMeshScanResults> CREATOR;
   }
 
 }

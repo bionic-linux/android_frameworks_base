@@ -2348,6 +2348,7 @@ public abstract class Context {
             WIFI_SERVICE,
             WIFI_PASSPOINT_SERVICE,
             WIFI_P2P_SERVICE,
+            WIFI_MESH_SERVICE,
             WIFI_SCANNING_SERVICE,
             //@hide: WIFI_RTT_SERVICE,
             //@hide: ETHERNET_SERVICE,
@@ -2444,6 +2445,9 @@ public abstract class Context {
      *  <dt> {@link #WIFI_P2P_SERVICE} ("wifip2p")
      *  <dd> A {@link android.net.wifi.p2p.WifiP2pManager WifiP2pManager} for management of
      * Wi-Fi Direct connectivity.
+     *  <dt> {@link #WIFI_MESH_SERVICE} ("wifimesh")
+     *  <dd> A {@link android.net.wifi.mesh.WifiMeshManager WifiMeshManager} for
+     * management of Wi-Fi Mesh connectivity.
      * <dt> {@link #INPUT_METHOD_SERVICE} ("input_method")
      * <dd> An {@link android.view.inputmethod.InputMethodManager InputMethodManager}
      * for management of input methods.
@@ -2806,6 +2810,16 @@ public abstract class Context {
      * @see android.net.wifi.p2p.WifiP2pManager
      */
     public static final String WIFI_P2P_SERVICE = "wifip2p";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a {@link
+     * android.net.wifi.mesh.WifiMeshManager} for handling management of
+     * Wi-Fi mesh connections.
+     *
+     * @see #getSystemService
+     * @see android.net.wifi.mesh.WifiMeshManager
+     */
+    public static final String WIFI_MESH_SERVICE = "wifimesh";
 
     /**
      * Use with {@link #getSystemService} to retrieve a {@link
