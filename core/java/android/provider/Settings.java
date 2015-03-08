@@ -3584,14 +3584,6 @@ public final class Settings {
         public static final String HDMI_VOLUME_CONTROL = "hdmi_volume_control";
 
         /**
-         * HDMI CEC one-touch play
-         * 0 Off
-         * 1 On
-         * @hide
-        */
-        public static final String HDMI_ONE_TOUCH_PLAY = "hdmi_one_touch_play";
-
-        /**
          * I am the lolrus.
          * <p>
          * Nonzero values indicate that the user has a bukkit.
@@ -3675,7 +3667,6 @@ public final class Settings {
             NOTIFICATION_SOUND,
             ACCELEROMETER_ROTATION,
             HDMI_VOLUME_CONTROL,
-            HDMI_ONE_TOUCH_PLAY
         };
 
         /**
@@ -7179,6 +7170,13 @@ public final class Settings {
                "hdmi_control_auto_device_off_enabled";
 
        /**
+        * Whether to allow CEC devices to send &lt;One Touch Play&gt; commands.
+        * (0 = false, 1 = true)
+        * @hide
+        */
+       public static final String HDMI_ONE_TOUCH_PLAY_ENABLED = "hdmi_one_touch_play_enabled";
+
+       /**
         * Whether TV will switch to MHL port when a mobile device is plugged in.
         * (0 = false, 1 = true)
         * @hide
@@ -9134,7 +9132,8 @@ public final class Settings {
             DOCK_AUDIO_MEDIA_ENABLED,
             ENCODED_SURROUND_OUTPUT,
             LOW_POWER_MODE_TRIGGER_LEVEL,
-            BLUETOOTH_ON
+            BLUETOOTH_ON,
+            HDMI_ONE_TOUCH_PLAY_ENABLED
         };
 
         // Populated lazily, guarded by class object:
