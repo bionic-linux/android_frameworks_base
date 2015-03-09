@@ -292,7 +292,6 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
         } catch (IOException e) {
             mTotalSize = -1;
             mInputStream = null;
-            mConnection = null;
             mCurrentOffset = -1;
 
             throw e;
