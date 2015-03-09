@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ba7036_cf1a7da1",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7782,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-09T19:00:57Z",
+      "side": 1,
+      "message": "Add sizes of opening and closing apps to log point below. Also, add the the return value of isTransitionSet().",
+      "range": {
+        "startLine": 7781,
+        "startChar": 61,
+        "endLine": 7782,
+        "endChar": 62
+      },
+      "revId": "7db32cd167010b82f1c5218c8d4eae83920f18a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17b16857_71dc1862",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10505,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-09T19:00:57Z",
+      "side": 1,
+      "message": "Add mOpeningApps.size() to log point below.",
+      "range": {
+        "startLine": 10505,
+        "startChar": 45,
+        "endLine": 10505,
+        "endChar": 67
+      },
+      "revId": "7db32cd167010b82f1c5218c8d4eae83920f18a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
