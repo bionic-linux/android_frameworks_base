@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37ae6cfa_722d388f",
+        "filename": "wifi/java/android/net/wifi/mesh/IWifiMeshManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "cannot put Sony\u0027s copyright here",
+      "range": {
+        "startLine": 2,
+        "startChar": 27,
+        "endLine": 2,
+        "endChar": 38
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ceb4d64_41c73293",
+        "filename": "wifi/java/android/net/wifi/mesh/IWifiMeshManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ceb4d64_81bd3a01",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshGroup.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_8473666b",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshGroup.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ceb4d64_61c23685",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ae6cfa_522ab478",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ceb4d64_21cc2eb5",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshGroupList.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ae6cfa_b2c32037",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshGroupList.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ae6cfa_92c89c52",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ae6cfa_f2cda860",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_a478e245",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_447ece31",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ceb4d64_01d12a49",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "trailing spaces",
+      "range": {
+        "startLine": 64,
+        "startChar": 69,
+        "endLine": 64,
+        "endChar": 70
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ae6cfa_d2d22402",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 74,
+        "startChar": 72,
+        "endLine": 74,
+        "endChar": 73
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_647bca40",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshScanResults.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ceb4d64_e1cd26b1",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshScanResults.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_0488d6b2",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshScanResults.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_2485d29b",
+        "filename": "wifi/java/android/net/wifi/mesh/WifiMeshScanResults.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:34:26Z",
+      "side": 1,
+      "message": "2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "137ec875b19bb654e2f84bd0eb8678351dfcc025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
