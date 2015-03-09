@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f73db44d_806b56ed",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1039918
+      },
+      "writtenOn": "2015-03-09T06:50:54Z",
+      "side": 1,
+      "message": "This is ProtocolException Now",
+      "range": {
+        "startLine": 285,
+        "startChar": 26,
+        "endLine": 285,
+        "endChar": 37
+      },
+      "revId": "5b2f2f851d5eb09f4b1a439fd41304a10dfac5b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
