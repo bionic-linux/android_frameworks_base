@@ -9219,11 +9219,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                     // of being published...  but it is also allowed to run
                     // in the caller's process, so don't make a connection
                     // and just let the caller instantiate its own instance.
-                    ContentProviderHolder holder = cpr.newHolder(null);
-                    // don't give caller the provider object, it needs
-                    // to make its own.
-                    holder.provider = null;
-                    return holder;
+                    return cpr.newHolder(null);
                 }
 
                 final long origId = Binder.clearCallingIdentity();

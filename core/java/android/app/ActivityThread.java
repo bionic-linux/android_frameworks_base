@@ -4656,13 +4656,22 @@ public final class ActivityThread {
         // provider since it might take a long time to run and it could also potentially
         // be re-entrant in the case where the provider is in the same process.
         IActivityManager.ContentProviderHolder holder = null;
-        try {
-            holder = ActivityManagerNative.getDefault().getContentProvider(
-                    getApplicationThread(), auth, userId, stable);
-        } catch (RemoteException ex) {
-        }
-        if (holder == null) {
-            Slog.e(TAG, "Failed to find provider info for " + auth);
+        int retries = 0;
+        boolean invalid;
+        do {
+            try {
+                holder = ActivityManagerNative.getDefault().getContentProvider(
+                        getApplicationThread(), auth, userId, stable);
+            } catch (RemoteException ex) {
+            }
+            if (holder == null) {
+                Slog.e(TAG, "Failed to find provider info for " + auth);
+                return null;
+            }
+            invalid = holder.provider == null && !holder.canRunHere;
+        } while (invalid && ++retries < 2);
+        if (invalid) {
+            Slog.e(TAG, "Abort invalid provider for " + auth);
             return null;
         }
 

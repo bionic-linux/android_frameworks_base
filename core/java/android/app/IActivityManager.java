@@ -484,6 +484,7 @@ public interface IActivityManager extends IInterface {
         public IContentProvider provider;
         public IBinder connection;
         public boolean noReleaseNeeded;
+        public boolean canRunHere;
 
         public ContentProviderHolder(ProviderInfo _info) {
             info = _info;
@@ -503,7 +504,8 @@ public interface IActivityManager extends IInterface {
                 dest.writeStrongBinder(null);
             }
             dest.writeStrongBinder(connection);
-            dest.writeInt(noReleaseNeeded ? 1:0);
+            dest.writeInt(noReleaseNeeded ? 1 : 0);
+            dest.writeInt(canRunHere ? 1 : 0);
         }
 
         public static final Parcelable.Creator<ContentProviderHolder> CREATOR
@@ -525,6 +527,7 @@ public interface IActivityManager extends IInterface {
                 source.readStrongBinder());
             connection = source.readStrongBinder();
             noReleaseNeeded = source.readInt() != 0;
+            canRunHere = source.readInt() != 0;
         }
     }
 

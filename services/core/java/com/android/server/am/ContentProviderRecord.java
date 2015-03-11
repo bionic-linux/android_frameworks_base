@@ -77,7 +77,12 @@ final class ContentProviderRecord {
 
     public ContentProviderHolder newHolder(ContentProviderConnection conn) {
         ContentProviderHolder holder = new ContentProviderHolder(info);
-        holder.provider = provider;
+        if (conn != null) {
+            holder.provider = provider;
+        } else {
+            // Caller does not need the provider object, it needs to make its own.
+            holder.canRunHere = true;
+        }
         holder.noReleaseNeeded = noReleaseNeeded;
         holder.connection = conn;
         return holder;
