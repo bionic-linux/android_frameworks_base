@@ -130,6 +130,24 @@ public class InstallerConnection {
         return execute(builder.toString());
     }
 
+    public int selfpatchoat(String apkPath, int uid, boolean isPublic, String instructionSet) {
+        return selfpatchoat(apkPath, uid, isPublic, "*", instructionSet);
+    }
+
+    public int selfpatchoat(String apkPath, int uid, boolean isPublic, String pkgName,
+            String instructionSet) {
+        StringBuilder builder = new StringBuilder("selfpatchoat");
+        builder.append(' ');
+        builder.append(apkPath);
+        builder.append(' ');
+        builder.append(uid);
+        builder.append(isPublic ? " 1" : " 0");
+        builder.append(' ');
+        builder.append(pkgName);
+        builder.append(' ');
+        builder.append(instructionSet);
+        return execute(builder.toString());
+    }
     private boolean connect() {
         if (mSocket != null) {
             return true;

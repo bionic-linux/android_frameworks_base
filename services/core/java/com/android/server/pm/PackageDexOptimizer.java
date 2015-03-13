@@ -147,6 +147,21 @@ final class PackageDexOptimizer {
                         }
 
                         performedDexOpt = true;
+                    } else if (!defer && isDexOptNeeded == DexFile.SELF_PATCHOAT_NEEDED) {
+                        Log.i(TAG, "Running self patchoat on: " + pkg.applicationInfo.packageName);
+                        final int sharedGid = UserHandle.getSharedAppGid(pkg.applicationInfo.uid);
+                        final int ret = mPackageManagerService.mInstaller.selfpatchoat(path, sharedGid,
+                                !pkg.isForwardLocked(), pkg.packageName, dexCodeInstructionSet);
+
+                        if (ret < 0) {
+                            // Don't bother running patchoat again if we failed, it will probably
+                            // just result in an error again. Also, don't bother dexopting for other
+                            // paths & ISAs.
+                            return DEX_OPT_FAILED;
+                        }
+
+                        performedDexOpt = true;
+
                     }
 
                     // We're deciding to defer a needed dexopt. Don't bother dexopting for other
