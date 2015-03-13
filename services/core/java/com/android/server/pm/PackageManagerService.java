@@ -1465,6 +1465,8 @@ public class PackageManagerService extends IPackageManager.Stub {
                                 // The list of "shared libraries" we have at this point is
                                 if (dexoptRequired == DexFile.DEXOPT_NEEDED) {
                                     mInstaller.dexopt(lib, Process.SYSTEM_UID, true, dexCodeInstructionSet);
+                                } else if (dexoptRequired == (DexFile.SELF_PATCHOAT_NEEDED)) {
+                                    mInstaller.selfpatchoat(lib, Process.SYSTEM_UID, true, dexCodeInstructionSet);
                                 } else {
                                     mInstaller.patchoat(lib, Process.SYSTEM_UID, true, dexCodeInstructionSet);
                                 }
@@ -1520,6 +1522,8 @@ public class PackageManagerService extends IPackageManager.Stub {
                                 mInstaller.dexopt(path, Process.SYSTEM_UID, true, dexCodeInstructionSet);
                             } else if (dexoptRequired == DexFile.PATCHOAT_NEEDED) {
                                 mInstaller.patchoat(path, Process.SYSTEM_UID, true, dexCodeInstructionSet);
+                            } else if (dexoptRequired == DexFile.SELF_PATCHOAT_NEEDED) {
+                                mInstaller.selfpatchoat(path, Process.SYSTEM_UID, true, dexCodeInstructionSet);
                             }
                         } catch (FileNotFoundException e) {
                             Slog.w(TAG, "Jar not found: " + path);

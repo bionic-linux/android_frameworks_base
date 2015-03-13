@@ -471,6 +471,8 @@ public class ZygoteInit {
                     installer.dexopt(classPathElement, Process.SYSTEM_UID, false, instructionSet);
                 } else if (dexopt == DexFile.PATCHOAT_NEEDED) {
                     installer.patchoat(classPathElement, Process.SYSTEM_UID, false, instructionSet);
+                } else if (dexopt == DexFile.SELF_PATCHOAT_NEEDED) {
+                    installer.selfpatchoat(classPathElement, Process.SYSTEM_UID, false, instructionSet);
                 }
             }
         } catch (IOException ioe) {

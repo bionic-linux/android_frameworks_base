@@ -73,6 +73,25 @@ public final class Installer extends SystemService {
         return mInstaller.patchoat(apkPath, uid, isPublic, instructionSet);
     }
 
+    public int selfpatchoat(String apkPath, int uid, boolean isPublic, String pkgName,
+            String instructionSet) {
+        if (!isValidInstructionSet(instructionSet)) {
+            Slog.e(TAG, "Invalid instruction set: " + instructionSet);
+            return -1;
+        }
+
+        return mInstaller.selfpatchoat(apkPath, uid, isPublic, pkgName, instructionSet);
+    }
+
+    public int selfpatchoat(String apkPath, int uid, boolean isPublic, String instructionSet) {
+        if (!isValidInstructionSet(instructionSet)) {
+            Slog.e(TAG, "Invalid instruction set: " + instructionSet);
+            return -1;
+        }
+
+        return mInstaller.selfpatchoat(apkPath, uid, isPublic, instructionSet);
+    }
+
     public int dexopt(String apkPath, int uid, boolean isPublic, String instructionSet) {
         if (!isValidInstructionSet(instructionSet)) {
             Slog.e(TAG, "Invalid instruction set: " + instructionSet);
