@@ -524,7 +524,7 @@ public class Linkify {
             }
 
             public final boolean equals(Object o) {
-                return false;
+                return this == o;
             }
         };
 
