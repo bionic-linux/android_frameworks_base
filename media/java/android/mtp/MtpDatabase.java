@@ -727,8 +727,8 @@ public class MtpDatabase {
                 mPropertyGroupsByFormat.put(new Integer(format), propertyGroup);
             }
         } else {
-              propertyGroup = mPropertyGroupsByProperty.get(property);
-             if (propertyGroup == null) {
+            propertyGroup = mPropertyGroupsByProperty.get((int)property);
+            if (propertyGroup == null) {
                 int[] propertyList = new int[] { (int)property };
                 propertyGroup = new MtpPropertyGroup(this, mMediaProvider, mPackageName,
                         mVolumeName, propertyList);
