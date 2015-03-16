@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "c61ac4b3_7ac5818b",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-16T20:27:07Z",
+      "side": 1,
+      "message": "external/okhttp is already regularly using Reflection API. I don\u0027t think duplicating stuff between framework and libcore is worth the hassle if it\u0027s just because of external/okhttp.\n\nRegarding this being a glorified boolean flag -- it is indeed the case (recall that this discussion started with exposing this boolean flag as a System property, but in a more compile-time check friendly way). At the moment, there are no plans to add more information into this class. It is conceivable that we might need to expose more information about the network security policy in the future (hence the name). If you have good suggestions where this boolean could live for now, I\u0027m fine with getting rid of this class -- we can always add it later when we have a better idea / stronger need.",
+      "parentUuid": "48fb3a34_7e9d317f",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f8c637_ddc8cb5a",
         "filename": "core/java/android/security/NetworkSecurityPolicy.java",
         "patchSetId": 4
@@ -177,6 +201,30 @@
       "writtenOn": "2015-02-19T11:10:23Z",
       "side": 1,
       "message": "I\u0027m usually in favor of singletons like this because it allows for mocking, alternative implementation, etc. It\u0027s not usually how a lot of the Android APIs are written, though.\n\nIs that why you left NetworkSecurityPolicy non-final?\n\n[You\u0027ve only given it a private constructor which makes conventional subclassing/mocking impossible.]\n\n------\n\nget() and the docs suggests there might be a possibility of swapping out the instance / setting the policy. In actual fact, people can hang onto this. getInstance() or instance() might be more appropriate, and the comment could be made more useful.",
+      "range": {
+        "startLine": 39,
+        "startChar": 38,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86144c89_e749dcbd",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-16T20:27:07Z",
+      "side": 1,
+      "message": "Yes, the class is structured to allow mocking in tests. Mockito on Android can create mocks for classes with private constructors. If this is not how it\u0027s done in Android, I\u0027m fine with having just a public static boolean tester method instead.\n\nPoint taken on getInstance -- good idea.",
+      "parentUuid": "083302f6_0c3857f7",
       "range": {
         "startLine": 39,
         "startChar": 38,
