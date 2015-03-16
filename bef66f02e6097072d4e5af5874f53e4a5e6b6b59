@@ -16,6 +16,24 @@
       "revId": "bef66f02e6097072d4e5af5874f53e4a5e6b6b59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8147d63d_5549deb8",
+        "filename": "core/java/android/text/util/Linkify.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-03-16T15:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "861e0c58_b4bac04d",
+      "revId": "bef66f02e6097072d4e5af5874f53e4a5e6b6b59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
