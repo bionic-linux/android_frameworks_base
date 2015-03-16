@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "660f5879_6cf2ef1b",
+        "filename": "core/java/android/security/InsecureNetworkTrafficException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-16T20:57:54Z",
+      "side": 1,
+      "message": "3 and 4 are definitely a no go. In addition to 1 or 2, it might be acceptable to throw an IOException (not a subclass thereof). In that case, those few users of this feature who really need to discover that their traffic was blocked, would have to use an unbundled HTTP stack (or a wrapper) that offers that.",
+      "parentUuid": "083302f6_4c153f6f",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd55878_ca4c238a",
         "filename": "core/java/android/security/NetworkSecurityPolicy.java",
         "patchSetId": 4
