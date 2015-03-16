@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "861e0c58_b4bac04d",
+        "filename": "core/java/android/text/util/Linkify.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-03-16T10:23:43Z",
+      "side": 1,
+      "message": "i\u0027ts more idiomatic to just delete this altogether and inherit it from Object.",
+      "revId": "bef66f02e6097072d4e5af5874f53e4a5e6b6b59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
