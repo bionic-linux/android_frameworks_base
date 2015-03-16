@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "660f5879_4929e502",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-16T20:32:28Z",
+      "side": 1,
+      "message": "Another alternative occurred to me: we could make ApplicationInfo of this app statically accessible -- this flag can be obtained from ApplicationInfo. In fact, that\u0027s the authoritative source. Thoughts?",
+      "parentUuid": "c61ac4b3_7ac5818b",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f8c637_ddc8cb5a",
         "filename": "core/java/android/security/NetworkSecurityPolicy.java",
         "patchSetId": 4
