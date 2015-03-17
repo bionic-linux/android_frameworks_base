@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "86144c89_1a544225",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-17T15:53:40Z",
+      "side": 1,
+      "message": "What I meant is that we could expose a static method somewhere in the public framework API to obtain this app\u0027s ApplicationInfo without having to provide a Context or PackageManager. ActivityThread, when initializing this application, would set the ApplicationInfo reference. This is pretty similar to this CL except that this CL exposes only one boolean/flag from ApplicationInfo. The reason I\u0027m talking about ApplicationInfo is because the \"insecure/cleartext traffic permitted\" flag is contained in ApplicationInfo.flags.",
+      "parentUuid": "e6b188f2_9a4f89c3",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f8c637_ddc8cb5a",
         "filename": "core/java/android/security/NetworkSecurityPolicy.java",
         "patchSetId": 4
