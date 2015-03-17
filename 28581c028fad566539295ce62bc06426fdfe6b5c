@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "e6b188f2_9a4f89c3",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-03-17T14:58:51Z",
+      "side": 1,
+      "message": "I can interpret \"make ApplicationInfo of this app statically accessible\" a number of ways: can you give an example of what you mean?\n\n(Most of the ways I can think of I suspect wouldn\u0027t be supported by the frameworks team but I want to make sure I understand what you\u0027re suggesting).\n\nMaybe put together the change you like the best (including suggested changes to OkHttp) so we can review something concrete rather than the abstract.",
+      "parentUuid": "660f5879_4929e502",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f8c637_ddc8cb5a",
         "filename": "core/java/android/security/NetworkSecurityPolicy.java",
         "patchSetId": 4
