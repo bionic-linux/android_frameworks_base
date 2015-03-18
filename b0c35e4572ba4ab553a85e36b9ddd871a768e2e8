@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26b800d4_7ca39523",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-03-18T09:26:04Z",
+      "side": 1,
+      "message": "the proper fix is probably to make property an \"int\" and change the underlying native code.\n\nunlike |handle|, |property| is not a pointer, it\u0027s a uint16_t",
+      "revId": "b0c35e4572ba4ab553a85e36b9ddd871a768e2e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6b188f2_bd9e07af",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-03-18T09:26:04Z",
+      "side": 1,
+      "message": "nit: Integer.valueOf( ) ?",
+      "revId": "b0c35e4572ba4ab553a85e36b9ddd871a768e2e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
