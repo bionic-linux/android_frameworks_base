@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66de785c_2e1707fc",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3087,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-18T23:49:52Z",
+      "side": 1,
+      "message": "Do we want to also check for SOFT_INPUT_STATE_ALWAYS_HIDDEN here?",
+      "range": {
+        "startLine": 3087,
+        "startChar": 31,
+        "endLine": 3087,
+        "endChar": 55
+      },
+      "revId": "6b6838e9679852e3a39a924c2c1437bd429df8df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
