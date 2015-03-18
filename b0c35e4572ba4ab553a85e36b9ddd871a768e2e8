@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66de785c_ce9be34b",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-03-18T23:39:56Z",
+      "side": 1,
+      "message": "Discussed internally, I\u0027ll loop you in. Is low priority right now, but the reason I haven\u0027t merged.",
+      "parentUuid": "26b800d4_7ca39523",
+      "revId": "b0c35e4572ba4ab553a85e36b9ddd871a768e2e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6b188f2_bd9e07af",
         "filename": "media/java/android/mtp/MtpDatabase.java",
         "patchSetId": 1
