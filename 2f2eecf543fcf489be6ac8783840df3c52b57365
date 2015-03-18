@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6bd08e7_b7f12818",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-18T17:36:43Z",
+      "side": 1,
+      "message": "Does it matter for doc generation of FLAG_USES_CLEARTEXT_TRAFFIC is marked @hide above?",
+      "range": {
+        "startLine": 377,
+        "startChar": 40,
+        "endLine": 377,
+        "endChar": 76
+      },
+      "revId": "2f2eecf543fcf489be6ac8783840df3c52b57365",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
