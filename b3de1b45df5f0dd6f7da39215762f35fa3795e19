@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "068cdc85_eb730a94",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4585,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-20T15:50:04Z",
+      "side": 1,
+      "message": "Can we combine these two if statements into one?",
+      "range": {
+        "startLine": 4584,
+        "startChar": 8,
+        "endLine": 4585,
+        "endChar": 64
+      },
+      "revId": "b3de1b45df5f0dd6f7da39215762f35fa3795e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46825452_1cf81a93",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3395,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-20T15:50:04Z",
+      "side": 1,
+      "message": "why are we changing this to include the case where the activity is removed?",
+      "range": {
+        "startLine": 3393,
+        "startChar": 20,
+        "endLine": 3395,
+        "endChar": 21
+      },
+      "revId": "b3de1b45df5f0dd6f7da39215762f35fa3795e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
