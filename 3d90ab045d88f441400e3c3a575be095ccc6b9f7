@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a69cf0d8_229514bb",
+        "filename": "core/java/android/widget/RemoteViewsAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-03-21T20:59:10Z",
+      "side": 1,
+      "message": "cache",
+      "range": {
+        "startLine": 626,
+        "startChar": 40,
+        "endLine": 626,
+        "endChar": 46
+      },
+      "revId": "3d90ab045d88f441400e3c3a575be095ccc6b9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
