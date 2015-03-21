@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86160cff_48b5cfbe",
+        "filename": "core/java/android/content/res/Resources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-03-21T19:43:09Z",
+      "side": 1,
+      "message": "Move to top of class below LAYOUT_DIR_CONFIG. Fix keyword ordering. Naming is fine. Please add javadoc for SPEC_PUBLIC, as it\u0027s not obvious what that represents.",
+      "range": {
+        "startLine": 2031,
+        "startChar": 0,
+        "endLine": 2035,
+        "endChar": 54
+      },
+      "revId": "645977ae117c132b94841fec912317cc0e526db7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_62143cf5",
+        "filename": "core/java/android/content/res/Resources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-03-21T19:43:09Z",
+      "side": 1,
+      "message": "Fix line wrap.",
+      "revId": "645977ae117c132b94841fec912317cc0e526db7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
