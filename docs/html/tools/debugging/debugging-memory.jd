@@ -24,7 +24,7 @@ page.tags=memory,OutOfMemoryError
 
 
 <p>Because Android is designed for mobile devices, you should always be careful about how much
-random-access memory (RAM) your app uses. Although Android’s Dalvik virtual machine performs
+random-access memory (RAM) your app uses. Although Android’s Dalvik and ART runtimes perform
 routine garbage collection, this doesn’t mean you can ignore when and where your app allocates and
 releases memory. In order to provide a stable user experience that allows the system to quickly
 switch between apps, it’s important that your app does not needlessly consume memory when the user
@@ -39,11 +39,14 @@ memory usage with tools. This guide shows you how to do that.</p>
 
 <h2 id="LogMessages">Interpreting Log Messages</h2>
 
-<p>The simplest place to begin investigating your apps memory usage is the Dalvik log messages. You'll
-find these log messages in <a href="{@docRoot}tools/help/logcat.html">logcat</a> (the output is
-available in the Device Monitor or directly in IDEs such as Eclipse and Android Studio).</p>
+<p>The simplest place to begin investigating your apps memory usage is the Dalvik/ART log messages.
+Sometimes when a garbage collection occurs, a message is printed to
+<a href="{@docRoot}tools/help/logcat.html">logcat</a>. The logcat output is also available in the
+Device Monitor or directly in IDEs such as Eclipse and Android Studio.</p>
 
-<p>Every time a garbage collection occurs, logcat prints a message with the following information:</p>
+<h3 id="DalvikLogMessages">Dalvik Log Messages</h3>
+
+<p>In Dalvik (but not ART), every garbage collection prints the following information to logcat:</p>
 
 <pre class="no-pretty-print">
 D/dalvikvm: &lt;GC_Reason> &lt;Amount_freed>, &lt;Heap_stats>, &lt;External_memory_stats>, &lt;Pause_time>
@@ -101,6 +104,133 @@ D/dalvikvm( 9050): GC_CONCURRENT freed 2049K, 65% free 3571K/9991K, external 470
 {@code 3571K/9991K} value in the above example). If this value
 continues to increase and doesn't ever seem to get smaller, you could have a memory leak.</p>
 
+
+<h3 id="ARTLogMessages">ART Log Messages</h3>
+
+<p>Unlike Dalvik, ART doesn't print all garbage collections. Non-explicit GCs are only printed when
+they are deemed slow. This occurs in the following cases: the GC pause was longer than 5 ms,
+or the GC duration was longer than 100ms. If the app is in a non pause perceptible process state,
+then none of it's GCs are deemed slow. Explicit GCs are always logged.
+
+When printed, the following information is sent to logcat:</p>
+
+<pre class="no-pretty-print">
+I/art: &lt;GC_Reason> &lt;GC_Name> &lt;Objects_freed>(&lt;Size_freed>) AllocSpace Objects, &lt;Large_objects_freed>(&lt;Large_object_size_freed>) &lt;Heap_stats> LOS objects, &lt;Pause_time(s)>
+</pre>
+
+<dl>
+<dt>GC Reason</dt>
+<dd>
+What triggered the garbage collection and what kind of collection it is. Reasons that may appear
+include:
+<dl>
+<dt><code>Concurrent</code></dt>
+<dd>A concurrent garbage collection run in a background daemon thread which occurs as you are
+allocating.</dd>
+
+<dt><code>Alloc</code></dt>
+<dd>A garbage collection caused because your app attempted to allocate memory when your heap was
+already full and at max capacity. In this case, the system performed garbage collection in the
+allocating thread.</dd>
+
+<dt><code>Explicit</code>
+<dd>An explicit garbage collection, such as when you call {@link java.lang.System#gc()} or
+{@link java.lang.Runtime#gc()}. It is recommended that you trust the garbage collector and avoid
+causing explicit GCs if possible.</dd>
+
+<dt><code>NativeAlloc</code></dt>
+<dd>This happens when there is native memory pressure which is registered by the
+registerNativeAllocation private API. This could be caused by allocating a large amount of
+bitmaps / renderscript allocations.</dd>
+
+<dt><code>CollectorTransition</code></dt>
+<dd>This happens when an heap transition occurs, this usually means copying from a free-list backed
+space to a bump poitner space (or visa versa). Currently collector transitions only occur when an
+app changes process states from a pause perceptible state to a non pause perceptible state (or visa
+versa) on low memory devices.
+</dd>
+
+<dt><code>HomogeneousSpaceCompact</code></dt>
+<dd>Homogeneous space compaction is free list space to free list space compaction which usually
+occurs when an app is moved to a pause imperceptible process state. The main reasons for doing
+this are reducing RAM usage and defragmenting the heap.
+</dd>
+
+<dt><code>DisableMovingGc</code></dt>
+<dd>This is not a real GC reason, but you can get blocked it if you are using
+GetPrimitiveArrayCritical while concurrent heap compaction is occuring.
+</dd>
+
+<dt><code>HeapTrim</code></dt>
+<dd>This is also not a real GC reason but GCs may not run while a heap trim is in progress. If this
+happens, then the GC will wait for the heap trim to finish before starting.
+</dd>
+
+</dl>
+</dd>
+
+
+
+<dl>
+<dt>GC Name</dt>
+<dd>
+ART has various different garbage collectors which can get run.
+<dl>
+<dt><code>[Concurrent] mark sweep</code></dt>
+<dd>A whole heap collector which frees collects all spaces other than the image space.</dd>
+
+<dt><code>[Concurrent] partial mark sweep</code></dt>
+<dd>A mostly whole heap collector which collects all spaces other than the image and zygote spaces.
+</dd>
+
+<dt><code>[Concurrent] sticky mark sweep</code></dt>
+<dd>A generational collector which can only free objects allocated since the last GC. This garbage
+collection is run more often than full / partial mark sweep since it is faster and has lower pauses.
+</dd>
+
+<dt><code>Marksweep + semispace</code></dt>
+<dd>A non concurrent, copying garbage collector used for heap transitions as well as homogeneous space
+compaction (to defragement the heap).</dd>
+
+</dl>
+</dd>
+
+<dt>Objects freed</dt>
+<dd>The number of objects which were reclaimed from this garbage collection from the non large
+object space.</dd>
+
+<dt>Size freed</dt>
+<dd>The number of bytes which were reclaimed from this garbage collection from the non large object
+space.</dd>
+
+<dt>Large objects freed</dt>
+<dd>The number of object in the large object space which were reclaimed from this garbage
+collection.</dd>
+
+<dt>Large object size freed</dt>
+<dd>The number of bytes in the large object space which were reclaimed from this garbage
+collection.</dd>
+
+<dt>Heap stats</dt>
+<dd>Percentage free and (number of live objects)/(total heap size).</dd>
+
+<dt>Pause times</dt>
+<dd>In general pause times are proportional to the number of object references which were modified
+while the GC was running. Currently, the ART CMS GCs only has one pause, near the end of the GC.
+The moving GCs have a long pause which lasts for the majority of the GC duration.</dd>
+</dl>
+
+<p>For example:</p>
+
+<pre class="no-pretty-print">
+I/art : Explicit concurrent mark sweep GC freed 104710(7MB) AllocSpace objects, 21(416KB) LOS objects, 33% free, 25MB/38MB, paused 1.230ms total 67.216ms
+</pre>
+
+<p>If you are seeing a large amount of GCs in logcat, look for increases in the heap stats (the
+{@code 25MB/38MB} value in the above example). If this value continues to increase and doesn't
+ever seem to get smaller, you could have a memory leak. Alternatively, if you are seeing GC which
+are for the reason "Alloc", then you are already operating near your heap capacity and can expect
+OOM exceptios in the near future. </p>
 
 <h2 id="ViewHeap">Viewing Heap Updates</h2>
 
@@ -186,8 +316,10 @@ divided between different types of RAM allocation with the
 following <a href="{@docRoot}tools/help/adb.html">adb</a> command:</p>
 
 <pre class="no-pretty-print">
-adb shell dumpsys meminfo &lt;package_name>
+adb shell dumpsys meminfo &lt;package_name|pid> [-d]
 </pre>
+
+The -d flag prints more info related to Dalvik / ART memory usage.
 
 <p>The output lists all of your app's current allocations, measured in kilobytes.</p>
 
@@ -218,12 +350,54 @@ actual RAM weight of a process and for comparison against the RAM use of other p
 total available RAM.</p>
 
 
-<p>For example, below is the the output for Gmail’s process on a tablet device. There is a lot of
+<p>For example, below is the the output for Maps’ process on a Nexus 5 device. There is a lot of
 information here, but key points for discussion are listed below.</p>
 
 <p class="note"><strong>Note:</strong> The information you see may vary slightly from what is shown
 here, as some details of the output differ across platform versions.</p>
 
+<pre class="no-pretty-print">
+** MEMINFO in pid 18227 [com.google.android.apps.maps] **
+                   Pss  Private  Private  Swapped     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap    10468    10408        0        0    20480    14462     6017
+  Dalvik Heap    34340    33816        0        0    62436    53883     8553
+ Dalvik Other      972      972        0        0
+        Stack     1144     1144        0        0
+      Gfx dev    35300    35300        0        0
+    Other dev        5        0        4        0
+     .so mmap     1943      504      188        0
+    .apk mmap      598        0      136        0
+    .ttf mmap      134        0       68        0
+    .dex mmap     3908        0     3904        0
+    .oat mmap     1344        0       56        0
+    .art mmap     2037     1784       28        0
+   Other mmap       30        4        0        0
+   EGL mtrack    73072    73072        0        0
+    GL mtrack    51044    51044        0        0
+      Unknown      185      184        0        0
+        TOTAL   216524   208232     4384        0    82916    68345    14570
+
+ Dalvik Details
+        .Heap     6568     6568        0        0
+         .LOS    24771    24404        0        0
+          .GC      500      500        0        0
+    .JITCache      428      428        0        0
+      .Zygote     1093      936        0        0
+   .NonMoving     1908     1908        0        0
+ .IndirectRef       44       44        0        0
+
+ Objects
+               Views:       90         ViewRootImpl:        1
+         AppContexts:        4           Activities:        1
+              Assets:        2        AssetManagers:        2
+       Local Binders:       21        Proxy Binders:       28
+       Parcel memory:       18         Parcel count:       74
+    Death Recipients:        2      OpenSSL Sockets:        2
+</pre>
+
+Here is an older dumpsys on Dalvik of the gmail app:
 <pre class="no-pretty-print">
 ** MEMINFO in pid 9953 [com.google.android.gm] **
                  Pss     Pss  Shared Private  Shared Private    Heap    Heap    Heap
@@ -282,12 +456,62 @@ with all the others.</p>
 </dd>
 
 <dt><code>.so mmap</code> and <code>.dex mmap</code></dt>
-<dd>The RAM being used for mmapped <code>.so</code> (native) and <code>.dex</code> (Dalvik) code. The
-<code>Pss Total</code> number includes platform code shared across apps; the <code>Private Clean</code> is
-your app’s own code. Generally, the actual mapped size will be much larger—the RAM here is only
-what currently needs to be in RAM for code that has been executed by the app. However, the .so mmap
-has a large private dirty, which is due to fix-ups to the native code when it was loaded into its
-final address.
+<dd>The RAM being used for mmapped <code>.so</code> (native) and <code>.dex</code> (Dalvik or ART)
+code. The <code>Pss Total</code> number includes platform code shared across apps; the
+<code>Private Clean</code> is your app’s own code. Generally, the actual mapped size will be much
+larger—the RAM here is only what currently needs to be in RAM for code that has been executed by
+the app. However, the .so mmap has a large private dirty, which is due to fix-ups to the native
+code when it was loaded into its final address.
+</dd>
+
+<dt><code>.oat mmap</code></dt>
+<dd>This is the amount of RAM used by the code image which is based off of the preloaded classes
+which are commonly used by multiple apps. This image is shared across all apps and is unaffected
+by particular apps.
+</dd>
+
+<dt><code>.art mmap</code></dt>
+<dd>This is the amount of RAM used by the heap image which is based off of the preloaded classes
+which are commonly used by multiple apps. This image is shared across all apps and is unaffected
+by particular apps. Even though the ART image contains java objects, it does not count towards
+your heap size.
+</dd>
+
+<dt><code>.Heap</code> (only with -d flag)</dt>
+<dd>This is the amount of non large object space heap memory for your app. This excludes objects in
+the image, zygote, large object, and non-moving spaces.
+</dd>
+
+<dt><code>.LOS</code> (only with -d flag)</dt>
+<dd>This is the amount of RAM used by the ART large object space. This includes zygote large
+objects. Large objects are all primitive array allocations larger than 12KB.
+</dd>
+
+<dt><code>.GC</code> (only with -d flag)</dt>
+<dd>This is the amount of internal GC accounting overhead for your app. There is not really any way
+to reduce this overhead.
+</dd>
+
+<dt><code>.JITCache</code> (only with -d flag)</dt>
+<dd>This is the amount of memory used by the JIT data and code caches. For non eng builds, this is
+usually zero since all of the apps will be compiled at installed time.
+</dd>
+
+<dt><code>.Zygote</code> (only with -d flag)</dt>
+<dd>This is the amount of memory used by the zygote space. The zygote space is created shortly
+after the system has completed booting and is never allocated into after this point.
+</dd>
+
+<dt><code>.NonMoving</code> (only with -d flag)</dt>
+<dd>This is the amount of RAM used by the ART non moving space. The non moving space contains
+special non movable objects such as fields and methods. You can reduce this section by using less
+fields and methods in your app.
+</dd>
+
+<dt><code>.IndirectRef</code> (only with -d flag)</dt>
+<dd>This is the amount of RAM used by the ART indirect reference tables. Usually this amount is
+small, but if it is too high, it may be possible to reduce it by reducing the amount of local /
+global JNI references used.
 </dd>
 
 <dt><code>Unknown</code></dt>
