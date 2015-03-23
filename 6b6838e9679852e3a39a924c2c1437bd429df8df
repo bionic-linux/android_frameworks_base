@@ -46,6 +46,30 @@
       "revId": "6b6838e9679852e3a39a924c2c1437bd429df8df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86160cff_8e3a4f96",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3087,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2015-03-23T14:30:16Z",
+      "side": 1,
+      "message": "Does this work correctly for SOFT_INPUT_ADJUST_PAN?",
+      "parentUuid": "46e0943c_e5e690da",
+      "range": {
+        "startLine": 3087,
+        "startChar": 31,
+        "endLine": 3087,
+        "endChar": 55
+      },
+      "revId": "6b6838e9679852e3a39a924c2c1437bd429df8df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
