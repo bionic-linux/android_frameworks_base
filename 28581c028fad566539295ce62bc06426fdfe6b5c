@@ -310,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "a61790fa_f89d8de7",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-03-23T16:14:28Z",
+      "side": 1,
+      "message": "You have one field.",
+      "parentUuid": "460fb4b1_87fdb9b2",
+      "range": {
+        "startLine": 32,
+        "startChar": 18,
+        "endLine": 32,
+        "endChar": 43
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "083302f6_0c3857f7",
         "filename": "core/java/android/security/NetworkSecurityPolicy.java",
         "patchSetId": 4
@@ -392,6 +416,30 @@
       "side": 1,
       "message": "Javadoc style says \"Method descriptions begin with a verb phrase.\"",
       "parentUuid": "083302f6_ac838334",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "28581c028fad566539295ce62bc06426fdfe6b5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a61790fa_98a8d903",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-03-23T16:14:28Z",
+      "side": 1,
+      "message": "Except it doesn\u0027t check anything. It \"returns\".",
+      "parentUuid": "86fc4cc6_f8741901",
       "range": {
         "startLine": 44,
         "startChar": 5,
