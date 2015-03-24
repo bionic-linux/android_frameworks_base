@@ -70,6 +70,30 @@
       "revId": "6b6838e9679852e3a39a924c2c1437bd429df8df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e656e8ec_b20dbe6f",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3087,
+      "author": {
+        "id": 1035211
+      },
+      "writtenOn": "2015-03-24T05:57:39Z",
+      "side": 1,
+      "message": "Yes, it works correctly for SOFT_INPUT_ADJUST_PAN, because the client side (ViewRootImpl) would scroll the entire view tree without changing the layout.",
+      "parentUuid": "86160cff_8e3a4f96",
+      "range": {
+        "startLine": 3087,
+        "startChar": 31,
+        "endLine": 3087,
+        "endChar": 55
+      },
+      "revId": "6b6838e9679852e3a39a924c2c1437bd429df8df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
