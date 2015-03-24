@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "267f204e_a7acae9f",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2015-03-24T01:25:05Z",
+      "side": 1,
+      "message": "Sometimes doesn\u0027t feel reassuring.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "742216b625463a989f7a0a58b2e0a4c8e9981e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "267f204e_e7b6b6ed",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2015-03-24T01:25:05Z",
+      "side": 1,
+      "message": "Reasons that this may appear",
+      "range": {
+        "startLine": 126,
+        "startChar": 73,
+        "endLine": 126,
+        "endChar": 96
+      },
+      "revId": "742216b625463a989f7a0a58b2e0a4c8e9981e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "267f204e_a793ce5b",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2015-03-24T01:25:05Z",
+      "side": 1,
+      "message": "When you call ...\n. It is recommended that you avoid invoking a garbage collection manually and allow the garbage collector to run when needed.",
+      "revId": "742216b625463a989f7a0a58b2e0a4c8e9981e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
