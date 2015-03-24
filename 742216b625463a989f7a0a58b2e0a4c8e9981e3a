@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86728c8f_e813db58",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2015-03-24T02:41:54Z",
+      "side": 1,
+      "message": "Usually it starts logging if there is bad things happening.",
+      "parentUuid": "267f204e_a7acae9f",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "742216b625463a989f7a0a58b2e0a4c8e9981e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "267f204e_e7b6b6ed",
         "filename": "docs/html/tools/debugging/debugging-memory.jd",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "666d98b3_c7ec4ec0",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2015-03-24T02:41:54Z",
+      "side": 1,
+      "message": "I think that since we are referring to reasons, I should leave it?",
+      "parentUuid": "267f204e_e7b6b6ed",
+      "range": {
+        "startLine": 126,
+        "startChar": 73,
+        "endLine": 126,
+        "endChar": 96
+      },
+      "revId": "742216b625463a989f7a0a58b2e0a4c8e9981e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "267f204e_a793ce5b",
         "filename": "docs/html/tools/debugging/debugging-memory.jd",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2015-03-24T01:25:05Z",
       "side": 1,
       "message": "When you call ...\n. It is recommended that you avoid invoking a garbage collection manually and allow the garbage collector to run when needed.",
+      "revId": "742216b625463a989f7a0a58b2e0a4c8e9981e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "666d98b3_87b256c4",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2015-03-24T02:41:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "267f204e_a793ce5b",
       "revId": "742216b625463a989f7a0a58b2e0a4c8e9981e3a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
