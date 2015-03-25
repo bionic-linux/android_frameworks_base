@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "632e6a92_4eee53b7",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4585,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2015-03-25T07:38:34Z",
+      "side": 1,
+      "message": "Sure, I will update this.",
+      "parentUuid": "068cdc85_eb730a94",
+      "range": {
+        "startLine": 4584,
+        "startChar": 8,
+        "endLine": 4585,
+        "endChar": 64
+      },
+      "revId": "b3de1b45df5f0dd6f7da39215762f35fa3795e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46825452_1cf81a93",
         "filename": "services/core/java/com/android/server/am/ActivityStack.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2015-03-20T15:50:04Z",
       "side": 1,
       "message": "why are we changing this to include the case where the activity is removed?",
+      "range": {
+        "startLine": 3393,
+        "startChar": 20,
+        "endLine": 3395,
+        "endChar": 21
+      },
+      "revId": "b3de1b45df5f0dd6f7da39215762f35fa3795e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "632e6a92_6e5eaf56",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3395,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2015-03-25T07:38:34Z",
+      "side": 1,
+      "message": "Because if top activity (r.haveState \u003d\u003d false) is in the died process, it should still to resume next.",
+      "parentUuid": "46825452_1cf81a93",
       "range": {
         "startLine": 3393,
         "startChar": 20,
