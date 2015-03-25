@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c352b622_091a8d6d",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-25T17:10:02Z",
+      "side": 1,
+      "message": "add single space between operators.\n\nfor (int i \u003d app.connection.size() - 1; i \u003e\u003d 0; i--)",
+      "range": {
+        "startLine": 2093,
+        "startChar": 13,
+        "endLine": 2093,
+        "endChar": 54
+      },
+      "revId": "04c49d4ad09e186471d7fd4f9996438998b63cd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3fb9632_0a2258ce",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2101,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-25T17:10:02Z",
+      "side": 1,
+      "message": "here also",
+      "range": {
+        "startLine": 2101,
+        "startChar": 13,
+        "endLine": 2101,
+        "endChar": 51
+      },
+      "revId": "04c49d4ad09e186471d7fd4f9996438998b63cd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3fb9632_6a6e7cae",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-25T17:10:02Z",
+      "side": 1,
+      "message": "Would this still be valid if we remove the connection first?",
+      "range": {
+        "startLine": 2119,
+        "startChar": 37,
+        "endLine": 2119,
+        "endChar": 66
+      },
+      "revId": "04c49d4ad09e186471d7fd4f9996438998b63cd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
