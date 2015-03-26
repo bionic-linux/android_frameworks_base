@@ -68,6 +68,30 @@
       "revId": "04c49d4ad09e186471d7fd4f9996438998b63cd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "632e6a92_b19cf8b6",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1023593
+      },
+      "writtenOn": "2015-03-26T05:08:36Z",
+      "side": 1,
+      "message": "I think if the service was bring down while remove connections, the service will be removed from app.services and won\u0027t enter the outer for-loop (line#2101).",
+      "parentUuid": "c3fb9632_6a6e7cae",
+      "range": {
+        "startLine": 2119,
+        "startChar": 37,
+        "endLine": 2119,
+        "endChar": 66
+      },
+      "revId": "04c49d4ad09e186471d7fd4f9996438998b63cd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
