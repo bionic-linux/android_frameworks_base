@@ -75,6 +75,8 @@ public abstract class KeyStoreKeyGeneratorSpi extends KeyGeneratorSpi {
         if (mDigest != null) {
             args.addInt(KeymasterDefs.KM_TAG_DIGEST,
                     KeyStoreKeyConstraints.Digest.toKeymaster(mDigest));
+            // TODO: Switch to bits instead of bytes, once this is fixed in Keymaster
+            args.addInt(KeymasterDefs.KM_TAG_MAC_LENGTH, mDefaultKeySizeBits / 8);
         }
         int keySizeBits = (spec.getKeySize() != null) ? spec.getKeySize() : mDefaultKeySizeBits;
         args.addInt(KeymasterDefs.KM_TAG_KEY_SIZE, keySizeBits);
