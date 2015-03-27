@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a3ca80_6ce32a20",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "they way they are worded doesn\u0027t sound like reasons, it sounds like what happened, not why. i\u0027ll make some suggestions.",
+      "range": {
+        "startLine": 124,
+        "startChar": 73,
+        "endLine": 125,
+        "endChar": 8
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_cb9b2b4a",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "was run",
+      "range": {
+        "startLine": 128,
+        "startChar": 36,
+        "endLine": 128,
+        "endChar": 39
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_92a583f8",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "was caused",
+      "range": {
+        "startLine": 132,
+        "startChar": 25,
+        "endLine": 132,
+        "endChar": 31
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_ebb387c9",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "With ART, at is recommended",
+      "range": {
+        "startLine": 138,
+        "startChar": 32,
+        "endLine": 138,
+        "endChar": 49
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a3ca80_eccddab2",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "RenderScript",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 22
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_c5c26384",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "A collection was caused by native memory pressure from native allocations such as Bitmaps or RenderScript.",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 35
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_2b417f16",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "A collection was caused by a heap transition",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_25e9effb",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "pointer",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 23
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_abca6f1c",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "free-list space? here and elsewhere? not sure.",
+      "range": {
+        "startLine": 154,
+        "startChar": 36,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a3ca80_2c68d2ee",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "a note that collection was blocked due to use of GetPrimitiveArrayCritical",
+      "range": {
+        "startLine": 160,
+        "startChar": 38,
+        "endLine": 161,
+        "endChar": 25
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a3ca80_6c47aa80",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": ". In general, the use of GetPrimitiveArrayCritical is strongly discouraged due to its restrictions on moving collectors.",
+      "range": {
+        "startLine": 161,
+        "startChar": 70,
+        "endLine": 161,
+        "endChar": 71
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_a5587f5a",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "a note that collection was blocked",
+      "range": {
+        "startLine": 165,
+        "startChar": 42,
+        "endLine": 165,
+        "endChar": 57
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_cb46cb12",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "what is with the []",
+      "range": {
+        "startLine": 179,
+        "startChar": 10,
+        "endLine": 179,
+        "endChar": 22
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a3ca80_6c956a40",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "is CMS defined previosuly?",
+      "range": {
+        "startLine": 219,
+        "startChar": 45,
+        "endLine": 219,
+        "endChar": 48
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a3ca80_ec887a23",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "\u003ccode\u003eadb shell dumpsys meminfo com.google.android.apps.maps -d\u003c/code\u003e",
+      "range": {
+        "startLine": 353,
+        "startChar": 44,
+        "endLine": 353,
+        "endChar": 50
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_4b963bca",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "java.lang.Object instances",
+      "range": {
+        "startLine": 476,
+        "startChar": 55,
+        "endLine": 476,
+        "endChar": 67
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_0b1da3e8",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "Typically",
+      "range": {
+        "startLine": 496,
+        "startChar": 71,
+        "endLine": 496,
+        "endChar": 89
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_2b3f3f3a",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "during device startup",
+      "range": {
+        "startLine": 501,
+        "startChar": 87,
+        "endLine": 502,
+        "endChar": 38
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_28378615",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "non-moving",
+      "range": {
+        "startLine": 506,
+        "startChar": 46,
+        "endLine": 506,
+        "endChar": 56
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_2e2f4d88",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "non-movable?",
+      "range": {
+        "startLine": 507,
+        "startChar": 8,
+        "endLine": 507,
+        "endChar": 19
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_68182ea0",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "fewer?",
+      "range": {
+        "startLine": 507,
+        "startChar": 93,
+        "endLine": 507,
+        "endChar": 97
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_487a0ab7",
+        "filename": "docs/html/tools/debugging/debugging-memory.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-03-27T22:58:26Z",
+      "side": 1,
+      "message": "number?",
+      "range": {
+        "startLine": 513,
+        "startChar": 78,
+        "endLine": 513,
+        "endChar": 84
+      },
+      "revId": "3a1f77525097d4eec2ae59255f47fca2b503930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
