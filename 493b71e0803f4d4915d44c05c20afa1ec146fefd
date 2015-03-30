@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03dccefb_7aac469e",
+        "filename": "keystore/java/android/security/KeyStoreCryptoOperationChunkedStreamer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-30T18:01:48Z",
+      "side": 1,
+      "message": "won\u0027t this always be \u003c 0? mBuffered \u003d chunk and opResult.inputConsumed \u003c chunk.length.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 78
+      },
+      "revId": "493b71e0803f4d4915d44c05c20afa1ec146fefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43308612_89a59a82",
+        "filename": "keystore/java/android/security/KeyStoreCryptoOperationChunkedStreamer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-30T18:01:48Z",
+      "side": 1,
+      "message": "Keystore only returns Keystore.NO_ERROR on success.",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 69
+      },
+      "revId": "493b71e0803f4d4915d44c05c20afa1ec146fefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "837a7ea8_9b46ec11",
+        "filename": "keystore/java/android/security/KeyStoreHmacSpi.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-30T18:01:48Z",
+      "side": 1,
+      "message": "How will the dev be able to translate this into what the error was? I\u0027m assuming KeymasterException will be hidden API.\n\nAt some point they\u0027re going to need to be able to check that it failed auth specifically, how will they be doing that?",
+      "range": {
+        "startLine": 115,
+        "startChar": 22,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "493b71e0803f4d4915d44c05c20afa1ec146fefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
