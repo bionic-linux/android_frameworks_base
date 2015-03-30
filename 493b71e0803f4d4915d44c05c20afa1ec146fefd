@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03dccefb_cbbd66a7",
+        "filename": "keystore/java/android/security/KeyStoreCryptoOperationChunkedStreamer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-30T19:53:52Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "03dccefb_7aac469e",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 78
+      },
+      "revId": "493b71e0803f4d4915d44c05c20afa1ec146fefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43308612_89a59a82",
         "filename": "keystore/java/android/security/KeyStoreCryptoOperationChunkedStreamer.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43308612_ec98b4f5",
+        "filename": "keystore/java/android/security/KeyStoreCryptoOperationChunkedStreamer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-30T19:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43308612_89a59a82",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 69
+      },
+      "revId": "493b71e0803f4d4915d44c05c20afa1ec146fefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "837a7ea8_9b46ec11",
         "filename": "keystore/java/android/security/KeyStoreHmacSpi.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2015-03-30T18:01:48Z",
       "side": 1,
       "message": "How will the dev be able to translate this into what the error was? I\u0027m assuming KeymasterException will be hidden API.\n\nAt some point they\u0027re going to need to be able to check that it failed auth specifically, how will they be doing that?",
+      "range": {
+        "startLine": 115,
+        "startChar": 22,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "493b71e0803f4d4915d44c05c20afa1ec146fefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43308612_4cd5606f",
+        "filename": "keystore/java/android/security/KeyStoreHmacSpi.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-30T19:53:52Z",
+      "side": 1,
+      "message": "TBD. Once we introduce the special types of exceptions that we want developers to be able to catch, I\u0027ll go over the existing code and adjust it accordingly.",
+      "parentUuid": "837a7ea8_9b46ec11",
       "range": {
         "startLine": 115,
         "startChar": 22,
