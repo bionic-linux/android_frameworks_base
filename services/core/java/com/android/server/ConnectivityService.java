@@ -2022,6 +2022,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         ReapUnvalidatedNetworks.DONT_REAP);
             }
         }
+        mNetworkFactoryInfos.remove(msg.replyTo);
     }
 
     // If this method proves to be too slow then we can maintain a separate
