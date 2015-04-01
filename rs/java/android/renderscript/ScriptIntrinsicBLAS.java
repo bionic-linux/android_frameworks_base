@@ -176,6 +176,9 @@ public final class ScriptIntrinsicBLAS extends ScriptIntrinsic {
     private static final int RsBlas_zherk = 141;
     private static final int RsBlas_zher2k = 142;
 
+    // BLAS extensions start here
+    private static final int RsBlas_bgemm = 143;
+
     /**
      */
     public static ScriptIntrinsicBLAS create(RenderScript rs) {
