@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439a4679_87739495",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-01T14:56:33Z",
+      "side": 1,
+      "message": "Please remove {} on if statement. See other debug log points with file for format example.",
+      "range": {
+        "startLine": 903,
+        "startChar": 0,
+        "endLine": 905,
+        "endChar": 21
+      },
+      "revId": "2315e74e04d8f1d38b46e8abea17c3d835a86a02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
