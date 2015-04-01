@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e37fbae4_dbc3b3a3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2025,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2015-04-01T19:18:30Z",
+      "side": 1,
+      "message": "sorry - I wasn\u0027t clear.\n\nYour logging when the remove succeeds is good/useful.  I just didn\u0027t want the null case as that\u0027ll get hit alot in normal operations..",
+      "range": {
+        "startLine": 2025,
+        "startChar": 8,
+        "endLine": 2025,
+        "endChar": 28
+      },
+      "revId": "b30d495f7e2e467d7b6d767a537a9953652c6c2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
