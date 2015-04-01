@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3d89a3c_eef0cfe0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-01T01:29:54Z",
+      "side": 1,
+      "message": "Limit comment lines to 70 characters or less here and additional places below.",
+      "range": {
+        "startLine": 10,
+        "startChar": 71,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "ab39da848fdf867bd44d5942a01ff7dde9d71e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3da2233_1d5d3380",
+        "filename": "services/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-01T01:29:54Z",
+      "side": 1,
+      "message": "Add \u0027if (DEBUG_PAUSE) Slog.v(TAG, \"Executing finish of failed to pause activity: \" + r);\u0027 here before calling finishCurrentActivityLocked().",
+      "range": {
+        "startLine": 826,
+        "startChar": 69,
+        "endLine": 826,
+        "endChar": 70
+      },
+      "revId": "ab39da848fdf867bd44d5942a01ff7dde9d71e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
