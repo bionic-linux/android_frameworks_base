@@ -22,6 +22,30 @@
       "revId": "38a82173b17ae1b3a217065dc4fe711109a53741",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03a4ceb8_b03d3891",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1017344
+      },
+      "writtenOn": "2015-04-01T04:54:41Z",
+      "side": 1,
+      "message": "Actually, I tried to make it similar to line#3377. But anyways, I\u0027ll remove these logs in new patchset. Thanks.!!",
+      "parentUuid": "83143e89_61e831a7",
+      "range": {
+        "startLine": 2027,
+        "startChar": 0,
+        "endLine": 2027,
+        "endChar": 73
+      },
+      "revId": "38a82173b17ae1b3a217065dc4fe711109a53741",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
