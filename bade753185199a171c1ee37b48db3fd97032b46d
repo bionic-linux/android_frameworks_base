@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03d68e0c_832ac0f5",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-01T01:55:25Z",
+      "side": 1,
+      "message": "Add comment here on why we are removing the window. i.e. we are assuming the hosting process is dead or in a zombie state.",
+      "range": {
+        "startLine": 1409,
+        "startChar": 50,
+        "endLine": 1409,
+        "endChar": 51
+      },
+      "revId": "bade753185199a171c1ee37b48db3fd97032b46d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
