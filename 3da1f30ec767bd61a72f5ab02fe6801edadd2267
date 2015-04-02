@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63de6a5c_3f83af07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-02T14:26:16Z",
+      "side": 1,
+      "message": "limit to 70 chars or less.",
+      "range": {
+        "startLine": 9,
+        "startChar": 71,
+        "endLine": 9,
+        "endChar": 95
+      },
+      "revId": "3da1f30ec767bd61a72f5ab02fe6801edadd2267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63de6a5c_9f006305",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2231,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-02T14:26:16Z",
+      "side": 1,
+      "message": "can you do || here instead of introducing another \u0027else if\u0027 block below?",
+      "range": {
+        "startLine": 2231,
+        "startChar": 36,
+        "endLine": 2231,
+        "endChar": 37
+      },
+      "revId": "3da1f30ec767bd61a72f5ab02fe6801edadd2267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
