@@ -22,6 +22,30 @@
       "revId": "b30d495f7e2e467d7b6d767a537a9953652c6c2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63c90a9c_d3c034d0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2025,
+      "author": {
+        "id": 1017344
+      },
+      "writtenOn": "2015-04-02T05:30:34Z",
+      "side": 1,
+      "message": "Sorry for misunderstanding...I\u0027ll update it",
+      "parentUuid": "e37fbae4_dbc3b3a3",
+      "range": {
+        "startLine": 2025,
+        "startChar": 8,
+        "endLine": 2025,
+        "endChar": 28
+      },
+      "revId": "b30d495f7e2e467d7b6d767a537a9953652c6c2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
