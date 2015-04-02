@@ -2230,6 +2230,8 @@ public final class ActiveServices {
                 bringDownServiceLocked(sr);
             } else if (!allowRestart) {
                 bringDownServiceLocked(sr);
+            } else if (!mAm.isUserRunningLocked(sr.userId, false)) {
+                bringDownServiceLocked(sr);
             } else {
                 boolean canceled = scheduleServiceRestartLocked(sr, true);
 
