@@ -289,6 +289,7 @@ public class ScriptGroup2 extends BaseObj {
         }
     }
 
+    String mName;
     List<Closure> mClosures;
     List<UnboundValue> mInputs;
     Future[] mOutputs;
@@ -299,9 +300,10 @@ public class ScriptGroup2 extends BaseObj {
         super(id, rs);
     }
 
-    ScriptGroup2(RenderScript rs, List<Closure> closures,
+    ScriptGroup2(RenderScript rs, String name, List<Closure> closures,
                  List<UnboundValue> inputs, Future[] outputs) {
         super(0, rs);
+        mName = name;
         mClosures = closures;
         mInputs = inputs;
         mOutputs = outputs;
@@ -310,7 +312,7 @@ public class ScriptGroup2 extends BaseObj {
         for (int i = 0; i < closureIDs.length; i++) {
             closureIDs[i] = closures.get(i).getID(rs);
         }
-        long id = rs.nScriptGroup2Create(ScriptC.mCachePath, closureIDs);
+        long id = rs.nScriptGroup2Create(name, ScriptC.mCachePath, closureIDs);
         setID(id);
     }
 
@@ -412,8 +414,12 @@ public class ScriptGroup2 extends BaseObj {
             return addInvoke(invoke, args.toArray(), bindingMap);
         }
 
-        public ScriptGroup2 create(Future... outputs) {
-            ScriptGroup2 ret = new ScriptGroup2(mRS, mClosures, mInputs, outputs);
+        public ScriptGroup2 create(String name, Future... outputs) {
+            if (name == null || name.isEmpty() || name.length() > 100 ||
+                !name.equals(name.replaceAll("[^a-zA-Z0-9-]", "_"))) {
+                throw new RSIllegalArgumentException("invalid script group name");
+            }
+            ScriptGroup2 ret = new ScriptGroup2(mRS, name, mClosures, mInputs, outputs);
             return ret;
         }
 
