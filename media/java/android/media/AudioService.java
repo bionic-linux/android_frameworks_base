@@ -814,7 +814,7 @@ public class AudioService extends IAudioService.Stub {
             break;
         default:
             mStreamVolumeAlias = STREAM_VOLUME_ALIAS_DEFAULT;
-            dtmfStreamAlias = AudioSystem.STREAM_MUSIC;
+            dtmfStreamAlias = AudioSystem.STREAM_RING;
         }
 
         if (isPlatformTelevision()) {
