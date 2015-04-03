@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83cefea1_7b86d017",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-04-03T06:53:24Z",
+      "side": 1,
+      "message": "i put my comments on this in libcore part of this CL",
+      "range": {
+        "startLine": 1123,
+        "startChar": 38,
+        "endLine": 1123,
+        "endChar": 53
+      },
+      "revId": "dabee7c8f8a929683d70433186588fed632aa6ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
