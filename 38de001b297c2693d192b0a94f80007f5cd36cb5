@@ -22,6 +22,30 @@
       "revId": "38de001b297c2693d192b0a94f80007f5cd36cb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c34716eb_6abb7cb2",
+        "filename": "rs/java/android/renderscript/ScriptGroup2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2015-04-06T22:14:20Z",
+      "side": 1,
+      "message": "1. Reusing a name for a different script group will cause a miss on code cache for the overwritten script group.\n2. Then we should document that only letters, numbers, and underscores are allowed in a name and verify it.",
+      "parentUuid": "c34716eb_8f685a1f",
+      "range": {
+        "startLine": 417,
+        "startChar": 35,
+        "endLine": 418,
+        "endChar": 46
+      },
+      "revId": "38de001b297c2693d192b0a94f80007f5cd36cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
