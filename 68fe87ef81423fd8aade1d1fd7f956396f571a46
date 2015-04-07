@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a32b0216_be7c7d35",
+        "filename": "core/java/android/text/SpanSet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1015625
+      },
+      "writtenOn": "2015-04-07T17:51:29Z",
+      "side": 1,
+      "message": "use Arrays.fill instead of a for loop?",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "68fe87ef81423fd8aade1d1fd7f956396f571a46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
