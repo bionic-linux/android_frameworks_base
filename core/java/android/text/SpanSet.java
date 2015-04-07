@@ -54,6 +54,7 @@ public class SpanSet<E> {
             spanFlags = new int[length];
         }
 
+        int prevNumberOfSpans = numberOfSpans;
         numberOfSpans = 0;
         for (int i = 0; i < length; i++) {
             final E span = allSpans[i];
@@ -70,6 +71,13 @@ public class SpanSet<E> {
             spanFlags[numberOfSpans] = spanFlag;
 
             numberOfSpans++;
+        }
+
+        // cleanup extra spans left over from previous init() call
+        if (numberOfSpans < prevNumberOfSpans) {
+            for (int i = numberOfSpans; i < prevNumberOfSpans; i++) {
+                spans[i] = null;
+            }
         }
     }
 
