@@ -46,6 +46,30 @@
       "revId": "38de001b297c2693d192b0a94f80007f5cd36cb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03092eaf_0e368f62",
+        "filename": "rs/java/android/renderscript/ScriptGroup2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2015-04-07T00:58:11Z",
+      "side": 1,
+      "message": "Also, dlopen will fail if the name of the name of the .so is longer than 128 characters.  Instead of these edge case checks, should we just use the hash of the user-provided name?  This will not solve name reuse, but will address the other concerns.",
+      "parentUuid": "c34716eb_6abb7cb2",
+      "range": {
+        "startLine": 417,
+        "startChar": 35,
+        "endLine": 418,
+        "endChar": 46
+      },
+      "revId": "38de001b297c2693d192b0a94f80007f5cd36cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
