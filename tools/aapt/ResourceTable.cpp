@@ -164,8 +164,8 @@ static const char16_t flagsArray[] =
 
 static const flag_entry gFormatFlags[] = {
     { referenceArray, sizeof(referenceArray)/2, ResTable_map::TYPE_REFERENCE,
-      "a reference to another resource, in the form \"<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>\"\n"
-      "or to a theme attribute in the form \"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>\"."},
+      "a reference to another resource, in the form \"<code>@[+][<i>package</i>:]<i>type</i>/<i>name</i></code>\"\n"
+      "or to a theme attribute in the form \"<code>?[<i>package</i>:][<i>type</i>/]<i>name</i></code>\"."},
     { stringArray, sizeof(stringArray)/2, ResTable_map::TYPE_STRING,
       "a string value, using '\\\\;' to escape characters such as '\\\\n' or '\\\\uxxxx' for a unicode character." },
     { integerArray, sizeof(integerArray)/2, ResTable_map::TYPE_INTEGER,
@@ -267,9 +267,9 @@ static void appendTypeInfo(ResourceTable* outTable, const String16& pkg,
     if (hadType && (type&ResTable_map::TYPE_REFERENCE) == 0) {
         outTable->appendTypeComment(pkg, typeName, ident,
                 String16("<p>This may also be a reference to a resource (in the form\n"
-                         "\"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>\") or\n"
+                         "\"<code>@[<i>package</i>:]<i>type</i>/<i>name</i></code>\") or\n"
                          "theme attribute (in the form\n"
-                         "\"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>\")\n"
+                         "\"<code>?[<i>package</i>:][<i>type</i>/]<i>name</i></code>\")\n"
                          "containing a value of this type."));
     }
 }
