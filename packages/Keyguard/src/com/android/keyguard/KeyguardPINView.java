@@ -19,6 +19,7 @@ package com.android.keyguard;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.RenderNode;
 import android.view.RenderNodeAnimator;
@@ -102,6 +103,7 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
                 new View[]{
                         null, mEcaView, null
                 }};
+        mSecurityMessageDisplay = (KeyguardMessageArea) findViewById(R.id.keyguard_message_area);
     }
 
     @Override
@@ -145,6 +147,14 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
                         }
                     }
                 });
+        if (!TextUtils.isEmpty(mSecurityMessageDisplay.getText())) {
+            mDisappearAnimationUtils.createAnimation(mSecurityMessageDisplay, 0,
+                    200,
+                    - mDisappearAnimationUtils.getStartTranslation() * 3,
+                    false /* appearing */,
+                    mDisappearAnimationUtils.getInterpolator(),
+                    null /* finishRunnable */);
+        }
         return true;
     }
 

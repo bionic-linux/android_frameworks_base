@@ -37,7 +37,7 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     protected KeyguardSecurityCallback mCallback;
     protected LockPatternUtils mLockPatternUtils;
     protected AsyncTask<?, ?, ?> mPendingLockCheck;
-    protected SecurityMessageDisplay mSecurityMessageDisplay;
+    protected KeyguardMessageArea mSecurityMessageDisplay;
     protected View mEcaView;
     protected boolean mEnableHaptics;
     private boolean mDismissing;
@@ -91,7 +91,8 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     @Override
     protected void onFinishInflate() {
         mLockPatternUtils = new LockPatternUtils(mContext);
-        mSecurityMessageDisplay = KeyguardMessageArea.findSecurityMessageDisplay(this);
+        mSecurityMessageDisplay =
+                (KeyguardMessageArea) KeyguardMessageArea.findSecurityMessageDisplay(this);
         mEcaView = findViewById(R.id.keyguard_selector_fade_container);
 
         EmergencyButton button = (EmergencyButton) findViewById(R.id.emergency_call_button);
