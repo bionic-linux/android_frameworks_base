@@ -53,6 +53,8 @@ public class ConfigUpdateInstallReceiver extends BroadcastReceiver {
 
     private static final String UPDATE_CERTIFICATE_KEY = "config_update_certificate";
 
+    private static final int UNINSTALL_MAGIC_VERSION = -1;
+
     protected final File updateDir;
     protected final File updateContent;
     protected final File updateVersion;
@@ -94,6 +96,12 @@ public class ConfigUpdateInstallReceiver extends BroadcastReceiver {
                                cert)) {
                         EventLog.writeEvent(EventLogTags.CONFIG_INSTALL_FAILED,
                                             "Signature did not verify");
+                    } else if (altVersion == UNINSTALL_MAGIC_VERSION) {
+                        // This is an uninstall update.
+                        Slog.i(TAG, "Received valid uninstall update, uninstalling...");
+                        uninstall();
+                        Slog.i(TAG, "Uninstallation successful");
+                        postUninstall(context, intent);
                     } else {
                         // install the new content
                         Slog.i(TAG, "Found new update, installing...");
@@ -203,7 +211,7 @@ public class ConfigUpdateInstallReceiver extends BroadcastReceiver {
     }
 
     private boolean verifyVersion(int current, int alternative) {
-        return (current < alternative);
+        return (current < alternative || alternative == UNINSTALL_MAGIC_VERSION);
     }
 
     private boolean verifyPreviousHash(String current, String required) {
@@ -262,6 +270,20 @@ public class ConfigUpdateInstallReceiver extends BroadcastReceiver {
         writeUpdate(updateDir, updateVersion, Long.toString(version).getBytes());
     }
 
-    protected void postInstall(Context context, Intent intent) {
+    protected void postInstall(Context context, Intent intent) throws IOException {
+    }
+
+    protected void deleteFile(File file) throws IOException {
+        if (!file.delete()) {
+            throw new IOException("Failed to delete: " + file);
+        }
+    }
+
+    protected void uninstall() throws IOException {
+        deleteFile(updateContent);
+        deleteFile(updateVersion);
+    }
+
+    protected void postUninstall(Context context, Intent intent) {
     }
 }
