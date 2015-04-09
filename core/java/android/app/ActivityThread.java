@@ -4681,11 +4681,18 @@ public final class ActivityThread {
                 holder = ActivityManagerNative.getDefault().getContentProvider(
                         getApplicationThread(), auth, userId, stable);
             } catch (RemoteException ex) {
-            }
-            synchronized (r) {
-                r.holder = holder;
-                r.acquiring = false;
-                r.notifyAll();
+            } finally {
+                synchronized (r) {
+                    r.holder = holder;
+                    r.acquiring = false;
+                    r.notifyAll();
+                }
+
+                synchronized (mAcquiringProviderMap) {
+                    if (--r.requests == 0) {
+                        mAcquiringProviderMap.remove(key);
+                    }
+                }
             }
         } else {
             synchronized (r) {
@@ -4697,12 +4704,14 @@ public final class ActivityThread {
                 }
                 holder = r.holder;
             }
-        }
-        synchronized (mAcquiringProviderMap) {
-            if (--r.requests == 0) {
-                mAcquiringProviderMap.remove(key);
+
+            synchronized (mAcquiringProviderMap) {
+                if (--r.requests == 0) {
+                    mAcquiringProviderMap.remove(key);
+                }
             }
         }
+
         if (holder == null) {
             Slog.e(TAG, "Failed to find provider info for " + auth);
             return null;
