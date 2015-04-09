@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e356daec_b80cbd71",
+        "filename": "services/core/java/com/android/server/pm/Installer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2015-04-09T21:37:31Z",
+      "side": 1,
+      "message": "Use the new escapeNull() helper method here, too.\n\n(Also a number of other points in the code -- look for the literal \"!\" string and you\u0027ll see.)",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 54
+      },
+      "revId": "790a4ecac708883eb3f84165298f4927be59e0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
