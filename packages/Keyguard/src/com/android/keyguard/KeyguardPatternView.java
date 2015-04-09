@@ -363,7 +363,7 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
                     }
                 },
                 this);
-        if (!TextUtils.isEmpty(mSecurityMessageDisplay.getText())) {
+        if (!mSecurityMessageDisplay.isEmpty()) {
             mAppearAnimationUtils.createAnimation(mSecurityMessageDisplay, 0,
                     AppearAnimationUtils.DEFAULT_APPEAR_DURATION,
                     mAppearAnimationUtils.getStartTranslation(),
