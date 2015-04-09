@@ -363,7 +363,7 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
                     }
                 },
                 this);
-        if (!TextUtils.isEmpty(mSecurityMessageDisplay.getText())) {
+        if (!mSecurityMessageDisplay.isEmpty()) {
             mAppearAnimationUtils.createAnimation(mSecurityMessageDisplay, 0,
                     AppearAnimationUtils.DEFAULT_APPEAR_DURATION,
                     mAppearAnimationUtils.getStartTranslation(),
@@ -391,7 +391,7 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
                         }
                     }
                 }, KeyguardPatternView.this);
-        if (!TextUtils.isEmpty(mSecurityMessageDisplay.getText())) {
+        if (!mSecurityMessageDisplay.isEmpty()) {
             mDisappearAnimationUtils.createAnimation(mSecurityMessageDisplay, 0,
                     200,
                     - mDisappearAnimationUtils.getStartTranslation() * 3,
