@@ -1444,8 +1444,8 @@ final class ActivityStack {
     }
 
     final boolean resumeTopActivityLocked(ActivityRecord prev, Bundle options) {
-        if (mStackSupervisor.inResumeTopActivity) {
-            // Don't even start recursing.
+        if (inResumeTopActivity && !(isHomeStack() && prev == topRunningActivityLocked(null))) {
+            // Don't even start recursing, except to resume home.
             return false;
         }
 
