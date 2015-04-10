@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434a4643_92951c1b",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4673,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2015-04-10T04:14:09Z",
+      "side": 1,
+      "message": "Maybe it can reduce duplicated part.\ntry {\n    if (first) {\n    ...\n    } else {\n    ...\n    }\n} finally {\n    synchronized (mAcquiringProviderMap) {\n    ...\n    }\n}",
+      "revId": "9495e84e34b139ff876ecae01c37500b5739080f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
