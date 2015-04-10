@@ -22,7 +22,9 @@ import android.security.keymaster.KeymasterDefs;
 import java.security.InvalidKeyException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactorySpi;
@@ -74,10 +76,9 @@ public class KeyStoreSecretKeyFactorySpi extends SecretKeyFactorySpi {
         @KeyStoreKeyCharacteristics.OriginEnum int origin;
         int keySize;
         @KeyStoreKeyConstraints.PurposeEnum int purposes;
-        @KeyStoreKeyConstraints.AlgorithmEnum int algorithm;
-        @KeyStoreKeyConstraints.PaddingEnum int paddings;
-        @KeyStoreKeyConstraints.DigestEnum int digests;
-        @KeyStoreKeyConstraints.BlockModeEnum int blockModes;
+        String[] encryptionPaddings;
+        String[] digests;
+        String[] blockModes;
         @KeyStoreKeyConstraints.UserAuthenticatorEnum int userAuthenticators;
         @KeyStoreKeyConstraints.UserAuthenticatorEnum int teeEnforcedUserAuthenticators;
         try {
@@ -104,12 +105,26 @@ public class KeyStoreSecretKeyFactorySpi extends SecretKeyFactorySpi {
             if (alg == null) {
                 throw new InvalidKeySpecException("Key algorithm not available");
             }
-            algorithm = KeyStoreKeyConstraints.Algorithm.fromKeymaster(alg);
-            paddings = KeyStoreKeyConstraints.Padding.allFromKeymaster(
-                    KeymasterUtils.getInts(keyCharacteristics, KeymasterDefs.KM_TAG_PADDING));
-            digests = KeyStoreKeyConstraints.Digest.allFromKeymaster(
+
+            List<String> encryptionPaddingsList = new ArrayList<String>();
+            for (int keymasterPadding
+                    : KeymasterUtils.getInts(keyCharacteristics, KeymasterDefs.KM_TAG_PADDING)) {
+                String jcaPadding;
+                try {
+                    jcaPadding = KeymasterUtils.getJcaEncryptionPaddingFromKeymasterPadding(
+                            keymasterPadding);
+                } catch (IllegalArgumentException e) {
+                    throw new InvalidKeySpecException(
+                            "Unsupported encryption padding: " + keymasterPadding);
+                }
+                encryptionPaddingsList.add(jcaPadding);
+            }
+            encryptionPaddings =
+                    encryptionPaddingsList.toArray(new String[encryptionPaddingsList.size()]);
+
+            digests = KeymasterUtils.getJcaDigestAlgorithmsFromKeymasterDigests(
                     KeymasterUtils.getInts(keyCharacteristics, KeymasterDefs.KM_TAG_DIGEST));
-            blockModes = KeyStoreKeyConstraints.BlockMode.allFromKeymaster(
+            blockModes = KeymasterUtils.getJcaBlockModesFromKeymasterBlockModes(
                     KeymasterUtils.getInts(keyCharacteristics, KeymasterDefs.KM_TAG_BLOCK_MODE));
 
             @KeyStoreKeyConstraints.UserAuthenticatorEnum
@@ -158,8 +173,8 @@ public class KeyStoreSecretKeyFactorySpi extends SecretKeyFactorySpi {
                 keyValidityForOriginationEnd,
                 keyValidityForConsumptionEnd,
                 purposes,
-                algorithm,
-                paddings,
+                encryptionPaddings,
+                ArrayUtils.EMPTY_STRING_ARRAY, // no signature paddings -- this is symmetric crypto
                 digests,
                 blockModes,
                 userAuthenticators,

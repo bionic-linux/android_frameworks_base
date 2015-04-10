@@ -34,10 +34,10 @@ public class KeyStoreKeySpec implements KeySpec {
     private final Date mKeyValidityForOriginationEnd;
     private final Date mKeyValidityForConsumptionEnd;
     private final @KeyStoreKeyConstraints.PurposeEnum int mPurposes;
-    private final @KeyStoreKeyConstraints.AlgorithmEnum int mAlgorithm;
-    private final @KeyStoreKeyConstraints.PaddingEnum int mPaddings;
-    private final @KeyStoreKeyConstraints.DigestEnum int mDigests;
-    private final @KeyStoreKeyConstraints.BlockModeEnum int mBlockModes;
+    private final String[] mEncryptionPaddings;
+    private final String[] mSignaturePaddings;
+    private final String[] mDigests;
+    private final String[] mBlockModes;
     private final @KeyStoreKeyConstraints.UserAuthenticatorEnum int mUserAuthenticators;
     private final @KeyStoreKeyConstraints.UserAuthenticatorEnum int mTeeEnforcedUserAuthenticators;
     private final int mUserAuthenticationValidityDurationSeconds;
@@ -54,10 +54,10 @@ public class KeyStoreKeySpec implements KeySpec {
             Date keyValidityForOriginationEnd,
             Date keyValidityForConsumptionEnd,
             @KeyStoreKeyConstraints.PurposeEnum int purposes,
-            @KeyStoreKeyConstraints.AlgorithmEnum int algorithm,
-            @KeyStoreKeyConstraints.PaddingEnum int paddings,
-            @KeyStoreKeyConstraints.DigestEnum int digests,
-            @KeyStoreKeyConstraints.BlockModeEnum int blockModes,
+            String[] encryptionPaddings,
+            String[] signaturePaddings,
+            String[] digests,
+            String[] blockModes,
             @KeyStoreKeyConstraints.UserAuthenticatorEnum int userAuthenticators,
             @KeyStoreKeyConstraints.UserAuthenticatorEnum int teeEnforcedUserAuthenticators,
             int userAuthenticationValidityDurationSeconds) {
@@ -69,10 +69,12 @@ public class KeyStoreKeySpec implements KeySpec {
         mKeyValidityForOriginationEnd = keyValidityForOriginationEnd;
         mKeyValidityForConsumptionEnd = keyValidityForConsumptionEnd;
         mPurposes = purposes;
-        mAlgorithm = algorithm;
-        mPaddings = paddings;
-        mDigests = digests;
-        mBlockModes = blockModes;
+        mEncryptionPaddings =
+                ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(encryptionPaddings));
+        mSignaturePaddings =
+                ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(signaturePaddings));
+        mDigests = ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(digests));
+        mBlockModes = ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(blockModes));
         mUserAuthenticators = userAuthenticators;
         mTeeEnforcedUserAuthenticators = teeEnforcedUserAuthenticators;
         mUserAuthenticationValidityDurationSeconds = userAuthenticationValidityDurationSeconds;
@@ -142,31 +144,31 @@ public class KeyStoreKeySpec implements KeySpec {
     }
 
     /**
-     * Gets the algorithm of the key.
-     */
-    public @KeyStoreKeyConstraints.AlgorithmEnum int getAlgorithm() {
-        return mAlgorithm;
-    }
-
-    /**
      * Gets the set of block modes with which the key can be used.
      */
-    public @KeyStoreKeyConstraints.BlockModeEnum int getBlockModes() {
-        return mBlockModes;
+    public String[] getBlockModes() {
+        return ArrayUtils.cloneIfNotEmpty(mBlockModes);
     }
 
     /**
-     * Gets the set of padding modes with which the key can be used.
+     * Gets the set of padding modes with which the key can be used when encrypting/decrypting.
      */
-    public @KeyStoreKeyConstraints.PaddingEnum int getPaddings() {
-        return mPaddings;
+    public String[] getEncryptionPaddings() {
+        return ArrayUtils.cloneIfNotEmpty(mEncryptionPaddings);
+    }
+
+    /**
+     * Gets the set of padding modes with which the key can be used when signing/verifying.
+     */
+    public String[] getSignaturePaddings() {
+        return ArrayUtils.cloneIfNotEmpty(mSignaturePaddings);
     }
 
     /**
      * Gets the set of digest algorithms with which the key can be used.
      */
-    public @KeyStoreKeyConstraints.DigestEnum int getDigests() {
-        return mDigests;
+    public String[] getDigests() {
+        return ArrayUtils.cloneIfNotEmpty(mDigests);
     }
 
     /**
