@@ -50,8 +50,8 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
     private final Date mKeyValidityForOriginationEnd;
     private final Date mKeyValidityForConsumptionEnd;
     private final @KeyStoreKeyConstraints.PurposeEnum int mPurposes;
-    private final @KeyStoreKeyConstraints.PaddingEnum int mPaddings;
-    private final @KeyStoreKeyConstraints.BlockModeEnum int mBlockModes;
+    private final String[] mEncryptionPaddings;
+    private final String[] mBlockModes;
     private final boolean mRandomizedEncryptionRequired;
     private final @KeyStoreKeyConstraints.UserAuthenticatorEnum int mUserAuthenticators;
     private final int mUserAuthenticationValidityDurationSeconds;
@@ -65,8 +65,8 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
             Date keyValidityForOriginationEnd,
             Date keyValidityForConsumptionEnd,
             @KeyStoreKeyConstraints.PurposeEnum int purposes,
-            @KeyStoreKeyConstraints.PaddingEnum int paddings,
-            @KeyStoreKeyConstraints.BlockModeEnum int blockModes,
+            String[] encryptionPaddings,
+            String[] blockModes,
             boolean randomizedEncryptionRequired,
             @KeyStoreKeyConstraints.UserAuthenticatorEnum int userAuthenticators,
             int userAuthenticationValidityDurationSeconds) {
@@ -88,8 +88,9 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
         mKeyValidityForOriginationEnd = keyValidityForOriginationEnd;
         mKeyValidityForConsumptionEnd = keyValidityForConsumptionEnd;
         mPurposes = purposes;
-        mPaddings = paddings;
-        mBlockModes = blockModes;
+        mEncryptionPaddings =
+                ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(encryptionPaddings));
+        mBlockModes = ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(blockModes));
         mRandomizedEncryptionRequired = randomizedEncryptionRequired;
         mUserAuthenticators = userAuthenticators;
         mUserAuthenticationValidityDurationSeconds = userAuthenticationValidityDurationSeconds;
@@ -159,17 +160,17 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
     }
 
     /**
-     * Gets the set of padding schemes to which the key is restricted.
+     * Gets the set of padding schemes to which the key is restricted when encrypting/decrypting.
      */
-    public @KeyStoreKeyConstraints.PaddingEnum int getPaddings() {
-        return mPaddings;
+    public String[] getEncryptionPaddings() {
+        return ArrayUtils.cloneIfNotEmpty(mEncryptionPaddings);
     }
 
     /**
      * Gets the set of block modes to which the key is restricted.
      */
-    public @KeyStoreKeyConstraints.BlockModeEnum int getBlockModes() {
-        return mBlockModes;
+    public String[] getBlockModes() {
+        return ArrayUtils.cloneIfNotEmpty(mBlockModes);
     }
 
     /**
@@ -222,8 +223,8 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
         private Date mKeyValidityForOriginationEnd;
         private Date mKeyValidityForConsumptionEnd;
         private @KeyStoreKeyConstraints.PurposeEnum int mPurposes;
-        private @KeyStoreKeyConstraints.PaddingEnum int mPaddings;
-        private @KeyStoreKeyConstraints.BlockModeEnum int mBlockModes;
+        private String[] mEncryptionPaddings;
+        private String[] mBlockModes;
         private boolean mRandomizedEncryptionRequired = true;
         private @KeyStoreKeyConstraints.UserAuthenticatorEnum int mUserAuthenticators;
         private int mUserAuthenticationValidityDurationSeconds = -1;
@@ -342,13 +343,13 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
         }
 
         /**
-         * Restricts the key to being used only with the provided padding schemes. Attempts to use
-         * the key with any other padding will be rejected.
+         * Restricts the key to being used only with the provided padding schemes when
+         * encrypting/decrypting. Attempts to use the key with any other padding will be rejected.
          *
          * <p>This restriction must be specified for keys which are used for encryption/decryption.
          */
-        public Builder setPaddings(@KeyStoreKeyConstraints.PaddingEnum int paddings) {
-            mPaddings = paddings;
+        public Builder setEncryptionPaddings(String... paddings) {
+            mEncryptionPaddings = ArrayUtils.cloneIfNotEmpty(paddings);
             return this;
         }
 
@@ -358,8 +359,8 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
          *
          * <p>This restriction must be specified for keys which are used for encryption/decryption.
          */
-        public Builder setBlockModes(@KeyStoreKeyConstraints.BlockModeEnum int blockModes) {
-            mBlockModes = blockModes;
+        public Builder setBlockModes(String... blockModes) {
+            mBlockModes = ArrayUtils.cloneIfNotEmpty(blockModes);
             return this;
         }
 
@@ -447,7 +448,7 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
                     mKeyValidityForOriginationEnd,
                     mKeyValidityForConsumptionEnd,
                     mPurposes,
-                    mPaddings,
+                    mEncryptionPaddings,
                     mBlockModes,
                     mRandomizedEncryptionRequired,
                     mUserAuthenticators,

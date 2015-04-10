@@ -46,6 +46,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -112,13 +113,6 @@ public class AndroidKeyStore extends KeyStoreSpi {
             if (keymasterAlgorithm == -1) {
                 throw new UnrecoverableKeyException("Key algorithm unknown");
             }
-            @KeyStoreKeyConstraints.AlgorithmEnum int keyAlgorithm;
-            try {
-                keyAlgorithm = KeyStoreKeyConstraints.Algorithm.fromKeymaster(keymasterAlgorithm);
-            } catch (IllegalArgumentException e) {
-                throw (UnrecoverableKeyException)
-                        new UnrecoverableKeyException("Unsupported key algorithm").initCause(e);
-            }
 
             int keymasterDigest =
                     keyCharacteristics.hwEnforced.getInt(KeymasterDefs.KM_TAG_DIGEST, -1);
@@ -126,20 +120,11 @@ public class AndroidKeyStore extends KeyStoreSpi {
                 keymasterDigest =
                         keyCharacteristics.swEnforced.getInt(KeymasterDefs.KM_TAG_DIGEST, -1);
             }
-            @KeyStoreKeyConstraints.DigestEnum Integer digest = null;
-            if (keymasterDigest != -1) {
-                try {
-                    digest = KeyStoreKeyConstraints.Digest.fromKeymaster(keymasterDigest);
-                } catch (IllegalArgumentException e) {
-                    throw (UnrecoverableKeyException)
-                            new UnrecoverableKeyException("Unsupported digest").initCause(e);
-                }
-            }
 
             String keyAlgorithmString;
             try {
-                keyAlgorithmString = KeyStoreKeyConstraints.Algorithm.toJCASecretKeyAlgorithm(
-                    keyAlgorithm, digest);
+                keyAlgorithmString = KeymasterUtils.getJcaSecretKeyAlgorithm(
+                        keymasterAlgorithm, keymasterDigest);
             } catch (IllegalArgumentException e) {
                 throw (UnrecoverableKeyException)
                         new UnrecoverableKeyException("Unsupported secret key type").initCause(e);
@@ -456,85 +441,86 @@ public class AndroidKeyStore extends KeyStoreSpi {
         }
 
         String keyAlgorithmString = key.getAlgorithm();
-        @KeyStoreKeyConstraints.AlgorithmEnum int keyAlgorithm;
-        @KeyStoreKeyConstraints.DigestEnum Integer digest;
+        int keymasterAlgorithm;
+        int keymasterDigest;
         try {
-            keyAlgorithm =
-                    KeyStoreKeyConstraints.Algorithm.fromJCASecretKeyAlgorithm(keyAlgorithmString);
-            digest = KeyStoreKeyConstraints.Digest.fromJCASecretKeyAlgorithm(keyAlgorithmString);
+            keymasterAlgorithm = KeymasterUtils.getKeymasterAlgorithmFromJcaSecretKeyAlgorithm(
+                    keyAlgorithmString);
+            keymasterDigest =
+                    KeymasterUtils.getKeymasterDigestfromJcaSecretKeyAlgorithm(keyAlgorithmString);
         } catch (IllegalArgumentException e) {
             throw new KeyStoreException("Unsupported secret key algorithm: " + keyAlgorithmString);
         }
 
         KeymasterArguments args = new KeymasterArguments();
-        args.addInt(KeymasterDefs.KM_TAG_ALGORITHM,
-                KeyStoreKeyConstraints.Algorithm.toKeymaster(keyAlgorithm));
+        args.addInt(KeymasterDefs.KM_TAG_ALGORITHM, keymasterAlgorithm);
 
-        @KeyStoreKeyConstraints.DigestEnum int digests;
+        int[] keymasterDigests;
         if (params.isDigestsSpecified()) {
             // Digest(s) specified in parameters
-            if (digest != null) {
+            keymasterDigests =
+                    KeymasterUtils.getKeymasterDigestsFromJcaDigestAlgorithms(params.getDigests());
+            if (keymasterDigest != -1) {
                 // Digest also specified in the JCA key algorithm name.
-                if ((params.getDigests() & digest) != digest) {
+                if (!ArrayUtils.contains(keymasterDigests, keymasterDigest)) {
                     throw new KeyStoreException("Key digest mismatch"
                             + ". Key: " + keyAlgorithmString
-                            + ", parameter spec: "
-                            + KeyStoreKeyConstraints.Digest.allToString(params.getDigests()));
+                            + ", parameter spec: " + Arrays.asList(params.getDigests()));
                 }
             }
-            digests = params.getDigests();
         } else {
             // No digest specified in parameters
-            if (digest != null) {
+            if (keymasterDigest != -1) {
                 // Digest specified in the JCA key algorithm name.
-                digests = digest;
+                keymasterDigests = new int[] {keymasterDigest};
             } else {
-                digests = 0;
+                keymasterDigests = ArrayUtils.EMPTY_INT_ARRAY;
             }
         }
-        for (int keymasterDigest : KeyStoreKeyConstraints.Digest.allToKeymaster(digests)) {
-            args.addInt(KeymasterDefs.KM_TAG_DIGEST, keymasterDigest);
-        }
-        if (digests != 0) {
+        KeymasterUtils.addInts(args, KeymasterDefs.KM_TAG_DIGEST, keymasterDigests);
+        if (keymasterDigests.length > 0) {
             // TODO: Remove MAC length constraint once Keymaster API no longer requires it.
             // This code will blow up if mode than one digest is specified.
-            Integer digestOutputSizeBytes =
-                    KeyStoreKeyConstraints.Digest.getOutputSizeBytes(digest);
-            if (digestOutputSizeBytes != null) {
+            int digestOutputSizeBytes =
+                    KeymasterUtils.getDigestOutputSizeBytes(keymasterDigests[0]);
+            if (digestOutputSizeBytes != -1) {
                 // TODO: Switch to bits instead of bytes, once this is fixed in Keymaster
                 args.addInt(KeymasterDefs.KM_TAG_MAC_LENGTH, digestOutputSizeBytes);
             }
         }
-        if (keyAlgorithm == KeyStoreKeyConstraints.Algorithm.HMAC) {
-            if (digests == 0) {
+        if (keymasterAlgorithm == KeymasterDefs.KM_ALGORITHM_HMAC) {
+            if (keymasterDigests.length == 0) {
                 throw new KeyStoreException("At least one digest algorithm must be specified"
                         + " for key algorithm " + keyAlgorithmString);
             }
         }
 
         @KeyStoreKeyConstraints.PurposeEnum int purposes = params.getPurposes();
-        @KeyStoreKeyConstraints.BlockModeEnum int blockModes = params.getBlockModes();
+        int[] keymasterBlockModes = KeymasterUtils.getKeymasterBlockModesFromJcaBlockModes(
+                params.getBlockModes());
         if (((purposes & KeyStoreKeyConstraints.Purpose.ENCRYPT) != 0)
                 && (params.isRandomizedEncryptionRequired())) {
-            @KeyStoreKeyConstraints.BlockModeEnum int incompatibleBlockModes =
-                    blockModes & ~KeyStoreKeyConstraints.BlockMode.IND_CPA_COMPATIBLE_MODES;
-            if (incompatibleBlockModes != 0) {
-                throw new KeyStoreException("Randomized encryption (IND-CPA) required but may be"
-                        + " violated by block mode(s): "
-                        + KeyStoreKeyConstraints.BlockMode.allToString(incompatibleBlockModes)
-                        + ". See KeyStoreParameter documentation.");
+            for (int keymasterBlockMode : keymasterBlockModes) {
+                if (!KeymasterUtils.isKeymasterBlockModeIndCpaCompatible(keymasterBlockMode)) {
+                    throw new KeyStoreException(
+                            "Randomized encryption (IND-CPA) required but may be violated by block"
+                            + " mode: "
+                            + KeymasterUtils.getJcaBlockModeFromKeymasterBlockMode(
+                                    keymasterBlockMode)
+                            + ". See KeyStoreParameter documentation.");
+                }
             }
         }
         for (int keymasterPurpose : KeyStoreKeyConstraints.Purpose.allToKeymaster(purposes)) {
             args.addInt(KeymasterDefs.KM_TAG_PURPOSE, keymasterPurpose);
         }
-        for (int keymasterBlockMode : KeyStoreKeyConstraints.BlockMode.allToKeymaster(blockModes)) {
-            args.addInt(KeymasterDefs.KM_TAG_BLOCK_MODE, keymasterBlockMode);
-        }
-        for (int keymasterPadding :
-            KeyStoreKeyConstraints.Padding.allToKeymaster(params.getPaddings())) {
-            args.addInt(KeymasterDefs.KM_TAG_PADDING, keymasterPadding);
-        }
+        KeymasterUtils.addInts(args, KeymasterDefs.KM_TAG_BLOCK_MODE, keymasterBlockModes);
+        int[] keymasterPaddings = ArrayUtils.concat(
+                KeymasterUtils.getKeymasterPaddingsFromJcaEncryptionPaddings(
+                        params.getEncryptionPaddings()),
+                KeymasterUtils.getKeymasterPaddingsFromJcaSignaturePaddings(
+                        params.getSignaturePaddings()));
+        KeymasterUtils.addInts(args, KeymasterDefs.KM_TAG_PADDING, keymasterPaddings);
         if (params.getUserAuthenticators() == 0) {
             args.addBoolean(KeymasterDefs.KM_TAG_NO_AUTH_REQUIRED);
         } else {
