@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "234d525a_42f832f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-10T15:16:44Z",
+      "side": 1,
+      "message": "s/may/is",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "bff861821f58e337e265342a8ec92e6c58e6ad88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234d525a_82ea1a1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-10T15:16:44Z",
+      "side": 1,
+      "message": "s/will/won\u0027t be",
+      "range": {
+        "startLine": 15,
+        "startChar": 55,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "bff861821f58e337e265342a8ec92e6c58e6ad88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "636d8ab3_b0e4e150",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-10T15:16:44Z",
+      "side": 1,
+      "message": "PAUSED",
+      "range": {
+        "startLine": 16,
+        "startChar": 42,
+        "endLine": 16,
+        "endChar": 49
+      },
+      "revId": "bff861821f58e337e265342a8ec92e6c58e6ad88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234d525a_a29d5eb3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-10T15:16:44Z",
+      "side": 1,
+      "message": "PAUSING",
+      "range": {
+        "startLine": 19,
+        "startChar": 42,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "bff861821f58e337e265342a8ec92e6c58e6ad88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e356daec_ecb042f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-10T15:16:44Z",
+      "side": 1,
+      "message": "That results in an activity that",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "bff861821f58e337e265342a8ec92e6c58e6ad88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234d525a_824e9ac3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-10T15:16:44Z",
+      "side": 1,
+      "message": "I don\u0027t understand what you are trying to say here. Can you please reword to be clearer?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "bff861821f58e337e265342a8ec92e6c58e6ad88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234d525a_05bf14f4",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-10T15:16:44Z",
+      "side": 1,
+      "message": "Add comment on what we are trying to avoid here and also that pause will be completed when we wake-up on mPausingActivity.",
+      "range": {
+        "startLine": 812,
+        "startChar": 12,
+        "endLine": 812,
+        "endChar": 41
+      },
+      "revId": "bff861821f58e337e265342a8ec92e6c58e6ad88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
