@@ -22,6 +22,30 @@
       "revId": "7dfe4d7d8562351243eb81c4fcefdae07fc2fecb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "901e4658_74a6683a",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2015-04-13T06:16:04Z",
+      "side": 1,
+      "message": "I am not sure whether the description matches below condition:\nDuring sleeping, in one sequential call: \"resume, pause A\", \"resume, pause B\"\nWithout check sleeping:\n1.Force B complete pause (mPausingActivity becomes null)\n2.A activityPaused -\u003e failed to pause\n3.B activityPaused -\u003e failed to pause\n4.A is not visible, allow go STOPPING-\u003eSTOPPED state\n5.B keeps visible and pausing state\n\nWith check sleeping:\n1.A activityPaused -\u003e failed to pause (mPausingActivity is B)\n2.B activityPaused -\u003e complete pause\n3.A is not visible, allow go STOPPING-\u003eSTOPPED state\n4.B has correct state",
+      "parentUuid": "d0fb5e32_01812c97",
+      "range": {
+        "startLine": 813,
+        "startChar": 16,
+        "endLine": 815,
+        "endChar": 77
+      },
+      "revId": "7dfe4d7d8562351243eb81c4fcefdae07fc2fecb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
