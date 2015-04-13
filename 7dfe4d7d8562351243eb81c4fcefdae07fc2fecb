@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0fb5e32_01812c97",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-13T04:29:42Z",
+      "side": 1,
+      "message": "sorry, this isn\u0027t clear to me. can we just say \"pause will be completed on mPausingActivity on wake-up\"?",
+      "range": {
+        "startLine": 813,
+        "startChar": 16,
+        "endLine": 815,
+        "endChar": 77
+      },
+      "revId": "7dfe4d7d8562351243eb81c4fcefdae07fc2fecb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
