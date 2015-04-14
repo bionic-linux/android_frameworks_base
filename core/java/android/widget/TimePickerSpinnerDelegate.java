@@ -313,6 +313,7 @@ class TimePickerSpinnerDelegate extends TimePicker.AbstractTimePickerDelegate {
 
     @Override
     public Integer getCurrentHour() {
+        mHourSpinner.clearFocus();
         int currentHour = mHourSpinner.getValue();
         if (is24HourView()) {
             return currentHour;
@@ -334,6 +335,7 @@ class TimePickerSpinnerDelegate extends TimePicker.AbstractTimePickerDelegate {
 
     @Override
     public Integer getCurrentMinute() {
+        mMinuteSpinner.clearFocus();
         return mMinuteSpinner.getValue();
     }
 

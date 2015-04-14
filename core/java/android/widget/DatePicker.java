@@ -748,16 +748,19 @@ public class DatePicker extends FrameLayout {
 
         @Override
         public int getYear() {
+            mYearSpinner.clearFocus();
             return mCurrentDate.get(Calendar.YEAR);
         }
 
         @Override
         public int getMonth() {
+            mMonthSpinner.clearFocus();
             return mCurrentDate.get(Calendar.MONTH);
         }
 
         @Override
         public int getDayOfMonth() {
+            mDaySpinner.clearFocus();
             return mCurrentDate.get(Calendar.DAY_OF_MONTH);
         }
 
