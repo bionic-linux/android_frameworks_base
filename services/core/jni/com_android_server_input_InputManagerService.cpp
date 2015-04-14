@@ -577,7 +577,7 @@ nsecs_t NativeInputManager::notifyANR(const sp<InputApplicationHandle>& inputApp
 #if DEBUG_INPUT_DISPATCHER_POLICY
     ALOGD("notifyANR");
 #endif
-
+    nsecs_t result = 0;
     JNIEnv* env = jniEnv();
 
     jobject inputApplicationHandleObj =
@@ -595,10 +595,12 @@ nsecs_t NativeInputManager::notifyANR(const sp<InputApplicationHandle>& inputApp
         assert(newTimeout >= 0);
     }
 
+    result = milliseconds_to_nanoseconds(newTimeout);
+
     env->DeleteLocalRef(reasonObj);
     env->DeleteLocalRef(inputWindowHandleObj);
     env->DeleteLocalRef(inputApplicationHandleObj);
-    return newTimeout;
+    return result;
 }
 
 void NativeInputManager::notifyInputChannelBroken(const sp<InputWindowHandle>& inputWindowHandle) {
