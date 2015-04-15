@@ -367,7 +367,7 @@ public class ExifInterface {
      */
     public long getDateTime() {
         String dateTimeString = mAttributes.get(TAG_DATETIME);
-        if (dateTimeString == null) return -1;
+        if (dateTimeString == null || !dateTimeString.matches(".*[1-9].*")) return -1;
 
         ParsePosition pos = new ParsePosition(0);
         try {
@@ -402,7 +402,8 @@ public class ExifInterface {
     public long getGpsDateTime() {
         String date = mAttributes.get(TAG_GPS_DATESTAMP);
         String time = mAttributes.get(TAG_GPS_TIMESTAMP);
-        if (date == null || time == null) return -1;
+        if (date == null || time == null
+                || (!date.matches(".*[1-9].*") && !time.matches(".*[1-9].*"))) return -1;
 
         String dateTimeString = date + ' ' + time;
 
