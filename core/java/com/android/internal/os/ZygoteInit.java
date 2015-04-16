@@ -72,6 +72,8 @@ import java.util.ArrayList;
 public class ZygoteInit {
     private static final String TAG = "Zygote";
 
+    private static final String PROPERTY_PARALLEL_PRELOADING = "ro.zygote.preload.parallel";
+
     private static final String PROPERTY_DISABLE_OPENGL_PRELOADING = "ro.zygote.disable_gl_preload";
 
     private static final String ANDROID_SOCKET_PREFIX = "ANDROID_SOCKET_";
@@ -182,9 +184,40 @@ public class ZygoteInit {
 
     static void preload() {
         Log.d(TAG, "begin preload");
-        preloadClasses();
-        preloadResources();
-        preloadOpenGL();
+
+        if (SystemProperties.getBoolean(PROPERTY_PARALLEL_PRELOADING, false)) {
+            // Very simple parallelization scheme that had the best improvement-to-effort ratio in
+            // experiments:
+            //     Run class-preloading and open-gl in sequence, in parallel to resource loading.
+            // This configuration is very simple (requires only one extra thread), and honors some
+            // simple dependencies. For example, OpenGL requires EGL14 to be initialized, which
+            // is *not* compile-time initialized because of native components. Thus starting
+            // class-preloading and OpenGL preloading at the same time has the potential for
+            // collision. Further parallelization, i.e., work-queue implementations for class and
+            // resource preloading, have not shown significant improvements (see b/19817625).
+            Log.d(TAG, "using parallel preload");
+            Thread preloadThread = new Thread("Zygote-Preloading-Thread") {
+                public void run() {
+                    preloadClasses();
+                    preloadOpenGL();
+                }
+            };
+            preloadThread.start();
+            preloadResources();
+
+            // Wait for the thread to finish.
+            try {
+                preloadThread.join();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else {
+            // Traditional: load in sequence.
+            preloadClasses();
+            preloadResources();
+            preloadOpenGL();
+        }
+
         preloadSharedLibraries();
         // Ask the WebViewFactory to do any initialization that must run in the zygote process,
         // for memory sharing purposes.
