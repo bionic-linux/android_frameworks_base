@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "709c722a_ca157bf0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-04-16T15:28:25Z",
+      "side": 1,
+      "message": "I can\u0027t -- not a googler. :)\n\nIs there anything interesting on there (i.e. about the class/gl conflict), or just some benchmark numbers?",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "6cbd34fd19ee8bbfbc7ec12d550c50bf869e229a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90a1e660_4bdf3155",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-04-16T15:28:25Z",
+      "side": 1,
+      "message": "\u003e Thus starting class-preloading and OpenGL preloading at the same time has the potential for collision.\n\nMaybe I\u0027m missing something here, but the VM should definitely be able to handle several threads loading and initializing classes at the same time. So if that was your concern, I don\u0027t think you have to worry. If you meant something else, please educate me. :)",
+      "revId": "6cbd34fd19ee8bbfbc7ec12d550c50bf869e229a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90a1e660_6be0ed13",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-04-16T15:28:25Z",
+      "side": 1,
+      "message": "Same theoretical issue as in https://android-review.googlesource.com/#/c/146951 -- if any classes preloaded classes (or their dependencies) are statically loading resources, we will have concurrent access issues in Resources. Again, I don\u0027t think this happens in practice.",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 28
+      },
+      "revId": "6cbd34fd19ee8bbfbc7ec12d550c50bf869e229a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
