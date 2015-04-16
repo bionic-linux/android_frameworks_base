@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "907ac6a8_2c0439cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-04-16T16:23:05Z",
+      "side": 1,
+      "message": "\"Benchmark numbers,\" and guesses about the classes/GL conflict.\n\nI\u0027ve tried the combinations as indicated by the other CL, on a Nexus 6. Basically everything except starting OpenGL early reduced overall preloading time from ~1.6s to ~1.1s.",
+      "parentUuid": "709c722a_ca157bf0",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "6cbd34fd19ee8bbfbc7ec12d550c50bf869e229a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a1e660_4bdf3155",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d080bec6_42ea9f74",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-04-16T16:23:05Z",
+      "side": 1,
+      "message": "EGL14 is initialized in both preloadClasses and preloadOpenGL. When preloadClasses is not multi-threaded, then there\u0027s the potential for overlap, and one may have to wait for the other. That was the only good reason (besides more I/O) that I was able to come up with for why in my experiments having all three started in parallel is worse than this scheme overall.",
+      "parentUuid": "90a1e660_4bdf3155",
+      "revId": "6cbd34fd19ee8bbfbc7ec12d550c50bf869e229a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a1e660_6be0ed13",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2015-04-16T15:28:25Z",
       "side": 1,
       "message": "Same theoretical issue as in https://android-review.googlesource.com/#/c/146951 -- if any classes preloaded classes (or their dependencies) are statically loading resources, we will have concurrent access issues in Resources. Again, I don\u0027t think this happens in practice.",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 28
+      },
+      "revId": "6cbd34fd19ee8bbfbc7ec12d550c50bf869e229a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "907ac6a8_0c629dbd",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-04-16T16:23:05Z",
+      "side": 1,
+      "message": "The only thing I could see was that semantics would be slightly changed - because of the global mPreloading flag, resources loaded would now go into the sPreloaded... structures instead of the caches. Otherwise I can\u0027t see concurrent access issues, honestly. Shouldn\u0027t the worst case be that you load a resource twice?",
+      "parentUuid": "90a1e660_6be0ed13",
       "range": {
         "startLine": 206,
         "startChar": 12,
