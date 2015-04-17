@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "90a1e660_eb14fdc7",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-04-17T07:00:44Z",
+      "side": 1,
+      "message": "Okay, so no functional/stability difference. That\u0027s what I was wondering about -- thanks.",
+      "parentUuid": "d080bec6_42ea9f74",
+      "revId": "6cbd34fd19ee8bbfbc7ec12d550c50bf869e229a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a1e660_6be0ed13",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 1
@@ -119,6 +137,30 @@
       "side": 1,
       "message": "The only thing I could see was that semantics would be slightly changed - because of the global mPreloading flag, resources loaded would now go into the sPreloaded... structures instead of the caches. Otherwise I can\u0027t see concurrent access issues, honestly. Shouldn\u0027t the worst case be that you load a resource twice?",
       "parentUuid": "90a1e660_6be0ed13",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 28
+      },
+      "revId": "6cbd34fd19ee8bbfbc7ec12d550c50bf869e229a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90a1e660_0b1289d9",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-04-17T07:00:44Z",
+      "side": 1,
+      "message": "AFAICT, there\u0027s no locking in the getDrawable -\u003e loadDrawable -\u003e cacheDrawable flow when preloading. We\u0027re adding stuff to the (non-concurrent-safe) sPreloaded* LongSparseArrays at https://android.googlesource.com/platform/frameworks/base/+/android-5.1.0_r5/core/java/android/content/res/Resources.java#2402\n\nThat spells trouble. The worst case is much worse than double-loading. Two concurrent put() calls could cause any of these problems, at least:\n\n* mSize is increased by 1 instead of 2\n* One of the puts is lost\n* ArrayIndexOutOfBoundsException\n* A put overwriting an old value (with a different key)\n* Probably more state corruption that could cause immediate or delayed problems.",
+      "parentUuid": "907ac6a8_0c629dbd",
       "range": {
         "startLine": 206,
         "startChar": 12,
