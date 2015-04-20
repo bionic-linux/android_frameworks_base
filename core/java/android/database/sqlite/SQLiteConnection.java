@@ -91,7 +91,14 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
-    private static final Pattern TRIM_SQL_PATTERN = Pattern.compile("[\\s]*\\n+[\\s]*");
+    /**
+     * A helper class to encapsulate a regular expression that is used in connection dumping.
+     * Regular expressions are not compile-time initializable and stop the compiler optimizing
+     * this class otherwise.
+     */
+    private final static class NoPreloadHolder {
+        private static final Pattern TRIM_SQL_PATTERN = Pattern.compile("[\\s]*\\n+[\\s]*");
+    }
 
     private final CloseGuard mCloseGuard = CloseGuard.get();
 
@@ -1203,7 +1210,7 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
     }
 
     private static String trimSqlForDisplay(String sql) {
-        return TRIM_SQL_PATTERN.matcher(sql).replaceAll(" ");
+        return NoPreloadHolder.TRIM_SQL_PATTERN.matcher(sql).replaceAll(" ");
     }
 
     /**
@@ -1437,8 +1444,15 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
     }
 
     private static final class Operation {
-        private static final SimpleDateFormat sDateFormat =
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        /**
+         * A helper class to encapsulate a date format that is used in connection dumping.
+         * SimpleDateFormat is not compile-time initializable and stops the compiler optimizing
+         * this class otherwise.
+         */
+        private final static class NoPreloadHolder {
+            private static final SimpleDateFormat sDateFormat =
+                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        }
 
         public long mStartTime;
         public long mEndTime;
@@ -1494,7 +1508,7 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
         }
 
         private String getFormattedStartTime() {
-            return sDateFormat.format(new Date(mStartTime));
+            return NoPreloadHolder.sDateFormat.format(new Date(mStartTime));
         }
     }
 }
