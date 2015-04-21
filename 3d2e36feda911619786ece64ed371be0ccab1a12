@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01a7eb3_e16a5d18",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-04-21T05:35:12Z",
+      "side": 1,
+      "message": "SimpleDateFormat isn\u0027t thread-safe so this is a bit of an anti-pattern anyway.",
+      "revId": "3d2e36feda911619786ece64ed371be0ccab1a12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
