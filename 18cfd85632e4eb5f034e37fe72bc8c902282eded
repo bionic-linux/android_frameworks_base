@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "302afabf_615e717d",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-04-21T22:05:47Z",
+      "side": 1,
+      "message": "you can also write this as\n\n  return sql.replaceAll(TRIM_SQL_PATTERN_STRING, \" \");",
+      "revId": "18cfd85632e4eb5f034e37fe72bc8c902282eded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
