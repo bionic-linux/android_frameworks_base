@@ -34,6 +34,24 @@
       "revId": "18cfd85632e4eb5f034e37fe72bc8c902282eded",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f02302ea_a8afa5e2",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-04-21T22:50:24Z",
+      "side": 1,
+      "message": "generally, yes. not constructing a Pattern at all lets libcore decide whether it can special-case \"easy\" patterns and not use regular expressions at all. (especially effective for String.split.) plus it discourages this kind of thing :-)",
+      "parentUuid": "f02302ea_08ceb1de",
+      "revId": "18cfd85632e4eb5f034e37fe72bc8c902282eded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
