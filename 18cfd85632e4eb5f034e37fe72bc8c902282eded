@@ -16,6 +16,24 @@
       "revId": "18cfd85632e4eb5f034e37fe72bc8c902282eded",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f02302ea_08ceb1de",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-04-21T22:48:03Z",
+      "side": 1,
+      "message": "Do we prefer the shortcut, which makes the regular expression somewhat implicit and requires the knowledge of replace?\n\n(Personally I\u0027m all for it, I was just conservative.)",
+      "parentUuid": "302afabf_615e717d",
+      "revId": "18cfd85632e4eb5f034e37fe72bc8c902282eded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
