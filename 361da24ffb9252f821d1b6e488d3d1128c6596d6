@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "309d9a70_008150fc",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-04-22T16:48:11Z",
+      "side": 1,
+      "message": "Don\u0027t make UI changes in response to a getter call. It may fix for this particular issue, but it is a bad approach.",
+      "range": {
+        "startLine": 749,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 9
+      },
+      "revId": "361da24ffb9252f821d1b6e488d3d1128c6596d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
