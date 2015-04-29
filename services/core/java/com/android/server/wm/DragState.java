@@ -60,6 +60,7 @@ class DragState {
     WindowState mTargetWindow;
     ArrayList<WindowState> mNotifiedWindows;
     boolean mDragInProgress;
+    boolean mDropInProgress = false;
     Display mDisplay;
 
     private final Region mTmpRegion = new Region();
@@ -85,6 +86,7 @@ class DragState {
         mData = null;
         mThumbOffsetX = mThumbOffsetY = 0;
         mNotifiedWindows = null;
+        mDropInProgress = false;
     }
 
     /**
@@ -361,6 +363,13 @@ class DragState {
             mDragResult = false;
             return true;
         }
+        if (mDropInProgress) {
+            if (WindowManagerService.DEBUG_DRAG) {
+                Slog.w(WindowManagerService.TAG, "skip sending DROP to " + touchedWin
+                        + " because the previous one is in progress");
+            }
+            return false;
+        }
 
         if (WindowManagerService.DEBUG_DRAG) {
             Slog.d(WindowManagerService.TAG, "sending DROP to " + touchedWin);
@@ -371,6 +380,7 @@ class DragState {
                 null, null, mData, false);
         try {
             touchedWin.mClient.dispatchDragEvent(evt);
+            mDropInProgress = true;
 
             // 5 second timeout for this window to respond to the drop
             mService.mH.removeMessages(H.DRAG_END_TIMEOUT, token);
