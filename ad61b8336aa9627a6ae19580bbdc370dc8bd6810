@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "105fb6fa_2d908519",
+        "filename": "services/core/java/com/android/server/job/JobServiceContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1023072
+      },
+      "writtenOn": "2015-05-02T01:25:51Z",
+      "side": 0,
+      "message": "this was because the initial value of mVerb was set to -1, but looks like I changed that at some point along the way so you\u0027re right it makes no sense to keep.",
+      "range": {
+        "startLine": 309,
+        "startChar": 33,
+        "endLine": 309,
+        "endChar": 45
+      },
+      "revId": "ad61b8336aa9627a6ae19580bbdc370dc8bd6810",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
