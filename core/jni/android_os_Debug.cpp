@@ -221,41 +221,152 @@ static int read_memtrack_memory(int pid, struct graphics_memory_pss* graphics_me
     return err;
 }
 
+// *** Parsing and attribution of /proc/pid/smaps ***
+
+// String helpers.
+
+static bool starts_with(const char* source, const char* other) {
+    return strncmp(source, other, strlen(other)) == 0;
+}
+
+static bool ends_with(const char* source, int sourceLen, const char* other) {
+    int otherLen = strlen(other);
+    if (sourceLen < otherLen) {
+        return false;
+    }
+    return strcmp(source + sourceLen - otherLen, other);
+}
+
+static bool contains(const char* source, const char* other) {
+    return strstr(source, other) != nullptr;
+}
+
+// Matching modes.
+enum class PMode {
+    kStartsWith,  // Match as prefix.
+    kEndsWith,    // Match as suffix.
+    kContains     // Match as substring.
+};
+
+// Container for a parsing element.
+struct ParsingData {
+    constexpr ParsingData(PMode m, const char* c, int hv, int shv = HEAP_UNKNOWN, bool s = false)
+        : mode(m), compare_against(c), heap_value(hv), sub_heap_value(shv), swappable(s) {}
+
+    const PMode mode;             // Matching rule.
+    const char* compare_against;  // What string to match.
+    const int heap_value;         // What is the "heap" value when successfully matched?
+    const int sub_heap_value;     // What is the "sub heap" value when successfully matched?
+    const bool swappable;         // What is the "swappable" value when successfully matched?
+};
+
+// Try to parse/match the given name to the first match in the given parsing elements array. Return
+// true iff a match was found, in which case the out parameters are set according to the matched
+// element.
+//
+// Note: using an array instead of STL container to allow for a constexpr definition of the rules.
+static bool parse(const char* name, const ParsingData* data, const size_t dataSize,
+                  int* whichHeap, int* subHeap, bool* swappable) {
+    const int nameLen = strlen(name);
+    for (size_t i = 0; i < dataSize; ++i) {
+        bool matches = false;
+        switch (data[i].mode) {
+            case PMode::kStartsWith:
+                matches = starts_with(name, data[i].compare_against);
+                break;
+
+            case PMode::kEndsWith:
+                matches = ends_with(name, nameLen, data[i].compare_against);
+                break;
+
+            case PMode::kContains:
+                matches = contains(name, data[i].compare_against);
+                break;
+        }
+        if (matches) {
+            *whichHeap = data[i].heap_value;
+            *subHeap = data[i].sub_heap_value;
+            *swappable = data[i].swappable;
+            return true;
+        }
+    }
+    return false;
+}
+
+// Our parsing/matching rules.
+static constexpr ParsingData kMapParsingData[] = {
+    // Some basic maps.
+    ParsingData(PMode::kStartsWith, "[heap]",             HEAP_NATIVE),
+    ParsingData(PMode::kStartsWith, "[anon:libc_malloc]", HEAP_NATIVE),
+    ParsingData(PMode::kStartsWith, "[stack",             HEAP_STACK),
+
+    // Parsed by extension.
+    ParsingData(PMode::kEndsWith, ".so",   HEAP_SO,  HEAP_UNKNOWN, true),
+    ParsingData(PMode::kEndsWith, ".jar",  HEAP_JAR, HEAP_UNKNOWN, true),
+    ParsingData(PMode::kEndsWith, ".apk",  HEAP_APK, HEAP_UNKNOWN, true),
+    ParsingData(PMode::kEndsWith, ".ttf",  HEAP_TTF, HEAP_UNKNOWN, true),
+    ParsingData(PMode::kContains, ".dex",  HEAP_DEX, HEAP_UNKNOWN, true),
+    ParsingData(PMode::kEndsWith, ".odex", HEAP_DEX, HEAP_UNKNOWN, true),
+    ParsingData(PMode::kEndsWith, ".oat",  HEAP_OAT, HEAP_UNKNOWN, true),
+    ParsingData(PMode::kEndsWith, ".art",  HEAP_ART, HEAP_UNKNOWN, true),
+
+    // OpenGL.
+    ParsingData(PMode::kStartsWith, "/dev/kgsl-3d0", HEAP_GL_DEV),
+
+    // ART runtime maps.
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-LinearAlloc",
+                HEAP_DALVIK_OTHER, HEAP_DALVIK_LINEARALLOC),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-alloc space",
+                HEAP_DALVIK, HEAP_DALVIK_NORMAL),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-main space",
+                HEAP_DALVIK, HEAP_DALVIK_NORMAL),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-large object space",
+                HEAP_DALVIK, HEAP_DALVIK_LARGE),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-non moving space",
+                HEAP_DALVIK, HEAP_DALVIK_NON_MOVING),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-zygote space",
+                HEAP_DALVIK, HEAP_DALVIK_ZYGOTE),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-indirect ref",
+                HEAP_DALVIK_OTHER, HEAP_DALVIK_INDIRECT_REFERENCE_TABLE),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-dalvik-jit-code-cache",
+                HEAP_DALVIK_OTHER, HEAP_DALVIK_CODE_CACHE),
+    // Default to accounting for any other dalvik map.
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/dalvik-",
+                HEAP_DALVIK_OTHER, HEAP_DALVIK_ACCOUNTING),
+
+    // Other ashmem.
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/CursorWindow", HEAP_CURSOR),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem/libc malloc",  HEAP_NATIVE),
+    ParsingData(PMode::kStartsWith, "/dev/ashmem",              HEAP_ASHMEM),
+
+    // Unknown dev.
+    ParsingData(PMode::kStartsWith, "/dev/", HEAP_UNKNOWN_DEV),
+
+    // Anonymous maps.
+    ParsingData(PMode::kStartsWith, "[anon:", HEAP_UNKNOWN)
+};
+
 static void read_mapinfo(FILE *fp, stats_t* stats)
 {
     char line[1024];
-    int len, nameLen;
-    bool skip, done = false;
+    bool done = false;
 
-    unsigned pss = 0, swappable_pss = 0;
-    float sharing_proportion = 0.0;
-    unsigned shared_clean = 0, shared_dirty = 0;
-    unsigned private_clean = 0, private_dirty = 0;
-    unsigned swapped_out = 0;
-    bool is_swappable = false;
-    unsigned temp;
-
-    uint64_t start;
-    uint64_t end = 0;
-    uint64_t prevEnd = 0;
-    char* name;
-    int name_pos;
-
-    int whichHeap = HEAP_UNKNOWN;
-    int subHeap = HEAP_UNKNOWN;
     int prevHeap = HEAP_UNKNOWN;
+    uint64_t prevEnd = 0;
 
     if(fgets(line, sizeof(line), fp) == 0) return;
 
     while (!done) {
-        prevHeap = whichHeap;
-        prevEnd = end;
-        whichHeap = HEAP_UNKNOWN;
-        subHeap = HEAP_UNKNOWN;
-        skip = false;
-        is_swappable = false;
+        int whichHeap = HEAP_UNKNOWN;
+        int subHeap = HEAP_UNKNOWN;
+        uint64_t start;
+        uint64_t end;
+        int name_pos;
 
-        len = strlen(line);
+        bool skip = false;
+        bool is_swappable = false;
+
+        int len = strlen(line);
         if (len < 1) return;
         line[--len] = 0;
 
@@ -265,94 +376,27 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
             while (isspace(line[name_pos])) {
                 name_pos += 1;
             }
-            name = line + name_pos;
-            nameLen = strlen(name);
+            const char* name = line + name_pos;
+            int nameLen = strlen(name);
 
-            if ((strstr(name, "[heap]") == name)) {
-                whichHeap = HEAP_NATIVE;
-            } else if (strncmp(name, "[anon:libc_malloc]", 18) == 0) {
-                whichHeap = HEAP_NATIVE;
-            } else if (strncmp(name, "[stack", 6) == 0) {
-                whichHeap = HEAP_STACK;
-            } else if (nameLen > 3 && strcmp(name+nameLen-3, ".so") == 0) {
-                whichHeap = HEAP_SO;
-                is_swappable = true;
-            } else if (nameLen > 4 && strcmp(name+nameLen-4, ".jar") == 0) {
-                whichHeap = HEAP_JAR;
-                is_swappable = true;
-            } else if (nameLen > 4 && strcmp(name+nameLen-4, ".apk") == 0) {
-                whichHeap = HEAP_APK;
-                is_swappable = true;
-            } else if (nameLen > 4 && strcmp(name+nameLen-4, ".ttf") == 0) {
-                whichHeap = HEAP_TTF;
-                is_swappable = true;
-            } else if ((nameLen > 4 && strstr(name, ".dex") != NULL) ||
-                       (nameLen > 5 && strcmp(name+nameLen-5, ".odex") == 0)) {
-                whichHeap = HEAP_DEX;
-                is_swappable = true;
-            } else if (nameLen > 4 && strcmp(name+nameLen-4, ".oat") == 0) {
-                whichHeap = HEAP_OAT;
-                is_swappable = true;
-            } else if (nameLen > 4 && strcmp(name+nameLen-4, ".art") == 0) {
-                whichHeap = HEAP_ART;
-                is_swappable = true;
-            } else if (strncmp(name, "/dev/", 5) == 0) {
-                if (strncmp(name, "/dev/kgsl-3d0", 13) == 0) {
-                    whichHeap = HEAP_GL_DEV;
-                } else if (strncmp(name, "/dev/ashmem", 11) == 0) {
-                    if (strncmp(name, "/dev/ashmem/dalvik-", 19) == 0) {
-                        whichHeap = HEAP_DALVIK_OTHER;
-                        if (strstr(name, "/dev/ashmem/dalvik-LinearAlloc") == name) {
-                            subHeap = HEAP_DALVIK_LINEARALLOC;
-                        } else if ((strstr(name, "/dev/ashmem/dalvik-alloc space") == name) ||
-                                   (strstr(name, "/dev/ashmem/dalvik-main space") == name)) {
-                            // This is the regular Dalvik heap.
-                            whichHeap = HEAP_DALVIK;
-                            subHeap = HEAP_DALVIK_NORMAL;
-                        } else if (strstr(name, "/dev/ashmem/dalvik-large object space") == name) {
-                            whichHeap = HEAP_DALVIK;
-                            subHeap = HEAP_DALVIK_LARGE;
-                        } else if (strstr(name, "/dev/ashmem/dalvik-non moving space") == name) {
-                            whichHeap = HEAP_DALVIK;
-                            subHeap = HEAP_DALVIK_NON_MOVING;
-                        } else if (strstr(name, "/dev/ashmem/dalvik-zygote space") == name) {
-                            whichHeap = HEAP_DALVIK;
-                            subHeap = HEAP_DALVIK_ZYGOTE;
-                        } else if (strstr(name, "/dev/ashmem/dalvik-indirect ref") == name) {
-                            subHeap = HEAP_DALVIK_INDIRECT_REFERENCE_TABLE;
-                        } else if (strstr(name, "/dev/ashmem/dalvik-jit-code-cache") == name) {
-                            subHeap = HEAP_DALVIK_CODE_CACHE;
-                        } else {
-                            subHeap = HEAP_DALVIK_ACCOUNTING;  // Default to accounting.
-                        }
-                    } else if (strncmp(name, "/dev/ashmem/CursorWindow", 24) == 0) {
-                        whichHeap = HEAP_CURSOR;
-                    } else if (strncmp(name, "/dev/ashmem/libc malloc", 23) == 0) {
-                        whichHeap = HEAP_NATIVE;
-                    } else {
-                        whichHeap = HEAP_ASHMEM;
-                    }
-                } else {
-                    whichHeap = HEAP_UNKNOWN_DEV;
+            if (!parse(name, kMapParsingData, 1, &whichHeap, &subHeap, &is_swappable)) {
+                if (nameLen > 0) {
+                    whichHeap = HEAP_UNKNOWN_MAP;
+                } else if (start == prevEnd && prevHeap == HEAP_SO) {
+                    // bss section of a shared library.
+                    whichHeap = HEAP_SO;
                 }
-            } else if (strncmp(name, "[anon:", 6) == 0) {
-                whichHeap = HEAP_UNKNOWN;
-            } else if (nameLen > 0) {
-                whichHeap = HEAP_UNKNOWN_MAP;
-            } else if (start == prevEnd && prevHeap == HEAP_SO) {
-                // bss section of a shared library.
-                whichHeap = HEAP_SO;
             }
         }
 
         //ALOGI("native=%d dalvik=%d sqlite=%d: %s\n", isNativeHeap, isDalvikHeap,
         //    isSqliteHeap, line);
 
-        shared_clean = 0;
-        shared_dirty = 0;
-        private_clean = 0;
-        private_dirty = 0;
-        swapped_out = 0;
+        unsigned pss = 0, swappable_pss = 0;
+        float sharing_proportion = 0.0;
+        unsigned shared_clean = 0, shared_dirty = 0;
+        unsigned private_clean = 0, private_dirty = 0;
+        unsigned swapped_out = 0;
 
         while (true) {
             if (fgets(line, 1024, fp) == 0) {
@@ -360,6 +404,7 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
                 break;
             }
 
+            unsigned temp;
             if (line[0] == 'S' && sscanf(line, "Size: %d kB", &temp) == 1) {
                 /* size = temp; */
             } else if (line[0] == 'R' && sscanf(line, "Rss: %d kB", &temp) == 1) {
@@ -413,6 +458,9 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
                 stats[subHeap].swappedOut += swapped_out;
             }
         }
+
+        prevHeap = whichHeap;
+        prevEnd = end;
     }
 }
 
