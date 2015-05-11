@@ -192,6 +192,13 @@ final class AccessibilityController {
         }
     }
 
+    public void onWindowInsetsChanged() {
+        // Not relevant for the display magnifier.
+        if (mWindowsForAccessibilityObserver != null) {
+            mWindowsForAccessibilityObserver.scheduleComputeChangedWindowsLocked();
+        }
+    }
+
     /** NOTE: This has to be called within a surface transaction. */
     public void drawMagnifiedRegionBorderIfNeededLocked() {
         if (mDisplayMagnifier != null) {
