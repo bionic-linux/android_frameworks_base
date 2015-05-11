@@ -2729,6 +2729,9 @@ public class WindowManagerService extends IWindowManager.Stub
                     }
                     w.setDisplayLayoutNeeded();
                     mWindowPlacerLocked.performSurfacePlacement();
+                    if (mAccessibilityController != null) {
+                        mAccessibilityController.onWindowInsetsChanged();
+                    }
                 }
             }
         } finally {
