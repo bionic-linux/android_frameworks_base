@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd8d8546_bd234bd3",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2015-05-14T16:16:01Z",
+      "side": 1,
+      "message": "Can you put an @hide annotation in the comment here? That will make this API invisible (but still able to be used for development purposes). Once the @hide is here, you can rerun \"make update-api\" to regenerate the current.txt files that are also part of this CL (which should then have zero changes in them).",
+      "revId": "c463d050f1675f95eaf8e737e85c92a0da9747f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
