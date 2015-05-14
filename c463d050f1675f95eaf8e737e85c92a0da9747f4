@@ -16,6 +16,24 @@
       "revId": "c463d050f1675f95eaf8e737e85c92a0da9747f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d970d54_6f7ccd6b",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1072765
+      },
+      "writtenOn": "2015-05-14T17:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd8d8546_bd234bd3",
+      "revId": "c463d050f1675f95eaf8e737e85c92a0da9747f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
