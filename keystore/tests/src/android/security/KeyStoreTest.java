@@ -985,4 +985,28 @@ public class KeyStoreTest extends ActivityUnitTestCase<Activity> {
         assertTrue(mKeyStore.contains(TEST_KEYNAME));
         assertTrue(Arrays.equals(TEST_KEYVALUE, mKeyStore.get(TEST_KEYNAME)));
     }
+
+    public void testPasswordReplacedEncryptedEntry() throws Exception {
+        mKeyStore.onUserPasswordChanged("test");
+        assertTrue(mKeyStore.put(TEST_KEYNAME, TEST_KEYVALUE, KeyStore.UID_SELF,
+                KeyStore.FLAG_ENCRYPTED));
+        assertTrue(mKeyStore.contains(TEST_KEYNAME));
+        assertTrue(Arrays.equals(TEST_KEYVALUE, mKeyStore.get(TEST_KEYNAME)));
+        mKeyStore.onUserPasswordChanged("foo");
+        // Changing the password without the old one should clear encrypted entries
+        assertNull(mKeyStore.get(TEST_KEYNAME));
+        assertFalse(mKeyStore.contains(TEST_KEYNAME));
+    }
+
+    public void testPasswordChangedEncryptedEntry() throws Exception {
+        mKeyStore.onUserPasswordChanged("test");
+        assertTrue(mKeyStore.put(TEST_KEYNAME, TEST_KEYVALUE, KeyStore.UID_SELF,
+                KeyStore.FLAG_ENCRYPTED));
+        assertTrue(mKeyStore.contains(TEST_KEYNAME));
+        assertTrue(Arrays.equals(TEST_KEYVALUE, mKeyStore.get(TEST_KEYNAME)));
+        mKeyStore.onUserPasswordChanged("foo", "test");
+        // Providing the old password should leave the old entries untouched.
+        assertTrue(mKeyStore.contains(TEST_KEYNAME));
+        assertTrue(Arrays.equals(TEST_KEYVALUE, mKeyStore.get(TEST_KEYNAME)));
+    }
 }

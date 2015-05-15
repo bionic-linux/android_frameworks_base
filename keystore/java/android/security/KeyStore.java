@@ -527,19 +527,27 @@ public class KeyStore {
      *
      * @param userId the user whose password changed.
      * @param newPassword the new password or "" if the password was removed.
+     * @param oldPassword the user's old password or "" if none or clearing the password.
      */
-    public boolean onUserPasswordChanged(int userId, String newPassword) {
+    public boolean onUserPasswordChanged(int userId, String newPassword, String oldPassword) {
         // Parcel.cpp doesn't support deserializing null strings and treats them as "". Make that
         // explicit here.
         if (newPassword == null) {
             newPassword = "";
         }
+        if (oldPassword == null) {
+            oldPassword = "";
+        }
         try {
-            return mBinder.onUserPasswordChanged(userId, newPassword) == NO_ERROR;
+            return mBinder.onUserPasswordChanged(userId, newPassword, oldPassword) == NO_ERROR;
         } catch (RemoteException e) {
             Log.w(TAG, "Cannot connect to keystore", e);
             return false;
         }
+    }
+
+    public boolean onUserPasswordChanged(int userId, String newPassword) {
+        return onUserPasswordChanged(userId, newPassword, "");
     }
 
     /**
@@ -582,6 +590,11 @@ public class KeyStore {
 
     public boolean onUserPasswordChanged(String newPassword) {
         return onUserPasswordChanged(UserHandle.getUserId(Process.myUid()), newPassword);
+    }
+
+    public boolean onUserPasswordChanged(String newPassword, String oldPassword) {
+        return onUserPasswordChanged(UserHandle.getUserId(Process.myUid()), newPassword,
+                oldPassword);
     }
 
     /**
