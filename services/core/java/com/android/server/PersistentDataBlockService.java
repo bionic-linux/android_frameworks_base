@@ -112,6 +112,7 @@ public class PersistentDataBlockService extends SystemService {
             synchronized (mLock) {
                 formatPartitionLocked();
                 doSetOemUnlockEnabledLocked(true);
+                computeAndWriteDigestLocked();
             }
         }
     }
