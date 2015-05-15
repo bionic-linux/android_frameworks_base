@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da4fdb8_2b370b5f",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-05-15T21:06:58Z",
+      "side": 1,
+      "message": "Add a comment that this is destructive and that the one above is preferred.",
+      "revId": "f467db562b9157410e1f65d1883af1fd53771acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
