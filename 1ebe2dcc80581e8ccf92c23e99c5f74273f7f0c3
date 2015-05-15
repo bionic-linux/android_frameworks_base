@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0fb5e32_e1f080de",
+        "filename": "services/core/java/com/android/server/wm/WindowStateAnimator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-15T20:41:38Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to use the window stack bounds for this?",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 808,
+        "endChar": 13
+      },
+      "revId": "1ebe2dcc80581e8ccf92c23e99c5f74273f7f0c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
