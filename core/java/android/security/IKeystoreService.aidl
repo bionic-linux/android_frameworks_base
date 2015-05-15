@@ -37,7 +37,7 @@ interface IKeystoreService {
     int exist(String name, int uid);
     String[] saw(String namePrefix, int uid);
     int reset();
-    int onUserPasswordChanged(int userId, String newPassword);
+    int onUserPasswordChanged(int userId, String newPassword, String oldPassword);
     int lock();
     int unlock(int userId, String userPassword);
     int zero();
