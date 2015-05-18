@@ -45,7 +45,6 @@ import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.DatagramSocket;
 import java.net.Socket;
-import java.nio.ByteOrder;
 
 /**
  * The FileDescriptor returned by {@link Parcel#readFileDescriptor}, allowing
@@ -685,7 +684,7 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
                 final byte[] buf = getOrCreateStatusBuffer();
                 int writePtr = 0;
 
-                Memory.pokeInt(buf, writePtr, status, ByteOrder.BIG_ENDIAN);
+                Memory.unsafePokeInt(buf, writePtr, status, true /* needs swap */);
                 writePtr += 4;
 
                 if (msg != null) {
@@ -717,7 +716,7 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
                 // EOF means they're dead
                 return new Status(Status.DEAD);
             } else {
-                final int status = Memory.peekInt(buf, 0, ByteOrder.BIG_ENDIAN);
+                final int status = Memory.unsafePeekInt(buf, 0, true /* needs swap */);
                 if (status == Status.ERROR) {
                     final String msg = new String(buf, 4, n - 4);
                     return new Status(status, msg);

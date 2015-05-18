@@ -31,7 +31,6 @@ import libcore.io.Streams;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteOrder;
 import java.util.Arrays;
 
 /**
@@ -95,10 +94,10 @@ public class FileBridge extends Thread {
         final byte[] temp = new byte[8192];
         try {
             while (IoBridge.read(mServer, temp, 0, MSG_LENGTH) == MSG_LENGTH) {
-                final int cmd = Memory.peekInt(temp, 0, ByteOrder.BIG_ENDIAN);
+                final int cmd = Memory.unsafePeekInt(temp, 0, true /* needs swap */);
                 if (cmd == CMD_WRITE) {
                     // Shuttle data into local file
-                    int len = Memory.peekInt(temp, 4, ByteOrder.BIG_ENDIAN);
+                    int len = Memory.unsafePeekInt(temp, 4, true /* needs swap */);
                     while (len > 0) {
                         int n = IoBridge.read(mServer, temp, 0, Math.min(temp.length, len));
                         if (n == -1) {
@@ -161,12 +160,12 @@ public class FileBridge extends Thread {
         }
 
         private void writeCommandAndBlock(int cmd, String cmdString) throws IOException {
-            Memory.pokeInt(mTemp, 0, cmd, ByteOrder.BIG_ENDIAN);
+            Memory.unsafePokeInt(mTemp, 0, cmd, true /* needs swap */);
             IoBridge.write(mClient, mTemp, 0, MSG_LENGTH);
 
             // Wait for server to ack
             if (IoBridge.read(mClient, mTemp, 0, MSG_LENGTH) == MSG_LENGTH) {
-                if (Memory.peekInt(mTemp, 0, ByteOrder.BIG_ENDIAN) == cmd) {
+                if (Memory.unsafePeekInt(mTemp, 0, true /* needs swap */) == cmd) {
                     return;
                 }
             }
@@ -177,8 +176,8 @@ public class FileBridge extends Thread {
         @Override
         public void write(byte[] buffer, int byteOffset, int byteCount) throws IOException {
             Arrays.checkOffsetAndCount(buffer.length, byteOffset, byteCount);
-            Memory.pokeInt(mTemp, 0, CMD_WRITE, ByteOrder.BIG_ENDIAN);
-            Memory.pokeInt(mTemp, 4, byteCount, ByteOrder.BIG_ENDIAN);
+            Memory.unsafePokeInt(mTemp, 0, CMD_WRITE, true /* needs swap */);
+            Memory.unsafePokeInt(mTemp, 4, byteCount, true /* needs swap */);
             IoBridge.write(mClient, mTemp, 0, MSG_LENGTH);
             IoBridge.write(mClient, buffer, byteOffset, byteCount);
         }
