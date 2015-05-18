@@ -22,6 +22,30 @@
       "revId": "1ebe2dcc80581e8ccf92c23e99c5f74273f7f0c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8db54dfa_7c5a590c",
+        "filename": "services/core/java/com/android/server/wm/WindowStateAnimator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1058846
+      },
+      "writtenOn": "2015-05-18T01:50:06Z",
+      "side": 1,
+      "message": "The window stack bounds can be used for the default size but I thought that DisplayInfo\u0027s \"appWidth\" and \"appHeight\" are needed anyway when consuming navigation bar is not set.  When I checked the window stack bounds, those \"appWidth\" and \"appHeight\" can not be obtained from it. So I choose to use DisplayInfo.",
+      "parentUuid": "d0fb5e32_e1f080de",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 808,
+        "endChar": 13
+      },
+      "revId": "1ebe2dcc80581e8ccf92c23e99c5f74273f7f0c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
