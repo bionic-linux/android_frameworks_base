@@ -224,6 +224,12 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
      */
     private boolean mHasFeature;
 
+    /**
+     * Whether or not managed users feature is supported. If it isn't return defaults for managed
+     * profile creation methods.
+     */
+    private boolean mHasManagedUsersFeature;
+
     public static final class Lifecycle extends SystemService {
         private DevicePolicyManagerService mService;
 
@@ -944,8 +950,9 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     public DevicePolicyManagerService(Context context) {
         mContext = context;
         mUserManager = UserManager.get(mContext);
-        mHasFeature = context.getPackageManager().hasSystemFeature(
-                PackageManager.FEATURE_DEVICE_ADMIN);
+        PackageManager pm = context.getPackageManager();
+        mHasFeature = pm.hasSystemFeature(PackageManager.FEATURE_DEVICE_ADMIN);
+        mHasManagedUsersFeature = pm.hasSystemFeature(PackageManager.FEATURE_MANAGED_USERS);
         mPowerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         mPowerManagerInternal = LocalServices.getService(PowerManagerInternal.class);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DPM");
@@ -4736,6 +4743,9 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     @Override
     public UserHandle createAndInitializeUser(ComponentName who, String name,
             String ownerName, ComponentName profileOwnerComponent, Bundle adminExtras) {
+        if (!mHasManagedUsersFeature) {
+            return null;
+        }
         UserHandle user = createUser(who, name);
         if (user == null) {
             return null;
