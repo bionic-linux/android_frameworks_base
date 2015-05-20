@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d7ad934_2d85a40a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-20T22:20:29Z",
+      "side": 1,
+      "message": "greater than 60 char limit here and below. See https://source.android.com/source/submit-patches.html#make-your-change",
+      "range": {
+        "startLine": 9,
+        "startChar": 71,
+        "endLine": 9,
+        "endChar": 112
+      },
+      "revId": "fe50c06b2558dbf49d3aa8048f844d3f77595f74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d6e217b_f25459ac",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5138,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-20T22:20:29Z",
+      "side": 1,
+      "message": "Instead of doing this on a separate thread, can we just make ActivityManagerNative.attachApplication() call ONEWAY?",
+      "range": {
+        "startLine": 5129,
+        "startChar": 0,
+        "endLine": 5138,
+        "endChar": 22
+      },
+      "revId": "fe50c06b2558dbf49d3aa8048f844d3f77595f74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
