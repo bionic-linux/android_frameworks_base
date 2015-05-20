@@ -22,6 +22,30 @@
       "revId": "d907d12da271066cad3851dbccc87ea37eba8944",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d20e12c_a24ea418",
+        "filename": "services/core/java/com/android/server/InputMethodManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-05-20T22:03:12Z",
+      "side": 1,
+      "message": "Yeah, A general rule of thumb is that \"catch (RuntimeException e)\" is almost always a bad idea.",
+      "parentUuid": "adfdb1c1_3c33b729",
+      "range": {
+        "startLine": 1251,
+        "startChar": 0,
+        "endLine": 1256,
+        "endChar": 9
+      },
+      "revId": "d907d12da271066cad3851dbccc87ea37eba8944",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
