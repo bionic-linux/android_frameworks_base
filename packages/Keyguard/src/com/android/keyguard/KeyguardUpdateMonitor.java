@@ -52,6 +52,7 @@ import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
+import com.android.internal.telephony.uicc.IccCardProxy;
 
 import android.service.fingerprint.FingerprintManager;
 import android.service.fingerprint.FingerprintManagerReceiver;
@@ -447,7 +448,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 final Message msg = mHandler.obtainMessage(
                         MSG_BATTERY_UPDATE, new BatteryStatus(status, level, plugged, health));
                 mHandler.sendMessage(msg);
-            } else if (TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(action)) {
+            } else if (TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(action) ||
+                    IccCardProxy.ACTION_INTERNAL_SIM_STATE_CHANGED.equals(action)) {
                 SimData args = SimData.fromIntent(intent);
                 if (DEBUG_SIM_STATES) {
                     Log.v(TAG, "action " + action
@@ -530,13 +532,15 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
 
         static SimData fromIntent(Intent intent) {
             State state;
-            if (!TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(intent.getAction())) {
+            if (!TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(intent.getAction()) &&
+                    !IccCardProxy.ACTION_INTERNAL_SIM_STATE_CHANGED.equals(intent.getAction())) {
                 throw new IllegalArgumentException("only handles intent ACTION_SIM_STATE_CHANGED");
             }
             String stateExtra = intent.getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE);
-            int slotId = intent.getIntExtra(PhoneConstants.SLOT_KEY, 0);
-            int subId = intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
-                    SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+            int[] id = getSlotIdAndSubId(intent);
+            int slotId = id[0];
+            int subId = id[1];
+
             if (IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(stateExtra)) {
                 final String absentReason = intent
                     .getStringExtra(IccCardConstants.INTENT_KEY_LOCKED_REASON);
@@ -570,6 +574,22 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 state = IccCardConstants.State.UNKNOWN;
             }
             return new SimData(state, slotId, subId);
+        }
+
+        static int[] getSlotIdAndSubId(Intent intent) {
+            int[] id = {-1, -1};
+            if (TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(intent.getAction())) {
+                id[0] = intent.getIntExtra(PhoneConstants.SLOT_KEY, -1);
+                id[1] = intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
+                    SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+            } else if (IccCardProxy.ACTION_INTERNAL_SIM_STATE_CHANGED.equals(intent.getAction())) {
+                id[0] = intent.getIntExtra(PhoneConstants.PHONE_KEY, -1);
+                int[] subIds = SubscriptionManager.getSubId(id[0]);
+                if (subIds != null && subIds.length != 0) {
+                    id[1] = subIds[0];
+                }
+            }
+            return id;
         }
 
         public String toString() {
@@ -690,6 +710,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
         filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
         filter.addAction(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+        filter.addAction(IccCardProxy.ACTION_INTERNAL_SIM_STATE_CHANGED);
         filter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
         filter.addAction(AudioManager.RINGER_MODE_CHANGED_ACTION);
         filter.addAction(Intent.ACTION_USER_REMOVED);

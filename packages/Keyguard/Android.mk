@@ -24,6 +24,8 @@ LOCAL_CERTIFICATE := platform
 
 LOCAL_PRIVILEGED_MODULE := true
 
+LOCAL_JAVA_LIBRARIES += telephony-common
+
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
