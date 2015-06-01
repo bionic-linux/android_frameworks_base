@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7919c071_8298a4fd",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10514,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-06-01T14:55:18Z",
+      "side": 1,
+      "message": "Note that there is still a small risk of getting *one* extra kill here, due to a race: proc.pid can be changed by another thread after this check, before the actuall SIGKILL is sent.\n\nI opted for a simpler patch that fixes most of the problem over a complicated patch that may cause new ones.",
+      "range": {
+        "startLine": 10514,
+        "startChar": 20,
+        "endLine": 10514,
+        "endChar": 21
+      },
+      "revId": "5e55ca824926b6caa55848e05945265650e66e43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
