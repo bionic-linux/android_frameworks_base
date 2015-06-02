@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9a97860_8512020d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-02T09:10:52Z",
+      "side": 1,
+      "message": "Could you please explain further ? Emoji are 4 byte UTF-8 sequences or 2 x (3 byte UTF-8 sequences) for MUTF-8.\n\nEither way, this seems like the right thing to do.",
+      "revId": "2a97830ac05f2800bd9fd21844d673d23b2a71fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
