@@ -16,6 +16,23 @@
       "revId": "2a97830ac05f2800bd9fd21844d673d23b2a71fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99a8345d_6a8793ea",
+        "filename": "core/jni/android_os_Parcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-06-02T16:04:24Z",
+      "side": 1,
+      "message": "they already #include ScopedUtfChars.h, so you could just use that.",
+      "revId": "2a97830ac05f2800bd9fd21844d673d23b2a71fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
