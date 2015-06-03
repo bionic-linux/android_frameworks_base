@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d23ce8_c91487d1",
+        "filename": "core/jni/android_os_Parcel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-06-03T01:08:50Z",
+      "side": 1,
+      "message": "ScopedUtfChars will already have thrown an appropriate exception, so you should probably just remove L454-455.",
+      "revId": "261c5e1cb67686880368e1fc2c7df00178673ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
