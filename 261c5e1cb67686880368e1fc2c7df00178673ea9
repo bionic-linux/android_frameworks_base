@@ -34,6 +34,24 @@
       "revId": "261c5e1cb67686880368e1fc2c7df00178673ea9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9a97860_7f650f3c",
+        "filename": "core/jni/android_os_Parcel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-06-03T04:23:32Z",
+      "side": 1,
+      "message": "i\u0027m not suggesting you remove L453. i\u0027m suggesting you remove L454-455. you can\u0027t throw an exception with an exception already pending. the original code was incorrect, and you\u0027re preserving the mistake.",
+      "parentUuid": "f9de90f5_52ab72e3",
+      "revId": "261c5e1cb67686880368e1fc2c7df00178673ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
