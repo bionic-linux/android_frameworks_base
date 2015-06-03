@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99a8345d_79552bca",
+        "filename": "core/jni/android_os_Parcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-06-03T04:24:23Z",
+      "side": 1,
+      "message": "no, you need to check that name8.c_str() !\u003d null...",
+      "revId": "1518d01d924fd1f896a021f9cba3627c3c43a008",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
