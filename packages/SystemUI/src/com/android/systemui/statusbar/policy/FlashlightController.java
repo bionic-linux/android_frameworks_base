@@ -72,17 +72,34 @@ public class FlashlightController {
     }
 
     public void initialize() {
-        try {
-            mCameraId = getCameraId();
-        } catch (Throwable e) {
-            Log.e(TAG, "Couldn't initialize.", e);
-            return;
-        }
-
-        if (mCameraId != null) {
-            ensureHandler();
-            mCameraManager.registerAvailabilityCallback(mAvailabilityCallback, mHandler);
-        }
+        ensureHandler();
+        final Handler uiHandler = new Handler();
+        final Runnable cameraCheckRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mCameraId = getCameraId();
+                    if (mCameraId != null) {
+                        mCameraManager.registerAvailabilityCallback(mAvailabilityCallback, mHandler);
+                    }
+                } catch (Throwable e) {
+                    Log.e(TAG, "Couldn't initialize.", e);
+                    return;
+                }
+                finally {
+                    if (mCameraId == null) {
+                        uiHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mHandler.getLooper().quitSafely();
+                                mHandler = null;
+                            }
+                        });
+                    }
+                }
+            }
+        };
+        mHandler.post(cameraCheckRunnable);
     }
 
     public synchronized void setFlashlight(boolean enabled) {
@@ -159,7 +176,9 @@ public class FlashlightController {
     }
 
     private void postUpdateFlashlight() {
-        ensureHandler();
+        if (mHandler == null) {
+            return;
+        }
         mHandler.post(mUpdateFlashlightRunnable);
     }
 
@@ -178,6 +197,9 @@ public class FlashlightController {
     }
 
     private void updateFlashlight(boolean forceDisable) {
+        if (mCameraId == null) {
+            return;
+        }
         try {
             boolean enabled;
             synchronized (this) {
