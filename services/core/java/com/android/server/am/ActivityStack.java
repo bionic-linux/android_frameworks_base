@@ -1258,6 +1258,13 @@ final class ActivityStack {
                         }
                         if (r != starting) {
                             mStackSupervisor.startSpecificActivityLocked(r, false, false);
+                            if (activityNdx >= activities.size()) {
+                                // Record may be removed if its process needs to restart.
+                                activityNdx = activities.size() - 1;
+                                if (r == activities.get(activityNdx)) {
+                                    --activityNdx;
+                                }
+                            }
                         }
 
                     } else if (r.visible) {
