@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b130f2_80355c67",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/FlashlightController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2015-06-05T17:47:55Z",
+      "side": 1,
+      "message": "why are we shutting down the handler here? I think we still need it for later.",
+      "revId": "c7420e086f26dcee6a433452ccc17fc457f4235f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
