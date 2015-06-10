@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ce74a2_ae242bb7",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2015-06-10T19:58:50Z",
+      "side": 1,
+      "message": "In the future just use IoUtils.closeQuietly",
+      "revId": "945c52d5d723134999cbad18d9c03572ef00620e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
