@@ -34,6 +34,24 @@
       "revId": "945c52d5d723134999cbad18d9c03572ef00620e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59823c52_d2fe047d",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-11T08:44:25Z",
+      "side": 1,
+      "message": "Actually, please use try with resources wherever possible. IoUtils.closeQuietly is only needed for unbundled code that needs to run on pre-kitkat platforms.\n\n            try (ParcelFileDescriptor pfd \u003d ParcelFileDescriptor.dup(fd)) {\n                mBluetooth.dump(pfd);\n            } catch (RemoteException re) {\n                writer.println(\"RemoteException while calling Bluetooth Service\");\n            } catch (IOException ioe) {\n                writer.println(\"IOException attempting to dup() fd\");\n            }",
+      "parentUuid": "79254042_f3579029",
+      "revId": "945c52d5d723134999cbad18d9c03572ef00620e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
