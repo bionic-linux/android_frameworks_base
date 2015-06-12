@@ -823,6 +823,12 @@ public final class ActivityStackSupervisor implements DisplayListener {
                 }
             }
 
+            if ((startFlags&ActivityManager.START_FLAG_TRACK_ALLOCATION) != 0) {
+                if (!aInfo.processName.equals("system")) {
+                    mService.setTrackAllocationApp(aInfo.applicationInfo, aInfo.processName);
+                }
+            }
+
             if (profilerInfo != null) {
                 if (!aInfo.processName.equals("system")) {
                     mService.setProfileApp(aInfo.applicationInfo, aInfo.processName, profilerInfo);
