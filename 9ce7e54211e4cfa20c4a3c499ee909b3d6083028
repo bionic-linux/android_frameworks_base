@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "1ebb4af3_b84479ed",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4321,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-06-24T12:44:14Z",
+      "side": 1,
+      "message": "please use an import statement for this bit.",
+      "range": {
+        "startLine": 4321,
+        "startChar": 10,
+        "endLine": 4321,
+        "endChar": 54
+      },
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deab729c_bea9f999",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
@@ -53,6 +76,52 @@
       "writtenOn": "2015-06-24T08:11:53Z",
       "side": 1,
       "message": "fix indentation.",
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ded45230_5642d40f",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10371,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-06-24T12:44:14Z",
+      "side": 1,
+      "message": "space between operators.",
+      "range": {
+        "startLine": 10371,
+        "startChar": 28,
+        "endLine": 10371,
+        "endChar": 29
+      },
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ebb4af3_9849b505",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13196,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-06-24T12:44:14Z",
+      "side": 1,
+      "message": "4 space indentation here and below...",
+      "range": {
+        "startLine": 13196,
+        "startChar": 8,
+        "endLine": 13196,
+        "endChar": 10
+      },
       "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
