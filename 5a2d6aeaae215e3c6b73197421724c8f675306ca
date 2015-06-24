@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e098aaf_ae0d4371",
+        "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-06-24T20:01:52Z",
+      "side": 1,
+      "message": "Do you mind re-working this code a little while you are in here?\n1. Change to format:\nif (!aInfo.processName.equals(\"system\")) {\n    if ((startFlags \u0026 ActivityManager.START_FLAG_DEBUG) !\u003d 0) {\n        mService.setDebugApp(aInfo.processName, true, false);\n    }\n    ...\n}\nto reduce the number of places we check for !aInfo.processName.equals(\"system\")\n2. Add single spaces between \u0026 operators.\n\nThanks!",
+      "range": {
+        "startLine": 814,
+        "startChar": 0,
+        "endLine": 836,
+        "endChar": 13
+      },
+      "revId": "5a2d6aeaae215e3c6b73197421724c8f675306ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
