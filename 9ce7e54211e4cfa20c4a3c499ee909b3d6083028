@@ -129,6 +129,30 @@
     },
     {
       "key": {
+        "uuid": "7eb0c609_a112fa90",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10371,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-06-24T15:27:05Z",
+      "side": 1,
+      "message": "I would like this to change with every new commit to this file. There are several other clean-ups I would like to do within this file.",
+      "parentUuid": "3e9bae8e_8145ba18",
+      "range": {
+        "startLine": 10371,
+        "startChar": 28,
+        "endLine": 10371,
+        "endChar": 29
+      },
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ebb4af3_9849b505",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
