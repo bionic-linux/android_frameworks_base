@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de02928c_0c421bbd",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4319,
+      "author": {
+        "id": 1073545
+      },
+      "writtenOn": "2015-06-24T19:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ea26abf_003be6fd",
+      "range": {
+        "startLine": 4319,
+        "startChar": 8,
+        "endLine": 4319,
+        "endChar": 59
+      },
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eb57afa_bc26a1ef",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 1
@@ -65,6 +89,48 @@
     },
     {
       "key": {
+        "uuid": "5e0f82b1_b3bfeafd",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4321,
+      "author": {
+        "id": 1073545
+      },
+      "writtenOn": "2015-06-24T19:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eb57afa_bc26a1ef",
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e0f82b1_d3ba5e0f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4321,
+      "author": {
+        "id": 1073545
+      },
+      "writtenOn": "2015-06-24T19:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ebb4af3_b84479ed",
+      "range": {
+        "startLine": 4321,
+        "startChar": 10,
+        "endLine": 4321,
+        "endChar": 54
+      },
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deab729c_bea9f999",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2015-06-24T08:11:53Z",
       "side": 1,
       "message": "fix indentation.",
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e0f82b1_93c4e684",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10368,
+      "author": {
+        "id": 1073545
+      },
+      "writtenOn": "2015-06-24T19:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deab729c_bea9f999",
       "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -153,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "1e098aaf_cb65093f",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10371,
+      "author": {
+        "id": 1073545
+      },
+      "writtenOn": "2015-06-24T19:53:17Z",
+      "side": 1,
+      "message": "Done. Also fixed two nearby places.",
+      "parentUuid": "7eb0c609_a112fa90",
+      "range": {
+        "startLine": 10371,
+        "startChar": 28,
+        "endLine": 10371,
+        "endChar": 29
+      },
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ebb4af3_9849b505",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
@@ -176,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "de02928c_2cda778f",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13196,
+      "author": {
+        "id": 1073545
+      },
+      "writtenOn": "2015-06-24T19:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ebb4af3_9849b505",
+      "range": {
+        "startLine": 13196,
+        "startChar": 8,
+        "endLine": 13196,
+        "endChar": 10
+      },
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ea26abf_206dcaf6",
         "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
         "patchSetId": 1
@@ -187,6 +319,24 @@
       "writtenOn": "2015-06-24T08:11:53Z",
       "side": 1,
       "message": "fix indent",
+      "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe0bd6a6_8d496505",
+        "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1073545
+      },
+      "writtenOn": "2015-06-24T19:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ea26abf_206dcaf6",
       "revId": "9ce7e54211e4cfa20c4a3c499ee909b3d6083028",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
