@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e856e59_f1d0e8f5",
+        "filename": "services/core/jni/com_android_server_PersistentDataBlockService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-25T09:02:47Z",
+      "side": 1,
+      "message": "use ScopedUtfChars (from libnativehelper) instead ? it\u0027s already pretty widely used in this library.",
+      "revId": "3d3e377a7187080cd2707920cb96bfc819825e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
