@@ -71,7 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // database gets upgraded properly. At a minimum, please confirm that 'upgradeVersion'
     // is properly propagated through your change.  Not doing so will result in a loss of user
     // settings.
-    private static final int DATABASE_VERSION = 118;
+    private static final int DATABASE_VERSION = 119;
 
     private Context mContext;
     private int mUserHandle;
@@ -1895,6 +1895,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             upgradeVersion = 118;
         }
+
+        if (upgradeVersion < 119) {
+            // initialize REQUIRE_PASSWORD_TO_DECRYPT to 0  on upgrade.
+            db.beginTransaction();
+            SQLiteStatement stmt = null;
+            try {
+                stmt = db.compileStatement("INSERT OR REPLACE INTO global(name,value)"
+                        + " VALUES(?,?);");
+                loadIntegerSetting(stmt, Settings.Global.REQUIRE_PASSWORD_TO_DECRYPT,
+                     R.integer.def_require_password_to_decrypt);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+                if (stmt != null) stmt.close();
+            }
+            upgradeVersion = 119;
+        }
+
         // *** Remember to update DATABASE_VERSION above!
 
         if (upgradeVersion != currentVersion) {
@@ -2643,6 +2661,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadBooleanSetting(stmt, Settings.Global.GUEST_USER_ENABLED,
                     R.bool.def_guest_user_enabled);
             loadSetting(stmt, Settings.Global.ENHANCED_4G_MODE_ENABLED, ImsConfig.FeatureValueConstants.ON);
+
+            loadIntegerSetting(stmt, Settings.Global.REQUIRE_PASSWORD_TO_DECRYPT,
+                    R.integer.def_require_password_to_decrypt);
             // --- New global settings start here
         } finally {
             if (stmt != null) stmt.close();

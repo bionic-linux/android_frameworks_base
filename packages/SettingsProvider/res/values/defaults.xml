@@ -207,4 +207,7 @@
     <!-- Default for Settings.Global.GUEST_USER_ENABLED -->
     <bool name="def_guest_user_enabled">true</bool>
 
+    <!-- Default for Settings.Global.REQUIRE_PASSWORD_TO_DECRYPT -->
+    <integer name="def_require_password_to_decrypt">0</integer>
+
 </resources>
