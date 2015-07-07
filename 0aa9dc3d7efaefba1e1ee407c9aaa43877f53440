@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3260d9c_86ceca57",
+        "filename": "policy/src/com/android/internal/policy/impl/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4090,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2015-07-07T01:55:36Z",
+      "side": 1,
+      "message": "I believe this breaks the following, desired behavior:\n- Have an activity with SHOW_WHEN_LOCKED\n- This activity starts another activity with DISMISS_KEYGUARD (by pressing a button, or whatever)\n- Bouncer shows up on Keyguard.",
+      "revId": "0aa9dc3d7efaefba1e1ee407c9aaa43877f53440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
