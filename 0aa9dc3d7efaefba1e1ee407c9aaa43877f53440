@@ -16,6 +16,24 @@
       "revId": "0aa9dc3d7efaefba1e1ee407c9aaa43877f53440",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8420e4b_0f5285e0",
+        "filename": "policy/src/com/android/internal/policy/impl/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4090,
+      "author": {
+        "id": 1035211
+      },
+      "writtenOn": "2015-07-07T09:06:28Z",
+      "side": 1,
+      "message": "You are correct.\n\nThe change here was for solving the issue that the secure state of keyguard is changed while there is an app dismissing keyguard; which would also make the occluded state wrong. However, the issue has been solved (by using mSecureDismissingKeyguard to detect the state change).\n\nI will remove the change here and upload a new patch set.",
+      "parentUuid": "d3260d9c_86ceca57",
+      "revId": "0aa9dc3d7efaefba1e1ee407c9aaa43877f53440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
