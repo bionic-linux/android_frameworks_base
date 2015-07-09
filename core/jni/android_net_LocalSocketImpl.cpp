@@ -78,40 +78,6 @@ socket_connect_local(JNIEnv *env, jobject object,
     }
 }
 
-#define DEFAULT_BACKLOG 4
-
-/* private native void bindLocal(FileDescriptor fd, String name, namespace)
- * throws IOException;
- */
-
-static void
-socket_bind_local (JNIEnv *env, jobject object, jobject fileDescriptor,
-                jstring name, jint namespaceId)
-{
-    int ret;
-    int fd;
-
-    if (name == NULL) {
-        jniThrowNullPointerException(env, NULL);
-        return;
-    }
-
-    fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
-
-    if (env->ExceptionCheck()) {
-        return;
-    }
-
-    ScopedUtfChars nameUtf8(env, name);
-
-    ret = socket_local_server_bind(fd, nameUtf8.c_str(), namespaceId);
-
-    if (ret < 0) {
-        jniThrowIOException(env, errno);
-        return;
-    }
-}
-
 /**
  * Processes ancillary data, handling only
  * SCM_RIGHTS. Creates appropriate objects and sets appropriate
@@ -499,7 +465,6 @@ static JNINativeMethod gMethods[] = {
      /* name, signature, funcPtr */
     {"connectLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V",
                                                 (void*)socket_connect_local},
-    {"bindLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V", (void*)socket_bind_local},
     {"read_native", "(Ljava/io/FileDescriptor;)I", (void*) socket_read},
     {"readba_native", "([BIILjava/io/FileDescriptor;)I", (void*) socket_readba},
     {"writeba_native", "([BIILjava/io/FileDescriptor;)V", (void*) socket_writeba},
