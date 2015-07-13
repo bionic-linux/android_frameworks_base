@@ -29640,6 +29640,7 @@ package android.system {
     field public static final int O_ACCMODE;
     field public static final int O_APPEND;
     field public static final int O_CREAT;
+    field public static final int O_DSYNC;
     field public static final int O_EXCL;
     field public static final int O_NOCTTY;
     field public static final int O_NOFOLLOW;
