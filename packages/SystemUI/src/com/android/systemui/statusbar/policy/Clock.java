@@ -122,9 +122,11 @@ public class Clock extends TextView implements DemoMode {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_TIMEZONE_CHANGED)) {
                 String tz = intent.getStringExtra("time-zone");
-                mCalendar = Calendar.getInstance(TimeZone.getTimeZone(tz));
-                if (mClockFormat != null) {
-                    mClockFormat.setTimeZone(mCalendar.getTimeZone());
+                if (tz != null) {
+                    mCalendar = Calendar.getInstance(TimeZone.getTimeZone(tz));
+                    if (mClockFormat != null) {
+                        mClockFormat.setTimeZone(mCalendar.getTimeZone());
+                    }
                 }
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 final Locale newLocale = getResources().getConfiguration().locale;
