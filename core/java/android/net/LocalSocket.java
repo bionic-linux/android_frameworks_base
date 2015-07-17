@@ -16,12 +16,15 @@
 
 package android.net;
 
+import android.system.StructUcred;
+
 import java.io.Closeable;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.SocketOptions;
+import libcore.io.LocalSocketImpl;
 
 /**
  * Creates a (non-server) socket in the UNIX-domain namespace. The interface
@@ -39,11 +42,11 @@ public class LocalSocket implements Closeable {
     /** unknown socket type (used for constructor with existing file descriptor) */
     /* package */ static final int SOCKET_UNKNOWN = 0;
     /** Datagram socket type */
-    public static final int SOCKET_DGRAM = 1;
+    public static final int SOCKET_DGRAM = LocalSocketImpl.SOCKET_DGRAM;
     /** Stream socket type */
-    public static final int SOCKET_STREAM = 2;
+    public static final int SOCKET_STREAM = LocalSocketImpl.SOCKET_STREAM;
     /** Sequential packet socket type */
-    public static final int SOCKET_SEQPACKET = 3;
+    public static final int SOCKET_SEQPACKET = LocalSocketImpl.SOCKET_SEQPACKET;
 
     /**
      * Creates a AF_LOCAL/UNIX domain stream socket.
@@ -127,7 +130,7 @@ public class LocalSocket implements Closeable {
             }
 
             implCreateIfNeeded();
-            impl.connect(endpoint, 0);
+            impl.connect(endpoint.toUnixSocketAddress(), 0);
             isConnected = true;
             isBound = true;
         }
@@ -149,7 +152,7 @@ public class LocalSocket implements Closeable {
             }
 
             localAddress = bindpoint;
-            impl.bind(localAddress);
+            impl.bind(localAddress.toUnixSocketAddress());
             isBound = true;
         }
     }
@@ -310,7 +313,8 @@ public class LocalSocket implements Closeable {
      * @throws IOException
      */
     public Credentials getPeerCredentials() throws IOException {
-        return impl.getPeerCredentials();
+        StructUcred ucred = impl.getPeerCredentials();
+        return new Credentials(ucred.pid, ucred.uid, ucred.gid);
     }
 
     /**

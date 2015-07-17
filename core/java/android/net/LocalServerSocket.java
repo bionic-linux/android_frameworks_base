@@ -18,6 +18,7 @@ package android.net;
 
 import java.io.IOException;
 import java.io.FileDescriptor;
+import libcore.io.LocalSocketImpl;
 
 /**
  * Non-standard class for creating an inbound UNIX-domain socket
@@ -45,7 +46,7 @@ public class LocalServerSocket {
         impl.create(LocalSocket.SOCKET_STREAM);
 
         localAddress = new LocalSocketAddress(name);
-        impl.bind(localAddress);
+        impl.bind(localAddress.toUnixSocketAddress());
 
         impl.listen(LISTEN_BACKLOG);
     }
@@ -63,7 +64,7 @@ public class LocalServerSocket {
     {
         impl = new LocalSocketImpl(fd);
         impl.listen(LISTEN_BACKLOG);
-        localAddress = impl.getSockAddress();
+        localAddress = null;
     }
 
     /**
