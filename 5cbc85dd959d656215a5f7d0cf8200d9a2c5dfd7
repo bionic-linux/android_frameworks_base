@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "383666c8_af00fd0c",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2015-07-20T23:14:12Z",
+      "side": 1,
+      "message": "There is no obvious explanation for how we use vertical whitespace in this block of functions -- functions are separated by zero, one, or two blank lines.",
+      "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d83d4aa0_915fdec1",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2015-07-20T23:14:12Z",
+      "side": 1,
+      "message": "Does this correspond to the source-level kernel argument \"usr\" (unsupported for reduce kernels)?",
+      "range": {
+        "startLine": 725,
+        "startChar": 37,
+        "endLine": 725,
+        "endChar": 50
+      },
+      "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8568eec_32070ed2",
+        "filename": "rs/java/android/renderscript/Script.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2015-07-20T23:14:12Z",
+      "side": 1,
+      "message": "I am comparing this to the forEach() method above.  That method has ains/aout null checks; should this method?",
+      "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d83d4aa0_d14246e3",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1962,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2015-07-20T23:14:12Z",
+      "side": 1,
+      "message": "I am comparing this to the preceding function nScriptForEach().  Does that function\u0027s \"params\" argument correspond to source-level kernel argument \"usr\", which is not supported for reduce kernels?",
+      "range": {
+        "startLine": 1962,
+        "startChar": 0,
+        "endLine": 1962,
+        "endChar": 13
+      },
+      "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "185442e3_f90acb28",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1980,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2015-07-20T23:14:12Z",
+      "side": 1,
+      "message": "I don\u0027t know where this array comes from, so it\u0027s not obvious to me that it should be length 2 rather than length 6.",
+      "range": {
+        "startLine": 1980,
+        "startChar": 8,
+        "endLine": 1980,
+        "endChar": 31
+      },
+      "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
