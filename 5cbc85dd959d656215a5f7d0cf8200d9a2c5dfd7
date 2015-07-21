@@ -234,6 +234,30 @@
       "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "185442e3_24642a18",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1980,
+      "author": {
+        "id": 1074808
+      },
+      "writtenOn": "2015-07-21T00:15:56Z",
+      "side": 1,
+      "message": "It\u0027s constructed in Script.reduce() (see other file).",
+      "parentUuid": "0d0ec228_f7572053",
+      "range": {
+        "startLine": 1980,
+        "startChar": 8,
+        "endLine": 1980,
+        "endChar": 31
+      },
+      "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
