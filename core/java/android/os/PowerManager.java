@@ -367,7 +367,13 @@ public final class PowerManager {
      * @hide
      */
     public static final String REBOOT_RECOVERY = "recovery";
-    
+
+    /**
+     * The value to pass as the 'reason' argument to android_reboot().
+     * @hide
+     */
+    public static final String SHUTDOWN_USER_REQUESTED = "userrequested";
+
     final Context mContext;
     final IPowerManager mService;
     final Handler mHandler;
