@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed97ae00_fe284137",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1074808
+      },
+      "writtenOn": "2015-07-21T18:08:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8568eec_9548a405",
+      "revId": "88bcd358384185833a2edafec841b20ec137342e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d11fe41_bd0e2bec",
         "filename": "rs/jni/android_renderscript_RenderScript.cpp",
         "patchSetId": 2
