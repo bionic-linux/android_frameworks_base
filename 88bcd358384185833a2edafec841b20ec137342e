@@ -22,6 +22,30 @@
       "revId": "88bcd358384185833a2edafec841b20ec137342e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "383666c8_f26e5e78",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2597,
+      "author": {
+        "id": 1074808
+      },
+      "writtenOn": "2015-07-21T00:38:52Z",
+      "side": 1,
+      "message": "This means\n\"takes (long, long, int, long, long, int array), returns void\"\nIt should match up with the RenderScript native method rsnScriptReduce. We really should just auto-generate this information.\n\nTo verify this is the right signature:\n\n\u003e CLASSPATH\u003d$ANDROID_BUILD_TOP/out/target/common/obj/JAVA_LIBRARIES/framework_intermediates/classes.jar javap -s android.renderscript.RenderScript | grep rsnScriptReduce -A 1\n\nnative void rsnScriptReduce(long, long, int, long, long, int[]);\n    Signature: (JJIJJ[I)V",
+      "parentUuid": "6d11fe41_bd0e2bec",
+      "range": {
+        "startLine": 2597,
+        "startChar": 37,
+        "endLine": 2597,
+        "endChar": 49
+      },
+      "revId": "88bcd358384185833a2edafec841b20ec137342e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
