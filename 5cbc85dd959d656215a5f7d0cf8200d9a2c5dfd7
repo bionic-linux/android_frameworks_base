@@ -210,6 +210,30 @@
       "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d0ec228_f7572053",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1980,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2015-07-21T00:14:30Z",
+      "side": 1,
+      "message": "Where is the array actually constructed?  In the case of a forEach, the array is 6 elements regardless of the actual number of dimensions we are operating on.",
+      "parentUuid": "78429e31_31938864",
+      "range": {
+        "startLine": 1980,
+        "startChar": 8,
+        "endLine": 1980,
+        "endChar": 31
+      },
+      "revId": "5cbc85dd959d656215a5f7d0cf8200d9a2c5dfd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
