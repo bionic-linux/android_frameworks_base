@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d11fe41_bd0e2bec",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2597,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2015-07-21T00:20:19Z",
+      "side": 1,
+      "message": "I don\u0027t know how to read this.",
+      "range": {
+        "startLine": 2597,
+        "startChar": 37,
+        "endLine": 2597,
+        "endChar": 49
+      },
+      "revId": "88bcd358384185833a2edafec841b20ec137342e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
