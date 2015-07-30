@@ -92,6 +92,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1443,6 +1444,7 @@ class MountService extends IMountService.Stub
     private void addVolumeLocked(StorageVolume volume) {
         Slog.d(TAG, "addVolumeLocked() " + volume);
         mVolumes.add(volume);
+        Collections.sort(mVolumes);
         final StorageVolume existing = mVolumesByPath.put(volume.getPath(), volume);
         if (existing != null) {
             throw new IllegalStateException(

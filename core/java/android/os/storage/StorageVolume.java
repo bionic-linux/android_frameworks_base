@@ -32,7 +32,7 @@ import java.io.File;
  *
  * @hide
  */
-public class StorageVolume implements Parcelable {
+public class StorageVolume implements Parcelable, Comparable<StorageVolume> {
 
     // TODO: switch to more durable token
     private int mStorageId;
@@ -310,5 +310,11 @@ public class StorageVolume implements Parcelable {
         parcel.writeString(mUuid);
         parcel.writeString(mUserLabel);
         parcel.writeString(mState);
+    }
+
+    @Override
+    public int compareTo(StorageVolume another) {
+        // TODO Auto-generated method stub
+        return mStorageId - another.getStorageId();
     }
 }
