@@ -537,7 +537,7 @@ public class PackageManagerBackupAgent extends BackupAgent {
                 pkg = in.readUTF();
             } else {
                 // This is an older version of the state file in which the lead element
-                // is not a STATE_FILE_VERSION string.  If that's the case, we want to
+                // is not a STATE_FILE_HEADER string.  If that's the case, we want to
                 // make sure to write our full backup dataset when given an opportunity.
                 // We trigger that by simply not marking the restored package metadata
                 // as known-to-exist-in-archive.
