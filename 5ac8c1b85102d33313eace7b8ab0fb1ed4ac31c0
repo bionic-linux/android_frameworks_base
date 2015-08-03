@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a56a845_ba9a6d42",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T16:49:21Z",
+      "side": 1,
+      "message": "never returns false so can be void?",
+      "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a5c2064_3c393d90",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T16:49:21Z",
+      "side": 1,
+      "message": "what if gids[0] \u003d\u003d \u0027\\0\u0027?",
+      "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a01803c_74ebe69c",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T16:49:21Z",
+      "side": 1,
+      "message": "gid_list[cmp++] \u003d gid; is more typical C.",
+      "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa667c34_f726ba68",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T16:49:21Z",
+      "side": 1,
+      "message": "again, rc \u003d\u003d false is what you mean I think.",
+      "range": {
+        "startLine": 198,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 17
+      },
+      "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
