@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aae91cd1_5cbc1d06",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-03T21:16:36Z",
+      "side": 1,
+      "message": "Copyright and license notice?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a24e8f1_a746cad5",
+        "filename": "libs/packagelistparser/packagelistparser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-03T21:16:36Z",
+      "side": 1,
+      "message": "typical license is granted to \"The Android Open Source Project\" with an Apache License version 2.0 header.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ad9483e_5fbc0b06",
+        "filename": "libs/packagelistparser/packagelistparser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-03T21:16:36Z",
+      "side": 1,
+      "message": "If this does not build for any target products (Mac, Linux, Windows), then use __BEGIN_DECLS as defined in sys/cdefs.h",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca157084_45c1ca76",
+        "filename": "libs/packagelistparser/packagelistparser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-03T21:16:36Z",
+      "side": 1,
+      "message": "__END_DECLS ?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 6
+      },
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
