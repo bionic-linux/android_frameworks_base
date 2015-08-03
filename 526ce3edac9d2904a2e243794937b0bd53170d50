@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4acfc072_21c80e4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T21:33:31Z",
+      "side": 1,
+      "message": "I would agree with you Elliot, I was just going off of the comments in the runas code. Just let me know what you would be willing to accept, and I can make the change.",
+      "parentUuid": "2ad60c0d_c0667e1a",
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae91cd1_5cbc1d06",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2015-08-03T21:16:36Z",
       "side": 1,
       "message": "Copyright and license notice?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ad9483e_5feb2b9c",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T21:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aae91cd1_5cbc1d06",
       "range": {
         "startLine": 1,
         "startChar": 0,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6acc847d_e230e6f0",
+        "filename": "libs/packagelistparser/packagelistparser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T21:33:31Z",
+      "side": 1,
+      "message": "Done, Ill just copy what I had for libaudit.c|h in Logd and update.",
+      "parentUuid": "0a24e8f1_a746cad5",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ad9483e_5fbc0b06",
         "filename": "libs/packagelistparser/packagelistparser.h",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2015-08-03T21:16:36Z",
       "side": 1,
       "message": "If this does not build for any target products (Mac, Linux, Windows), then use __BEGIN_DECLS as defined in sys/cdefs.h",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ad9483e_ffc23f27",
+        "filename": "libs/packagelistparser/packagelistparser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T21:33:31Z",
+      "side": 1,
+      "message": "I\u0027m confused by your statement. Isn\u0027t the target product always an Android device? This would have to build on any host building an Android target for all architectures.\n\nDo you want me to drop the ifdef cplusplus and switch to __BEGIIN_DECLS like in:\n\nsystem/core/logd/libaudit.h",
+      "parentUuid": "0ad9483e_5fbc0b06",
       "range": {
         "startLine": 17,
         "startChar": 0,
