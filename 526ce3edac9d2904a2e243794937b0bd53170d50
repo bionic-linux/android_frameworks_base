@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2ad60c0d_c0667e1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-08-03T21:21:40Z",
+      "side": 1,
+      "message": "i\u0027m not sure that\u0027s true. it\u0027s probably more useful to just have one library parsing this stuff.",
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae91cd1_5cbc1d06",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 8
