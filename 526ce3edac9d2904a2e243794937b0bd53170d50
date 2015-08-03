@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8a0ff877_6304c221",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-08-03T21:59:01Z",
+      "side": 1,
+      "message": "i\u0027m not on the security team, but i think those comments are unmotivated and that having One True Implementation is important for security anyway.\n\nthere\u0027s certainly a plan to have run-as rewritten so the zygote does the work (in which case presumably it would end up switching over to this implementation implicitly anyway).",
+      "parentUuid": "4acfc072_21c80e4d",
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae91cd1_5cbc1d06",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 8
