@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a08cc62_b362827d",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T16:56:55Z",
+      "side": 1,
+      "message": "I guess it doesn\u0027t now. Likely have it return size_t for the cnt",
+      "parentUuid": "0a56a845_ba9a6d42",
+      "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a5c2064_3c393d90",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0a56a845_1a5a79ff",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T16:56:55Z",
+      "side": 1,
+      "message": "Is this even possible? We can add a check next to the none check",
+      "parentUuid": "4a5c2064_3c393d90",
+      "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a01803c_74ebe69c",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2015-08-03T16:49:21Z",
       "side": 1,
       "message": "gid_list[cmp++] \u003d gid; is more typical C.",
+      "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a61b821_967dca91",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T16:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a01803c_74ebe69c",
       "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
