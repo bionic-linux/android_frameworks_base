@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0ad9483e_1f6603a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T22:14:37Z",
+      "side": 1,
+      "message": "Good to know about the plan on runas. Do you want me to just strike this comment in the commit message?\n\nAs far as the security implications of the parsing routines, their are typically 2 models of thought. The first is, if everyone has their own implementaton of operation X, when X has a vulnerability it only affects that very specific module. The other school of thought is to have everyone use the same package and if a vulnerability is found, only have to fix it in one spot, however, everything that uses it breaks.",
+      "parentUuid": "8a0ff877_6304c221",
+      "revId": "526ce3edac9d2904a2e243794937b0bd53170d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae91cd1_5cbc1d06",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 8
