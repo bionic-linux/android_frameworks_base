@@ -1,0 +1,369 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a536c56_fb7a2b95",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "Put { on its own line for functions.",
+      "range": {
+        "startLine": 12,
+        "startChar": 62,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a61b821_5396a4a3",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "{ } not needed around single statement.",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a08cc62_138c2e10",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "space between if and (",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 7
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a0b0862_12b70a26",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "empty line",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a56a845_3a565d36",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "indent",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 5
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa667c34_17fff674",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 30,
+        "startChar": 65,
+        "endLine": 30,
+        "endChar": 66
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca673030_156a5409",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "pointless empty line - does not help readability.",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a61b821_739120aa",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "Any particular reason for strtok_r here rather than strsep as below?",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a5c2064_fcdea5fd",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa667c34_77046a21",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "space between if and (",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a01803c_f4e876ed",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "Do we really want to enforce this here?",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a61b821_b3aa98cc",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "wrong indentation",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a01803c_d4e57215",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "combine with prior statement, and kill extranaeous empty line.",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca673030_b558c084",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "Not really a fan of this kind of argument checking; assert it or let it fail when there is no legitimate usage.",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa667c34_970ae627",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "empty line",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a536c56_1b28bf87",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "space between if and (",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a5c2064_7ca8d55f",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "Is this something we want to enforce here?",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a08cc62_33fa1285",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "rc \u003d\u003d false?",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a536c56_9b196fb1",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:16:29Z",
+      "side": 1,
+      "message": "More informative error message, preferably including PACKAGES_LIST_FILE, lineno, and if errno, strerror(errno).",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
