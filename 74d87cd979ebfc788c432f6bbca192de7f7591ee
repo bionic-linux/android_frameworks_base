@@ -299,6 +299,23 @@
     },
     {
       "key": {
+        "uuid": "ea6cf416_39c82b4d",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:27:11Z",
+      "side": 1,
+      "message": "For better validity checking, assign strtoul() result to unsigned long variable and range check against UID_MAX before assigning to uid_t.",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a536c56_1b28bf87",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 4
@@ -327,6 +344,23 @@
       "writtenOn": "2015-08-03T15:16:29Z",
       "side": 1,
       "message": "Is this something we want to enforce here?",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a01803c_d4fa92ac",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-08-03T15:27:11Z",
+      "side": 1,
+      "message": "Similarly, assign strtoul() result to unsigned long variable and verify that it is 0 or 1 only.",
       "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
