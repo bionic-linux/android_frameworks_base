@@ -127,6 +127,30 @@
       "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a56a845_5a1fd11d",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T17:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa667c34_f726ba68",
+      "range": {
+        "startLine": 198,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 17
+      },
+      "revId": "5ac8c1b85102d33313eace7b8ab0fb1ed4ac31c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
