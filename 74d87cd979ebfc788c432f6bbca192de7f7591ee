@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a01803c_34295ebe",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "Unlesss thier IS a C standard for Android, which I have yet to encounter, then I prefer this bracket style.\n\ncommon_time/clock_recovery.cpp uses this bracket style.",
+      "parentUuid": "2a536c56_fb7a2b95",
+      "range": {
+        "startLine": 12,
+        "startChar": 62,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a61b821_5396a4a3",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 4
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "8a61b821_936cbc2a",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a08cc62_138c2e10",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 7
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a0b0862_12e0aa08",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "Not needed but to me thats not a good coding practice. Bugs have been introduced when someone changes these lines, just bracket everything. Also, input/PointerController.cpp uses this style.",
+      "parentUuid": "8a61b821_5396a4a3",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a0b0862_12b70a26",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ea6cf416_19f60f89",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "Done for here and throughout, Ill run the formatter on this. I should have done it BEFORE I uploaded.",
+      "parentUuid": "0a0b0862_12b70a26",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a56a845_3a565d36",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2015-08-03T15:16:29Z",
       "side": 1,
       "message": "indent",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 5
+      },
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a5c2064_5c86b1f1",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a56a845_3a565d36",
       "range": {
         "startLine": 25,
         "startChar": 4,
@@ -231,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "8a61b821_5364e43b",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "No",
+      "parentUuid": "4a01803c_f4e876ed",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a61b821_b3aa98cc",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 4
@@ -276,6 +414,24 @@
       "writtenOn": "2015-08-03T15:16:29Z",
       "side": 1,
       "message": "Not really a fan of this kind of argument checking; assert it or let it fail when there is no legitimate usage.",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a5c2064_bc9a6d42",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca673030_b558c084",
       "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -350,6 +506,24 @@
     },
     {
       "key": {
+        "uuid": "ea6cf416_99e17fbc",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "No I dont think so",
+      "parentUuid": "4a5c2064_7ca8d55f",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a01803c_d4fa92ac",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 4
@@ -384,6 +558,24 @@
     },
     {
       "key": {
+        "uuid": "ea6cf416_f9deb3fd",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "Im gonna flip the logic here.",
+      "parentUuid": "2a08cc62_33fa1285",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a536c56_9b196fb1",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 4
@@ -395,6 +587,24 @@
       "writtenOn": "2015-08-03T15:16:29Z",
       "side": 1,
       "message": "More informative error message, preferably including PACKAGES_LIST_FILE, lineno, and if errno, strerror(errno).",
+      "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca673030_b8c55585",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-03T15:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a536c56_9b196fb1",
       "revId": "74d87cd979ebfc788c432f6bbca192de7f7591ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
