@@ -34,6 +34,259 @@
       "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4acfc072_95091439",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "Not sure of the value of both of these, there is a 1:1 relationship between errno and strerror messages.",
+      "range": {
+        "startLine": 94,
+        "startChar": 37,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ad60c0d_06d31e7f",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "IF_ALOGE() ALOGE(...)\n\nwould allow us to to control whether these get logged at all with is loggable mechanics.",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 13
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a0ff877_89d2bdca",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "calloc will also produce an error message, this second message would contribute to log stutter.\n\nKnowing _which_ allocation failed is also generally meaningless in the debug sense, it would be the least of your worries ;-}",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 9
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ad60c0d_2601027b",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "Heaven forbid the file landed in DOS format, but it would not hurt to add a \\r as well? ditto on all below.",
+      "range": {
+        "startLine": 109,
+        "startChar": 32,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca157084_cec837b9",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 55
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ad60c0d_86e72e58",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 9
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ad9483e_0877abf7",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 9
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6acc847d_ebd52164",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 13
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aae91cd1_45f6008a",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "IF_ALOGE() ALOGE()",
+      "range": {
+        "startLine": 237,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 9
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6acc847d_2b01c97a",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "Maybe only ALOGE if errmsg is set to accommodate reducing log stutter?",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 48
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ad9483e_6886776b",
+        "filename": "services/core/java/com/android/server/pm/Settings.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T15:03:56Z",
+      "side": 1,
+      "message": "I agree with enh@ regarding also altering run-as, placing a note here to remember to drop this line when run-as is modified.",
+      "range": {
+        "startLine": 1686,
+        "startChar": 25,
+        "endLine": 1686,
+        "endChar": 52
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
