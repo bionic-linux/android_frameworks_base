@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "cadad034_310a18af",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-04T18:28:15Z",
+      "side": 1,
+      "message": "__android_log_is_loggable() (wrapped in IF_ALOGE()) is new for M. It is optional, but does allow us to suppress logspam should something call this library incessantly.",
+      "parentUuid": "aae91cd1_0524f85e",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 13
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a0ff877_89d2bdca",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 9
