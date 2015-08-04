@@ -16,6 +16,24 @@
       "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aae91cd1_6504dc21",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-04T14:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad9483e_c876a34c",
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
