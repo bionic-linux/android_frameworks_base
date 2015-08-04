@@ -83,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "aae91cd1_0524f85e",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-04T16:23:44Z",
+      "side": 1,
+      "message": "Sorry just saw your comments. So I looked around in system/core and frameworks/base, their are no uses there of IF_LOGE(). It appears you do something like IF_LOGE() { ALOGE(msg, ...); }",
+      "parentUuid": "2ad60c0d_06d31e7f",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 13
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a0ff877_89d2bdca",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 9
