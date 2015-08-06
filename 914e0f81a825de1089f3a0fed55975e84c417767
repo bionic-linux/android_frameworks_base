@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "eaa1540d_913d3e7d",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-08-06T18:15:15Z",
+      "side": 1,
+      "message": "yeah, don\u0027t print errno values. just use strerror.",
+      "parentUuid": "4acfc072_95091439",
+      "range": {
+        "startLine": 94,
+        "startChar": 37,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "914e0f81a825de1089f3a0fed55975e84c417767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a0ff877_89d2bdca",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 9
