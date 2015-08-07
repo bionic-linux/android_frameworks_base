@@ -2600,4 +2600,5 @@
 
     <public type="attr" name="extractNativeLibs" />
     <public type="attr" name="preventAppDataExecution" />
+    <public type="attr" name="isolatedApplicationData" />
 </resources>

@@ -2592,6 +2592,15 @@ public class PackageParser {
                 false)) {
             ai.flags |= ApplicationInfo.FLAG_PREVENT_APPDATA_EXECUTION;
         }
+        if (sa.getBoolean(
+                com.android.internal.R.styleable.AndroidManifestApplication_isolatedApplicationData,
+                false)) {
+            if (owner.mSharedUserId == null) {
+                ai.flags |= ApplicationInfo.FLAG_ISOLATED_APPDATA;
+            } else {
+                outError[0] = "sharedUserId applications cannot opt in to isolatedApplicationData.";
+            }
+        }
 
         if (owner.applicationInfo.targetSdkVersion >= Build.VERSION_CODES.FROYO) {
             str = sa.getNonConfigurationString(

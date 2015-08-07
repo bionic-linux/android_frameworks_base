@@ -716,6 +716,7 @@ package android {
     field public static final int isRepeatable = 16843336; // 0x1010248
     field public static final int isScrollContainer = 16843342; // 0x101024e
     field public static final int isSticky = 16843335; // 0x1010247
+    field public static final int isolatedApplicationData = 16843992; // 0x10104d8
     field public static final int isolatedProcess = 16843689; // 0x10103a9
     field public static final int itemBackground = 16843056; // 0x1010130
     field public static final int itemIconDisabledAlpha = 16843057; // 0x1010131

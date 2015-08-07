@@ -402,6 +402,8 @@
          policy. The default value is false. -->
     <!-- To opt in for ensuring no execute permissions are given to files downloaded by app -->
     <attr name="preventAppDataExecution" format="boolean" />
+    <!-- To opt in for ensuring isolation of the app data directory -->
+    <attr name="isolatedApplicationData" format="boolean" />
 
     <!-- Declare that code from this application will need to be loaded into other
          applications' processes. On devices that support multiple instruction sets,
@@ -1162,6 +1164,7 @@
         <attr name="multiArch" />
         <attr name="extractNativeLibs" />
         <attr name="preventAppDataExecution" />
+	<attr name="isolatedApplicationData" />
     </declare-styleable>
     <!-- The <code>permission</code> tag declares a security permission that can be
          used to control access from other packages to specific components or

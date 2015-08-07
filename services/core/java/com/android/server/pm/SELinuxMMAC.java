@@ -58,7 +58,9 @@ public final class SELinuxMMAC {
 
     static final String TAG = "SELinuxMMAC";
 
-    // Append to existing seinfo labels when opting in for preventAppDataExecution attribute
+    // Append to existing seinfo labels when opting in for
+    // isolatedApplicationData or preventAppDataExecution manifest attribute(s)
+    private static final String ISOLATEDDATA_STR = ":isolated";
     private static final String NOEXECUTE_STR = ":nxfile";
 
     private static final boolean DEBUG_POLICY = false;
@@ -322,6 +324,11 @@ public final class SELinuxMMAC {
                     break;
                 }
             }
+        }
+        // Note: the order here is important for matching seinfo in seapp_contexts
+        // All possible combinations of seinfo strings must be handled in seapp_contexts
+        if ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_ISOLATED_APPDATA) != 0) {
+            pkg.applicationInfo.seinfo += ISOLATEDDATA_STR;
         }
         if ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_PREVENT_APPDATA_EXECUTION) != 0) {
             pkg.applicationInfo.seinfo += NOEXECUTE_STR;

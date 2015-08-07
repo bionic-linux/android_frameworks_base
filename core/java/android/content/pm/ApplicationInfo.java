@@ -363,6 +363,15 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      public static final int FLAG_PREVENT_APPDATA_EXECUTION = 1<<29;
 
     /**
+     * Value for {@link #flags}: {@code true} if code from this application wants to isolate
+     * its application data from all other apps. If {@code false}, the app chooses
+     * not to opt into the additional SE-based protection of its application data.
+     *
+     * @hide
+     */
+     public static final int FLAG_ISOLATED_APPDATA = 1<<30;
+
+    /**
      * Value for {@link #flags}: true if code from this application will need to be
      * loaded into other applications' processes. On devices that support multiple
      * instruction sets, this implies the code might be loaded into a process that's
