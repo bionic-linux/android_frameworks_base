@@ -48,6 +48,20 @@ public class AudioFormat {
     public static final int ENCODING_AC3 = 5;
     /** Audio data format: E-AC-3 compressed */
     public static final int ENCODING_E_AC3 = 6;
+    /** Audio data format: DTS compressed */
+    public static final int ENCODING_DTS = 7;
+    /** Audio data format: DTS HD compressed */
+    public static final int ENCODING_DTS_HD = 8;
+    /** Audio data format: DolbyTrueHD compressed */
+    public static final int ENCODING_DOLBY_TRUEHD = 9;
+    /** Audio data format: Dolby ATMOS compressed */
+    public static final int ENCODING_DOLBY_ATMOS = 10;
+    /** Audio data format: Dolby DTS_X compressed */
+    public static final int ENCODING_DTS_X = 11;
+    /** Audio data format: Dolby DTS_NEO_X compressed */
+    public static final int ENCODING_DTS_NEO_X = 12;
+    /** Audio data format: Dolby DTS_NEURAL_X compressed */
+    public static final int ENCODING_DTS_NEURAL_X = 13;
 
     /** Invalid audio channel configuration */
     /** @deprecated use CHANNEL_INVALID instead  */
