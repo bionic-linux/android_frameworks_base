@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "046a21d9_fd083f34",
+        "filename": "core/java/android/os/MessageQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2015-08-12T22:00:07Z",
+      "side": 1,
+      "message": "Don\u0027t need this.",
+      "revId": "7960a8fe7a169d8346c15e7a6e3e2bbfb6da8681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44141933_cdc929bf",
+        "filename": "core/java/android/os/MessageQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2015-08-12T22:00:07Z",
+      "side": 1,
+      "message": "msg \u003d null;",
+      "revId": "7960a8fe7a169d8346c15e7a6e3e2bbfb6da8681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4f6494b_51edc4b0",
+        "filename": "core/java/android/os/MessageQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2015-08-12T22:00:07Z",
+      "side": 1,
+      "message": "We don\u0027t need any of this.",
+      "revId": "7960a8fe7a169d8346c15e7a6e3e2bbfb6da8681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4298d86_3d7fbb5a",
+        "filename": "core/java/android/os/MessageQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2015-08-12T22:00:07Z",
+      "side": 1,
+      "message": "if (pendingIdleHandlerCount \u003c 0 \u0026\u0026 msg \u003d\u003d null) {",
+      "revId": "7960a8fe7a169d8346c15e7a6e3e2bbfb6da8681",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
