@@ -22,6 +22,30 @@
       "revId": "83c97921bcd4c763a2d8f6b123cf9fb67d51402b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4485f957_5d269e6b",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 15
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-24T20:59:38Z",
+      "side": 1,
+      "message": "Nothing broke. I made \\r changes elsewhere and this local branch did not have the correct version.",
+      "parentUuid": "048f817d_f14c5b1d",
+      "range": {
+        "startLine": 178,
+        "startChar": 28,
+        "endLine": 178,
+        "endChar": 35
+      },
+      "revId": "83c97921bcd4c763a2d8f6b123cf9fb67d51402b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
