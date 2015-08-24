@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048f817d_f14c5b1d",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 15
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-08-24T20:55:11Z",
+      "side": 1,
+      "message": "What problem occurred that one feels like removing the \\r?\n\nWhat about Android release that are running under other operating systems than Linux?",
+      "range": {
+        "startLine": 178,
+        "startChar": 28,
+        "endLine": 178,
+        "endChar": 35
+      },
+      "revId": "83c97921bcd4c763a2d8f6b123cf9fb67d51402b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
