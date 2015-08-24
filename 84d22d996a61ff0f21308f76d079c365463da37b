@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4026d8c_494245c6",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4294,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-08-24T12:45:44Z",
+      "side": 1,
+      "message": "0 is not a valid resource ID either. Change to id \u003e 0, move to beginning of if statement so that we can avoid JNI call in Resources method.",
+      "range": {
+        "startLine": 4294,
+        "startChar": 61,
+        "endLine": 4294,
+        "endChar": 72
+      },
+      "revId": "84d22d996a61ff0f21308f76d079c365463da37b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
