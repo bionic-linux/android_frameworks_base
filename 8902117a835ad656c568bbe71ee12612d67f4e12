@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84253145_6b7a9c95",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 17
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-24T21:04:54Z",
+      "side": 1,
+      "message": "Ok, now the ordering matches what is below...",
+      "revId": "8902117a835ad656c568bbe71ee12612d67f4e12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
