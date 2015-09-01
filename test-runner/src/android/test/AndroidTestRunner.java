@@ -86,7 +86,7 @@ public class AndroidTestRunner extends BaseTestRunner {
         try {
             return (Class<? extends Test>) mContext.getClassLoader().loadClass(testClassName);
         } catch (ClassNotFoundException e) {
-            runFailed("Could not find test class. Class: " + testClassName);
+            runFailed("Could not find test class. Class: " + testClassName, e);
         }
         return null;
     }
@@ -114,13 +114,13 @@ public class AndroidTestRunner extends BaseTestRunner {
             testCase.setName(testMethodName);
             return testCase;
         } catch (IllegalAccessException e) {
-            runFailed("Could not access test class. Class: " + testClass.getName());
+            runFailed("Could not access test class. Class: " + testClass.getName(), e);
         } catch (InstantiationException e) {
-            runFailed("Could not instantiate test class. Class: " + testClass.getName());
+            runFailed("Could not instantiate test class. Class: " + testClass.getName(), e);
         } catch (IllegalArgumentException e) {
-            runFailed("Illegal argument passed to constructor. Class: " + testClass.getName());
+            runFailed("Illegal argument passed to constructor. Class: " + testClass.getName(), e);
         } catch (InvocationTargetException e) {
-            runFailed("Constructor thew an exception. Class: " + testClass.getName());
+            runFailed("Constructor thew an exception. Class: " + testClass.getName(), e);
         }
         return null;
     }
@@ -137,13 +137,14 @@ public class AndroidTestRunner extends BaseTestRunner {
                         (TestSuiteProvider) clazz.getConstructor().newInstance();
                 return testSuiteProvider.getTestSuite();
             } catch (InstantiationException e) {
-                runFailed("Could not instantiate test suite provider. Class: " + clazz.getName());
+                runFailed(
+                    "Could not instantiate test suite provider. Class: " + clazz.getName(), e);
             } catch (IllegalAccessException e) {
-                runFailed("Illegal access of test suite provider. Class: " + clazz.getName());
+                runFailed("Illegal access of test suite provider. Class: " + clazz.getName(), e);
             } catch (InvocationTargetException e) {
-                runFailed("Invocation exception test suite provider. Class: " + clazz.getName());
+                runFailed("Invocation exception test suite provider. Class: " + clazz.getName(), e);
             } catch (NoSuchMethodException e) {
-                runFailed("No such method on test suite provider. Class: " + clazz.getName());
+                runFailed("No such method on test suite provider. Class: " + clazz.getName(), e);
             }
         }
         return getTest(clazz.getName());
@@ -253,5 +254,9 @@ public class AndroidTestRunner extends BaseTestRunner {
 
     protected void runFailed(String message) {
         throw new RuntimeException(message);
+    }
+
+    protected void runFailed(String message, Exception e) {
+        throw new RuntimeException(message, e);
     }
 }
