@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6492fe15_86021048",
+        "filename": "test-runner/src/android/test/AndroidTestRunner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2015-09-01T17:42:40Z",
+      "side": 1,
+      "message": "Nit: More than 100 chars",
+      "range": {
+        "startLine": 140,
+        "startChar": 98,
+        "endLine": 140,
+        "endChar": 101
+      },
+      "revId": "10998a1045687e8299316f10533322ab87926148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
