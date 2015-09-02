@@ -35,6 +35,7 @@ import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkTemplate.buildTemplateMobileWildcard;
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
+import static android.net.NetworkTemplate.buildTemplateEthernet;
 import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.provider.Settings.Global.NETSTATS_DEV_BUCKET_DURATION;
@@ -1002,6 +1003,18 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         uidTotal = mUidRecorder.getTotalSinceBootLocked(template);
 
         EventLogTags.writeNetstatsWifiSample(
+                devTotal.rxBytes, devTotal.rxPackets, devTotal.txBytes, devTotal.txPackets,
+                xtTotal.rxBytes, xtTotal.rxPackets, xtTotal.txBytes, xtTotal.txPackets,
+                uidTotal.rxBytes, uidTotal.rxPackets, uidTotal.txBytes, uidTotal.txPackets,
+                trustedTime);
+
+        // collect ethernet sample
+        template = buildTemplateEthernet();
+        devTotal = mDevRecorder.getTotalSinceBootLocked(template);
+        xtTotal = mXtRecorder.getTotalSinceBootLocked(template);
+        uidTotal = mUidRecorder.getTotalSinceBootLocked(template);
+
+        EventLogTags.writeNetstatsEthernetSample(
                 devTotal.rxBytes, devTotal.rxPackets, devTotal.txBytes, devTotal.txPackets,
                 xtTotal.rxBytes, xtTotal.rxPackets, xtTotal.txBytes, xtTotal.txPackets,
                 uidTotal.rxBytes, uidTotal.rxPackets, uidTotal.txBytes, uidTotal.txPackets,
