@@ -62,7 +62,6 @@ LOCAL_SRC_FILES := \
     options_unittest.cpp \
     test_main.cpp \
     tests/end_to_end_tests.cpp \
-    tests/test.cpp \
     tests/example_interface_test_data.cpp \
 
 LOCAL_SHARED_LIBRARIES := \
