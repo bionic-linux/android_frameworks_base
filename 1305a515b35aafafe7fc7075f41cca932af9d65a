@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a40a365b_0f3d25a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2015-09-02T18:39:58Z",
+      "side": 1,
+      "message": "Could you add Bug: and Test: lines?  In lieu of good unittests (which you should also run) we should probably build the SDK with this change to make sure that this hasn\u0027t broken anything (`make sdk` if I read the internet correctly).",
+      "revId": "1305a515b35aafafe7fc7075f41cca932af9d65a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "644d9e85_da28b163",
+        "filename": "tools/aidl/generate_java.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2015-09-02T18:39:58Z",
+      "side": 1,
+      "message": "Are there other kinds of documents?  Maybe return 1 here if it\u0027s not a binder interface type?",
+      "revId": "1305a515b35aafafe7fc7075f41cca932af9d65a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
