@@ -2981,6 +2981,68 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         return false;
     }
 
+    @Override
+    public byte[] generateKeyPair(ComponentName who, String alias, int keyType,
+            int keySize, String subject, byte[] attributes) {
+        if (who == null) {
+            throw new NullPointerException("ComponentName is null");
+        }
+        synchronized (this) {
+            getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_PROFILE_OWNER);
+        }
+        final UserHandle userHandle = new UserHandle(UserHandle.getCallingUserId());
+        final int callingUid = Binder.getCallingUid();
+        final long id = Binder.clearCallingIdentity();
+        try {
+            final KeyChainConnection keyChainConnection = KeyChain.bindAsUser(mContext, userHandle);
+            try {
+                IKeyChainService keyChain = keyChainConnection.getService();
+                return keyChain.generateKeyPair(callingUid, alias, keyType, keySize,
+                        subject, attributes);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "Generating keypair", e);
+            } finally {
+                keyChainConnection.close();
+            }
+        } catch (InterruptedException e) {
+            Log.w(LOG_TAG, "Interrupted while generating keypair", e);
+            Thread.currentThread().interrupt();
+        } finally {
+            Binder.restoreCallingIdentity(id);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean setCertificate(ComponentName who, String alias, byte[] certificate) {
+        if (who == null) {
+            throw new NullPointerException("ComponentName is null");
+        }
+        synchronized (this) {
+            getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_PROFILE_OWNER);
+        }
+        final UserHandle userHandle = new UserHandle(UserHandle.getCallingUserId());
+        final int callingUid = Binder.getCallingUid();
+        final long id = Binder.clearCallingIdentity();
+        try {
+            final KeyChainConnection keyChainConnection = KeyChain.bindAsUser(mContext, userHandle);
+            try {
+                IKeyChainService keyChain = keyChainConnection.getService();
+                return keyChain.setCertificate(callingUid, alias, certificate);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "Setting certificate", e);
+            } finally {
+                keyChainConnection.close();
+            }
+        } catch (InterruptedException e) {
+            Log.w(LOG_TAG, "Interrupted while setting certificate", e);
+            Thread.currentThread().interrupt();
+        } finally {
+            Binder.restoreCallingIdentity(id);
+        }
+        return false;
+    }
+
     private void wipeDataLocked(boolean wipeExtRequested, String reason) {
         // If the SD card is encrypted and non-removable, we have to force a wipe.
         boolean forceExtWipe = !Environment.isExternalStorageRemovable() && isExtStorageEncrypted();
