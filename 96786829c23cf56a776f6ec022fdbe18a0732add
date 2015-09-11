@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c34e74_98008c77",
+        "filename": "tools/aidl/aidl_language_y.y",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-09-11T01:39:16Z",
+      "side": 1,
+      "message": "you don\u0027t want to pass \u0027l\u0027 through? would that help fix the TODO in your other patch about reporting line numbers as -1?",
+      "revId": "96786829c23cf56a776f6ec022fdbe18a0732add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
