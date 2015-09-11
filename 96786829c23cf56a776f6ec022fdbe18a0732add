@@ -16,6 +16,24 @@
       "revId": "96786829c23cf56a776f6ec022fdbe18a0732add",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84d4522f_d1c38322",
+        "filename": "tools/aidl/aidl_language_y.y",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1080302
+      },
+      "writtenOn": "2015-09-11T01:45:04Z",
+      "side": 1,
+      "message": "We\u0027re not that far along in the port. yy::parse::location_type isn\u0027t defined yet, and it won\u0027t be recording properly (the original implementer seems to have written location tracking support /around/ flex/bison, rather than within them, so I still have to sort out all of that mess in another CL).",
+      "parentUuid": "e4c34e74_98008c77",
+      "revId": "96786829c23cf56a776f6ec022fdbe18a0732add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
