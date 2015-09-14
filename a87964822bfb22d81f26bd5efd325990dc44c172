@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648afea0_d16c1444",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2015-09-14T17:58:21Z",
+      "side": 1,
+      "message": "Don\u0027t need volatile - access to this field already synchronized",
+      "range": {
+        "startLine": 512,
+        "startChar": 16,
+        "endLine": 512,
+        "endChar": 24
+      },
+      "revId": "a87964822bfb22d81f26bd5efd325990dc44c172",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a46156bd_c0cd14f3",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2015-09-14T17:58:21Z",
+      "side": 1,
+      "message": "Why do you need to maintain it outside of PhoneStateListener lifecycle?",
+      "range": {
+        "startLine": 531,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 17
+      },
+      "revId": "a87964822bfb22d81f26bd5efd325990dc44c172",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
