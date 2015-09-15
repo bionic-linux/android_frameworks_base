@@ -1,0 +1,308 @@
+/*
+ * Copyright (C) 2015 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.preload;
+
+import com.android.ddmlib.AndroidDebugBridge;
+import com.android.ddmlib.AndroidDebugBridge.IDeviceChangeListener;
+import com.android.preload.classdataretrieval.hprof.Hprof;
+import com.android.ddmlib.DdmPreferences;
+import com.android.ddmlib.IDevice;
+import com.android.ddmlib.IShellOutputReceiver;
+
+import java.util.Date;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+public class DeviceUtils {
+
+  public static void init() {
+    DdmPreferences.setSelectedDebugPort(8800);
+
+    Hprof.init();
+
+    AndroidDebugBridge.init(true);
+
+    AndroidDebugBridge.createBridge();
+  }
+
+  public static void doShell(IDevice device, String cmdline, long timeout, TimeUnit unit) {
+    doShell(device, cmdline, new NullShellOutputReceiver(), timeout, unit);
+  }
+
+  public static String doShellReturnString(IDevice device, String cmdline, long timeout,
+      TimeUnit unit) {
+    CollectStringShellOutputReceiver rec = new CollectStringShellOutputReceiver();
+    doShell(device, cmdline, rec, timeout, unit);
+    return rec.toString();
+  }
+
+  public static void doShell(IDevice device, String cmdline, IShellOutputReceiver receiver,
+      long timeout, TimeUnit unit) {
+    try {
+      device.executeShellCommand(cmdline, receiver, timeout, unit);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void doAMStart(IDevice device, String name, String activity) {
+    doShell(device, "am start -n " + name + " /." + activity, 30, TimeUnit.SECONDS);
+  }
+
+  public static IDevice findDevice(String serial) {
+    WaitForDevice wfd = new WaitForDevice(serial, 10000);
+    return wfd.get();
+  }
+
+  public static IDevice[] findDevices() {
+    WaitForDevice wfd = new WaitForDevice(null, 10000);
+    wfd.get();
+    return AndroidDebugBridge.getBridge().getDevices();
+  }
+
+  public static String getBuildType(IDevice device) {
+    // Ensure it's a userdebug or eng build.
+    try {
+      Future<String> buildType = device.getSystemProperty("ro.build.type");
+      return buildType.get(500, TimeUnit.MILLISECONDS);
+    } catch (Exception e) {
+    }
+    return null;
+  }
+
+  public static boolean hasPrebuiltBootImage(IDevice device) {
+    String ret =
+        doShellReturnString(device, "ls /system/framework/*/boot.art", 500, TimeUnit.MILLISECONDS);
+
+    return !ret.contains("No such file or directory");
+  }
+
+  public static boolean removePreloaded(IDevice device, long preloadedWaitTimeInSeconds) {
+    String oldContent =
+        DeviceUtils.doShellReturnString(device, "cat /etc/preloaded-classes", 1, TimeUnit.SECONDS);
+    if (oldContent.trim().equals("")) {
+      System.out.println("Preloaded-classes already empty.");
+      return true;
+    }
+
+    // Stop the system server etc.
+    doShell(device, "stop", 100, TimeUnit.MILLISECONDS);
+
+    // Remount /system, delete /etc/preloaded-classes. It would be nice to use "adb remount,"
+    // but AndroidDebugBridge doesn't expose it.
+    doShell(device, "mount -o remount,rw /system", 500, TimeUnit.MILLISECONDS);
+    doShell(device, "rm /etc/preloaded-classes", 100, TimeUnit.MILLISECONDS);
+    // We do need an empty file.
+    doShell(device, "touch /etc/preloaded-classes", 100, TimeUnit.MILLISECONDS);
+
+    // Delete the files in the dalvik cache.
+    doShell(device, "rm /data/dalvik-cache/*/*boot.art", 500, TimeUnit.MILLISECONDS);
+
+    // We'll try to use dev.bootcomplete to know when the system server is back up. But stop
+    // doesn't reset it, so do it manually.
+    doShell(device, "setprop dev.bootcomplete \"0\"", 500, TimeUnit.MILLISECONDS);
+
+    // Start the system server.
+    doShell(device, "start", 100, TimeUnit.MILLISECONDS);
+
+    // Do a loop checking each second whether bootcomplete. Wait for at most the given
+    // threshold.
+    Date startDate = new Date();
+    for (;;) {
+      try {
+        Thread.sleep(1000);
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+      // Check whether bootcomplete.
+      String ret =
+          doShellReturnString(device, "getprop dev.bootcomplete", 500, TimeUnit.MILLISECONDS);
+      if (ret.trim().equals("1")) {
+        break;
+      }
+      System.out.println("Still not booted: " + ret);
+
+      // Check whether we timed out. This is a simplistic check that doesn't take into account
+      // things like switches in time.
+      Date endDate = new Date();
+      long seconds =
+          TimeUnit.SECONDS.convert(endDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS);
+      if (seconds > preloadedWaitTimeInSeconds) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * @param device
+   */
+  public static void enableTracing(IDevice device) {
+    // Disable selinux.
+    doShell(device, "setenforce 9", 100, TimeUnit.MILLISECONDS);
+
+    // Make the profile directory world-writable.
+    doShell(device, "chmod 777 /data/dalvik-cache/profiles", 100, TimeUnit.MILLISECONDS);
+
+    // Enable streaming method tracing with a small 1K buffer.
+    doShell(device, "setprop dalvik.vm.method-trace true", 100, TimeUnit.MILLISECONDS);
+    doShell(device, "setprop dalvik.vm.method-trace-file "
+                    + "/data/dalvik-cache/profiles/zygote.trace.bin", 100, TimeUnit.MILLISECONDS);
+    doShell(device, "setprop dalvik.vm.method-trace-file-siz 1024", 100, TimeUnit.MILLISECONDS);
+    doShell(device, "setprop dalvik.vm.method-trace-stream true", 100, TimeUnit.MILLISECONDS);
+  }
+
+  private static class NullShellOutputReceiver implements IShellOutputReceiver {
+    @Override
+    public boolean isCancelled() {
+      return false;
+    }
+
+    @Override
+    public void flush() {}
+
+    @Override
+    public void addOutput(byte[] arg0, int arg1, int arg2) {}
+  }
+
+  private static class CollectStringShellOutputReceiver implements IShellOutputReceiver {
+
+    private StringBuilder builder = new StringBuilder();
+
+    @Override
+    public String toString() {
+      String ret = builder.toString();
+      // Strip trailing newlines. They are especially ugly because adb uses DOS line endings.
+      while (ret.endsWith("\r") || ret.endsWith("\n")) {
+        ret = ret.substring(0, ret.length() - 1);
+      }
+      return ret;
+    }
+
+    @Override
+    public void addOutput(byte[] arg0, int arg1, int arg2) {
+      builder.append(new String(arg0, arg1, arg2));
+    }
+
+    @Override
+    public void flush() {}
+
+    @Override
+    public boolean isCancelled() {
+      return false;
+    }
+  }
+
+  private static class WaitForDevice implements IDeviceChangeListener {
+
+    private String serial;
+    private long timeout;
+    private IDevice device;
+
+    public WaitForDevice(String serial, long timeout) {
+      this.serial = serial;
+      this.timeout = timeout;
+      device = null;
+    }
+
+    public IDevice get() {
+      synchronized (this) {
+        AndroidDebugBridge.addDeviceChangeListener(this);
+
+        // Check whether
+        IDevice[] devices = AndroidDebugBridge.getBridge().getDevices();
+        if (serial != null) {
+          for (IDevice d : devices) {
+            if (serial.equals(d.getSerialNumber())) {
+              // Only accept if there are clients already. Else do the wait loop.
+              if (d.hasClients()) {
+                device = d;
+              }
+
+              break;
+            }
+          }
+
+          if (device == null) {
+            try {
+              wait(timeout);
+            } catch (Exception e) {
+            }
+          }
+        } else {
+          if (devices.length == 0) {
+            try {
+              wait(timeout);
+            } catch (Exception e) {
+            }
+          }
+        }
+      }
+
+      AndroidDebugBridge.removeDeviceChangeListener(this);
+      return device;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.android.ddmlib.AndroidDebugBridge.IDeviceChangeListener#deviceChanged(com.android
+     * .ddmlib.IDevice, int)
+     */
+    @Override
+    public void deviceChanged(IDevice arg0, int arg1) {
+      if (arg0 == device
+          || (device == null && serial != null && serial.equals(arg0.getSerialNumber()))) {
+        if (device == null) {
+          device = arg0;
+        }
+        if ((arg1 & IDevice.CHANGE_CLIENT_LIST) != 0) {
+          // Got a client list, done here.
+          synchronized (this) {
+            notifyAll();
+          }
+        }
+      }
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.android.ddmlib.AndroidDebugBridge.IDeviceChangeListener#deviceConnected(com.android
+     * .ddmlib.IDevice)
+     */
+    @Override
+    public void deviceConnected(IDevice arg0) {
+      if (serial == null) {
+        synchronized (this) {
+          notifyAll();
+        }
+        return;
+      }
+      if (serial.equals(arg0.getSerialNumber())) {
+        device = arg0;
+      }
+    }
+
+    @Override
+    public void deviceDisconnected(IDevice arg0) {}
+
+  }
+
+}
