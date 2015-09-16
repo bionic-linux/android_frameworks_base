@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2900dfee_1e62a99c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2015-09-16T17:18:27Z",
+      "side": 1,
+      "message": "Noted. Shouldn\u0027t be a problem.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 81
+      },
+      "revId": "6dc0feecb165b601ed481a00f9ca5c0d48222c56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44209a82_2af07b5a",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1960,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2015-09-16T17:18:27Z",
+      "side": 1,
+      "message": "{@link NativeConstants.EVP_PKEY_RSA} if possible please!",
+      "range": {
+        "startLine": 1960,
+        "startChar": 7,
+        "endLine": 1960,
+        "endChar": 35
+      },
+      "revId": "6dc0feecb165b601ed481a00f9ca5c0d48222c56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9ea475e_44e86073",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2999,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2015-09-16T17:18:27Z",
+      "side": 1,
+      "message": "This will always be AID_SYSTEM since you already cleared the calling identity on line 2994.\n\nTake a look at eg. installKeyPair which saves the calling identity first (you can\u0027t use `id`, it\u0027s only a token).",
+      "range": {
+        "startLine": 2999,
+        "startChar": 70,
+        "endLine": 2999,
+        "endChar": 71
+      },
+      "revId": "6dc0feecb165b601ed481a00f9ca5c0d48222c56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
