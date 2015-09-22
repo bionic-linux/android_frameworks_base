@@ -354,11 +354,12 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
             try {
                 InputStream is = regenerateInputStream();
                 ei.readExif(is);
-                Utils.closeSilently(is);
                 return true;
             } catch (IOException e) {
                 Log.e("BitmapRegionTileSource", "Error reading resource", e);
                 return false;
+            } finally {
+                Utils.closeSilently(is);
             }
         }
     }

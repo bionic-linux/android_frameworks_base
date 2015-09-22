@@ -72,6 +72,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
+import libcore.io.IoUtils;
+
 public class Am extends BaseCommand {
 
     private IActivityManager mAm;
@@ -1333,28 +1335,32 @@ public class Am extends BaseCommand {
                         @Override
                         public void run() {
                             BufferedReader in = new BufferedReader(converter);
-                            String line;
-                            int count = 0;
-                            while (true) {
-                                synchronized (MyActivityController.this) {
-                                    if (mGdbThread == null) {
+                            try {
+                                String line;
+                                int count = 0;
+                                while (true) {
+                                    synchronized (MyActivityController.this) {
+                                        if (mGdbThread == null) {
+                                            return;
+                                        }
+                                        if (count == 2) {
+                                            mGotGdbPrint = true;
+                                            MyActivityController.this.notifyAll();
+                                        }
+                                    }
+                                    try {
+                                        line = in.readLine();
+                                        if (line == null) {
+                                            return;
+                                        }
+                                        System.out.println("GDB: " + line);
+                                        count++;
+                                    } catch (IOException e) {
                                         return;
                                     }
-                                    if (count == 2) {
-                                        mGotGdbPrint = true;
-                                        MyActivityController.this.notifyAll();
-                                    }
                                 }
-                                try {
-                                    line = in.readLine();
-                                    if (line == null) {
-                                        return;
-                                    }
-                                    System.out.println("GDB: " + line);
-                                    count++;
-                                } catch (IOException e) {
-                                    return;
-                                }
+                            } finally {
+                                IoUtils.closeQuietly(in);
                             }
                         }
                     };
@@ -1421,6 +1427,7 @@ public class Am extends BaseCommand {
         }
 
         void run() throws RemoteException {
+            BufferedReader in = null;
             try {
                 printMessageForState();
 
@@ -1428,7 +1435,7 @@ public class Am extends BaseCommand {
                 mState = STATE_NORMAL;
 
                 InputStreamReader converter = new InputStreamReader(System.in);
-                BufferedReader in = new BufferedReader(converter);
+                in = new BufferedReader(converter);
                 String line;
 
                 while ((line = in.readLine()) != null) {
@@ -1479,6 +1486,7 @@ public class Am extends BaseCommand {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
+                IoUtils.closeQuietly(in);
                 mAm.setActivityController(null);
             }
         }

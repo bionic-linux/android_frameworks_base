@@ -586,11 +586,12 @@ public class WallpaperCropActivity extends Activity {
                     InputStream is = regenerateInputStream();
                     if (is != null) {
                         wallpaperManager.setStream(is);
-                        Utils.closeSilently(is);
                     }
                 } catch (IOException e) {
                     Log.w(LOGTAG, "cannot write stream to wallpaper", e);
                     failure = true;
+                } finally {
+                    Utils.closeSilently(is);
                 }
                 return !failure;
             } else {
@@ -646,7 +647,6 @@ public class WallpaperCropActivity extends Activity {
                         return false;
                     }
                     decoder = BitmapRegionDecoder.newInstance(is, false);
-                    Utils.closeSilently(is);
                 } catch (IOException e) {
                     Log.w(LOGTAG, "cannot open region decoder for file: " + mInUri.toString(), e);
                 } finally {

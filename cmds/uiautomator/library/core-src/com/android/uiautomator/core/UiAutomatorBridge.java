@@ -17,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import libcore.io.IoUtils;
+
 /**
  * @hide
  */
@@ -121,13 +123,7 @@ public abstract class UiAutomatorBridge {
             Log.e(LOG_TAG, "failed to save screen shot to file", ioe);
             return false;
         } finally {
-            if (bos != null) {
-                try {
-                    bos.close();
-                } catch (IOException ioe) {
-                    /* ignore */
-                }
-            }
+            IoUtils.closeQuietly(bos);
             screenshot.recycle();
         }
         return true;

@@ -46,6 +46,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.List;
 
+import libcore.io.IoUtils;
+
 public class Media extends BaseCommand {
     private ISessionManager mSessionService;
 
@@ -280,6 +282,7 @@ public class Media extends BaseCommand {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
+                IoUtils.closeQuietly(in);
                 cbThread.getLooper().quit();
                 try {
                     mController.unregisterCallbackListener(this);

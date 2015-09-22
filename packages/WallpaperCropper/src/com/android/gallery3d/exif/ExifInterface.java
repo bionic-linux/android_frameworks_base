@@ -45,6 +45,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
 
+import libcore.io.IoUtils;
+
 /**
  * This class provides methods and constants for reading and writing jpeg file
  * metadata. It contains a collection of ExifTags, and a collection of
@@ -762,10 +764,10 @@ public class ExifInterface {
             is = (InputStream) new BufferedInputStream(new FileInputStream(inFileName));
             readExif(is);
         } catch (IOException e) {
-            closeSilently(is);
             throw e;
+        } finally {
+            IoUtils.closeQuietly(is);
         }
-        is.close();
     }
 
     /**
@@ -861,10 +863,10 @@ public class ExifInterface {
             s.write(jpeg, 0, jpeg.length);
             s.flush();
         } catch (IOException e) {
-            closeSilently(s);
             throw e;
+        } finally {
+            IoUtils.closeQuietly(s);
         }
-        s.close();
     }
 
     /**
@@ -888,10 +890,10 @@ public class ExifInterface {
             bmap.compress(Bitmap.CompressFormat.JPEG, 90, s);
             s.flush();
         } catch (IOException e) {
-            closeSilently(s);
             throw e;
+        } finally {
+            IoUtils.closeQuietly(s);
         }
-        s.close();
     }
 
     /**
@@ -915,10 +917,10 @@ public class ExifInterface {
             doExifStreamIO(jpegStream, s);
             s.flush();
         } catch (IOException e) {
-            closeSilently(s);
             throw e;
+        } finally {
+            IoUtils.closeQuietly(s);
         }
-        s.close();
     }
 
     /**
@@ -941,10 +943,10 @@ public class ExifInterface {
             is = new FileInputStream(jpegFileName);
             writeExif(is, exifOutFileName);
         } catch (IOException e) {
-            closeSilently(is);
             throw e;
+        } finally {
+            IoUtils.closeQuietly(s);
         }
-        is.close();
     }
 
     /**
@@ -987,8 +989,9 @@ public class ExifInterface {
         try {
             out = (OutputStream) new FileOutputStream(exifOutFileName);
         } catch (FileNotFoundException e) {
-            closeSilently(out);
             throw e;
+        } finally {
+            IoUtils.closeQuietly(s);
         }
         return getExifWriterStream(out);
     }
@@ -1043,12 +1046,11 @@ public class ExifInterface {
             // file copy).
             ret = rewriteExif(buf, tags);
         } catch (IOException e) {
-            closeSilently(file);
             throw e;
         } finally {
-            closeSilently(is);
+            IoUtils.closeQuietly(file);
+            IoUtils.closeQuietly(is);
         }
-        file.close();
         return ret;
     }
 
@@ -1109,10 +1111,9 @@ public class ExifInterface {
                 setTags(tags);
                 writeExif(imageBytes, filename);
             } catch (IOException e) {
-                closeSilently(is);
                 throw e;
             } finally {
-                is.close();
+                IoUtils.closeQuietly(is);
                 // Prevent clobbering of mData
                 mData = tempData;
             }

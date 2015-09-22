@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import libcore.io.IoUtils;
+
 /** @hide */
 public class SRTRenderer extends Renderer {
     private final Context mContext;
@@ -108,10 +110,11 @@ class SRTTrack extends WebVttTrack {
 
     @Override
     public void onData(byte[] data, boolean eos, long runID) {
+        BufferedReader br = null;
         // TODO make reentrant
         try {
             Reader r = new InputStreamReader(new ByteArrayInputStream(data), "UTF-8");
-            BufferedReader br = new BufferedReader(r);
+            br = new BufferedReader(r);
 
             String header;
             while ((header = br.readLine()) != null) {
@@ -151,6 +154,8 @@ class SRTTrack extends WebVttTrack {
         } catch (IOException ioe) {
             // shouldn't happen
             Log.e(TAG, ioe.getMessage(), ioe);
+        } finally {
+            IoUtils.closeQuietly(br);
         }
     }
 

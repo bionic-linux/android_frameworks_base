@@ -29,6 +29,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 
+import libcore.io.IoUtils;
+
 public class Utils {
     private static final String TAG = "Utils";
     private static final String DEBUG_TAG = "GalleryDebug";
@@ -171,12 +173,7 @@ public class Utils {
     }
 
     public static void closeSilently(Closeable c) {
-        if (c == null) return;
-        try {
-            c.close();
-        } catch (IOException t) {
-            Log.w(TAG, "close fail ", t);
-        }
+        IoUtils.closeQuietly(c);
     }
 
     public static int compare(long a, long b) {
