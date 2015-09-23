@@ -36,20 +36,29 @@ please see styles_device_defaults.xml.
     <!-- Begin Holo theme styles -->
 
     <!-- Text Styles -->
-    <style name="TextAppearance.Holo" parent="TextAppearance" />
+    <style name="TextAppearance.Holo" parent="TextAppearance">
+        <item name="fontFamily">@string/font_family_holo</item>
+    </style>
 
     <style name="TextAppearance.Holo.Inverse" parent="TextAppearance.Inverse">
         <item name="textColor">?textColorPrimaryInverse</item>
         <item name="textColorHint">?textColorHintInverse</item>
         <item name="textColorHighlight">?textColorHighlightInverse</item>
         <item name="textColorLink">?textColorLinkInverse</item>
+        <item name="fontFamily">@string/font_family_holo</item>
     </style>
 
-    <style name="TextAppearance.Holo.Large" parent="TextAppearance.Large" />
+    <style name="TextAppearance.Holo.Large" parent="TextAppearance.Large">
+        <item name="fontFamily">@string/font_family_holo</item>
+    </style>
 
-    <style name="TextAppearance.Holo.Medium" parent="TextAppearance.Medium" />
+    <style name="TextAppearance.Holo.Medium" parent="TextAppearance.Medium">
+        <item name="fontFamily">@string/font_family_holo</item>
+    </style>
 
-    <style name="TextAppearance.Holo.Small" parent="TextAppearance.Small" />
+    <style name="TextAppearance.Holo.Small" parent="TextAppearance.Small">
+        <item name="fontFamily">@string/font_family_holo</item>
+    </style>
 
     <style name="TextAppearance.Holo.Large.Inverse">
         <item name="textColor">?textColorPrimaryInverse</item>
@@ -87,7 +96,9 @@ please see styles_device_defaults.xml.
         <item name="textColor">?textColorSecondary</item>
     </style>
 
-    <style name="TextAppearance.Holo.Widget" parent="TextAppearance.Widget" />
+    <style name="TextAppearance.Holo.Widget" parent="TextAppearance.Widget">
+        <item name="fontFamily">@string/font_family_holo</item>
+    </style>
 
     <style name="TextAppearance.Holo.Widget.Button" parent="TextAppearance.Holo.Small.Inverse">
         <item name="textColor">@color/primary_text_light_nodisable</item>
@@ -272,7 +283,9 @@ please see styles_device_defaults.xml.
         <item name="textColor">?textColorSecondary</item>
     </style>
 
-    <style name="TextAppearance.Holo.Light.Widget" parent="TextAppearance.Widget" />
+    <style name="TextAppearance.Holo.Light.Widget" parent="TextAppearance.Widget">
+        <item name="fontFamily">@string/font_family_holo</item>
+    </style>
 
     <style name="TextAppearance.Holo.Light.Widget.Button" />
 
@@ -304,7 +317,9 @@ please see styles_device_defaults.xml.
         <item name="textColor">@color/holo_blue_light</item>
     </style>
 
-    <style name="TextAppearance.Holo.Light.CalendarViewWeekDayView" parent="TextAppearance.Small.CalendarViewWeekDayView" />
+    <style name="TextAppearance.Holo.Light.CalendarViewWeekDayView" parent="TextAppearance.Small.CalendarViewWeekDayView">
+        <item name="fontFamily">@string/font_family_holo</item>
+    </style>
 
     <!-- Widget Styles -->
 
