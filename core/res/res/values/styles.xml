@@ -786,6 +786,7 @@ please see styles_device_defaults.xml.
         <item name="textColorLink">?textColorLink</item>
         <item name="textSize">16sp</item>
         <item name="textStyle">normal</item>
+        <item name="fontFamily">@string/font_family_base</item>
     </style>
 
     <style name="TextAppearance.Inverse">
