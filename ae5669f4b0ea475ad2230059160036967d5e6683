@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ebd45ca_5309646d",
+        "filename": "cmds/am/src/com/android/commands/am/Am.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "try-with-resources instead?\n\ne.g. \ntry (BufferedReader in \u003d new BufferedReader(converter)) {\nand lose the closeQuiety().\n\n\nDid you test this? Is it reasonable to close the input stream from the gdbserver?",
+      "range": {
+        "startLine": 1338,
+        "startChar": 28,
+        "endLine": 1338,
+        "endChar": 31
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ec27958_740e4878",
+        "filename": "cmds/am/src/com/android/commands/am/Am.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "Seems unusual to close System.in, but I don\u0027t see any problems in this case.",
+      "range": {
+        "startLine": 1489,
+        "startChar": 24,
+        "endLine": 1489,
+        "endChar": 36
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e9a4178_72583870",
+        "filename": "cmds/media/src/com/android/commands/media/Media.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "Looks like this wouldn\u0027t compile.",
+      "range": {
+        "startLine": 285,
+        "startChar": 24,
+        "endLine": 285,
+        "endChar": 36
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0eb5e1d9_7a2559ec",
+        "filename": "packages/WallpaperCropper/src/com/android/gallery3d/common/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "This does modify behavior: we lose the log message. Not sure I would care, myself.",
+      "range": {
+        "startLine": 176,
+        "startChar": 16,
+        "endLine": 176,
+        "endChar": 28
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ec27958_b4ef00ec",
+        "filename": "packages/WallpaperCropper/src/com/android/gallery3d/exif/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "This looks like it doesn\u0027t do anything now. Generally below too.",
+      "range": {
+        "startLine": 766,
+        "startChar": 17,
+        "endLine": 766,
+        "endChar": 28
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e9a4178_b259c073",
+        "filename": "packages/WallpaperCropper/src/com/android/gallery3d/exif/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "This has changed the behavior. IOException on close() would previously have thrown, now it will not. Generally below too.",
+      "range": {
+        "startLine": 769,
+        "startChar": 20,
+        "endLine": 769,
+        "endChar": 32
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ceae6993_981f9567",
+        "filename": "packages/WallpaperCropper/src/com/android/gallery3d/exif/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "s?",
+      "range": {
+        "startLine": 948,
+        "startChar": 20,
+        "endLine": 948,
+        "endChar": 32
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0eb5e1d9_9a194db5",
+        "filename": "packages/WallpaperCropper/src/com/android/gallery3d/exif/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "s?",
+      "range": {
+        "startLine": 994,
+        "startChar": 20,
+        "endLine": 994,
+        "endChar": 32
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e9a4178_f2634823",
+        "filename": "packages/WallpaperCropper/src/com/android/photos/BitmapRegionTileSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "Behavior change here too, though I suspect it wasn\u0027t intentionally not closing before.",
+      "range": {
+        "startLine": 362,
+        "startChar": 22,
+        "endLine": 362,
+        "endChar": 35
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ceae6993_b81c5973",
+        "filename": "packages/WallpaperCropper/src/com/android/wallpapercropper/WallpaperCropActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-09-24T10:11:13Z",
+      "side": 1,
+      "message": "Compile?",
+      "range": {
+        "startLine": 594,
+        "startChar": 26,
+        "endLine": 594,
+        "endChar": 39
+      },
+      "revId": "ae5669f4b0ea475ad2230059160036967d5e6683",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
