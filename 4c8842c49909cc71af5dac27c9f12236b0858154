@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e52b121_89c8bd36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-09-24T07:22:14Z",
+      "side": 1,
+      "message": "Bug: 23628238\nBug: https://code.google.com/p/android/issues/detail?id\u003d186589",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "4c8842c49909cc71af5dac27c9f12236b0858154",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
