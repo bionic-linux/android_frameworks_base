@@ -22,6 +22,30 @@
       "revId": "05b8f4d4575c8acbc9c61769e8143a9822407f95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce582944_efc1728b",
+        "filename": "cmds/pm/src/com/android/commands/pm/Pm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-09-25T20:09:22Z",
+      "side": 1,
+      "message": "Done. I fixed all the place I copy/pasted from as well as all other bad cases.",
+      "parentUuid": "ee86cdd4_5b929b88",
+      "range": {
+        "startLine": 734,
+        "startChar": 21,
+        "endLine": 734,
+        "endChar": 22
+      },
+      "revId": "05b8f4d4575c8acbc9c61769e8143a9822407f95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
