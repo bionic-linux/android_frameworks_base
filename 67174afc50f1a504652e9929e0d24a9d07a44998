@@ -16,6 +16,24 @@
       "revId": "67174afc50f1a504652e9929e0d24a9d07a44998",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "957f26e6_27083af4",
+        "filename": "libs/hwui/DeferredDisplayList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1067467
+      },
+      "writtenOn": "2015-09-30T19:38:30Z",
+      "side": 1,
+      "message": "Sure. Changed now (sorry, my c++ is a little rusty)",
+      "parentUuid": "15a33681_86a20c0c",
+      "revId": "67174afc50f1a504652e9929e0d24a9d07a44998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
