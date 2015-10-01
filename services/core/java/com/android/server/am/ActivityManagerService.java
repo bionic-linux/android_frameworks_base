@@ -191,6 +191,7 @@ import android.os.UpdateLock;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
+import android.provider.Telephony.Sms.Intents;
 import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.AtomicFile;
@@ -16039,6 +16040,20 @@ public final class ActivityManagerService extends ActivityManagerNative
         final String action = intent.getAction();
         if (action != null) {
             switch (action) {
+                case Intents.SMS_RECEIVED_ACTION:
+                    if (checkComponentPermission(
+                            android.Manifest.permission.BROADCAST_SMS,
+                            callingPid, callingUid, -1, true)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        String msg = "Permission Denial: " + action
+                                + " broadcast from " + callerPackage + " (pid=" + callingPid
+                                + ", uid=" + callingUid + ")"
+                                + " requires "
+                                + android.Manifest.permission.BROADCAST_SMS;
+                        Slog.w(TAG, msg);
+                        throw new SecurityException(msg);
+                    }
+                    break;
                 case Intent.ACTION_UID_REMOVED:
                 case Intent.ACTION_PACKAGE_REMOVED:
                 case Intent.ACTION_PACKAGE_CHANGED:
