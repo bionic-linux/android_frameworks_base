@@ -228,7 +228,7 @@ public class MobileSignalController extends SignalController<
                         && mCurrentState.activityOut;
         showDataIcon &= mCurrentState.isDefault
                 || mCurrentState.iconGroup == TelephonyIcons.ROAMING;
-        int typeIcon = showDataIcon ? icons.mDataType : 0;
+        int typeIcon = (showDataIcon || mConfig.alwaysShowDataIcon) ? icons.mDataType : 0;
         mCallbackHandler.setMobileDataIndicators(statusIcon, qsIcon, typeIcon, qsTypeIcon,
                 activityIn, activityOut, dataContentDescription, description, icons.mIsWide,
                 mSubscriptionInfo.getSubscriptionId());
@@ -372,6 +372,11 @@ public class MobileSignalController extends SignalController<
             } else {
                 mCurrentState.level = mSignalStrength.getLevel();
             }
+        }
+        if (mConfig.alwaysShowDataIcon
+                && mDataNetType == TelephonyManager.NETWORK_TYPE_UNKNOWN
+                && mServiceState != null) {
+            mDataNetType = mServiceState.getVoiceNetworkType();
         }
         if (mNetworkToIconLookup.indexOfKey(mDataNetType) >= 0) {
             mCurrentState.iconGroup = mNetworkToIconLookup.get(mDataNetType);
