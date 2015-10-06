@@ -287,6 +287,9 @@
     <!-- Duration of the full carrier network change icon animation. -->
     <integer name="carrier_network_change_anim_time">3000</integer>
 
+    <!-- Whether to show RAT icon when data is disconnected. -->
+    <bool name="config_alwaysShowRATIcon">false</bool>
+
     <!-- Duration of the expansion animation in the volume dialog -->
     <item name="volume_expand_animation_duration" type="integer">300</item>
 
