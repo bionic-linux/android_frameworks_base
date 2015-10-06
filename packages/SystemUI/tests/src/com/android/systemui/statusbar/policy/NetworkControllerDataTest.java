@@ -122,6 +122,24 @@ public class NetworkControllerDataTest extends NetworkControllerBaseTest {
         verifyDataIndicators(0, 0);
     }
 
+    public void testAlwaysShowDataIcon() {
+        // Switch to showing data icon when data is diconnected
+        // and re-initialize the NetworkController.
+        mConfig.alwaysShowDataIcon = true;
+        Mockito.when(mMockTm.getDataEnabled(mSubId)).thenReturn(false);
+        mNetworkController = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
+                mConfig, Looper.getMainLooper(), mCallbackHandler,
+                Mockito.mock(AccessPointControllerImpl.class),
+                Mockito.mock(DataUsageController.class), mMockSubDefaults);
+        setupDefaultSignal();
+        updateDataConnectionState(TelephonyManager.DATA_DISCONNECTED,
+                TelephonyManager.NETWORK_TYPE_GSM);
+        setConnectivity(NetworkCapabilities.TRANSPORT_CELLULAR, false, false);
+
+        verifyDataIndicators(TelephonyIcons.DATA_G[1][0 /* No direction */],
+                TelephonyIcons.QS_DATA_G);
+    }
+
     public void test4gDataIconConfigChange() {
         setupDefaultSignal();
         updateDataConnectionState(TelephonyManager.DATA_CONNECTED,
