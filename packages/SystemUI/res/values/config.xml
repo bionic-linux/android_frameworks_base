@@ -250,6 +250,9 @@
     <!-- Duration of the full carrier network change icon animation. -->
     <integer name="carrier_network_change_anim_time">3000</integer>
 
+    <!-- Whether to show data icon when data is disabled. -->
+    <bool name="config_alwaysShowDataIcon">false</bool>
+
     <!-- Duration of the expansion animation in the volume dialog -->
     <item name="volume_expand_animation_duration" type="integer">300</item>
 
