@@ -615,6 +615,12 @@ public class CarrierConfigManager {
     public static final String KEY_BROADCAST_EMERGENCY_CALL_STATE_CHANGES_BOOL =
             "broadcast_emergency_call_state_changes_bool";
 
+    /**
+     * Boolean indicating if show data icon on status bar even when data is disabled
+     * @hide
+     */
+    public static final String KEY_ALWAYS_SHOW_DATA_ICON_BOOL = "always_show_data_icon_bool";
+
     // These variables are used by the MMS service and exposed through another API, {@link
     // SmsManager}. The variable names and string values are copied from there.
     public static final String KEY_MMS_ALIAS_ENABLED_BOOL = "aliasEnabled";
@@ -859,6 +865,7 @@ public class CarrierConfigManager {
         // Used for Sim card State detection app
         sDefaults.putStringArray(KEY_SIM_PROVISIONING_STATUS_DETECTION_CARRIER_APP_STRING_ARRAY,
                 null);
+        sDefaults.putBoolean(KEY_ALWAYS_SHOW_DATA_ICON_BOOL, false);
     }
 
     /**

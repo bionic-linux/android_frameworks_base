@@ -28,7 +28,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PersistableBundle;
 import android.provider.Settings;
+import android.telephony.CarrierConfigManager;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -851,6 +853,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
         boolean alwaysShowCdmaRssi = false;
         boolean show4gForLte = false;
         boolean hspaDataDistinguishable;
+        boolean alwaysShowDataIcon = false;
 
         static Config readConfig(Context context) {
             Config config = new Config();
@@ -862,6 +865,15 @@ public class NetworkControllerImpl extends BroadcastReceiver
             config.show4gForLte = res.getBoolean(R.bool.config_show4GForLTE);
             config.hspaDataDistinguishable =
                     res.getBoolean(R.bool.config_hspa_data_distinguishable);
+
+            CarrierConfigManager configMgr = (CarrierConfigManager)
+                    context.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+            PersistableBundle b = configMgr.getConfigForSubId(
+                    SubscriptionManager.getDefaultDataSubscriptionId());
+            if (b != null) {
+                config.alwaysShowDataIcon = b.getBoolean(
+                        CarrierConfigManager.KEY_ALWAYS_SHOW_DATA_ICON_BOOL);
+            }
             return config;
         }
     }
