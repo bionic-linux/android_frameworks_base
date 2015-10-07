@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50422131_2be5d901",
+        "filename": "core/res/res/values/donottranslate.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-10-07T16:48:09Z",
+      "side": 1,
+      "message": "Remove, DeviceDefault should inherit from its base theme by default.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 60
+      },
+      "revId": "c106e4f3b667206fb0bceb94efdafa9b87d31002",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85f6194a_fdb82704",
+        "filename": "core/res/res/values/styles_device_defaults.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-10-07T16:48:09Z",
+      "side": 1,
+      "message": "Leave this file untouched -- DeviceDefault styles should be identical to Material for AOSP.",
+      "revId": "c106e4f3b667206fb0bceb94efdafa9b87d31002",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
