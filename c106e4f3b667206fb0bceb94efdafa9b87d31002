@@ -39,6 +39,24 @@
       "revId": "c106e4f3b667206fb0bceb94efdafa9b87d31002",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50922167_2b52b9d4",
+        "filename": "core/res/res/values/styles_device_defaults.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005082
+      },
+      "writtenOn": "2015-10-08T01:54:39Z",
+      "side": 1,
+      "message": "But DeviceDefault styles are not Material(that uses sans-serif explictly), and these styles are defined for manufacturer that want to customize.\nAnd some manufacturers should want to use their own fonts.\n\nOf course, they can replace these resources with DEVICE_PACKAGE_OVERLAYS or PRODUCT_PACKAGE_OVERLAYS.\n\nBut If AOSP support default font symbol as  @string/font_family_device_default, font customizing will be more easy.",
+      "parentUuid": "85f6194a_fdb82704",
+      "revId": "c106e4f3b667206fb0bceb94efdafa9b87d31002",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
