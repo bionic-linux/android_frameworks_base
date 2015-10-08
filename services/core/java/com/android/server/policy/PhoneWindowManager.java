@@ -4407,11 +4407,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // Remove any previous windows with the same appToken.
                     mAppsToBeHidden.remove(appToken);
                     mAppsThatDismissKeyguard.remove(appToken);
+                    mWinShowWhenLocked = win;
                     if (mAppsToBeHidden.isEmpty()) {
                         if (dismissKeyguard && !mKeyguardSecure) {
                             mAppsThatDismissKeyguard.add(appToken);
                         } else {
-                            mWinShowWhenLocked = win;
                             mHideLockScreen = true;
                             mForceStatusBarFromKeyguard = false;
                         }
