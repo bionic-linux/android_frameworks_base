@@ -511,7 +511,8 @@ public final class ActivityStackSupervisor implements DisplayListener {
 
         mHomeStack.moveHomeStackTaskToTop(homeStackTaskType);
         ActivityRecord r = getHomeActivity();
-        if (r != null) {
+        // Resume running home activity, or start home activity if no more.
+        if (r != null && !r.finishing) {
             mService.setFocusedActivityLocked(r, reason);
             return resumeTopActivitiesLocked(mHomeStack, prev, null);
         }
