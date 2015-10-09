@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a526bd9a_49914547",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-10-09T00:04:01Z",
+      "side": 1,
+      "message": "over 70 chars here and below. see https://source.android.com/source/submit-patches.html#make-your-change",
+      "range": {
+        "startLine": 14,
+        "startChar": 71,
+        "endLine": 14,
+        "endChar": 81
+      },
+      "revId": "04d4acb8a393ec7d88dc9df85e038d5b6a280465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0536a9c7_c926115a",
+        "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-10-09T00:04:01Z",
+      "side": 1,
+      "message": "Change to // Only resume home activity if isn\u0027t finishing.",
+      "range": {
+        "startLine": 514,
+        "startChar": 8,
+        "endLine": 514,
+        "endChar": 75
+      },
+      "revId": "04d4acb8a393ec7d88dc9df85e038d5b6a280465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
