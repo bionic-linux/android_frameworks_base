@@ -64,6 +64,7 @@ public class PhoneStatusBarPolicy implements Callback {
     private static final String SLOT_VOLUME = "volume";
     private static final String SLOT_ALARM_CLOCK = "alarm_clock";
     private static final String SLOT_MANAGED_PROFILE = "managed_profile";
+    private static final String SLOT_HAC = "hac";
 
     private final Context mContext;
     private final StatusBarManager mService;
@@ -105,6 +106,9 @@ public class PhoneStatusBarPolicy implements Callback {
             }
             else if (action.equals(TelecomManager.ACTION_CURRENT_TTY_MODE_CHANGED)) {
                 updateTTY(intent);
+            }
+            else if (action.equals(AudioManager.HAC_ENABLED_CHANGE_ACTION)) {
+                updateHAC(intent);
             }
         }
     };
@@ -179,6 +183,10 @@ public class PhoneStatusBarPolicy implements Callback {
         mService.setIcon(SLOT_MANAGED_PROFILE, R.drawable.stat_sys_managed_profile_status, 0,
                 mContext.getString(R.string.accessibility_managed_profile));
         mService.setIconVisibility(SLOT_MANAGED_PROFILE, false);
+
+        // HAC
+        mService.setIcon(SLOT_HAC, R.drawable.stat_sys_hac_on, 0, null);
+        mService.setIconVisibility(SLOT_HAC, false);
     }
 
     public void setZenMode(int zen) {
@@ -424,5 +432,12 @@ public class PhoneStatusBarPolicy implements Callback {
         if (mCurrentUserSetup == userSetup) return;
         mCurrentUserSetup = userSetup;
         updateAlarm();
+    }
+
+    private final void updateHAC(Intent intent) {
+        final boolean enabled = intent.getBooleanExtra(AudioManager.EXTRA_HAC_ENABLED, false);
+
+        if (DEBUG) Log.v(TAG, "updateHAC: enabled: " + enabled);
+        mService.setIconVisibility("hac", enabled);
     }
 }
