@@ -64,6 +64,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final String mSlotHotspot;
     private final String mSlotBluetooth;
     private final String mSlotTty;
+    private final String mSlotHac;
     private final String mSlotZen;
     private final String mSlotVolume;
     private final String mSlotAlarmClock;
@@ -122,6 +123,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mSlotHotspot = context.getString(com.android.internal.R.string.status_bar_hotspot);
         mSlotBluetooth = context.getString(com.android.internal.R.string.status_bar_bluetooth);
         mSlotTty = context.getString(com.android.internal.R.string.status_bar_tty);
+        mSlotHac = context.getString(com.android.internal.R.string.status_bar_hac);
         mSlotZen = context.getString(com.android.internal.R.string.status_bar_zen);
         mSlotVolume = context.getString(com.android.internal.R.string.status_bar_volume);
         mSlotAlarmClock = context.getString(com.android.internal.R.string.status_bar_alarm_clock);
@@ -155,6 +157,10 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         // TTY status
         mIconController.setIcon(mSlotTty,  R.drawable.stat_sys_tty_mode, null);
         mIconController.setIconVisibility(mSlotTty, false);
+
+        // HAC status
+        mIconController.setIcon(mSlotHac,  R.drawable.stat_sys_hac_on, null);
+        mIconController.setIconVisibility(mSlotHac, false);
 
         // bluetooth status
         updateBluetooth();
@@ -339,6 +345,13 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
             if (DEBUG) Log.v(TAG, "updateTTY: set TTY off");
             mIconController.setIconVisibility(mSlotTty, false);
         }
+    }
+
+    private final void updateHac(Intent intent) {
+        final boolean enabled = intent.getBooleanExtra(AudioManager.EXTRA_HAC_ENABLED, false);
+
+        if (DEBUG) Log.v(TAG, "updateHAC: enabled: " + enabled);
+        mIconController.setIconVisibility(mSlotHac, enabled);
     }
 
     private void updateCast() {
@@ -537,6 +550,8 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
                 updateSimState(intent);
             } else if (action.equals(TelecomManager.ACTION_CURRENT_TTY_MODE_CHANGED)) {
                 updateTTY(intent);
+            } else if (action.equals(AudioManager.HAC_ENABLED_CHANGE_ACTION)) {
+                updateHac(intent);
             } else if (action.equals(Intent.ACTION_MANAGED_PROFILE_AVAILABLE) ||
                     action.equals(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE) ||
                     action.equals(Intent.ACTION_MANAGED_PROFILE_REMOVED)) {

@@ -40,6 +40,7 @@
         <item><xliff:g id="id">@string/status_bar_bluetooth</xliff:g></item>
         <item><xliff:g id="id">@string/status_bar_nfc</xliff:g></item>
         <item><xliff:g id="id">@string/status_bar_tty</xliff:g></item>
+        <item><xliff:g id="id">@string/status_bar_hac</xliff:g></item>
         <item><xliff:g id="id">@string/status_bar_speakerphone</xliff:g></item>
         <item><xliff:g id="id">@string/status_bar_zen</xliff:g></item>
         <item><xliff:g id="id">@string/status_bar_mute</xliff:g></item>
@@ -68,6 +69,7 @@
     <string translatable="false" name="status_bar_bluetooth">bluetooth</string>
     <string translatable="false" name="status_bar_nfc">nfc</string>
     <string translatable="false" name="status_bar_tty">tty</string>
+    <string translatable="false" name="status_bar_hac">hac</string>
     <string translatable="false" name="status_bar_speakerphone">speakerphone</string>
     <string translatable="false" name="status_bar_zen">zen</string>
     <string translatable="false" name="status_bar_mute">mute</string>
