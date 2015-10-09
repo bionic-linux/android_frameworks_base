@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e55355fb_193ceffd",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2015-10-09T17:19:18Z",
+      "side": 1,
+      "message": "have you verified this works?  It appears to be the first use of a \"\\*\" or \"#\" in the file and I\u0027m not sure those chars make it to the application of this pattern (not sure they don\u0027t either).",
+      "range": {
+        "startLine": 135,
+        "startChar": 66,
+        "endLine": 135,
+        "endChar": 69
+      },
+      "revId": "e7e3b2a6b20dcaac6c6943dd811d899eac760cb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
