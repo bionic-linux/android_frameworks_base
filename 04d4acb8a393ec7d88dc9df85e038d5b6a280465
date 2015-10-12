@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8aa9c660_0564d2d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1023708
+      },
+      "writtenOn": "2015-10-12T03:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a526bd9a_49914547",
+      "range": {
+        "startLine": 14,
+        "startChar": 71,
+        "endLine": 14,
+        "endChar": 81
+      },
+      "revId": "04d4acb8a393ec7d88dc9df85e038d5b6a280465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0536a9c7_c926115a",
         "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2015-10-09T00:04:01Z",
       "side": 1,
       "message": "Change to // Only resume home activity if isn\u0027t finishing.",
+      "range": {
+        "startLine": 514,
+        "startChar": 8,
+        "endLine": 514,
+        "endChar": 75
+      },
+      "revId": "04d4acb8a393ec7d88dc9df85e038d5b6a280465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff3846ce_11006c49",
+        "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1023708
+      },
+      "writtenOn": "2015-10-12T03:17:30Z",
+      "side": 1,
+      "message": "@Ogunwale:\nThanks, already changed as your suggestion..:)",
+      "parentUuid": "0536a9c7_c926115a",
       "range": {
         "startLine": 514,
         "startChar": 8,
