@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb462b2_b14c2205",
+        "filename": "services/accessibility/java/com/android/server/accessibility/ScreenMagnifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2015-10-12T23:20:13Z",
+      "side": 1,
+      "message": "Something like this should do the trick.\n\nprivate void sendDelayedMotionEvents() {\n    while (mDelayedEventQueue !\u003d null) {\n        MotionEventInfo info \u003d mDelayedEventQueue;\n        mDelayedEventQueue \u003d info.mNext;\n        ScreenMagnifier.this.onMotionEvent(info.event, info.rawEvent,\n            info.mPolicyFlags);\n        info.recycle();\n    }\n}",
+      "range": {
+        "startLine": 782,
+        "startChar": 0,
+        "endLine": 795,
+        "endChar": 9
+      },
+      "revId": "c4725b7ad883f434ef5de294ec78ae413d3a94e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
