@@ -120,7 +120,7 @@ public class AndroidTestRunner extends BaseTestRunner {
         } catch (IllegalArgumentException e) {
             runFailed("Illegal argument passed to constructor. Class: " + testClass.getName(), e);
         } catch (InvocationTargetException e) {
-            runFailed("Constructor thew an exception. Class: " + testClass.getName(), e);
+            runFailed("Constructor threw an exception. Class: " + testClass.getName(), e);
         }
         return null;
     }
