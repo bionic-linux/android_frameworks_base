@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff32061b_8f0f54b4",
+        "filename": "libs/packagelistparser/Android.mk",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-10-14T23:11:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df39c202_ddb63c14",
+      "revId": "8902117a835ad656c568bbe71ee12612d67f4e12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df39c202_1dc1c463",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 17
@@ -30,6 +48,30 @@
       "writtenOn": "2015-10-14T17:30:20Z",
       "side": 1,
       "message": "please change \"r\" to \"re\" to set the O_CLOEXEC flag.",
+      "range": {
+        "startLine": 108,
+        "startChar": 36,
+        "endLine": 108,
+        "endChar": 38
+      },
+      "revId": "8902117a835ad656c568bbe71ee12612d67f4e12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfb462b2_1ae73b98",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-10-14T23:11:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df39c202_1dc1c463",
       "range": {
         "startLine": 108,
         "startChar": 36,
