@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "df39c202_ddb63c14",
+        "filename": "libs/packagelistparser/Android.mk",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2015-10-14T17:30:20Z",
+      "side": 1,
+      "message": "Can you please turn on integer overflow protection here by adding the following entries:\n\n  LOCAL_CLANG :\u003d true\n  LOCAL_SANITIZE :\u003d integer\n\n(also on line 24)",
+      "revId": "8902117a835ad656c568bbe71ee12612d67f4e12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df39c202_1dc1c463",
+        "filename": "libs/packagelistparser/packagelistparser.c",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2015-10-14T17:30:20Z",
+      "side": 1,
+      "message": "please change \"r\" to \"re\" to set the O_CLOEXEC flag.",
+      "range": {
+        "startLine": 108,
+        "startChar": 36,
+        "endLine": 108,
+        "endChar": 38
+      },
+      "revId": "8902117a835ad656c568bbe71ee12612d67f4e12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84253145_6b7a9c95",
         "filename": "libs/packagelistparser/packagelistparser.c",
         "patchSetId": 17
