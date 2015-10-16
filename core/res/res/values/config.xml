@@ -732,6 +732,7 @@
             0 - Nothing
             1 - Toggle theater mode setting
             2 - Brightness boost
+            3 - Launch Camera
     -->
     <integer name="config_doublePressOnPowerBehavior">0</integer>
 
@@ -739,6 +740,7 @@
             0 - Nothing
             1 - Toggle theater mode setting
             2 - Brightness boost
+            3 - Launch Camera
     -->
     <integer name="config_triplePressOnPowerBehavior">0</integer>
 
