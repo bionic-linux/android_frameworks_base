@@ -175,6 +175,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int MULTI_PRESS_POWER_NOTHING = 0;
     static final int MULTI_PRESS_POWER_THEATER_MODE = 1;
     static final int MULTI_PRESS_POWER_BRIGHTNESS_BOOST = 2;
+    static final int MULTI_PRESS_POWER_LAUNCH_CAMERA = 3;
 
     // These need to match the documentation/constant in
     // core/res/res/values/config.xml
@@ -1076,6 +1077,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     wakeUpFromPowerKey(eventTime);
                 }
                 mPowerManager.boostScreenBrightness(eventTime);
+                break;
+            case MULTI_PRESS_POWER_LAUNCH_CAMERA:
+                Slog.i(TAG, "Launching camera by power button.");
+                if (!interactive) {
+                    wakeUpFromPowerKey(eventTime);
+                }
+
+                if (mCameraLensCoverState == CAMERA_LENS_COVERED) {
+                    break;
+                }
+
+                launchCamera();
                 break;
         }
     }
@@ -4720,6 +4733,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    private void launchCamera() {
+        Intent intent;
+        final boolean keyguardActive = mKeyguardDelegate == null ?
+                false : mKeyguardDelegate.isShowing();
+        if (keyguardActive) {
+            intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE);
+        } else {
+            intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+        }
+        startActivityAsUser(intent, UserHandle.CURRENT_OR_SELF);
+    }
+
     @Override
     public void notifyCameraLensCoverSwitchChanged(long whenNanos, boolean lensCovered) {
         int lensCoverState = lensCovered ? CAMERA_LENS_COVERED : CAMERA_LENS_UNCOVERED;
@@ -4728,17 +4753,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
         if (mCameraLensCoverState == CAMERA_LENS_COVERED &&
                 lensCoverState == CAMERA_LENS_UNCOVERED) {
-            Intent intent;
-            final boolean keyguardActive = mKeyguardDelegate == null ? false :
-                    mKeyguardDelegate.isShowing();
-            if (keyguardActive) {
-                intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE);
-            } else {
-                intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-            }
             wakeUp(whenNanos / 1000000, mAllowTheaterModeWakeFromCameraLens,
                     "android.policy:CAMERA_COVER");
-            startActivityAsUser(intent, UserHandle.CURRENT_OR_SELF);
+            launchCamera();
         }
         mCameraLensCoverState = lensCoverState;
     }
