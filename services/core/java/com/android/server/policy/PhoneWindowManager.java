@@ -1560,7 +1560,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.integer.config_doubleTapOnHomeBehavior);
         if (mDoubleTapOnHomeBehavior < DOUBLE_TAP_HOME_NOTHING ||
                 mDoubleTapOnHomeBehavior > DOUBLE_TAP_HOME_RECENT_SYSTEM_UI) {
-            mDoubleTapOnHomeBehavior = LONG_PRESS_HOME_NOTHING;
+            mDoubleTapOnHomeBehavior = DOUBLE_TAP_HOME_NOTHING;
         }
     }
 
