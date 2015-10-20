@@ -2313,6 +2313,7 @@ final class Settings {
         serializer.attribute(null, "it", Long.toHexString(pkg.firstInstallTime));
         serializer.attribute(null, "ut", Long.toHexString(pkg.lastUpdateTime));
         serializer.attribute(null, "version", String.valueOf(pkg.versionCode));
+        serializer.attribute(null, "ipf", Boolean.toString(pkg.installPermissionsFixed));
         if (!pkg.resourcePathString.equals(pkg.codePathString)) {
             serializer.attribute(null, "resourcePath", pkg.resourcePathString);
         }
@@ -3263,6 +3264,7 @@ final class Settings {
         PackageSettingBase packageSetting = null;
         String version = null;
         int versionCode = 0;
+        boolean installPermissionsFixed = true;
         try {
             name = parser.getAttributeValue(null, ATTR_NAME);
             realName = parser.getAttributeValue(null, "realName");
@@ -3290,6 +3292,7 @@ final class Settings {
                 } catch (NumberFormatException e) {
                 }
             }
+            installPermissionsFixed = Boolean.parseBoolean(parser.getAttributeValue(null, "ipf"));
             installerPackageName = parser.getAttributeValue(null, "installer");
             volumeUuid = parser.getAttributeValue(null, "volumeUuid");
 
@@ -3444,6 +3447,7 @@ final class Settings {
             packageSetting.legacyNativeLibraryPathString = legacyNativeLibraryPathStr;
             packageSetting.primaryCpuAbiString = primaryCpuAbiString;
             packageSetting.secondaryCpuAbiString = secondaryCpuAbiString;
+            packageSetting.installPermissionsFixed = installPermissionsFixed;
             // Handle legacy string here for single-user mode
             final String enabledStr = parser.getAttributeValue(null, ATTR_ENABLED);
             if (enabledStr != null) {
@@ -3494,7 +3498,6 @@ final class Settings {
                 } else if (tagName.equals(TAG_PERMISSIONS)) {
                     readInstallPermissionsLPr(parser,
                             packageSetting.getPermissionsState());
-                    packageSetting.installPermissionsFixed = true;
                 } else if (tagName.equals("proper-signing-keyset")) {
                     long id = Long.parseLong(parser.getAttributeValue(null, "identifier"));
                     Integer refCt = mKeySetRefs.get(id);
