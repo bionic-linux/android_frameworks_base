@@ -132,6 +132,8 @@ interface IDevicePolicyManager {
     void enforceCanManageCaCerts(in ComponentName admin);
 
     boolean installKeyPair(in ComponentName who, in byte[] privKeyBuffer, in byte[] certBuffer, String alias);
+    byte[] generateKeyPair(in ComponentName who, String alias, String keyType, int keySize);
+    boolean setCertificate(in ComponentName who, String alias, in byte[] certificate);
     void choosePrivateKeyAlias(int uid, in Uri uri, in String alias, IBinder aliasCallback);
 
     void setCertInstallerPackage(in ComponentName who, String installerPackage);

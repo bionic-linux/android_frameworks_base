@@ -3235,6 +3235,72 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     }
 
     @Override
+    public byte[] generateKeyPair(ComponentName who, String alias, String keyType,
+            int keySize) {
+        if (who == null) {
+            if (!isCallerDelegatedCertInstaller()) {
+                throw new NullPointerException("who == null, but caller is not cert installer");
+            }
+        } else {
+            synchronized (this) {
+                getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_PROFILE_OWNER);
+            }
+        }
+        final UserHandle userHandle = new UserHandle(UserHandle.getCallingUserId());
+        final int callingUid = Binder.getCallingUid();
+        final long id = Binder.clearCallingIdentity();
+        try {
+            final KeyChainConnection keyChainConnection = KeyChain.bindAsUser(mContext, userHandle);
+            try {
+                IKeyChainService keyChain = keyChainConnection.getService();
+                return keyChain.generateKeyPair(callingUid, alias, keyType, keySize);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "Generating keypair", e);
+            } finally {
+                keyChainConnection.close();
+            }
+        } catch (InterruptedException e) {
+            Log.w(LOG_TAG, "Interrupted while generating keypair", e);
+            Thread.currentThread().interrupt();
+        } finally {
+            Binder.restoreCallingIdentity(id);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean setCertificate(ComponentName who, String alias, byte[] certificate) {
+        if (who == null) {
+            if (!isCallerDelegatedCertInstaller()) {
+                throw new NullPointerException("who == null, but caller is not cert installer");
+            }
+        } else {
+            synchronized (this) {
+                getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_PROFILE_OWNER);
+            }
+        }
+        final UserHandle userHandle = new UserHandle(UserHandle.getCallingUserId());
+        final int callingUid = Binder.getCallingUid();
+        final long id = Binder.clearCallingIdentity();
+        try {
+            final KeyChainConnection keyChainConnection = KeyChain.bindAsUser(mContext, userHandle);
+            try {
+                IKeyChainService keyChain = keyChainConnection.getService();
+                return keyChain.setCertificate(callingUid, alias, certificate);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "Setting certificate", e);
+            } finally {
+                keyChainConnection.close();
+            }
+        } catch (InterruptedException e) {
+            Log.w(LOG_TAG, "Interrupted while setting certificate", e);
+            Thread.currentThread().interrupt();
+        } finally {
+            Binder.restoreCallingIdentity(id);
+        }
+        return false;
+    }
+
     public void choosePrivateKeyAlias(final int uid, final Uri uri, final String alias,
             final IBinder response) {
         // Caller UID needs to be trusted, so we restrict this method to SYSTEM_UID callers.

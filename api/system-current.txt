@@ -5724,6 +5724,7 @@ package android.app.admin {
     method public deprecated android.os.UserHandle createUser(android.content.ComponentName, java.lang.String);
     method public void enableSystemApp(android.content.ComponentName, java.lang.String);
     method public int enableSystemApp(android.content.ComponentName, android.content.Intent);
+    method public byte[] generateKeyPair(android.content.ComponentName, java.lang.String, java.lang.String, int);
     method public java.lang.String[] getAccountTypesWithManagementDisabled();
     method public java.util.List<android.content.ComponentName> getActiveAdmins();
     method public android.os.Bundle getApplicationRestrictions(android.content.ComponentName, java.lang.String);
@@ -5791,6 +5792,7 @@ package android.app.admin {
     method public void setAutoTimeRequired(android.content.ComponentName, boolean);
     method public void setBluetoothContactSharingDisabled(android.content.ComponentName, boolean);
     method public void setCameraDisabled(android.content.ComponentName, boolean);
+    method public boolean setCertificate(android.content.ComponentName, java.lang.String, byte[]);
     method public void setCertInstallerPackage(android.content.ComponentName, java.lang.String) throws java.lang.SecurityException;
     method public void setCrossProfileCallerIdDisabled(android.content.ComponentName, boolean);
     method public void setGlobalSetting(android.content.ComponentName, java.lang.String, java.lang.String);
