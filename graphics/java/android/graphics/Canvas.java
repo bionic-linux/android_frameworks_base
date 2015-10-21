@@ -26,6 +26,8 @@ import android.text.SpannableString;
 import android.text.SpannedString;
 import android.text.TextUtils;
 
+import dalvik.system.VMRuntime;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -50,7 +52,7 @@ public class Canvas {
 
     /**
      * Should only be assigned in constructors (or setBitmap if software canvas),
-     * freed in finalizer.
+     * freed by NativeAllocation.
      * @hide
      */
     protected long mNativeCanvasWrapper;
@@ -85,32 +87,12 @@ public class Canvas {
     // (see SkCanvas.cpp, SkDraw.cpp)
     private static final int MAXMIMUM_BITMAP_SIZE = 32766;
 
+    // The approximate size of the native allocation associated with
+    // a Canvas object.
+    private static final long mNativeAllocationSize = 256;
+
     // This field is used to finalize the native Canvas properly
-    private final CanvasFinalizer mFinalizer;
-
-    private static final class CanvasFinalizer {
-        private long mNativeCanvasWrapper;
-
-        public CanvasFinalizer(long nativeCanvas) {
-            mNativeCanvasWrapper = nativeCanvas;
-        }
-
-        @Override
-        protected void finalize() throws Throwable {
-            try {
-                dispose();
-            } finally {
-                super.finalize();
-            }
-        }
-
-        public void dispose() {
-            if (mNativeCanvasWrapper != 0) {
-                finalizer(mNativeCanvasWrapper);
-                mNativeCanvasWrapper = 0;
-            }
-        }
-    }
+    private VMRuntime.NativeAllocation mNativeAllocation;
 
     /**
      * Construct an empty raster canvas. Use setBitmap() to specify a bitmap to
@@ -122,9 +104,10 @@ public class Canvas {
         if (!isHardwareAccelerated()) {
             // 0 means no native bitmap
             mNativeCanvasWrapper = initRaster(null);
-            mFinalizer = new CanvasFinalizer(mNativeCanvasWrapper);
+            mNativeAllocation = VMRuntime.registerNativeAllocation(this,
+                    mNativeCanvasWrapper, finalizer(), mNativeAllocationSize);
         } else {
-            mFinalizer = null;
+            mNativeAllocation = null;
         }
     }
 
@@ -143,7 +126,8 @@ public class Canvas {
         }
         throwIfCannotDraw(bitmap);
         mNativeCanvasWrapper = initRaster(bitmap);
-        mFinalizer = new CanvasFinalizer(mNativeCanvasWrapper);
+        mNativeAllocation = VMRuntime.registerNativeAllocation(this,
+                mNativeCanvasWrapper, finalizer(), mNativeAllocationSize);
         mBitmap = bitmap;
         mDensity = bitmap.mDensity;
     }
@@ -154,7 +138,8 @@ public class Canvas {
             throw new IllegalStateException();
         }
         mNativeCanvasWrapper = nativeCanvas;
-        mFinalizer = new CanvasFinalizer(mNativeCanvasWrapper);
+        mNativeAllocation = VMRuntime.registerNativeAllocation(this,
+                mNativeCanvasWrapper, finalizer(), mNativeAllocationSize);
         mDensity = Bitmap.getDefaultDensity();
     }
 
@@ -1960,7 +1945,9 @@ public class Canvas {
      * @hide
      */
     public void release() {
-        mFinalizer.dispose();
+        mNativeCanvasWrapper = 0;
+        mNativeAllocation.freeNativeAllocation();
+        mNativeAllocation = null;
     }
 
     /**
@@ -2122,5 +2109,5 @@ public class Canvas {
                                                      float hOffset,
                                                      float vOffset,
                                                      int flags, long nativePaint, long nativeTypeface);
-    private static native void finalizer(long nativeCanvas);
+    private static native long finalizer();
 }

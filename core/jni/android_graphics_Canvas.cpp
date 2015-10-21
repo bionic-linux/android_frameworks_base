@@ -34,8 +34,12 @@ static Canvas* get_canvas(jlong canvasHandle) {
     return reinterpret_cast<Canvas*>(canvasHandle);
 }
 
-static void finalizer(JNIEnv* env, jobject clazz, jlong canvasHandle) {
-    delete get_canvas(canvasHandle);
+static void delete_canvas(Canvas* canvas) {
+    delete canvas;
+}
+
+static jlong finalizer(JNIEnv* env, jobject clazz) {
+    return static_cast<jlong>(reinterpret_cast<uintptr_t>(&delete_canvas));
 }
 
 // Native wrapper constructor used by Canvas(Bitmap)
@@ -666,7 +670,7 @@ static void freeTextLayoutCaches(JNIEnv* env, jobject) {
 }; // namespace CanvasJNI
 
 static const JNINativeMethod gMethods[] = {
-    {"finalizer", "(J)V", (void*) CanvasJNI::finalizer},
+    {"finalizer", "()J", (void*) CanvasJNI::finalizer},
     {"initRaster", "(Landroid/graphics/Bitmap;)J", (void*) CanvasJNI::initRaster},
     {"native_setBitmap", "(JLandroid/graphics/Bitmap;)V", (void*) CanvasJNI::setBitmap},
     {"native_isOpaque","(J)Z", (void*) CanvasJNI::isOpaque},
