@@ -6124,7 +6124,7 @@ public class PackageManagerService extends IPackageManager.Stub {
         //
         // The exception is first boot of a non-eng device (aka !mLazyDexOpt), which
         // should do a full dexopt.
-        if (mLazyDexOpt || (!isFirstBoot() && mPackageUsage.isHistoricalPackageUsageAvailable())) {
+        if (mLazyDexOpt || isFirstBoot() || (!isFirstBoot() && mPackageUsage.isHistoricalPackageUsageAvailable())) {
             int total = pkgs.size();
             int skipped = 0;
             long now = System.currentTimeMillis();
