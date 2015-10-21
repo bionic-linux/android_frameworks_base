@@ -62,6 +62,9 @@ public:
     virtual int width() = 0;
     virtual int height() = 0;
 
+    // Return the approximate logical size of the Canvas native allocation.
+    virtual long nativeAllocationSize() = 0;
+
 // ----------------------------------------------------------------------------
 // Canvas state operations
 // ----------------------------------------------------------------------------

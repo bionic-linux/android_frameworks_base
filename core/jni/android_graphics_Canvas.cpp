@@ -34,17 +34,34 @@ static Canvas* get_canvas(jlong canvasHandle) {
     return reinterpret_cast<Canvas*>(canvasHandle);
 }
 
-static void finalizer(JNIEnv* env, jobject clazz, jlong canvasHandle) {
-    delete get_canvas(canvasHandle);
+static void finalizer(Canvas* canvas) {
+    delete canvas;
 }
 
+// Associate the native wrapper object with a NativeAllocation
+static jlong trackRaster(JNIEnv* env, jobject cls, jlong canvasHandle, jobject nativeAlloc) {
+    jclass nativeAllocClass = env->GetObjectClass(nativeAlloc);
+    jmethodID mid = env->GetMethodID(nativeAllocClass, "resetNativeAllocation", "(JJJ)V");
+    if (mid == 0) {
+        // TODO: Is this the right thing to do here?
+        finalizer(get_canvas(canvasHandle));
+        return 0;
+    }
+    jlong freeFunc = static_cast<jlong>(reinterpret_cast<uintptr_t>(&finalizer));
+    jlong size = static_cast<jlong>(get_canvas(canvasHandle)->nativeAllocationSize());
+    env->CallVoidMethod(nativeAlloc, mid, canvasHandle, freeFunc, size);
+    return canvasHandle;
+}
+
+
 // Native wrapper constructor used by Canvas(Bitmap)
-static jlong initRaster(JNIEnv* env, jobject, jobject jbitmap) {
+static jlong initRaster(JNIEnv* env, jobject cls, jobject jbitmap, jobject nativeAlloc) {
     SkBitmap bitmap;
     if (jbitmap != NULL) {
         GraphicsJNI::getSkBitmap(env, jbitmap, &bitmap);
     }
-    return reinterpret_cast<jlong>(Canvas::create_canvas(bitmap));
+    jlong canvasHandle = reinterpret_cast<jlong>(Canvas::create_canvas(bitmap));
+    return trackRaster(env, cls, canvasHandle, nativeAlloc);
 }
 
 // Set the given bitmap as the new draw target (wrapped in a new SkCanvas),
@@ -666,8 +683,8 @@ static void freeTextLayoutCaches(JNIEnv* env, jobject) {
 }; // namespace CanvasJNI
 
 static const JNINativeMethod gMethods[] = {
-    {"finalizer", "(J)V", (void*) CanvasJNI::finalizer},
-    {"initRaster", "(Landroid/graphics/Bitmap;)J", (void*) CanvasJNI::initRaster},
+    {"initRaster", "(Landroid/graphics/Bitmap;Ldalvik/system/NativeAllocation;)J", (void*) CanvasJNI::initRaster},
+    {"trackRaster", "(JLdalvik/system/NativeAllocation;)J", (void*) CanvasJNI::trackRaster},
     {"native_setBitmap", "(JLandroid/graphics/Bitmap;)V", (void*) CanvasJNI::setBitmap},
     {"native_isOpaque","(J)Z", (void*) CanvasJNI::isOpaque},
     {"native_getWidth","(J)I", (void*) CanvasJNI::getWidth},

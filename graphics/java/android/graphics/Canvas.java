@@ -26,6 +26,8 @@ import android.text.SpannableString;
 import android.text.SpannedString;
 import android.text.TextUtils;
 
+import dalvik.system.NativeAllocation;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -50,7 +52,7 @@ public class Canvas {
 
     /**
      * Should only be assigned in constructors (or setBitmap if software canvas),
-     * freed in finalizer.
+     * freed by NativeAllocation.
      * @hide
      */
     protected long mNativeCanvasWrapper;
@@ -86,31 +88,7 @@ public class Canvas {
     private static final int MAXMIMUM_BITMAP_SIZE = 32766;
 
     // This field is used to finalize the native Canvas properly
-    private final CanvasFinalizer mFinalizer;
-
-    private static final class CanvasFinalizer {
-        private long mNativeCanvasWrapper;
-
-        public CanvasFinalizer(long nativeCanvas) {
-            mNativeCanvasWrapper = nativeCanvas;
-        }
-
-        @Override
-        protected void finalize() throws Throwable {
-            try {
-                dispose();
-            } finally {
-                super.finalize();
-            }
-        }
-
-        public void dispose() {
-            if (mNativeCanvasWrapper != 0) {
-                finalizer(mNativeCanvasWrapper);
-                mNativeCanvasWrapper = 0;
-            }
-        }
-    }
+    private NativeAllocation mNativeAllocation;
 
     /**
      * Construct an empty raster canvas. Use setBitmap() to specify a bitmap to
@@ -121,10 +99,10 @@ public class Canvas {
     public Canvas() {
         if (!isHardwareAccelerated()) {
             // 0 means no native bitmap
-            mNativeCanvasWrapper = initRaster(null);
-            mFinalizer = new CanvasFinalizer(mNativeCanvasWrapper);
+            mNativeAllocation = new NativeAllocation(this);
+            mNativeCanvasWrapper = initRaster(null, mNativeAllocation);
         } else {
-            mFinalizer = null;
+            mNativeAllocation = null;
         }
     }
 
@@ -142,8 +120,8 @@ public class Canvas {
             throw new IllegalStateException("Immutable bitmap passed to Canvas constructor");
         }
         throwIfCannotDraw(bitmap);
-        mNativeCanvasWrapper = initRaster(bitmap);
-        mFinalizer = new CanvasFinalizer(mNativeCanvasWrapper);
+        mNativeAllocation = new NativeAllocation(this);
+        mNativeCanvasWrapper = initRaster(bitmap, mNativeAllocation);
         mBitmap = bitmap;
         mDensity = bitmap.mDensity;
     }
@@ -153,8 +131,8 @@ public class Canvas {
         if (nativeCanvas == 0) {
             throw new IllegalStateException();
         }
-        mNativeCanvasWrapper = nativeCanvas;
-        mFinalizer = new CanvasFinalizer(mNativeCanvasWrapper);
+        mNativeAllocation = new NativeAllocation(this);
+        mNativeCanvasWrapper = trackRaster(nativeCanvas, mNativeAllocation);
         mDensity = Bitmap.getDefaultDensity();
     }
 
@@ -1960,7 +1938,9 @@ public class Canvas {
      * @hide
      */
     public void release() {
-        mFinalizer.dispose();
+        mNativeCanvasWrapper = 0;
+        mNativeAllocation.freeNativeAllocation();
+        mNativeAllocation = null;
     }
 
     /**
@@ -1977,7 +1957,8 @@ public class Canvas {
      */
     public static native void freeTextLayoutCaches();
 
-    private static native long initRaster(Bitmap bitmap);
+    private static native long initRaster(Bitmap bitmap, NativeAllocation alloc);
+    private static native long trackRaster(long canvasHandle, NativeAllocation alloc);
     private static native void native_setBitmap(long canvasHandle,
                                                 Bitmap bitmap);
     private static native boolean native_isOpaque(long canvasHandle);
@@ -2122,5 +2103,4 @@ public class Canvas {
                                                      float hOffset,
                                                      float vOffset,
                                                      int flags, long nativePaint, long nativeTypeface);
-    private static native void finalizer(long nativeCanvas);
 }

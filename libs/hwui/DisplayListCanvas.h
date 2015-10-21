@@ -144,6 +144,9 @@ public:
     virtual int width() override { return mState.getWidth(); }
     virtual int height() override { return mState.getHeight(); }
 
+    // TODO: How nativeAllocationSize this be implemented?
+    virtual long nativeAllocationSize() override { return sizeof(*this); }
+
 // ----------------------------------------------------------------------------
 // android/graphics/Canvas state operations
 // ----------------------------------------------------------------------------

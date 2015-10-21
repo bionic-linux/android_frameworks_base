@@ -54,6 +54,7 @@ public:
     virtual bool isOpaque() override;
     virtual int width() override;
     virtual int height() override;
+    virtual long nativeAllocationSize() override;
 
     virtual int getSaveCount() const override;
     virtual int save(SkCanvas::SaveFlags flags) override;
@@ -214,6 +215,11 @@ int SkiaCanvas::width() {
 
 int SkiaCanvas::height() {
     return mCanvas->getBaseLayerSize().height();
+}
+
+long SkiaCanvas::nativeAllocationSize() {
+    // TODO: What should this be?
+    return sizeof(*this);
 }
 
 // ----------------------------------------------------------------------------
