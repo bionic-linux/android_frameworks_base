@@ -6097,9 +6097,7 @@ public class PackageManagerService extends IPackageManager.Stub {
             }
 
             // If we want to be lazy, filter everything that wasn't recently used.
-            if (mLazyDexOpt) {
-                filterRecentlyUsedApps(sortedPkgs);
-            }
+            filterRecentlyUsedApps(sortedPkgs);
 
             int i = 0;
             int total = sortedPkgs.size();
@@ -6124,7 +6122,7 @@ public class PackageManagerService extends IPackageManager.Stub {
         //
         // The exception is first boot of a non-eng device (aka !mLazyDexOpt), which
         // should do a full dexopt.
-        if (mLazyDexOpt || (!isFirstBoot() && mPackageUsage.isHistoricalPackageUsageAvailable())) {
+        if (mLazyDexOpt || isFirstBoot() || (!isFirstBoot() && mPackageUsage.isHistoricalPackageUsageAvailable())) {
             int total = pkgs.size();
             int skipped = 0;
             long now = System.currentTimeMillis();
