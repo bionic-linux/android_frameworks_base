@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b956eeeb_358538d3",
+        "filename": "core/jni/android_graphics_Canvas.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-10-21T20:53:58Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 42,
+        "endChar": 49
+      },
+      "revId": "5357a3b8983659589b4cc3e6f3c832e6a0287501",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f935c6bb_0fe5898f",
+        "filename": "core/jni/android_graphics_Canvas.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-10-21T20:53:58Z",
+      "side": 1,
+      "message": "I\u0027d probably do a LOG_ALWAYS_FATAL_IF() here as it should be impossible for this to fail and if it does there\u0027s really no recovery. That said the preferred pattern is to lookup the class \u0026 method in the register function and stash it so that it doesn\u0027t need to be repeatedly looked up. GetMethodID is slow after all.",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "5357a3b8983659589b4cc3e6f3c832e6a0287501",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b956eeeb_3537f8c6",
+        "filename": "libs/hwui/DisplayListCanvas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-10-21T20:53:58Z",
+      "side": 1,
+      "message": "This is good enough. The size on this class is dynamic but also relatively small.",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "5357a3b8983659589b4cc3e6f3c832e6a0287501",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "993daaa1_d725d6e2",
+        "filename": "libs/hwui/SkiaCanvas.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-10-21T20:53:58Z",
+      "side": 1,
+      "message": "This is good enough. Same as DisplayListCanvas the size is dynamic but fairly small.",
+      "range": {
+        "startLine": 221,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 33
+      },
+      "revId": "5357a3b8983659589b4cc3e6f3c832e6a0287501",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
