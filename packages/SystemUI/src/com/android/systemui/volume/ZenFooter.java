@@ -136,6 +136,7 @@ public class ZenFooter extends LinearLayout {
                 : ZenModeConfig.getConditionSummary(mContext, mConfig, mController.getCurrentUser(),
                         true /*shortVersion*/);
         Util.setText(mSummaryLine2, line2);
+        Util.setText(mEndNowButton, mContext.getString(R.string.volume_zen_end_now));
     }
 
     public void onConfigurationChanged() {
