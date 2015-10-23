@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36e4cdf6_c151269f",
+        "filename": "core/jni/android_graphics_Canvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-10-23T22:57:25Z",
+      "side": 1,
+      "message": "fastjni it",
+      "range": {
+        "startLine": 673,
+        "startChar": 19,
+        "endLine": 673,
+        "endChar": 22
+      },
+      "revId": "a49b4369295e744f86b75854bb84a3b24440affe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
