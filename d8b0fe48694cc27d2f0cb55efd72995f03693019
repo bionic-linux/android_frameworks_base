@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f27de4_0f91e54b",
+        "filename": "packages/SystemUI/src/com/android/systemui/volume/ZenFooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2015-10-26T14:30:06Z",
+      "side": 1,
+      "message": "Do this in onConfigurationChanged",
+      "revId": "d8b0fe48694cc27d2f0cb55efd72995f03693019",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
