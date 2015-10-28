@@ -435,4 +435,22 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
             return mWakeLock.isHeld();
         }
     }
+
+    @ServiceThreadOnly
+    void changeSystemAudioMode(boolean enabled, IHdmiControlCallback callback) {
+        assertRunOnServiceThread();
+        // TODO: implement
+    }
+
+    @ServiceThreadOnly
+    void changeVolume(int curVolume, int delta, int maxVolume) {
+        assertRunOnServiceThread();
+        // TODO: implement
+    }
+
+    @ServiceThreadOnly
+    void changeMute(boolean mute) {
+        assertRunOnServiceThread();
+        // TODO: implement
+    }
 }

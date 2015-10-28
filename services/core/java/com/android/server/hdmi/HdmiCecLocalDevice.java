@@ -17,6 +17,7 @@
 package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -420,6 +421,14 @@ abstract class HdmiCecLocalDevice {
     protected boolean handleSetSystemAudioMode(HdmiCecMessage message) {
         return false;
     }
+
+    // TODO: javadoc
+    // TODO: make protected or bring common implementation here?
+    abstract void changeSystemAudioMode(boolean enabled, IHdmiControlCallback callback);
+
+    abstract void changeVolume(int curVolume, int delta, int maxVolume);
+
+    abstract void changeMute(boolean mute);
 
     protected boolean handleTerminateArc(HdmiCecMessage message) {
         return false;

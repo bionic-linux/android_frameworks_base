@@ -175,11 +175,8 @@ public final class HdmiTvClient extends HdmiClient {
      * @throws {@link IllegalArgumentException} if the {@code callback} is null
      */
     public void setSystemAudioMode(boolean enabled, SelectCallback callback) {
-        try {
-            mService.setSystemAudioMode(enabled, getCallbackWrapper(callback));
-        } catch (RemoteException e) {
-            Log.e(TAG, "failed to set system audio mode:", e);
-        }
+        // Does not @Override HdmiClient implementation due to argument difference
+        super.setSystemAudioMode(enabled, (SystemAudioModeCallback) getCallbackWrapper(callback));
     }
 
     /**
@@ -189,12 +186,9 @@ public final class HdmiTvClient extends HdmiClient {
      * @param newIndex volume index to be set
      * @param maxIndex maximum volume index
      */
+    @Override
     public void setSystemAudioVolume(int oldIndex, int newIndex, int maxIndex) {
-        try {
-            mService.setSystemAudioVolume(oldIndex, newIndex, maxIndex);
-        } catch (RemoteException e) {
-            Log.e(TAG, "failed to set volume: ", e);
-        }
+        super.setSystemAudioVolume(oldIndex, newIndex, maxIndex);
     }
 
     /**
@@ -202,12 +196,9 @@ public final class HdmiTvClient extends HdmiClient {
      *
      * @param mute {@code true} if muted; otherwise, {@code false}
      */
+    @Override
     public void setSystemAudioMute(boolean mute) {
-        try {
-            mService.setSystemAudioMute(mute);
-        } catch (RemoteException e) {
-            Log.e(TAG, "failed to set mute: ", e);
-        }
+        super.setSystemAudioMute(mute);
     }
 
     /**
