@@ -107,4 +107,75 @@ public abstract class HdmiClient {
             }
         };
     }
+
+    /**
+     * Callback interface used to get the result of {@link #setSystemAudioMode}.
+     * @hide
+     */
+    public interface SystemAudioModeCallback {
+        /**
+         * Called when the operation is finished.
+         *
+         * @param result the result value of {@link #setSystemAudioMode}
+         */
+        void onComplete(int result);
+    }
+
+    private static IHdmiControlCallback getCallbackWrapper(final SystemAudioModeCallback callback) {
+        return new IHdmiControlCallback.Stub() {
+            @Override
+            public void onComplete(int result) {
+                callback.onComplete(result);
+            }
+        };
+    }
+
+    /**
+     * Sets system audio mode.
+     *
+     * @hide
+     *
+     * @param enabled set to {@code true} to enable the mode; otherwise {@code false}
+     * @param callback callback to get the result with
+     * @throws {@link IllegalArgumentException} if the {@code callback} is null
+     */
+    public void setSystemAudioMode(boolean enabled, SystemAudioModeCallback callback) {
+        try {
+            mService.setSystemAudioMode(enabled, getCallbackWrapper(callback));
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to set system audio mode:", e);
+        }
+    }
+
+    /**
+     * Sets system audio volume
+     *
+     * @hide
+     *
+     * @param oldIndex current volume index
+     * @param newIndex volume index to be set
+     * @param maxIndex maximum volume index
+     */
+    public void setSystemAudioVolume(int oldIndex, int newIndex, int maxIndex) {
+        try {
+            mService.setSystemAudioVolume(oldIndex, newIndex, maxIndex);
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to set volume: ", e);
+        }
+    }
+
+    /**
+     * Sets system audio mute status
+     *
+     * @hide
+     *
+     * @param mute {@code true} if muted; otherwise, {@code false}
+     */
+    public void setSystemAudioMute(boolean mute) {
+        try {
+            mService.setSystemAudioMute(mute);
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to set mute: ", e);
+        }
+    }
 }

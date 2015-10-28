@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (C) 2016, NVIDIA CORPORATION. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +18,7 @@
 package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -420,6 +422,14 @@ abstract class HdmiCecLocalDevice {
     protected boolean handleSetSystemAudioMode(HdmiCecMessage message) {
         return false;
     }
+
+    // TODO: javadoc
+    // TODO: make protected or bring common implementation here?
+    abstract void changeSystemAudioMode(boolean enabled, IHdmiControlCallback callback);
+
+    abstract void changeVolume(int curVolume, int delta, int maxVolume);
+
+    abstract void changeMute(boolean mute);
 
     protected boolean handleTerminateArc(HdmiCecMessage message) {
         return false;

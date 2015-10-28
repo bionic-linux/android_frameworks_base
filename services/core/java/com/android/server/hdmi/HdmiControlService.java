@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (C) 2016, NVIDIA CORPORATION. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1398,13 +1399,13 @@ public final class HdmiControlService extends SystemService {
             runOnServiceThread(new Runnable() {
                 @Override
                 public void run() {
-                    HdmiCecLocalDeviceTv tv = tv();
-                    if (tv == null) {
-                        Slog.w(TAG, "Local tv device not available");
+                    HdmiCecLocalDevice device = device();
+                    if (device == null) {
+                        Slog.w(TAG, "Local device not available");
                         invokeCallback(callback, HdmiControlManager.RESULT_SOURCE_NOT_AVAILABLE);
                         return;
                     }
-                    tv.changeSystemAudioMode(enabled, callback);
+                    device.changeSystemAudioMode(enabled, callback);
                 }
             });
         }
@@ -1463,12 +1464,12 @@ public final class HdmiControlService extends SystemService {
             runOnServiceThread(new Runnable() {
                 @Override
                 public void run() {
-                    HdmiCecLocalDeviceTv tv = tv();
-                    if (tv == null) {
-                        Slog.w(TAG, "Local tv device not available");
+                    HdmiCecLocalDevice device = device();
+                    if (device == null) {
+                        Slog.w(TAG, "Local device not available");
                         return;
                     }
-                    tv.changeVolume(oldIndex, newIndex - oldIndex, maxIndex);
+                    device.changeVolume(oldIndex, newIndex - oldIndex, maxIndex);
                 }
             });
         }
@@ -1479,12 +1480,12 @@ public final class HdmiControlService extends SystemService {
             runOnServiceThread(new Runnable() {
                 @Override
                 public void run() {
-                    HdmiCecLocalDeviceTv tv = tv();
-                    if (tv == null) {
-                        Slog.w(TAG, "Local tv device not available");
+                    HdmiCecLocalDevice device = device();
+                    if (device == null) {
+                        Slog.w(TAG, "Local device not available");
                         return;
                     }
-                    tv.changeMute(mute);
+                    device.changeMute(mute);
                 }
             });
         }
@@ -1961,6 +1962,24 @@ public final class HdmiControlService extends SystemService {
     private HdmiCecLocalDevicePlayback playback() {
         return (HdmiCecLocalDevicePlayback)
                 mCecController.getLocalDevice(HdmiDeviceInfo.DEVICE_PLAYBACK);
+    }
+
+    boolean isPlaybackDevice() {
+        return mLocalDevices.contains(HdmiDeviceInfo.DEVICE_PLAYBACK);
+    }
+
+    boolean isPlaybackDeviceEnabled() {
+        return isPlaybackDevice() && playback() != null;
+    }
+
+    private HdmiCecLocalDevice device() {
+        // Tv profile overrides playback because Tv is implemented more fully
+        if (isTvDevice())
+            return mCecController.getLocalDevice(HdmiDeviceInfo.DEVICE_TV);
+        else if (isPlaybackDevice())
+            return mCecController.getLocalDevice(HdmiDeviceInfo.DEVICE_PLAYBACK);
+        else
+            return null;
     }
 
     AudioManager getAudioManager() {
