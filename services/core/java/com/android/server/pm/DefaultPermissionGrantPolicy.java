@@ -828,6 +828,16 @@ final class DefaultPermissionGrantPolicy {
 
                     mService.updatePermissionFlags(permission, pkg.packageName,
                             newFlags, newFlags, userId);
+                } else if ((flags == (PackageManager.FLAG_PERMISSION_GRANTED_BY_DEFAULT |
+                            PackageManager.FLAG_PERMISSION_SYSTEM_FIXED)) &&
+                            (pkg.mSharedUserId != null) && !systemFixed) {
+                    if (DEBUG) {
+                        Log.i(TAG, "Set " + permission + " to fixed for "
+                                + pkg.packageName);
+                    }
+                    int newFlags = PackageManager.FLAG_PERMISSION_GRANTED_BY_DEFAULT;
+                    mService.updatePermissionFlags(permission, pkg.packageName,
+                            newFlags, newFlags, userId);
                 }
             }
         }
