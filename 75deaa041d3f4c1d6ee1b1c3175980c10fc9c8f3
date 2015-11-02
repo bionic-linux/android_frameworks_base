@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96401a44_df5427d5",
+        "filename": "services/core/java/com/android/server/pm/DefaultPermissionGrantPolicy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2015-11-02T16:47:07Z",
+      "side": 1,
+      "message": "This should apply to any app not only for shared users.",
+      "range": {
+        "startLine": 833,
+        "startChar": 29,
+        "endLine": 833,
+        "endChar": 54
+      },
+      "revId": "75deaa041d3f4c1d6ee1b1c3175980c10fc9c8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6195673_dc3afca2",
+        "filename": "services/core/java/com/android/server/pm/DefaultPermissionGrantPolicy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2015-11-02T16:47:07Z",
+      "side": 1,
+      "message": "We already have the granted by default flag set. What we have to do is clear the system fixed flag by passing it as the mask and zero for the flag value.",
+      "range": {
+        "startLine": 838,
+        "startChar": 20,
+        "endLine": 840,
+        "endChar": 56
+      },
+      "revId": "75deaa041d3f4c1d6ee1b1c3175980c10fc9c8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
