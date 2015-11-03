@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "569941f8_22b40a0a",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-11-03T07:20:44Z",
+      "side": 1,
+      "message": "This case will throw an operation away without ending its trace. It\u0027s only a problem if there are more than MAX_RECENT_OPERATIONS, but you just know *someone* will reach that. :)",
+      "revId": "daa21d299bdf9e4e5f3fc3d8ffc03a37f547d440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
