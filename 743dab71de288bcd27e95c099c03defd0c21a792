@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d69a9277_327870a7",
+        "filename": "core/java/android/security/net/config/Domain.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-04T21:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a98a5f_aa8d8be5",
+      "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16d0aae3_95a22667",
         "filename": "core/java/android/security/net/config/RootTrustManager.java",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2015-11-04T00:38:37Z",
       "side": 1,
       "message": "Style nit: It should be EMPTY_ISSUERS or EMPTY_X509CERTIFICATE_ARRAY.",
+      "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36892e3b_cd5dc958",
+        "filename": "core/java/android/security/net/config/RootTrustManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-04T21:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d0aae3_95a22667",
       "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "36892e3b_ed5a855d",
+        "filename": "core/java/android/security/net/config/RootTrustManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-04T21:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a98a5f_aa64abf3",
+      "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6bb729e_4d274d5f",
         "filename": "core/java/android/security/net/config/SystemCertificateSource.java",
         "patchSetId": 2
@@ -81,6 +135,24 @@
       "writtenOn": "2015-11-04T00:38:37Z",
       "side": 1,
       "message": "Please add a comment that you\u0027re not throwing here to be consistent with Conscrypt\u0027s trust management code.",
+      "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b69d1e72_91eafc99",
+        "filename": "core/java/android/security/net/config/SystemCertificateSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-04T21:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6bb729e_4d274d5f",
       "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "f6923665_4b93853e",
+        "filename": "core/java/android/security/net/config/UserCertificateSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-04T21:59:30Z",
+      "side": 1,
+      "message": "Conscrypt assumes that the directories will be directories and so list will never return null.",
+      "parentUuid": "f6a3167e_0954ed04",
+      "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76df26f3_d5574cd7",
         "filename": "core/java/android/security/net/config/UserCertificateSource.java",
         "patchSetId": 2
@@ -115,6 +205,24 @@
       "writtenOn": "2015-11-04T00:38:37Z",
       "side": 1,
       "message": "Please add a comment saying that we ignore the exception to be consistent with Conscrypt\u0027s behavior.",
+      "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76a726c0_0f7345cd",
+        "filename": "core/java/android/security/net/config/UserCertificateSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-04T21:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76df26f3_d5574cd7",
       "revId": "743dab71de288bcd27e95c099c03defd0c21a792",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
