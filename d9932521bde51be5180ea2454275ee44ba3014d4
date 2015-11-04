@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d69a9277_7504a2a3",
+        "filename": "core/java/android/security/net/config/Domain.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-04T22:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6923665_ee8d1fe5",
+      "revId": "d9932521bde51be5180ea2454275ee44ba3014d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b686fe2b_ec3b63c4",
         "filename": "core/java/android/security/net/config/Domain.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-04T22:25:15Z",
       "side": 1,
       "message": "Domain isn\u0027t a rule. Suggestion: Whether this domain includes subdomains.",
+      "revId": "d9932521bde51be5180ea2454275ee44ba3014d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96a49abb_f6d0981e",
+        "filename": "core/java/android/security/net/config/Domain.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-04T22:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b686fe2b_ec3b63c4",
       "revId": "d9932521bde51be5180ea2454275ee44ba3014d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
