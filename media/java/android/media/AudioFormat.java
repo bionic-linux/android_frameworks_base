@@ -251,6 +251,10 @@ public class AudioFormat {
      * @hide
      * */
     public static final int ENCODING_AAC_HE_V2 = 12;
+    /** Audio data format: DOLBY TRUEHD compressed
+     * @hide
+     * */
+    public static final int ENCODING_DOLBY_TRUEHD = 13;
 
     /** Invalid audio channel configuration */
     /** @deprecated Use {@link #CHANNEL_INVALID} instead.  */
@@ -443,6 +447,7 @@ public class AudioFormat {
         case ENCODING_AAC_LC:
         case ENCODING_AAC_HE_V1:
         case ENCODING_AAC_HE_V2:
+        case ENCODING_DOLBY_TRUEHD:
             return true;
         default:
             return false;
@@ -460,6 +465,7 @@ public class AudioFormat {
         case ENCODING_E_AC3:
         case ENCODING_DTS:
         case ENCODING_DTS_HD:
+        case ENCODING_DOLBY_TRUEHD:
             return true;
         default:
             return false;
@@ -483,6 +489,7 @@ public class AudioFormat {
         case ENCODING_AAC_LC:
         case ENCODING_AAC_HE_V1:
         case ENCODING_AAC_HE_V2:
+        case ENCODING_DOLBY_TRUEHD:
             return false;
         case ENCODING_INVALID:
         default:
@@ -715,6 +722,7 @@ public class AudioFormat {
                 case ENCODING_E_AC3:
                 case ENCODING_DTS:
                 case ENCODING_DTS_HD:
+                case ENCODING_DOLBY_TRUEHD:
                     mEncoding = encoding;
                     break;
                 case ENCODING_INVALID:
@@ -859,7 +867,8 @@ public class AudioFormat {
         ENCODING_AC3,
         ENCODING_E_AC3,
         ENCODING_DTS,
-        ENCODING_DTS_HD
+        ENCODING_DTS_HD,
+        ENCODING_DOLBY_TRUEHD
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface Encoding {}
