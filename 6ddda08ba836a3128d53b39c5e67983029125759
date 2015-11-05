@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1698aa84_0956de51",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-11-05T21:44:49Z",
+      "side": 1,
+      "message": "You probably meant to use readFileDescriptor() here?  (So that the writeFileDescriptor() logic is mirrored.)",
+      "range": {
+        "startLine": 1712,
+        "startChar": 19,
+        "endLine": 1712,
+        "endChar": 40
+      },
+      "revId": "6ddda08ba836a3128d53b39c5e67983029125759",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d69a9277_c7ff5c1b",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-11-05T21:44:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1727,
+        "startChar": 25,
+        "endLine": 1727,
+        "endChar": 46
+      },
+      "revId": "6ddda08ba836a3128d53b39c5e67983029125759",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
