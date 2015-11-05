@@ -92,39 +92,12 @@ static void SigChldHandler(int /*signal_number*/) {
   int saved_errno = errno;
 
   while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
-     // Log process-death status that we care about.  In general it is
-     // not safe to call LOG(...) from a signal handler because of
-     // possible reentrancy.  However, we know a priori that the
-     // current implementation of LOG() is safe to call from a SIGCHLD
-     // handler in the zygote process.  If the LOG() implementation
-     // changes its locking strategy or its use of syscalls within the
-     // lazy-init critical section, its use here may become unsafe.
-    if (WIFEXITED(status)) {
-      if (WEXITSTATUS(status)) {
-        ALOGI("Process %d exited cleanly (%d)", pid, WEXITSTATUS(status));
-      }
-    } else if (WIFSIGNALED(status)) {
-      if (WTERMSIG(status) != SIGKILL) {
-        ALOGI("Process %d exited due to signal (%d)", pid, WTERMSIG(status));
-      }
-      if (WCOREDUMP(status)) {
-        ALOGI("Process %d dumped core.", pid);
-      }
-    }
-
     // If the just-crashed process is the system_server, bring down zygote
     // so that it is restarted by init and system server will be restarted
     // from there.
     if (pid == gSystemServerPid) {
-      ALOGE("Exit zygote because system server (%d) has terminated", pid);
       kill(getpid(), SIGKILL);
     }
-  }
-
-  // Note that we shouldn't consider ECHILD an error because
-  // the secondary zygote might have no children left to wait for.
-  if (pid < 0 && errno != ECHILD) {
-    ALOGW("Zygote SIGCHLD error in waitpid: %s", strerror(errno));
   }
 
   errno = saved_errno;
