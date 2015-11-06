@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d69a9277_2dff2684",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-11-06T19:02:54Z",
+      "side": 1,
+      "message": "Let\u0027s bring some order to the chaos.  :)  Here\u0027s a proposal:\n\n-- Add writeRawFileDescriptor(), writeRawFileDescriptorArray(), readRawFileDescriptorArray() so that we use \"raw\" consistently everywhere around here.\n\n-- On an internal branch, mark writeFileDescriptor() as @Deprecated and unhide readRaw/writeRaw() methods.",
+      "parentUuid": "d683721b_9e0f6db7",
+      "range": {
+        "startLine": 1712,
+        "startChar": 19,
+        "endLine": 1712,
+        "endChar": 40
+      },
+      "revId": "6ddda08ba836a3128d53b39c5e67983029125759",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69a9277_c7ff5c1b",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 1
