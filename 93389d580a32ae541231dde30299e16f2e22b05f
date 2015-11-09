@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6923665_bd4dfd19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2015-11-09T16:05:51Z",
+      "side": 1,
+      "message": "I couldn\u0027t find this mentioned in the document. Since you\u0027re linking to the spec, can you also mention the page or paragraph that says this?",
+      "revId": "93389d580a32ae541231dde30299e16f2e22b05f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5676a24b_34f098f8",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2015-11-09T16:05:51Z",
+      "side": 1,
+      "message": "My reading of the spec is that an unknown date can also be indicated by \"    :  :  \", which would pass this test. In fact, since the datetime field contains both date and time in the format \"\"YYYY:MM:DD HH:MM:SS\", wouldn\u0027t this regex always accept it (because of the space between date and time)?",
+      "range": {
+        "startLine": 370,
+        "startChar": 53,
+        "endLine": 370,
+        "endChar": 54
+      },
+      "revId": "93389d580a32ae541231dde30299e16f2e22b05f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
