@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6a6b626_4b8e85e1",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2015-11-09T22:59:25Z",
+      "side": 1,
+      "message": "RawFile?",
+      "range": {
+        "startLine": 1713,
+        "startChar": 40,
+        "endLine": 1713,
+        "endChar": 44
+      },
+      "revId": "f21fdd61d0e0e274e14462d194bf7d7bd6e0daef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
