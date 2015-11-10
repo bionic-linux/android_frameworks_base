@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6da7ea7_4f568152",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2015-11-10T01:50:28Z",
+      "side": 1,
+      "message": "I know it\u0027s the same method, but writeRawFileDescriptor() would be cleaner here",
+      "range": {
+        "startLine": 624,
+        "startChar": 16,
+        "endLine": 624,
+        "endChar": 35
+      },
+      "revId": "4a64c6f8cbdfa72695c5a81e5a01257a25bded27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
