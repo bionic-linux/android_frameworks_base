@@ -16,6 +16,24 @@
       "revId": "4b5872fb5801132f4db04b742ae67e09bf73eaa8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968c9a88_7032b0ed",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1074124
+      },
+      "writtenOn": "2015-11-10T06:32:53Z",
+      "side": 1,
+      "message": "As you said, \"0000:00:01\" is invalid data. But I haven\u0027t seen such a timestamp.\n\nSome camera returns all zero when it has no data to set. But \"0000:00:01\" hardly happens. Strictly speaking, there are many invalid timestamps, e.g. \"1997:00:00\", \"9999:13:02\" etc. I think current implementation is reasonable to handle actual problem.\n\nOn the other hand, I think current commit title is confusing. Let me change the title (and commit message again)",
+      "parentUuid": "f6a6b626_b1cb1827",
+      "revId": "4b5872fb5801132f4db04b742ae67e09bf73eaa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
