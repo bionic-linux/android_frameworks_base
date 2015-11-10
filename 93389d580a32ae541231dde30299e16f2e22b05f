@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "162b4a19_94e084bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1074124
+      },
+      "writtenOn": "2015-11-10T02:11:44Z",
+      "side": 1,
+      "message": "It looks our misunderstanding. page.22 shows \"Default \u003d none\", but it does not mean \"set to \"none\"\" as you pointed.\n\nAlso referring to Table 14 in page.54, DateTime is Recommended value. In addition to that, GPSInfo IDF \u0026 GPSDateStamp is Optional. So we can omitted these values. \n\nLet me modify the commit message to avoid misunderstanding.\nBut this patch itself is still valid.",
+      "parentUuid": "f6923665_bd4dfd19",
+      "revId": "93389d580a32ae541231dde30299e16f2e22b05f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5676a24b_34f098f8",
         "filename": "media/java/android/media/ExifInterface.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2015-11-09T16:05:51Z",
       "side": 1,
       "message": "My reading of the spec is that an unknown date can also be indicated by \"    :  :  \", which would pass this test. In fact, since the datetime field contains both date and time in the format \"\"YYYY:MM:DD HH:MM:SS\", wouldn\u0027t this regex always accept it (because of the space between date and time)?",
+      "range": {
+        "startLine": 370,
+        "startChar": 53,
+        "endLine": 370,
+        "endChar": 54
+      },
+      "revId": "93389d580a32ae541231dde30299e16f2e22b05f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6829250_95694603",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1074124
+      },
+      "writtenOn": "2015-11-10T02:11:44Z",
+      "side": 1,
+      "message": "This regex detects non 0 numeric data. Both \"0000:00:00\" and \" : : \" are regarded as error since those does not include \"1 to 9\" value. \"0000:01:01 00:00:00\" will be detected as valid value, but we haven\u0027t seen it.",
+      "parentUuid": "5676a24b_34f098f8",
       "range": {
         "startLine": 370,
         "startChar": 53,
