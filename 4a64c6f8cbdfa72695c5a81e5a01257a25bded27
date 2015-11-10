@@ -22,6 +22,30 @@
       "revId": "4a64c6f8cbdfa72695c5a81e5a01257a25bded27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16ac2a06_15cad6c6",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1080302
+      },
+      "writtenOn": "2015-11-10T19:01:34Z",
+      "side": 1,
+      "message": "Oh, my mistake actually.",
+      "parentUuid": "b6da7ea7_4f568152",
+      "range": {
+        "startLine": 624,
+        "startChar": 16,
+        "endLine": 624,
+        "endChar": 35
+      },
+      "revId": "4a64c6f8cbdfa72695c5a81e5a01257a25bded27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
