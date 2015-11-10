@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6a6b626_b1cb1827",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000882
+      },
+      "writtenOn": "2015-11-10T03:33:51Z",
+      "side": 1,
+      "message": "This will accept timestamps with a zero year but non-zero time, like \"0000:00:00 00:00:01\", which doesn\u0027t seem like it should be considered valid either. Should this check just the year?",
+      "revId": "4b5872fb5801132f4db04b742ae67e09bf73eaa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
