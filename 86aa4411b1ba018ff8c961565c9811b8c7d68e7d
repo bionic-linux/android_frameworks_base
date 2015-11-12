@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6da7ea7_17d2d651",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfigProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-12T23:02:51Z",
+      "side": 1,
+      "message": "throw RuntimeException instead. I think this failure should kill the app unconditionally.",
+      "revId": "86aa4411b1ba018ff8c961565c9811b8c7d68e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b3453db_75179a26",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfigProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-12T23:02:51Z",
+      "side": 1,
+      "message": "Fail if Security.insertProviderAt return value is not 1.",
+      "revId": "86aa4411b1ba018ff8c961565c9811b8c7d68e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
