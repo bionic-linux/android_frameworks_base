@@ -615,6 +615,21 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote)
     char methodTraceFileBuf[sizeof("-Xmethod-trace-file:") + PROPERTY_VALUE_MAX];
     char methodTraceFileSizeBuf[sizeof("-Xmethod-trace-file-size:") + PROPERTY_VALUE_MAX];
     char fingerprintBuf[sizeof("-Xfingerprint:") + PROPERTY_VALUE_MAX];
+    const char* publicNativeLibraries = "--public-native-libraries=libandroid.so:"
+                                                                  "libc.so:"
+                                                                  "libdl.so:"
+                                                                  "libEGL.so:"
+                                                                  "libGLESv1_CM.so:"
+                                                                  "libGLESv2.so:"
+                                                                  "libGLESv3.so:"
+                                                                  "libjnigraphics.so:"
+                                                                  "liblog.so:"
+                                                                  "libmediandk.so:"
+                                                                  "libm.so:"
+                                                                  "libOpenMAXAL.so:"
+                                                                  "libOpenSLES.so:"
+                                                                  "libstdc++.so:"
+                                                                  "libz.so";
 
     bool checkJni = false;
     property_get("dalvik.vm.checkjni", propBuf, "");
@@ -867,6 +882,8 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote)
     }
     snprintf(cpuAbiListBuf, sizeof(cpuAbiListBuf), "--cpu-abilist=%s", propBuf);
     addOption(cpuAbiListBuf);
+
+    addOption(publicNativeLibraries);
 
     // Dalvik-cache pruning counter.
     parseRuntimeOption("dalvik.vm.zygote.max-boot-retry", cachePruneBuf,
