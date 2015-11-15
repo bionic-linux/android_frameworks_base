@@ -359,6 +359,13 @@ public final class LoadedApk {
                     }
                 }
 
+                if (mApplicationInfo.isSystemApp()) {
+                  // Add path to system libraries to libPaths;
+                  // Access to system libs should be limited
+                  // to bundled applications
+                  libPaths.add(System.getProperty("java.library.path"));
+                }
+
                 final String lib = TextUtils.join(File.pathSeparator, libPaths);
 
                 /*
