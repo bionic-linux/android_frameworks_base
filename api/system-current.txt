@@ -49025,12 +49025,14 @@ package dalvik.bytecode {
 package dalvik.system {
 
   public class BaseDexClassLoader extends java.lang.ClassLoader {
-    ctor public BaseDexClassLoader(java.lang.String, java.io.File, java.lang.String, java.lang.ClassLoader);
+    ctor public deprecated BaseDexClassLoader(java.lang.String, java.io.File, java.lang.String, java.lang.ClassLoader);
+    ctor protected BaseDexClassLoader(java.lang.String, java.io.File, java.lang.String, java.lang.String, java.lang.ClassLoader);
     method public java.lang.String findLibrary(java.lang.String);
   }
 
   public class DexClassLoader extends dalvik.system.BaseDexClassLoader {
-    ctor public DexClassLoader(java.lang.String, java.lang.String, java.lang.String, java.lang.ClassLoader);
+    ctor public deprecated DexClassLoader(java.lang.String, java.lang.String, java.lang.String, java.lang.ClassLoader);
+    ctor public DexClassLoader(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.ClassLoader);
   }
 
   public final class DexFile {
@@ -49046,7 +49048,8 @@ package dalvik.system {
 
   public class PathClassLoader extends dalvik.system.BaseDexClassLoader {
     ctor public PathClassLoader(java.lang.String, java.lang.ClassLoader);
-    ctor public PathClassLoader(java.lang.String, java.lang.String, java.lang.ClassLoader);
+    ctor public deprecated PathClassLoader(java.lang.String, java.lang.String, java.lang.ClassLoader);
+    ctor public PathClassLoader(java.lang.String, java.lang.String, java.lang.String, java.lang.ClassLoader);
   }
 
 }
