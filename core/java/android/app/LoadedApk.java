@@ -359,6 +359,13 @@ public final class LoadedApk {
                     }
                 }
 
+                if (mApplicationInfo.isSystemApp()) {
+                    // Add path to system libraries to libPaths;
+                    // Access to system libs should be limited
+                    // to bundled applications
+                    libPaths.add(System.getProperty("java.library.path"));
+                }
+
                 final String lib = TextUtils.join(File.pathSeparator, libPaths);
 
                 /*
@@ -373,8 +380,10 @@ public final class LoadedApk {
                 // as this is early and necessary.
                 StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
 
+                String isolationPath = mAppDir + File.pathSeparator + mDataDir;
+
                 mClassLoader = ApplicationLoaders.getDefault().getClassLoader(zip, lib,
-                        mBaseClassLoader);
+                        isolationPath, mBaseClassLoader);
 
                 StrictMode.setThreadPolicy(oldPolicy);
             } else {
