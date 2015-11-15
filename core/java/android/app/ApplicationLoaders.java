@@ -27,7 +27,8 @@ class ApplicationLoaders
         return gApplicationLoaders;
     }
 
-    public ClassLoader getClassLoader(String zip, String libPath, ClassLoader parent)
+    public ClassLoader getClassLoader(String zip, String libPath,
+                                      String isolationPath, ClassLoader parent)
     {
         /*
          * This is the parent we use if they pass "null" in.  In theory
@@ -55,7 +56,7 @@ class ApplicationLoaders
     
                 Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, zip);
                 PathClassLoader pathClassloader =
-                    new PathClassLoader(zip, libPath, parent);
+                    new PathClassLoader(zip, libPath, isolationPath, parent);
                 Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
 
                 mLoaders.put(zip, pathClassloader);
