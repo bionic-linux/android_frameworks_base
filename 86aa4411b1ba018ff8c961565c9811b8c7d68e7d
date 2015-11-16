@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b3453db_8c3afc16",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfigProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-16T23:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6da7ea7_17d2d651",
+      "revId": "86aa4411b1ba018ff8c961565c9811b8c7d68e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b3453db_75179a26",
         "filename": "core/java/android/security/net/config/NetworkSecurityConfigProvider.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-12T23:02:51Z",
       "side": 1,
       "message": "Fail if Security.insertProviderAt return value is not 1.",
+      "revId": "86aa4411b1ba018ff8c961565c9811b8c7d68e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b2a4b7b_7fd2d0dd",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfigProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-16T23:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b3453db_75179a26",
       "revId": "86aa4411b1ba018ff8c961565c9811b8c7d68e7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
