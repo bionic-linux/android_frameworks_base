@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b3d4fed_3f23e7ec",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10615,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2015-11-20T17:45:42Z",
+      "side": 1,
+      "message": "nit: add { }",
+      "range": {
+        "startLine": 10615,
+        "startChar": 47,
+        "endLine": 10615,
+        "endChar": 48
+      },
+      "revId": "5e479113396ec10d02655f4efa92c17a87b5603a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b3a03f5_20046a2d",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10616,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2015-11-20T17:45:42Z",
+      "side": 1,
+      "message": "why are we pulling \u0026 overriding volumeUuid here instead of passing in the correct value when creating the InstallParams? one of those is not necessary.",
+      "range": {
+        "startLine": 10616,
+        "startChar": 53,
+        "endLine": 10616,
+        "endChar": 63
+      },
+      "revId": "5e479113396ec10d02655f4efa92c17a87b5603a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db30fb14_e209e63f",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10617,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2015-11-20T17:45:42Z",
+      "side": 1,
+      "message": "nit missing space",
+      "range": {
+        "startLine": 10617,
+        "startChar": 34,
+        "endLine": 10617,
+        "endChar": 36
+      },
+      "revId": "5e479113396ec10d02655f4efa92c17a87b5603a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b3d4fed_df547b4c",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10625,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2015-11-20T17:45:42Z",
+      "side": 1,
+      "message": "close synchronized block after pulling volumeUuid",
+      "range": {
+        "startLine": 10625,
+        "startChar": 28,
+        "endLine": 10625,
+        "endChar": 29
+      },
+      "revId": "5e479113396ec10d02655f4efa92c17a87b5603a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
