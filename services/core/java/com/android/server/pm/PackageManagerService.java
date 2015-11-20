@@ -10423,7 +10423,7 @@ public class PackageManagerService extends IPackageManager.Stub {
         final IPackageInstallObserver2 observer;
         int installFlags;
         final String installerPackageName;
-        final String volumeUuid;
+        String volumeUuid;
         final VerificationParams verificationParams;
         private InstallArgs mArgs;
         private int mRet;
@@ -10609,9 +10609,21 @@ public class PackageManagerService extends IPackageManager.Stub {
                     } else if (!onSd && !onInt) {
                         // Override install location with flags
                         if (loc == PackageHelper.RECOMMEND_INSTALL_EXTERNAL) {
-                            // Set the flag to install on external media.
-                            installFlags |= PackageManager.INSTALL_EXTERNAL;
-                            installFlags &= ~PackageManager.INSTALL_INTERNAL;
+                            String packageName = pkgLite.packageName;
+                            synchronized (mPackages) {
+                                PackageParser.Package pkg = mPackages.get(packageName);
+                                if (pkg != null) {
+                                    volumeUuid = pkg.volumeUuid;
+                                }
+                            }
+                            if(!TextUtils.isEmpty(volumeUuid)) {
+                                installFlags |= PackageManager.INSTALL_INTERNAL;
+                                installFlags &= ~PackageManager.INSTALL_EXTERNAL;
+                            } else {
+                                // Set the flag to install on external media.
+                                installFlags |= PackageManager.INSTALL_EXTERNAL;
+                                installFlags &= ~PackageManager.INSTALL_INTERNAL;
+                            }
                         } else {
                             // Make sure the flag for installing on external
                             // media is unset
