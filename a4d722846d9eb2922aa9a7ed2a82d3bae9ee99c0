@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb2a67bd_de9e2121",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2015-11-24T16:32:41Z",
+      "side": 1,
+      "message": "Please comment on why this value was selected so future selves can have the confidence to change it if there is a problem.\n\nThe minimal comment would be // Cap to a reasonable size\n\nConveys that it is arbitrary and much smaller than the trace buffer, leaving space for many to be recorded, a comment like the above would allow someone to decide to change to 512 for example with little fear.\n\nOnly question left in my mind is why not 128 ;-} not knowing how large mKind or mSql can get in reasonable cases.",
+      "range": {
+        "startLine": 1449,
+        "startChar": 61,
+        "endLine": 1449,
+        "endChar": 64
+      },
+      "revId": "a4d722846d9eb2922aa9a7ed2a82d3bae9ee99c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
