@@ -16,6 +16,47 @@
       "revId": "daa21d299bdf9e4e5f3fc3d8ffc03a37f547d440",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db271bf3_647046e6",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1015340
+      },
+      "writtenOn": "2015-11-24T00:38:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure the alternatives are any better.  The other choices are to let this list expand with no limit, or artificially end an operation\u0027s trace when it gets evicted from the list.  The former seems impractical, and the latter sends a false signal to the developer about how long the operation actually took.",
+      "parentUuid": "569941f8_22b40a0a",
+      "revId": "daa21d299bdf9e4e5f3fc3d8ffc03a37f547d440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b167790_9469323f",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1015340
+      },
+      "writtenOn": "2015-11-24T00:38:30Z",
+      "side": 1,
+      "message": "This needs to be capped to a reasonable size.  atrace has an internal limit on entry sizes, and will truncate if you hit it (corrupting the cookie at the end).",
+      "range": {
+        "startLine": 1332,
+        "startChar": 64,
+        "endLine": 1332,
+        "endChar": 67
+      },
+      "revId": "daa21d299bdf9e4e5f3fc3d8ffc03a37f547d440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
