@@ -590,7 +590,7 @@ class AlarmManagerService extends SystemService {
     static final BatchTimeOrder sBatchOrder = new BatchTimeOrder();
     final ArrayList<Batch> mAlarmBatches = new ArrayList<>();
 
-    // set to null if in idle mode; while in this mode, any alarms we don't want
+    // set to null if not idle mode; while in idle mode, any alarms we don't want
     // to run during this time are placed in mPendingWhileIdleAlarms
     Alarm mPendingIdleUntil = null;
     Alarm mNextWakeFromIdle = null;
