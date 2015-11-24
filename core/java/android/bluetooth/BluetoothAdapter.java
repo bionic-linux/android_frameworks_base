@@ -87,6 +87,8 @@ import java.util.UUID;
  * <a href="{@docRoot}guide/topics/wireless/bluetooth.html">Bluetooth</a> developer guide.</p>
  * </div>
  *
+ * <p>This class is thread safe.
+ *
  * {@see BluetoothDevice}
  * {@see BluetoothServerSocket}
  */
