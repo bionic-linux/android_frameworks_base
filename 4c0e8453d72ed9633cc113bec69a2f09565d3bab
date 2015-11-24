@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3bed97ca_f6eeb11a",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1041673
+      },
+      "writtenOn": "2015-11-24T21:50:07Z",
+      "side": 1,
+      "message": "no - and this is intentional, unbundled system apps should obey namespace restrictions.",
+      "parentUuid": "9baf638f_de8f35db",
+      "revId": "4c0e8453d72ed9633cc113bec69a2f09565d3bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbb8a7d5_dcbae189",
         "filename": "core/java/android/app/LoadedApk.java",
         "patchSetId": 2
