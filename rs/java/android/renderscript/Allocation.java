@@ -16,14 +16,16 @@
 
 package android.renderscript;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.Surface;
-import android.util.Log;
 import android.graphics.Canvas;
 import android.os.Trace;
+import android.util.Log;
+import android.view.Surface;
 
 /**
  * <p> This class provides the primary method through which data is passed to
@@ -78,6 +80,8 @@ public class Allocation extends BaseObj {
     OnBufferAvailableListener mBufferNotifier;
 
     private Surface mGetSurfaceSurface = null;
+    private ByteBuffer mByteBuffer = null;
+    private long mByteBufferStride = 0;
 
     private Element.DataType validateObjectIsPrimitiveArray(Object d, boolean checkType) {
         final Class c = d.getClass();
@@ -2047,6 +2051,43 @@ public class Allocation extends BaseObj {
         } finally {
             Trace.traceEnd(RenderScript.TRACE_TAG);
         }
+    }
+
+    /**
+     * @hide
+     * Gets or creates a ByteBuffer that contains the raw data of the current Allocation.
+     * If the Allocation is created with USAGE_IO_INPUT, the returned ByteBuffer
+     * would contain the up-to-date data.
+     * For a 2D or 3D Allocation, the raw data maybe padded so that each row of
+     * the Allocation has certain alignment. The size of each row including padding,
+     * called stride, can be queried using the {@link #getStride()} method.
+     *
+     * @return the ByteBuffer.
+     */
+    public ByteBuffer getByteBuffer() {
+        // Create a new ByteBuffer if it is not initialized or using IO_INPUT.
+        if (mByteBuffer == null || (mUsage & USAGE_IO_INPUT) != 0) {
+            int xBytesSize = mType.getX() * mType.getElement().getBytesSize();
+            mByteBuffer = mRS.nAllocationGetByteBuffer(getID(mRS), xBytesSize, mType.getY(), mType.getZ());
+        }
+        return mByteBuffer;
+    }
+
+    /**
+     * @hide
+     * Gets the stride of the Allocation.
+     * For a 2D or 3D Allocation, the raw data maybe padded so that each row of
+     * the Allocation has certain alignment. The size of each row including such
+     * padding is called stride.
+     *
+     * @return the stride. 0 for 1D Allocation, or 1 if the target API level is
+     *                     below 21.
+     */
+    public long getStride() {
+        if (mByteBufferStride == 0) {
+            mByteBufferStride = mRS.nAllocationGetStride(getID(mRS));
+        }
+        return mByteBufferStride;
     }
 
     /**
