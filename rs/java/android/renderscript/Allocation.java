@@ -17,6 +17,8 @@
 package android.renderscript;
 
 import java.util.HashMap;
+import java.nio.ByteBuffer;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -60,6 +62,7 @@ public class Allocation extends BaseObj {
     int mSize;
     MipmapControl mMipmaps;
     long mTimeStamp;
+    ByteBuffer mByteBuffer;
 
     boolean mReadAllowed = true;
     boolean mWriteAllowed = true;
@@ -2126,6 +2129,15 @@ public class Allocation extends BaseObj {
      */
     public long getTimeStamp() {
         return mTimeStamp;
+    }
+
+    /**
+     * @hide
+     * Get the ByteBuffer pointing to the raw data associated with Allocation.
+     */
+    public ByteBuffer getByteBuffer() {
+        mByteBuffer = mRS.nAllocationGetByteBuffer(getID(mRS));
+        return mByteBuffer;
     }
 
     /**
