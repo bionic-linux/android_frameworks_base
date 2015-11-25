@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b7da3ef_eb07cd9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-11-25T11:01:47Z",
+      "side": 1,
+      "message": "this should be the last line of your commit message.\n\nThe description should be \"Add free short codes..\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 60
+      },
+      "revId": "ba568963b259146e09472aa195c085ca4c257573",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
