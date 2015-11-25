@@ -2658,7 +2658,46 @@ nSystemGetPointerSize(JNIEnv *_env, jobject _this) {
     return (jint)sizeof(void*);
 }
 
+static jobject
+nAllocationGetByteBuffer(JNIEnv *_env, jobject _this, jlong con, jlong alloc, jint xBytesSize, jint dimY, jint dimZ) {
+    if (kLogApi) {
+        ALOGD("nAllocationGetByteBuffer, con(%p), alloc(%p)", (RsContext)con, (RsAllocation)alloc);
+    }
+    size_t strideIn = xBytesSize;
+    void* ptr = NULL;
+    if (alloc != 0) {
+        ptr = rsAllocationGetPointer((RsContext)con, (RsAllocation)alloc, 0,
+                                     RS_ALLOCATION_CUBEMAP_FACE_POSITIVE_X, dimZ, 0,
+                                     &strideIn, sizeof(size_t));
+    }
+    if (ptr != NULL) {
+        size_t bufferSize = strideIn;
+        if (dimY > 0) {
+            bufferSize *= dimY;
+        }
+        if (dimZ > 0) {
+            bufferSize *= dimZ;
+        }
+        jobject byteBuffer = _env->NewDirectByteBuffer(ptr, (jlong) bufferSize);
+        return byteBuffer;
+    } else {
+        return NULL;
+    }
+}
 
+static jlong
+nAllocationGetStride(JNIEnv *_env, jobject _this, jlong con, jlong alloc)
+{
+    LOG_API("nAllocationGetStride, con(%p), alloc(%p)", (RsContext)con, (RsAllocation)alloc);
+    size_t strideIn;
+    void* ptr = NULL;
+    if (alloc != 0 && dispatchTab.AllocationGetPointer != nullptr) {
+        ptr = dispatchTab.AllocationGetPointer((RsContext)con, (RsAllocation)alloc, 0,
+                                               RS_ALLOCATION_CUBEMAP_FACE_POSITIVE_X, 0, 0,
+                                               &strideIn, sizeof(size_t));
+    }
+    return (jlong)strideIn;
+}
 // ---------------------------------------------------------------------------
 
 
@@ -2814,6 +2853,9 @@ static const JNINativeMethod methods[] = {
 {"rsnMeshGetIndices",                "(JJ[J[II)V",                            (void*)nMeshGetIndices },
 
 {"rsnSystemGetPointerSize",          "()I",                                   (void*)nSystemGetPointerSize },
+{"rsnAllocationGetByteBuffer",       "(JJIII)Ljava/nio/ByteBuffer;",          (void*)nAllocationGetByteBuffer },
+{"rsnAllocationGetStride",           "(JJ)J",                                 (void*)nAllocationGetStride },
+
 };
 
 static int registerFuncs(JNIEnv *_env)

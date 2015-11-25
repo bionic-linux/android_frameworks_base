@@ -17,6 +17,8 @@
 package android.renderscript;
 
 import java.util.HashMap;
+import java.nio.ByteBuffer;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -58,6 +60,8 @@ public class Allocation extends BaseObj {
     int mUsage;
     Allocation mAdaptedAllocation;
     int mSize;
+    ByteBuffer mByteBuffer = null;
+    long mByteBufferStride = 0;
 
     boolean mReadAllowed = true;
     boolean mWriteAllowed = true;
@@ -2047,6 +2051,31 @@ public class Allocation extends BaseObj {
         } finally {
             Trace.traceEnd(RenderScript.TRACE_TAG);
         }
+    }
+
+    /**
+     * @hide
+     * Get the ByteBuffer pointing to the raw data associated with Allocation.
+     */
+    public ByteBuffer getByteBuffer() {
+        // Create a new ByteBuffer if it is not initialized or using IO_INPUT.
+        if (mByteBuffer == null || (mUsage & USAGE_IO_INPUT) != 0) {
+            int xBytesSize = mType.getX() * mType.getElement().getBytesSize();
+            mByteBuffer = mRS.nAllocationGetByteBuffer(getID(mRS), xBytesSize, mType.getY(), mType.getZ());
+        }
+        return mByteBuffer;
+    }
+
+    /**
+     * @hide
+     * Get the Stride of raw data associated with Allocation.
+     * Note: Will return 0 if TargetAPI of the app is below 21.
+     */
+    public long getStride() {
+        if (mByteBufferStride == 0) {
+            mByteBufferStride = mRS.nAllocationGetStride(getID(mRS));
+        }
+        return mByteBufferStride;
     }
 
     /**
