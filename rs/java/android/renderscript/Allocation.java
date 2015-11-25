@@ -16,14 +16,16 @@
 
 package android.renderscript;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.Surface;
-import android.util.Log;
 import android.graphics.Canvas;
 import android.os.Trace;
+import android.util.Log;
+import android.view.Surface;
 
 /**
  * <p> This class provides the primary method through which data is passed to
@@ -78,6 +80,8 @@ public class Allocation extends BaseObj {
     OnBufferAvailableListener mBufferNotifier;
 
     private Surface mGetSurfaceSurface = null;
+    private ByteBuffer mByteBuffer = null;
+    private long mByteBufferStride = -1;
 
     private Element.DataType validateObjectIsPrimitiveArray(Object d, boolean checkType) {
         final Class c = d.getClass();
@@ -2047,6 +2051,71 @@ public class Allocation extends BaseObj {
         } finally {
             Trace.traceEnd(RenderScript.TRACE_TAG);
         }
+    }
+
+    /**
+     * @hide
+     * Gets or creates a ByteBuffer that contains the raw data of the current Allocation.
+     * If the Allocation is created with USAGE_IO_INPUT, the returned ByteBuffer
+     * would contain the up-to-date data as READ ONLY.
+     * For a 2D or 3D Allocation, the raw data maybe padded so that each row of
+     * the Allocation has certain alignment. The size of each row including padding,
+     * called stride, can be queried using the {@link #getStride()} method.
+     *
+     * Note: for 3D Allocation, the API will only return the slice for z = 0.
+     *
+     * @return ByteBuffer The ByteBuffer associated with raw data pointer of the Allocation.
+     */
+    public ByteBuffer getByteBuffer() {
+        return getByteBuffer(0);
+    }
+
+    /**
+     * @hide
+     * Gets or creates a ByteBuffer that contains the raw data of the current Allocation.
+     * If the Allocation is created with USAGE_IO_INPUT, the returned ByteBuffer
+     * would contain the up-to-date data as READ ONLY.
+     * For a 2D or 3D Allocation, the raw data maybe padded so that each row of
+     * the Allocation has certain alignment. The size of each row including padding,
+     * called stride, can be queried using the {@link #getStride()} method.
+     *
+     * @param z Specifying the slice in Z dimension for 3D Allocation.
+     * @return ByteBuffer The ByteBuffer associated with raw data pointer of the Allocation.
+     */
+    public ByteBuffer getByteBuffer(int z) {
+        // Create a new ByteBuffer if it is not initialized or using IO_INPUT.
+        if (mByteBuffer == null || (mUsage & USAGE_IO_INPUT) != 0) {
+            int xBytesSize = mType.getX() * mType.getElement().getBytesSize();
+            long[] stride = new long[1];
+            if (z >= mType.getZ() || z < 0) {
+                throw new RSIllegalArgumentException("z must be non-negative and smaller than Z dimension of the 3D Allocation.");
+            }
+            mByteBuffer = mRS.nAllocationGetByteBuffer(getID(mRS), stride, xBytesSize, mType.getY(), z);
+            mByteBufferStride = stride[0];
+        }
+        if ((mUsage & USAGE_IO_INPUT) != 0) {
+            return mByteBuffer.asReadOnlyBuffer();
+        }
+        return mByteBuffer;
+    }
+
+
+    /**
+     * @hide
+     * Gets the stride of the Allocation.
+     * For a 2D or 3D Allocation, the raw data maybe padded so that each row of
+     * the Allocation has certain alignment. The size of each row including such
+     * padding is called stride.
+     *
+     * @return the stride. For 1D Allocation, the stride will be the number of
+     *         bytes of this Allocation. For 2D and 3D Allocations, the stride
+     *         will be the stride in X dimension measuring in bytes.
+     */
+    public long getStride() {
+        if (mByteBufferStride == -1) {
+            getByteBuffer();
+        }
+        return mByteBufferStride;
     }
 
     /**
