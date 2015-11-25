@@ -2669,6 +2669,22 @@ nSystemGetPointerSize(JNIEnv *_env, jobject _this) {
 }
 
 
+static jobject
+nAllocationGetByteBuffer(JNIEnv *_env, jobject _this, jlong con, jlong alloc, jint dimY) {
+    if (kLogApi) {
+        ALOGD("nAllocationGetByteBuffer, con(%p), alloc(%p)", (RsContext)con, (RsAllocation)alloc);
+    }
+    size_t strideIn;
+    void* ptr = NULL;
+    if (alloc != 0) {
+        ptr = dispatchTab.AllocationGetPointer((RsContext)con, (RsAllocation)alloc, 0,
+                                               RS_ALLOCATION_CUBEMAP_FACE_POSITIVE_X, 0, 0,
+                                               &strideIn, sizeof(size_t));
+    }
+    jobject byteBuffer = _env->NewDirectByteBuffer(_env, ptr, (jlong) strideIn * dimY);
+    return byteBuffer;
+}
+
 // ---------------------------------------------------------------------------
 
 
@@ -2825,6 +2841,7 @@ static const JNINativeMethod methods[] = {
 {"rsnMeshGetIndices",                "(JJ[J[II)V",                            (void*)nMeshGetIndices },
 
 {"rsnSystemGetPointerSize",          "()I",                                   (void*)nSystemGetPointerSize },
+{"rsnAllocationGetByteBuffer",       "(JI)Ljava/lang/Object;",                (void*)nAllocationGetByteBuffer },
 };
 
 static int registerFuncs(JNIEnv *_env)
