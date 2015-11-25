@@ -19,6 +19,8 @@ package android.renderscript;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.ArrayList;
+import java.nio.ByteBuffer;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -28,7 +30,6 @@ import android.util.Log;
 import android.view.Surface;
 import android.os.SystemProperties;
 import android.os.Trace;
-import java.util.ArrayList;
 
 // TODO: Clean up the whitespace that separates methods in this class.
 
@@ -494,6 +495,13 @@ public class RenderScript {
         validate();
         rsnAllocationShareBufferQueue(mContext, alloc1, alloc2);
     }
+
+    native ByteBuffer rsnAllocationGetByteBuffer(long con, long alloc, int dimY);
+    synchronized ByteBuffer nAllocationGetByteBuffer(long alloc, int dimY) {
+        validate();
+        return rsnAllocationGetByteBuffer(mContext, alloc, dimY);
+    }
+
     native Surface rsnAllocationGetSurface(long con, long alloc);
     synchronized Surface nAllocationGetSurface(long alloc) {
         validate();
