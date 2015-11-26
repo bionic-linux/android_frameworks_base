@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbb05f0b_3a3728bc",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2015-11-26T00:41:14Z",
+      "side": 1,
+      "message": "How about 1D allocations?",
+      "range": {
+        "startLine": 2139,
+        "startChar": 63,
+        "endLine": 2139,
+        "endChar": 75
+      },
+      "revId": "33c7d65d91ea575e0f90a9591020a38b1e26db95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbb05f0b_3a5048dd",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2684,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2015-11-26T00:41:14Z",
+      "side": 1,
+      "message": "There are paddings for a 2D allocation, where stridenIn could be more than elementSize * dimX. This would leads to confusion and errors using the Java API.",
+      "range": {
+        "startLine": 2684,
+        "startChar": 68,
+        "endLine": 2684,
+        "endChar": 76
+      },
+      "revId": "33c7d65d91ea575e0f90a9591020a38b1e26db95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
