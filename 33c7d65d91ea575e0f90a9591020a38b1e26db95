@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b1b2bb8_bd236598",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2015-11-26T00:44:15Z",
+      "side": 1,
+      "message": "Needs more description on what this is about.\nProbably also needs a bug or doc on the intended semantics and usage and to track implementation.",
+      "revId": "33c7d65d91ea575e0f90a9591020a38b1e26db95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb05f0b_3a3728bc",
         "filename": "rs/java/android/renderscript/Allocation.java",
         "patchSetId": 4
