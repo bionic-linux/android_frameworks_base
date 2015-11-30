@@ -4291,7 +4291,9 @@ public class PackageManagerService extends IPackageManager.Stub {
                             .equals(ai.applicationInfo.packageName)) {
                         continue;
                     }
-                    if (!ri.activityInfo.name.equals(ai.name)) {
+                    if (!ri.activityInfo.name.equals(ai.name)
+                        && (ri.activityInfo.targetActivity != null
+                            && !ri.ActivityInfo.targetActivity.equals(ai.name))) {
                         continue;
                     }
                     //  Found a persistent preference that can handle the intent.
@@ -4405,7 +4407,9 @@ public class PackageManagerService extends IPackageManager.Stub {
                                     .equals(ai.applicationInfo.packageName)) {
                                 continue;
                             }
-                            if (!ri.activityInfo.name.equals(ai.name)) {
+                            if (!ri.activityInfo.name.equals(ai.name)
+                                && (ri.activityInfo.targetActivity != null
+                                    && !ri.ActivityInfo.targetActivity.equals(ai.name))) {
                                 continue;
                             }
 

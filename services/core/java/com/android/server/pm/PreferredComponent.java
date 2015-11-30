@@ -209,7 +209,8 @@ public class PreferredComponent {
             boolean good = false;
             for (int j=0; j<NS; j++) {
                 if (mSetPackages[j].equals(ai.packageName)
-                        && mSetClasses[j].equals(ai.name)) {
+                        && (mSetClasses[j].equals(ai.name)
+                            || mSetClasses[j].equals(ai.targetActivity))) {
                     numMatch++;
                     good = true;
                     break;
