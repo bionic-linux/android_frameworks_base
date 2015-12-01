@@ -315,25 +315,8 @@ public class SyncManager {
     }
 
     public void updateRunningAccounts() {
-        mRunningAccounts = AccountManagerService.getSingleton().getRunningAccounts();
-
-        if (mBootCompleted) {
-            doDatabaseCleanup();
-        }
-
-        AccountAndUser[] accounts = mRunningAccounts;
-        for (ActiveSyncContext currentSyncContext : mActiveSyncContexts) {
-            if (!containsAccountAndUser(accounts,
-                    currentSyncContext.mSyncOperation.target.account,
-                    currentSyncContext.mSyncOperation.target.userId)) {
-                Log.d(TAG, "canceling sync since the account is no longer running");
-                sendSyncFinishedOrCanceledMessage(currentSyncContext,
-                        null /* no result since this is a cancel */);
-            }
-        }
-        // we must do this since we don't bother scheduling alarms when
-        // the accounts are not set yet
-        sendCheckAlarmsMessage();
+        // Update accounts in handler thread.
+        mSyncHandler.sendEmptyMessage(SyncHandler.MESSAGE_ACCOUNTS_UPDATED);
     }
 
     private void doDatabaseCleanup() {
@@ -2098,6 +2081,7 @@ public class SyncManager {
          * obj: {@link com.android.server.content.SyncManager.ActiveSyncContext}
          */
         private static final int MESSAGE_MONITOR_SYNC = 8;
+        private static final int MESSAGE_ACCOUNTS_UPDATED = 9;
 
         public final SyncNotificationInfo mSyncNotificationInfo = new SyncNotificationInfo();
         private Long mAlarmScheduleTime = null;
@@ -2215,6 +2199,28 @@ public class SyncManager {
                 // to also take into account the periodic syncs.
                 earliestFuturePollTime = scheduleReadyPeriodicSyncs();
                 switch (msg.what) {
+                    case SyncHandler.MESSAGE_ACCOUNTS_UPDATED:
+                        mRunningAccounts = AccountManagerService.getSingleton().getRunningAccounts();
+
+                        if (mBootCompleted) {
+                            doDatabaseCleanup();
+                        }
+
+                        AccountAndUser[] accounts = mRunningAccounts;
+                        for (ActiveSyncContext currentSyncContext : mActiveSyncContexts) {
+                            if (!containsAccountAndUser(accounts,
+                                    currentSyncContext.mSyncOperation.target.account,
+                                    currentSyncContext.mSyncOperation.target.userId)) {
+                                Log.d(TAG, "canceling sync since the account is no longer running");
+                                sendSyncFinishedOrCanceledMessage(currentSyncContext,
+                                        null /* no result since this is a cancel */);
+                            }
+                        }
+                        // we must do this since we don't bother scheduling alarms when
+                        // the accounts are not set yet
+                        sendCheckAlarmsMessage();
+                        break;
+
                     case SyncHandler.MESSAGE_CANCEL:
                         SyncStorageEngine.EndPoint endpoint = (SyncStorageEngine.EndPoint) msg.obj;
                         Bundle extras = msg.peekData();
