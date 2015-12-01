@@ -106,6 +106,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @hide
@@ -216,7 +217,7 @@ public class SyncManager {
     @GuardedBy("mSyncQueue")
     private final SyncQueue mSyncQueue;
 
-    protected final ArrayList<ActiveSyncContext> mActiveSyncContexts = Lists.newArrayList();
+    protected final CopyOnWriteArrayList<ActiveSyncContext> mActiveSyncContexts = new CopyOnWriteArrayList<ActiveSyncContext>();
 
     // set if the sync active indicator should be reported
     private boolean mNeedSyncActiveNotification = false;
