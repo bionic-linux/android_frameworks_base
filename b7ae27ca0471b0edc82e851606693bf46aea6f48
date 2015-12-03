@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f23453_e099a2ea",
+        "filename": "services/core/java/com/android/server/content/SyncManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1023072
+      },
+      "writtenOn": "2015-12-03T11:57:55Z",
+      "side": 1,
+      "message": "CopyOnWriteArrayList seems too expensive for this, given the fact that the only non-threadsafe access is exactly the one in updateRunningAccounts.\n\nI\u0027d prefer to offboard the traversal from the main thread to the handler thread.\nie, introduce a new MESSAGE_ACCOUNTS_UPDATED and move the logic to cancel running syncs for non-existent accounts there.",
+      "range": {
+        "startLine": 109,
+        "startChar": 28,
+        "endLine": 109,
+        "endChar": 48
+      },
+      "revId": "b7ae27ca0471b0edc82e851606693bf46aea6f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
