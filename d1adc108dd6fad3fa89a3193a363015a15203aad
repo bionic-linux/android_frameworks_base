@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "803d30f0_3f164797",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6317,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2015-12-04T15:52:12Z",
+      "side": 1,
+      "message": "nit: the method signature is documentation enough, this comment isn\u0027t needed.",
+      "revId": "d1adc108dd6fad3fa89a3193a363015a15203aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
