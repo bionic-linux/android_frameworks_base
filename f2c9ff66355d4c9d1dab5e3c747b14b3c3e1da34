@@ -16,6 +16,24 @@
       "revId": "f2c9ff66355d4c9d1dab5e3c747b14b3c3e1da34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c05c8866_b90f1f49",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6317,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2015-12-04T17:14:39Z",
+      "side": 1,
+      "message": "Something that I\u0027ll have to do outside of the Gerrit in-line editor. ;) Can I ask what the reason for the change is?",
+      "parentUuid": "204e44ac_5cfebd91",
+      "revId": "f2c9ff66355d4c9d1dab5e3c747b14b3c3e1da34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
