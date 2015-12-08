@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c001e83e_54c3425d",
+        "filename": "services/core/java/com/android/server/content/SyncManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1023072
+      },
+      "writtenOn": "2015-12-08T10:46:11Z",
+      "side": 1,
+      "message": "you can short-circuit this by looking at \ncase SyncHandler.MESSAGE_CHECK_ALARMS\nit is a one liner where we run \nnextPendingSyncTime \u003d maybeStartNextSyncH();\n\nalso, please add appropriate logging (follow example of each of the other case statements.",
+      "range": {
+        "startLine": 2221,
+        "startChar": 24,
+        "endLine": 2221,
+        "endChar": 46
+      },
+      "revId": "fe9f319e8548fd8897871394d42776e981abc809",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
