@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a567a60d_4da179c8",
+        "filename": "core/java/android/app/ApplicationLoaders.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1041673
+      },
+      "writtenOn": "2015-12-11T18:30:55Z",
+      "side": 1,
+      "message": "renamed",
+      "range": {
+        "startLine": 31,
+        "startChar": 45,
+        "endLine": 31,
+        "endChar": 58
+      },
+      "revId": "e89c42139cfbc79b7121703e3dbab5069f401d97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
