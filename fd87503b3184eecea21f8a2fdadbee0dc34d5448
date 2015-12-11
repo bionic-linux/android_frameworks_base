@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454eea83_9f8c6b5a",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-12-11T01:14:44Z",
+      "side": 1,
+      "message": "Still 4-space indent.",
+      "range": {
+        "startLine": 363,
+        "startChar": 18,
+        "endLine": 366,
+        "endChar": 72
+      },
+      "revId": "fd87503b3184eecea21f8a2fdadbee0dc34d5448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "454eea83_7f7bef0a",
+        "filename": "core/java/android/app/NativeActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-12-11T01:14:44Z",
+      "side": 1,
+      "message": "Remove one newline?",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 8
+      },
+      "revId": "fd87503b3184eecea21f8a2fdadbee0dc34d5448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
