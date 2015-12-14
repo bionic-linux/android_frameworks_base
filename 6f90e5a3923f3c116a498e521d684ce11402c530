@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "453fcae8_bd609f85",
+        "filename": "services/core/java/com/android/server/display/AutomaticBrightnessController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2015-12-14T17:07:24Z",
+      "side": 1,
+      "message": "This also needs to be moved up with the rest of the final variables.",
+      "revId": "6f90e5a3923f3c116a498e521d684ce11402c530",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c59d7a71_51941425",
+        "filename": "services/core/java/com/android/server/display/AutomaticBrightnessController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2015-12-14T17:07:24Z",
+      "side": 1,
+      "message": "I\u0027d rather you just make this final and move it up to the final section, then mark the static method it\u0027s used in non-static. Having a single static variable that really *shouldn\u0027t* be static (since it depends on the horizon) is just asking for trouble.\n\nSorry for the extra work.",
+      "revId": "6f90e5a3923f3c116a498e521d684ce11402c530",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
