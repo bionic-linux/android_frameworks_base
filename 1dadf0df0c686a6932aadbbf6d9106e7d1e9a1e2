@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25673634_1476d472",
+        "filename": "services/core/java/com/android/server/display/AutomaticBrightnessController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2015-12-14T17:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25a9f65f_878d28e8",
+      "revId": "1dadf0df0c686a6932aadbbf6d9106e7d1e9a1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d9c240_33c5c065",
         "filename": "services/core/java/com/android/server/display/AutomaticBrightnessController.java",
         "patchSetId": 2
