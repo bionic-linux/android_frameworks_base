@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c55c9a66_5cc4f165",
+        "filename": "services/core/java/com/android/server/display/AutomaticBrightnessController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2015-12-14T16:38:06Z",
+      "side": 1,
+      "message": "Used in a static method.",
+      "parentUuid": "25157684_ed8d3de7",
+      "revId": "76f1da41ea5b68583be38d9f6560245649193346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45db4a39_46ae08c5",
         "filename": "services/core/java/com/android/server/display/DisplayPowerController.java",
         "patchSetId": 1
