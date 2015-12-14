@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85d9c240_33c5c065",
+        "filename": "services/core/java/com/android/server/display/AutomaticBrightnessController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1060157
+      },
+      "writtenOn": "2015-12-14T16:58:18Z",
+      "side": 1,
+      "message": "Sorry, one last nit: mWeighting -\u003e sWeighting.",
+      "revId": "1dadf0df0c686a6932aadbbf6d9106e7d1e9a1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
