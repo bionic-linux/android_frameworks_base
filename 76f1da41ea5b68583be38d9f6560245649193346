@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e598be91_c2f62281",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1060157
+      },
+      "writtenOn": "2015-12-14T16:21:50Z",
+      "side": 1,
+      "message": "Let\u0027s be consistent and add autoBrightness infix to this config symbol.",
+      "revId": "76f1da41ea5b68583be38d9f6560245649193346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25157684_ed8d3de7",
+        "filename": "services/core/java/com/android/server/display/AutomaticBrightnessController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1060157
+      },
+      "writtenOn": "2015-12-14T16:21:50Z",
+      "side": 1,
+      "message": "Remove the static please.",
+      "revId": "76f1da41ea5b68583be38d9f6560245649193346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45db4a39_46ae08c5",
+        "filename": "services/core/java/com/android/server/display/DisplayPowerController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1060157
+      },
+      "writtenOn": "2015-12-14T16:21:50Z",
+      "side": 1,
+      "message": "I think this could fit in the previous line.",
+      "revId": "76f1da41ea5b68583be38d9f6560245649193346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
