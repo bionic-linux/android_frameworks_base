@@ -2320,6 +2320,7 @@ public final class ActivityStackSupervisor implements DisplayListener {
                 if (DEBUG_TASKS) Slog.v(TAG_TASKS,
                         "Starting new activity " + r + " in new task " + r.task);
             } else {
+                reuseTask.stack = targetStack;
                 r.setTask(reuseTask, taskToAffiliate);
             }
             if (isLockTaskModeViolation(r.task)) {
