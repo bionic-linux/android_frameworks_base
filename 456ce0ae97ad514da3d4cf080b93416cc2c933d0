@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "855702e9_8f37b52e",
+        "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2323,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2015-12-17T07:03:15Z",
+      "side": 1,
+      "message": "Or \"targetStack.addTask(reuseTask, !launchTaskBehind, false);\"",
+      "range": {
+        "startLine": 2323,
+        "startChar": 16,
+        "endLine": 2323,
+        "endChar": 46
+      },
+      "revId": "456ce0ae97ad514da3d4cf080b93416cc2c933d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
