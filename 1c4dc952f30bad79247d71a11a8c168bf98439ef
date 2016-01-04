@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a0b8f60_d8dc7c3b",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "aabbf3f0_d8804d1f",
+      "range": {
+        "startLine": 27,
+        "startChar": 79,
+        "endLine": 27,
+        "endChar": 84
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2ae7be_e171c1b4",
         "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "aa2133e4_7d2d7b38",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Yeah, null is the return value when nothing can be found.",
+      "parentUuid": "cac4a77f_3993cf80",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aabbf3f0_3bf1838a",
         "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
         "patchSetId": 3
@@ -82,6 +130,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "\u0027checkDevice\u0027 isn\u0027t very descriptive. Perhaps rename this to \u0027searchForClient\u0027 or some other more meaningful name?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aabbf3f0_decb95a1",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "aabbf3f0_3bf1838a",
       "range": {
         "startLine": 74,
         "startChar": 0,
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "aa2133e4_bd36d38a",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "?\n\nYou mean be a bit more defensive in the first part and not sleep if things failed?",
+      "parentUuid": "aabbf3f0_9baf6f50",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1bbbb8_dbe11718",
         "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
         "patchSetId": 3
@@ -151,6 +247,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "People complained when I did this kind of thing in ahat. Do you really want to catch every kind of exception? Wouldn\u0027t an exception automatically print its stack trace if you didn\u0027t explicitly catch it?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 5
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca2ae7be_5c6074b1",
+        "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Personally I prefer this strongly. Using the unhandled exception handler isn\u0027t in any way better than this. This is at least a bit defensive if the caller doesn\u0027t use try-finally correctly.\n\nAlso, the stack trace should be shown in a dialog at some point, not just the shell. I\u0027d put that here, but maybe the caller should take care of that. So there\u0027s probably a follow-up CL at some point...",
+      "parentUuid": "6a1bbbb8_dbe11718",
       "range": {
         "startLine": 57,
         "startChar": 0,
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "0af79f9a_f7598b86",
+        "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "6a1bbbb8_7b9f4388",
+      "range": {
+        "startLine": 67,
+        "startChar": 50,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a0b8f60_84a574c2",
         "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
         "patchSetId": 3
@@ -197,6 +341,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "If you want to combing getting the build type and restricting it to userdebug/eng, a more descriptive name might help avoid confusion. Perhaps \u0027getUsableBuildType\u0027, and document what \u0027Useable\u0027 means with a comment on the method?\n\nOr, is this just an out-of-date comment?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca2ae7be_fc3328c7",
+        "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Out-of-date comment. The code was closer to the use case before.",
+      "parentUuid": "8a0b8f60_84a574c2",
       "range": {
         "startLine": 77,
         "startChar": 0,
@@ -255,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "cac4a77f_5f37831f",
+        "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Ups, the loop must have gotten lost at some point. The wait below synchronizes with the notifyAll in deviceChanged, which should run a second iteration scanning for devices.\n\nIn practice adb already has devices, so it works right now, but I need to fix this.",
+      "parentUuid": "6a1bbbb8_0d437245",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 81
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eafecb6e_396310ef",
         "filename": "tools/preload2/src/com/android/preload/DumpData.java",
         "patchSetId": 3
@@ -301,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "aa2133e4_fd404be9",
+        "filename": "tools/preload2/src/com/android/preload/Main.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "A mostly random timeout.",
+      "parentUuid": "cac4a77f_fc49c513",
+      "range": {
+        "startLine": 123,
+        "startChar": 29,
+        "endLine": 123,
+        "endChar": 35
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2133e4_1da6ff7d",
         "filename": "tools/preload2/src/com/android/preload/Main.java",
         "patchSetId": 3
@@ -312,6 +528,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "Is it obvious to the user what it means to \u0027prepare\u0027 the device?",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 82
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2afc637c_f354ffa6",
+        "filename": "tools/preload2/src/com/android/preload/Main.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "If you run the tool, yes.\n\nPoints towards documentation...",
+      "parentUuid": "aa2133e4_1da6ff7d",
       "range": {
         "startLine": 189,
         "startChar": 0,
@@ -393,6 +633,30 @@
     },
     {
       "key": {
+        "uuid": "8a0b8f60_d803dc54",
+        "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Reformat issue from older code, I guess.",
+      "parentUuid": "aabbf3f0_dea5d571",
+      "range": {
+        "startLine": 84,
+        "startChar": 54,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2afc637c_53eb535f",
         "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
         "patchSetId": 3
@@ -404,6 +668,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "Are you writing to a temporary file to help for debugging in case fromThreshold doesn\u0027t complete?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 53
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa2133e4_1d4f1f18",
+        "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Yeah, I should probably remove this code. :-)",
+      "parentUuid": "2afc637c_53eb535f",
       "range": {
         "startLine": 101,
         "startChar": 0,
@@ -450,6 +738,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "Do you have any test cases for the serialization/deserialization code?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 74
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca2ae7be_9c702c73",
+        "filename": "tools/preload2/src/com/android/preload/actions/ImportAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T22:34:43Z",
+      "side": 1,
+      "message": "Nope, there are no tests as you can see. This is so far only replacing the old tool, which also has zero tests. Tests in a follow-up CL, as I have to figure out what the right level of testing is for this (e.g., it\u0027s not a CTS test, I think; and also not a gtest).",
+      "parentUuid": "ca2ae7be_1c8b9c06",
       "range": {
         "startLine": 54,
         "startChar": 0,
