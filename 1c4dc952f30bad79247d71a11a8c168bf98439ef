@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ea27abf2_47a1c164",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-04T23:16:11Z",
+      "side": 1,
+      "message": "You get woken up (clientChanged) on the first client (\u003drunning app) polled from the device, but I want to ensure all clients are available.\n\nA proper thing would be a loop with a timeout, but that\u0027s fragile as well, so I tried to keep it simple.",
+      "parentUuid": "0af79f9a_f79b4b34",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1bbbb8_dbe11718",
         "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
         "patchSetId": 3
