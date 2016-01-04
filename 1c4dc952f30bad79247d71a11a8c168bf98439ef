@@ -236,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "0af79f9a_f79b4b34",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2016-01-04T23:01:13Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why you sleep a little longer. I was assuming based on the comments that you expected an exception during the first wait, and the sleep after the wait was specifically for that case.",
+      "parentUuid": "aa2133e4_bd36d38a",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1bbbb8_dbe11718",
         "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
         "patchSetId": 3
