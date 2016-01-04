@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e2e2591_74bc39a2",
+        "filename": "tools/preload2/src/com/android/preload/Hprof.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2016-01-04T22:09:54Z",
+      "side": 1,
+      "message": "I think this includes reachable and unreachable classes. In a world with class unloading, do you want the unreachable ones?",
+      "range": {
+        "startLine": 54,
+        "startChar": 45,
+        "endLine": 54,
+        "endChar": 76
+      },
+      "revId": "14c11348fdbc70de4d3babda641c74df5b746f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
