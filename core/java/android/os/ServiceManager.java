@@ -113,7 +113,7 @@ public final class ServiceManager {
     /**
      * Return a list of all currently running services.
      */
-    public static String[] listServices() throws RemoteException {
+    public static String[] listServices() {
         try {
             return getIServiceManager().listServices();
         } catch (RemoteException e) {
