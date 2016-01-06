@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8a1aaf01_fa80c51e",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0b8f60_d8dc7c3b",
+      "range": {
+        "startLine": 27,
+        "startChar": 79,
+        "endLine": 27,
+        "endChar": 84
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2ae7be_e171c1b4",
         "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
         "patchSetId": 3
@@ -60,6 +84,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "ditto.",
+      "range": {
+        "startLine": 35,
+        "startChar": 56,
+        "endLine": 35,
+        "endChar": 61
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca202730_dfc1335b",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca2ae7be_e171c1b4",
       "range": {
         "startLine": 35,
         "startChar": 56,
@@ -154,6 +202,30 @@
       "side": 1,
       "message": "Sure.",
       "parentUuid": "aabbf3f0_3bf1838a",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea1debf7_23f1388a",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aabbf3f0_decb95a1",
       "range": {
         "startLine": 74,
         "startChar": 0,
@@ -448,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "ca202730_7fa0270d",
+        "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a1bbbb8_0d6c12d8",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 29
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1bbbb8_0d437245",
         "filename": "tools/preload2/src/com/android/preload/DeviceUtils.java",
         "patchSetId": 3
@@ -506,6 +602,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "Document what data this is supposed to hold. Is it a mapping from class name to class loader type name?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea1debf7_2ead9f04",
+        "filename": "tools/preload2/src/com/android/preload/DumpData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eafecb6e_396310ef",
       "range": {
         "startLine": 27,
         "startChar": 0,
@@ -635,6 +755,30 @@
     },
     {
       "key": {
+        "uuid": "aa1773d7_4190e870",
+        "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aabbf3f0_5e0b053f",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 80
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cac4a77f_5c5b11d9",
         "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
         "patchSetId": 3
@@ -646,6 +790,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "Document that blacklist should be in the format of a regex. Or have the caller provide the RegEx directly?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 92
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca202730_82d3602f",
+        "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cac4a77f_5c5b11d9",
       "range": {
         "startLine": 42,
         "startChar": 0,
@@ -705,6 +873,30 @@
     },
     {
       "key": {
+        "uuid": "6a481bfe_a4a786df",
+        "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0b8f60_d803dc54",
+      "range": {
+        "startLine": 84,
+        "startChar": 54,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2afc637c_53eb535f",
         "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
         "patchSetId": 3
@@ -752,6 +944,30 @@
     },
     {
       "key": {
+        "uuid": "6a481bfe_c4ac12c6",
+        "filename": "tools/preload2/src/com/android/preload/actions/ComputeThresholdAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa2133e4_1d4f1f18",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 53
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0af79f9a_741759d6",
         "filename": "tools/preload2/src/com/android/preload/actions/DeviceSpecific.java",
         "patchSetId": 3
@@ -763,6 +979,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "whitespace",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 3
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a52a3ad_d0f84c6c",
+        "filename": "tools/preload2/src/com/android/preload/actions/DeviceSpecific.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0af79f9a_741759d6",
       "range": {
         "startLine": 24,
         "startChar": 2,
@@ -845,6 +1085,30 @@
     },
     {
       "key": {
+        "uuid": "aa3e9347_c92429ed",
+        "filename": "tools/preload2/src/com/android/preload/classdataretrieval/jdwp/JDWPClassDataRetriever.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0b8f60_e4eba006",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea27abf2_1406d9a4",
         "filename": "tools/preload2/src/com/android/preload/classdataretrieval/jdwp/JDWPClassDataRetriever.java",
         "patchSetId": 3
@@ -856,6 +1120,30 @@
       "writtenOn": "2016-01-04T22:09:54Z",
       "side": 1,
       "message": "whitespace",
+      "range": {
+        "startLine": 199,
+        "startChar": 63,
+        "endLine": 199,
+        "endChar": 64
+      },
+      "revId": "1c4dc952f30bad79247d71a11a8c168bf98439ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a52a3ad_700e1851",
+        "filename": "tools/preload2/src/com/android/preload/classdataretrieval/jdwp/JDWPClassDataRetriever.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-06T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea27abf2_1406d9a4",
       "range": {
         "startLine": 199,
         "startChar": 63,
