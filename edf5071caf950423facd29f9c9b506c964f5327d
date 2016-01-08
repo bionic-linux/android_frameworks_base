@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a74377b_d5987cf1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "Bug number should go right after the subject line.",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a74377b_958e04aa",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "Do we need two methods getByteBuffer() and getStride(), or we need one that returns both the buffer and the stride?\n\nIs there any way that the two may go out of sync, e.g., in the case of a USAGE_IO Allocation?\n\nIn addition, if we provide one Java API method, we avoid the two calls to the HAL or driver, which are exactly the same. At the minimum, we maybe able to save the stride from the call to retrieve the data pointer.",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a9aa3ee_3c0b5140",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "nit: Grouping java.* imports is good... Since you are on it, can you sort all these imports in alphabetical order?",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a9aa3ee_5c081d41",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "private?\n\nnit: I didn\u0027t check all existing fields. At lest some of them probably should be private as well.",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a74377b_f5af384e",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "private?",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a74377b_55b62ca3",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "Gets or creates a ByteBuffer that contains the raw data of the current Allocation.\n\nIf the Allocation is created with USAGE_IO_INPUT, the returned ByteBuffer would contain the up-to-date data.\n\nFor a 2D or 3D Allocation, the raw data maybe padded so that each row of the Allocation has certain alignment. The size of each row including padding, called stride, can be queried using the {@link #getStride()} method.\n\n@return the ByteBuffer.",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a9aa3ee_bc7be19f",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "Gets the stride of the Allocation.\n\nFor a 2D or 3D Allocation, the raw data maybe padded so that each row of the Allocation has certain alignment. The size of each row including such padding is called stride. \n\n@return the stride. 0 for 1D Allocation, or if the target API level is below 21.",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca6827a1_d94ef370",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "nit: Alphabetically sort all imports.",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a62afbe_f7f8206c",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2668,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "It seems that this check really should be an assert.\nThere should be no way that we can get into this function without a valid alloc.",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a8b57a3_fd53a717",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2669,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "Do we have restrictions on what kind of Allocations we can call getByteBuffer? E.g., if I have a cubemap or a allocation with multiple levels of details. Can we call getByteBuffer on it?\nWe either update the javadoc on the API to rule those out, or have to add support to them, here and other places applicable.",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea65ebc4_5a9f3523",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2684,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-01-08T18:27:06Z",
+      "side": 1,
+      "message": "In which cases can ptr be NULL?  Is this another assert?",
+      "revId": "edf5071caf950423facd29f9c9b506c964f5327d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
