@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a481bfe_28f0244a",
+        "filename": "tools/preload2/src/com/android/preload/ClientUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2016-01-08T00:05:45Z",
+      "side": 1,
+      "message": "Receive more what? Perhaps something like \"Sleep a little longer to give (hopefully all of) the rest of the clients a chance to become available\" would be more clear?",
+      "range": {
+        "startLine": 201,
+        "startChar": 41,
+        "endLine": 201,
+        "endChar": 53
+      },
+      "revId": "c619206a13d32ea0abc7852de715013465c161a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
