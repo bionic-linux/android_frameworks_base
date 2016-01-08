@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a8b57a3_1d04d35c",
+        "filename": "tools/preload2/src/com/android/preload/Main.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2016-01-08T17:00:53Z",
+      "side": 1,
+      "message": "I always think it is good for the name to contain the units (DEFAULT_TIMEOUT_MILLIS) and to be more readable by doing 10 * 1000 to make it more readable without the comment.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "3ecf1e49544fd08b580699fc6a44bc9c4c320d60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a79fb72_16dd9c34",
+        "filename": "tools/preload2/src/com/android/preload/Main.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2016-01-08T17:00:53Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 51
+      },
+      "revId": "3ecf1e49544fd08b580699fc6a44bc9c4c320d60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a901bcb_beed99e3",
+        "filename": "tools/preload2/src/com/android/preload/actions/DeviceSpecific.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2016-01-08T17:00:53Z",
+      "side": 1,
+      "message": "shouldn\u0027t this doc be on the method?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 72
+      },
+      "revId": "3ecf1e49544fd08b580699fc6a44bc9c4c320d60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa5f73f8_f8f731af",
+        "filename": "tools/preload2/src/com/android/preload/ui/NullProgressMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2016-01-08T17:00:53Z",
+      "side": 1,
+      "message": "Noop?",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "3ecf1e49544fd08b580699fc6a44bc9c4c320d60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
