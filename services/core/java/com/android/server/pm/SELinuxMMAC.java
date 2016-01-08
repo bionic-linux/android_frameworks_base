@@ -18,6 +18,7 @@ package com.android.server.pm;
 
 import android.content.pm.PackageParser;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Slog;
 import android.util.Xml;
@@ -102,6 +103,9 @@ public final class SELinuxMMAC {
 
     // Append privapp to existing seinfo label
     private static final String PRIVILEGED_APP_STR = ":privapp";
+
+    // Append targetSdkVersion=n to existing seinfo label where n is the app's targetSdkVersion
+    private static final String TARGETSDKVERSION_STR = ":targetSdkVersion=";
 
     /**
      * Load the mac_permissions.xml file containing all seinfo assignments used to
@@ -318,6 +322,8 @@ public final class SELinuxMMAC {
 
         if (pkg.applicationInfo.isPrivilegedApp())
             pkg.applicationInfo.seinfo += PRIVILEGED_APP_STR;
+
+        pkg.applicationInfo.seinfo += TARGETSDKVERSION_STR + pkg.applicationInfo.targetSdkVersion;
 
         if (DEBUG_POLICY_INSTALL) {
             Slog.i(TAG, "package (" + pkg.packageName + ") labeled with " +
