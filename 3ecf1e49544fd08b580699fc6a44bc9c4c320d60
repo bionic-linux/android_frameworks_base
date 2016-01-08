@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a74377b_357e10bd",
+        "filename": "tools/preload2/src/com/android/preload/Main.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-08T17:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a8b57a3_1d04d35c",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "3ecf1e49544fd08b580699fc6a44bc9c4c320d60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a79fb72_16dd9c34",
         "filename": "tools/preload2/src/com/android/preload/Main.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-08T17:00:53Z",
       "side": 1,
       "message": "same here",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 51
+      },
+      "revId": "3ecf1e49544fd08b580699fc6a44bc9c4c320d60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a79fb72_d64884b7",
+        "filename": "tools/preload2/src/com/android/preload/Main.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-08T17:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a79fb72_16dd9c34",
       "range": {
         "startLine": 61,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ea65ebc4_5a5d7571",
+        "filename": "tools/preload2/src/com/android/preload/actions/DeviceSpecific.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-08T17:25:36Z",
+      "side": 1,
+      "message": "Not really, only partially. I\u0027ve extended the comment for clarification: one is allowed to call methods of the implementor before calling setDevice.",
+      "parentUuid": "6a901bcb_beed99e3",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 72
+      },
+      "revId": "3ecf1e49544fd08b580699fc6a44bc9c4c320d60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa5f73f8_f8f731af",
         "filename": "tools/preload2/src/com/android/preload/ui/NullProgressMonitor.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2016-01-08T17:00:53Z",
       "side": 1,
       "message": "Noop?",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "3ecf1e49544fd08b580699fc6a44bc9c4c320d60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a79fb72_3650d85a",
+        "filename": "tools/preload2/src/com/android/preload/ui/NullProgressMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-01-08T17:25:36Z",
+      "side": 1,
+      "message": "I\u0027ve seen Null as a standard name before (it\u0027s what Eclipse uses, where I think ddmlib copied the IProgressMonitor concept from), that\u0027s why I chose it.\n\nShould I still change it?",
+      "parentUuid": "aa5f73f8_f8f731af",
       "range": {
         "startLine": 21,
         "startChar": 13,
