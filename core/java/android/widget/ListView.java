@@ -3962,4 +3962,26 @@ public class ListView extends AbsListView {
 
         encoder.addProperty("recycleOnMeasure", recycleOnMeasure());
     }
+
+    /**
+     * Remove detached HeaderView and FooterView from window, when ListView detouch
+     * @see android.widget.AbsListView#onDetachedFromWindow()
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        if (isAttachedToWindow()) {
+            if (mHeaderViewInfos.size() > 0) {
+                for (int headerIndex = 0 ; headerIndex < mHeaderViewInfos.size() ; headerIndex++) {
+                    removeDetachedView(mHeaderViewInfos.get(headerIndex).view, false);
+                }
+            }
+
+            if (mFooterViewInfos.size() > 0) {
+                for (int footerIndex = 0 ; footerIndex < mFooterViewInfos.size() ; footerIndex++) {
+                    removeDetachedView(mFooterViewInfos.get(footerIndex).view, false);
+                }
+            }
+        }
+        super.onDetachedFromWindow();
+    }
 }
