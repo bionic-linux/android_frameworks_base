@@ -16,18 +16,28 @@
 
 package android.view.inputmethod;
 
+import android.annotation.NonNull;
 import android.os.Bundle;
 import android.view.KeyEvent;
+
+import static com.android.internal.util.Preconditions.checkNotNull;
 
 /**
  * <p>Wrapper class for proxying calls to another InputConnection.  Subclass
  * and have fun!
  */
 public class InputConnectionWrapper implements InputConnection {
+    @NonNull
     private InputConnection mTarget;
     final boolean mMutable;
-    
-    public InputConnectionWrapper(InputConnection target, boolean mutable) {
+
+    /**
+     * Initializes the wrapper for the given {@link InputConnection}.
+     * @param target the {@link InputConnection} to be wrapped.
+     * @param mutable {@code true} if the wrapper is to be mutable.
+     */
+    public InputConnectionWrapper(@NonNull InputConnection target, boolean mutable) {
+        checkNotNull(target);
         mMutable = mutable;
         mTarget = target;
     }
@@ -36,12 +46,13 @@ public class InputConnectionWrapper implements InputConnection {
      * Change the target of the input connection.
      */
     public void setTarget(InputConnection target) {
+        checkNotNull(target);
         if (mTarget != null && !mMutable) {
             throw new SecurityException("not mutable");
         }
         mTarget = target;
     }
-    
+
     public CharSequence getTextBeforeCursor(int n, int flags) {
         return mTarget.getTextBeforeCursor(n, flags);
     }
