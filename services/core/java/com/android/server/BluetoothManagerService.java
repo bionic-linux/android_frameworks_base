@@ -133,6 +133,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private final ContentResolver mContentResolver;
     private final RemoteCallbackList<IBluetoothManagerCallback> mCallbacks;
     private final RemoteCallbackList<IBluetoothStateChangeCallback> mStateChangeCallbacks;
+    private IBinder mBluetoothBinder;
     private IBluetooth mBluetooth;
     private IBluetoothGatt mBluetoothGatt;
     private boolean mBinding;
@@ -244,6 +245,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
         mContext = context;
         mBluetooth = null;
+        mBluetoothBinder = null;
         mBluetoothGatt = null;
         mBinding = false;
         mUnbinding = false;
@@ -690,6 +692,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                     }
                 }
                 if (DBG) Log.d(TAG, "Sending unbind request.");
+                mBluetoothBinder = null;
                 mBluetooth = null;
                 //Unbind
                 mContext.unbindService(mConnection);
@@ -1296,6 +1299,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                         mHandler.removeMessages(MESSAGE_TIMEOUT_BIND);
 
                         mBinding = false;
+                        mBluetoothBinder = service;
                         mBluetooth = IBluetooth.Stub.asInterface(service);
 
                         try {
@@ -1832,44 +1836,15 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
-        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.DUMP, TAG);
-
-        writer.println("Bluetooth Status");
-        writer.println("  enabled: " + mEnable);
-        writer.println("  state: " + mState);
-        writer.println("  address: " + mAddress);
-        writer.println("  name: " + mName + "\n");
-        writer.flush();
-
-        if (mBluetooth == null) {
-            writer.println("Bluetooth Service not connected");
-        } else {
-            ParcelFileDescriptor pfd = null;
-            try {
-                writer.println("Bonded devices:");
-                for (BluetoothDevice device : mBluetooth.getBondedDevices()) {
-                    writer.println("  " + device.getAddress() +
-                            " [" + DEVICE_TYPE_NAMES[device.getType()] + "] " +
-                            device.getName());
-                }
-                writer.flush();
-
-                pfd = ParcelFileDescriptor.dup(fd);
-                mBluetooth.dump(pfd);
-            } catch (RemoteException re) {
-                writer.println("RemoteException while calling Bluetooth Service");
-            } catch (IOException ioe) {
-                writer.println("IOException attempting to dup() fd");
-            } finally {
-                if (pfd != null) {
-                    try {
-                        pfd.close();
-                    } catch (IOException ioe) {
-                        writer.println("IOException attempting to close() fd");
-                    }
-                }
-            }
+    public void dump(FileDescriptor fd, PrintWriter writer, String args[]) {
+      if (mBluetoothBinder == null) {
+        writer.println("Bluetooth Service not connected");
+      } else {
+        try {
+          mBluetoothBinder.dump(fd, args);
+        } catch (RemoteException re) {
+          writer.println("RemoteException while calling Bluetooth Service");
         }
+      }
     }
 }
