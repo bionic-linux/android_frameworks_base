@@ -80,21 +80,29 @@ namespace android {
     {
         ScopedUtfChars path(env, jpath);
         int fd = open(path.c_str(), O_RDONLY);
+        uint64_t size;
 
         if (fd < 0)
             return 0;
 
-        return get_block_device_size(fd);
+        size = get_block_device_size(fd);
+
+        close(fd);
+        return size;
     }
 
     static int com_android_server_PersistentDataBlockService_wipe(JNIEnv *env, jclass, jstring jpath) {
         ScopedUtfChars path(env, jpath);
         int fd = open(path.c_str(), O_WRONLY);
+        int ret;
 
         if (fd < 0)
             return 0;
 
-        return wipe_block_device(fd);
+        ret = wipe_block_device(fd);
+
+        close(fd);
+        return ret;
     }
 
     static const JNINativeMethod sMethods[] = {
