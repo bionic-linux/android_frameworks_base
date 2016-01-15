@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a77deeee_8b201188",
+        "filename": "services/core/jni/com_android_server_PersistentDataBlockService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-01-15T11:15:56Z",
+      "side": 1,
+      "message": "this is C++ (not C) so please move this lower down and write\n\nconst uint64_t size \u003d get_block_device_size(fd);",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 22
+      },
+      "revId": "7241e6c8443bc6fd04cdcc8cc85a5ae8274b9110",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2771fe1c_2791143c",
+        "filename": "services/core/jni/com_android_server_PersistentDataBlockService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-01-15T11:15:56Z",
+      "side": 1,
+      "message": "same",
+      "revId": "7241e6c8443bc6fd04cdcc8cc85a5ae8274b9110",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
