@@ -22,6 +22,30 @@
       "revId": "d736cba6e7f93a2e6df172a644e413f27a1dc939",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27673e34_e568b9f7",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2016-01-15T01:18:10Z",
+      "side": 0,
+      "message": "It is not.  I\u0027ve updated that CL so it matches, and moved DEVICE_TYPE_NAMES there too.",
+      "parentUuid": "4768b202_697bdf9f",
+      "range": {
+        "startLine": 1850,
+        "startChar": 1,
+        "endLine": 1850,
+        "endChar": 50
+      },
+      "revId": "d736cba6e7f93a2e6df172a644e413f27a1dc939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
