@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4768b202_697bdf9f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-01-15T00:44:59Z",
+      "side": 0,
+      "message": "The removed \"Bluetooth Status\" code above has been moved\nto the following file in another CL:\n\npackages/apps/Bluetooth/src/com/android/bluetooth/btservice/AdapterService.java\n\nHowever, I didn\u0027t see in any of the the other CLs code printing the \"Bonded devices\" output. Did I miss it, or is this removal intentional?",
+      "range": {
+        "startLine": 1850,
+        "startChar": 1,
+        "endLine": 1850,
+        "endChar": 50
+      },
+      "revId": "d736cba6e7f93a2e6df172a644e413f27a1dc939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
