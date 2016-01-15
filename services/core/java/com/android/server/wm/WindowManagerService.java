@@ -52,6 +52,7 @@ import android.os.IBinder;
 import android.os.IRemoteCallback;
 import android.os.Looper;
 import android.os.Message;
+import android.os.UserManager;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.PowerManager;
@@ -7614,6 +7615,10 @@ public class WindowManagerService extends IWindowManager.Stub
             Slog.w(TAG, "Devices still not ready after waiting "
                    + INPUT_DEVICES_READY_FOR_SAFE_MODE_DETECTION_TIMEOUT_MILLIS
                    + " milliseconds before attempting to detect safe mode.");
+        }
+        UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
+        if (um != null && um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
+            return false;
         }
 
         int menuState = mInputManager.getKeyCodeState(-1, InputDevice.SOURCE_ANY,
