@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07495aa4_1ce37ff1",
+        "filename": "data/keyboards/Vendor_045e_Product_0719.kl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1091604
+      },
+      "writtenOn": "2016-01-19T16:23:48Z",
+      "side": 1,
+      "message": "You might want to update the year. They wanted me to here:\nhttps://android-review.googlesource.com/#/c/194780/4/data/keyboards/Vendor_045e_Product_02d1.kl",
+      "revId": "be410db2e3bc0a98cafd5a6497d5732f6e27f5ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
