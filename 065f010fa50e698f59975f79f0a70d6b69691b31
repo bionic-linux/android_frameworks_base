@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4768b202_b160b5b0",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2016-01-20T17:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_f8fa1cd9",
+      "range": {
+        "startLine": 1832,
+        "startChar": 0,
+        "endLine": 1832,
+        "endChar": 76
+      },
+      "revId": "065f010fa50e698f59975f79f0a70d6b69691b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "676db610_64b3fd53",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-20T00:08:48Z",
       "side": 1,
       "message": "This should all be 4 space indents",
+      "range": {
+        "startLine": 1833,
+        "startChar": 6,
+        "endLine": 1839,
+        "endChar": 13
+      },
+      "revId": "065f010fa50e698f59975f79f0a70d6b69691b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07495aa4_1988ac8f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2016-01-20T17:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "676db610_64b3fd53",
       "range": {
         "startLine": 1833,
         "startChar": 6,
