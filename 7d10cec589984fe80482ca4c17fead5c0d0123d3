@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f484f6cd_82675acb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-01-21T17:01:55Z",
+      "side": 1,
+      "message": "\"incorrectly include packages that are present in the boot classpath\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 28,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "7d10cec589984fe80482ca4c17fead5c0d0123d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
