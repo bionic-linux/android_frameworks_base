@@ -20,10 +20,12 @@ package com.android.server.hdmi;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.input.InputManager;
+import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings.Global;
 import android.util.Slog;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
@@ -123,6 +125,17 @@ abstract class HdmiCecLocalDevice {
     // the active port id (or active input) since it can be gotten by {@link #pathToPortId(int)}.
     @GuardedBy("mLock")
     private int mActiveRoutingPath;
+
+    // Whether System audio mode is activated or not.
+    // This becomes true only when all system audio sequences are finished.
+    @GuardedBy("mLock")
+    protected boolean mSystemAudioActivated = false;
+
+    @GuardedBy("mLock")
+    protected int mSystemAudioVolume = Constants.UNKNOWN_VOLUME;
+
+    @GuardedBy("mLock")
+    protected boolean mSystemAudioMute = false;
 
     protected final HdmiCecMessageCache mCecMessageCache = new HdmiCecMessageCache();
     protected final Object mLock;
@@ -430,6 +443,44 @@ abstract class HdmiCecLocalDevice {
     abstract void changeVolume(int curVolume, int delta, int maxVolume);
 
     abstract void changeMute(boolean mute);
+
+    // # Seq 25
+    void setSystemAudioMode(boolean on, boolean updateSetting) {
+        HdmiLogger.debug("System Audio Mode change[old:%b new:%b]", mSystemAudioActivated, on);
+
+        if (updateSetting) {
+            mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_ENABLED, on);
+        }
+        updateAudioManagerForSystemAudio(on);
+        synchronized (mLock) {
+            if (mSystemAudioActivated != on) {
+                mSystemAudioActivated = on;
+                mService.announceSystemAudioModeChange(on);
+            }
+        }
+    }
+
+    private void updateAudioManagerForSystemAudio(boolean on) {
+        int device = mService.getAudioManager().setHdmiSystemAudioSupported(on);
+        HdmiLogger.debug("[A]UpdateSystemAudio mode[on=%b] output=[%X]", on, device);
+    }
+
+    abstract boolean isSystemAudioActivated();
+
+    boolean getSystemAudioModeSetting() {
+        return mService.readBooleanSetting(Global.HDMI_SYSTEM_AUDIO_ENABLED, false);
+    }
+
+    void setAudioStatus(boolean mute, int volume) {
+        synchronized (mLock) {
+            mSystemAudioMute = mute;
+            mSystemAudioVolume = volume;
+            int maxVolume = mService.getAudioManager().getStreamMaxVolume(
+                    AudioManager.STREAM_MUSIC);
+            mService.setAudioStatus(mute,
+                    VolumeControlAction.scaleToCustomVolume(volume, maxVolume));
+        }
+    }
 
     protected boolean handleTerminateArc(HdmiCecMessage message) {
         return false;
@@ -924,5 +975,8 @@ abstract class HdmiCecLocalDevice {
         pw.println("mDeviceInfo: " + mDeviceInfo);
         pw.println("mActiveSource: " + mActiveSource);
         pw.println(String.format("mActiveRoutingPath: 0x%04x", mActiveRoutingPath));
+        pw.println("mSystemAudioActivated: " + mSystemAudioActivated);
+        pw.println("mSystemAudioVolume: " + mSystemAudioVolume);
+        pw.println("mSystemAudioMute: " + mSystemAudioMute);
     }
 }
