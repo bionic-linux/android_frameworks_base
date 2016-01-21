@@ -37,7 +37,6 @@ final class SystemAudioActionFromAvr extends SystemAudioAction {
     SystemAudioActionFromAvr(HdmiCecLocalDevice source, int avrAddress,
             boolean targetStatus, IHdmiControlCallback callback) {
         super(source, avrAddress, targetStatus, callback);
-        HdmiUtils.verifyAddressType(getSourceAddress(), HdmiDeviceInfo.DEVICE_TV);
     }
 
     @Override
@@ -48,17 +47,19 @@ final class SystemAudioActionFromAvr extends SystemAudioAction {
     }
 
     private void handleSystemAudioActionFromAvr() {
-        if (mTargetAudioStatus == tv().isSystemAudioActivated()) {
+        if (mTargetAudioStatus == localDevice().isSystemAudioActivated()) {
             finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
             return;
         }
-        if (tv().isProhibitMode()) {
-            sendCommand(HdmiCecMessageBuilder.buildFeatureAbortCommand(
-                    getSourceAddress(), mAvrLogicalAddress,
-                    Constants.MESSAGE_SET_SYSTEM_AUDIO_MODE, Constants.ABORT_REFUSED));
-            mTargetAudioStatus = false;
-            sendSystemAudioModeRequest();
-            return;
+        if (localDevice().getType() == HdmiDeviceInfo.DEVICE_TV) {
+            if (tv().isProhibitMode()) {
+                sendCommand(HdmiCecMessageBuilder.buildFeatureAbortCommand(
+                        getSourceAddress(), mAvrLogicalAddress,
+                        Constants.MESSAGE_SET_SYSTEM_AUDIO_MODE, Constants.ABORT_REFUSED));
+                mTargetAudioStatus = false;
+                sendSystemAudioModeRequest();
+                return;
+            }
         }
 
         removeAction(SystemAudioAutoInitiationAction.class);

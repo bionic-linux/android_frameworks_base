@@ -37,7 +37,6 @@ final class SystemAudioActionFromTv extends SystemAudioAction {
     SystemAudioActionFromTv(HdmiCecLocalDevice sourceAddress, int avrAddress,
             boolean targetStatus, IHdmiControlCallback callback) {
         super(sourceAddress, avrAddress, targetStatus, callback);
-        HdmiUtils.verifyAddressType(getSourceAddress(), HdmiDeviceInfo.DEVICE_TV);
     }
 
     @Override

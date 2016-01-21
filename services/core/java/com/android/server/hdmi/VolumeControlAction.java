@@ -145,7 +145,7 @@ final class VolumeControlAction extends HdmiCecFeatureAction {
         mLastAvrMute = mute;
         if (shouldUpdateAudioVolume(mute)) {
             HdmiLogger.debug("Force volume change[mute:%b, volume=%d]", mute, volume);
-            tv().setAudioStatus(mute, volume);
+            localDevice().setAudioStatus(mute, volume);
             mLastAvrVolume = UNKNOWN_AVR_VOLUME;
             mLastAvrMute = false;
         }
@@ -160,7 +160,7 @@ final class VolumeControlAction extends HdmiCecFeatureAction {
 
         // Update audio status if current volume position is edge of volume bar,
         // i.e max or min volume.
-        AudioManager audioManager = tv().getService().getAudioManager();
+        AudioManager audioManager = localDevice().getService().getAudioManager();
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         if (mIsVolumeUp) {
             int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -188,7 +188,7 @@ final class VolumeControlAction extends HdmiCecFeatureAction {
             sendVolumeKeyReleased();
         }
         if (mLastAvrVolume != UNKNOWN_AVR_VOLUME) {
-            tv().setAudioStatus(mLastAvrMute, mLastAvrVolume);
+            localDevice().setAudioStatus(mLastAvrMute, mLastAvrVolume);
             mLastAvrVolume = UNKNOWN_AVR_VOLUME;
             mLastAvrMute = false;
         }
