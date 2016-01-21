@@ -49,7 +49,7 @@ final class SystemAudioAutoInitiationAction extends HdmiCecFeatureAction {
             @Override
             public void onSendCompleted(int error) {
                 if (error != Constants.SEND_RESULT_SUCCESS) {
-                    tv().setSystemAudioMode(false, true);
+                    localDevice().setSystemAudioMode(false, true);
                     finish();
                 }
             }
@@ -77,11 +77,11 @@ final class SystemAudioAutoInitiationAction extends HdmiCecFeatureAction {
             return;
         }
 
-        boolean systemAudioModeSetting = tv().getSystemAudioModeSetting();
+        boolean systemAudioModeSetting = localDevice().getSystemAudioModeSetting();
         if (systemAudioModeSetting && !isSystemAudioModeOn) {
-            addAndStartAction(new SystemAudioActionFromTv(tv(), mAvrAddress, systemAudioModeSetting, null));
+            addAndStartAction(new SystemAudioActionFromTv(localDevice(), mAvrAddress, systemAudioModeSetting, null));
         } else {
-            tv().setSystemAudioMode(isSystemAudioModeOn, true);
+            localDevice().setSystemAudioMode(isSystemAudioModeOn, true);
         }
         finish();
     }
@@ -100,18 +100,19 @@ final class SystemAudioAutoInitiationAction extends HdmiCecFeatureAction {
     }
 
     private void handleSystemAudioModeStatusTimeout() {
-        if (tv().getSystemAudioModeSetting()) {
+        if (localDevice().getSystemAudioModeSetting()) {
             if (canChangeSystemAudio()) {
-                addAndStartAction(new SystemAudioActionFromTv(tv(), mAvrAddress, true, null));
+                addAndStartAction(new SystemAudioActionFromTv(localDevice(), mAvrAddress, true, null));
             }
         } else {
-            tv().setSystemAudioMode(false, true);
+            // TODO: SS: just set to true, they chose it
+            localDevice().setSystemAudioMode(false, true);
         }
         finish();
     }
 
     private boolean canChangeSystemAudio() {
-        return !(tv().hasAction(SystemAudioActionFromTv.class)
-               || tv().hasAction(SystemAudioActionFromAvr.class));
+        return !(localDevice().hasAction(SystemAudioActionFromTv.class)
+               || localDevice().hasAction(SystemAudioActionFromAvr.class));
     }
 }

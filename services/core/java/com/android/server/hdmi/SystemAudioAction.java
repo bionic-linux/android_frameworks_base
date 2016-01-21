@@ -73,20 +73,24 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
 
     // Seq #27
     protected void sendSystemAudioModeRequest() {
-        List<RoutingControlAction> routingActions = getActions(RoutingControlAction.class);
-        if (!routingActions.isEmpty()) {
-            mState = STATE_CHECK_ROUTING_IN_PRGRESS;
-            // Should have only one Routing Control Action
-            RoutingControlAction routingAction = routingActions.get(0);
-            routingAction.addOnFinishedCallback(this, new Runnable() {
-                @Override
-                public void run() {
-                    sendSystemAudioModeRequestInternal();
-                }
-            });
-            return;
+        if (localDevice().getType() == HdmiDeviceInfo.DEVICE_TV) {
+            List<RoutingControlAction> routingActions = getActions(RoutingControlAction.class);
+            if (!routingActions.isEmpty()) {
+                mState = STATE_CHECK_ROUTING_IN_PRGRESS;
+                // Should have only one Routing Control Action
+                RoutingControlAction routingAction = routingActions.get(0);
+                routingAction.addOnFinishedCallback(this, new Runnable() {
+                    @Override
+                    public void run() {
+                        sendSystemAudioModeRequestInternal();
+                    }
+                });
+                return;
+            }
+            sendSystemAudioModeRequestInternal();
+        } else if (localDevice().getType() == HdmiDeviceInfo.DEVICE_PLAYBACK) {
+            sendSystemAudioModeRequestInternal();
         }
-        sendSystemAudioModeRequestInternal();
     }
 
     private void sendSystemAudioModeRequestInternal() {
@@ -113,12 +117,18 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
         // 1) physical address of the active source
         // 2) active routing path
         // 3) physical address of TV
-        if (tv().getActiveSource().isValid()) {
-            return tv().getActiveSource().physicalAddress;
+        if (localDevice().getType() == HdmiDeviceInfo.DEVICE_PLAYBACK) {
+            return getSourcePath();
+        } else if (localDevice().getType() == HdmiDeviceInfo.DEVICE_TV) {
+            if (tv().getActiveSource().isValid()) {
+                return tv().getActiveSource().physicalAddress;
+            }
+            int param = tv().getActivePath();
+            return param != Constants.INVALID_PHYSICAL_ADDRESS
+                    ? param : Constants.PATH_INTERNAL;
+        } else {
+            return Constants.PATH_INTERNAL;
         }
-        int param = tv().getActivePath();
-        return param != Constants.INVALID_PHYSICAL_ADDRESS
-                ? param : Constants.PATH_INTERNAL;
     }
 
     private void handleSendSystemAudioModeRequestTimeout() {
@@ -133,7 +143,7 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
     }
 
     protected void setSystemAudioMode(boolean mode) {
-        tv().setSystemAudioMode(mode, true);
+        localDevice().setSystemAudioMode(mode, true);
     }
 
     @Override
@@ -174,7 +184,7 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
     }
 
     protected void startAudioStatusAction() {
-        addAndStartAction(new SystemAudioStatusAction(tv(), mAvrLogicalAddress, mCallback));
+        addAndStartAction(new SystemAudioStatusAction(localDevice(), mAvrLogicalAddress, mCallback));
         finish();
     }
 
