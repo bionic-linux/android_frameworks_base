@@ -75,11 +75,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     // Stores whether ARC feature is enabled per port. True by default for all the ARC-enabled ports.
     private final SparseBooleanArray mArcFeatureEnabled = new SparseBooleanArray();
 
-    // Whether System audio mode is activated or not.
-    // This becomes true only when all system audio sequences are finished.
-    @GuardedBy("mLock")
-    private boolean mSystemAudioActivated = false;
-
     // The previous port id (input) before switching to the new one. This is remembered in order to
     // be able to switch to it upon receiving <Inactive Source> from currently active source.
     // This remains valid only when the active source was switched via one touch play operation
@@ -87,12 +82,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     // Constants.PORT_INVALID, for which case <Inactive Source> does not do anything.
     @GuardedBy("mLock")
     private int mPrevPortId;
-
-    @GuardedBy("mLock")
-    private int mSystemAudioVolume = Constants.UNKNOWN_VOLUME;
-
-    @GuardedBy("mLock")
-    private boolean mSystemAudioMute = false;
 
     // Copy of mDeviceInfos to guarantee thread-safety.
     @GuardedBy("mLock")
@@ -864,27 +853,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 new SystemAudioActionFromTv(this, avr.getLogicalAddress(), enabled, callback));
     }
 
-    // # Seq 25
-    void setSystemAudioMode(boolean on, boolean updateSetting) {
-        HdmiLogger.debug("System Audio Mode change[old:%b new:%b]", mSystemAudioActivated, on);
-
-        if (updateSetting) {
-            mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_ENABLED, on);
-        }
-        updateAudioManagerForSystemAudio(on);
-        synchronized (mLock) {
-            if (mSystemAudioActivated != on) {
-                mSystemAudioActivated = on;
-                mService.announceSystemAudioModeChange(on);
-            }
-        }
-    }
-
-    private void updateAudioManagerForSystemAudio(boolean on) {
-        int device = mService.getAudioManager().setHdmiSystemAudioSupported(on);
-        HdmiLogger.debug("[A]UpdateSystemAudio mode[on=%b] output=[%X]", on, device);
-    }
-
     boolean isSystemAudioActivated() {
         if (!hasSystemAudioDevice()) {
             return false;
@@ -892,10 +860,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         synchronized (mLock) {
             return mSystemAudioActivated;
         }
-    }
-
-    boolean getSystemAudioModeSetting() {
-        return mService.readBooleanSetting(Global.HDMI_SYSTEM_AUDIO_ENABLED, false);
     }
 
     /**
@@ -1039,16 +1003,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     }
 
     void setAudioStatus(boolean mute, int volume) {
-        synchronized (mLock) {
-            mSystemAudioMute = mute;
-            mSystemAudioVolume = volume;
-            int maxVolume = mService.getAudioManager().getStreamMaxVolume(
-                    AudioManager.STREAM_MUSIC);
-            mService.setAudioStatus(mute,
-                    VolumeControlAction.scaleToCustomVolume(volume, maxVolume));
-            displayOsd(HdmiControlManager.OSD_MESSAGE_AVR_VOLUME_CHANGED,
-                    mute ? HdmiControlManager.AVR_VOLUME_MUTED : volume);
-        }
+        super.setAudioStatus(mute, volume);
+        displayOsd(HdmiControlManager.OSD_MESSAGE_AVR_VOLUME_CHANGED,
+                mute ? HdmiControlManager.AVR_VOLUME_MUTED : volume);
     }
 
     @ServiceThreadOnly
@@ -1935,8 +1892,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         super.dump(pw);
         pw.println("mArcEstablished: " + mArcEstablished);
         pw.println("mArcFeatureEnabled: " + mArcFeatureEnabled);
-        pw.println("mSystemAudioActivated: " + mSystemAudioActivated);
-        pw.println("mSystemAudioMute: " + mSystemAudioMute);
         pw.println("mAutoDeviceOff: " + mAutoDeviceOff);
         pw.println("mAutoWakeup: " + mAutoWakeup);
         pw.println("mSkipRoutingControl: " + mSkipRoutingControl);

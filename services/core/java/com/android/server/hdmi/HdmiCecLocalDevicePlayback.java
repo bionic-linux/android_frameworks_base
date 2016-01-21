@@ -453,4 +453,16 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         assertRunOnServiceThread();
         // TODO: implement
     }
+
+    boolean isSystemAudioActivated() {
+        // TODO: SS: changed from HdmiCecLocalDeviceTv
+/*
+        if (!hasSystemAudioDevice()) {
+            return false;
+        }
+*/
+        synchronized (mLock) {
+            return mSystemAudioActivated;
+        }
+    }
 }
