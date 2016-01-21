@@ -49918,7 +49918,6 @@ package java.net {
     method public void disconnect();
     method public synchronized boolean getBroadcast() throws java.net.SocketException;
     method public java.nio.channels.DatagramChannel getChannel();
-    method public final java.io.FileDescriptor getFileDescriptor$();
     method public java.net.InetAddress getInetAddress();
     method public java.net.InetAddress getLocalAddress();
     method public int getLocalPort();
