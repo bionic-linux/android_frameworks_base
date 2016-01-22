@@ -465,4 +465,17 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
             return mSystemAudioActivated;
         }
     }
+
+    @ServiceThreadOnly
+    HdmiDeviceInfo getAvrDeviceInfo() {
+        assertRunOnServiceThread();
+        // return getCecDeviceInfo(Constants.ADDR_AUDIO_SYSTEM); // FIXME
+        boolean avrExists = true; // FIXME
+        if (avrExists)
+            // TODO: HdmiDeviceInfo(logicalAddress, physicalAddress, portId,
+            // deviceType, vendorId, displayName, powerStatus)
+            return new HdmiDeviceInfo();
+        else
+            return null;
+    }
 }

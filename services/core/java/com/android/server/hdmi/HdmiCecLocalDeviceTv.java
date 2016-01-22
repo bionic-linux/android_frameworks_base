@@ -702,18 +702,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     @Override
     @ServiceThreadOnly
-    protected boolean handleReportAudioStatus(HdmiCecMessage message) {
-        assertRunOnServiceThread();
-
-        byte params[] = message.getParams();
-        int mute = params[0] & 0x80;
-        int volume = params[0] & 0x7F;
-        setAudioStatus(mute == 0x80, volume);
-        return true;
-    }
-
-    @Override
-    @ServiceThreadOnly
     protected boolean handleTextViewOn(HdmiCecMessage message) {
         assertRunOnServiceThread();
 
@@ -1113,40 +1101,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         return true;
     }
 
-    @Override
-    @ServiceThreadOnly
-    protected boolean handleSetSystemAudioMode(HdmiCecMessage message) {
-        assertRunOnServiceThread();
-        if (!isMessageForSystemAudio(message)) {
-            if (getAvrDeviceInfo() == null) {
-                // AVR may not have been discovered yet. Delay the message processing.
-                mDelayedMessageBuffer.add(message);
-            } else {
-                HdmiLogger.warning("Invalid <Set System Audio Mode> message:" + message);
-                mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
-            }
-            return true;
-        }
-        removeAction(SystemAudioAutoInitiationAction.class);
-        SystemAudioActionFromAvr action = new SystemAudioActionFromAvr(this,
-                message.getSource(), HdmiUtils.parseCommandParamSystemAudioStatus(message), null);
-        addAndStartAction(action);
-        return true;
-    }
-
-    @Override
-    @ServiceThreadOnly
-    protected boolean handleSystemAudioModeStatus(HdmiCecMessage message) {
-        assertRunOnServiceThread();
-        if (!isMessageForSystemAudio(message)) {
-            HdmiLogger.warning("Invalid <System Audio Mode Status> message:" + message);
-            // Ignore this message.
-            return true;
-        }
-        setSystemAudioMode(HdmiUtils.parseCommandParamSystemAudioStatus(message), true);
-        return true;
-    }
-
     // Seq #53
     @Override
     @ServiceThreadOnly
@@ -1190,14 +1144,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     void announceClearTimerRecordingResult(int recorderAddress, int result) {
         mService.invokeClearTimerRecordingResult(recorderAddress, result);
-    }
-
-    private boolean isMessageForSystemAudio(HdmiCecMessage message) {
-        return mService.isControlEnabled()
-                && message.getSource() == Constants.ADDR_AUDIO_SYSTEM
-                && (message.getDestination() == Constants.ADDR_TV
-                        || message.getDestination() == Constants.ADDR_BROADCAST)
-                && getAvrDeviceInfo() != null;
     }
 
     /**
