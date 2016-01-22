@@ -434,12 +434,36 @@ abstract class HdmiCecLocalDevice {
         return false;
     }
 
+    @ServiceThreadOnly
     protected boolean handleSystemAudioModeStatus(HdmiCecMessage message) {
-        return false;
+        assertRunOnServiceThread();
+        if (!isMessageForSystemAudio(message)) {
+            HdmiLogger.warning("Invalid <System Audio Mode Status> message:" + message);
+            // Ignore this message.
+            return true;
+        }
+        setSystemAudioMode(HdmiUtils.parseCommandParamSystemAudioStatus(message), true);
+        return true;
     }
 
+    @ServiceThreadOnly
     protected boolean handleSetSystemAudioMode(HdmiCecMessage message) {
-        return false;
+        assertRunOnServiceThread();
+        if (!isMessageForSystemAudio(message)) {
+            if (getAvrDeviceInfo() == null) {
+                // AVR may not have been discovered yet. Delay the message processing.
+                mDelayedMessageBuffer.add(message);
+            } else {
+                HdmiLogger.warning("Invalid <Set System Audio Mode> message:" + message);
+                mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
+            }
+            return true;
+        }
+        removeAction(SystemAudioAutoInitiationAction.class);
+        SystemAudioActionFromAvr action = new SystemAudioActionFromAvr(this,
+                message.getSource(), HdmiUtils.parseCommandParamSystemAudioStatus(message), null);
+        addAndStartAction(action);
+        return true;
     }
 
     // TODO: javadoc
@@ -488,6 +512,16 @@ abstract class HdmiCecLocalDevice {
         }
     }
 
+    private boolean isMessageForSystemAudio(HdmiCecMessage message) {
+        return mService.isControlEnabled()
+                && message.getSource() == Constants.ADDR_AUDIO_SYSTEM
+                && (message.getDestination() == Constants.ADDR_TV
+                        || message.getDestination() == Constants.ADDR_BROADCAST)
+                && getAvrDeviceInfo() != null;
+    }
+
+    abstract HdmiDeviceInfo getAvrDeviceInfo();
+
     protected boolean handleTerminateArc(HdmiCecMessage message) {
         return false;
     }
@@ -496,8 +530,15 @@ abstract class HdmiCecLocalDevice {
         return false;
     }
 
+    @ServiceThreadOnly
     protected boolean handleReportAudioStatus(HdmiCecMessage message) {
-        return false;
+        assertRunOnServiceThread();
+
+        byte params[] = message.getParams();
+        int mute = params[0] & 0x80;
+        int volume = params[0] & 0x7F;
+        setAudioStatus(mute == 0x80, volume);
+        return true;
     }
 
     @ServiceThreadOnly
