@@ -436,22 +436,82 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         }
     }
 
+    // TODO: implement these?
+    // disableSystemAudioIfExist? call on disableDevice?
+
     @ServiceThreadOnly
     void changeSystemAudioMode(boolean enabled, IHdmiControlCallback callback) {
         assertRunOnServiceThread();
-        // TODO: implement
+        if (!mService.isControlEnabled() /* || hasAction(DeviceDiscoveryAction.class) */) { // FIXME
+            setSystemAudioMode(false, true);
+            invokeCallback(callback, HdmiControlManager.RESULT_INCORRECT_MODE);
+        }
+        HdmiDeviceInfo avr = getAvrDeviceInfo();
+        if (avr == null) {
+            setSystemAudioMode(false, true);
+            invokeCallback(callback, HdmiControlManager.RESULT_TARGET_NOT_AVAILABLE);
+        }
+        addAndStartAction(
+                new SystemAudioActionFromTv(this, Constants.ADDR_AUDIO_SYSTEM, enabled, callback));
     }
 
     @ServiceThreadOnly
     void changeVolume(int curVolume, int delta, int maxVolume) {
         assertRunOnServiceThread();
-        // TODO: implement
+/*
+        if (delta == 0 || !isSystemAudioActivated()) {
+            return;
+        }
+
+        int targetVolume = curVolume + delta;
+        int cecVolume = VolumeControlAction.scaleToCecVolume(targetVolume, maxVolume);
+        synchronized (mLock) {
+            // If new volume is the same as current system audio volume, just ignore it.
+            // Note that UNKNOWN_VOLUME is not in range of cec volume scale.
+            if (cecVolume == mSystemAudioVolume) {
+                // Update tv volume with system volume value.
+                mService.setAudioStatus(false,
+                        VolumeControlAction.scaleToCustomVolume(mSystemAudioVolume, maxVolume));
+                return;
+            }
+        }
+
+        List<VolumeControlAction> actions = getActions(VolumeControlAction.class);
+        if (actions.isEmpty()) {
+            // TODO: need to add "if NV_CEC_VOLUME && isSystemAudioActivated, then send to AVR, else send to TV"
+            // 2nd arg: getAvrDeviceInfo().getLogicalAddress()
+            addAndStartAction(new VolumeControlAction(this,
+                    Constants.ADDR_AUDIO_SYSTEM, delta > 0));
+        } else {
+            actions.get(0).handleVolumeChange(delta > 0);
+        }
+*/
     }
 
     @ServiceThreadOnly
     void changeMute(boolean mute) {
+/*
         assertRunOnServiceThread();
-        // TODO: implement
+        HdmiLogger.debug("[A]:Change mute:%b", mute);
+        synchronized (mLock) {
+            if (mSystemAudioMute == mute) {
+                HdmiLogger.debug("No need to change mute.");
+                return;
+            }
+        }
+        if (!isSystemAudioActivated()) {
+            HdmiLogger.debug("[A]:System audio is not activated.");
+            return;
+        }
+
+        // Remove existing volume action.
+        removeAction(VolumeControlAction.class);
+        // TODO: fix getAvrDeviceInfo()
+        // 1st arg: getAvrDeviceInfo().getLogicalAddress()
+        sendUserControlPressedAndReleased(Constants.ADDR_AUDIO_SYSTEM,
+                mute ? HdmiCecKeycode.CEC_KEYCODE_MUTE_FUNCTION :
+                        HdmiCecKeycode.CEC_KEYCODE_RESTORE_VOLUME_FUNCTION);
+*/
     }
 
     boolean isSystemAudioActivated() {
