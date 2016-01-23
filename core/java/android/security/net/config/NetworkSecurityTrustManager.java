@@ -128,13 +128,19 @@ public class NetworkSecurityTrustManager implements X509TrustManager {
         if (chain.isEmpty()) {
             return false;
         }
-        X509Certificate anchorCert = chain.get(chain.size() - 1);
-        TrustAnchor chainAnchor =
-                mNetworkSecurityConfig.findTrustAnchorBySubjectAndPublicKey(anchorCert);
-        if (chainAnchor == null) {
-            throw new CertificateException("Trusted chain does not end in a TrustAnchor");
+        // Pinning is enforced if there are no certificates in the chain which are allowed to
+        // override pins.
+        for (X509Certificate cert : chain) {
+            TrustAnchor certAnchor =
+                    mNetworkSecurityConfig.findTrustAnchorBySubjectAndPublicKey(cert);
+            if (certAnchor == null) {
+                continue;
+            }
+            if (certAnchor.overridesPins) {
+                return false;
+            }
         }
-        return !chainAnchor.overridesPins;
+        return true;
     }
 
     @Override
