@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4b51eae_b7917274",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2016-01-23T06:07:50Z",
+      "side": 1,
+      "message": "Every time I review this method it takes me a while to figure out what the return value means. Please rename for clarity (e.g., isPinningPermitted or, perhaps it\u0027s better to invert and call it isPinningBypassed) or add Javadoc.",
+      "revId": "aa1916ae153895c01518828534c75c3bb996d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
