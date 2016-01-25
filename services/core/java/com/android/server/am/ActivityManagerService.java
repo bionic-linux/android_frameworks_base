@@ -1213,6 +1213,7 @@ public final class ActivityManagerService extends ActivityManagerNative
     int mSamplingInterval = 0;
     boolean mAutoStopProfiler = false;
     int mProfileType = 0;
+    String mNativeDebuggingApp = null;
     String mOpenGlTraceApp = null;
     final ProcessMap<Pair<Long, String>> mMemWatchProcesses = new ProcessMap<>();
     String mMemWatchDumpProcName;
@@ -3342,6 +3343,12 @@ public final class ActivityManagerService extends ActivityManagerNative
             }
             if ("1".equals(SystemProperties.get("debug.assert"))) {
                 debugFlags |= Zygote.DEBUG_ENABLE_ASSERT;
+            }
+            if (mNativeDebuggingApp != null && mNativeDebuggingApp.equals(app.processName)) {
+                // Enable all debug flag required by the native debugger.
+                debugFlags |= Zygote.DEBUG_ALWAYS_JIT;          // Don't interpret anything
+                debugFlags |= Zygote.DEBUG_GENERATE_DEBUG_INFO; // Generate debug inf
+                debugFlags |= Zygote.DEBUG_NATIVE_DEBUGGABLE;   // Disbale optimizations
             }
 
             String requiredAbi = (abiOverride != null) ? abiOverride : app.info.primaryCpuAbi;
@@ -10584,6 +10591,20 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
     }
 
+
+    void setNativeDebuggingApp(ApplicationInfo app, String processName) {
+        synchronized (this) {
+            boolean isDebuggable = "1".equals(SystemProperties.get(SYSTEM_DEBUGGABLE, "0"));
+            if (!isDebuggable) {
+                if ((app.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {
+                    throw new SecurityException("Process not debuggable: " + app.packageName);
+                }
+            }
+
+            mNativeDebuggingApp = processName;
+        }
+    }
+
     void setOpenGlTraceApp(ApplicationInfo app, String processName) {
         synchronized (this) {
             boolean isDebuggable = "1".equals(SystemProperties.get(SYSTEM_DEBUGGABLE, "0"));
@@ -13676,6 +13697,15 @@ public final class ActivityManagerService extends ActivityManagerNative
             pw.print("  mMemWatchDumpFile="); pw.println(mMemWatchDumpFile);
             pw.print("  mMemWatchDumpPid="); pw.print(mMemWatchDumpPid);
                     pw.print(" mMemWatchDumpUid="); pw.println(mMemWatchDumpUid);
+        }
+        if (mNativeDebuggingApp != null) {
+            if (dumpPackage == null || dumpPackage.equals(mNativeDebuggingApp)) {
+                if (needSep) {
+                    pw.println();
+                    needSep = false;
+                }
+                pw.println("  mNativeDebuggingApp=" + mNativeDebuggingApp);
+            }
         }
         if (mOpenGlTraceApp != null) {
             if (dumpPackage == null || dumpPackage.equals(mOpenGlTraceApp)) {

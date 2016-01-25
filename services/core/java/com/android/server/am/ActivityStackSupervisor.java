@@ -890,6 +890,10 @@ public final class ActivityStackSupervisor implements DisplayListener {
                     mService.setDebugApp(aInfo.processName, true, false);
                 }
 
+                if ((startFlags & ActivityManager.START_FLAG_NATIVE_DEBUGGING) != 0) {
+                    mService.setNativeDebuggingApp(aInfo.applicationInfo, aInfo.processName);
+                }
+
                 if ((startFlags & ActivityManager.START_FLAG_OPENGL_TRACES) != 0) {
                     mService.setOpenGlTraceApp(aInfo.applicationInfo, aInfo.processName);
                 }
