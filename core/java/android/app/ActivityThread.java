@@ -449,6 +449,7 @@ public final class ActivityThread {
         IInstrumentationWatcher instrumentationWatcher;
         IUiAutomationConnection instrumentationUiAutomationConnection;
         int debugMode;
+        boolean enableNativeDebugging;
         boolean enableOpenGlTrace;
         boolean trackAllocation;
         boolean restrictedBackupMode;
@@ -775,9 +776,9 @@ public final class ActivityThread {
                 ProfilerInfo profilerInfo, Bundle instrumentationArgs,
                 IInstrumentationWatcher instrumentationWatcher,
                 IUiAutomationConnection instrumentationUiConnection, int debugMode,
-                boolean enableOpenGlTrace, boolean trackAllocation, boolean isRestrictedBackupMode,
-                boolean persistent, Configuration config, CompatibilityInfo compatInfo,
-                Map<String, IBinder> services, Bundle coreSettings) {
+                boolean enableNativeDebugging, boolean enableOpenGlTrace, boolean trackAllocation,
+                boolean isRestrictedBackupMode, boolean persistent, Configuration config,
+                CompatibilityInfo compatInfo, Map<String, IBinder> services, Bundle coreSettings) {
 
             if (services != null) {
                 // Setup the service cache in the ServiceManager
@@ -795,6 +796,7 @@ public final class ActivityThread {
             data.instrumentationWatcher = instrumentationWatcher;
             data.instrumentationUiAutomationConnection = instrumentationUiConnection;
             data.debugMode = debugMode;
+            data.enableNativeDebugging = enableNativeDebugging;
             data.enableOpenGlTrace = enableOpenGlTrace;
             data.trackAllocation = trackAllocation;
             data.restrictedBackupMode = isRestrictedBackupMode;
@@ -4614,6 +4616,9 @@ public final class ActivityThread {
 
         NetworkSecurityPolicy.getInstance().setCleartextTrafficPermitted(
                 (data.appInfo.flags & ApplicationInfo.FLAG_USES_CLEARTEXT_TRAFFIC) != 0);
+
+        if (data.enableNativeDebugging)
+            dalvik.system.VMRuntime.getRuntime().enableNativeDebugging();
 
         if (data.debugMode != IApplicationThread.DEBUG_OFF) {
             // XXX should have option to change the port.
