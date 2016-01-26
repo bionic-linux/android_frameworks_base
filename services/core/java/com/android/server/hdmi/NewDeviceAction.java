@@ -164,7 +164,7 @@ final class NewDeviceAction extends HdmiCecFeatureAction {
 
     private void addDeviceInfo() {
         // The device should be in the device list with default information.
-        if (!tv().isInDeviceList(mDeviceLogicalAddress, mDevicePhysicalAddress)) {
+        if (!localDevice().isInDeviceList(mDeviceLogicalAddress, mDevicePhysicalAddress)) {
             Slog.w(TAG, String.format("Device not found (%02x, %04x)",
                     mDeviceLogicalAddress, mDevicePhysicalAddress));
             return;
@@ -174,16 +174,18 @@ final class NewDeviceAction extends HdmiCecFeatureAction {
         }
         HdmiDeviceInfo deviceInfo = new HdmiDeviceInfo(
                 mDeviceLogicalAddress, mDevicePhysicalAddress,
-                tv().getPortId(mDevicePhysicalAddress),
+                localDevice().getPortId(mDevicePhysicalAddress),
                 mDeviceType, mVendorId, mDisplayName);
-        tv().addCecDevice(deviceInfo);
+        localDevice().addCecDevice(deviceInfo);
 
-        // Consume CEC messages we already got for this newly found device.
-        localDevice().processDelayedMessages(mDeviceLogicalAddress);
+        if (localDevice().getType() == HdmiDeviceInfo.DEVICE_TV) {
+            // Consume CEC messages we already got for this newly found device.
+            tv().processDelayedMessages(mDeviceLogicalAddress);
+        }
 
         if (HdmiUtils.getTypeFromAddress(mDeviceLogicalAddress)
                 == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
-            tv().onNewAvrAdded(deviceInfo);
+            localDevice().onNewAvrAdded(deviceInfo);
         }
     }
 
