@@ -1001,9 +1001,33 @@ abstract class HdmiCecLocalDevice {
      * @param keyCode key code defined in {@link android.view.KeyEvent}
      * @param isPressed {@code true} for key down event
      */
+    @ServiceThreadOnly
     protected void sendKeyEvent(int keyCode, boolean isPressed) {
-        Slog.w(TAG, "sendKeyEvent not implemented");
+        assertRunOnServiceThread();
+        if (!HdmiCecKeycode.isSupportedKeycode(keyCode)) {
+            Slog.w(TAG, "Unsupported key: " + keyCode);
+            return;
+        }
+        List<SendKeyAction> action = getActions(SendKeyAction.class);
+        int logicalAddress = findKeyReceiverAddress();
+        if (logicalAddress == mAddress) {
+            Slog.w(TAG, "Discard key event to itself :" + keyCode + " pressed:" + isPressed);
+            return;
+        }
+        if (!action.isEmpty()) {
+            action.get(0).processKeyEvent(keyCode, isPressed);
+        } else {
+            if (isPressed) {
+                if (logicalAddress != Constants.ADDR_INVALID) {
+                    addAndStartAction(new SendKeyAction(this, logicalAddress, keyCode));
+                    return;
+                }
+            }
+            Slog.w(TAG, "Discard key event: " + keyCode + " pressed:" + isPressed);
+        }
     }
+
+    abstract protected int findKeyReceiverAddress();
 
     void sendUserControlPressedAndReleased(int targetAddress, int cecKeycode) {
         mService.sendCecCommand(HdmiCecMessageBuilder.buildUserControlPressed(

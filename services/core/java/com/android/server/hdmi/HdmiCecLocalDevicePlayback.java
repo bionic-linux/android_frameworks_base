@@ -139,24 +139,12 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         addAndStartAction(action);
     }
 
-    @Override
-    @ServiceThreadOnly
-    protected void sendKeyEvent(int keyCode, boolean isPressed) {
-        assertRunOnServiceThread();
-        if (!HdmiCecKeycode.isSupportedKeycode(keyCode)) {
-            Slog.w(TAG, "Unsupported key: " + keyCode);
-            return;
-        }
-        List<SendKeyAction> action = getActions(SendKeyAction.class);
-        if (!action.isEmpty()) {
-            action.get(0).processKeyEvent(keyCode, isPressed);
+    protected int findKeyReceiverAddress() {
+        HdmiDeviceInfo avr = getAvrDeviceInfo();
+        if (avr != null) {
+            return Constants.ADDR_AUDIO_SYSTEM;
         } else {
-            if (isPressed) {
-                int logicalAddress = Constants.ADDR_TV;
-                addAndStartAction(new SendKeyAction(this, logicalAddress, keyCode));
-            } else {
-                Slog.w(TAG, "Discard key event: " + keyCode + " pressed:" + isPressed);
-            }
+            return Constants.ADDR_TV;
         }
     }
 
