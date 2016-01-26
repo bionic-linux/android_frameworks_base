@@ -799,14 +799,10 @@ public abstract class BaseStatusBar extends SystemUI implements
                         }
                     }
                 });
-            vetoButton.setVisibility(View.VISIBLE);
-        } else {
-            vetoButton.setVisibility(View.GONE);
         }
         vetoButton.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
         return vetoButton;
     }
-
 
     protected void applyColorsAndBackgrounds(StatusBarNotification sbn,
             NotificationData.Entry entry) {
