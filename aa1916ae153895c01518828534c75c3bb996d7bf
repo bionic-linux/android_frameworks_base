@@ -16,6 +16,24 @@
       "revId": "aa1916ae153895c01518828534c75c3bb996d7bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34c3ee5c_fbb6c0f7",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2016-01-26T20:15:58Z",
+      "side": 1,
+      "message": "Is enforced not clear? I\u0027m not sure what I could put in a java doc that isn\u0027t just duplicating the name.",
+      "parentUuid": "b4b51eae_b7917274",
+      "revId": "aa1916ae153895c01518828534c75c3bb996d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
