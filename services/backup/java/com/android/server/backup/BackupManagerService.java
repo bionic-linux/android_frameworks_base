@@ -8828,11 +8828,11 @@ if (MORE_DEBUG) Slog.v(TAG, "   + got " + nRead + "; now wanting " + (size - soF
                     mBackupHandler.removeMessages(MSG_FULL_CONFIRMATION_TIMEOUT, params);
                     mFullConfirmations.delete(token);
 
-                    if (allow) {
-                        final int verb = params instanceof FullBackupParams
-                                ? MSG_RUN_ADB_BACKUP
-                                : MSG_RUN_ADB_RESTORE;
+                    final int verb = params instanceof FullBackupParams
+                            ? MSG_RUN_ADB_BACKUP
+                            : MSG_RUN_ADB_RESTORE;
 
+                    if (allow) {
                         params.observer = observer;
                         params.curPassword = curPassword;
 
@@ -8846,6 +8846,7 @@ if (MORE_DEBUG) Slog.v(TAG, "   + got " + nRead + "; now wanting " + (size - soF
                         Slog.w(TAG, "User rejected full backup/restore operation");
                         // indicate completion without having actually transferred any data
                         signalFullBackupRestoreCompletion(params);
+                        sendEnd(observer, verb);
                     }
                 } else {
                     Slog.w(TAG, "Attempted to ack full backup/restore with invalid token");
@@ -8853,6 +8854,20 @@ if (MORE_DEBUG) Slog.v(TAG, "   + got " + nRead + "; now wanting " + (size - soF
             }
         } finally {
             Binder.restoreCallingIdentity(oldId);
+        }
+    }
+
+    private void sendEnd(IFullBackupRestoreObserver observer, int verb) {
+        if (observer != null) {
+            try {
+                if (verb == MSG_RUN_FULL_BACKUP) {
+                    observer.onEndBackup();
+                } else {
+                    observer.onEndRestore();
+                }
+            } catch (RemoteException e) {
+                Slog.w(TAG, "full restore observer went away: sendEnd");
+            }
         }
     }
 
