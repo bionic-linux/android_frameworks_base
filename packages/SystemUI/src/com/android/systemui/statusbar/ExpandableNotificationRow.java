@@ -377,7 +377,6 @@ public class ExpandableNotificationRow extends ActivatableNotificationView {
         mExpandable = false;
         mHasUserChangedExpansion = false;
         mUserLocked = false;
-        mShowingPublic = false;
         mSensitive = false;
         mShowingPublicInitialized = false;
         mIsSystemExpanded = false;
@@ -981,5 +980,9 @@ public class ExpandableNotificationRow extends ActivatableNotificationView {
         if (wasExpanded != nowExpanded && mLogger != null) {
             mLogger.logNotificationExpansion(mLoggingKey, userAction, nowExpanded) ;
         }
+    }
+
+    public boolean isShowingPublic() {
+        return mShowingPublic;
     }
 }

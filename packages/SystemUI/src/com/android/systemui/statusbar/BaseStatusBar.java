@@ -799,7 +799,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                         }
                     }
                 });
-            vetoButton.setVisibility(View.VISIBLE);
+            vetoButton.setVisibility(isShowingPublic(row) ? View.GONE : View.VISIBLE);
         } else {
             vetoButton.setVisibility(View.GONE);
         }
@@ -807,6 +807,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         return vetoButton;
     }
 
+    private boolean isShowingPublic(View row) {
+        if (row instanceof ExpandableNotificationRow) {
+            return ((ExpandableNotificationRow)row).isShowingPublic();
+        }
+        return false;
+    }
 
     protected void applyColorsAndBackgrounds(StatusBarNotification sbn,
             NotificationData.Entry entry) {
