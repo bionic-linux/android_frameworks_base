@@ -17,6 +17,7 @@
 
 package com.android.server.hdmi;
 
+import android.content.ContentResolver;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
@@ -25,8 +26,9 @@ import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.Settings.Global;
+import android.provider.Settings.System;
 import android.util.Slog;
-import java.util.List;
+import android.util.SparseArray;
 
 import com.android.internal.app.LocalePicker;
 import com.android.internal.app.LocalePicker.LocaleInfo;
@@ -44,6 +46,8 @@ import java.util.List;
  */
 final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
     private static final String TAG = "HdmiCecLocalDevicePlayback";
+
+    private static final int VOLUME_TYPE_CEC = 0;
 
     private static final boolean WAKE_ON_HOTPLUG =
             SystemProperties.getBoolean(Constants.PROPERTY_WAKE_ON_HOTPLUG, true);
@@ -63,6 +67,11 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
 
     // If true, turn off TV upon standby. False by default.
     private boolean mAutoTvOff;
+
+    // Map-like container of all cec devices including local ones.
+    // device id is used as key of container.
+    // This is not thread-safe. For external purpose use mSafeDeviceInfos.
+    private final SparseArray<HdmiDeviceInfo> mDeviceInfos = new SparseArray<>();
 
     HdmiCecLocalDevicePlayback(HdmiControlService service) {
         super(service, HdmiDeviceInfo.DEVICE_PLAYBACK);
@@ -365,6 +374,145 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         }
     }
 
+    /**
+     * Called when a device is newly added or a new device is detected or
+     * existing device is updated.
+     *
+     * @param info device info of a new device.
+     */
+    @ServiceThreadOnly
+    final void addCecDevice(HdmiDeviceInfo info) {
+        assertRunOnServiceThread();
+        HdmiDeviceInfo old = addDeviceInfo(info);
+        if (info.getLogicalAddress() == mAddress) {
+            // The addition of TV device itself should not be notified.
+            return;
+        }
+        // skip invokeDeviceEventListener(), tv does it, but playback doesn't need it
+    }
+
+    /**
+     * Called when a device is removed or removal of device is detected.
+     *
+     * @param address a logical address of a device to be removed
+     */
+    @ServiceThreadOnly
+    final void removeCecDevice(int address) {
+        assertRunOnServiceThread();
+        HdmiDeviceInfo info = removeDeviceInfo(HdmiDeviceInfo.idForCecDevice(address));
+
+        mCecMessageCache.flushMessagesFrom(address);
+        // skip invokeDeviceEventListener(), tv does it, but playback doesn't need it
+    }
+
+    /**
+     * Add a new {@link HdmiDeviceInfo}. It returns old device info which has the same
+     * logical address as new device info's.
+     *
+     * <p>Declared as package-private. accessed by {@link HdmiControlService} only.
+     *
+     * @param deviceInfo a new {@link HdmiDeviceInfo} to be added.
+     * @return {@code null} if it is new device. Otherwise, returns old {@HdmiDeviceInfo}
+     *         that has the same logical address as new one has.
+     */
+    @ServiceThreadOnly
+    private HdmiDeviceInfo addDeviceInfo(HdmiDeviceInfo deviceInfo) {
+        assertRunOnServiceThread();
+        HdmiDeviceInfo oldDeviceInfo = getCecDeviceInfo(deviceInfo.getLogicalAddress());
+        if (oldDeviceInfo != null) {
+            removeDeviceInfo(deviceInfo.getId());
+        }
+        mDeviceInfos.append(deviceInfo.getId(), deviceInfo);
+        // updateSafeDeviceInfoList(); // FIXME
+        return oldDeviceInfo;
+    }
+
+    /**
+     * Remove a device info corresponding to the given {@code logicalAddress}.
+     * It returns removed {@link HdmiDeviceInfo} if exists.
+     *
+     * <p>Declared as package-private. accessed by {@link HdmiControlService} only.
+     *
+     * @param id id of device to be removed
+     * @return removed {@link HdmiDeviceInfo} it exists. Otherwise, returns {@code null}
+     */
+    @ServiceThreadOnly
+    private HdmiDeviceInfo removeDeviceInfo(int id) {
+        assertRunOnServiceThread();
+        HdmiDeviceInfo deviceInfo = mDeviceInfos.get(id);
+        if (deviceInfo != null) {
+            mDeviceInfos.remove(id);
+        }
+        // updateSafeDeviceInfoList(); // FIXME
+        return deviceInfo;
+    }
+
+    /**
+     * Whether a device of the specified physical address and logical address exists
+     * in a device info list. However, both are minimal condition and it could
+     * be different device from the original one.
+     *
+     * @param logicalAddress logical address of a device to be searched
+     * @param physicalAddress physical address of a device to be searched
+     * @return true if exist; otherwise false
+     */
+    @ServiceThreadOnly
+    boolean isInDeviceList(int logicalAddress, int physicalAddress) {
+        assertRunOnServiceThread();
+        HdmiDeviceInfo device = getCecDeviceInfo(logicalAddress);
+        if (device == null) {
+            return false;
+        }
+        return device.getPhysicalAddress() == physicalAddress;
+    }
+
+    /**
+     * Return a {@link HdmiDeviceInfo} corresponding to the given {@code logicalAddress}.
+     *
+     * This is not thread-safe. For thread safety, call {@link #getSafeCecDeviceInfo(int)}.
+     *
+     * @param logicalAddress logical address of the device to be retrieved
+     * @return {@link HdmiDeviceInfo} matched with the given {@code logicalAddress}.
+     *         Returns null if no logical address matched
+     */
+    @ServiceThreadOnly
+    HdmiDeviceInfo getCecDeviceInfo(int logicalAddress) {
+        assertRunOnServiceThread();
+        return mDeviceInfos.get(HdmiDeviceInfo.idForCecDevice(logicalAddress));
+    }
+
+    // Clear all device info.
+    @ServiceThreadOnly
+    private void clearDeviceInfoList() {
+        assertRunOnServiceThread();
+        // skip invokeDeviceEventListener(), tv does, but playback doesn't have to
+        mDeviceInfos.clear();
+        // updateSafeDeviceInfoList(); //FIXME
+    }
+
+    void startNewDeviceAction(ActiveSource activeSource, int deviceType) {
+        for (NewDeviceAction action : getActions(NewDeviceAction.class)) {
+            // If there is new device action which has the same logical address and path
+            // ignore new request.
+            // NewDeviceAction is created whenever it receives <Report Physical Address>.
+            // And there is a chance starting NewDeviceAction for the same source.
+            // Usually, new device sends <Report Physical Address> when it's plugged
+            // in. However, TV can detect a new device from HotPlugDetectionAction,
+            // which sends <Give Physical Address> to the source for newly detected
+            // device.
+            if (action.isActionOf(activeSource)) {
+                return;
+            }
+        }
+
+        addAndStartAction(new NewDeviceAction(this, activeSource.logicalAddress,
+                activeSource.physicalAddress, deviceType));
+    }
+
+    int getPortId(int physicalAddress) {
+        return Constants.INVALID_PORT_ID;
+    }
+
     @Override
     @ServiceThreadOnly
     protected void sendStandby(int deviceId) {
@@ -378,12 +526,29 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
     @Override
     @ServiceThreadOnly
     protected void disableDevice(boolean initiatedByCec, PendingActionClearedCallback callback) {
+        assertRunOnServiceThread();
+        disableSystemAudioIfExist();
+
         super.disableDevice(initiatedByCec, callback);
 
-        assertRunOnServiceThread();
         // Do not send <Inactive Source> command as some TVs switch inputs improperly
         setActiveSource(false);
         checkIfPendingActionsCleared();
+    }
+
+    @ServiceThreadOnly
+    private void disableSystemAudioIfExist() {
+        assertRunOnServiceThread();
+        if (getAvrDeviceInfo() == null) {
+            return;
+        }
+
+        // Seq #31.
+        removeAction(SystemAudioActionFromAvr.class);
+        removeAction(SystemAudioActionFromTv.class);
+        removeAction(SystemAudioAutoInitiationAction.class);
+        removeAction(SystemAudioStatusAction.class);
+        removeAction(VolumeControlAction.class);
     }
 
     @Override
@@ -518,13 +683,20 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     HdmiDeviceInfo getAvrDeviceInfo() {
         assertRunOnServiceThread();
-        // return getCecDeviceInfo(Constants.ADDR_AUDIO_SYSTEM); // FIXME
-        boolean avrExists = true; // FIXME
-        if (avrExists)
-            // TODO: HdmiDeviceInfo(logicalAddress, physicalAddress, portId,
-            // deviceType, vendorId, displayName, powerStatus)
-            return new HdmiDeviceInfo();
-        else
-            return null;
+        return getCecDeviceInfo(Constants.ADDR_AUDIO_SYSTEM);
+    }
+
+    @ServiceThreadOnly
+    void onNewAvrAdded(HdmiDeviceInfo avr) {
+        assertRunOnServiceThread();
+        if (getNvHdmiVolumeControl() == VOLUME_TYPE_CEC && getSystemAudioModeSetting() && !isSystemAudioActivated()) {
+            addAndStartAction(new SystemAudioAutoInitiationAction(this, avr.getLogicalAddress()));
+        }
+    }
+
+    @ServiceThreadOnly
+    private int getNvHdmiVolumeControl() {
+        ContentResolver cr = mService.getContext().getContentResolver();
+        return System.getInt(cr, System.HDMI_VOLUME_CONTROL, 1);
     }
 }

@@ -521,6 +521,10 @@ abstract class HdmiCecLocalDevice {
     }
 
     abstract HdmiDeviceInfo getAvrDeviceInfo();
+    abstract boolean isInDeviceList(int logicalAddress, int physicalAddress);
+    abstract void addCecDevice(HdmiDeviceInfo info);
+    abstract void onNewAvrAdded(HdmiDeviceInfo avr);
+    abstract int getPortId(int physicalAddress);
 
     protected boolean handleTerminateArc(HdmiCecMessage message) {
         return false;
