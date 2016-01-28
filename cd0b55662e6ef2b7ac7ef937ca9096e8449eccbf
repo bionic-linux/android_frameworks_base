@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "542ce22d_58e78140",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-01-28T02:59:44Z",
+      "side": 1,
+      "message": "Ok I see! It\u0027s called in the update from the outside.",
+      "parentUuid": "f40f96af_8a182b05",
+      "range": {
+        "startLine": 733,
+        "startChar": 8,
+        "endLine": 733,
+        "endChar": 78
+      },
+      "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34fdaec1_440b4eb1",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
         "patchSetId": 2
@@ -137,6 +161,23 @@
         "endLine": 751,
         "endChar": 27
       },
+      "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "941ada01_0b176d96",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-01-28T02:59:44Z",
+      "side": 1,
+      "message": "How about we move this to setSensitive and maybe also rename it to mSensitiveInitialized?\nThen we could potentially also remove all other calls to updateVetoButton from the Outside to only have the update in here in this class. That would be much cleaner. The current code is so ugly :D (I proably even wrote part of it)",
       "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
