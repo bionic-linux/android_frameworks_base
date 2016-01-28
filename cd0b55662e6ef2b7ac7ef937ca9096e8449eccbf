@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b4f0bedd_b6bfd018",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/BaseStatusBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-01-28T02:18:25Z",
+      "side": 1,
+      "message": "Well.. I rechecked the order of method calls.\n\nBaseStatusBar#updateNotification(StatusBarNotification, RankingMap)\n | if (applyInPlace) {\n |     ...\n |     updateNotificationViews(entry, notification);\n |      | entry.row.setStatusBarNotification(notification);\n |                   | ExpandableNotificationRow#updateVetoButton();\n |     ...\n | }\n | updateNotificationVetoButton(entry.row, notification);\n\nAs the above codes...\nwhen update a notification, BaseStatusBar#updateNotificationVetoButton(..) is called finally.\nSo veto button is visible if just clearable.",
+      "parentUuid": "54c4e260_77f3a354",
+      "range": {
+        "startLine": 784,
+        "startChar": 8,
+        "endLine": 784,
+        "endChar": 30
+      },
+      "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fea2bd_cb1e29f2",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
         "patchSetId": 2
