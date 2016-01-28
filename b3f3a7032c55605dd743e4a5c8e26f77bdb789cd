@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d41292d7_6cfd131e",
+        "filename": "tools/aapt/StringPool.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1005973
+      },
+      "writtenOn": "2016-01-28T11:17:48Z",
+      "side": 1,
+      "message": "I visited here just to leave my opinion : resize() looks like more convenient way.\n\nnewEntryStyleArray.resize(i + 1);",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 5
+      },
+      "revId": "b3f3a7032c55605dd743e4a5c8e26f77bdb789cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
