@@ -97,6 +97,52 @@
     },
     {
       "key": {
+        "uuid": "f40f96af_8a182b05",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-01-28T02:43:53Z",
+      "side": 1,
+      "message": "1) This is why veto button is not updated although setHideSensitive(..) method is called.",
+      "range": {
+        "startLine": 733,
+        "startChar": 8,
+        "endLine": 733,
+        "endChar": 78
+      },
+      "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34fdaec1_440b4eb1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-01-28T02:43:53Z",
+      "side": 1,
+      "message": "2) In this method, updateVetoButton() is called for only not initialized and mShowingPublic variable is changed.",
+      "range": {
+        "startLine": 751,
+        "startChar": 8,
+        "endLine": 751,
+        "endChar": 27
+      },
+      "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fea2bd_cb1e29f2",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
         "patchSetId": 2
