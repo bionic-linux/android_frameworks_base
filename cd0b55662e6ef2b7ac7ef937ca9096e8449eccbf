@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "34fdaec1_64e76a41",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/BaseStatusBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-01-28T01:01:05Z",
+      "side": 1,
+      "message": "This condition is different with thigs in ExpandableNotificationRow.\n\nAlthough public notification,\nveto button is updated to visible if it has clearable flags.",
+      "range": {
+        "startLine": 784,
+        "startChar": 8,
+        "endLine": 784,
+        "endChar": 30
+      },
+      "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fea2bd_cb1e29f2",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
         "patchSetId": 2
