@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54fea2bd_cb1e29f2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-01-28T00:16:55Z",
+      "side": 1,
+      "message": "As this condition, private and clearable notifications are dismissable. Public notifications is not dismissable.",
+      "range": {
+        "startLine": 781,
+        "startChar": 34,
+        "endLine": 781,
+        "endChar": 66
+      },
+      "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
