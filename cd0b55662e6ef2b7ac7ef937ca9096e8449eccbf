@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "94b2daf4_4f7528a9",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/BaseStatusBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-01-28T02:35:46Z",
+      "side": 1,
+      "message": "Yes but setHideSensitive is called much later when the notifications are updated which is in onPreDraw.\n\nI guess it wouldn\u0027t hurt to add a \"|| isShowingPublic()\" in the above statement, but I don\u0027t understand why this would happen.",
+      "parentUuid": "b4f0bedd_b6bfd018",
+      "range": {
+        "startLine": 784,
+        "startChar": 8,
+        "endLine": 784,
+        "endChar": 30
+      },
+      "revId": "cd0b55662e6ef2b7ac7ef937ca9096e8449eccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fea2bd_cb1e29f2",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
         "patchSetId": 2
