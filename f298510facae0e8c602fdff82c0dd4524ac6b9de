@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4f0bedd_d6c934ad",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/BaseStatusBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-01-28T05:21:49Z",
+      "side": 1,
+      "message": "remove this code.",
+      "range": {
+        "startLine": 802,
+        "startChar": 12,
+        "endLine": 802,
+        "endChar": 86
+      },
+      "revId": "f298510facae0e8c602fdff82c0dd4524ac6b9de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34fdaec1_c4829e27",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/BaseStatusBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-01-28T05:21:49Z",
+      "side": 1,
+      "message": "and remove this code.",
+      "range": {
+        "startLine": 804,
+        "startChar": 12,
+        "endLine": 804,
+        "endChar": 48
+      },
+      "revId": "f298510facae0e8c602fdff82c0dd4524ac6b9de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
