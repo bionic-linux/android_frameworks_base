@@ -126,6 +126,12 @@ abstract class HdmiCecLocalDevice {
     @GuardedBy("mLock")
     private int mActiveRoutingPath;
 
+    // Message buffer used to buffer selected messages to process later. <Set System Audio Mode>
+    // from a source device, for instance, needs to be buffered if the device is not
+    // discovered yet. The buffered commands are taken out and when they are ready to
+    // handle.
+    protected final DelayedMessageBuffer mDelayedMessageBuffer = new DelayedMessageBuffer(this);
+
     // Whether System audio mode is activated or not.
     // This becomes true only when all system audio sequences are finished.
     @GuardedBy("mLock")
@@ -963,6 +969,12 @@ abstract class HdmiCecLocalDevice {
                 mAddress, targetAddress, cecKeycode));
         mService.sendCecCommand(HdmiCecMessageBuilder.buildUserControlReleased(
                 mAddress, targetAddress));
+    }
+
+    @ServiceThreadOnly
+    void processDelayedMessages(int address) {
+        assertRunOnServiceThread();
+        mDelayedMessageBuffer.processMessagesForDevice(address);
     }
 
     /**
