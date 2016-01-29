@@ -114,12 +114,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     // other CEC devices since they might not have logical address.
     private final ArraySet<Integer> mCecSwitches = new ArraySet<Integer>();
 
-    // Message buffer used to buffer selected messages to process later. <Active Source>
-    // from a source device, for instance, needs to be buffered if the device is not
-    // discovered yet. The buffered commands are taken out and when they are ready to
-    // handle.
-    private final DelayedMessageBuffer mDelayedMessageBuffer = new DelayedMessageBuffer(this);
-
     // Defines the callback invoked when TV input framework is updated with input status.
     // We are interested in the notification for HDMI input addition event, in order to
     // process any CEC commands that arrived before the input is added.
@@ -1873,12 +1867,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     void processAllDelayedMessages() {
         assertRunOnServiceThread();
         mDelayedMessageBuffer.processAllMessages();
-    }
-
-    @ServiceThreadOnly
-    void processDelayedMessages(int address) {
-        assertRunOnServiceThread();
-        mDelayedMessageBuffer.processMessagesForDevice(address);
     }
 
     @ServiceThreadOnly
