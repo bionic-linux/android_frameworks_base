@@ -30,8 +30,6 @@ import android.os.RemoteException;
 import android.text.format.DateUtils;
 
 public class DocumentsApplication extends Application {
-    private static final long PROVIDER_ANR_TIMEOUT = 20 * DateUtils.SECOND_IN_MILLIS;
-
     private RootsCache mRoots;
     private Point mThumbnailsSize;
     private ThumbnailCache mThumbnails;
@@ -57,7 +55,6 @@ public class DocumentsApplication extends Application {
         if (client == null) {
             throw new RemoteException("Failed to acquire provider for " + authority);
         }
-        client.setDetectNotResponding(PROVIDER_ANR_TIMEOUT);
         return client;
     }
 
