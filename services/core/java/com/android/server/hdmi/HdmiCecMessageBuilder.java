@@ -200,6 +200,17 @@ public class HdmiCecMessageBuilder {
     }
 
     /**
+     * Build &lt;Give CEC Version &gt; command.
+     *
+     * @param src source address of command
+     * @param dest destination address of command
+     * @return newly created {@link HdmiCecMessage}
+     */
+    static HdmiCecMessage buildCecVersionCommand(int src, int dest) {
+        return buildCommand(src, dest, Constants.MESSAGE_GET_CEC_VERSION);
+    }
+
+    /**
      * Build &lt;Request Arc Initiation&gt;
      *
      * @param src source address of command

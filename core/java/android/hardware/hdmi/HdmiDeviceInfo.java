@@ -533,6 +533,21 @@ public class HdmiDeviceInfo implements Parcelable {
         return s.toString();
     }
 
+    /**
+     * @hide
+     */
+    public String toStatsString() {
+        StringBuffer s = new StringBuffer();
+        s.append("CECDEV:");
+        s.append("logical_address,").append(String.format("0x%02X", mLogicalAddress));
+        s.append(",");
+        s.append("vendor_id,").append(mVendorId).append(",");
+        s.append("display_name,").append(mDisplayName).append(",");
+        s.append("cec_version,").append(mCecVersion).append(",");
+        s.append("physical_address,").append(String.format("0x%04X", mPhysicalAddress));
+        return s.toString();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof HdmiDeviceInfo)) {

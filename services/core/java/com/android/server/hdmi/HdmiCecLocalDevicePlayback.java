@@ -18,15 +18,18 @@
 package com.android.server.hdmi;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
+import android.net.Uri;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.Settings.Global;
 import android.provider.Settings.System;
+import android.text.TextUtils;
 import android.util.Slog;
 import android.util.SparseArray;
 
@@ -34,10 +37,12 @@ import com.android.internal.app.LocalePicker;
 import com.android.internal.app.LocalePicker.LocaleInfo;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
+import com.android.server.hdmi.DeviceDiscoveryAction.DeviceDiscoveryCallback;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,6 +53,9 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
     private static final String TAG = "HdmiCecLocalDevicePlayback";
 
     private static final int VOLUME_TYPE_CEC = 0;
+
+    private static final String ACTION_CEC_STATS = "com.nvidia.hdmi.cecstats";
+    private static final String CEC_STATS_EXTRA = "cecinfo";
 
     private static final boolean WAKE_ON_HOTPLUG =
             SystemProperties.getBoolean(Constants.PROPERTY_WAKE_ON_HOTPLUG, true);
@@ -95,7 +103,69 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
                 mAddress, mService.getPhysicalAddress(), mDeviceType));
         mService.sendCecCommand(HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
                 mAddress, mService.getVendorId()));
+        if (!hasAction(DeviceDiscoveryAction.class)) {
+            launchDeviceDiscovery();
+        }
         startQueuedActions();
+    }
+
+    // Similar to device discovery thread for tv
+    @ServiceThreadOnly
+    private void launchDeviceDiscovery() {
+        assertRunOnServiceThread();
+        clearDeviceInfoList();
+        DeviceDiscoveryAction action = new DeviceDiscoveryAction(this,
+            new DeviceDiscoveryCallback() {
+                @Override
+                public void onDeviceDiscoveryDone(List<HdmiDeviceInfo> deviceInfos) {
+                    ArrayList<HdmiDeviceInfo> allDeviceInfos = new ArrayList<>(deviceInfos);
+                    allDeviceInfos.add(getDeviceInfo());
+                    // Sort the list by physical address
+                    Collections.sort(allDeviceInfos, new Comparator<HdmiDeviceInfo>() {
+                        @Override
+                        public int compare(HdmiDeviceInfo info1, HdmiDeviceInfo info2) {
+                            return info1.getPhysicalAddress() - info2.getPhysicalAddress();
+                        }
+                    });
+                    // Send the data as a string and broadcast intent
+                    sendCecInfo(allDeviceInfos);
+
+                   for (HdmiDeviceInfo info : deviceInfos) {
+                       addCecDevice(info);
+                   }
+
+                   // Since we removed all devices when it's start and
+                   // device discovery action does not poll local devices,
+                   // we should put device info of local device manually here
+                   for (HdmiCecLocalDevice device : mService.getAllLocalDevices()) {
+                       addCecDevice(device.getDeviceInfo());
+                   }
+
+                   // If there is AVR, initiate System Audio Auto initiation action,
+                   // which turns on and off system audio according to last system
+                   // audio setting.
+                   HdmiDeviceInfo avr = getAvrDeviceInfo();
+                   if (avr != null) {
+                       onNewAvrAdded(avr);
+                   }
+                }
+            });
+        addAndStartAction(action);
+    }
+
+    // Helper function to send cec stats to hdmimonitor
+    @ServiceThreadOnly
+    final void sendCecInfo(ArrayList<HdmiDeviceInfo> deviceInfos) {
+        assertRunOnServiceThread();
+        String result = "";
+        ArrayList<String> holder = new ArrayList<String>();
+        for (HdmiDeviceInfo info : deviceInfos) {
+            holder.add(info.toStatsString());
+        }
+        result = TextUtils.join(";", holder);
+        Intent cecIntent = new Intent(ACTION_CEC_STATS);
+        cecIntent.putExtra(CEC_STATS_EXTRA, result);
+        mService.getContext().sendBroadcast(cecIntent);
     }
 
     @Override
@@ -546,11 +616,13 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     protected void disableDevice(boolean initiatedByCec, PendingActionClearedCallback callback) {
         assertRunOnServiceThread();
+        removeAction(DeviceDiscoveryAction.class);
         disableSystemAudioIfExist();
 
         super.disableDevice(initiatedByCec, callback);
 
         // Do not send <Inactive Source> command as some TVs switch inputs improperly
+        clearDeviceInfoList();
         setActiveSource(false);
         checkIfPendingActionsCleared();
     }
