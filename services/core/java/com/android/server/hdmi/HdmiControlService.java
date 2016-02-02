@@ -1017,7 +1017,7 @@ public final class HdmiControlService extends SystemService {
         String displayName = Build.MODEL;
         return new HdmiDeviceInfo(logicalAddress,
                 getPhysicalAddress(), pathToPortId(getPhysicalAddress()), deviceType,
-                getVendorId(), displayName);
+                getVendorId(), displayName, powerStatus, getCecVersion());
     }
 
     @ServiceThreadOnly

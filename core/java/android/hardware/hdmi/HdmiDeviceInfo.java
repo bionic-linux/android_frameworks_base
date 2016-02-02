@@ -80,6 +80,12 @@ public class HdmiDeviceInfo implements Parcelable {
     /** Invalid device ID */
     public static final int ID_INVALID = 0xFFFF;
 
+    /**
+     * Invalid CEC Version
+     * @hide
+     */
+    public static final int CEC_VERSION_INVALID = -1;
+
     /** Device info used to indicate an inactivated device. */
     public static final HdmiDeviceInfo INACTIVE_DEVICE = new HdmiDeviceInfo();
 
@@ -108,6 +114,7 @@ public class HdmiDeviceInfo implements Parcelable {
     private final int mVendorId;
     private final String mDisplayName;
     private final int mDevicePowerStatus;
+    private final int mCecVersion;
 
     // MHL only parameters.
     private final int mDeviceId;
@@ -131,8 +138,9 @@ public class HdmiDeviceInfo implements Parcelable {
                             int vendorId = source.readInt();
                             int powerStatus = source.readInt();
                             String displayName = source.readString();
+                            int cecVersion = source.readInt();
                             return new HdmiDeviceInfo(logicalAddress, physicalAddress, portId,
-                                    deviceType, vendorId, displayName, powerStatus);
+                                    deviceType, vendorId, displayName, powerStatus, cecVersion);
                         case HDMI_DEVICE_TYPE_MHL:
                             int deviceId = source.readInt();
                             int adopterId = source.readInt();
@@ -162,10 +170,11 @@ public class HdmiDeviceInfo implements Parcelable {
      * @param vendorId vendor id of device. Used for vendor specific command.
      * @param displayName name of device
      * @param powerStatus device power status
+     * @param cecVersion CEC version
      * @hide
      */
     public HdmiDeviceInfo(int logicalAddress, int physicalAddress, int portId, int deviceType,
-            int vendorId, String displayName, int powerStatus) {
+            int vendorId, String displayName, int powerStatus, int cecVersion) {
         mHdmiDeviceType = HDMI_DEVICE_TYPE_CEC;
         mPhysicalAddress = physicalAddress;
         mPortId = portId;
@@ -176,9 +185,28 @@ public class HdmiDeviceInfo implements Parcelable {
         mVendorId = vendorId;
         mDevicePowerStatus = powerStatus;
         mDisplayName = displayName;
+        mCecVersion = cecVersion;
 
         mDeviceId = -1;
         mAdopterId = -1;
+    }
+
+    /**
+     * Constructor. Used to initialize the instance for CEC device.
+     *
+     * @param logicalAddress logical address of HDMI-CEC device
+     * @param physicalAddress physical address of HDMI-CEC device
+     * @param portId HDMI port ID (1 for HDMI1)
+     * @param deviceType type of device
+     * @param vendorId vendor id of device. Used for vendor specific command.
+     * @param displayName name of device
+     * @param powerStatus device power status
+     * @hide
+     */
+    public HdmiDeviceInfo(int logicalAddress, int physicalAddress, int portId, int deviceType,
+            int vendorId, String displayName, int powerStatus) {
+        this(logicalAddress, physicalAddress, portId, deviceType,
+                vendorId, displayName, HdmiControlManager.POWER_STATUS_UNKNOWN, CEC_VERSION_INVALID);
     }
 
     /**
@@ -216,6 +244,7 @@ public class HdmiDeviceInfo implements Parcelable {
         mVendorId = 0;
         mDevicePowerStatus = HdmiControlManager.POWER_STATUS_UNKNOWN;
         mDisplayName = "HDMI" + portId;
+        mCecVersion = CEC_VERSION_INVALID;
 
         mDeviceId = -1;
         mAdopterId = -1;
@@ -241,6 +270,7 @@ public class HdmiDeviceInfo implements Parcelable {
         mVendorId = 0;
         mDevicePowerStatus = HdmiControlManager.POWER_STATUS_UNKNOWN;
         mDisplayName = "Mobile";
+        mCecVersion = CEC_VERSION_INVALID;
 
         mDeviceId = adopterId;
         mAdopterId = deviceId;
@@ -263,6 +293,7 @@ public class HdmiDeviceInfo implements Parcelable {
         mDevicePowerStatus = HdmiControlManager.POWER_STATUS_UNKNOWN;
         mDisplayName = "Inactive";
         mVendorId = 0;
+        mCecVersion = CEC_VERSION_INVALID;
 
         mDeviceId = -1;
         mAdopterId = -1;
@@ -419,6 +450,14 @@ public class HdmiDeviceInfo implements Parcelable {
     }
 
     /**
+     * Returns CEC Version.
+     * @hide
+     */
+    public int getCecVersion() {
+        return mCecVersion;
+    }
+
+    /**
      * Describes the kinds of special objects contained in this Parcelable's marshalled
      * representation.
      */
@@ -446,6 +485,7 @@ public class HdmiDeviceInfo implements Parcelable {
                 dest.writeInt(mVendorId);
                 dest.writeInt(mDevicePowerStatus);
                 dest.writeString(mDisplayName);
+                dest.writeInt(mCecVersion);
                 break;
             case HDMI_DEVICE_TYPE_MHL:
                 dest.writeInt(mDeviceId);
@@ -470,6 +510,7 @@ public class HdmiDeviceInfo implements Parcelable {
                 s.append("vendor_id: ").append(mVendorId).append(" ");
                 s.append("display_name: ").append(mDisplayName).append(" ");
                 s.append("power_status: ").append(mDevicePowerStatus).append(" ");
+                s.append("cec_version: ").append(mCecVersion).append(" ");
                 break;
             case HDMI_DEVICE_TYPE_MHL:
                 s.append("MHL: ");
@@ -507,6 +548,7 @@ public class HdmiDeviceInfo implements Parcelable {
                 && mVendorId == other.mVendorId
                 && mDevicePowerStatus == other.mDevicePowerStatus
                 && mDisplayName.equals(other.mDisplayName)
+                && mCecVersion == other.mCecVersion
                 && mDeviceId == other.mDeviceId
                 && mAdopterId == other.mAdopterId;
     }
