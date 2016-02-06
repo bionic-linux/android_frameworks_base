@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d0ec829_57c36c55",
+        "filename": "packages/Keyguard/src/com/android/keyguard/KeyguardMessageArea.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2016-02-06T16:16:40Z",
+      "side": 1,
+      "message": "Apologies! I was too quick - this should actually be getText()",
+      "range": {
+        "startLine": 129,
+        "startChar": 33,
+        "endLine": 129,
+        "endChar": 41
+      },
+      "revId": "333ed4fae10b114d8e9a749a52d29bd5a1bb4512",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
