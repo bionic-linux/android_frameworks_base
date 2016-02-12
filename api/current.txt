@@ -34651,6 +34651,7 @@ package android.telephony {
     field public static final java.lang.String KEY_MMS_ALIAS_MAX_CHARS_INT = "aliasMaxChars";
     field public static final java.lang.String KEY_MMS_ALIAS_MIN_CHARS_INT = "aliasMinChars";
     field public static final java.lang.String KEY_MMS_ALLOW_ATTACH_AUDIO_BOOL = "allowAttachAudio";
+    field public static final java.lang.String KEY_MMS_ALLOW_WITH_ROAMING_SETTING_OFF_BOOL = "allowMmsWithRoamingSettingOff";
     field public static final java.lang.String KEY_MMS_APPEND_TRANSACTION_ID_BOOL = "enabledTransID";
     field public static final java.lang.String KEY_MMS_EMAIL_GATEWAY_NUMBER_STRING = "emailGatewayNumber";
     field public static final java.lang.String KEY_MMS_GROUP_MMS_ENABLED_BOOL = "enableGroupMms";
@@ -35027,6 +35028,7 @@ package android.telephony {
     field public static final java.lang.String MMS_CONFIG_ALIAS_MAX_CHARS = "aliasMaxChars";
     field public static final java.lang.String MMS_CONFIG_ALIAS_MIN_CHARS = "aliasMinChars";
     field public static final java.lang.String MMS_CONFIG_ALLOW_ATTACH_AUDIO = "allowAttachAudio";
+    field public static final java.lang.String MMS_CONFIG_ALLOW_WITH_ROAMING_SETTING_OFF_BOOL = "allowMmsWithRoamingSettingOff";
     field public static final java.lang.String MMS_CONFIG_APPEND_TRANSACTION_ID = "enabledTransID";
     field public static final java.lang.String MMS_CONFIG_EMAIL_GATEWAY_NUMBER = "emailGatewayNumber";
     field public static final java.lang.String MMS_CONFIG_GROUP_MMS_ENABLED = "enableGroupMms";

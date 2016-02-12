@@ -498,6 +498,8 @@ public class CarrierConfigManager {
     public static final String KEY_MMS_UA_PROF_TAG_NAME_STRING = "uaProfTagName";
     public static final String KEY_MMS_UA_PROF_URL_STRING = "uaProfUrl";
     public static final String KEY_MMS_USER_AGENT_STRING = "userAgent";
+    public static final String KEY_MMS_ALLOW_WITH_ROAMING_SETTING_OFF_BOOL =
+            "allowMmsWithRoamingSettingOff";
 
     /**
      * Determines whether the carrier supports making non-emergency phone calls while the phone is
@@ -613,6 +615,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_MMS_UA_PROF_URL_STRING, "");
         sDefaults.putString(KEY_MMS_USER_AGENT_STRING, "");
         sDefaults.putBoolean(KEY_ALLOW_NON_EMERGENCY_CALLS_IN_ECM_BOOL, true);
+        sDefaults.putBoolean(KEY_MMS_ALLOW_WITH_ROAMING_SETTING_OFF_BOOL, false);
     }
 
     /**
