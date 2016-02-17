@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d9da072_ebfc2d61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-02-17T14:30:45Z",
+      "side": 1,
+      "message": "PS. Please follow git commit message guidelines.\n\nA 60-70 char summary, followed by a blank line followed by a detailed description.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 33
+      },
+      "revId": "6bf49fe0be2abed1a30638812e7ae0701d0d1d55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
