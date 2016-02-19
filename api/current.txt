@@ -6987,6 +6987,15 @@ package android.bluetooth {
     field public static final int TYPE_SCO = 2; // 0x2
   }
 
+  public class OobData implements android.os.Parcelable {
+    ctor public OobData();
+    method public int describeContents();
+    method public byte[] getSecurityManagerTk();
+    method public void setSecurityManagerTk(byte[]);
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.bluetooth.OobData> CREATOR;
+  }
+
 }
 
 package android.bluetooth.le {
@@ -46877,7 +46886,6 @@ package java.io {
     method public boolean setReadable(boolean);
     method public boolean setWritable(boolean, boolean);
     method public boolean setWritable(boolean);
-    method public java.nio.file.Path toPath();
     method public java.net.URI toURI();
     method public deprecated java.net.URL toURL() throws java.net.MalformedURLException;
     field public static final java.lang.String pathSeparator;
@@ -48190,13 +48198,16 @@ package java.lang {
     method public static java.lang.Class<?> forName(java.lang.String, boolean, java.lang.ClassLoader) throws java.lang.ClassNotFoundException;
     method public A getAnnotation(java.lang.Class<A>);
     method public java.lang.annotation.Annotation[] getAnnotations();
+    method public T[] getAnnotationsByType(java.lang.Class<T>);
     method public java.lang.String getCanonicalName();
     method public java.lang.ClassLoader getClassLoader();
     method public java.lang.Class<?>[] getClasses();
     method public java.lang.Class<?> getComponentType();
     method public java.lang.reflect.Constructor<T> getConstructor(java.lang.Class<?>...) throws java.lang.NoSuchMethodException, java.lang.SecurityException;
     method public java.lang.reflect.Constructor<?>[] getConstructors() throws java.lang.SecurityException;
+    method public T getDeclaredAnnotation(java.lang.Class<T>);
     method public java.lang.annotation.Annotation[] getDeclaredAnnotations();
+    method public T[] getDeclaredAnnotationsByType(java.lang.Class<T>);
     method public java.lang.Class<?>[] getDeclaredClasses();
     method public java.lang.reflect.Constructor<T> getDeclaredConstructor(java.lang.Class<?>...) throws java.lang.NoSuchMethodException, java.lang.SecurityException;
     method public java.lang.reflect.Constructor<?>[] getDeclaredConstructors() throws java.lang.SecurityException;
@@ -48428,6 +48439,9 @@ package java.lang {
     field public static final float POSITIVE_INFINITY = (1.0f/0.0f);
     field public static final int SIZE = 32; // 0x20
     field public static final java.lang.Class<java.lang.Float> TYPE;
+  }
+
+  public abstract class FunctionalInterface implements java.lang.annotation.Annotation {
   }
 
   public class IllegalAccessError extends java.lang.IncompatibleClassChangeError {
@@ -48724,7 +48738,10 @@ package java.lang {
   public class Package implements java.lang.reflect.AnnotatedElement {
     method public A getAnnotation(java.lang.Class<A>);
     method public java.lang.annotation.Annotation[] getAnnotations();
+    method public T[] getAnnotationsByType(java.lang.Class<T>);
+    method public java.lang.annotation.Annotation getDeclaredAnnotation(java.lang.Class<T>);
     method public java.lang.annotation.Annotation[] getDeclaredAnnotations();
+    method public T[] getDeclaredAnnotationsByType(java.lang.Class<T>);
     method public java.lang.String getImplementationTitle();
     method public java.lang.String getImplementationVendor();
     method public java.lang.String getImplementationVersion();
@@ -49361,6 +49378,9 @@ package java.lang.annotation {
   public abstract class Inherited implements java.lang.annotation.Annotation {
   }
 
+  public abstract class Repeatable implements java.lang.annotation.Annotation {
+  }
+
   public abstract class Retention implements java.lang.annotation.Annotation {
   }
 
@@ -49415,7 +49435,10 @@ package java.lang.reflect {
     ctor protected AccessibleObject();
     method public T getAnnotation(java.lang.Class<T>);
     method public java.lang.annotation.Annotation[] getAnnotations();
+    method public T[] getAnnotationsByType(java.lang.Class<T>);
+    method public java.lang.annotation.Annotation getDeclaredAnnotation(java.lang.Class<T>);
     method public java.lang.annotation.Annotation[] getDeclaredAnnotations();
+    method public T[] getDeclaredAnnotationsByType(java.lang.Class<T>);
     method public boolean isAccessible();
     method public boolean isAnnotationPresent(java.lang.Class<? extends java.lang.annotation.Annotation>);
     method public static void setAccessible(java.lang.reflect.AccessibleObject[], boolean) throws java.lang.SecurityException;
@@ -49425,7 +49448,10 @@ package java.lang.reflect {
   public abstract interface AnnotatedElement {
     method public abstract T getAnnotation(java.lang.Class<T>);
     method public abstract java.lang.annotation.Annotation[] getAnnotations();
+    method public abstract T[] getAnnotationsByType(java.lang.Class<T>);
+    method public abstract java.lang.annotation.Annotation getDeclaredAnnotation(java.lang.Class<T>);
     method public abstract java.lang.annotation.Annotation[] getDeclaredAnnotations();
+    method public abstract T[] getDeclaredAnnotationsByType(java.lang.Class<T>);
     method public abstract boolean isAnnotationPresent(java.lang.Class<? extends java.lang.annotation.Annotation>);
   }
 
@@ -49559,6 +49585,7 @@ package java.lang.reflect {
     method public java.lang.Object invoke(java.lang.Object, java.lang.Object...) throws java.lang.IllegalAccessException, java.lang.IllegalArgumentException, java.lang.reflect.InvocationTargetException;
     method public boolean isAnnotationPresent(java.lang.Class<? extends java.lang.annotation.Annotation>);
     method public boolean isBridge();
+    method public boolean isDefault();
     method public boolean isSynthetic();
     method public boolean isVarArgs();
     method public java.lang.String toGenericString();
@@ -50115,7 +50142,6 @@ package java.net {
 
   public class InetAddress implements java.io.Serializable {
     method public byte[] getAddress();
-    method public byte[] getAddressInternal();
     method public static java.net.InetAddress[] getAllByName(java.lang.String) throws java.net.UnknownHostException;
     method public static java.net.InetAddress getByAddress(java.lang.String, byte[]) throws java.net.UnknownHostException;
     method public static java.net.InetAddress getByAddress(byte[]) throws java.net.UnknownHostException;
@@ -50389,7 +50415,7 @@ package java.net {
     method protected abstract void connect(java.net.InetAddress, int) throws java.io.IOException;
     method protected abstract void connect(java.net.SocketAddress, int) throws java.io.IOException;
     method protected abstract void create(boolean) throws java.io.IOException;
-    method public java.io.FileDescriptor getFileDescriptor();
+    method protected java.io.FileDescriptor getFileDescriptor();
     method protected java.net.InetAddress getInetAddress();
     method protected abstract java.io.InputStream getInputStream() throws java.io.IOException;
     method protected int getLocalPort();
@@ -50539,7 +50565,6 @@ package java.net {
     method public static void setURLStreamHandlerFactory(java.net.URLStreamHandlerFactory);
     method public java.lang.String toExternalForm();
     method public java.net.URI toURI() throws java.net.URISyntaxException;
-    method public java.net.URI toURILenient() throws java.net.URISyntaxException;
   }
 
   public class URLClassLoader extends java.security.SecureClassLoader implements java.io.Closeable {
@@ -50932,10 +50957,6 @@ package java.nio {
 
 package java.nio.channels {
 
-  public class AcceptPendingException extends java.lang.IllegalStateException {
-    ctor public AcceptPendingException();
-  }
-
   public class AlreadyBoundException extends java.lang.IllegalStateException {
     ctor public AlreadyBoundException();
   }
@@ -50944,85 +50965,8 @@ package java.nio.channels {
     ctor public AlreadyConnectedException();
   }
 
-  public abstract interface AsynchronousByteChannel implements java.nio.channels.AsynchronousChannel {
-    method public abstract void read(java.nio.ByteBuffer, A, java.nio.channels.CompletionHandler<java.lang.Integer, ? super A>);
-    method public abstract java.util.concurrent.Future<java.lang.Integer> read(java.nio.ByteBuffer);
-    method public abstract void write(java.nio.ByteBuffer, A, java.nio.channels.CompletionHandler<java.lang.Integer, ? super A>);
-    method public abstract java.util.concurrent.Future<java.lang.Integer> write(java.nio.ByteBuffer);
-  }
-
-  public abstract interface AsynchronousChannel implements java.nio.channels.Channel {
-    method public abstract void close() throws java.io.IOException;
-  }
-
-  public abstract class AsynchronousChannelGroup {
-    ctor protected AsynchronousChannelGroup(java.nio.channels.spi.AsynchronousChannelProvider);
-    method public abstract boolean awaitTermination(long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
-    method public abstract boolean isShutdown();
-    method public abstract boolean isTerminated();
-    method public final java.nio.channels.spi.AsynchronousChannelProvider provider();
-    method public abstract void shutdown();
-    method public abstract void shutdownNow() throws java.io.IOException;
-    method public static java.nio.channels.AsynchronousChannelGroup withCachedThreadPool(java.util.concurrent.ExecutorService, int) throws java.io.IOException;
-    method public static java.nio.channels.AsynchronousChannelGroup withFixedThreadPool(int, java.util.concurrent.ThreadFactory) throws java.io.IOException;
-    method public static java.nio.channels.AsynchronousChannelGroup withThreadPool(java.util.concurrent.ExecutorService) throws java.io.IOException;
-  }
-
   public class AsynchronousCloseException extends java.nio.channels.ClosedChannelException {
     ctor public AsynchronousCloseException();
-  }
-
-  public abstract class AsynchronousFileChannel implements java.nio.channels.AsynchronousChannel {
-    ctor protected AsynchronousFileChannel();
-    method public abstract void force(boolean) throws java.io.IOException;
-    method public abstract void lock(long, long, boolean, A, java.nio.channels.CompletionHandler<java.nio.channels.FileLock, ? super A>);
-    method public final void lock(A, java.nio.channels.CompletionHandler<java.nio.channels.FileLock, ? super A>);
-    method public abstract java.util.concurrent.Future<java.nio.channels.FileLock> lock(long, long, boolean);
-    method public final java.util.concurrent.Future<java.nio.channels.FileLock> lock();
-    method public static java.nio.channels.AsynchronousFileChannel open(java.nio.file.Path, java.util.Set<? extends java.nio.file.OpenOption>, java.util.concurrent.ExecutorService, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.channels.AsynchronousFileChannel open(java.nio.file.Path, java.nio.file.OpenOption...) throws java.io.IOException;
-    method public abstract void read(java.nio.ByteBuffer, long, A, java.nio.channels.CompletionHandler<java.lang.Integer, ? super A>);
-    method public abstract java.util.concurrent.Future<java.lang.Integer> read(java.nio.ByteBuffer, long);
-    method public abstract long size() throws java.io.IOException;
-    method public abstract java.nio.channels.AsynchronousFileChannel truncate(long) throws java.io.IOException;
-    method public abstract java.nio.channels.FileLock tryLock(long, long, boolean) throws java.io.IOException;
-    method public final java.nio.channels.FileLock tryLock() throws java.io.IOException;
-    method public abstract void write(java.nio.ByteBuffer, long, A, java.nio.channels.CompletionHandler<java.lang.Integer, ? super A>);
-    method public abstract java.util.concurrent.Future<java.lang.Integer> write(java.nio.ByteBuffer, long);
-  }
-
-  public abstract class AsynchronousServerSocketChannel implements java.nio.channels.AsynchronousChannel java.nio.channels.NetworkChannel {
-    ctor protected AsynchronousServerSocketChannel(java.nio.channels.spi.AsynchronousChannelProvider);
-    method public abstract void accept(A, java.nio.channels.CompletionHandler<java.nio.channels.AsynchronousSocketChannel, ? super A>);
-    method public abstract java.util.concurrent.Future<java.nio.channels.AsynchronousSocketChannel> accept();
-    method public final java.nio.channels.AsynchronousServerSocketChannel bind(java.net.SocketAddress) throws java.io.IOException;
-    method public abstract java.nio.channels.AsynchronousServerSocketChannel bind(java.net.SocketAddress, int) throws java.io.IOException;
-    method public static java.nio.channels.AsynchronousServerSocketChannel open(java.nio.channels.AsynchronousChannelGroup) throws java.io.IOException;
-    method public static java.nio.channels.AsynchronousServerSocketChannel open() throws java.io.IOException;
-    method public final java.nio.channels.spi.AsynchronousChannelProvider provider();
-    method public abstract java.nio.channels.AsynchronousServerSocketChannel setOption(java.net.SocketOption<T>, T) throws java.io.IOException;
-  }
-
-  public abstract class AsynchronousSocketChannel implements java.nio.channels.AsynchronousByteChannel java.nio.channels.NetworkChannel {
-    ctor protected AsynchronousSocketChannel(java.nio.channels.spi.AsynchronousChannelProvider);
-    method public abstract java.nio.channels.AsynchronousSocketChannel bind(java.net.SocketAddress) throws java.io.IOException;
-    method public abstract void connect(java.net.SocketAddress, A, java.nio.channels.CompletionHandler<java.lang.Void, ? super A>);
-    method public abstract java.util.concurrent.Future<java.lang.Void> connect(java.net.SocketAddress);
-    method public abstract java.net.SocketAddress getRemoteAddress() throws java.io.IOException;
-    method public static java.nio.channels.AsynchronousSocketChannel open(java.nio.channels.AsynchronousChannelGroup) throws java.io.IOException;
-    method public static java.nio.channels.AsynchronousSocketChannel open() throws java.io.IOException;
-    method public final java.nio.channels.spi.AsynchronousChannelProvider provider();
-    method public abstract void read(java.nio.ByteBuffer, long, java.util.concurrent.TimeUnit, A, java.nio.channels.CompletionHandler<java.lang.Integer, ? super A>);
-    method public final void read(java.nio.ByteBuffer, A, java.nio.channels.CompletionHandler<java.lang.Integer, ? super A>);
-    method public abstract java.util.concurrent.Future<java.lang.Integer> read(java.nio.ByteBuffer);
-    method public abstract void read(java.nio.ByteBuffer[], int, int, long, java.util.concurrent.TimeUnit, A, java.nio.channels.CompletionHandler<java.lang.Long, ? super A>);
-    method public abstract java.nio.channels.AsynchronousSocketChannel setOption(java.net.SocketOption<T>, T) throws java.io.IOException;
-    method public abstract java.nio.channels.AsynchronousSocketChannel shutdownInput() throws java.io.IOException;
-    method public abstract java.nio.channels.AsynchronousSocketChannel shutdownOutput() throws java.io.IOException;
-    method public abstract void write(java.nio.ByteBuffer, long, java.util.concurrent.TimeUnit, A, java.nio.channels.CompletionHandler<java.lang.Integer, ? super A>);
-    method public final void write(java.nio.ByteBuffer, A, java.nio.channels.CompletionHandler<java.lang.Integer, ? super A>);
-    method public abstract java.util.concurrent.Future<java.lang.Integer> write(java.nio.ByteBuffer);
-    method public abstract void write(java.nio.ByteBuffer[], int, int, long, java.util.concurrent.TimeUnit, A, java.nio.channels.CompletionHandler<java.lang.Long, ? super A>);
   }
 
   public abstract interface ByteChannel implements java.nio.channels.ReadableByteChannel java.nio.channels.WritableByteChannel {
@@ -51041,9 +50985,7 @@ package java.nio.channels {
     method public static java.nio.channels.ReadableByteChannel newChannel(java.io.InputStream);
     method public static java.nio.channels.WritableByteChannel newChannel(java.io.OutputStream);
     method public static java.io.InputStream newInputStream(java.nio.channels.ReadableByteChannel);
-    method public static java.io.InputStream newInputStream(java.nio.channels.AsynchronousByteChannel);
     method public static java.io.OutputStream newOutputStream(java.nio.channels.WritableByteChannel);
-    method public static java.io.OutputStream newOutputStream(java.nio.channels.AsynchronousByteChannel);
     method public static java.io.Reader newReader(java.nio.channels.ReadableByteChannel, java.nio.charset.CharsetDecoder, int);
     method public static java.io.Reader newReader(java.nio.channels.ReadableByteChannel, java.lang.String);
     method public static java.io.Writer newWriter(java.nio.channels.WritableByteChannel, java.nio.charset.CharsetEncoder, int);
@@ -51062,16 +51004,11 @@ package java.nio.channels {
     ctor public ClosedSelectorException();
   }
 
-  public abstract interface CompletionHandler {
-    method public abstract void completed(V, A);
-    method public abstract void failed(java.lang.Throwable, A);
-  }
-
   public class ConnectionPendingException extends java.lang.IllegalStateException {
     ctor public ConnectionPendingException();
   }
 
-  public abstract class DatagramChannel extends java.nio.channels.spi.AbstractSelectableChannel implements java.nio.channels.ByteChannel java.nio.channels.GatheringByteChannel java.nio.channels.MulticastChannel java.nio.channels.ScatteringByteChannel {
+  public abstract class DatagramChannel extends java.nio.channels.spi.AbstractSelectableChannel implements java.nio.channels.ByteChannel java.nio.channels.GatheringByteChannel java.nio.channels.ScatteringByteChannel {
     ctor protected DatagramChannel(java.nio.channels.spi.SelectorProvider);
     method public abstract java.nio.channels.DatagramChannel bind(java.net.SocketAddress) throws java.io.IOException;
     method public abstract java.nio.channels.DatagramChannel connect(java.net.SocketAddress) throws java.io.IOException;
@@ -51099,8 +51036,6 @@ package java.nio.channels {
     method public abstract java.nio.channels.FileLock lock(long, long, boolean) throws java.io.IOException;
     method public final java.nio.channels.FileLock lock() throws java.io.IOException;
     method public abstract java.nio.MappedByteBuffer map(java.nio.channels.FileChannel.MapMode, long, long) throws java.io.IOException;
-    method public static java.nio.channels.FileChannel open(java.nio.file.Path, java.util.Set<? extends java.nio.file.OpenOption>, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.channels.FileChannel open(java.nio.file.Path, java.nio.file.OpenOption...) throws java.io.IOException;
     method public abstract long position() throws java.io.IOException;
     method public abstract java.nio.channels.FileChannel position(long) throws java.io.IOException;
     method public abstract int read(java.nio.ByteBuffer) throws java.io.IOException;
@@ -51127,7 +51062,6 @@ package java.nio.channels {
 
   public abstract class FileLock implements java.lang.AutoCloseable {
     ctor protected FileLock(java.nio.channels.FileChannel, long, long, boolean);
-    ctor protected FileLock(java.nio.channels.AsynchronousFileChannel, long, long, boolean);
     method public java.nio.channels.Channel acquiredBy();
     method public final java.nio.channels.FileChannel channel();
     method public final void close() throws java.io.IOException;
@@ -51153,38 +51087,12 @@ package java.nio.channels {
     ctor public IllegalBlockingModeException();
   }
 
-  public class IllegalChannelGroupException extends java.lang.IllegalArgumentException {
-    ctor public IllegalChannelGroupException();
-  }
-
   public class IllegalSelectorException extends java.lang.IllegalArgumentException {
     ctor public IllegalSelectorException();
   }
 
-  public class InterruptedByTimeoutException extends java.io.IOException {
-    ctor public InterruptedByTimeoutException();
-  }
-
   public abstract interface InterruptibleChannel implements java.nio.channels.Channel {
     method public abstract void close() throws java.io.IOException;
-  }
-
-  public abstract class MembershipKey {
-    ctor protected MembershipKey();
-    method public abstract java.nio.channels.MembershipKey block(java.net.InetAddress) throws java.io.IOException;
-    method public abstract java.nio.channels.MulticastChannel channel();
-    method public abstract void drop();
-    method public abstract java.net.InetAddress group();
-    method public abstract boolean isValid();
-    method public abstract java.net.NetworkInterface networkInterface();
-    method public abstract java.net.InetAddress sourceAddress();
-    method public abstract java.nio.channels.MembershipKey unblock(java.net.InetAddress);
-  }
-
-  public abstract interface MulticastChannel implements java.nio.channels.NetworkChannel {
-    method public abstract void close() throws java.io.IOException;
-    method public abstract java.nio.channels.MembershipKey join(java.net.InetAddress, java.net.NetworkInterface) throws java.io.IOException;
-    method public abstract java.nio.channels.MembershipKey join(java.net.InetAddress, java.net.NetworkInterface, java.net.InetAddress) throws java.io.IOException;
   }
 
   public abstract interface NetworkChannel implements java.nio.channels.Channel {
@@ -51234,10 +51142,6 @@ package java.nio.channels {
   public static abstract class Pipe.SourceChannel extends java.nio.channels.spi.AbstractSelectableChannel implements java.nio.channels.ReadableByteChannel java.nio.channels.ScatteringByteChannel {
     ctor protected Pipe.SourceChannel(java.nio.channels.spi.SelectorProvider);
     method public final int validOps();
-  }
-
-  public class ReadPendingException extends java.lang.IllegalStateException {
-    ctor public ReadPendingException();
   }
 
   public abstract interface ReadableByteChannel implements java.nio.channels.Channel {
@@ -51317,10 +51221,6 @@ package java.nio.channels {
     method public final int validOps();
   }
 
-  public class ShutdownChannelGroupException extends java.lang.IllegalStateException {
-    ctor public ShutdownChannelGroupException();
-  }
-
   public abstract class SocketChannel extends java.nio.channels.spi.AbstractSelectableChannel implements java.nio.channels.ByteChannel java.nio.channels.GatheringByteChannel java.nio.channels.NetworkChannel java.nio.channels.ScatteringByteChannel {
     ctor protected SocketChannel(java.nio.channels.spi.SelectorProvider);
     method public abstract java.nio.channels.SocketChannel bind(java.net.SocketAddress) throws java.io.IOException;
@@ -51354,10 +51254,6 @@ package java.nio.channels {
 
   public abstract interface WritableByteChannel implements java.nio.channels.Channel {
     method public abstract int write(java.nio.ByteBuffer) throws java.io.IOException;
-  }
-
-  public class WritePendingException extends java.lang.IllegalStateException {
-    ctor public WritePendingException();
   }
 
 }
@@ -51404,15 +51300,6 @@ package java.nio.channels.spi {
     method public final boolean isOpen();
     method public final java.nio.channels.spi.SelectorProvider provider();
     method protected abstract java.nio.channels.SelectionKey register(java.nio.channels.spi.AbstractSelectableChannel, int, java.lang.Object);
-  }
-
-  public abstract class AsynchronousChannelProvider {
-    ctor protected AsynchronousChannelProvider();
-    method public abstract java.nio.channels.AsynchronousChannelGroup openAsynchronousChannelGroup(int, java.util.concurrent.ThreadFactory) throws java.io.IOException;
-    method public abstract java.nio.channels.AsynchronousChannelGroup openAsynchronousChannelGroup(java.util.concurrent.ExecutorService, int) throws java.io.IOException;
-    method public abstract java.nio.channels.AsynchronousServerSocketChannel openAsynchronousServerSocketChannel(java.nio.channels.AsynchronousChannelGroup) throws java.io.IOException;
-    method public abstract java.nio.channels.AsynchronousSocketChannel openAsynchronousSocketChannel(java.nio.channels.AsynchronousChannelGroup) throws java.io.IOException;
-    method public static java.nio.channels.spi.AsynchronousChannelProvider provider();
   }
 
   public abstract class SelectorProvider {
@@ -51573,592 +51460,6 @@ package java.nio.charset.spi {
     ctor protected CharsetProvider();
     method public abstract java.nio.charset.Charset charsetForName(java.lang.String);
     method public abstract java.util.Iterator<java.nio.charset.Charset> charsets();
-  }
-
-}
-
-package java.nio.file {
-
-  public class AccessDeniedException extends java.nio.file.FileSystemException {
-    ctor public AccessDeniedException(java.lang.String);
-    ctor public AccessDeniedException(java.lang.String, java.lang.String, java.lang.String);
-  }
-
-  public final class AccessMode extends java.lang.Enum {
-    method public static java.nio.file.AccessMode valueOf(java.lang.String);
-    method public static final java.nio.file.AccessMode[] values();
-    enum_constant public static final java.nio.file.AccessMode EXECUTE;
-    enum_constant public static final java.nio.file.AccessMode READ;
-    enum_constant public static final java.nio.file.AccessMode WRITE;
-  }
-
-  public class AtomicMoveNotSupportedException extends java.nio.file.FileSystemException {
-    ctor public AtomicMoveNotSupportedException(java.lang.String, java.lang.String, java.lang.String);
-  }
-
-  public class ClosedDirectoryStreamException extends java.lang.IllegalStateException {
-    ctor public ClosedDirectoryStreamException();
-  }
-
-  public class ClosedFileSystemException extends java.lang.IllegalStateException {
-    ctor public ClosedFileSystemException();
-  }
-
-  public class ClosedWatchServiceException extends java.lang.IllegalStateException {
-    ctor public ClosedWatchServiceException();
-  }
-
-  public abstract interface CopyOption {
-  }
-
-  public final class DirectoryIteratorException extends java.util.ConcurrentModificationException {
-    ctor public DirectoryIteratorException(java.io.IOException);
-  }
-
-  public class DirectoryNotEmptyException extends java.nio.file.FileSystemException {
-    ctor public DirectoryNotEmptyException(java.lang.String);
-  }
-
-  public abstract interface DirectoryStream implements java.io.Closeable java.lang.Iterable {
-    method public abstract java.util.Iterator<T> iterator();
-  }
-
-  public static abstract interface DirectoryStream.Filter {
-    method public abstract boolean accept(T) throws java.io.IOException;
-  }
-
-  public class FileAlreadyExistsException extends java.nio.file.FileSystemException {
-    ctor public FileAlreadyExistsException(java.lang.String);
-    ctor public FileAlreadyExistsException(java.lang.String, java.lang.String, java.lang.String);
-  }
-
-  public abstract class FileStore {
-    ctor protected FileStore();
-    method public abstract java.lang.Object getAttribute(java.lang.String) throws java.io.IOException;
-    method public abstract V getFileStoreAttributeView(java.lang.Class<V>);
-    method public abstract long getTotalSpace() throws java.io.IOException;
-    method public abstract long getUnallocatedSpace() throws java.io.IOException;
-    method public abstract long getUsableSpace() throws java.io.IOException;
-    method public abstract boolean isReadOnly();
-    method public abstract java.lang.String name();
-    method public abstract boolean supportsFileAttributeView(java.lang.Class<? extends java.nio.file.attribute.FileAttributeView>);
-    method public abstract boolean supportsFileAttributeView(java.lang.String);
-    method public abstract java.lang.String type();
-  }
-
-  public abstract class FileSystem implements java.io.Closeable {
-    ctor protected FileSystem();
-    method public abstract void close() throws java.io.IOException;
-    method public abstract java.lang.Iterable<java.nio.file.FileStore> getFileStores();
-    method public abstract java.nio.file.Path getPath(java.lang.String, java.lang.String...);
-    method public abstract java.nio.file.PathMatcher getPathMatcher(java.lang.String);
-    method public abstract java.lang.Iterable<java.nio.file.Path> getRootDirectories();
-    method public abstract java.lang.String getSeparator();
-    method public abstract java.nio.file.attribute.UserPrincipalLookupService getUserPrincipalLookupService();
-    method public abstract boolean isOpen();
-    method public abstract boolean isReadOnly();
-    method public abstract java.nio.file.WatchService newWatchService() throws java.io.IOException;
-    method public abstract java.nio.file.spi.FileSystemProvider provider();
-    method public abstract java.util.Set<java.lang.String> supportedFileAttributeViews();
-  }
-
-  public class FileSystemAlreadyExistsException extends java.lang.RuntimeException {
-    ctor public FileSystemAlreadyExistsException();
-    ctor public FileSystemAlreadyExistsException(java.lang.String);
-  }
-
-  public class FileSystemException extends java.io.IOException {
-    ctor public FileSystemException(java.lang.String);
-    ctor public FileSystemException(java.lang.String, java.lang.String, java.lang.String);
-    method public java.lang.String getFile();
-    method public java.lang.String getOtherFile();
-    method public java.lang.String getReason();
-  }
-
-  public class FileSystemLoopException extends java.nio.file.FileSystemException {
-    ctor public FileSystemLoopException(java.lang.String);
-  }
-
-  public class FileSystemNotFoundException extends java.lang.RuntimeException {
-    ctor public FileSystemNotFoundException();
-    ctor public FileSystemNotFoundException(java.lang.String);
-  }
-
-  public final class FileSystems {
-    method public static java.nio.file.FileSystem getDefault();
-    method public static java.nio.file.FileSystem getFileSystem(java.net.URI);
-    method public static java.nio.file.FileSystem newFileSystem(java.net.URI, java.util.Map<java.lang.String, ?>) throws java.io.IOException;
-    method public static java.nio.file.FileSystem newFileSystem(java.net.URI, java.util.Map<java.lang.String, ?>, java.lang.ClassLoader) throws java.io.IOException;
-    method public static java.nio.file.FileSystem newFileSystem(java.nio.file.Path, java.lang.ClassLoader) throws java.io.IOException;
-  }
-
-  public final class FileVisitOption extends java.lang.Enum {
-    method public static java.nio.file.FileVisitOption valueOf(java.lang.String);
-    method public static final java.nio.file.FileVisitOption[] values();
-    enum_constant public static final java.nio.file.FileVisitOption FOLLOW_LINKS;
-  }
-
-  public final class FileVisitResult extends java.lang.Enum {
-    method public static java.nio.file.FileVisitResult valueOf(java.lang.String);
-    method public static final java.nio.file.FileVisitResult[] values();
-    enum_constant public static final java.nio.file.FileVisitResult CONTINUE;
-    enum_constant public static final java.nio.file.FileVisitResult SKIP_SIBLINGS;
-    enum_constant public static final java.nio.file.FileVisitResult SKIP_SUBTREE;
-    enum_constant public static final java.nio.file.FileVisitResult TERMINATE;
-  }
-
-  public abstract interface FileVisitor {
-    method public abstract java.nio.file.FileVisitResult postVisitDirectory(T, java.io.IOException) throws java.io.IOException;
-    method public abstract java.nio.file.FileVisitResult preVisitDirectory(T, java.nio.file.attribute.BasicFileAttributes) throws java.io.IOException;
-    method public abstract java.nio.file.FileVisitResult visitFile(T, java.nio.file.attribute.BasicFileAttributes) throws java.io.IOException;
-    method public abstract java.nio.file.FileVisitResult visitFileFailed(T, java.io.IOException) throws java.io.IOException;
-  }
-
-  public final class Files {
-    method public static java.nio.file.Path copy(java.nio.file.Path, java.nio.file.Path, java.nio.file.CopyOption...) throws java.io.IOException;
-    method public static long copy(java.io.InputStream, java.nio.file.Path, java.nio.file.CopyOption...) throws java.io.IOException;
-    method public static long copy(java.nio.file.Path, java.io.OutputStream) throws java.io.IOException;
-    method public static java.nio.file.Path createDirectories(java.nio.file.Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.file.Path createDirectory(java.nio.file.Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.file.Path createFile(java.nio.file.Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.file.Path createLink(java.nio.file.Path, java.nio.file.Path) throws java.io.IOException;
-    method public static java.nio.file.Path createSymbolicLink(java.nio.file.Path, java.nio.file.Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.file.Path createTempDirectory(java.nio.file.Path, java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.file.Path createTempDirectory(java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.file.Path createTempFile(java.nio.file.Path, java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.file.Path createTempFile(java.lang.String, java.lang.String, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static void delete(java.nio.file.Path) throws java.io.IOException;
-    method public static boolean deleteIfExists(java.nio.file.Path) throws java.io.IOException;
-    method public static boolean exists(java.nio.file.Path, java.nio.file.LinkOption...);
-    method public static java.lang.Object getAttribute(java.nio.file.Path, java.lang.String, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public static V getFileAttributeView(java.nio.file.Path, java.lang.Class<V>, java.nio.file.LinkOption...);
-    method public static java.nio.file.FileStore getFileStore(java.nio.file.Path) throws java.io.IOException;
-    method public static java.nio.file.attribute.FileTime getLastModifiedTime(java.nio.file.Path, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public static java.nio.file.attribute.UserPrincipal getOwner(java.nio.file.Path, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public static java.util.Set<java.nio.file.attribute.PosixFilePermission> getPosixFilePermissions(java.nio.file.Path, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public static boolean isDirectory(java.nio.file.Path, java.nio.file.LinkOption...);
-    method public static boolean isExecutable(java.nio.file.Path);
-    method public static boolean isHidden(java.nio.file.Path) throws java.io.IOException;
-    method public static boolean isReadable(java.nio.file.Path);
-    method public static boolean isRegularFile(java.nio.file.Path, java.nio.file.LinkOption...);
-    method public static boolean isSameFile(java.nio.file.Path, java.nio.file.Path) throws java.io.IOException;
-    method public static boolean isSymbolicLink(java.nio.file.Path);
-    method public static boolean isWritable(java.nio.file.Path);
-    method public static java.nio.file.Path move(java.nio.file.Path, java.nio.file.Path, java.nio.file.CopyOption...) throws java.io.IOException;
-    method public static java.io.BufferedReader newBufferedReader(java.nio.file.Path, java.nio.charset.Charset) throws java.io.IOException;
-    method public static java.io.BufferedWriter newBufferedWriter(java.nio.file.Path, java.nio.charset.Charset, java.nio.file.OpenOption...) throws java.io.IOException;
-    method public static java.nio.channels.SeekableByteChannel newByteChannel(java.nio.file.Path, java.util.Set<? extends java.nio.file.OpenOption>, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public static java.nio.channels.SeekableByteChannel newByteChannel(java.nio.file.Path, java.nio.file.OpenOption...) throws java.io.IOException;
-    method public static java.nio.file.DirectoryStream<java.nio.file.Path> newDirectoryStream(java.nio.file.Path) throws java.io.IOException;
-    method public static java.nio.file.DirectoryStream<java.nio.file.Path> newDirectoryStream(java.nio.file.Path, java.lang.String) throws java.io.IOException;
-    method public static java.nio.file.DirectoryStream<java.nio.file.Path> newDirectoryStream(java.nio.file.Path, java.nio.file.DirectoryStream.Filter<? super java.nio.file.Path>) throws java.io.IOException;
-    method public static java.io.InputStream newInputStream(java.nio.file.Path, java.nio.file.OpenOption...) throws java.io.IOException;
-    method public static java.io.OutputStream newOutputStream(java.nio.file.Path, java.nio.file.OpenOption...) throws java.io.IOException;
-    method public static boolean notExists(java.nio.file.Path, java.nio.file.LinkOption...);
-    method public static java.lang.String probeContentType(java.nio.file.Path) throws java.io.IOException;
-    method public static byte[] readAllBytes(java.nio.file.Path) throws java.io.IOException;
-    method public static java.util.List<java.lang.String> readAllLines(java.nio.file.Path, java.nio.charset.Charset) throws java.io.IOException;
-    method public static A readAttributes(java.nio.file.Path, java.lang.Class<A>, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public static java.util.Map<java.lang.String, java.lang.Object> readAttributes(java.nio.file.Path, java.lang.String, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public static java.nio.file.Path readSymbolicLink(java.nio.file.Path) throws java.io.IOException;
-    method public static java.nio.file.Path setAttribute(java.nio.file.Path, java.lang.String, java.lang.Object, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public static java.nio.file.Path setLastModifiedTime(java.nio.file.Path, java.nio.file.attribute.FileTime) throws java.io.IOException;
-    method public static java.nio.file.Path setOwner(java.nio.file.Path, java.nio.file.attribute.UserPrincipal) throws java.io.IOException;
-    method public static java.nio.file.Path setPosixFilePermissions(java.nio.file.Path, java.util.Set<java.nio.file.attribute.PosixFilePermission>) throws java.io.IOException;
-    method public static long size(java.nio.file.Path) throws java.io.IOException;
-    method public static java.nio.file.Path walkFileTree(java.nio.file.Path, java.util.Set<java.nio.file.FileVisitOption>, int, java.nio.file.FileVisitor<? super java.nio.file.Path>) throws java.io.IOException;
-    method public static java.nio.file.Path walkFileTree(java.nio.file.Path, java.nio.file.FileVisitor<? super java.nio.file.Path>) throws java.io.IOException;
-    method public static java.nio.file.Path write(java.nio.file.Path, byte[], java.nio.file.OpenOption...) throws java.io.IOException;
-    method public static java.nio.file.Path write(java.nio.file.Path, java.lang.Iterable<? extends java.lang.CharSequence>, java.nio.charset.Charset, java.nio.file.OpenOption...) throws java.io.IOException;
-  }
-
-  public class InvalidPathException extends java.lang.IllegalArgumentException {
-    ctor public InvalidPathException(java.lang.String, java.lang.String, int);
-    ctor public InvalidPathException(java.lang.String, java.lang.String);
-    method public int getIndex();
-    method public java.lang.String getInput();
-    method public java.lang.String getReason();
-  }
-
-  public final class LinkOption extends java.lang.Enum implements java.nio.file.CopyOption java.nio.file.OpenOption {
-    method public static java.nio.file.LinkOption valueOf(java.lang.String);
-    method public static final java.nio.file.LinkOption[] values();
-    enum_constant public static final java.nio.file.LinkOption NOFOLLOW_LINKS;
-  }
-
-  public final class LinkPermission extends java.security.BasicPermission {
-    ctor public LinkPermission(java.lang.String);
-    ctor public LinkPermission(java.lang.String, java.lang.String);
-  }
-
-  public class NoSuchFileException extends java.nio.file.FileSystemException {
-    ctor public NoSuchFileException(java.lang.String);
-    ctor public NoSuchFileException(java.lang.String, java.lang.String, java.lang.String);
-  }
-
-  public class NotDirectoryException extends java.nio.file.FileSystemException {
-    ctor public NotDirectoryException(java.lang.String);
-  }
-
-  public class NotLinkException extends java.nio.file.FileSystemException {
-    ctor public NotLinkException(java.lang.String);
-    ctor public NotLinkException(java.lang.String, java.lang.String, java.lang.String);
-  }
-
-  public abstract interface OpenOption {
-  }
-
-  public abstract interface Path implements java.lang.Comparable java.lang.Iterable java.nio.file.Watchable {
-    method public abstract int compareTo(java.nio.file.Path);
-    method public abstract boolean endsWith(java.nio.file.Path);
-    method public abstract boolean endsWith(java.lang.String);
-    method public abstract boolean equals(java.lang.Object);
-    method public abstract java.nio.file.Path getFileName();
-    method public abstract java.nio.file.FileSystem getFileSystem();
-    method public abstract java.nio.file.Path getName(int);
-    method public abstract int getNameCount();
-    method public abstract java.nio.file.Path getParent();
-    method public abstract java.nio.file.Path getRoot();
-    method public abstract int hashCode();
-    method public abstract boolean isAbsolute();
-    method public abstract java.util.Iterator<java.nio.file.Path> iterator();
-    method public abstract java.nio.file.Path normalize();
-    method public abstract java.nio.file.WatchKey register(java.nio.file.WatchService, java.nio.file.WatchEvent.Kind<?>[], java.nio.file.WatchEvent.Modifier...) throws java.io.IOException;
-    method public abstract java.nio.file.WatchKey register(java.nio.file.WatchService, java.nio.file.WatchEvent.Kind<?>...) throws java.io.IOException;
-    method public abstract java.nio.file.Path relativize(java.nio.file.Path);
-    method public abstract java.nio.file.Path resolve(java.nio.file.Path);
-    method public abstract java.nio.file.Path resolve(java.lang.String);
-    method public abstract java.nio.file.Path resolveSibling(java.nio.file.Path);
-    method public abstract java.nio.file.Path resolveSibling(java.lang.String);
-    method public abstract boolean startsWith(java.nio.file.Path);
-    method public abstract boolean startsWith(java.lang.String);
-    method public abstract java.nio.file.Path subpath(int, int);
-    method public abstract java.nio.file.Path toAbsolutePath();
-    method public abstract java.io.File toFile();
-    method public abstract java.nio.file.Path toRealPath(java.nio.file.LinkOption...) throws java.io.IOException;
-    method public abstract java.lang.String toString();
-    method public abstract java.net.URI toUri();
-  }
-
-  public abstract interface PathMatcher {
-    method public abstract boolean matches(java.nio.file.Path);
-  }
-
-  public final class Paths {
-    method public static java.nio.file.Path get(java.lang.String, java.lang.String...);
-    method public static java.nio.file.Path get(java.net.URI);
-  }
-
-  public class ProviderMismatchException extends java.lang.IllegalArgumentException {
-    ctor public ProviderMismatchException();
-    ctor public ProviderMismatchException(java.lang.String);
-  }
-
-  public class ProviderNotFoundException extends java.lang.RuntimeException {
-    ctor public ProviderNotFoundException();
-    ctor public ProviderNotFoundException(java.lang.String);
-  }
-
-  public class ReadOnlyFileSystemException extends java.lang.UnsupportedOperationException {
-    ctor public ReadOnlyFileSystemException();
-  }
-
-  public abstract interface SecureDirectoryStream implements java.nio.file.DirectoryStream {
-    method public abstract void deleteDirectory(T) throws java.io.IOException;
-    method public abstract void deleteFile(T) throws java.io.IOException;
-    method public abstract V getFileAttributeView(java.lang.Class<V>);
-    method public abstract V getFileAttributeView(T, java.lang.Class<V>, java.nio.file.LinkOption...);
-    method public abstract void move(T, java.nio.file.SecureDirectoryStream<T>, T) throws java.io.IOException;
-    method public abstract java.nio.channels.SeekableByteChannel newByteChannel(T, java.util.Set<? extends java.nio.file.OpenOption>, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public abstract java.nio.file.SecureDirectoryStream<T> newDirectoryStream(T, java.nio.file.LinkOption...) throws java.io.IOException;
-  }
-
-  public final class StandardCopyOption extends java.lang.Enum implements java.nio.file.CopyOption {
-    method public static java.nio.file.StandardCopyOption valueOf(java.lang.String);
-    method public static final java.nio.file.StandardCopyOption[] values();
-    enum_constant public static final java.nio.file.StandardCopyOption ATOMIC_MOVE;
-    enum_constant public static final java.nio.file.StandardCopyOption COPY_ATTRIBUTES;
-    enum_constant public static final java.nio.file.StandardCopyOption REPLACE_EXISTING;
-  }
-
-  public final class StandardOpenOption extends java.lang.Enum implements java.nio.file.OpenOption {
-    method public static java.nio.file.StandardOpenOption valueOf(java.lang.String);
-    method public static final java.nio.file.StandardOpenOption[] values();
-    enum_constant public static final java.nio.file.StandardOpenOption APPEND;
-    enum_constant public static final java.nio.file.StandardOpenOption CREATE;
-    enum_constant public static final java.nio.file.StandardOpenOption CREATE_NEW;
-    enum_constant public static final java.nio.file.StandardOpenOption DELETE_ON_CLOSE;
-    enum_constant public static final java.nio.file.StandardOpenOption DSYNC;
-    enum_constant public static final java.nio.file.StandardOpenOption READ;
-    enum_constant public static final java.nio.file.StandardOpenOption SPARSE;
-    enum_constant public static final java.nio.file.StandardOpenOption SYNC;
-    enum_constant public static final java.nio.file.StandardOpenOption TRUNCATE_EXISTING;
-    enum_constant public static final java.nio.file.StandardOpenOption WRITE;
-  }
-
-  public final class StandardWatchEventKinds {
-    field public static final java.nio.file.WatchEvent.Kind<java.nio.file.Path> ENTRY_CREATE;
-    field public static final java.nio.file.WatchEvent.Kind<java.nio.file.Path> ENTRY_DELETE;
-    field public static final java.nio.file.WatchEvent.Kind<java.nio.file.Path> ENTRY_MODIFY;
-    field public static final java.nio.file.WatchEvent.Kind<java.lang.Object> OVERFLOW;
-  }
-
-  public abstract interface WatchEvent {
-    method public abstract T context();
-    method public abstract int count();
-    method public abstract java.nio.file.WatchEvent.Kind<T> kind();
-  }
-
-  public static abstract interface WatchEvent.Kind {
-    method public abstract java.lang.String name();
-    method public abstract java.lang.Class<T> type();
-  }
-
-  public static abstract interface WatchEvent.Modifier {
-    method public abstract java.lang.String name();
-  }
-
-  public abstract interface WatchKey {
-    method public abstract void cancel();
-    method public abstract boolean isValid();
-    method public abstract java.util.List<java.nio.file.WatchEvent<?>> pollEvents();
-    method public abstract boolean reset();
-    method public abstract java.nio.file.Watchable watchable();
-  }
-
-  public abstract interface WatchService implements java.io.Closeable {
-    method public abstract void close() throws java.io.IOException;
-    method public abstract java.nio.file.WatchKey poll();
-    method public abstract java.nio.file.WatchKey poll(long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
-    method public abstract java.nio.file.WatchKey take() throws java.lang.InterruptedException;
-  }
-
-  public abstract interface Watchable {
-    method public abstract java.nio.file.WatchKey register(java.nio.file.WatchService, java.nio.file.WatchEvent.Kind<?>[], java.nio.file.WatchEvent.Modifier...) throws java.io.IOException;
-    method public abstract java.nio.file.WatchKey register(java.nio.file.WatchService, java.nio.file.WatchEvent.Kind<?>...) throws java.io.IOException;
-  }
-
-}
-
-package java.nio.file.attribute {
-
-  public final class AclEntry {
-    method public java.util.Set<java.nio.file.attribute.AclEntryFlag> flags();
-    method public static java.nio.file.attribute.AclEntry.Builder newBuilder();
-    method public static java.nio.file.attribute.AclEntry.Builder newBuilder(java.nio.file.attribute.AclEntry);
-    method public java.util.Set<java.nio.file.attribute.AclEntryPermission> permissions();
-    method public java.nio.file.attribute.UserPrincipal principal();
-    method public java.nio.file.attribute.AclEntryType type();
-  }
-
-  public static final class AclEntry.Builder {
-    method public java.nio.file.attribute.AclEntry build();
-    method public java.nio.file.attribute.AclEntry.Builder setFlags(java.util.Set<java.nio.file.attribute.AclEntryFlag>);
-    method public java.nio.file.attribute.AclEntry.Builder setFlags(java.nio.file.attribute.AclEntryFlag...);
-    method public java.nio.file.attribute.AclEntry.Builder setPermissions(java.util.Set<java.nio.file.attribute.AclEntryPermission>);
-    method public java.nio.file.attribute.AclEntry.Builder setPermissions(java.nio.file.attribute.AclEntryPermission...);
-    method public java.nio.file.attribute.AclEntry.Builder setPrincipal(java.nio.file.attribute.UserPrincipal);
-    method public java.nio.file.attribute.AclEntry.Builder setType(java.nio.file.attribute.AclEntryType);
-  }
-
-  public final class AclEntryFlag extends java.lang.Enum {
-    method public static java.nio.file.attribute.AclEntryFlag valueOf(java.lang.String);
-    method public static final java.nio.file.attribute.AclEntryFlag[] values();
-    enum_constant public static final java.nio.file.attribute.AclEntryFlag DIRECTORY_INHERIT;
-    enum_constant public static final java.nio.file.attribute.AclEntryFlag FILE_INHERIT;
-    enum_constant public static final java.nio.file.attribute.AclEntryFlag INHERIT_ONLY;
-    enum_constant public static final java.nio.file.attribute.AclEntryFlag NO_PROPAGATE_INHERIT;
-  }
-
-  public final class AclEntryPermission extends java.lang.Enum {
-    method public static java.nio.file.attribute.AclEntryPermission valueOf(java.lang.String);
-    method public static final java.nio.file.attribute.AclEntryPermission[] values();
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission APPEND_DATA;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission DELETE;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission DELETE_CHILD;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission EXECUTE;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission READ_ACL;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission READ_ATTRIBUTES;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission READ_DATA;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission READ_NAMED_ATTRS;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission SYNCHRONIZE;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission WRITE_ACL;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission WRITE_ATTRIBUTES;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission WRITE_DATA;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission WRITE_NAMED_ATTRS;
-    enum_constant public static final java.nio.file.attribute.AclEntryPermission WRITE_OWNER;
-    field public static final java.nio.file.attribute.AclEntryPermission ADD_FILE;
-    field public static final java.nio.file.attribute.AclEntryPermission ADD_SUBDIRECTORY;
-    field public static final java.nio.file.attribute.AclEntryPermission LIST_DIRECTORY;
-  }
-
-  public final class AclEntryType extends java.lang.Enum {
-    method public static java.nio.file.attribute.AclEntryType valueOf(java.lang.String);
-    method public static final java.nio.file.attribute.AclEntryType[] values();
-    enum_constant public static final java.nio.file.attribute.AclEntryType ALARM;
-    enum_constant public static final java.nio.file.attribute.AclEntryType ALLOW;
-    enum_constant public static final java.nio.file.attribute.AclEntryType AUDIT;
-    enum_constant public static final java.nio.file.attribute.AclEntryType DENY;
-  }
-
-  public abstract interface AclFileAttributeView implements java.nio.file.attribute.FileOwnerAttributeView {
-    method public abstract java.util.List<java.nio.file.attribute.AclEntry> getAcl() throws java.io.IOException;
-    method public abstract java.lang.String name();
-    method public abstract void setAcl(java.util.List<java.nio.file.attribute.AclEntry>) throws java.io.IOException;
-  }
-
-  public abstract interface AttributeView {
-    method public abstract java.lang.String name();
-  }
-
-  public abstract interface BasicFileAttributeView implements java.nio.file.attribute.FileAttributeView {
-    method public abstract java.lang.String name();
-    method public abstract java.nio.file.attribute.BasicFileAttributes readAttributes() throws java.io.IOException;
-    method public abstract void setTimes(java.nio.file.attribute.FileTime, java.nio.file.attribute.FileTime, java.nio.file.attribute.FileTime) throws java.io.IOException;
-  }
-
-  public abstract interface BasicFileAttributes {
-    method public abstract java.nio.file.attribute.FileTime creationTime();
-    method public abstract java.lang.Object fileKey();
-    method public abstract boolean isDirectory();
-    method public abstract boolean isOther();
-    method public abstract boolean isRegularFile();
-    method public abstract boolean isSymbolicLink();
-    method public abstract java.nio.file.attribute.FileTime lastAccessTime();
-    method public abstract java.nio.file.attribute.FileTime lastModifiedTime();
-    method public abstract long size();
-  }
-
-  public abstract interface DosFileAttributeView implements java.nio.file.attribute.BasicFileAttributeView {
-    method public abstract java.lang.String name();
-    method public abstract java.nio.file.attribute.DosFileAttributes readAttributes() throws java.io.IOException;
-    method public abstract void setArchive(boolean) throws java.io.IOException;
-    method public abstract void setHidden(boolean) throws java.io.IOException;
-    method public abstract void setReadOnly(boolean) throws java.io.IOException;
-    method public abstract void setSystem(boolean) throws java.io.IOException;
-  }
-
-  public abstract interface DosFileAttributes implements java.nio.file.attribute.BasicFileAttributes {
-    method public abstract boolean isArchive();
-    method public abstract boolean isHidden();
-    method public abstract boolean isReadOnly();
-    method public abstract boolean isSystem();
-  }
-
-  public abstract interface FileAttribute {
-    method public abstract java.lang.String name();
-    method public abstract T value();
-  }
-
-  public abstract interface FileAttributeView implements java.nio.file.attribute.AttributeView {
-  }
-
-  public abstract interface FileOwnerAttributeView implements java.nio.file.attribute.FileAttributeView {
-    method public abstract java.nio.file.attribute.UserPrincipal getOwner() throws java.io.IOException;
-    method public abstract java.lang.String name();
-    method public abstract void setOwner(java.nio.file.attribute.UserPrincipal) throws java.io.IOException;
-  }
-
-  public abstract interface FileStoreAttributeView implements java.nio.file.attribute.AttributeView {
-  }
-
-  public final class FileTime implements java.lang.Comparable {
-    method public int compareTo(java.nio.file.attribute.FileTime);
-    method public static java.nio.file.attribute.FileTime from(long, java.util.concurrent.TimeUnit);
-    method public static java.nio.file.attribute.FileTime fromMillis(long);
-    method public long to(java.util.concurrent.TimeUnit);
-    method public long toMillis();
-  }
-
-  public abstract interface GroupPrincipal implements java.nio.file.attribute.UserPrincipal {
-  }
-
-  public abstract interface PosixFileAttributeView implements java.nio.file.attribute.BasicFileAttributeView java.nio.file.attribute.FileOwnerAttributeView {
-    method public abstract java.lang.String name();
-    method public abstract java.nio.file.attribute.PosixFileAttributes readAttributes() throws java.io.IOException;
-    method public abstract void setGroup(java.nio.file.attribute.GroupPrincipal) throws java.io.IOException;
-    method public abstract void setPermissions(java.util.Set<java.nio.file.attribute.PosixFilePermission>) throws java.io.IOException;
-  }
-
-  public abstract interface PosixFileAttributes implements java.nio.file.attribute.BasicFileAttributes {
-    method public abstract java.nio.file.attribute.GroupPrincipal group();
-    method public abstract java.nio.file.attribute.UserPrincipal owner();
-    method public abstract java.util.Set<java.nio.file.attribute.PosixFilePermission> permissions();
-  }
-
-  public final class PosixFilePermission extends java.lang.Enum {
-    method public static java.nio.file.attribute.PosixFilePermission valueOf(java.lang.String);
-    method public static final java.nio.file.attribute.PosixFilePermission[] values();
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission GROUP_EXECUTE;
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission GROUP_READ;
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission GROUP_WRITE;
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission OTHERS_EXECUTE;
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission OTHERS_READ;
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission OTHERS_WRITE;
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission OWNER_EXECUTE;
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission OWNER_READ;
-    enum_constant public static final java.nio.file.attribute.PosixFilePermission OWNER_WRITE;
-  }
-
-  public final class PosixFilePermissions {
-    method public static java.nio.file.attribute.FileAttribute<java.util.Set<java.nio.file.attribute.PosixFilePermission>> asFileAttribute(java.util.Set<java.nio.file.attribute.PosixFilePermission>);
-    method public static java.util.Set<java.nio.file.attribute.PosixFilePermission> fromString(java.lang.String);
-    method public static java.lang.String toString(java.util.Set<java.nio.file.attribute.PosixFilePermission>);
-  }
-
-  public abstract interface UserPrincipal implements java.security.Principal {
-  }
-
-  public abstract class UserPrincipalLookupService {
-    ctor protected UserPrincipalLookupService();
-    method public abstract java.nio.file.attribute.GroupPrincipal lookupPrincipalByGroupName(java.lang.String) throws java.io.IOException;
-    method public abstract java.nio.file.attribute.UserPrincipal lookupPrincipalByName(java.lang.String) throws java.io.IOException;
-  }
-
-  public class UserPrincipalNotFoundException extends java.io.IOException {
-    ctor public UserPrincipalNotFoundException(java.lang.String);
-    method public java.lang.String getName();
-  }
-
-}
-
-package java.nio.file.spi {
-
-  public abstract class FileSystemProvider {
-    ctor protected FileSystemProvider();
-    method public abstract void checkAccess(java.nio.file.Path, java.nio.file.AccessMode...) throws java.io.IOException;
-    method public abstract void copy(java.nio.file.Path, java.nio.file.Path, java.nio.file.CopyOption...) throws java.io.IOException;
-    method public abstract void createDirectory(java.nio.file.Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public void createLink(java.nio.file.Path, java.nio.file.Path) throws java.io.IOException;
-    method public void createSymbolicLink(java.nio.file.Path, java.nio.file.Path, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public abstract void delete(java.nio.file.Path) throws java.io.IOException;
-    method public boolean deleteIfExists(java.nio.file.Path) throws java.io.IOException;
-    method public abstract V getFileAttributeView(java.nio.file.Path, java.lang.Class<V>, java.nio.file.LinkOption...);
-    method public abstract java.nio.file.FileStore getFileStore(java.nio.file.Path) throws java.io.IOException;
-    method public abstract java.nio.file.FileSystem getFileSystem(java.net.URI);
-    method public abstract java.nio.file.Path getPath(java.net.URI);
-    method public abstract java.lang.String getScheme();
-    method public static java.util.List<java.nio.file.spi.FileSystemProvider> installedProviders();
-    method public abstract boolean isHidden(java.nio.file.Path) throws java.io.IOException;
-    method public abstract boolean isSameFile(java.nio.file.Path, java.nio.file.Path) throws java.io.IOException;
-    method public abstract void move(java.nio.file.Path, java.nio.file.Path, java.nio.file.CopyOption...) throws java.io.IOException;
-    method public java.nio.channels.AsynchronousFileChannel newAsynchronousFileChannel(java.nio.file.Path, java.util.Set<? extends java.nio.file.OpenOption>, java.util.concurrent.ExecutorService, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public abstract java.nio.channels.SeekableByteChannel newByteChannel(java.nio.file.Path, java.util.Set<? extends java.nio.file.OpenOption>, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public abstract java.nio.file.DirectoryStream<java.nio.file.Path> newDirectoryStream(java.nio.file.Path, java.nio.file.DirectoryStream.Filter<? super java.nio.file.Path>) throws java.io.IOException;
-    method public java.nio.channels.FileChannel newFileChannel(java.nio.file.Path, java.util.Set<? extends java.nio.file.OpenOption>, java.nio.file.attribute.FileAttribute<?>...) throws java.io.IOException;
-    method public abstract java.nio.file.FileSystem newFileSystem(java.net.URI, java.util.Map<java.lang.String, ?>) throws java.io.IOException;
-    method public java.nio.file.FileSystem newFileSystem(java.nio.file.Path, java.util.Map<java.lang.String, ?>) throws java.io.IOException;
-    method public java.io.InputStream newInputStream(java.nio.file.Path, java.nio.file.OpenOption...) throws java.io.IOException;
-    method public java.io.OutputStream newOutputStream(java.nio.file.Path, java.nio.file.OpenOption...) throws java.io.IOException;
-    method public abstract A readAttributes(java.nio.file.Path, java.lang.Class<A>, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public abstract java.util.Map<java.lang.String, java.lang.Object> readAttributes(java.nio.file.Path, java.lang.String, java.nio.file.LinkOption...) throws java.io.IOException;
-    method public java.nio.file.Path readSymbolicLink(java.nio.file.Path) throws java.io.IOException;
-    method public abstract void setAttribute(java.nio.file.Path, java.lang.String, java.lang.Object, java.nio.file.LinkOption...) throws java.io.IOException;
-  }
-
-  public abstract class FileTypeDetector {
-    ctor protected FileTypeDetector();
-    method public abstract java.lang.String probeContentType(java.nio.file.Path) throws java.io.IOException;
   }
 
 }
@@ -52815,7 +52116,6 @@ package java.security {
   public abstract class Signature extends java.security.SignatureSpi {
     ctor protected Signature(java.lang.String);
     method public final java.lang.String getAlgorithm();
-    method public java.security.SignatureSpi getCurrentSpi();
     method public static java.security.Signature getInstance(java.lang.String) throws java.security.NoSuchAlgorithmException;
     method public static java.security.Signature getInstance(java.lang.String, java.lang.String) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
     method public static java.security.Signature getInstance(java.lang.String, java.security.Provider) throws java.security.NoSuchAlgorithmException;
@@ -56614,8 +55914,11 @@ package java.util {
     method public static boolean equals(java.lang.Object, java.lang.Object);
     method public static int hash(java.lang.Object...);
     method public static int hashCode(java.lang.Object);
+    method public static boolean isNull(java.lang.Object);
+    method public static boolean nonNull(java.lang.Object);
     method public static T requireNonNull(T);
     method public static T requireNonNull(T, java.lang.String);
+    method public static T requireNonNull(T, java.util.function.Supplier<java.lang.String>);
     method public static java.lang.String toString(java.lang.Object);
     method public static java.lang.String toString(java.lang.Object, java.lang.String);
   }
@@ -56759,8 +56062,6 @@ package java.util {
     ctor public Scanner(java.io.InputStream, java.lang.String);
     ctor public Scanner(java.io.File) throws java.io.FileNotFoundException;
     ctor public Scanner(java.io.File, java.lang.String) throws java.io.FileNotFoundException;
-    ctor public Scanner(java.nio.file.Path) throws java.io.IOException;
-    ctor public Scanner(java.nio.file.Path, java.lang.String) throws java.io.IOException;
     ctor public Scanner(java.lang.String);
     ctor public Scanner(java.nio.channels.ReadableByteChannel);
     ctor public Scanner(java.nio.channels.ReadableByteChannel, java.lang.String);
@@ -58318,6 +57619,217 @@ package java.util.concurrent.locks {
     method public boolean tryLock();
     method public boolean tryLock(long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
     method public void unlock();
+  }
+
+}
+
+package java.util.function {
+
+  public abstract interface BiConsumer {
+    method public abstract void accept(T, U);
+    method public default java.util.function.BiConsumer<T, U> andThen(java.util.function.BiConsumer<? super T, ? super U>);
+  }
+
+  public abstract interface BiFunction {
+    method public default java.util.function.BiFunction<T, U, V> andThen(java.util.function.Function<? super R, ? extends V>);
+    method public abstract R apply(T, U);
+  }
+
+  public abstract interface BiPredicate {
+    method public default java.util.function.BiPredicate<T, U> and(java.util.function.BiPredicate<? super T, ? super U>);
+    method public default java.util.function.BiPredicate<T, U> negate();
+    method public default java.util.function.BiPredicate<T, U> or(java.util.function.BiPredicate<? super T, ? super U>);
+    method public abstract boolean test(T, U);
+  }
+
+  public abstract interface BinaryOperator implements java.util.function.BiFunction {
+    method public static java.util.function.BinaryOperator<T> maxBy(java.util.Comparator<? super T>);
+    method public static java.util.function.BinaryOperator<T> minBy(java.util.Comparator<? super T>);
+  }
+
+  public abstract interface BooleanSupplier {
+    method public abstract boolean getAsBoolean();
+  }
+
+  public abstract interface Consumer {
+    method public abstract void accept(T);
+    method public default java.util.function.Consumer<T> andThen(java.util.function.Consumer<? super T>);
+  }
+
+  public abstract interface DoubleBinaryOperator {
+    method public abstract double applyAsDouble(double, double);
+  }
+
+  public abstract interface DoubleConsumer {
+    method public abstract void accept(double);
+    method public default java.util.function.DoubleConsumer andThen(java.util.function.DoubleConsumer);
+  }
+
+  public abstract interface DoubleFunction {
+    method public abstract R apply(double);
+  }
+
+  public abstract interface DoublePredicate {
+    method public default java.util.function.DoublePredicate and(java.util.function.DoublePredicate);
+    method public default java.util.function.DoublePredicate negate();
+    method public default java.util.function.DoublePredicate or(java.util.function.DoublePredicate);
+    method public abstract boolean test(double);
+  }
+
+  public abstract interface DoubleSupplier {
+    method public abstract double getAsDouble();
+  }
+
+  public abstract interface DoubleToIntFunction {
+    method public abstract int applyAsInt(double);
+  }
+
+  public abstract interface DoubleToLongFunction {
+    method public abstract long applyAsLong(double);
+  }
+
+  public abstract interface DoubleUnaryOperator {
+    method public default java.util.function.DoubleUnaryOperator andThen(java.util.function.DoubleUnaryOperator);
+    method public abstract double applyAsDouble(double);
+    method public default java.util.function.DoubleUnaryOperator compose(java.util.function.DoubleUnaryOperator);
+    method public static java.util.function.DoubleUnaryOperator identity();
+  }
+
+  public abstract interface Function {
+    method public default java.util.function.Function<T, V> andThen(java.util.function.Function<? super R, ? extends V>);
+    method public abstract R apply(T);
+    method public default java.util.function.Function<V, R> compose(java.util.function.Function<? super V, ? extends T>);
+    method public static java.util.function.Function<T, T> identity();
+  }
+
+  public abstract interface IntBinaryOperator {
+    method public abstract int applyAsInt(int, int);
+  }
+
+  public abstract interface IntConsumer {
+    method public abstract void accept(int);
+    method public default java.util.function.IntConsumer andThen(java.util.function.IntConsumer);
+  }
+
+  public abstract interface IntFunction {
+    method public abstract R apply(int);
+  }
+
+  public abstract interface IntPredicate {
+    method public default java.util.function.IntPredicate and(java.util.function.IntPredicate);
+    method public default java.util.function.IntPredicate negate();
+    method public default java.util.function.IntPredicate or(java.util.function.IntPredicate);
+    method public abstract boolean test(int);
+  }
+
+  public abstract interface IntSupplier {
+    method public abstract int getAsInt();
+  }
+
+  public abstract interface IntToDoubleFunction {
+    method public abstract double applyAsDouble(int);
+  }
+
+  public abstract interface IntToLongFunction {
+    method public abstract long applyAsLong(int);
+  }
+
+  public abstract interface IntUnaryOperator {
+    method public default java.util.function.IntUnaryOperator andThen(java.util.function.IntUnaryOperator);
+    method public abstract int applyAsInt(int);
+    method public default java.util.function.IntUnaryOperator compose(java.util.function.IntUnaryOperator);
+    method public static java.util.function.IntUnaryOperator identity();
+  }
+
+  public abstract interface LongBinaryOperator {
+    method public abstract long applyAsLong(long, long);
+  }
+
+  public abstract interface LongConsumer {
+    method public abstract void accept(long);
+    method public default java.util.function.LongConsumer andThen(java.util.function.LongConsumer);
+  }
+
+  public abstract interface LongFunction {
+    method public abstract R apply(long);
+  }
+
+  public abstract interface LongPredicate {
+    method public default java.util.function.LongPredicate and(java.util.function.LongPredicate);
+    method public default java.util.function.LongPredicate negate();
+    method public default java.util.function.LongPredicate or(java.util.function.LongPredicate);
+    method public abstract boolean test(long);
+  }
+
+  public abstract interface LongSupplier {
+    method public abstract long getAsLong();
+  }
+
+  public abstract interface LongToDoubleFunction {
+    method public abstract double applyAsDouble(long);
+  }
+
+  public abstract interface LongToIntFunction {
+    method public abstract int applyAsInt(long);
+  }
+
+  public abstract interface LongUnaryOperator {
+    method public default java.util.function.LongUnaryOperator andThen(java.util.function.LongUnaryOperator);
+    method public abstract long applyAsLong(long);
+    method public default java.util.function.LongUnaryOperator compose(java.util.function.LongUnaryOperator);
+    method public static java.util.function.LongUnaryOperator identity();
+  }
+
+  public abstract interface ObjDoubleConsumer {
+    method public abstract void accept(T, double);
+  }
+
+  public abstract interface ObjIntConsumer {
+    method public abstract void accept(T, int);
+  }
+
+  public abstract interface ObjLongConsumer {
+    method public abstract void accept(T, long);
+  }
+
+  public abstract interface Predicate {
+    method public default java.util.function.Predicate<T> and(java.util.function.Predicate<? super T>);
+    method public static java.util.function.Predicate<T> isEqual(java.lang.Object);
+    method public default java.util.function.Predicate<T> negate();
+    method public default java.util.function.Predicate<T> or(java.util.function.Predicate<? super T>);
+    method public abstract boolean test(T);
+  }
+
+  public abstract interface Supplier {
+    method public abstract T get();
+  }
+
+  public abstract interface ToDoubleBiFunction {
+    method public abstract double applyAsDouble(T, U);
+  }
+
+  public abstract interface ToDoubleFunction {
+    method public abstract double applyAsDouble(T);
+  }
+
+  public abstract interface ToIntBiFunction {
+    method public abstract int applyAsInt(T, U);
+  }
+
+  public abstract interface ToIntFunction {
+    method public abstract int applyAsInt(T);
+  }
+
+  public abstract interface ToLongBiFunction {
+    method public abstract long applyAsLong(T, U);
+  }
+
+  public abstract interface ToLongFunction {
+    method public abstract long applyAsLong(T);
+  }
+
+  public abstract interface UnaryOperator implements java.util.function.Function {
+    method public static java.util.function.UnaryOperator<T> identity();
   }
 
 }
@@ -60629,6 +60141,7 @@ package javax.net.ssl {
     ctor public ExtendedSSLSession();
     method public abstract java.lang.String[] getLocalSupportedSignatureAlgorithms();
     method public abstract java.lang.String[] getPeerSupportedSignatureAlgorithms();
+    method public java.util.List<javax.net.ssl.SNIServerName> getRequestedServerNames();
   }
 
   public class HandshakeCompletedEvent extends java.util.EventObject {
@@ -60699,6 +60212,25 @@ package javax.net.ssl {
   }
 
   public abstract interface ManagerFactoryParameters {
+  }
+
+  public final class SNIHostName extends javax.net.ssl.SNIServerName {
+    ctor public SNIHostName(java.lang.String);
+    ctor public SNIHostName(byte[]);
+    method public static javax.net.ssl.SNIMatcher createSNIMatcher(java.lang.String);
+    method public java.lang.String getAsciiName();
+  }
+
+  public abstract class SNIMatcher {
+    ctor protected SNIMatcher(int);
+    method public final int getType();
+    method public abstract boolean matches(javax.net.ssl.SNIServerName);
+  }
+
+  public abstract class SNIServerName {
+    ctor protected SNIServerName(int, byte[]);
+    method public final byte[] getEncoded();
+    method public final int getType();
   }
 
   public class SSLContext {
@@ -60822,12 +60354,18 @@ package javax.net.ssl {
     method public java.lang.String getEndpointIdentificationAlgorithm();
     method public boolean getNeedClientAuth();
     method public java.lang.String[] getProtocols();
+    method public final java.util.Collection<javax.net.ssl.SNIMatcher> getSNIMatchers();
+    method public final java.util.List<javax.net.ssl.SNIServerName> getServerNames();
+    method public final boolean getUseCipherSuitesOrder();
     method public boolean getWantClientAuth();
     method public void setAlgorithmConstraints(java.security.AlgorithmConstraints);
     method public void setCipherSuites(java.lang.String[]);
     method public void setEndpointIdentificationAlgorithm(java.lang.String);
     method public void setNeedClientAuth(boolean);
     method public void setProtocols(java.lang.String[]);
+    method public final void setSNIMatchers(java.util.Collection<javax.net.ssl.SNIMatcher>);
+    method public final void setServerNames(java.util.List<javax.net.ssl.SNIServerName>);
+    method public final void setUseCipherSuitesOrder(boolean);
     method public void setWantClientAuth(boolean);
   }
 
@@ -60953,6 +60491,10 @@ package javax.net.ssl {
     method public static synchronized javax.net.SocketFactory getDefault();
     method public abstract java.lang.String[] getDefaultCipherSuites();
     method public abstract java.lang.String[] getSupportedCipherSuites();
+  }
+
+  public final class StandardConstants {
+    field public static final int SNI_HOST_NAME = 0; // 0x0
   }
 
   public abstract interface TrustManager {

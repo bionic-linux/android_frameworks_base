@@ -98,13 +98,6 @@ public class RenderScript {
     */
     public static final int CREATE_FLAG_WAIT_FOR_ATTACH = 0x0008;
 
-    /**
-     * @hide
-     * Context creation flag which specifies that optimization level 0 is
-     * passed to the device compiler upon execution of the RenderScript kernel.
-     * The default optimization level is 3.
-    */
-    public static final int CREATE_FLAG_OPT_LEVEL_0 = 0x0010;
 
     /*
      * Detect the bitness of the VM to allow FieldPacker to do the right thing.
@@ -484,7 +477,6 @@ public class RenderScript {
         rsnAllocationCopyToBitmap(mContext, alloc, bmp);
     }
 
-
     native void rsnAllocationSyncAll(long con, long alloc, int src);
     synchronized void nAllocationSyncAll(long alloc, int src) {
         validate();
@@ -497,6 +489,16 @@ public class RenderScript {
         return rsnAllocationGetByteBuffer(mContext, alloc, stride, xBytesSize, dimY, dimZ);
     }
 
+    native void rsnAllocationSetupBufferQueue(long con, long alloc, int numAlloc);
+    synchronized void nAllocationSetupBufferQueue(long alloc, int numAlloc) {
+        validate();
+        rsnAllocationSetupBufferQueue(mContext, alloc, numAlloc);
+    }
+    native void rsnAllocationShareBufferQueue(long con, long alloc1, long alloc2);
+    synchronized void nAllocationShareBufferQueue(long alloc1, long alloc2) {
+        validate();
+        rsnAllocationShareBufferQueue(mContext, alloc1, alloc2);
+    }
     native Surface rsnAllocationGetSurface(long con, long alloc);
     synchronized Surface nAllocationGetSurface(long alloc) {
         validate();
@@ -512,12 +514,11 @@ public class RenderScript {
         validate();
         rsnAllocationIoSend(mContext, alloc);
     }
-    native void rsnAllocationIoReceive(long con, long alloc);
-    synchronized void nAllocationIoReceive(long alloc) {
+    native long rsnAllocationIoReceive(long con, long alloc);
+    synchronized long nAllocationIoReceive(long alloc) {
         validate();
-        rsnAllocationIoReceive(mContext, alloc);
+        return rsnAllocationIoReceive(mContext, alloc);
     }
-
 
     native void rsnAllocationGenerateMipmaps(long con, long alloc);
     synchronized void nAllocationGenerateMipmaps(long alloc) {
@@ -1398,7 +1399,7 @@ public class RenderScript {
         }
 
         if ((flags & ~(CREATE_FLAG_LOW_LATENCY | CREATE_FLAG_LOW_POWER |
-                       CREATE_FLAG_WAIT_FOR_ATTACH | CREATE_FLAG_OPT_LEVEL_0)) != 0) {
+                       CREATE_FLAG_WAIT_FOR_ATTACH)) != 0) {
             throw new RSIllegalArgumentException("Invalid flags passed.");
         }
 
