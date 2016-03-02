@@ -593,6 +593,10 @@ public class NotificationStackScrollLayout extends ViewGroup
         final View veto = v.findViewById(R.id.veto);
         if (veto != null && veto.getVisibility() != View.GONE) {
             veto.performClick();
+        } else {
+            // If notification is not clearable, snap-back view again
+            mSwipedOutViews.remove(v);
+            snapView(v, true /*animate*/);
         }
         if (DEBUG) Log.v(TAG, "onChildDismissed: " + v);
     }
@@ -801,6 +805,14 @@ public class NotificationStackScrollLayout extends ViewGroup
 
     public void dismissViewAnimated(View child, Runnable endRunnable, int delay, long duration) {
         mSwipeHelper.dismissChild(child, 0, endRunnable, delay, true, duration);
+    }
+
+    public void snapView(View child, boolean animate) {
+        if (animate) {
+            mSwipeHelper.snapChild(child, 0.0f);
+        } else {
+            mSwipeHelper.snapChildInstantly(child);
+        }
     }
 
     @Override

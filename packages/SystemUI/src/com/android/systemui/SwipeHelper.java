@@ -386,6 +386,13 @@ public class SwipeHelper implements Gefingerpoken {
         anim.start();
     }
 
+    public void snapChildInstantly(final View view) {
+        final View targetView = mCallback.getChildContentView(view);
+        final boolean canAnimViewBeDismissed = mCallback.canChildBeDismissed(targetView);
+        setTranslation(targetView, 0);
+        updateSwipeProgressFromOffset(targetView, canAnimViewBeDismissed);
+    }
+
     public boolean onTouchEvent(MotionEvent ev) {
         if (mLongPressSent) {
             return true;
