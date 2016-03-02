@@ -1268,6 +1268,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     @Override
+    public void updateNotification(StatusBarNotification notification, RankingMap ranking) {
+        super.updateNotification(notification, ranking);
+
+        if (!notification.isClearable()) {
+            String key = notification.getKey();
+            Entry entry = mNotificationData.get(key);
+            if (entry != null) {
+                // The notification could be taken dismiss animation
+                // although it isn't clearable. So, snap it back if needed.
+                mStackScroller.snapViewIfNeeded(entry.row);
+            }
+        }
+    }
+
+    @Override
     protected void refreshLayout(int layoutDirection) {
         if (mNavigationBarView != null) {
             mNavigationBarView.setLayoutDirection(layoutDirection);
