@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42318581_e7881de1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-03-02T18:33:17Z",
+      "side": 1,
+      "message": "why is this outside the run?",
+      "revId": "4678d687fc58dc01170c5316f725bcd6dfa3e799",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4277c50e_941f46f2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-03-02T18:33:17Z",
+      "side": 1,
+      "message": "we shouldn\u0027t snap it back animated but unanimated (the panel is closed)",
+      "revId": "4678d687fc58dc01170c5316f725bcd6dfa3e799",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
