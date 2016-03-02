@@ -987,6 +987,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mBarService.onClearAllNotifications(mCurrentUserId);
                 } catch (Exception ex) { }
             }
+            for (View v : viewsToHide) {
+                if (!(v instanceof ExpandableNotificationRow)) {
+                    continue;
+                }
+                StatusBarNotification sbn =
+                        ((ExpandableNotificationRow)v).getStatusBarNotification();
+                if (!sbn.isClearable()) {
+                    // If notification is not clearable, snap-back view again
+                    mStackScroller.snapViewAnimated(v);
+                }
+            }
         });
 
         performDismissAllAnimations(viewsToHide);
