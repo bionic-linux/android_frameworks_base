@@ -15,6 +15,9 @@
  */
 package android.bluetooth;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.ParcelUuid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +28,7 @@ import java.util.UUID;
  * <p> Gatt Service contains a collection of {@link BluetoothGattCharacteristic},
  * as well as referenced services.
  */
-public class BluetoothGattService {
+public class BluetoothGattService implements Parcelable{
 
     /**
      * Primary service
@@ -117,11 +120,90 @@ public class BluetoothGattService {
     }
 
     /**
+     * Create a new BluetoothGattService
+     * @hide
+     */
+    public BluetoothGattService(UUID uuid, int instanceId, int serviceType) {
+        mDevice = null;
+        mUuid = uuid;
+        mInstanceId = instanceId;
+        mServiceType = serviceType;
+        mCharacteristics = new ArrayList<BluetoothGattCharacteristic>();
+        mIncludedServices = new ArrayList<BluetoothGattService>();
+    }
+
+    /**
+     * @hide
+     */
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeParcelable(new ParcelUuid(mUuid), 0);
+        out.writeInt(mInstanceId);
+        out.writeInt(mServiceType);
+        out.writeTypedArray(mCharacteristics.toArray(new BluetoothGattCharacteristic[0]), 0);
+
+        BluetoothGattIncludedService[] includedServices = new BluetoothGattIncludedService[mIncludedServices.size()];
+        int i = 0;
+        for(BluetoothGattService s : mIncludedServices) {
+            includedServices[i] = new BluetoothGattIncludedService(s.getUuid(), s.getInstanceId(), s.getType());
+            i++;
+        }
+        out.writeTypedArray(includedServices, 0);
+     }
+
+    public static final Parcelable.Creator<BluetoothGattService> CREATOR
+            = new Parcelable.Creator<BluetoothGattService>() {
+        public BluetoothGattService createFromParcel(Parcel in) {
+            return new BluetoothGattService(in);
+        }
+
+        public BluetoothGattService[] newArray(int size) {
+            return new BluetoothGattService[size];
+        }
+    };
+
+    private BluetoothGattService(Parcel in) {
+        mUuid = ((ParcelUuid)in.readParcelable(null)).getUuid();
+        mInstanceId = in.readInt();
+        mServiceType = in.readInt();
+
+        mCharacteristics = new ArrayList<BluetoothGattCharacteristic>();
+
+        BluetoothGattCharacteristic[] chrcs = in.createTypedArray(BluetoothGattCharacteristic.CREATOR);
+        if (chrcs != null) {
+            for (BluetoothGattCharacteristic chrc: chrcs) {
+                chrc.setService(this);
+                mCharacteristics.add(chrc);
+            }
+        }
+
+        mIncludedServices = new ArrayList<BluetoothGattService>();
+
+        BluetoothGattIncludedService[] inclSvcs = in.createTypedArray(BluetoothGattIncludedService.CREATOR);
+        if (chrcs != null) {
+            for (BluetoothGattIncludedService isvc: inclSvcs) {
+                mIncludedServices.add(new BluetoothGattService(null, isvc.getUuid(), isvc.getInstanceId(), isvc.getType()));
+            }
+        }
+    }
+
+    /**
      * Returns the device associated with this service.
      * @hide
      */
     /*package*/ BluetoothDevice getDevice() {
         return mDevice;
+    }
+
+    /**
+     * Returns the device associated with this service.
+     * @hide
+     */
+    /*package*/ void setDevice(BluetoothDevice device) {
+        this.mDevice = device;
     }
 
     /**
@@ -192,7 +274,7 @@ public class BluetoothGattService {
      * Add an included service to the internal map.
      * @hide
      */
-    /*package*/ void addIncludedService(BluetoothGattService includedService) {
+    public void addIncludedService(BluetoothGattService includedService) {
         mIncludedServices.add(includedService);
     }
 
