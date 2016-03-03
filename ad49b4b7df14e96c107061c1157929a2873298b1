@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "620cc9c0_0dcb35c1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2016-03-03T00:58:42Z",
+      "side": 1,
+      "message": "Actual removing action in here, another process.",
+      "range": {
+        "startLine": 987,
+        "startChar": 20,
+        "endLine": 987,
+        "endChar": 72
+      },
+      "revId": "ad49b4b7df14e96c107061c1157929a2873298b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02cf8da0_d17a63fe",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2016-03-03T00:58:42Z",
+      "side": 1,
+      "message": "Checking whether clearable and removing noti are performed in different processes.\nSo there can be a timing issue again. (I represented the bug again with this code)",
+      "range": {
+        "startLine": 995,
+        "startChar": 20,
+        "endLine": 995,
+        "endChar": 45
+      },
+      "revId": "ad49b4b7df14e96c107061c1157929a2873298b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
