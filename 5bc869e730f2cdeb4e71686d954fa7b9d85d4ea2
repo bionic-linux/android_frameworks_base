@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b78445cd_2208ce79",
+        "filename": "packages/SystemUI/src/com/android/systemui/SwipeHelper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2016-03-07T23:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97be618f_29f68db0",
+      "revId": "5bc869e730f2cdeb4e71686d954fa7b9d85d4ea2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97be618f_89b2190f",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2016-03-07T20:53:55Z",
       "side": 1,
       "message": "does this need to live in PhoneStatusBar? We should have it together with the rest.",
+      "revId": "5bc869e730f2cdeb4e71686d954fa7b9d85d4ea2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b711a544_6087c63c",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2016-03-07T23:31:15Z",
+      "side": 1,
+      "message": "Due to not accessible to mStackScroller in BaseStatusBar.\nThen, can I make BaseStatusBar.updateNotification() method to abstract method and implement it in PhoneStatusBar with these codes?\n(like addNotification(), removeNotification(), ...)",
+      "parentUuid": "97be618f_89b2190f",
       "revId": "5bc869e730f2cdeb4e71686d954fa7b9d85d4ea2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -82,6 +118,24 @@
       "writtenOn": "2016-03-07T20:53:55Z",
       "side": 1,
       "message": "mIsExpanded || ((ExpandableView) child).isPinned()",
+      "revId": "5bc869e730f2cdeb4e71686d954fa7b9d85d4ea2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "570ea929_1746142e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2016-03-07T23:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17c19119_0d087179",
       "revId": "5bc869e730f2cdeb4e71686d954fa7b9d85d4ea2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
