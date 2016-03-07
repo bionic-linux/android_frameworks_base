@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "37af7563_4cbaf338",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-03-07T23:36:11Z",
+      "side": 1,
+      "message": "Oh I see, leave it as is then. In our internal codebase mStackScroller was moved sometime to BaseStatusBar. Mady can you just move it there?",
+      "parentUuid": "b711a544_6087c63c",
+      "revId": "5bc869e730f2cdeb4e71686d954fa7b9d85d4ea2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97be618f_892539f4",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
         "patchSetId": 8
