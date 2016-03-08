@@ -1016,6 +1016,10 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 }
             }
         }
+
+        if (!isNameAndAddressSet())
+            loadStoredNameAndAddress();
+
         // mAddress is accessed from outside.
         // It is alright without a lock. Here, bluetooth is off, no other thread is
         // changing mAddress
@@ -1161,7 +1165,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                                 Log.e(TAG,"",re);
                             }
 
-                            if (name != null && address != null) {
+                            if (name != null || address != null) {
                                 storeNameAndAddress(name,address);
                                 if (mConnection.isGetNameAddressOnly()) {
                                     unbind = true;
