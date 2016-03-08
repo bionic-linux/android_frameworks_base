@@ -1115,7 +1115,7 @@ public final class PowerManagerService extends SystemService
 
     private void goToSleepInternal(long eventTime, int reason, int flags, int uid) {
         synchronized (mLock) {
-            if (goToSleepNoUpdateLocked(eventTime, reason, flags, uid)) {
+            if (isItBedTimeYetLocked() && goToSleepNoUpdateLocked(eventTime, reason, flags, uid)) {
                 updatePowerStateLocked();
             }
         }
@@ -1720,7 +1720,8 @@ public final class PowerManagerService extends SystemService
      * to being fully awake or else go to sleep for good.
      */
     private boolean isItBedTimeYetLocked() {
-        return mBootCompleted && !isBeingKeptAwakeLocked();
+        //return mBootCompleted && !isBeingKeptAwakeLocked();
+        return false;
     }
 
     /**
