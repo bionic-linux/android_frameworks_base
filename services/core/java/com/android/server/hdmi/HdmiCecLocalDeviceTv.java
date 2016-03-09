@@ -1304,7 +1304,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         }
     }
 
-    List<HdmiDeviceInfo> getSafeCecDevicesLocked() {
+    @Override
+    protected List<HdmiDeviceInfo> getSafeCecDevicesLocked() {
         ArrayList<HdmiDeviceInfo> infoList = new ArrayList<>();
         for (HdmiDeviceInfo info : mSafeAllDeviceInfos) {
             if (isLocalDeviceAddress(info.getLogicalAddress())) {
