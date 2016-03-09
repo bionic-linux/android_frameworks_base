@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "570ce9bf_130c6f1f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3748,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2016-03-09T22:07:20Z",
+      "side": 1,
+      "message": "I think it is time to factor this logic in a method",
+      "range": {
+        "startLine": 3748,
+        "startChar": 24,
+        "endLine": 3748,
+        "endChar": 25
+      },
+      "revId": "765f55a62dbfa77324cb05a1a582625033cc3f2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
