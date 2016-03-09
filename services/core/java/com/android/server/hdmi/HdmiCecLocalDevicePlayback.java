@@ -36,10 +36,10 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import java.util.List;
 
 /**
  * Represent a logical device of type Playback residing in Android system.
@@ -67,6 +67,10 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
 
     // If true, turn off TV upon standby. False by default.
     private boolean mAutoTvOff;
+
+    // Copy of mDeviceInfos to guarantee thread-safety.
+    //@GuardedBy("mLock")
+    private List<HdmiDeviceInfo> mSafeAllDeviceInfos = Collections.emptyList();
 
     // Map-like container of all cec devices including local ones.
     // device id is used as key of container.
@@ -374,6 +378,12 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         }
     }
 
+    // TODO: move out of locked, move matching call in HdmiControlService getDeviceList
+    @Override
+    protected List<HdmiDeviceInfo> getSafeCecDevicesLocked() {
+        return new ArrayList<>(mSafeAllDeviceInfos);
+    }
+
     /**
      * Called when a device is newly added or a new device is detected or
      * existing device is updated.
@@ -423,7 +433,7 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
             removeDeviceInfo(deviceInfo.getId());
         }
         mDeviceInfos.append(deviceInfo.getId(), deviceInfo);
-        // updateSafeDeviceInfoList(); // FIXME
+        updateSafeDeviceInfoList();
         return oldDeviceInfo;
     }
 
@@ -443,8 +453,17 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         if (deviceInfo != null) {
             mDeviceInfos.remove(id);
         }
-        // updateSafeDeviceInfoList(); // FIXME
+        updateSafeDeviceInfoList();
         return deviceInfo;
+    }
+
+    @ServiceThreadOnly
+    private void updateSafeDeviceInfoList() {
+        assertRunOnServiceThread();
+        List<HdmiDeviceInfo> copiedDevices = HdmiUtils.sparseArrayToList(mDeviceInfos);
+        synchronized (mLock) {
+            mSafeAllDeviceInfos = copiedDevices;
+        }
     }
 
     /**
@@ -487,7 +506,7 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         assertRunOnServiceThread();
         // skip invokeDeviceEventListener(), tv does, but playback doesn't have to
         mDeviceInfos.clear();
-        // updateSafeDeviceInfoList(); //FIXME
+        updateSafeDeviceInfoList();
     }
 
     void startNewDeviceAction(ActiveSource activeSource, int deviceType) {

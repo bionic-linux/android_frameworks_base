@@ -1459,11 +1459,11 @@ public final class HdmiControlService extends SystemService {
         @Override
         public List<HdmiDeviceInfo> getDeviceList() {
             enforceAccessPermission();
-            HdmiCecLocalDeviceTv tv = tv();
+            HdmiCecLocalDevice device = device();
             synchronized (mLock) {
-                return (tv == null)
+                return (device == null)
                         ? Collections.<HdmiDeviceInfo>emptyList()
-                        : tv.getSafeCecDevicesLocked();
+                        : device.getSafeCecDevicesLocked();
             }
         }
 

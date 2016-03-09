@@ -1046,6 +1046,9 @@ abstract class HdmiCecLocalDevice {
         mDelayedMessageBuffer.processMessagesForDevice(address);
     }
 
+    // TODO: move all device discovery here
+    abstract protected List<HdmiDeviceInfo> getSafeCecDevicesLocked();
+
     /**
      * Dump internal status of HdmiCecLocalDevice object.
      */
