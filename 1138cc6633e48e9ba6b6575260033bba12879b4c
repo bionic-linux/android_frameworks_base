@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a61927_6b9f01d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2016-03-10T21:39:30Z",
+      "side": 1,
+      "message": "Space after \":\"",
+      "revId": "1138cc6633e48e9ba6b6575260033bba12879b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7a61927_8b6ced9c",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3740,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2016-03-10T21:39:30Z",
+      "side": 1,
+      "message": "Replace with \"Pre-scale volume at volume steps 1, 2 and 3.\". Putting the actual values in the comment is redundant and will be outdated ;)",
+      "range": {
+        "startLine": 3740,
+        "startChar": 15,
+        "endLine": 3740,
+        "endChar": 93
+      },
+      "revId": "1138cc6633e48e9ba6b6575260033bba12879b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
