@@ -714,6 +714,7 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
 
     @ServiceThreadOnly
     private int getNvHdmiVolumeControl() {
+        assertRunOnServiceThread();
         ContentResolver cr = mService.getContext().getContentResolver();
         return System.getInt(cr, System.HDMI_VOLUME_CONTROL, 1);
     }
