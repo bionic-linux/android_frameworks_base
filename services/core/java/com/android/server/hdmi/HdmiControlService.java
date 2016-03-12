@@ -396,14 +396,16 @@ public final class HdmiControlService extends SystemService {
     public void onStart() {
         mIoThread.start();
         mPowerStatus = HdmiControlManager.POWER_STATUS_TRANSIENT_TO_ON;
-        mProhibitMode = false;
-        mHdmiControlEnabled = readBooleanSetting(Global.HDMI_CONTROL_ENABLED, true);
-        mCecOneTouchPlayEnabled = readBooleanSetting(Global.HDMI_ONE_TOUCH_PLAY_ENABLED, false);
-        mMhlInputChangeEnabled = readBooleanSetting(Global.MHL_INPUT_SWITCHING_ENABLED, true);
+        synchronized (mLock) {
+            mProhibitMode = false;
+            mHdmiControlEnabled = readBooleanSetting(Global.HDMI_CONTROL_ENABLED, true);
+            mCecOneTouchPlayEnabled = readBooleanSetting(Global.HDMI_ONE_TOUCH_PLAY_ENABLED, false);
+            mMhlInputChangeEnabled = readBooleanSetting(Global.MHL_INPUT_SWITCHING_ENABLED, true);
+        }
 
         mCecController = HdmiCecController.create(this);
         if (mCecController != null) {
-            if (mHdmiControlEnabled) {
+            if (isControlEnabled()) {
                 initializeCec(INITIATED_BY_BOOT_UP);
             }
         } else {
@@ -1710,7 +1712,7 @@ public final class HdmiControlService extends SystemService {
             invokeCallback(callback, HdmiControlManager.RESULT_SOURCE_NOT_AVAILABLE);
             return;
         }
-        if (!mCecOneTouchPlayEnabled) {
+        if (!isOneTouchPlayEnabled()) {
             Slog.w(TAG, "CEC OneTouchPlay disabled");
             invokeCallback(callback, HdmiControlManager.RESULT_INCORRECT_MODE);
             return;
@@ -2059,7 +2061,7 @@ public final class HdmiControlService extends SystemService {
         assertRunOnServiceThread();
         mPowerStatus = HdmiControlManager.POWER_STATUS_TRANSIENT_TO_ON;
         if (mCecController != null) {
-            if (mHdmiControlEnabled) {
+            if (isControlEnabled()) {
                 int startReason = INITIATED_BY_SCREEN_ON;
                 if (mWakeUpMessageReceived) {
                     startReason = INITIATED_BY_WAKE_UP_MESSAGE;
@@ -2312,6 +2314,12 @@ public final class HdmiControlService extends SystemService {
         assertRunOnServiceThread();
         synchronized (mLock) {
             mCecOneTouchPlayEnabled = enabled;
+        }
+    }
+
+    boolean isOneTouchPlayEnabled() {
+        synchronized (mLock) {
+            return mCecOneTouchPlayEnabled;
         }
     }
 
