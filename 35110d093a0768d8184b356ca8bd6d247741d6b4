@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a61927_f20bcc07",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2016-03-14T23:05:30Z",
+      "side": 1,
+      "message": "Should this be a static method?",
+      "range": {
+        "startLine": 1394,
+        "startChar": 11,
+        "endLine": 1394,
+        "endChar": 23
+      },
+      "revId": "35110d093a0768d8184b356ca8bd6d247741d6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7a61927_d26210b7",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2016-03-14T23:05:30Z",
+      "side": 1,
+      "message": "ScriptC.mCachePath was initialized in a synchronized method.  RenderScript.mCachePath is not.  Should it be?",
+      "range": {
+        "startLine": 1427,
+        "startChar": 8,
+        "endLine": 1427,
+        "endChar": 18
+      },
+      "revId": "35110d093a0768d8184b356ca8bd6d247741d6b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
