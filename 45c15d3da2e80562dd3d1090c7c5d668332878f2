@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37cbf5e3_0d83f2c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-03-15T23:05:01Z",
+      "side": 1,
+      "message": "Just had a quick look at the code but couldn\u0027t easily find such instances. Could you give some specific examples?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "45c15d3da2e80562dd3d1090c7c5d668332878f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37cbf5e3_8d6ec2cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-03-15T23:05:01Z",
+      "side": 1,
+      "message": "Just out of curiosity, what real world problems do you see because of not doing this?",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "45c15d3da2e80562dd3d1090c7c5d668332878f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
