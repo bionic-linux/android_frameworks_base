@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37cbf5e3_30d8c535",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1098498
+      },
+      "writtenOn": "2016-03-15T23:39:34Z",
+      "side": 1,
+      "message": "The other 2 places where MENU_STATE_ACTIVATED command is sent are HdmiCecLocalDevicePlayback#maySendActiveSource() and HdmiCecLocalDevice#handleMenuRequest().\n\nHdmiCecLocalDevicePlayback#maySendActiveSource() is called in 2 places: handleRequestActiveSource() and handleSetStreamPath(). This is the typical path when a new device comes online or is asking about us. We send MENU_STATE_ACTIVATED so that we receive remote control passthrough.\n\nHdmiCecLocalDevice#handleMenuRequest() is expected that it should respond to the menu request by saying that we are activated.",
+      "parentUuid": "37cbf5e3_0d83f2c7",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "45c15d3da2e80562dd3d1090c7c5d668332878f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37cbf5e3_8d6ec2cd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-03-15T23:05:01Z",
       "side": 1,
       "message": "Just out of curiosity, what real world problems do you see because of not doing this?",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "45c15d3da2e80562dd3d1090c7c5d668332878f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37cbf5e3_3029e5d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1098498
+      },
+      "writtenOn": "2016-03-15T23:39:34Z",
+      "side": 1,
+      "message": "If TV and our device are both off, then boot our device and send One Touch Play to turn on TV, remote control passthrough (RCP) (navigation with TV remote) does not work. Some TVs cache whether or not RCP should be on across reboots. If the TV doesn\u0027t, you\u0027re not going to see RCP work after One Touch Play",
+      "parentUuid": "37cbf5e3_8d6ec2cd",
       "range": {
         "startLine": 10,
         "startChar": 22,
