@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc755eba_c7300eca",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2016-03-16T20:25:05Z",
+      "side": 1,
+      "message": "Why isn\u0027t this code guarded by \"if (mCachePath !\u003d nullptr)\", the same way similar code was in ScriptC.java?  (I realize this CL doesn\u0027t change whether or not the code is guarded.)\n\nEven if there\u0027s a good reason not to guard the code, perhaps the assignment to mCachePath ought to be?  I don\u0027t think this (writer) method is synchronized on a lock along with all readers of this field.  Unless the Java memory model considers accesses to object references to be atomic, and allows concurrent readers and writers, in which case an explicit lock in our code would be unnecessary?  Even if the model lets us get away with this, is it possible some other method that accesses mCachePath multiple times might get confused if mCachePath is rewritten to a different value between two accesses?",
+      "range": {
+        "startLine": 1429,
+        "startChar": 0,
+        "endLine": 1433,
+        "endChar": 19
+      },
+      "revId": "d8bb74598feb79dd78682da37ee4be6618838b3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
