@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dc755eba_6d6b19f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-03-16T21:41:47Z",
+      "side": 1,
+      "message": "Then would it make more sense to put this inside broadcastActiveSource()?\n\nOtherwise, we need to explain why it\u0027s OK not to report MenuStatus in start() where we also call broadcastActiveSource().",
+      "parentUuid": "37cbf5e3_30d8c535",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "45c15d3da2e80562dd3d1090c7c5d668332878f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37cbf5e3_8d6ec2cd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "If TV and our device are both off, then boot our device and send One Touch Play to turn on TV, remote control passthrough (RCP) (navigation with TV remote) does not work. Some TVs cache whether or not RCP should be on across reboots. If the TV doesn\u0027t, you\u0027re not going to see RCP work after One Touch Play",
       "parentUuid": "37cbf5e3_8d6ec2cd",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "45c15d3da2e80562dd3d1090c7c5d668332878f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc755eba_2d65211f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-03-16T21:41:47Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "37cbf5e3_3029e5d0",
       "range": {
         "startLine": 10,
         "startChar": 22,
