@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.util.Slog;
@@ -69,8 +71,10 @@ public class ConnectivityController extends StateController implements
         // Register connectivity changed BR.
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        HandlerThread thread = new HandlerThread(TAG);
+        thread.start();
         mContext.registerReceiverAsUser(
-                mConnectivityChangedReceiver, UserHandle.ALL, intentFilter, null, null);
+                mConnectivityChangedReceiver, UserHandle.ALL, intentFilter, null, new Handler(thread.getLooper());
         ConnectivityService cs =
                 (ConnectivityService)ServiceManager.getService(Context.CONNECTIVITY_SERVICE);
         if (cs != null) {
