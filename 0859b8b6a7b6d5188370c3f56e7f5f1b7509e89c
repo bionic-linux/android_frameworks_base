@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc755eba_dc20e186",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1396,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2016-03-16T19:14:44Z",
+      "side": 1,
+      "message": "I was requesting a comment as to why this accessor for a static member is not static -- some suitable refinement of your explanation in our discussion: \"If we make it static, then it can be misused before the variable is properly set, which is during context creation in internalCreate()\".  Perhaps something like: \"mCachePath is not set until the first Renderscript object is instantiated (see internalCreate()); so although mCachePath is static, its accessor is not, to ensure that this instantiation has occurred.\"  Or wordsmith it better than that.",
+      "range": {
+        "startLine": 1394,
+        "startChar": 0,
+        "endLine": 1396,
+        "endChar": 7
+      },
+      "revId": "0859b8b6a7b6d5188370c3f56e7f5f1b7509e89c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
