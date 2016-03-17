@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc842acd_e8d9673a",
+        "filename": "services/core/java/com/android/server/job/controllers/ConnectivityController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2016-03-17T01:05:01Z",
+      "side": 1,
+      "message": "Instead of spinning up a whole new HandlerThread, use BackgroundThread for this.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 114
+      },
+      "revId": "3dac59ad5f15a7cad01a08e9d9eab2c7e3492c99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
