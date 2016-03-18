@@ -1,0 +1,271 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc14e289_fe14c1d2",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_be1a49fc",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: line length, raw collection type",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_fe9de1dc",
+        "filename": "core/java/android/bluetooth/BluetoothGattCharacteristic.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "Use Parcel#createTypedArrayList instead",
+      "range": {
+        "startLine": 307,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 9
+      },
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_de9aa5e2",
+        "filename": "core/java/android/bluetooth/BluetoothGattIncludedService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: space before {",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_7e63b1ab",
+        "filename": "core/java/android/bluetooth/BluetoothGattIncludedService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "You don\u0027t need to hide elements of a hidden class.",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_fe768164",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: space before {",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_5ee19548",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: @Override",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_9ec2eda6",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_fecfa1cc",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "Why not just parcel these as BluetoothGattServices? Presumably they either don\u0027t have included services of their own, which is fine, or they do, in which case you probably care about them and *should* be parceling them. The only concern is if included services can be cyclical, but that seems like a poor idea in general.\n\nalso, nit: line length",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_5eba3534",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_be3fe969",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: space before \u0027:\u0027",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_fe49610a",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "Use Parcel#createTypedArrayList",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_beaec9f6",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_3e2c994b",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: space before \u0027:\u0027",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_9eab0de7",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-03-18T00:45:58Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "4b58c60cf91c41e8342a130f1f4ceb840a47416d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
