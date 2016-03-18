@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc14e289_70e11549",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2016-03-18T23:22:18Z",
+      "side": 1,
+      "message": "Might be clearer to say \"prior to this change the code cache path is initialized\"?",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "4a1c15803b6026362a08e0bca251459e110b2b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_d0ae09f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2016-03-18T23:22:18Z",
+      "side": 1,
+      "message": "Looks like it\u0027s actually initialized on demand (i.e., whenever the accessor method is first called).  Is that always when the first context is created?  If so, is that fact important enough to document (perhaps there\u0027s some dependency that the initialization shouldn\u0027t happen before this time)?",
+      "range": {
+        "startLine": 17,
+        "startChar": 65,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "4a1c15803b6026362a08e0bca251459e110b2b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
