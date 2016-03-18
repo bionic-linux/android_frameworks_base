@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc14e289_7f5e08ed",
+        "filename": "core/java/android/bluetooth/BluetoothGattCharacteristic.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2016-03-18T19:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc14e289_df745ca1",
+      "revId": "1c6d925d586c540887bffa3de345072ba1418aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc14e289_ff6b18bb",
         "filename": "core/java/android/bluetooth/BluetoothGattService.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2016-03-18T19:43:09Z",
       "side": 1,
       "message": "nit: 8 space hanging indents",
+      "revId": "1c6d925d586c540887bffa3de345072ba1418aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_1f3434bc",
+        "filename": "core/java/android/bluetooth/BluetoothGattService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2016-03-18T19:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc14e289_ff6b18bb",
       "revId": "1c6d925d586c540887bffa3de345072ba1418aaf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
