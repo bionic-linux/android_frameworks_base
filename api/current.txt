@@ -15175,7 +15175,7 @@ package android.icu.lang {
     field public static final int BIDI_MIRRORING_GLYPH = 16385; // 0x4001
     field public static final int BIDI_PAIRED_BRACKET = 16397; // 0x400d
     field public static final int BIDI_PAIRED_BRACKET_TYPE = 4117; // 0x1015
-    field public static final int BINARY_LIMIT = 57; // 0x39
+    field public static final int BINARY_LIMIT = 61; // 0x3d
     field public static final int BINARY_START = 0; // 0x0
     field public static final int BLOCK = 4097; // 0x1001
     field public static final int CANONICAL_COMBINING_CLASS = 4098; // 0x1002
@@ -15910,7 +15910,7 @@ package android.icu.text {
     field public static final int DOW_LOCAL_FIELD = 19; // 0x13
     field public static final int ERA_FIELD = 0; // 0x0
     field public static final int EXTENDED_YEAR_FIELD = 20; // 0x14
-    field public static final int FIELD_COUNT = 36; // 0x24
+    field public static final int FIELD_COUNT = 38; // 0x26
     field public static final int FRACTIONAL_SECOND_FIELD = 8; // 0x8
     field public static final int FULL = 0; // 0x0
     field public static final java.lang.String GENERIC_TZ = "vvvv";
@@ -16076,9 +16076,9 @@ package android.icu.text {
 
   public class DateIntervalFormat extends android.icu.text.UFormat {
     method public final java.lang.StringBuffer format(java.lang.Object, java.lang.StringBuffer, java.text.FieldPosition);
-    method public final java.lang.StringBuffer format(android.icu.util.DateInterval, java.lang.StringBuffer, java.text.FieldPosition);
-    method public final java.lang.StringBuffer format(android.icu.util.Calendar, android.icu.util.Calendar, java.lang.StringBuffer, java.text.FieldPosition);
-    method public android.icu.text.DateFormat getDateFormat();
+    method public final synchronized java.lang.StringBuffer format(android.icu.util.DateInterval, java.lang.StringBuffer, java.text.FieldPosition);
+    method public final synchronized java.lang.StringBuffer format(android.icu.util.Calendar, android.icu.util.Calendar, java.lang.StringBuffer, java.text.FieldPosition);
+    method public synchronized android.icu.text.DateFormat getDateFormat();
     method public android.icu.text.DateIntervalInfo getDateIntervalInfo();
     method public static final android.icu.text.DateIntervalFormat getInstance(java.lang.String);
     method public static final android.icu.text.DateIntervalFormat getInstance(java.lang.String, java.util.Locale);
@@ -16380,6 +16380,8 @@ package android.icu.text {
     method public static android.icu.text.LocaleDisplayNames getInstance(android.icu.util.ULocale, android.icu.text.DisplayContext...);
     method public static android.icu.text.LocaleDisplayNames getInstance(java.util.Locale, android.icu.text.DisplayContext...);
     method public abstract android.icu.util.ULocale getLocale();
+    method public java.util.List<android.icu.text.LocaleDisplayNames.UiListItem> getUiList(java.util.Set<android.icu.util.ULocale>, boolean, java.util.Comparator<java.lang.Object>);
+    method public abstract java.util.List<android.icu.text.LocaleDisplayNames.UiListItem> getUiListCompareWholeItems(java.util.Set<android.icu.util.ULocale>, java.util.Comparator<android.icu.text.LocaleDisplayNames.UiListItem>);
     method public abstract java.lang.String keyDisplayName(java.lang.String);
     method public abstract java.lang.String keyValueDisplayName(java.lang.String, java.lang.String);
     method public abstract java.lang.String languageDisplayName(java.lang.String);
@@ -16399,9 +16401,19 @@ package android.icu.text {
     enum_constant public static final android.icu.text.LocaleDisplayNames.DialectHandling STANDARD_NAMES;
   }
 
+  public static class LocaleDisplayNames.UiListItem {
+    ctor public LocaleDisplayNames.UiListItem(android.icu.util.ULocale, android.icu.util.ULocale, java.lang.String, java.lang.String);
+    method public static java.util.Comparator<android.icu.text.LocaleDisplayNames.UiListItem> getComparator(java.util.Comparator<java.lang.Object>, boolean);
+    field public final android.icu.util.ULocale minimized;
+    field public final android.icu.util.ULocale modified;
+    field public final java.lang.String nameInDisplayLocale;
+    field public final java.lang.String nameInSelf;
+  }
+
   public class MeasureFormat extends android.icu.text.UFormat {
     method public final boolean equals(java.lang.Object);
     method public java.lang.StringBuffer format(java.lang.Object, java.lang.StringBuffer, java.text.FieldPosition);
+    method public java.lang.StringBuilder formatMeasurePerUnit(android.icu.util.Measure, android.icu.util.MeasureUnit, java.lang.StringBuilder, java.text.FieldPosition);
     method public final java.lang.String formatMeasures(android.icu.util.Measure...);
     method public java.lang.StringBuilder formatMeasures(java.lang.StringBuilder, java.text.FieldPosition, android.icu.util.Measure...);
     method public static android.icu.text.MeasureFormat getCurrencyFormat(android.icu.util.ULocale);
@@ -17806,11 +17818,11 @@ package android.icu.util {
     ctor public IslamicCalendar(java.util.Date);
     ctor public IslamicCalendar(int, int, int);
     ctor public IslamicCalendar(int, int, int, int, int, int);
+    method public android.icu.util.IslamicCalendar.CalculationType getCalculationType();
     method protected int handleComputeMonthStart(int, int, boolean);
     method protected int handleGetExtendedYear();
     method protected int handleGetLimit(int, int);
-    method public boolean isCivil();
-    method public void setCivil(boolean);
+    method public void setCalculationType(android.icu.util.IslamicCalendar.CalculationType);
     field public static final int DHU_AL_HIJJAH = 11; // 0xb
     field public static final int DHU_AL_QIDAH = 10; // 0xa
     field public static final int JUMADA_1 = 4; // 0x4
