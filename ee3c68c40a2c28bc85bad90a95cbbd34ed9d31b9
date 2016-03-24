@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dce47ef9_41cd16aa",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 15913,
+      "author": {
+        "id": 1024310
+      },
+      "writtenOn": "2016-03-24T16:13:02Z",
+      "side": 1,
+      "message": "\u003e You are right, but this has apparently never caused any problems\n \u003e for anyone -- or no one has complained, anyway.\n\nBut do we know of any other environment, apart from Android, in which it would be normal to build using one version of ICU4J but then execute using another version?\n\nBuilding with the latest version of the SDK and executing on older devices is what\u0027s normal on Android, as the majority of users never are updated to the latest version of the operating system.",
+      "parentUuid": "3ca2fa11_cebba3e6",
+      "range": {
+        "startLine": 15913,
+        "startChar": 34,
+        "endLine": 15913,
+        "endChar": 45
+      },
+      "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc14e289_a0f03c83",
         "filename": "api/current.txt",
         "patchSetId": 1
