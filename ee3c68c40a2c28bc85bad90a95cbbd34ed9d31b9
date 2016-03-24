@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc14e289_a0f03c83",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16079,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2016-03-24T03:16:41Z",
+      "side": 1,
+      "message": "ask Neil whether \"synchronized\" should be removed from this list, since it does not distinguish method signatures",
+      "range": {
+        "startLine": 16079,
+        "startChar": 24,
+        "endLine": 16079,
+        "endChar": 36
+      },
+      "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
