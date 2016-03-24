@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dce47ef9_4185168b",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 15913,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-03-24T10:42:17Z",
+      "side": 1,
+      "message": "The java compiler inlines final static primitives so people have to recompile if they change.\n\nWhen compiling code against Android N stubs they will have one value built into their app, and a different value if they build against O.\n\nDoes it matter? How is this used? (and the one above)\n\nhttp://stackoverflow.com/questions/3524150/is-it-possible-to-disable-javacs-inlining-of-static-final-variables\n\nThis may point to a problem (or a class of problem) we need to fix for N.",
+      "range": {
+        "startLine": 15913,
+        "startChar": 34,
+        "endLine": 15913,
+        "endChar": 45
+      },
+      "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc14e289_a0f03c83",
         "filename": "api/current.txt",
         "patchSetId": 1
@@ -18,6 +41,53 @@
         "startChar": 24,
         "endLine": 16079,
         "endChar": 36
+      },
+      "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dce47ef9_c14f6636",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16079,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-03-24T10:42:17Z",
+      "side": 1,
+      "message": "It\u0027s in the api .txt but removed from the docs.",
+      "parentUuid": "fc14e289_a0f03c83",
+      "range": {
+        "startLine": 16079,
+        "startChar": 24,
+        "endLine": 16079,
+        "endChar": 36
+      },
+      "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dce47ef9_e14c6244",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16383,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-03-24T10:42:17Z",
+      "side": 1,
+      "message": "Hmm. Think we should keep the API footprint (e.g. methods and classes) stable and do this as a follow up once it lands.",
+      "range": {
+        "startLine": 16383,
+        "startChar": 81,
+        "endLine": 16383,
+        "endChar": 90
       },
       "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
