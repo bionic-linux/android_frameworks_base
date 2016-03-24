@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ca2fa11_cebba3e6",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 15913,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2016-03-24T16:02:28Z",
+      "side": 1,
+      "message": "You are right, but this has apparently never caused any problems for anyone -- or no one has complained, anyway.\n\nFor \"int enums\" (which originate from before we could use Java 5), we almost always define COUNT or LIMIT constants for array sizing and loops, mostly internally to ICU. They all change values as we add more constants to existing sets.\n\nThese constants are not very useful to callers because they don\u0027t select behavior, they are actually invalid as input values; callers normally use the other constants in these sets for selecting behavior.\n\nIt is of course possible that some caller uses these COUNT/LIMIT constants and don\u0027t tell us if they have had any problems. There might be some API methods that return COUNT/LIMIT values as integer versions of \"null\".",
+      "parentUuid": "dce47ef9_4185168b",
+      "range": {
+        "startLine": 15913,
+        "startChar": 34,
+        "endLine": 15913,
+        "endChar": 45
+      },
+      "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc14e289_a0f03c83",
         "filename": "api/current.txt",
         "patchSetId": 1
@@ -83,6 +107,30 @@
       "writtenOn": "2016-03-24T10:42:17Z",
       "side": 1,
       "message": "Hmm. Think we should keep the API footprint (e.g. methods and classes) stable and do this as a follow up once it lands.",
+      "range": {
+        "startLine": 16383,
+        "startChar": 81,
+        "endLine": 16383,
+        "endChar": 90
+      },
+      "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dca63e27_cba275c6",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16383,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2016-03-24T16:02:28Z",
+      "side": 1,
+      "message": "Ok. Note that every release will add @stable API.\nThis one is for functionality that had been requested by a Google product.",
+      "parentUuid": "dce47ef9_e14c6244",
       "range": {
         "startLine": 16383,
         "startChar": 81,
