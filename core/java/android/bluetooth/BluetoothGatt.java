@@ -943,7 +943,8 @@ public final class BluetoothGatt implements BluetoothProfile {
 
         try {
             mService.writeDescriptor(mClientIf, device.getAddress(), descriptor.getInstanceId(),
-                characteristic.getWriteType(), AUTHENTICATION_NONE, descriptor.getValue());
+                BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT, AUTHENTICATION_NONE,
+                descriptor.getValue());
         } catch (RemoteException e) {
             Log.e(TAG,"",e);
             mDeviceBusy = false;
