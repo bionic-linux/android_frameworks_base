@@ -1005,4 +1005,28 @@ interface ITelephony {
      * Return the modem activity info.
      */
     ModemActivityInfo getModemActivityInfo();
+
+    /**
+    * add invokeOemRilRequestRaw by phoneId.
+    *Returns the result and response from RIL for oem request
+    * @param phoneId user preferred phoneId.
+    * @param oemReq the data is sent to ril.
+    * @param oemResp the respose data from RIL.
+    * @return negative value request was not handled or get error
+    * 0 request was handled succesfully, but no response data
+    * positive value success, data length of response
+    */
+    int invokeOemRilRequestRawByPhoneId(int phoneId, in byte[] oemReq, out byte[] oemResp);
+
+    /**
+    * add invokeOemRilRequestStrings by phoneId.
+    *Returns the result and response from RIL for oem request
+    * @param phoneId user preferred phoneId.
+    * @param oemReq the data is sent to ril.
+    * @param oemResp the respose data from RIL.
+    * @return negative value request was not handled or get error
+    * 0 request was handled succesfully, but no response data
+    * positive value success, data length of response
+    */
+    int invokeOemRilRequestStrings(int phoneId, in String[] oemReq, out String[] oemResp);
 }

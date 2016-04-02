@@ -4848,4 +4848,57 @@ public class TelephonyManager {
         }
         return null;
     }
+
+    /**
+    * add invokeOemRilRequestRaw by phoneId. @{
+    * Returns the result and response from RIL for oem request
+    *
+    * @param phoneId user preferred phoneId.
+    * @param oemReq the data is sent to ril.
+    * @param oemResp the respose data from RIL.
+    * @return negative value request was not handled or get error
+    * 0 request was handled succesfully, but no response data
+    * positive value success, data length of response
+    * @hide
+    */
+    public int invokeOemRilRequestRawByPhoneId(int phoneId, byte[] oemReq, byte[] oemResp) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null)
+                return telephony.invokeOemRilRequestRawByPhoneId(phoneId, oemReq, oemResp);
+        } catch (RemoteException ex) {
+            Log.e(TAG, "Error");
+        } catch (NullPointerException ex) {
+
+        }
+        return -1;
+    }
+    /** @} */
+
+    /**
+    * add invokeOemRilRequestStrings by phoneId. @{
+    * Returns the result and response from RIL for oem request
+    *
+    * @param phoneId user preferred phoneId.
+    * @param oemReq the data is sent to ril.
+    * @param oemResp the respose data from RIL.
+    * @return negative value request was not handled or get error
+    * 0 request was handled succesfully, but no response data
+    * positive value success, data length of response
+    * @hide
+    */
+    public int invokeOemRilRequestStrings(int phoneId, String[] oemReq, String[] oemResp) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null)
+                return telephony.invokeOemRilRequestStrings(phoneId, oemReq, oemResp);
+        } catch (RemoteException ex) {
+            Log.e(TAG, "Error");
+        } catch (NullPointerException ex) {
+
+        }
+        return -1;
+    }
+    /** @} */
+
 }
