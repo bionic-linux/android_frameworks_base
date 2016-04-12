@@ -94,6 +94,30 @@
       "revId": "4101ba633ab42f487781bde6bf8eadc80e3ce6c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbccb67f_227d6e8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-04-12T14:43:13Z",
+      "side": 1,
+      "message": "Maybe that\u0027s a bit of a non goal - the system property appears only once in code (and once in the documentation).\n\nOTOH, the bad shorter name is repeated in several places.",
+      "parentUuid": "cbccb67f_02a6aa81",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "4101ba633ab42f487781bde6bf8eadc80e3ce6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
