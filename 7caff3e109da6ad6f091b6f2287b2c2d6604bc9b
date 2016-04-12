@@ -22,6 +22,30 @@
       "revId": "7caff3e109da6ad6f091b6f2287b2c2d6604bc9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbccb67f_c2e9229d",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2016-04-12T13:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbccb67f_42def2fb",
+      "range": {
+        "startLine": 694,
+        "startChar": 23,
+        "endLine": 694,
+        "endChar": 54
+      },
+      "revId": "7caff3e109da6ad6f091b6f2287b2c2d6604bc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
