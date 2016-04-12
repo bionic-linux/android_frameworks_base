@@ -22,6 +22,30 @@
       "revId": "4101ba633ab42f487781bde6bf8eadc80e3ce6c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbccb67f_c2104273",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2016-04-12T13:53:40Z",
+      "side": 1,
+      "message": "name war again :).\n\nHappy to go with other suggestion. Do you have one?",
+      "parentUuid": "cbccb67f_62fa165b",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "4101ba633ab42f487781bde6bf8eadc80e3ce6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
