@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b3d8aed_a8c7bfba",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1585,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2016-04-12T00:03:33Z",
+      "side": 1,
+      "message": "This is an unrelated bugfix, but still needed.",
+      "revId": "682350ce80dc8be59356b1181cb2641a82492898",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b3d8aed_c8b16353",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2016-04-12T00:03:33Z",
+      "side": 1,
+      "message": "Allocation - Note that this isn\u0027t public, so we should fix it.",
+      "range": {
+        "startLine": 2179,
+        "startChar": 32,
+        "endLine": 2179,
+        "endChar": 41
+      },
+      "revId": "682350ce80dc8be59356b1181cb2641a82492898",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
