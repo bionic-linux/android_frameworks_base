@@ -190,6 +190,30 @@
       "revId": "4101ba633ab42f487781bde6bf8eadc80e3ce6c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbccb67f_426992c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-04-12T14:57:21Z",
+      "side": 1,
+      "message": "jitthreadweight is probably better than jitpriorityweight. the former at least makes it clear that you\u0027re talking about threads.",
+      "parentUuid": "cbccb67f_02986a2e",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "4101ba633ab42f487781bde6bf8eadc80e3ce6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
