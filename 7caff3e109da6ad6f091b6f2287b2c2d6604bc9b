@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbccb67f_42def2fb",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-04-12T13:28:53Z",
+      "side": 1,
+      "message": "make a note of this in a comment or in the commit message. it\u0027s easy to overlook the missing \"itive\" (due to property size limits, presumably).",
+      "range": {
+        "startLine": 694,
+        "startChar": 23,
+        "endLine": 694,
+        "endChar": 54
+      },
+      "revId": "7caff3e109da6ad6f091b6f2287b2c2d6604bc9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
