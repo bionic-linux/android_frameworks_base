@@ -44,6 +44,7 @@ import android.graphics.Bitmap;
 import android.os.Debug;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.os.UserHandle;
 import android.service.voice.IVoiceInteractionSession;
 import android.util.Slog;
@@ -292,7 +293,11 @@ final class TaskRecord {
     }
 
     void touchActiveTime() {
-        lastActiveTime = System.currentTimeMillis();
+        // The last active time of task will impact the
+        // result of getRunningTasks(@link android.app.ActivityManager),
+        // it must not be effected by the change of system date and time.
+        // Its originally use System.currentTimeMillis.
+        lastActiveTime = SystemClock.elapsedRealtime();
         if (firstActiveTime == 0) {
             firstActiveTime = lastActiveTime;
         }
