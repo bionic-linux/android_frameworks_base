@@ -4148,7 +4148,11 @@ final class ActivityStack {
             if (focusedStack && topTask) {
                 // Give the latest time to ensure foreground task can be sorted
                 // at the first, because lastActiveTime of creating task is 0.
-                ci.lastActiveTime = System.currentTimeMillis();
+                // The last active time of task will impact the
+                // result of getRunningTasks(@link android.app.ActivityManager),
+                // it must not be effected by the change of system date and time.
+                // Its originally use System.currentTimeMillis.
+                ci.lastActiveTime = SystemClock.elapsedRealtime();
                 topTask = false;
             }
 
