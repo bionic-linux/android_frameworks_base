@@ -1645,7 +1645,9 @@ class AppWidgetServiceImpl extends IAppWidgetService.Stub implements WidgetBacku
     private void handleNotifyUpdateAppWidget(Host host, IAppWidgetHost callbacks,
             int appWidgetId, RemoteViews views) {
         try {
-            callbacks.updateAppWidget(appWidgetId, views);
+            synchronized (mLock) {
+                callbacks.updateAppWidget(appWidgetId, views);
+            }
         } catch (RemoteException re) {
             synchronized (mLock) {
                 Slog.e(TAG, "Widget host dead: " + host.id, re);
