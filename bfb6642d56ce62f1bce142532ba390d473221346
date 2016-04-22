@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e85340c8_96393627",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2016-04-22T19:21:43Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "bfb6642d56ce62f1bce142532ba390d473221346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e85340c8_363e420d",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2016-04-22T19:21:43Z",
+      "side": 1,
+      "message": "not needed with proper design discipline",
+      "revId": "bfb6642d56ce62f1bce142532ba390d473221346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e85340c8_5643be92",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2016-04-22T19:21:43Z",
+      "side": 1,
+      "message": "this is a layering violation do not expose this type",
+      "revId": "bfb6642d56ce62f1bce142532ba390d473221346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
