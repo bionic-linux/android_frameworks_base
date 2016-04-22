@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e85340c8_5b22073c",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2016-04-22T19:04:18Z",
+      "side": 1,
+      "message": "You should not leave debugging code like this in your patches.",
+      "revId": "0ea6748aba59cff0ac38758df08cb4d038063179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e85340c8_dbf597dc",
+        "filename": "core/jni/android_database_SQLiteConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2016-04-22T19:04:18Z",
+      "side": 1,
+      "message": "You should not need to call up into Java just for this.  Instead bail out of this function returning an indication that you need to reset other statements.  It should only happen on the first iteration of the loop therefore there will not have been any meaningful side-effects.\n\nIn fact, this case is rare enough that you could perhaps just let it keep throwing the exception and leave the retry logic in Java.",
+      "revId": "0ea6748aba59cff0ac38758df08cb4d038063179",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
