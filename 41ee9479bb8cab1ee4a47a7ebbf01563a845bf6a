@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8a6e026_14601a07",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2016-04-26T13:48:21Z",
+      "side": 0,
+      "message": "Hey guys, I noticed this in the original code when I was making adjustments to the patch: shouldn\u0027t there be a \"mInUse \u003d true\" before returning here?",
+      "revId": "41ee9479bb8cab1ee4a47a7ebbf01563a845bf6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
