@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2898f932_0137ccd4",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3748,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-04-26T17:32:02Z",
+      "side": 1,
+      "message": "Nit: there should be a space after \u0027/\u0027.\nThe same comment applies to the rest of the CL below (sometimes\na space is needed before \u0027/\u0027 as well).",
+      "range": {
+        "startLine": 3748,
+        "startChar": 47,
+        "endLine": 3748,
+        "endChar": 48
+      },
+      "revId": "d52567f875d267e68e63ed83b409f2717e694fe6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
