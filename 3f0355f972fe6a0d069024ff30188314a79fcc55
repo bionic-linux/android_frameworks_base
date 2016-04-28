@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28dab964_82548a44",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18742,
+      "author": {
+        "id": 1039918
+      },
+      "writtenOn": "2016-04-28T23:17:54Z",
+      "side": 0,
+      "message": "Is this because this field is not set for isolated process? if so can you just set it for isolated processes and don\u0027t modify here?",
+      "range": {
+        "startLine": 18742,
+        "startChar": 43,
+        "endLine": 18742,
+        "endChar": 55
+      },
+      "revId": "3f0355f972fe6a0d069024ff30188314a79fcc55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
