@@ -22,6 +22,30 @@
       "revId": "3f0355f972fe6a0d069024ff30188314a79fcc55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28dab964_68c17f90",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18742,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2016-04-29T03:40:29Z",
+      "side": 0,
+      "message": "The field ApplicationInfo.uid is the package uid.\ne.g. Assume an application has uid 10100, but its isolated process will use pid like 99001.\nRefer to:\n@ActivityManagerService\n    final ProcessRecord newProcessRecordLocked(\n    ...\n        if (isolated) {\n\n// If the process is not isolated, uid is the same as info.uid\n@ProcessRecord\n    ProcessRecord(BatteryStatsImpl _batteryStats, ApplicationInfo _info,\n            String _processName, int _uid) {\n        mBatteryStats \u003d _batteryStats;\n        info \u003d _info;\n        isolated \u003d _info.uid !\u003d _uid;\n        uid \u003d _uid;",
+      "parentUuid": "28dab964_82548a44",
+      "range": {
+        "startLine": 18742,
+        "startChar": 43,
+        "endLine": 18742,
+        "endChar": 55
+      },
+      "revId": "3f0355f972fe6a0d069024ff30188314a79fcc55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
