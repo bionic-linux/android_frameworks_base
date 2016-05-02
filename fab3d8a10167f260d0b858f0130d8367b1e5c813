@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28a2b911_a24e2684",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3748,
+      "author": {
+        "id": 1048224
+      },
+      "writtenOn": "2016-05-02T20:27:00Z",
+      "side": 1,
+      "message": "instead I remove all the white spaces before / to be consistent with the context",
+      "revId": "fab3d8a10167f260d0b858f0130d8367b1e5c813",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
