@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "928758d1_b00426b3",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1099158
+      },
+      "writtenOn": "2016-05-08T10:11:24Z",
+      "side": 1,
+      "message": "crash log:\n\njava.lang.IllegalArgumentException\n\tat android.os.Process.setProcessGroup(Native Method)\n\tat com.android.server.am.ActiveServices.bringUpServiceLocked(ActiveServices.java:1536)\n\tat com.android.server.am.ActiveServices.performServiceRestartLocked(ActiveServices.java:1385)\n\tat com.android.server.am.ActiveServices$ServiceRestarter.run(ActiveServices.java:1080)\n\tat android.os.Handler.handleCallback(Handler.java:815)\n\tat android.os.Handler.dispatchMessage(Handler.java:104)\n\tat android.os.Looper.loop(Looper.java:207)\n\tat android.os.HandlerThread.run(HandlerThread.java:61)\n\tat com.android.server.ServiceThread.run(ServiceThread.java:46)",
+      "range": {
+        "startLine": 266,
+        "startChar": 40,
+        "endLine": 266,
+        "endChar": 46
+      },
+      "revId": "570c914e12dbf8773aa7ff7a392c9dd20ebfd7ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
