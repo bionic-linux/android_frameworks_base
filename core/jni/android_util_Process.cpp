@@ -252,8 +252,7 @@ void android_os_Process_setProcessGroup(JNIEnv* env, jobject clazz, int pid, jin
 #ifdef ENABLE_CPUSETS
                 int err = set_cpuset_policy(t_pid, sp);
                 if (err != NO_ERROR) {
-                    signalExceptionForGroupError(env, -err);
-                    break;
+                    ALOGE("Error setting cpuset policy for pid:%d errno:%d \n", pid, errno);
                 }
 #endif
                 continue;
@@ -264,8 +263,7 @@ void android_os_Process_setProcessGroup(JNIEnv* env, jobject clazz, int pid, jin
         // set both cpuset and cgroup for general threads
         err = set_cpuset_policy(t_pid, sp);
         if (err != NO_ERROR) {
-            signalExceptionForGroupError(env, -err);
-            break;
+            ALOGE("Error setting cpuset policy for pid:%d errno:%d \n", pid, errno);
         }
 #endif
 
