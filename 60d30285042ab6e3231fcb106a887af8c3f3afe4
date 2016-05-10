@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92e3d849_6afb66d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2016-05-10T23:47:51Z",
+      "side": 1,
+      "message": "Nit: The title of the commit message is too long.  It\u0027d be better to use a succinct tile and move this sentence to the description.",
+      "revId": "60d30285042ab6e3231fcb106a887af8c3f3afe4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
