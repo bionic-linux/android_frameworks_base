@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77af3690_18070577",
+        "filename": "core/java/android/bluetooth/BluetoothInputDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1101148
+      },
+      "writtenOn": "2016-05-18T04:22:50Z",
+      "side": 1,
+      "message": "Do not recommend to add different naming convention which is inconsistent with other sdk constants\ncodeaurora.bluetooth --\u003e android.bluetooth",
+      "revId": "556d6f5f469a9dc05722c4d5e3be74ecd42662c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77af3690_380cc996",
+        "filename": "core/java/android/bluetooth/IBluetoothInputDevice.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1101148
+      },
+      "writtenOn": "2016-05-18T04:22:50Z",
+      "side": 1,
+      "message": "just wondering is byte enough for idle time boundary?",
+      "revId": "556d6f5f469a9dc05722c4d5e3be74ecd42662c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
