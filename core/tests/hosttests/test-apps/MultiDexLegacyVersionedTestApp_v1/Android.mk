@@ -34,3 +34,26 @@ LOCAL_JACK_FLAGS := -D jack.dex.output.policy=minimal-multidex -D jack.preproces
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/test.jpp
 
 include $(BUILD_PACKAGE)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_TAGS := tests
+
+LOCAL_SRC_FILES := $(call all-java-files-under, src)
+
+LOCAL_SDK_VERSION := 9
+
+LOCAL_PACKAGE_NAME := MultiDexLegacyVersionedTestApp_corrupted
+
+LOCAL_STATIC_JAVA_LIBRARIES := android-support-multidex
+
+LOCAL_DEX_PREOPT := false
+
+include $(BUILD_PACKAGE)
+
+corrupted_classes2_dex := $(dir $(built_dex))/classes2.dex
+
+$(corrupted_classes2_dex): $(built_dex)
+	$(hide) touch $@
+
+$(LOCAL_BUILT_MODULE): $(corrupted_classes2_dex)
