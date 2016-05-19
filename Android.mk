@@ -990,6 +990,7 @@ LOCAL_DROIDDOC_OPTIONS:= \
 		-showAnnotation android.annotation.SystemApi \
 		-title "Android SDK - Including system APIs." \
 		-toroot / \
+		-hide 100/ \
 		-hdf android.whichdoc online \
 		$(sample_groups) \
 		-hdf android.hasSamples true \
