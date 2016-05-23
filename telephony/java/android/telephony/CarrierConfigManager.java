@@ -508,6 +508,42 @@ public class CarrierConfigManager {
     public static final String KEY_ALLOW_NON_EMERGENCY_CALLS_IN_ECM_BOOL =
             "allow_non_emergency_calls_in_ecm_bool";
 
+        // for CellBroadcastReceiver
+    /**
+     * Specifies cell broadcast message ID range that shoud be received.
+     * @hide
+     */
+    public static final String KEY_CELL_BROADCAST_MESSAGE_ID_RANGE_STRING =
+            "cell_broadcast_message_id_range_string";
+
+    /**
+     * Specifies cell broadcast message ID range that shoud be received for CDMA2000.
+     * @hide
+     */
+    public static final String KEY_CELL_BROADCAST_CDMA_MESSAGE_ID_RANGE_STRING =
+            "cell_broadcast_cdma_message_id_range_string";
+
+    /**
+     * Specifies cell broadcast message cast type and method.
+     * @hide
+     */
+    public static final String KEY_CELL_BROADCST_MESSAGE_ID_CAST_STRING_ARRAY =
+            "cell_broadcast_message_id_cast_string_array";
+
+    /**
+     * Specifies cell broadcast message cast type and method for CDMA2000.
+     * @hide
+     */
+    public static final String KEY_CELL_BROADCST_CDMA_MESSAGE_ID_CAST_STRING_ARRAY =
+            "cell_broadcast_cdma_message_id_cast_string_array";
+
+    /**
+     * If this is true, unspecified message IDs are blocked.
+     * @hide
+     */
+    public static final String KEY_CELL_BROADCAST_BLOCK_UNSPECIFIED_MESSAGE_BOOL =
+            "cell_broadcast_receiver_block_unspecified_message_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -613,6 +649,13 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_MMS_UA_PROF_URL_STRING, "");
         sDefaults.putString(KEY_MMS_USER_AGENT_STRING, "");
         sDefaults.putBoolean(KEY_ALLOW_NON_EMERGENCY_CALLS_IN_ECM_BOOL, true);
+
+        // CellBroadcastReceiver defaults
+        sDefaults.putString(KEY_CELL_BROADCAST_MESSAGE_ID_RANGE_STRING, "");
+        sDefaults.putString(KEY_CELL_BROADCAST_CDMA_MESSAGE_ID_RANGE_STRING, "");
+        sDefaults.putStringArray(KEY_CELL_BROADCST_MESSAGE_ID_CAST_STRING_ARRAY, null);
+        sDefaults.putStringArray(KEY_CELL_BROADCST_CDMA_MESSAGE_ID_CAST_STRING_ARRAY, null);
+        sDefaults.putBoolean(KEY_CELL_BROADCAST_BLOCK_UNSPECIFIED_MESSAGE_BOOL, false);
     }
 
     /**
