@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc0fd377_5d219b89",
+        "filename": "Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1022179
+      },
+      "writtenOn": "2016-05-24T21:39:00Z",
+      "side": 1,
+      "message": "Should these tabs be replaced with spaces?",
+      "range": {
+        "startLine": 989,
+        "startChar": 0,
+        "endLine": 989,
+        "endChar": 1
+      },
+      "revId": "694faef81432e57284966f3f186176213309f914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
