@@ -968,7 +968,7 @@ LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 include $(BUILD_DROIDDOC)
 
 # ==== docs for the web (on the androiddevdocs app engine server) =======================
-# TODO: Fix the System API docs build.
+# TODO: Fix the System API docs build so that we don't have to suppress the errors..
 ifneq ($(filter online-system-api-sdk-docs,$(MAKECMDGOALS)),)
 include $(CLEAR_VARS)
 
@@ -990,7 +990,11 @@ LOCAL_DROIDDOC_OPTIONS:= \
 		-showAnnotation android.annotation.SystemApi \
 		-title "Android SDK - Including system APIs." \
 		-toroot / \
-		-hide 100/ \
+		-hide 101 \
+		-hide 103 \
+		-hide 104 \
+		-hide 108 \
+		-hide 114 \
 		-hdf android.whichdoc online \
 		$(sample_groups) \
 		-hdf android.hasSamples true \
