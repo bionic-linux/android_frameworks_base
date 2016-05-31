@@ -22,6 +22,30 @@
       "revId": "e5cdb1e9dc65a63b4b67d41d11c8d02f85aa02e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "996dc1ef_9a24adfa",
+        "filename": "services/core/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1015340
+      },
+      "writtenOn": "2016-05-31T16:55:11Z",
+      "side": 1,
+      "message": "We needed to temporarily roll the change beneath this back, but once that\u0027s resolved I\u0027ll do a V2 that logs these SHAs too.",
+      "parentUuid": "1c27ff99_4619326e",
+      "range": {
+        "startLine": 308,
+        "startChar": 12,
+        "endLine": 308,
+        "endChar": 14
+      },
+      "revId": "e5cdb1e9dc65a63b4b67d41d11c8d02f85aa02e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
