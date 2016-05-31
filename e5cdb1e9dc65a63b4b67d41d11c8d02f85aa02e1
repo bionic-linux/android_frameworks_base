@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c27ff99_4619326e",
+        "filename": "services/core/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1041813
+      },
+      "writtenOn": "2016-05-31T11:10:39Z",
+      "side": 1,
+      "message": "Is it better to add these comments into the LOG as well? So from the log will know where to find the changes to back port, no need to check the source here again.",
+      "range": {
+        "startLine": 308,
+        "startChar": 12,
+        "endLine": 308,
+        "endChar": 14
+      },
+      "revId": "e5cdb1e9dc65a63b4b67d41d11c8d02f85aa02e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
