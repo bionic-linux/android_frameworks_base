@@ -262,6 +262,11 @@ public class Camera {
         public static final int CAMERA_FACING_FRONT = 1;
 
         /**
+         * The camera is external one.
+         */
+        public static final int CAMERA_FACING_EXTERNAL = 2;
+
+        /**
          * The direction that the camera faces. It should be
          * CAMERA_FACING_BACK or CAMERA_FACING_FRONT.
          */
