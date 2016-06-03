@@ -87,6 +87,7 @@ import com.android.server.pm.UserManagerService;
 import com.android.server.power.PowerManagerService;
 import com.android.server.power.ShutdownThread;
 import com.android.server.restrictions.RestrictionsManagerService;
+import com.android.server.security.KeyAttestationApplicationIdProviderService;
 import com.android.server.soundtrigger.SoundTriggerService;
 import com.android.server.statusbar.StatusBarManagerService;
 import com.android.server.storage.DeviceStorageMonitorService;
@@ -549,6 +550,11 @@ public final class SystemServer {
         try {
             Slog.i(TAG, "Reading configuration...");
             SystemConfig.getInstance();
+
+            traceBeginAndSlog("StartKeyAttestationApplicationIdProviderService");
+            ServiceManager.addService("sec_key_att_app_id_provider",
+                    new KeyAttestationApplicationIdProviderService(context));
+            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
             traceBeginAndSlog("StartSchedulingPolicyService");
             ServiceManager.addService("scheduling_policy", new SchedulingPolicyService());
