@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class WifiP2pServiceInfo implements Parcelable {
 
+
     /**
      * All service protocol types.
      */
