@@ -887,13 +887,18 @@ public class MediaSessionService extends SystemService implements Monitor {
                     }
                     return;
                 }
-                try {
-                    String packageName = getContext().getOpPackageName();
-                    mAudioService.adjustSuggestedStreamVolume(direction, suggestedStream,
-                            flags, packageName, TAG);
-                } catch (RemoteException e) {
-                    Log.e(TAG, "Error adjusting default volume.", e);
-                }
+                String packageName = getContext().getOpPackageName();
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            mAudioService.adjustSuggestedStreamVolume(direction, suggestedStream,
+                                flags, packageName, TAG);
+                        } catch (RemoteException e) {
+                            Log.e(TAG, "Error adjusting default volume.", e);
+                        }
+                    }
+                });
             } else {
                 session.adjustVolume(direction, flags, getContext().getPackageName(),
                         UserHandle.myUserId(), true);
