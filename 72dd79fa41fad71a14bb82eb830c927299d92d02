@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b461b121_93eddcc3",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 17812,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2016-06-14T10:04:50Z",
+      "side": 0,
+      "message": "we can\u0027t remove methods like this.\n\nIs that method actually gone? Is it possible to re-implement it in terms of the new method?",
+      "range": {
+        "startLine": 17812,
+        "startChar": 4,
+        "endLine": 17812,
+        "endChar": 36
+      },
+      "revId": "72dd79fa41fad71a14bb82eb830c927299d92d02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

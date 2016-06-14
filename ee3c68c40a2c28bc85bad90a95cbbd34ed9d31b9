@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b461b121_b3f0d89d",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 15913,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2016-06-14T10:04:50Z",
+      "side": 1,
+      "message": "If I remember correctly we tried to hide all of these fields and I don\u0027t remember that we intentionally made many exceptions. Maybe these were missed.",
+      "parentUuid": "dca63e27_cbea7595",
+      "range": {
+        "startLine": 15913,
+        "startChar": 34,
+        "endLine": 15913,
+        "endChar": 45
+      },
+      "revId": "ee3c68c40a2c28bc85bad90a95cbbd34ed9d31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc14e289_a0f03c83",
         "filename": "api/current.txt",
         "patchSetId": 1
