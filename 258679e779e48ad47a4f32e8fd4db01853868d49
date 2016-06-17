@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "493a9cf7_200d8a8c",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1105104
+      },
+      "writtenOn": "2016-06-17T06:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "493a9cf7_e0e8c2b3",
+      "revId": "258679e779e48ad47a4f32e8fd4db01853868d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "493a9cf7_4021ae02",
         "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2016-06-17T05:52:12Z",
       "side": 1,
       "message": "We use 8 spaces for breaking lines.",
+      "range": {
+        "startLine": 896,
+        "startChar": 28,
+        "endLine": 896,
+        "endChar": 32
+      },
+      "revId": "258679e779e48ad47a4f32e8fd4db01853868d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "493a9cf7_80029658",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1105104
+      },
+      "writtenOn": "2016-06-17T06:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "493a9cf7_4021ae02",
       "range": {
         "startLine": 896,
         "startChar": 28,
