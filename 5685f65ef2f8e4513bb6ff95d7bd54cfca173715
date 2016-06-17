@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493a9cf7_60e672f3",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-06-17T04:57:30Z",
+      "side": 1,
+      "message": "Please remove.",
+      "range": {
+        "startLine": 901,
+        "startChar": 16,
+        "endLine": 901,
+        "endChar": 32
+      },
+      "revId": "5685f65ef2f8e4513bb6ff95d7bd54cfca173715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "493a9cf7_80e1f6db",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-06-17T04:57:30Z",
+      "side": 1,
+      "message": "Could you use 4 spaces for indentation?",
+      "revId": "5685f65ef2f8e4513bb6ff95d7bd54cfca173715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "493a9cf7_c0cade50",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-06-17T04:57:30Z",
+      "side": 1,
+      "message": "This method is only called above. Why not just move the code here to line 891?",
+      "revId": "5685f65ef2f8e4513bb6ff95d7bd54cfca173715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
