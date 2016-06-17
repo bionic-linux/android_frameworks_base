@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493a9cf7_e01282a2",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2016-06-17T08:07:14Z",
+      "side": 1,
+      "message": "Please use // instead of /* */",
+      "range": {
+        "startLine": 891,
+        "startChar": 16,
+        "endLine": 896,
+        "endChar": 19
+      },
+      "revId": "ec05219a84f11655fe55a8dbcef16cb77b5868e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
