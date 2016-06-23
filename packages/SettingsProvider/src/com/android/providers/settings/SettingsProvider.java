@@ -903,7 +903,7 @@ public class SettingsProvider extends ContentProvider {
         }
 
         // Enforce what the calling package can mutate the system settings.
-        enforceRestrictedSystemSettingsMutationForCallingPackage(operation, name);
+        enforceRestrictedSystemSettingsMutationForCallingPackage(operation, name, runAsUserId);
 
         // Resolve the userId on whose behalf the call is made.
         final int callingUserId = resolveCallingUserIdEnforcingPermissionsLocked(runAsUserId);
@@ -1001,7 +1001,7 @@ public class SettingsProvider extends ContentProvider {
     }
 
     private void enforceRestrictedSystemSettingsMutationForCallingPackage(int operation,
-            String name) {
+            String name, int userId) {
         // System/root/shell can mutate whatever secure settings they want.
         final int callingUid = Binder.getCallingUid();
         if (callingUid == android.os.Process.SYSTEM_UID
@@ -1019,7 +1019,7 @@ public class SettingsProvider extends ContentProvider {
                 }
 
                 // The calling package is already verified.
-                PackageInfo packageInfo = getCallingPackageInfoOrThrow();
+                PackageInfo packageInfo = getCallingPackageInfoOrThrow(userId);
 
                 // Privileged apps can do whatever they want.
                 if ((packageInfo.applicationInfo.privateFlags
@@ -1039,7 +1039,7 @@ public class SettingsProvider extends ContentProvider {
                 }
 
                 // The calling package is already verified.
-                PackageInfo packageInfo = getCallingPackageInfoOrThrow();
+                PackageInfo packageInfo = getCallingPackageInfoOrThrow(userId);
 
                 // Privileged apps can do whatever they want.
                 if ((packageInfo.applicationInfo.privateFlags &
@@ -1053,9 +1053,9 @@ public class SettingsProvider extends ContentProvider {
         }
     }
 
-    private PackageInfo getCallingPackageInfoOrThrow() {
+    private PackageInfo getCallingPackageInfoOrThrow(int userId) {
         try {
-            return mPackageManager.getPackageInfo(getCallingPackage(), 0);
+            return mPackageManager.getPackageInfo(getCallingPackage(), 0, userId);
         } catch (PackageManager.NameNotFoundException e) {
             throw new IllegalStateException("Calling package doesn't exist");
         }

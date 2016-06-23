@@ -125,8 +125,13 @@ final class ApplicationPackageManager extends PackageManager {
     @Override
     public PackageInfo getPackageInfo(String packageName, int flags)
             throws NameNotFoundException {
+        return getPackageInfo(packageName, flags, mContext.getUserId());
+    }
+
+    @Override
+    public PackageInfo getPackageInfo(String packageName, int flags, int userId) throws NameNotFoundException {
         try {
-            PackageInfo pi = mPM.getPackageInfo(packageName, flags, mContext.getUserId());
+            PackageInfo pi = mPM.getPackageInfo(packageName, flags, userId);
             if (pi != null) {
                 return pi;
             }
