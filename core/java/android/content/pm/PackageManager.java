@@ -2049,6 +2049,44 @@ public abstract class PackageManager {
             throws NameNotFoundException;
 
     /**
+     * Retrieve overall information about an application package that is
+     * installed on the system.
+     * <p>
+     * Throws {@link NameNotFoundException} if a package with the given name can
+     * not be found on the system.
+     *
+     * @param packageName The full name (i.e. com.google.apps.contacts) of the
+     *            desired package.
+     * @param flags Additional option flags. Use any combination of
+     *            {@link #GET_ACTIVITIES}, {@link #GET_GIDS},
+     *            {@link #GET_CONFIGURATIONS}, {@link #GET_INSTRUMENTATION},
+     *            {@link #GET_PERMISSIONS}, {@link #GET_PROVIDERS},
+     *            {@link #GET_RECEIVERS}, {@link #GET_SERVICES},
+     *            {@link #GET_SIGNATURES}, {@link #GET_UNINSTALLED_PACKAGES} to
+     *            modify the data returned.
+     * @param userId The user id.
+     * @return Returns a PackageInfo object containing information about the
+     *         package. If flag GET_UNINSTALLED_PACKAGES is set and if the
+     *         package is not found in the list of installed applications, the
+     *         package information is retrieved from the list of uninstalled
+     *         applications (which includes installed applications as well as
+     *         applications with data directory i.e. applications which had been
+     *         deleted with {@code DONT_DELETE_DATA} flag set).
+     * @see #GET_ACTIVITIES
+     * @see #GET_GIDS
+     * @see #GET_CONFIGURATIONS
+     * @see #GET_INSTRUMENTATION
+     * @see #GET_PERMISSIONS
+     * @see #GET_PROVIDERS
+     * @see #GET_RECEIVERS
+     * @see #GET_SERVICES
+     * @see #GET_SIGNATURES
+     * @see #GET_UNINSTALLED_PACKAGES
+     */
+    public abstract PackageInfo getPackageInfo(String packageName, int flags, int userId)
+            throws NameNotFoundException;
+
+    /**
      * Map from the current package names in use on the device to whatever
      * the current canonical name of that package is.
      * @param names Array of current names to be mapped.
