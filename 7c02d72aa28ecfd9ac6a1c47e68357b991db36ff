@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c314ad8a_04d076d5",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2016-06-23T19:40:25Z",
+      "side": 1,
+      "message": "We already determined the setting value should be looked up in the owning user. We cannot just fallback to the calling user if the settings is not present.\n\nThis code changed for N and we have a null object instead of returning null which will fix the NPE.",
+      "range": {
+        "startLine": 710,
+        "startChar": 20,
+        "endLine": 711,
+        "endChar": 88
+      },
+      "revId": "7c02d72aa28ecfd9ac6a1c47e68357b991db36ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c314ad8a_a4dec2e7",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2016-06-23T19:40:25Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 849,
+        "startChar": 15,
+        "endLine": 855,
+        "endChar": 17
+      },
+      "revId": "7c02d72aa28ecfd9ac6a1c47e68357b991db36ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
