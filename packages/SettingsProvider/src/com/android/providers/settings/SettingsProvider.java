@@ -706,7 +706,13 @@ public class SettingsProvider extends ContentProvider {
 
                 Setting setting = mSettingsRegistry.getSettingLocked(
                         SettingsRegistry.SETTINGS_TYPE_SECURE, owningUserId, name);
-                appendSettingToCursor(result, setting);
+                if (setting == null) {
+                    setting = mSettingsRegistry.getSettingLocked(
+                            SettingsRegistry.SETTINGS_TYPE_SECURE, callingUserId, name);
+                }
+                if (setting != null) {
+                    appendSettingToCursor(result, setting);
+                }
             }
 
             return result;
@@ -840,7 +846,13 @@ public class SettingsProvider extends ContentProvider {
 
                 Setting setting = mSettingsRegistry.getSettingLocked(
                         SettingsRegistry.SETTINGS_TYPE_SYSTEM, owningUserId, name);
-                appendSettingToCursor(result, setting);
+                if (setting == null) {
+                    setting = mSettingsRegistry.getSettingLocked(
+                            SettingsRegistry.SETTINGS_TYPE_SYSTEM, callingUserId, name);
+                }
+                if (setting != null) {
+                    appendSettingToCursor(result, setting);
+                }
             }
 
             return result;
