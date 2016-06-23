@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "639dc16f_3483fe72",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2016-06-23T21:53:52Z",
+      "side": 1,
+      "message": "The settings provider is the only caller for now. Let us keep it out of the public APIs (just add @hide in the last line of the javadoc). Also the name should be getPackageInfoAsUser for consistency with other similar APIs.",
+      "range": {
+        "startLine": 2086,
+        "startChar": 1,
+        "endLine": 2087,
+        "endChar": 41
+      },
+      "revId": "7dcfb04676f6fc023fbf94915626f698a4321a78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
