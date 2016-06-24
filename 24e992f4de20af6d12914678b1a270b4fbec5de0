@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3925964_6ef12f6c",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyTestAppWithCorruptedDex/src/com/android/framework/multidexlegacycorrupteddex/CorruptedDexTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1109283
+      },
+      "writtenOn": "2016-06-24T14:02:33Z",
+      "side": 1,
+      "message": "I don\u0027t think this name makes sense. Maybe testSupressedExceptions() instead.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "24e992f4de20af6d12914678b1a270b4fbec5de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
