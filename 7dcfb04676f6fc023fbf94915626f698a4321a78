@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "837c7558_29f14e6d",
+        "filename": "core/java/android/app/ApplicationPackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2016-06-25T10:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "639dc16f_57db242b",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "7dcfb04676f6fc023fbf94915626f698a4321a78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "639dc16f_3483fe72",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 3
@@ -59,6 +83,54 @@
       "writtenOn": "2016-06-23T22:11:33Z",
       "side": 1,
       "message": "No. This should be removed. There\u0027s no need to have it defined here.",
+      "parentUuid": "639dc16f_3483fe72",
+      "range": {
+        "startLine": 2086,
+        "startChar": 1,
+        "endLine": 2087,
+        "endChar": 41
+      },
+      "revId": "7dcfb04676f6fc023fbf94915626f698a4321a78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "837c7558_e9f68666",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2016-06-25T10:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "639dc16f_d7b714e5",
+      "range": {
+        "startLine": 2086,
+        "startChar": 1,
+        "endLine": 2087,
+        "endChar": 41
+      },
+      "revId": "7dcfb04676f6fc023fbf94915626f698a4321a78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "837c7558_09ec8a93",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2016-06-25T10:21:53Z",
+      "side": 1,
+      "message": "I think i should remove this and use the internal API,Thank you.",
       "parentUuid": "639dc16f_3483fe72",
       "range": {
         "startLine": 2086,
