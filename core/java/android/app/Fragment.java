@@ -351,7 +351,7 @@ final class FragmentState implements Parcelable {
  * pressing back will pop it to return the user to whatever previous state
  * the activity UI was in.
  */
-public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListener {
+public class Fragment implements ComponentCallbacks2, OnCreateContextMenuListener { // yonguk.kim@lge.com test for commit
     private static final ArrayMap<String, Class<?>> sClassMap =
             new ArrayMap<String, Class<?>>();
 
