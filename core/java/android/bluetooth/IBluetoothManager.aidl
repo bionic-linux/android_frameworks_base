@@ -34,9 +34,10 @@ interface IBluetoothManager
     void registerStateChangeCallback(in IBluetoothStateChangeCallback callback);
     void unregisterStateChangeCallback(in IBluetoothStateChangeCallback callback);
     boolean isEnabled();
-    boolean enable();
+    boolean enable(String packageName);
     boolean enableNoAutoConnect();
-    boolean disable(boolean persist);
+    boolean disable(String packageName, boolean persist);
+    int getState();
     IBluetoothGatt getBluetoothGatt();
 
     boolean bindBluetoothProfileService(int profile, IBluetoothProfileServiceConnection proxy);
@@ -49,3 +50,4 @@ interface IBluetoothManager
     int updateBleAppCount(IBinder b, boolean enable);
     boolean isBleAppPresent();
 }
+
