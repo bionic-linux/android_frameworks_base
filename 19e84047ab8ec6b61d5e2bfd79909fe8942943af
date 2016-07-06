@@ -22,6 +22,30 @@
       "revId": "19e84047ab8ec6b61d5e2bfd79909fe8942943af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd76b211_09a8ad8b",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2016-07-06T08:19:34Z",
+      "side": 1,
+      "message": "Yes, it works.\n\nThe master branch of Android in the Android Open Source Project (AOSP) requires Java 8.\nhttps://source.android.com/source/initializing.html",
+      "parentUuid": "fd76b211_2681166b",
+      "range": {
+        "startLine": 902,
+        "startChar": 36,
+        "endLine": 902,
+        "endChar": 41
+      },
+      "revId": "19e84047ab8ec6b61d5e2bfd79909fe8942943af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
