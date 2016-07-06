@@ -3107,16 +3107,18 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
         if (getAccessibilityNodeProvider() != null) {
             return;
         }
-        if (mAttachInfo != null) {
-            final ArrayList<View> childrenForAccessibility = mAttachInfo.mTempArrayList;
-            childrenForAccessibility.clear();
-            addChildrenForAccessibility(childrenForAccessibility);
-            final int childrenForAccessibilityCount = childrenForAccessibility.size();
-            for (int i = 0; i < childrenForAccessibilityCount; i++) {
-                final View child = childrenForAccessibility.get(i);
-                info.addChildUnchecked(child);
+        synchronized (mAttachInfo.mTempArrayList) {
+            if (mAttachInfo != null) {
+                final ArrayList<View> childrenForAccessibility = mAttachInfo.mTempArrayList;
+                childrenForAccessibility.clear();
+                addChildrenForAccessibility(childrenForAccessibility);
+                final int childrenForAccessibilityCount = childrenForAccessibility.size();
+                for (int i = 0; i < childrenForAccessibilityCount; i++) {
+                    final View child = childrenForAccessibility.get(i);
+                    info.addChildUnchecked(child);
+                }
+                childrenForAccessibility.clear();
             }
-            childrenForAccessibility.clear();
         }
     }
 

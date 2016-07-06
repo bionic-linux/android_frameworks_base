@@ -6441,13 +6441,15 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_VIEW_FOCUSED: {
-                ArrayList<View> focusablesTempList = (mAttachInfo != null)
-                        ? mAttachInfo.mTempArrayList : new ArrayList<View>();
-                getRootView().addFocusables(focusablesTempList, View.FOCUS_FORWARD, FOCUSABLES_ALL);
-                event.setItemCount(focusablesTempList.size());
-                event.setCurrentItemIndex(focusablesTempList.indexOf(this));
-                if (mAttachInfo != null) {
-                    focusablesTempList.clear();
+                synchronized (mAttachInfo.mTempArrayList) {
+                    ArrayList<View> focusablesTempList = (mAttachInfo != null)
+                            ? mAttachInfo.mTempArrayList : new ArrayList<View>();
+                    getRootView().addFocusables(focusablesTempList, View.FOCUS_FORWARD, FOCUSABLES_ALL);
+                    event.setItemCount(focusablesTempList.size());
+                    event.setCurrentItemIndex(focusablesTempList.indexOf(this));
+                    if (mAttachInfo != null) {
+                        focusablesTempList.clear();
+                    }
                 }
             } break;
             case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED: {
