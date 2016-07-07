@@ -16,6 +16,24 @@
       "revId": "2e58a01788ee6310147c4a532c5052854a6316d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd172efa_78e85daf",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1105104
+      },
+      "writtenOn": "2016-07-07T14:18:15Z",
+      "side": 1,
+      "message": "Sure. Thanks.",
+      "parentUuid": "3dd12a8d_a869fbaa",
+      "revId": "2e58a01788ee6310147c4a532c5052854a6316d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
