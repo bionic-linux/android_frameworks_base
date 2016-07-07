@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd12a8d_a869fbaa",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-07-07T13:49:43Z",
+      "side": 1,
+      "message": "We don\u0027t need a background thread for this, just move the registration below the synchronize block.",
+      "revId": "2e58a01788ee6310147c4a532c5052854a6316d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
