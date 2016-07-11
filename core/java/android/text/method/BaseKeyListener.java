@@ -226,7 +226,7 @@ public abstract class BaseKeyListener extends MetaKeyKeyListener
             adjustMetaAfterKeypress(content);
         }
 
-        return super.onKeyDown(view, content, keyCode, event);
+        return super.onKeyDown(view, content, keyCode, event) || handled;
     }
 
     /**
