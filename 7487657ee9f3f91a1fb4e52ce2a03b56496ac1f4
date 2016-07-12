@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad4f82f_76c6f052",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6280,
+      "author": {
+        "id": 1022964
+      },
+      "writtenOn": "2016-07-12T06:29:36Z",
+      "side": 1,
+      "message": "\u0027ps.codePathString\u0027 points to \u0027/system/app[priv-app]/APP\u0027 for system app or \u0027/data/app/APP\u0027 for 3rd apps, however, \u0027mInstaller.rmdex\u0027 requires a valid apk file path instead, then it leads to failure to unlink the dalvik-cache of app with specified isa.\n\nto fix it:\nuse \u0027ps.pkg.getAllCodePathsExcludingResourceOnly()\u0027 to get all .apk paths, then invoke \u0027mInstaller.rmdex\u0027 to clean dalvik-cache each.",
+      "range": {
+        "startLine": 6280,
+        "startChar": 45,
+        "endLine": 6280,
+        "endChar": 62
+      },
+      "revId": "7487657ee9f3f91a1fb4e52ce2a03b56496ac1f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
