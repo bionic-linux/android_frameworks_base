@@ -834,6 +834,9 @@ class MountService extends IMountService.Stub
                     mCallbacks.notifyStorageStateChanged(userVol.getPath(), envState, envState);
                 }
             }
+        }
+
+        synchronized (mLock) {
             mStartedUsers = ArrayUtils.appendInt(mStartedUsers, userId);
         }
     }
@@ -846,7 +849,7 @@ class MountService extends IMountService.Stub
         } catch (NativeDaemonConnectorException ignored) {
         }
 
-        synchronized (mVolumes) {
+        synchronized (mLock) {
             mStartedUsers = ArrayUtils.removeInt(mStartedUsers, userId);
         }
     }
