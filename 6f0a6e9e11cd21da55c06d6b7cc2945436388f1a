@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5acfc472_8c2734bd",
+        "filename": "services/core/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2016-07-13T17:20:21Z",
+      "side": 1,
+      "message": "this should be mLock; mVolumes shouldn\u0027t be used to protect any fields. and, in fact, according to the annotation, mVolumes is supposed to be protected by mLock",
+      "range": {
+        "startLine": 826,
+        "startChar": 22,
+        "endLine": 826,
+        "endChar": 30
+      },
+      "revId": "6f0a6e9e11cd21da55c06d6b7cc2945436388f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
