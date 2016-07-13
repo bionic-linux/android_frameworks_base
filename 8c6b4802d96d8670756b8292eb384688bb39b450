@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5acfc472_a44c1663",
+        "filename": "core/java/android/view/WindowManagerGlobal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-07-13T00:58:22Z",
+      "side": 1,
+      "message": "ogunwale@: Pretty sure this access needs to be synchronized.",
+      "range": {
+        "startLine": 303,
+        "startChar": 12,
+        "endLine": 303,
+        "endChar": 18
+      },
+      "revId": "8c6b4802d96d8670756b8292eb384688bb39b450",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
