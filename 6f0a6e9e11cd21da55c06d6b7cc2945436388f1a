@@ -22,6 +22,30 @@
       "revId": "6f0a6e9e11cd21da55c06d6b7cc2945436388f1a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad4f82f_f609e0dc",
+        "filename": "services/core/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1112683
+      },
+      "writtenOn": "2016-07-14T07:58:15Z",
+      "side": 1,
+      "message": "thanks, your answer is valueable, so only  use mLock instead of mVolumes.",
+      "parentUuid": "5acfc472_8c2734bd",
+      "range": {
+        "startLine": 826,
+        "startChar": 22,
+        "endLine": 826,
+        "endChar": 30
+      },
+      "revId": "6f0a6e9e11cd21da55c06d6b7cc2945436388f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
