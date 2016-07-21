@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca004388_452c6afd",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-07-21T14:56:26Z",
+      "side": 1,
+      "message": "FWIW \"FATAL\" seems a bit misplaced here because LoggingHandler doesn\u0027t know whether KillApplicationHandler has been replaced or will run. Any idea how many tools might rely on exactly this String appearing in logcat / how safe it is to change this String?",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "63eb881b0d13a89e7c187afdcbf592efdbc9a30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
