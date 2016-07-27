@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0a6d5d_422537c5",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2016-07-27T17:29:46Z",
+      "side": 1,
+      "message": "This should be callingUserId as this is the user on whose behalf the call is made (in some cases if a managed profile asks a question we answer as the parent)",
+      "range": {
+        "startLine": 909,
+        "startChar": 82,
+        "endLine": 909,
+        "endChar": 93
+      },
+      "revId": "365e73e6726ec6a1bb3992680b87ee9910efd6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
