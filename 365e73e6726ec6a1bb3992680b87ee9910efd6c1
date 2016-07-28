@@ -22,6 +22,30 @@
       "revId": "365e73e6726ec6a1bb3992680b87ee9910efd6c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afb2410f_bcd581ec",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2016-07-28T03:37:27Z",
+      "side": 1,
+      "message": "Good point,most time the runAsUserId is equals the callingUserId,but the managed profile user may different.",
+      "parentUuid": "0f0a6d5d_422537c5",
+      "range": {
+        "startLine": 909,
+        "startChar": 82,
+        "endLine": 909,
+        "endChar": 93
+      },
+      "revId": "365e73e6726ec6a1bb3992680b87ee9910efd6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
