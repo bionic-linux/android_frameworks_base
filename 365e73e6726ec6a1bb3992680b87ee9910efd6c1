@@ -46,6 +46,30 @@
       "revId": "365e73e6726ec6a1bb3992680b87ee9910efd6c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afb2410f_7cc01927",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2016-07-28T03:38:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f0a6d5d_422537c5",
+      "range": {
+        "startLine": 909,
+        "startChar": 82,
+        "endLine": 909,
+        "endChar": 93
+      },
+      "revId": "365e73e6726ec6a1bb3992680b87ee9910efd6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
