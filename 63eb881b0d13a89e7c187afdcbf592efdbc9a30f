@@ -46,6 +46,30 @@
       "revId": "63eb881b0d13a89e7c187afdcbf592efdbc9a30f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9afab5f_8613ea08",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-08-08T17:12:22Z",
+      "side": 1,
+      "message": "Done.\n\nChecking whether the UEH is the default one is not enough to distinguish between fatal vs. nonfatal; a custom UEH may still treat the exception as fatal.\n\nWe could distinguish between system default (and known to be fatal) vs. custom (may or may not be fatal) UEH, but that forces log scrapers to be updated. Sure, we could have some logic that runs *afterwards* which logs \"WOOPS, JUST KIDDING, THIS WASN\u0027T ACTUALLY FATAL!\" but that\u0027d likely require additional @hide API and it doesn\u0027t seem worth its weight.\n\nFiled b/30733435",
+      "parentUuid": "b9a53384_84fd26a2",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "63eb881b0d13a89e7c187afdcbf592efdbc9a30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
