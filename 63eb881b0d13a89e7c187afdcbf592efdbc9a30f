@@ -22,6 +22,30 @@
       "revId": "63eb881b0d13a89e7c187afdcbf592efdbc9a30f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9a53384_84fd26a2",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-08-08T16:37:26Z",
+      "side": 1,
+      "message": "Good point. I think ideally we *should* change it, but the collateral damage could be large, particularly in 3rd party log-scraping tools, I\u0027m inclined to leave it but put in a comment as an initial response.\n\ne.g.\n\n// The \"FATAL EXCEPTION\" string is still used on Android even though a custom UncaughtExceptionHandler may be used to render uncaught exceptions non-fatal.\n\nSomething like that here and below....\n\nYou\u0027re correct it becomes rather misleading. I\u0027d like to get this in as you have it but create a bug and consult wiser heads before the next release, then iterate as needed.\n\nA third way (besides \"leave as is\" and \"change\") is to use the original string if the uncaught exception handler is going to be the default one. However, that probably ties us up in knots again and may not be worth the complexity. I can see ways that make it easy, but would require that we don\u0027t use the UncaughtExceptionHandler interface. Wouldn\u0027t be the end of the world, TBH.",
+      "parentUuid": "ca004388_452c6afd",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "63eb881b0d13a89e7c187afdcbf592efdbc9a30f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
