@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b977f3bf_6605701a",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2016-08-08T15:55:40Z",
+      "side": 1,
+      "message": "This is for DSD I suppose? \nI don\u0027t know this code well enough but if it relates somehow to the pcm mixer capabilities we should translate the max DSD rate in actual PCM sample rate.\n\nAlso what does this range correspond to? Is it further qualified by product specific limitations from system properties or media codec xml ?",
+      "range": {
+        "startLine": 807,
+        "startChar": 65,
+        "endLine": 807,
+        "endChar": 72
+      },
+      "revId": "80cac156042695f5d5cd7f05ad9100a10ace41f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
