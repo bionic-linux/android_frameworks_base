@@ -21,18 +21,23 @@ import android.app.ActivityManagerInternal;
 import android.app.ActivityManagerNative;
 import android.app.AppGlobals;
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AndroidRuntimeException;
 import android.util.ArraySet;
@@ -472,6 +477,15 @@ public final class WebViewFactory {
             // Log and discard errors at this stage as we must not crash the system server.
             Log.e(LOGTAG, "error preparing webview native library", t);
         }
+
+        // Tell the WebViewZygote about the package and the current value of the multi-
+        // process setting..
+        if (sSettingsObserver == null) {
+            sSettingsObserver = new SettingsObserver();
+        }
+        sSettingsObserver.dispatchChange(true, null);
+        WebViewZygote.onWebViewProviderChanged(packageInfo);
+
         return prepareWebViewInSystemServer(nativeLibs);
     }
 
@@ -640,6 +654,43 @@ public final class WebViewFactory {
         }
         return result;
     }
+
+    private static SettingsObserver sSettingsObserver;
+
+    /**
+     * Watches for changes in the WEBVIEW_MULTIPROCESS setting and lets
+     * the WebViewZygote know, so it can start or stop the zygote process
+     * appropriately.
+     */
+    private static class SettingsObserver extends ContentObserver {
+        private final ContentResolver mResolver;
+
+        SettingsObserver() {
+            super(new Handler());
+
+            mResolver = AppGlobals.getInitialApplication().getContentResolver();
+            mResolver.registerContentObserver(
+                    Settings.Global.getUriFor(Settings.Global.WEBVIEW_MULTIPROCESS),
+                    false, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            notifyZygote();
+        }
+
+        private void notifyZygote() {
+            boolean enableMultiprocess = false;
+
+            try {
+                enableMultiprocess = Settings.Global.getInt(mResolver,
+                        Settings.Global.WEBVIEW_MULTIPROCESS) == 1;
+            } catch (Settings.SettingNotFoundException ex) {
+            }
+
+            WebViewZygote.setMultiprocessEnabled(enableMultiprocess);
+        }
+    };
 
     private static String WEBVIEW_UPDATE_SERVICE_NAME = "webviewupdate";
 
