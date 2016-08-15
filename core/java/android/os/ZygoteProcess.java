@@ -110,7 +110,8 @@ public class ZygoteProcess {
             }
 
             String abiListString = getAbiList(zygoteWriter, zygoteInputStream);
-            Log.i("Zygote", "Process: zygote socket opened, supported ABIS: " + abiListString);
+            Log.i("Zygote", "Process: zygote socket " + socketAddress + " opened, supported ABIS: " +
+                    abiListString);
 
             return new ZygoteState(zygoteSocket, zygoteInputStream, zygoteWriter,
                     Arrays.asList(abiListString.split(",")));
@@ -311,7 +312,7 @@ public class ZygoteProcess {
                                                       String appDataDir,
                                                       String[] extraArgs)
                                                       throws ZygoteStartFailedEx {
-        synchronized(Process.class) {
+        synchronized(this) {
             ArrayList<String> argsForZygote = new ArrayList<String>();
 
             // --runtime-args, --setuid=, --setgid=,
@@ -443,5 +444,28 @@ public class ZygoteProcess {
         }
 
         throw new ZygoteStartFailedEx("Unsupported zygote ABI: " + abi);
+    }
+
+    /**
+     * Instructs the zygote to pre-load the classes and native libraries at the given paths
+     * for the specified abi. Not all zygotes support this function.
+     */
+    public void preloadPackageForAbi(String packagePath,
+                                     String libsPath,
+                                     String abi) throws ZygoteStartFailedEx, IOException {
+        ZygoteState state = openZygoteSocketIfNeeded(abi);
+        state.writer.write("3");
+        state.writer.newLine();
+
+        state.writer.write("--preload-package");
+        state.writer.newLine();
+
+        state.writer.write(packagePath);
+        state.writer.newLine();
+
+        state.writer.write(libsPath);
+        state.writer.newLine();
+
+        state.writer.flush();
     }
 }
