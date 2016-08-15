@@ -462,7 +462,8 @@ static pid_t ForkAndSpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArra
       EnableKeepCapabilities(env);
     }
 
-    DropCapabilitiesBoundingSet(env);
+    if (getuid() != AID_WEBVIEW_ZYGOTE)
+      DropCapabilitiesBoundingSet(env);
 
     bool use_native_bridge = !is_system_server && (instructionSet != NULL)
         && android::NativeBridgeAvailable();
@@ -479,7 +480,8 @@ static pid_t ForkAndSpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArra
       ALOGW("Native bridge will not be used because dataDir == NULL.");
     }
 
-    if (!MountEmulatedStorage(uid, mount_external, use_native_bridge)) {
+    if (getuid() != AID_WEBVIEW_ZYGOTE &&
+        !MountEmulatedStorage(uid, mount_external, use_native_bridge)) {
       ALOGW("Failed to mount emulated storage: %s", strerror(errno));
       if (errno == ENOTCONN || errno == EROFS) {
         // When device is actively encrypting, we get ENOTCONN here

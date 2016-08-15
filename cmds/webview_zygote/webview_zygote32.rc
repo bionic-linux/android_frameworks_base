@@ -1,0 +1,8 @@
+# Copyright 2016 The Android Open Source Project
+
+service webview_zygote32 /system/bin/webview_zygote32
+    user webview_zygote
+    socket webview_zygote stream 660 webview_zygote system
+
+on property:init.svc.zygote=stopped
+    stop webview_zygote32

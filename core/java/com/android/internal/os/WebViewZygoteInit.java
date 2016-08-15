@@ -16,6 +16,13 @@
 
 package com.android.internal.os;
 
+import android.net.LocalSocket;
+import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
+
+import java.io.IOException;
+
 /**
  * Startup class for the WebView zygote process.
  *
@@ -26,7 +33,46 @@ package com.android.internal.os;
 class WebViewZygoteInit {
     public static final String TAG = "WebViewZygoteInit";
 
+    private static ZygoteServer sServer;
+
+    private static class WebViewZygoteServer extends ZygoteServer {
+        @Override
+        protected ZygoteConnection createNewConnection(LocalSocket socket,
+                                                       String abiList) throws IOException {
+            return new WebViewZygoteConnection(socket, abiList);
+        }
+    }
+
+    private static class WebViewZygoteConnection extends ZygoteConnection {
+        WebViewZygoteConnection(LocalSocket socket, String abiList) throws IOException {
+            super(socket, abiList);
+        }
+
+        @Override
+        protected boolean handlePreloadPackage(String packagePath, String libsPath) {
+            Log.d(TAG, "Preload package ********************************************************");
+            Log.d(TAG, "WebView package = " + packagePath);
+            return false;
+        }
+    }
+
     public static void main(String argv[]) {
-        throw new RuntimeException("Not implemented yet");
+        sServer = new WebViewZygoteServer();
+
+        try {
+            sServer.registerServerSocket("webview_zygote");
+            Log.d(TAG, "Listening for WebView requests");
+
+            sServer.runSelectLoop(TextUtils.join(",", Build.SUPPORTED_ABIS));
+            sServer.closeServerSocket();
+        } catch (Zygote.MethodAndArgsCaller caller) {
+            caller.run();
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Fatal exception:", e);
+        }
+
+        Log.d(TAG, "Exiting webview_zygote server loop");
+
+        System.exit(0);
     }
 }
