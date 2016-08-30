@@ -15928,6 +15928,9 @@ public class PackageManagerService extends IPackageManager.Stub {
         final PackageParser.Package newPkg;
         try {
             newPkg = scanPackageTracedLI(disabledPs.codePath, parseFlags, SCAN_NO_PATHS, 0, null);
+            synchronized (mPackages) {
+                updateSharedLibrariesLPw(newPkg, null);
+            }
         } catch (PackageManagerException e) {
             Slog.w(TAG, "Failed to restore system package:" + deletedPkg.packageName + ": "
                     + e.getMessage());
