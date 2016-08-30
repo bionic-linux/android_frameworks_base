@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5967ec8_76ca50bc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/DismissView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1112331
+      },
+      "writtenOn": "2016-08-30T12:23:44Z",
+      "side": 1,
+      "message": "Is there probability of NPE because of mContext being null?",
+      "revId": "1a2b2c3a9116cabcfeee3b4d98ddcf473c5070f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
