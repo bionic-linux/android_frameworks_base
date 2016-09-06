@@ -1512,6 +1512,13 @@ class AppWidgetServiceImpl extends IAppWidgetService.Stub implements WidgetBacku
         // Make sure the package runs under the caller uid.
         mSecurityPolicy.enforceCallFromPackage(componentName.getPackageName());
 
+        final int bitmapMemoryUsage = (views != null) ? views.estimateMemoryUsage() : 0;
+        if (bitmapMemoryUsage > mMaxWidgetBitmapMemory) {
+            throw new IllegalArgumentException("RemoteViews for widget update exceeds"
+                    + " maximum bitmap memory usage (used: " + bitmapMemoryUsage
+                    + ", max: " + mMaxWidgetBitmapMemory + ")");
+        }
+
         synchronized (mLock) {
             ensureGroupStateLoadedLocked(userId);
 
