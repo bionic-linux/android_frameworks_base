@@ -1029,7 +1029,15 @@ public final class FloatingToolbar {
         }
 
         private void refreshViewPort() {
-            mParent.getWindowVisibleDisplayFrame(mViewPortOnScreen);
+            mParent.getWindowDisplayFrame(mViewPortOnScreen);
+
+            mParent.getRootView().getLocationOnScreen(mTmpCoords);
+            int rootViewLeftOnScreen = mTmpCoords[0];
+            mParent.getRootView().getLocationInWindow(mTmpCoords);
+            int rootViewLeftOnWindow = mTmpCoords[0];
+            int windowLeftOnScreen = rootViewLeftOnScreen - rootViewLeftOnWindow;
+
+            mViewPortOnScreen.left = Math.max(windowLeftOnScreen, mViewPortOnScreen.left);
         }
 
         private int getAdjustedToolbarWidth(int suggestedWidth) {
