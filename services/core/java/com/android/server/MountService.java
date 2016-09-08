@@ -1797,6 +1797,20 @@ class MountService extends IMountService.Stub
     }
 
     @Override
+    public long isAPCardCompliant(String volId) {
+        enforcePermission(android.Manifest.permission.MOUNT_FORMAT_FILESYSTEMS);
+        waitForReady();
+
+        try {
+            mConnector.execute(3 * DateUtils.MINUTE_IN_MILLIS,
+                    "volume", "ap_card_compliant", volId);
+            return 1;
+        } catch (NativeDaemonConnectorException e) {
+            return 0;
+        }
+    }
+
+    @Override
     public void partitionPublic(String diskId) {
         enforcePermission(android.Manifest.permission.MOUNT_FORMAT_FILESYSTEMS);
         waitForReady();

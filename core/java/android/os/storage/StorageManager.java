@@ -711,6 +711,15 @@ public class StorageManager {
     }
 
     /** {@hide} */
+    public boolean isAPCardCompliant(String volId) {
+        try {
+            return (0 != mMountService.isAPCardCompliant(volId));
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /** {@hide} */
     public void partitionPublic(String diskId) {
         try {
             mMountService.partitionPublic(diskId);

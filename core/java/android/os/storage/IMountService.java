@@ -1374,6 +1374,22 @@ public interface IMountService extends IInterface {
                 }
                 return _result;
             }
+
+            @Override
+            public long isAPCardCompliant(String volId) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeString(volId);
+                    mRemote.transact(Stub.TRANSACTION_isAPCardCompliant, _data, _reply, 0);
+                    _reply.readException();
+                    return _reply.readLong();
+                } finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
         }
 
         private static final String DESCRIPTOR = "IMountService";
@@ -1506,6 +1522,8 @@ public interface IMountService extends IInterface {
         static final int TRANSACTION_addUserKeyAuth = IBinder.FIRST_CALL_TRANSACTION + 70;
 
         static final int TRANSACTION_fixateNewestUserKeyAuth = IBinder.FIRST_CALL_TRANSACTION + 71;
+
+        static final int TRANSACTION_isAPCardCompliant = IBinder.FIRST_CALL_TRANSACTION + 72;
 
         /**
          * Cast an IBinder object into an IMountService interface, generating a
@@ -2154,6 +2172,14 @@ public interface IMountService extends IInterface {
                     reply.writeParcelable(fd, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
                     return true;
                 }
+                case TRANSACTION_isAPCardCompliant: {
+                    data.enforceInterface(DESCRIPTOR);
+                    String volId = data.readString();
+                    long res = isAPCardCompliant(volId);
+                    reply.writeNoException();
+                    reply.writeLong(res);
+                    return true;
+                }
             }
             return super.onTransact(code, data, reply, flags);
         }
@@ -2488,4 +2514,6 @@ public interface IMountService extends IInterface {
     public void destroyUserStorage(String volumeUuid, int userId, int flags) throws RemoteException;
 
     public ParcelFileDescriptor mountAppFuse(String name) throws RemoteException;
+
+    public long isAPCardCompliant(String volId) throws RemoteException;
 }
