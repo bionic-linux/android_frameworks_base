@@ -2181,8 +2181,10 @@ public class AppOpsService extends IAppOpsService.Stub {
         for (int i = 0; i < AppOpsManager._NUM_OP; i++) {
             String restriction = AppOpsManager.opToRestriction(i);
             if (restriction != null) {
-                setUserRestrictionNoCheck(i, restrictions.getBoolean(restriction, false), token,
-                        userHandle, null);
+                synchronized (this) {
+                    setUserRestrictionNoCheck(i, restrictions.getBoolean(restriction, false), token,
+                            userHandle, null);
+                }
             }
         }
     }
@@ -2205,7 +2207,9 @@ public class AppOpsService extends IAppOpsService.Stub {
         }
         verifyIncomingOp(code);
         Preconditions.checkNotNull(token);
-        setUserRestrictionNoCheck(code, restricted, token, userHandle, exceptionPackages);
+        synchronized (this) {
+            setUserRestrictionNoCheck(code, restricted, token, userHandle, exceptionPackages);
+        }
     }
 
     private void setUserRestrictionNoCheck(int code, boolean restricted, IBinder token,
