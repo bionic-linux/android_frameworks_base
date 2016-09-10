@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b9bba7b_47dfec5a",
+        "filename": "wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-10T17:38:38Z",
+      "side": 1,
+      "message": "Yes, I wondered about that. None of the other interfaced defined in this file have this key word either.",
+      "parentUuid": "8b9bba7b_47944ced",
+      "revId": "c879e75beb7580e7e4afe527531e18aeca1453d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9bba7b_879e340b",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2016-09-10T04:47:39Z",
       "side": 1,
       "message": "why?",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "c879e75beb7580e7e4afe527531e18aeca1453d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b9bba7b_27dae86b",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-10T17:38:38Z",
+      "side": 1,
+      "message": "the DeviceList stores the list of P2p Peers. This is to address some of the synchronization concerns we had. The DeviceList is updated in P2pThread while the AIDL service getPeers() retrieves it in the binder thread. So, to enable synchronization, I upgraded the hash map to a concurrent hash map. With this data structure, any time the list is accessed, it returns the latest snapshot of the data. The other option was to synchronize each access to mPeers in P2p State machine. Changing this data structure helps achieve this synchronization in the class itself.",
+      "parentUuid": "8b9bba7b_879e340b",
       "range": {
         "startLine": 37,
         "startChar": 18,
