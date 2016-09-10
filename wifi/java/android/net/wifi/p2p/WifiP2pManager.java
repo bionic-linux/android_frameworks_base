@@ -834,6 +834,12 @@ public class WifiP2pManager {
             }
         }
 
+        private void postResponse(int what, Object listener, Object obj) {
+            int listener_key = putListener(listener);
+            Message msg = mHandler.obtainMessage(what, 0, listener_key, obj);
+            mHandler.sendMessage(msg);
+        }
+
         private int putListener(Object listener) {
             if (listener == null) return INVALID_LISTENER_KEY;
             int key;
@@ -1270,8 +1276,14 @@ public class WifiP2pManager {
      * @param listener for callback when peer list is available. Can be null.
      */
     public void requestPeers(Channel c, PeerListListener listener) {
+        WifiP2pDeviceList peerList;
         checkChannel(c);
-        c.mAsyncChannel.sendMessage(REQUEST_PEERS, 0, c.putListener(listener));
+        try {
+            peerList = mService.getPeers(c.mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        c.postResponse(RESPONSE_PEERS, listener, peerList);
     }
 
     /**
