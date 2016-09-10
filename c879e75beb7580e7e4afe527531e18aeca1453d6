@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8b9bba7b_e7c7008d",
+        "filename": "wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-10T18:28:28Z",
+      "side": 1,
+      "message": "Not needed for primitive types (which are passed by value). Non-primitive types are passed by reference. Hence, when parceled across processes there\u0027s more work if they have to be parceled in both directions. For those you need to specify: in, out, inout.",
+      "parentUuid": "8b9bba7b_47dfec5a",
+      "revId": "c879e75beb7580e7e4afe527531e18aeca1453d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9bba7b_879e340b",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
         "patchSetId": 1
