@@ -1270,8 +1270,15 @@ public class WifiP2pManager {
      * @param listener for callback when peer list is available. Can be null.
      */
     public void requestPeers(Channel c, PeerListListener listener) {
+        WifiP2pDeviceList peerList;
         checkChannel(c);
-        c.mAsyncChannel.sendMessage(REQUEST_PEERS, 0, c.putListener(listener));
+        try {
+            peerList = mService.getPeers(c.mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        c.mHandler.sendMessage(c.mHandler.obtainMessage(RESPONSE_PEERS,
+                    0, c.putListener(listener), peerList));
     }
 
     /**

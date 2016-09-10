@@ -17,6 +17,7 @@
 package android.net.wifi.p2p;
 
 import android.os.Messenger;
+import android.net.wifi.p2p.WifiP2pDeviceList;
 
 /**
  * Interface that WifiP2pService implements
@@ -28,5 +29,6 @@ interface IWifiP2pManager
     Messenger getMessenger();
     Messenger getP2pStateMachineMessenger();
     void setMiracastMode(int mode);
+    WifiP2pDeviceList getPeers(in String callingPackage);
 }
 
