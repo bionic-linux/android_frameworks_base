@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b9bba7b_47944ced",
+        "filename": "wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-10T04:47:39Z",
+      "side": 1,
+      "message": "should there be an \u0027in\u0027 to indicate direction? I expect the compiler to warn about things like that.",
+      "revId": "c879e75beb7580e7e4afe527531e18aeca1453d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b9bba7b_879e340b",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-10T04:47:39Z",
+      "side": 1,
+      "message": "why?",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "c879e75beb7580e7e4afe527531e18aeca1453d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
