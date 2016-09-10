@@ -24,7 +24,7 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A class representing a Wi-Fi P2p device list.
@@ -34,7 +34,7 @@ import java.util.HashMap;
  */
 public class WifiP2pDeviceList implements Parcelable {
 
-    private final HashMap<String, WifiP2pDevice> mDevices = new HashMap<String, WifiP2pDevice>();
+    private final ConcurrentHashMap<String, WifiP2pDevice> mDevices = new ConcurrentHashMap<String, WifiP2pDevice>();
 
     public WifiP2pDeviceList() {
     }
