@@ -35,6 +35,7 @@ import java.util.HashMap;
 public class WifiP2pDeviceList implements Parcelable {
 
     private final HashMap<String, WifiP2pDevice> mDevices = new HashMap<String, WifiP2pDevice>();
+    private Object mDeviceMapLock = new Object();
 
     public WifiP2pDeviceList() {
     }
@@ -42,8 +43,10 @@ public class WifiP2pDeviceList implements Parcelable {
     /** copy constructor */
     public WifiP2pDeviceList(WifiP2pDeviceList source) {
         if (source != null) {
-            for (WifiP2pDevice d : source.getDeviceList()) {
-                mDevices.put(d.deviceAddress, new WifiP2pDevice(d));
+            synchronized (mDeviceMapLock) {
+                for (WifiP2pDevice d : source.getDeviceList()) {
+                    mDevices.put(d.deviceAddress, new WifiP2pDevice(d));
+                }
             }
         }
     }
@@ -52,11 +55,32 @@ public class WifiP2pDeviceList implements Parcelable {
     public WifiP2pDeviceList(ArrayList<WifiP2pDevice> devices) {
         for (WifiP2pDevice device : devices) {
             if (device.deviceAddress != null) {
-                mDevices.put(device.deviceAddress, new WifiP2pDevice(device));
+                putKey(device.deviceAddress, new WifiP2pDevice(device));
             }
         }
     }
 
+    private void putKey(String address, WifiP2pDevice device) {
+        synchronized (mDeviceMapLock) {
+            mDevices.put(device.deviceAddress, device);
+        }
+    }
+
+    private WifiP2pDevice getKey(String address) {
+        WifiP2pDevice device;
+        synchronized (mDeviceMapLock) {
+            device = mDevices.get(address);
+        }
+        return device;
+    }
+
+    private WifiP2pDevice removeKey(String address) {
+        WifiP2pDevice device;
+        synchronized(mDeviceMapLock) {
+            device = mDevices.remove(address);
+        }
+        return device;
+    }
     private void validateDevice(WifiP2pDevice device) {
         if (device == null) throw new IllegalArgumentException("Null device");
         if (TextUtils.isEmpty(device.deviceAddress)) {
@@ -84,43 +108,63 @@ public class WifiP2pDeviceList implements Parcelable {
      * @hide
      */
     public void update(WifiP2pDevice device) {
-        updateSupplicantDetails(device);
-        mDevices.get(device.deviceAddress).status = device.status;
+        validateDevice(device);
+        WifiP2pDevice d = getKey(device.deviceAddress);
+        if (d == null) {
+            putKey(device.deviceAddress, device);
+        } else {
+            synchronized (mDeviceMapLock) {
+                d.deviceName = device.deviceName;
+                d.primaryDeviceType = device.primaryDeviceType;
+                d.secondaryDeviceType = device.secondaryDeviceType;
+                d.wpsConfigMethodsSupported = device.wpsConfigMethodsSupported;
+                d.deviceCapability = device.deviceCapability;
+                d.groupCapability = device.groupCapability;
+                d.wfdInfo = device.wfdInfo;
+                d.status = device.status;
+            }
+        }
     }
 
     /** Only updates details fetched from the supplicant @hide */
     public void updateSupplicantDetails(WifiP2pDevice device) {
         validateDevice(device);
-        WifiP2pDevice d = mDevices.get(device.deviceAddress);
+        WifiP2pDevice d = getKey(device.deviceAddress);
         if (d != null) {
-            d.deviceName = device.deviceName;
-            d.primaryDeviceType = device.primaryDeviceType;
-            d.secondaryDeviceType = device.secondaryDeviceType;
-            d.wpsConfigMethodsSupported = device.wpsConfigMethodsSupported;
-            d.deviceCapability = device.deviceCapability;
-            d.groupCapability = device.groupCapability;
-            d.wfdInfo = device.wfdInfo;
+            synchronized (mDeviceMapLock) {
+                d.deviceName = device.deviceName;
+                d.primaryDeviceType = device.primaryDeviceType;
+                d.secondaryDeviceType = device.secondaryDeviceType;
+                d.wpsConfigMethodsSupported = device.wpsConfigMethodsSupported;
+                d.deviceCapability = device.deviceCapability;
+                d.groupCapability = device.groupCapability;
+                d.wfdInfo = device.wfdInfo;
+            }
             return;
         }
         //Not found, add a new one
-        mDevices.put(device.deviceAddress, device);
+        putKey(device.deviceAddress, device);
     }
 
     /** @hide */
     public void updateGroupCapability(String deviceAddress, int groupCapab) {
         validateDeviceAddress(deviceAddress);
-        WifiP2pDevice d = mDevices.get(deviceAddress);
+        WifiP2pDevice d = getKey(deviceAddress);
         if (d != null) {
-            d.groupCapability = groupCapab;
+            synchronized (mDeviceMapLock) {
+                d.groupCapability = groupCapab;
+            }
         }
     }
 
     /** @hide */
     public void updateStatus(String deviceAddress, int status) {
         validateDeviceAddress(deviceAddress);
-        WifiP2pDevice d = mDevices.get(deviceAddress);
+        WifiP2pDevice d = getKey(deviceAddress);
         if (d != null) {
-            d.status = status;
+            synchronized (mDeviceMapLock) {
+                d.status = status;
+            }
         }
     }
 
@@ -131,13 +175,13 @@ public class WifiP2pDeviceList implements Parcelable {
      */
     public WifiP2pDevice get(String deviceAddress) {
         validateDeviceAddress(deviceAddress);
-        return mDevices.get(deviceAddress);
+        return getKey(deviceAddress);
     }
 
     /** @hide */
     public boolean remove(WifiP2pDevice device) {
         validateDevice(device);
-        return mDevices.remove(device.deviceAddress) != null;
+        return removeKey(device.deviceAddress) != null;
     }
 
     /**
@@ -148,7 +192,7 @@ public class WifiP2pDeviceList implements Parcelable {
      */
     public WifiP2pDevice remove(String deviceAddress) {
         validateDeviceAddress(deviceAddress);
-        return mDevices.remove(deviceAddress);
+        return removeKey(deviceAddress);
     }
 
     /** Returns true if any device the list was removed @hide */
@@ -168,7 +212,7 @@ public class WifiP2pDeviceList implements Parcelable {
     /** @hide */
     public boolean isGroupOwner(String deviceAddress) {
         validateDeviceAddress(deviceAddress);
-        WifiP2pDevice device = mDevices.get(deviceAddress);
+        WifiP2pDevice device = getKey(deviceAddress);
         if (device == null) {
             throw new IllegalArgumentException("Device not found " + deviceAddress);
         }
