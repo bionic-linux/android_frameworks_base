@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b9bba7b_0ae4fafe",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-09-13T15:36:53Z",
+      "side": 1,
+      "message": "Although you do this only once, I think it makes more sense from a style and readability point of view to call a method in Channel instead of doing this much access to c.xxx from within this method.  Maybe something like:\n\n  c.postRespone(RESPONSE_PEERS, listener, peerList);",
+      "revId": "23fcb31da12cf547ee39ae7704ccb254d3d263bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
