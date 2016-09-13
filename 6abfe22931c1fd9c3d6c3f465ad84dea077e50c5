@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be1fa42_1135b6fb",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-09-13T22:24:36Z",
+      "side": 1,
+      "message": "This looks nicer than I guessed!  Thanks.",
+      "revId": "6abfe22931c1fd9c3d6c3f465ad84dea077e50c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
