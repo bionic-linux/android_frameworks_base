@@ -16,6 +16,24 @@
       "revId": "23fcb31da12cf547ee39ae7704ccb254d3d263bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b9bba7b_bbf342cf",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-13T18:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b9bba7b_0ae4fafe",
+      "revId": "23fcb31da12cf547ee39ae7704ccb254d3d263bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
