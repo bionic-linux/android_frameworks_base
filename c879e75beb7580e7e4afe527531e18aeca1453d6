@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8be1fa42_a567684e",
+        "filename": "wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-13T19:24:45Z",
+      "side": 1,
+      "message": "The in keyword is superfluous here.  The generator would have complained otherwise.  The key insight is that strings are immutable in Java, and thus cannot be out parameters.",
+      "parentUuid": "8b9bba7b_e7c7008d",
+      "revId": "c879e75beb7580e7e4afe527531e18aeca1453d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9bba7b_879e340b",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
         "patchSetId": 1
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "the DeviceList stores the list of P2p Peers. This is to address some of the synchronization concerns we had. The DeviceList is updated in P2pThread while the AIDL service getPeers() retrieves it in the binder thread. So, to enable synchronization, I upgraded the hash map to a concurrent hash map. With this data structure, any time the list is accessed, it returns the latest snapshot of the data. The other option was to synchronize each access to mPeers in P2p State machine. Changing this data structure helps achieve this synchronization in the class itself.",
       "parentUuid": "8b9bba7b_879e340b",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "c879e75beb7580e7e4afe527531e18aeca1453d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8be1fa42_e5e21095",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-13T19:24:45Z",
+      "side": 1,
+      "message": "Will this really accomplish that?  For instance, below I see a method called updateSupplicantDetails().  In that method, we get some value out of the map and update its fields if it is not null.  This means that despite synchronous reads/writes, we can still see inconsistent state.",
+      "parentUuid": "8b9bba7b_27dae86b",
       "range": {
         "startLine": 37,
         "startChar": 18,
