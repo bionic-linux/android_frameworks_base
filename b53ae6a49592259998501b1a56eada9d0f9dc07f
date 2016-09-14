@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be1fa42_9006d62a",
+        "filename": "core/java/com/android/internal/os/WifiPowerEstimator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2016-09-14T19:24:36Z",
+      "side": 1,
+      "message": "Awesome, thanks! Can you also adjust the comment?\n\n/**\n * Return estimated power per Wi-Fi packet in mAh/packet where 1 packet \u003d 2 Kb.\n*/",
+      "revId": "b53ae6a49592259998501b1a56eada9d0f9dc07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
