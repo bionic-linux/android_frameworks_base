@@ -118,6 +118,7 @@ import java.util.Arrays;
  */
 public class WifiNanManager {
     private static final String TAG = "WifiNanManager";
+    private static final String ANOTHER_TAG = "WifiNanManagerXXX";
     private static final boolean DBG = false;
     private static final boolean VDBG = false; // STOPSHIP if true
 
