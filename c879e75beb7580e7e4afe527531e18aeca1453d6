@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8be1fa42_256a38e5",
+        "filename": "wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-15T07:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be1fa42_a567684e",
+      "revId": "c879e75beb7580e7e4afe527531e18aeca1453d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9bba7b_879e340b",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
         "patchSetId": 1
