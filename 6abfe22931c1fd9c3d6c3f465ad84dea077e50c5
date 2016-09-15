@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8be1fa42_77c50151",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-09-15T03:27:28Z",
+      "side": 1,
+      "message": "Time to remove the line above.  Looks like you\u0027re ready for final approval once you\u0027re done with the other change in this topic, no?",
+      "revId": "6abfe22931c1fd9c3d6c3f465ad84dea077e50c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8be1fa42_1135b6fb",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
         "patchSetId": 4
