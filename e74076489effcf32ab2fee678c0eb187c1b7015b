@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cb1db24e_998e27e0",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-15T22:30:31Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters whether you use putKey vs put on line 48.  No one can access mDevices, because no one has a reference to |this| to access it through.",
+      "parentUuid": "cb1db24e_7eb6b1f4",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1db24e_935606fd",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
         "patchSetId": 7
