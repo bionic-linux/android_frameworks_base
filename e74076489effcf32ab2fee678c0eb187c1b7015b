@@ -73,6 +73,64 @@
     },
     {
       "key": {
+        "uuid": "cb1db24e_19d157c2",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-15T22:34:17Z",
+      "side": 1,
+      "message": "Do you need to lock here at all? Given this is a constructor, other threads should not be accessing this object. If the caller of this constructor is doing so in a manor where the source object may be mutated by other threads then it should be responsible for correctly locking. This constructor cannot know if the locking is actually needed or not.",
+      "parentUuid": "cb1db24e_7eb6b1f4",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb1db24e_39f53349",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-15T22:34:17Z",
+      "side": 1,
+      "message": "No need for the local. You can return directly from inside the synchronized block.",
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb1db24e_59f2ef61",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-15T22:34:17Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1db24e_935606fd",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
         "patchSetId": 7
@@ -102,6 +160,74 @@
       "side": 1,
       "message": "will do",
       "parentUuid": "cb1db24e_935606fd",
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb1db24e_f9b47b88",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-15T22:34:17Z",
+      "side": 1,
+      "message": "This lock really doesn\u0027t do much since your mutating the internal data not the actual map. You should probably lock over this entire method after the validateDevice call.",
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb1db24e_39a7f35c",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-15T22:34:17Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb1db24e_79a16b44",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-15T22:34:17Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb1db24e_b95da34b",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-15T22:34:17Z",
+      "side": 1,
+      "message": "and here",
       "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
