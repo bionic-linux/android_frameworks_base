@@ -1271,7 +1271,8 @@ public class WifiP2pManager {
      */
     public void requestPeers(Channel c, PeerListListener listener) {
         checkChannel(c);
-        c.mAsyncChannel.sendMessage(REQUEST_PEERS, 0, c.putListener(listener));
+        c.mAsyncChannel.sendMessage(REQUEST_PEERS, 0, c.putListener(listener),
+                c.mContext.getOpPackageName());
     }
 
     /**
