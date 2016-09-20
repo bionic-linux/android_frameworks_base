@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1099bb37_5ed1351d",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2016-09-20T05:03:31Z",
+      "side": 1,
+      "message": "I don\u0027t think you need locking any more.\n\nEither that or stopTethering() desperately needs it.",
+      "range": {
+        "startLine": 628,
+        "startChar": 8,
+        "endLine": 628,
+        "endChar": 20
+      },
+      "revId": "c9684e57156ed21e8064f058d23013ab74ab5e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
