@@ -34,6 +34,24 @@
       "revId": "f86bef7c72cd8853ccb4d8fb7f243aa4f7c80c57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0ac2770_531fe7c7",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-20T22:27:23Z",
+      "side": 1,
+      "message": "I\u0027m a little agnostic. If you would like to remove it, I certainly can.",
+      "parentUuid": "f0ac2770_ab7fcd36",
+      "revId": "f86bef7c72cd8853ccb4d8fb7f243aa4f7c80c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
