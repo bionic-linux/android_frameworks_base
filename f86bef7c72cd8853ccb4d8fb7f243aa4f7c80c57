@@ -16,6 +16,24 @@
       "revId": "f86bef7c72cd8853ccb4d8fb7f243aa4f7c80c57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0ac2770_ab7fcd36",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-20T00:33:55Z",
+      "side": 1,
+      "message": "+1. \n\nFor WCM, we can simply do full band scan always. There are a couple of other tests/apps calling into this API as well.",
+      "parentUuid": "f0ac2770_abd6edb6",
+      "revId": "f86bef7c72cd8853ccb4d8fb7f243aa4f7c80c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
