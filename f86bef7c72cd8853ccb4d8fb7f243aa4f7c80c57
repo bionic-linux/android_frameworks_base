@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0ac2770_abd6edb6",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-20T00:05:49Z",
+      "side": 1,
+      "message": "This is @hide, can we just remove it?",
+      "revId": "f86bef7c72cd8853ccb4d8fb7f243aa4f7c80c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
