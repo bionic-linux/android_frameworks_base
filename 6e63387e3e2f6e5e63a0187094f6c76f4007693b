@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "503b335a_4038eed6",
+        "filename": "packages/Keyguard/src/com/android/keyguard/KeyguardPINView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-09-21T23:43:54Z",
+      "side": 1,
+      "message": "couldn\u0027t we do this with mViews instead and without this? \nAlso, why is the duration different? Do you have a video of the new interaction that you can share?",
+      "revId": "6e63387e3e2f6e5e63a0187094f6c76f4007693b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
