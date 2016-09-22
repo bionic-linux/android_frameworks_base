@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "901e8bf2_00a2eaa0",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T17:59:50Z",
+      "side": 1,
+      "message": "You would need a lock on the other object\u0027s state, since that state may be changing underneath you.",
+      "parentUuid": "cb1db24e_19d157c2",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1db24e_39f53349",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
         "patchSetId": 7
