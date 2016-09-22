@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "901e8bf2_6018867e",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-22T18:13:42Z",
+      "side": 1,
+      "message": "Correct. since the caller of this knows the actual threading policy of that object and the synchronized block might not be needed at all.",
+      "parentUuid": "901e8bf2_00a2eaa0",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "e74076489effcf32ab2fee678c0eb187c1b7015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1db24e_39f53349",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.java",
         "patchSetId": 7
