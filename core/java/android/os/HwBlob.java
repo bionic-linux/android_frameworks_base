@@ -16,6 +16,8 @@
 
 package android.os;
 
+import android.annotation.NonNull;
+import java.util.Arrays;
 import libcore.util.NativeAllocationRegistry;
 
 /** @hide */
@@ -53,6 +55,48 @@ public class HwBlob {
     public native final void putBlob(long offset, HwBlob blob);
 
     public native final long handle();
+
+    public static Boolean[] wrapArray(@NonNull boolean[] array) {
+        Boolean[] wrappedArray = new Boolean[array.length];
+        Arrays.setAll(wrappedArray, n -> array[n]);
+        return wrappedArray;
+    };
+
+    public static Long[] wrapArray(@NonNull long[] array) {
+        Long[] wrappedArray = new Long[array.length];
+        Arrays.setAll(wrappedArray, n -> array[n]);
+        return wrappedArray;
+    };
+
+    public static Byte[] wrapArray(@NonNull byte[] array) {
+        Byte[] wrappedArray = new Byte[array.length];
+        Arrays.setAll(wrappedArray, n -> array[n]);
+        return wrappedArray;
+    };
+
+    public static Short[] wrapArray(@NonNull short[] array) {
+        Short[] wrappedArray = new Short[array.length];
+        Arrays.setAll(wrappedArray, n -> array[n]);
+        return wrappedArray;
+    };
+
+    public static Integer[] wrapArray(@NonNull int[] array) {
+        Integer[] wrappedArray = new Integer[array.length];
+        Arrays.setAll(wrappedArray, n -> array[n]);
+        return wrappedArray;
+    };
+
+    public static Float[] wrapArray(@NonNull float[] array) {
+        Float[] wrappedArray = new Float[array.length];
+        Arrays.setAll(wrappedArray, n -> array[n]);
+        return wrappedArray;
+    };
+
+    public static Double[] wrapArray(@NonNull double[] array) {
+        Double[] wrappedArray = new Double[array.length];
+        Arrays.setAll(wrappedArray, n -> array[n]);
+        return wrappedArray;
+    };
 
     // Returns address of the "freeFunction".
     private static native final long native_init();
