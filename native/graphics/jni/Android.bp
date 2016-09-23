@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-subdirs = [
-    "native/android",
-    "native/graphics/jni",
-]
+ndk_library {
+    name: "libjnigraphics.ndk",
+    symbol_file: "libjnigraphics.map.txt",
+    first_version: "9",
+}
