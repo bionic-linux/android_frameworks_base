@@ -515,7 +515,6 @@ public abstract class ContentResolver {
         if (unstableProvider == null) {
             return null;
         }
-        IContentProvider stableProvider = null;
         Cursor qCursor = null;
         try {
             long startTime = SystemClock.uptimeMillis();
@@ -534,11 +533,12 @@ public abstract class ContentResolver {
                 // reference though, so we might recover!!!  Let's try!!!!
                 // This is exciting!!1!!1!!!!1
                 unstableProviderDied(unstableProvider);
-                stableProvider = acquireProvider(uri);
-                if (stableProvider == null) {
+                unstableProvider =null;
+                unstableProvider = acquireUnstableProvider(uri);
+                if (unstableProvider == null) {
                     return null;
                 }
-                qCursor = stableProvider.query(mPackageName, uri, projection,
+                qCursor = unstableProvider.query(mPackageName, uri, projection,
                         selection, selectionArgs, sortOrder, remoteCancellationSignal);
             }
             if (qCursor == null) {
@@ -551,10 +551,8 @@ public abstract class ContentResolver {
             maybeLogQueryToEventLog(durationMillis, uri, projection, selection, sortOrder);
 
             // Wrap the cursor object into CursorWrapperInner object.
-            final IContentProvider provider = (stableProvider != null) ? stableProvider
-                    : acquireProvider(uri);
+            final IContentProvider provider = acquireProvider(uri);
             final CursorWrapperInner wrapper = new CursorWrapperInner(qCursor, provider);
-            stableProvider = null;
             qCursor = null;
             return wrapper;
         } catch (RemoteException e) {
@@ -570,9 +568,6 @@ public abstract class ContentResolver {
             }
             if (unstableProvider != null) {
                 releaseUnstableProvider(unstableProvider);
-            }
-            if (stableProvider != null) {
-                releaseProvider(stableProvider);
             }
         }
     }
