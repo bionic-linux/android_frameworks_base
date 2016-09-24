@@ -1712,6 +1712,13 @@ public class CarrierConfigManager {
     public static final String KEY_SPN_DISPLAY_RULE_USE_ROAMING_FROM_SERVICE_STATE_BOOL =
             "spn_display_rule_use_roaming_from_service_state_bool";
 
+    /**
+     * Controls whether to show wifi calling icon in statusbar when wifi calling is available.
+     * @hide
+     */
+    public static final String KEY_SHOW_WIFI_CALLING_ICON_IN_STATUS_BAR_BOOL =
+            "show_wifi_calling_icon_in_status_bar_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1995,6 +2002,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_IDENTIFY_HIGH_DEFINITION_CALLS_IN_CALL_LOG_BOOL, false);
         sDefaults.putBoolean(KEY_SPN_DISPLAY_RULE_USE_ROAMING_FROM_SERVICE_STATE_BOOL, false);
         sDefaults.putBoolean(KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_WIFI_CALLING_ICON_IN_STATUS_BAR_BOOL, true);
     }
 
     /**
