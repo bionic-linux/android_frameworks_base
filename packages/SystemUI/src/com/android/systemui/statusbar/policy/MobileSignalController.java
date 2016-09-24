@@ -22,6 +22,7 @@ import android.net.NetworkCapabilities;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings.Global;
+import android.telephony.ImsFeatureCapabilities;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -71,6 +72,8 @@ public class MobileSignalController extends SignalController<
     private SignalStrength mSignalStrength;
     private MobileIconGroup mDefaultIcons;
     private Config mConfig;
+    private boolean mImsRegistered = false;
+    private boolean mWifiCallingEnabled = false;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -154,7 +157,9 @@ public class MobileSignalController extends SignalController<
                         | PhoneStateListener.LISTEN_CALL_STATE
                         | PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
                         | PhoneStateListener.LISTEN_DATA_ACTIVITY
-                        | PhoneStateListener.LISTEN_CARRIER_NETWORK_CHANGE);
+                        | PhoneStateListener.LISTEN_CARRIER_NETWORK_CHANGE
+                        | PhoneStateListener.LISTEN_IMS_REGISTERED_STATE_CHANGE
+                        | PhoneStateListener.LISTEN_IMS_FEATURE_CAPABILITIES_CHANGE);
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(Global.MOBILE_DATA),
                 true, mObserver);
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
@@ -280,7 +285,7 @@ public class MobileSignalController extends SignalController<
 
         // Show icon in QS when we are connected or data is disabled.
         boolean showDataIcon = mCurrentState.dataConnected || dataDisabled;
-        IconState statusIcon = new IconState(mCurrentState.enabled && !mCurrentState.airplaneMode,
+        IconState statusIcon = new IconState(mCurrentState.enabled,
                 getCurrentIconId(), contentDescription);
 
         int qsTypeIcon = 0;
@@ -304,6 +309,8 @@ public class MobileSignalController extends SignalController<
         callback.setMobileDataIndicators(statusIcon, qsIcon, typeIcon, qsTypeIcon,
                 activityIn, activityOut, dataContentDescription, description, icons.mIsWide,
                 mSubscriptionInfo.getSubscriptionId(), mCurrentState.roaming);
+        callback.setWifiCallingIndicator(mConfig.showWifiCallingIcon &&
+                mCurrentState.wifiCallingAvailable, mSubscriptionInfo.getSubscriptionId());
     }
 
     @Override
@@ -473,6 +480,8 @@ public class MobileSignalController extends SignalController<
             mCurrentState.networkName = mServiceState.getOperatorAlphaShort();
         }
 
+        mCurrentState.wifiCallingAvailable = mImsRegistered && mWifiCallingEnabled;
+
         notifyListenersIfNecessary();
     }
 
@@ -497,6 +506,8 @@ public class MobileSignalController extends SignalController<
         pw.println("  mSignalStrength=" + mSignalStrength + ",");
         pw.println("  mDataState=" + mDataState + ",");
         pw.println("  mDataNetType=" + mDataNetType + ",");
+        pw.println("  mImsRegistered=" + mImsRegistered + ",");
+        pw.println("  mWifiCallingEnabled=" + mWifiCallingEnabled + ",");
     }
 
     class MobilePhoneStateListener extends PhoneStateListener {
@@ -563,6 +574,25 @@ public class MobileSignalController extends SignalController<
 
             updateTelephony();
         }
+
+        @Override
+        public void onImsRegisteredChanged(boolean isRegistered) {
+            if (DEBUG) {
+                Log.d(mTag, "onImsRegisteredChanged: isRegistered=" + isRegistered);
+            }
+            mImsRegistered = isRegistered;
+            updateTelephony();
+        }
+
+        @Override
+        public void onImsFeatureCapabilitiesChanged(ImsFeatureCapabilities capability) {
+            if (DEBUG) {
+                Log.d(mTag, "onImsFeatureCapabilitiesChanged: capability ="
+                        + capability);
+            }
+            mWifiCallingEnabled = capability.isWifiCallingEnabled();
+            updateTelephony();
+        }
     };
 
     static class MobileIconGroup extends SignalController.IconGroup {
@@ -595,6 +625,7 @@ public class MobileSignalController extends SignalController<
         boolean isDefault;
         boolean userSetup;
         boolean roaming;
+        boolean wifiCallingAvailable;
 
         @Override
         public void copyFrom(State s) {
@@ -610,6 +641,7 @@ public class MobileSignalController extends SignalController<
             carrierNetworkChangeMode = state.carrierNetworkChangeMode;
             userSetup = state.userSetup;
             roaming = state.roaming;
+            wifiCallingAvailable = state.wifiCallingAvailable;
         }
 
         @Override
@@ -627,6 +659,7 @@ public class MobileSignalController extends SignalController<
             builder.append("carrierNetworkChangeMode=").append(carrierNetworkChangeMode)
                     .append(',');
             builder.append("userSetup=").append(userSetup);
+            builder.append("wifiCallingAvailable=").append(wifiCallingAvailable);
         }
 
         @Override
@@ -641,7 +674,8 @@ public class MobileSignalController extends SignalController<
                     && ((MobileState) o).carrierNetworkChangeMode == carrierNetworkChangeMode
                     && ((MobileState) o).userSetup == userSetup
                     && ((MobileState) o).isDefault == isDefault
-                    && ((MobileState) o).roaming == roaming;
+                    && ((MobileState) o).roaming == roaming
+                    && ((MobileState) o).wifiCallingAvailable == wifiCallingAvailable;
         }
     }
 }

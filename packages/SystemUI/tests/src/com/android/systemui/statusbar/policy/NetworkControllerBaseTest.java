@@ -133,7 +133,7 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
         }).when(mMockProvisionController).addCallback(any());
 
         mNetworkController = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                mConfig, Looper.getMainLooper(), mCallbackHandler,
+                Looper.getMainLooper(), mCallbackHandler,
                 mock(AccessPointControllerImpl.class), mock(DataUsageController.class),
                 mMockSubDefaults, mMockProvisionController);
         setupNetworkController();
@@ -151,6 +151,8 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
         setDefaultSubId(mSubId);
         setSubscriptions(mSubId);
         mMobileSignalController = mNetworkController.mMobileSignalControllers.get(mSubId);
+        mNetworkController.mConfigs.put(mSubId, mConfig);
+        mNetworkController.handleConfigurationChanged();
         mPhoneStateListener = mMobileSignalController.mPhoneStateListener;
     }
 
@@ -174,7 +176,7 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
       when(mMockCm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)).thenReturn(false);
       NetworkControllerImpl networkControllerNoMobile
               = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                        mConfig, mContext.getMainLooper(), mCallbackHandler,
+                        mContext.getMainLooper(), mCallbackHandler,
                         mock(AccessPointControllerImpl.class),
                         mock(DataUsageController.class), mMockSubDefaults,
                         mock(DeviceProvisionedController.class));

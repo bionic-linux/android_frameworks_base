@@ -398,6 +398,16 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     }
 
     @Override
+    public void setWifiCallingIndicator(boolean show, int subId) {
+        PhoneState state = getState(subId);
+        if (state == null) {
+            return;
+        }
+        state.mWifiCallingVisible = show;
+        apply();
+    }
+
+    @Override
     public boolean dispatchPopulateAccessibilityEventInternal(AccessibilityEvent event) {
         // Standard group layout onPopulateAccessibilityEvent() implementations
         // ignore content description, so populate manually
@@ -507,10 +517,11 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
         boolean anyMobileVisible = false;
         int firstMobileTypeId = 0;
+        boolean firstMobileIconVisible = false;
         for (PhoneState state : mPhoneStates) {
             if (state.apply(anyMobileVisible)) {
                 if (!anyMobileVisible) {
-                    firstMobileTypeId = state.mMobileTypeId;
+                    firstMobileIconVisible = state.isAnyMobileIconVisible();
                     anyMobileVisible = true;
                 }
             }
@@ -540,7 +551,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             mWifiAirplaneSpacer.setVisibility(View.GONE);
         }
 
-        if (((anyMobileVisible && firstMobileTypeId != 0) || mNoSimsVisible) && mWifiVisible) {
+        if (((anyMobileVisible && firstMobileIconVisible) || mNoSimsVisible) && mWifiVisible) {
             mWifiSignalSpacer.setVisibility(View.VISIBLE);
         } else {
             mWifiSignalSpacer.setVisibility(View.GONE);
@@ -648,12 +659,15 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         private String mMobileDescription, mMobileTypeDescription;
 
         private ViewGroup mMobileGroup;
+        private ViewGroup mMobileInnerGroup;
         private ImageView mMobile, mMobileDark, mMobileType, mMobileRoaming;
         public boolean mRoaming;
         private ImageView mMobileActivityIn;
         private ImageView mMobileActivityOut;
         public boolean mActivityIn;
         public boolean mActivityOut;
+        private ImageView mWifiCalling;
+        private boolean mWifiCallingVisible;
 
         public PhoneState(int subId, Context context) {
             ViewGroup root = (ViewGroup) LayoutInflater.from(context)
@@ -664,6 +678,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
         public void setViews(ViewGroup root) {
             mMobileGroup    = root;
+            mMobileInnerGroup = root.findViewById(R.id.mobile_combo);
             mMobile         = root.findViewById(R.id.mobile_signal);
             mMobileDark     = root.findViewById(R.id.mobile_signal_dark);
             mMobileType     = root.findViewById(R.id.mobile_type);
@@ -675,24 +690,31 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             SignalDrawable drawable = new SignalDrawable(mMobileDark.getContext());
             drawable.setDarkIntensity(1);
             mMobileDark.setImageDrawable(drawable);
+            mWifiCalling    = root.findViewById(R.id.wifi_calling);
         }
 
         public boolean apply(boolean isSecondaryIcon) {
-            if (mMobileVisible && !mIsAirplaneMode) {
-                if (mLastMobileStrengthId != mMobileStrengthId) {
-                    mMobile.getDrawable().setLevel(mMobileStrengthId);
-                    mMobileDark.getDrawable().setLevel(mMobileStrengthId);
-                    mLastMobileStrengthId = mMobileStrengthId;
-                }
-
-                if (mLastMobileTypeId != mMobileTypeId) {
-                    mMobileType.setImageResource(mMobileTypeId);
-                    mLastMobileTypeId = mMobileTypeId;
-                }
-
+            if (mMobileVisible) {
                 mMobileGroup.setContentDescription(mMobileTypeDescription
                         + " " + mMobileDescription);
                 mMobileGroup.setVisibility(View.VISIBLE);
+
+                if (!mIsAirplaneMode) {
+                    if (mLastMobileStrengthId != mMobileStrengthId) {
+                        mMobile.getDrawable().setLevel(mMobileStrengthId);
+                        mMobileDark.getDrawable().setLevel(mMobileStrengthId);
+                        mLastMobileStrengthId = mMobileStrengthId;
+                    }
+
+                    if (mLastMobileTypeId != mMobileTypeId) {
+                        mMobileType.setImageResource(mMobileTypeId);
+                        mLastMobileTypeId = mMobileTypeId;
+                    }
+
+                    mMobileInnerGroup.setVisibility(View.VISIBLE);
+                } else {
+                    mMobileInnerGroup.setVisibility(View.GONE);
+                }
             } else {
                 mMobileGroup.setVisibility(View.GONE);
             }
@@ -714,6 +736,12 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             mMobileRoaming.setVisibility(mRoaming ? View.VISIBLE : View.GONE);
             mMobileActivityIn.setVisibility(mActivityIn ? View.VISIBLE : View.GONE);
             mMobileActivityOut.setVisibility(mActivityOut ? View.VISIBLE : View.GONE);
+            mWifiCalling.setVisibility(mWifiCallingVisible ? View.VISIBLE : View.GONE);
+
+            // Re-load the image resource to load it according to alternative resources.
+            if (mWifiCallingVisible) {
+                mWifiCalling.setImageResource(R.drawable.stat_sys_wifi_calling);
+            }
 
             return mMobileVisible;
         }
@@ -736,6 +764,11 @@ public class SignalClusterView extends LinearLayout implements NetworkController
                     DarkIconDispatcher.getTint(tintArea, mMobileActivityIn, tint));
             setTint(mMobileActivityOut,
                     DarkIconDispatcher.getTint(tintArea, mMobileActivityOut, tint));
+            setTint(mWifiCalling, DarkIconDispatcher.getTint(tintArea, mWifiCalling, tint));
+        }
+
+        public boolean isAnyMobileIconVisible() {
+            return (mMobileVisible && (mMobileTypeId != 0)) || mWifiCallingVisible;
         }
     }
 }
