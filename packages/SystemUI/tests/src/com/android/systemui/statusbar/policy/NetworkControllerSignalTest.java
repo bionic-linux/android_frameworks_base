@@ -20,6 +20,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.os.Looper;
 import android.support.test.runner.AndroidJUnit4;
+import android.telephony.ImsFeatureCapabilities;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.SubscriptionInfo;
@@ -57,7 +58,7 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         Mockito.when(mMockCm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)).thenReturn(false);
         // Create a new NetworkController as this is currently handled in constructor.
         mNetworkController = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                mConfig, Looper.getMainLooper(), mCallbackHandler,
+                Looper.getMainLooper(), mCallbackHandler,
                 mock(AccessPointControllerImpl.class), mock(DataUsageController.class),
                 mMockSubDefaults, mock(DeviceProvisionedController.class));
         setupNetworkController();
@@ -125,7 +126,7 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         Mockito.when(mMockCm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)).thenReturn(false);
         // Create a new NetworkController as this is currently handled in constructor.
         mNetworkController = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                mConfig, Looper.getMainLooper(), mCallbackHandler,
+                Looper.getMainLooper(), mCallbackHandler,
                 mock(AccessPointControllerImpl.class), mock(DataUsageController.class),
                 mMockSubDefaults, mock(DeviceProvisionedController.class));
         setupNetworkController();
@@ -603,6 +604,19 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
               strength /* strengthIcon */,
               DEFAULT_ICON /* typeIcon */,
               true /* roaming */);
+    }
+
+    @Test
+    @Ignore("Flaky")
+    public void testWifiCallingIcon() {
+        setupNetworkController();
+        mConfig.showWifiCallingIcon = true;
+        setImsRegisteredChange(true);
+        ImsFeatureCapabilities capabilities = new ImsFeatureCapabilities();
+        capabilities.setImsFeatureCapabilities(ImsFeatureCapabilities.CAPABILITY_VOWIFI);
+        setImsFeatureCapabilities(capabilities);
+
+        verifyWifiCallingIcon(true);
     }
 
     private void verifyEmergencyOnly(boolean isEmergencyOnly) {
