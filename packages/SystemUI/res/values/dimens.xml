@@ -858,4 +858,6 @@
     <!-- Home button padding for sizing -->
     <dimen name="home_padding">15dp</dimen>
 
+    <!-- The fixed end margin of wifi calling end margin -->
+    <dimen name="status_bar_wifi_calling_margin_end">4dp</dimen>
 </resources>
