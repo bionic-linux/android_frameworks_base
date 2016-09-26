@@ -22,6 +22,30 @@
       "revId": "567fbc70e4cf30ac5c34dd1229fe52af3aa335ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0938fd9_8f824eb0",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-26T17:20:27Z",
+      "side": 1,
+      "message": "This is the standard pattern. The package name is only used for logging - not for decision making.",
+      "parentUuid": "b0938fd9_4fc68610",
+      "range": {
+        "startLine": 1275,
+        "startChar": 27,
+        "endLine": 1275,
+        "endChar": 43
+      },
+      "revId": "567fbc70e4cf30ac5c34dd1229fe52af3aa335ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
