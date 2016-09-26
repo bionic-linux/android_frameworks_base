@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0938fd9_4fc68610",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-26T17:17:34Z",
+      "side": 1,
+      "message": "Forgive me, can\u0027t clients just lie here?  This code is running in the client\u0027s process, where they can do whatever they like.  What makes this secure?",
+      "range": {
+        "startLine": 1275,
+        "startChar": 27,
+        "endLine": 1275,
+        "endChar": 43
+      },
+      "revId": "567fbc70e4cf30ac5c34dd1229fe52af3aa335ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
