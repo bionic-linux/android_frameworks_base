@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2554bf0d_c66fc2ed",
+        "filename": "core/java/android/webkit/WebViewFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2016-09-26T09:30:10Z",
+      "side": 1,
+      "message": "Creating the settings observer like this looks a bit weird; can we just do this in the update service, which already has a context?",
+      "revId": "5d085484ee02c5f140e9182690298182a02d889d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
