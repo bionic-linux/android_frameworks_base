@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "05d89b6b_4d83793e",
+        "filename": "core/java/android/os/HwBlob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-09-26T23:24:43Z",
+      "side": 1,
+      "message": "Import style is android stuff, then empty line, then base Java stuff, then empty line, then libcore-specific core stuff. You\u0027re missing empty lines here.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "10562fdb029b8d3a7b7c14d6319796572503f4d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65a157aa_33fa32d5",
         "filename": "core/java/android/os/HwBlob.java",
         "patchSetId": 2
