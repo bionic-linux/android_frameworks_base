@@ -22,6 +22,30 @@
       "revId": "9ab557f6bbb2003be16ec6c8e6886b53da4263d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65a157aa_30322814",
+        "filename": "core/java/android/os/HwBlob.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2016-09-26T20:38:20Z",
+      "side": 1,
+      "message": "We don\u0027t expose char at all, a hidl \"char\" was always understood to mean \"byte\" not character.",
+      "parentUuid": "65a157aa_105fe44a",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 10
+      },
+      "revId": "9ab557f6bbb2003be16ec6c8e6886b53da4263d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
