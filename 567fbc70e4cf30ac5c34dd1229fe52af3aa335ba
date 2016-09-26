@@ -46,6 +46,54 @@
       "revId": "567fbc70e4cf30ac5c34dd1229fe52af3aa335ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0938fd9_4f2766bf",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-26T17:27:15Z",
+      "side": 1,
+      "message": "Yes they can. In the handler of this Async message, the permissions check actually validate that the package is associated with the uid. If not, we would have a security exception.",
+      "parentUuid": "b0938fd9_4fc68610",
+      "range": {
+        "startLine": 1275,
+        "startChar": 27,
+        "endLine": 1275,
+        "endChar": 43
+      },
+      "revId": "567fbc70e4cf30ac5c34dd1229fe52af3aa335ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0938fd9_ef3832d9",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-26T17:27:15Z",
+      "side": 1,
+      "message": "The package is used for a few things in the new permissions check -verifying if the app is foreground or not and as per my comment above, to verify that the package is associated with a uid.",
+      "parentUuid": "b0938fd9_8f824eb0",
+      "range": {
+        "startLine": 1275,
+        "startChar": 27,
+        "endLine": 1275,
+        "endChar": 43
+      },
+      "revId": "567fbc70e4cf30ac5c34dd1229fe52af3aa335ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
