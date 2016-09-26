@@ -389,6 +389,7 @@ public class DockedStackDividerController implements DimLayerUser {
                 mImeHideRequested = true;
             }
         } else {
+            mMinimizedDock = false;
             setMinimizedDockedStack(false);
         }
     }
