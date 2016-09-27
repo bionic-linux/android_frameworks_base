@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d89b6b_2c35c6dc",
+        "filename": "telecomm/java/android/telecom/Log.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2016-09-27T21:07:32Z",
+      "side": 1,
+      "message": "Did you want to check this in with the TODO?",
+      "range": {
+        "startLine": 463,
+        "startChar": 38,
+        "endLine": 463,
+        "endChar": 44
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_84698620",
+        "filename": "telecomm/java/android/telecom/Logging/Events.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2016-09-27T21:07:32Z",
+      "side": 1,
+      "message": "Will com.android.server.Telecom.Call implement this in a later CL?\nAlso could you rename this to EventRecordKey? Hard to distinguish this name from EventRecord.",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_449b0e17",
+        "filename": "telecomm/java/android/telecom/Logging/Events.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2016-09-27T21:07:32Z",
+      "side": 1,
+      "message": "static?",
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_44514e2c",
+        "filename": "telecomm/java/android/telecom/Logging/Events.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2016-09-27T21:07:32Z",
+      "side": 1,
+      "message": "The event listener callback will be called again for each event. Doesn\u0027t seem like desired behavior.",
+      "range": {
+        "startLine": 317,
+        "startChar": 28,
+        "endLine": 317,
+        "endChar": 52
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_44bcaeb1",
+        "filename": "telecomm/java/android/telecom/Logging/Events.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2016-09-27T21:07:32Z",
+      "side": 1,
+      "message": "Should be renamed if EventRecords are no longer specific to calls.",
+      "range": {
+        "startLine": 328,
+        "startChar": 17,
+        "endLine": 328,
+        "endChar": 35
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_a4e762d1",
+        "filename": "telecomm/java/android/telecom/Logging/Events.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2016-09-27T21:07:32Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 11
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_84da263f",
+        "filename": "telecomm/java/android/telecom/Logging/Sessions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2016-09-27T21:07:32Z",
+      "side": 1,
+      "message": "Perhaps SessionManager or LogSessionManager?",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 21
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
