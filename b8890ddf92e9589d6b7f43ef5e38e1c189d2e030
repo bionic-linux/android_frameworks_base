@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "450533c2_1756545f",
+        "filename": "core/java/android/os/HwBlob.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-09-27T16:39:35Z",
+      "side": 1,
+      "message": "Agree with Igor: lambdas are going to be expensive for this.",
+      "range": {
+        "startLine": 69,
+        "startChar": 41,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "b8890ddf92e9589d6b7f43ef5e38e1c189d2e030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
