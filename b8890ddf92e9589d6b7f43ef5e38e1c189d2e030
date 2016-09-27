@@ -22,6 +22,30 @@
       "revId": "b8890ddf92e9589d6b7f43ef5e38e1c189d2e030",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05d89b6b_e207cc23",
+        "filename": "core/java/android/os/HwBlob.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2016-09-27T17:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "450533c2_1756545f",
+      "range": {
+        "startLine": 69,
+        "startChar": 41,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "b8890ddf92e9589d6b7f43ef5e38e1c189d2e030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
