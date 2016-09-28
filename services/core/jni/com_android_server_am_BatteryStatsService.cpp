@@ -17,29 +17,28 @@
 #define LOG_TAG "BatteryStatsService"
 //#define LOG_NDEBUG 0
 
-#include <android_runtime/AndroidRuntime.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <inttypes.h>
 #include <jni.h>
+#include <semaphore.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-#include <ScopedLocalRef.h>
-#include <ScopedPrimitiveArray.h>
-
-#include <cutils/log.h>
+#include <android/log.h>
+#include <android_runtime/AndroidRuntime.h>
 #include <utils/misc.h>
 #include <utils/Log.h>
 #include <hardware/hardware.h>
 #include <hardware/power.h>
 #include <suspend/autosuspend.h>
 
-#include <inttypes.h>
-#include <stdio.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <semaphore.h>
-#include <stddef.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
+#include <ScopedLocalRef.h>
+#include <ScopedPrimitiveArray.h>
 
 namespace android
 {

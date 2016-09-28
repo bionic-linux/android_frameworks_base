@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <cutils/log.h>
+#include <android/log.h>
 
 #include "JNIHelp.h"
 #include "core_jni_helpers.h"

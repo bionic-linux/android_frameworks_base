@@ -20,8 +20,8 @@
 #include "JNIHelp.h"
 #include "android/graphics/GraphicsJNI.h"
 
+#include <android/log.h>
 #include <android_view_GraphicBuffer.h>
-#include <cutils/log.h>
 
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>

@@ -17,9 +17,10 @@
 #include "time_util.h"
 #include "utilities.h"
 
-#include <cutils/log.h>
 #include <sys/time.h>
 #include <map>
+
+#include <android/log.h>
 
 namespace android {
 namespace filterfw {
