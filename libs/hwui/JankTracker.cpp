@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #include "JankTracker.h"
 
 #include "Properties.h"
 
-#include <algorithm>
-#include <cutils/ashmem.h>
-#include <cutils/log.h>
-#include <cstdio>
 #include <errno.h>
 #include <inttypes.h>
-#include <limits>
-#include <cmath>
 #include <sys/mman.h>
+
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <limits>
+
+#include <android/log.h>
+#include <cutils/ashmem.h>
 
 namespace android {
 namespace uirenderer {

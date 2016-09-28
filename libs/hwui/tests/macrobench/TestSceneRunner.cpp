@@ -22,7 +22,7 @@
 #include "renderthread/RenderProxy.h"
 #include "renderthread/RenderTask.h"
 
-#include <cutils/log.h>
+#include <android/log.h>
 #include <gui/Surface.h>
 #include <ui/PixelFormat.h>
 

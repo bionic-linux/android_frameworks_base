@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-#include <cutils/log.h>
 #include <cmath>
+
+#include <android/log.h>
 
 #include "geometry.h"
 
