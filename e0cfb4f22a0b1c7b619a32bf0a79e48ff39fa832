@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c1c7c3_4bb5d6c6",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9523,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "nit: Let\u0027s us isEmpty() here and other places.",
+      "range": {
+        "startLine": 9523,
+        "startChar": 38,
+        "endLine": 9523,
+        "endChar": 50
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_2bb21ae0",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18904,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "Update comment",
+      "range": {
+        "startLine": 18903,
+        "startChar": 0,
+        "endLine": 18904,
+        "endChar": 69
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_abec4ab6",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18905,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "Rename to isReceivingBroadcastLocked since the service lock should be held (and is held) when this method is called.",
+      "range": {
+        "startLine": 18905,
+        "startChar": 37,
+        "endLine": 18905,
+        "endChar": 57
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_6b32525f",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18906,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "To avoid this allocation all the time, let\u0027s have the caller pass in the ArraySet to use and we can .clear it before using in this method. The caller should use a class variable like final ArraySet\u003cBroadcastQueue\u003e mTmpReceivingBroadcast \u003d new ArraySet\u003cBroadcastQueue\u003e(); to avoid the allocation.",
+      "range": {
+        "startLine": 18906,
+        "startChar": 8,
+        "endLine": 18906,
+        "endChar": 79
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_8bbfcea6",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18907,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "change to !app.curReceivers.isEmpty()",
+      "range": {
+        "startLine": 18907,
+        "startChar": 12,
+        "endLine": 18907,
+        "endChar": 39
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_cb16e6bb",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18910,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "You can use addAll instead.",
+      "range": {
+        "startLine": 18908,
+        "startChar": 0,
+        "endLine": 18910,
+        "endChar": 13
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_ebe642d2",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18915,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "Remove since the service lock is already held when this method is called.",
+      "range": {
+        "startLine": 18915,
+        "startChar": 0,
+        "endLine": 18915,
+        "endChar": 29
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_0b211e0c",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18917,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 18917,
+        "startChar": 12,
+        "endLine": 18917,
+        "endChar": 15
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_cbfd4656",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 19102,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "!isEmpty()",
+      "range": {
+        "startLine": 19102,
+        "startChar": 55,
+        "endLine": 19102,
+        "endChar": 66
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_ab028a6b",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 20118,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "isEmpty()",
+      "range": {
+        "startLine": 20118,
+        "startChar": 62,
+        "endLine": 20118,
+        "endChar": 73
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_0bf8fe61",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 20988,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "isEmpty()",
+      "range": {
+        "startLine": 20988,
+        "startChar": 44,
+        "endLine": 20988,
+        "endChar": 55
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_4b12f6bd",
+        "filename": "services/core/java/com/android/server/am/ProcessRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 141,
+        "startChar": 83,
+        "endLine": 141,
+        "endChar": 123
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_2b0fba93",
+        "filename": "services/core/java/com/android/server/am/ProcessRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "!isEmpty()",
+      "range": {
+        "startLine": 424,
+        "startChar": 25,
+        "endLine": 424,
+        "endChar": 35
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_8b0cee9d",
+        "filename": "services/core/java/com/android/server/am/ProcessRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2016-09-28T14:14:18Z",
+      "side": 1,
+      "message": "single space between operators.",
+      "range": {
+        "startLine": 426,
+        "startChar": 22,
+        "endLine": 426,
+        "endChar": 47
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
