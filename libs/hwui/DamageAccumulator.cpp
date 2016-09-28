@@ -16,7 +16,7 @@
 
 #include "DamageAccumulator.h"
 
-#include <cutils/log.h>
+#include <android/log.h>
 
 #include "RenderNode.h"
 #include "utils/MathUtils.h"

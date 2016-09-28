@@ -17,10 +17,10 @@
 #ifndef _ANDROID__DATABASE_WINDOW_H
 #define _ANDROID__DATABASE_WINDOW_H
 
-#include <cutils/log.h>
 #include <stddef.h>
 #include <stdint.h>
 
+#include <android/log.h>
 #include <binder/Parcel.h>
 #include <utils/String8.h>
 
