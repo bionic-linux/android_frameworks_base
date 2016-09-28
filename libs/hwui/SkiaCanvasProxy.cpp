@@ -24,8 +24,6 @@
 #include <SkRect.h>
 #include <SkRRect.h>
 
-#include <memory>
-
 namespace android {
 namespace uirenderer {
 
