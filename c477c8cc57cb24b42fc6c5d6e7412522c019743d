@@ -16,6 +16,24 @@
       "revId": "c477c8cc57cb24b42fc6c5d6e7412522c019743d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_fc40498c",
+        "filename": "cmds/webview_zygote/Android.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2016-09-29T23:05:15Z",
+      "side": 1,
+      "message": "libandroid_runtime hasn\u0027t been converted to soong yet, so this has to be in make still.",
+      "parentUuid": "a28505ca_f12952f2",
+      "revId": "c477c8cc57cb24b42fc6c5d6e7412522c019743d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
