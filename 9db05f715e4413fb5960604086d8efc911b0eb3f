@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "452ff370_87f406e9",
+        "filename": "core/java/com/android/internal/os/ZygoteServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-09-29T14:20:44Z",
+      "side": 1,
+      "message": "awkward indent, usual style is :\n\n  protected... socket, String abiList)\n      throws IOException {\n  }",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 87
+      },
+      "revId": "9db05f715e4413fb5960604086d8efc911b0eb3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
