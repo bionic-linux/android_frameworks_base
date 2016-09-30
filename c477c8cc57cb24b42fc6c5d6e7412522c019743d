@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "62506d49_fb618b31",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2016-09-30T23:17:05Z",
+      "side": 1,
+      "message": "I was following the advice here: https://goto.google.com/android-locking, which discourages synchronized methods. But looking more closely, it seems like really we want to be protecting ZygoteState.writer (which is accessed by more than just startViaZygote()). I think synchronizing (and documenting) on a ZygoteState instance is more correct. That would ensure serialized, atomic communication with the zygote, which is I think what this lock is designed to achieve. Thoughts?",
+      "parentUuid": "a28505ca_33cb3717",
+      "revId": "c477c8cc57cb24b42fc6c5d6e7412522c019743d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_c9610232",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 5
