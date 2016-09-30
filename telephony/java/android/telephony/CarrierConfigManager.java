@@ -78,6 +78,13 @@ public class CarrierConfigManager {
     public static final String KEY_WORLD_PHONE_BOOL = "world_phone_bool";
 
     /**
+     * Forces 7-bit GSM encoding as the default for SMS
+     * @hide
+     */
+    public static final String
+            KEY_SMS_FORCE_7BIT_ENCODING_BOOL = "sms_force_7bit_encoding_bool";
+
+    /**
      * Flag to require or skip entitlement checks.
      * If true, entitlement checks will be executed if device has been configured for it,
      * If false, entitlement checks will be skipped.
@@ -796,6 +803,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_VOICEMAIL_NOTIFICATION_PERSISTENT_BOOL, false);
         sDefaults.putBoolean(KEY_VOICE_PRIVACY_DISABLE_UI_BOOL, false);
         sDefaults.putBoolean(KEY_WORLD_PHONE_BOOL, false);
+        sDefaults.putBoolean(KEY_SMS_FORCE_7BIT_ENCODING_BOOL, false);
         sDefaults.putBoolean(KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
         sDefaults.putBoolean(KEY_RESTART_RADIO_ON_PDP_FAIL_REGULAR_DEACTIVATION_BOOL, false);
         sDefaults.putInt(KEY_VOLTE_REPLACEMENT_RAT_INT, 0);
