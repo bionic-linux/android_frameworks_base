@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_133630eb",
+        "filename": "telecomm/java/android/telecom/Log.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_d64a027e",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5c1c7c3_56573223",
         "filename": "telecomm/java/android/telecom/Log.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-29T15:27:43Z",
       "side": 1,
       "message": "Telecom",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_d35528f9",
+        "filename": "telecomm/java/android/telecom/Log.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_56573223",
       "range": {
         "startLine": 50,
         "startChar": 28,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_f34dcc68",
+        "filename": "telecomm/java/android/telecom/Log.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_b602e616",
+      "range": {
+        "startLine": 97,
+        "startChar": 42,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5c1c7c3_d607a223",
         "filename": "telecomm/java/android/telecom/Log.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2016-09-29T15:27:43Z",
       "side": 1,
       "message": "sIsUserExtendedLoggingEnabled",
+      "range": {
+        "startLine": 102,
+        "startChar": 27,
+        "endLine": 102,
+        "endChar": 56
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_7373fca7",
+        "filename": "telecomm/java/android/telecom/Log.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_d607a223",
       "range": {
         "startLine": 102,
         "startChar": 27,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_336d74be",
+        "filename": "telecomm/java/android/telecom/Log.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_1612da65",
+      "range": {
+        "startLine": 108,
+        "startChar": 24,
+        "endLine": 108,
+        "endChar": 52
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5c1c7c3_f6773e92",
         "filename": "telecomm/java/android/telecom/Log.java",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2016-09-29T15:27:43Z",
       "side": 1,
       "message": "Wasting that \\n?",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 218,
+        "endChar": 42
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_536a78a6",
+        "filename": "telecomm/java/android/telecom/Log.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_f6773e92",
       "range": {
         "startLine": 218,
         "startChar": 12,
@@ -198,6 +342,30 @@
       "writtenOn": "2016-09-29T15:27:43Z",
       "side": 1,
       "message": "Probably can dump the TODO; I think you\u0027ve got an okay doc set here.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_16313e59",
+        "filename": "telecomm/java/android/telecom/Logging/Events.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_d02e8295",
       "range": {
         "startLine": 39,
         "startChar": 2,
@@ -474,6 +642,30 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_362a42e7",
+        "filename": "telecomm/java/android/telecom/Logging/Session.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_70450e41",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 11
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5c1c7c3_84da263f",
         "filename": "telecomm/java/android/telecom/Logging/Sessions.java",
         "patchSetId": 1
@@ -532,6 +724,30 @@
       "writtenOn": "2016-09-29T15:27:43Z",
       "side": 1,
       "message": "an Activity\n\"just trying to generisize the comment\"",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "2a0220088bfd9a86cded1e550067c4ef1064dd6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_d61bd6e1",
+        "filename": "telecomm/java/android/telecom/Logging/Sessions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2016-09-30T21:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5c1c7c3_b04f8660",
       "range": {
         "startLine": 70,
         "startChar": 12,
