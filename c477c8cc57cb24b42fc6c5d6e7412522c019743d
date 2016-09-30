@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_33cb3717",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-09-30T18:09:38Z",
+      "side": 1,
+      "message": "Then where\u0027s the documentation for this? And why not just make the whole function synchronized to expose this implicit lock (sometimes there are arguments about using a lock object to avoid external impact, just as a side note)?",
+      "parentUuid": "62506d49_f8a87175",
+      "revId": "c477c8cc57cb24b42fc6c5d6e7412522c019743d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_c9610232",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 5
