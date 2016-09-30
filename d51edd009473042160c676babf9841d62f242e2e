@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_b02bba85",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-30T20:01:01Z",
+      "side": 1,
+      "message": "Yes, not sure what the equivalent of it in Android Java :)",
+      "parentUuid": "a28505ca_6ecf9454",
+      "range": {
+        "startLine": 40,
+        "startChar": 33,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "d51edd009473042160c676babf9841d62f242e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_8ee9b8a7",
         "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-30T19:55:04Z",
       "side": 1,
       "message": "Nit: skipped",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "d51edd009473042160c676babf9841d62f242e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_d030bef5",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-30T20:01:01Z",
+      "side": 1,
+      "message": "will fix.",
+      "parentUuid": "a28505ca_8ee9b8a7",
       "range": {
         "startLine": 47,
         "startChar": 28,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_9078f681",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-30T20:01:01Z",
+      "side": 1,
+      "message": "I think that\u0027s probably not needed. If there is an exception, certBytes value will not be updated anyway.\n\nStill getting used to the Exception handling :)",
+      "parentUuid": "a28505ca_70369209",
+      "revId": "d51edd009473042160c676babf9841d62f242e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_5006ee2f",
         "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2016-09-30T19:55:04Z",
       "side": 1,
       "message": "Is there a upper bound to check?",
+      "revId": "d51edd009473042160c676babf9841d62f242e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_d0abdedb",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-30T20:01:01Z",
+      "side": 1,
+      "message": "Not that I know of. I think we just need to make sure the length is \u003e 0 since it will be used to construct an array.",
+      "parentUuid": "a28505ca_5006ee2f",
       "revId": "d51edd009473042160c676babf9841d62f242e2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
