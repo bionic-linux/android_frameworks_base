@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28505ca_6ecf9454",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-30T19:55:04Z",
+      "side": 1,
+      "message": "Is this a style from ChromeOS? I have seen people used to work on ChromeOS like to use |xx|. Usually don\u0027t see this style in Android Java code base.",
+      "range": {
+        "startLine": 40,
+        "startChar": 33,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "d51edd009473042160c676babf9841d62f242e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_8ee9b8a7",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-30T19:55:04Z",
+      "side": 1,
+      "message": "Nit: skipped",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "d51edd009473042160c676babf9841d62f242e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_70369209",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-30T19:55:04Z",
+      "side": 1,
+      "message": "Do we need this reset?",
+      "revId": "d51edd009473042160c676babf9841d62f242e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_5006ee2f",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-30T19:55:04Z",
+      "side": 1,
+      "message": "Is there a upper bound to check?",
+      "revId": "d51edd009473042160c676babf9841d62f242e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
