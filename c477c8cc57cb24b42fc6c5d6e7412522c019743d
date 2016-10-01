@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_c5a0f693",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-10-01T00:24:59Z",
+      "side": 1,
+      "message": "But you only implemented a synchronized method in the end. It\u0027s nonsensical to hide that. :-)\n\nHowever, ZygoteState sounds very reasonable to me. No reason at all to wait filling the args. You\u0027ll have to be careful, though. The big synchronized block also orders creation of the ZygoteState...",
+      "parentUuid": "62506d49_fb618b31",
+      "revId": "c477c8cc57cb24b42fc6c5d6e7412522c019743d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_c9610232",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 5
