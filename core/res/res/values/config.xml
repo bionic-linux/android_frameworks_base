@@ -2166,18 +2166,6 @@
         string that's stored in 8-bit unpacked format) characters.-->
     <bool translatable="false" name="config_sms_decode_gsm_8bit_data">false</bool>
 
-    <!-- If EMS is not supported, framework breaks down EMS into single segment SMS
-         and adds page info " x/y". This config is used to set which carrier doesn't
-         support EMS and whether page info should be added at the beginning or the end.
-         We use tag 'prefix' for position beginning and 'suffix' for position end.
-         And use gid to distinguish different carriers which using same mcc and mnc.
-         Examples: <item>simOperatorNumber;position;gid(optional)</item>>
-    -->
-    <string-array translatable="false" name="no_ems_support_sim_operators">
-        <!-- VZW -->
-        <item>20404;suffix;BAE0000000000000</item>
-    </string-array>
-
     <bool name="config_auto_attach_data_on_creation">true</bool>
 
     <!-- Values for GPS configuration -->
@@ -2275,22 +2263,6 @@
     <!-- If true, the transition for a RemoteViews is read from a resource instead of using the
          default scale-up transition. -->
     <bool name="config_overrideRemoteViewsActivityTransition">false</bool>
-
-    <!-- This config is used to check if the carrier requires converting destination
-         number before sending out a SMS.
-         Formats for this configuration as below:
-         [true or false][;optional gid]
-         The logic to pick up the configuration:
-         (1) If the "config_sms_convert_destination_number_support" array has no gid
-             special item, the last one will be picked
-         (2) If the "config_sms_convert_destination_number_support" array has gid special
-             item and it matches the current sim's gid, it will be picked.
-         (3) If the "config_sms_convert_destination_number_support" array has gid special
-             item but it doesn't match the current sim's gid, the last one without gid
-             will be picked -->
-    <string-array translatable="false" name="config_sms_convert_destination_number_support">
-        <item>false</item>
-    </string-array>
 
     <!-- The maximum bitmap size that can be written to a MediaMetadata object. This value
          is the max width/height allowed in dips.-->
