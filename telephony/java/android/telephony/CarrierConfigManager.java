@@ -95,6 +95,12 @@ public class CarrierConfigManager {
                     "restart_radio_on_pdp_fail_regular_deactivation_bool";
 
     /**
+     *
+     */
+    public static final String
+            KEY_CARRIER_VT_AVAILABLE_BOOL = "carrier_vt_available_bool";
+
+    /**
      * If true, enable vibration (haptic feedback) for key presses in the EmergencyDialer activity.
      * The pattern is set on a per-platform basis using config_virtualKeyVibePattern. To be
      * consistent with the regular Dialer, this value should agree with the corresponding values
@@ -114,6 +120,14 @@ public class CarrierConfigManager {
      * playing of the tones.
      */
     public static final String KEY_ALLOW_LOCAL_DTMF_TONES_BOOL = "allow_local_dtmf_tones_bool";
+
+    /**
+     * Determines if the carrier requires converting the destination number before sending out an
+     * SMS.
+     * @hide
+     */
+    public static final String KEY_SMS_CONVERT_DESTINATION_NUMBER_SUPPORT_BOOL =
+            "sms_convert_destination_number_support_bool";
 
     /**
      * If true, show an onscreen "Dial" button in the dialer. In practice this is used on all
@@ -778,6 +792,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_CARRIER_INSTANT_LETTERING_LENGTH_LIMIT_INT, 64);
         sDefaults.putBoolean(KEY_DISABLE_CDMA_ACTIVATION_CODE_BOOL, false);
         sDefaults.putBoolean(KEY_DTMF_TYPE_ENABLED_BOOL, false);
+        sDefaults.putBoolean(KEY_CARRIER_VT_AVAILABLE_BOOL, false);
         sDefaults.putBoolean(KEY_ENABLE_DIALER_KEY_VIBRATION_BOOL, true);
         sDefaults.putBoolean(KEY_HAS_IN_CALL_NOISE_SUPPRESSION_BOOL, false);
         sDefaults.putBoolean(KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL, false);
@@ -787,6 +802,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_PREFER_2G_BOOL, true);
         sDefaults.putBoolean(KEY_SHOW_APN_SETTING_CDMA_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_CDMA_CHOICES_BOOL, false);
+        sDefaults.putBoolean(KEY_SMS_CONVERT_DESTINATION_NUMBER_SUPPORT_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_ONSCREEN_DIAL_BUTTON_BOOL, true);
         sDefaults.putBoolean(KEY_SIM_NETWORK_UNLOCK_ALLOW_DISMISS_BOOL, true);
         sDefaults.putBoolean(KEY_SUPPORT_PAUSE_IMS_VIDEO_CALLS_BOOL, false);
