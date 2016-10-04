@@ -22,6 +22,30 @@
       "revId": "8ede57b061c9735ab0f298945d244745d2c51bd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02aa519b_91418c91",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-04T15:53:06Z",
+      "side": 1,
+      "message": "This is the current behavior in WifiEnterpriseConfig.  I agreed we can reconsider this behavior, will require more thought thou.  I think this will be out of scope for this CL.",
+      "parentUuid": "02aa519b_912aace5",
+      "range": {
+        "startLine": 98,
+        "startChar": 14,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "8ede57b061c9735ab0f298945d244745d2c51bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
