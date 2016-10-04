@@ -173,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "c224b949_933adc81",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2016-10-04T21:54:49Z",
+      "side": 1,
+      "message": "Guarding on the ZygoteState turned out to be difficult, since, as you note, we also want to protect its initialization. I instead created a mLock object to synchronize on.",
+      "parentUuid": "a28505ca_c5a0f693",
+      "revId": "c477c8cc57cb24b42fc6c5d6e7412522c019743d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_c9610232",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 5
