@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "02aa519b_ecb59384",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-04T17:16:37Z",
+      "side": 1,
+      "message": "I don\u0027t think I need the negative number check, since creating an array with negative length will throw an exception.",
+      "parentUuid": "02aa519b_715ba0f8",
+      "range": {
+        "startLine": 153,
+        "startChar": 19,
+        "endLine": 153,
+        "endChar": 20
+      },
+      "revId": "8ede57b061c9735ab0f298945d244745d2c51bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02aa519b_9144ec47",
         "filename": "wifi/tests/src/android/net/wifi/ParcelUtilTest.java",
         "patchSetId": 3
