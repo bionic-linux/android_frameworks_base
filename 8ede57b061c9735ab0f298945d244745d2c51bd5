@@ -70,6 +70,76 @@
       "revId": "8ede57b061c9735ab0f298945d244745d2c51bd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02aa519b_b1fda852",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-04T16:17:14Z",
+      "side": 1,
+      "message": "or (if intentional) than add a comment - style-wise shouldn\u0027t have empty clauses, e.g.\n\n/* empty - store null */",
+      "parentUuid": "02aa519b_912aace5",
+      "range": {
+        "startLine": 98,
+        "startChar": 14,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "8ede57b061c9735ab0f298945d244745d2c51bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02aa519b_510d4496",
+        "filename": "wifi/java/android/net/wifi/ParcelUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-04T16:17:14Z",
+      "side": 1,
+      "message": "a bit strange, if this happens then something is seriously wrong [i.e. programming error - mismatch of write/read]",
+      "range": {
+        "startLine": 153,
+        "startChar": 19,
+        "endLine": 153,
+        "endChar": 20
+      },
+      "revId": "8ede57b061c9735ab0f298945d244745d2c51bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02aa519b_9144ec47",
+        "filename": "wifi/tests/src/android/net/wifi/ParcelUtilTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-04T16:17:14Z",
+      "side": 1,
+      "message": "Is this a sufficient test? What I\u0027ve done (consider - not sure if correct either) is:\n\n        Parcel parcelW \u003d Parcel.obtain();\n         ... write to parcel ...\n        byte[] bytes \u003d parcelW.marshall();\n        parcelW.recycle();\n\n        Parcel parcelR \u003d Parcel.obtain();\n        parcelR.unmarshall(bytes, 0, bytes.length);\n        parcelR.setDataPosition(0);\n         ... read from parcel ...\n\nThe read can be done using utility or CREATOR.createFromParcel(parcelR)",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 94
+      },
+      "revId": "8ede57b061c9735ab0f298945d244745d2c51bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
