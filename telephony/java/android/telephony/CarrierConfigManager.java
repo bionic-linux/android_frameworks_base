@@ -1005,4 +1005,23 @@ public class CarrierConfigManager {
         return ICarrierConfigLoader.Stub
                 .asInterface(ServiceManager.getService(Context.CARRIER_CONFIG_SERVICE));
     }
+
+   /**
+    * Given the key to a boolean and the calling context, return the carrier specific value or
+    * default value
+    * @hide
+    */
+    @NonNull
+    @SystemApi
+    public static boolean getBoolean(String key, Context context) {
+        CarrierConfigManager configManager = (CarrierConfigManager)
+                context.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configManager != null) {
+            PersistableBundle bundle = configManager.getConfig();
+            if (bundle != null) {
+                return bundle.getBoolean(key);
+            }
+        }
+        return getDefaultConfig().getBoolean(key);
+    }
 }
