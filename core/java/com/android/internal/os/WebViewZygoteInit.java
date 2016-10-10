@@ -16,6 +16,7 @@
 
 package com.android.internal.os;
 
+import android.app.ApplicationLoaders;
 import android.net.LocalSocket;
 import android.os.Build;
 import android.system.ErrnoException;
@@ -52,7 +53,15 @@ class WebViewZygoteInit {
 
         @Override
         protected boolean handlePreloadPackage(String packagePath, String libsPath) {
-            // TODO: Use preload information to setup the ClassLoader.
+            ClassLoader loader = ApplicationLoaders.getDefault().getClassLoader(packagePath,
+                    Build.VERSION.SDK_INT, false, libsPath, null, null);
+            // We now need to load the native library into that classloader. Two problems:
+            // 1) We don't know the name of the library at this point. It's discovered from a
+            //    metadata tag on the package by code in WebViewFactory. The generic preload
+            //    interface we've added here doesn't tell us.
+            // 2) System.loadLibrary doesn't take a classloader, and the method that does
+            //    (Runtime.loadLibrary) is deprecated and targetSDK limited because it's abused by
+            //    apps. The real method (Runtime.loadLibrary0) is not public.
             return false;
         }
     }
