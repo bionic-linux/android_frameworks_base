@@ -16,17 +16,19 @@
 
 package android.app;
 
+import android.os.Build;
 import android.os.Trace;
 import android.util.ArrayMap;
 import com.android.internal.os.PathClassLoaderFactory;
 import dalvik.system.PathClassLoader;
 
-class ApplicationLoaders {
+/** @hide */
+public class ApplicationLoaders {
     public static ApplicationLoaders getDefault() {
         return gApplicationLoaders;
     }
 
-    public ClassLoader getClassLoader(String zip, int targetSdkVersion, boolean isBundled,
+    ClassLoader getClassLoader(String zip, int targetSdkVersion, boolean isBundled,
                                       String librarySearchPath, String libraryPermittedPath,
                                       ClassLoader parent) {
         /*
@@ -78,6 +80,20 @@ class ApplicationLoaders {
             Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
             return pathClassloader;
         }
+    }
+
+    /**
+     * Create a classloader for the WebView APK, for use in the WebView zygote.
+     *
+     * The zygote's children will reuse this same classloader via the cache in mLoaders, speeding up
+     * startup and enabling some memory sharing.
+     */
+    public ClassLoader createWebViewClassLoaderForZygote(String packagePath, String libsPath) {
+      // The correct paths are calculated by WebViewZygote in the system server and passed to
+      // us here. We hardcode the other parameters: WebView always targets the current SDK,
+      // does not need to use non-public system libraries, and uses the base classloader as its
+      // parent to permit usage of the cache.
+      return getClassLoader(packagePath, Build.VERSION.SDK_INT, false, libsPath, null, null);
     }
 
     private static native void setupVulkanLayerPath(ClassLoader classLoader, String librarySearchPath);
