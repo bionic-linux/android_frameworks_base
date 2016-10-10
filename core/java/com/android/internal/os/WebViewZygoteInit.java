@@ -16,14 +16,17 @@
 
 package com.android.internal.os;
 
+import android.app.ApplicationLoaders;
 import android.net.LocalSocket;
 import android.os.Build;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.text.TextUtils;
 import android.util.Log;
+import android.webkit.WebViewFactory;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Startup class for the WebView zygote process.
@@ -52,7 +55,29 @@ class WebViewZygoteInit {
 
         @Override
         protected boolean handlePreloadPackage(String packagePath, String libsPath) {
-            // TODO: Use preload information to setup the ClassLoader.
+            // Create a classloader for the WebView APK. The zygote's children will reuse this
+            // via the cache in ApplicationLoaders, speeding up startup and enabling some memory
+            // sharing.
+            // The correct paths are calculated by WebViewZygote in the system server and passed to
+            // us here. We hardcode the other parameters: WebView always targets the current SDK,
+            // and does not need to use non-public system libraries.
+            ClassLoader loader = ApplicationLoaders.getDefault().getClassLoader(packagePath,
+                    Build.VERSION.SDK_INT, false, libsPath, null, null);
+
+            // Once we have the classloader, look up the WebViewFactoryProvider implementation and
+            // call preloadInZygote() on it to give it the opportunity to preload the native library
+            // and perform any other initialisation work that should be shared among the children.
+            try {
+                Class providerClass = Class.forName(WebViewFactory.CHROMIUM_WEBVIEW_FACTORY, true,
+                                                    loader);
+                Object result = providerClass.getMethod("preloadInZygote").invoke(null);
+                if (!((Boolean)result).booleanValue()) {
+                    Log.e(TAG, "preloadInZygote returned false");
+                }
+            } catch (ClassNotFoundException | NoSuchMethodException | SecurityException |
+                     IllegalAccessException | InvocationTargetException e) {
+                Log.e(TAG, "Exception while preloading package", e);
+            }
             return false;
         }
     }

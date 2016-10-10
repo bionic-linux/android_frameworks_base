@@ -16,14 +16,19 @@
 
 package android.webkit;
 
+import android.app.LoadedApk;
 import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.os.SystemService;
 import android.os.ZygoteProcess;
+import android.text.TextUtils;
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 /** @hide */
@@ -122,11 +127,18 @@ public class WebViewZygote {
         try {
             sZygote = new ZygoteProcess("webview_zygote", null);
 
-            String packagePath = sPackage.applicationInfo.sourceDir;
-            String libsPath = sPackage.applicationInfo.nativeLibraryDir;
+            // The zygote can't talk to PackageManager or construct a LoadedApk, so we have to
+            // figure out the paths here. Reuse the logic from LoadedApk to determine the correct
+            // paths and pass them to the zygote as strings.
+            final List<String> zipPaths = new ArrayList<>(10);
+            final List<String> libPaths = new ArrayList<>(10);
+            LoadedApk.makePaths(null, sPackage.applicationInfo, zipPaths, libPaths);
+            final String librarySearchPath = TextUtils.join(File.pathSeparator, libPaths);
+            final String zip = (zipPaths.size() == 1) ? zipPaths.get(0) :
+                    TextUtils.join(File.pathSeparator, zipPaths);
 
-            Log.d(LOGTAG, "Preloading package " + packagePath + " " + libsPath);
-            sZygote.preloadPackageForAbi(packagePath, libsPath, Build.SUPPORTED_ABIS[0]);
+            Log.d(LOGTAG, "Preloading package " + zip + " " + librarySearchPath);
+            sZygote.preloadPackageForAbi(zip, librarySearchPath, Build.SUPPORTED_ABIS[0]);
         } catch (Exception e) {
             Log.e(LOGTAG, "Error connecting to " + serviceName, e);
             sZygote = null;

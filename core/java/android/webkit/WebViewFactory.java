@@ -56,7 +56,8 @@ import java.util.zip.ZipFile;
 @SystemApi
 public final class WebViewFactory {
 
-    private static final String CHROMIUM_WEBVIEW_FACTORY =
+    /** @hide */
+    public static final String CHROMIUM_WEBVIEW_FACTORY =
             "com.android.webview.chromium.WebViewChromiumFactoryProvider";
 
     private static final String NULL_WEBVIEW_FACTORY =
