@@ -16,14 +16,17 @@
 
 package com.android.internal.os;
 
+import android.app.ApplicationLoaders;
 import android.net.LocalSocket;
 import android.os.Build;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.text.TextUtils;
 import android.util.Log;
+import android.webkit.WebViewFactory;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Startup class for the WebView zygote process.
@@ -52,7 +55,19 @@ class WebViewZygoteInit {
 
         @Override
         protected boolean handlePreloadPackage(String packagePath, String libsPath) {
-            // TODO: Use preload information to setup the ClassLoader.
+            ClassLoader loader = ApplicationLoaders.getDefault().getClassLoader(packagePath,
+                    Build.VERSION.SDK_INT, false, libsPath, null, null);
+            try {
+                Class providerClass = Class.forName(WebViewFactory.CHROMIUM_WEBVIEW_FACTORY, true,
+                                                    loader);
+                Object result = providerClass.getMethod("preloadInZygote").invoke(null);
+                if (!((Boolean)result).booleanValue()) {
+                    Log.e(TAG, "preloadInZygote returned false");
+                }
+            } catch (ClassNotFoundException | NoSuchMethodException | SecurityException |
+                     IllegalAccessException | InvocationTargetException e) {
+                Log.e(TAG, "Exception while preloading package", e);
+            }
             return false;
         }
     }
