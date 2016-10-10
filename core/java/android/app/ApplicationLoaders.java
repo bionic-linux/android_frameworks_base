@@ -21,7 +21,8 @@ import android.util.ArrayMap;
 import com.android.internal.os.PathClassLoaderFactory;
 import dalvik.system.PathClassLoader;
 
-class ApplicationLoaders {
+/** @hide */
+public class ApplicationLoaders {
     public static ApplicationLoaders getDefault() {
         return gApplicationLoaders;
     }
