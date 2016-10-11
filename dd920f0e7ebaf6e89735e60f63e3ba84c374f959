@@ -16,6 +16,24 @@
       "revId": "dd920f0e7ebaf6e89735e60f63e3ba84c374f959",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f7aac68_9ca46d11",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-10-11T02:21:50Z",
+      "side": 1,
+      "message": "Are they generally useful enough? I think normally we should enforce std::string usage wherever we can, I just wanted to avoid copies here (never trust Clang...)...",
+      "parentUuid": "1f7aac68_9c79cd89",
+      "revId": "dd920f0e7ebaf6e89735e60f63e3ba84c374f959",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
