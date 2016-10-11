@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f7aac68_9c79cd89",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-10-11T02:18:14Z",
+      "side": 1,
+      "message": "why not add them to strings.h?",
+      "revId": "dd920f0e7ebaf6e89735e60f63e3ba84c374f959",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
