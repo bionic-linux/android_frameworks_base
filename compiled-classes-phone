@@ -7137,6 +7137,7 @@ java.util.HashMap$HashIterator
 java.util.HashMap$HashMapEntry
 java.util.HashMap$KeyIterator
 java.util.HashMap$KeySet
+java.util.HashMap$Node
 java.util.HashMap$ValueIterator
 java.util.HashMap$Values
 java.util.HashSet
@@ -7163,6 +7164,8 @@ java.util.JumboEnumSet$EnumSetIterator
 java.util.LinkedHashMap
 java.util.LinkedHashMap$EntryIterator
 java.util.LinkedHashMap$KeyIterator
+java.util.LinkedHashMap$LinkedEntryIterator
+java.util.LinkedHashMap$LinkedEntrySet
 java.util.LinkedHashMap$LinkedHashIterator
 java.util.LinkedHashMap$LinkedHashMapEntry
 java.util.LinkedHashMap$ValueIterator
@@ -8085,6 +8088,8 @@ sun.misc.CharacterDecoder
 sun.misc.Cleaner
 sun.misc.CompoundEnumeration
 sun.misc.FDBigInt
+sun.misc.FDBigInteger
+sun.misc.FloatingDecimal$BinaryToASCIIBuffer
 sun.misc.FormattedFloatingDecimal
 sun.misc.FormattedFloatingDecimal$1
 sun.misc.FormattedFloatingDecimal$Form
