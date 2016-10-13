@@ -148,6 +148,8 @@
     <protected-broadcast
         android:name="android.bluetooth.headset.action.VENDOR_SPECIFIC_HEADSET_EVENT" />
     <protected-broadcast
+        android:name="android.bluetooth.headset.action.HF_INDICATORS_VALUE_CHANGED" />
+    <protected-broadcast
         android:name="android.bluetooth.headsetclient.profile.action.CONNECTION_STATE_CHANGED" />
     <protected-broadcast
         android:name="android.bluetooth.headsetclient.profile.action.AUDIO_STATE_CHANGED" />
@@ -289,6 +291,7 @@
     <protected-broadcast android:name="android.net.wifi.WIFI_AP_STATE_CHANGED" />
     <protected-broadcast android:name="android.net.wifi.WIFI_CREDENTIAL_CHANGED" />
     <protected-broadcast android:name="android.net.wifi.WIFI_SCAN_AVAILABLE" />
+    <protected-broadcast android:name="android.net.wifi.nan.action.WIFI_NAN_STATE_CHANGED" />
     <protected-broadcast android:name="android.net.wifi.SCAN_RESULTS" />
     <protected-broadcast android:name="android.net.wifi.RSSI_CHANGED" />
     <protected-broadcast android:name="android.net.wifi.STATE_CHANGE" />

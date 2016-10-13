@@ -32,7 +32,8 @@ import java.util.Arrays;
 /**
  * Defines the configuration of a NAN publish session. Built using
  * {@link PublishConfig.Builder}. A publish session is created using
- * {@link WifiNanSession#publish(PublishConfig, WifiNanDiscoverySessionCallback)} or updated using
+ * {@link WifiNanSession#publish(android.os.Handler, PublishConfig, WifiNanDiscoverySessionCallback)}
+ * or updated using
  * {@link WifiNanPublishDiscoverySession#updatePublish(PublishConfig)}.
  *
  * @hide PROPOSED_NAN_API
@@ -181,7 +182,7 @@ public final class PublishConfig implements Parcelable {
      *
      * @hide
      */
-    public void validate() throws IllegalArgumentException {
+    public void assertValid(WifiNanCharacteristics characteristics) throws IllegalArgumentException {
         WifiNanUtils.validateServiceName(mServiceName);
 
         if (!LvBufferUtils.isValid(mMatchFilter, 1)) {
@@ -196,6 +197,26 @@ public final class PublishConfig implements Parcelable {
         }
         if (mTtlSec < 0) {
             throw new IllegalArgumentException("Invalid ttlSec - must be non-negative");
+        }
+
+        if (characteristics != null) {
+            int maxServiceNameLength = characteristics.getMaxServiceNameLength();
+            if (maxServiceNameLength != 0 && mServiceName.length > maxServiceNameLength) {
+                throw new IllegalArgumentException(
+                        "Service name longer than supported by device characteristics");
+            }
+            int maxServiceSpecificInfoLength = characteristics.getMaxServiceSpecificInfoLength();
+            if (maxServiceSpecificInfoLength != 0 && mServiceSpecificInfo != null
+                    && mServiceSpecificInfo.length > maxServiceSpecificInfoLength) {
+                throw new IllegalArgumentException(
+                        "Service specific info longer than supported by device characteristics");
+            }
+            int maxMatchFilterLength = characteristics.getMaxMatchFilterLength();
+            if (maxMatchFilterLength != 0 && mMatchFilter != null
+                    && mMatchFilter.length > maxMatchFilterLength) {
+                throw new IllegalArgumentException(
+                        "Match filter longer than supported by device characteristics");
+            }
         }
     }
 
@@ -256,25 +277,6 @@ public final class PublishConfig implements Parcelable {
         }
 
         /**
-         * Specify service specific information for the publish session - a simple wrapper
-         * of {@link PublishConfig.Builder#setServiceSpecificInfo(byte[])}
-         * obtaining the data from a String.
-         * <p>
-         *     Optional. Empty by default.
-         *
-         * @param serviceSpecificInfoStr The service specific information string
-         *            to be included (as a byte array) in the publish
-         *            information.
-         *
-         * @return The builder to facilitate chaining
-         *         {@code builder.setXXX(..).setXXX(..)}.
-         */
-        public Builder setServiceSpecificInfo(@NonNull String serviceSpecificInfoStr) {
-            mServiceSpecificInfo = serviceSpecificInfoStr.getBytes();
-            return this;
-        }
-
-        /**
          * The match filter for a publish session. Used to determine whether a service
          * discovery occurred - in addition to relying on the service name.
          * <p>
@@ -320,7 +322,7 @@ public final class PublishConfig implements Parcelable {
          * will be broadcast. When the count is reached an event will be
          * generated for {@link WifiNanDiscoverySessionCallback#onSessionTerminated(int)}
          * with {@link WifiNanDiscoverySessionCallback#TERMINATE_REASON_DONE} [unless
-         * {@link #setEnableTerminateNotification(boolean)} disables the callback].
+         * {@link #setTerminateNotificationEnabled(boolean)} disables the callback].
          * <p>
          *     Optional. 0 by default - indicating the session doesn't terminate on its own.
          *     Session will be terminated when {@link WifiNanDiscoveryBaseSession#destroy()} is
@@ -346,7 +348,7 @@ public final class PublishConfig implements Parcelable {
          * an event will be generated for
          * {@link WifiNanDiscoverySessionCallback#onSessionTerminated(int)} with
          * {@link WifiNanDiscoverySessionCallback#TERMINATE_REASON_DONE}  [unless
-         * {@link #setEnableTerminateNotification(boolean)} disables the callback].
+         * {@link #setTerminateNotificationEnabled(boolean)} disables the callback].
          * <p>
          *     Optional. 0 by default - indicating the session doesn't terminate on its own.
          *     Session will be terminated when {@link WifiNanDiscoveryBaseSession#destroy()} is
@@ -376,7 +378,7 @@ public final class PublishConfig implements Parcelable {
          * @return The builder to facilitate chaining
          *         {@code builder.setXXX(..).setXXX(..)}.
          */
-        public Builder setEnableTerminateNotification(boolean enable) {
+        public Builder setTerminateNotificationEnabled(boolean enable) {
             mEnableTerminateNotification = enable;
             return this;
         }

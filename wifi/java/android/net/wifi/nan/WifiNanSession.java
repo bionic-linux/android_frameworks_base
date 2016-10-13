@@ -41,19 +41,17 @@ public class WifiNanSession {
 
     private final WeakReference<WifiNanManager> mMgr;
     private final Binder mBinder;
-    private final Looper mLooper;
     private final int mClientId;
 
     private boolean mTerminated = true;
     private final CloseGuard mCloseGuard = CloseGuard.get();
 
     /** @hide */
-    public WifiNanSession(WifiNanManager manager, Binder binder, Looper looper, int clientId) {
+    public WifiNanSession(WifiNanManager manager, Binder binder, int clientId) {
         if (VDBG) Log.v(TAG, "New session created: manager=" + manager + ", clientId=" + clientId);
 
         mMgr = new WeakReference<>(manager);
         mBinder = binder;
-        mLooper = looper;
         mClientId = clientId;
         mTerminated = false;
 
@@ -68,7 +66,7 @@ public class WifiNanSession {
      * session-wide destroy.
      * <p>
      * An application may re-attach after a destroy using
-     * {@link WifiNanManager#attach(Handler, WifiNanEventCallback)} .
+     * {@link WifiNanManager#attach(Handler, WifiNanAttachCallback)} .
      */
     public void destroy() {
         WifiNanManager mgr = mMgr.get();
@@ -100,10 +98,11 @@ public class WifiNanSession {
      * the specified {@code publishConfig} configuration. The results of the publish operation
      * are routed to the callbacks of {@link WifiNanDiscoverySessionCallback}:
      * <ul>
-     *     <li>{@link WifiNanDiscoverySessionCallback#onPublishStarted(WifiNanPublishDiscoverySession)}
+     *     <li>
+     *     {@link WifiNanDiscoverySessionCallback#onPublishStarted(WifiNanPublishDiscoverySession)}
      *     is called when the publish session is created and provides a handle to the session.
      *     Further operations on the publish session can be executed on that object.
-     *     <li>{@link WifiNanDiscoverySessionCallback#onSessionConfigFailed(int)} is called if the
+     *     <li>{@link WifiNanDiscoverySessionCallback#onSessionConfigFailed()} is called if the
      *     publish operation failed.
      * </ul>
      * <p>
@@ -114,13 +113,17 @@ public class WifiNanSession {
      *      An application must use the {@link WifiNanDiscoveryBaseSession#destroy()} to
      *      terminate the publish discovery session once it isn't needed. This will free
      *      resources as well terminate any on-air transmissions.
+     * <p>The application must have the {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}
+     * permission to start a publish discovery session.
      *
+     * @param handler The Handler on whose thread to execute the callbacks of the {@code
+     * callback} object. If a null is provided then the application's main thread will be used.
      * @param publishConfig The {@link PublishConfig} specifying the
      *            configuration of the requested publish session.
      * @param callback A {@link WifiNanDiscoverySessionCallback} derived object to be used for
      *                 session event callbacks.
      */
-    public void publish(@NonNull PublishConfig publishConfig,
+    public void publish(@Nullable Handler handler, @NonNull PublishConfig publishConfig,
             @NonNull WifiNanDiscoverySessionCallback callback) {
         WifiNanManager mgr = mMgr.get();
         if (mgr == null) {
@@ -131,7 +134,8 @@ public class WifiNanSession {
             Log.e(TAG, "publish: called after termination");
             return;
         }
-        mgr.publish(mClientId, mLooper, publishConfig, callback);
+        mgr.publish(mClientId, (handler == null) ? Looper.getMainLooper() : handler.getLooper(),
+                publishConfig, callback);
     }
 
     /**
@@ -139,10 +143,11 @@ public class WifiNanSession {
      * the specified {@code subscribeConfig} configuration. The results of the subscribe
      * operation are routed to the callbacks of {@link WifiNanDiscoverySessionCallback}:
      * <ul>
-     *     <li>{@link WifiNanDiscoverySessionCallback#onSubscribeStarted(WifiNanSubscribeDiscoverySession)}
+     *     <li>
+     *  {@link WifiNanDiscoverySessionCallback#onSubscribeStarted(WifiNanSubscribeDiscoverySession)}
      *     is called when the subscribe session is created and provides a handle to the session.
      *     Further operations on the subscribe session can be executed on that object.
-     *     <li>{@link WifiNanDiscoverySessionCallback#onSessionConfigFailed(int)} is called if the
+     *     <li>{@link WifiNanDiscoverySessionCallback#onSessionConfigFailed()} is called if the
      *     subscribe operation failed.
      * </ul>
      * <p>
@@ -153,13 +158,17 @@ public class WifiNanSession {
      *      An application must use the {@link WifiNanDiscoveryBaseSession#destroy()} to
      *      terminate the subscribe discovery session once it isn't needed. This will free
      *      resources as well terminate any on-air transmissions.
+     * <p>The application must have the {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}
+     * permission to start a subscribe discovery session.
      *
+     * @param handler The Handler on whose thread to execute the callbacks of the {@code
+     * callback} object. If a null is provided then the application's main thread will be used.
      * @param subscribeConfig The {@link SubscribeConfig} specifying the
      *            configuration of the requested subscribe session.
      * @param callback A {@link WifiNanDiscoverySessionCallback} derived object to be used for
      *                 session event callbacks.
      */
-    public void subscribe(@NonNull SubscribeConfig subscribeConfig,
+    public void subscribe(@Nullable Handler handler, @NonNull SubscribeConfig subscribeConfig,
             @NonNull WifiNanDiscoverySessionCallback callback) {
         WifiNanManager mgr = mMgr.get();
         if (mgr == null) {
@@ -170,7 +179,8 @@ public class WifiNanSession {
             Log.e(TAG, "publish: called after termination");
             return;
         }
-        mgr.subscribe(mClientId, mLooper, subscribeConfig, callback);
+        mgr.subscribe(mClientId, (handler == null) ? Looper.getMainLooper() : handler.getLooper(),
+                subscribeConfig, callback);
     }
 
     /**
@@ -182,7 +192,7 @@ public class WifiNanSession {
      *     This API is targeted for applications which can obtain the peer MAC address using OOB
      *     (out-of-band) discovery. NAN discovery does not provide the MAC address of the peer -
      *     when using NAN discovery use the alternative network specifier method -
-     *     {@link WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, int, byte[])}.
+     *     {@link WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, Object, byte[])}.
      *
      * @param role  The role of this device:
      *              {@link WifiNanManager#WIFI_NAN_DATA_PATH_ROLE_INITIATOR} or

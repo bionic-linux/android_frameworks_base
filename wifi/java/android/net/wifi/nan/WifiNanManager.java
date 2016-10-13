@@ -58,12 +58,12 @@ import java.util.Arrays;
  * <li>Initialize a NAN cluster (peer-to-peer synchronization). Refer to
  * {@link #attach(Handler, WifiNanAttachCallback)}.
  * <li>Create discovery sessions (publish or subscribe sessions). Refer to
- * {@link WifiNanSession#publish(PublishConfig, WifiNanDiscoverySessionCallback)} and
- * {@link WifiNanSession#subscribe(SubscribeConfig, WifiNanDiscoverySessionCallback)}.
+ * {@link WifiNanSession#publish(Handler, PublishConfig, WifiNanDiscoverySessionCallback)} and
+ * {@link WifiNanSession#subscribe(Handler, SubscribeConfig, WifiNanDiscoverySessionCallback)}.
  * <li>Create a NAN network specifier to be used with
  * {@link ConnectivityManager#requestNetwork(NetworkRequest, ConnectivityManager.NetworkCallback)}
  * to set-up a NAN connection with a peer. Refer to
- * {@link WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, int, byte[])} and
+ * {@link WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, Object, byte[])} and
  * {@link WifiNanSession#createNetworkSpecifier(int, byte[], byte[])}.
  * </ul>
  * <p>
@@ -85,9 +85,9 @@ import java.util.Arrays;
  *     device will actually disable NAN once the last application detaches.
  * <p>
  *     Once a NAN attach is confirmed use the
- *     {@link WifiNanSession#publish(PublishConfig, WifiNanDiscoverySessionCallback)} or
- *     {@link WifiNanSession#subscribe(SubscribeConfig, WifiNanDiscoverySessionCallback)} to
- *     create publish or subscribe NAN discovery sessions. Events are called on the provided
+ *     {@link WifiNanSession#publish(Handler, PublishConfig, WifiNanDiscoverySessionCallback)} or
+ *     {@link WifiNanSession#subscribe(Handler, SubscribeConfig, WifiNanDiscoverySessionCallback)}
+ *     to create publish or subscribe NAN discovery sessions. Events are called on the provided
  *     callback object {@link WifiNanDiscoverySessionCallback}. Specifically, the
  *     {@link WifiNanDiscoverySessionCallback#onPublishStarted(WifiNanPublishDiscoverySession)}
  *     and
@@ -97,8 +97,8 @@ import java.util.Arrays;
  *     the session {@link WifiNanPublishDiscoverySession#updatePublish(PublishConfig)} and
  *     {@link WifiNanSubscribeDiscoverySession#updateSubscribe(SubscribeConfig)}. Sessions can also
  *     be used to send messages using the
- *     {@link WifiNanDiscoveryBaseSession#sendMessage(int, byte[], int)} APIs. When an application
- *     is finished with a discovery session it <b>must</b> terminate it using the
+ *     {@link WifiNanDiscoveryBaseSession#sendMessage(Object, int, byte[])} APIs. When an
+ *     application is finished with a discovery session it <b>must</b> terminate it using the
  *     {@link WifiNanDiscoveryBaseSession#destroy()} API.
  * <p>
  *    Creating connections between NAN devices is managed by the standard
@@ -109,7 +109,7 @@ import java.util.Arrays;
  *        {@link android.net.NetworkCapabilities#TRANSPORT_WIFI_NAN}.
  *        <li>{@link NetworkRequest.Builder#setNetworkSpecifier(String)} using
  *        {@link WifiNanSession#createNetworkSpecifier(int, byte[], byte[])} or
- *        {@link WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, int, byte[])}.
+ *        {@link WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, Object, byte[])}.
  *    </ul>
  *
  * @hide PROPOSED_NAN_API
@@ -197,42 +197,16 @@ public class WifiNanManager {
     public static final String NETWORK_SPECIFIER_KEY_TOKEN = "token";
 
     /**
-     * Broadcast intent action to indicate whether Wi-Fi NAN is enabled or
-     * disabled. An extra {@link #EXTRA_WIFI_STATE} provides the state
-     * information as int using {@link #WIFI_NAN_STATE_DISABLED} and
-     * {@link #WIFI_NAN_STATE_ENABLED} constants. This broadcast is <b>not</b> sticky,
-     * use the {@link #isAvailable()} API after registering the broadcast to check the current
-     * state of Wi-Fi NAN.
-     *
-     * @see #EXTRA_WIFI_STATE
+     * Broadcast intent action to indicate that the state of Wi-Fi NAN availability has changed.
+     * Use the {@link #isAvailable()} to query the current status.
+     * This broadcast is <b>not</b> sticky, use the {@link #isAvailable()} API after registering
+     * the broadcast to check the current state of Wi-Fi NAN.
+     * <p>Note: The broadcast is only delivered to registered receivers - no manifest registered
+     * components will be launched.
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_WIFI_NAN_STATE_CHANGED =
             "android.net.wifi.nan.action.WIFI_NAN_STATE_CHANGED";
-
-    /**
-     * The lookup key for an int value indicating whether Wi-Fi NAN is enabled or
-     * disabled. Retrieve it with
-     * {@link android.content.Intent#getIntExtra(String,int)}.
-     *
-     * @see #WIFI_NAN_STATE_DISABLED
-     * @see #WIFI_NAN_STATE_ENABLED
-     */
-    public static final String EXTRA_WIFI_STATE = "android.net.wifi.nan.extra.WIFI_STATE";
-
-    /**
-     * Wi-Fi NAN is disabled.
-     *
-     * @see #ACTION_WIFI_NAN_STATE_CHANGED
-     */
-    public static final int WIFI_NAN_STATE_DISABLED = 1;
-
-    /**
-     * Wi-Fi NAN is enabled.
-     *
-     * @see #ACTION_WIFI_NAN_STATE_CHANGED
-     */
-    public static final int WIFI_NAN_STATE_ENABLED = 2;
 
     /** @hide */
     @IntDef({
@@ -245,7 +219,7 @@ public class WifiNanManager {
      * Connection creation role is that of INITIATOR. Used to create a network specifier string
      * when requesting a NAN network.
      *
-     * @see WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, int, byte[])
+     * @see WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, Object, byte[])
      * @see WifiNanSession#createNetworkSpecifier(int, byte[], byte[])
      */
     public static final int WIFI_NAN_DATA_PATH_ROLE_INITIATOR = 0;
@@ -254,7 +228,7 @@ public class WifiNanManager {
      * Connection creation role is that of RESPONDER. Used to create a network specifier string
      * when requesting a NAN network.
      *
-     * @see WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, int, byte[])
+     * @see WifiNanDiscoveryBaseSession#createNetworkSpecifier(int, Object, byte[])
      * @see WifiNanSession#createNetworkSpecifier(int, byte[], byte[])
      */
     public static final int WIFI_NAN_DATA_PATH_ROLE_RESPONDER = 1;
@@ -319,6 +293,20 @@ public class WifiNanManager {
     }
 
     /**
+     * Returns the characteristics of the Wi-Fi NAN interface: a set of parameters which specify
+     * limitations on configurations, e.g. the maximum service name length.
+     *
+     * @return An object specifying configuration limitations of NAN.
+     */
+    public WifiNanCharacteristics getCharacteristics() {
+        try {
+            return mService.getCharacteristics();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Attach to the Wi-Fi NAN service - enabling the application to create discovery sessions or
      * create connections to peers. The device will attach to an existing cluster if it can find
      * one or create a new cluster (if it is the first to enable NAN in its vicinity). Results
@@ -330,9 +318,9 @@ public class WifiNanManager {
      * then this function will simply indicate success immediately using the same {@code
      * attachCallback}.
      *
-     * @param handler The Handler on whose thread to execute all callbacks related to the
-     *            attach request - including all sessions opened as part of this
-     *            attach. If a null is provided then the application's main thread will be used.
+     * @param handler The Handler on whose thread to execute the callbacks of the {@code
+     * attachCallback} object. If a null is provided then the application's main thread will be
+     *                used.
      * @param attachCallback A callback for attach events, extended from
      * {@link WifiNanAttachCallback}.
      */
@@ -360,12 +348,13 @@ public class WifiNanManager {
      * requirements this listener will wake up the host at regular intervals causing higher power
      * consumption, do not use it unless the information is necessary (e.g. for OOB discovery).
      *
-     * @param handler The Handler on whose thread to execute all callbacks related to the
-     *            attach request - including all sessions opened as part of this
-     *            attach. If a null is provided then the application's main thread will be used.
+     * @param handler The Handler on whose thread to execute the callbacks of the {@code
+     * attachCallback} and {@code identityChangedListener} objects. If a null is provided then the
+     *                application's main thread will be used.
      * @param attachCallback A callback for attach events, extended from
      * {@link WifiNanAttachCallback}.
-     * @param identityChangedListener A listener for changed identity.
+     * @param identityChangedListener A listener for changed identity, extended from
+     * {@link WifiNanIdentityChangedListener}.
      */
     public void attach(@Nullable Handler handler, @NonNull WifiNanAttachCallback attachCallback,
             @NonNull WifiNanIdentityChangedListener identityChangedListener) {
@@ -484,16 +473,22 @@ public class WifiNanManager {
     }
 
     /** @hide */
-    public void sendMessage(int clientId, int sessionId, int peerId, byte[] message, int messageId,
-            int retryCount) {
+    public void sendMessage(int clientId, int sessionId, Object peerHandle, byte[] message,
+            int messageId, int retryCount) {
+        if (peerHandle == null) {
+            throw new IllegalArgumentException(
+                    "sendMessage: invalid peerHandle - must be non-null");
+        }
+
         if (VDBG) {
-            Log.v(TAG,
-                    "sendMessage(): clientId=" + clientId + ", sessionId=" + sessionId + ", peerId="
-                            + peerId + ", messageId=" + messageId + ", retryCount=" + retryCount);
+            Log.v(TAG, "sendMessage(): clientId=" + clientId + ", sessionId=" + sessionId
+                    + ", peerHandle=" + ((OpaquePeerHandle) peerHandle).peerId + ", messageId="
+                    + messageId + ", retryCount=" + retryCount);
         }
 
         try {
-            mService.sendMessage(clientId, sessionId, peerId, message, messageId, retryCount);
+            mService.sendMessage(clientId, sessionId, ((OpaquePeerHandle) peerHandle).peerId,
+                    message, messageId, retryCount);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -521,19 +516,20 @@ public class WifiNanManager {
     }
 
     /** @hide */
-    public String createNetworkSpecifier(int clientId, int role, int sessionId, int peerId,
+    public String createNetworkSpecifier(int clientId, int role, int sessionId, Object peerHandle,
             byte[] token) {
         if (VDBG) {
             Log.v(TAG, "createNetworkSpecifier: role=" + role + ", sessionId=" + sessionId
-                    + ", peerId=" + peerId + ", token=" + token);
+                    + ", peerHandle=" + ((peerHandle == null) ? peerHandle
+                    : ((OpaquePeerHandle) peerHandle).peerId) + ", token=" + token);
         }
 
         int type;
-        if (token != null && peerId != 0) {
+        if (token != null && peerHandle != null) {
             type = NETWORK_SPECIFIER_TYPE_1A;
-        } else if (token == null && peerId != 0) {
+        } else if (token == null && peerHandle != null) {
             type = NETWORK_SPECIFIER_TYPE_1B;
-        } else if (token != null && peerId == 0) {
+        } else if (token != null && peerHandle == null) {
             type = NETWORK_SPECIFIER_TYPE_1C;
         } else {
             type = NETWORK_SPECIFIER_TYPE_1D;
@@ -550,10 +546,10 @@ public class WifiNanManager {
                 throw new IllegalArgumentException(
                         "createNetworkSpecifier: Invalid null token - not permitted on INITIATOR");
             }
-            if (peerId == 0) {
+            if (peerHandle == null) {
                 throw new IllegalArgumentException(
-                        "createNetworkSpecifier: Invalid peer ID (value of 0) - not permitted on "
-                                + "INITIATOR");
+                        "createNetworkSpecifier: Invalid peer handle (value of null) - not "
+                                + "permitted on INITIATOR");
             }
         }
 
@@ -564,8 +560,8 @@ public class WifiNanManager {
             json.put(NETWORK_SPECIFIER_KEY_ROLE, role);
             json.put(NETWORK_SPECIFIER_KEY_CLIENT_ID, clientId);
             json.put(NETWORK_SPECIFIER_KEY_SESSION_ID, sessionId);
-            if (peerId != 0) {
-                json.put(NETWORK_SPECIFIER_KEY_PEER_ID, peerId);
+            if (peerHandle != null) {
+                json.put(NETWORK_SPECIFIER_KEY_PEER_ID, ((OpaquePeerHandle) peerHandle).peerId);
             }
             if (token != null) {
                 json.put(NETWORK_SPECIFIER_KEY_TOKEN,
@@ -579,8 +575,8 @@ public class WifiNanManager {
     }
 
     /** @hide */
-    public String createNetworkSpecifier(int clientId, @DataPathRole int role, @Nullable byte[] peer,
-            @Nullable byte[] token) {
+    public String createNetworkSpecifier(int clientId, @DataPathRole int role,
+            @Nullable byte[] peer, @Nullable byte[] token) {
         if (VDBG) {
             Log.v(TAG, "createNetworkSpecifier: role=" + role + ", token=" + token);
         }
@@ -695,11 +691,11 @@ public class WifiNanManager {
                     switch (msg.what) {
                         case CALLBACK_CONNECT_SUCCESS:
                             attachCallback.onAttached(
-                                    new WifiNanSession(mgr, mBinder, mLooper, msg.arg1));
+                                    new WifiNanSession(mgr, mBinder, msg.arg1));
                             break;
                         case CALLBACK_CONNECT_FAIL:
                             mNanManager.clear();
-                            attachCallback.onAttachFailed(msg.arg1);
+                            attachCallback.onAttachFailed();
                             break;
                         case CALLBACK_IDENTITY_CHANGED:
                             identityChangedListener.onIdentityChanged((byte[]) msg.obj);
@@ -751,7 +747,7 @@ public class WifiNanManager {
 
         @Override
         public void onConnectFail(int reason) {
-            if (VDBG) Log.v(TAG, "onConfigFailed: reason=" + reason);
+            if (VDBG) Log.v(TAG, "onConnectFail: reason=" + reason);
 
             Message msg = mHandler.obtainMessage(CALLBACK_CONNECT_FAIL);
             msg.arg1 = reason;
@@ -856,7 +852,7 @@ public class WifiNanManager {
                             mOriginalCallback.onSessionConfigUpdated();
                             break;
                         case CALLBACK_SESSION_CONFIG_FAIL:
-                            mOriginalCallback.onSessionConfigFailed(msg.arg1);
+                            mOriginalCallback.onSessionConfigFailed();
                             if (mSession == null) {
                                 /*
                                  * creation failed (as opposed to update
@@ -870,7 +866,7 @@ public class WifiNanManager {
                             break;
                         case CALLBACK_MATCH:
                             mOriginalCallback.onServiceDiscovered(
-                                    msg.arg1,
+                                    new OpaquePeerHandle(msg.arg1),
                                     msg.getData().getByteArray(MESSAGE_BUNDLE_KEY_MESSAGE),
                                     msg.getData().getByteArray(MESSAGE_BUNDLE_KEY_MESSAGE2));
                             break;
@@ -878,10 +874,11 @@ public class WifiNanManager {
                             mOriginalCallback.onMessageSent(msg.arg1);
                             break;
                         case CALLBACK_MESSAGE_SEND_FAIL:
-                            mOriginalCallback.onMessageSendFailed(msg.arg1, msg.arg2);
+                            mOriginalCallback.onMessageSendFailed(msg.arg1);
                             break;
                         case CALLBACK_MESSAGE_RECEIVED:
-                            mOriginalCallback.onMessageReceived(msg.arg1, (byte[]) msg.obj);
+                            mOriginalCallback.onMessageReceived(new OpaquePeerHandle(msg.arg1),
+                                    (byte[]) msg.obj);
                             break;
                     }
                 }
@@ -1010,5 +1007,14 @@ public class WifiNanManager {
             mNanManager.clear();
             mOriginalCallback.onSessionTerminated(reason);
         }
+    }
+
+    /** @hide */
+    public static class OpaquePeerHandle {
+        public OpaquePeerHandle(int peerId) {
+            this.peerId = peerId;
+        }
+
+        public int peerId;
     }
 }
