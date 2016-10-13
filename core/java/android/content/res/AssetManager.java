@@ -221,6 +221,7 @@ public final class AssetManager implements AutoCloseable {
         if (outValue.type == TypedValue.TYPE_STRING) {
             outValue.string = mStringBlocks[block].get(outValue.data);
         }
+        outValue.changingConfigurations = ActivityInfo.activityInfoConfigNativeToJava(outValue.changingConfigurations);
         return true;
     }
 
