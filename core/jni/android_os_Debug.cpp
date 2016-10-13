@@ -15,15 +15,7 @@
  */
 
 #define LOG_TAG "android.os.Debug"
-#include "JNIHelp.h"
-#include "jni.h"
-#include <utils/String8.h>
-#include "utils/misc.h"
-#include "cutils/debugger.h"
-#include <memtrack/memtrack.h>
-#include <memunreachable/memunreachable.h>
 
-#include <cutils/log.h>
 #include <fcntl.h>
 #include <inttypes.h>
 #include <stdio.h>
@@ -40,8 +32,25 @@
 #include <iomanip>
 #include <string>
 
+#include "jni.h"
+
+#include "android-base/stringprintf.h"
+#include "cutils/debugger.h"
+#include "cutils/log.h"
+#include "JNIHelp.h"
+#include "memtrack/memtrack.h"
+#include "memunreachable/memunreachable.h"
+#include "utils/misc.h"
+#include "utils/String8.h"
+
 namespace android
 {
+
+using UniqueFile = std::unique_ptr<FILE, decltype(&fclose)>;
+
+static inline UniqueFile MakeUniqueFile(const char* path, const char* mode) {
+    return UniqueFile(fopen(path, mode), fclose);
+}
 
 enum {
     HEAP_UNKNOWN,
@@ -427,15 +436,13 @@ static void read_mapinfo(FILE *fp, stats_t* stats, bool* foundSwapPss)
 
 static void load_maps(int pid, stats_t* stats, bool* foundSwapPss)
 {
-    char tmp[128];
-    FILE *fp;
+    *foundSwapPss = false;
 
-    sprintf(tmp, "/proc/%d/smaps", pid);
-    fp = fopen(tmp, "r");
-    if (fp == 0) return;
+    std::string smaps_path = base::StringPrintf("/proc/%d/smaps", pid);
+    UniqueFile fp = MakeUniqueFile(smaps_path.c_str(), "re");
+    if (fp == nullptr) return;
 
-    read_mapinfo(fp, stats, foundSwapPss);
-    fclose(fp);
+    read_mapinfo(fp.get(), stats, foundSwapPss);
 }
 
 static void android_os_Debug_getDirtyPagesPid(JNIEnv *env, jobject clazz,
@@ -517,51 +524,48 @@ static jlong android_os_Debug_getPssPid(JNIEnv *env, jobject clazz, jint pid,
     jlong uss = 0;
     jlong memtrack = 0;
 
-    char tmp[128];
-    FILE *fp;
-
     struct graphics_memory_pss graphics_mem;
     if (read_memtrack_memory(pid, &graphics_mem) == 0) {
         pss = uss = memtrack = graphics_mem.graphics + graphics_mem.gl + graphics_mem.other;
     }
 
-    sprintf(tmp, "/proc/%d/smaps", pid);
-    fp = fopen(tmp, "r");
+    {
+        std::string smaps_path = base::StringPrintf("/proc/%d/smaps", pid);
+        UniqueFile fp = MakeUniqueFile(smaps_path.c_str(), "re");
 
-    if (fp != 0) {
-        while (true) {
-            if (fgets(line, 1024, fp) == NULL) {
-                break;
-            }
+        if (fp != nullptr) {
+            while (true) {
+                if (fgets(line, 1024, fp.get()) == NULL) {
+                    break;
+                }
 
-            if (line[0] == 'P') {
-                if (strncmp(line, "Pss:", 4) == 0) {
-                    char* c = line + 4;
+                if (line[0] == 'P') {
+                    if (strncmp(line, "Pss:", 4) == 0) {
+                        char* c = line + 4;
+                        while (*c != 0 && (*c < '0' || *c > '9')) {
+                            c++;
+                        }
+                        pss += atoi(c);
+                    } else if (strncmp(line, "Private_Clean:", 14) == 0
+                                || strncmp(line, "Private_Dirty:", 14) == 0) {
+                        char* c = line + 14;
+                        while (*c != 0 && (*c < '0' || *c > '9')) {
+                            c++;
+                        }
+                        uss += atoi(c);
+                    }
+                } else if (line[0] == 'S' && strncmp(line, "SwapPss:", 8) == 0) {
+                    char* c = line + 8;
+                    jlong lSwapPss;
                     while (*c != 0 && (*c < '0' || *c > '9')) {
                         c++;
                     }
-                    pss += atoi(c);
-                } else if (strncmp(line, "Private_Clean:", 14) == 0
-                        || strncmp(line, "Private_Dirty:", 14) == 0) {
-                    char* c = line + 14;
-                    while (*c != 0 && (*c < '0' || *c > '9')) {
-                        c++;
-                    }
-                    uss += atoi(c);
+                    lSwapPss = atoi(c);
+                    swapPss += lSwapPss;
+                    pss += lSwapPss; // Also in swap, those pages would be accounted as Pss without SWAP
                 }
-            } else if (line[0] == 'S' && strncmp(line, "SwapPss:", 8) == 0) {
-                char* c = line + 8;
-                jlong lSwapPss;
-                while (*c != 0 && (*c < '0' || *c > '9')) {
-                    c++;
-                }
-                lSwapPss = atoi(c);
-                swapPss += lSwapPss;
-                pss += lSwapPss; // Also in swap, those pages would be accounted as Pss without SWAP
             }
         }
-
-        fclose(fp);
     }
 
     if (outUssSwapPss != NULL) {
@@ -605,12 +609,14 @@ static long get_allocated_vmalloc_memory() {
             NULL
     };
     long size, vmalloc_allocated_size = 0;
-    FILE* fp = fopen("/proc/vmallocinfo", "r");
-    if (fp == NULL) {
+
+    UniqueFile fp = MakeUniqueFile("/proc/vmallocinfo", "re");
+    if (fp == nullptr) {
         return 0;
     }
+
     while (true) {
-        if (fgets(line, 1024, fp) == NULL) {
+        if (fgets(line, 1024, fp.get()) == NULL) {
             break;
         }
         bool valid_line = true;
@@ -626,7 +632,6 @@ static long get_allocated_vmalloc_memory() {
             vmalloc_allocated_size += size;
         }
     }
-    fclose(fp);
     return vmalloc_allocated_size;
 }
 
@@ -650,27 +655,25 @@ enum {
 static long long get_zram_mem_used()
 {
 #define ZRAM_SYSFS "/sys/block/zram0/"
-    FILE *f = fopen(ZRAM_SYSFS "mm_stat", "r");
-    if (f) {
+    UniqueFile mm_stat_file = MakeUniqueFile(ZRAM_SYSFS "mm_stat", "re");
+    if (mm_stat_file) {
         long long mem_used_total = 0;
 
-        int matched = fscanf(f, "%*d %*d %lld %*d %*d %*d %*d", &mem_used_total);
+        int matched = fscanf(mm_stat_file.get(), "%*d %*d %lld %*d %*d %*d %*d", &mem_used_total);
         if (matched != 1)
             ALOGW("failed to parse " ZRAM_SYSFS "mm_stat");
 
-        fclose(f);
         return mem_used_total;
     }
 
-    f = fopen(ZRAM_SYSFS "mem_used_total", "r");
-    if (f) {
+    UniqueFile mem_used_total_file = MakeUniqueFile(ZRAM_SYSFS "mem_used_total", "re");
+    if (mem_used_total_file) {
         long long mem_used_total = 0;
 
-        int matched = fscanf(f, "%lld", &mem_used_total);
+        int matched = fscanf(mem_used_total_file.get(), "%lld", &mem_used_total);
         if (matched != 1)
             ALOGW("failed to parse " ZRAM_SYSFS "mem_used_total");
 
-        fclose(f);
         return mem_used_total;
     }
 
@@ -783,8 +786,8 @@ static void android_os_Debug_getMemInfo(JNIEnv *env, jobject clazz, jlongArray o
 
 static jint read_binder_stat(const char* stat)
 {
-    FILE* fp = fopen(BINDER_STATS, "r");
-    if (fp == NULL) {
+    UniqueFile fp = MakeUniqueFile(BINDER_STATS, "re");
+    if (fp == nullptr) {
         return -1;
     }
 
@@ -795,8 +798,7 @@ static jint read_binder_stat(const char* stat)
 
     // loop until we have the block that represents this process
     do {
-        if (fgets(line, 1024, fp) == 0) {
-            fclose(fp);
+        if (fgets(line, 1024, fp.get()) == 0) {
             return -1;
         }
     } while (strncmp(compare, line, len));
@@ -805,8 +807,7 @@ static jint read_binder_stat(const char* stat)
     len = snprintf(compare, 128, "  %s: ", stat);
 
     do {
-        if (fgets(line, 1024, fp) == 0) {
-            fclose(fp);
+        if (fgets(line, 1024, fp.get()) == 0) {
             return -1;
         }
     } while (strncmp(compare, line, len));
@@ -814,7 +815,6 @@ static jint read_binder_stat(const char* stat)
     // we have the line, now increment the line ptr to the value
     char* ptr = line + len;
     jint result = atoi(ptr);
-    fclose(fp);
     return result;
 }
 
@@ -839,7 +839,8 @@ extern "C" void get_malloc_leak_info(uint8_t** info, size_t* overallSize,
     size_t* infoSize, size_t* totalMemory, size_t* backtraceSize);
 extern "C" void free_malloc_leak_info(uint8_t* info);
 #define SIZE_FLAG_ZYGOTE_CHILD  (1<<31)
-#define BACKTRACE_SIZE          32
+
+static size_t gNumBacktraceElements;
 
 /*
  * This is a qsort() callback.
@@ -859,11 +860,11 @@ static int compareHeapRecords(const void* vrec1, const void* vrec2)
         return -1;
     }
 
-    intptr_t* bt1 = (intptr_t*)(rec1 + 2);
-    intptr_t* bt2 = (intptr_t*)(rec2 + 2);
-    for (size_t idx = 0; idx < BACKTRACE_SIZE; idx++) {
-        intptr_t addr1 = bt1[idx];
-        intptr_t addr2 = bt2[idx];
+    uintptr_t* bt1 = (uintptr_t*)(rec1 + 2);
+    uintptr_t* bt2 = (uintptr_t*)(rec2 + 2);
+    for (size_t idx = 0; idx < gNumBacktraceElements; idx++) {
+        uintptr_t addr1 = bt1[idx];
+        uintptr_t addr2 = bt2[idx];
         if (addr1 == addr2) {
             if (addr1 == 0)
                 break;
@@ -907,9 +908,10 @@ static void dumpNativeHeap(FILE* fp)
     if (info == NULL) {
         fprintf(fp, "Native heap dump not available. To enable, run these"
                     " commands (requires root):\n");
-        fprintf(fp, "$ adb shell setprop libc.debug.malloc 1\n");
-        fprintf(fp, "$ adb shell stop\n");
-        fprintf(fp, "$ adb shell start\n");
+        fprintf(fp, "# adb shell stop\n");
+        fprintf(fp, "# adb shell setprop libc.debug.malloc.options "
+                    "backtrace\n");
+        fprintf(fp, "# adb shell start\n");
         return;
     }
     assert(infoSize != 0);
@@ -920,13 +922,11 @@ static void dumpNativeHeap(FILE* fp)
     size_t recordCount = overallSize / infoSize;
     fprintf(fp, "Total memory: %zu\n", totalMemory);
     fprintf(fp, "Allocation records: %zd\n", recordCount);
-    if (backtraceSize != BACKTRACE_SIZE) {
-        fprintf(fp, "WARNING: mismatched backtrace sizes (%zu vs. %d)\n",
-            backtraceSize, BACKTRACE_SIZE);
-    }
+    fprintf(fp, "Backtrace size: %zd\n", backtraceSize);
     fprintf(fp, "\n");
 
     /* re-sort the entries */
+    gNumBacktraceElements = backtraceSize;
     qsort(info, recordCount, infoSize, compareHeapRecords);
 
     /* dump the entries to the file */
@@ -934,7 +934,7 @@ static void dumpNativeHeap(FILE* fp)
     for (size_t idx = 0; idx < recordCount; idx++) {
         size_t size = *(size_t*) ptr;
         size_t allocations = *(size_t*) (ptr + sizeof(size_t));
-        intptr_t* backtrace = (intptr_t*) (ptr + sizeof(size_t) * 2);
+        uintptr_t* backtrace = (uintptr_t*) (ptr + sizeof(size_t) * 2);
 
         fprintf(fp, "z %d  sz %8zu  num %4zu  bt",
                 (size & SIZE_FLAG_ZYGOTE_CHILD) != 0,
@@ -960,16 +960,15 @@ static void dumpNativeHeap(FILE* fp)
 
     fprintf(fp, "MAPS\n");
     const char* maps = "/proc/self/maps";
-    FILE* in = fopen(maps, "r");
-    if (in == NULL) {
+    UniqueFile in = MakeUniqueFile(maps, "re");
+    if (in == nullptr) {
         fprintf(fp, "Could not open %s\n", maps);
         return;
     }
     char buf[BUFSIZ];
-    while (size_t n = fread(buf, sizeof(char), BUFSIZ, in)) {
+    while (size_t n = fread(buf, sizeof(char), BUFSIZ, in.get())) {
         fwrite(buf, sizeof(char), n, fp);
     }
-    fclose(in);
 
     fprintf(fp, "END\n");
 }
@@ -999,8 +998,8 @@ static void android_os_Debug_dumpNativeHeap(JNIEnv* env, jobject clazz,
         return;
     }
 
-    FILE* fp = fdopen(fd, "w");
-    if (fp == NULL) {
+    UniqueFile fp(fdopen(fd, "w"), fclose);
+    if (fp == nullptr) {
         ALOGW("fdopen(%d) failed: %s\n", fd, strerror(errno));
         close(fd);
         jniThrowRuntimeException(env, "fdopen() failed");
@@ -1008,10 +1007,8 @@ static void android_os_Debug_dumpNativeHeap(JNIEnv* env, jobject clazz,
     }
 
     ALOGD("Native heap dump starting...\n");
-    dumpNativeHeap(fp);
+    dumpNativeHeap(fp.get());
     ALOGD("Native heap dump complete.\n");
-
-    fclose(fp);
 }
 
 

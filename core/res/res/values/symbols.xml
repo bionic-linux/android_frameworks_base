@@ -345,8 +345,6 @@
   <java-symbol type="integer"  name="config_wifi_operating_voltage_mv" />
   <java-symbol type="string"  name="config_wifi_framework_sap_2G_channel_list" />
 
-  <java-symbol type="bool" name="editable_voicemailnumber" />
-
   <java-symbol type="bool" name="config_wifi_framework_cellular_handover_enable_user_triggered_adjustment" />
   <java-symbol type="integer" name="config_wifi_framework_associated_full_scan_tx_packet_threshold" />
   <java-symbol type="integer" name="config_wifi_framework_associated_full_scan_rx_packet_threshold" />
@@ -2237,6 +2235,7 @@
   <java-symbol type="layout" name="resolver_different_item_header" />
   <java-symbol type="array" name="config_default_vm_number" />
   <java-symbol type="integer" name="config_cdma_3waycall_flash_delay"/>
+  <java-symbol type="array" name="config_default_vm_number" />
   <java-symbol type="attr" name="windowBackgroundFallback" />
   <java-symbol type="id" name="textSpacerNoButtons" />
   <java-symbol type="array" name="dial_string_replace" />
@@ -2613,4 +2612,9 @@
 
   <java-symbol type="layout" name="unsupported_display_size_dialog_content" />
   <java-symbol type="string" name="unsupported_display_size_message" />
+  <java-symbol type="string" name="global_action_emergency" />
+  <java-symbol type="string" name="config_emergency_call_number" />
+  <java-symbol type="array" name="config_emergency_mcc_codes" />
+
+  <java-symbol type="drawable" name="emergency_icon" />
 </resources>

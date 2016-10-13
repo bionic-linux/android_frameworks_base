@@ -32,7 +32,8 @@ import java.util.Arrays;
 /**
  * Defines the configuration of a NAN subscribe session. Built using
  * {@link SubscribeConfig.Builder}. Subscribe is done using
- * {@link WifiNanSession#subscribe(SubscribeConfig, WifiNanDiscoverySessionCallback)} or
+ * {@link WifiNanSession#subscribe(android.os.Handler, SubscribeConfig, WifiNanDiscoverySessionCallback)}
+ * or
  * {@link WifiNanSubscribeDiscoverySession#updateSubscribe(SubscribeConfig)}.
  *
  * @hide PROPOSED_NAN_API
@@ -208,7 +209,7 @@ public final class SubscribeConfig implements Parcelable {
      *
      * @hide
      */
-    public void validate() throws IllegalArgumentException {
+    public void assertValid(WifiNanCharacteristics characteristics) throws IllegalArgumentException {
         WifiNanUtils.validateServiceName(mServiceName);
 
         if (!LvBufferUtils.isValid(mMatchFilter, 1)) {
@@ -227,6 +228,26 @@ public final class SubscribeConfig implements Parcelable {
         if (mMatchStyle != MATCH_STYLE_FIRST_ONLY && mMatchStyle != MATCH_STYLE_ALL) {
             throw new IllegalArgumentException(
                     "Invalid matchType - must be MATCH_FIRST_ONLY or MATCH_ALL");
+        }
+
+        if (characteristics != null) {
+            int maxServiceNameLength = characteristics.getMaxServiceNameLength();
+            if (maxServiceNameLength != 0 && mServiceName.length > maxServiceNameLength) {
+                throw new IllegalArgumentException(
+                        "Service name longer than supported by device characteristics");
+            }
+            int maxServiceSpecificInfoLength = characteristics.getMaxServiceSpecificInfoLength();
+            if (maxServiceSpecificInfoLength != 0 && mServiceSpecificInfo != null
+                    && mServiceSpecificInfo.length > maxServiceSpecificInfoLength) {
+                throw new IllegalArgumentException(
+                        "Service specific info longer than supported by device characteristics");
+            }
+            int maxMatchFilterLength = characteristics.getMaxMatchFilterLength();
+            if (maxMatchFilterLength != 0 && mMatchFilter != null
+                    && mMatchFilter.length > maxMatchFilterLength) {
+                throw new IllegalArgumentException(
+                        "Match filter longer than supported by device characteristics");
+            }
         }
     }
 
@@ -284,25 +305,6 @@ public final class SubscribeConfig implements Parcelable {
          */
         public Builder setServiceSpecificInfo(@Nullable byte[] serviceSpecificInfo) {
             mServiceSpecificInfo = serviceSpecificInfo;
-            return this;
-        }
-
-        /**
-         * Specify service specific information for the subscribe session - a simple wrapper
-         * of {@link SubscribeConfig.Builder#setServiceSpecificInfo(byte[])}
-         * obtaining the data from a String.
-         * <p>
-         *     Optional. Empty by default.
-         *
-         * @param serviceSpecificInfoStr The service specific information string
-         *            to be included (as a byte array) in the subscribe
-         *            information.
-         *
-         * @return The builder to facilitate chaining
-         *         {@code builder.setXXX(..).setXXX(..)}.
-         */
-        public Builder setServiceSpecificInfo(@NonNull String serviceSpecificInfoStr) {
-            mServiceSpecificInfo = serviceSpecificInfoStr.getBytes();
             return this;
         }
 
@@ -399,7 +401,7 @@ public final class SubscribeConfig implements Parcelable {
          * Sets the match style of the subscription - how are matches from a
          * single match session (corresponding to the same publish action on the
          * peer) reported to the host (using the
-         * {@link WifiNanDiscoverySessionCallback#onServiceDiscovered(int, byte[], byte[])}
+         * {@link WifiNanDiscoverySessionCallback#onServiceDiscovered(Object, byte[], byte[])}
          * ). The options are: only report the first match and ignore the rest
          * {@link SubscribeConfig#MATCH_STYLE_FIRST_ONLY} or report every single
          * match {@link SubscribeConfig#MATCH_STYLE_ALL} (the default).
@@ -428,7 +430,7 @@ public final class SubscribeConfig implements Parcelable {
          * @return The builder to facilitate chaining
          *         {@code builder.setXXX(..).setXXX(..)}.
          */
-        public Builder setEnableTerminateNotification(boolean enable) {
+        public Builder setTerminateNotificationEnabled(boolean enable) {
             mEnableTerminateNotification = enable;
             return this;
         }

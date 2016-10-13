@@ -23,6 +23,7 @@ import android.net.wifi.nan.IWifiNanDiscoverySessionCallback;
 import android.net.wifi.nan.IWifiNanEventCallback;
 import android.net.wifi.nan.PublishConfig;
 import android.net.wifi.nan.SubscribeConfig;
+import android.net.wifi.nan.WifiNanCharacteristics;
 import android.net.wifi.RttManager;
 
 /**
@@ -36,6 +37,7 @@ interface IWifiNanManager
     void enableUsage();
     void disableUsage();
     boolean isUsageEnabled();
+    WifiNanCharacteristics getCharacteristics();
 
     // client API
     void connect(in IBinder binder, in String callingPackage, in IWifiNanEventCallback callback,
@@ -50,8 +52,8 @@ interface IWifiNanManager
     // session API
     void updatePublish(int clientId, int discoverySessionId, in PublishConfig publishConfig);
     void updateSubscribe(int clientId, int discoverySessionId, in SubscribeConfig subscribeConfig);
-    void sendMessage(int clientId, int discoverySessionId, int peerId, in byte[] message, int messageId,
-        int retryCount);
+    void sendMessage(int clientId, int discoverySessionId, int peerId, in byte[] message,
+        int messageId, int retryCount);
     void terminateSession(int clientId, int discoverySessionId);
     int startRanging(int clientId, int discoverySessionId, in RttManager.ParcelableRttParams parms);
 }

@@ -86,6 +86,15 @@ public class CarrierConfigManager {
             KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL = "require_entitlement_checks_bool";
 
     /**
+     * Flag indicating whether radio is to be restarted on error PDP_FAIL_REGULAR_DEACTIVATION
+     * This is false by default.
+     * @hide
+     */
+    public static final String
+            KEY_RESTART_RADIO_ON_PDP_FAIL_REGULAR_DEACTIVATION_BOOL =
+                    "restart_radio_on_pdp_fail_regular_deactivation_bool";
+
+    /**
      * If true, enable vibration (haptic feedback) for key presses in the EmergencyDialer activity.
      * The pattern is set on a per-platform basis using config_virtualKeyVibePattern. To be
      * consistent with the regular Dialer, this value should agree with the corresponding values
@@ -173,6 +182,14 @@ public class CarrierConfigManager {
     public static final String KEY_SUPPORT_SWAP_AFTER_MERGE_BOOL = "support_swap_after_merge_bool";
 
     /**
+     * Since the default voicemail number is empty, if a SIM card does not have a voicemail number
+     * available the user cannot use voicemail. This flag allows the user to edit the voicemail
+     * number in such cases, and is false by default.
+     * @hide
+     */
+    public static final String KEY_EDITABLE_VOICEMAIL_NUMBER_BOOL= "editable_voicemail_number_bool";
+
+    /**
      * Determine whether the voicemail notification is persistent in the notification bar. If true,
      * the voicemail notifications cannot be dismissed from the notification bar.
      */
@@ -250,6 +267,17 @@ public class CarrierConfigManager {
      * provisioning, availability etc.
      */
     public static final String KEY_CARRIER_WFC_IMS_AVAILABLE_BOOL = "carrier_wfc_ims_available_bool";
+
+    /**
+     * Specifies a map from dialstrings to replacements for roaming network service numbers which
+     * cannot be replaced on the carrier side.
+     * <p>
+     * Individual entries have the format:
+     * [dialstring to replace]:[replacement]
+     * @hide
+     */
+    public static final String KEY_DIAL_STRING_REPLACE_STRING_ARRAY =
+            "dial_string_replace_string_array";
 
     /**
      * Flag specifying whether WFC over IMS supports the "wifi only" option.  If false, the wifi
@@ -701,6 +729,15 @@ public class CarrierConfigManager {
             "duration_blocking_disabled_after_emergency_int";
 
     /**
+     * For carriers which require an empty flash to be sent before sending the normal 3-way calling
+     * flash, the duration in milliseconds of the empty flash to send.  When {@code 0}, no empty
+     * flash is sent.
+     * @hide
+     */
+    public static final String KEY_CDMA_3WAYCALL_FLASH_DELAY_INT = "cdma_3waycall_flash_delay_int";
+
+
+    /**
      * @hide
      * The default value for preferred CDMA roaming mode (aka CDMA system select.)
      *          CDMA_ROAMING_MODE_RADIO_DEFAULT = the default roaming mode from the radio
@@ -763,11 +800,13 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_SUPPORT_PAUSE_IMS_VIDEO_CALLS_BOOL, false);
         sDefaults.putBoolean(KEY_SUPPORT_SWAP_AFTER_MERGE_BOOL, true);
         sDefaults.putBoolean(KEY_USE_HFA_FOR_PROVISIONING_BOOL, false);
+        sDefaults.putBoolean(KEY_EDITABLE_VOICEMAIL_NUMBER_BOOL, false);
         sDefaults.putBoolean(KEY_USE_OTASP_FOR_PROVISIONING_BOOL, false);
         sDefaults.putBoolean(KEY_VOICEMAIL_NOTIFICATION_PERSISTENT_BOOL, false);
         sDefaults.putBoolean(KEY_VOICE_PRIVACY_DISABLE_UI_BOOL, false);
         sDefaults.putBoolean(KEY_WORLD_PHONE_BOOL, false);
         sDefaults.putBoolean(KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
+        sDefaults.putBoolean(KEY_RESTART_RADIO_ON_PDP_FAIL_REGULAR_DEACTIVATION_BOOL, false);
         sDefaults.putInt(KEY_VOLTE_REPLACEMENT_RAT_INT, 0);
         sDefaults.putString(KEY_DEFAULT_SIM_CALL_MANAGER_STRING, "");
         sDefaults.putString(KEY_VVM_DESTINATION_NUMBER_STRING, "");
@@ -803,10 +842,12 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_GSM_NONROAMING_NETWORKS_STRING_ARRAY, null);
         sDefaults.putStringArray(KEY_CDMA_ROAMING_NETWORKS_STRING_ARRAY, null);
         sDefaults.putStringArray(KEY_CDMA_NONROAMING_NETWORKS_STRING_ARRAY, null);
+        sDefaults.putStringArray(KEY_DIAL_STRING_REPLACE_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_FORCE_HOME_NETWORK_BOOL, false);
         sDefaults.putInt(KEY_GSM_DTMF_TONE_DELAY_INT, 0);
         sDefaults.putInt(KEY_IMS_DTMF_TONE_DELAY_INT, 0);
         sDefaults.putInt(KEY_CDMA_DTMF_TONE_DELAY_INT, 100);
+        sDefaults.putInt(KEY_CDMA_3WAYCALL_FLASH_DELAY_INT , 0);
         sDefaults.putBoolean(KEY_SUPPORT_CONFERENCE_CALL_BOOL, true);
         sDefaults.putBoolean(KEY_EDITABLE_ENHANCED_4G_LTE_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_IMS_APN_BOOL, false);
