@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6993e3_0c3b8301",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/external/CustomTile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2016-10-17T14:55:22Z",
+      "side": 1,
+      "message": "I kind of wish we had a better place to do this, but we don\u0027t have one at the moment, so oh well.",
+      "revId": "eb09362c729aaf5f91597d88de49d099f9f95c60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
