@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6993e3_74952118",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-10-17T19:58:41Z",
+      "side": 1,
+      "message": "how about\n\nPersistableBundle bundle;\nif (configManager !\u003d null) {\n    bundle \u003d configManager.getConfig();\n}\nif (bundle \u003d\u003d null) bundle \u003d getDefaultConfig();\nreturn bundle.getBoolean(key);\n\nThis has a single return and highlights the parallels between using a config specific bundle and a default bundle.\n\nThoughts?",
+      "range": {
+        "startLine": 1019,
+        "startChar": 0,
+        "endLine": 1024,
+        "endChar": 9
+      },
+      "revId": "7f71d515549496adea94652c37c42b997c216670",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
