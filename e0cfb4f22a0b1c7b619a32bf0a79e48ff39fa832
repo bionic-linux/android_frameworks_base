@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "5c00b2b2_58bf5d13",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18910,
+      "author": {
+        "id": 1120023
+      },
+      "writtenOn": "2016-10-17T06:14:18Z",
+      "side": 1,
+      "message": "Here we add one field of item in source collection to target collection, no direct efficient addAll can finish the task. It is better to use for loop.",
+      "parentUuid": "e5c1c7c3_cb16e6bb",
+      "range": {
+        "startLine": 18908,
+        "startChar": 0,
+        "endLine": 18910,
+        "endChar": 13
+      },
+      "revId": "e0cfb4f22a0b1c7b619a32bf0a79e48ff39fa832",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5c1c7c3_ebe642d2",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 3
