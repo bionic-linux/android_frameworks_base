@@ -79,7 +79,7 @@ public class ParcelUtilTest {
 
         mParcel.setDataPosition(0);    // Rewind data position back to the beginning for read.
         X509Certificate readCert = ParcelUtil.readCertificate(mParcel);
-        assertNotNull(readCert);
+        assertNull(readCert);
         assertArrayEquals(writeCert.getEncoded(), readCert.getEncoded());
     }
 
