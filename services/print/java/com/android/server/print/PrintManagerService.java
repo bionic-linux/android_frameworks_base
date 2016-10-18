@@ -727,17 +727,20 @@ public final class PrintManagerService extends SystemService {
 
                 @Override
                 public void onPackageModified(String packageName) {
-                    if (!mUserManager.isUserUnlockingOrUnlocked(getChangingUserId())) return;
-                    UserState userState = getOrCreateUserStateLocked(getChangingUserId(), false);
+                    try {
+                        UserState userState = getOrCreateUserStateLocked(getChangingUserId(), false);
 
-                    synchronized (mLock) {
-                        if (hadPrintService(userState, packageName)
-                                || hasPrintService(packageName)) {
-                            userState.updateIfNeededLocked();
+                        synchronized (mLock) {
+                            if (hadPrintService(userState, packageName)
+                                    || hasPrintService(packageName)) {
+                                userState.updateIfNeededLocked();
+                            }
                         }
-                    }
 
-                    userState.prunePrintServices();
+                        userState.prunePrintServices();
+                    } catch (IllegalStateException e) {
+                        Log.w(LOG_TAG, "Failed onPackageModified", e);
+                    }
                 }
 
                 @Override
