@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2016 Sony Mobile Communications Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are licensed under the License.
  */
 
 package com.android.server.print;
@@ -727,17 +731,20 @@ public final class PrintManagerService extends SystemService {
 
                 @Override
                 public void onPackageModified(String packageName) {
-                    if (!mUserManager.isUserUnlockingOrUnlocked(getChangingUserId())) return;
-                    UserState userState = getOrCreateUserStateLocked(getChangingUserId(), false);
+                    try {
+                        UserState userState = getOrCreateUserStateLocked(getChangingUserId(), false);
 
-                    synchronized (mLock) {
-                        if (hadPrintService(userState, packageName)
-                                || hasPrintService(packageName)) {
-                            userState.updateIfNeededLocked();
+                        synchronized (mLock) {
+                            if (hadPrintService(userState, packageName)
+                                    || hasPrintService(packageName)) {
+                                userState.updateIfNeededLocked();
+                            }
                         }
-                    }
 
-                    userState.prunePrintServices();
+                        userState.prunePrintServices();
+                    } catch (IllegalStateException e) {
+                        Log.w(LOG_TAG, "Failed onPackageModified", e);
+                    }
                 }
 
                 @Override
