@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcf58392_86a8d277",
+        "filename": "core/java/android/os/HwParcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2016-10-19T00:21:26Z",
+      "side": 1,
+      "message": "nit: shouldn\u0027t these names be updated too?",
+      "range": {
+        "startLine": 59,
+        "startChar": 39,
+        "endLine": 59,
+        "endChar": 45
+      },
+      "revId": "ef1a565bd4e96646e6848a6a40a53ee4dfe33293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
