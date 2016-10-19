@@ -22,6 +22,30 @@
       "revId": "ef1a565bd4e96646e6848a6a40a53ee4dfe33293",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf58392_e6def1f6",
+        "filename": "core/java/android/os/HwParcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2016-10-19T15:56:30Z",
+      "side": 1,
+      "message": "I think they\u0027re fine, they\u0027re now private and just an implementation detail. The primary reason I renamed the others was because you can\u0027t overload on return type alone.",
+      "parentUuid": "dcf58392_86a8d277",
+      "range": {
+        "startLine": 59,
+        "startChar": 39,
+        "endLine": 59,
+        "endChar": 45
+      },
+      "revId": "ef1a565bd4e96646e6848a6a40a53ee4dfe33293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
