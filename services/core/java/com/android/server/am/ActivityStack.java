@@ -4138,9 +4138,9 @@ final class ActivityStack {
                         hasVisibleActivities = true;
                     }
                     final boolean remove;
-                    if ((!r.haveState && !r.stateNotNeeded) || r.finishing) {
+                    if ((!r.haveState && !r.stateNotNeeded) || r.finishing || mService.mShuttingDown) {
                         // Don't currently have state for the activity, or
-                        // it is finishing -- always remove it.
+                        // it is finishing, or shutting down -- always remove it.
                         remove = true;
                     } else if (!r.visible && r.launchCount > 2 &&
                             r.lastLaunchTime > (SystemClock.uptimeMillis() - 60000)) {
