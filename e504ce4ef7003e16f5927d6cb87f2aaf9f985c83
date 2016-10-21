@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c913fcf_878a4cfb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1060196
+      },
+      "writtenOn": "2016-10-21T01:28:38Z",
+      "side": 1,
+      "message": "Kindly add some more information in the commit message about what this fix is doing.",
+      "revId": "e504ce4ef7003e16f5927d6cb87f2aaf9f985c83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
