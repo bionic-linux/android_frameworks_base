@@ -2716,7 +2716,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (getNetworkForRequest(nri.request.requestId) != null) {
             return;
         }
-        if (VDBG || (DBG && nri.request.isRequest())) {
+        if (DBG && nri.request.isRequest()) {
             log("releasing " + nri.request + " (timeout)");
         }
         handleRemoveNetworkRequest(nri);
@@ -2729,7 +2729,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nri == null) {
             return;
         }
-        if (VDBG || (DBG && nri.request.isRequest())) {
+        if (DBG && nri.request.isRequest()) {
             log("releasing " + nri.request + " (release request)");
         }
         handleRemoveNetworkRequest(nri);
@@ -4438,7 +4438,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
                 NetworkRequest.Type.LISTEN);
         NetworkRequestInfo nri = new NetworkRequestInfo(messenger, networkRequest, binder);
-        if (VDBG) log("listenForNetwork for " + nri);
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_LISTENER, nri));
         return networkRequest;
@@ -4461,7 +4460,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
                 NetworkRequest.Type.LISTEN);
         NetworkRequestInfo nri = new NetworkRequestInfo(networkRequest, operation);
-        if (VDBG) log("pendingListenForNetwork for " + nri);
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_LISTENER, nri));
     }
@@ -5040,7 +5038,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         msg.what = notificationType;
         msg.setData(bundle);
         try {
-            if (VDBG) {
+            if (VDBG && nri.request.isRequest()) {
                 String notification = ConnectivityManager.getCallbackName(notificationType);
                 log("sending notification " + notification + " for " + nri.request);
             }
@@ -5174,7 +5172,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         ArrayList<NetworkAgentInfo> affectedNetworks = new ArrayList<>();
         ArrayList<NetworkRequestInfo> addedRequests = new ArrayList<>();
         NetworkCapabilities nc = newNetwork.networkCapabilities;
-        if (VDBG) log(" network has: " + nc);
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
             // Process requests in the first pass and listens in the second pass. This allows us to
             // change a network's capabilities depending on which requests it has. This is only
@@ -5185,16 +5182,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final NetworkAgentInfo currentNetwork = getNetworkForRequest(nri.request.requestId);
             final boolean satisfies = newNetwork.satisfies(nri.request);
             if (newNetwork == currentNetwork && satisfies) {
-                if (VDBG) {
-                    log("Network " + newNetwork.name() + " was already satisfying" +
-                            " request " + nri.request.requestId + ". No change.");
-                }
                 keep = true;
                 continue;
             }
 
             // check if it satisfies the NetworkCapabilities
-            if (VDBG) log("  checking if request is satisfied: " + nri.request);
             if (satisfies) {
                 // next check if it's better than any current network we're using for
                 // this request
@@ -5204,7 +5196,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             ", newScore = " + score);
                 }
                 if (currentNetwork == null || currentNetwork.getCurrentScore() < score) {
-                    if (VDBG) log("rematch for " + newNetwork.name());
                     if (currentNetwork != null) {
                         if (VDBG) log("   accepting network in place of " + currentNetwork.name());
                         currentNetwork.removeRequest(nri.request.requestId);
@@ -5663,7 +5654,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         for (int i = 0; i < networkAgent.numNetworkRequests(); i++) {
             NetworkRequest nr = networkAgent.requestAt(i);
             NetworkRequestInfo nri = mNetworkRequests.get(nr);
-            if (VDBG) log(" sending notification for " + nr);
             // TODO: if we're in the middle of a rematch, can we send a CAP_CHANGED callback for
             // a network that no longer satisfies the listen?
             if (nri.mPendingIntent == null) {
