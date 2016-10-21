@@ -16,6 +16,23 @@
       "revId": "e504ce4ef7003e16f5927d6cb87f2aaf9f985c83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c913fcf_474a04c8",
+        "filename": "services/core/java/com/android/server/display/DisplayPowerController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-10-21T01:46:34Z",
+      "side": 1,
+      "message": "Missing \u0027)\u0027",
+      "revId": "e504ce4ef7003e16f5927d6cb87f2aaf9f985c83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
