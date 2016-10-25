@@ -25,6 +25,7 @@ import android.net.DhcpInfo;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.wifi.hotspot2.PasspointConfiguration;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
@@ -840,6 +841,52 @@ public class WifiManager {
                                                List<PasspointManagementObjectDefinition> mos) {
         try {
             return mService.modifyPasspointManagementObject(fqdn, mos);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Add a Passpoint configuration.  The configuration provides credentials
+     * for connecting to Passpoint networks that are provided by the Passpoint
+     * service provider specified in the configuration.
+     *
+     * @param config The Passpoint configuration to be added
+     * @return true on success or false on failure
+     * @hide
+     */
+    public boolean addPasspointConfiguration(PasspointConfiguration config) {
+        try {
+            return mService.addPasspointConfiguration(config);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Remove a Passpoint configuration identified by its FQDN (Fully Qualified Domain Name).
+     *
+     * @param fqdn The FQDN of the passpoint configuration to be removed
+     * @return true on success or false on failure
+     * @hide
+     */
+    public boolean removePasspointConfiguration(String fqdn) {
+        try {
+            return mService.removePasspointConfiguration(fqdn);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Return the list of installed Passpoint configurations.
+     *
+     * @return A list of PasspointConfiguration or null
+     * @hide
+     */
+    public List<PasspointConfiguration> getPasspointConfigurations() {
+        try {
+            return mService.getPasspointConfigurations();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
