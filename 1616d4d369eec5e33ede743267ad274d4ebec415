@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21775881_95bb64ac",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/QSIconView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1073200
+      },
+      "writtenOn": "2016-10-26T04:28:35Z",
+      "side": 1,
+      "message": "Dear Jason\nI think this condition cannot be changed in this block.\nSo below line 110 ~ 112 cannot be executed.\nRemoving this condition might be better, because in some case animation could not be started at all.\nWhat do you think about this?",
+      "range": {
+        "startLine": 95,
+        "startChar": 39,
+        "endLine": 95,
+        "endChar": 55
+      },
+      "revId": "1616d4d369eec5e33ede743267ad274d4ebec415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21775881_75a24882",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/QSIconView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1073200
+      },
+      "writtenOn": "2016-10-26T04:28:35Z",
+      "side": 1,
+      "message": "line 110 ~ 112",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 17
+      },
+      "revId": "1616d4d369eec5e33ede743267ad274d4ebec415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
