@@ -78,6 +78,7 @@ import java.util.Map;
  * <tr><td>{@link #KEY_SAMPLE_RATE}</td><td>Integer</td><td></td></tr>
  * <tr><td>{@link #KEY_PCM_ENCODING}</td><td>Integer</td><td>optional</td></tr>
  * <tr><td>{@link #KEY_IS_ADTS}</td><td>Integer</td><td>optional, if <em>decoding</em> AAC audio content, setting this key to 1 indicates that each audio frame is prefixed by the ADTS header.</td></tr>
+ * <tr><td>{@link #KEY_AC4_IS_SYNC}</td><td>Integer</td><td>optional, if <em>decoding</em> AC4 audio content, setting this key to 1 indicates that each audio frame is encapsulated as an AC4 sync frame.</td></tr>
  * <tr><td>{@link #KEY_AAC_PROFILE}</td><td>Integer</td><td><b>encoder-only</b>, optional, if content is AAC audio, specifies the desired profile.</td></tr>
  * <tr><td>{@link #KEY_AAC_SBR_MODE}</td><td>Integer</td><td><b>encoder-only</b>, optional, if content is AAC audio, specifies the desired SBR mode.</td></tr>
  * <tr><td>{@link #KEY_AAC_DRC_TARGET_REFERENCE_LEVEL}</td><td>Integer</td><td><b>decoder-only</b>, optional, if content is AAC audio, specifies the target reference level.</td></tr>
@@ -121,6 +122,7 @@ public final class MediaFormat {
     public static final String MIMETYPE_AUDIO_AC3 = "audio/ac3";
     public static final String MIMETYPE_AUDIO_EAC3 = "audio/eac3";
     public static final String MIMETYPE_VIDEO_DOLBY_VISION = "video/dolby-vision";
+    public static final String MIMETYPE_AUDIO_AC4 = "audio/ac4";
 
     /**
      * MIME type for WebVTT subtitle data.
@@ -367,6 +369,13 @@ public final class MediaFormat {
      * be used to configure an encoder to emit ADTS output.
      */
     public static final String KEY_IS_ADTS = "is-adts";
+
+    /**
+     * A key mapping to a value of 1 if the content is AC4 audio and
+     * audio frames are encapsulated as an AC4 sync frame.
+     * The associated value is an integer (0 or 1).
+     */
+    public static final String KEY_AC4_IS_SYNC = "ac4-is-sync";
 
     /**
      * A key describing the channel composition of audio content. This mask
