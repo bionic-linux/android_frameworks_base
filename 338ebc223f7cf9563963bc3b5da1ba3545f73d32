@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4654620e_a9249976",
+        "filename": "telecomm/java/android/telecom/DisconnectCause.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-10-27T22:18:10Z",
+      "side": 1,
+      "message": "are DisconnectCode and PreciseDisconnectCode coming from the same range (CallFailCause)?\n\nDo we need both",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 38
+      },
+      "revId": "338ebc223f7cf9563963bc3b5da1ba3545f73d32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4654620e_c98c7556",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-10-27T22:18:10Z",
+      "side": 1,
+      "message": "is this configuring whether the carrier wants the info shown/suppressed, or is this indicating whether they provide this indication?  \"show precise\" !\u003d \"SUPPORT_PRECISE\".",
+      "range": {
+        "startLine": 619,
+        "startChar": 35,
+        "endLine": 619,
+        "endChar": 47
+      },
+      "revId": "338ebc223f7cf9563963bc3b5da1ba3545f73d32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
