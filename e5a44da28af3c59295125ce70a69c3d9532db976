@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86501a4a_78eaa188",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2016-10-28T17:25:08Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand the code, but the last step, MOBILE_POWER / mobilePps, seems to already be \"per second\" since both MOBILE_POWER and mobilePps are, so your change seems to be valid.\n\nHowever, here, mobileData is # of packets, not # of bytes.  So \"mobilePps\" is not actually \"per second\" but \"per millisecond\" in this case...?\n\n@Adam please advise. :)",
+      "revId": "e5a44da28af3c59295125ce70a69c3d9532db976",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
