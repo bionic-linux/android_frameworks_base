@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86501a4a_95a493a3",
+        "filename": "core/java/com/android/internal/os/MobileRadioPowerCalculator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2016-10-31T16:04:13Z",
+      "side": 1,
+      "message": "nit: Please remove the extra space.",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "a8df5ac2d76c8992d8117b51a4fc33aff39917f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
