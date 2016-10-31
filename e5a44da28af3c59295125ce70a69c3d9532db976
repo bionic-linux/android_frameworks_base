@@ -16,6 +16,24 @@
       "revId": "e5a44da28af3c59295125ce70a69c3d9532db976",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46caa26f_36721856",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1112683
+      },
+      "writtenOn": "2016-10-31T11:46:06Z",
+      "side": 1,
+      "message": "Hi Makoto,  I think \"mobilePps\" represents  packets per second. \nwhen mobileData \u003d\u003d 0 or radioDataUptimeMs \u003d\u003d0, the result is packets/second;\notherwise,  it seems packets/millisecond, so should change to packets/second again. \n\nso I think need change radioDataUptimeMs to  radioDataUptimeSecond, do not divide by 1000. I will update this patch again. thanks",
+      "parentUuid": "86501a4a_78eaa188",
+      "revId": "e5a44da28af3c59295125ce70a69c3d9532db976",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
