@@ -20,11 +20,16 @@ import android.net.wifi.ParcelUtil;
 import android.os.Parcelable;
 import android.os.Parcel;
 import android.text.TextUtils;
+import android.util.Log;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class representing Credential subtree in the PerProviderSubscription (PPS)
@@ -40,6 +45,23 @@ import java.util.Arrays;
  * @hide
  */
 public final class Credential implements Parcelable {
+    private static final String TAG = "Credential";
+
+    /**
+     * Supported EAP types.
+     */
+    public static final int EAP_TLS = 13;
+    public static final int EAP_SIM = 18;
+    public static final int EAP_TTLS = 21;
+    public static final int EAP_AKA = 23;
+    public static final int EAP_AKA_PRIME = 50;
+
+    /**
+     * Max string length for realm.  Refer to Credential/Realm node in Hotspot 2.0 Release 2
+     * Technical Specification Section 9.1 for more info.
+     */
+    private static final int MAX_REALM_LENGTH = 253;
+
     /**
      * The realm associated with this credential.  It will be used to determine
      * if this credential can be used to authenticate with a given hotspot by
@@ -52,6 +74,26 @@ public final class Credential implements Parcelable {
      * Contains the fields under PerProviderSubscription/Credential/UsernamePassword subtree.
      */
     public static final class UserCredential implements Parcelable {
+        /**
+         * Maximum string length for username.  Refer to Credential/UsernamePassword/Username
+         * node in Hotspot 2.0 Release 2 Technical Specification Section 9.1 for more info.
+         */
+        private static final int MAX_USERNAME_LENGTH = 63;
+
+        /**
+         * Maximum string length for password.  Refer to Credential/UsernamePassword/Password
+         * in Hotspot 2.0 Release 2 Technical Specification Section 9.1 for more info.
+         */
+        private static final int MAX_PASSWORD_LENGTH = 255;
+
+        /**
+         * Supported Non-EAP inner methods.  Refer to
+         * Credential/UsernamePassword/EAPMethod/InnerEAPType in Hotspot 2.0 Release 2 Technical
+         * Specification Section 9.1 for more info.
+         */
+        private static final Set<String> SUPPORTED_AUTH =
+                new HashSet<String>(Arrays.asList("PAP", "CHAP", "MS-CHAP", "MS-CHAP-V2"));
+
         /**
          * Username of the credential.
          */
@@ -104,6 +146,43 @@ public final class Credential implements Parcelable {
                     TextUtils.equals(nonEapInnerMethod, that.nonEapInnerMethod);
         }
 
+        /**
+         * Validate the configuration data.
+         *
+         * @return true on success or false on failure
+         */
+        public boolean validate() {
+            if (username == null || username.isEmpty()) {
+                Log.d(TAG, "Missing username");
+                return false;
+            }
+            if (username.length() > MAX_USERNAME_LENGTH) {
+                Log.d(TAG, "username exceeding maximum length: " + username.length());
+                return false;
+            }
+
+            if (password == null || password.isEmpty()) {
+                Log.d(TAG, "Missing password");
+                return false;
+            }
+            if (password.length() > MAX_PASSWORD_LENGTH) {
+                Log.d(TAG, "password exceeding maximum length: " + password.length());
+                return false;
+            }
+
+            if (eapType != EAP_TLS && eapType != EAP_TTLS) {
+                Log.d(TAG, "Invalid EAP Type for user credential: " + eapType);
+                return false;
+            }
+
+            // Verify Non-EAP inner method for EAP-TTLS.
+            if (eapType == EAP_TTLS && !SUPPORTED_AUTH.contains(nonEapInnerMethod)) {
+                Log.d(TAG, "Invalid non-EAP inner method for EAP-TTLS: " + nonEapInnerMethod);
+                return false;
+            }
+            return true;
+        }
+
         public static final Creator<UserCredential> CREATOR =
             new Creator<UserCredential>() {
                 @Override
@@ -130,7 +209,17 @@ public final class Credential implements Parcelable {
      */
     public static final class CertificateCredential implements Parcelable {
         /**
-         * Certificate type. Valid values are "802.1ar" and "x509v3".
+         * Supported certificate types.
+         */
+        private static final String CERT_TYPE_X509V3 = "x509v3";
+
+        /**
+         * Certificate SHA-256 fingerprint length.
+         */
+        private static final int CERT_SHA256_FINGER_PRINT_LENGTH = 32;
+
+        /**
+         * Certificate type.
          */
         public String certType = null;
 
@@ -162,6 +251,24 @@ public final class Credential implements Parcelable {
             CertificateCredential that = (CertificateCredential) thatObject;
             return TextUtils.equals(certType, that.certType) &&
                     Arrays.equals(certSha256FingerPrint, that.certSha256FingerPrint);
+        }
+
+        /**
+         * Validate the configuration data.
+         *
+         * @return true on success or false on failure
+         */
+        public boolean validate() {
+            if (!TextUtils.equals(CERT_TYPE_X509V3, certType)) {
+                Log.d(TAG, "Unsupported certificate type: " + certType);
+                return false;
+            }
+            if (certSha256FingerPrint == null ||
+                    certSha256FingerPrint.length != CERT_SHA256_FINGER_PRINT_LENGTH) {
+                Log.d(TAG, "Invalid SHA-256 fingerprint");
+                return false;
+            }
+            return true;
         }
 
         public static final Creator<CertificateCredential> CREATOR =
@@ -223,6 +330,23 @@ public final class Credential implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(imsi);
             dest.writeInt(eapType);
+        }
+
+        /**
+         * Validate the configuration data.
+         *
+         * @return true on success or false on failure
+         */
+        public boolean validate() {
+            if (imsi == null || imsi.isEmpty()) {
+                Log.d(TAG, "Missing IMSI");
+                return false;
+            }
+            if (eapType != EAP_SIM && eapType != EAP_AKA && eapType != EAP_AKA_PRIME) {
+                Log.d(TAG, "Invalid EAP Type for SIM credential: " + eapType);
+                return false;
+            }
+            return true;
         }
 
         public static final Creator<SimCredential> CREATOR =
@@ -296,6 +420,50 @@ public final class Credential implements Parcelable {
                 isPrivateKeyEquals(clientPrivateKey, that.clientPrivateKey);
     }
 
+    /**
+     * Validate the configuration data.
+     *
+     * @return true on success or false on failure
+     */
+    public boolean validate() {
+        if (realm == null || realm.isEmpty()) {
+            Log.d(TAG, "Missing realm");
+            return false;
+        }
+        if (realm.length() > MAX_REALM_LENGTH) {
+            Log.d(TAG, "realm exceeding maximum length: " + realm.length());
+            return false;
+        }
+
+        if (userCredential != null) {
+            if (!userCredential.validate()) {
+                return false;
+            }
+            if (simCredential != null) {
+                Log.d(TAG, "Contained both user and SIM credential");
+                return false;
+            }
+            if (caCertificate == null) {
+                Log.d(TAG, "Missing CA Certificate for user credential");
+                return false;
+            }
+            if (userCredential.eapType == EAP_TLS) {
+                if (!verifyCertificateCredentialForEapTls()) {
+                    return false;
+                }
+            }
+        } else if (simCredential != null) {
+            if (!simCredential.validate()) {
+                return false;
+            }
+        } else {
+            Log.d(TAG, "Missing required credential");
+            return false;
+        }
+
+        return true;
+    }
+
     public static final Creator<Credential> CREATOR =
         new Creator<Credential>() {
             @Override
@@ -316,6 +484,38 @@ public final class Credential implements Parcelable {
                 return new Credential[size];
             }
         };
+
+    /**
+     * Verify certificate credential, private key, and certificates for EAP-TLS.
+     *
+     * @return true if necessary credentials for EAP-TLS are provided, false otherwise.
+     */
+    private boolean verifyCertificateCredentialForEapTls() {
+        if (certCredential == null) {
+            Log.d(TAG, "Missing digital certificate for EAP-TLS");
+            return false;
+        }
+        if (!certCredential.validate()) {
+            return false;
+        }
+        if (clientPrivateKey == null) {
+            Log.d(TAG, "Missing client private key for EAP-TLS");
+            return false;
+        }
+        try {
+            // Verify SHA-256 fingerprint for client certificate.
+            if (!verifySha256Fingerprint(clientCertificateChain,
+                    certCredential.certSha256FingerPrint)) {
+                Log.d(TAG, "SHA-256 fingerprint mismatch");
+                return false;
+            }
+        } catch (NoSuchAlgorithmException | CertificateEncodingException e) {
+            Log.d(TAG, "Failed to verify SHA-256 fingerprint: " + e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
 
     private static boolean isPrivateKeyEquals(PrivateKey key1, PrivateKey key2) {
         if (key1 == null && key2 == null) {
@@ -372,5 +572,32 @@ public final class Credential implements Parcelable {
         }
 
         return true;
+    }
+
+    /**
+     * Verify that the digest for a certificate in the certificate chain matches expected
+     * fingerprint.  The certificate that matches the fingerprint is the client certificate.
+     *
+     * @param certChain Chain of certificates
+     * @param expectedFingerprint The expected SHA-256 digest of the client certificate
+     * @return true if the certificate chain contains a matching certificate, false otherwise
+     * @throws NoSuchAlgorithmException
+     * @throws CertificateEncodingException
+     */
+    private static boolean verifySha256Fingerprint(X509Certificate[] certChain,
+                                                   byte[] expectedFingerprint)
+            throws NoSuchAlgorithmException, CertificateEncodingException {
+        if (certChain == null) {
+            return false;
+        }
+        MessageDigest digester = MessageDigest.getInstance("SHA-256");
+        for (X509Certificate certificate : certChain) {
+            digester.reset();
+            byte[] fingerprint = digester.digest(certificate.getEncoded());
+            if (Arrays.equals(expectedFingerprint, fingerprint)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
