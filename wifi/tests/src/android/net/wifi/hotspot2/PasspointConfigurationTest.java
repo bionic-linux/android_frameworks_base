@@ -16,8 +16,10 @@
 
 package android.net.wifi.hotspot2;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import android.net.wifi.EAP;
 import android.net.wifi.hotspot2.pps.Credential;
 import android.net.wifi.hotspot2.pps.HomeSP;
 import android.os.Parcel;
@@ -44,7 +46,9 @@ public class PasspointConfigurationTest {
         cred.realm = "realm";
         cred.userCredential = null;
         cred.certCredential = null;
-        cred.simCredential = null;
+        cred.simCredential = new Credential.SimCredential();
+        cred.simCredential.imsi = "1234*";
+        cred.simCredential.eapType = EAP.EAP_SIM;
         cred.caCertificate = null;
         cred.clientCertificateChain = null;
         cred.clientPrivateKey = null;
@@ -86,5 +90,33 @@ public class PasspointConfigurationTest {
         PasspointConfiguration config = new PasspointConfiguration();
         config.credential = createCredential();
         verifyParcel(config);
+    }
+
+    @Test
+    public void validateDefaultConfig() throws Exception {
+        PasspointConfiguration config = new PasspointConfiguration();
+        assertFalse(config.validate());
+    }
+
+    @Test
+    public void validateConfigWithoutCredential() throws Exception {
+        PasspointConfiguration config = new PasspointConfiguration();
+        config.homeSp = createHomeSp();
+        assertFalse(config.validate());
+    }
+
+    @Test
+    public void validateConfigWithoutHomeSp() throws Exception {
+        PasspointConfiguration config = new PasspointConfiguration();
+        config.credential = createCredential();
+        assertFalse(config.validate());
+    }
+
+    @Test
+    public void validateValidConfig() throws Exception {
+        PasspointConfiguration config = new PasspointConfiguration();
+        config.homeSp = createHomeSp();
+        config.credential = createCredential();
+        assertTrue(config.validate());
     }
 }
