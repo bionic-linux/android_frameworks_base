@@ -22,6 +22,30 @@
       "revId": "a8df5ac2d76c8992d8117b51a4fc33aff39917f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46caa26f_56c6b4ff",
+        "filename": "core/java/com/android/internal/os/MobileRadioPowerCalculator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1112683
+      },
+      "writtenOn": "2016-11-03T14:59:56Z",
+      "side": 1,
+      "message": "thanks, you are so considerate.",
+      "parentUuid": "86501a4a_95a493a3",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "a8df5ac2d76c8992d8117b51a4fc33aff39917f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
