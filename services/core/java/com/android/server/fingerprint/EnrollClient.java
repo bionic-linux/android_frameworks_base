@@ -105,13 +105,16 @@ public abstract class EnrollClient extends ClientMonitor {
             return ERROR_ESRCH;
         }
         try {
+            mIsCanceling = true;
             final int result = daemon.cancelEnrollment();
             if (result != 0) {
                 Slog.w(TAG, "startEnrollCancel failed, result = " + result);
+                mIsCanceling = false;
                 return result;
             }
         } catch (RemoteException e) {
             Slog.e(TAG, "stopEnrollment failed", e);
+            mIsCanceling = false;
         }
         if (initiatedByClient) {
             onError(FingerprintManager.FINGERPRINT_ERROR_CANCELED);

@@ -44,6 +44,7 @@ public abstract class ClientMonitor implements IBinder.DeathRecipient {
     private String mOwner;
     private Context mContext;
     private long mHalDeviceId;
+    boolean mIsCanceling;
 
     /**
      * @param context context of FingerprintService
@@ -67,6 +68,7 @@ public abstract class ClientMonitor implements IBinder.DeathRecipient {
         mGroupId = groupId;
         mIsRestricted = restricted;
         mOwner = owner;
+        mIsCanceling = false;
         try {
             token.linkToDeath(this, 0);
         } catch (RemoteException e) {

@@ -134,14 +134,17 @@ public abstract class AuthenticationClient extends ClientMonitor {
             return ERROR_ESRCH;
         }
         try {
+            mIsCanceling = true;
             final int result = daemon.cancelAuthentication();
             if (result != 0) {
                 Slog.w(TAG, "stopAuthentication failed, result=" + result);
+                mIsCanceling = false;
                 return result;
             }
             if (DEBUG) Slog.w(TAG, "client " + getOwnerString() + " is no longer authenticating");
         } catch (RemoteException e) {
             Slog.e(TAG, "stopAuthentication failed", e);
+            mIsCanceling = false;
             return ERROR_ESRCH;
         }
         return 0; // success
