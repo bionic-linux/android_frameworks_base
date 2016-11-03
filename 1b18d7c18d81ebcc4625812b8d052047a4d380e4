@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6dd1ea2_c0735293",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-03T18:34:35Z",
+      "side": 1,
+      "message": "In the scenario of video streaming, WiFi is used in a periodic way to fill up the player buffer. We factor in the previous rate (with less weight) to avoid the situation that the Tx/Rx rate is low at the moment the rate is calculated but becomes high when scan is ongoing, which can take 5~6 seconds.",
+      "range": {
+        "startLine": 179,
+        "startChar": 32,
+        "endLine": 179,
+        "endChar": 47
+      },
+      "revId": "1b18d7c18d81ebcc4625812b8d052047a4d380e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6dd1ea2_a081fe4a",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-03T18:34:35Z",
+      "side": 1,
+      "message": "These parameters are selected so that the new results are comparable to the previous values, however in a more real-time fashion.",
+      "range": {
+        "startLine": 180,
+        "startChar": 44,
+        "endLine": 181,
+        "endChar": 71
+      },
+      "revId": "1b18d7c18d81ebcc4625812b8d052047a4d380e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
