@@ -131,6 +131,11 @@ abstract class DhcpPacket {
     private static final int DHCP_MAGIC_COOKIE = 0x63825363;
 
     /**
+     * The magic cookie length.
+     */
+    private static final int DHCP_MAGIC_COOKIE_LENGTH = 4;
+
+    /**
      * DHCP Optional Type: DHCP Subnet Mask
      */
     protected static final byte DHCP_SUBNET_MASK = 1;
@@ -893,6 +898,11 @@ abstract class DhcpPacket {
         packet.position(packet.position() + (16 - addrLen)
                         + 64    // skip server host name (64 chars)
                         + 128); // skip boot file name (128 chars)
+
+        if (packet.remaining() < DHCP_MAGIC_COOKIE_LENGTH) {
+            throw new ParseException("Invalid magic cookie length %d < %d", packet.remaining(),
+                    DHCP_MAGIC_COOKIE_LENGTH);
+        }
 
         int dhcpMagicCookie = packet.getInt();
 
