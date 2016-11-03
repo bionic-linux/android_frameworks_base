@@ -20,6 +20,8 @@ import android.content.Context;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IllformedLocaleException;
@@ -340,7 +342,9 @@ public class LocaleStore {
         String parentId = parent == null ? null : parent.getId();
 
         HashSet<LocaleInfo> result = new HashSet<>();
-        for (LocaleStore.LocaleInfo li : sLocaleCache.values()) {
+        Collection<LocaleStore.LocaleInfo> values =
+                new ArrayList<LocaleStore.LocaleInfo>(sLocaleCache.values());
+        for (LocaleStore.LocaleInfo li : values) {
             int level = getLevel(ignorables, li, translatedOnly);
             if (level == 2) {
                 if (parent != null) { // region selection
