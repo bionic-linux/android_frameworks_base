@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6dd1ea2_431ac751",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-03T23:39:05Z",
+      "side": 1,
+      "message": "Hmm, I think what we want here is something like\n\nweightNew \u003d Math.exp(-magicConstant * deltaTime);\nnewVal \u003d oldVal * (1.0-weightNew) + newVal * weightNew;",
+      "parentUuid": "a6dd1ea2_c0735293",
+      "range": {
+        "startLine": 179,
+        "startChar": 32,
+        "endLine": 179,
+        "endChar": 47
+      },
+      "revId": "1b18d7c18d81ebcc4625812b8d052047a4d380e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6dd1ea2_a081fe4a",
         "filename": "wifi/java/android/net/wifi/WifiInfo.java",
         "patchSetId": 2
