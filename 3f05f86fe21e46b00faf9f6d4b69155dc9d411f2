@@ -16,6 +16,24 @@
       "revId": "3f05f86fe21e46b00faf9f6d4b69155dc9d411f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6dd1ea2_86705288",
+        "filename": "wifi/tests/src/android/net/wifi/hotspot2/ConfigBuilderTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-03T20:52:03Z",
+      "side": 1,
+      "message": "Will add more test cases. Keep in mind that the exceptions are not exposed to the callers.",
+      "parentUuid": "a6dd1ea2_c6a24a37",
+      "revId": "3f05f86fe21e46b00faf9f6d4b69155dc9d411f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
