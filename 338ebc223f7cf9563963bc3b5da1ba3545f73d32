@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb6e9be9_7a5f598a",
+        "filename": "telecomm/java/android/telecom/DisconnectCause.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1097598
+      },
+      "writtenOn": "2016-11-05T01:44:47Z",
+      "side": 1,
+      "message": "| are DisconnectCode and PreciseDisconnectCode coming from the same range (CallFailCause)?\n\nYes, actually they are from the same range(CallFailCause). PreciseDisconnectCode is converted to android.telephony.DisconnectCause and then converted to android.telecom.DisconnectCause.\n\n | Do we need both\n\nFirst I think we should not overlap PreciseDisconnectCode to DisconnectCode, because normal disconnect code has fixed value range defined in this class and there are already some code in InCallUI etc to rely on this error code.\n\n\nWe think it is better to deliver precise disconnect code along with normal disconnect code for application to access both of the code easily. However, if you disagree, we can change the solution. Could you let me know your opinion?",
+      "parentUuid": "4654620e_a9249976",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 38
+      },
+      "revId": "338ebc223f7cf9563963bc3b5da1ba3545f73d32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4654620e_c98c7556",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-10-27T22:18:10Z",
       "side": 1,
       "message": "is this configuring whether the carrier wants the info shown/suppressed, or is this indicating whether they provide this indication?  \"show precise\" !\u003d \"SUPPORT_PRECISE\".",
+      "range": {
+        "startLine": 619,
+        "startChar": 35,
+        "endLine": 619,
+        "endChar": 47
+      },
+      "revId": "338ebc223f7cf9563963bc3b5da1ba3545f73d32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb6e9be9_1a641d62",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1097598
+      },
+      "writtenOn": "2016-11-05T01:44:47Z",
+      "side": 1,
+      "message": "This is indicating whether we provide precise cause or normal cause with upper application. If true, this results in displaying precise cause to user in InCallUI. Otherwise displaying normal cause.\n\n\n\nI will correct mismatch between variable name and string.",
+      "parentUuid": "4654620e_c98c7556",
       "range": {
         "startLine": 619,
         "startChar": 35,
