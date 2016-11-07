@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b19f7c0_85faa2c7",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2016-11-07T13:33:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b19f7c0_c54f7a7c",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 343,
+        "endChar": 37
+      },
+      "revId": "c57d41674bed42796a764399ea49f278be69b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b19f7c0_256e4ee5",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2b19f7c0_c5049af4",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2016-11-07T13:33:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b19f7c0_256e4ee5",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 65
+      },
+      "revId": "c57d41674bed42796a764399ea49f278be69b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b19f7c0_057352cb",
         "filename": "core/java/com/android/internal/os/WebViewZygoteInit.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2016-11-07T09:58:25Z",
       "side": 1,
       "message": "ditto about comments.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "c57d41674bed42796a764399ea49f278be69b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b19f7c0_65ede60d",
+        "filename": "core/java/com/android/internal/os/WebViewZygoteInit.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2016-11-07T13:33:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b19f7c0_057352cb",
       "range": {
         "startLine": 58,
         "startChar": 0,
