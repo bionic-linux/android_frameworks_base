@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0be7d3fb_9163e6c9",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-08T01:29:39Z",
+      "side": 1,
+      "message": "These values are chosen based on a number of experiments. Still need more metrics data to validate.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 52
+      },
+      "revId": "33a12176e3b8d8e7a65f1b5a69fe4dddde9131be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0be7d3fb_f1e0aa14",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-08T01:29:39Z",
+      "side": 1,
+      "message": "This is more for the legacy device that doesn\u0027t support Wifi link layer statics. So keep it as is.",
+      "range": {
+        "startLine": 225,
+        "startChar": 4,
+        "endLine": 225,
+        "endChar": 47
+      },
+      "revId": "33a12176e3b8d8e7a65f1b5a69fe4dddde9131be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
