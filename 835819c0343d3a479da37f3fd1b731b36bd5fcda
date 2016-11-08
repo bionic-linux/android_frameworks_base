@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0be7d3fb_4db8de1d",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-08T19:21:13Z",
+      "side": 1,
+      "message": "A better name for this would be FILTER_TIME_CONSTANT - the units are the same as timeStamp (milliseconds).",
+      "range": {
+        "startLine": 141,
+        "startChar": 30,
+        "endLine": 141,
+        "endChar": 48
+      },
+      "revId": "835819c0343d3a479da37f3fd1b731b36bd5fcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0be7d3fb_0d3df67f",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-08T19:21:13Z",
+      "side": 1,
+      "message": "This determines the units of the output signal, which is not well documented. It probably would be better to just use packets per second for the units. This may require adjusting the consumers of these values to test against a different threshold. In either case, the name should be changed. Maybe MILLISEC_PER_SEC or MILLISEC_PER_REPORT_PERIOD?",
+      "range": {
+        "startLine": 142,
+        "startChar": 30,
+        "endLine": 142,
+        "endChar": 44
+      },
+      "revId": "835819c0343d3a479da37f3fd1b731b36bd5fcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0be7d3fb_e84a78c6",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-08T19:21:13Z",
+      "side": 1,
+      "message": "Should also test for mLastPacketCountUpdateTimeStamp \u003c timeStamp here, to defend against clock adjustments yielding negative deltas, or worse, a timeDelta of zero.",
+      "range": {
+        "startLine": 177,
+        "startChar": 16,
+        "endLine": 177,
+        "endChar": 67
+      },
+      "revId": "835819c0343d3a479da37f3fd1b731b36bd5fcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
