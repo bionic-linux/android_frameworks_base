@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b19f7c0_c854af6a",
+        "filename": "core/java/com/android/internal/os/WebViewZygoteInit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-11-08T14:07:13Z",
+      "side": 1,
+      "message": "why do you need to use ApplicationLoaders.getClassLoader ? What does it do that you need ? (In other words, why can\u0027t you use a PathClassLoader directly ?)",
+      "range": {
+        "startLine": 64,
+        "startChar": 33,
+        "endLine": 64,
+        "endChar": 80
+      },
+      "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
