@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b8e8f82_63cc2ac4",
+        "filename": "wifi/java/android/net/wifi/NativeScanResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-09T22:36:12Z",
+      "side": 1,
+      "message": "I wouldn\u0027t mind seeing this as a private static final constant since we use it in three places",
+      "range": {
+        "startLine": 73,
+        "startChar": 28,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "86886d4c58fbe4f8ae7efde1898715b2c5331088",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
