@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbb69be6_50cdc91a",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-09T00:00:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be7d3fb_4db8de1d",
+      "range": {
+        "startLine": 141,
+        "startChar": 30,
+        "endLine": 141,
+        "endChar": 48
+      },
+      "revId": "835819c0343d3a479da37f3fd1b731b36bd5fcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0be7d3fb_0d3df67f",
         "filename": "wifi/java/android/net/wifi/WifiInfo.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8bd3c31c_122d0aab",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-09T00:00:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be7d3fb_0d3df67f",
+      "range": {
+        "startLine": 142,
+        "startChar": 30,
+        "endLine": 142,
+        "endChar": 44
+      },
+      "revId": "835819c0343d3a479da37f3fd1b731b36bd5fcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0be7d3fb_e84a78c6",
         "filename": "wifi/java/android/net/wifi/WifiInfo.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2016-11-08T19:21:13Z",
       "side": 1,
       "message": "Should also test for mLastPacketCountUpdateTimeStamp \u003c timeStamp here, to defend against clock adjustments yielding negative deltas, or worse, a timeDelta of zero.",
+      "range": {
+        "startLine": 177,
+        "startChar": 16,
+        "endLine": 177,
+        "endChar": 67
+      },
+      "revId": "835819c0343d3a479da37f3fd1b731b36bd5fcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8baca39c_0d2df7aa",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-09T00:00:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be7d3fb_e84a78c6",
       "range": {
         "startLine": 177,
         "startChar": 16,
