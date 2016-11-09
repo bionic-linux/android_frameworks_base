@@ -459,13 +459,15 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
         if (!calledFromValidUser()) {
             return null;
         }
+        final int subtypeHashCode;
+        final SpellCheckerInfo sci;
         synchronized (mSpellCheckerMap) {
-            final int subtypeHashCode =
+            subtypeHashCode =
                     mSettings.getSelectedSpellCheckerSubtype(SpellCheckerSubtype.SUBTYPE_ID_NONE);
             if (DBG) {
                 Slog.w(TAG, "getCurrentSpellCheckerSubtype: " + subtypeHashCode);
             }
-            final SpellCheckerInfo sci = getCurrentSpellChecker(null);
+            sci = getCurrentSpellChecker(null);
             if (sci == null || sci.getSubtypeCount() == 0) {
                 if (DBG) {
                     Slog.w(TAG, "Subtype not found.");
@@ -476,26 +478,28 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
                     && !allowImplicitlySelectedSubtype) {
                 return null;
             }
-            String candidateLocale = null;
-            if (subtypeHashCode == 0) {
-                // Spell checker language settings == "auto"
-                final InputMethodManager imm = mContext.getSystemService(InputMethodManager.class);
-                if (imm != null) {
-                    final InputMethodSubtype currentInputMethodSubtype =
-                            imm.getCurrentInputMethodSubtype();
-                    if (currentInputMethodSubtype != null) {
-                        final String localeString = currentInputMethodSubtype.getLocale();
-                        if (!TextUtils.isEmpty(localeString)) {
-                            // 1. Use keyboard locale if available in the spell checker
-                            candidateLocale = localeString;
-                        }
+        }
+        String candidateLocale = null;
+        if (subtypeHashCode == 0) {
+            // Spell checker language settings == "auto"
+            final InputMethodManager imm = mContext.getSystemService(InputMethodManager.class);
+            if (imm != null) {
+                final InputMethodSubtype currentInputMethodSubtype =
+                        imm.getCurrentInputMethodSubtype();
+                if (currentInputMethodSubtype != null) {
+                    final String localeString = currentInputMethodSubtype.getLocale();
+                    if (!TextUtils.isEmpty(localeString)) {
+                        // 1. Use keyboard locale if available in the spell checker
+                        candidateLocale = localeString;
                     }
                 }
-                if (candidateLocale == null) {
-                    // 2. Use System locale if available in the spell checker
-                    candidateLocale = mContext.getResources().getConfiguration().locale.toString();
-                }
             }
+            if (candidateLocale == null) {
+                // 2. Use System locale if available in the spell checker
+                candidateLocale = mContext.getResources().getConfiguration().locale.toString();
+            }
+        }
+        synchronized (mSpellCheckerMap) {
             SpellCheckerSubtype candidate = null;
             for (int i = 0; i < sci.getSubtypeCount(); ++i) {
                 final SpellCheckerSubtype scs = sci.getSubtypeAt(i);
