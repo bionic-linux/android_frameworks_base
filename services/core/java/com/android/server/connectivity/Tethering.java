@@ -67,7 +67,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
-import com.android.server.IoThread;
+import com.android.internal.os.BackgroundThread;
 import com.android.server.connectivity.tethering.IControlsTethering;
 import com.android.server.connectivity.tethering.TetherInterfaceStateMachine;
 import com.android.server.net.BaseNetworkObserver;
@@ -186,7 +186,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         mTetherStates = new ArrayMap<>();
 
         // make our own thread so we don't anr the system
-        mLooper = IoThread.get().getLooper();
+        mLooper = BackgroundThread.get().getLooper();
         mTetherMasterSM = new TetherMasterSM("TetherMaster", mLooper);
         mTetherMasterSM.start();
 
