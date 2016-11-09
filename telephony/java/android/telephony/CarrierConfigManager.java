@@ -701,6 +701,17 @@ public class CarrierConfigManager {
             "sim_state_detection_carrier_app_string_array";
 
     /**
+     * A list of component name of activation service which are interested in intent
+     * android.intent.action.SIM_ACTIVATION_REQUEST.
+     * Example:
+     * <item>com.google.android.ActivationPackageName/.ActivationServiceNameA</item>
+     * <item>com.google.android.ActivationPackageName/.ActivationServiceNameB</item>
+     * @hide
+     */
+    public static final String KEY_SIM_ACTIVATION_SERVICE_STRING_ARRAY =
+            "sim_activation_service_string_array";
+
+    /**
      * Determines whether the carrier supports making non-emergency phone calls while the phone is
      * in emergency callback mode.  Default value is {@code true}, meaning that non-emergency calls
      * are allowed in emergency callback mode.
@@ -910,6 +921,9 @@ public class CarrierConfigManager {
         // Used for Sim card State detection app
         sDefaults.putStringArray(KEY_SIM_PROVISIONING_STATUS_DETECTION_CARRIER_APP_STRING_ARRAY,
                 null);
+        // Sim Activation Services
+        sDefaults.putStringArray(KEY_SIM_ACTIVATION_SERVICE_STRING_ARRAY,
+                new String[]{"com.android.phone/.OtaspActivationService"});
     }
 
     /**
