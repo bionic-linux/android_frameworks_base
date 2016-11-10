@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b8e8f82_0740c17b",
+        "filename": "wifi/java/android/net/wifi/hotspot2/ConfigBuilder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-10T18:25:54Z",
+      "side": 1,
+      "message": "Please add some examples in this javadoc",
+      "revId": "1bfcc4235203bb8f2e302204843f8c9bf7efdfc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
