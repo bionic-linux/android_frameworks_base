@@ -22,6 +22,30 @@
       "revId": "60eec5d281390e1c3a9d8a8c1de819366470cea3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb669bd0_7453282a",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-10T23:37:11Z",
+      "side": 1,
+      "message": "I see a larger list in the OSU app as well here: https://cs.corp.google.com/android/frameworks/base/packages/Osu/src/com/android/anqp/eap/EAP.java?rcl\u003d05675c80c11b5414ecee20afce727fe25698452d\u0026l\u003d16.\n\n\nIt might be good to have these in one central place.",
+      "parentUuid": "cb669bd0_74e9683d",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "60eec5d281390e1c3a9d8a8c1de819366470cea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
