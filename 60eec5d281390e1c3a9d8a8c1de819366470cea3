@@ -46,6 +46,54 @@
       "revId": "60eec5d281390e1c3a9d8a8c1de819366470cea3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb669bd0_3491b06b",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-10T23:53:38Z",
+      "side": 1,
+      "message": "Yes, that file contained constants for all possible EAP types. I believe it was copied from WifiService.\n\nIdeally, we would want to move those constants into Framework API, so that it can be used by the apps and WifiService.  It on my list of todos.  Probably make sense to do it sooner rather than later.  I will upload a CL for that :)",
+      "parentUuid": "cb669bd0_7453282a",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "60eec5d281390e1c3a9d8a8c1de819366470cea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb669bd0_74e16816",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-10T23:53:38Z",
+      "side": 1,
+      "message": "These constants are used for validation only. All are used in this file except EAP_TLS. EAP_TLS is implied when Certificate Credential is provided.",
+      "parentUuid": "cb669bd0_74e9683d",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "60eec5d281390e1c3a9d8a8c1de819366470cea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
