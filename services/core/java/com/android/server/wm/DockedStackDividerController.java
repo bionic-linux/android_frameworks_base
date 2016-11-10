@@ -635,6 +635,7 @@ public class DockedStackDividerController implements DimLayerUser {
     }
 
     private void setMinimizedDockedStack(boolean minimized) {
+        mAnimatingForMinimizedDockedStack = false;
         final TaskStack stack = mDisplayContent.getDockedStackVisibleForUserLocked();
         notifyDockedStackMinimizedChanged(minimized, 0);
         if (stack == null) {

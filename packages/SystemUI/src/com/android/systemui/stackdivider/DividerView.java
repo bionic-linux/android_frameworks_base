@@ -639,22 +639,7 @@ public class DividerView extends FrameLayout implements OnTouchListener,
 
 
     public void setMinimizedDockStack(boolean minimized) {
-        updateDockSide();
-        mHandle.setAlpha(minimized ? 0f : 1f);
-        if (!minimized) {
-            resetBackground();
-        } else if (mDockSide == WindowManager.DOCKED_TOP) {
-            mBackground.setPivotY(0);
-            mBackground.setScaleY(MINIMIZE_DOCK_SCALE);
-        } else if (mDockSide == WindowManager.DOCKED_LEFT
-                || mDockSide == WindowManager.DOCKED_RIGHT) {
-            mBackground.setPivotX(mDockSide == WindowManager.DOCKED_LEFT
-                    ? 0
-                    : mBackground.getWidth());
-            mBackground.setScaleX(MINIMIZE_DOCK_SCALE);
-        }
-        mMinimizedShadow.setAlpha(minimized ? 1f : 0f);
-        mDockedStackMinimized = minimized;
+        setMinimizedDockStack(minimized, 1);
     }
 
     public void setMinimizedDockStack(boolean minimized, long animDuration) {
