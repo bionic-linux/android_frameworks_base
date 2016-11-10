@@ -45,6 +45,24 @@
       "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bba0f39_4f55ed62",
+        "filename": "core/java/com/android/internal/os/WebViewZygoteInit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-11-10T11:54:52Z",
+      "side": 1,
+      "message": "I thought about this a bit more, and I think the best thing for you to do here is to not use getClassLoader and rely on the side effect that it\u0027s cached.\n\nI\u0027d prefer it if you added an explicit function to ApplicationLoaders (something like ApplicationLoaders.createWebviewClassLoader(String packagePath, String libsPath) and add detailed comments there. That makes things slightly less messy and also makes it clear to readers of ApplicationLoader that it\u0027s being used to cache classloaders in the zygote.",
+      "parentUuid": "2b19f7c0_c854af6a",
+      "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
