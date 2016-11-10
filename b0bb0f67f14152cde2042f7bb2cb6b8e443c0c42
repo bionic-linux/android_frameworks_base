@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "0b56f3b8_242e32ee",
+        "filename": "core/java/android/webkit/WebViewFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-11-10T13:13:20Z",
+      "side": 1,
+      "message": "I\u0027d also add a comment on why you need to make it public.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 16
+      },
+      "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abe6c757_61d8b6d3",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-11-10T13:13:20Z",
+      "side": 1,
+      "message": "I\u0027d also add why.",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 80
+      },
+      "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b19f7c0_c854af6a",
         "filename": "core/java/com/android/internal/os/WebViewZygoteInit.java",
         "patchSetId": 4
