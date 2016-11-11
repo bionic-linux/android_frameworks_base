@@ -21,40 +21,98 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
 
-public abstract class CurrentUserTracker extends BroadcastReceiver {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
-    private Context mContext;
-    private int mCurrentUserId;
+public abstract class CurrentUserTracker {
+    private UserReceiver mUserReceiver;
+
+    private Consumer<Integer> mCallback = this::onUserSwitched;
 
     public CurrentUserTracker(Context context) {
-        mContext = context;
+        mUserReceiver = UserReceiver.getInstance(context);
     }
 
     public int getCurrentUserId() {
-        return mCurrentUserId;
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if (Intent.ACTION_USER_SWITCHED.equals(intent.getAction())) {
-            int oldUserId = mCurrentUserId;
-            mCurrentUserId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, 0);
-            if (oldUserId != mCurrentUserId) {
-                onUserSwitched(mCurrentUserId);
-            }
-        }
+        return mUserReceiver.getCurrentUserId();
     }
 
     public void startTracking() {
-        mCurrentUserId = ActivityManager.getCurrentUser();
-        IntentFilter filter = new IntentFilter(Intent.ACTION_USER_SWITCHED);
-        mContext.registerReceiver(this, filter);
+        mUserReceiver.addTracker(mCallback);
     }
 
     public void stopTracking() {
-        mContext.unregisterReceiver(this);
+        mUserReceiver.removeTracker(mCallback);
     }
 
     public abstract void onUserSwitched(int newUserId);
+
+    private static class UserReceiver extends BroadcastReceiver {
+        private static UserReceiver sInstance;
+
+        private Context mAppContext;
+        private boolean mReceiverRegistered;
+        private int mCurrentUserId;
+
+        private List<Consumer<Integer>> mCallbacks = new ArrayList<>();
+        private Handler mHandler = new Handler(Looper.getMainLooper());
+
+        private UserReceiver(Context context) {
+            mAppContext = context.getApplicationContext();
+        }
+
+        static UserReceiver getInstance(Context context) {
+            if (sInstance == null) {
+                sInstance = new UserReceiver(context);
+            }
+            return sInstance;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Intent.ACTION_USER_SWITCHED.equals(intent.getAction())) {
+                mHandler.post(() -> notifyUserSwitched(intent.getIntExtra(
+                        Intent.EXTRA_USER_HANDLE, 0)));
+            }
+        }
+
+        public int getCurrentUserId() {
+            return mCurrentUserId;
+        }
+
+        private void addTracker(Consumer<Integer> callback) {
+            if (!mCallbacks.contains(callback)) {
+                mCallbacks.add(callback);
+            }
+            if (!mReceiverRegistered) {
+                mCurrentUserId = ActivityManager.getCurrentUser();
+                IntentFilter filter = new IntentFilter(Intent.ACTION_USER_SWITCHED);
+                mAppContext.registerReceiver(this, filter);
+                mReceiverRegistered = true;
+            }
+        }
+
+        private void removeTracker(Consumer<Integer> callback) {
+            if (mCallbacks.contains(callback)) {
+                mCallbacks.remove(callback);
+                if (mCallbacks.size() == 0 && mReceiverRegistered) {
+                    mAppContext.unregisterReceiver(this);
+                    mReceiverRegistered = false;
+                }
+            }
+        }
+
+        private void notifyUserSwitched(int newUserId) {
+            if (mCurrentUserId != newUserId) {
+                mCurrentUserId = newUserId;
+                for (Consumer<Integer> consumer : mCallbacks) {
+                    consumer.accept(newUserId);
+                }
+            }
+        }
+    }
 }
