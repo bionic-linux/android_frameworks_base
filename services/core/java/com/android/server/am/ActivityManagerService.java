@@ -3814,7 +3814,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                 startResult = Process.start(entryPoint,
                         app.processName, uid, uid, gids, debugFlags, mountExternal,
                         app.info.targetSdkVersion, app.info.seinfo, requiredAbi, instructionSet,
-                        app.info.dataDir, entryPointArgs);
+                        app.info.dataDir, null, entryPointArgs);
             }
             checkTime(startTime, "startProcess: returned from zygote!");
             Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
