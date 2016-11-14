@@ -16,6 +16,24 @@
       "revId": "3801ede2696f28f0596739a53433428de4551468",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7037600d_746c7044",
+        "filename": "packages/Osu/src/com/android/hotspot2/WifiNetworkAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-14T23:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7037600d_941934f5",
+      "revId": "3801ede2696f28f0596739a53433428de4551468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
