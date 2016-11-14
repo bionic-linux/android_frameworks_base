@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7037600d_941934f5",
+        "filename": "packages/Osu/src/com/android/hotspot2/WifiNetworkAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-14T23:21:59Z",
+      "side": 1,
+      "message": "Nit: maybe put a ticket number here?",
+      "revId": "3801ede2696f28f0596739a53433428de4551468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
