@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb669bd0_1e591415",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-11-14T19:55:48Z",
+      "side": 0,
+      "message": "canChildBeDismissed already includes the testing for all the children and will return false if any of the children are non-clearable. I think The Ux should be to clear all children only if the group is expanded and otherwise don\u0027t clear any of the children.",
+      "revId": "836e74052e16f4c24c3e7e9eab0dbcaee462986f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
