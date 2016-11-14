@@ -16,6 +16,24 @@
       "revId": "836e74052e16f4c24c3e7e9eab0dbcaee462986f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b451336_6c053bed",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-11-14T23:36:53Z",
+      "side": 0,
+      "message": "First, thanks your comments. :)\nI understand that if group is expanded, the UX should be to clear all childs.\n\nBut I don\u0027t think so.\nDo you think notification can be dismissed if ongoing is expanded ?\n\nShould not on-going childs remain\nthough group is dismissed?",
+      "parentUuid": "cb669bd0_1e591415",
+      "revId": "836e74052e16f4c24c3e7e9eab0dbcaee462986f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
