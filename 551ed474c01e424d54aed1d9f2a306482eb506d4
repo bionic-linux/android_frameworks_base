@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb669bd0_5e28ecb4",
+        "filename": "packages/SystemUI/src/com/android/systemui/settings/CurrentUserTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-11-14T19:34:00Z",
+      "side": 1,
+      "message": "why is this posted now and wasn\u0027t before?",
+      "revId": "551ed474c01e424d54aed1d9f2a306482eb506d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
