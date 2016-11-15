@@ -34,6 +34,24 @@
       "revId": "551ed474c01e424d54aed1d9f2a306482eb506d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7037600d_ef7a6d8d",
+        "filename": "packages/SystemUI/src/com/android/systemui/settings/CurrentUserTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-11-15T00:11:07Z",
+      "side": 1,
+      "message": "Well we didn\u0027t do that before either, right? All Listeners would immediately be executed.\n\nonReceive is always on the UI tread anyway, so posting it won\u0027t change anything since it will be on the UI tread again.",
+      "parentUuid": "0b451336_8cf267ee",
+      "revId": "551ed474c01e424d54aed1d9f2a306482eb506d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
