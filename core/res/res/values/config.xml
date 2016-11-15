@@ -2676,4 +2676,14 @@
 
     <!-- An array of packages for which notifications cannot be blocked. -->
     <string-array translatable="false" name="config_nonBlockableNotificationPackages" />
+
+    <!-- Thresholds for Umts Dbm in status bar -->
+    <!-- "2147483647" is invalid value of RSCP. -->
+    <integer-array name="config_umtsDbmThresholds">
+        <item>2147483647</item>   <!-- SIGNAL_STRENGTH_POOR -->
+        <item>2147483647</item>   <!-- SIGNAL_STRENGTH_MODERATE -->
+        <item>2147483647</item>   <!-- SIGNAL_STRENGTH_GOOD -->
+        <item>2147483647</item>   <!-- SIGNAL_STRENGTH_GREAT -->
+    </integer-array>
+
 </resources>

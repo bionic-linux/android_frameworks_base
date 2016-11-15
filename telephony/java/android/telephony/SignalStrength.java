@@ -54,6 +54,7 @@ public class SignalStrength implements Parcelable {
 
     private int mGsmSignalStrength; // Valid values are (0-31, 99) as defined in TS 27.007 8.5
     private int mGsmBitErrorRate;   // bit error rate (0-7, 99) as defined in TS 27.007 8.5
+    private int mUmtsRscp;  // This value is the RSCP value
     private int mCdmaDbm;   // This value is the RSSI value
     private int mCdmaEcio;  // This value is the Ec/Io
     private int mEvdoDbm;   // This value is the EVDO RSSI value
@@ -94,6 +95,7 @@ public class SignalStrength implements Parcelable {
     public SignalStrength() {
         mGsmSignalStrength = 99;
         mGsmBitErrorRate = -1;
+        mUmtsRscp = INVALID;
         mCdmaDbm = -1;
         mCdmaEcio = -1;
         mEvdoDbm = -1;
@@ -119,6 +121,7 @@ public class SignalStrength implements Parcelable {
     public SignalStrength(boolean gsmFlag) {
         mGsmSignalStrength = 99;
         mGsmBitErrorRate = -1;
+        mUmtsRscp = INVALID;
         mCdmaDbm = -1;
         mCdmaEcio = -1;
         mEvdoDbm = -1;
@@ -143,7 +146,7 @@ public class SignalStrength implements Parcelable {
             int evdoDbm, int evdoEcio, int evdoSnr,
             int lteSignalStrength, int lteRsrp, int lteRsrq, int lteRssnr, int lteCqi,
             int tdScdmaRscp, boolean gsmFlag) {
-        initialize(gsmSignalStrength, gsmBitErrorRate, cdmaDbm, cdmaEcio,
+        initialize(gsmSignalStrength, gsmBitErrorRate, INVALID, cdmaDbm, cdmaEcio,
                 evdoDbm, evdoEcio, evdoSnr, lteSignalStrength, lteRsrp,
                 lteRsrq, lteRssnr, lteCqi, gsmFlag);
         mTdScdmaRscp = tdScdmaRscp;
@@ -159,7 +162,7 @@ public class SignalStrength implements Parcelable {
             int evdoDbm, int evdoEcio, int evdoSnr,
             int lteSignalStrength, int lteRsrp, int lteRsrq, int lteRssnr, int lteCqi,
             boolean gsmFlag) {
-        initialize(gsmSignalStrength, gsmBitErrorRate, cdmaDbm, cdmaEcio,
+        initialize(gsmSignalStrength, gsmBitErrorRate, INVALID, cdmaDbm, cdmaEcio,
                 evdoDbm, evdoEcio, evdoSnr, lteSignalStrength, lteRsrp,
                 lteRsrq, lteRssnr, lteCqi, gsmFlag);
     }
@@ -173,7 +176,7 @@ public class SignalStrength implements Parcelable {
             int cdmaDbm, int cdmaEcio,
             int evdoDbm, int evdoEcio, int evdoSnr,
             boolean gsmFlag) {
-        initialize(gsmSignalStrength, gsmBitErrorRate, cdmaDbm, cdmaEcio,
+        initialize(gsmSignalStrength, gsmBitErrorRate, INVALID, cdmaDbm, cdmaEcio,
                 evdoDbm, evdoEcio, evdoSnr, 99, INVALID,
                 INVALID, INVALID, INVALID, gsmFlag);
     }
@@ -207,7 +210,7 @@ public class SignalStrength implements Parcelable {
             int cdmaDbm, int cdmaEcio,
             int evdoDbm, int evdoEcio, int evdoSnr,
             boolean gsm) {
-        initialize(gsmSignalStrength, gsmBitErrorRate, cdmaDbm, cdmaEcio,
+        initialize(gsmSignalStrength, gsmBitErrorRate, INVALID, cdmaDbm, cdmaEcio,
                 evdoDbm, evdoEcio, evdoSnr, 99, INVALID,
                 INVALID, INVALID, INVALID, gsm);
     }
@@ -217,6 +220,7 @@ public class SignalStrength implements Parcelable {
      *
      * @param gsmSignalStrength
      * @param gsmBitErrorRate
+     * @param umtsRscp
      * @param cdmaDbm
      * @param cdmaEcio
      * @param evdoDbm
@@ -231,13 +235,14 @@ public class SignalStrength implements Parcelable {
      *
      * @hide
      */
-    public void initialize(int gsmSignalStrength, int gsmBitErrorRate,
+    public void initialize(int gsmSignalStrength, int gsmBitErrorRate, int umtsRscp,
             int cdmaDbm, int cdmaEcio,
             int evdoDbm, int evdoEcio, int evdoSnr,
             int lteSignalStrength, int lteRsrp, int lteRsrq, int lteRssnr, int lteCqi,
             boolean gsm) {
         mGsmSignalStrength = gsmSignalStrength;
         mGsmBitErrorRate = gsmBitErrorRate;
+        mUmtsRscp = umtsRscp;
         mCdmaDbm = cdmaDbm;
         mCdmaEcio = cdmaEcio;
         mEvdoDbm = evdoDbm;
@@ -259,6 +264,7 @@ public class SignalStrength implements Parcelable {
     protected void copyFrom(SignalStrength s) {
         mGsmSignalStrength = s.mGsmSignalStrength;
         mGsmBitErrorRate = s.mGsmBitErrorRate;
+        mUmtsRscp = s.mUmtsRscp;
         mCdmaDbm = s.mCdmaDbm;
         mCdmaEcio = s.mCdmaEcio;
         mEvdoDbm = s.mEvdoDbm;
@@ -283,6 +289,7 @@ public class SignalStrength implements Parcelable {
 
         mGsmSignalStrength = in.readInt();
         mGsmBitErrorRate = in.readInt();
+        mUmtsRscp = in.readInt();
         mCdmaDbm = in.readInt();
         mCdmaEcio = in.readInt();
         mEvdoDbm = in.readInt();
@@ -310,6 +317,7 @@ public class SignalStrength implements Parcelable {
         SignalStrength ss = new SignalStrength();
         ss.mGsmSignalStrength = in.readInt();
         ss.mGsmBitErrorRate = in.readInt();
+        ss.mUmtsRscp = in.readInt();
         ss.mCdmaDbm = in.readInt();
         ss.mCdmaEcio = in.readInt();
         ss.mEvdoDbm = in.readInt();
@@ -330,6 +338,7 @@ public class SignalStrength implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(mGsmSignalStrength);
         out.writeInt(mGsmBitErrorRate);
+        out.writeInt(mUmtsRscp);
         out.writeInt(mCdmaDbm);
         out.writeInt(mCdmaEcio);
         out.writeInt(mEvdoDbm);
@@ -382,6 +391,9 @@ public class SignalStrength implements Parcelable {
         // TS 27.007 8.5
         mGsmSignalStrength = mGsmSignalStrength >= 0 ? mGsmSignalStrength : 99;
         // BER no change;
+
+        mUmtsRscp = ((mUmtsRscp >= 25) && (mUmtsRscp <= 120))
+                ? -mUmtsRscp : SignalStrength.INVALID;
 
         mCdmaDbm = mCdmaDbm > 0 ? -mCdmaDbm : -120;
         mCdmaEcio = (mCdmaEcio > 0) ? -mCdmaEcio : -160;
@@ -615,7 +627,23 @@ public class SignalStrength implements Parcelable {
      * @hide
      */
     public int getGsmLevel() {
-        int level;
+        int level = -1;
+
+        int[] sUmtsDbmThresholds = Resources.getSystem().getIntArray(
+                com.android.internal.R.array.config_umtsDbmThresholds);
+        if (sUmtsDbmThresholds.length != 4) {
+            Log.wtf(LOG_TAG, "getGsmLevel - config_umtsDbmThresholds has invalid num of elements."
+                    + " Cannot evaluate RSCP signal.");
+        } else {
+            if (mUmtsRscp > -25) level = -1;
+            else if (mUmtsRscp >= sUmtsDbmThresholds[3]) level = SIGNAL_STRENGTH_GREAT;
+            else if (mUmtsRscp >= sUmtsDbmThresholds[2]) level = SIGNAL_STRENGTH_GOOD;
+            else if (mUmtsRscp >= sUmtsDbmThresholds[1]) level = SIGNAL_STRENGTH_MODERATE;
+            else if (mUmtsRscp >= sUmtsDbmThresholds[0]) level = SIGNAL_STRENGTH_POOR;
+            else if (mUmtsRscp >= -120) level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+            if (DBG) log("getGsmLevel=" + level + " UmtsRscp=" + mUmtsRscp);
+        }
+        if (level != -1) return level;
 
         // ASU ranges from 0 to 31 - TS 27.007 Sec 8.5
         // asu = 0 (-113dB or less) is very weak
@@ -934,7 +962,7 @@ public class SignalStrength implements Parcelable {
     public int hashCode() {
         int primeNum = 31;
         return ((mGsmSignalStrength * primeNum)
-                + (mGsmBitErrorRate * primeNum)
+                + (mGsmBitErrorRate * primeNum) + (mUmtsRscp * primeNum)
                 + (mCdmaDbm * primeNum) + (mCdmaEcio * primeNum)
                 + (mEvdoDbm * primeNum) + (mEvdoEcio * primeNum) + (mEvdoSnr * primeNum)
                 + (mLteSignalStrength * primeNum) + (mLteRsrp * primeNum)
@@ -961,6 +989,7 @@ public class SignalStrength implements Parcelable {
 
         return (mGsmSignalStrength == s.mGsmSignalStrength
                 && mGsmBitErrorRate == s.mGsmBitErrorRate
+                && mUmtsRscp == s.mUmtsRscp
                 && mCdmaDbm == s.mCdmaDbm
                 && mCdmaEcio == s.mCdmaEcio
                 && mEvdoDbm == s.mEvdoDbm
@@ -983,6 +1012,7 @@ public class SignalStrength implements Parcelable {
         return ("SignalStrength:"
                 + " " + mGsmSignalStrength
                 + " " + mGsmBitErrorRate
+                + " " + mUmtsRscp
                 + " " + mCdmaDbm
                 + " " + mCdmaEcio
                 + " " + mEvdoDbm
@@ -1006,6 +1036,7 @@ public class SignalStrength implements Parcelable {
     private void setFromNotifierBundle(Bundle m) {
         mGsmSignalStrength = m.getInt("GsmSignalStrength");
         mGsmBitErrorRate = m.getInt("GsmBitErrorRate");
+        mUmtsRscp = m.getInt("UmtsRscp");
         mCdmaDbm = m.getInt("CdmaDbm");
         mCdmaEcio = m.getInt("CdmaEcio");
         mEvdoDbm = m.getInt("EvdoDbm");
@@ -1029,6 +1060,7 @@ public class SignalStrength implements Parcelable {
     public void fillInNotifierBundle(Bundle m) {
         m.putInt("GsmSignalStrength", mGsmSignalStrength);
         m.putInt("GsmBitErrorRate", mGsmBitErrorRate);
+        m.putInt("UmtsRscp", mUmtsRscp);
         m.putInt("CdmaDbm", mCdmaDbm);
         m.putInt("CdmaEcio", mCdmaEcio);
         m.putInt("EvdoDbm", mEvdoDbm);
