@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b028f8c6_4a6c3344",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2016-11-15T16:17:43Z",
+      "side": 1,
+      "message": "Expanded the reasoning here slightly; the eng spec now linked from the bug has more info.",
+      "parentUuid": "6b55af38_fde85f3b",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b56f3b8_242e32ee",
         "filename": "core/java/android/webkit/WebViewFactory.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b028f8c6_0a623b51",
+        "filename": "core/java/android/webkit/WebViewFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2016-11-15T16:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b56f3b8_242e32ee",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 16
+      },
+      "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abe6c757_61d8b6d3",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2016-11-10T13:13:20Z",
       "side": 1,
       "message": "I\u0027d also add why.",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 80
+      },
+      "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b028f8c6_ca002369",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2016-11-15T16:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe6c757_61d8b6d3",
       "range": {
         "startLine": 130,
         "startChar": 15,
@@ -160,6 +232,24 @@
       "side": 1,
       "message": "+1 for making it webview specific.",
       "parentUuid": "0b56f3b8_c4a39e54",
+      "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b028f8c6_2a5d7f99",
+        "filename": "core/java/com/android/internal/os/WebViewZygoteInit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2016-11-15T16:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6beccf3c_5fbf4b5f",
       "revId": "b0bb0f67f14152cde2042f7bb2cb6b8e443c0c42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
