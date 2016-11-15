@@ -34,6 +34,24 @@
       "revId": "836e74052e16f4c24c3e7e9eab0dbcaee462986f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7037600d_cf2e89a3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-11-15T00:05:53Z",
+      "side": 0,
+      "message": "No, what I\u0027m saying:\nWhen a group is expanded and clear all is pressed, all notifications of the group that are clearable should be cleared, all those that are not remain (and the group summary too).\n\nThe other point I was making: canChildBeDismissed returns false if a group summary has any non-clearable children.",
+      "parentUuid": "0b451336_6c053bed",
+      "revId": "836e74052e16f4c24c3e7e9eab0dbcaee462986f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
