@@ -52,6 +52,24 @@
       "revId": "551ed474c01e424d54aed1d9f2a306482eb506d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5055fc37_d79c5c48",
+        "filename": "packages/SystemUI/src/com/android/systemui/settings/CurrentUserTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1073200
+      },
+      "writtenOn": "2016-11-15T04:19:25Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right. I mistook ACTION_USER_SWITCHED as ordered broadcast, and sendFinished of ActivityManager would be called after onReceive. But I found that it isn\u0027t. I\u0027ll update patch. Thank you for indication.",
+      "parentUuid": "7037600d_ef7a6d8d",
+      "revId": "551ed474c01e424d54aed1d9f2a306482eb506d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
