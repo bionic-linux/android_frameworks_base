@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7037600d_3dc488a0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-11-15T04:53:18Z",
+      "side": 1,
+      "message": "sent to the default dialer to inform it to show (or hide) the visual voicemail notification.",
+      "range": {
+        "startLine": 665,
+        "startChar": 31,
+        "endLine": 666,
+        "endChar": 20
+      },
+      "revId": "73cdcf57877f94cefb76d2b1d160f59a2ce82df6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
