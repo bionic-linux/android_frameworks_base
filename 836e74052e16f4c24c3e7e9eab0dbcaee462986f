@@ -52,6 +52,24 @@
       "revId": "836e74052e16f4c24c3e7e9eab0dbcaee462986f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b451336_4ce15f16",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1073094
+      },
+      "writtenOn": "2016-11-15T01:15:41Z",
+      "side": 0,
+      "message": "OK, I will recheck at latest N MR1 version.\n(it still occurs at old version)",
+      "parentUuid": "7037600d_cf2e89a3",
+      "revId": "836e74052e16f4c24c3e7e9eab0dbcaee462986f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
