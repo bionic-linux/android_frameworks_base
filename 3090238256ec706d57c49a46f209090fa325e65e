@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7037600d_dcbf4904",
+        "filename": "wifi/tests/src/android/net/wifi/hotspot2/PasspointConfigurationTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-16T18:25:52Z",
+      "side": 1,
+      "message": "Add javadocs to this and other tests in the CL",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "3090238256ec706d57c49a46f209090fa325e65e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
