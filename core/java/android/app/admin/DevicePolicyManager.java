@@ -2940,6 +2940,61 @@ public class DevicePolicyManager {
     }
 
     /**
+     * Called by a device or profile owner, or delegated certificate installer, to generate
+     * a key pair. The key pair will be visible to all apps within the profile after setCertificate
+     * is called to install an issued certificate for the key pair. Before setCertificate
+     * is called, the generated private key is available for use through a call to KeyChain.getPrivateKey
+     * by the entity that called generateKeyPair even when no certificate is installed yet to enable
+     * the certificate requester to provide proof-of-possession of the private key. No interface exists
+     * for others to use the key until a certificate is installed.
+     *
+     * @param who Which {@link DeviceAdminReceiver} this request is associated with, or
+     * {@code null} if calling from a delegated certificate installer.
+     * @param alias The private key alias under which to generate the key pair. If a key pair
+     * with that alias already exists, it will be overwritten.
+     * @param keyType The type of key to generate. Currently can be
+     * {@link android.security.keystore.KeyProperties#KEY_ALGORITHM_RSA} or
+     * {@link android.security.keystore.KeyProperties#KEY_ALGORITHM_EC}.
+     * @param keySize The size of key to generate. For EC, currently can be 256 or 384, to
+     * indicate a P-256 or P-384 key respectively.
+     * @return The generated public key (ASN.1 DER encoded SubjectPublicKeyInfo), or {@code null}
+     * if the request failed.
+     */
+    public byte[] generateKeyPair(ComponentName who, String alias, String keyType, int keySize) {
+        try {
+            return mService.generateKeyPair(who, alias, keyType, keySize);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Failed talking with device policy service", e);
+        }
+        return null;
+    }
+
+    /**
+     * Called by a device or profile owner, or delegated certificate installer, to install
+     * a certificate for a previously generated key pair. This method can only be called by
+     * the entity that originally called generateKeyPair for the alias.
+     *
+     * @param who Which {@link DeviceAdminReceiver} this request is associated with, or
+     *        {@code null} if calling from a delegated certificate installer.
+     * @param alias The private key alias under which to install the certificate.
+     *        If a certificate with that alias already exists, installation will fail.
+     * @param certificate The certificate to install.
+     * @param retainAccess {@code true} to request that the calling app retain access to
+     *        the credentials after the certificate is installed. Otherwise, access to
+     *        the credentials will be gated by user approval.
+     * @return {@code true} if the certificate was installed, {@code false} otherwise.
+     */
+    public boolean setCertificate(ComponentName who, String alias, byte[] certificate,
+            boolean retainAccess) {
+        try {
+            return mService.setCertificate(who, alias, certificate, retainAccess);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Failed talking with device policy service", e);
+        }
+        return false;
+     }
+
+    /**
      * @return the alias of a given CA certificate in the certificate store, or {@code null} if it
      * doesn't exist.
      */
