@@ -140,7 +140,7 @@ public final class Looper {
             }
 
             // This must be in a local variable, in case a UI event sets the logger
-            final Printer logging = me.mLogging;
+            Printer logging = me.mLogging;
             if (logging != null) {
                 logging.println(">>>>> Dispatching to " + msg.target + " " +
                         msg.callback + ": " + msg.what);
@@ -157,7 +157,7 @@ public final class Looper {
                     Trace.traceEnd(traceTag);
                 }
             }
-
+            logging = me.mLogging;
             if (logging != null) {
                 logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
             }
