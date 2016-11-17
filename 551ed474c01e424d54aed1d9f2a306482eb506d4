@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5055fc37_37fcb800",
+        "filename": "packages/SystemUI/src/com/android/systemui/settings/CurrentUserTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1073200
+      },
+      "writtenOn": "2016-11-17T01:10:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7037600d_0dc4d22e",
+      "revId": "551ed474c01e424d54aed1d9f2a306482eb506d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb669bd0_5e28ecb4",
         "filename": "packages/SystemUI/src/com/android/systemui/settings/CurrentUserTracker.java",
         "patchSetId": 2
