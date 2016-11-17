@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0bc8cd0_3970474a",
+        "filename": "packages/SystemUI/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-11-17T18:49:31Z",
+      "side": 0,
+      "message": "where is this duplicated? I can\u0027t find it elsewhere in this file?",
+      "revId": "a908e65b66f9de251a4c610cb52673f2be3de4b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
