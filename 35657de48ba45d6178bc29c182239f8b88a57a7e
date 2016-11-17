@@ -22,6 +22,30 @@
       "revId": "35657de48ba45d6178bc29c182239f8b88a57a7e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7037600d_4ef411d5",
+        "filename": "core/tests/coretests/apks/install_jni_lib/com_android_frameworks_coretests_JNITest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1041673
+      },
+      "writtenOn": "2016-11-17T02:36:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7037600d_ceb1412a",
+      "range": {
+        "startLine": 19,
+        "startChar": 100,
+        "endLine": 19,
+        "endChar": 111
+      },
+      "revId": "35657de48ba45d6178bc29c182239f8b88a57a7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
