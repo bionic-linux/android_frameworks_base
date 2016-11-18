@@ -34,6 +34,24 @@
       "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30040898_4c20130d",
+        "filename": "core/jni/android_util_Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-11-18T20:55:36Z",
+      "side": 1,
+      "message": "at a minimum, we should fix that middle name. as maco@ just demonstrated, even to long-time platform developers \u003clog/log.h\u003e sounds the same as \u003candroid/log.h\u003e (or cutils or utils or ...). there should be something like \"platform\" or \"internal\" or whatever in the name.\n\n\"this is not the logging header you\u0027re looking for\".\n\n(it might be the one most interesting to you, but 99% of even *platform* developers should never need to know it exists.)",
+      "parentUuid": "30040898_acd9c714",
+      "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
