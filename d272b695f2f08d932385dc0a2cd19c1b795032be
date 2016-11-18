@@ -52,6 +52,24 @@
       "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0e71824_d200241f",
+        "filename": "core/jni/android_util_Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2016-11-18T21:03:12Z",
+      "side": 1,
+      "message": "I mean I was lazy and could have just read the headers, but it would certainly be nice if you could tell from the name and/or path which one is the right one to use.",
+      "parentUuid": "30040898_4c20130d",
+      "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
