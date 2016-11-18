@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30040898_4912451d",
+        "filename": "core/jni/android_util_Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-11-18T20:39:05Z",
+      "side": 1,
+      "message": "i think this is a great example of why \"the file that contains all the implementation detail crap\" ought to have a more intention-revealing name...",
+      "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
