@@ -88,6 +88,24 @@
       "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30040898_ec47bf1c",
+        "filename": "core/jni/android_util_Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-11-18T21:27:52Z",
+      "side": 1,
+      "message": "Ok, log/log.h is the hairy one enh@ speaks of.\n\nIn subsequent CLs in the patch series we are splitting out log/log_event_list.h.\n\nMaybe later log/log_system.h and log/log_radio.h will come out and play. Baby steps.\n\nFirst, let\u0027s get rid of the _bad_ one log/logger.h, wth is that one for?",
+      "parentUuid": "30040898_8c2ccbc4",
+      "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
