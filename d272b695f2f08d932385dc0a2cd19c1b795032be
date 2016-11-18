@@ -16,6 +16,24 @@
       "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30040898_acd9c714",
+        "filename": "core/jni/android_util_Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-11-18T20:51:02Z",
+      "side": 1,
+      "message": "logger.h had too much interdependent incest with log.h, we merged them together and deprecated logger.h.\n\nI think everyone will appreciate a one-stop-shop approach to logging.\n\nandroid/log.h -\u003e \"C\" NDK\nlog/log.h \u003e \"C\" VNDK or system\nandroid-base/logging.h -\u003e C++\n\n\u003cbam\u003e",
+      "parentUuid": "30040898_4912451d",
+      "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
