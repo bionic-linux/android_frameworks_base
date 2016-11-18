@@ -70,6 +70,24 @@
       "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30040898_8c2ccbc4",
+        "filename": "core/jni/android_util_Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-11-18T21:06:45Z",
+      "side": 1,
+      "message": "yeah, but we\u0027re all lazy^Wtoo busy trying to get stuff done to work out the _minimal_ header we need.\n\nsince 99% of folks _shouldn\u0027t_ be using the hairy one, it should have a name that says \"this is not the logging header you\u0027re looking for\". (and, ideally, says to the 1% \"hey, this is where the hairy stuff you\u0027re looking for lives!\" :-) )",
+      "parentUuid": "b0e71824_d200241f",
+      "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
