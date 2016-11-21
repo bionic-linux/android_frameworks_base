@@ -22,6 +22,30 @@
       "revId": "5831f7e5173b5fd30ae33fcc0977d517347e53ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0e0b014_32eac82e",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2016-11-21T17:58:00Z",
+      "side": 1,
+      "message": "been watching \u0027Silicon Valley\u0027? :D done.",
+      "parentUuid": "30040898_728b9d3f",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 1
+      },
+      "revId": "5831f7e5173b5fd30ae33fcc0977d517347e53ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
