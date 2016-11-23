@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30288869_263fd6e9",
+        "filename": "core/res/res/layout/date_picker_material.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2016-11-23T21:58:52Z",
+      "side": 1,
+      "message": "Please add the attribute\n\n    android:scrollIndicators\u003d\"top|bottom\"\n\nto the ScrollView so that scroll indicators will be displayed when there is content outside the visible area.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "e18518060654e0e50cbe0bfeaf0fa8d7ae224bd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
