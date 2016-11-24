@@ -25,6 +25,23 @@ import android.app.ActivityThread;
 import android.app.VoiceInteractor.PickOptionRequest;
 import android.app.VoiceInteractor.PickOptionRequest.Option;
 import android.app.VoiceInteractor.Prompt;
+<<<<<<< HEAD
+=======
+import android.content.pm.ComponentInfo;
+import android.content.res.Configuration;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.text.TextUtils;
+import android.util.Slog;
+import android.widget.AbsListView;
+import com.android.internal.R;
+import com.android.internal.content.PackageMonitor;
+
+import android.app.ActivityManager;
+import android.app.ActivityManagerNative;
+import android.app.AppGlobals;
+>>>>>>> 3d03297... Fix ListView can not be moved after rotation.
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -330,6 +347,12 @@ public class ResolverActivity extends Activity {
                 : MetricsProto.MetricsEvent.ACTION_SHOW_APP_DISAMBIG_NONE_FEATURED,
                 intent.getAction() + ":" + intent.getType() + ":"
                         + (categories != null ? Arrays.toString(categories.toArray()) : ""));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mAdapter.handlePackagesChanged();
     }
 
     /**
