@@ -106,6 +106,24 @@
       "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4db723b6_8ab52bb1",
+        "filename": "core/jni/android_util_Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2016-12-01T23:17:06Z",
+      "side": 1,
+      "message": "I\u0027m ok with baby steps - this change at least doesn\u0027t make things worse. If this is needed to move forward, let\u0027s do it. Elliott?",
+      "parentUuid": "30040898_ec47bf1c",
+      "revId": "d272b695f2f08d932385dc0a2cd19c1b795032be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
