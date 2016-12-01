@@ -22,6 +22,30 @@
       "revId": "c53a8a5e208258becba57e2da35558bfe98787d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d556338_65994d0b",
+        "filename": "libs/hwui/DamageAccumulator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-01T23:36:59Z",
+      "side": 1,
+      "message": "Good catch! \u003coops\u003e\n\nI thought this was in system/core/include/utils/MathUtils.h and part of the Android set of include files.\n\nThis is instead in frameworks/base/libs/hwui/utils/MathUtils.h and probably should continue to use \"\" instead of \u003c\u003e.",
+      "parentUuid": "0dc44b28_30fca6fc",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "c53a8a5e208258becba57e2da35558bfe98787d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
