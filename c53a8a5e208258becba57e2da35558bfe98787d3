@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc44b28_30fca6fc",
+        "filename": "libs/hwui/DamageAccumulator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2016-12-01T23:17:06Z",
+      "side": 1,
+      "message": "did you intentionally change this (since a later file keeps \")",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "c53a8a5e208258becba57e2da35558bfe98787d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
