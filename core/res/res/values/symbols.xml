@@ -2620,4 +2620,7 @@
 
   <java-symbol type="bool" name="config_permissionReviewRequired" />
 
+  <!-- Network Recommendation -->
+  <java-symbol type="array" name="config_networkRecommendationPackageNames" />
+
 </resources>
