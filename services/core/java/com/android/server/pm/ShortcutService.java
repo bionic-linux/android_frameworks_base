@@ -321,13 +321,12 @@ public class ShortcutService extends IShortcutService.Stub {
         mPackageManagerInternal = LocalServices.getService(PackageManagerInternal.class);
         mUserManager = context.getSystemService(UserManager.class);
 
-        if (!FEATURE_ENABLED) {
-            return;
-        }
-        mPackageMonitor.register(context, looper, UserHandle.ALL, /* externalStorage= */ false);
+        if (FEATURE_ENABLED) {
+            mPackageMonitor.register(context, looper, UserHandle.ALL, /* externalStorage= */ false);
 
-        injectRegisterUidObserver(mUidObserver, ActivityManager.UID_OBSERVER_PROCSTATE
-                | ActivityManager.UID_OBSERVER_GONE);
+            injectRegisterUidObserver(mUidObserver, ActivityManager.UID_OBSERVER_PROCSTATE
+                    | ActivityManager.UID_OBSERVER_GONE);
+        }
     }
 
     void logDurationStat(int statId, long start) {
