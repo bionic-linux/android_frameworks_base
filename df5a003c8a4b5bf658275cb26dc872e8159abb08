@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d556338_7d143d6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-12-02T07:56:32Z",
+      "side": 1,
+      "message": "Why do I not believe this when the previous change/PS was obviously broken (Java !\u003d C)...",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "df5a003c8a4b5bf658275cb26dc872e8159abb08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d556338_5d1979a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-12-02T07:56:32Z",
+      "side": 1,
+      "message": "Monkey isn\u0027t a test. Where\u0027s the regression test? Why is there no default display?",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "df5a003c8a4b5bf658275cb26dc872e8159abb08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d556338_bd1ed588",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2019,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-12-02T07:56:32Z",
+      "side": 1,
+      "message": "This change doesn\u0027t make sense. You\u0027re just keeping the metrics object broken. I don\u0027t think that\u0027s intended.\n\nYour bug drill-down did *not* analyze the actual failure. Why is there no default display?",
+      "range": {
+        "startLine": 2017,
+        "startChar": 8,
+        "endLine": 2019,
+        "endChar": 9
+      },
+      "revId": "df5a003c8a4b5bf658275cb26dc872e8159abb08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
