@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad833f54_0102f426",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-06T21:13:28Z",
+      "side": 1,
+      "message": "Here is the comment - something to let us know why we would get a null service and why we want to return null.",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 288,
+        "endChar": 53
+      },
+      "revId": "b29090687f440b066a3aa027c350717f591bd5aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad833f54_a11d288f",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-06T21:13:28Z",
+      "side": 1,
+      "message": "in one of the other services above (DropBoxManager) there was a comment added about why the \"return null\" is necessary, can we add a similar comment here?  Thanks!\n\n(I will put a note at that spot.)",
+      "range": {
+        "startLine": 535,
+        "startChar": 16,
+        "endLine": 537,
+        "endChar": 17
+      },
+      "revId": "b29090687f440b066a3aa027c350717f591bd5aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
