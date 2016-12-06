@@ -532,6 +532,12 @@ final class SystemServiceRegistry {
             public WifiScanner createService(ContextImpl ctx) {
                 IBinder b = ServiceManager.getService(Context.WIFI_SCANNING_SERVICE);
                 IWifiScanner service = IWifiScanner.Stub.asInterface(b);
+                if (service == null) {
+                    // Don't return a WifiScanner that will NPE upon use.
+                    // Service may be null for untrusted application
+                    // because wifiscanner is protected by selinux.
+                    return null;
+                }
                 return new WifiScanner(ctx.getOuterContext(), service,
                         ConnectivityThread.getInstanceLooper());
             }});
