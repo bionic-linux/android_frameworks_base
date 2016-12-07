@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df58ffe_fe658159",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7448,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-07T00:14:22Z",
+      "side": 1,
+      "message": "Should be last for consistency.",
+      "range": {
+        "startLine": 7448,
+        "startChar": 11,
+        "endLine": 7448,
+        "endChar": 16
+      },
+      "revId": "3cf3e5f8bc683af165f6dd90cffbdf7d0872a594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
