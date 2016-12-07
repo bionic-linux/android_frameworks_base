@@ -7446,6 +7446,8 @@ public final class Settings {
         /**
          * Value to specify if Wi-Fi Wakeup feature is enabled.
          * @hide
+         *
+         * Type: int (0 for false, 1 for true)
          */
         @SystemApi
         public static final String WIFI_WAKEUP_ENABLED = "wifi_wakeup_enabled";
@@ -7453,6 +7455,8 @@ public final class Settings {
         /**
          * Value to specify if network recommendations from
          * {@link com.android.server.NetworkScoreService} are enabled.
+         *
+         * Type: int (0 for false, 1 for true)
          * @hide
          */
         @SystemApi
