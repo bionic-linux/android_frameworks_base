@@ -192,6 +192,11 @@ package android.mtp {
 
 package android.net {
 
+  public class ConnectivityManager {
+    method public deprecated boolean requestRouteToHost(int, int);
+    method public deprecated int startUsingNetworkFeature(int, java.lang.String);
+  }
+
   public class SSLCertificateSocketFactory extends javax.net.ssl.SSLSocketFactory {
     method public static deprecated org.apache.http.conn.ssl.SSLSocketFactory getHttpSocketFactory(int, android.net.SSLSessionCache);
   }

@@ -1139,6 +1139,7 @@ public class ConnectivityManager {
      *             {@link #requestNetwork(NetworkRequest, NetworkCallback)} API.
      *             In {@link VERSION_CODES#M}, and above, this method is unsupported and will
      *             throw {@code UnsupportedOperationException} if called.
+     * @removed
      */
     public int startUsingNetworkFeature(int networkType, String feature) {
         checkLegacyRoutingApiAccess();
@@ -1607,6 +1608,7 @@ public class ConnectivityManager {
      *             {@link #bindProcessToNetwork} and {@link Network#getSocketFactory} API.
      *             In {@link VERSION_CODES#M}, and above, this method is unsupported and will
      *             throw {@code UnsupportedOperationException} if called.
+     * @removed
      */
     public boolean requestRouteToHost(int networkType, int hostAddress) {
         return requestRouteToHostAddress(networkType, NetworkUtils.intToInetAddress(hostAddress));
