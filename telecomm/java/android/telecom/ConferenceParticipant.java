@@ -17,6 +17,7 @@
 package android.telecom;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -48,6 +49,8 @@ public class ConferenceParticipant implements Parcelable {
      * @see android.telecom.Connection
      */
     private final int mState;
+
+    private static final boolean DBG_BUILD = !Build.TYPE.equals("user");
 
     /**
      * Creates an instance of {@code ConferenceParticipant}.
@@ -113,12 +116,16 @@ public class ConferenceParticipant implements Parcelable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[ConferenceParticipant Handle: ");
-        sb.append(Log.pii(mHandle));
-        sb.append(" DisplayName: ");
-        sb.append(Log.pii(mDisplayName));
-        sb.append(" Endpoint: ");
-        sb.append(Log.pii(mEndpoint));
+        sb.append("[ConferenceParticipant");
+        // Refrain from logging user personal information like phone number in user build.
+        if (DBG_BUILD) {
+            sb.append(" Handle: ");
+            sb.append(Log.pii(mHandle));
+            sb.append(" DisplayName: ");
+            sb.append(Log.pii(mDisplayName));
+            sb.append(" Endpoint: ");
+            sb.append(Log.pii(mEndpoint));
+        }
         sb.append(" State: ");
         sb.append(Connection.stateToString(mState));
         sb.append("]");

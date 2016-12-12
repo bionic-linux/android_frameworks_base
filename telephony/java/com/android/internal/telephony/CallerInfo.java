@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Country;
 import android.location.CountryDetector;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
@@ -52,6 +53,7 @@ import java.util.Locale;
 public class CallerInfo {
     private static final String TAG = "CallerInfo";
     private static final boolean VDBG = Rlog.isLoggable(TAG, Log.VERBOSE);
+    private static final boolean DBG_BUILD = !Build.TYPE.equals("user");
 
     public static final long USER_TYPE_CURRENT = 0;
     public static final long USER_TYPE_WORK = 1;
@@ -577,7 +579,7 @@ public class CallerInfo {
      * @see com.android.i18n.phonenumbers.PhoneNumberOfflineGeocoder
      */
     private static String getGeoDescription(Context context, String number) {
-        if (VDBG) Rlog.v(TAG, "getGeoDescription('" + number + "')...");
+        if (VDBG && DBG_BUILD) Rlog.v(TAG, "getGeoDescription('" + number + "')...");
 
         if (TextUtils.isEmpty(number)) {
             return null;
@@ -590,17 +592,23 @@ public class CallerInfo {
         String countryIso = getCurrentCountryIso(context, locale);
         PhoneNumber pn = null;
         try {
-            if (VDBG) Rlog.v(TAG, "parsing '" + number
+            if (VDBG && DBG_BUILD) Rlog.v(TAG, "parsing '" + number
                             + "' for countryIso '" + countryIso + "'...");
             pn = util.parse(number, countryIso);
-            if (VDBG) Rlog.v(TAG, "- parsed number: " + pn);
+            if (VDBG && DBG_BUILD) Rlog.v(TAG, "- parsed number: " + pn);
         } catch (NumberParseException e) {
-            Rlog.w(TAG, "getGeoDescription: NumberParseException for incoming number '" + number + "'");
+            // Refrain from logging user personal information like phone number in user build.
+            if (DBG_BUILD) {
+                Rlog.w(TAG, "getGeoDescription: NumberParseException for incoming number '"
+                                + number + "'");
+            } else {
+                Rlog.w(TAG, "getGeoDescription: NumberParseException");
+            }
         }
 
         if (pn != null) {
             String description = geocoder.getDescriptionForNumber(pn, locale);
-            if (VDBG) Rlog.v(TAG, "- got description: '" + description + "'");
+            if (VDBG && DBG_BUILD) Rlog.v(TAG, "- got description: '" + description + "'");
             return description;
         } else {
             return null;
