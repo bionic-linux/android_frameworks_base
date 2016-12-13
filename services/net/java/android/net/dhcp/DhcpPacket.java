@@ -5,7 +5,6 @@ import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.metrics.DhcpErrorEvent;
 import android.os.Build;
-import android.os.SystemProperties;
 import android.system.OsConstants;
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -615,9 +614,12 @@ abstract class DhcpPacket {
         return "android-dhcp-" + Build.VERSION.RELEASE;
     }
 
+    private boolean hasHostname() {
+        return (testOverrideHostname != null);
+    }
+
     private String getHostname() {
-        if (testOverrideHostname != null) return testOverrideHostname;
-        return SystemProperties.get("net.hostname");
+        return testOverrideHostname;
     }
 
     /**
@@ -629,7 +631,7 @@ abstract class DhcpPacket {
     protected void addCommonClientTlvs(ByteBuffer buf) {
         addTlv(buf, DHCP_MAX_MESSAGE_SIZE, (short) MAX_LENGTH);
         addTlv(buf, DHCP_VENDOR_CLASS_ID, getVendorId());
-        addTlv(buf, DHCP_HOST_NAME, getHostname());
+        if (hasHostname()) addTlv(buf, DHCP_HOST_NAME, getHostname());
     }
 
     /**
