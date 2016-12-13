@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d3f4f99_b1cf7a14",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2016-12-13T08:50:50Z",
+      "side": 1,
+      "message": "Suggest:\n\n    if (!TextUtils.isEmpty(getHostname()) addTlv(buf, DHCP_HOST_NAME, hn);",
+      "range": {
+        "startLine": 633,
+        "startChar": 8,
+        "endLine": 633,
+        "endChar": 40
+      },
+      "revId": "a36deb550c2e066252333e2b2d5a664feeff7c91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
