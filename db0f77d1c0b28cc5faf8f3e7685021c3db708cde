@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6aeb2c_dd2acbee",
+        "filename": "services/core/java/com/android/server/fingerprint/FingerprintService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2016-12-14T01:53:33Z",
+      "side": 1,
+      "message": "This check should be in each client\u0027s stop() method since stop is called from multiple places in FingerprintService.",
+      "range": {
+        "startLine": 374,
+        "startChar": 16,
+        "endLine": 374,
+        "endChar": 47
+      },
+      "revId": "db0f77d1c0b28cc5faf8f3e7685021c3db708cde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
