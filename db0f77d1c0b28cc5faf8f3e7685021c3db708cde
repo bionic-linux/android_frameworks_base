@@ -22,6 +22,30 @@
       "revId": "db0f77d1c0b28cc5faf8f3e7685021c3db708cde",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ad3a349_b589200d",
+        "filename": "services/core/java/com/android/server/fingerprint/FingerprintService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1128209
+      },
+      "writtenOn": "2016-12-14T02:53:32Z",
+      "side": 1,
+      "message": "let\u0027s think about the case that cancel-\u003e auth -\u003ecancel(from startClinet)-\u003e cancel(from user) and cancel error callback(triggered from startClient) from hal send to service not yet, at this time user sends cancelAuthentication() can not be operated if check every client check mIsCanceling.",
+      "parentUuid": "da6aeb2c_dd2acbee",
+      "range": {
+        "startLine": 374,
+        "startChar": 16,
+        "endLine": 374,
+        "endChar": 47
+      },
+      "revId": "db0f77d1c0b28cc5faf8f3e7685021c3db708cde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
