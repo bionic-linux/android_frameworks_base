@@ -249,7 +249,14 @@ static void JHwBinder_native_registerService(
         return;
     }
 
-    bool ok = hardware::defaultServiceManager()->add(
+    auto manager = hardware::defaultServiceManager();
+
+    if (manager == nullptr) {
+        LOG(ERROR) << "Could not get hwservicemanager.";
+        signalExceptionForError(env, UNKNOWN_ERROR);
+    }
+
+    bool ok = manager->add(
                 interfaceChain,
                 serviceName,
                 base);
@@ -294,8 +301,15 @@ static jobject JHwBinder_native_getService(
               << serviceName
               << "'";
 
+    auto manager = hardware::defaultServiceManager();
+
+    if (manager == nullptr) {
+        LOG(ERROR) << "Could not get hwservicemanager.";
+        signalExceptionForError(env, UNKNOWN_ERROR);
+    }
+
     sp<hardware::IBinder> service;
-    hardware::defaultServiceManager()->get(
+    manager->get(
             ifaceName,
             serviceName,
             [&service](sp<hidl::base::V1_0::IBase> out) {
