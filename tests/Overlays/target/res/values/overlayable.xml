@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <overlayable category="com.android.test.overlay.target:test">
+        <item type="string" name="str" />
+        <item type="color" name="red" />
+        <item type="color" name="green" />
+        <item type="color" name="blue" />
+    </overlayable>
+</resources>
