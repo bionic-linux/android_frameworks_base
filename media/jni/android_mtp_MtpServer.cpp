@@ -56,8 +56,8 @@ static inline MtpServer* getMtpServer(JNIEnv *env, jobject thiz) {
     return (MtpServer*)env->GetLongField(thiz, field_MtpServer_nativeContext);
 }
 
-static void android_mtp_configure(JNIEnv *, jobject, jboolean usePtp) {
-    MtpServer::configure(usePtp);
+static void android_mtp_configure(JNIEnv *, jobject) {
+    MtpServer::configure();
 }
 
 static void
@@ -179,7 +179,7 @@ android_mtp_MtpServer_remove_storage(JNIEnv *env, jobject thiz, jint storageId)
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gMethods[] = {
-    {"native_configure",              "(Z)V",  (void *)android_mtp_configure},
+    {"native_configure",            "()V",  (void *)android_mtp_configure},
     {"native_setup",                "(Landroid/mtp/MtpDatabase;Z)V",
                                             (void *)android_mtp_MtpServer_setup},
     {"native_run",                  "()V",  (void *)android_mtp_MtpServer_run},
