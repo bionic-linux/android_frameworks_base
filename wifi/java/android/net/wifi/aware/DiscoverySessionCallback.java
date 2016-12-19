@@ -105,7 +105,7 @@ public class DiscoverySessionCallback {
      * @param matchFilter The filter which resulted in this service discovery.
      */
     public void onServiceDiscovered(PeerHandle peerHandle,
-            byte[] serviceSpecificInfo, List<byte[]> matchFilter) {
+            byte[] serviceSpecificInfo, byte[][] matchFilter) {
         /* empty */
     }
 

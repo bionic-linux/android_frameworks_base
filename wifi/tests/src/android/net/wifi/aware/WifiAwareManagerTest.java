@@ -293,8 +293,7 @@ public class WifiAwareManagerTest {
         ArgumentCaptor<PublishDiscoverySession> publishSession = ArgumentCaptor
                 .forClass(PublishDiscoverySession.class);
         ArgumentCaptor<PeerHandle> peerIdCaptor = ArgumentCaptor.forClass(PeerHandle.class);
-        ArgumentCaptor<List<byte[]>> matchFilterCaptor = ArgumentCaptor.forClass(
-                (Class) List.class);
+        ArgumentCaptor<byte[][]> matchFilterCaptor = ArgumentCaptor.forClass(byte[][].class);
 
         // (0) connect + success
         mDut.attach(mMockLooperHandler, configRequest, mockCallback, null);
@@ -332,11 +331,11 @@ public class WifiAwareManagerTest {
         // note: need to capture/compare elements since the Mockito eq() is a shallow comparator
         List<byte[]> parsedMatchFilter = new TlvBufferUtils.TlvIterable(0, 1, matchFilter).toList();
         collector.checkThat("match-filter-size", parsedMatchFilter.size(),
-                equalTo(matchFilterCaptor.getValue().size()));
+                equalTo(matchFilterCaptor.getValue().length));
         collector.checkThat("match-filter-entry0", parsedMatchFilter.get(0),
-                equalTo(matchFilterCaptor.getValue().get(0)));
+                equalTo(matchFilterCaptor.getValue()[0]));
         collector.checkThat("match-filter-entry1", parsedMatchFilter.get(1),
-                equalTo(matchFilterCaptor.getValue().get(1)));
+                equalTo(matchFilterCaptor.getValue()[1]));
 
         assertEquals(peerIdCaptor.getValue().peerId, peerHandle.peerId);
         inOrder.verify(mockSessionCallback).onMessageReceived(peerIdCaptor.capture(),
@@ -474,7 +473,7 @@ public class WifiAwareManagerTest {
         inOrder.verify(mockAwareService).sendMessage(eq(clientId), eq(sessionId),
                 eq(peerHandle.peerId), eq(string1.getBytes()), eq(messageId), eq(0));
         inOrder.verify(mockSessionCallback).onServiceDiscovered(peerIdCaptor.capture(),
-                eq(string1.getBytes()), (List<byte[]>) isNull());
+                eq(string1.getBytes()), (byte[][]) isNull());
         assertEquals((peerIdCaptor.getValue()).peerId, peerHandle.peerId);
         inOrder.verify(mockSessionCallback).onMessageReceived(peerIdCaptor.capture(),
                 eq(string1.getBytes()));
@@ -681,7 +680,9 @@ public class WifiAwareManagerTest {
     public void testSubscribeConfigBuilder() {
         final String serviceName = "some_service_or_other";
         final String serviceSpecificInfo = "long arbitrary string with some info";
-        final byte[] matchFilter = { 1, 16, 1, 22 };
+        final byte[] matchFilter = { 3, 16, 23, 45, 1, 22 };
+        final byte[] matchFilter1 = { 16, 23, 45 };
+        final byte[] matchFilter2 = { 22 };
         final int subscribeType = SubscribeConfig.SUBSCRIBE_TYPE_PASSIVE;
         final int subscribeCount = 10;
         final int subscribeTtl = 15;
@@ -690,7 +691,7 @@ public class WifiAwareManagerTest {
 
         SubscribeConfig subscribeConfig = new SubscribeConfig.Builder().setServiceName(serviceName)
                 .setServiceSpecificInfo(serviceSpecificInfo.getBytes()).setMatchFilter(
-                        new TlvBufferUtils.TlvIterable(0, 1, matchFilter).toList())
+                        matchFilter1, matchFilter2)
                 .setSubscribeType(subscribeType)
                 .setSubscribeCount(subscribeCount).setTtlSec(subscribeTtl).setMatchStyle(matchStyle)
                 .setTerminateNotificationEnabled(enableTerminateNotification).build();
@@ -714,7 +715,8 @@ public class WifiAwareManagerTest {
     public void testSubscribeConfigParcel() {
         final String serviceName = "some_service_or_other";
         final String serviceSpecificInfo = "long arbitrary string with some info";
-        final byte[] matchFilter = { 1, 16, 1, 22 };
+        final byte[] matchFilter1 = { 16, 22 };
+        final byte[] matchFilter2 = { 55 };
         final int subscribeType = SubscribeConfig.SUBSCRIBE_TYPE_PASSIVE;
         final int subscribeCount = 10;
         final int subscribeTtl = 15;
@@ -723,7 +725,7 @@ public class WifiAwareManagerTest {
 
         SubscribeConfig subscribeConfig = new SubscribeConfig.Builder().setServiceName(serviceName)
                 .setServiceSpecificInfo(serviceSpecificInfo.getBytes()).setMatchFilter(
-                        new TlvBufferUtils.TlvIterable(0, 1, matchFilter).toList())
+                        matchFilter1, matchFilter2, null)
                 .setSubscribeType(subscribeType)
                 .setSubscribeCount(subscribeCount).setTtlSec(subscribeTtl).setMatchStyle(matchStyle)
                 .setTerminateNotificationEnabled(enableTerminateNotification).build();
@@ -785,7 +787,8 @@ public class WifiAwareManagerTest {
     public void testPublishConfigBuilder() {
         final String serviceName = "some_service_or_other";
         final String serviceSpecificInfo = "long arbitrary string with some info";
-        final byte[] matchFilter = { 1, 16, 1, 22 };
+        final byte[] matchFilter1 = { 16, 22 };
+        final byte[] matchFilter2 = { 55 };
         final int publishType = PublishConfig.PUBLISH_TYPE_SOLICITED;
         final int publishCount = 10;
         final int publishTtl = 15;
@@ -793,7 +796,7 @@ public class WifiAwareManagerTest {
 
         PublishConfig publishConfig = new PublishConfig.Builder().setServiceName(serviceName)
                 .setServiceSpecificInfo(serviceSpecificInfo.getBytes()).setMatchFilter(
-                        new TlvBufferUtils.TlvIterable(0, 1, matchFilter).toList())
+                        matchFilter1, matchFilter2, null)
                 .setPublishType(publishType)
                 .setPublishCount(publishCount).setTtlSec(publishTtl)
                 .setTerminateNotificationEnabled(enableTerminateNotification).build();
@@ -802,7 +805,8 @@ public class WifiAwareManagerTest {
                 equalTo(publishConfig.mServiceName));
         collector.checkThat("mServiceSpecificInfo",
                 serviceSpecificInfo.getBytes(), equalTo(publishConfig.mServiceSpecificInfo));
-        collector.checkThat("mMatchFilter", matchFilter, equalTo(publishConfig.mMatchFilter));
+        collector.checkThat("mMatchFilter", new TlvBufferUtils.TlvConstructor(0, 1).allocateAndPut(
+                matchFilter1, matchFilter2, null).getArray(), equalTo(publishConfig.mMatchFilter));
         collector.checkThat("mPublishType", publishType, equalTo(publishConfig.mPublishType));
         collector.checkThat("mPublishCount", publishCount, equalTo(publishConfig.mPublishCount));
         collector.checkThat("mTtlSec", publishTtl, equalTo(publishConfig.mTtlSec));
@@ -814,7 +818,8 @@ public class WifiAwareManagerTest {
     public void testPublishConfigParcel() {
         final String serviceName = "some_service_or_other";
         final String serviceSpecificInfo = "long arbitrary string with some info";
-        final byte[] matchFilter = { 1, 16, 1, 22 };
+        final byte[] matchFilter1 = { 16, 22 };
+        final byte[] matchFilter2 = { 55 };
         final int publishType = PublishConfig.PUBLISH_TYPE_SOLICITED;
         final int publishCount = 10;
         final int publishTtl = 15;
@@ -822,7 +827,7 @@ public class WifiAwareManagerTest {
 
         PublishConfig publishConfig = new PublishConfig.Builder().setServiceName(serviceName)
                 .setServiceSpecificInfo(serviceSpecificInfo.getBytes()).setMatchFilter(
-                        new TlvBufferUtils.TlvIterable(0, 1, matchFilter).toList())
+                        matchFilter1, null, matchFilter2)
                 .setPublishType(publishType)
                 .setPublishCount(publishCount).setTtlSec(publishTtl)
                 .setTerminateNotificationEnabled(enableTerminateNotification).build();
