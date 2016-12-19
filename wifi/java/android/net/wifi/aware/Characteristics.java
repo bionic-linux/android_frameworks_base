@@ -70,8 +70,8 @@ public class Characteristics implements Parcelable {
     /**
      * Returns the maximum length of byte array that can be used to specify a Aware match filter.
      * Restricts the parameters of the
-     * {@link PublishConfig.Builder#setMatchFilter(java.util.List)} and
-     * {@link SubscribeConfig.Builder#setMatchFilter(java.util.List)}.
+     * {@link PublishConfig.Builder#setMatchFilter(byte[][])} and
+     * {@link SubscribeConfig.Builder#setMatchFilter(byte[][])}.
      *
      * @return A positive integer, maximum legngth of byte array for Aware discovery match filter.
      */

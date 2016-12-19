@@ -114,23 +114,23 @@ public class TlvBufferUtils {
 
         /**
          * Creates a TLV array (of the previously specified Type and Length sizes) from the input
-         * list. Allocates an array matching the contents (and required Type and Length
+         * varargs. Allocates an array matching the contents (and required Type and Length
          * fields), copies the contents, and set the Length fields. The Type field is set to 0.
          *
-         * @param list A list of fields to be added to the TLV buffer.
+         * @param entries A variable length set of entries to be added to the TLV buffer.
          * @return The constructor of the TLV.
          */
-        public TlvConstructor allocateAndPut(@Nullable List<byte[]> list) {
-            if (list != null) {
+        public TlvConstructor allocateAndPut(byte[]... entries) {
+            if (entries != null) {
                 int size = 0;
-                for (byte[] field : list) {
+                for (byte[] field : entries) {
                     size += mTypeSize + mLengthSize;
                     if (field != null) {
                         size += field.length;
                     }
                 }
                 allocate(size);
-                for (byte[] field : list) {
+                for (byte[] field : entries) {
                     putByteArray(0, field);
                 }
             }
@@ -481,15 +481,15 @@ public class TlvBufferUtils {
         }
 
         /**
-         * Returns a List with the raw contents (no types) of the iterator.
+         * Returns a byte[][] with the individual elements (no types) of the iterator.
          */
-        public List<byte[]> toList() {
+        public byte[][] toArray() {
             List<byte[]> list = new ArrayList<>();
             for (TlvElement tlv : this) {
                 list.add(Arrays.copyOfRange(tlv.refArray, tlv.offset, tlv.offset + tlv.length));
             }
 
-            return list;
+            return list.toArray(new byte[0][]);
         }
 
         /**

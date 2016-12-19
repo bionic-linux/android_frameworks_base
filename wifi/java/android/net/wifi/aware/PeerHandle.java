@@ -18,7 +18,7 @@ package android.net.wifi.aware;
 
 /**
  * Opaque object used to represent a Wi-Fi Aware peer. Obtained from discovery sessions in
- * {@link DiscoverySessionCallback#onServiceDiscovered(PeerHandle, byte[], java.util.List)}, used
+ * {@link DiscoverySessionCallback#onServiceDiscovered(PeerHandle, byte[], byte[][])}, used
  * when sending messages e,g, {@link PublishDiscoverySession#sendMessage(PeerHandle, int, byte[])},
  * or when configuring a network link to a peer, e.g.
  * {@link PublishDiscoverySession#createNetworkSpecifier(PeerHandle, byte[])}.

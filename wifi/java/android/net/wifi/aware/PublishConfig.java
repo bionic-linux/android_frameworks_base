@@ -28,7 +28,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Defines the configuration of a Aware publish session. Built using
@@ -285,15 +284,15 @@ public final class PublishConfig implements Parcelable {
          * <p>
          *     Optional. Empty by default.
          *
-         * @param matchFilter A list of match filter entries (each of which is an arbitrary byte
-         *                    array).
+         * @param matchFilterEntries Any number of of match filter entries. Individual entries may
+         *                           be null.
          *
          * @return The builder to facilitate chaining
          *         {@code builder.setXXX(..).setXXX(..)}.
          */
-        public Builder setMatchFilter(@Nullable List<byte[]> matchFilter) {
+        public Builder setMatchFilter(byte[]... matchFilterEntries) {
             mMatchFilter = new TlvBufferUtils.TlvConstructor(0, 1).allocateAndPut(
-                    matchFilter).getArray();
+                    matchFilterEntries).getArray();
             return this;
         }
 

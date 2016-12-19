@@ -18,8 +18,6 @@ package android.net.wifi.aware;
 
 import android.annotation.NonNull;
 
-import java.util.List;
-
 /**
  * Base class for Aware session events callbacks. Should be extended by
  * applications wanting notifications. The callbacks are set when a
@@ -105,7 +103,7 @@ public class DiscoverySessionCallback {
      * @param matchFilter The filter which resulted in this service discovery.
      */
     public void onServiceDiscovered(PeerHandle peerHandle,
-            byte[] serviceSpecificInfo, List<byte[]> matchFilter) {
+            byte[] serviceSpecificInfo, byte[][] matchFilter) {
         /* empty */
     }
 
