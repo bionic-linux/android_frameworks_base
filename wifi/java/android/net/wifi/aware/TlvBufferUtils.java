@@ -138,6 +138,31 @@ public class TlvBufferUtils {
         }
 
         /**
+         * Creates a TLV array (of the previously specified Type and Length sizes) from the input
+         * varargs. Allocates an array matching the contents (and required Type and Length
+         * fields), copies the contents, and set the Length fields. The Type field is set to 0.
+         *
+         * @param entries A variable length set of entries to be added to the TLV buffer.
+         * @return The constructor of the TLV.
+         */
+        public TlvConstructor allocateAndPut(byte[]... entries) {
+            if (entries != null) {
+                int size = 0;
+                for (byte[] field : entries) {
+                    size += mTypeSize + mLengthSize;
+                    if (field != null) {
+                        size += field.length;
+                    }
+                }
+                allocate(size);
+                for (byte[] field : entries) {
+                    putByteArray(0, field);
+                }
+            }
+            return this;
+        }
+
+        /**
          * Copies a byte into the TLV with the indicated type. For an LV
          * formatted structure (i.e. typeLength=0 in {@link TlvConstructor
          * TlvConstructor(int, int)} ) the type field is ignored.
@@ -481,7 +506,7 @@ public class TlvBufferUtils {
         }
 
         /**
-         * Returns a List with the raw contents (no types) of the iterator.
+         * Returns a List with the individual elements (no types) of the iterator.
          */
         public List<byte[]> toList() {
             List<byte[]> list = new ArrayList<>();
@@ -490,6 +515,18 @@ public class TlvBufferUtils {
             }
 
             return list;
+        }
+
+        /**
+         * Returns a byte[][] with the individual elements (no types) of the iterator.
+         */
+        public byte[][] toArray() {
+            List<byte[]> list = new ArrayList<>();
+            for (TlvElement tlv : this) {
+                list.add(Arrays.copyOfRange(tlv.refArray, tlv.offset, tlv.offset + tlv.length));
+            }
+
+            return list.toArray(new byte[0][]);
         }
 
         /**

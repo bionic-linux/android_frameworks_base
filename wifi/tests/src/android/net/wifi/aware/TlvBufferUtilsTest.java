@@ -97,6 +97,29 @@ public class TlvBufferUtilsTest {
     }
 
     /**
+     * Verify that can build a valid TLV from a varargs of byte[].
+     */
+    @Test
+    public void testTlvVarargsOperations() {
+        byte[] entry1 = { 1, 2, 3 };
+        byte[] entry2 = { 4, 5 };
+        byte[] entry3 = new byte[0];
+
+        TlvBufferUtils.TlvConstructor tlv01 = new TlvBufferUtils.TlvConstructor(0, 1);
+        tlv01.allocateAndPut(entry1, entry2, null, entry3);
+        byte[] tlvData = tlv01.getArray();
+        List<byte[]> parsedList = new TlvBufferUtils.TlvIterable(0, 1, tlvData).toList();
+
+        collector.checkThat("tlvData-correct-length", tlvData.length,
+                equalTo(entry1.length + 1 + entry2.length + 1 + entry3.length + 1 + 1));
+        collector.checkThat("parsedList-correct-length", parsedList.size(), equalTo(4));
+        collector.checkThat("parsedList-entry1", parsedList.get(0), equalTo(entry1));
+        collector.checkThat("parsedList-entry2", parsedList.get(1), equalTo(entry2));
+        collector.checkThat("parsedList-entry3", parsedList.get(2), equalTo(new byte[0]));
+        collector.checkThat("parsedList-entry4", parsedList.get(3), equalTo(entry3));
+    }
+
+    /**
      * Verify that can parse a (correctly formatted) byte array to a list.
      */
     @Test
