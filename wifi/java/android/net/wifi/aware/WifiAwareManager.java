@@ -47,7 +47,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.nio.BufferOverflowException;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * This class provides the primary API for managing Wi-Fi Aware operations:
@@ -877,10 +876,10 @@ public class WifiAwareManager {
                             onProxySessionTerminated(msg.arg1);
                             break;
                         case CALLBACK_MATCH: {
-                            List<byte[]> matchFilter = null;
+                            byte[][] matchFilter = null;
                             byte[] arg = msg.getData().getByteArray(MESSAGE_BUNDLE_KEY_MESSAGE2);
                             try {
-                                matchFilter = new TlvBufferUtils.TlvIterable(0, 1, arg).toList();
+                                matchFilter = new TlvBufferUtils.TlvIterable(0, 1, arg).toArray();
                             } catch (BufferOverflowException e) {
                                 matchFilter = null;
                                 Log.e(TAG, "onServiceDiscovered: invalid match filter byte array '"

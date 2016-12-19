@@ -21,7 +21,6 @@ import android.annotation.NonNull;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.List;
 
 /**
  * Base class for Aware session events callbacks. Should be extended by
@@ -134,7 +133,7 @@ public class WifiAwareDiscoverySessionCallback {
      * @param matchFilter The filter which resulted in this service discovery.
      */
     public void onServiceDiscovered(WifiAwareManager.PeerHandle peerHandle,
-            byte[] serviceSpecificInfo, List<byte[]> matchFilter) {
+            byte[] serviceSpecificInfo, byte[][] matchFilter) {
         /* empty */
     }
 
