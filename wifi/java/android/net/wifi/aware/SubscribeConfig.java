@@ -331,6 +331,22 @@ public final class SubscribeConfig implements Parcelable {
         }
 
         /**
+         * The match filter for a subscribe session. Used to determine whether a service
+         * discovery occurred - in addition to relying on the service name.
+         * <p>
+         *     Optional. Empty by default.
+         *
+         * @param matchFilters Any number of of match filter entries. Individual entries may be
+         *                     null.
+         *
+         * @return The builder to facilitate chaining
+         *         {@code builder.setXXX(..).setXXX(..)}.
+         */
+        public Builder setMatchFilter(byte[]... matchFilters) {
+            return setMatchFilter(Arrays.asList(matchFilters));
+        }
+
+        /**
          * Sets the type of the subscribe session: active (subscribe packets are
          * transmitted over-the-air), or passive (no subscribe packets are
          * transmitted, a match is made against a solicited/active publish
