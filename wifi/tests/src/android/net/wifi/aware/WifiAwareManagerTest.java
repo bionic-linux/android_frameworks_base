@@ -685,7 +685,9 @@ public class WifiAwareManagerTest {
     public void testSubscribeConfigBuilder() {
         final String serviceName = "some_service_or_other";
         final String serviceSpecificInfo = "long arbitrary string with some info";
-        final byte[] matchFilter = { 1, 16, 1, 22 };
+        final byte[] matchFilter = { 3, 16, 23, 45, 1, 22 };
+        final byte[] matchFilter1 = { 16, 23, 45 };
+        final byte[] matchFilter2 = { 22 };
         final int subscribeType = SubscribeConfig.SUBSCRIBE_TYPE_PASSIVE;
         final int subscribeCount = 10;
         final int subscribeTtl = 15;
@@ -694,7 +696,7 @@ public class WifiAwareManagerTest {
 
         SubscribeConfig subscribeConfig = new SubscribeConfig.Builder().setServiceName(serviceName)
                 .setServiceSpecificInfo(serviceSpecificInfo.getBytes()).setMatchFilter(
-                        new TlvBufferUtils.TlvIterable(0, 1, matchFilter).toList())
+                        matchFilter1, matchFilter2)
                 .setSubscribeType(subscribeType)
                 .setSubscribeCount(subscribeCount).setTtlSec(subscribeTtl).setMatchStyle(matchStyle)
                 .setTerminateNotificationEnabled(enableTerminateNotification).build();

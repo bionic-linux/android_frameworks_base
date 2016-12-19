@@ -298,6 +298,22 @@ public final class PublishConfig implements Parcelable {
         }
 
         /**
+         * The match filter for a publish session. Used to determine whether a service
+         * discovery occurred - in addition to relying on the service name.
+         * <p>
+         *     Optional. Empty by default.
+         *
+         * @param matchFilters Any number of of match filter entries. Individual entries may be
+         *                     null.
+         *
+         * @return The builder to facilitate chaining
+         *         {@code builder.setXXX(..).setXXX(..)}.
+         */
+        public Builder setMatchFilter(byte[]... matchFilters) {
+            return setMatchFilter(Arrays.asList(matchFilters));
+        }
+
+        /**
          * Specify the type of the publish session: solicited (aka active - publish
          * packets are transmitted over-the-air), or unsolicited (aka passive -
          * no publish packets are transmitted, a match is made against an active
