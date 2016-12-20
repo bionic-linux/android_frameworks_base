@@ -58,6 +58,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -219,14 +220,18 @@ final class DefaultPermissionGrantPolicy {
     private void grantPermissionsToSysComponentsAndPrivApps(int userId) {
         Log.i(TAG, "Granting permissions to platform components for user " + userId);
 
+        Collection<PackageParser.Package> allPackage = null;
         synchronized (mService.mPackages) {
-            for (PackageParser.Package pkg : mService.mPackages.values()) {
+            allPackage = mService.mPackages.values();
+        }
+        for (PackageParser.Package pkg : allPackage) {
+            Set<String> permissions = new ArraySet<>();
+            synchronized (mService.mPackages) {
                 if (!isSysComponentOrPersistentPlatformSignedPrivAppLPr(pkg)
                         || !doesPackageSupportRuntimePermissions(pkg)
                         || pkg.requestedPermissions.isEmpty()) {
                     continue;
                 }
-                Set<String> permissions = new ArraySet<>();
                 final int permissionCount = pkg.requestedPermissions.size();
                 for (int i = 0; i < permissionCount; i++) {
                     String permission = pkg.requestedPermissions.get(i);
@@ -235,9 +240,9 @@ final class DefaultPermissionGrantPolicy {
                         permissions.add(permission);
                     }
                 }
-                if (!permissions.isEmpty()) {
-                    grantRuntimePermissionsLPw(pkg, permissions, true, userId);
-                }
+            }
+            if (!permissions.isEmpty()) {
+                grantRuntimePermissionsLPw(pkg, permissions, true, userId);
             }
         }
     }
@@ -276,257 +281,335 @@ final class DefaultPermissionGrantPolicy {
         String[] calendarSyncAdapterPackages = (syncAdapterPackagesProvider != null) ?
                 syncAdapterPackagesProvider.getPackages(CalendarContract.AUTHORITY, userId) : null;
 
+        PackageParser.Package installerPackage = null;
         synchronized (mService.mPackages) {
             // Installer
-            PackageParser.Package installerPackage = getSystemPackageLPr(
+            installerPackage = getSystemPackageLPr(
                     mService.mRequiredInstallerPackage);
-            if (installerPackage != null
-                    && doesPackageSupportRuntimePermissions(installerPackage)) {
-                grantRuntimePermissionsLPw(installerPackage, STORAGE_PERMISSIONS, true, userId);
-            }
+        }
+        if (installerPackage != null
+                && doesPackageSupportRuntimePermissions(installerPackage)) {
+            grantRuntimePermissionsLPw(installerPackage, STORAGE_PERMISSIONS, true, userId);
+        }
 
+        PackageParser.Package verifierPackage = null;
+        synchronized (mService.mPackages) {
             // Verifier
-            PackageParser.Package verifierPackage = getSystemPackageLPr(
+            verifierPackage = getSystemPackageLPr(
                     mService.mRequiredVerifierPackage);
-            if (verifierPackage != null
-                    && doesPackageSupportRuntimePermissions(verifierPackage)) {
-                grantRuntimePermissionsLPw(verifierPackage, STORAGE_PERMISSIONS, true, userId);
-                grantRuntimePermissionsLPw(verifierPackage, PHONE_PERMISSIONS, false, userId);
-                grantRuntimePermissionsLPw(verifierPackage, SMS_PERMISSIONS, false, userId);
-            }
+        }
+        if (verifierPackage != null
+                && doesPackageSupportRuntimePermissions(verifierPackage)) {
+            grantRuntimePermissionsLPw(verifierPackage, STORAGE_PERMISSIONS, true, userId);
+            grantRuntimePermissionsLPw(verifierPackage, PHONE_PERMISSIONS, false, userId);
+            grantRuntimePermissionsLPw(verifierPackage, SMS_PERMISSIONS, false, userId);
+        }
 
+        PackageParser.Package setupPackage = null;
+        synchronized (mService.mPackages) {
             // SetupWizard
-            PackageParser.Package setupPackage = getSystemPackageLPr(
+            setupPackage = getSystemPackageLPr(
                     mService.mSetupWizardPackage);
-            if (setupPackage != null
-                    && doesPackageSupportRuntimePermissions(setupPackage)) {
-                grantRuntimePermissionsLPw(setupPackage, PHONE_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(setupPackage, CONTACTS_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(setupPackage, LOCATION_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(setupPackage, CAMERA_PERMISSIONS, userId);
-            }
+        }
+        if (setupPackage != null
+                && doesPackageSupportRuntimePermissions(setupPackage)) {
+            grantRuntimePermissionsLPw(setupPackage, PHONE_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(setupPackage, CONTACTS_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(setupPackage, LOCATION_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(setupPackage, CAMERA_PERMISSIONS, userId);
+        }
 
-            // Camera
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            PackageParser.Package cameraPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // Camera
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        PackageParser.Package cameraPackage = null;
+        synchronized (mService.mPackages) {
+            cameraPackage = getDefaultSystemHandlerActivityPackageLPr(
                     cameraIntent, userId);
-            if (cameraPackage != null
-                    && doesPackageSupportRuntimePermissions(cameraPackage)) {
-                grantRuntimePermissionsLPw(cameraPackage, CAMERA_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(cameraPackage, MICROPHONE_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(cameraPackage, STORAGE_PERMISSIONS, userId);
-            }
+        }
+        if (cameraPackage != null
+                && doesPackageSupportRuntimePermissions(cameraPackage)) {
+            grantRuntimePermissionsLPw(cameraPackage, CAMERA_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(cameraPackage, MICROPHONE_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(cameraPackage, STORAGE_PERMISSIONS, userId);
+        }
 
+        PackageParser.Package mediaStorePackage = null;
+        synchronized (mService.mPackages) {
             // Media provider
-            PackageParser.Package mediaStorePackage = getDefaultProviderAuthorityPackageLPr(
+            mediaStorePackage = getDefaultProviderAuthorityPackageLPr(
                     MediaStore.AUTHORITY, userId);
-            if (mediaStorePackage != null) {
-                grantRuntimePermissionsLPw(mediaStorePackage, STORAGE_PERMISSIONS, true, userId);
-            }
+        }
+        if (mediaStorePackage != null) {
+            grantRuntimePermissionsLPw(mediaStorePackage, STORAGE_PERMISSIONS, true, userId);
+        }
 
+        PackageParser.Package downloadsPackage = null;
+        synchronized (mService.mPackages) {
             // Downloads provider
-            PackageParser.Package downloadsPackage = getDefaultProviderAuthorityPackageLPr(
+            downloadsPackage = getDefaultProviderAuthorityPackageLPr(
                     "downloads", userId);
-            if (downloadsPackage != null) {
-                grantRuntimePermissionsLPw(downloadsPackage, STORAGE_PERMISSIONS, true, userId);
-            }
+        }
+        if (downloadsPackage != null) {
+            grantRuntimePermissionsLPw(downloadsPackage, STORAGE_PERMISSIONS, true, userId);
+        }
 
-            // Downloads UI
-            Intent downloadsUiIntent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
-            PackageParser.Package downloadsUiPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // Downloads UI
+        Intent downloadsUiIntent = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);
+        PackageParser.Package downloadsUiPackage;
+        synchronized (mService.mPackages) {
+            downloadsUiPackage = getDefaultSystemHandlerActivityPackageLPr(
                     downloadsUiIntent, userId);
-            if (downloadsUiPackage != null
-                    && doesPackageSupportRuntimePermissions(downloadsUiPackage)) {
-                grantRuntimePermissionsLPw(downloadsUiPackage, STORAGE_PERMISSIONS, true, userId);
-            }
+        }
+        if (downloadsUiPackage != null
+                && doesPackageSupportRuntimePermissions(downloadsUiPackage)) {
+            grantRuntimePermissionsLPw(downloadsUiPackage, STORAGE_PERMISSIONS, true, userId);
+        }
 
+        PackageParser.Package storagePackage = null;
+        synchronized (mService.mPackages) {
             // Storage provider
-            PackageParser.Package storagePackage = getDefaultProviderAuthorityPackageLPr(
+            storagePackage = getDefaultProviderAuthorityPackageLPr(
                     "com.android.externalstorage.documents", userId);
-            if (storagePackage != null) {
-                grantRuntimePermissionsLPw(storagePackage, STORAGE_PERMISSIONS, true, userId);
-            }
+        }
+        if (storagePackage != null) {
+            grantRuntimePermissionsLPw(storagePackage, STORAGE_PERMISSIONS, true, userId);
+        }
 
-            // CertInstaller
-            Intent certInstallerIntent = new Intent(Credentials.INSTALL_ACTION);
-            PackageParser.Package certInstallerPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // CertInstaller
+        Intent certInstallerIntent = new Intent(Credentials.INSTALL_ACTION);
+        PackageParser.Package certInstallerPackage = null;
+        synchronized (mService.mPackages) {
+            certInstallerPackage = getDefaultSystemHandlerActivityPackageLPr(
                     certInstallerIntent, userId);
-            if (certInstallerPackage != null
-                    && doesPackageSupportRuntimePermissions(certInstallerPackage)) {
-                grantRuntimePermissionsLPw(certInstallerPackage, STORAGE_PERMISSIONS, true, userId);
-            }
+        }
+        if (certInstallerPackage != null
+                && doesPackageSupportRuntimePermissions(certInstallerPackage)) {
+            grantRuntimePermissionsLPw(certInstallerPackage, STORAGE_PERMISSIONS, true, userId);
+        }
 
-            // Dialer
-            if (dialerAppPackageNames == null) {
-                Intent dialerIntent = new Intent(Intent.ACTION_DIAL);
-                PackageParser.Package dialerPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // Dialer
+        if (dialerAppPackageNames == null) {
+            Intent dialerIntent = new Intent(Intent.ACTION_DIAL);
+            PackageParser.Package dialerPackage = null;
+            synchronized (mService.mPackages) {
+                dialerPackage = getDefaultSystemHandlerActivityPackageLPr(
                         dialerIntent, userId);
+            }
+            if (dialerPackage != null) {
+                grantDefaultPermissionsToDefaultSystemDialerAppLPr(dialerPackage, userId);
+            }
+        } else {
+            for (String dialerAppPackageName : dialerAppPackageNames) {
+                PackageParser.Package dialerPackage = null;
+                synchronized (mService.mPackages) {
+                    dialerPackage = getSystemPackageLPr(dialerAppPackageName);
+                }
                 if (dialerPackage != null) {
                     grantDefaultPermissionsToDefaultSystemDialerAppLPr(dialerPackage, userId);
                 }
-            } else {
-                for (String dialerAppPackageName : dialerAppPackageNames) {
-                    PackageParser.Package dialerPackage = getSystemPackageLPr(dialerAppPackageName);
-                    if (dialerPackage != null) {
-                        grantDefaultPermissionsToDefaultSystemDialerAppLPr(dialerPackage, userId);
-                    }
-                }
             }
+        }
 
-            // Sim call manager
-            if (simCallManagerPackageNames != null) {
-                for (String simCallManagerPackageName : simCallManagerPackageNames) {
-                    PackageParser.Package simCallManagerPackage =
+        // Sim call manager
+        if (simCallManagerPackageNames != null) {
+            for (String simCallManagerPackageName : simCallManagerPackageNames) {
+                PackageParser.Package simCallManagerPackage = null;
+                synchronized (mService.mPackages) {
+                    simCallManagerPackage =
                             getSystemPackageLPr(simCallManagerPackageName);
-                    if (simCallManagerPackage != null) {
-                        grantDefaultPermissionsToDefaultSimCallManagerLPr(simCallManagerPackage,
-                                userId);
-                    }
+                }
+                if (simCallManagerPackage != null) {
+                    grantDefaultPermissionsToDefaultSimCallManagerLPr(simCallManagerPackage,
+                            userId);
                 }
             }
+        }
 
-            // SMS
-            if (smsAppPackageNames == null) {
-                Intent smsIntent = new Intent(Intent.ACTION_MAIN);
-                smsIntent.addCategory(Intent.CATEGORY_APP_MESSAGING);
-                PackageParser.Package smsPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // SMS
+        if (smsAppPackageNames == null) {
+            Intent smsIntent = new Intent(Intent.ACTION_MAIN);
+            smsIntent.addCategory(Intent.CATEGORY_APP_MESSAGING);
+            PackageParser.Package smsPackage = null;
+            synchronized (mService.mPackages) {
+                smsPackage = getDefaultSystemHandlerActivityPackageLPr(
                         smsIntent, userId);
+            }
+            if (smsPackage != null) {
+                grantDefaultPermissionsToDefaultSystemSmsAppLPr(smsPackage, userId);
+            }
+        } else {
+            for (String smsPackageName : smsAppPackageNames) {
+                PackageParser.Package smsPackage = null;
+                synchronized (mService.mPackages) {
+                    smsPackage = getSystemPackageLPr(smsPackageName);
+                }
                 if (smsPackage != null) {
-                   grantDefaultPermissionsToDefaultSystemSmsAppLPr(smsPackage, userId);
-                }
-            } else {
-                for (String smsPackageName : smsAppPackageNames) {
-                    PackageParser.Package smsPackage = getSystemPackageLPr(smsPackageName);
-                    if (smsPackage != null) {
-                        grantDefaultPermissionsToDefaultSystemSmsAppLPr(smsPackage, userId);
-                    }
+                    grantDefaultPermissionsToDefaultSystemSmsAppLPr(smsPackage, userId);
                 }
             }
+        }
 
-            // Cell Broadcast Receiver
-            Intent cbrIntent = new Intent(Intents.SMS_CB_RECEIVED_ACTION);
-            PackageParser.Package cbrPackage =
+        // Cell Broadcast Receiver
+        Intent cbrIntent = new Intent(Intents.SMS_CB_RECEIVED_ACTION);
+        PackageParser.Package cbrPackage = null;
+        synchronized (mService.mPackages) {
+            cbrPackage =
                     getDefaultSystemHandlerActivityPackageLPr(cbrIntent, userId);
-            if (cbrPackage != null && doesPackageSupportRuntimePermissions(cbrPackage)) {
-                grantRuntimePermissionsLPw(cbrPackage, SMS_PERMISSIONS, userId);
-            }
+        }
+        if (cbrPackage != null && doesPackageSupportRuntimePermissions(cbrPackage)) {
+            grantRuntimePermissionsLPw(cbrPackage, SMS_PERMISSIONS, userId);
+        }
 
-            // Carrier Provisioning Service
-            Intent carrierProvIntent = new Intent(Intents.SMS_CARRIER_PROVISION_ACTION);
-            PackageParser.Package carrierProvPackage =
+        // Carrier Provisioning Service
+        Intent carrierProvIntent = new Intent(Intents.SMS_CARRIER_PROVISION_ACTION);
+        PackageParser.Package carrierProvPackage = null;
+        synchronized (mService.mPackages) {
+            carrierProvPackage =
                     getDefaultSystemHandlerServicePackageLPr(carrierProvIntent, userId);
-            if (carrierProvPackage != null && doesPackageSupportRuntimePermissions(carrierProvPackage)) {
-                grantRuntimePermissionsLPw(carrierProvPackage, SMS_PERMISSIONS, false, userId);
-            }
+        }
+        if (carrierProvPackage != null && doesPackageSupportRuntimePermissions(carrierProvPackage)) {
+            grantRuntimePermissionsLPw(carrierProvPackage, SMS_PERMISSIONS, false, userId);
+        }
 
-            // Calendar
-            Intent calendarIntent = new Intent(Intent.ACTION_MAIN);
-            calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR);
-            PackageParser.Package calendarPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // Calendar
+        Intent calendarIntent = new Intent(Intent.ACTION_MAIN);
+        calendarIntent.addCategory(Intent.CATEGORY_APP_CALENDAR);
+        PackageParser.Package calendarPackage = null;
+        synchronized (mService.mPackages) {
+            calendarPackage = getDefaultSystemHandlerActivityPackageLPr(
                     calendarIntent, userId);
-            if (calendarPackage != null
-                    && doesPackageSupportRuntimePermissions(calendarPackage)) {
-                grantRuntimePermissionsLPw(calendarPackage, CALENDAR_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(calendarPackage, CONTACTS_PERMISSIONS, userId);
-            }
+        }
+        if (calendarPackage != null
+                && doesPackageSupportRuntimePermissions(calendarPackage)) {
+            grantRuntimePermissionsLPw(calendarPackage, CALENDAR_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(calendarPackage, CONTACTS_PERMISSIONS, userId);
+        }
 
-            // Calendar provider
-            PackageParser.Package calendarProviderPackage = getDefaultProviderAuthorityPackageLPr(
+        // Calendar provider
+        PackageParser.Package calendarProviderPackage = null;
+        synchronized (mService.mPackages) {
+            calendarProviderPackage = getDefaultProviderAuthorityPackageLPr(
                     CalendarContract.AUTHORITY, userId);
-            if (calendarProviderPackage != null) {
-                grantRuntimePermissionsLPw(calendarProviderPackage, CONTACTS_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(calendarProviderPackage, CALENDAR_PERMISSIONS,
-                        true, userId);
-                grantRuntimePermissionsLPw(calendarProviderPackage, STORAGE_PERMISSIONS, userId);
-            }
+        }
+        if (calendarProviderPackage != null) {
+            grantRuntimePermissionsLPw(calendarProviderPackage, CONTACTS_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(calendarProviderPackage, CALENDAR_PERMISSIONS,
+                    true, userId);
+            grantRuntimePermissionsLPw(calendarProviderPackage, STORAGE_PERMISSIONS, userId);
+        }
 
-            // Calendar provider sync adapters
-            List<PackageParser.Package> calendarSyncAdapters = getHeadlessSyncAdapterPackagesLPr(
+        // Calendar provider sync adapters
+        List<PackageParser.Package> calendarSyncAdapters;
+        synchronized (mService.mPackages) {
+            calendarSyncAdapters = getHeadlessSyncAdapterPackagesLPr(
                     calendarSyncAdapterPackages, userId);
-            final int calendarSyncAdapterCount = calendarSyncAdapters.size();
-            for (int i = 0; i < calendarSyncAdapterCount; i++) {
-                PackageParser.Package calendarSyncAdapter = calendarSyncAdapters.get(i);
-                if (doesPackageSupportRuntimePermissions(calendarSyncAdapter)) {
-                    grantRuntimePermissionsLPw(calendarSyncAdapter, CALENDAR_PERMISSIONS, userId);
-                }
+        }
+        final int calendarSyncAdapterCount = calendarSyncAdapters.size();
+        for (int i = 0; i < calendarSyncAdapterCount; i++) {
+            PackageParser.Package calendarSyncAdapter = calendarSyncAdapters.get(i);
+            if (doesPackageSupportRuntimePermissions(calendarSyncAdapter)) {
+                grantRuntimePermissionsLPw(calendarSyncAdapter, CALENDAR_PERMISSIONS, userId);
             }
+        }
 
-            // Contacts
-            Intent contactsIntent = new Intent(Intent.ACTION_MAIN);
-            contactsIntent.addCategory(Intent.CATEGORY_APP_CONTACTS);
-            PackageParser.Package contactsPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // Contacts
+        Intent contactsIntent = new Intent(Intent.ACTION_MAIN);
+        contactsIntent.addCategory(Intent.CATEGORY_APP_CONTACTS);
+        PackageParser.Package contactsPackage = null;
+        synchronized (mService.mPackages) {
+            contactsPackage = getDefaultSystemHandlerActivityPackageLPr(
                     contactsIntent, userId);
-            if (contactsPackage != null
-                    && doesPackageSupportRuntimePermissions(contactsPackage)) {
-                grantRuntimePermissionsLPw(contactsPackage, CONTACTS_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(contactsPackage, PHONE_PERMISSIONS, userId);
-            }
+        }
+        if (contactsPackage != null
+                && doesPackageSupportRuntimePermissions(contactsPackage)) {
+            grantRuntimePermissionsLPw(contactsPackage, CONTACTS_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(contactsPackage, PHONE_PERMISSIONS, userId);
+        }
 
-            // Contacts provider sync adapters
-            List<PackageParser.Package> contactsSyncAdapters = getHeadlessSyncAdapterPackagesLPr(
+        // Contacts provider sync adapters
+        List<PackageParser.Package> contactsSyncAdapters;
+        synchronized (mService.mPackages) {
+            contactsSyncAdapters = getHeadlessSyncAdapterPackagesLPr(
                     contactsSyncAdapterPackages, userId);
-            final int contactsSyncAdapterCount = contactsSyncAdapters.size();
-            for (int i = 0; i < contactsSyncAdapterCount; i++) {
-                PackageParser.Package contactsSyncAdapter = contactsSyncAdapters.get(i);
-                if (doesPackageSupportRuntimePermissions(contactsSyncAdapter)) {
-                    grantRuntimePermissionsLPw(contactsSyncAdapter, CONTACTS_PERMISSIONS, userId);
-                }
+        }
+        final int contactsSyncAdapterCount = contactsSyncAdapters.size();
+        for (int i = 0; i < contactsSyncAdapterCount; i++) {
+            PackageParser.Package contactsSyncAdapter = contactsSyncAdapters.get(i);
+            if (doesPackageSupportRuntimePermissions(contactsSyncAdapter)) {
+                grantRuntimePermissionsLPw(contactsSyncAdapter, CONTACTS_PERMISSIONS, userId);
             }
+        }
 
-            // Contacts provider
-            PackageParser.Package contactsProviderPackage = getDefaultProviderAuthorityPackageLPr(
+        // Contacts provider
+        PackageParser.Package contactsProviderPackage = null;
+        synchronized (mService.mPackages) {
+            contactsProviderPackage = getDefaultProviderAuthorityPackageLPr(
                     ContactsContract.AUTHORITY, userId);
-            if (contactsProviderPackage != null) {
-                grantRuntimePermissionsLPw(contactsProviderPackage, CONTACTS_PERMISSIONS,
-                        true, userId);
-                grantRuntimePermissionsLPw(contactsProviderPackage, PHONE_PERMISSIONS,
-                        true, userId);
-                grantRuntimePermissionsLPw(contactsProviderPackage, STORAGE_PERMISSIONS, userId);
-            }
+        }
+        if (contactsProviderPackage != null) {
+            grantRuntimePermissionsLPw(contactsProviderPackage, CONTACTS_PERMISSIONS,
+                    true, userId);
+            grantRuntimePermissionsLPw(contactsProviderPackage, PHONE_PERMISSIONS,
+                    true, userId);
+            grantRuntimePermissionsLPw(contactsProviderPackage, STORAGE_PERMISSIONS, userId);
+        }
 
-            // Device provisioning
-            Intent deviceProvisionIntent = new Intent(
-                    DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE);
-            PackageParser.Package deviceProvisionPackage =
+        // Device provisioning
+        Intent deviceProvisionIntent = new Intent(
+                DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE);
+        PackageParser.Package deviceProvisionPackage = null;
+        synchronized (mService.mPackages) {
+            deviceProvisionPackage =
                     getDefaultSystemHandlerActivityPackageLPr(deviceProvisionIntent, userId);
-            if (deviceProvisionPackage != null
-                    && doesPackageSupportRuntimePermissions(deviceProvisionPackage)) {
-                grantRuntimePermissionsLPw(deviceProvisionPackage, CONTACTS_PERMISSIONS, userId);
-            }
+        }
+        if (deviceProvisionPackage != null
+                && doesPackageSupportRuntimePermissions(deviceProvisionPackage)) {
+            grantRuntimePermissionsLPw(deviceProvisionPackage, CONTACTS_PERMISSIONS, userId);
+        }
 
-            // Maps
-            Intent mapsIntent = new Intent(Intent.ACTION_MAIN);
-            mapsIntent.addCategory(Intent.CATEGORY_APP_MAPS);
-            PackageParser.Package mapsPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // Maps
+        Intent mapsIntent = new Intent(Intent.ACTION_MAIN);
+        mapsIntent.addCategory(Intent.CATEGORY_APP_MAPS);
+        PackageParser.Package mapsPackage = null;
+        synchronized (mService.mPackages) {
+            mapsPackage = getDefaultSystemHandlerActivityPackageLPr(
                     mapsIntent, userId);
-            if (mapsPackage != null
-                    && doesPackageSupportRuntimePermissions(mapsPackage)) {
-                grantRuntimePermissionsLPw(mapsPackage, LOCATION_PERMISSIONS, userId);
-            }
+        }
+        if (mapsPackage != null
+                && doesPackageSupportRuntimePermissions(mapsPackage)) {
+            grantRuntimePermissionsLPw(mapsPackage, LOCATION_PERMISSIONS, userId);
+        }
 
-            // Gallery
-            Intent galleryIntent = new Intent(Intent.ACTION_MAIN);
-            galleryIntent.addCategory(Intent.CATEGORY_APP_GALLERY);
-            PackageParser.Package galleryPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // Gallery
+        Intent galleryIntent = new Intent(Intent.ACTION_MAIN);
+        galleryIntent.addCategory(Intent.CATEGORY_APP_GALLERY);
+        PackageParser.Package galleryPackage = null;
+        synchronized (mService.mPackages) {
+            galleryPackage = getDefaultSystemHandlerActivityPackageLPr(
                     galleryIntent, userId);
-            if (galleryPackage != null
-                    && doesPackageSupportRuntimePermissions(galleryPackage)) {
-                grantRuntimePermissionsLPw(galleryPackage, STORAGE_PERMISSIONS, userId);
-            }
+        }
+        if (galleryPackage != null
+                && doesPackageSupportRuntimePermissions(galleryPackage)) {
+            grantRuntimePermissionsLPw(galleryPackage, STORAGE_PERMISSIONS, userId);
+        }
 
-            // Email
-            Intent emailIntent = new Intent(Intent.ACTION_MAIN);
-            emailIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
-            PackageParser.Package emailPackage = getDefaultSystemHandlerActivityPackageLPr(
+        // Email
+        Intent emailIntent = new Intent(Intent.ACTION_MAIN);
+        emailIntent.addCategory(Intent.CATEGORY_APP_EMAIL);
+        PackageParser.Package emailPackage = null;
+        synchronized (mService.mPackages) {
+            emailPackage = getDefaultSystemHandlerActivityPackageLPr(
                     emailIntent, userId);
-            if (emailPackage != null
-                    && doesPackageSupportRuntimePermissions(emailPackage)) {
-                grantRuntimePermissionsLPw(emailPackage, CONTACTS_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(emailPackage, CALENDAR_PERMISSIONS, userId);
-            }
+        }
+        if (emailPackage != null
+                && doesPackageSupportRuntimePermissions(emailPackage)) {
+            grantRuntimePermissionsLPw(emailPackage, CONTACTS_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(emailPackage, CALENDAR_PERMISSIONS, userId);
+        }
 
-            // Browser
-            PackageParser.Package browserPackage = null;
+        // Browser
+        PackageParser.Package browserPackage = null;
+        synchronized (mService.mPackages) {
             String defaultBrowserPackage = mService.getDefaultBrowserPackageName(userId);
             if (defaultBrowserPackage != null) {
                 browserPackage = getPackageLPr(defaultBrowserPackage);
@@ -537,157 +620,189 @@ final class DefaultPermissionGrantPolicy {
                 browserPackage = getDefaultSystemHandlerActivityPackageLPr(
                         browserIntent, userId);
             }
-            if (browserPackage != null
-                    && doesPackageSupportRuntimePermissions(browserPackage)) {
-                grantRuntimePermissionsLPw(browserPackage, LOCATION_PERMISSIONS, userId);
-            }
-
-            // Voice interaction
-            if (voiceInteractPackageNames != null) {
-                for (String voiceInteractPackageName : voiceInteractPackageNames) {
-                    PackageParser.Package voiceInteractPackage = getSystemPackageLPr(
-                            voiceInteractPackageName);
-                    if (voiceInteractPackage != null
-                            && doesPackageSupportRuntimePermissions(voiceInteractPackage)) {
-                        grantRuntimePermissionsLPw(voiceInteractPackage,
-                                CONTACTS_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(voiceInteractPackage,
-                                CALENDAR_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(voiceInteractPackage,
-                                MICROPHONE_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(voiceInteractPackage,
-                                PHONE_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(voiceInteractPackage,
-                                SMS_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(voiceInteractPackage,
-                                LOCATION_PERMISSIONS, userId);
-                    }
-                }
-            }
-
-            // Voice recognition
-            Intent voiceRecoIntent = new Intent("android.speech.RecognitionService");
-            voiceRecoIntent.addCategory(Intent.CATEGORY_DEFAULT);
-            PackageParser.Package voiceRecoPackage = getDefaultSystemHandlerServicePackageLPr(
-                    voiceRecoIntent, userId);
-            if (voiceRecoPackage != null
-                    && doesPackageSupportRuntimePermissions(voiceRecoPackage)) {
-                grantRuntimePermissionsLPw(voiceRecoPackage, MICROPHONE_PERMISSIONS, userId);
-            }
-
-            // Location
-            if (locationPackageNames != null) {
-                for (String packageName : locationPackageNames) {
-                    PackageParser.Package locationPackage = getSystemPackageLPr(packageName);
-                    if (locationPackage != null
-                            && doesPackageSupportRuntimePermissions(locationPackage)) {
-                        grantRuntimePermissionsLPw(locationPackage, CONTACTS_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(locationPackage, CALENDAR_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(locationPackage, MICROPHONE_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(locationPackage, PHONE_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(locationPackage, SMS_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(locationPackage, LOCATION_PERMISSIONS,
-                                true, userId);
-                        grantRuntimePermissionsLPw(locationPackage, CAMERA_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(locationPackage, SENSORS_PERMISSIONS, userId);
-                        grantRuntimePermissionsLPw(locationPackage, STORAGE_PERMISSIONS, userId);
-                    }
-                }
-            }
-
-            // Music
-            Intent musicIntent = new Intent(Intent.ACTION_VIEW);
-            musicIntent.addCategory(Intent.CATEGORY_DEFAULT);
-            musicIntent.setDataAndType(Uri.fromFile(new File("foo.mp3")),
-                    AUDIO_MIME_TYPE);
-            PackageParser.Package musicPackage = getDefaultSystemHandlerActivityPackageLPr(
-                    musicIntent, userId);
-            if (musicPackage != null
-                    && doesPackageSupportRuntimePermissions(musicPackage)) {
-                grantRuntimePermissionsLPw(musicPackage, STORAGE_PERMISSIONS, userId);
-            }
-
-            // Watches
-            if (mService.hasSystemFeature(PackageManager.FEATURE_WATCH, 0)) {
-                // Home application on watches
-                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-                homeIntent.addCategory(Intent.CATEGORY_HOME_MAIN);
-
-                PackageParser.Package wearHomePackage = getDefaultSystemHandlerActivityPackageLPr(
-                        homeIntent, userId);
-
-                if (wearHomePackage != null
-                        && doesPackageSupportRuntimePermissions(wearHomePackage)) {
-                    grantRuntimePermissionsLPw(wearHomePackage, CONTACTS_PERMISSIONS, false,
-                            userId);
-                    grantRuntimePermissionsLPw(wearHomePackage, PHONE_PERMISSIONS, true, userId);
-                    grantRuntimePermissionsLPw(wearHomePackage, MICROPHONE_PERMISSIONS, false,
-                            userId);
-                    grantRuntimePermissionsLPw(wearHomePackage, LOCATION_PERMISSIONS, false,
-                            userId);
-                }
-
-                // Twinning on watches
-                Intent twinningIntent = new Intent(ACTION_TWINNING);
-                PackageParser.Package twinningPackage = getDefaultSystemHandlerActivityPackageLPr(
-                        twinningIntent, userId);
-
-                if (twinningPackage != null
-                        && doesPackageSupportRuntimePermissions(twinningPackage)) {
-                    grantRuntimePermissionsLPw(twinningPackage, PHONE_PERMISSIONS, false, userId);
-                    grantRuntimePermissionsLPw(twinningPackage, SMS_PERMISSIONS, false, userId);
-                }
-
-                // Fitness tracking on watches
-                Intent trackIntent = new Intent(ACTION_TRACK);
-                PackageParser.Package trackPackage = getDefaultSystemHandlerActivityPackageLPr(
-                        trackIntent, userId);
-                if (trackPackage != null
-                        && doesPackageSupportRuntimePermissions(trackPackage)) {
-                    grantRuntimePermissionsLPw(trackPackage, SENSORS_PERMISSIONS, false, userId);
-                    grantRuntimePermissionsLPw(trackPackage, LOCATION_PERMISSIONS, false, userId);
-                }
-            }
-
-            // Print Spooler
-            PackageParser.Package printSpoolerPackage = getSystemPackageLPr(
-                    PrintManager.PRINT_SPOOLER_PACKAGE_NAME);
-            if (printSpoolerPackage != null
-                    && doesPackageSupportRuntimePermissions(printSpoolerPackage)) {
-                grantRuntimePermissionsLPw(printSpoolerPackage, LOCATION_PERMISSIONS, true, userId);
-            }
-
-            // EmergencyInfo
-            Intent emergencyInfoIntent = new Intent(TelephonyManager.ACTION_EMERGENCY_ASSISTANCE);
-            PackageParser.Package emergencyInfoPckg = getDefaultSystemHandlerActivityPackageLPr(
-                    emergencyInfoIntent, userId);
-            if (emergencyInfoPckg != null
-                    && doesPackageSupportRuntimePermissions(emergencyInfoPckg)) {
-                grantRuntimePermissionsLPw(emergencyInfoPckg, CONTACTS_PERMISSIONS, true, userId);
-                grantRuntimePermissionsLPw(emergencyInfoPckg, PHONE_PERMISSIONS, true, userId);
-            }
-
-            // NFC Tag viewer
-            Intent nfcTagIntent = new Intent(Intent.ACTION_VIEW);
-            nfcTagIntent.setType("vnd.android.cursor.item/ndef_msg");
-            PackageParser.Package nfcTagPkg = getDefaultSystemHandlerActivityPackageLPr(
-                    nfcTagIntent, userId);
-            if (nfcTagPkg != null
-                    && doesPackageSupportRuntimePermissions(nfcTagPkg)) {
-                grantRuntimePermissionsLPw(nfcTagPkg, CONTACTS_PERMISSIONS, false, userId);
-                grantRuntimePermissionsLPw(nfcTagPkg, PHONE_PERMISSIONS, false, userId);
-            }
-
-            // Storage Manager
-            Intent storageManagerIntent = new Intent(StorageManager.ACTION_MANAGE_STORAGE);
-            PackageParser.Package storageManagerPckg = getDefaultSystemHandlerActivityPackageLPr(
-                    storageManagerIntent, userId);
-            if (storageManagerPckg != null
-                    && doesPackageSupportRuntimePermissions(storageManagerPckg)) {
-                grantRuntimePermissionsLPw(storageManagerPckg, STORAGE_PERMISSIONS, true, userId);
-            }
-            mService.mSettings.onDefaultRuntimePermissionsGrantedLPr(userId);
         }
+        if (browserPackage != null
+                && doesPackageSupportRuntimePermissions(browserPackage)) {
+            grantRuntimePermissionsLPw(browserPackage, LOCATION_PERMISSIONS, userId);
+        }
+
+        // Voice interaction
+        if (voiceInteractPackageNames != null) {
+            for (String voiceInteractPackageName : voiceInteractPackageNames) {
+                PackageParser.Package voiceInteractPackage = null;
+                synchronized (mService.mPackages) {
+                    voiceInteractPackage = getSystemPackageLPr(
+                            voiceInteractPackageName);
+                }
+                if (voiceInteractPackage != null
+                        && doesPackageSupportRuntimePermissions(voiceInteractPackage)) {
+                    grantRuntimePermissionsLPw(voiceInteractPackage,
+                            CONTACTS_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(voiceInteractPackage,
+                            CALENDAR_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(voiceInteractPackage,
+                            MICROPHONE_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(voiceInteractPackage,
+                            PHONE_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(voiceInteractPackage,
+                            SMS_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(voiceInteractPackage,
+                            LOCATION_PERMISSIONS, userId);
+                }
+            }
+        }
+
+        // Voice recognition
+        Intent voiceRecoIntent = new Intent("android.speech.RecognitionService");
+        voiceRecoIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        PackageParser.Package voiceRecoPackage = null;
+        synchronized (mService.mPackages) {
+            voiceRecoPackage = getDefaultSystemHandlerServicePackageLPr(
+                    voiceRecoIntent, userId);
+        }
+        if (voiceRecoPackage != null
+                && doesPackageSupportRuntimePermissions(voiceRecoPackage)) {
+            grantRuntimePermissionsLPw(voiceRecoPackage, MICROPHONE_PERMISSIONS, userId);
+        }
+
+        // Location
+        if (locationPackageNames != null) {
+            for (String packageName : locationPackageNames) {
+                PackageParser.Package locationPackage = null;
+                synchronized (mService.mPackages) {
+                    locationPackage = getSystemPackageLPr(packageName);
+                }
+                if (locationPackage != null
+                        && doesPackageSupportRuntimePermissions(locationPackage)) {
+                    grantRuntimePermissionsLPw(locationPackage, CONTACTS_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(locationPackage, CALENDAR_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(locationPackage, MICROPHONE_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(locationPackage, PHONE_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(locationPackage, SMS_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(locationPackage, LOCATION_PERMISSIONS,
+                            true, userId);
+                    grantRuntimePermissionsLPw(locationPackage, CAMERA_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(locationPackage, SENSORS_PERMISSIONS, userId);
+                    grantRuntimePermissionsLPw(locationPackage, STORAGE_PERMISSIONS, userId);
+                }
+            }
+        }
+
+        // Music
+        Intent musicIntent = new Intent(Intent.ACTION_VIEW);
+        musicIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        musicIntent.setDataAndType(Uri.fromFile(new File("foo.mp3")),
+                AUDIO_MIME_TYPE);
+        PackageParser.Package musicPackage = null;
+        synchronized (mService.mPackages) {
+            musicPackage = getDefaultSystemHandlerActivityPackageLPr(
+                    musicIntent, userId);
+        }
+        if (musicPackage != null
+                && doesPackageSupportRuntimePermissions(musicPackage)) {
+            grantRuntimePermissionsLPw(musicPackage, STORAGE_PERMISSIONS, userId);
+        }
+
+        // Watches
+        if (mService.hasSystemFeature(PackageManager.FEATURE_WATCH, 0)) {
+            // Home application on watches
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory(Intent.CATEGORY_HOME_MAIN);
+            PackageParser.Package wearHomePackage = null;
+            synchronized (mService.mPackages) {
+                wearHomePackage = getDefaultSystemHandlerActivityPackageLPr(
+                        homeIntent, userId);
+            }
+
+            if (wearHomePackage != null
+                    && doesPackageSupportRuntimePermissions(wearHomePackage)) {
+                grantRuntimePermissionsLPw(wearHomePackage, CONTACTS_PERMISSIONS, false,
+                        userId);
+                grantRuntimePermissionsLPw(wearHomePackage, PHONE_PERMISSIONS, true, userId);
+                grantRuntimePermissionsLPw(wearHomePackage, MICROPHONE_PERMISSIONS, false,
+                        userId);
+                grantRuntimePermissionsLPw(wearHomePackage, LOCATION_PERMISSIONS, false,
+                        userId);
+            }
+
+            // Twinning on watches
+            Intent twinningIntent = new Intent(ACTION_TWINNING);
+            PackageParser.Package twinningPackage = null;
+            synchronized (mService.mPackages) {
+                twinningPackage = getDefaultSystemHandlerActivityPackageLPr(
+                        twinningIntent, userId);
+            }
+
+            if (twinningPackage != null
+                    && doesPackageSupportRuntimePermissions(twinningPackage)) {
+                grantRuntimePermissionsLPw(twinningPackage, PHONE_PERMISSIONS, false, userId);
+                grantRuntimePermissionsLPw(twinningPackage, SMS_PERMISSIONS, false, userId);
+            }
+
+            // Fitness tracking on watches
+            Intent trackIntent = new Intent(ACTION_TRACK);
+            PackageParser.Package trackPackage = null;
+            synchronized (mService.mPackages) {
+                trackPackage = getDefaultSystemHandlerActivityPackageLPr(
+                        trackIntent, userId);
+            }
+            if (trackPackage != null
+                    && doesPackageSupportRuntimePermissions(trackPackage)) {
+                grantRuntimePermissionsLPw(trackPackage, SENSORS_PERMISSIONS, false, userId);
+                grantRuntimePermissionsLPw(trackPackage, LOCATION_PERMISSIONS, false, userId);
+            }
+        }
+
+        // Print Spooler
+        PackageParser.Package printSpoolerPackage = null;
+        synchronized (mService.mPackages) {
+            printSpoolerPackage = getSystemPackageLPr(
+                    PrintManager.PRINT_SPOOLER_PACKAGE_NAME);
+        }
+        if (printSpoolerPackage != null
+                && doesPackageSupportRuntimePermissions(printSpoolerPackage)) {
+            grantRuntimePermissionsLPw(printSpoolerPackage, LOCATION_PERMISSIONS, true, userId);
+        }
+
+        // EmergencyInfo
+        Intent emergencyInfoIntent = new Intent(TelephonyManager.ACTION_EMERGENCY_ASSISTANCE);
+        PackageParser.Package emergencyInfoPckg = null;
+        synchronized (mService.mPackages) {
+            emergencyInfoPckg = getDefaultSystemHandlerActivityPackageLPr(
+                    emergencyInfoIntent, userId);
+        }
+        if (emergencyInfoPckg != null
+                && doesPackageSupportRuntimePermissions(emergencyInfoPckg)) {
+            grantRuntimePermissionsLPw(emergencyInfoPckg, CONTACTS_PERMISSIONS, true, userId);
+            grantRuntimePermissionsLPw(emergencyInfoPckg, PHONE_PERMISSIONS, true, userId);
+        }
+
+        // NFC Tag viewer
+        Intent nfcTagIntent = new Intent(Intent.ACTION_VIEW);
+        nfcTagIntent.setType("vnd.android.cursor.item/ndef_msg");
+        PackageParser.Package nfcTagPkg = null;
+        synchronized (mService.mPackages) {
+            nfcTagPkg = getDefaultSystemHandlerActivityPackageLPr(
+                    nfcTagIntent, userId);
+        }
+        if (nfcTagPkg != null
+                && doesPackageSupportRuntimePermissions(nfcTagPkg)) {
+            grantRuntimePermissionsLPw(nfcTagPkg, CONTACTS_PERMISSIONS, false, userId);
+            grantRuntimePermissionsLPw(nfcTagPkg, PHONE_PERMISSIONS, false, userId);
+        }
+
+        // Storage Manager
+        Intent storageManagerIntent = new Intent(StorageManager.ACTION_MANAGE_STORAGE);
+        PackageParser.Package storageManagerPckg = null;
+        synchronized (mService.mPackages) {
+            storageManagerPckg = getDefaultSystemHandlerActivityPackageLPr(
+                    storageManagerIntent, userId);
+        }
+        if (storageManagerPckg != null
+                && doesPackageSupportRuntimePermissions(storageManagerPckg)) {
+            grantRuntimePermissionsLPw(storageManagerPckg, STORAGE_PERMISSIONS, true, userId);
+        }
+        mService.mSettings.onDefaultRuntimePermissionsGrantedLPr(userId);
     }
 
     private void grantDefaultPermissionsToDefaultSystemDialerAppLPr(
