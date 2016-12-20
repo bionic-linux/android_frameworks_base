@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97d84e0a_f105c87c",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6343,
+      "author": {
+        "id": 1112683
+      },
+      "writtenOn": "2016-12-20T06:37:12Z",
+      "side": 1,
+      "message": "if after execute thread.asBinder().linkToDeath(adr, 0) in attachApplicationLocked();\nin BindDied() have change to restart persistent process.",
+      "range": {
+        "startLine": 6343,
+        "startChar": 42,
+        "endLine": 6343,
+        "endChar": 44
+      },
+      "revId": "3a6381b9b41b133daa33e4514617954087a6ec91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
