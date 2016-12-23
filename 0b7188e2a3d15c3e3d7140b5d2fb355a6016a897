@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a50a83_b9793ca4",
+        "filename": "wifi/java/android/net/wifi/aware/TlvBufferUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-23T00:51:50Z",
+      "side": 1,
+      "message": "Can we remove this overload, or is it still needed?",
+      "revId": "0b7188e2a3d15c3e3d7140b5d2fb355a6016a897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_79e8a4f6",
+        "filename": "wifi/java/android/net/wifi/aware/TlvBufferUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-23T00:51:50Z",
+      "side": 1,
+      "message": "Could we simplify to just the following?\n\n  return toList().toArray(new byte[0][])\n\n(Except for the last line, the body of this method is identical to the body of toList().)\n\n\nAlternatively: can we remove toList()?",
+      "revId": "0b7188e2a3d15c3e3d7140b5d2fb355a6016a897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
