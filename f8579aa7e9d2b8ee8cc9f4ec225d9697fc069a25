@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97368e0e_61403656",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11371,
+      "author": {
+        "id": 1014554
+      },
+      "writtenOn": "2016-12-23T17:26:05Z",
+      "side": 1,
+      "message": "mOrderResult.get(packageName)",
+      "range": {
+        "startLine": 11371,
+        "startChar": 70,
+        "endLine": 11371,
+        "endChar": 99
+      },
+      "revId": "f8579aa7e9d2b8ee8cc9f4ec225d9697fc069a25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97368e0e_c154a219",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11378,
+      "author": {
+        "id": 1014554
+      },
+      "writtenOn": "2016-12-23T17:26:05Z",
+      "side": 1,
+      "message": "mOrderResult.remove(packageName)",
+      "range": {
+        "startLine": 11378,
+        "startChar": 20,
+        "endLine": 11378,
+        "endChar": 53
+      },
+      "revId": "f8579aa7e9d2b8ee8cc9f4ec225d9697fc069a25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
