@@ -1569,7 +1569,7 @@ public class AudioService extends IAudioService.Stub {
                 (device & AudioSystem.DEVICE_OUT_ALL_A2DP) != 0 &&
                 (flags & AudioManager.FLAG_BLUETOOTH_ABS_VOLUME) == 0) {
                 synchronized (mA2dpAvrcpLock) {
-                    if (mA2dp != null && mAvrcpAbsVolSupported) {
+                    if (mA2dp != null) {
                         mA2dp.setAvrcpAbsoluteVolume(index / 10);
                     }
                 }
