@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7180671_2240b054",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-12-29T14:23:51Z",
+      "side": 1,
+      "message": "i suggest naming this FDTableWrapper",
+      "range": {
+        "startLine": 443,
+        "startChar": 6,
+        "endLine": 443,
+        "endChar": 16
+      },
+      "revId": "b5eec4018f1d5712ece8f83ff86b4933cff13064",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3726c2ad_7c9bf102",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-12-29T14:23:51Z",
+      "side": 1,
+      "message": "this will always be true when permissive \u003d true.\n\nTo me, it would be a little more readable to do :\n\nCheckFileDescriptorTable(env, bool is_invoke_with) {\n  \n  if (is_invoke_with) {\n    invoke_with_fd_table_.Reset(..::Create(true /* permissive */);\n  } else {\n    if (gOpenFdTable \u003d\u003d nullptr) {\n    } else {\n        gOpenFdTable.Restat();\n    }\n  }\n}\n\nReopenOrDetach() {\n  if (is_invoke_with) {\n    invoke_with_fd_table_-\u003eReopenOrDetach();\n  } else {\n    gOpenFdTable.ReopenOrDetach();\n  }\n}",
+      "range": {
+        "startLine": 475,
+        "startChar": 4,
+        "endLine": 475,
+        "endChar": 31
+      },
+      "revId": "b5eec4018f1d5712ece8f83ff86b4933cff13064",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
