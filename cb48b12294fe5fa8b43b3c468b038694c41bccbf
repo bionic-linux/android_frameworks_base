@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a50a83_18baaa6b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkControllerImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1043929
+      },
+      "writtenOn": "2017-01-03T19:21:44Z",
+      "side": 1,
+      "message": "how is readConfig called? if it\u0027s too early eg. before carrier config loaded, you might always get default false for always show data",
+      "range": {
+        "startLine": 858,
+        "startChar": 22,
+        "endLine": 858,
+        "endChar": 32
+      },
+      "revId": "cb48b12294fe5fa8b43b3c468b038694c41bccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_b8a1164a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1043929
+      },
+      "writtenOn": "2017-01-03T19:21:44Z",
+      "side": 1,
+      "message": "data RAT icon\n\nkey should be named similarly.",
+      "range": {
+        "startLine": 639,
+        "startChar": 34,
+        "endLine": 639,
+        "endChar": 43
+      },
+      "revId": "cb48b12294fe5fa8b43b3c468b038694c41bccbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
