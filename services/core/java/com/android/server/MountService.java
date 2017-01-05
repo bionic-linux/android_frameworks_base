@@ -2160,7 +2160,7 @@ class MountService extends IMountService.Stub
 
         int rc = StorageResultCode.OperationSucceeded;
         try {
-            mConnector.execute("asec", "create", id, sizeMb, fstype, new SensitiveArg(key),
+            mConnector.execute(3 * DateUtils.MINUTE_IN_MILLIS, "asec", "create", id, sizeMb, fstype, new SensitiveArg(key),
                     ownerUid, external ? "1" : "0");
         } catch (NativeDaemonConnectorException e) {
             rc = StorageResultCode.OperationFailedInternalError;
