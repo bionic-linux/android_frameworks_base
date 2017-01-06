@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_e02c2f60",
+        "filename": "services/core/java/com/android/server/pm/DefaultPermissionGrantPolicy.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-01-06T22:09:54Z",
+      "side": 1,
+      "message": "Can you replace this with a call to the 4 argument version:\n\n  grantRuntimePermissionsLPw(pkg, permissions, permissionGrant.fixed, userId);",
+      "revId": "33c53e9cdfd0059e1519e8b9ebf2e45405ca18bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
