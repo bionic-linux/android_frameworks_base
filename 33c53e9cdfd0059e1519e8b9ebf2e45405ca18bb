@@ -16,6 +16,24 @@
       "revId": "33c53e9cdfd0059e1519e8b9ebf2e45405ca18bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7af12f5_b2904030",
+        "filename": "services/core/java/com/android/server/pm/DefaultPermissionGrantPolicy.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1092708
+      },
+      "writtenOn": "2017-01-06T22:21:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7b632e5_e02c2f60",
+      "revId": "33c53e9cdfd0059e1519e8b9ebf2e45405ca18bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
