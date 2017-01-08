@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7b632e5_ea332506",
+        "filename": "wifi/java/android/net/wifi/aware/TlvBufferUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-08T18:37:22Z",
+      "side": 1,
+      "message": "remove all the List\u003cbyte[]\u003e methods",
+      "parentUuid": "f7a50a83_b9793ca4",
+      "revId": "0b7188e2a3d15c3e3d7140b5d2fb355a6016a897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_79e8a4f6",
         "filename": "wifi/java/android/net/wifi/aware/TlvBufferUtils.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-23T00:51:50Z",
       "side": 1,
       "message": "Could we simplify to just the following?\n\n  return toList().toArray(new byte[0][])\n\n(Except for the last line, the body of this method is identical to the body of toList().)\n\n\nAlternatively: can we remove toList()?",
+      "revId": "0b7188e2a3d15c3e3d7140b5d2fb355a6016a897",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_ca3661f9",
+        "filename": "wifi/java/android/net/wifi/aware/TlvBufferUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-08T18:37:22Z",
+      "side": 1,
+      "message": "remove all the List\u003cbyte[]\u003e methods",
+      "parentUuid": "f7a50a83_79e8a4f6",
       "revId": "0b7188e2a3d15c3e3d7140b5d2fb355a6016a897",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
