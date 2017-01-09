@@ -1472,6 +1472,24 @@ public final class SystemServer {
                     reportWtf("starting System UI", e);
                 }
 
+                //*****MakeNetworkPolicyServiceReady in background********
+                Timer tr7 = new Timer();
+                tr7.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Slog.i(TAG, "MakeNetworkPolicyServiceReady --- begin");
+                        Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkPolicyServiceReady");
+                        try {
+                            if (networkPolicyF != null) networkPolicyF.systemReady();
+                        } catch (Throwable e) {
+                            reportWtf("making Network Policy Service ready", e);
+                        }
+                        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                        Slog.i(TAG, "MakeNetworkPolicyServiceReady --- end");
+                    }
+                }, 0);
+                //*****MakeNetworkPolicyServiceReady in background********
+
                 Slog.i(TAG, "MakeNetworkScoreReady --- begin");
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
                 Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkScoreReady");
@@ -1493,27 +1511,9 @@ public final class SystemServer {
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
                 Slog.i(TAG, "MakeNetworkManagementServiceReady --- end");
 
-                /*
-                Slog.i(TAG, "MakeNetworkStatsServiceReady --- begin");
-                Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkStatsServiceReady");
-                try {
-                    if (networkStatsF != null) networkStatsF.systemReady();
-                } catch (Throwable e) {
-                    reportWtf("making Network Stats Service ready", e);
-                }
-                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-                Slog.i(TAG, "MakeNetworkStatsServiceReady --- end");
-                */
 
-                Slog.i(TAG, "MakeNetworkPolicyServiceReady --- begin");
-                Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkPolicyServiceReady");
-                try {
-                    if (networkPolicyF != null) networkPolicyF.systemReady();
-                } catch (Throwable e) {
-                    reportWtf("making Network Policy Service ready", e);
-                }
-                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-                Slog.i(TAG, "MakeNetworkPolicyServiceReady --- end");
+
+
 
                 //**********************MakeConnectivityServiceReady delay******
                 Timer tr5 = new Timer();
@@ -1635,7 +1635,6 @@ public final class SystemServer {
                     }
                }, 10000);
                //********Notifications delay***********
-
             }
         });
 
