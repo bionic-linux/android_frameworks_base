@@ -39,8 +39,6 @@ import java.lang.ref.WeakReference;
  * </ul>
  * The {@link #destroy()} method must be called to destroy discovery sessions once they are
  * no longer needed.
- *
- * @hide PROPOSED_AWARE_API
  */
 public class DiscoverySession {
     private static final String TAG = "DiscoverySession";
