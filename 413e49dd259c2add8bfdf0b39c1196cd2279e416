@@ -46,6 +46,30 @@
       "revId": "413e49dd259c2add8bfdf0b39c1196cd2279e416",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3d9950f_e665ff1f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-01-11T23:57:03Z",
+      "side": 1,
+      "message": "Can you point me to an example of where this will be used?",
+      "parentUuid": "a3d9950f_46d08ba9",
+      "range": {
+        "startLine": 1424,
+        "startChar": 4,
+        "endLine": 1426,
+        "endChar": 5
+      },
+      "revId": "413e49dd259c2add8bfdf0b39c1196cd2279e416",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
