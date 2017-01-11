@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3d9950f_2bbaf2cc",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-01-11T23:37:47Z",
+      "side": 1,
+      "message": "I\u0027m not sure I see the value in this particular API; I\u0027m not sure where exactly you\u0027re using it but I don\u0027t see why you can\u0027t just cast the subId to a string.\n\nThe docs for NetworkRequest#setNetworkSpecifier say:\nThe interpretation of this {@code String} is bearer specific and bearers that use it should document their particulars.  For example, Bluetooth may use some sort of device id while WiFi could used ssid and/or bssid.  Cellular may use carrier spn.\n\nSo it sounds to me like the user of NetworkRequest is able to use whatever identifier they see fit.",
+      "range": {
+        "startLine": 1424,
+        "startChar": 4,
+        "endLine": 1426,
+        "endChar": 5
+      },
+      "revId": "413e49dd259c2add8bfdf0b39c1196cd2279e416",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
