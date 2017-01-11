@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4328d982_30dc8626",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2017-01-11T21:51:28Z",
+      "side": 1,
+      "message": "See other CL, don\u0027t think we need an offset here.",
+      "parentUuid": "a3d9950f_778c5f8f",
+      "range": {
+        "startLine": 573,
+        "startChar": 43,
+        "endLine": 573,
+        "endChar": 45
+      },
+      "revId": "24c82279feaff1674efacddc33a7785b23351c58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d9950f_3786d76d",
         "filename": "core/jni/android_os_HwParcel.cpp",
         "patchSetId": 1
