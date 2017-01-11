@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3d9950f_778c5f8f",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-01-11T21:29:23Z",
+      "side": 1,
+      "message": "+ offset of buffer?\n\n(it\u0027s zero right now, but still)",
+      "range": {
+        "startLine": 573,
+        "startChar": 43,
+        "endLine": 573,
+        "endChar": 45
+      },
+      "revId": "24c82279feaff1674efacddc33a7785b23351c58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3d9950f_3786d76d",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-01-11T21:29:23Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 601,
+        "startChar": 44,
+        "endLine": 601,
+        "endChar": 47
+      },
+      "revId": "24c82279feaff1674efacddc33a7785b23351c58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
