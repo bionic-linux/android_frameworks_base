@@ -5653,10 +5653,17 @@ public class TelephonyManager {
      * Set the allowed carrier list for slotId
      * Require system privileges. In the future we may add this to carrier APIs.
      *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE}
+     *
+     * <p>This method works only on devices with {@link
+     * android.content.pm.PackageManager#FEATURE_TELEPHONY_SIMLOCK} enabled.
+     *
      * @return The number of carriers set successfully. Should be length of
      * carrierList on success; -1 on error.
      * @hide
      */
+    @SystemApi
     public int setAllowedCarriers(int slotId, List<CarrierIdentifier> carriers) {
         try {
             ITelephony service = getITelephony();
@@ -5673,10 +5680,17 @@ public class TelephonyManager {
      * Get the allowed carrier list for slotId.
      * Require system privileges. In the future we may add this to carrier APIs.
      *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE}
+     *
+     * <p>This method returns valid data on devices with {@link
+     * android.content.pm.PackageManager#FEATURE_TELEPHONY_SIMLOCK} enabled.
+     *
      * @return List of {@link android.telephony.CarrierIdentifier}; empty list
      * means all carriers are allowed.
      * @hide
      */
+    @SystemApi
     public List<CarrierIdentifier> getAllowedCarriers(int slotId) {
         try {
             ITelephony service = getITelephony();
