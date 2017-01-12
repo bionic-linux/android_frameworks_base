@@ -70,6 +70,30 @@
       "revId": "413e49dd259c2add8bfdf0b39c1196cd2279e416",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3d9950f_46216bbe",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1097644
+      },
+      "writtenOn": "2017-01-12T00:00:47Z",
+      "side": 1,
+      "message": "Current version:\nhttps://cs.corp.google.com/android/packages/services/Telephony/src/com/android/phone/vvm/omtp/sync/VvmNetworkRequestCallback.java?q\u003dvvmnetworkrequestcallback\u0026sq\u003dpackage:%5Eandroid$\u0026dr\u003dCSs\u0026l\u003d93\n\nSome carriers requires the connection to the server to go through their cellular internet",
+      "parentUuid": "a3d9950f_e665ff1f",
+      "range": {
+        "startLine": 1424,
+        "startChar": 4,
+        "endLine": 1426,
+        "endChar": 5
+      },
+      "revId": "413e49dd259c2add8bfdf0b39c1196cd2279e416",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
