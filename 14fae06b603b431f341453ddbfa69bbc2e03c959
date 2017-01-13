@@ -46,6 +46,30 @@
       "revId": "14fae06b603b431f341453ddbfa69bbc2e03c959",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e39b8d7a_665b1698",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-01-13T20:14:22Z",
+      "side": 1,
+      "message": "Oh NVM. I see what you are doing here.",
+      "parentUuid": "c365a9f6_4f052130",
+      "range": {
+        "startLine": 834,
+        "startChar": 16,
+        "endLine": 834,
+        "endChar": 42
+      },
+      "revId": "14fae06b603b431f341453ddbfa69bbc2e03c959",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
