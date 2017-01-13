@@ -22,6 +22,30 @@
       "revId": "14fae06b603b431f341453ddbfa69bbc2e03c959",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c365a9f6_4f052130",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2017-01-13T20:04:05Z",
+      "side": 1,
+      "message": "mmm we do want to allow returning a null buffer if the \u0027nullable\u0027 parameter is true here. Or are you proposing to use an \u0027if (nullable)\u0027 branch?",
+      "parentUuid": "e39b8d7a_58d0b5a9",
+      "range": {
+        "startLine": 834,
+        "startChar": 16,
+        "endLine": 834,
+        "endChar": 42
+      },
+      "revId": "14fae06b603b431f341453ddbfa69bbc2e03c959",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
