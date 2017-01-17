@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63787d00_0665faf5",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-17T04:38:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t UNM immediately throw an NPE if a null context is passed in, instead of silently accepting it and possibly blowing up later on?",
+      "range": {
+        "startLine": 70,
+        "startChar": 64,
+        "endLine": 70,
+        "endChar": 68
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_e65ffe1c",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-17T04:38:09Z",
+      "side": 1,
+      "message": "Nit: s/Can/Does/ ?",
+      "range": {
+        "startLine": 102,
+        "startChar": 20,
+        "endLine": 102,
+        "endChar": 23
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_068c1a8e",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-17T04:38:09Z",
+      "side": 1,
+      "message": "Nit: s/Can/Does/ ? Can/should this test be merged with the previous one?",
+      "range": {
+        "startLine": 125,
+        "startChar": 20,
+        "endLine": 125,
+        "endChar": 23
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_466ff2d5",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-17T04:38:09Z",
+      "side": 1,
+      "message": "Nit: these could be private if you had a hasNoListens method.",
+      "range": {
+        "startLine": 149,
+        "startChar": 52,
+        "endLine": 149,
+        "endChar": 61
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_266af6c6",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-17T04:38:09Z",
+      "side": 1,
+      "message": "Nit: the ConnectivityManager isn\u0027t really \"empty\". hasNoCallbacks?",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 23
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_c66202e8",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-17T04:38:09Z",
+      "side": 1,
+      "message": "Nit: I\u0027m sure Hugo could come up with a fancy Java 8 one-liner using predicates if you ask him. The result might or might not be more readable. :-)",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 59
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_a6550601",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-17T04:38:09Z",
+      "side": 1,
+      "message": "Suggest:\n\n    } else {\n        fail(\"Unexpected callback removed\");",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 13
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
