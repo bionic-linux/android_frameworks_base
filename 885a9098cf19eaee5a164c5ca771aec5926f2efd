@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63787d00_c6d04250",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-17T06:38:38Z",
+      "side": 1,
+      "message": "It could probably have a checkNotNull, yeah.  It will need that for the start statemachine as well, once I\u0027ve added the infrastructure for it here.",
+      "parentUuid": "63787d00_0665faf5",
+      "range": {
+        "startLine": 70,
+        "startChar": 64,
+        "endLine": 70,
+        "endChar": 68
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63787d00_e65ffe1c",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-17T04:38:09Z",
       "side": 1,
       "message": "Nit: s/Can/Does/ ?",
+      "range": {
+        "startLine": 102,
+        "startChar": 20,
+        "endLine": 102,
+        "endChar": 23
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_26b83627",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-17T06:38:38Z",
+      "side": 1,
+      "message": "Went with s/CanRequest/Requests/",
+      "parentUuid": "63787d00_e65ffe1c",
       "range": {
         "startLine": 102,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "63787d00_46bd3216",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-17T06:38:38Z",
+      "side": 1,
+      "message": "Went with s/CanRequest/Requests/\n\nMaybe.  I also need to add test that changing the DUN required settings unregisters and reregisters the requests.",
+      "parentUuid": "63787d00_068c1a8e",
+      "range": {
+        "startLine": 125,
+        "startChar": 20,
+        "endLine": 125,
+        "endChar": 23
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63787d00_466ff2d5",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-01-17T04:38:09Z",
       "side": 1,
       "message": "Nit: these could be private if you had a hasNoListens method.",
+      "range": {
+        "startLine": 149,
+        "startChar": 52,
+        "endLine": 149,
+        "endChar": 61
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_66c22e89",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-17T06:38:38Z",
+      "side": 1,
+      "message": "Yeah, I haven\u0027t yet figured out what the right level of encapsulation for this test CM should be.",
+      "parentUuid": "63787d00_466ff2d5",
       "range": {
         "startLine": 149,
         "startChar": 52,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "63787d00_c6792298",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-17T06:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63787d00_266af6c6",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 23
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63787d00_c66202e8",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "63787d00_a6c34688",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-17T06:38:38Z",
+      "side": 1,
+      "message": "I eagerly await enlightenment.\n\n(Of course that\u0027s true more broadly...)",
+      "parentUuid": "63787d00_c66202e8",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 59
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63787d00_a6550601",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2017-01-17T04:38:09Z",
       "side": 1,
       "message": "Suggest:\n\n    } else {\n        fail(\"Unexpected callback removed\");",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 13
+      },
+      "revId": "885a9098cf19eaee5a164c5ca771aec5926f2efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63787d00_86c64a99",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-17T06:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63787d00_a6550601",
       "range": {
         "startLine": 206,
         "startChar": 12,
