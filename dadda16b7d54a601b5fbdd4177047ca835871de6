@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "284ae270_33bed2a3",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-18T23:57:19Z",
+      "side": 1,
+      "message": "This is fixed across WiFi.  I am leaning towards leave it as is, since it is used only for validation purpose, prefer not to make it a public constant.",
+      "parentUuid": "a35c3506_98663591",
+      "range": {
+        "startLine": 58,
+        "startChar": 1,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "dadda16b7d54a601b5fbdd4177047ca835871de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a35c3506_988d551d",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-18T06:29:57Z",
       "side": 1,
       "message": "1) define -1 as macro. 2) it is safer to do \u0027if (size \u003c\u003d -1)\u0027.",
+      "range": {
+        "startLine": 376,
+        "startChar": 1,
+        "endLine": 376,
+        "endChar": 33
+      },
+      "revId": "dadda16b7d54a601b5fbdd4177047ca835871de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_b3b1a2d0",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-18T23:57:19Z",
+      "side": 1,
+      "message": "Will defined a constant for it.",
+      "parentUuid": "a35c3506_988d551d",
       "range": {
         "startLine": 376,
         "startChar": 1,
