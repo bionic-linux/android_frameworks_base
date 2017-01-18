@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e399cd94_69405664",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-01-18T00:59:28Z",
+      "side": 1,
+      "message": "carrierlock",
+      "range": {
+        "startLine": 1823,
+        "startChar": 87,
+        "endLine": 1823,
+        "endChar": 94
+      },
+      "revId": "1b8f313c22ec5d643f0409aa5f5c76701bdbd6ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3e70d23_2cf5cf58",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-01-18T00:59:28Z",
+      "side": 1,
+      "message": "carrierlock",
+      "range": {
+        "startLine": 1823,
+        "startChar": 49,
+        "endLine": 1823,
+        "endChar": 56
+      },
+      "revId": "1b8f313c22ec5d643f0409aa5f5c76701bdbd6ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
