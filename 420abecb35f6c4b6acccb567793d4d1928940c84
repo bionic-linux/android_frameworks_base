@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "284ae270_2ae53bad",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5699,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-01-18T22:37:41Z",
+      "side": 1,
+      "message": "this check needs to be done on the service side.  The Manager isn\u0027t guaranteed to be used.",
+      "range": {
+        "startLine": 5699,
+        "startChar": 8,
+        "endLine": 5699,
+        "endChar": 20
+      },
+      "revId": "420abecb35f6c4b6acccb567793d4d1928940c84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
