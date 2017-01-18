@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a35c3506_98663591",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:29:57Z",
+      "side": 1,
+      "message": "This is defined in class HomeSp as well. If it\u0027s something fixed across the PassPoint spec, consider define it in a common place.",
+      "range": {
+        "startLine": 58,
+        "startChar": 1,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "dadda16b7d54a601b5fbdd4177047ca835871de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a35c3506_988d551d",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:29:57Z",
+      "side": 1,
+      "message": "1) define -1 as macro. 2) it is safer to do \u0027if (size \u003c\u003d -1)\u0027.",
+      "range": {
+        "startLine": 376,
+        "startChar": 1,
+        "endLine": 376,
+        "endChar": 33
+      },
+      "revId": "dadda16b7d54a601b5fbdd4177047ca835871de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a35c3506_788241ed",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:29:57Z",
+      "side": 1,
+      "message": "1) define -1 as macro. 2) it is safer to do \u0027if (size \u003c\u003d -1)\u0027.",
+      "range": {
+        "startLine": 396,
+        "startChar": 1,
+        "endLine": 396,
+        "endChar": 33
+      },
+      "revId": "dadda16b7d54a601b5fbdd4177047ca835871de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a35c3506_f8757135",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:29:57Z",
+      "side": 1,
+      "message": "Macro?",
+      "range": {
+        "startLine": 416,
+        "startChar": 26,
+        "endLine": 416,
+        "endChar": 28
+      },
+      "revId": "dadda16b7d54a601b5fbdd4177047ca835871de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a35c3506_187b052b",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:29:57Z",
+      "side": 1,
+      "message": "Macro?",
+      "range": {
+        "startLine": 436,
+        "startChar": 26,
+        "endLine": 436,
+        "endChar": 28
+      },
+      "revId": "dadda16b7d54a601b5fbdd4177047ca835871de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
