@@ -22,6 +22,30 @@
       "revId": "a8904fbc19717dd78aa91946c592ea6ca4668efa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "433c59a4_0da2f18a",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-18T08:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "433c59a4_8d8d011d",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 46
+      },
+      "revId": "a8904fbc19717dd78aa91946c592ea6ca4668efa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
