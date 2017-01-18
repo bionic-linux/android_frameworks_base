@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03f8a1f9_5ef59157",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-01-18T02:40:52Z",
+      "side": 1,
+      "message": "The first line should be a 50-60 char descriptive summary. E.g.:\nFixed NPE in canAddMoreManagedProfiles",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 81
+      },
+      "revId": "ede32a52a5f6b614522eacf51f6e2e7f03c851ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
