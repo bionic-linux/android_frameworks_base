@@ -45,6 +45,30 @@
       "revId": "1b8f313c22ec5d643f0409aa5f5c76701bdbd6ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "231e854a_e45f7a80",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1135464
+      },
+      "writtenOn": "2017-01-18T12:16:52Z",
+      "side": 1,
+      "message": "I think simlock is a widely understood term..?",
+      "parentUuid": "e399cd94_69405664",
+      "range": {
+        "startLine": 1823,
+        "startChar": 87,
+        "endLine": 1823,
+        "endChar": 94
+      },
+      "revId": "1b8f313c22ec5d643f0409aa5f5c76701bdbd6ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
