@@ -69,6 +69,30 @@
       "revId": "1b8f313c22ec5d643f0409aa5f5c76701bdbd6ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a35c3506_dbb8a789",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-01-18T16:16:47Z",
+      "side": 1,
+      "message": "It\u0027s a misnomer, widely misused and misleading term that I would like to kill with fire.\n\nYou can imagine a technology that does indeed force a phone to only use a single sim and that is not our intent or our effect.",
+      "parentUuid": "231e854a_e45f7a80",
+      "range": {
+        "startLine": 1823,
+        "startChar": 87,
+        "endLine": 1823,
+        "endChar": 94
+      },
+      "revId": "1b8f313c22ec5d643f0409aa5f5c76701bdbd6ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
