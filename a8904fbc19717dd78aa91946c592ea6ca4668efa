@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "433c59a4_8d8d011d",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-18T08:05:05Z",
+      "side": 1,
+      "message": "Might want to put this in:\n\n    if (legacyType !\u003d ConnectivityManager.TYPE_NONE) {\n    }",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 46
+      },
+      "revId": "a8904fbc19717dd78aa91946c592ea6ca4668efa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
