@@ -93,6 +93,30 @@
       "revId": "1b8f313c22ec5d643f0409aa5f5c76701bdbd6ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c35049f2_71919870",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1098412
+      },
+      "writtenOn": "2017-01-18T18:20:26Z",
+      "side": 1,
+      "message": "simlock-\u003ecarrierlock",
+      "parentUuid": "a35c3506_dbb8a789",
+      "range": {
+        "startLine": 1823,
+        "startChar": 87,
+        "endLine": 1823,
+        "endChar": 94
+      },
+      "revId": "1b8f313c22ec5d643f0409aa5f5c76701bdbd6ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
