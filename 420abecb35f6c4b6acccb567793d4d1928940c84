@@ -22,6 +22,30 @@
       "revId": "420abecb35f6c4b6acccb567793d4d1928940c84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c88a26db_410952e1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5699,
+      "author": {
+        "id": 1098412
+      },
+      "writtenOn": "2017-01-19T16:01:57Z",
+      "side": 1,
+      "message": "Moved check to RIL: \nhttps://android-review.googlesource.com/#/c/325401/",
+      "parentUuid": "284ae270_2ae53bad",
+      "range": {
+        "startLine": 5699,
+        "startChar": 8,
+        "endLine": 5699,
+        "endChar": 20
+      },
+      "revId": "420abecb35f6c4b6acccb567793d4d1928940c84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
