@@ -133,6 +133,20 @@ public final class PPSMOParser {
     private static final String NODE_PER_PROVIDER_SUBSCRIPTION = "PerProviderSubscription";
 
     /**
+     * Fields under PerProviderSubscription.
+     */
+    private static final String NODE_UPDATE_IDENTIFIER = "UpdateIdentifier";
+    private static final String NODE_AAA_SERVER_TRUST_ROOT = "AAAServerTrustRoot";
+    private static final String NODE_SUBSCRIPTION_UPDATE = "SubscriptionUpdate";
+    private static final String NODE_SUBSCRIPTION_PARAMETER = "SubscriptionParameter";
+    private static final String NODE_TYPE_OF_SUBSCRIPTION = "TypeOfSubscription";
+    private static final String NODE_USAGE_LIMITS = "UsageLimits";
+    private static final String NODE_DATA_LIMIT = "DataLimit";
+    private static final String NODE_START_DATE = "StartDate";
+    private static final String NODE_TIME_LIMIT = "TimeLimit";
+    private static final String NODE_USAGE_TIME_PERIOD = "UsageTimePeriod";
+    private static final String NODE_CREDENTIAL_PRIORITY = "CredentialPriority";
+    /**
      * Fields under HomeSP subtree.
      */
     private static final String NODE_HOMESP = "HomeSP";
@@ -378,6 +392,10 @@ public final class PPSMOParser {
      *     ...
      *   </RTPProperties>
      *   <Node>
+     *     <NodeName>UpdateIdentifier</NodeName>
+     *     <Value>...</Value>
+     *   </Node>
+     *   <Node>
      *     ...
      *   </Node>
      * </Node>
@@ -390,6 +408,7 @@ public final class PPSMOParser {
             throws ParsingException {
         PasspointConfiguration config = null;
         String nodeName = null;
+        int updateIdentifier = Integer.MIN_VALUE;
         for (XMLNode child : node.getChildren()) {
             switch (child.getTag()) {
                 case TAG_NODE_NAME:
@@ -402,13 +421,20 @@ public final class PPSMOParser {
                     }
                     break;
                 case TAG_NODE:
-                    // Only one PerProviderSubscription instance is expected and allowed.
-                    if (config != null) {
-                        throw new ParsingException("Multiple PPS instance");
+                    // Convert a XML tree to a PPS tree.
+                    PPSNode ppsNodeRoot = buildPpsNode(child);
+                    if (TextUtils.equals(ppsNodeRoot.getName(), NODE_UPDATE_IDENTIFIER)) {
+                        if (updateIdentifier != Integer.MIN_VALUE) {
+                            throw new ParsingException("Multiple node for UpdateIdentifier");
+                        }
+                        updateIdentifier = parseInteger(getPpsNodeValue(ppsNodeRoot));
+                    } else {
+                        // Only one PerProviderSubscription instance is expected and allowed.
+                        if (config != null) {
+                            throw new ParsingException("Multiple PPS instance");
+                        }
+                        config = parsePpsInstance(ppsNodeRoot);
                     }
-                    // Convert the XML tree to a PPS tree.
-                    PPSNode ppsInstanceRoot = buildPpsNode(child);
-                    config = parsePpsInstance(ppsInstanceRoot);
                     break;
                 case TAG_RT_PROPERTIES:
                     // Parse and verify URN stored in the RT (Run Time) Properties.
@@ -420,6 +446,9 @@ public final class PPSMOParser {
                 default:
                     throw new ParsingException("Unknown tag under PPS node: " + child.getTag());
             }
+        }
+        if (config != null && updateIdentifier != Integer.MIN_VALUE) {
+            config.updateIdentifier = updateIdentifier;
         }
         return config;
     }
@@ -583,6 +612,18 @@ public final class PPSMOParser {
                 case NODE_POLICY:
                     config.policy = parsePolicy(child);
                     break;
+                case NODE_AAA_SERVER_TRUST_ROOT:
+                    config.trustRootCertList = parseAAAServerTrustRootList(child);
+                    break;
+                case NODE_SUBSCRIPTION_UPDATE:
+                    config.subscriptionUpdate = parseUpdateParameter(child);
+                    break;
+                case NODE_SUBSCRIPTION_PARAMETER:
+                    parseSubscriptionParameter(child, config);
+                    break;
+                case NODE_CREDENTIAL_PRIORITY:
+                    config.credentialPriority = parseInteger(getPpsNodeValue(child));
+                    break;
                 default:
                     throw new ParsingException("Unknown node: " + child.getName());
             }
@@ -648,11 +689,7 @@ public final class PPSMOParser {
         String[] oiStrArray = oiStr.split(",");
         long[] oiArray = new long[oiStrArray.length];
         for (int i = 0; i < oiStrArray.length; i++) {
-            try {
-                oiArray[i] = Long.parseLong(oiStrArray[i], 16);
-            } catch (NumberFormatException e) {
-                throw new ParsingException("Invalid OI: " + oiStrArray[i]);
-            }
+            oiArray[i] = parseLong(oiStrArray[i], 16);
         }
         return oiArray;
     }
@@ -703,11 +740,7 @@ public final class PPSMOParser {
                     ssid = getPpsNodeValue(child);
                     break;
                 case NODE_HESSID:
-                    try {
-                        hessid = Long.parseLong(getPpsNodeValue(child), 16);
-                    } catch (NumberFormatException e) {
-                        throw new ParsingException("Invalid HESSID: " + getPpsNodeValue(child));
-                    }
+                    hessid = parseLong(getPpsNodeValue(child), 16);
                     break;
                 default:
                     throw new ParsingException("Unknown node under NetworkID instance: " +
@@ -1180,20 +1213,10 @@ public final class PPSMOParser {
                     networkType = getPpsNodeValue(child);
                     break;
                 case NODE_DOWNLINK_BANDWIDTH:
-                    try {
-                        downlinkBandwidth = Long.parseLong(getPpsNodeValue(child));
-                    } catch (NumberFormatException e) {
-                        throw new ParsingException("Invalid value for downlink bandwidth: "
-                                + getPpsNodeValue(child));
-                    }
+                    downlinkBandwidth = parseLong(getPpsNodeValue(child), 10);
                     break;
                 case NODE_UPLINK_BANDWIDTH:
-                    try {
-                        uplinkBandwidth = Long.parseLong(getPpsNodeValue(child));
-                    } catch (NumberFormatException e) {
-                        throw new ParsingException("Invalid value for downlink bandwidth: "
-                                + getPpsNodeValue(child));
-                    }
+                    uplinkBandwidth = parseLong(getPpsNodeValue(child), 10);
                     break;
                 default:
                     throw new ParsingException("Unknown node under MinBackhaulThreshold instance "
@@ -1235,13 +1258,7 @@ public final class PPSMOParser {
         for (PPSNode child : node.getChildren()) {
             switch(child.getName()) {
                 case NODE_UPDATE_INTERVAL:
-                    try {
-                        updateParam.updateIntervalInMinutes =
-                                Long.parseLong(getPpsNodeValue(child));
-                    } catch (NumberFormatException e) {
-                        throw new ParsingException("Invalid value for update interval: "
-                                + getPpsNodeValue(child));
-                    }
+                    updateParam.updateIntervalInMinutes = parseLong(getPpsNodeValue(child), 10);
                     break;
                 case NODE_UPDATE_METHOD:
                     updateParam.updateMethod = getPpsNodeValue(child);
@@ -1258,7 +1275,7 @@ public final class PPSMOParser {
                     updateParam.base64EncodedPassword = usernamePassword.second;
                     break;
                 case NODE_TRUST_ROOT:
-                    Pair<String, byte[]> trustRoot = parseUpdateTrustRoot(child);
+                    Pair<String, byte[]> trustRoot = parseTrustRoot(child);
                     updateParam.trustRootCertUrl = trustRoot.first;
                     updateParam.trustRootCertSha256Fingerprint = trustRoot.second;
                     break;
@@ -1308,16 +1325,19 @@ public final class PPSMOParser {
     }
 
     /**
-     * Parse the trust root parameters associated with policy or subscription update.
+     * Parse the trust root parameters associated with policy update, subscription update, or AAA
+     * server trust root.
+     *
      * This contained configurations under either
      * PerProviderSubscription/Policy/PolicyUpdate/TrustRoot or
-     * PerProviderSubscription/SubscriptionUpdate/TrustRoot subtree.
+     * PerProviderSubscription/SubscriptionUpdate/TrustRoot or
+     * PerProviderSubscription/AAAServerTrustRoot/<X+> subtree.
      *
      * @param node PPSNode representing the root of the TrustRoot subtree
      * @return Pair of Certificate URL and fingerprint
      * @throws ParsingException
      */
-    private static Pair<String, byte[]> parseUpdateTrustRoot(PPSNode node)
+    private static Pair<String, byte[]> parseTrustRoot(PPSNode node)
             throws ParsingException {
         if (node.isLeaf()) {
             throw new ParsingException("Leaf node not expected for TrustRoot");
@@ -1337,6 +1357,12 @@ public final class PPSMOParser {
                     throw new ParsingException("Unknown node under TrustRoot: "
                             + child.getName());
             }
+        }
+        if (certUrl == null) {
+            throw new ParsingException("Missing trust root certificate URL");
+        }
+        if (certFingerprint == null) {
+            throw new ParsingException("Missing trust root certificate fingerprint");
         }
         return Pair.create(certUrl, certFingerprint);
     }
@@ -1446,6 +1472,97 @@ public final class PPSMOParser {
     }
 
     /**
+     * Parse configurations under PerProviderSubscription/AAAServerTrustRoot subtree.
+     *
+     * @param node PPSNode representing the root of PerProviderSubscription/AAAServerTrustRoot
+     *             subtree
+     * @return Map of certificate URL with the corresponding certificate fingerprint
+     * @throws ParsingException
+     */
+    private static Map<String, byte[]> parseAAAServerTrustRootList(PPSNode node)
+            throws ParsingException {
+        if (node.isLeaf()) {
+            throw new ParsingException("Leaf node not expected for AAAServerTrustRoot");
+        }
+        Map<String, byte[]> certList = new HashMap<>();
+        for (PPSNode child : node.getChildren()) {
+            Pair<String, byte[]> certTuple = parseTrustRoot(child);
+            certList.put(certTuple.first, certTuple.second);
+        }
+        return certList;
+    }
+
+    /**
+     * Parse configurations under PerProviderSubscription/SubscriptionParameter subtree.
+     *
+     * @param node PPSNode representing the root of PerProviderSubscription/SubscriptionParameter
+     *             subtree
+     * @param config Instance of {@link PasspointConfiguration}
+     * @throws ParsingException
+     */
+    private static void parseSubscriptionParameter(PPSNode node, PasspointConfiguration config)
+            throws ParsingException {
+        if (node.isLeaf()) {
+            throw new ParsingException("Leaf node not expected for SubscriptionParameter");
+        }
+        for (PPSNode child : node.getChildren()) {
+            switch (child.getName()) {
+                case NODE_CREATION_DATE:
+                    config.subscriptionCreationTimeInMs = parseDate(getPpsNodeValue(child));
+                    break;
+                case NODE_EXPIRATION_DATE:
+                    config.subscriptionExpirationTimeInMs = parseDate(getPpsNodeValue(child));
+                    break;
+                case NODE_TYPE_OF_SUBSCRIPTION:
+                    config.subscriptionType = getPpsNodeValue(child);
+                    break;
+                case NODE_USAGE_LIMITS:
+                    parseUsageLimits(child, config);
+                    break;
+                default:
+                    throw new ParsingException("Unknown node under SubscriptionParameter"
+                            + child.getName());
+            }
+        }
+    }
+
+    /**
+     * Parse configurations under PerProviderSubscription/SubscriptionParameter/UsageLimits
+     * subtree.
+     *
+     * @param node PPSNode representing the root of
+     *             PerProviderSubscription/SubscriptionParameter/UsageLimits subtree
+     * @param config Instance of {@link PasspointConfiguration}
+     * @throws ParsingException
+     */
+    private static void parseUsageLimits(PPSNode node, PasspointConfiguration config)
+            throws ParsingException {
+        if (node.isLeaf()) {
+            throw new ParsingException("Leaf node not expected for UsageLimits");
+        }
+        for (PPSNode child : node.getChildren()) {
+            switch (child.getName()) {
+                case NODE_DATA_LIMIT:
+                    config.usageLimitDataLimit = parseLong(getPpsNodeValue(child), 10);
+                    break;
+                case NODE_START_DATE:
+                    config.usageLimitStartTimeInMs = parseDate(getPpsNodeValue(child));
+                    break;
+                case NODE_TIME_LIMIT:
+                    config.usageLimitTimeLimitInMinutes = parseLong(getPpsNodeValue(child), 10);
+                    break;
+                case NODE_USAGE_TIME_PERIOD:
+                    config.usageLimitUsageTimePeriodInMinutes =
+                            parseLong(getPpsNodeValue(child), 10);
+                    break;
+                default:
+                    throw new ParsingException("Unknown node under UsageLimits"
+                            + child.getName());
+            }
+        }
+    }
+
+    /**
      * Convert a hex string to a byte array.
      *
      * @param str String containing hex values
@@ -1497,6 +1614,21 @@ public final class PPSMOParser {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
             throw new ParsingException("Invalid integer value: " + value);
+        }
+    }
+
+    /**
+     * Parse a string representing a long integer.
+     *
+     * @param value String of long integer value
+     * @return long
+     * @throws ParsingException
+     */
+    private static long parseLong(String value, int radix) throws ParsingException {
+        try {
+            return Long.parseLong(value, radix);
+        } catch (NumberFormatException e) {
+            throw new ParsingException("Invalid long integer value: " + value);
         }
     }
 
