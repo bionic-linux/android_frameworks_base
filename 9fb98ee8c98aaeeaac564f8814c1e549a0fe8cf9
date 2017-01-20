@@ -163,6 +163,30 @@
       "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48963609_a08374f0",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 18900,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-01-20T14:20:45Z",
+      "side": 1,
+      "message": "Ok. Worth sticking that justification somewhere. Maybe a commit comment or any documentation you\u0027re generating.",
+      "parentUuid": "48963609_3db0efe4",
+      "range": {
+        "startLine": 18900,
+        "startChar": 21,
+        "endLine": 18900,
+        "endChar": 39
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
