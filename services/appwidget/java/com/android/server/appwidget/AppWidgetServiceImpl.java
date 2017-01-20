@@ -2152,15 +2152,17 @@ class AppWidgetServiceImpl extends IAppWidgetService.Stub implements WidgetBacku
     }
 
     // Remove widgets for provider that are hosted in userId.
-    private void deleteWidgetsLocked(Provider provider, int userId) {
+    private void deleteWidgetsLocked(Provider provider, int userId, boolean needsUpdate) {
         final int N = provider.widgets.size();
         for (int i = N - 1; i >= 0; i--) {
             Widget widget = provider.widgets.get(i);
             if (userId == UserHandle.USER_ALL
                     || userId == widget.host.getUserId()) {
                 provider.widgets.remove(i);
-                // Call back with empty RemoteViews
-                updateAppWidgetInstanceLocked(widget, null, false);
+                if(needsUpdate){
+                    // Call back with empty RemoteViews
+                    updateAppWidgetInstanceLocked(widget, null, false);
+                }
                 // clear out references to this appWidgetId
                 widget.host.widgets.remove(widget);
                 removeWidgetLocked(widget);
@@ -2172,7 +2174,7 @@ class AppWidgetServiceImpl extends IAppWidgetService.Stub implements WidgetBacku
     }
 
     private void deleteProviderLocked(Provider provider) {
-        deleteWidgetsLocked(provider, UserHandle.USER_ALL);
+        deleteWidgetsLocked(provider, UserHandle.USER_ALL, false);
         mProviders.remove(provider);
 
         // no need to send the DISABLE broadcast, since the receiver is gone anyway
@@ -3250,7 +3252,7 @@ class AppWidgetServiceImpl extends IAppWidgetService.Stub implements WidgetBacku
             if (pkgName.equals(provider.info.provider.getPackageName())
                     && provider.getUserId() == userId
                     && provider.widgets.size() > 0) {
-                deleteWidgetsLocked(provider, parentUserId);
+                deleteWidgetsLocked(provider, parentUserId, true);
             }
         }
     }
