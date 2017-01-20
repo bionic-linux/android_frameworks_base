@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48963609_9d17c3ff",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17020,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-01-20T13:27:29Z",
+      "side": 1,
+      "message": "FYI - this class introduces another SimpleCache.",
+      "range": {
+        "startLine": 17020,
+        "startChar": 21,
+        "endLine": 17020,
+        "endChar": 34
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48963609_bd14fffa",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17506,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-01-20T13:27:29Z",
+      "side": 1,
+      "message": "Shame about the distracting copyright in the javadoc. Perhaps we should generally ask ICU to keep copyright in the headers, not the generated docs.\n\nWhat does this enable? Looks like it\u0027s not required for any other the other APIs. \"Not intended for general use\" in the docs is a bit of a red flag.",
+      "range": {
+        "startLine": 17506,
+        "startChar": 15,
+        "endLine": 17506,
+        "endChar": 32
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48963609_5de37beb",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 18692,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-01-20T13:27:29Z",
+      "side": 1,
+      "message": "Docs have an @see to a class we don\u0027t expose.\n\nWhat does this enable?",
+      "range": {
+        "startLine": 18692,
+        "startChar": 15,
+        "endLine": 18692,
+        "endChar": 29
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48963609_1dddf321",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 18900,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-01-20T13:27:29Z",
+      "side": 1,
+      "message": "What does this enable an Android app developer would want to do?",
+      "range": {
+        "startLine": 18900,
+        "startChar": 21,
+        "endLine": 18900,
+        "endChar": 39
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
