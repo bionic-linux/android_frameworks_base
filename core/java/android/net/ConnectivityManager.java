@@ -1456,7 +1456,6 @@ public class ConnectivityManager {
         return true;
     }
 
-    /** @hide */
     public static class PacketKeepaliveCallback {
         /** The requested keepalive was successfully started. */
         public void onStarted() {}
@@ -1476,10 +1475,8 @@ public class ConnectivityManager {
      * {@code onStarted} method will be called. If an error occurs, {@code onError} will be called,
      * specifying one of the {@code ERROR_*} constants in this class.
      *
-     * To stop an existing keepalive, call {@link stop}. The system will call {@code onStopped} if
+     * To stop an existing keepalive, call {@link #stop}. The system will call {@code onStopped} if
      * the operation was successfull or {@code onError} if an error occurred.
-     *
-     * @hide
      */
     public class PacketKeepalive {
 
@@ -1524,6 +1521,9 @@ public class ConnectivityManager {
             mLooper.quit();
         }
 
+        /**
+         *  Stops the keep alive.
+         */
         public void stop() {
             try {
                 mService.stopKeepalive(mNetwork, mSlot);
@@ -1576,8 +1576,6 @@ public class ConnectivityManager {
 
     /**
      * Starts an IPsec NAT-T keepalive packet with the specified parameters.
-     *
-     * @hide
      */
     public PacketKeepalive startNattKeepalive(
             Network network, int intervalSeconds, PacketKeepaliveCallback callback,
