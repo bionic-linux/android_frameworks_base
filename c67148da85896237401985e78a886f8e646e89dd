@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48963609_e0a2dc8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-01-20T14:36:41Z",
+      "side": 1,
+      "message": "in general, this isn\u0027t sufficient - you\u0027ll need make docs or offline-doc-comment-check (or whatever that means)",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "c67148da85896237401985e78a886f8e646e89dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
