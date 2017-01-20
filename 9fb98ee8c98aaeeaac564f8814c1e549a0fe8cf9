@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "284ae270_0e65d3f6",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17506,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2017-01-20T17:32:37Z",
+      "side": 1,
+      "message": "re copyright: i submitted http://bugs.icu-project.org/trac/ticket/12945\n\nre usage: this is a convenience class mostly for using Transliterator which operates on Replaceable.\n\ni guess the class name would have been better as StringBufferReplaceable -- but it\u0027s 18 years old [it can get a driver license in germany] and won\u0027t change now...",
+      "parentUuid": "48963609_bd14fffa",
+      "range": {
+        "startLine": 17506,
+        "startChar": 15,
+        "endLine": 17506,
+        "endChar": 32
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48963609_5de37beb",
         "filename": "api/current.txt",
         "patchSetId": 2
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "On closer inspection I actually found a problem with this class: Not all time related MeasureUnit instances are TimeUnit instances: MILLISECOND and NANOSECOND are MeasureUnit for some reason.\n\nThat means that while \"new TimeUnitAmount(1, MeasureUnit.SECOND)\" would work, \"new TimeUnitAmount(1, MeasureUnit.NANOSECOND)\" would not work!\n\n\"new MeasureUnit(...)\" will work for both cases and AFAICT produce the same result, so I actually think we shouldn\u0027t expose this.",
       "parentUuid": "48963609_5de37beb",
+      "range": {
+        "startLine": 18692,
+        "startChar": 15,
+        "endLine": 18692,
+        "endChar": 29
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_ae0fdf16",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 18692,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2017-01-20T17:32:37Z",
+      "side": 1,
+      "message": "re MeasureUnit vs. TimeUnit: i submitted http://bugs.icu-project.org/trac/ticket/12946\n\nre whether we \"need\" this class: http://bugs.icu-project.org/trac/ticket/12947",
+      "parentUuid": "48963609_bd9b9f60",
       "range": {
         "startLine": 18692,
         "startChar": 15,
