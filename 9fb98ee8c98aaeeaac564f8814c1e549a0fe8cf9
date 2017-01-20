@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "48963609_7db677e6",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17506,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-01-20T13:52:31Z",
+      "side": 1,
+      "message": "Good catch about the general use, I missed that and thought it was exactly that: a general purpose Replaceable, will remove.",
+      "parentUuid": "48963609_bd14fffa",
+      "range": {
+        "startLine": 17506,
+        "startChar": 15,
+        "endLine": 17506,
+        "endChar": 32
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48963609_5de37beb",
         "filename": "api/current.txt",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "48963609_bd9b9f60",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 18692,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-01-20T13:52:31Z",
+      "side": 1,
+      "message": "On closer inspection I actually found a problem with this class: Not all time related MeasureUnit instances are TimeUnit instances: MILLISECOND and NANOSECOND are MeasureUnit for some reason.\n\nThat means that while \"new TimeUnitAmount(1, MeasureUnit.SECOND)\" would work, \"new TimeUnitAmount(1, MeasureUnit.NANOSECOND)\" would not work!\n\n\"new MeasureUnit(...)\" will work for both cases and AFAICT produce the same result, so I actually think we shouldn\u0027t expose this.",
+      "parentUuid": "48963609_5de37beb",
+      "range": {
+        "startLine": 18692,
+        "startChar": 15,
+        "endLine": 18692,
+        "endChar": 29
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48963609_1dddf321",
         "filename": "api/current.txt",
         "patchSetId": 2
@@ -82,6 +130,30 @@
       "writtenOn": "2017-01-20T13:27:29Z",
       "side": 1,
       "message": "What does this enable an Android app developer would want to do?",
+      "range": {
+        "startLine": 18900,
+        "startChar": 21,
+        "endLine": 18900,
+        "endChar": 39
+      },
+      "revId": "9fb98ee8c98aaeeaac564f8814c1e549a0fe8cf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48963609_3db0efe4",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 18900,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-01-20T13:52:31Z",
+      "side": 1,
+      "message": "I expect this to replace lots and lots of ad-hoc code that needs convert from one timestamp format to another (because apps are talking to servers with weird/legacy protocols).",
+      "parentUuid": "48963609_1dddf321",
       "range": {
         "startLine": 18900,
         "startChar": 21,
