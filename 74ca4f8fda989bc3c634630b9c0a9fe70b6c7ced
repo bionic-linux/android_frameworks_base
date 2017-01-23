@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b252c3_ab30350a",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-23T07:44:01Z",
+      "side": 1,
+      "message": "Suggest refactoring these out to an assertUpstreamTypeRequested(int type) method.",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 5
+      },
+      "revId": "74ca4f8fda989bc3c634630b9c0a9fe70b6c7ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
