@@ -21,6 +21,7 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.reset;
@@ -126,6 +127,38 @@ public class UpstreamNetworkMonitorTest {
     }
 
     @Test
+    public void testDuplicateMobileRequestsIgnored() throws Exception {
+        assertFalse(mUNM.mobileNetworkRequested());
+        assertEquals(0, mCM.requested.size());
+        assertEquals(0, mCM.totalOperations);
+
+        mUNM.start();
+        assertFalse(mUNM.mobileNetworkRequested());
+        assertEquals(0, mCM.requested.size());
+        final int opsBefore = mCM.totalOperations;
+        assertNotEquals(0, opsBefore);
+
+        mUNM.updateMobileRequiresDun(true);
+        mUNM.registerMobileNetworkRequest();
+
+        assertTrue(mUNM.mobileNetworkRequested());
+        assertUpstreamTypeRequested(TYPE_MOBILE_DUN);
+        assertTrue(mCM.isDunRequested());
+        final int opsWithMobileRequested = mCM.totalOperations;
+        assertTrue(opsWithMobileRequested > opsBefore);
+
+        // Try a few things that must not result in any state change.
+        mUNM.registerMobileNetworkRequest();
+        mUNM.updateMobileRequiresDun(true);
+        mUNM.registerMobileNetworkRequest();
+
+        assertTrue(mUNM.mobileNetworkRequested());
+        assertUpstreamTypeRequested(TYPE_MOBILE_DUN);
+        assertTrue(mCM.isDunRequested());
+        assertEquals(mCM.totalOperations, opsWithMobileRequested);
+    }
+
+    @Test
     public void testRequestsDunNetwork() throws Exception {
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
@@ -149,7 +182,7 @@ public class UpstreamNetworkMonitorTest {
     }
 
     @Test
-    public void testUpdateMobileRequiredDun() throws Exception {
+    public void testUpdateMobileRequiresDun() throws Exception {
         mUNM.start();
 
         // Test going from no-DUN to DUN correctly re-registers callbacks.
@@ -181,6 +214,7 @@ public class UpstreamNetworkMonitorTest {
     }
 
     private static class TestConnectivityManager extends ConnectivityManager {
+        public int totalOperations = 0;
         public Set<NetworkCallback> trackingDefault = new HashSet<>();
         public Map<NetworkCallback, NetworkRequest> listening = new HashMap<>();
         public Map<NetworkCallback, NetworkRequest> requested = new HashMap<>();
@@ -222,6 +256,7 @@ public class UpstreamNetworkMonitorTest {
         public void requestNetwork(NetworkRequest req, NetworkCallback cb) {
             assertFalse(requested.containsKey(cb));
             requested.put(cb, req);
+            totalOperations++;
         }
 
         @Override
@@ -229,6 +264,7 @@ public class UpstreamNetworkMonitorTest {
                 int timeoutMs, int legacyType) {
             assertFalse(requested.containsKey(cb));
             requested.put(cb, req);
+            totalOperations++;
             assertFalse(legacyTypeMap.containsKey(cb));
             if (legacyType != ConnectivityManager.TYPE_NONE) {
                 legacyTypeMap.put(cb, legacyType);
@@ -239,12 +275,14 @@ public class UpstreamNetworkMonitorTest {
         public void registerNetworkCallback(NetworkRequest req, NetworkCallback cb) {
             assertFalse(listening.containsKey(cb));
             listening.put(cb, req);
+            totalOperations++;
         }
 
         @Override
         public void registerDefaultNetworkCallback(NetworkCallback cb) {
             assertFalse(trackingDefault.contains(cb));
             trackingDefault.add(cb);
+            totalOperations++;
         }
 
         @Override
@@ -259,6 +297,7 @@ public class UpstreamNetworkMonitorTest {
             } else {
                 fail("Unexpected callback removed");
             }
+            totalOperations++;
 
             assertFalse(trackingDefault.contains(cb));
             assertFalse(listening.containsKey(cb));
