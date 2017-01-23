@@ -117,11 +117,7 @@ public class UpstreamNetworkMonitorTest {
 
         mUNM.registerMobileNetworkRequest();
         assertTrue(mUNM.mobileNetworkRequested());
-        assertEquals(1, mCM.requested.size());
-        assertEquals(1, mCM.legacyTypeMap.size());
-        assertEquals(Integer.valueOf(TYPE_MOBILE_HIPRI),
-                mCM.legacyTypeMap.values().iterator().next());
-        assertFalse(mCM.isDunRequested());
+        assertHipriRequested();
 
         mUNM.stop();
         assertFalse(mUNM.mobileNetworkRequested());
@@ -143,15 +139,49 @@ public class UpstreamNetworkMonitorTest {
 
         mUNM.registerMobileNetworkRequest();
         assertTrue(mUNM.mobileNetworkRequested());
+        assertDunRequested();
+
+        mUNM.stop();
+        assertFalse(mUNM.mobileNetworkRequested());
+        assertTrue(mCM.hasNoCallbacks());
+    }
+
+    @Test
+    public void testUpdateMobileRequiredDun() throws Exception {
+        mUNM.start();
+
+        // Test going from no-DUN to DUN correctly re-registers callbacks.
+        mUNM.updateMobileRequiresDun(false);
+        mUNM.registerMobileNetworkRequest();
+        assertTrue(mUNM.mobileNetworkRequested());
+        assertHipriRequested();
+        mUNM.updateMobileRequiresDun(true);
+        assertTrue(mUNM.mobileNetworkRequested());
+        assertDunRequested();
+
+        // Test going from DUN to no-DUN correctly re-registers callbacks.
+        mUNM.updateMobileRequiresDun(false);
+        assertTrue(mUNM.mobileNetworkRequested());
+        assertHipriRequested();
+
+        mUNM.stop();
+        assertFalse(mUNM.mobileNetworkRequested());
+    }
+
+    private void assertDunRequested() throws Exception {
         assertEquals(1, mCM.requested.size());
         assertEquals(1, mCM.legacyTypeMap.size());
         assertEquals(Integer.valueOf(TYPE_MOBILE_DUN),
                 mCM.legacyTypeMap.values().iterator().next());
         assertTrue(mCM.isDunRequested());
+    }
 
-        mUNM.stop();
-        assertFalse(mUNM.mobileNetworkRequested());
-        assertTrue(mCM.hasNoCallbacks());
+    private void assertHipriRequested() throws Exception {
+        assertEquals(1, mCM.requested.size());
+        assertEquals(1, mCM.legacyTypeMap.size());
+        assertEquals(Integer.valueOf(TYPE_MOBILE_HIPRI),
+                mCM.legacyTypeMap.values().iterator().next());
+        assertFalse(mCM.isDunRequested());
     }
 
     private static class TestConnectivityManager extends ConnectivityManager {
