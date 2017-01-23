@@ -3501,7 +3501,10 @@ public final class ActivityThread {
                 l.type = WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
                 l.softInputMode |= forwardBit;
                 if (r.mPreserveWindow) {
-                    a.mWindowAdded = true;
+                    // if the preserve decor view is not attached to window, we
+                    // should make sure that it will been attached in the following
+                    // workflow.
+                    if (a.mDecor.isAttachedToWindow()) a.mWindowAdded = true;
                     r.mPreserveWindow = false;
                     // Normally the ViewRoot sets up callbacks with the Activity
                     // in addView->ViewRootImpl#setView. If we are instead reusing
