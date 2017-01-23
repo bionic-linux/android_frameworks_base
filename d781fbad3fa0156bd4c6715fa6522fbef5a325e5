@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b252c3_8bee913b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3128,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-23T07:04:14Z",
+      "side": 1,
+      "message": "Should this go into Tethering as well?",
+      "range": {
+        "startLine": 3128,
+        "startChar": 0,
+        "endLine": 3128,
+        "endChar": 91
+      },
+      "revId": "d781fbad3fa0156bd4c6715fa6522fbef5a325e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
