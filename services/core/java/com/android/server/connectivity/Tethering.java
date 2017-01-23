@@ -1351,7 +1351,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
 
         class TetherModeAliveState extends TetherMasterUtilState {
             final SimChangeListener simChange = new SimChangeListener(mContext);
-            boolean mTryCell = true;
+            boolean mTryCell = false;
             @Override
             public void enter() {
                 // TODO: examine if we should check the return value.
@@ -1359,9 +1359,8 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 simChange.startListening();
                 mUpstreamNetworkMonitor.start();
 
-                mTryCell = true;  // better try something first pass or crazy tests cases will fail
-                chooseUpstreamType(mTryCell);
-                mTryCell = !mTryCell;
+                // better try something first pass or crazy tests cases will fail
+                chooseUpstreamType(true);
             }
 
             @Override
@@ -1413,9 +1412,8 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                     }
                     case CMD_UPSTREAM_CHANGED:
                         // need to try DUN immediately if Wifi goes down
-                        mTryCell = true;
-                        chooseUpstreamType(mTryCell);
-                        mTryCell = !mTryCell;
+                        chooseUpstreamType(true);
+                        mTryCell = false;
                         break;
                     case CMD_RETRY_UPSTREAM:
                         chooseUpstreamType(mTryCell);
