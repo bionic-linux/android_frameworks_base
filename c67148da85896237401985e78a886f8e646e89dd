@@ -22,6 +22,30 @@
       "revId": "c67148da85896237401985e78a886f8e646e89dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48963609_a09cd44a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-01-24T12:29:32Z",
+      "side": 1,
+      "message": "I actually did checkbuil which includes doc-comment-check-docs, will update the comment.\n\nI also manually reviewed the generated docs to check if they contain any obvious wrongness.",
+      "parentUuid": "48963609_e0a2dc8a",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "c67148da85896237401985e78a886f8e646e89dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
