@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28f9028e_32504874",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-24T01:17:31Z",
+      "side": 0,
+      "message": "Is this swap not necessary anymore ?\n\nIsn\u0027t it possible for enter() to be recalled after processMessage() in general for a StateMachine State instance ? If yes then it seems possible that mTryCell is true at the beginning fenter().\n\nUnless I am missing something else, it looks like \"mTryCell \u003d false;\" like in CDM_UPSTYREAM_CHANGED",
+      "range": {
+        "startLine": 1364,
+        "startChar": 0,
+        "endLine": 1364,
+        "endChar": 37
+      },
+      "revId": "7b913bf0b46448ed702bdbeb6f8b82930b4ccdd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
