@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "080a3d2d_497335a8",
+        "filename": "libs/hwui/ProgramCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1010334
+      },
+      "writtenOn": "2017-01-24T21:03:53Z",
+      "side": 1,
+      "message": "rename useShadowAlphaInterp -\u003e useShadowAlpha, since it\u0027s not just the interpolation anymore",
+      "range": {
+        "startLine": 477,
+        "startChar": 24,
+        "endLine": 477,
+        "endChar": 44
+      },
+      "revId": "56dc2d521a1d81b56eb7e42b559637d30e05933c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
