@@ -40,13 +40,19 @@ import java.util.HashMap;
  * pertaining to the current and any potential upstream network.
  *
  * Calling #start() registers two callbacks: one to track the system default
- * network and a second to specifically observe TYPE_MOBILE_DUN networks.
+ * network and a second to observe all networks.  The latter is necessary
+ * while the expression of preferred upstreams remains a list of legacy
+ * connectivity types.  In future, this can be revisited.
  *
  * The methods and data members of this class are only to be accessed and
  * modified from the tethering master state machine thread. Any other
  * access semantics would necessitate the addition of locking.
  *
  * TODO: Move upstream selection logic here.
+ *
+ * All callback methods are run on the same thread as the specified target
+ * statemachine.  This class does not require locking when accessed from this
+ * thread.  Access from other threads is not advised.
  *
  * @hide
  */
@@ -60,15 +66,21 @@ public class UpstreamNetworkMonitor {
     public static final int EVENT_ON_LINKPROPERTIES = 3;
     public static final int EVENT_ON_LOST           = 4;
 
+    private static final int LISTEN_ALL = 1;
+    private static final int TRACK_DEFAULT = 2;
+    private static final int MOBILE_REQUEST = 2;
+
     private final Context mContext;
     private final StateMachine mTarget;
     private final int mWhat;
     private final HashMap<Network, NetworkState> mNetworkMap = new HashMap<>();
     private ConnectivityManager mCM;
+    private NetworkCallback mListenAllCallback;
     private NetworkCallback mDefaultNetworkCallback;
     private NetworkCallback mDunTetheringCallback;
     private NetworkCallback mMobileNetworkCallback;
     private boolean mDunRequired;
+    private Network mCurrentDefault;
 
     public UpstreamNetworkMonitor(Context ctx, StateMachine tgt, int what) {
         mContext = ctx;
@@ -85,7 +97,7 @@ public class UpstreamNetworkMonitor {
     public void start() {
         stop();
 
-        mDefaultNetworkCallback = new UpstreamNetworkCallback();
+        mDefaultNetworkCallback = new UpstreamNetworkCallback(TRACK_DEFAULT);
         cm().registerDefaultNetworkCallback(mDefaultNetworkCallback);
 
         final NetworkRequest dunTetheringRequest = new NetworkRequest.Builder()
@@ -93,7 +105,7 @@ public class UpstreamNetworkMonitor {
                 .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_DUN)
                 .build();
-        mDunTetheringCallback = new UpstreamNetworkCallback();
+        mDunTetheringCallback = new UpstreamNetworkCallback(LISTEN_ALL);
         cm().registerNetworkCallback(dunTetheringRequest, mDunTetheringCallback);
     }
 
@@ -140,7 +152,7 @@ public class UpstreamNetworkMonitor {
 
         // The existing default network and DUN callbacks will be notified.
         // Therefore, to avoid duplicate notifications, we only register a no-op.
-        mMobileNetworkCallback = new NetworkCallback();
+        mMobileNetworkCallback = new UpstreamNetworkCallback(MOBILE_REQUEST);
 
         // TODO: Change the timeout from 0 (no onUnavailable callback) to some
         // moderate callback timeout. This might be useful for updating some UI.
@@ -165,21 +177,31 @@ public class UpstreamNetworkMonitor {
         return (network != null) ? mNetworkMap.get(network) : null;
     }
 
-    private void handleAvailable(Network network) {
-        if (VDBG) {
-            Log.d(TAG, "EVENT_ON_AVAILABLE for " + network);
-        }
+    private void handleAvailable(int callbackType, Network network) {
+        if (VDBG) Log.d(TAG, "EVENT_ON_AVAILABLE for " + network);
+
         if (!mNetworkMap.containsKey(network)) {
             mNetworkMap.put(network,
                     new NetworkState(null, null, null, network, null, null));
         }
 
-        final ConnectivityManager cm = cm();
-
-        if (mDefaultNetworkCallback != null) {
+        // Always request whatever extra information we can, in case this
+        // was already up when start() was called, in which case we would
+        // not have been notified of any information that had not changed.
+        final NetworkCallback cb =
+                (callbackType == TRACK_DEFAULT) ? mDefaultNetworkCallback :
+                (callbackType == MOBILE_REQUEST) ? mMobileNetworkCallback : null;
+        if (cb != null) {
+            final ConnectivityManager cm = cm();
             cm.requestNetworkCapabilities(mDefaultNetworkCallback);
             cm.requestLinkProperties(mDefaultNetworkCallback);
         }
+
+        if (callbackType == TRACK_DEFAULT) {
+            mCurrentDefault = network;
+        }
+
+        // XXX
 
         // Requesting updates for mDunTetheringCallback is not
         // necessary. Because it's a listen, it will already have
@@ -194,57 +216,85 @@ public class UpstreamNetworkMonitor {
         // the system that requests it) we won't know its
         // LinkProperties or NetworkCapabilities.
 
+        // TODO: If sufficient information is available to select a more
+        // preferrable upstream, do so now and notify the target.
         notifyTarget(EVENT_ON_AVAILABLE, network);
     }
 
     private void handleNetCap(Network network, NetworkCapabilities newNc) {
-        if (!mNetworkMap.containsKey(network)) {
-            // Ignore updates for networks for which we have not yet
-            // received onAvailable() - which should never happen -
-            // or for which we have already received onLost().
+        NetworkState newState = null;
+        final NetworkState prev = mNetworkMap.get(network);
+        if (prev == null) {
+            // Record any new information, since the LISTEN_ALL callback
+            // might never receive onAvailable().
+            newState = new NetworkState(null, null, newNc, network, null, null);
+        } else if (!newNc.equals(prev.networkCapabilities)) {
+            newState = new NetworkState(
+                    null, prev.linkProperties, newNc, network, null, null);
+        } else {
+            // This is a duplicate update.
             return;
         }
+
         if (VDBG) {
             Log.d(TAG, String.format("EVENT_ON_CAPABILITIES for %s: %s",
                     network, newNc));
         }
 
-        final NetworkState prev = mNetworkMap.get(network);
-        mNetworkMap.put(network,
-                new NetworkState(null, prev.linkProperties, newNc,
-                                 network, null, null));
+        mNetworkMap.put(network, newState);
+        // TODO: If sufficient information is available to select a more
+        // preferrable upstream, do so now and notify the target.
         notifyTarget(EVENT_ON_CAPABILITIES, network);
     }
 
     private void handleLinkProp(Network network, LinkProperties newLp) {
-        if (!mNetworkMap.containsKey(network)) {
-            // Ignore updates for networks for which we have not yet
-            // received onAvailable() - which should never happen -
-            // or for which we have already received onLost().
+        NetworkState newState = null;
+        final NetworkState prev = mNetworkMap.get(network);
+        if (prev == null) {
+            // Record any new information, since the LISTEN_ALL callback
+            // might never receive onAvailable().
+            newState = new NetworkState(null, newLp, null, network, null, null);
+        } else if (!newLp.equals(prev.linkProperties)) {
+            newState = new NetworkState(
+                    null, newLp, prev.networkCapabilities, network, null, null);
+        } else {
+            // This is a duplicate notification.
             return;
         }
+
         if (VDBG) {
             Log.d(TAG, String.format("EVENT_ON_LINKPROPERTIES for %s: %s",
                     network, newLp));
         }
 
-        final NetworkState prev = mNetworkMap.get(network);
-        mNetworkMap.put(network,
-                new NetworkState(null, newLp, prev.networkCapabilities,
-                                 network, null, null));
+        mNetworkMap.put(network, newState);
+        // TODO: If sufficient information is available to select a more
+        // preferrable upstream, do so now and notify the target.
         notifyTarget(EVENT_ON_LINKPROPERTIES, network);
     }
 
-    private void handleLost(Network network) {
+    private void handleLost(int callbackType, Network network) {
         if (!mNetworkMap.containsKey(network)) {
-            // Ignore updates for networks for which we have not yet
-            // received onAvailable() - which should never happen -
-            // or for which we have already received onLost().
+            // Ignore updates for networks about which we have not yet
+            // learned any information.  The LISTEN_ALL callback might
+            // receive this notification.
             return;
         }
-        if (VDBG) {
-            Log.d(TAG, "EVENT_ON_LOST for " + network);
+        if (VDBG) Log.d(TAG, "EVENT_ON_LOST for " + network);
+
+        if (callbackType == TRACK_DEFAULT) {
+            mCurrentDefault = null;
+            // Receiving onLost() for a default network does not necessarily
+            // mean the network is gone.  We wait for a separate notification
+            // on either the LISTEN_ALL or MOBILE_REQUEST callbacks before
+            // clearing all state.
+            return;
         }
+
+        // TODO: If sufficient information is available to select a more
+        // preferrable upstream, do so now and notify the target.  Likewise,
+        // if the current upstream network is gone, notify the target of the
+        // fact that we now have no upstream at all.
         notifyTarget(EVENT_ON_LOST, mNetworkMap.remove(network));
     }
 
@@ -261,9 +311,15 @@ public class UpstreamNetworkMonitor {
      * tethering master state machine thread for subsequent processing.
      */
     private class UpstreamNetworkCallback extends NetworkCallback {
+        private final int mCallbackType;
+
+        UpstreamNetworkCallback(int callbackType) {
+            mCallbackType = callbackType;
+        }
+
         @Override
         public void onAvailable(Network network) {
-            mTarget.getHandler().post(() -> handleAvailable(network));
+            mTarget.getHandler().post(() -> handleAvailable(mCallbackType, network));
         }
 
         @Override
@@ -278,7 +334,7 @@ public class UpstreamNetworkMonitor {
 
         @Override
         public void onLost(Network network) {
-            mTarget.getHandler().post(() -> handleLost(network));
+            mTarget.getHandler().post(() -> handleLost(mCallbackType, network));
         }
     }
 
