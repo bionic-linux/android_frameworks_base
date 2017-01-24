@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6598b7af_b145ebdb",
+        "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T22:58:42Z",
+      "side": 1,
+      "message": "Where are they parsed into?",
+      "range": {
+        "startLine": 1146,
+        "startChar": 7,
+        "endLine": 1146,
+        "endChar": 27
+      },
+      "revId": "a2c5c1ee9a6ef6e26e6889ea621bc1610d64b1ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01cb99c9_32ee4c70",
+        "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T22:58:42Z",
+      "side": 1,
+      "message": "Missing javadoc for this param (so is the next method)",
+      "range": {
+        "startLine": 1152,
+        "startChar": 64,
+        "endLine": 1152,
+        "endChar": 77
+      },
+      "revId": "a2c5c1ee9a6ef6e26e6889ea621bc1610d64b1ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d1fa602_b6454c06",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Policy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T22:58:42Z",
+      "side": 1,
+      "message": "Can you please add a *very brief* nutshell description of what this is used for, significance, etc",
+      "revId": "a2c5c1ee9a6ef6e26e6889ea621bc1610d64b1ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
