@@ -1236,6 +1236,8 @@ interface ITelephony {
      * */
     void setSimPowerStateForSlot(int slotId, boolean powerUp);
 
+
+    /**
      * Returns a list of Forbidden PLMNs from the specified SIM App
      * Returns null if the query fails.
      *
