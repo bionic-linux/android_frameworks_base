@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8619add3_7d679327",
+        "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T23:28:28Z",
+      "side": 1,
+      "message": "Make this a constant",
+      "range": {
+        "startLine": 411,
+        "startChar": 31,
+        "endLine": 411,
+        "endChar": 48
+      },
+      "revId": "42d51c1499e2e63a6c9b0d044dae19944902fc1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ddddb95_4d9c2f80",
+        "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T23:28:28Z",
+      "side": 1,
+      "message": "This is a typo, but it almost works...",
+      "range": {
+        "startLine": 416,
+        "startChar": 52,
+        "endLine": 416,
+        "endChar": 61
+      },
+      "revId": "42d51c1499e2e63a6c9b0d044dae19944902fc1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
