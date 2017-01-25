@@ -154,6 +154,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
     private boolean mRndisEnabled;       // track the RNDIS function enabled state
     private boolean mUsbTetherRequested; // true if USB tethering should be started
                                          // when RNDIS is enabled
+    private boolean mUsbTetherFailed;
 
     // True iff WiFi tethering should be started when soft AP is ready.
     private boolean mWifiTetherRequested;
@@ -271,6 +272,9 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 trackNewTetherableInterface(iface, interfaceType);
             } else {
                 if (VDBG) Log.d(TAG, "active iface (" + iface + ") reported as added, ignoring");
+            }
+            if (mUsbTetherFailed) {
+                mUsbTetherFailed = !tetherMatchingInterfaces(true, ConnectivityManager.TETHERING_USB);
             }
         }
     }
@@ -732,7 +736,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 mRndisEnabled = rndisEnabled;
                 // start tethering if we have a request pending
                 if (usbConnected && mRndisEnabled && mUsbTetherRequested) {
-                    tetherMatchingInterfaces(true, ConnectivityManager.TETHERING_USB);
+                    mUsbTetherFailed = !tetherMatchingInterfaces(true, ConnectivityManager.TETHERING_USB);
                 }
                 mUsbTetherRequested = false;
             }
@@ -779,15 +783,14 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
     }
 
-    private void tetherMatchingInterfaces(boolean enable, int interfaceType) {
+    private boolean tetherMatchingInterfaces(boolean enable, int interfaceType) {
         if (VDBG) Log.d(TAG, "tetherMatchingInterfaces(" + enable + ", " + interfaceType + ")");
-
         String[] ifaces = null;
         try {
             ifaces = mNMService.listInterfaces();
         } catch (Exception e) {
             Log.e(TAG, "Error listing Interfaces", e);
-            return;
+            return false;
         }
         String chosenIface = null;
         if (ifaces != null) {
@@ -800,14 +803,15 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
         if (chosenIface == null) {
             Log.e(TAG, "could not find iface of type " + interfaceType);
-            return;
+            return false;
         }
 
         int result = (enable ? tether(chosenIface) : untether(chosenIface));
         if (result != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
             Log.e(TAG, "unable start or stop tethering on iface " + chosenIface);
-            return;
+            return false;
         }
+        return true;
     }
 
     public TetheringConfiguration getTetheringConfiguration() {
@@ -848,7 +852,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 if (mRndisEnabled) {
                     final long ident = Binder.clearCallingIdentity();
                     try {
-                        tetherMatchingInterfaces(true, ConnectivityManager.TETHERING_USB);
+                        mUsbTetherFailed = !tetherMatchingInterfaces(true, ConnectivityManager.TETHERING_USB);
                     } finally {
                         Binder.restoreCallingIdentity(ident);
                     }
