@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76869be0_12a16287",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-25T00:58:48Z",
+      "side": 0,
+      "message": "What about the exception ? By removing it the log msg becomes insufficient for understanding the root cause.\n\nTechnically the exception msg is an arbitrary string and can contain privacy user data. On the other hand, the exception stack trace is very helpful debugging data.\n\nI think it is safe to assume that a NPE or IO exception won\u0027t have sensitive data.\n\nI suggest:\n - considering keeping the exception all the time, by logging it as a Throwable: Log.w(TAG, \"Could not open requested URI.\", ex)\n - considering doing the same, but only for NullPointerException and IOException.",
+      "range": {
+        "startLine": 1019,
+        "startChar": 55,
+        "endLine": 1019,
+        "endChar": 57
+      },
+      "revId": "e5f0221f06816aab958eb1fa6630e58ebfaf3d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
