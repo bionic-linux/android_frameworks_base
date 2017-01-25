@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "22078860_61cc88cd",
+        "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-25T18:20:10Z",
+      "side": 1,
+      "message": "This constant is used in the context of this function, prefer not to define another constant to point to it.",
+      "range": {
+        "startLine": 411,
+        "startChar": 31,
+        "endLine": 411,
+        "endChar": 48
+      },
+      "revId": "42d51c1499e2e63a6c9b0d044dae19944902fc1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ddddb95_4d9c2f80",
         "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
         "patchSetId": 3
