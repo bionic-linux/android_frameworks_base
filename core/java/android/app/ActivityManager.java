@@ -3649,6 +3649,22 @@ public class ActivityManager {
     }
 
     /**
+     * Get the name of the current process.
+     *
+     * The process name is the same name reported via {@link #getRunningAppProcesses}, but this
+     * method retrieves it more efficiently.
+     *
+     * @return the name of the current process.
+     *
+     */
+    @NonNull
+    public static String currentProcessName() {
+        // ActivityThread.currentProcessName() can return null, but only before the process is
+        // bound, and user code may call this method only after we bind the process.
+        return ActivityThread.currentProcessName();
+    }
+
+    /**
      * The AppTask allows you to manage your own application's tasks.
      * See {@link android.app.ActivityManager#getAppTasks()}
      */
