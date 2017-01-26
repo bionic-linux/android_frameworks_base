@@ -46,6 +46,7 @@ import android.telephony.SubscriptionManager;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.PhoneConstants;
@@ -1454,6 +1455,51 @@ public class ConnectivityManager {
         unregisterNetworkCallback(l.networkCallback);
         l.clearDnsBinding();
         return true;
+    }
+
+    private static final SparseIntArray sLegacyTypeToTransport = new SparseIntArray();
+    static {
+        sLegacyTypeToTransport.put(TYPE_MOBILE, NetworkCapabilities.TRANSPORT_CELLULAR);
+        sLegacyTypeToTransport.put(TYPE_MOBILE_DUN, NetworkCapabilities.TRANSPORT_CELLULAR);
+        sLegacyTypeToTransport.put(TYPE_MOBILE_HIPRI, NetworkCapabilities.TRANSPORT_CELLULAR);
+        sLegacyTypeToTransport.put(TYPE_WIFI, NetworkCapabilities.TRANSPORT_WIFI);
+        sLegacyTypeToTransport.put(TYPE_WIFI_P2P, NetworkCapabilities.TRANSPORT_WIFI);
+        sLegacyTypeToTransport.put(TYPE_BLUETOOTH, NetworkCapabilities.TRANSPORT_BLUETOOTH);
+        sLegacyTypeToTransport.put(TYPE_ETHERNET, NetworkCapabilities.TRANSPORT_ETHERNET);
+    }
+
+    /**
+     * Given a legacy type (TYPE_WIFI, ...) returns a NetworkCapabilities
+     * instance suitable for registering a request or callback.  Returns
+     * null if no mapping from type to NetworkCapabilities is known.
+     *
+     * @hide
+     */
+    public static NetworkCapabilities networkCapabilitiesForType(int type) {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+
+        // Map from type to transports.
+        final int NOT_FOUND = NetworkCapabilities.MIN_TRANSPORT - 1;
+        final int transport = sLegacyTypeToTransport.get(type, NOT_FOUND);
+        if (transport < NetworkCapabilities.MIN_TRANSPORT) {
+            return null;
+        }
+        nc.addTransportType(transport);
+
+        // Map from type to capabilities.
+        switch (type) {
+            case TYPE_MOBILE_DUN:
+                nc.addCapability(NetworkCapabilities.NET_CAPABILITY_DUN);
+                nc.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+                break;
+            case TYPE_WIFI_P2P:
+                nc.addCapability(NetworkCapabilities.NET_CAPABILITY_WIFI_P2P);
+                break;
+            default:
+                nc.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        }
+
+        return nc;
     }
 
     /** @hide */
