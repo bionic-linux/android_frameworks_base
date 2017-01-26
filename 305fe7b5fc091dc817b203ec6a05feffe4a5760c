@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a9f1946_dddd7fd0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-26T19:30:59Z",
+      "side": 1,
+      "message": "typo - given",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "305fe7b5fc091dc817b203ec6a05feffe4a5760c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e14cb2f_53ee35dd",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-26T19:30:59Z",
+      "side": 1,
+      "message": "I am a little confused by the implementation for this method since it seems to only be called with TYPE_MOBILE_DUN or TYPE_MOBILE_HIPRI.  Is that just a reflection of the current code and the method is more general?",
+      "range": {
+        "startLine": 137,
+        "startChar": 53,
+        "endLine": 137,
+        "endChar": 92
+      },
+      "revId": "305fe7b5fc091dc817b203ec6a05feffe4a5760c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
