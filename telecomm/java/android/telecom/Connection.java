@@ -384,8 +384,13 @@ public abstract class Connection extends Conferenceable {
      */
     public static final int PROPERTY_SELF_MANAGED = 1<<7;
 
+    /**
+     * When set, indicates that a connection has an active RTT stream associated with it.
+     */
+    public static final int PROPERTY_IS_RTT = 1 << 8;
+
     //**********************************************************************************************
-    // Next PROPERTY value: 1<<8
+    // Next PROPERTY value: 1<<9
     //**********************************************************************************************
 
     /**

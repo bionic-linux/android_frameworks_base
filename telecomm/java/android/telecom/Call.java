@@ -20,8 +20,12 @@ import android.annotation.SystemApi;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.ParcelFileDescriptor;
 
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.lang.String;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -828,6 +832,66 @@ public final class Call {
          * @param extras Extras associated with the connection event.
          */
         public void onConnectionEvent(Call call, String event, Bundle extras) {}
+
+        /**
+         * Invoked when the RTT mode changes for this call.
+         * @param mode the new RTT mode
+         */
+        public void onRttModeChanged(int mode) {}
+
+        /**
+         * Invoked when the call's RTT status changes, either from off to on or from on to off.
+         * @param enabled whether RTT is now enabled or disabled
+         */
+        public void onIsRttChanged(boolean enabled) {}
+
+        /**
+         * Invoked when the remote end of the connection has requested that an RTT communication
+         * channel be opened. A response to this should be sent via {@link #respondToRttRequest}
+         * with the same ID that this method is invoked with.
+         * @param id The ID of the request.
+         */
+        public void onRttUpgradeRequest(int id) {}
+    }
+
+    /**
+     * A class that holds the state that describes the state of the RTT channel to the remote
+     * party, if it is active.
+     */
+    public static final class RttCall {
+        public static final int RTT_MODE_INVALID = 0;
+        public static final int RTT_MODE_FULL = 1;
+        public static final int RTT_MODE_HCO = 2;
+        public static final int RTT_MODE_VCO = 3;
+
+        private InputStreamReader mReceiveStream;
+        private OutputStreamWriter mTransmitStream;
+        private int mRttMode;
+        private final InCallAdapter mInCallAdapter;
+
+        public RttCall(InputStreamReader receiveStream, OutputStreamWriter transmitStream,
+                int mode, InCallAdapter inCallAdapter) {
+            mReceiveStream = receiveStream;
+            mTransmitStream = transmitStream;
+            mRttMode = mode;
+            mInCallAdapter = inCallAdapter;
+        }
+
+        public InputStreamReader getReceiveStream() {
+            return mReceiveStream;
+        }
+
+        public OutputStreamWriter getTransmitStream() {
+            return mTransmitStream;
+        }
+
+        public int getRttMode() {
+            return mRttMode;
+        }
+
+        public void setRttMode(int mode) {
+            mInCallAdapter.setRttMode(mode);
+        }
     }
 
     /**
@@ -855,6 +919,7 @@ public final class Call {
     private List<String> mCannedTextResponses = null;
     private String mRemainingPostDialSequence;
     private VideoCallImpl mVideoCallImpl;
+    private RttCall mRttCall;
     private Details mDetails;
     private Bundle mExtras;
 
@@ -1053,6 +1118,31 @@ public final class Call {
     }
 
     /**
+     * Sends an RTT upgrade request to the remote end of the connection. Success is not
+     * guaranteed, and notification of success will be via the
+     * {@link Callback#onIsRttChanged(boolean)} callback.
+     */
+    public void sendRttRequest() {
+        mInCallAdapter.sendRttRequest();
+    }
+
+    /**
+     * Responds to an RTT request sent via the {@link Callback#onRttUpgradeRequest(int)} callback.
+     * The ID used here should be the same as the ID that was sent via the callback.
+     */
+    public void respondToRttRequest(int id, boolean accept) {
+        mInCallAdapter.respondToRttRequest(id, accept);
+    }
+
+    /**
+     * Terminate the RTT connection on this call. The resulting state change will be notified via
+     * the {@link Callback#onIsRttChanged(boolean)} callback.
+     */
+    public void stopRtt() {
+        mInCallAdapter.stopRtt();
+    }
+
+    /**
      * Adds some extras to this {@link Call}.  Existing keys are replaced and new ones are
      * added.
      * <p>
@@ -1229,6 +1319,22 @@ public final class Call {
      */
     public Details getDetails() {
         return mDetails;
+    }
+
+    /**
+     * Returns this call's RttCall object.
+     * @return A {@link Call.RttCall}. Null if there is no active RTT connection.
+     */
+    public RttCall getRttCall() {
+        return mRttCall;
+    }
+
+    /**
+     * Returns whether this call has an active RTT connection.
+     * @return true if there is a connection, false otherwise.
+     */
+    public boolean isRttCall() {
+        return mRttCall != null;
     }
 
     /**
@@ -1421,6 +1527,31 @@ public final class Call {
             fireConferenceableCallsChanged();
         }
 
+        boolean isRttChanged = false;
+        boolean rttModeChanged = false;
+        if (parcelableCall.getParcelableRttCall() != null) {
+            ParcelableRttCall parcelableRttCall = parcelableCall.getParcelableRttCall();
+            InputStreamReader receiveStream = new InputStreamReader(
+                    new ParcelFileDescriptor.AutoCloseInputStream(
+                            parcelableRttCall.getReceiveStream()),
+                    StandardCharsets.UTF_8);
+            OutputStreamWriter transmitStream = new OutputStreamWriter(
+                    new ParcelFileDescriptor.AutoCloseOutputStream(
+                            parcelableRttCall.getTransmitStream()),
+                    StandardCharsets.UTF_8);
+            RttCall newRttCall = new Call.RttCall(
+                    receiveStream, transmitStream, parcelableRttCall.getRttMode(), mInCallAdapter);
+            if (mRttCall == null) {
+                isRttChanged = true;
+            } else if (mRttCall.getRttMode() != newRttCall.getRttMode()) {
+                rttModeChanged = true;
+            }
+            mRttCall = newRttCall;
+        } else if (mRttCall != null) {
+            isRttChanged = true;
+            mRttCall = null;
+        }
+
         // Now we fire updates, ensuring that any client who listens to any of these notifications
         // gets the most up-to-date state.
 
@@ -1441,6 +1572,12 @@ public final class Call {
         }
         if (childrenChanged) {
             fireChildrenChanged(getChildren());
+        }
+        if (isRttChanged) {
+            fireOnIsRttChanged(mRttCall == null);
+        }
+        if (rttModeChanged) {
+            fireOnRttModeChanged(mRttCall.getRttMode());
         }
 
         // If we have transitioned to DISCONNECTED, that means we need to notify clients and
@@ -1470,6 +1607,14 @@ public final class Call {
     /** {@hide} */
     final void internalOnConnectionEvent(String event, Bundle extras) {
         fireOnConnectionEvent(event, extras);
+    }
+
+    /** {@hide} */
+    final void internalOnRttUpgradeRequest(final int requestId) {
+        for (CallbackRecord<Callback> record : mCallbackRecords) {
+            final Callback callback = record.getCallback();
+            record.getHandler().post(() -> callback.onRttUpgradeRequest(requestId));
+        }
     }
 
     private void fireStateChanged(final int newState) {
@@ -1636,6 +1781,30 @@ public final class Call {
                     callback.onConnectionEvent(call, event, extras);
                 }
             });
+        }
+    }
+
+    /**
+     * Notifies listeners of an RTT on/off change
+     *
+     * @param enabled True if RTT is now enabled, false otherwise
+     */
+    private void fireOnIsRttChanged(final boolean enabled) {
+        for (CallbackRecord<Callback> record : mCallbackRecords) {
+            final Callback callback = record.getCallback();
+            record.getHandler().post(() -> callback.onIsRttChanged(enabled));
+        }
+    }
+
+    /**
+     * Notifies listeners of a RTT mode change
+     *
+     * @param mode The new RTT mode
+     */
+    private void fireOnRttModeChanged(final int mode) {
+        for (CallbackRecord<Callback> record : mCallbackRecords) {
+            final Callback callback = record.getCallback();
+            record.getHandler().post(() -> callback.onRttModeChanged(mode));
         }
     }
 
