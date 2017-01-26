@@ -128,13 +128,80 @@ public final class BluetoothCodecConfig implements Parcelable {
                             mCodecSpecific2, mCodecSpecific3, mCodecSpecific4);
     }
 
+    /**
+     * Adds capability string to an existing string.
+     *
+     * @param prevStr the previous string with the capabilities. Can be
+     * a null pointer.
+     * @param capStr the capability string to append to prevStr argument.
+     * @return the result string in the form "prevStr|capStr".
+     */
+    private String appendCapabilityToString(String prevStr, String capStr) {
+        if (prevStr == null) {
+            return capStr;
+        }
+        return prevStr + "|" + capStr;
+    }
+
     @Override
     public String toString() {
-        return "{mCodecType:" + mCodecType +
+        String sampleRateStr = null;
+        if (mSampleRate == SAMPLE_RATE_NONE) {
+            sampleRateStr = appendCapabilityToString(sampleRateStr, "NONE");
+        }
+        if ((mSampleRate & SAMPLE_RATE_44100) != 0) {
+            sampleRateStr = appendCapabilityToString(sampleRateStr, "44100");
+        }
+        if ((mSampleRate & SAMPLE_RATE_48000) != 0) {
+            sampleRateStr = appendCapabilityToString(sampleRateStr, "48000");
+        }
+        if ((mSampleRate & SAMPLE_RATE_88200) != 0) {
+            sampleRateStr = appendCapabilityToString(sampleRateStr, "88200");
+        }
+        if ((mSampleRate & SAMPLE_RATE_96000) != 0) {
+            sampleRateStr = appendCapabilityToString(sampleRateStr, "96000");
+        }
+        if ((mSampleRate & SAMPLE_RATE_176400) != 0) {
+            sampleRateStr = appendCapabilityToString(sampleRateStr, "176400");
+        }
+        if ((mSampleRate & SAMPLE_RATE_192000) != 0) {
+            sampleRateStr = appendCapabilityToString(sampleRateStr, "192000");
+        }
+
+        String bitsPerSampleStr = null;
+        if (mBitsPerSample == BITS_PER_SAMPLE_NONE) {
+            bitsPerSampleStr = appendCapabilityToString(bitsPerSampleStr, "NONE");
+        }
+        if ((mBitsPerSample & BITS_PER_SAMPLE_16) != 0) {
+            bitsPerSampleStr = appendCapabilityToString(bitsPerSampleStr, "16");
+        }
+        if ((mBitsPerSample & BITS_PER_SAMPLE_24) != 0) {
+            bitsPerSampleStr = appendCapabilityToString(bitsPerSampleStr, "24");
+        }
+        if ((mBitsPerSample & BITS_PER_SAMPLE_32) != 0) {
+            bitsPerSampleStr = appendCapabilityToString(bitsPerSampleStr, "32");
+        }
+
+        String channelModeStr = null;
+        if (mChannelMode == CHANNEL_MODE_NONE) {
+            channelModeStr = appendCapabilityToString(channelModeStr, "NONE");
+        }
+        if ((mChannelMode & CHANNEL_MODE_MONO) != 0) {
+            channelModeStr = appendCapabilityToString(channelModeStr, "MONO");
+        }
+        if ((mChannelMode & CHANNEL_MODE_STEREO) != 0) {
+            channelModeStr = appendCapabilityToString(channelModeStr, "STEREO");
+        }
+
+        return "{codecName:" + getCodecName() +
+            ",mCodecType:" + mCodecType +
             ",mCodecPriority:" + mCodecPriority +
             ",mSampleRate:" + String.format("0x%x", mSampleRate) +
+            "(" + sampleRateStr + ")" +
             ",mBitsPerSample:" + String.format("0x%x", mBitsPerSample) +
+            "(" + bitsPerSampleStr + ")" +
             ",mChannelMode:" + String.format("0x%x", mChannelMode) +
+            "(" + channelModeStr + ")" +
             ",mCodecSpecific1:" + mCodecSpecific1 +
             ",mCodecSpecific2:" + mCodecSpecific2 +
             ",mCodecSpecific3:" + mCodecSpecific3 +
@@ -178,6 +245,31 @@ public final class BluetoothCodecConfig implements Parcelable {
         out.writeLong(mCodecSpecific2);
         out.writeLong(mCodecSpecific3);
         out.writeLong(mCodecSpecific4);
+    }
+
+    /**
+     * Returns the codec name.
+     *
+     * @return the codec name
+     */
+    public String getCodecName() {
+        switch (mCodecType) {
+        case SOURCE_CODEC_TYPE_SBC:
+            return "SBC";
+        case SOURCE_CODEC_TYPE_AAC:
+            return "AAC";
+        case SOURCE_CODEC_TYPE_APTX:
+            return "aptX";
+        case SOURCE_CODEC_TYPE_APTX_HD:
+            return "aptX HD";
+        case SOURCE_CODEC_TYPE_LDAC:
+            return "LDAC";
+        case SOURCE_CODEC_TYPE_INVALID:
+            return "INVALID CODEC";
+        default:
+            break;
+        }
+        return "UNKNOWN CODEC(" + mCodecType + ")";
     }
 
     /**
