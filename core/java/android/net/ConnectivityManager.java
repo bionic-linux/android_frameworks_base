@@ -1456,6 +1456,53 @@ public class ConnectivityManager {
         return true;
     }
 
+    /**
+     * Given a legacy type (TYPE_WIFI, ...) returns a NetworkCapabilities
+     * instance suitable for registering a request or callback.  Returns
+     * null if no mapping from type to NetworkCapabilities is known.
+     *
+     * @hide
+     */
+    public static NetworkCapabilities networkCapabilitiesForType(int type) {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+
+        // Map from type to transports.
+        switch (type) {
+            case TYPE_MOBILE:
+            case TYPE_MOBILE_DUN:
+            case TYPE_MOBILE_HIPRI:
+                nc.addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
+                break;
+            case TYPE_WIFI:
+            case TYPE_WIFI_P2P:
+                nc.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
+                break;
+            case TYPE_BLUETOOTH:
+                nc.addTransportType(NetworkCapabilities.TRANSPORT_BLUETOOTH);
+                break;
+            case TYPE_ETHERNET:
+                nc.addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET);
+                break;
+            default:
+                return null;
+        }
+
+        // Map from type to capabilities.
+        switch (type) {
+            case TYPE_MOBILE_DUN:
+                nc.addCapability(NetworkCapabilities.NET_CAPABILITY_DUN);
+                nc.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+                break;
+            case TYPE_WIFI_P2P:
+                nc.addCapability(NetworkCapabilities.NET_CAPABILITY_WIFI_P2P);
+                break;
+            default:
+                nc.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        }
+
+        return nc;
+    }
+
     /** @hide */
     public static class PacketKeepaliveCallback {
         /** The requested keepalive was successfully started. */
