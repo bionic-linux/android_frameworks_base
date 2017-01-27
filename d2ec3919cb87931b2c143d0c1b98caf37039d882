@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "506dd8e1_05dd38ea",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T19:07:00Z",
+      "side": 1,
+      "message": "should we file a bug to make sure it isn\u0027t lost?",
+      "range": {
+        "startLine": 45,
+        "startChar": 24,
+        "endLine": 45,
+        "endChar": 57
+      },
+      "revId": "d2ec3919cb87931b2c143d0c1b98caf37039d882",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
