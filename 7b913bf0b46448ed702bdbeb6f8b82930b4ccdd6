@@ -22,6 +22,29 @@
       "revId": "7b913bf0b46448ed702bdbeb6f8b82930b4ccdd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7606611_102e1b1c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-30T08:52:48Z",
+      "side": 0,
+      "message": "mTryCell is not completely gone.",
+      "range": {
+        "startLine": 1364,
+        "startChar": 0,
+        "endLine": 1364,
+        "endChar": 37
+      },
+      "revId": "7b913bf0b46448ed702bdbeb6f8b82930b4ccdd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
