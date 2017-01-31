@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "65061103_9a320664",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-31T06:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 1466,
+        "startChar": 38,
+        "endLine": 1466,
+        "endChar": 64
+      },
+      "revId": "305fe7b5fc091dc817b203ec6a05feffe4a5760c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e14cb2f_53ee35dd",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 1
