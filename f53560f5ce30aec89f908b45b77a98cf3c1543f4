@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "d06f22cc_8ff3a022",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-31T06:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 9,
+        "startChar": 72,
+        "endLine": 9,
+        "endChar": 73
+      },
+      "revId": "f53560f5ce30aec89f908b45b77a98cf3c1543f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e87140f_e17260bf",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -36,6 +59,29 @@
       "writtenOn": "2017-01-31T02:02:18Z",
       "side": 1,
       "message": "This style looks good to me. I just wanted to mention the other possibility of doing:\n\nstatic final SparseIntArray mobileTypesToTransport \u003d new ...\nstatic {\n  mobileTypesToTransport.put(TYPE_MOBILE, NetworkCapabilities.TRANSPORT_CELLULAR);\n  mobileTypesToTransport.put(TYPE_WIFI, NetworkCapabilities.TRANSPORT_WIFI);\n  ...\n}\n\n...\n\nint transport \u003d mobileTypesToTransport.get(type);\nif (transport \u003e 0) {\n  nc.addTransportType(transport);\n}\n\n\nI am mentionning this approach because tt looks like this static mapping is something we might want to use consistently in several places where type\u003c-\u003etransport and type\u003c-\u003ecapability translation needs to happen.",
+      "range": {
+        "startLine": 1470,
+        "startChar": 8,
+        "endLine": 1470,
+        "endChar": 23
+      },
+      "revId": "f53560f5ce30aec89f908b45b77a98cf3c1543f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53cc067f_4c5ab160",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-31T06:40:16Z",
+      "side": 1,
+      "message": "Sure, I can do this, though the current approach for capabilities seems easier.\n\nAlso, TRANSPORT_CELLULAR is 0, so it will need to be \u003e -1.",
       "range": {
         "startLine": 1470,
         "startChar": 8,
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "16242c82_f82fe85c",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-31T06:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 10
+      },
+      "revId": "f53560f5ce30aec89f908b45b77a98cf3c1543f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf9db382_7f983925",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 2
@@ -82,6 +151,29 @@
       "writtenOn": "2017-01-31T02:02:18Z",
       "side": 1,
       "message": "should it be a \"full\" url starting with http:// ?",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 133,
+        "endChar": 30
+      },
+      "revId": "f53560f5ce30aec89f908b45b77a98cf3c1543f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf5b863a_7389118b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-31T06:40:16Z",
+      "side": 1,
+      "message": "Unsure.  Used the short form, and added a space before the trailing full stop to make it easier to copy and paste.",
       "range": {
         "startLine": 133,
         "startChar": 20,
