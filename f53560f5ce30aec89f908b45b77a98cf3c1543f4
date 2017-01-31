@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "187a9e4f_08c8ea7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:02:18Z",
+      "side": 1,
+      "message": "line overflow",
+      "range": {
+        "startLine": 9,
+        "startChar": 72,
+        "endLine": 9,
+        "endChar": 73
+      },
+      "revId": "f53560f5ce30aec89f908b45b77a98cf3c1543f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e87140f_e17260bf",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:02:18Z",
+      "side": 1,
+      "message": "This style looks good to me. I just wanted to mention the other possibility of doing:\n\nstatic final SparseIntArray mobileTypesToTransport \u003d new ...\nstatic {\n  mobileTypesToTransport.put(TYPE_MOBILE, NetworkCapabilities.TRANSPORT_CELLULAR);\n  mobileTypesToTransport.put(TYPE_WIFI, NetworkCapabilities.TRANSPORT_WIFI);\n  ...\n}\n\n...\n\nint transport \u003d mobileTypesToTransport.get(type);\nif (transport \u003e 0) {\n  nc.addTransportType(transport);\n}\n\n\nI am mentionning this approach because tt looks like this static mapping is something we might want to use consistently in several places where type\u003c-\u003etransport and type\u003c-\u003ecapability translation needs to happen.",
+      "range": {
+        "startLine": 1470,
+        "startChar": 8,
+        "endLine": 1470,
+        "endChar": 23
+      },
+      "revId": "f53560f5ce30aec89f908b45b77a98cf3c1543f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3429d18_4dfbc585",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:02:18Z",
+      "side": 1,
+      "message": "needs as \"@param nc blablabla\" cline as well to be javadoc compliant.",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 10
+      },
+      "revId": "f53560f5ce30aec89f908b45b77a98cf3c1543f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf9db382_7f983925",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:02:18Z",
+      "side": 1,
+      "message": "should it be a \"full\" url starting with http:// ?",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 133,
+        "endChar": 30
+      },
+      "revId": "f53560f5ce30aec89f908b45b77a98cf3c1543f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
