@@ -22,6 +22,29 @@
       "revId": "a5db1ab6863d8018543df99825b662622eb9054a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a969804_c5134314",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-31T03:15:18Z",
+      "side": 1,
+      "message": "This comment is ancient, and not relevant.  Removed.\n\nNaturally, when entering \"TetherModeAliveState\" you want to initiate the process of selecting a suitable upstream.",
+      "range": {
+        "startLine": 1363,
+        "startChar": 0,
+        "endLine": 1363,
+        "endChar": 81
+      },
+      "revId": "a5db1ab6863d8018543df99825b662622eb9054a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
