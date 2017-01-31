@@ -473,7 +473,7 @@ public class TaskStack implements DimLayer.DimLayerUser,
                 .getDockedDividerController().getContentWidth();
         final int dockSide = getDockSide(outBounds);
         final int dividerPosition = DockedDividerUtils.calculatePositionForBounds(outBounds,
-                dockSide, dividerSize);
+                dockSide, dividerSize) + calculateStableInsetsEffectAfterRotation(dockSide);
         final int displayWidth = mDisplayContent.getDisplayInfo().logicalWidth;
         final int displayHeight = mDisplayContent.getDisplayInfo().logicalHeight;
 
@@ -490,6 +490,70 @@ public class TaskStack implements DimLayer.DimLayerUser,
         DockedDividerUtils.calculateBoundsForPosition(target.position, dockSide,
                 outBounds, displayInfo.logicalWidth, displayInfo.logicalHeight,
                 dividerSize);
+    }
+
+    private int calculateStableInsetsEffectAfterRotation(int dockSide) {
+        if (mRotation == mDisplayContent.getDisplayInfo().rotation) {
+            // No rotation change.
+            return 0;
+        }
+
+        // Calculate old dock side and old display size.
+        final int displayWidth = mDisplayContent.getDisplayInfo().logicalWidth;
+        final int displayHeight = mDisplayContent.getDisplayInfo().logicalHeight;
+        final int oldDockSide;
+        mDisplayContent.getLogicalDisplayRect(mTmpRect);
+        mDisplayContent.rotateBounds(mDisplayContent.getDisplayInfo().rotation, mRotation,
+                mTmpRect);
+        final int oldDisplayWidth = mTmpRect.width();
+        final int oldDisplayHeight = mTmpRect.height();
+        if (mService.mCurConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Rotated from landscape.
+            oldDockSide = getDockSideUnchecked(mBounds, mTmpRect,
+                    Configuration.ORIENTATION_LANDSCAPE);
+        } else if (mService.mCurConfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Rotated from portrait.
+            oldDockSide = getDockSideUnchecked(mBounds, mTmpRect,
+                    Configuration.ORIENTATION_PORTRAIT);
+        } else {
+            return 0;
+        }
+
+        // Calculate old stable insets effect.
+        mService.mPolicy.getStableInsetsLw(mRotation, oldDisplayWidth, oldDisplayHeight, mTmpRect);
+        final int oldStableInsetsSize = calculateStableInsetsSize(mTmpRect, oldDockSide);
+        final int oldUnsplittableSize = calculateUnsplittableSize(mTmpRect, oldDockSide);
+
+        // Calculate new stable insets effect.
+        mService.mPolicy.getStableInsetsLw(mDisplayContent.getDisplayInfo().rotation,
+                displayWidth, displayHeight, mTmpRect);
+        final int stableInsetsSize = calculateStableInsetsSize(mTmpRect, dockSide);
+        final int unsplittableSize = calculateUnsplittableSize(mTmpRect, dockSide);
+
+        return stableInsetsSize - oldStableInsetsSize
+                - (unsplittableSize - oldUnsplittableSize) / 2;
+    }
+
+    private int calculateStableInsetsSize(Rect insets, int dockSide) {
+        if (dockSide == DOCKED_TOP) {
+            return insets.top; // status bar height
+        } else if (dockSide == DOCKED_LEFT) {
+            return insets.left; // navigation bar width if exists
+        } else if (dockSide == DOCKED_RIGHT) {
+            return insets.right; // navigation bar width if exists
+        } else if (dockSide == DOCKED_BOTTOM) {
+            return insets.bottom; // navigation bar height
+        }
+        return 0;
+    }
+
+    private int calculateUnsplittableSize(Rect insets, int dockSide) {
+        if (dockSide == DOCKED_TOP || dockSide == DOCKED_BOTTOM) {
+            return insets.top + insets.bottom; // status bar and navigation bar height
+        } else if (dockSide == DOCKED_LEFT || dockSide == DOCKED_RIGHT) {
+            return insets.left + insets.right; // navigation bar height if exists
+        }
+        return 0;
     }
 
     boolean isAnimating() {
