@@ -3255,8 +3255,9 @@ final class ActivityStack {
 
     final void stopActivityLocked(ActivityRecord r) {
         if (DEBUG_SWITCH) Slog.d(TAG_SWITCH, "Stopping: " + r);
-        if ((r.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_HISTORY) != 0
-                || (r.info.flags&ActivityInfo.FLAG_NO_HISTORY) != 0) {
+        if (!mService.getTaskWindowPlacer().isActivityMinimized(r)
+                && ((r.intent.getFlags() & Intent.FLAG_ACTIVITY_NO_HISTORY) != 0
+                           || (r.info.flags & ActivityInfo.FLAG_NO_HISTORY) != 0)) {
             if (!r.finishing) {
                 if (!mService.isSleepingLocked()) {
                     if (DEBUG_STATES) Slog.d(TAG_STATES, "no-history finish of " + r);
