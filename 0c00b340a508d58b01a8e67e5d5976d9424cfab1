@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110daf5d_2a24813d",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-01T06:14:16Z",
+      "side": 1,
+      "message": "Nit: often when trying to enforce that something didn\u0027t happen it\u0027s beneficial to use a Mock object, where you can record, replay, and verify expectations.\n\nHaving an explicit counter in a home-grown object works too but it does require that you remember to update any future method calls to update totalOperations.\n\nThat said, given that your TestConnectivityManager is already more sophisticated than a simple mock it, using a mock might not be useful at all.",
+      "range": {
+        "startLine": 259,
+        "startChar": 12,
+        "endLine": 259,
+        "endChar": 30
+      },
+      "revId": "0c00b340a508d58b01a8e67e5d5976d9424cfab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
