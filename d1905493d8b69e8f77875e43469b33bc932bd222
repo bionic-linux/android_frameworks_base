@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e0580f7_ff61f984",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-01T01:04:31Z",
+      "side": 1,
+      "message": "is this necessary ?",
+      "range": {
+        "startLine": 426,
+        "startChar": 4,
+        "endLine": 426,
+        "endChar": 17
+      },
+      "revId": "d1905493d8b69e8f77875e43469b33bc932bd222",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa194f47_09f28da3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-01T01:04:31Z",
+      "side": 1,
+      "message": "consider prefixing these constants with CALLBACK_ or for clarifying their purpose.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "d1905493d8b69e8f77875e43469b33bc932bd222",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b87685a_b3a80968",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-01T01:04:31Z",
+      "side": 1,
+      "message": "consider using a switch.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 81
+      },
+      "revId": "d1905493d8b69e8f77875e43469b33bc932bd222",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca5150e7_170b8894",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-01T01:04:31Z",
+      "side": 1,
+      "message": "I suggest a static import of all the TRANSPORT_* constants you need.",
+      "range": {
+        "startLine": 43,
+        "startChar": 35,
+        "endLine": 43,
+        "endChar": 73
+      },
+      "revId": "d1905493d8b69e8f77875e43469b33bc932bd222",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f9dce4b_e2f41992",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-01T01:04:31Z",
+      "side": 1,
+      "message": "Not necessarily important if you have any higher priority tasks. Here are just a couple of comments about testing:\n\n- if you see repeated pattern in tests, consider refactoring it like non-test code. For instance here you could have:\n\nassertHasCapabalities(NetworkCapabilities nc, int... caps) {\n  for (int c : caps) {\n    assertTrue(nc.hasCapability, caps);\n  }\n}\n\nyou can also create a testcase method like this:\n\nvoid verifyNetworkCapabalitiesForType(int type, int transport, int... caps) {\n  final NetCap nc \u003d ConnMgr.netCapForType(type);\n  assertNonNull(nc);\n  assertTrue(nc.hasTransport(transport));\n  assertHasCapabilities(nc, caps);\n}\n\n- assertTrue() is very unhelpful for debugging, because it prints messages like \"got false, expected true\" which are not immediately actionable. One alternative for better test failure messages is using the overloaded version with a string:\n\nassertTrue(\"expected capability \" + transportName(c), nc.hasCapability(c));",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 81
+      },
+      "revId": "d1905493d8b69e8f77875e43469b33bc932bd222",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
