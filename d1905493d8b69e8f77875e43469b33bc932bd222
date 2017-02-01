@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "4badd0ba_00323fb7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-01T06:53:05Z",
+      "side": 1,
+      "message": "Nit: I\u0027d just throw an IllegalArgumentException for any invalid input since that is not a failure mode but a programming error.\n\nAll the callers of this code are going to be tightly coupled with it, so I don\u0027t see the benefit of adding code to support graceful error recovery.",
+      "range": {
+        "startLine": 1482,
+        "startChar": 0,
+        "endLine": 1487,
+        "endChar": 39
+      },
+      "revId": "d1905493d8b69e8f77875e43469b33bc932bd222",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab9e7788_0f522908",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-01T06:53:05Z",
+      "side": 1,
+      "message": "Instead of duplicating the knowledge about what\u0027s restricted and what\u0027s not, I would suggest unconditionally doing:\n\n    nc.maybeMarkCapabilitiesRestricted();\n\nbefore:\n\n    return nc;",
+      "range": {
+        "startLine": 1493,
+        "startChar": 16,
+        "endLine": 1493,
+        "endChar": 87
+      },
+      "revId": "d1905493d8b69e8f77875e43469b33bc932bd222",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24f672e8_2d2a9500",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-01T06:53:05Z",
+      "side": 1,
+      "message": "Nit: now that you have this new code, can you also simplify networkCapabilitiesForFeature to call it? That method could become something very simple along the lines of:\n\n    private NetworkCapabilities networkCapabilitiesForFeature(int networkType, String feature) {\n        if (networkType \u003d\u003d TYPE_MOBILE) {\n            switch (feature) {\n                case \"enableMMS\":\n                    return networkCapabilitiesForType(TYPE_MOBILE_MMS);\n                case \"enableSUPL\":\n                    return networkCapabilitiesForType(TYPE_MOBILE_SUPL);\n                case \"enableDUN\":\n                case \"enableDUNAlways\":\n                    return networkCapabilitiesForType(TYPE_MOBILE_SUPL);\n                ....\n            }\n        } else if (networkType \u003d\u003d TYPE_WIFI \u0026\u0026 \"p2p\".equals(feature)) {\n            return networkCapabilitiesForType(TYPE_WIFI_P2P);\n        }\n\n        return null;\n    }",
+      "revId": "d1905493d8b69e8f77875e43469b33bc932bd222",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e0580f7_ff61f984",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
