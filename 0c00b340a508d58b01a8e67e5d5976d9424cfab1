@@ -22,6 +22,29 @@
       "revId": "0c00b340a508d58b01a8e67e5d5976d9424cfab1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d363f81b_ed537068",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-01T12:29:17Z",
+      "side": 1,
+      "message": "New version with a spy implementation now.",
+      "range": {
+        "startLine": 259,
+        "startChar": 12,
+        "endLine": 259,
+        "endChar": 30
+      },
+      "revId": "0c00b340a508d58b01a8e67e5d5976d9424cfab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
