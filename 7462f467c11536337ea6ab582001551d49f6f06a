@@ -22,6 +22,29 @@
       "revId": "7462f467c11536337ea6ab582001551d49f6f06a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a3e017f_1f93446e",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-02T03:00:09Z",
+      "side": 1,
+      "message": "For some of these calls, yes, but for others no.  Because there are ConnectivityService calls that have the same name but take, say, an Intent instead (for example).\n\nI don\u0027t much mind being explicit (since I really do need to be sure the calls in stubby CM are getting called.  \u003d)",
+      "range": {
+        "startLine": 142,
+        "startChar": 20,
+        "endLine": 142,
+        "endChar": 40
+      },
+      "revId": "7462f467c11536337ea6ab582001551d49f6f06a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
