@@ -1573,7 +1573,7 @@ public final class BluetoothDevice implements Parcelable {
      * @throws IllegalArgumentException if callback is null
      */
     public BluetoothGatt connectGatt(Context context, boolean autoConnect,
-                                     BluetoothGattCallback callback) {
+                                     BluetoothGattCallbackExt callback) {
         return (connectGatt(context, autoConnect,callback, TRANSPORT_AUTO));
     }
 
@@ -1593,7 +1593,7 @@ public final class BluetoothDevice implements Parcelable {
      * @throws IllegalArgumentException if callback is null
      */
     public BluetoothGatt connectGatt(Context context, boolean autoConnect,
-                                     BluetoothGattCallback callback, int transport) {
+                                     BluetoothGattCallbackExt callback, int transport) {
         // TODO(Bluetooth) check whether platform support BLE
         //     Do the check here or in GattServer?
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();

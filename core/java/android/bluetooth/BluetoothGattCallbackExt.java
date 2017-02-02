@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,19 @@ package android.bluetooth;
 
 /**
  * This abstract class is used to implement {@link BluetoothGatt} callbacks.
- * @deprecated use {@link BluetoothGattCallbackExt}
  */
-public abstract class BluetoothGattCallback extends BluetoothGattCallbackExt {
+public abstract class BluetoothGattCallbackExt {
+
+    /**
+     *
+     * @param gatt GATT client
+     * @param status Status of the phy update operation.
+     *               {@link BluetoothGatt#GATT_SUCCESS} if the operation succeeds.
+     * @param txPhy
+     * @param rxPhy
+     */
+    public void onPhyUpdate(BluetoothGatt gatt, int status, int txPhy, int rxPhy) {
+    }
 
     /**
      * Callback indicating when GATT client has connected/disconnected to/from a remote
@@ -35,14 +45,6 @@ public abstract class BluetoothGattCallback extends BluetoothGattCallbackExt {
      */
     public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                         int newState) {
-    }
-
-    /**
-     * @hide
-     */
-    @Override
-    public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
-
     }
 
     /**
