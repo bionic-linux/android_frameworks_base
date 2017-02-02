@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df87b50_03b16e4d",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1011544
+      },
+      "writtenOn": "2017-02-02T21:08:13Z",
+      "side": 1,
+      "message": "Should this be slotId?",
+      "revId": "e6ec7d8b8f0bd9875cbaff5aa1c3bc2b69e6cc51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
