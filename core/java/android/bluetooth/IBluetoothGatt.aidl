@@ -20,15 +20,18 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.le.AdvertiseSettings;
 import android.bluetooth.le.AdvertiseData;
+import android.bluetooth.le.AdvertisingSetParameters;
+import android.bluetooth.le.PeriodicAdvertisingParameters;
+import android.bluetooth.le.ResultStorageDescriptor;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanSettings;
-import android.bluetooth.le.ResultStorageDescriptor;
 import android.os.ParcelUuid;
 import android.os.WorkSource;
 
-import android.bluetooth.IBluetoothGattCallback;
+import android.bluetooth.IBluetoothGattCallbackExt;
 import android.bluetooth.IBluetoothGattServerCallback;
 import android.bluetooth.le.IAdvertiserCallback;
+import android.bluetooth.le.IExtendedAdvertiserCallback;
 import android.bluetooth.le.IScannerCallback;
 
 /**
@@ -53,7 +56,14 @@ interface IBluetoothGatt {
                                in AdvertiseSettings settings);
     void stopMultiAdvertising(in int advertiserId);
 
-    void registerClient(in ParcelUuid appId, in IBluetoothGattCallback callback);
+/*    void registerAdvertisingSet(in AdvertisingSetParameters parameters,
+                           in AdvertiseData advertiseData,
+                           in AdvertiseData scanResponse,
+                           in PeriodicAdvertisingParameters periodicParameters,
+                           in AdvertiseData periodicData,
+                           in IExtendedAdvertiserCallback callback);
+*/
+    void registerClient(in ParcelUuid appId, in IBluetoothGattCallbackExt callback);
     void unregisterClient(in int clientIf);
     void clientConnect(in int clientIf, in String address, in boolean isDirect, in int transport);
     void clientDisconnect(in int clientIf, in String address);
