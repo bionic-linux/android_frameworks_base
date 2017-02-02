@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d532757_cd7e40ca",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-02T01:28:22Z",
+      "side": 1,
+      "message": "consider instead feeding NET_CAPABILITY_INTERNET as the default to sLegacyTypeToCapability.get() directly.",
+      "range": {
+        "startLine": 1499,
+        "startChar": 8,
+        "endLine": 1503,
+        "endChar": 9
+      },
+      "revId": "10d573dd0aa864e0639cff241b90aac193614f20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
