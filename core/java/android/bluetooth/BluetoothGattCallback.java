@@ -18,8 +18,9 @@ package android.bluetooth;
 
 /**
  * This abstract class is used to implement {@link BluetoothGatt} callbacks.
+ * @deprecated use {@link BluetoothGattCallbackExt}
  */
-public abstract class BluetoothGattCallback {
+public abstract class BluetoothGattCallback extends BluetoothGattCallbackExt {
 
     /**
      * Callback indicating when GATT client has connected/disconnected to/from a remote
@@ -34,6 +35,14 @@ public abstract class BluetoothGattCallback {
      */
     public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                         int newState) {
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
+
     }
 
     /**
