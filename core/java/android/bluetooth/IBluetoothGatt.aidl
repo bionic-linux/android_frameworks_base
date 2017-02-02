@@ -26,8 +26,8 @@ import android.bluetooth.le.ResultStorageDescriptor;
 import android.os.ParcelUuid;
 import android.os.WorkSource;
 
-import android.bluetooth.IBluetoothGattCallback;
-import android.bluetooth.IBluetoothGattServerCallback;
+import android.bluetooth.IBluetoothGattCallbackExt;
+import android.bluetooth.IBluetoothGattServerCallbackExt;
 import android.bluetooth.le.IAdvertiserCallback;
 import android.bluetooth.le.IScannerCallback;
 
@@ -53,10 +53,11 @@ interface IBluetoothGatt {
                                in AdvertiseSettings settings);
     void stopMultiAdvertising(in int advertiserId);
 
-    void registerClient(in ParcelUuid appId, in IBluetoothGattCallback callback);
+    void registerClient(in ParcelUuid appId, in IBluetoothGattCallbackExt callback);
     void unregisterClient(in int clientIf);
-    void clientConnect(in int clientIf, in String address, in boolean isDirect, in int transport);
+    void clientConnect(in int clientIf, in String address, in boolean isDirect, in int transport, in int phy);
     void clientDisconnect(in int clientIf, in String address);
+    void clientSetPreferredPhy(in int clientIf, in String address, in int txPhy, in int rxPhy);
     void refreshDevice(in int clientIf, in String address);
     void discoverServices(in int clientIf, in String address);
     void readCharacteristic(in int clientIf, in String address, in int handle, in int authReq);
@@ -72,10 +73,11 @@ interface IBluetoothGatt {
     void configureMTU(in int clientIf, in String address, in int mtu);
     void connectionParameterUpdate(in int clientIf, in String address, in int connectionPriority);
 
-    void registerServer(in ParcelUuid appId, in IBluetoothGattServerCallback callback);
+    void registerServer(in ParcelUuid appId, in IBluetoothGattServerCallbackExt callback);
     void unregisterServer(in int serverIf);
     void serverConnect(in int serverIf, in String address, in boolean isDirect, in int transport);
     void serverDisconnect(in int serverIf, in String address);
+    void serverSetPreferredPhy(in int clientIf, in String address, in int txPhy, in int rxPhy);
     void addService(in int serverIf, in BluetoothGattService service);
     void removeService(in int serverIf, in int handle);
     void clearServices(in int serverIf);
