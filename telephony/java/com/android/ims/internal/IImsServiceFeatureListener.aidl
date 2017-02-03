@@ -17,6 +17,7 @@
 package com.android.ims.internal;
 
 /**
+ * Callback to ImsManager when a feature changes in the ImsServiceController.
  * {@hide}
  */
 oneway interface IImsServiceFeatureListener {
