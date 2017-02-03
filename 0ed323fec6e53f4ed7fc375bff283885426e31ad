@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "1914ada4_f21cf9ef",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-02-03T18:14:10Z",
+      "side": 1,
+      "message": "This sounds like a function that gets whether or not Rtt has changed. Would onRttstatusChanged or onRttIsChanged be better?",
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61c69cde_7759277e",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
