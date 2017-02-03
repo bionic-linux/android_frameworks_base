@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b755b4ef_1722528c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-03T04:18:07Z",
+      "side": 1,
+      "message": "I still think that we do this in a more straightforward manner with mUsbTetherRequested \u0026\u0026 isUsb(iface).",
+      "range": {
+        "startLine": 276,
+        "startChar": 16,
+        "endLine": 276,
+        "endChar": 32
+      },
+      "revId": "86ef8b14c027fdea077969e71b7b68221fc280be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98caae0c_630a34f0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-03T04:18:07Z",
+      "side": 1,
+      "message": "I think unconditionally setting this to false is a source errors.  We should leave around the fact that usb tethering had been requested.  Then you could auto-start when a matching interface comes up.\n\nI think?",
+      "range": {
+        "startLine": 741,
+        "startChar": 16,
+        "endLine": 741,
+        "endChar": 43
+      },
+      "revId": "86ef8b14c027fdea077969e71b7b68221fc280be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
