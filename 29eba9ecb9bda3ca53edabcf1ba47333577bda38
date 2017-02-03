@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2acd3a6_02a8e413",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 36765,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-03T02:03:46Z",
+      "side": 1,
+      "message": "Forgot to hide the constructor for RttCall... will fix this",
+      "range": {
+        "startLine": 36765,
+        "startChar": 21,
+        "endLine": 36765,
+        "endChar": 34
+      },
+      "revId": "29eba9ecb9bda3ca53edabcf1ba47333577bda38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
