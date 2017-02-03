@@ -364,6 +364,29 @@
     },
     {
       "key": {
+        "uuid": "8eeb75e9_cf013491",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-03T05:37:32Z",
+      "side": 1,
+      "message": "Any need to also have this in Call?  I guess the presence of RTT there gives it away.",
+      "range": {
+        "startLine": 390,
+        "startChar": 28,
+        "endLine": 390,
+        "endChar": 43
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8383f624_fc8d5d27",
         "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
         "patchSetId": 3
