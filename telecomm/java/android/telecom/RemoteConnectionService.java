@@ -405,6 +405,50 @@ final class RemoteConnectionService {
                         extras);
             }
         }
+
+        @Override
+        public void onRttConnectionSuccess(String callId, Session.Info sessionInfo)
+                throws RemoteException {
+            if (hasConnection(callId)) {
+                findConnectionForAction(callId, "onRttConnectionSuccess")
+                        .onRttConnectionSuccess();
+            } else {
+                Log.w(this, "onRttConnectionSuccess called on a remote conference");
+            }
+        }
+
+        @Override
+        public void onRttConnectionFailure(String callId, Session.Info sessionInfo)
+                throws RemoteException {
+            if (hasConnection(callId)) {
+                findConnectionForAction(callId, "onRttConnectionFailure")
+                        .onRttConnectionFailure();
+            } else {
+                Log.w(this, "onRttConnectionFailure called on a remote conference");
+            }
+        }
+
+        @Override
+        public void onRttConnectionRemotelyTerminated(String callId, Session.Info sessionInfo)
+                throws RemoteException {
+            if (hasConnection(callId)) {
+                findConnectionForAction(callId, "onRttConnectionRemotelyTerminated")
+                        .onRttConnectionRemotelyTerminated();
+            } else {
+                Log.w(this, "onRttConnectionRemotelyTerminated called on a remote conference");
+            }
+        }
+
+        @Override
+        public void onRemoteRttUpgradeRequest(String callId, Session.Info sessionInfo)
+                throws RemoteException {
+            if (hasConnection(callId)) {
+                findConnectionForAction(callId, "onRemoteRttUpgradeRequest")
+                        .onRemoteRttUpgradeRequest();
+            } else {
+                Log.w(this, "onRemoteRttUpgradeRequest called on a remote conference");
+            }
+        }
     };
 
     private final ConnectionServiceAdapterServant mServant =
