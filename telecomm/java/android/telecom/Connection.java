@@ -764,6 +764,10 @@ public abstract class Connection extends Conferenceable {
         /** @hide */
         public void onConferenceSupportedChanged(Connection c, boolean isConferenceSupported) {}
         public void onAudioRouteChanged(Connection c, int audioRoute) {}
+        public void onRttConnectionSuccess(Connection c) {}
+        public void onRttConnectionFailure(Connection c) {}
+        public void onRttConnectionRemotelyTerminated(Connection c) {}
+        public void onRemoteRttUpgradeRequest(Connection c) {}
     }
 
     /**
@@ -774,12 +778,16 @@ public abstract class Connection extends Conferenceable {
         private static final int READ_BUFFER_SIZE = 1000;
         private final InputStreamReader mPipeFromInCall;
         private final OutputStreamWriter mPipeToInCall;
+        private final ParcelFileDescriptor mFdFromInCall;
+        private final ParcelFileDescriptor mFdToInCall;
         private char[] mReadBuffer = new char[READ_BUFFER_SIZE];
 
         /**
          * @hide
          */
         public RttTextStream(ParcelFileDescriptor toInCall, ParcelFileDescriptor fromInCall) {
+            mFdFromInCall = fromInCall;
+            mFdToInCall = toInCall;
             mPipeFromInCall = new InputStreamReader(
                     new ParcelFileDescriptor.AutoCloseInputStream(fromInCall));
             mPipeToInCall = new OutputStreamWriter(
@@ -822,6 +830,16 @@ public abstract class Connection extends Conferenceable {
                 Log.w(this, "Exception encountered when reading from InputStreamReader: %s", e);
                 return null;
             }
+        }
+
+        /** @hide */
+        public ParcelFileDescriptor getFdFromInCall() {
+            return mFdFromInCall;
+        }
+
+        /** @hide */
+        public ParcelFileDescriptor getFdToInCall() {
+            return mFdToInCall;
         }
     }
 
@@ -2426,6 +2444,46 @@ public abstract class Connection extends Conferenceable {
     }
 
     /**
+     * Informs listeners that a previously requested RTT connection via
+     * {@link ConnectionRequest#isRequestingRtt()} or
+     * {@link #onStartRtt(ParcelFileDescriptor, ParcelFileDescriptor)}
+     * has succeeded.
+     * @hide
+     */
+    public final void sendRttConnectionSuccess() {
+        mListeners.forEach((l) -> l.onRttConnectionSuccess(Connection.this));
+    }
+
+    /**
+     * Informs listeners that a previously requested RTT connection via
+     * {@link ConnectionRequest#isRequestingRtt()} or
+     * {@link #onStartRtt(ParcelFileDescriptor, ParcelFileDescriptor)}
+     * has failed.
+     * @hide
+     */
+    public final void sendRttConnectionFailure() {
+        mListeners.forEach((l) -> l.onRttConnectionFailure(Connection.this));
+    }
+
+    /**
+     * Informs listeners that a currently active RTT session has been terminated by the remote
+     * side of the coll.
+     * @hide
+     */
+    public final void sendRttConnectionRemotelyTerminated() {
+        mListeners.forEach((l) -> l.onRttConnectionRemotelyTerminated(Connection.this));
+    }
+
+    /**
+     * Informs listeners that the remote side of the call has requested an upgrade to include an
+     * RTT session in the call.
+     * @hide
+     */
+    public final void sendRemoteRttUpgradeRequest() {
+        mListeners.forEach((l) -> l.onRemoteRttUpgradeRequest(Connection.this));
+    }
+
+    /**
      * Notifies this Connection that the {@link #getAudioState()} property has a new value.
      *
      * @param state The new connection audio state.
@@ -2594,6 +2652,35 @@ public abstract class Connection extends Conferenceable {
      * disconnect other ongoing calls, or to reject the new incoming call.
      */
     public void onShowIncomingCallUi() {}
+
+    /**
+     * Notifies this {@link Connection} that the user has requested an RTT session.
+     * The connection service should call {@link #sendRttConnectionSuccess} or
+     * {@link #sendRttConnectionFailure} to inform Telecom of the success or failure of the
+     * request, respectively.
+     * @param rttTextStream The object that should be used to send text to or receive text from
+     *                      the in-call app.
+     * @hide
+     */
+    public void onStartRtt(@NonNull RttTextStream rttTextStream) {}
+
+    /**
+     * Notifies this {@link Connection} that it should terminate any existing RTT communication
+     * channel. No response to Telecom is needed for this method.
+     * @hide
+     */
+    public void onStopRtt() {}
+
+    /**
+     * Notifies this connection of a response to a previous remotely-initiated RTT upgrade
+     * request sent via {@link #sendRemoteRttUpgradeRequest}. Acceptance of the request is
+     * indicated by the supplied {@link RttTextStream} being non-null, and rejection is
+     * indicated by {@code rttTextStream} being {@code null}
+     * @hide
+     * @param rttTextStream The object that should be used to send text to or receive text from
+     *                      the in-call app.
+     */
+    public void handleRttUpgradeResponse(@Nullable RttTextStream rttTextStream) {}
 
     static String toLogSafePhoneNumber(String number) {
         // For unknown number, log empty string.

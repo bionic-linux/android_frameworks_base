@@ -106,4 +106,12 @@ oneway interface IConnectionServiceAdapter {
 
     void onConnectionEvent(String callId, String event, in Bundle extras,
     in Session.Info sessionInfo);
+
+    void onRttConnectionSuccess(String callId, in Session.Info sessionInfo);
+
+    void onRttConnectionFailure(String callId, in Session.Info sessionInfo);
+
+    void onRttConnectionRemotelyTerminated(String callId, in Session.Info sessionInfo);
+
+    void onRemoteRttUpgradeRequest(String callId, in Session.Info sessionInfo);
 }

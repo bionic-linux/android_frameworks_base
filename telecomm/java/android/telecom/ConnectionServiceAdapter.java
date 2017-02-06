@@ -547,4 +547,66 @@ final class ConnectionServiceAdapter implements DeathRecipient {
             }
         }
     }
+
+    /**
+     * Notifies Telecom that an RTT connection was successfully established
+     *
+     * @param callId The unique ID of the call.
+     */
+    void onRttConnectionSuccess(String callId) {
+        Log.v(this, "onRttConnectionSuccess: %s", callId);
+        for (IConnectionServiceAdapter adapter : mAdapters) {
+            try {
+                adapter.onRttConnectionSuccess(callId, Log.getExternalSession());
+            } catch (RemoteException ignored) {
+            }
+        }
+    }
+
+    /**
+     * Notifies Telecom that a requested RTT connection failed to be established
+     *
+     * @param callId The unique ID of the call.
+     */
+    void onRttConnectionFailure(String callId) {
+        Log.v(this, "onRttConnectionFailure: %s", callId);
+        for (IConnectionServiceAdapter adapter : mAdapters) {
+            try {
+                adapter.onRttConnectionFailure(callId, Log.getExternalSession());
+            } catch (RemoteException ignored) {
+            }
+        }
+    }
+
+    /**
+     * Notifies Telecom that an established RTT connection was terminated by the remote user on
+     * the call.
+     *
+     * @param callId The unique ID of the call.
+     */
+    void onRttConnectionRemotelyTerminated(String callId) {
+        Log.v(this, "onRttConnectionRemotelyTerminated: %s", callId);
+        for (IConnectionServiceAdapter adapter : mAdapters) {
+            try {
+                adapter.onRttConnectionRemotelyTerminated(callId, Log.getExternalSession());
+            } catch (RemoteException ignored) {
+            }
+        }
+    }
+
+    /**
+     * Notifies Telecom that the remote user on the call has requested an upgrade to an RTT
+     * session for this call.
+     *
+     * @param callId The unique ID of the call.
+     */
+    void onRemoteRttUpgradeRequest(String callId) {
+        Log.v(this, "onRemoteRttUpgradeRequest: %s", callId);
+        for (IConnectionServiceAdapter adapter : mAdapters) {
+            try {
+                adapter.onRemoteRttUpgradeRequest(callId, Log.getExternalSession());
+            } catch (RemoteException ignored) {
+            }
+        }
+    }
 }

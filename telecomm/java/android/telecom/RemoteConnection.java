@@ -20,6 +20,7 @@ import com.android.internal.telecom.IConnectionService;
 import com.android.internal.telecom.IVideoCallback;
 import com.android.internal.telecom.IVideoProvider;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.hardware.camera2.CameraManager;
@@ -231,6 +232,38 @@ public final class RemoteConnection {
          * @param extras Extras associated with the event.
          */
         public void onConnectionEvent(RemoteConnection connection, String event, Bundle extras) {}
+
+        /**
+         * Indicates that a RTT connection was successfully established on this
+         * {@link RemoteConnection}. See {@link Connection#sendRttConnectionSuccess()}.
+         * @hide
+         * @param connection The {@code RemoteConnection} invoking this method.
+         */
+        public void onRttConnectionSuccess(RemoteConnection connection) {}
+
+        /**
+         * Indicates that a RTT connection failed to be established on this
+         * {@link RemoteConnection}. See {@link Connection#sendRttConnectionFailure()}.
+         * @hide
+         * @param connection The {@code RemoteConnection} invoking this method.
+         */
+        public void onRttConnectionFailure(RemoteConnection connection) {}
+
+        /**
+         * Indicates that an established RTT connection was terminated remotely on this
+         * {@link RemoteConnection}. See {@link Connection#sendRttConnectionRemotelyTerminated()}
+         * @hide
+         * @param connection The {@code RemoteConnection} invoking this method.
+         */
+        public void onRttConnectionRemotelyTerminated(RemoteConnection connection) {}
+
+        /**
+         * Indicates that the remote user on this {@link RemoteConnection} has requested an upgrade
+         * to an RTT session. See {@link Connection#sendRemoteRttUpgradeRequest()}
+         * @hide
+         * @param connection The {@code RemoteConnection} invoking this method.
+         */
+        public void onRemoteRttUpgradeRequest(RemoteConnection connection) {}
     }
 
     /**
@@ -1046,6 +1079,61 @@ public final class RemoteConnection {
     }
 
     /**
+     * Notifies this {@link RemoteConnection} that the user has requested an RTT session.
+     * @param rttTextStream The object that should be used to send text to or receive text from
+     *                      the in-call app.
+     * @hide
+     */
+    public void startRtt(@NonNull Connection.RttTextStream rttTextStream) {
+        try {
+            if (mConnected) {
+                mConnectionService.startRtt(mConnectionId, rttTextStream.getFdFromInCall(),
+                        rttTextStream.getFdToInCall(), null /*Session.Info*/);
+            }
+        } catch (RemoteException ignored) {
+        }
+    }
+
+    /**
+     * Notifies this {@link RemoteConnection} that it should terminate any existing RTT
+     * communication channel. No response to Telecom is needed for this method.
+     * @hide
+     */
+    public void stopRtt() {
+        try {
+            if (mConnected) {
+                mConnectionService.stopRtt(mConnectionId, null /*Session.Info*/);
+            }
+        } catch (RemoteException ignored) {
+        }
+    }
+
+    /**
+     * Notifies this {@link RemoteConnection} of a response to a previous remotely-initiated RTT
+     * upgrade request sent via {@link Connection#sendRemoteRttUpgradeRequest}.
+     * Acceptance of the request is indicated by the supplied {@link RttTextStream} being non-null,
+     * and rejection is indicated by {@code rttTextStream} being {@code null}
+     * @hide
+     * @param rttTextStream The object that should be used to send text to or receive text from
+     *                      the in-call app.
+     */
+    public void sendRttUpgradeResponse(@Nullable Connection.RttTextStream rttTextStream) {
+        try {
+            if (mConnected) {
+                if (rttTextStream == null) {
+                    mConnectionService.respondToRttUpgradeRequest(mConnectionId,
+                            null, null, null /*Session.Info*/);
+                } else {
+                    mConnectionService.respondToRttUpgradeRequest(mConnectionId,
+                            rttTextStream.getFdFromInCall(), rttTextStream.getFdToInCall(),
+                            null /*Session.Info*/);
+                }
+            }
+        } catch (RemoteException ignored) {
+        }
+    }
+
+    /**
      * Obtain the {@code RemoteConnection}s with which this {@code RemoteConnection} may be
      * successfully asked to create a conference with.
      *
@@ -1411,6 +1499,47 @@ public final class RemoteConnection {
         }
     }
 
+    /** @hide */
+    void onRttConnectionSuccess() {
+        for (CallbackRecord record : mCallbackRecords) {
+            final RemoteConnection connection = this;
+            final Callback callback = record.getCallback();
+            record.getHandler().post(
+                    () -> callback.onRttConnectionSuccess(connection));
+        }
+    }
+
+    /** @hide */
+    void onRttConnectionFailure() {
+        for (CallbackRecord record : mCallbackRecords) {
+            final RemoteConnection connection = this;
+            final Callback callback = record.getCallback();
+            record.getHandler().post(
+                    () -> callback.onRttConnectionFailure(connection));
+        }
+    }
+
+    /** @hide */
+    void onRttConnectionRemotelyTerminated() {
+        for (CallbackRecord record : mCallbackRecords) {
+            final RemoteConnection connection = this;
+            final Callback callback = record.getCallback();
+            record.getHandler().post(
+                    () -> callback.onRttConnectionRemotelyTerminated(connection));
+        }
+    }
+
+    /** @hide */
+    void onRemoteRttUpgradeRequest() {
+        for (CallbackRecord record : mCallbackRecords) {
+            final RemoteConnection connection = this;
+            final Callback callback = record.getCallback();
+            record.getHandler().post(
+                    () -> callback.onRemoteRttUpgradeRequest(connection));
+        }
+    }
+
+    /**
     /**
      * Create a RemoteConnection represents a failure, and which will be in
      * {@link Connection#STATE_DISCONNECTED}. Attempting to use it for anything will almost
