@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e42ce7a6_6270d867",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-06T20:10:56Z",
+      "side": 0,
+      "message": "Hey Erik, is there any chance that removing this has caused a problem for me where hasTetherableConfiguration returned false once after an OS update? I can explain the details more off-thread if you\u0027d like.",
+      "range": {
+        "startLine": 868,
+        "startChar": 8,
+        "endLine": 868,
+        "endChar": 49
+      },
+      "revId": "b3b665de22ace6437538aa244fbc608a22cb9d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
