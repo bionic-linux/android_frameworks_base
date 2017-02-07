@@ -223,8 +223,7 @@ public class MobileSignalController extends SignalController<
 
         String contentDescription = getStringIfExists(getContentDescription());
         String dataContentDescription = getStringIfExists(icons.mDataContentDescription);
-        final boolean dataDisabled = mCurrentState.iconGroup == TelephonyIcons.DATA_DISABLED
-                && mCurrentState.userSetup;
+        final boolean dataDisabled = isDataDisabled() && mCurrentState.userSetup;
 
         // Show icon in QS when we are connected or need to show roaming or data is disabled.
         boolean showDataIcon = mCurrentState.dataConnected
@@ -409,7 +408,7 @@ public class MobileSignalController extends SignalController<
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
         } else if (isRoaming()) {
             mCurrentState.iconGroup = TelephonyIcons.ROAMING;
-        } else if (isDataDisabled()) {
+        } else if (isDataDisabled() && !mConfig.alwaysShowDataRatIcon) {
             mCurrentState.iconGroup = TelephonyIcons.DATA_DISABLED;
         }
         if (isEmergencyOnly() != mCurrentState.isEmergency) {
