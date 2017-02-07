@@ -787,6 +787,13 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_ADDITIONAL_CBS_CHANNELS_STRINGS =
             "carrier_additional_cbs_channels_strings";
 
+    /**
+     * Boolean indicating if show data RAT icon on status bar even when data is disabled
+     * @hide
+     */
+    public static final String KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL =
+            "always_show_data_rat_icon_bool";
+
     // These variables are used by the MMS service and exposed through another API, {@link
     // SmsManager}. The variable names and string values are copied from there.
     public static final String KEY_MMS_ALIAS_ENABLED_BOOL = "aliasEnabled";
@@ -1393,6 +1400,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_LTE_EARFCNS_RSRP_BOOST_INT, 0);
         sDefaults.putStringArray(KEY_BOOSTED_LTE_EARFCNS_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_DISABLE_VOICE_BARRING_NOTIFICATION_BOOL, false);
+        sDefaults.putBoolean(KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL, false);
     }
 
     /**
