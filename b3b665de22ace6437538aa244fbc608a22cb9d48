@@ -22,6 +22,30 @@
       "revId": "b3b665de22ace6437538aa244fbc608a22cb9d48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c255c3d1_ee3436f6",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-07T20:28:58Z",
+      "side": 0,
+      "message": "After an OS update?  That seems strange, and unlikely to me, but I may be wrong.\n\nOne big problem with this updateConfiguration() call was that it could return something different than what was running in the Tethereing state machine.  If this caused something to work where now it doesn\u0027t, then the right thing to do is probably to figure out what signal we should be listening for and calling updateConfiguration() in that context.\n\nOff thread follow up is fine by me.",
+      "parentUuid": "e42ce7a6_6270d867",
+      "range": {
+        "startLine": 868,
+        "startChar": 8,
+        "endLine": 868,
+        "endChar": 49
+      },
+      "revId": "b3b665de22ace6437538aa244fbc608a22cb9d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
