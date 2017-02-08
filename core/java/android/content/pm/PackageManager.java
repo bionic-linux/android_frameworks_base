@@ -1814,6 +1814,13 @@ public abstract class PackageManager {
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device EMULATES support for connecting to USB accessories.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_USB_EMULATED = "android.hardware.usb.emulated";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
      * {@link #hasSystemFeature}: The SIP API is enabled on the device.
      */
     @SdkConstant(SdkConstantType.FEATURE)
