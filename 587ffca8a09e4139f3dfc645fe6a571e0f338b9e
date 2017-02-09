@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "176b353c_a5f89e71",
+        "filename": "services/core/java/com/android/server/ese/JavaCardSecureElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2017-02-09T14:55:46Z",
+      "side": 1,
+      "message": "Is there any plan for how this will integrate into the android build system?",
+      "range": {
+        "startLine": 80,
+        "startChar": 37,
+        "endLine": 80,
+        "endChar": 71
+      },
+      "revId": "587ffca8a09e4139f3dfc645fe6a571e0f338b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828b1bdf_1fb3d4e2",
+        "filename": "services/core/java/com/android/server/ese/SecureElementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2017-02-09T14:55:46Z",
+      "side": 1,
+      "message": "How will I know which hardware it is? From the name libese provides?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "587ffca8a09e4139f3dfc645fe6a571e0f338b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6325440e_7cd77c45",
+        "filename": "services/core/jni/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2017-02-09T14:55:46Z",
+      "side": 1,
+      "message": "I don\u0027t see external being referenced from frameworks/base so I feel like I\u0027m doing this in the wrong place...",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "587ffca8a09e4139f3dfc645fe6a571e0f338b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3025a4_5039a055",
+        "filename": "services/core/jni/com_android_server_ese_SecureElementConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2017-02-09T14:55:46Z",
+      "side": 1,
+      "message": "Do I need to know this much about the hardware being used?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "587ffca8a09e4139f3dfc645fe6a571e0f338b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
