@@ -2722,6 +2722,7 @@ public abstract class Context {
             //@hide: SOUND_TRIGGER_SERVICE,
             SHORTCUT_SERVICE,
             //@hide: CONTEXTHUB_SERVICE,
+            //@hide: SECURE_ELEMENT_SERVICE,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ServiceName {}
@@ -3656,6 +3657,12 @@ public abstract class Context {
      * @hide
      */
     public static final String GATEKEEPER_SERVICE = "android.service.gatekeeper.IGateKeeperService";
+
+    /**
+     * Secure element service.
+     * @hide
+     */
+    public static final String SECURE_ELEMENT_SERVICE = "secure_element";
 
     /**
      * Determine whether the given permission is allowed for a particular

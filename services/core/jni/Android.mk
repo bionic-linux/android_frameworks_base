@@ -17,6 +17,7 @@ LOCAL_SRC_FILES += \
     $(LOCAL_REL_DIR)/com_android_server_AssetAtlasService.cpp \
     $(LOCAL_REL_DIR)/com_android_server_connectivity_Vpn.cpp \
     $(LOCAL_REL_DIR)/com_android_server_ConsumerIrService.cpp \
+    $(LOCAL_REL_DIR)/com_android_server_ese_SecureElementConnection.cpp \
     $(LOCAL_REL_DIR)/com_android_server_HardwarePropertiesManagerService.cpp \
     $(LOCAL_REL_DIR)/com_android_server_hdmi_HdmiCecController.cpp \
     $(LOCAL_REL_DIR)/com_android_server_input_InputApplicationHandle.cpp \
@@ -40,6 +41,8 @@ LOCAL_SRC_FILES += \
 
 LOCAL_C_INCLUDES += \
     $(JNI_H_INCLUDE) \
+    external/libese/libese/include \
+    external/libese/libese-hw/nxp/include \
     frameworks/base/services \
     frameworks/base/libs \
     frameworks/base/libs/hwui \
@@ -55,6 +58,8 @@ LOCAL_SHARED_LIBRARIES += \
     libbase \
     libbinder \
     libcutils \
+    libese \
+    libese-hw-nxp-pn80t-spidev \
     liblog \
     libhardware \
     libhardware_legacy \

@@ -67,6 +67,7 @@ import com.android.server.display.DisplayManagerService;
 import com.android.server.display.NightDisplayService;
 import com.android.server.dreams.DreamManagerService;
 import com.android.server.emergency.EmergencyAffordanceService;
+import com.android.server.ese.SecureElementService;
 import com.android.server.fingerprint.FingerprintService;
 import com.android.server.hdmi.HdmiControlService;
 import com.android.server.input.InputManagerService;
@@ -722,6 +723,10 @@ public final class SystemServer {
                 }
             }
         }
+
+        traceBeginAndSlog("StartSecureElementService");
+        mSystemServiceManager.startService(SecureElementService.class);
+        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
         // We start this here so that we update our configuration to set watch or television
         // as appropriate.
