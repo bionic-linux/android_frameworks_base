@@ -393,9 +393,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     @GuardedBy("mUidRulesFirstLock")
     final SparseIntArray mUidState = new SparseIntArray();
 
-    /** Higher priority listener before general event dispatch */
-    private INetworkPolicyListener mConnectivityListener;
-
     private final RemoteCallbackList<INetworkPolicyListener>
             mListeners = new RemoteCallbackList<>();
 
@@ -1878,15 +1875,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     }
 
     @Override
-    public void setConnectivityListener(INetworkPolicyListener listener) {
-        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
-        if (mConnectivityListener != null) {
-            throw new IllegalStateException("Connectivity listener already registered");
-        }
-        mConnectivityListener = listener;
-    }
-
-    @Override
     public void registerListener(INetworkPolicyListener listener) {
         // TODO: create permission for observing network policy
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
@@ -2212,6 +2200,24 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         synchronized (mUidRulesFirstLock) {
             return mRestrictBackground;
+        }
+    }
+
+    @Override
+    public boolean isInterfaceMetered(String interfaceName) {
+        mContext.enforceCallingOrSelfPermission(MANAGE_NETWORK_POLICY, TAG);
+
+        synchronized (mNetworkPoliciesSecondLock) {
+            return mMeteredIfaces.contains(interfaceName);
+        }
+    }
+
+    @Override
+    public int getUidRules(int uid, int defaultRules) {
+        mContext.enforceCallingOrSelfPermission(MANAGE_NETWORK_POLICY, TAG);
+
+        synchronized (mUidRulesFirstLock) {
+            return mUidRules.get(uid, defaultRules);
         }
     }
 
@@ -3263,7 +3269,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 case MSG_RULES_CHANGED: {
                     final int uid = msg.arg1;
                     final int uidRules = msg.arg2;
-                    dispatchUidRulesChanged(mConnectivityListener, uid, uidRules);
                     final int length = mListeners.beginBroadcast();
                     for (int i = 0; i < length; i++) {
                         final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);
@@ -3274,7 +3279,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 }
                 case MSG_METERED_IFACES_CHANGED: {
                     final String[] meteredIfaces = (String[]) msg.obj;
-                    dispatchMeteredIfacesChanged(mConnectivityListener, meteredIfaces);
                     final int length = mListeners.beginBroadcast();
                     for (int i = 0; i < length; i++) {
                         final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);
@@ -3305,7 +3309,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 }
                 case MSG_RESTRICT_BACKGROUND_CHANGED: {
                     final boolean restrictBackground = msg.arg1 != 0;
-                    dispatchRestrictBackgroundChanged(mConnectivityListener, restrictBackground);
                     final int length = mListeners.beginBroadcast();
                     for (int i = 0; i < length; i++) {
                         final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);
@@ -3336,8 +3339,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     // First notify internal listeners...
                     if (whitelisted != null) {
                         final boolean whitelistedBool = whitelisted.booleanValue();
-                        dispatchRestrictBackgroundWhitelistChanged(mConnectivityListener, uid,
-                                whitelistedBool);
                         final int length = mListeners.beginBroadcast();
                         for (int i = 0; i < length; i++) {
                             final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);
@@ -3364,9 +3365,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 case MSG_RESTRICT_BACKGROUND_BLACKLIST_CHANGED: {
                     final int uid = msg.arg1;
                     final boolean blacklisted = msg.arg2 == 1;
-
-                    dispatchRestrictBackgroundBlacklistChanged(mConnectivityListener, uid,
-                            blacklisted);
                     final int length = mListeners.beginBroadcast();
                     for (int i = 0; i < length; i++) {
                         final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);

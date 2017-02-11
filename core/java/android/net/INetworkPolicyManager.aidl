@@ -38,9 +38,6 @@ interface INetworkPolicyManager {
 
     boolean isUidForeground(int uid);
 
-    /** Higher priority listener before general event dispatch */
-    void setConnectivityListener(INetworkPolicyListener listener);
-
     void registerListener(INetworkPolicyListener listener);
     void unregisterListener(INetworkPolicyListener listener);
 
@@ -54,6 +51,12 @@ interface INetworkPolicyManager {
     /** Control if background data is restricted system-wide. */
     void setRestrictBackground(boolean restrictBackground);
     boolean getRestrictBackground();
+
+    /** Returns true if traffic on the given interface is metered. */
+    boolean isInterfaceMetered(String interfaceName);
+
+    /** Returns true if traffic on the given interface is metered. */
+    int getUidRules(int uid, int defaultRules);
 
     /** Callback used to change internal state on tethering */
     void onTetheringChanged(String iface, boolean tethering);

@@ -220,18 +220,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private boolean mLockdownEnabled;
     private LockdownVpnTracker mLockdownTracker;
 
-    /** Lock around {@link #mUidRules} and {@link #mMeteredIfaces}. */
-    private Object mRulesLock = new Object();
-    /** Currently active network rules by UID. */
-    @GuardedBy("mRulesLock")
-    private SparseIntArray mUidRules = new SparseIntArray();
-    /** Set of ifaces that are costly. */
-    @GuardedBy("mRulesLock")
-    private ArraySet<String> mMeteredIfaces = new ArraySet<>();
-    /** Flag indicating if background data is restricted. */
-    @GuardedBy("mRulesLock")
-    private boolean mRestrictBackground;
-
     final private Context mContext;
     private int mNetworkPreference;
     // 0 is full bad, 100 is full good
@@ -728,8 +716,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
 
         try {
-            mPolicyManager.setConnectivityListener(mPolicyListener);
-            mRestrictBackground = mPolicyManager.getRestrictBackground();
+            mPolicyManager.registerListener(mPolicyListener);
         } catch (RemoteException e) {
             // ouch, no rules updates means some processes may never get network
             loge("unable to register INetworkPolicyListener" + e);
@@ -1002,9 +989,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Networks are never blocked for system services
         if (isSystem(uid)) return false;
 
-        final boolean networkMetered;
-        final int uidRules;
-
         synchronized (mVpns) {
             final Vpn vpn = mVpns.get(UserHandle.getUserId(uid));
             if (vpn != null && vpn.isBlockingUid(uid)) {
@@ -1013,24 +997,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         final String iface = (lp == null ? "" : lp.getInterfaceName());
-        synchronized (mRulesLock) {
-            networkMetered = mMeteredIfaces.contains(iface);
-            uidRules = mUidRules.get(uid, RULE_NONE);
-        }
+        final boolean isNetworkMetered = isInterfaceMetered(iface);
+        final int uidRules = getUidRulesOrDefault(uid, RULE_NONE);
 
         boolean allowed = true;
         // Check Data Saver Mode first...
-        if (networkMetered) {
+        if (isNetworkMetered) {
             if ((uidRules & RULE_REJECT_METERED) != 0) {
                 if (LOGD_RULES) Log.d(TAG, "uid " + uid + " is blacklisted");
                 // Explicitly blacklisted.
                 allowed = false;
             } else {
-                allowed = !mRestrictBackground
+                final boolean isBackgroundRestricted = isBackgroundRestricted();
+                allowed = !isBackgroundRestricted
                       || (uidRules & RULE_ALLOW_METERED) != 0
                       || (uidRules & RULE_TEMPORARY_ALLOW_METERED) != 0;
                 if (LOGD_RULES) Log.d(TAG, "allowed status for uid " + uid + " when"
-                        + " mRestrictBackground=" + mRestrictBackground
+                        + " isBackgroundRestricted=" + isBackgroundRestricted
                         + ", whitelisted=" + ((uidRules & RULE_ALLOW_METERED) != 0)
                         + ", tempWhitelist= + ((uidRules & RULE_TEMPORARY_ALLOW_METERED) != 0)"
                         + ": " + allowed);
@@ -1488,55 +1471,44 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return true;
     }
 
-    private INetworkPolicyListener mPolicyListener = new INetworkPolicyListener.Stub() {
+    private boolean isBackgroundRestricted() {
+        try {
+            return mPolicyManager.getRestrictBackground();
+        } catch (RemoteException e) {
+            loge("could not get restrict background policy state", e);
+            return false;
+        }
+    }
+
+    private boolean isInterfaceMetered(String ifname) {
+        try {
+            return mPolicyManager.isInterfaceMetered(ifname);
+        } catch (RemoteException e) {
+            loge("could not get netering status for interface " + ifname, e);
+            return false;
+        }
+    }
+
+    private int getUidRulesOrDefault(int uid, int defaultValue) {
+        try {
+            return mPolicyManager.getUidRules(uid, RULE_NONE);
+        } catch (Exception e) {
+            loge("could not get uid rules for uid " + uid, e);
+            return defaultValue;
+        }
+    }
+
+    private final INetworkPolicyListener mPolicyListener = new INetworkPolicyListener.Stub() {
         @Override
         public void onUidRulesChanged(int uid, int uidRules) {
-            // caller is NPMS, since we only register with them
-            if (LOGD_RULES) {
-                log("onUidRulesChanged(uid=" + uid + ", uidRules=" + uidRules + ")");
-            }
-
-            synchronized (mRulesLock) {
-                // skip update when we've already applied rules
-                final int oldRules = mUidRules.get(uid, RULE_NONE);
-                if (oldRules == uidRules) return;
-
-                if (uidRules == RULE_NONE) {
-                    mUidRules.delete(uid);
-                } else {
-                    mUidRules.put(uid, uidRules);
-                }
-            }
-
             // TODO: notify UID when it has requested targeted updates
         }
 
-        @Override
-        public void onMeteredIfacesChanged(String[] meteredIfaces) {
-            // caller is NPMS, since we only register with them
-            if (LOGD_RULES) {
-                log("onMeteredIfacesChanged(ifaces=" + Arrays.toString(meteredIfaces) + ")");
-            }
-
-            synchronized (mRulesLock) {
-                mMeteredIfaces.clear();
-                for (String iface : meteredIfaces) {
-                    mMeteredIfaces.add(iface);
-                }
-            }
+        public void onMeteredIfacesChanged(String[] ifaces) {
         }
 
         @Override
         public void onRestrictBackgroundChanged(boolean restrictBackground) {
-            // caller is NPMS, since we only register with them
-            if (LOGD_RULES) {
-                log("onRestrictBackgroundChanged(restrictBackground=" + restrictBackground + ")");
-            }
-
-            synchronized (mRulesLock) {
-                mRestrictBackground = restrictBackground;
-            }
-
             if (restrictBackground) {
                 log("onRestrictBackgroundChanged(true): disabling tethering");
                 mTethering.untetherAll();
@@ -1998,33 +1970,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         pw.decreaseIndent();
         pw.println();
-
-        pw.println("Metered Interfaces:");
-        pw.increaseIndent();
-        for (String value : mMeteredIfaces) {
-            pw.println(value);
-        }
-        pw.decreaseIndent();
-        pw.println();
-
-        pw.print("Restrict background: ");
-        pw.println(mRestrictBackground);
-        pw.println();
-
-        pw.println("Status for known UIDs:");
-        pw.increaseIndent();
-        final int size = mUidRules.size();
-        for (int i = 0; i < size; i++) {
-            final int uid = mUidRules.keyAt(i);
-            pw.print("UID=");
-            pw.print(uid);
-            final int uidRules = mUidRules.get(uid, RULE_NONE);
-            pw.print(" rules=");
-            pw.print(uidRulesToString(uidRules));
-            pw.println();
-        }
-        pw.println();
-        pw.decreaseIndent();
 
         pw.println("Network Requests:");
         pw.increaseIndent();
@@ -3473,6 +3418,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         Slog.e(TAG, s);
     }
 
+    private static void loge(String s, Throwable t) {
+        Slog.e(TAG, s, t);
+    }
+
     private static <T> T checkNotNull(T value, String message) {
         if (value == null) {
             throw new NullPointerException(message);
@@ -4220,18 +4169,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (isSystem(uid)) {
             return;
         }
+        if (networkCapabilities.hasCapability(NET_CAPABILITY_NOT_METERED)) {
+            return;
+        }
+        if (!isBackgroundRestricted()) {
+            return;
+        }
         // if UID is restricted, don't allow them to bring up metered APNs
-        if (networkCapabilities.hasCapability(NET_CAPABILITY_NOT_METERED) == false) {
-            final int uidRules;
-            synchronized(mRulesLock) {
-                uidRules = mUidRules.get(uid, RULE_ALLOW_ALL);
-            }
-            if (mRestrictBackground && (uidRules & RULE_ALLOW_METERED) == 0
-                    && (uidRules & RULE_TEMPORARY_ALLOW_METERED) == 0) {
-                // we could silently fail or we can filter the available nets to only give
-                // them those they have access to.  Chose the more useful option.
-                networkCapabilities.addCapability(NET_CAPABILITY_NOT_METERED);
-            }
+        final int uidRules = getUidRulesOrDefault(uid, RULE_ALLOW_ALL);
+        if ((uidRules & RULE_ALLOW_METERED) == 0
+                && (uidRules & RULE_TEMPORARY_ALLOW_METERED) == 0) {
+            // we could silently fail or we can filter the available nets to only give
+            // them those they have access to.  Chose the more useful option.
+            networkCapabilities.addCapability(NET_CAPABILITY_NOT_METERED);
         }
     }
 
