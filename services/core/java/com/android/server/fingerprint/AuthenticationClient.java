@@ -83,7 +83,8 @@ public abstract class AuthenticationClient extends ClientMonitor {
             // send lockout event in case driver doesn't enforce it.
             if (inLockoutMode) {
                 try {
-                    Slog.w(TAG, "Forcing lockout (fp driver code should do this!)");
+                    Slog.w(TAG, "Forcing lockout (fp driver code should do this!) And daemon.cancel");
+                    stop(true);
                     receiver.onError(getHalDeviceId(),
                             FingerprintManager.FINGERPRINT_ERROR_LOCKOUT);
                 } catch (RemoteException e) {
