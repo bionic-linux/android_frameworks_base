@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b6582f7_bfee6c80",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-14T22:26:50Z",
+      "side": 1,
+      "message": "Should add @params for these; the ID you explained but accept couple be explained as well (even though its pretty clear).",
+      "range": {
+        "startLine": 1216,
+        "startChar": 36,
+        "endLine": 1216,
+        "endChar": 58
+      },
+      "revId": "4b5cf6c19b37bc0509fd65e1e51030b7b7102e65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0c1157_faec2b74",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-14T22:26:50Z",
+      "side": 1,
+      "message": "Any cleanup needed if mRttcall is not null?\nGiven its nulled in the else below I presume not.",
+      "range": {
+        "startLine": 1637,
+        "startChar": 12,
+        "endLine": 1637,
+        "endChar": 20
+      },
+      "revId": "4b5cf6c19b37bc0509fd65e1e51030b7b7102e65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06497231_9c186e1b",
+        "filename": "telecomm/java/android/telecom/ParcelableRttCall.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-14T22:26:50Z",
+      "side": 1,
+      "message": "Not used?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "4b5cf6c19b37bc0509fd65e1e51030b7b7102e65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
