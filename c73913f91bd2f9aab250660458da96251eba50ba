@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e82bcde_2dc5ec18",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1048217
+      },
+      "writtenOn": "2017-02-14T16:00:30Z",
+      "side": 1,
+      "message": "Doesn\u0027t this change the API? In which case not sure we can add it without bumping the API version.",
+      "revId": "c73913f91bd2f9aab250660458da96251eba50ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
