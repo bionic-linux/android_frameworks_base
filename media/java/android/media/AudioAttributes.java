@@ -303,11 +303,16 @@ public final class AudioAttributes implements Parcelable {
      */
     public final static int FLAG_LOW_LATENCY = 0x1 << 8;
 
+    /**
+     * Flag requesting the use of an output stream supporting hardware mixing.
+     */
+    public final static int FLAG_HW_MIX = 0x1 << 9;
+
     private final static int FLAG_ALL = FLAG_AUDIBILITY_ENFORCED | FLAG_SECURE | FLAG_SCO |
             FLAG_BEACON | FLAG_HW_AV_SYNC | FLAG_HW_HOTWORD | FLAG_BYPASS_INTERRUPTION_POLICY |
-            FLAG_BYPASS_MUTE | FLAG_LOW_LATENCY;
+            FLAG_BYPASS_MUTE | FLAG_LOW_LATENCY | FLAG_HW_MIX;
     private final static int FLAG_ALL_PUBLIC = FLAG_AUDIBILITY_ENFORCED |
-            FLAG_HW_AV_SYNC | FLAG_LOW_LATENCY;
+            FLAG_HW_AV_SYNC | FLAG_LOW_LATENCY | FLAG_HW_MIX;
 
     private int mUsage = USAGE_UNKNOWN;
     private int mContentType = CONTENT_TYPE_UNKNOWN;
@@ -534,7 +539,7 @@ public final class AudioAttributes implements Parcelable {
         /**
          * Sets the combination of flags.
          * @param flags a combination of {@link AudioAttributes#FLAG_AUDIBILITY_ENFORCED},
-         *    {@link AudioAttributes#FLAG_HW_AV_SYNC}.
+         *    {@link AudioAttributes#FLAG_HW_AV_SYNC}, {@link AudioAttributes#FLAG_HW_MIX}.
          * @return the same Builder instance.
          */
         public Builder setFlags(int flags) {
