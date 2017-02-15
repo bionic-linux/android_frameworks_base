@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f12e901c_0ff3f559",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-02-15T01:33:01Z",
+      "side": 1,
+      "message": "What is \"usb\". A plug, a document, a daemon, a jelly-bean? Can you call this \"USBConfigDaemon\" or such.",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77ea4683_57ceb453",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-02-15T01:33:01Z",
+      "side": 1,
+      "message": "remove //",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d83923ca_a2d2ab58",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-02-15T01:33:01Z",
+      "side": 1,
+      "message": "sServiceName",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9e0a1da_b64107c5",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-02-15T01:33:01Z",
+      "side": 1,
+      "message": "Ah, I remember talking about this. This seems to be an unfortunate side-effect of the wrapping of Log in logAndPrint. We end up loosing the nice properties of Log which e.g. prints the back traces.\n\nCan\u0027t we pass down the raw exception and then feed it to Log?",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7af26d4_147ec14a",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-02-15T01:33:01Z",
+      "side": 1,
+      "message": "Do not align on (, just indent by 8\n\nsame issue at other places.\n\nMy suggestion, just use the android auto-formatter for intellij.",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "612b45fa_604d38ce",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-02-15T01:33:01Z",
+      "side": 1,
+      "message": "public vars should not be prefixed by m.",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
