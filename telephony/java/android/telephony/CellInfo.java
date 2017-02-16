@@ -107,6 +107,15 @@ public abstract class CellInfo implements Parcelable {
         }
     }
 
+    /**
+     * Get the {@link CellSignalStrength} associated with this {@link CellInfo}.
+     *
+     * Should be overriden by subclasses.
+     */
+    public CellSignalStrength getCellSignalStrength() {
+        return null;
+    };
+
     @Override
     public int hashCode() {
         int primeNum = 31;
