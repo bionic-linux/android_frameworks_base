@@ -53,6 +53,7 @@ public final class CellInfoWcdma extends CellInfo implements Parcelable {
         mCellIdentityWcdma = cid;
     }
 
+    @Override
     public CellSignalStrengthWcdma getCellSignalStrength() {
         return mCellSignalStrengthWcdma;
     }

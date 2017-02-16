@@ -107,6 +107,24 @@ public abstract class CellInfo implements Parcelable {
         }
     }
 
+    /**
+     * Get the {@link CellSignalStrength} associated with this {@link CellInfo}.
+     */
+    public abstract CellSignalStrength getCellSignalStrength();
+
+    /**
+     * Get signal level as an int from 0..4
+     * <p>
+     * @see SIGNAL_STRENGTH_NONE_OR_UNKNOWN
+     * @see SIGNAL_STRENGTH_POOR
+     * @see SIGNAL_STRENGTH_MODERATE
+     * @see SIGNAL_STRENGTH_GOOD
+     * @see SIGNAL_STRENGTH_GREAT
+     */
+    public int getCellSignalStrengthLevel() {
+        return getCellSignalStrength().getLevel();
+    }
+
     @Override
     public int hashCode() {
         int primeNum = 31;

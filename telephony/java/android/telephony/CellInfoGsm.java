@@ -53,6 +53,7 @@ public final class CellInfoGsm extends CellInfo implements Parcelable {
         mCellIdentityGsm = cid;
     }
 
+    @Override
     public CellSignalStrengthGsm getCellSignalStrength() {
         return mCellSignalStrengthGsm;
     }

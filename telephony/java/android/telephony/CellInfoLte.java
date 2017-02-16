@@ -55,6 +55,7 @@ public final class CellInfoLte extends CellInfo implements Parcelable {
         mCellIdentityLte = cid;
     }
 
+    @Override
     public CellSignalStrengthLte getCellSignalStrength() {
         if (DBG) log("getCellSignalStrength: " + mCellSignalStrengthLte);
         return mCellSignalStrengthLte;
