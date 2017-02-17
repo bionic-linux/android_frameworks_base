@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b948e88d_9a5f7a73",
+        "filename": "wifi/java/android/net/wifi/aware/ConfigRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-17T01:21:17Z",
+      "side": 1,
+      "message": "Maybe add \u003d, before the end-quote? (For consistency with other elements of ConfigRequest.)",
+      "range": {
+        "startLine": 97,
+        "startChar": 60,
+        "endLine": 97,
+        "endChar": 61
+      },
+      "revId": "d88062e300e3052bdc7862d56f395ab8bd0e9a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56c50858_e4ad029a",
+        "filename": "wifi/java/android/net/wifi/aware/ConfigRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-17T01:21:17Z",
+      "side": 1,
+      "message": "Should this be 5GHZ?",
+      "range": {
+        "startLine": 203,
+        "startChar": 46,
+        "endLine": 203,
+        "endChar": 51
+      },
+      "revId": "d88062e300e3052bdc7862d56f395ab8bd0e9a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
