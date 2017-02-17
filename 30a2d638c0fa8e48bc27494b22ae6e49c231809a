@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86789add_98946efd",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-02-17T17:56:05Z",
+      "side": 1,
+      "message": "It\u0027s a privileged permission. As of O it must be whitelisted in https://cs.corp.google.com/android/frameworks/base/data/etc/privapp-permissions-platform.xml",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "30a2d638c0fa8e48bc27494b22ae6e49c231809a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
