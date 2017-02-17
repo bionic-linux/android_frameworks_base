@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ba498c6_fcb442de",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a782ddca_25b554fd",
+      "range": {
+        "startLine": 838,
+        "startChar": 23,
+        "endLine": 838,
+        "endChar": 39
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1914ada4_f21cf9ef",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4c49457e_0e393284",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "renamed to onRttStatusChanged",
+      "parentUuid": "1914ada4_f21cf9ef",
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61c69cde_7759277e",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "Since this in the public API, you should add good javadocs to these (trust me; it\u0027ll come up in API council).",
+      "range": {
+        "startLine": 862,
+        "startChar": 8,
+        "endLine": 865,
+        "endChar": 49
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7063d054_b5219783",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61c69cde_7759277e",
       "range": {
         "startLine": 862,
         "startChar": 8,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "9274d610_8fb64786",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Removed in favor of explicit read()/write() methods",
+      "parentUuid": "97816a32_3eb9c4de",
+      "range": {
+        "startLine": 883,
+        "startChar": 8,
+        "endLine": 889,
+        "endChar": 9
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a308735e_fa9be12d",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
@@ -99,6 +189,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "Add Javadoc indicating what values this can return.",
+      "range": {
+        "startLine": 891,
+        "startChar": 8,
+        "endLine": 891,
+        "endChar": 33
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50b47f3d_b95822be",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a308735e_fa9be12d",
       "range": {
         "startLine": 891,
         "startChar": 8,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "b10c4e21_d8009fd8",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c596e1_82d4788b",
+      "range": {
+        "startLine": 895,
+        "startChar": 7,
+        "endLine": 895,
+        "endChar": 40
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "948a21fe_2aaa2f12",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
@@ -145,6 +283,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "Not a bad idea to also mention the callback method on the remote end of the connection where this surfaces.",
+      "range": {
+        "startLine": 1127,
+        "startChar": 4,
+        "endLine": 1127,
+        "endChar": 7
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43bdb039_f2c57c30",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Connection APIs are non-public",
+      "parentUuid": "948a21fe_2aaa2f12",
       "range": {
         "startLine": 1127,
         "startChar": 4,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "858f9dfc_3a9f686b",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32705cb8_645de1b7",
+      "range": {
+        "startLine": 1133,
+        "startChar": 34,
+        "endLine": 1133,
+        "endChar": 38
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4949c25a_3a5c3b79",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
@@ -191,6 +377,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "received?",
+      "range": {
+        "startLine": 1134,
+        "startChar": 62,
+        "endLine": 1134,
+        "endChar": 66
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3111886_d02f0d8b",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4949c25a_3a5c3b79",
       "range": {
         "startLine": 1134,
         "startChar": 62,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "c455fedf_969663cd",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98977d26_52fea2a0",
+      "range": {
+        "startLine": 1141,
+        "startChar": 25,
+        "endLine": 1141,
+        "endChar": 35
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be8866de_ba2693f2",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
@@ -237,6 +471,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "Good to also mention where this surfaces on the remote end.  May also want to mention any special handling for the input and output streams.",
+      "range": {
+        "startLine": 1143,
+        "startChar": 5,
+        "endLine": 1143,
+        "endChar": 7
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ca488ad_5c366956",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "I/O streams will be totally obscured from the API user.",
+      "parentUuid": "be8866de_ba2693f2",
       "range": {
         "startLine": 1143,
         "startChar": 5,
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "93baa244_3c55989e",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "157fb566_83b5f7b9",
+      "range": {
+        "startLine": 1328,
+        "startChar": 36,
+        "endLine": 1328,
+        "endChar": 42
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "facc4d2c_4054dc6c",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
@@ -283,6 +565,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "{@code Null}",
+      "range": {
+        "startLine": 1329,
+        "startChar": 39,
+        "endLine": 1329,
+        "endChar": 43
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "393183c3_904f9a77",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "facc4d2c_4054dc6c",
       "range": {
         "startLine": 1329,
         "startChar": 39,
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "02429db0_59398c08",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77af90e8_020165c3",
+      "range": {
+        "startLine": 1339,
+        "startChar": 19,
+        "endLine": 1339,
+        "endChar": 28
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f70e9de_d117f1ff",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 3
@@ -329,6 +659,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "The way this is written it looks like we\u0027re going to recreate the Input/Output streams and the RttCall instance every time there is a new ParcelableCall sent to the InCallService (which is going to happen anytime anything in the call changes).\n\nAnother question: Do we need to do anything special here with respect to other IncallServices?  Ie is it valid to have multiple readers and writers on the same stream?",
+      "range": {
+        "startLine": 1535,
+        "startChar": 7,
+        "endLine": 1535,
+        "endChar": 60
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "394eaf1a_fb05cf7f",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Yeah I should do some caching here. I\u0027ll copy what you\u0027ve got for the video provider.\n\nWRT the other in-call service thing, I\u0027ll only send the streams to the active UI in-call service within Telecom.",
+      "parentUuid": "2f70e9de_d117f1ff",
       "range": {
         "startLine": 1535,
         "startChar": 7,
@@ -358,6 +712,24 @@
     },
     {
       "key": {
+        "uuid": "02ef5067_bf53ba47",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Not in O. The RTT pipes are coming in a future CL for Telephony, but they\u0027ll be @hide",
+      "parentUuid": "ee7703e5_92b8be10",
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aa7363c_7297bd50",
         "filename": "telecomm/java/android/telecom/Connection.java",
         "patchSetId": 3
@@ -381,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "29c6453e_f25b1cde",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done. I\u0027m changing all of them to RTT Session",
+      "parentUuid": "6aa7363c_7297bd50",
+      "range": {
+        "startLine": 388,
+        "startChar": 6,
+        "endLine": 388,
+        "endChar": 89
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eeb75e9_cf013491",
         "filename": "telecomm/java/android/telecom/Connection.java",
         "patchSetId": 3
@@ -392,6 +788,30 @@
       "writtenOn": "2017-02-03T05:37:32Z",
       "side": 1,
       "message": "Any need to also have this in Call?  I guess the presence of RTT there gives it away.",
+      "range": {
+        "startLine": 390,
+        "startChar": 28,
+        "endLine": 390,
+        "endChar": 43
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "411cc7ee_c403ecfa",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "It\u0027s for communicating between the connection service and Telecom.",
+      "parentUuid": "8eeb75e9_cf013491",
       "range": {
         "startLine": 390,
         "startChar": 28,
@@ -450,6 +870,30 @@
     },
     {
       "key": {
+        "uuid": "ada66be9_713c696f",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4879f42_9229c854",
+      "range": {
+        "startLine": 279,
+        "startChar": 16,
+        "endLine": 279,
+        "endChar": 36
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9785a63_da4428e9",
         "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
         "patchSetId": 3
@@ -473,6 +917,30 @@
     },
     {
       "key": {
+        "uuid": "1ca796fc_b277f4b8",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9785a63_da4428e9",
+      "range": {
+        "startLine": 281,
+        "startChar": 5,
+        "endLine": 281,
+        "endChar": 12
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cb94610_72a7cb52",
         "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
         "patchSetId": 3
@@ -484,6 +952,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "Should also include in the documentation a code snippet of how this should be translated into the in/out stream.",
+      "range": {
+        "startLine": 289,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 6
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68a22e00_efacae34",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cb94610_72a7cb52",
       "range": {
         "startLine": 289,
         "startChar": 6,
@@ -542,6 +1034,54 @@
     },
     {
       "key": {
+        "uuid": "b5d95d09_2e3d3abe",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c9fdac_84ca6256",
+      "range": {
+        "startLine": 298,
+        "startChar": 15,
+        "endLine": 298,
+        "endChar": 19
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4f3a886_0a2dce5c",
+        "filename": "telecomm/java/android/telecom/ConnectionRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c0242d5_e7995a38",
+      "range": {
+        "startLine": 298,
+        "startChar": 41,
+        "endLine": 298,
+        "endChar": 46
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "876b8230_bcdee765",
         "filename": "telecomm/java/android/telecom/ParcelableCall.java",
         "patchSetId": 3
@@ -553,6 +1093,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "For whatever reason I\u0027ve always known to put new parcelables at the end.  Feel free to do that, or to ignore me.",
+      "range": {
+        "startLine": 305,
+        "startChar": 12,
+        "endLine": 305,
+        "endChar": 59
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e14f7fd_b9e9977d",
+        "filename": "telecomm/java/android/telecom/ParcelableCall.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "876b8230_bcdee765",
       "range": {
         "startLine": 305,
         "startChar": 12,
@@ -588,6 +1152,30 @@
     },
     {
       "key": {
+        "uuid": "c82a11f0_ddc3d93d",
+        "filename": "telecomm/java/android/telecom/PhoneAccount.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "606932ae_4067aef4",
+      "range": {
+        "startLine": 207,
+        "startChar": 78,
+        "endLine": 207,
+        "endChar": 81
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03a0e06d_d5f26a0e",
         "filename": "telecomm/java/android/telecom/RemoteConnectionService.java",
         "patchSetId": 3
@@ -599,6 +1187,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "Don\u0027t need to pass this; I\u0027m not intending self-managed connections to go to the ConnectionManager.",
+      "range": {
+        "startLine": 437,
+        "startChar": 16,
+        "endLine": 437,
+        "endChar": 80
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b256671_3931423e",
+        "filename": "telecomm/java/android/telecom/RemoteConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a0e06d_d5f26a0e",
       "range": {
         "startLine": 437,
         "startChar": 16,
@@ -634,6 +1246,30 @@
     },
     {
       "key": {
+        "uuid": "d6105442_f38182d4",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d1346b7_f25e5537",
+      "range": {
+        "startLine": 319,
+        "startChar": 4,
+        "endLine": 319,
+        "endChar": 6
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf513f24_00762afe",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 3
@@ -657,6 +1293,30 @@
     },
     {
       "key": {
+        "uuid": "6e188553_61060ee5",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf513f24_00762afe",
+      "range": {
+        "startLine": 320,
+        "startChar": 89,
+        "endLine": 320,
+        "endChar": 92
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a712008b_b832a12e",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 3
@@ -668,6 +1328,30 @@
       "writtenOn": "2017-02-03T05:32:05Z",
       "side": 1,
       "message": "Add a:\nSee {@link blah} for more information on RTT.",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 322,
+        "endChar": 7
+      },
+      "revId": "0ed323fec6e53f4ed7fc375bff283885426e31ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70dfafe5_22cbf90b",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-17T03:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a712008b_b832a12e",
       "range": {
         "startLine": 321,
         "startChar": 4,
