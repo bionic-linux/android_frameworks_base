@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa3b474d_64e09800",
+        "filename": "wifi/java/android/net/wifi/aware/ConfigRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-17T02:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b948e88d_9a5f7a73",
+      "range": {
+        "startLine": 97,
+        "startChar": 60,
+        "endLine": 97,
+        "endChar": 61
+      },
+      "revId": "d88062e300e3052bdc7862d56f395ab8bd0e9a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56c50858_e4ad029a",
         "filename": "wifi/java/android/net/wifi/aware/ConfigRequest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-17T01:21:17Z",
       "side": 1,
       "message": "Should this be 5GHZ?",
+      "range": {
+        "startLine": 203,
+        "startChar": 46,
+        "endLine": 203,
+        "endChar": 51
+      },
+      "revId": "d88062e300e3052bdc7862d56f395ab8bd0e9a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99cc162e_b22573a4",
+        "filename": "wifi/java/android/net/wifi/aware/ConfigRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-17T02:39:41Z",
+      "side": 1,
+      "message": "Yikes. Also added a unit test to at least run through this code.",
+      "parentUuid": "56c50858_e4ad029a",
       "range": {
         "startLine": 203,
         "startChar": 46,
