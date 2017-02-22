@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8226672_77f8bef8",
+        "filename": "tools/aapt2/compile/Png.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2017-02-22T01:59:19Z",
+      "side": 1,
+      "message": "This is set to nullptr when initialized above (line 424).\n\nIn this block, pIndex !\u003d bIndex because info-\u003ehaveLayoutBounds \u003d\u003d true, so data has never been set. \n\nTherefore, calling free() here is incorrect, regardless of any warnings.",
+      "revId": "595567decf6ed6cec0deb30e72261b7e3d5bd974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
