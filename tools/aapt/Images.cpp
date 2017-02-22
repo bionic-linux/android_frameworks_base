@@ -1267,6 +1267,7 @@ static void write_png(const char* imageName,
         if (imageInfo.haveLayoutBounds) {
             int chunk_size = sizeof(png_uint_32) * 4;
             strcpy((char*)unknowns[b_index].name, "npLb");
+            free(unknowns[b_index].data);
             unknowns[b_index].data = (png_byte*) calloc(chunk_size, 1);
             memcpy(unknowns[b_index].data, &imageInfo.layoutBoundsLeft, chunk_size);
             unknowns[b_index].size = chunk_size;

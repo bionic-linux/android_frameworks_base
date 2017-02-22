@@ -532,6 +532,7 @@ static bool writePng(IDiagnostics* diag, png_structp writePtr, png_infop infoPtr
         if (info->haveLayoutBounds) {
             int chunkSize = sizeof(png_uint_32) * 4;
             strcpy((char*)unknowns[bIndex].name, "npLb");
+            free(unknowns[bIndex].data);
             unknowns[bIndex].data = (png_byte*) calloc(chunkSize, 1);
             memcpy(unknowns[bIndex].data, &info->layoutBoundsLeft, chunkSize);
             unknowns[bIndex].size = chunkSize;
