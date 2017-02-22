@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a445aebf_4c2ca22c",
+        "filename": "services/core/java/com/android/server/am/TaskRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2017-02-22T21:14:48Z",
+      "side": 0,
+      "message": "What if the app is displaying on top of the lock screen?",
+      "range": {
+        "startLine": 1661,
+        "startChar": 0,
+        "endLine": 1663,
+        "endChar": 9
+      },
+      "revId": "4533b1ccdd207f232b1311961cac6680682a56e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
