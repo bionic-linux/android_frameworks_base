@@ -72,10 +72,6 @@ public interface IMMTelFeature {
      *        {@link ImsCallProfile#SERVICE_TYPE_NORMAL}
      *        {@link ImsCallProfile#SERVICE_TYPE_EMERGENCY}
      * @param callType a call type that is specified in {@link ImsCallProfile}
-     *        {@link ImsCallProfile#CALL_TYPE_VOICE_N_VIDEO}
-     *        {@link ImsCallProfile#CALL_TYPE_VOICE}
-     *        {@link ImsCallProfile#CALL_TYPE_VT}
-     *        {@link ImsCallProfile#CALL_TYPE_VS}
      * @return true if the specified service id is connected to the IMS network; false otherwise
      * @throws RemoteException
      */
