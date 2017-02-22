@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd884d1_39e5b20d",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "Name is kind of confusing since ImsCallSession doesn\u0027t extend this class.\nAlso, maybe make it abstract? There are no unimplemented methods, but it seems like there\u0027s no good reason for someone to instantiate this class directly.",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f05ebb07_a53ef97e",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "@link ImsCallProfile, here and for the next two methods",
+      "range": {
+        "startLine": 60,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62bb7a2a_9566f6cc",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "Maybe use an intdef?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 84
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "043fc6bc_9d39d5ab",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "An",
+      "range": {
+        "startLine": 121,
+        "startChar": 58,
+        "endLine": 121,
+        "endChar": 59
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "560f41d6_ff679ede",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "Should specify where the listener is provided, here and in below method",
+      "range": {
+        "startLine": 142,
+        "startChar": 11,
+        "endLine": 142,
+        "endChar": 27
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd67297c_12bd5eb9",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "What are valid values?",
+      "range": {
+        "startLine": 187,
+        "startChar": 21,
+        "endLine": 187,
+        "endChar": 32
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "109d2b30_5ec7a488",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "Add reason param",
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7e044f4_924388bb",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "with",
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df76b95a_d66f291d",
+        "filename": "telephony/java/com/android/ims/ImsConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "\u003e100",
+      "range": {
+        "startLine": 252,
+        "startChar": 100,
+        "endLine": 252,
+        "endChar": 101
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c652ff8_fd5fbd89",
+        "filename": "telephony/java/com/android/ims/internal/ImsCallSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this extend ImsCallSessionListenerBase now instead?",
+      "range": {
+        "startLine": 950,
+        "startChar": 55,
+        "endLine": 950,
+        "endChar": 82
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f61daabe_b97a57ae",
+        "filename": "telephony/java/com/android/ims/internal/ImsVideoCallProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T19:24:26Z",
+      "side": 1,
+      "message": "Is there no base class for this?",
+      "range": {
+        "startLine": 117,
+        "startChar": 59,
+        "endLine": 117,
+        "endChar": 85
+      },
+      "revId": "dcdb30aada785f9fd2334b9bfac1587f68308adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
