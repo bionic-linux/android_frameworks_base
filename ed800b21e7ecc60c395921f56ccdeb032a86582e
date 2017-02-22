@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffac2934_19cd5a2f",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-02-22T21:36:44Z",
+      "side": 1,
+      "message": "Will the InCallService not care about success?",
+      "range": {
+        "startLine": 873,
+        "startChar": 20,
+        "endLine": 873,
+        "endChar": 42
+      },
+      "revId": "ed800b21e7ecc60c395921f56ccdeb032a86582e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
