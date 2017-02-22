@@ -53,48 +53,107 @@ public class ImsCallProfile implements Parcelable {
     public static final int SERVICE_TYPE_EMERGENCY = 2;
 
     /**
-     * Call types
+     * Indicates an unknown call type.
+     */
+    public static final int CALL_TYPE_UNKNOWN = -1;
+
+    /**
+     * Call type bit fields. The call type should be interpreted as a bitmask composed of the
+     * following bit fields.
      */
     /**
-     * IMSPhone to support IR.92 & IR.94 (voice + video upgrade/downgrade)
+     * Indicates that the call has voice.
      */
-    public static final int CALL_TYPE_VOICE_N_VIDEO = 1;
+    public static final int CALL_TYPE_VOICE_BIT = 1 << 0;
+
+    /**
+     * Indicates that the call can be upgraded to VT per IR.94
+     */
+    public static final int CALL_TYPE_VT_UPGRADE_CAPABLE_BIT = 1 << 1;
+
+    /**
+     * Indicates the call is transmitting video
+     */
+    public static final int CALL_TYPE_VT_TX_BIT = 1 << 2;
+
+    /**
+     * Indicates that the call is receiving video
+     */
+    public static final int CALL_TYPE_VT_RX_BIT = 1 << 3;
+
+    /**
+     * Indicates that the call is a VT call.
+     */
+    public static final int CALL_TYPE_VT_BIT = 1 << 4;
+
+    /**
+     * Indicates that the call is performing VideoShare transmit.
+     */
+    public static final int CALL_TYPE_VS_TX_BIT = 1 << 5;
+
+    /**
+     * Indicates that the call is performing VideoShare receive.
+     */
+    public static final int CALL_TYPE_VS_RX_BIT = 1 << 6;
+
+    /**
+     * Indicates that the call has an active RTT session associated with it.
+     */
+    public static final int CALL_TYPE_RTT_BIT = 1 << 7;
+
+    /**
+     * Legacy call type definitions. Defined in terms of the above bits for compatibility.
+     */
+    /**
+     * This seems to map to the unknown call type in vendor code. Name is preserved for
+     * compatibility, but this actually has nothing to do with VOICE_N_VIDEO.
+     */
+    public static final int CALL_TYPE_VOICE_N_VIDEO = CALL_TYPE_UNKNOWN;
+
     /**
      * IR.92 (Voice only)
      */
-    public static final int CALL_TYPE_VOICE = 2;
+    public static final int CALL_TYPE_VOICE = CALL_TYPE_VOICE_BIT;
     /**
      * VT to support IR.92 & IR.94 (voice + video upgrade/downgrade)
      */
-    public static final int CALL_TYPE_VIDEO_N_VOICE = 3;
+    public static final int CALL_TYPE_VIDEO_N_VOICE =
+            CALL_TYPE_VOICE_BIT | CALL_TYPE_VT_UPGRADE_CAPABLE_BIT;
+
     /**
      * Video Telephony (audio / video two way)
      */
-    public static final int CALL_TYPE_VT = 4;
+    public static final int CALL_TYPE_VT =
+            CALL_TYPE_VOICE_BIT | CALL_TYPE_VT_BIT | CALL_TYPE_VT_RX_BIT | CALL_TYPE_VT_TX_BIT;
     /**
      * Video Telephony (audio two way / video TX one way)
      */
-    public static final int CALL_TYPE_VT_TX = 5;
+    public static final int CALL_TYPE_VT_TX =
+            CALL_TYPE_VOICE_BIT | CALL_TYPE_VT_BIT | CALL_TYPE_VT_TX_BIT;
     /**
      * Video Telephony (audio two way / video RX one way)
      */
-    public static final int CALL_TYPE_VT_RX = 6;
+    public static final int CALL_TYPE_VT_RX =
+            CALL_TYPE_VOICE_BIT | CALL_TYPE_VT_BIT | CALL_TYPE_VT_RX_BIT;
+
     /**
      * Video Telephony (audio two way / video inactive)
      */
-    public static final int CALL_TYPE_VT_NODIR = 7;
+    public static final int CALL_TYPE_VT_NODIR =
+            CALL_TYPE_VOICE_BIT | CALL_TYPE_VT_BIT;
+
     /**
      * VideoShare (video two way)
      */
-    public static final int CALL_TYPE_VS = 8;
+    public static final int CALL_TYPE_VS = CALL_TYPE_VS_RX_BIT | CALL_TYPE_VS_TX_BIT;
     /**
      * VideoShare (video TX one way)
      */
-    public static final int CALL_TYPE_VS_TX = 9;
+    public static final int CALL_TYPE_VS_TX = CALL_TYPE_VS_TX_BIT;
     /**
      * VideoShare (video RX one way)
      */
-    public static final int CALL_TYPE_VS_RX = 10;
+    public static final int CALL_TYPE_VS_RX = CALL_TYPE_VS_RX_BIT;
 
     /**
      * Extra properties for IMS call.
