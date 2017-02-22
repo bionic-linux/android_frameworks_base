@@ -23,6 +23,9 @@ LOCAL_SHARED_LIBRARIES := \
     libskia \
     libandroidfw
 
+LOCAL_HEADER_LIBRARIES  := \
+    libutils_headers \
+
 LOCAL_C_INCLUDES += \
     frameworks/base/native/include \
     frameworks/base/core/jni/android/graphics \

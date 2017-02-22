@@ -36,6 +36,10 @@ cc_library {
         "ZipFileRO.cpp",
         "ZipUtils.cpp",
     ],
+    header_libs: [
+        "libutils_headers",
+    ],
+
     export_include_dirs: ["include"],
     target: {
         android: {

@@ -279,6 +279,9 @@ LOCAL_SHARED_LIBRARIES += \
     libhwui \
     libdl
 
+LOCAL_EXPORT_SHARED_LIBRARY_HEADERS := \
+    libutils
+
 # we need to access the private Bionic header
 # <bionic_tls.h> in com_google_android_gles_jni_GLImpl.cpp
 LOCAL_C_INCLUDES += bionic/libc/private

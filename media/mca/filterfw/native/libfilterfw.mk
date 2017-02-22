@@ -16,6 +16,8 @@
 # Add include paths for native code.
 FFW_PATH := $(call my-dir)
 
+LOCAL_HEADER_LIBRARIES += libutils_headers
+
 # Uncomment the requirements below, once we need them:
 
 # Neven FaceDetect SDK
