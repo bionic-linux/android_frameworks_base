@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e7e4dae_ccd1e1e7",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-22T02:17:39Z",
+      "side": 1,
+      "message": "Had to add these so that I can plumb this through the RemoteConnection indirection.",
+      "revId": "8e0bac05dc9ecbda85ec05a416084134aa7d87a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
