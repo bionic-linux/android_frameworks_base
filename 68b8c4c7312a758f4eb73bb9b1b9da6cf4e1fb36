@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79464763_a3d34a15",
+        "filename": "telephony/java/com/android/ims/ImsCallProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-02-23T22:44:42Z",
+      "side": 1,
+      "message": "-1 is probably not a good idea for an unknown call type, because -1 -\u003e 0xFFFF FFFF (2s complement). This would look to be all bits enabled in the field (unless that is what you want UNKNOWN to mean :) )",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "68b8c4c7312a758f4eb73bb9b1b9da6cf4e1fb36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
