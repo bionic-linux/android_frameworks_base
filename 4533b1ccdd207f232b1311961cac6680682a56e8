@@ -22,6 +22,30 @@
       "revId": "4533b1ccdd207f232b1311961cac6680682a56e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a03fa65_cdd09aaa",
+        "filename": "services/core/java/com/android/server/am/TaskRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1102318
+      },
+      "writtenOn": "2017-02-23T03:44:54Z",
+      "side": 0,
+      "message": "In our investigation, 99732940809058fae558618399323c36b8a0e856 covers this case.\n\n75b3720c50752d988d361a57b2d32f8baaee3e28 is used to fix app over lockscreen being cropped by docked stack, \nhowever, commit 2 has changed the behavior of app over lockscreen. \nIf an activity is trying to show over the lockscreen, setLockScreenShown in ActivityManagerService \nwill call ActivityStackSupervisor\u0027s moveTasksToFullscreenStackLocked() method to dismiss the docked stack and\nmove the task to fullscreen configuration. \nAs a result, if have the 99732940809058fae558618399323c36b8a0e856, the bug fixed by commit 1 could never reproduce.",
+      "parentUuid": "a445aebf_4c2ca22c",
+      "range": {
+        "startLine": 1661,
+        "startChar": 0,
+        "endLine": 1663,
+        "endChar": 9
+      },
+      "revId": "4533b1ccdd207f232b1311961cac6680682a56e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
