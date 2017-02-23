@@ -209,6 +209,7 @@ public class PhoneStateListener {
      * @see #onOemHookRawEvent
      * @hide
      */
+    @Deprecated
     public static final int LISTEN_OEM_HOOK_RAW_EVENT                       = 0x00008000;
 
     /**

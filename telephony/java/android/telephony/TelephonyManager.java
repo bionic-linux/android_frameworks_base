@@ -5041,6 +5041,7 @@ public class TelephonyManager {
      *         positive value success, data length of response
      * @hide
      */
+    @Deprecated
     public int invokeOemRilRequestRaw(byte[] oemReq, byte[] oemResp) {
         try {
             ITelephony telephony = getITelephony();
