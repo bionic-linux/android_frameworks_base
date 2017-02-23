@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d27c35d_a64be626",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-02-23T20:21:00Z",
+      "side": 1,
+      "message": "add javadoc @deprecated with comment on vendor-extension,etc.",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 12
+      },
+      "revId": "bbcc7612545ae7e5654a5694e20e31f31c480246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6724538a_b31b45f5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5044,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-02-23T20:21:00Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 5044,
+        "startChar": 5,
+        "endLine": 5044,
+        "endChar": 15
+      },
+      "revId": "bbcc7612545ae7e5654a5694e20e31f31c480246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
