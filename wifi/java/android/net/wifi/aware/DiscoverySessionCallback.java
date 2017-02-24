@@ -124,10 +124,10 @@ public class DiscoverySessionCallback {
     }
 
     /**
-     * Called when message transmission fails - when no ACK is received from the peer.
-     * Retries when ACKs are not received are done by hardware, MAC, and in the Aware stack (using
-     * the {@link DiscoverySession#sendMessage(PeerHandle, int,
-     * byte[], int)} method) - this event is received after all retries are exhausted.
+     * Called when message transmission fails (requested with
+     * {@link DiscoverySession#sendMessage(PeerHandle, int, byte[])} - when no ACK is received
+     * from the peer. The MAC retries transmitting messages when ACKs are not received. This
+     * event is received after all retries are exhausted.
      * <p>
      * Note that either this callback or
      * {@link DiscoverySessionCallback#onMessageSendSucceeded(int)} will be received
@@ -141,9 +141,7 @@ public class DiscoverySessionCallback {
 
     /**
      * Called when a message is received from a discovery session peer - in response to the
-     * peer's {@link DiscoverySession#sendMessage(PeerHandle, int,
-     * byte[])} or {@link DiscoverySession#sendMessage(PeerHandle,
-     * int, byte[], int)}.
+     * peer's {@link DiscoverySession#sendMessage(PeerHandle, int, byte[])}.
      *
      * @param peerHandle An opaque handle to the peer matching our discovery operation.
      * @param message A byte array containing the message.
