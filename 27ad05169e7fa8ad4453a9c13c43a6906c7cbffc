@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "107542c4_7f2ade46",
+        "filename": "telephony/java/com/android/ims/ImsCallProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-02-24T18:31:49Z",
+      "side": 0,
+      "message": "Do you still want to check this case?",
+      "range": {
+        "startLine": 377,
+        "startChar": 17,
+        "endLine": 377,
+        "endChar": 32
+      },
+      "revId": "27ad05169e7fa8ad4453a9c13c43a6906c7cbffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
