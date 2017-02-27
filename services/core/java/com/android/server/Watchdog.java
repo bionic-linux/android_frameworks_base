@@ -25,6 +25,7 @@ import android.system.OsConstants;
 import android.system.StructRlimit;
 import com.android.internal.os.ZygoteConnectionConstants;
 import com.android.server.am.ActivityManagerService;
+import com.android.server.am.BinderTransaction.BinderProcsInfo;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -500,6 +501,15 @@ public class Watchdog extends Thread {
             ArrayList<Integer> pids = new ArrayList<>();
             pids.add(Process.myPid());
             if (mPhonePid > 0) pids.add(mPhonePid);
+            // Dump PIDs which are connected with system_server process by binder.
+            final BinderProcsInfo binderProcsInfo =
+                    ActivityManagerService.getBinderTransactionInfo(Process.myPid());
+            for (Integer pid : binderProcsInfo.javaPids) {
+                if (!pids.contains(pid)) {
+                    pids.add(pid);
+                }
+            }
+
             // Pass !waitedHalf so that just in case we somehow wind up here without having
             // dumped the halfway stacks, we properly re-initialize the trace file.
             final File stack = ActivityManagerService.dumpStackTraces(
@@ -525,7 +535,7 @@ public class Watchdog extends Thread {
                     public void run() {
                         mActivity.addErrorToDropBox(
                                 "watchdog", null, "system_server", null, null,
-                                subject, null, stack, null);
+                                subject, null, stack, null, binderProcsInfo.rawInfo);
                     }
                 };
             dropboxThread.start();
