@@ -70,6 +70,76 @@
       "revId": "ed800b21e7ecc60c395921f56ccdeb032a86582e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0c3e1b_5b5e94cd",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-27T18:02:54Z",
+      "side": 1,
+      "message": "Yeah, agreed, error codes are cool when they make sense.  However if there\u0027s just one error code, \"Error unspecified\" or \"RTT Failed\", then perhaps not needed.\n\nLooking at the comment for this method though; it would definitely be nice to distinguish between the \"failed because the user on the other end rejected\" and \"ooops, the modem did it again\".",
+      "parentUuid": "feb5db9b_e550b981",
+      "range": {
+        "startLine": 873,
+        "startChar": 20,
+        "endLine": 873,
+        "endChar": 42
+      },
+      "revId": "ed800b21e7ecc60c395921f56ccdeb032a86582e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a6f8709_047880e0",
+        "filename": "telecomm/java/android/telecom/ConnectionServiceAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-27T18:02:54Z",
+      "side": 1,
+      "message": "sb onRttInitiationSuccess to match",
+      "range": {
+        "startLine": 557,
+        "startChar": 21,
+        "endLine": 557,
+        "endChar": 40
+      },
+      "revId": "ed800b21e7ecc60c395921f56ccdeb032a86582e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42eb6596_73f8f51e",
+        "filename": "telecomm/java/android/telecom/ConnectionServiceAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-27T18:02:54Z",
+      "side": 1,
+      "message": "sb onRttInitiationFailure to match",
+      "range": {
+        "startLine": 572,
+        "startChar": 21,
+        "endLine": 572,
+        "endChar": 40
+      },
+      "revId": "ed800b21e7ecc60c395921f56ccdeb032a86582e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
