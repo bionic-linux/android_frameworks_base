@@ -1920,31 +1920,31 @@ public class TelephonyManager {
      * @see #SIM_STATE_CARD_RESTRICTED
      */
     public int getSimState() {
-        int slotIdx = getDefaultSim();
-        // slotIdx may be invalid due to sim being absent. In that case query all slots to get
+        int slotId = getDefaultSim();
+        // slotId may be invalid due to sim being absent. In that case query all slots to get
         // sim state
-        if (slotIdx < 0) {
+        if (slotId < 0) {
             // query for all slots and return absent if all sim states are absent, otherwise
             // return unknown
             for (int i = 0; i < getPhoneCount(); i++) {
                 int simState = getSimState(i);
                 if (simState != SIM_STATE_ABSENT) {
-                    Rlog.d(TAG, "getSimState: default sim:" + slotIdx + ", sim state for " +
-                            "slotIdx=" + i + " is " + simState + ", return state as unknown");
+                    Rlog.d(TAG, "getSimState: default sim:" + slotId + ", sim state for " +
+                            "slotId=" + i + " is " + simState + ", return state as unknown");
                     return SIM_STATE_UNKNOWN;
                 }
             }
-            Rlog.d(TAG, "getSimState: default sim:" + slotIdx + ", all SIMs absent, return " +
+            Rlog.d(TAG, "getSimState: default sim:" + slotId + ", all SIMs absent, return " +
                     "state as absent");
             return SIM_STATE_ABSENT;
         }
-        return getSimState(slotIdx);
+        return getSimState(slotId);
     }
 
     /**
      * Returns a constant indicating the state of the device SIM card in a slot.
      *
-     * @param slotIdx
+     * @param slotId of which SIM state is returned
      *
      * @see #SIM_STATE_UNKNOWN
      * @see #SIM_STATE_ABSENT
@@ -1957,8 +1957,8 @@ public class TelephonyManager {
      * @see #SIM_STATE_CARD_IO_ERROR
      * @see #SIM_STATE_CARD_RESTRICTED
      */
-    public int getSimState(int slotIdx) {
-        int simState = SubscriptionManager.getSimStateForSlotIdx(slotIdx);
+    public int getSimState(int slotId) {
+        int simState = SubscriptionManager.getSimStateForSlotIdx(slotId);
         return simState;
     }
 
