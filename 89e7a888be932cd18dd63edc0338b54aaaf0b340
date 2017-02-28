@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b30940b_e91a075f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1923,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-02-28T17:47:34Z",
+      "side": 0,
+      "message": "Why are you dropping the x?\n\nWhere simId\u0027s are always increasing identifiers, the slot index is into the N-long 0-based array of slots.  The getSimStateForSlotIdx continues this trend.\n\nWhat\u0027s the reason to change it?",
+      "range": {
+        "startLine": 1923,
+        "startChar": 12,
+        "endLine": 1923,
+        "endChar": 19
+      },
+      "revId": "89e7a888be932cd18dd63edc0338b54aaaf0b340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
