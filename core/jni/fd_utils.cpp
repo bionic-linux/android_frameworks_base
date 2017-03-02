@@ -174,6 +174,7 @@ FileDescriptorInfo* FileDescriptorInfo::CreateFromFd(int fd) {
 
   std::string file_path;
   if (!Readlink(fd, &file_path)) {
+    ALOGE("Readlink for %d failed.", fd);
     return NULL;
   }
 
@@ -224,6 +225,7 @@ FileDescriptorInfo* FileDescriptorInfo::CreateFromFd(int fd) {
 bool FileDescriptorInfo::Restat() const {
   struct stat f_stat;
   if (TEMP_FAILURE_RETRY(fstat(fd, &f_stat)) == -1) {
+    ALOGE("Unable to restat fd %d : %s", fd, strerror(errno));
     return false;
   }
 
