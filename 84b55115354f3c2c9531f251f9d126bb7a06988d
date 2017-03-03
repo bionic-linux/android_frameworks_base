@@ -16,6 +16,24 @@
       "revId": "84b55115354f3c2c9531f251f9d126bb7a06988d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca769970_8bc25ddc",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-03T09:22:19Z",
+      "side": 1,
+      "message": "No, i did mean LOG. There\u0027s no reason to log an errno because there\u0027s no failed syscall or library call as such.",
+      "parentUuid": "cb6a43f5_55a02950",
+      "revId": "84b55115354f3c2c9531f251f9d126bb7a06988d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
