@@ -60,7 +60,12 @@ public class TetheringConfiguration {
         "192.168.48.2", "192.168.48.254", "192.168.49.2", "192.168.49.254",
     };
 
-    private final String[] DEFAULT_IPV4_DNS = {"8.8.4.4", "8.8.8.8"};
+    private final String[] DEFAULT_IPV4_DNS = { "8.8.4.4", "8.8.8.8" };
+
+    // Defaults gleaned from angler, bullhead, marlin, and other overlays.
+    private final String[] DEFAULT_BT_REGEXS = { "bnep\\d", "bt-pan" };
+    private final String[] DEFAULT_WIFI_REGEXS = { "wlan\\d", "softap.*" };
+    private final String[] DEFAULT_USB_REGEXS = { "usb\\d", "rndis\\d" };
 
     public final String[] tetherableUsbRegexs;
     public final String[] tetherableWifiRegexs;
@@ -71,12 +76,15 @@ public class TetheringConfiguration {
     public final String[] defaultIPv4DNS;
 
     public TetheringConfiguration(Context ctx) {
-        tetherableUsbRegexs = ctx.getResources().getStringArray(
-                com.android.internal.R.array.config_tether_usb_regexs);
-        tetherableWifiRegexs = ctx.getResources().getStringArray(
-                com.android.internal.R.array.config_tether_wifi_regexs);
-        tetherableBluetoothRegexs = ctx.getResources().getStringArray(
-                com.android.internal.R.array.config_tether_bluetooth_regexs);
+        tetherableUsbRegexs = getDownstreamRegexs(ctx,
+                com.android.internal.R.array.config_tether_usb_regexs,
+                DEFAULT_USB_REGEXS);
+        tetherableWifiRegexs = getDownstreamRegexs(ctx,
+                com.android.internal.R.array.config_tether_wifi_regexs,
+                DEFAULT_WIFI_REGEXS);
+        tetherableBluetoothRegexs = getDownstreamRegexs(ctx,
+                com.android.internal.R.array.config_tether_bluetooth_regexs,
+                DEFAULT_BT_REGEXS);
 
         isDunRequired = checkDunRequired(ctx);
         preferredUpstreamIfaceTypes = getUpstreamIfaceTypes(ctx, isDunRequired);
@@ -148,13 +156,29 @@ public class TetheringConfiguration {
         return false;
     }
 
+    private static String[] getDownstreamRegexs(Context ctx, int resourceId, String[] defaults) {
+        final String[] regexs = getStringArray(ctx, resourceId);
+        if ((regexs != null) && (regexs.length > 0)) {
+            return copy(regexs);
+        }
+        return copy(defaults);
+    }
+
     private static String[] getDhcpRanges(Context ctx) {
-        final String[] fromResource = ctx.getResources().getStringArray(
+        final String[] value = getStringArray(ctx,
                 com.android.internal.R.array.config_tether_dhcp_range);
-        if ((fromResource.length > 0) && (fromResource.length % 2 == 0)) {
-            return fromResource;
+        if ((value != null) && (value.length > 0) && (value.length % 2 == 0)) {
+            return copy(value);
         }
         return copy(DHCP_DEFAULT_RANGE);
+    }
+
+    private static String[] getStringArray(Context ctx, int resourceId) {
+        try {
+            return ctx.getResources().getStringArray(resourceId);
+        } catch (Resources.NotFoundException nfe) {
+            return null;
+        }
     }
 
     private static String[] copy(String[] strarray) {
