@@ -170,8 +170,36 @@ RENDERTHREAD_TEST(FrameBuilder, simpleStroke) {
     EXPECT_EQ(1, renderer.getIndex());
 }
 
+RENDERTHREAD_TEST(FrameBuilder, arcStrokeClip) {
+    class ArcStrokeClipTestRenderer : public TestRendererBase {
+    public:
+        void onArcOp(const ArcOp& op, const BakedOpState& state) override {
+            EXPECT_EQ(0, mIndex++);
+            EXPECT_EQ(Rect(25, 25, 175, 175), op.unmappedBounds);
+            EXPECT_EQ(Rect(25, 25, 175, 175), state.computedState.clippedBounds);
+            EXPECT_EQ(OpClipSideFlags::Full, state.computedState.clipSideFlags)
+                    << "Arc op clipped conservatively, since path texture may be expanded";
+        }
+    };
+
+    auto node = TestUtils::createNode<RecordingCanvas>(0, 0, 200, 200,
+            [](RenderProperties& props, RecordingCanvas& canvas) {
+        canvas.clipRect(25, 25, 175, 175, SkClipOp::kIntersect);
+        SkPaint aaPaint;
+        aaPaint.setAntiAlias(true);
+        canvas.drawArc(25, 25, 175, 175, 40, 180, true, aaPaint);
+    });
+    FrameBuilder frameBuilder(SkRect::MakeWH(200, 200), 200, 200,
+            sLightGeometry, Caches::getInstance());
+    frameBuilder.deferRenderNode(*TestUtils::getSyncedNode(node));
+
+    ArcStrokeClipTestRenderer renderer;
+    frameBuilder.replayBakedOps<TestDispatcher>(renderer);
+    EXPECT_EQ(1, renderer.getIndex());
+}
+
 RENDERTHREAD_TEST(FrameBuilder, simpleRejection) {
-    auto node = TestUtils::createNode(0, 0, 200, 200,
+    auto node = TestUtils::createNode<RecordingCanvas>(0, 0, 200, 200,
             [](RenderProperties& props, RecordingCanvas& canvas) {
         canvas.save(SaveFlags::MatrixClip);
         canvas.clipRect(200, 200, 400, 400, SkRegion::kIntersect_Op); // intersection should be empty
