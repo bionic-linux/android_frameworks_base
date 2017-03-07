@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e091623_9e09236a",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1031561
+      },
+      "writtenOn": "2017-03-07T18:28:36Z",
+      "side": 1,
+      "message": "PYH_LE_ANY (to keep aligned with rest of them)",
+      "range": {
+        "startLine": 613,
+        "startChar": 28,
+        "endLine": 613,
+        "endChar": 35
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08d06524_3bcc038a",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1031561
+      },
+      "writtenOn": "2017-03-07T18:28:36Z",
+      "side": 1,
+      "message": "update -\u003e read",
+      "range": {
+        "startLine": 191,
+        "startChar": 19,
+        "endLine": 191,
+        "endChar": 25
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58ceeb3b_749a9a8f",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1031561
+      },
+      "writtenOn": "2017-03-07T18:28:36Z",
+      "side": 1,
+      "message": "onPhyRead()",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 48
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "440a13ca_3687ea8c",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1031561
+      },
+      "writtenOn": "2017-03-07T18:28:36Z",
+      "side": 1,
+      "message": "Make it clear that at least one bit needs to be set. See general comment about this and ALL_PHYS parameter (or lack thereof).\nSame for rxPhy below.",
+      "range": {
+        "startLine": 755,
+        "startChar": 14,
+        "endLine": 757,
+        "endChar": 56
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2de69080_58bcecca",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1031561
+      },
+      "writtenOn": "2017-03-07T18:28:36Z",
+      "side": 1,
+      "message": "txPhy -\u003e rxPhy",
+      "range": {
+        "startLine": 758,
+        "startChar": 14,
+        "endLine": 758,
+        "endChar": 19
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2782d9a_facdd324",
+        "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1031561
+      },
+      "writtenOn": "2017-03-07T18:28:36Z",
+      "side": 1,
+      "message": "at least one bit/phy shall be specified or the host stack shall ensure that at least one bit is set if an application sets zero bits. zero bits set is invalid at the HCI interface",
+      "range": {
+        "startLine": 535,
+        "startChar": 6,
+        "endLine": 540,
+        "endChar": 56
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
