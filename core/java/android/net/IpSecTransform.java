@@ -15,9 +15,16 @@
  */
 package android.net;
 
+import static android.content.Context.IPSEC_SERVICE;
+
 import android.annotation.IntDef;
 import android.annotation.SystemApi;
 import android.content.Context;
+import android.os.Binder;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.system.ErrnoException;
 import android.util.Log;
 import dalvik.system.CloseGuard;
@@ -91,34 +98,78 @@ public final class IpSecTransform implements AutoCloseable {
      *
      * @hide
      */
-    public static final int INVALID_TRANSFORM_ID = -1;
+    public static final int INVALID_SPI = -1;
 
     private IpSecTransform(Context context, IpSecConfig config) {
         mContext = context;
         mConfig = config;
-        mTransformId = INVALID_TRANSFORM_ID;
+        mResourceId = INVALID_SPI;
+    }
+
+    private IIpSecService getIpSecService() {
+        if (mContext == null) {
+            throw new IllegalArgumentException("Cannot get service from a null context!");
+        }
+
+        IBinder b = ServiceManager.getService(IPSEC_SERVICE);
+        if (b == null) {
+            throw new RemoteException("Failed to connect to IpSecService")
+                    .rethrowFromSystemServer();
+        }
+
+        return IIpSecService.Stub.asInterface(b);
+    }
+
+    /** @hide */ public static final String KEY_STATUS = "status";
+    /** @hide */ public static final String KEY_RESOURCE_ID = "resourceId";
+
+    private void checkResultStatus(int status)
+            throws IOException, IpSecManager.ResourceUnavailableException,
+                    IpSecManager.SpiUnavailableException {
+        if (status == IpSecManager.Status.OK) {
+            return;
+        }
+        else if (status < 0) {
+            throw new ErrnoException("activate()", -status).rethrowAsIOException();
+        }
+        else if (status == IpSecManager.Status.RESOURCE_UNAVAILABLE) {
+            throw new IpSecManager.ResourceUnavailableException(
+                    "Failed to allocate a new IpSecTransform");
+        }
+        else if (status == IpSecManager.Status.SPI_UNAVAILABLE) {
+            throw new IpSecManager.SpiUnavailableException(
+                    // FIXME: We need to get the SPI to raise this exception
+                    "Could not allocate an SPI for the requested transform!", 0);
+        }
+        else {
+            // FIXME: should there be yet another kind of exception for "other"?
+            throw new IpSecManager.ResourceUnavailableException("Unknown Exception in IpSecTransform");
+        }
     }
 
     private IpSecTransform activate()
             throws IOException, IpSecManager.ResourceUnavailableException,
                     IpSecManager.SpiUnavailableException {
-        int transformId;
         synchronized (this) {
-            //try {
-            transformId = INVALID_TRANSFORM_ID;
-            //} catch (RemoteException e) {
-            //    throw e.rethrowFromSystemServer();
-            //}
+            try {
+                IIpSecService svc = getIpSecService();
+                Bundle result = svc.createTransportModeTransform(mConfig, new Binder());
+                int status = result.getInt(KEY_STATUS, Integer.MAX_VALUE);
+                checkResultStatus(status);
+                mResourceId = result.getInt(KEY_RESOURCE_ID, INVALID_SPI);
 
-            if (transformId < 0) {
-                throw new ErrnoException("addTransform", -transformId).rethrowAsIOException();
+                /* Keepalive will silently fail if not needed by the config; but, if needed and
+                 * it fails to start, we need to bail because a transform will not be reliable
+                 * to use if keepalive is expected to offload and fails.
+                 */
+                // FIXME: if keepalive fails, we need to fail spectacularly
+                startKeepalive(mContext);
+                Log.d(TAG, "Added Transform with Id " + mResourceId);
+                mCloseGuard.open("build");
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
             }
-
-            startKeepalive(mContext); // Will silently fail if not required
-            mTransformId = transformId;
-            Log.d(TAG, "Added Transform with Id " + transformId);
         }
-        mCloseGuard.open("build");
 
         return this;
     }
@@ -133,21 +184,26 @@ public final class IpSecTransform implements AutoCloseable {
      * transform is no longer needed.
      */
     public void close() {
-        Log.d(TAG, "Removing Transform with Id " + mTransformId);
+        Log.d(TAG, "Removing Transform with Id " + mResourceId);
 
         // Always safe to attempt cleanup
-        if (mTransformId == INVALID_TRANSFORM_ID) {
+        if (mResourceId == INVALID_SPI) {
+            mCloseGuard.close();
             return;
         }
-        //try {
-        stopKeepalive();
-        //} catch (RemoteException e) {
-        //    transform.setTransformId(transformId);
-        //    throw e.rethrowFromSystemServer();
-        //} finally {
-        mTransformId = INVALID_TRANSFORM_ID;
-        //}
-        mCloseGuard.close();
+        try {
+            /* Order matters here because the keepalive is best-effort but could fail
+             * in some horrible way to be removed if wifi has gone to lunch, and we
+             * still want to clear out the transform.
+             */
+            IIpSecService svc = getIpSecService();
+            svc.deleteTransportModeTransform(mResourceId);
+            stopKeepalive();
+            mResourceId = INVALID_SPI;
+            mCloseGuard.close();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     @Override
@@ -164,7 +220,7 @@ public final class IpSecTransform implements AutoCloseable {
     }
 
     private final IpSecConfig mConfig;
-    private int mTransformId;
+    private int mResourceId;
     private final Context mContext;
     private final CloseGuard mCloseGuard = CloseGuard.get();
     private ConnectivityManager.PacketKeepalive mKeepalive;
@@ -218,9 +274,9 @@ public final class IpSecTransform implements AutoCloseable {
                             mConfig.getNetwork(),
                             mConfig.getNattKeepaliveInterval(),
                             mKeepaliveCallback,
-                            mConfig.getLocalIp(),
+                            mConfig.getLocalAddress(),
                             mConfig.getEncapLocalPort(),
-                            mConfig.getRemoteIp());
+                            mConfig.getRemoteAddress());
             try {
                 mKeepaliveSyncLock.wait(2000);
             } catch (InterruptedException e) {
@@ -248,13 +304,13 @@ public final class IpSecTransform implements AutoCloseable {
     }
 
     /* Package */
-    void setTransformId(int transformId) {
-        mTransformId = transformId;
+    void setResourceId(int resourceId) {
+        mResourceId = resourceId;
     }
 
     /* Package */
-    int getTransformId() {
-        return mTransformId;
+    int getResourceId() {
+        return mResourceId;
     }
 
     /**
@@ -280,7 +336,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         public IpSecTransform.Builder setEncryption(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
-            mConfig.flow[direction].encryptionAlgo = algo;
+            mConfig.flow[direction].encryption = algo;
             return this;
         }
 
@@ -295,7 +351,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         public IpSecTransform.Builder setAuthentication(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
-            mConfig.flow[direction].authenticationAlgo = algo;
+            mConfig.flow[direction].authentication = algo;
             return this;
         }
 
@@ -307,7 +363,7 @@ public final class IpSecTransform implements AutoCloseable {
          * <p>Care should be chosen when selecting an SPI to ensure that is is as unique as
          * possible. Random number generation is a reasonable approach to selecting an SPI. For
          * outbound SPIs, they must be reserved by calling {@link
-         * IpSecManager#reserveSecurityParameterIndex(InetAddress, int)}. Otherwise, Transforms will
+         * IpSecManager#reserveSecurityParameterIndex(int, InetAddress, int)}. Otherwise, Transforms will
          * fail to build.
          *
          * <p>Unless an SPI is set for a given direction, traffic in that direction will be
@@ -329,7 +385,7 @@ public final class IpSecTransform implements AutoCloseable {
          * <p>Care should be chosen when selecting an SPI to ensure that is is as unique as
          * possible. Random number generation is a reasonable approach to selecting an SPI. For
          * outbound SPIs, they must be reserved by calling {@link
-         * IpSecManager#reserveSecurityParameterIndex(InetAddress, int)}. Otherwise, Transforms will
+         * IpSecManager#reserveSecurityParameterIndex(int, InetAddress, int)}. Otherwise, Transforms will
          * fail to activate.
          *
          * <p>Unless an SPI is set for a given direction, traffic in that direction will be
