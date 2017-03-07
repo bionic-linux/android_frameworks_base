@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,29 @@
 package com.android.server;
 
 import static android.Manifest.permission.DUMP;
-import static android.Manifest.permission.SHUTDOWN;
 
 import android.content.Context;
 import android.net.IIpSecService;
 import android.net.INetd;
+import android.net.IpSecAlgorithm;
+import android.net.IpSecConfig;
+import android.net.IpSecManager;
+import android.net.IpSecTransform;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.ServiceSpecificException;
 import android.util.Log;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** @hide */
 public class IpSecService extends IIpSecService.Stub implements Watchdog.Monitor {
@@ -51,6 +60,127 @@ public class IpSecService extends IIpSecService.Stub implements Watchdog.Monitor
 
     private final Thread mThread;
     private CountDownLatch mConnectedSignal = new CountDownLatch(1);
+
+    private AtomicInteger mNextTransformId = new AtomicInteger(0xFADED000);
+
+    private abstract class ManagedResource implements IBinder.DeathRecipient {
+        final int pid;
+        final int uid;
+        private IBinder mBinder;
+
+        ManagedResource(IBinder binder) {
+            super();
+            mBinder = binder;
+            pid = getCallingPid();
+            uid = getCallingUid();
+
+            try {
+                mBinder.linkToDeath(this, 0);
+            } catch (RemoteException e) {
+                binderDied();
+            }
+        }
+
+        /**
+         * When this record is no longer needed for managing system resources this function should
+         * unlink all references held by the record to allow efficient garbage collection.
+         */
+        public final void release() {
+            //Release all the underlying system resources first
+            releaseResources();
+
+            if (mBinder != null) {
+                mBinder.unlinkToDeath(this, 0);
+            }
+            mBinder = null;
+
+            //remove this record so that it can be cleaned up
+            nullifyRecord();
+        }
+
+        /**
+         * If the Binder object dies, this function is called to free the system resources that are
+         * being managed by this record and to subsequently release this record for garbage
+         * collection
+         */
+        public final void binderDied() {
+            release();
+        }
+
+        /**
+         * Implement this method to release all object references contained in the subclass to allow
+         * efficient garbage collection of the record. This should remove any references to the
+         * record from all other locations that hold a reference as the record is no longer valid.
+         */
+        protected abstract void nullifyRecord();
+
+        /**
+         * Implement this method to release all system resources that are being protected by this
+         * record. Once the resources are released, the record should be invalidated and no longer
+         * used by calling releaseRecord()
+         */
+        protected abstract void releaseResources();
+    };
+
+    private final class TransformRecord extends ManagedResource {
+        private IpSecConfig mConfig;
+        private int mResourceId;
+
+        TransformRecord(IpSecConfig config, int resourceId, IBinder binder) {
+            super(binder);
+            mConfig = config;
+            mResourceId = resourceId;
+        }
+
+        public IpSecConfig getConfig() {
+            return mConfig;
+        }
+
+        public int getResourceId() {
+            return mResourceId;
+        }
+
+        @Override
+        protected void releaseResources() {
+            deleteTransformInternal(mConfig, mResourceId);
+        }
+
+        @Override
+        protected void nullifyRecord() {
+            mConfig = null;
+            mResourceId = 0;
+        }
+    }
+
+    private final class SpiInfo implements IBinder.DeathRecipient {
+        final String mRemoteAddress;
+        final int mSpi;
+        private final IBinder mBinder;
+        private final int mTransformId;
+
+        SpiInfo(String remoteAddress, int spi, IBinder binder, int recordId) {
+            mRemoteAddress = remoteAddress;
+            mSpi = spi;
+            mBinder = binder;
+            mTransformId = recordId;
+        }
+
+        void unlinkDeathRecipient() {
+            if (mBinder != null) {
+                mBinder.unlinkToDeath(this, 0);
+            }
+        }
+
+        protected void releaseResources() {}
+
+        protected void nullifyRecord() {}
+
+        public void binderDied() {
+            Log.w(TAG, "IpSecService.SpiInfo binderDied(" + mBinder + ")");
+        }
+    }
+
+    private final HashMap<Integer, TransformRecord> mTransformRecords = new HashMap<>();
 
     /**
      * Constructs a new IpSecService instance
@@ -185,6 +315,190 @@ public class IpSecService extends IIpSecService.Stub implements Watchdog.Monitor
             return false;
         }
     }
+
+    @Override
+    /** Get a new SPI and maintain the reservation in the system server */
+    public Bundle reserveSecurityParameterIndex(
+            String destinationAddress, int requestedSpi, IBinder binder) {
+        return null;
+    }
+
+    /** Release a previously allocated SPI that has been registered with the system server */
+    @Override
+    public void releaseSecurityParameterIndex(String destinationAddress, int spi) {}
+
+    /**
+     * Open a socket via the system server and bind it to the specified port (random if port=0).
+     * This will return a PFD to the user that represent a bound UDP socket. The system server will
+     * cache the socket and a record of its owner so that it can and must be freed when no longer
+     * needed.
+     */
+    @Override
+    public Bundle openUdpEncapsulationSocket(int port, IBinder binder) {
+        return null;
+    }
+
+    /** close a socket that has been been allocated by and registered with the system server */
+    @Override
+    public void closeUdpEncapsulationSocket(ParcelFileDescriptor socket) {}
+
+    /**
+     * Create a transport mode transform, which represent two security associations (one in each
+     * direction) in the kernel. The transform will be cached by the system server and must be freed
+     * when no longer needed. It is possible to free one, deleting the SA from underneath sockets
+     * that are using it, which will result in all of those sockets becoming unable to send or
+     * receive data.
+     */
+    @Override
+    public Bundle createTransportModeTransform(IpSecConfig c, IBinder binder) {
+        int resourceId = mNextTransformId.getAndIncrement();
+        for (int direction :
+                new int[] {IpSecTransform.DIRECTION_OUT, IpSecTransform.DIRECTION_IN}) {
+            IpSecAlgorithm auth = c.getAuthentication(direction);
+            IpSecAlgorithm crypt = c.getEncryption(direction);
+            try {
+                int result =
+                        mNetdService.ipSecAddSecurityAssociation(
+                                resourceId,
+                                c.getMode(),
+                                direction,
+                                (c.getLocalAddress() != null)
+                                        ? c.getLocalAddress().getHostAddress()
+                                        : "",
+                                (c.getRemoteAddress() != null)
+                                        ? c.getRemoteAddress().getHostAddress()
+                                        : "",
+                                (c.getNetwork() != null) ? c.getNetwork().getNetworkHandle() : 0,
+                                c.getSpi(direction),
+                                (auth != null) ? auth.getName() : "",
+                                (auth != null) ? auth.getKey() : null,
+                                (auth != null) ? auth.getTruncationLengthBits() : 0,
+                                (crypt != null) ? crypt.getName() : "",
+                                (crypt != null) ? crypt.getKey() : null,
+                                (crypt != null) ? crypt.getTruncationLengthBits() : 0,
+                                c.getEncapType(),
+                                c.getEncapLocalPort(),
+                                c.getEncapRemotePort());
+                if (result != c.getSpi(direction)) {
+                    Bundle retBundle = new Bundle(2);
+                    retBundle.putInt(
+                            IpSecTransform.KEY_STATUS, IpSecManager.Status.SPI_UNAVAILABLE);
+                    retBundle.putInt(IpSecTransform.KEY_RESOURCE_ID, IpSecTransform.INVALID_SPI);
+                    return retBundle;
+                }
+            } catch (ServiceSpecificException e) {
+                // FIXME: get the error code and throw is at an IOException from Errno Exception
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        synchronized (mTransformRecords) {
+            mTransformRecords.put(resourceId, new TransformRecord(c, resourceId, binder));
+        }
+
+        Bundle retBundle = new Bundle(2);
+        retBundle.putInt(IpSecTransform.KEY_STATUS, IpSecManager.Status.OK);
+        retBundle.putInt(IpSecTransform.KEY_RESOURCE_ID, resourceId);
+        return retBundle;
+    }
+
+    private void deleteTransformInternal(IpSecConfig c, int resourceId) {
+        for (int direction :
+                new int[] {IpSecTransform.DIRECTION_OUT, IpSecTransform.DIRECTION_IN}) {
+            try {
+                mNetdService.ipSecDeleteSecurityAssociation(
+                        resourceId,
+                        direction,
+                        (c.getLocalAddress() != null) ? c.getLocalAddress().getHostAddress() : "",
+                        (c.getRemoteAddress() != null) ? c.getRemoteAddress().getHostAddress() : "",
+                        c.getSpi(direction));
+            } catch (ServiceSpecificException e) {
+                // FIXME: get the error code and throw is at an IOException from Errno Exception
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    /**
+     * Delete a transport mode transform that was previously allocated by + registered with the
+     * system server. If this is called on an inactive (or non-existent) transform, it will not
+     * return an error. It's safe to de-allocate transforms that may have already been deleted for
+     * other reasons.
+     */
+    @Override
+    public void deleteTransportModeTransform(int resourceId) {
+        TransformRecord info;
+        synchronized (mTransformRecords) {
+            // We want to non-destructively get so that we can check credentials before removing this
+            info = mTransformRecords.get(resourceId);
+
+            if (info == null) {
+                throw new IllegalArgumentException(
+                        "Transform " + resourceId + " is not available to be deleted");
+            }
+
+            if (info.pid != getCallingPid() || info.uid != getCallingUid()) {
+                throw new SecurityException("Only the owner of an IpSec Transform may delete it!");
+            }
+
+            deleteTransformInternal(info.getConfig(), info.getResourceId());
+            // don't remove it from the data structure until we've successfully deleted it
+            mTransformRecords.remove(resourceId);
+        }
+    }
+
+    /**
+     * Apply an active transport mode transform to a socket, which will apply the IPsec security
+     * association as a correspondent policy to the provided socket
+     */
+    @Override
+    public void applyTransportModeTransform(ParcelFileDescriptor socket, int resourceId) {
+        TransformRecord info;
+
+        synchronized (mTransformRecords) {
+            // FIXME: this code should be factored out into a security check + getter
+            info = mTransformRecords.get(resourceId);
+
+            if (info == null) {
+                throw new IllegalArgumentException("Transform " + resourceId + " is not active");
+            }
+
+            if (info.pid != getCallingPid() || info.uid != getCallingUid()) {
+                throw new SecurityException("Only the owner of an IpSec Transform may apply it!");
+            }
+
+            IpSecConfig c = info.getConfig();
+            try {
+                for (int direction :
+                        new int[] {IpSecTransform.DIRECTION_OUT, IpSecTransform.DIRECTION_IN}) {
+                    mNetdService.ipSecApplyTransportModeTransform(
+                            socket.getFileDescriptor(),
+                            info.getResourceId(),
+                            direction,
+                            (c.getLocalAddress() != null)
+                                    ? c.getLocalAddress().getHostAddress()
+                                    : "",
+                            (c.getRemoteAddress() != null)
+                                    ? c.getRemoteAddress().getHostAddress()
+                                    : "",
+                            c.getSpi(direction));
+                }
+            } catch (ServiceSpecificException e) {
+                // FIXME: get the error code and throw is at an IOException from Errno Exception
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+    /**
+     * Remove a transport mode transform from a socket, applying the default (empty) policy. This
+     * will ensure that NO IPsec policy is applied to the socket (would be the equivalent of
+     * applying a policy that performs no IPsec). Today the resourceId parameter is passed but not
+     * used: reserved for future improved input validation.
+     */
+    @Override
+    public void removeTransportModeTransform(ParcelFileDescriptor socket, int resourceId) {}
 
     @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
