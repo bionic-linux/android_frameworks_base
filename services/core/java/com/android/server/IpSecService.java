@@ -17,13 +17,17 @@
 package com.android.server;
 
 import static android.Manifest.permission.DUMP;
-import static android.Manifest.permission.SHUTDOWN;
 
 import android.content.Context;
 import android.net.IIpSecService;
 import android.net.INetd;
+import android.net.IpSecAlgorithm;
+import android.net.IpSecConfig;
+import android.net.IpSecTransform;
 import android.os.Binder;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -31,6 +35,7 @@ import android.util.Log;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** @hide */
 public class IpSecService extends IIpSecService.Stub implements Watchdog.Monitor {
@@ -51,6 +56,8 @@ public class IpSecService extends IIpSecService.Stub implements Watchdog.Monitor
 
     private final Thread mThread;
     private CountDownLatch mConnectedSignal = new CountDownLatch(1);
+
+    private AtomicInteger mNextTransformId = new AtomicInteger(0xFADED000);
 
     /**
      * Constructs a new IpSecService instance
@@ -185,6 +192,105 @@ public class IpSecService extends IIpSecService.Stub implements Watchdog.Monitor
             return false;
         }
     }
+
+    @Override
+    /** Get a new SPI and maintain the reservation in the system server */
+    public int reserveSecurityParameterIndex(
+            String destinationAddress, int requestedSpi, IBinder binder) {
+        return 0xDEADBEEF;
+    }
+
+    /** Release a previously allocated SPI that has been registered with the system server */
+    @Override
+    public void releaseSecurityParameterIndex(int spi) {}
+
+    /**
+     * Open a socket via the system server and bind it to the specified port (random if port=0).
+     * This will return a PFD to the user that represent a bound UDP socket. The system server will
+     * cache the socket and a record of its owner so that it can and must be freed when no longer
+     * needed.
+     */
+    @Override
+    public ParcelFileDescriptor openUdpEncapsulationSocket(int port, IBinder binder) {
+        return null;
+    }
+
+    /** close a socket that has been been allocated by and registered with the system server */
+    @Override
+    public void closeUdpEncapsulationSocket(ParcelFileDescriptor socket) {}
+
+    /**
+     * Create a transport mode transform, which represent two security associations (one in each
+     * direction) in the kernel. The transform will be cached by the system server and must be freed
+     * when no longer needed. It is possible to free one, deleting the SA from underneath sockets
+     * that are using it, which will result in all of those sockets becoming unable to send or
+     * receive data.
+     */
+    @Override
+    public int createTransportModeTransform(IpSecConfig c, IBinder binder) {
+        int transformId = mNextTransformId.getAndIncrement();
+        for (int direction :
+                new int[] {IpSecTransform.DIRECTION_OUT, IpSecTransform.DIRECTION_IN}) {
+            IpSecAlgorithm auth = c.getAuthentication(direction);
+            IpSecAlgorithm crypt = c.getEncryption(direction);
+            try {
+                int result =
+                        mNetdService.ipSecAddSecurityAssociation(
+                                transformId,
+                                c.getMode(),
+                                direction,
+                                (c.getLocalAddress() != null)
+                                        ? c.getLocalAddress().getHostAddress()
+                                        : "",
+                                (c.getRemoteAddress() != null)
+                                        ? c.getRemoteAddress().getHostAddress()
+                                        : "",
+                                (c.getNetwork() != null) ? c.getNetwork().getNetworkHandle() : 0,
+                                c.getSpi(direction),
+                                (auth != null) ? auth.getName() : "",
+                                (auth != null) ? auth.getKey() : null,
+                                (auth != null) ? auth.getTruncationLengthBits() : 0,
+                                (crypt != null) ? crypt.getName() : "",
+                                (crypt != null) ? crypt.getKey() : null,
+                                (crypt != null) ? crypt.getTruncationLengthBits() : 0,
+                                c.getEncapType(),
+                                c.getEncapLocalPort(),
+                                c.getEncapRemotePort());
+                if (result != c.getSpi(direction)) {
+                    // FIXME: this needs to clean up before bailing out
+                    return result;
+                }
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return transformId;
+    }
+
+    /**
+     * Delete a transport mode transform that was previously allocated by + registered with the
+     * system server. If this is called on an inactive (or non-existent) transform, it will not
+     * return an error. It's safe to de-allocate transforms that may have already been deleted for
+     * other reasons.
+     */
+    @Override
+    public void deleteTransportModeTransform(int transformId) {}
+
+    /**
+     * Apply an active transport mode transform to a socket, which will apply the IPsec security
+     * association as a correspondent policy to the provided socket
+     */
+    @Override
+    public void applyTransportModeTransform(ParcelFileDescriptor socket, int transformId) {}
+
+    /**
+     * Remove a transport mode transform from a socket, applying the default (empty) policy. This
+     * will ensure that NO IPsec policy is applied to the socket (would be the equivalent of
+     * applying a policy that performs no IPsec). Today the transformId parameter is passed but not
+     * used: reserved for future improved input validation.
+     */
+    @Override
+    public void removeTransportModeTransform(ParcelFileDescriptor socket, int transformId) {}
 
     @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
