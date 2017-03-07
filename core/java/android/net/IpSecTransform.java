@@ -15,9 +15,15 @@
  */
 package android.net;
 
+import static android.content.Context.IPSEC_SERVICE;
+
 import android.annotation.IntDef;
 import android.annotation.SystemApi;
 import android.content.Context;
+import android.os.Binder;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.system.ErrnoException;
 import android.util.Log;
 import dalvik.system.CloseGuard;
@@ -99,26 +105,45 @@ public final class IpSecTransform implements AutoCloseable {
         mTransformId = INVALID_TRANSFORM_ID;
     }
 
+    private IIpSecService getIpSecService() {
+        if (mContext == null) {
+            throw new IllegalArgumentException("Cannot get service from a null context!");
+        }
+
+        IBinder b = ServiceManager.getService(IPSEC_SERVICE);
+        if (b == null) {
+            throw new RemoteException("Failed to connect to IpSecService")
+                    .rethrowFromSystemServer();
+        }
+
+        return IIpSecService.Stub.asInterface(b);
+    }
+
     private IpSecTransform activate()
             throws IOException, IpSecManager.ResourceUnavailableException,
                     IpSecManager.SpiUnavailableException {
         int transformId;
         synchronized (this) {
-            //try {
-            transformId = INVALID_TRANSFORM_ID;
-            //} catch (RemoteException e) {
-            //    throw e.rethrowFromSystemServer();
-            //}
+            try {
+                IIpSecService svc = getIpSecService();
+                transformId = svc.createTransportModeTransform(mConfig, new Binder());
+                if (transformId < 0) {
+                    throw new ErrnoException("addTransform", -transformId).rethrowAsIOException();
+                }
 
-            if (transformId < 0) {
-                throw new ErrnoException("addTransform", -transformId).rethrowAsIOException();
+                /* Keepalive will silently fail if not needed by the config; but, if needed and
+                 * it fails to start, we need to bail because a transform will not be reliable
+                 * to use if keepalive is expected to offload and fails.
+                 */
+                // FIXME: if keepalive fails, we need to fail spectacularly
+                startKeepalive(mContext);
+                mTransformId = transformId;
+                Log.d(TAG, "Added Transform with Id " + transformId);
+                mCloseGuard.open("build");
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
             }
-
-            startKeepalive(mContext); // Will silently fail if not required
-            mTransformId = transformId;
-            Log.d(TAG, "Added Transform with Id " + transformId);
         }
-        mCloseGuard.open("build");
 
         return this;
     }
@@ -137,17 +162,22 @@ public final class IpSecTransform implements AutoCloseable {
 
         // Always safe to attempt cleanup
         if (mTransformId == INVALID_TRANSFORM_ID) {
+            mCloseGuard.close();
             return;
         }
-        //try {
-        stopKeepalive();
-        //} catch (RemoteException e) {
-        //    transform.setTransformId(transformId);
-        //    throw e.rethrowFromSystemServer();
-        //} finally {
-        mTransformId = INVALID_TRANSFORM_ID;
-        //}
-        mCloseGuard.close();
+        try {
+            /* Order matters here because the keepalive is best-effort but could fail
+             * in some horrible way to be removed if wifi has gone to lunch, and we
+             * still want to clear out the transform.
+             */
+            IIpSecService svc = getIpSecService();
+            svc.deleteTransportModeTransform(mTransformId);
+            stopKeepalive();
+            mTransformId = INVALID_TRANSFORM_ID;
+            mCloseGuard.close();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     @Override
@@ -218,9 +248,9 @@ public final class IpSecTransform implements AutoCloseable {
                             mConfig.getNetwork(),
                             mConfig.getNattKeepaliveInterval(),
                             mKeepaliveCallback,
-                            mConfig.getLocalIp(),
+                            mConfig.getLocalAddress(),
                             mConfig.getEncapLocalPort(),
-                            mConfig.getRemoteIp());
+                            mConfig.getRemoteAddress());
             try {
                 mKeepaliveSyncLock.wait(2000);
             } catch (InterruptedException e) {
@@ -280,7 +310,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         public IpSecTransform.Builder setEncryption(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
-            mConfig.flow[direction].encryptionAlgo = algo;
+            mConfig.flow[direction].encryption = algo;
             return this;
         }
 
@@ -295,7 +325,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         public IpSecTransform.Builder setAuthentication(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
-            mConfig.flow[direction].authenticationAlgo = algo;
+            mConfig.flow[direction].authentication = algo;
             return this;
         }
 
