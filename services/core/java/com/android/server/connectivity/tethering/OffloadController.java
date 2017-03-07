@@ -17,6 +17,7 @@
 package com.android.server.connectivity.tethering;
 
 import android.net.LinkProperties;
+import android.net.netlink.NetlinkSocket;
 import android.os.Handler;
 import android.util.Log;
 
@@ -49,5 +50,12 @@ public class OffloadController {
     public void setUpstreamLinkProperties(LinkProperties lp) {
         // TODO: setUpstreamParameters().
         mUpstreamLinkProperties = lp;
+    }
+
+    private static class ConnectionTracker {
+        // NF_NETLINK_CONNTRACK_UPDATE, NF_NETLINK_CONNTRACK_DESTROY
+        NetlinkSocket mTCPEvents;
+        // NF_NETLINK_CONNTRACK_NEW, NF_NETLINK_CONNTRACK_DESTROY
+        NetlinkSocket mUDPEvents;
     }
 }
