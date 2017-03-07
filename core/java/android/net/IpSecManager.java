@@ -17,10 +17,13 @@ package android.net;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 
+import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.content.Context;
-import android.os.INetworkManagementService;
+import android.os.Binder;
+import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
 import android.util.AndroidException;
 import dalvik.system.CloseGuard;
 import java.io.FileDescriptor;
@@ -39,6 +42,13 @@ import java.net.Socket;
  */
 public final class IpSecManager {
     private static final String TAG = "IpSecManager";
+
+    /** @hide */
+    public interface Status {
+        public static final int OK = 0;
+        public static final int RESOURCE_UNAVAILABLE = 1;
+        public static final int SPI_UNAVAILABLE = 2;
+    }
 
     /**
      * Indicates that the combination of remote InetAddress and SPI was non-unique for a given
@@ -83,22 +93,22 @@ public final class IpSecManager {
     private final IIpSecService mService;
 
     public static final class SecurityParameterIndex implements AutoCloseable {
-        private final Context mContext;
+        private final IIpSecService mService;
         private final InetAddress mDestinationAddress;
         private final CloseGuard mCloseGuard = CloseGuard.get();
-        private int mSpi;
+        private int mSpi = INVALID_SECURITY_PARAMETER_INDEX;
+        private int mResourceId;
+
+        /** @hide */
+        public static final String KEY_SPI = "spi";
+        /** @hide */
+        public static final String KEY_RESOURCE_ID = "resourceId";
+        /** @hide */
+        public static final String KEY_STATUS = "status";
 
         /** Return the underlying SPI held by this object */
         public int getSpi() {
             return mSpi;
-        }
-
-        private SecurityParameterIndex(Context context, InetAddress destinationAddress, int spi)
-                throws ResourceUnavailableException, SpiUnavailableException {
-            mContext = context;
-            mDestinationAddress = destinationAddress;
-            mSpi = spi;
-            mCloseGuard.open("open");
         }
 
         /**
@@ -106,11 +116,6 @@ public final class IpSecManager {
          *
          * <p>Release an SPI for use by other users in the system. This will fail if the SPI is
          * currently in use by an IpSecTransform.
-         *
-         * @param destinationAddress SPIs must be unique for each combination of SPI and destination
-         *     address. Thus, the destinationAddress to which the SPI will communicate must be
-         *     supplied.
-         * @param spi the previously reserved SPI to be freed.
          */
         @Override
         public void close() {
@@ -125,6 +130,22 @@ public final class IpSecManager {
             }
 
             close();
+        }
+
+        private SecurityParameterIndex(
+                @NonNull IIpSecService service, InetAddress destinationAddress, int spi)
+                throws ResourceUnavailableException, SpiUnavailableException {
+            mService = service;
+            mDestinationAddress = destinationAddress;
+            try {
+            Bundle result =
+                    mService.reserveSecurityParameterIndex(
+                            destinationAddress.getHostAddress(), spi, new Binder());
+
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+            mCloseGuard.open("open");
         }
     }
 
@@ -152,7 +173,8 @@ public final class IpSecManager {
     public SecurityParameterIndex reserveSecurityParameterIndex(
             InetAddress destinationAddress, int requestedSpi)
             throws SpiUnavailableException, ResourceUnavailableException {
-        return new SecurityParameterIndex(mContext, destinationAddress, requestedSpi);
+        return new SecurityParameterIndex(
+                mService, destinationAddress, requestedSpi);
     }
 
     /**
@@ -190,7 +212,13 @@ public final class IpSecManager {
     }
 
     /* Call down to activate a transform */
-    private void applyTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {}
+    private void applyTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {
+        try {
+            mService.applyTransportModeTransform(pfd, transform.getResourceId());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 
     /**
      * Apply an active Tunnel Mode IPsec Transform to a network, which will tunnel all traffic to
@@ -235,7 +263,13 @@ public final class IpSecManager {
     }
 
     /* Call down to activate a transform */
-    private void removeTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {}
+    private void removeTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {
+        try {
+            mService.removeTransportModeTransform(pfd, transform.getResourceId());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 
     /**
      * Remove a Tunnel Mode IPsec Transform from a {@link Network}. This must be used as part of
@@ -260,19 +294,19 @@ public final class IpSecManager {
      */
     public static final class UdpEncapsulationSocket implements AutoCloseable {
         private final FileDescriptor mFd;
-        private final Context mContext;
+        private final IIpSecService mService;
         private final CloseGuard mCloseGuard = CloseGuard.get();
 
-        private UdpEncapsulationSocket(Context context, int port)
+        private UdpEncapsulationSocket(@NonNull IIpSecService service, int port)
                 throws ResourceUnavailableException {
-            mContext = context;
+            mService = service;
             mCloseGuard.open("constructor");
             // TODO: go down to the kernel and get a socket on the specified
             mFd = new FileDescriptor();
         }
 
-        private UdpEncapsulationSocket(Context context) throws ResourceUnavailableException {
-            mContext = context;
+        private UdpEncapsulationSocket(IIpSecService service) throws ResourceUnavailableException {
+            mService = service;
             mCloseGuard.open("constructor");
             // TODO: go get a random socket on a random port
             mFd = new FileDescriptor();
@@ -339,7 +373,7 @@ public final class IpSecManager {
     public UdpEncapsulationSocket openUdpEncapsulationSocket(int port)
             throws IOException, ResourceUnavailableException {
         // Temporary code
-        return new UdpEncapsulationSocket(mContext, port);
+        return new UdpEncapsulationSocket(mService, port);
     }
 
     /**
@@ -363,7 +397,7 @@ public final class IpSecManager {
     public UdpEncapsulationSocket openUdpEncapsulationSocket()
             throws IOException, ResourceUnavailableException {
         // Temporary code
-        return new UdpEncapsulationSocket(mContext);
+        return new UdpEncapsulationSocket(mService);
     }
 
     /**
