@@ -16,12 +16,30 @@
 
 package android.net;
 
-import android.net.INetd;
 import android.net.Network;
+import android.net.IpSecConfig;
+import android.os.IBinder;
+import android.os.ParcelFileDescriptor;
 
 /**
  * @hide
  */
 interface IIpSecService
 {
+    int reserveSecurityParameterIndex(
+            in String destinationAddress, in int requestedSpi, in IBinder binder);
+
+    void releaseSecurityParameterIndex(in int spi);
+
+    ParcelFileDescriptor openUdpEncapsulationSocket(in int port, in IBinder binder);
+
+    void closeUdpEncapsulationSocket(in ParcelFileDescriptor socket);
+
+    int createTransportModeTransform(in IpSecConfig c, in IBinder binder);
+
+    void deleteTransportModeTransform(in int transformId);
+
+    void applyTransportModeTransform(in ParcelFileDescriptor socket, in int transformId);
+
+    void removeTransportModeTransform(in ParcelFileDescriptor socket, int transformId);
 }
