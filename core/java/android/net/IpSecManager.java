@@ -19,8 +19,8 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.SystemApi;
 import android.content.Context;
-import android.os.INetworkManagementService;
 import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
 import android.util.AndroidException;
 import dalvik.system.CloseGuard;
 import java.io.FileDescriptor;
@@ -190,7 +190,13 @@ public final class IpSecManager {
     }
 
     /* Call down to activate a transform */
-    private void applyTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {}
+    private void applyTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {
+        try {
+            mService.applyTransportModeTransform(pfd, transform.getTransformId());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 
     /**
      * Apply an active Tunnel Mode IPsec Transform to a network, which will tunnel all traffic to
@@ -204,7 +210,8 @@ public final class IpSecManager {
      * @hide
      */
     @SystemApi
-    public void applyTunnelModeTransform(Network net, IpSecTransform transform) {}
+    public void applyTunnelModeTransform(Network net, IpSecTransform transform) {
+    }
 
     /**
      * Remove a transform from a given stream socket. Once removed, traffic on the socket will not
@@ -235,7 +242,13 @@ public final class IpSecManager {
     }
 
     /* Call down to activate a transform */
-    private void removeTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {}
+    private void removeTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {
+        try {
+            mService.removeTransportModeTransform(pfd, transform.getTransformId());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 
     /**
      * Remove a Tunnel Mode IPsec Transform from a {@link Network}. This must be used as part of
