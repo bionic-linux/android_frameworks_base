@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44b8162d_1cc4bc3d",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-07T22:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e091623_9e09236a",
+      "range": {
+        "startLine": 613,
+        "startChar": 28,
+        "endLine": 613,
+        "endChar": 35
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08d06524_3bcc038a",
         "filename": "core/java/android/bluetooth/BluetoothGatt.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-07T18:28:36Z",
       "side": 1,
       "message": "update -\u003e read",
+      "range": {
+        "startLine": 191,
+        "startChar": 19,
+        "endLine": 191,
+        "endChar": 25
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1e0ff1f_41fe0603",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-07T22:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d06524_3bcc038a",
       "range": {
         "startLine": 191,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6ce0a7f9_cb5decf3",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-07T22:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ceeb3b_749a9a8f",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 48
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "440a13ca_3687ea8c",
         "filename": "core/java/android/bluetooth/BluetoothGatt.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-07T18:28:36Z",
       "side": 1,
       "message": "Make it clear that at least one bit needs to be set. See general comment about this and ALL_PHYS parameter (or lack thereof).\nSame for rxPhy below.",
+      "range": {
+        "startLine": 755,
+        "startChar": 14,
+        "endLine": 757,
+        "endChar": 56
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31ba0c3c_bd5951fe",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-07T22:49:37Z",
+      "side": 1,
+      "message": "If no bit is set, then ALL_PHYS will have corresponding bit set to 0",
+      "parentUuid": "440a13ca_3687ea8c",
       "range": {
         "startLine": 755,
         "startChar": 14,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a57b02ee_d51c6796",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-07T22:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2de69080_58bcecca",
+      "range": {
+        "startLine": 758,
+        "startChar": 14,
+        "endLine": 758,
+        "endChar": 19
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61952c64_afe5165d",
         "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d543c931_44e17571",
+        "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-07T22:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61952c64_afe5165d",
+      "range": {
+        "startLine": 538,
+        "startChar": 14,
+        "endLine": 538,
+        "endChar": 19
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2782d9a_facdd324",
         "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
         "patchSetId": 7
@@ -151,6 +295,30 @@
       "writtenOn": "2017-03-07T18:28:36Z",
       "side": 1,
       "message": "at least one bit/phy shall be specified or the host stack shall ensure that at least one bit is set if an application sets zero bits. zero bits set is invalid at the HCI interface",
+      "range": {
+        "startLine": 535,
+        "startChar": 6,
+        "endLine": 540,
+        "endChar": 56
+      },
+      "revId": "c0391def93207d86ff37f75eac75708921878263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6a14aaa_438b54f1",
+        "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-07T22:49:37Z",
+      "side": 1,
+      "message": "ALL_PHYS HCI field is not exposed. If someone passes 0 this will translate into proper bit in ALL_PHYS not being set.",
+      "parentUuid": "f2782d9a_facdd324",
       "range": {
         "startLine": 535,
         "startChar": 6,
