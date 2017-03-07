@@ -2952,6 +2952,34 @@ public class TelephonyManager {
     }
 
     /**
+     * Send the special dialer code. The IPC caller must be the current default dialer.
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
+     *
+     * @param inputCode The special dialer code to send.
+     *
+     * @throws SecurityException if the callers are either not permitted with
+     *         {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE} or is not
+     *         the current default dialer.
+     * @throws IllegalStateException if telephony service is unavailable.
+     */
+    public void sendDialerCode(String inputCode) {
+        try {
+            final ITelephony telephony = getITelephony();
+            if (telephony == null) {
+                throw new IllegalStateException("Telephony service unavailable");
+            }
+            telephony.sendDialerCode(mContext.getOpPackageName(), inputCode);
+        } catch (RemoteException ex) {
+            // This could happen if binder process crashes.
+            ex.rethrowFromSystemServer();
+        } catch (NullPointerException ex) {
+            // This could happen before phone restarts due to crashing
+        }
+    }
+
+    /**
      * Returns the IMS private user identity (IMPI) that was loaded from the ISIM.
      * @return the IMPI, or null if not present or not loaded
      * @hide
