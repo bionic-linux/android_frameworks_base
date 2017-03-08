@@ -1845,7 +1845,7 @@ class ActivityStarter {
         if (mDoResume) {
             mTargetStack.moveToFront("addingToTopTask");
         }
-        final ActivityRecord prev = mTargetStack.topActivity();
+        final ActivityRecord prev = (mStartActivity.resultTo.finishing) ? null : mTargetStack.topActivity();
         final TaskRecord task = (prev != null) ? prev.task : mTargetStack.createTaskRecord(
                         mSupervisor.getNextTaskIdForUserLocked(mStartActivity.userId),
                         mStartActivity.info, mIntent, null, null, true);
