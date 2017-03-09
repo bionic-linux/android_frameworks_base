@@ -3817,7 +3817,7 @@ final class ActivityStack {
         mWindowManager.notifyAppRelaunchesCleared(r.appToken);
     }
 
-    private void removeTimeoutsForActivityLocked(ActivityRecord r) {
+    protected void removeTimeoutsForActivityLocked(ActivityRecord r) {
         mStackSupervisor.removeTimeoutsForActivityLocked(r);
         mHandler.removeMessages(PAUSE_TIMEOUT_MSG, r);
         mHandler.removeMessages(STOP_TIMEOUT_MSG, r);

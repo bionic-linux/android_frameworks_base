@@ -2491,6 +2491,19 @@ public final class ActivityStackSupervisor implements DisplayListener {
         task.mTemporarilyUnresizable = true;
         final ActivityStack stack = getStack(stackId, CREATE_IF_NEEDED, toTop);
         task.mTemporarilyUnresizable = false;
+
+        if (prevStack.mStackId != stackId) {
+            for (int i = task.mActivities.size() - 1; i >= 0; i--) {
+                final ActivityRecord activity = task.mActivities.get(i);
+                if(prevStack.mPausingActivity == activity) {
+                    Slog.v(TAG, "stack : " + prevStack + " / mPausingActivity : " +  prevStack.mPausingActivity + " / mPausingActivity = null");
+                    prevStack.mPausingActivity = null;
+                    prevStack.removeTimeoutsForActivityLocked(activity);
+                    break;
+                }
+            }
+        }
+
         mWindowManager.moveTaskToStack(task.taskId, stack.mStackId, toTop);
         stack.addTask(task, toTop, reason);
 
