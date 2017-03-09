@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a7d2153_1f955bde",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2017-03-09T19:44:47Z",
+      "side": 1,
+      "message": "These are the headers from the HAL interface. IMHO not sure whether the renaming makes much sense.. I could add a comment pointing to the interface definition here: https://cs.corp.google.com/android/hardware/interfaces/usb/1.0/IUsb.hal Will that work ?",
+      "parentUuid": "f12e901c_0ff3f559",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ea4683_57ceb453",
         "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-02-15T01:33:01Z",
       "side": 1,
       "message": "remove //",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63794888_bc65f24e",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2017-03-09T19:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ea4683_57ceb453",
       "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "29386e02_cb19711b",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2017-03-09T19:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d83923ca_a2d2ab58",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9e0a1da_b64107c5",
         "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-02-15T01:33:01Z",
       "side": 1,
       "message": "Ah, I remember talking about this. This seems to be an unfortunate side-effect of the wrapping of Log in logAndPrint. We end up loosing the nice properties of Log which e.g. prints the back traces.\n\nCan\u0027t we pass down the raw exception and then feed it to Log?",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb5fcb1c_60e78c80",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2017-03-09T19:44:47Z",
+      "side": 1,
+      "message": "I am adding a new helper to print exceptions. private static void logAndPrintException(IndentingPrintWriter pw, String msg, Exception e). Let me know if it makes sense.",
+      "parentUuid": "b9e0a1da_b64107c5",
       "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f82f8222_ac6a1332",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2017-03-09T19:44:47Z",
+      "side": 1,
+      "message": "Reformatting the whole file through intellij.. But, I will upload that as a CL on top this, so that it is easier to do a diff and review.",
+      "parentUuid": "d7af26d4_147ec14a",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "612b45fa_604d38ce",
         "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-02-15T01:33:01Z",
       "side": 1,
       "message": "public vars should not be prefixed by m.",
+      "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff3ea78a_e5751c2d",
+        "filename": "services/usb/java/com/android/server/usb/UsbPortManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2017-03-09T19:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "612b45fa_604d38ce",
       "revId": "a2a0c1bbf0f15f3510e000777c0fcc5e9f57b6f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
