@@ -65,10 +65,17 @@ public class IPv6TetheringInterfaceServices {
     }
 
     public boolean start() {
+        // TODO: Refactor for testability (perhaps passing an android.system.Os
+        // instance and calling getifaddrs() directly).
         try {
             mNetworkInterface = NetworkInterface.getByName(mIfName);
         } catch (SocketException e) {
-            Log.e(TAG, "Failed to find NetworkInterface for " + mIfName, e);
+            Log.e(TAG, "Error looking up NetworkInterfaces for " + mIfName, e);
+            stop();
+            return false;
+        }
+        if (mNetworkInterface == null) {
+            Log.e(TAG, "Failed to find NetworkInterface for " + mIfName);
             stop();
             return false;
         }
