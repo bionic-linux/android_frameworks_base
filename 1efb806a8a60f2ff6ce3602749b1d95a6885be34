@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36898c03_4f870f0f",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-03-10T19:26:25Z",
+      "side": 1,
+      "message": "Sorry, you can\u0027t add new abstract methods to a non-final public API class.\n\n(Consider an app that had extended this class; their previously valid class would now fail to validate with this change.)\n\nYou can only add non-abstract methods.",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 63
+      },
+      "revId": "1efb806a8a60f2ff6ce3602749b1d95a6885be34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
