@@ -28,8 +28,11 @@ import android.util.Log;
 
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Random;
 
 
 /**
@@ -48,6 +51,7 @@ public class IPv6TetheringCoordinator {
     private final ArrayList<TetherInterfaceStateMachine> mNotifyList;
     private final LinkedList<TetherInterfaceStateMachine> mActiveDownstreams;
     private NetworkState mUpstreamNetworkState;
+    private byte[] mUniqueLocalPrefix;
 
     public IPv6TetheringCoordinator(ArrayList<TetherInterfaceStateMachine> notifyList) {
         mNotifyList = notifyList;
@@ -68,6 +72,11 @@ public class IPv6TetheringCoordinator {
         if (mActiveDownstreams.remove(downstream)) {
             updateIPv6TetheringInterfaces();
         }
+    }
+
+    public void useLocalOnlyPrefix(boolean enable) {
+        mUniqueLocalPrefix = enable ? generateUniqueLocalPrefix() : null;
+        updateIPv6TetheringInterfaces();
     }
 
     public void updateUpstreamNetworkState(NetworkState ns) {
@@ -123,11 +132,16 @@ public class IPv6TetheringCoordinator {
     }
 
     private LinkProperties getInterfaceIPv6LinkProperties(TetherInterfaceStateMachine sm) {
-        if (mUpstreamNetworkState == null) return null;
-
         if (sm.interfaceType() == ConnectivityManager.TETHERING_BLUETOOTH) {
             // TODO: Figure out IPv6 support on PAN interfaces.
             return null;
+        }
+
+        if (mUpstreamNetworkState == null) {
+            if (mUniqueLocalPrefix == null) return null;
+
+            // Build a Unique Locally-assigned Prefix configuration.
+            return getUniqueLocalConfig(mUniqueLocalPrefix, sm.interfaceName());
         }
 
         // NOTE: Here, in future, we would have policies to decide how to divvy
@@ -261,6 +275,43 @@ public class IPv6TetheringCoordinator {
                !ip.isLinkLocalAddress() &&
                !ip.isSiteLocalAddress() &&
                !ip.isMulticastAddress();
+    }
+
+    private static LinkProperties getUniqueLocalConfig(byte[] ulp, String ifname) {
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(ifname);
+
+        final IpPrefix local48 = getUniqueLocalPrefix(ulp, (short) 0, 48);
+        lp.addRoute(new RouteInfo(local48, null, null));
+
+        // Use 16 bits of the hashCode of the interface name as the Subnet ID.
+        final IpPrefix local64 = getUniqueLocalPrefix(ulp, (short) ifname.hashCode(), 64);
+        lp.addLinkAddress(new LinkAddress(local64.getAddress(), 64));
+
+        return lp;
+    }
+
+    // Generates a Unique Locally-assigned Prefix:
+    //
+    //     https://tools.ietf.org/html/rfc4193#section-3.1
+    //
+    // The result is a /48 that can be used for local-only communications.
+    private static byte[] generateUniqueLocalPrefix() {
+        final byte[] ulp = new byte[6];  // 6 = 48bits / 8bits/byte
+        (new Random()).nextBytes(ulp);
+
+        final byte[] in6addr = new byte[16];
+        System.arraycopy(ulp, 0, in6addr, 0, ulp.length);
+        in6addr[0] = (byte) 0xfd;  // fc00::/7 and L=1
+
+        return in6addr;
+    }
+
+    private static IpPrefix getUniqueLocalPrefix(byte[] in6addr, short subnetId, int prefixlen) {
+        final byte[] bytes = Arrays.copyOf(in6addr, in6addr.length);
+        bytes[7] = (byte) (subnetId >> 8);
+        bytes[8] = (byte) subnetId;
+        return new IpPrefix(bytes, prefixlen);
     }
 
     private static String toDebugString(NetworkState ns) {
