@@ -153,6 +153,13 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
     private Notification.Builder mTetheredNotificationBuilder;
     private int mLastNotificationId;
 
+    private enum Mode {
+        TETHERING,
+        HOTSPOT,
+    }
+    //private volatile Mode mMode = Mode.TETHERING;
+    private volatile Mode mMode = Mode.HOTSPOT;
+
     private boolean mRndisEnabled;       // track the RNDIS function enabled state
     private boolean mUsbTetherRequested; // true if USB tethering should be started
                                          // when RNDIS is enabled
@@ -313,6 +320,22 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         if (isTetherProvisioningRequired()) {
             cancelTetherProvisioningRechecks(type);
         }
+    }
+
+    public int startLocalOnlyWifiHotspot() {
+        untetherAll();
+        stopLocalOnlyWifiHotspot();
+        mMode = Mode.HOTSPOT;
+        final int result = setWifiTethering(true);
+        if (result != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+            mMode = Mode.TETHERING;
+        }
+        return result;
+    }
+
+    public void stopLocalOnlyWifiHotspot() {
+        final int result = setWifiTethering(false);
+        mMode = Mode.TETHERING;
     }
 
     /**
@@ -717,6 +740,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
 
         private void handleConnectivityAction(Intent intent) {
+            if (mMode != Mode.TETHERING) {
+                // If we're not in tethering mode, we don't worry about changes
+                // in other networks.
+                return;
+            }
+
             final NetworkInfo networkInfo = (NetworkInfo)intent.getParcelableExtra(
                     ConnectivityManager.EXTRA_NETWORK_INFO);
             if (networkInfo == null ||
@@ -1374,6 +1403,10 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
             public void enter() {
                 // TODO: examine if we should check the return value.
                 turnOnMasterTetherSettings(); // may transition us out
+                if (mMode != Mode.TETHERING) {
+                    // None of the rest of this setup pertains to this mode.
+                    return;
+                }
                 simChange.startListening();
                 mUpstreamNetworkMonitor.start();
                 mOffloadController.start();

@@ -3046,6 +3046,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    // TODO: Publish this method from IConnectivityManager.aidl.
+    public int startLocalOnlyWifiHotspot(WifiConfiguration wifiConfig) {
+        // TODO: Permissions checks.
+        return mTethering.startLocalOnlyWifiHotspot(wifiConfig);
+    }
+
+    // TODO: Publish this method from IConnectivityManager.aidl.
+    public void stopLocalOnlyWifiHotspot() {
+        mTethering.stopLocalOnlyWifiHotspot();
+    }
+
     // TODO - move iface listing, queries, etc to new module
     // javadoc from interface
     @Override
