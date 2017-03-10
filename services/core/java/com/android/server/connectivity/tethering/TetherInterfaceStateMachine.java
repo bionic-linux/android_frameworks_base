@@ -47,8 +47,8 @@ public class TetherInterfaceStateMachine extends StateMachine {
     private static final int WIFI_HOST_IFACE_PREFIX_LENGTH = 24;
 
     private final static String TAG = "TetherInterfaceSM";
-    private final static boolean DBG = false;
-    private final static boolean VDBG = false;
+    private final static boolean DBG = true;
+    private final static boolean VDBG = true;
     private static final Class[] messageClasses = {
             TetherInterfaceStateMachine.class
     };
@@ -112,6 +112,10 @@ public class TetherInterfaceStateMachine extends StateMachine {
         addState(mUnavailableState);
 
         setInitialState(mInitialState);
+    }
+
+    public String interfaceName() {
+        return mIfaceName;
     }
 
     public int interfaceType() {
