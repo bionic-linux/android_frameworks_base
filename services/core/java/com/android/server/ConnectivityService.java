@@ -1948,6 +1948,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (argsContain(args, "--diag")) {
             dumpNetworkDiagnostics(pw);
             return;
+        } else if (argsContain(args, "--local_hotspot")) {
+            if (argsContain(args, "start")) {
+                mTethering.startLocalOnlyWifiHotspot(null);
+            } else if (argsContain(args, "stop")) {
+                mTethering.stopLocalOnlyWifiHotspot();
+            }
+            return;
         }
 
         pw.print("NetworkFactories for:");
