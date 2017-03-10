@@ -47,6 +47,7 @@ import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.Bundle;
@@ -152,6 +153,13 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
 
     private Notification.Builder mTetheredNotificationBuilder;
     private int mLastNotificationId;
+
+    private enum Mode {
+        TETHERING,
+        HOTSPOT,
+    }
+    //private volatile Mode mMode = Mode.TETHERING;
+    private volatile Mode mMode = Mode.HOTSPOT;
 
     private boolean mRndisEnabled;       // track the RNDIS function enabled state
     private boolean mUsbTetherRequested; // true if USB tethering should be started
@@ -315,6 +323,22 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
     }
 
+    public int startLocalOnlyWifiHotspot(WifiConfiguration cfg) {
+        untetherAll();
+        stopLocalOnlyWifiHotspot();
+        mMode = Mode.HOTSPOT;
+        final int result = setWifiTethering(cfg, true);
+        if (result != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+            mMode = Mode.TETHERING;
+        }
+        return result;
+    }
+
+    public void stopLocalOnlyWifiHotspot() {
+        final int result = setWifiTethering(null, false);
+        mMode = Mode.TETHERING;
+    }
+
     /**
      * Check if the device requires a provisioning check in order to enable tethering.
      *
@@ -353,7 +377,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         int result;
         switch (type) {
             case ConnectivityManager.TETHERING_WIFI:
-                result = setWifiTethering(enable);
+                result = setWifiTethering(null /* use existing wifi config */, enable);
                 if (isProvisioningRequired && result == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
                     scheduleProvisioningRechecks(type);
                 }
@@ -381,12 +405,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
     }
 
-    private int setWifiTethering(final boolean enable) {
+    private int setWifiTethering(WifiConfiguration cfg, final boolean enable) {
         synchronized (mPublicSync) {
             mWifiTetherRequested = enable;
             final WifiManager wifiManager =
                     (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-            if (wifiManager.setWifiApEnabled(null /* use existing wifi config */, enable)) {
+            if (wifiManager.setWifiApEnabled(cfg, enable)) {
                 return ConnectivityManager.TETHER_ERROR_NO_ERROR;
             }
             return ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
@@ -717,6 +741,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
 
         private void handleConnectivityAction(Intent intent) {
+            if (mMode != Mode.TETHERING) {
+                // If we're not in tethering mode, we don't worry about changes
+                // in other networks.
+                return;
+            }
+
             final NetworkInfo networkInfo = (NetworkInfo)intent.getParcelableExtra(
                     ConnectivityManager.EXTRA_NETWORK_INFO);
             if (networkInfo == null ||
@@ -1374,6 +1404,10 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
             public void enter() {
                 // TODO: examine if we should check the return value.
                 turnOnMasterTetherSettings(); // may transition us out
+                if (mMode != Mode.TETHERING) {
+                    // None of the rest of this setup pertains to this mode.
+                    return;
+                }
                 simChange.startListening();
                 mUpstreamNetworkMonitor.start();
                 mOffloadController.start();
