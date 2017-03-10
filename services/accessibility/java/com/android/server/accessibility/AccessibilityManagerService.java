@@ -397,11 +397,13 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub {
                 } else if (Intent.ACTION_USER_REMOVED.equals(action)) {
                     removeUser(intent.getIntExtra(Intent.EXTRA_USER_HANDLE, 0));
                 } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
-                    // We will update when the automation service dies.
-                    UserState userState = getCurrentUserStateLocked();
-                    if (!userState.isUiAutomationSuppressingOtherServices()) {
-                        if (readConfigurationForUserStateLocked(userState)) {
-                            onUserStateChangedLocked(userState);
+                    synchronized (mLock) {
+                        // We will update when the automation service dies.
+                        UserState userState = getCurrentUserStateLocked();
+                        if (!userState.isUiAutomationSuppressingOtherServices()) {
+                            if (readConfigurationForUserStateLocked(userState)) {
+                                onUserStateChangedLocked(userState);
+                            }
                         }
                     }
                 } else if (Intent.ACTION_SETTING_RESTORED.equals(action)) {
