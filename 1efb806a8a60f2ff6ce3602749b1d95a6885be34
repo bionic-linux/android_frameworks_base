@@ -22,6 +22,30 @@
       "revId": "1efb806a8a60f2ff6ce3602749b1d95a6885be34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddc6e825_3c19fdb7",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-03-10T20:19:16Z",
+      "side": 1,
+      "message": "Made it a non-abstract method with an UOE.",
+      "parentUuid": "36898c03_4f870f0f",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 63
+      },
+      "revId": "1efb806a8a60f2ff6ce3602749b1d95a6885be34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
