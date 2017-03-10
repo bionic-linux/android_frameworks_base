@@ -47,6 +47,7 @@ import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.Bundle;
@@ -148,6 +149,14 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
     private String mCurrentUpstreamIface;
     private Notification.Builder mTetheredNotificationBuilder;
     private int mLastNotificationId;
+
+    private enum Mode {
+        TETHERING,
+        HOTSPOT,
+    }
+    //private volatile Mode mMode = Mode.TETHERING;
+    private volatile Mode mMode = Mode.HOTSPOT;
+
     private boolean mRndisEnabled;       // track the RNDIS function enabled state
     private boolean mUsbTetherRequested; // true if USB tethering should be started
                                          // when RNDIS is enabled
@@ -308,6 +317,22 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
     }
 
+    public int startLocalOnlyWifiHotspot(WifiConfiguration cfg) {
+        untetherAll();
+        stopLocalOnlyWifiHotspot();
+        mMode = Mode.HOTSPOT;
+        final int result = setWifiTethering(cfg, true);
+        if (result != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+            mMode = Mode.TETHERING;
+        }
+        return result;
+    }
+
+    public void stopLocalOnlyWifiHotspot() {
+        final int result = setWifiTethering(null, false);
+        mMode = Mode.TETHERING;
+    }
+
     /**
      * Check if the device requires a provisioning check in order to enable tethering.
      *
@@ -346,7 +371,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         int result;
         switch (type) {
             case ConnectivityManager.TETHERING_WIFI:
-                result = setWifiTethering(enable);
+                result = setWifiTethering(null /* use existing wifi config */, enable);
                 if (isProvisioningRequired && result == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
                     scheduleProvisioningRechecks(type);
                 }
@@ -374,12 +399,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
     }
 
-    private int setWifiTethering(final boolean enable) {
+    private int setWifiTethering(WifiConfiguration cfg, final boolean enable) {
         synchronized (mPublicSync) {
             mWifiTetherRequested = enable;
             final WifiManager wifiManager =
                     (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-            if (wifiManager.setWifiApEnabled(null /* use existing wifi config */, enable)) {
+            if (wifiManager.setWifiApEnabled(cfg, enable)) {
                 return ConnectivityManager.TETHER_ERROR_NO_ERROR;
             }
             return ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
@@ -710,6 +735,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
 
         private void handleConnectivityAction(Intent intent) {
+            if (mMode != Mode.TETHERING) {
+                // If we're not in tethering mode, we don't worry about changes
+                // in other networks.
+                return;
+            }
+
             final NetworkInfo networkInfo = (NetworkInfo)intent.getParcelableExtra(
                     ConnectivityManager.EXTRA_NETWORK_INFO);
             if (networkInfo == null ||
@@ -1015,41 +1046,71 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 mUpstreamNetworkMonitor.releaseMobileNetworkRequest();
             }
 
-            protected boolean turnOnMasterTetherSettings() {
-                final TetheringConfiguration cfg = mConfig;
+            private boolean startIpServices(Mode mode, String[] dhcpRanges) {
+                // TODO: Randomize DHCPv4 ranges, especially in hotspot mode.
                 try {
-                    mNMService.setIpForwardingEnabled(true);
-                } catch (Exception e) {
-                    transitionTo(mSetIpForwardingEnabledErrorState);
-                    return false;
-                }
-                try {
-                    mNMService.startTethering(cfg.dhcpRanges);
+                    mNMService.startTethering(dhcpRanges);
                 } catch (Exception e) {
                     try {
                         mNMService.stopTethering();
-                        mNMService.startTethering(cfg.dhcpRanges);
+                        mNMService.startTethering(dhcpRanges);
                     } catch (Exception ee) {
-                        transitionTo(mStartTetheringErrorState);
                         return false;
                     }
+                }
+
+                mIPv6TetheringCoordinator.useLocalOnlyPrefix(mode == Mode.HOTSPOT);
+
+                return true;
+            }
+
+            private boolean stopIpServices() {
+                mIPv6TetheringCoordinator.useLocalOnlyPrefix(false);
+
+                try {
+                    mNMService.stopTethering();
+                } catch (Exception e) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            protected boolean turnOnMasterTetherSettings() {
+                final Mode mode = mMode;
+                final TetheringConfiguration cfg = mConfig;
+
+                if (mode == Mode.TETHERING) {
+                    try {
+                        mNMService.setIpForwardingEnabled(true);
+                    } catch (Exception e) {
+                        transitionTo(mSetIpForwardingEnabledErrorState);
+                        return false;
+                    }
+                }
+
+                if (!startIpServices(mode, cfg.dhcpRanges)) {
+                    transitionTo(mStartTetheringErrorState);
+                    return false;
                 }
                 return true;
             }
 
             protected boolean turnOffMasterTetherSettings() {
-                try {
-                    mNMService.stopTethering();
-                } catch (Exception e) {
+                if (!stopIpServices()) {
                     transitionTo(mStopTetheringErrorState);
                     return false;
                 }
-                try {
-                    mNMService.setIpForwardingEnabled(false);
-                } catch (Exception e) {
-                    transitionTo(mSetIpForwardingDisabledErrorState);
-                    return false;
+
+                if (mMode == Mode.TETHERING) {
+                    try {
+                        mNMService.setIpForwardingEnabled(false);
+                    } catch (Exception e) {
+                        transitionTo(mSetIpForwardingDisabledErrorState);
+                        return false;
+                    }
                 }
+
                 transitionTo(mInitialState);
                 return true;
             }
@@ -1367,6 +1428,10 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
             public void enter() {
                 // TODO: examine if we should check the return value.
                 turnOnMasterTetherSettings(); // may transition us out
+                if (mMode != Mode.TETHERING) {
+                    // None of the rest of this setup pertains to this mode.
+                    return;
+                }
                 simChange.startListening();
                 mUpstreamNetworkMonitor.start();
                 mOffloadController.start();
