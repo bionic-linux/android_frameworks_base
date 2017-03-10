@@ -16,6 +16,8 @@
 
 package com.android.server.connectivity.tethering;
 
+import static android.net.util.NetworkConstants.RFC7421_IP_PREFIX_LENGTH;
+
 import android.net.INetd;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -40,6 +42,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Random;
 
 
 /**
@@ -48,7 +51,6 @@ import java.util.Objects;
 public class IPv6TetheringInterfaceServices {
     private static final String TAG = IPv6TetheringInterfaceServices.class.getSimpleName();
     private static final IpPrefix LINK_LOCAL_PREFIX = new IpPrefix("fe80::/64");
-    private static final int RFC7421_IP_PREFIX_LENGTH = 64;
 
     private final String mIfName;
     private final INetworkManagementService mNMService;
@@ -65,10 +67,17 @@ public class IPv6TetheringInterfaceServices {
     }
 
     public boolean start() {
+        // TODO: Refactor for testability (perhaps passing an android.system.Os
+        // instance and calling getifaddrs() directly).
         try {
             mNetworkInterface = NetworkInterface.getByName(mIfName);
         } catch (SocketException e) {
-            Log.e(TAG, "Failed to find NetworkInterface for " + mIfName, e);
+            Log.e(TAG, "Error looking up NetworkInterfaces for " + mIfName, e);
+            stop();
+            return false;
+        }
+        if (mNetworkInterface == null) {
+            Log.e(TAG, "Failed to find NetworkInterface for " + mIfName);
             stop();
             return false;
         }
@@ -142,7 +151,6 @@ public class IPv6TetheringInterfaceServices {
         setRaParams(params);
         mLastIPv6LinkProperties = v6only;
     }
-
 
     private void configureLocalRoutes(
             HashSet<IpPrefix> deprecatedPrefixes, HashSet<IpPrefix> newPrefixes) {
@@ -266,15 +274,20 @@ public class IPv6TetheringInterfaceServices {
         return localRoutes;
     }
 
-    // Given a prefix like 2001:db8::/64 return 2001:db8::1.
+    // Given a prefix like 2001:db8::/64 return an address like 2001:db8::1.
     private static Inet6Address getLocalDnsIpFor(IpPrefix localPrefix) {
         final byte[] dnsBytes = localPrefix.getRawAddress();
-        dnsBytes[dnsBytes.length - 1] = 0x1;
+        dnsBytes[dnsBytes.length - 1] = getRandomNonZeroByte();
         try {
             return Inet6Address.getByAddress(null, dnsBytes, 0);
         } catch (UnknownHostException e) {
             Slog.wtf(TAG, "Failed to construct Inet6Address from: " + localPrefix);
             return null;
         }
+    }
+
+    private static byte getRandomNonZeroByte() {
+        final byte random = (byte) (new Random()).nextInt();
+        return (random != 0) ? random : 0x1;
     }
 }
