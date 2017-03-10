@@ -79,6 +79,7 @@ import android.net.metrics.DefaultNetworkEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.util.MultinetworkPolicyTracker;
+import android.net.wifi.WifiConfiguration;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -3044,6 +3045,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } else {
             return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
         }
+    }
+
+    // TODO: Publish this method from IConnectivityManager.aidl.
+    public int startLocalOnlyWifiHotspot(WifiConfiguration wifiConfig) {
+        // TODO: Permissions checks.
+        return mTethering.startLocalOnlyWifiHotspot(wifiConfig);
+    }
+
+    // TODO: Publish this method from IConnectivityManager.aidl.
+    public void stopLocalOnlyWifiHotspot() {
+        mTethering.stopLocalOnlyWifiHotspot();
     }
 
     // TODO - move iface listing, queries, etc to new module

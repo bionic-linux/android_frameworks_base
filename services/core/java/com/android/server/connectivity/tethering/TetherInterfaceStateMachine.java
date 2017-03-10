@@ -114,6 +114,10 @@ public class TetherInterfaceStateMachine extends StateMachine {
         setInitialState(mInitialState);
     }
 
+    public String interfaceName() {
+        return mIfaceName;
+    }
+
     public int interfaceType() {
         return mInterfaceType;
     }
