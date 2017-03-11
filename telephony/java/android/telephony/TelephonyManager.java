@@ -6428,5 +6428,29 @@ public class TelephonyManager {
         }
         return false;
     }
+
+    /**
+     * Get the current signal strength information for the given subscription.
+     *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE}
+     *
+     * Get the most recent SignalStrength information reported by the modem. Due
+     * to power saving this information may not always be current.
+     * @return the most recent cached signal strength info from the modem
+     * @hide
+     */
+    @Nullable
+    SignalStrength getSignalStrength() {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.getSignalStrength(getSubId(), getOpPackageName());
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#getSignalStrength", e);
+        }
+        return null;
+    }
 }
 
