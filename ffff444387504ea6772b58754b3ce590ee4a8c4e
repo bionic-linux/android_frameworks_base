@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "033f829d_28910953",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3051,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-11T02:23:44Z",
+      "side": 1,
+      "message": "we may need to keep track of the caller to listen for the app dying so we can shut down on a failure/stop.",
+      "range": {
+        "startLine": 3051,
+        "startChar": 0,
+        "endLine": 3051,
+        "endChar": 36
+      },
+      "revId": "ffff444387504ea6772b58754b3ce590ee4a8c4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5b70013_70916e84",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-11T02:23:44Z",
+      "side": 1,
+      "message": "not sure where, but we should:\n1 - make sure the caller is the same?\n2 - make sure calling stop local only won\u0027t kill the full hotspot if it is up",
+      "range": {
+        "startLine": 3056,
+        "startChar": 16,
+        "endLine": 3056,
+        "endChar": 40
+      },
+      "revId": "ffff444387504ea6772b58754b3ce590ee4a8c4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
