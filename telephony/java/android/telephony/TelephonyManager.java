@@ -6102,5 +6102,43 @@ public class TelephonyManager {
 
         return null;
     }
+
+
+    /**
+     * Get the current signal strength information for the given subscription.
+     * Because this information is not updated when the device is in a low power state
+     * it should not be relied-upon to be current.
+     * Callers require either READ_PRIVILEGED_PHONE_STATE or
+     * READ_PHONE_STATE to retrieve the information.
+     * @return the most recent cached signal strength info from the modem
+     * @hide
+     */
+    @Nullable
+    SignalStrength getSignalStrength() {
+        return getSignalStrength(getSubId());
+    }
+
+    /**
+     * Get the current signal strength information for the given subscription.
+     * Because this information is not updated when the device is in a low power state
+     * it should not be relied-upon to be current.
+     * Callers require either READ_PRIVILEGED_PHONE_STATE or
+     * READ_PHONE_STATE to retrieve the information.
+     * @param subId Subscription index
+     * @return the most recent cached signal strength info from the modem if available
+     * @hide
+     */
+    @Nullable
+    SignalStrength getSignalStrength(int subId) {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.getSignalStrength(subId, getOpPackageName());
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#getSignalStrength", e);
+        }
+        return null;
+    }
 }
 
