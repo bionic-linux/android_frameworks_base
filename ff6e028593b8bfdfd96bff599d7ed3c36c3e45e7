@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88dca656_540a587b",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-13T13:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52157d28_43e08cb4",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 15
+      },
+      "revId": "ff6e028593b8bfdfd96bff599d7ed3c36c3e45e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55140e4_853d42da",
         "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
         "patchSetId": 8
