@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52157d28_43e08cb4",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-13T09:19:37Z",
+      "side": 1,
+      "message": "Given that HOTSPOT is the user-visible name for the tethering feature, maybe call this something else? LOCAL_HOTSPOT?",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 15
+      },
+      "revId": "ff6e028593b8bfdfd96bff599d7ed3c36c3e45e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f55140e4_853d42da",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-13T09:19:37Z",
+      "side": 1,
+      "message": "16 bits might not be long enough to ensure no collisions. If we currently only support one downstream, then you could use 0 everywhere. If not, then perhaps this code should keep state?",
+      "range": {
+        "startLine": 287,
+        "startChar": 15,
+        "endLine": 287,
+        "endChar": 38
+      },
+      "revId": "ff6e028593b8bfdfd96bff599d7ed3c36c3e45e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
