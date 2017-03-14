@@ -38,12 +38,11 @@ import org.mockito.MockitoAnnotations;
 
 /**
  * Tests for IpManager.
- *
- * @hide
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class IpManagerTest {
+    private static final int DEFAULT_AVOIDBADWIFI_CONFIG_VALUE = 1;
     @Mock private Context mContext;
     @Mock private INetworkManagementService mNMService;
     @Mock private Resources mResources;
@@ -54,7 +53,7 @@ public class IpManagerTest {
 
         when(mContext.getResources()).thenReturn(mResources);
         when(mResources.getInteger(R.integer.config_networkAvoidBadWifi))
-                .thenReturn(0);
+                .thenReturn(DEFAULT_AVOIDBADWIFI_CONFIG_VALUE);
 
         mContentResolver = new MockContentResolver();
         mContentResolver.addProvider(Settings.AUTHORITY, new FakeSettingsProvider());
