@@ -57,6 +57,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private StatusBar mStatusBarComponent;
     private DarkIconManager mDarkIconManager;
     private SignalClusterView mSignalClusterView;
+    private View mNetworkLabel;
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
@@ -91,6 +92,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
+        mNetworkLabel = mStatusBar.findViewById(R.id.network_label_frame);
         // Default to showing until we know otherwise.
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
@@ -147,8 +149,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if ((diff1 & StatusBarManager.DISABLE_SYSTEM_INFO) != 0) {
             if ((state1 & StatusBarManager.DISABLE_SYSTEM_INFO) != 0) {
                 hideSystemIconArea(animate);
+                hideNetworkLabel(animate);
             } else {
                 showSystemIconArea(animate);
+                showNetworkLabel(animate);
             }
         }
         if ((diff1 & StatusBarManager.DISABLE_NOTIFICATION_ICONS) != 0) {
@@ -196,6 +200,14 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
+    }
+
+    public void hideNetworkLabel(boolean animate) {
+        animateHide(mNetworkLabel, animate);
+    }
+
+    public void showNetworkLabel(boolean animate) {
+        animateShow(mNetworkLabel, animate);
     }
 
     /**

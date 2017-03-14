@@ -336,4 +336,12 @@
     <!-- Whether to show activity indicators in the status bar -->
     <bool name="config_showActivity">false</bool>
 
+    <!-- Enables the feature that can show/hide the operator name in statusbar.
+         When true, the user can select to show/hide operator name through a
+         checkbox in Settings. When false, there is no option to show operator
+         name (no checkbox in Settings). -->
+    <bool name="config_showOperatorNameInStatusBar">false</bool>
+    <!-- Maximum length of operator name to be shown in status bar  -->
+    <integer name="config_operatorNameMaxLength">20</integer>
+
 </resources>

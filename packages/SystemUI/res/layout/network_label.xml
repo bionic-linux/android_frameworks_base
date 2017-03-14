@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (C) 2017 Sony Mobile Communications Inc.
+   All rights, including trade secret rights, reserved.
+-->
+<com.android.systemui.statusbar.AlphaOptimizedFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/network_label_frame"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    >
+    <com.sonymobile.systemui.statusbar.NetworkLabelView
+        android:id="@+id/network_label"
+        android:textSize="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:maxLength="@integer/config_operatorNameMaxLength"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:visibility="gone" />
+</com.android.systemui.statusbar.AlphaOptimizedFrameLayout>
