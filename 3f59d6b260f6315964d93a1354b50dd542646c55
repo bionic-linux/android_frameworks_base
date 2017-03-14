@@ -93,6 +93,30 @@
       "revId": "3f59d6b260f6315964d93a1354b50dd542646c55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f8da9d8_16d267b1",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-14T07:19:21Z",
+      "side": 1,
+      "message": "it is part of my notion for a temp config - but yes, it can be later.  just wanted to make sure it wasn\u0027t going to end up being hard to do later :)",
+      "parentUuid": "41c2d1b8_32d461f5",
+      "range": {
+        "startLine": 368,
+        "startChar": 42,
+        "endLine": 368,
+        "endChar": 77
+      },
+      "revId": "3f59d6b260f6315964d93a1354b50dd542646c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
