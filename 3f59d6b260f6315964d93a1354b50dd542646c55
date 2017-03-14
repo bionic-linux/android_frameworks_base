@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3be8f70_e540b42f",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-14T06:30:44Z",
+      "side": 1,
+      "message": "Good point.  I\u0027ll add a check that the mode is correct, at least.\n\nOther checks and defenses might best be left to ConnectivityService.",
+      "parentUuid": "4c6a68ab_7beb3ea4",
+      "range": {
+        "startLine": 325,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 5
+      },
+      "revId": "3f59d6b260f6315964d93a1354b50dd542646c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a8c1f98_26dea1f1",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-14T06:26:14Z",
       "side": 1,
       "message": "will it be hard to plumb a config here?  to support temp configs for supported tethering calls, i will need to hand it in if possible.",
+      "range": {
+        "startLine": 368,
+        "startChar": 42,
+        "endLine": 368,
+        "endChar": 77
+      },
+      "revId": "3f59d6b260f6315964d93a1354b50dd542646c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41c2d1b8_32d461f5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-14T06:30:44Z",
+      "side": 1,
+      "message": "That must be a separate change for a separate feature, yes?",
+      "parentUuid": "9a8c1f98_26dea1f1",
       "range": {
         "startLine": 368,
         "startChar": 42,
