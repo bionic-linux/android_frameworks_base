@@ -46,6 +46,30 @@
       "revId": "246bc1f79532a4fb82a17b1678152c6e8fc3d80e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b9415cb_f498aeb7",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-14T04:25:55Z",
+      "side": 1,
+      "message": "ok SG.",
+      "parentUuid": "989f5c38_987b7a30",
+      "range": {
+        "startLine": 45,
+        "startChar": 65,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "246bc1f79532a4fb82a17b1678152c6e8fc3d80e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
