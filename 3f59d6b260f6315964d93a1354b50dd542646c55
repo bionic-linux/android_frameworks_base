@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6a68ab_7beb3ea4",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-14T06:26:14Z",
+      "side": 1,
+      "message": "would be good to make sure a call to this by an app wouldn\u0027t tear down the hotspot from Settings",
+      "range": {
+        "startLine": 325,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 5
+      },
+      "revId": "3f59d6b260f6315964d93a1354b50dd542646c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a8c1f98_26dea1f1",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-14T06:26:14Z",
+      "side": 1,
+      "message": "will it be hard to plumb a config here?  to support temp configs for supported tethering calls, i will need to hand it in if possible.",
+      "range": {
+        "startLine": 368,
+        "startChar": 42,
+        "endLine": 368,
+        "endChar": 77
+      },
+      "revId": "3f59d6b260f6315964d93a1354b50dd542646c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
