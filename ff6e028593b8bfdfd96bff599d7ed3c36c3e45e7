@@ -69,6 +69,30 @@
       "revId": "ff6e028593b8bfdfd96bff599d7ed3c36c3e45e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d78179fb_b84dd285",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-14T11:37:18Z",
+      "side": 1,
+      "message": "Now keeping some DownstreamState.  I expect in the future that we might keep IPv4 prefixes allocated to downstreams and so forth (once that stuff is dynamic).",
+      "parentUuid": "f55140e4_853d42da",
+      "range": {
+        "startLine": 287,
+        "startChar": 15,
+        "endLine": 287,
+        "endChar": 38
+      },
+      "revId": "ff6e028593b8bfdfd96bff599d7ed3c36c3e45e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
