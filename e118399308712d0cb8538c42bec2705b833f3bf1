@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d88af97_f88acf99",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-15T09:15:08Z",
+      "side": 1,
+      "message": "We probably need to check for mode being TETHERING here.",
+      "range": {
+        "startLine": 319,
+        "startChar": 15,
+        "endLine": 319,
+        "endChar": 40
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b099e6e_c2a91726",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-15T09:15:08Z",
+      "side": 1,
+      "message": "Nit: \"Local hotspot already started\"?",
+      "range": {
+        "startLine": 322,
+        "startChar": 27,
+        "endLine": 322,
+        "endChar": 92
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dce9284b_1d7153bb",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-15T09:15:08Z",
+      "side": 1,
+      "message": "\"Local hotspot not running\"?",
+      "range": {
+        "startLine": 333,
+        "startChar": 27,
+        "endLine": 333,
+        "endChar": 92
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e65d42a_a2f7239d",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-15T09:15:08Z",
+      "side": 1,
+      "message": "What happens if someone calls into here when mode \u003d\u003d LOCAL_HOTSPOT? Do we know to tear down the local hotspot and start tethering? I suppose that could be deemed out of scope for this particular CL.",
+      "range": {
+        "startLine": 374,
+        "startChar": 8,
+        "endLine": 374,
+        "endChar": 31
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b51aab89_f4022112",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-15T09:15:08Z",
+      "side": 1,
+      "message": "Not an issue with this CL, but what does \"startTethering\" do?\n If all this does is start dnsmasq, then we should rename it.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 31,
+        "endLine": 1058,
+        "endChar": 45
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeb85691_23a087a3",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 16
@@ -231,6 +346,75 @@
         "startChar": 4,
         "endLine": 1765,
         "endChar": 5
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f9b0766_314062f2",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-15T09:15:08Z",
+      "side": 1,
+      "message": "Nit: \"drop the State, it\u0027s cleaner\"?",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49f23ad1_fa156bdc",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-15T09:15:08Z",
+      "side": 1,
+      "message": "Nit: could/should this be a Map from subnet ID to TetherInterfaceStateMachine? If so I think you would\u0027t need the DownstreamState class.\n\nEquivalently it could be a SparseArray keyed off subnet ID\n\nBut this is fine too.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 65
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f59e1705_66f82d35",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-15T09:15:08Z",
+      "side": 1,
+      "message": "Do you need to do something when mNextSubnetId goes from 32767 to -32768?",
+      "range": {
+        "startLine": 79,
+        "startChar": 69,
+        "endLine": 79,
+        "endChar": 84
       },
       "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
