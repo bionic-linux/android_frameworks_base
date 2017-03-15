@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c9bad63_b4e11e91",
+        "filename": "services/core/java/com/android/server/fingerprint/AuthenticationClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2017-03-15T02:05:30Z",
+      "side": 1,
+      "message": "This should report \u0027false\u0027 since the line below is calling onError(). Otherwise you\u0027ll get a CANCEL notification and a LOCKOUT notification.",
+      "range": {
+        "startLine": 87,
+        "startChar": 25,
+        "endLine": 87,
+        "endChar": 29
+      },
+      "revId": "27d8420e37fe523763f498df7e162dc1e5f069af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
