@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5377eded_fb7fb8f2",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-15T07:05:56Z",
+      "side": 1,
+      "message": "ok SG.",
+      "parentUuid": "ff55c453_6ecd57d4",
+      "range": {
+        "startLine": 1062,
+        "startChar": 24,
+        "endLine": 1062,
+        "endChar": 62
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f384f2cf_077d8071",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 16
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I think the way it stands now, if a new mode introduced \u0026\u0026 it wants to also use a unique local prefix then it would be force to update this code.\n\nThat seems conservative and a reasonable burden on the implementer of the new mode.",
       "parentUuid": "f384f2cf_077d8071",
+      "range": {
+        "startLine": 1068,
+        "startChar": 61,
+        "endLine": 1068,
+        "endChar": 87
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e86bda3_6fc5b664",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-15T07:05:56Z",
+      "side": 1,
+      "message": "ok SG.",
+      "parentUuid": "c3653a85_2a04357b",
       "range": {
         "startLine": 1068,
         "startChar": 61,
@@ -183,6 +231,29 @@
         "startChar": 4,
         "endLine": 1765,
         "endChar": 5
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "237d839c_7945c9db",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-15T07:05:56Z",
+      "side": 1,
+      "message": "I think it can be folded into:\n\nArrays.copyOf(ulp, NetworkConstants.IPV6_ADDR_LEN) that would return an array of length NetworkConstants.IPV6_ADDR_LEN padded with 0s.",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 57
       },
       "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
