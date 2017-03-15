@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14f54268_503fc4c0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-15T11:35:32Z",
+      "side": 1,
+      "message": "I now check for !\u003d IDLE.",
+      "parentUuid": "0d88af97_f88acf99",
+      "range": {
+        "startLine": 319,
+        "startChar": 15,
+        "endLine": 319,
+        "endChar": 40
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b099e6e_c2a91726",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3d3ede9a_fd0058c0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-15T11:35:32Z",
+      "side": 1,
+      "message": "I now just output the mode we\u0027re in.",
+      "parentUuid": "9b099e6e_c2a91726",
+      "range": {
+        "startLine": 322,
+        "startChar": 27,
+        "endLine": 322,
+        "endChar": 92
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dce9284b_1d7153bb",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 16
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-15T09:15:08Z",
       "side": 1,
       "message": "\"Local hotspot not running\"?",
+      "range": {
+        "startLine": 333,
+        "startChar": 27,
+        "endLine": 333,
+        "endChar": 92
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8602abf2_b728629f",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-15T11:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce9284b_1d7153bb",
       "range": {
         "startLine": 333,
         "startChar": 27,
@@ -105,6 +177,30 @@
       "writtenOn": "2017-03-15T09:15:08Z",
       "side": 1,
       "message": "Not an issue with this CL, but what does \"startTethering\" do?\n If all this does is start dnsmasq, then we should rename it.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 31,
+        "endLine": 1058,
+        "endChar": 45
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb91b6aa_8780fcdb",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-15T11:35:32Z",
+      "side": 1,
+      "message": "That\u0027s pretty much it.\n\nNoted.",
+      "parentUuid": "b51aab89_f4022112",
       "range": {
         "startLine": 1058,
         "startChar": 31,
@@ -376,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "30550513_03bc6567",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-15T11:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f9b0766_314062f2",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49f23ad1_fa156bdc",
         "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
         "patchSetId": 16
@@ -399,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "1ab3f58b_79d5a312",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-15T11:35:32Z",
+      "side": 1,
+      "message": "Well, the order is important because the head of the list is the one that gets the global /64 from the mobile interface on a first-tethered, first-served basis.",
+      "parentUuid": "49f23ad1_fa156bdc",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 65
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f59e1705_66f82d35",
         "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
         "patchSetId": 16
@@ -410,6 +554,30 @@
       "writtenOn": "2017-03-15T09:15:08Z",
       "side": 1,
       "message": "Do you need to do something when mNextSubnetId goes from 32767 to -32768?",
+      "range": {
+        "startLine": 79,
+        "startChar": 69,
+        "endLine": 79,
+        "endChar": 84
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d870da76_e356bf39",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-15T11:35:32Z",
+      "side": 1,
+      "message": "I seem to have lost some code that reset that.  I now reset to 0 in removeActiveDownstream() when the last potential downstream is removed.\n\nEven still, if it does roll over I guess we\u0027ll just get whatever happens when we try to write it to 2 bytes in getUniqueLocalPrefix() below.\n\nWe could just make it a long and truncate to 16bits when forming a ULP, is that better?",
+      "parentUuid": "f59e1705_66f82d35",
       "range": {
         "startLine": 79,
         "startChar": 69,
