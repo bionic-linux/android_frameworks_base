@@ -111,6 +111,55 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.os.Handler;
+
+
+//*******imports from ZygoteInit.java******
+import static android.system.OsConstants.POLLIN;
+import static android.system.OsConstants.S_IRWXG;
+import static android.system.OsConstants.S_IRWXO;
+
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.icu.impl.CacheValue;
+import android.icu.text.DecimalFormatSymbols;
+import android.icu.util.ULocale;
+import android.net.LocalServerSocket;
+import android.opengl.EGL14;
+import android.os.Process;
+import android.os.SystemClock;
+import android.os.SystemProperties;
+import android.os.Trace;
+import android.security.keystore.AndroidKeyStoreProvider;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.system.OsConstants;
+import android.system.StructPollfd;
+import android.text.Hyphenator;
+import android.util.EventLog;
+import android.util.Log;
+import android.webkit.WebViewFactory;
+import android.widget.TextView;
+
+
+
+import dalvik.system.DexFile;
+import dalvik.system.ZygoteHooks;
+
+import libcore.io.IoUtils;
+
+import java.io.BufferedReader;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.security.Security;
+import java.security.Provider;
+import java.util.ArrayList;
+//****************************************************
+
 public final class SystemServer {
     private static final String TAG = "SystemServer";
 
@@ -334,12 +383,24 @@ public final class SystemServer {
             Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
         }
 
+        //start preloading
+        Timer trr = new Timer();
+		trr.schedule(new TimerTask() {
+		    @Override
+		    public void run() {
+                preloadClasses();
+                endIcuCachePinning();
+            }
+        }, 100);
+
         // Start services.
         try {
             Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "StartServices");
-            startBootstrapServices();
+            Slog.i(TAG, "StartServices begin");
+	        startBootstrapServices();
             startCoreServices();
             startOtherServices();
+	    Slog.i(TAG, "StartServices end");
         } catch (Throwable ex) {
             Slog.e("System", "******************************************");
             Slog.e("System", "************ Failure starting system services", ex);
@@ -506,16 +567,18 @@ public final class SystemServer {
      * Starts some essential services that are not tangled up in the bootstrap process.
      */
     private void startCoreServices() {
-        // Tracks the battery level.  Requires LightService.
-        mSystemServiceManager.startService(BatteryService.class);
 
-        // Tracks application usage stats.
-        mSystemServiceManager.startService(UsageStatsService.class);
-        mActivityManagerService.setUsageStatsManager(
-                LocalServices.getService(UsageStatsManagerInternal.class));
 
-        // Tracks whether the updatable WebView is in a ready state and watches for update installs.
-        mWebViewUpdateService = mSystemServiceManager.startService(WebViewUpdateService.class);
+    // Tracks the battery level.  Requires LightService.
+	mSystemServiceManager.startService(BatteryService.class);
+
+	// Tracks application usage stats.
+	mSystemServiceManager.startService(UsageStatsService.class);
+	mActivityManagerService.setUsageStatsManager(
+	   LocalServices.getService(UsageStatsManagerInternal.class));
+
+	// Tracks whether the updatable WebView is in a ready state and watches for update installs.
+	mWebViewUpdateService = mSystemServiceManager.startService(WebViewUpdateService.class);
     }
 
     /**
@@ -524,7 +587,8 @@ public final class SystemServer {
      */
     private void startOtherServices() {
         final Context context = mSystemContext;
-        VibratorService vibrator = null;
+        //VibratorService vibrator = null;
+        final VibratorService vibrator = new VibratorService(context);
         IMountService mountService = null;
         NetworkManagementService networkManagement = null;
         NetworkStatsService networkStats = null;
@@ -538,7 +602,8 @@ public final class SystemServer {
         CommonTimeManagementService commonTimeMgmtService = null;
         InputManagerService inputManager = null;
         TelephonyRegistry telephonyRegistry = null;
-        ConsumerIrService consumerIr = null;
+        //ConsumerIrService consumerIr = null;
+        final ConsumerIrService consumerIr = new ConsumerIrService(context);
         MmsServiceBroker mmsService = null;
         HardwarePropertiesManagerService hardwarePropertiesService = null;
 
@@ -570,29 +635,63 @@ public final class SystemServer {
 
         try {
             Slog.i(TAG, "Reading configuration...");
+            Slog.i(TAG, "disableNetwork:"+disableNetwork);
             SystemConfig.getInstance();
 
-            traceBeginAndSlog("StartSchedulingPolicyService");
-            ServiceManager.addService("scheduling_policy", new SchedulingPolicyService());
-            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                traceBeginAndSlog("StartSchedulingPolicyService");
+                ServiceManager.addService("scheduling_policy", new SchedulingPolicyService());
+                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
-            mSystemServiceManager.startService(TelecomLoaderService.class);
+                mSystemServiceManager.startService(TelecomLoaderService.class);
 
-            traceBeginAndSlog("StartTelephonyRegistry");
-            telephonyRegistry = new TelephonyRegistry(context);
-            ServiceManager.addService("telephony.registry", telephonyRegistry);
-            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                traceBeginAndSlog("StartTelephonyRegistry");
+                telephonyRegistry = new TelephonyRegistry(context);
+                ServiceManager.addService("telephony.registry", telephonyRegistry);
+                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
-            traceBeginAndSlog("StartEntropyMixer");
-            mEntropyMixer = new EntropyMixer(context);
-            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                //StartEntropyMixer with delay
+                Handler mmm_handler;
+                mmm_handler = new Handler();
+                mmm_handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        traceBeginAndSlog("StartEntropyMixer with delay begin");
+                        mEntropyMixer = new EntropyMixer(context);
+                        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                        traceBeginAndSlog("StartEntropyMixer with delay end");
+                    }
+                }, 10000);
+                //StartEntropyMixer with delay
 
-            mContentResolver = context.getContentResolver();
+                mContentResolver = context.getContentResolver();
 
             if (!disableCameraService) {
                 Slog.i(TAG, "Camera Service");
                 mSystemServiceManager.startService(CameraService.class);
             }
+
+            //***************
+            Timer tr1 = new Timer();
+            tr1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                        Slog.i(TAG, "StartVibratorService--StartConsumerIrService with delay begin");
+
+
+                        traceBeginAndSlog("StartVibratorService");
+                        //vibrator = new VibratorService(context);
+                        ServiceManager.addService("vibrator", vibrator);
+                        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                        if (!disableConsumerIr) {
+                           traceBeginAndSlog("StartConsumerIrService");
+                           //consumerIr = new ConsumerIrService(context);
+                           ServiceManager.addService(Context.CONSUMER_IR_SERVICE, consumerIr);
+                           Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                        }
+                        Slog.i(TAG, "StartVibratorService--StartConsumerIrService with delay end");
+                }
+		      }, 10000);
+
 
             // The AccountManager must come before the ContentService
             traceBeginAndSlog("StartAccountManagerService");
@@ -607,17 +706,6 @@ public final class SystemServer {
             mActivityManagerService.installSystemProviders();
             Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
-            traceBeginAndSlog("StartVibratorService");
-            vibrator = new VibratorService(context);
-            ServiceManager.addService("vibrator", vibrator);
-            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-
-            if (!disableConsumerIr) {
-                traceBeginAndSlog("StartConsumerIrService");
-                consumerIr = new ConsumerIrService(context);
-                ServiceManager.addService(Context.CONSUMER_IR_SERVICE, consumerIr);
-                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-            }
 
             traceBeginAndSlog("StartAlarmManagerService");
             mSystemServiceManager.startService(AlarmManagerService.class);
@@ -729,7 +817,9 @@ public final class SystemServer {
 
         // We start this here so that we update our configuration to set watch or television
         // as appropriate.
+        traceBeginAndSlog("UiModeManagerService begin");
         mSystemServiceManager.startService(UiModeManagerService.class);
+        traceBeginAndSlog("UiModeManagerService end");
 
         if (!mOnlyCore) {
             Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "UpdatePackagesIfNeeded");
@@ -748,7 +838,6 @@ public final class SystemServer {
             reportWtf("performing fstrim", e);
         }
         Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-
         if (mFactoryTestMode != FactoryTest.FACTORY_TEST_LOW_LEVEL) {
             if (!disableNonCoreServices) {
                 traceBeginAndSlog("StartLockSettingsService");
@@ -761,9 +850,19 @@ public final class SystemServer {
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
-                if (!SystemProperties.get(PERSISTENT_DATA_BLOCK_PROP).equals("")) {
-                    mSystemServiceManager.startService(PersistentDataBlockService.class);
-                }
+                //******PersistentDataBlockService with delay begin*******
+                Timer tr2 = new Timer();
+                tr2.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        traceBeginAndSlog("PersistentDataBlockService with delay begin");
+                        if (!SystemProperties.get(PERSISTENT_DATA_BLOCK_PROP).equals("")) {
+                            mSystemServiceManager.startService(PersistentDataBlockService.class);
+                        }
+                        traceBeginAndSlog("PersistentDataBlockService with delay end");
+                    }
+		         }, 10000);
+                //******PersistentDataBlockService with delay end*******
 
                 mSystemServiceManager.startService(DeviceIdleController.class);
 
@@ -838,14 +937,27 @@ public final class SystemServer {
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
+
                 // Wifi Service must be started first for wifi-related services.
+
                 mSystemServiceManager.startService(WIFI_SERVICE_CLASS);
+
                 mSystemServiceManager.startService(
                         "com.android.server.wifi.scanner.WifiScanningService");
 
-                if (!disableRtt) {
-                    mSystemServiceManager.startService("com.android.server.wifi.RttService");
+                //**********RttService--Wi-Fi NAN delay******************
+                Timer tr3 = new Timer();
+                tr3.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Slog.i(TAG, "RttService delay begin");
+                    if (!disableRtt) {
+                        mSystemServiceManager.startService("com.android.server.wifi.RttService");
+                    }
+                    Slog.i(TAG, "RttService delay end");
                 }
+		      }, 10000);
+              //**************RttService--Wi-Fi NAN delay****************
 
                 if (context.getPackageManager().hasSystemFeature(
                         PackageManager.FEATURE_WIFI_AWARE)) {
@@ -1134,10 +1246,17 @@ public final class SystemServer {
                         new GraphicsStatsService(context));
             }
 
-            if (mPackageManager.hasSystemFeature(PackageManager.FEATURE_PRINTING)) {
-                mSystemServiceManager.startService(PRINT_MANAGER_SERVICE_CLASS);
-            }
-
+            //PrintManagerService with delay
+            Timer tr6 = new Timer();
+		    tr6.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (mPackageManager.hasSystemFeature(PackageManager.FEATURE_PRINTING)) {
+                        mSystemServiceManager.startService(PRINT_MANAGER_SERVICE_CLASS);
+                    }
+                }
+		     }, 10000);
+            //PrintManagerService with delay
             mSystemServiceManager.startService(RestrictionsManagerService.class);
 
             mSystemServiceManager.startService(MediaSessionService.class);
@@ -1215,7 +1334,7 @@ public final class SystemServer {
         }
 
         // MMS service broker
-        mmsService = mSystemServiceManager.startService(MmsServiceBroker.class);
+        //mmsService = mSystemServiceManager.startService(MmsServiceBroker.class);
 
         if (Settings.Global.getInt(mContentResolver, Settings.Global.DEVICE_PROVISIONED, 0) == 0 ||
                 UserManager.isDeviceInDemoMode(mSystemContext)) {
@@ -1224,6 +1343,7 @@ public final class SystemServer {
 
         // It is now time to start up the app processes...
 
+        /*
         Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeVibratorServiceReady");
         try {
             vibrator.systemReady();
@@ -1231,7 +1351,7 @@ public final class SystemServer {
             reportWtf("making Vibrator Service ready", e);
         }
         Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-
+        */
         Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeLockSettingsServiceReady");
         if (lockSettings != null) {
             try {
@@ -1241,7 +1361,6 @@ public final class SystemServer {
             }
         }
         Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-
         // Needed by DevicePolicyManager for initialization
         mSystemServiceManager.startBootPhase(SystemService.PHASE_LOCK_SETTINGS_READY);
 
@@ -1317,7 +1436,9 @@ public final class SystemServer {
         final InputManagerService inputManagerF = inputManager;
         final TelephonyRegistry telephonyRegistryF = telephonyRegistry;
         final MediaRouterService mediaRouterF = mediaRouter;
-        final MmsServiceBroker mmsServiceF = mmsService;
+        //final MmsServiceBroker mmsServiceF = mmsService;
+        //final ILockSettings lockSettingsF = lockSettings;
+        final WindowManagerService wmF = wm;
 
         // We now tell the activity manager it is okay to run third party
         // code.  It will call back into us once it has gotten to the state
@@ -1340,12 +1461,23 @@ public final class SystemServer {
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
-                if (!mOnlyCore) {
-                    Slog.i(TAG, "WebViewFactory preparation");
-                    Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "WebViewFactoryPreparation");
-                    mWebViewUpdateService.prepareWebViewInSystemServer();
-                    Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-                }
+            Slog.i(TAG, "Timer tr4 --- begin");
+            //*********************WebViewFactoryPreparation delay****************
+            if (!mOnlyCore) {
+                Timer tr4 = new Timer();
+                tr4.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Slog.i(TAG, "WebViewFactory preparation");
+                            Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "WebViewFactoryPreparation");
+                            mWebViewUpdateService.prepareWebViewInSystemServer();
+                            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                        Slog.i(TAG, "WebViewFactory preparation end");
+                    }
+                }, 10000);
+            }
+            Slog.i(TAG, "Timer tr4 --- end");
+            //*********************WebViewFactoryPreparation delay****************
 
                 Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "StartSystemUI");
                 try {
@@ -1353,6 +1485,8 @@ public final class SystemServer {
                 } catch (Throwable e) {
                     reportWtf("starting System UI", e);
                 }
+
+                Slog.i(TAG, "MakeNetworkScoreReady --- begin");
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
                 Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkScoreReady");
                 try {
@@ -1361,6 +1495,9 @@ public final class SystemServer {
                     reportWtf("making Network Score Service ready", e);
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                Slog.i(TAG, "MakeNetworkScoreReady --- end");
+
+                Slog.i(TAG, "MakeNetworkManagementServiceReady --- begin");
                 Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkManagementServiceReady");
                 try {
                     if (networkManagementF != null) networkManagementF.systemReady();
@@ -1368,6 +1505,10 @@ public final class SystemServer {
                     reportWtf("making Network Managment Service ready", e);
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                Slog.i(TAG, "MakeNetworkManagementServiceReady --- end");
+
+                /*
+                Slog.i(TAG, "MakeNetworkStatsServiceReady --- begin");
                 Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkStatsServiceReady");
                 try {
                     if (networkStatsF != null) networkStatsF.systemReady();
@@ -1375,6 +1516,10 @@ public final class SystemServer {
                     reportWtf("making Network Stats Service ready", e);
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                Slog.i(TAG, "MakeNetworkStatsServiceReady --- end");
+                */
+
+                Slog.i(TAG, "MakeNetworkPolicyServiceReady --- begin");
                 Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkPolicyServiceReady");
                 try {
                     if (networkPolicyF != null) networkPolicyF.systemReady();
@@ -1382,13 +1527,36 @@ public final class SystemServer {
                     reportWtf("making Network Policy Service ready", e);
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-                Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeConnectivityServiceReady");
-                try {
-                    if (connectivityF != null) connectivityF.systemReady();
-                } catch (Throwable e) {
-                    reportWtf("making Connectivity Service ready", e);
-                }
-                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                Slog.i(TAG, "MakeNetworkPolicyServiceReady --- end");
+
+                //**********************MakeConnectivityServiceReady delay******
+                Timer tr5 = new Timer();
+		        tr5.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        //Need to be tested better
+                        Slog.i(TAG, "MakeNetworkStatsServiceReady --- delay begin");
+                            Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkStatsServiceReady");
+                            try {
+                                if (networkStatsF != null) networkStatsF.systemReady();
+                            } catch (Throwable e) {
+                                reportWtf("making Network Stats Service ready", e);
+                            }
+                            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                            Slog.i(TAG, "MakeNetworkStatsServiceReady --- delay end");
+
+                        Slog.i(TAG, "MakeConnectivityServiceReady --- delay begin");
+                        Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeConnectivityServiceReady");
+                        try {
+                            if (connectivityF != null) connectivityF.systemReady();
+                        } catch (Throwable e) {
+                            reportWtf("making Connectivity Service ready", e);
+                        }
+                        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                        Slog.i(TAG, "MakeConnectivityServiceReady --- delay end");
+                    }
+		        }, 10000);
+                //**********************MakeConnectivityServiceReady delay******
 
                 Watchdog.getInstance().start();
 
@@ -1399,64 +1567,94 @@ public final class SystemServer {
                 mSystemServiceManager.startBootPhase(
                         SystemService.PHASE_THIRD_PARTY_APPS_CAN_START);
 
-                try {
-                    if (locationF != null) locationF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying Location Service running", e);
-                }
-                try {
-                    if (countryDetectorF != null) countryDetectorF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying CountryDetectorService running", e);
-                }
-                try {
-                    if (networkTimeUpdaterF != null) networkTimeUpdaterF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying NetworkTimeService running", e);
-                }
-                try {
-                    if (commonTimeMgmtServiceF != null) {
-                        commonTimeMgmtServiceF.systemRunning();
+                Slog.i(TAG, "mm_handler --- begin");
+                //********Notifications delay************
+                Handler mm_handler;
+                mm_handler = new Handler();
+                mm_handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                            Slog.i(TAG, "Begin MmsServiceBroker-MakeVibratorServiceReady with delay");
+                            final MmsServiceBroker mmsServiceF = mSystemServiceManager.startService(MmsServiceBroker.class);
+
+                            Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeVibratorServiceReady");
+                            try {
+                                vibrator.systemReady();
+                            } catch (Throwable e) {
+                                reportWtf("making Vibrator Service ready", e);
+                            }
+                            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+
+                            Slog.i(TAG, "End MmsServiceBroker-MakeVibratorServiceReady with delay");
+
+                            Slog.i(TAG, "Begin notifications with delay");
+                            try {
+                                if (locationF != null) locationF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying Location Service running", e);
+                            }
+                            try {
+                                if (countryDetectorF != null) countryDetectorF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying CountryDetectorService running", e);
+                            }
+                            try {
+                                if (networkTimeUpdaterF != null) networkTimeUpdaterF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying NetworkTimeService running", e);
+                            }
+                            try {
+                                if (commonTimeMgmtServiceF != null) {
+                                    commonTimeMgmtServiceF.systemRunning();
+                                }
+                            } catch (Throwable e) {
+                                reportWtf("Notifying CommonTimeManagementService running", e);
+                            }
+                            try {
+                                if (atlasF != null) atlasF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying AssetAtlasService running", e);
+                            }
+                            try {
+                                // TODO(BT) Pass parameter to input manager
+                                if (inputManagerF != null) inputManagerF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying InputManagerService running", e);
+                            }
+                            try {
+                                if (telephonyRegistryF != null) telephonyRegistryF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying TelephonyRegistry running", e);
+                            }
+                            try {
+                                if (mediaRouterF != null) mediaRouterF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying MediaRouterService running", e);
+                            }
+
+                            try {
+                                if (mmsServiceF != null) mmsServiceF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying MmsService running", e);
+                            }
+
+                            try {
+                                if (networkScoreF != null) networkScoreF.systemRunning();
+                            } catch (Throwable e) {
+                                reportWtf("Notifying NetworkScoreService running", e);
+                            }
+                            Slog.i(TAG, "End notifications with delay");
+
+                            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
                     }
-                } catch (Throwable e) {
-                    reportWtf("Notifying CommonTimeManagementService running", e);
-                }
-                try {
-                    if (atlasF != null) atlasF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying AssetAtlasService running", e);
-                }
-                try {
-                    // TODO(BT) Pass parameter to input manager
-                    if (inputManagerF != null) inputManagerF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying InputManagerService running", e);
-                }
-                try {
-                    if (telephonyRegistryF != null) telephonyRegistryF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying TelephonyRegistry running", e);
-                }
-                try {
-                    if (mediaRouterF != null) mediaRouterF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying MediaRouterService running", e);
-                }
+               }, 10000);
+               //********Notifications delay************
+               Slog.i(TAG, "mm_handler --- end");
 
-                try {
-                    if (mmsServiceF != null) mmsServiceF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying MmsService running", e);
-                }
-
-                try {
-                    if (networkScoreF != null) networkScoreF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying NetworkScoreService running", e);
-                }
-                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
             }
         });
+             Slog.i(TAG, "otherservices --- end");
     }
 
     static final void startSystemUi(Context context) {
@@ -1471,5 +1669,126 @@ public final class SystemServer {
     private static void traceBeginAndSlog(String name) {
         Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, name);
         Slog.i(TAG, name);
+    }
+
+    private static void preloadClasses() {
+        final String PRELOADED_CLASSES = "/system/etc/preloaded-classes";
+
+        final int UNPRIVILEGED_UID = 9999;
+        final int UNPRIVILEGED_GID = 9999;
+
+        final int ROOT_UID = 0;
+        final int ROOT_GID = 0;
+
+        final VMRuntime runtime = VMRuntime.getRuntime();
+
+        InputStream is;
+        try {
+            is = new FileInputStream(PRELOADED_CLASSES);
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Couldn't find " + PRELOADED_CLASSES + ".");
+            return;
+        }
+
+        Log.i(TAG, "Preloading classes...");
+        long startTime = SystemClock.uptimeMillis();
+
+        // Drop root perms while running static initializers.
+        final int reuid = Os.getuid();
+        final int regid = Os.getgid();
+
+        // We need to drop root perms only if we're already root. In the case of "wrapped"
+        // processes (see WrapperInit), this function is called from an unprivileged uid
+        // and gid.
+        boolean droppedPriviliges = false;
+        if (reuid == ROOT_UID && regid == ROOT_GID) {
+            try {
+                Os.setregid(ROOT_GID, UNPRIVILEGED_GID);
+                Os.setreuid(ROOT_UID, UNPRIVILEGED_UID);
+            } catch (ErrnoException ex) {
+                throw new RuntimeException("Failed to drop root", ex);
+            }
+
+            droppedPriviliges = true;
+        }
+
+        // Alter the target heap utilization.  With explicit GCs this
+        // is not likely to have any effect.
+        float defaultUtilization = runtime.getTargetHeapUtilization();
+        runtime.setTargetHeapUtilization(0.8f);
+
+        try {
+            BufferedReader br
+                = new BufferedReader(new InputStreamReader(is), 256);
+
+            int count = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Skip comments and blank lines.
+                line = line.trim();
+                if (line.startsWith("#") || line.equals("")) {
+                    continue;
+                }
+
+                Trace.traceBegin(Trace.TRACE_TAG_DALVIK, "PreloadClass " + line);
+                try {
+                    if (false) {
+                        Log.v(TAG, "Preloading " + line + "...");
+                    }
+                    // Load and explicitly initialize the given class. Use
+                    // Class.forName(String, boolean, ClassLoader) to avoid repeated stack lookups
+                    // (to derive the caller's class-loader). Use true to force initialization, and
+                    // null for the boot classpath class-loader (could as well cache the
+                    // class-loader of this class in a variable).
+                    Class.forName(line, true, null);
+                    count++;
+                } catch (ClassNotFoundException e) {
+                    Log.w(TAG, "Class not found for preloading: " + line);
+                } catch (UnsatisfiedLinkError e) {
+                    Log.w(TAG, "Problem preloading " + line + ": " + e);
+                } catch (Throwable t) {
+                    Log.e(TAG, "Error preloading " + line + ".", t);
+                    if (t instanceof Error) {
+                        throw (Error) t;
+                    }
+                    if (t instanceof RuntimeException) {
+                        throw (RuntimeException) t;
+                    }
+                    throw new RuntimeException(t);
+                }
+                Trace.traceEnd(Trace.TRACE_TAG_DALVIK);
+            }
+
+            Log.i(TAG, "...preloaded " + count + " classes in "
+                    + (SystemClock.uptimeMillis()-startTime) + "ms.");
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading " + PRELOADED_CLASSES + ".", e);
+        } finally {
+            IoUtils.closeQuietly(is);
+            // Restore default.
+            runtime.setTargetHeapUtilization(defaultUtilization);
+
+            // Fill in dex caches with classes, fields, and methods brought in by preloading.
+            Trace.traceBegin(Trace.TRACE_TAG_DALVIK, "PreloadDexCaches");
+            runtime.preloadDexCaches();
+            Trace.traceEnd(Trace.TRACE_TAG_DALVIK);
+
+            // Bring back root. We'll need it later if we're in the zygote.
+            if (droppedPriviliges) {
+                try {
+                    Os.setreuid(ROOT_UID, ROOT_UID);
+                    Os.setregid(ROOT_GID, ROOT_GID);
+                } catch (ErrnoException ex) {
+                    throw new RuntimeException("Failed to restore root", ex);
+                }
+            }
+        }
+    }
+
+    private static void endIcuCachePinning() {
+        // All cache references created by ICU from this point will be soft.
+        CacheValue.setStrength(CacheValue.Strength.SOFT);
+
+        Log.i(TAG, "Uninstalled ICU cache reference pinning...");
     }
 }
