@@ -258,6 +258,30 @@
       "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e7e59d9_2acd5ebc",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-15T07:43:43Z",
+      "side": 1,
+      "message": "Magic!",
+      "parentUuid": "237d839c_7945c9db",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 57
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
