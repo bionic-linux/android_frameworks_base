@@ -99,6 +99,14 @@ public final class NetworkConstants {
     public static final int IPV6_ADDR_LEN = 16;
 
     /**
+     * IPv6 constants.
+     *
+     * See also:
+     *     - https://tools.ietf.org/html/rfc7421
+     */
+    public static final int RFC7421_IP_PREFIX_LENGTH = 64;
+
+    /**
      * ICMPv6 constants.
      *
      * See also:
