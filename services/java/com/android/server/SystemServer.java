@@ -646,10 +646,8 @@ public final class SystemServer {
                 mmm_handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        traceBeginAndSlog("StartEntropyMixer with delay begin");
                         mEntropyMixer = new EntropyMixer(context);
                         Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-                        traceBeginAndSlog("StartEntropyMixer with delay end");
                     }
                 }, 10000);
                 //StartEntropyMixer with delay
@@ -666,9 +664,6 @@ public final class SystemServer {
             tr1.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                        Slog.i(TAG, "StartVibratorService--StartConsumerIrService with delay begin");
-
-
                         traceBeginAndSlog("StartVibratorService");
                         //vibrator = new VibratorService(context);
                         ServiceManager.addService("vibrator", vibrator);
@@ -679,7 +674,6 @@ public final class SystemServer {
                            ServiceManager.addService(Context.CONSUMER_IR_SERVICE, consumerIr);
                            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
                         }
-                        Slog.i(TAG, "StartVibratorService--StartConsumerIrService with delay end");
                 }
 		      }, 10000);
 
@@ -808,9 +802,8 @@ public final class SystemServer {
 
         // We start this here so that we update our configuration to set watch or television
         // as appropriate.
-        traceBeginAndSlog("UiModeManagerService begin");
         mSystemServiceManager.startService(UiModeManagerService.class);
-        traceBeginAndSlog("UiModeManagerService end");
+
 
         if (!mOnlyCore) {
             Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "UpdatePackagesIfNeeded");
@@ -928,13 +921,29 @@ public final class SystemServer {
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
+                //****Run Wi-Fi services in background*****
+                Timer tr_wifi = new Timer();
+                tr_wifi.schedule(new TimerTask() {
+                    @Override
+                        public void run() {
+                            mSystemServiceManager.startService(WIFI_SERVICE_CLASS);
+                            mSystemServiceManager.startService(
+                                "com.android.server.wifi.scanner.WifiScanningService");
 
-                // Wifi Service must be started first for wifi-related services.
+                            if (context.getPackageManager().hasSystemFeature(
+                            PackageManager.FEATURE_WIFI_AWARE)) {
+                                mSystemServiceManager.startService(WIFI_AWARE_SERVICE_CLASS);
+                            } else {
+                                Slog.i(TAG, "No Wi-Fi Aware Service (Aware support Not Present)");
+                            }
 
-                mSystemServiceManager.startService(WIFI_SERVICE_CLASS);
-
-                mSystemServiceManager.startService(
-                        "com.android.server.wifi.scanner.WifiScanningService");
+                            if (context.getPackageManager().hasSystemFeature(
+                            PackageManager.FEATURE_WIFI_DIRECT)) {
+                                mSystemServiceManager.startService(WIFI_P2P_SERVICE_CLASS);
+                            }
+                        }
+                }, 0);
+                //****Run Wi-Fi services in background*****
 
                 //**********RttService--Wi-Fi NAN delay******************
                 Timer tr3 = new Timer();
@@ -949,18 +958,6 @@ public final class SystemServer {
                 }
 		      }, 10000);
               //**************RttService--Wi-Fi NAN delay****************
-
-                if (context.getPackageManager().hasSystemFeature(
-                        PackageManager.FEATURE_WIFI_AWARE)) {
-                    mSystemServiceManager.startService(WIFI_AWARE_SERVICE_CLASS);
-                } else {
-                    Slog.i(TAG, "No Wi-Fi Aware Service (Aware support Not Present)");
-                }
-
-                if (context.getPackageManager().hasSystemFeature(
-                        PackageManager.FEATURE_WIFI_DIRECT)) {
-                    mSystemServiceManager.startService(WIFI_P2P_SERVICE_CLASS);
-                }
 
                 if (mPackageManager.hasSystemFeature(PackageManager.FEATURE_ETHERNET) ||
                     mPackageManager.hasSystemFeature(PackageManager.FEATURE_USB_HOST)) {
@@ -1324,8 +1321,7 @@ public final class SystemServer {
             VMRuntime.getRuntime().startJitCompilation();
         }
 
-        // MMS service broker
-        //mmsService = mSystemServiceManager.startService(MmsServiceBroker.class);
+
 
         if (Settings.Global.getInt(mContentResolver, Settings.Global.DEVICE_PROVISIONED, 0) == 0 ||
                 UserManager.isDeviceInDemoMode(mSystemContext)) {
@@ -1334,15 +1330,7 @@ public final class SystemServer {
 
         // It is now time to start up the app processes...
 
-        /*
-        Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeVibratorServiceReady");
-        try {
-            vibrator.systemReady();
-        } catch (Throwable e) {
-            reportWtf("making Vibrator Service ready", e);
-        }
-        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-        */
+
         Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeLockSettingsServiceReady");
         if (lockSettings != null) {
             try {
@@ -1452,7 +1440,6 @@ public final class SystemServer {
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
 
-            Slog.i(TAG, "Timer tr4 --- begin");
             //*********************WebViewFactoryPreparation delay****************
             if (!mOnlyCore) {
                 Timer tr4 = new Timer();
@@ -1467,7 +1454,6 @@ public final class SystemServer {
                     }
                 }, 10000);
             }
-            Slog.i(TAG, "Timer tr4 --- end");
             //*********************WebViewFactoryPreparation delay****************
 
                 Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "StartSystemUI");
@@ -1558,14 +1544,13 @@ public final class SystemServer {
                 mSystemServiceManager.startBootPhase(
                         SystemService.PHASE_THIRD_PARTY_APPS_CAN_START);
 
-                Slog.i(TAG, "mm_handler --- begin");
                 //********Notifications delay************
                 Handler mm_handler;
                 mm_handler = new Handler();
                 mm_handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
+                            // MMS service broker
                             Slog.i(TAG, "Begin MmsServiceBroker-MakeVibratorServiceReady with delay");
                             final MmsServiceBroker mmsServiceF = mSystemServiceManager.startService(MmsServiceBroker.class);
 
@@ -1640,12 +1625,12 @@ public final class SystemServer {
                             Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
                     }
                }, 10000);
-               //********Notifications delay************
-               Slog.i(TAG, "mm_handler --- end");
+               //********Notifications delay***********
 
             }
         });
-             Slog.i(TAG, "otherservices --- end");
+
+
     }
 
     static final void startSystemUi(Context context) {
@@ -1653,7 +1638,7 @@ public final class SystemServer {
         intent.setComponent(new ComponentName("com.android.systemui",
                     "com.android.systemui.SystemUIService"));
         intent.addFlags(Intent.FLAG_DEBUG_TRIAGED_MISSING);
-        //Slog.d(TAG, "Starting service: " + intent);
+        Slog.i(TAG, "Starting service: " + intent);
         context.startServiceAsUser(intent, UserHandle.SYSTEM);
     }
 
