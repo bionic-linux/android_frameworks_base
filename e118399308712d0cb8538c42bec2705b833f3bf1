@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeb85691_23a087a3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-15T02:44:41Z",
+      "side": 1,
+      "message": "Just curious: 1) why only one retry ? 2) why no stopTethering is the second startTethering fails too ?",
+      "range": {
+        "startLine": 1062,
+        "startChar": 24,
+        "endLine": 1062,
+        "endChar": 62
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f384f2cf_077d8071",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-15T02:44:41Z",
+      "side": 1,
+      "message": "Is there a change that the input args need to be more than just one bit in the future ? If so could the Mode be passed in directly ?",
+      "range": {
+        "startLine": 1068,
+        "startChar": 61,
+        "endLine": 1068,
+        "endChar": 87
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37c9c816_5e831a9e",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-15T02:44:41Z",
+      "side": 1,
+      "message": "I would say put it unconditionally after the if branch if this is a condition that needs to be ensured.",
+      "range": {
+        "startLine": 1119,
+        "startChar": 20,
+        "endLine": 1120,
+        "endChar": 43
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d8df3e6_05c55a74",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1765,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-15T02:44:41Z",
+      "side": 1,
+      "message": "Consider hosting these in the enum definitions themselves:\n\npublic enum Mode {\n  TETHERING(\"tethering\"),\n  LOCAL_HOTSPOT(\"local-only Wi-Fi hotspot\");\n\n  public final String descr;\n  public Mode(String descr) { this.descr \u003d descr; }\n}\n\nOne advantage is that this switch will never get out of sync if new enum values are added.",
+      "range": {
+        "startLine": 1758,
+        "startChar": 4,
+        "endLine": 1765,
+        "endChar": 5
+      },
+      "revId": "e118399308712d0cb8538c42bec2705b833f3bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
