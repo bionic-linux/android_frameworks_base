@@ -42,6 +42,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.os.SystemClock;
+import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.LocalLog;
 import android.util.Log;
@@ -381,6 +382,8 @@ public class IpManager extends StateMachine {
 
     private static final boolean NO_CALLBACKS = false;
     private static final boolean SEND_CALLBACKS = true;
+
+    private static final int ACCEPT_RA_RT_INFO_MAX_PLEN = 64;
 
     // This must match the interface prefix in clatd.c.
     // TODO: Revert this hack once IpManager and Nat464Xlat work in concert.
@@ -1028,15 +1031,36 @@ public class IpManager extends StateMachine {
         return true;
     }
 
-    private boolean startIPv6() {
-        // Set privacy extensions.
+    private void enableInterfaceIpv6PrivacyExtensions() {
         final String PREFER_TEMPADDRS = "2";
+        NetdService.run((INetd netd) -> {
+                netd.setProcSysNet(
+                        INetd.IPV6, INetd.CONF, mInterfaceName, "use_tempaddr", PREFER_TEMPADDRS);
+            });
+    }
+
+    private void setInterfaceIpv6RaRtInfoMaxPlen(int plen) {
+        // Setting RIO max plen is best effort. Catch and ignore most exceptions.
         try {
             NetdService.run((INetd netd) -> {
-                netd.setProcSysNet(
-                        INetd.IPV6, INetd.CONF, mInterfaceName, "use_tempaddr",
-                        PREFER_TEMPADDRS);
-            });
+                    netd.setProcSysNet(
+                            INetd.IPV6, INetd.CONF, mInterfaceName, "accept_ra_rt_info_max_plen",
+                            Integer.toString(plen));
+                });
+        } catch (ServiceSpecificException e) {
+            // Old kernel versions without support for RIOs do not export accept_ra_rt_info_max_plen
+            // in the /proc filesystem. If the kernel supports RIOs we should never see any other
+            // type of error.
+            if (e.errorCode != OsConstants.ENOENT) {
+                logError("unexpected error setting accept_ra_rt_info_max_plen %s", e);
+            }
+        }
+    }
+
+    private boolean startIPv6() {
+        try {
+            enableInterfaceIpv6PrivacyExtensions();
+            setInterfaceIpv6RaRtInfoMaxPlen(ACCEPT_RA_RT_INFO_MAX_PLEN);
             mNwService.enableIpv6(mInterfaceName);
         } catch (IllegalStateException|RemoteException|ServiceSpecificException e) {
             logError("Unable to change interface settings: %s", e);
