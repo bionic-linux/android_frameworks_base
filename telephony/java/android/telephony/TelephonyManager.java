@@ -18,9 +18,9 @@ package android.telephony;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
-import android.annotation.SystemApi;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SystemApi;
 import android.app.ActivityThread;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -28,24 +28,23 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.BatteryStats;
-import android.os.ResultReceiver;
-import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.RemoteException;
+import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.service.carrier.CarrierIdentifier;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
-import android.telephony.ClientRequestStats;
-import android.telephony.TelephonyHistogram;
 import android.telephony.ims.feature.ImsFeature;
 import android.util.Log;
 
 import com.android.ims.internal.IImsServiceController;
 import com.android.ims.internal.IImsServiceFeatureListener;
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telecom.ITelecomService;
 import com.android.internal.telephony.CellNetworkScanResult;
 import com.android.internal.telephony.IPhoneSubInfo;
@@ -885,7 +884,11 @@ public class TelephonyManager {
      *
      * <p>Requires Permission:
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     *
+     * @deprecated Use (@link getImei} which returns IMEI for GSM or (@link getMeid} which returns
+     * MEID for CDMA.
      */
+    @Deprecated
     public String getDeviceId() {
         try {
             ITelephony telephony = getITelephony();
@@ -907,7 +910,11 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      *
      * @param slotId of which deviceID is returned
+     *
+     * @deprecated Use (@link getImei} which returns IMEI for GSM or (@link getMeid} which returns
+     * MEID for CDMA.
      */
+    @Deprecated
     public String getDeviceId(int slotId) {
         // FIXME this assumes phoneId == slotId
         try {
@@ -923,12 +930,11 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns the IMEI. Return null if IMEI is not available.
+     * Returns the IMEI (International Mobile Equipment Identity). Return null if IMEI is not
+     * available.
      *
      * <p>Requires Permission:
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
-     *
-     * @hide
      */
     @SystemApi
     public String getImei() {
@@ -936,14 +942,13 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns the IMEI. Return null if IMEI is not available.
+     * Returns the IMEI (International Mobile Equipment Identity). Return null if IMEI is not
+     * available.
      *
      * <p>Requires Permission:
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      *
-     * @param slotId of which deviceID is returned
-     *
-     * @hide
+     * @param slotId of which IMEI is returned
      */
     @SystemApi
     public String getImei(int slotId) {
@@ -952,6 +957,39 @@ public class TelephonyManager {
 
         try {
             return telephony.getImeiForSlot(slotId, getOpPackageName());
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns the MEID (Mobile Equipment Identifier). Return null if MEID is not available.
+     *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     */
+    @SystemApi
+    public String getMeid() {
+        return getMeid(getDefaultSim());
+    }
+
+    /**
+     * Returns the MEID (Mobile Equipment Identifier). Return null if MEID is not available.
+     *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     *
+     * @param slotId of which MEID is returned
+     */
+    @SystemApi
+    public String getMeid(int slotId) {
+        ITelephony telephony = getITelephony();
+        if (telephony == null) return null;
+
+        try {
+            return telephony.getMeidForSlot(slotId, getOpPackageName());
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -3886,9 +3924,18 @@ public class TelephonyManager {
         return SubscriptionManager.getPhoneId(SubscriptionManager.getDefaultSubscriptionId());
     }
 
-    /** {@hide} */
+    /**
+     *  @return default SIM's slot id. If SIM is not inserted, return default SIM slot id.
+     *
+     * {@hide}
+     */
+    @VisibleForTesting
     public int getDefaultSim() {
-        return SubscriptionManager.getSlotId(SubscriptionManager.getDefaultSubscriptionId());
+        int slotId = SubscriptionManager.getSlotId(SubscriptionManager.getDefaultSubscriptionId());
+        if (slotId == SubscriptionManager.SIM_NOT_INSERTED) {
+            slotId = SubscriptionManager.DEFAULT_SIM_SLOT_INDEX;
+        }
+        return slotId;
     }
 
     /**
