@@ -22,12 +22,15 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.StringJoiner;
 
 
 /**
@@ -95,6 +98,49 @@ public class TetheringConfiguration {
 
     public boolean isBluetooth(String iface) {
         return matchesDownstreamRegexs(iface, tetherableBluetoothRegexs);
+    }
+
+    public void dump(PrintWriter pw) {
+        pw.print("tetherableUsbRegexs: ");
+        dumpStringArray(pw, tetherableUsbRegexs);
+        pw.println();
+
+        pw.print("tetherableWifiRegexs: ");
+        dumpStringArray(pw, tetherableWifiRegexs);
+        pw.println();
+
+        pw.print("tetherableBluetoothRegexs: ");
+        dumpStringArray(pw, tetherableBluetoothRegexs);
+        pw.println();
+
+        pw.print("isDunRequired: ");
+        pw.println(isDunRequired);
+
+        pw.print("preferredUpstreamIfaceTypes: ");
+        final StringJoiner sj = new StringJoiner(", ", "[", "]");
+        for (Integer netType : preferredUpstreamIfaceTypes) {
+            sj.add(ConnectivityManager.getNetworkTypeName(netType));
+        }
+        pw.println(sj.toString());
+
+        pw.print("dhcpRanges: ");
+        dumpStringArray(pw, dhcpRanges);
+        pw.println();
+
+        pw.print("defaultIPv4DNS: ");
+        dumpStringArray(pw, defaultIPv4DNS);
+        pw.println();
+    }
+
+    private static void dumpStringArray(PrintWriter pw, String[] strings) {
+        if (strings == null) {
+            pw.print("null");
+            return;
+        }
+
+        final StringJoiner sj = new StringJoiner(", ", "[", "]");
+        for (String str : strings) { sj.add(str); }
+        pw.print(sj.toString());
     }
 
     private static boolean checkDunRequired(Context ctx) {
