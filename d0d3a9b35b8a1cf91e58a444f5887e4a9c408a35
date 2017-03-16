@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7d8c2db_53949de1",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringInterfaceServices.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-16T08:25:19Z",
+      "side": 1,
+      "message": "If you do:\n\n    import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;\n\nyou can keep this nice and short.",
+      "range": {
+        "startLine": 127,
+        "startChar": 50,
+        "endLine": 127,
+        "endChar": 66
+      },
+      "revId": "d0d3a9b35b8a1cf91e58a444f5887e4a9c408a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd043a94_465f7bfe",
+        "filename": "services/net/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-16T08:25:19Z",
+      "side": 1,
+      "message": "You can just move this constant right up to below IPV6_ADDR_LEN.\n\nYou can also s/_IP_/_/ out of its name.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 7
+      },
+      "revId": "d0d3a9b35b8a1cf91e58a444f5887e4a9c408a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
