@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e74917ec_56d1b12f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-03-16T17:55:32Z",
+      "side": 1,
+      "message": "we catch NPE everywhere in this file. Doesn\u0027t look right to me. Wondering if we should file a bug to fix all of them.",
+      "range": {
+        "startLine": 962,
+        "startChar": 9,
+        "endLine": 962,
+        "endChar": 43
+      },
+      "revId": "a88e46fcca1868f265258619f9005901cc5c5500",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
