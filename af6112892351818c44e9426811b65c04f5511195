@@ -68,6 +68,30 @@
       "revId": "af6112892351818c44e9426811b65c04f5511195",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc62acd6_9fe35c86",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-03-16T07:06:06Z",
+      "side": 1,
+      "message": "I\u0027d like to see this happen, but I believe it is outside of the scope of this change.",
+      "parentUuid": "62d470a0_e5e5f756",
+      "range": {
+        "startLine": 1064,
+        "startChar": 23,
+        "endLine": 1064,
+        "endChar": 33
+      },
+      "revId": "af6112892351818c44e9426811b65c04f5511195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
