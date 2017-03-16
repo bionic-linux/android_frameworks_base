@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf9f6eca_952de9dd",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-16T06:18:22Z",
+      "side": 1,
+      "message": "[nit]\n\nI would never fault someone for breaking with style wherever \"Ip\" could be replace with \"IP\".  ;-)",
+      "range": {
+        "startLine": 1034,
+        "startChar": 32,
+        "endLine": 1034,
+        "endChar": 34
+      },
+      "revId": "af6112892351818c44e9426811b65c04f5511195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a62a8ea0_672d31c7",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-16T06:18:22Z",
+      "side": 1,
+      "message": "[nit]\n\nIf you felt ambitious, you could in this change:\n\n   [1] airlift IPv6TetheringInterfaceServices\u0027 RFC7421_IP_PREFIX_LENGTH definition out of its file and into android.net.util.NetworkConstants (with s/IP/IPV6/ in the anem)\n\n   [2] import and use NetworkConstants.RFC7421_IPV6_PREFIX_LENGTH here.",
+      "range": {
+        "startLine": 1063,
+        "startChar": 44,
+        "endLine": 1063,
+        "endChar": 70
+      },
+      "revId": "af6112892351818c44e9426811b65c04f5511195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62d470a0_e5e5f756",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-16T06:18:22Z",
+      "side": 1,
+      "message": "[nit]\n\nI believe you could go for the Fully Monty and have an enableIPv6() command that wrote \"0\" into \"disable_ipv6\" (which is all I think it does, actually (worth double-checking, if you attempt this).",
+      "range": {
+        "startLine": 1064,
+        "startChar": 23,
+        "endLine": 1064,
+        "endChar": 33
+      },
+      "revId": "af6112892351818c44e9426811b65c04f5511195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
