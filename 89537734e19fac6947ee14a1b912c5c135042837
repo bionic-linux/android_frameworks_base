@@ -46,6 +46,30 @@
       "revId": "89537734e19fac6947ee14a1b912c5c135042837",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d3948f1_8ca388f0",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-17T20:11:22Z",
+      "side": 1,
+      "message": "Yeah. I don\u0027t think FQDN/Provider name would be considered PII.",
+      "parentUuid": "fff9ef4c_233822f3",
+      "range": {
+        "startLine": 357,
+        "startChar": 27,
+        "endLine": 357,
+        "endChar": 38
+      },
+      "revId": "89537734e19fac6947ee14a1b912c5c135042837",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
