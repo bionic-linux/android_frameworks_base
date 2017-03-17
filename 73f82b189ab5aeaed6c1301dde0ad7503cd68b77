@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81adcf22_4fae1a9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-03-17T05:19:56Z",
+      "side": 1,
+      "message": "Nit: Bluetooth",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "73f82b189ab5aeaed6c1301dde0ad7503cd68b77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45fe9250_e417eeec",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-03-17T05:19:56Z",
+      "side": 1,
+      "message": "Is the extra space at the end intentional?\nThe spacing formatting should be done by the caller.",
+      "range": {
+        "startLine": 158,
+        "startChar": 68,
+        "endLine": 158,
+        "endChar": 69
+      },
+      "revId": "73f82b189ab5aeaed6c1301dde0ad7503cd68b77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a177341_7b28e015",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-03-17T05:19:56Z",
+      "side": 1,
+      "message": "Extra empty space at the end.",
+      "range": {
+        "startLine": 180,
+        "startChar": 92,
+        "endLine": 180,
+        "endChar": 93
+      },
+      "revId": "73f82b189ab5aeaed6c1301dde0ad7503cd68b77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f31f1e59_c3bc4e3d",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-03-17T05:19:56Z",
+      "side": 1,
+      "message": "Double-spaces?",
+      "range": {
+        "startLine": 180,
+        "startChar": 56,
+        "endLine": 180,
+        "endChar": 58
+      },
+      "revId": "73f82b189ab5aeaed6c1301dde0ad7503cd68b77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f01ab7a0_223b61b9",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-03-17T05:19:56Z",
+      "side": 1,
+      "message": "Looks like mCrashTimes might grow infinitively.\nLimit the number of entries to some reasonably large number.",
+      "range": {
+        "startLine": 1973,
+        "startChar": 8,
+        "endLine": 1973,
+        "endChar": 20
+      },
+      "revId": "73f82b189ab5aeaed6c1301dde0ad7503cd68b77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "626fde19_c75dcec2",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-03-17T05:19:56Z",
+      "side": 1,
+      "message": "Name-wise, \"crashed\" is more like a flag.\n\"crashTimes\" is more obvious.",
+      "range": {
+        "startLine": 2096,
+        "startChar": 16,
+        "endLine": 2096,
+        "endChar": 23
+      },
+      "revId": "73f82b189ab5aeaed6c1301dde0ad7503cd68b77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4d9592_4961a18f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2099,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-03-17T05:19:56Z",
+      "side": 1,
+      "message": "Is this double-space intentional (for better readability)?",
+      "range": {
+        "startLine": 2099,
+        "startChar": 30,
+        "endLine": 2099,
+        "endChar": 32
+      },
+      "revId": "73f82b189ab5aeaed6c1301dde0ad7503cd68b77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
