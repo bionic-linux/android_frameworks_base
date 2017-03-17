@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6385aee_6c6ddb45",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-03-17T17:53:12Z",
+      "side": 1,
+      "message": "Name-wise, \"fooTimes\" can be ambiguous; I this case I think the more appropriate name would be mCrashTimestamps.",
+      "range": {
+        "startLine": 323,
+        "startChar": 8,
+        "endLine": 323,
+        "endChar": 19
+      },
+      "revId": "cdf1b70eae6940873334766f1571b2467033fe3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
