@@ -22,6 +22,30 @@
       "revId": "89537734e19fac6947ee14a1b912c5c135042837",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fff9ef4c_233822f3",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-17T20:07:39Z",
+      "side": 1,
+      "message": "Password was purposely left out, refer to the implementation of Credential.UserCredential#toString().\n\nAs far as PII, I don\u0027t think the provider info (e.g. fqdn, provider name) is considered PII.",
+      "parentUuid": "7276ec62_dada5812",
+      "range": {
+        "startLine": 357,
+        "startChar": 27,
+        "endLine": 357,
+        "endChar": 38
+      },
+      "revId": "89537734e19fac6947ee14a1b912c5c135042837",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
