@@ -372,7 +372,7 @@ static jboolean JHwParcel_native_readBool(JNIEnv *env, jobject thiz) {
 
 static void JHwParcel_native_writeStatus(
         JNIEnv *env, jobject thiz, jint statusCode) {
-    using hardware::Status;
+    using hardware::details::Status;
 
     Status status;
     switch (statusCode) {
@@ -394,7 +394,7 @@ static void JHwParcel_native_writeStatus(
 }
 
 static void JHwParcel_native_verifySuccess(JNIEnv *env, jobject thiz) {
-    using hardware::Status;
+    using hardware::details::Status;
 
     hardware::Parcel *parcel =
         JHwParcel::GetNativeContext(env, thiz)->getParcel();
