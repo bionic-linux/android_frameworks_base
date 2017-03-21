@@ -26,8 +26,6 @@ import android.util.Log;
  *
  * <p>This object represents optional data obtained from a remote device through
  * an out-of-band channel (eg. NFC).
- *
- * @hide
  */
 public class OobData implements Parcelable {
     private byte[] leBluetoothDeviceAddress;
