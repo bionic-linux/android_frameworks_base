@@ -918,11 +918,9 @@ public final class BluetoothDevice implements Parcelable {
      *
      * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}.
      *
-     * @param transport - Transport to use
+     * @param transport - Transport to use for the pairing procedure.
      * @param oobData - Out Of Band data
      * @return false on immediate error, true if bonding will begin
-     *
-     * @hide
      */
     public boolean createBondOutOfBand(int transport, OobData oobData) {
         try {

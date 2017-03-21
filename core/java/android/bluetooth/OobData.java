@@ -26,8 +26,6 @@ import android.util.Log;
  *
  * <p>This object represents optional data obtained from a remote device through
  * an out-of-band channel (eg. NFC).
- *
- * @hide
  */
 public class OobData implements Parcelable {
     private byte[] leBluetoothDeviceAddress;
@@ -41,7 +39,7 @@ public class OobData implements Parcelable {
 
     /**
      * Sets the LE Bluetooth Device Address value to be used during LE pairing.
-     * The value shall be 7 bytes. Please see Bluetooth CSSv6, Part A 1.16 for
+     * The value shall be 7 bytes. Please see Bluetooth CSSv7, Part A 1.16 for
      * a detailed description.
      */
     public void setLeBluetoothDeviceAddress(byte[] leBluetoothDeviceAddress) {
@@ -54,7 +52,7 @@ public class OobData implements Parcelable {
 
     /**
      * Sets the Temporary Key value to be used by the LE Security Manager during
-     * LE pairing. The value shall be 16 bytes. Please see Bluetooth CSSv6,
+     * LE pairing. The value shall be 16 bytes. Please see Bluetooth CSSv7,
      * Part A 1.8 for a detailed description.
      */
     public void setSecurityManagerTk(byte[] securityManagerTk) {
@@ -65,6 +63,11 @@ public class OobData implements Parcelable {
         return leSecureConnectionsConfirmation;
     }
 
+    /**
+     * Sets the LE Secure Connections Confirmation Value to be used during LE pairing.
+     * The value shall be 16 bytes. Please see Bluetooth CSSv7, Part A 1.6 for a
+     * detailed description.
+     */
     public void setLeSecureConnectionsConfirmation(byte[] leSecureConnectionsConfirmation) {
         this.leSecureConnectionsConfirmation = leSecureConnectionsConfirmation;
     }
@@ -73,6 +76,11 @@ public class OobData implements Parcelable {
         return leSecureConnectionsRandom;
     }
 
+    /**
+     * Sets the LE Secure Connections Random Value to be used during LE pairing.
+     * The value shall be 16 bytes. Please see Bluetooth CSSv7, Part A 1.6 for a
+     * detailed description.
+     */
     public void setLeSecureConnectionsRandom(byte[] leSecureConnectionsRandom) {
         this.leSecureConnectionsRandom = leSecureConnectionsRandom;
     }
