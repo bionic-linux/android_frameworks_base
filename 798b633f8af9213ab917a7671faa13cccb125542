@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3548c43d_2074c9a4",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-24T17:24:18Z",
+      "side": 1,
+      "message": "And how about On... Instead of on...?",
+      "parentUuid": "9c307c88_037650b0",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f792b41_1dc0d9d8",
         "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
         "patchSetId": 2
