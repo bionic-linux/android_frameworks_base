@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "186f08e6_abfd4235",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-24T17:27:13Z",
+      "side": 1,
+      "message": "I see your new to gerrit :) You\u0027re looking at old revision. \n\nTake a look here:\nhttps://android-review.googlesource.com/#/c/357014/2..4/core/java/android/bluetooth/BluetoothGatt.java@547\n\n\nnotice \"2..4\" in URL",
+      "parentUuid": "3548c43d_2074c9a4",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f792b41_1dc0d9d8",
         "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
         "patchSetId": 2
