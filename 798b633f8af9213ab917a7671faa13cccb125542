@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9313d5b6_19a3d79f",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-24T07:14:42Z",
+      "side": 1,
+      "message": "Small o in onConn..., How about onConnectionParametersUpdated?",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f792b41_1dc0d9d8",
+        "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-24T07:14:42Z",
+      "side": 1,
+      "message": "Comments",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2ec146_20eb1c22",
+        "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-24T07:14:42Z",
+      "side": 1,
+      "message": "How about onConnectionParametersUpdated? Or will it only be called as a response to requestConnectionPriority?",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a81f1e1_8b709dea",
+        "filename": "core/java/android/bluetooth/BluetoothGattServerCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-24T07:14:42Z",
+      "side": 1,
+      "message": "Why hidden? :(",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bc68ca_1897421b",
+        "filename": "core/java/android/bluetooth/BluetoothGattServerCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-24T07:14:42Z",
+      "side": 1,
+      "message": "How about onConnectionParametersUpdated?",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3bc1c9_bab387cb",
+        "filename": "core/java/android/bluetooth/IBluetoothGattCallbackExt.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-24T07:14:42Z",
+      "side": 1,
+      "message": "Wrong file modified. Ext should be removed.",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
