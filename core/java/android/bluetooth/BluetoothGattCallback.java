@@ -179,4 +179,19 @@ public abstract class BluetoothGattCallback{
      */
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
     }
+
+    /**
+     * Callback indicating the connection parameters were updated.
+     *
+     * @param gatt GATT client involved
+     * @param interval
+     * @param latency
+     * @param timeout
+     * @param status {@link BluetoothGatt#GATT_SUCCESS} if the connection has been updated
+     *                successfully
+     * @hide
+     */
+    public void onConnectionUpdated(BluetoothGatt gatt, int interval, int latency, int timeout,
+                                    int status) {
+    }
 }
