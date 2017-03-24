@@ -37,4 +37,6 @@ oneway interface IBluetoothGattCallbackExt {
     void onNotify(in String address, in int handle, in byte[] value);
     void onReadRemoteRssi(in String address, in int rssi, in int status);
     void onConfigureMTU(in String address, in int mtu, in int status);
+    void OnConnectionUpdated(String address, int interval, int latency,
+                             int timeout, int status);
 }

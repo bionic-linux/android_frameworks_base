@@ -184,4 +184,20 @@ public abstract class BluetoothGattServerCallback {
      */
     public void onPhyRead(BluetoothDevice device, int txPhy, int rxPhy, int status) {
     }
+
+    /**
+     * Callback indicating the connection parameters were updated.
+     *
+     * @param device The remote device involved
+     * @param interval The connection interval used
+     * @param latency Slave latency for the connection in number of connection events
+     * @param timeout Supervision timeout for this connection.
+     * @param status {@link BluetoothGatt#GATT_SUCCESS} if the connection has been updated
+     *                successfully
+     * @hide
+     */
+    public void onConnectionUpdated(BluetoothDevice gatt, int interval, int latency, int timeout,
+                                    int status) {
+    }
+
 }

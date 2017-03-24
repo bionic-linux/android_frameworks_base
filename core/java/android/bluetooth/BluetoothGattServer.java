@@ -328,6 +328,27 @@ public final class BluetoothGattServer implements BluetoothProfile {
                     Log.w(TAG, "Unhandled exception: " + ex);
                 }
             }
+
+            /**
+             * Callback invoked when the given connection is updated
+             * @hide
+             */
+            public void onConnectionUpdated(String address, int interval, int latency,
+                                            int timeout, int status) {
+                if (DBG) Log.d(TAG, "onConnectionUpdated() - Device=" + address +
+                            " interval=" + interval + " latency=" + latency +
+                            " timeout=" + timeout + " status=" + status);
+                BluetoothDevice device = mAdapter.getRemoteDevice(address);
+                if (device == null) return;
+
+                try {
+                    mCallback.onConnectionUpdated(device, interval, latency,
+                                                  timeout, status);
+                } catch (Exception ex) {
+                    Log.w(TAG, "Unhandled exception: " + ex);
+                }
+            }
+
         };
 
     /**

@@ -539,6 +539,26 @@ public final class BluetoothGatt implements BluetoothProfile {
                     Log.w(TAG, "Unhandled exception in callback", ex);
                 }
             }
+
+            /**
+             * Callback invoked when the given connection is updated
+             * @hide
+             */
+            public void OnConnectionUpdated(String address, int interval, int latency,
+                                            int timeout, int status) {
+                if (DBG) Log.d(TAG, "onConnectionUpdated() - Device=" + address +
+                            " interval=" + interval + " latency=" + latency +
+                            " timeout=" + timeout + " status=" + status);
+                if (!address.equals(mDevice.getAddress())) {
+                    return;
+                }
+                try {
+                    mCallback.onConnectionUpdated(BluetoothGatt.this, interval, latency,
+                                                  timeout, status);
+                } catch (Exception ex) {
+                    Log.w(TAG, "Unhandled exception in callback", ex);
+                }
+            }
         };
 
     /*package*/ BluetoothGatt(IBluetoothGatt iGatt, BluetoothDevice device,
