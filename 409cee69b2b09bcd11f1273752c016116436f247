@@ -16,6 +16,24 @@
       "revId": "409cee69b2b09bcd11f1273752c016116436f247",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1ca1547_1a6b10e6",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-24T17:37:40Z",
+      "side": 1,
+      "message": "I expect the phy to be translated to \"Initiating_PHYs\" field fro \"LE Extended Create Connection Command\".\n\nI can\u0027t really make a use of Tx and Rx phy or options here, they can be used only after the connection was created, right ? I might be wrong here.",
+      "parentUuid": "322946cd_f860f872",
+      "revId": "409cee69b2b09bcd11f1273752c016116436f247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
