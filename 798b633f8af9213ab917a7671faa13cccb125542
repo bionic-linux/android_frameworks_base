@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c307c88_037650b0",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-24T17:20:35Z",
+      "side": 1,
+      "message": "the spec have it as \"LE Connection Updated\", no \"parameters\".",
+      "parentUuid": "9313d5b6_19a3d79f",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f792b41_1dc0d9d8",
         "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e1b80b17_61a9ab6a",
+        "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-24T17:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f792b41_1dc0d9d8",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e2ec146_20eb1c22",
         "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-03-24T07:14:42Z",
       "side": 1,
       "message": "How about onConnectionParametersUpdated? Or will it only be called as a response to requestConnectionPriority?",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36176bfe_a7100437",
+        "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-24T17:20:35Z",
+      "side": 1,
+      "message": "This will be called when connection priority is changed, either by master or slave.\nIt might be called at any moment, not only after \"requestConnectionPriority\" by this particular client.",
+      "parentUuid": "8e2ec146_20eb1c22",
       "revId": "798b633f8af9213ab917a7671faa13cccb125542",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -98,6 +152,24 @@
       "writtenOn": "2017-03-24T07:14:42Z",
       "side": 1,
       "message": "Wrong file modified. Ext should be removed.",
+      "revId": "798b633f8af9213ab917a7671faa13cccb125542",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d77757e_27dc1296",
+        "filename": "core/java/android/bluetooth/IBluetoothGattCallbackExt.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-03-24T17:20:35Z",
+      "side": 1,
+      "message": "This is not visible in API, and will be addressed in separate patch.",
+      "parentUuid": "bf3bc1c9_bab387cb",
       "revId": "798b633f8af9213ab917a7671faa13cccb125542",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
