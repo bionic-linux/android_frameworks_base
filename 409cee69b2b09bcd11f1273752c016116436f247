@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322946cd_f860f872",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1096023
+      },
+      "writtenOn": "2017-03-24T11:29:57Z",
+      "side": 1,
+      "message": "Nice idea to provide an API for connectGatt with phy as a parameter!\n.\nThough, have few doubts:\n1) Can we pass couple of parameters here for phy instead of one? one for TX_PHY and another for RX_PHY? It will be useful in setting different PHYs in each direction for Asymmetric Connections.\n.\n2) Also, Phy options can be a useful parameter in case of PHY_LE_CODED selection. It can be useful for LE Long Range, too.",
+      "revId": "409cee69b2b09bcd11f1273752c016116436f247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
