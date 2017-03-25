@@ -2760,4 +2760,6 @@
   <java-symbol type="string" name="etws_primary_default_message_test" />
 
   <java-symbol type="string" name="etws_primary_default_message_others" />
+
+  <java-symbol type="string" name="global_action_sos_button" />
 </resources>

@@ -4462,4 +4462,7 @@
     <string name="mmcc_imsi_unknown_in_hlr">SIM not provisioned</string>
     <string name="mmcc_illegal_ms">SIM not allowed</string>
     <string name="mmcc_illegal_me">Phone not allowed</string>
+
+    <!-- label for item that starts SOS call -->
+    <string name="global_action_sos_button">SOS</string>
 </resources>

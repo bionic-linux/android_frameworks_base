@@ -21,6 +21,7 @@ import com.android.internal.app.AlertController.AlertParams;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 import com.android.internal.policy.EmergencyAffordanceManager;
+import com.android.internal.policy.SOSCallManager;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.R;
@@ -104,6 +105,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
     private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
     private static final String GLOBAL_ACTION_KEY_RESTART = "restart";
+    private static final String GLOBAL_ACTION_KEY_SOS_CALL = "sos";
 
     private final Context mContext;
     private final WindowManagerFuncs mWindowManagerFuncs;
@@ -126,6 +128,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mHasVibrator;
     private final boolean mShowSilentToggle;
     private final EmergencyAffordanceManager mEmergencyAffordanceManager;
+    private final SOSCallManager mSOSCallManager;
 
     /**
      * @param context everything needs a context :(
@@ -162,6 +165,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 com.android.internal.R.bool.config_useFixedVolume);
 
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(context);
+
+        mSOSCallManager = new SOSCallManager(context);
     }
 
     /**
@@ -304,6 +309,11 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 mItems.add(getAssistAction());
             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
                 mItems.add(new RestartAction());
+            } else if (GLOBAL_ACTION_KEY_SOS_CALL.equals(actionKey)) {
+                if (!TextUtils.isEmpty(Settings.Global.getString(mContext.getContentResolver(),
+                        Settings.Global.SOS_CALL_NUMBER))) {
+                    mItems.add(getSOSAction());
+                }
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
             }
@@ -586,6 +596,26 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             @Override
             public boolean showBeforeProvisioning() {
                 return false;
+            }
+        };
+    }
+
+    private Action getSOSAction() {
+        return new SinglePressAction(com.android.internal.R.drawable.emergency_icon,
+                R.string.global_action_sos_button) {
+            @Override
+            public void onPress() {
+                mSOSCallManager.performSOSCall();
+            }
+
+            @Override
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            @Override
+            public boolean showBeforeProvisioning() {
+                return true;
             }
         };
     }

@@ -32,9 +32,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
+import com.android.internal.policy.SOSCallManager;
 import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.policy.EmergencyAffordanceManager;
@@ -55,6 +57,7 @@ public class EmergencyButton extends Button {
 
     private static final String LOG_TAG = "EmergencyButton";
     private final EmergencyAffordanceManager mEmergencyAffordanceManager;
+    private final SOSCallManager mSOSCallManager;
 
     private int mDownX;
     private int mDownY;
@@ -94,6 +97,7 @@ public class EmergencyButton extends Button {
         mEnableEmergencyCallWhileSimLocked = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_enable_emergency_call_while_sim_locked);
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(context);
+        mSOSCallManager = new SOSCallManager(context);
     }
 
     @Override
@@ -121,10 +125,14 @@ public class EmergencyButton extends Button {
         setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (!mLongPressWasDragged
-                        && mEmergencyAffordanceManager.needsEmergencyAffordance()) {
-                    mEmergencyAffordanceManager.performEmergencyCall();
-                    return true;
+                if (!mLongPressWasDragged) {
+                    if (mEmergencyAffordanceManager.needsEmergencyAffordance()) {
+                        mEmergencyAffordanceManager.performEmergencyCall();
+                        return true;
+                    } else if (mSOSCallManager.isNumberSet()) {
+                        mSOSCallManager.performSOSCall();
+                        return true;
+                    }
                 }
                 return false;
             }

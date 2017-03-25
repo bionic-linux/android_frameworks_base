@@ -8550,6 +8550,14 @@ public final class Settings {
          */
         public static final String EMERGENCY_TONE = "emergency_tone";
 
+
+        /**
+         * A setting that represents a number to perform SOS call.
+         *
+         * @hide
+         */
+        public static final String SOS_CALL_NUMBER = "sos_call_number";
+
         /**
          * CDMA only settings
          * Whether the auto retry is enabled. The value is
