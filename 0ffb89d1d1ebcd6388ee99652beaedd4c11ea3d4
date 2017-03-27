@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7054868_72d26b7d",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/wifi/WifiTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-27T21:00:51Z",
+      "side": 1,
+      "message": "The documentation of this API in WifiManager does not say that it will throw such an exception. Please take an AI to update this because it\u0027s not clear to the app developers.\n\nhttps://cs.corp.google.com/android/frameworks/base/wifi/java/android/net/wifi/WifiManager.java?rcl\u003de259c2c42be68fa2ead28eeed1df5042452d0eae\u0026l\u003d862",
+      "range": {
+        "startLine": 398,
+        "startChar": 68,
+        "endLine": 398,
+        "endChar": 89
+      },
+      "revId": "0ffb89d1d1ebcd6388ee99652beaedd4c11ea3d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
