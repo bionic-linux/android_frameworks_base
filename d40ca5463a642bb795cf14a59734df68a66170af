@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c65be60_ce04b310",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6108,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-27T19:47:01Z",
+      "side": 1,
+      "message": "\"most recent\"?",
+      "range": {
+        "startLine": 6108,
+        "startChar": 16,
+        "endLine": 6108,
+        "endChar": 22
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea08373a_8fa4faa1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6110,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-27T19:47:01Z",
+      "side": 1,
+      "message": "no \u0027-\u0027",
+      "range": {
+        "startLine": 6110,
+        "startChar": 30,
+        "endLine": 6110,
+        "endChar": 31
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f694775d_f5968b1b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6112,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-27T19:47:01Z",
+      "side": 1,
+      "message": "carrier apps ok?",
+      "range": {
+        "startLine": 6112,
+        "startChar": 7,
+        "endLine": 6112,
+        "endChar": 23
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1de98079_302dab69",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6113,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-27T19:47:01Z",
+      "side": 1,
+      "message": "drop - not accurate anyway.",
+      "range": {
+        "startLine": 6113,
+        "startChar": 59,
+        "endLine": 6113,
+        "endChar": 73
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9100e8c6_da288d25",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6132,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-27T19:47:01Z",
+      "side": 1,
+      "message": "don\u0027t add - they want you to get a TM instance for the subId rather than have per-subId functions.",
+      "range": {
+        "startLine": 6132,
+        "startChar": 1,
+        "endLine": 6132,
+        "endChar": 47
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c81a2f7_22136a6f",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-27T19:47:01Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1252,
+        "startChar": 15,
+        "endLine": 1252,
+        "endChar": 22
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "804d85df_1669077d",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-27T19:47:01Z",
+      "side": 1,
+      "message": "is \"relied-upon\" really a hyphenated word?\n\nhttp://www.getitwriteonline.com/archive/042703compwdshyph.htm\nsuggests no - if it formed an adjective before a noun it\u0027s a maybe (according to texas law review) but only if it significantly helps the reader  in recognizing the compound adjective.",
+      "range": {
+        "startLine": 1254,
+        "startChar": 30,
+        "endLine": 1254,
+        "endChar": 31
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
