@@ -51,6 +51,7 @@ import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.INetworkManagementService;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
@@ -775,7 +776,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
     }
 
-    private void tetherMatchingInterfaces(boolean enable, int interfaceType) {
+    private void tetherMatchingInterfaces(final boolean enable, int interfaceType) {
         if (VDBG) Log.d(TAG, "tetherMatchingInterfaces(" + enable + ", " + interfaceType + ")");
 
         String[] ifaces = null;
@@ -785,25 +786,31 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
             Log.e(TAG, "Error listing Interfaces", e);
             return;
         }
-        String chosenIface = null;
+        String tmpChosenIface = null;
         if (ifaces != null) {
             for (String iface : ifaces) {
                 if (ifaceNameToType(iface) == interfaceType) {
-                    chosenIface = iface;
+                    tmpChosenIface = iface;
                     break;
                 }
             }
         }
-        if (chosenIface == null) {
+        if (tmpChosenIface == null) {
             Log.e(TAG, "could not find iface of type " + interfaceType);
             return;
         }
+        final String chosenIface = tmpChosenIface;
 
-        int result = (enable ? tether(chosenIface) : untether(chosenIface));
-        if (result != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-            Log.e(TAG, "unable start or stop tethering on iface " + chosenIface);
-            return;
-        }
+        Handler h = new Handler(mLooper);
+        h.post(new Runnable() {
+            @Override
+            public void run() {
+                int result = (enable ? tether(chosenIface) : untether(chosenIface));
+                if (result != ConnectivityManager.TETHER_ERROR_NO_ERROR) {
+                    Log.e(TAG, "unable start or stop tethering on iface " + chosenIface);
+                }
+            }
+        });
     }
 
     public TetheringConfiguration getTetheringConfiguration() {
