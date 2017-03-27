@@ -64,6 +64,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.INetworkManagementService;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
@@ -1005,7 +1006,7 @@ public class Tethering extends BaseNetworkObserver {
     //     - handles both enabling and disabling serving states
     //     - only tethers the first matching interface in listInterfaces()
     //       order of a given type
-    private void tetherMatchingInterfaces(int requestedState, int interfaceType) {
+    private void tetherMatchingInterfaces(final int requestedState, int interfaceType) {
         if (VDBG) {
             Log.d(TAG, "tetherMatchingInterfaces(" + requestedState + ", " + interfaceType + ")");
         }
@@ -1017,21 +1018,29 @@ public class Tethering extends BaseNetworkObserver {
             Log.e(TAG, "Error listing Interfaces", e);
             return;
         }
-        String chosenIface = null;
+        String tmpChosenIface = null;
         if (ifaces != null) {
             for (String iface : ifaces) {
                 if (ifaceNameToType(iface) == interfaceType) {
-                    chosenIface = iface;
+                    tmpChosenIface = iface;
                     break;
                 }
             }
         }
-        if (chosenIface == null) {
+        if (tmpChosenIface == null) {
             Log.e(TAG, "could not find iface of type " + interfaceType);
             return;
         }
 
-        changeInterfaceState(chosenIface, requestedState);
+        final String chosenIface = tmpChosenIface;
+
+        Handler h = new Handler(mLooper);
+        h.post(new Runnable() {
+            @Override
+            public void run() {
+                changeInterfaceState(chosenIface, requestedState);
+            }
+        });
     }
 
     private void changeInterfaceState(String ifname, int requestedState) {
