@@ -280,6 +280,30 @@
       "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "239fe407_e2ea5976",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-28T01:40:17Z",
+      "side": 1,
+      "message": "The hyphen isn\u0027t appropriate here. I can\u0027t remember if I reworded and forgot to remove it or whether my brain simply failed me (as is often the case). I would use the hyphen to remind people that this is not the relied-upon API, but I wouldn\u0027t use the hyphen to say that the API shouldn\u0027t be relied upon. :-) Isn\u0027t English terrific.",
+      "parentUuid": "804d85df_1669077d",
+      "range": {
+        "startLine": 1254,
+        "startChar": 30,
+        "endLine": 1254,
+        "endChar": 31
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
