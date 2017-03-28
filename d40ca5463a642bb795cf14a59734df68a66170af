@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8aa9d6ff_831055d9",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6108,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-28T01:33:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c65be60_ce04b310",
+      "range": {
+        "startLine": 6108,
+        "startChar": 16,
+        "endLine": 6108,
+        "endChar": 22
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea08373a_8fa4faa1",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-27T19:47:01Z",
       "side": 1,
       "message": "no \u0027-\u0027",
+      "range": {
+        "startLine": 6110,
+        "startChar": 30,
+        "endLine": 6110,
+        "endChar": 31
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "436b620a_db5c7d0c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6110,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-28T01:33:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea08373a_8fa4faa1",
       "range": {
         "startLine": 6110,
         "startChar": 30,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e9df583b_73258082",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6112,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-28T01:33:15Z",
+      "side": 1,
+      "message": "CARRIER_PRIVILEGE is generally much more privileged than READ_PHONE_STATE, but it\u0027s not a strict superset. Given the permission level this feels more like READ_PHONE_STATE to me. Thoughts?",
+      "parentUuid": "f694775d_f5968b1b",
+      "range": {
+        "startLine": 6112,
+        "startChar": 7,
+        "endLine": 6112,
+        "endChar": 23
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1de98079_302dab69",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4e822fd8_cff2888c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6113,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-28T01:33:15Z",
+      "side": 1,
+      "message": "Why not accurate?",
+      "parentUuid": "1de98079_302dab69",
+      "range": {
+        "startLine": 6113,
+        "startChar": 59,
+        "endLine": 6113,
+        "endChar": 73
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9100e8c6_da288d25",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-03-27T19:47:01Z",
       "side": 1,
       "message": "don\u0027t add - they want you to get a TM instance for the subId rather than have per-subId functions.",
+      "range": {
+        "startLine": 6132,
+        "startChar": 1,
+        "endLine": 6132,
+        "endChar": 47
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0cfa202_085d5c54",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6132,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-28T01:33:15Z",
+      "side": 1,
+      "message": "I don\u0027t intend to un-hide this (the version above that uses the static subId will eventually go public), but we\u0027ve still been adding the per-subId versions post-N, presumably so that the system doesn\u0027t need to keep or dynamically instantiate multiple TMs. There are around 70 hidden/system APIs that have per-subId versions in TM.",
+      "parentUuid": "9100e8c6_da288d25",
       "range": {
         "startLine": 6132,
         "startChar": 1,
