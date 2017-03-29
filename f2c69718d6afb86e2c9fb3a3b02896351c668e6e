@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4025450c_871361f8",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "alignement",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 27
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3da9952b_95d9f176",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "Since mContext if final, this validation should probably go in the ctor.",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 89
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcc200f2_f8e83c37",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "Why not just IllegalStateException ?",
+      "range": {
+        "startLine": 116,
+        "startChar": 22,
+        "endLine": 116,
+        "endChar": 37
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e8de025_9cc43986",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "Isn\u0027t this duplicated from elsewhere ?",
+      "range": {
+        "startLine": 123,
+        "startChar": 44,
+        "endLine": 123,
+        "endChar": 66
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d01cf21f_1f1caf99",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this mean. What do you mean by getting the spi ? Is this some kind of TODO ?",
+      "range": {
+        "startLine": 141,
+        "startChar": 30,
+        "endLine": 141,
+        "endChar": 52
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24125488_26b6d4f1",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "Consider using a switch.",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 9
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b6cebc9_2c4d56d8",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "If I understand correctly, status should either be negative or one of the three value in IpSecManager.Status and therefore this branch should not happen unless there is a bug.\n\nI suggest doing some kind of logging and throwing a runtime exception, just to be sure to hear about it quickly if this branch can be reached.",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 147,
+        "endChar": 9
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2da54a9b_3289eadc",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "what calls this private method ? Maybe just declare that it throws RemoteException and let the public caller deal with it. At least the caller will also have a catch block for all the checked exception declared here right ?",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 17
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87f52bc3_e7c3cca4",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "Please use more precise language.",
+      "range": {
+        "startLine": 196,
+        "startChar": 53,
+        "endLine": 196,
+        "endChar": 75
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9816152e_9826d1da",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "At which point should cleanup always be done regardless of the possible RemoteException ? i.e should mResourceId \u003d INVALID_SPI or mCloseGuard.close() happen in a finally block ?",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 203,
+        "endChar": 32
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68618636_6e1ed5f3",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "It looks like this class is only inherited once. Do you have plan to reuse it more ? Otherwise consider folding it in the child class.",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bfff5b1_1a6fdebc",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T02:34:14Z",
+      "side": 1,
+      "message": "If keys are ints, consider using a SparseArray instead if the number of entries is small or bounded.",
+      "range": {
+        "startLine": 198,
+        "startChar": 18,
+        "endLine": 198,
+        "endChar": 45
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
