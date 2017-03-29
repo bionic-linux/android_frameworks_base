@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a74894f_f7a344b7",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "Why this TODO? What remains to be done in this code?",
+      "range": {
+        "startLine": 121,
+        "startChar": 52,
+        "endLine": 121,
+        "endChar": 73
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8034f3c3_3169918a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "Indent these lines by 4 chars.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 79
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa10dd52_16e3dd37",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": ":-)",
+      "range": {
+        "startLine": 304,
+        "startChar": 12,
+        "endLine": 304,
+        "endChar": 39
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1f93f7d_36acb3e3",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "Any reason this can\u0027t be 0 like the client-side INVALID_SPI constant?",
+      "range": {
+        "startLine": 101,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 44
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a825fff0_3a484f92",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "Preconditions.checkNotNull?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fef4f8d3_926b3744",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "Can you complain in the constructor instead?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 9
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "296851d2_a5a7cdcb",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "With the current state of the service, can this code ever possibly run?",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 144,
+        "endChar": 14
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0e3e499_2e7c8816",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we throw an exception if the Bundle contains no value with KEY_RESOURCE_ID?",
+      "range": {
+        "startLine": 159,
+        "startChar": 59,
+        "endLine": 159,
+        "endChar": 72
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d396e36_540fc678",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "Do this first, before you try anything that can fail?",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 32
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebc75115_3d172613",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:46:44Z",
+      "side": 1,
+      "message": "Long line.",
+      "range": {
+        "startLine": 388,
+        "startChar": 101,
+        "endLine": 388,
+        "endChar": 105
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
