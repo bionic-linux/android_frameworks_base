@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db62304_037c14d7",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-03-29T20:57:20Z",
+      "side": 1,
+      "message": "what are the valid options for this? an int is not very descriptive. \n\nWe probably want to fix the one for createBond() too, and fix the description on the transport types.  it doesn\u0027t make a lot of sense when you\u0027re talking about a bond - what does it have to do with GATT?",
+      "range": {
+        "startLine": 921,
+        "startChar": 26,
+        "endLine": 921,
+        "endChar": 36
+      },
+      "revId": "82fe24b97e41b8440509912d81fbb5cc79eb9beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
