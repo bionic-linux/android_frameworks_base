@@ -275,6 +275,236 @@
       "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "680f04c9_5b2d2803",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "Once all catch branches rethrow, consider declaring final int spi instead.",
+      "range": {
+        "startLine": 268,
+        "startChar": 8,
+        "endLine": 268,
+        "endChar": 64
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c701285d_aa08a6c3",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "??",
+      "range": {
+        "startLine": 291,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 19
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb94f715_35c46581",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "Isn\u0027t there some minimal validation you should do here (same comment for other impl methods).\n\nFor instance can c be null ?",
+      "range": {
+        "startLine": 321,
+        "startChar": 18,
+        "endLine": 321,
+        "endChar": 46
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14f40993_8a01ac25",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "Consider declaring this as a package private static final\n\nint[] DIRECTIONS \u003d { OUT, IN };\n\n\nOtherwise consider putting the block below in a helper priv method createTransportModeTransform(IpSecConfig c, IBinder binder, int direction) and do\ncreateTransportModeTransform(c, binder, DIRECTION_OUT);\ncreateTransportModeTransform(c, binder, DIRECTION_IN);\n\n(alternative is probably not convenient for control flow though).",
+      "range": {
+        "startLine": 324,
+        "startChar": 16,
+        "endLine": 324,
+        "endChar": 85
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e58490b_6e8179d0",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "It is a bit ugly and hard to read, but I am not sure how it could be improved really.\n\nMaybe you can define a \"null\" IpSecAlgorithm object that returns \"\", null and 0 for getName() getKey() getTruncationLengthBits. Then instead of doing three times (auth !\u003d null) xxx : yyy, you can simply do:\n\nIpSecAlgorithm auth \u003d c.getAuthentication(direction);\nif (auth \u003d\u003d null) {\n  auth \u003d IpSecAlgorithm.NULL; // or DEFAULT, or NONE, ...\n}",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 56
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41a48822_2a27b8cd",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "Could be a static final object with documentation: returned by xxx when yyy fails.",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 354,
+        "endChar": 97
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "465d29fa_d35741d0",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "should be in the sync block.",
+      "range": {
+        "startLine": 381,
+        "startChar": 8,
+        "endLine": 381,
+        "endChar": 30
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "922fa332_2e35ec20",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "Probably not necessary at that point, but could it be useful to have a exemption for a special whitelisted thing that can always administrate transforms ?",
+      "range": {
+        "startLine": 391,
+        "startChar": 16,
+        "endLine": 391,
+        "endChar": 78
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4fe4b75_fef7e150",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "Is this failure detectable here ? If yes I suggest adding a log so that it can be discovered if there is a real issue going on.",
+      "range": {
+        "startLine": 395,
+        "startChar": 52,
+        "endLine": 395,
+        "endChar": 62
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "618b718d_803d59fd",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T04:05:40Z",
+      "side": 1,
+      "message": "Should be in the sync block",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 29
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
