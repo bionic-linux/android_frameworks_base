@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24369bdf_ef31fb14",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a74894f_f7a344b7",
+      "range": {
+        "startLine": 121,
+        "startChar": 52,
+        "endLine": 121,
+        "endChar": 73
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8034f3c3_3169918a",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 9
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "d85d8807_83e097b9",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "This looks like a global find-and-replace gone wrong.",
+      "parentUuid": "b1f93f7d_36acb3e3",
+      "range": {
+        "startLine": 101,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 44
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a825fff0_3a484f92",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 9
@@ -105,6 +153,30 @@
       "writtenOn": "2017-03-29T00:46:44Z",
       "side": 1,
       "message": "Preconditions.checkNotNull?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b5bff92_cd4024ae",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Adding the check in the Builder() constructor (the public call site)",
+      "parentUuid": "a825fff0_3a484f92",
       "range": {
         "startLine": 104,
         "startChar": 8,
@@ -163,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "4cb91af5_9b6ff358",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "296851d2_a5a7cdcb",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 144,
+        "endChar": 14
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0e3e499_2e7c8816",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 9
@@ -174,6 +270,30 @@
       "writtenOn": "2017-03-29T00:46:44Z",
       "side": 1,
       "message": "Shouldn\u0027t we throw an exception if the Bundle contains no value with KEY_RESOURCE_ID?",
+      "range": {
+        "startLine": 159,
+        "startChar": 59,
+        "endLine": 159,
+        "endChar": 72
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bb21901_d776d375",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Actually, it seems to me we must have a status. If the status is \"horrible things have happened\" then conceivably we could omit the resourceId (though we don\u0027t).",
+      "parentUuid": "f0e3e499_2e7c8816",
       "range": {
         "startLine": 159,
         "startChar": 59,

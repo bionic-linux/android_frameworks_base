@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30179964_4665ea02",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4025450c_871361f8",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 27
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3da9952b_95d9f176",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-29T02:34:14Z",
       "side": 1,
       "message": "Since mContext if final, this validation should probably go in the ctor.",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 89
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b06e504f_a77747e2",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Moved to the builder() constructor (which is the user call site).",
+      "parentUuid": "3da9952b_95d9f176",
       "range": {
         "startLine": 111,
         "startChar": 12,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "0e3d4d3e_821c43d1",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Yes, I will have 3 different bundles (2 returned to IpSecManager. They each have a \"status\" key, but they\u0027re different enough (and in different enough locations), that I *though* it was worth defining the keys for each of them separately? Not really sure what the right thing to do here is (if it\u0027s \"define a parcelable\" I\u0027m going to be very sad).",
+      "parentUuid": "0e8de025_9cc43986",
+      "range": {
+        "startLine": 123,
+        "startChar": 44,
+        "endLine": 123,
+        "endChar": 66
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d01cf21f_1f1caf99",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 10
@@ -105,6 +177,30 @@
       "writtenOn": "2017-03-29T02:34:14Z",
       "side": 1,
       "message": "I don\u0027t understand what this mean. What do you mean by getting the spi ? Is this some kind of TODO ?",
+      "range": {
+        "startLine": 141,
+        "startChar": 30,
+        "endLine": 141,
+        "endChar": 52
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50e19bf3_9d8278ae",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "The \"SpiUnavailableException()\" type actually wants the requested SPI as an input. It\u0027s a checked user-recoverable exception type.",
+      "parentUuid": "d01cf21f_1f1caf99",
       "range": {
         "startLine": 141,
         "startChar": 30,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "56c41540_30bef3cc",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "The \u003c 0 case makes a switch awkward.",
+      "parentUuid": "24125488_26b6d4f1",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 9
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b6cebc9_2c4d56d8",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 10
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "631f9acd_8b71cf7b",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Should be unreachable. Throwing a WTF",
+      "parentUuid": "4b6cebc9_2c4d56d8",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 147,
+        "endChar": 9
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2da54a9b_3289eadc",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 10
@@ -174,6 +318,30 @@
       "writtenOn": "2017-03-29T02:34:14Z",
       "side": 1,
       "message": "what calls this private method ? Maybe just declare that it throws RemoteException and let the public caller deal with it. At least the caller will also have a catch block for all the checked exception declared here right ?",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 17
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "275266fc_b20329b2",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "This is called by the builder. If I want it to throw RemoteException I need to change the \"public\" API and have the caller throw RemoteException, but... in this case, we shouldn\u0027t get any remote exceptions that can be handled, so I believe this *should* be an unchecked exception.",
+      "parentUuid": "2da54a9b_3289eadc",
       "range": {
         "startLine": 154,
         "startChar": 12,
@@ -232,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "537d30ae_aff58e34",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "In the case that communication has died... I\u0027m not sure whether it\u0027s better to \"fail to clean up\" or to temporarily leak resources (that will eventually be cleaned up due to binder death). For now, I\u0027m going with the \"leak pending binder death cleanup\" version...",
+      "parentUuid": "9816152e_9826d1da",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 203,
+        "endChar": 32
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68618636_6e1ed5f3",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 10
@@ -255,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "73b46f4d_b50caca7",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "It will actually be used 3 times:\n1) transform\n2) spi\n3) udp encap socket\n\nEach of them shares the same BinderDeathRecipient pattern.",
+      "parentUuid": "68618636_6e1ed5f3",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bfff5b1_1a6fdebc",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 10
@@ -266,6 +482,30 @@
       "writtenOn": "2017-03-29T02:34:14Z",
       "side": 1,
       "message": "If keys are ints, consider using a SparseArray instead if the number of entries is small or bounded.",
+      "range": {
+        "startLine": 198,
+        "startChar": 18,
+        "endLine": 198,
+        "endChar": 45
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd7ee342_c9ee0004",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bfff5b1_1a6fdebc",
       "range": {
         "startLine": 198,
         "startChar": 18,
@@ -324,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "5dbfb875_7e334d2c",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "c701285d_aa08a6c3",
+      "range": {
+        "startLine": 291,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 19
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb94f715_35c46581",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 10
@@ -335,6 +599,30 @@
       "writtenOn": "2017-03-29T04:05:40Z",
       "side": 1,
       "message": "Isn\u0027t there some minimal validation you should do here (same comment for other impl methods).\n\nFor instance can c be null ?",
+      "range": {
+        "startLine": 321,
+        "startChar": 18,
+        "endLine": 321,
+        "endChar": 46
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87feb1f3_a446be21",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Yes there should... everything that comes over the binder should get sanity checked. Adding a TODO",
+      "parentUuid": "fb94f715_35c46581",
       "range": {
         "startLine": 321,
         "startChar": 18,
@@ -370,6 +658,30 @@
     },
     {
       "key": {
+        "uuid": "4a24908a_5542004d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14f40993_8a01ac25",
+      "range": {
+        "startLine": 324,
+        "startChar": 16,
+        "endLine": 324,
+        "endChar": 85
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e58490b_6e8179d0",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 10
@@ -381,6 +693,30 @@
       "writtenOn": "2017-03-29T04:05:40Z",
       "side": 1,
       "message": "It is a bit ugly and hard to read, but I am not sure how it could be improved really.\n\nMaybe you can define a \"null\" IpSecAlgorithm object that returns \"\", null and 0 for getName() getKey() getTruncationLengthBits. Then instead of doing three times (auth !\u003d null) xxx : yyy, you can simply do:\n\nIpSecAlgorithm auth \u003d c.getAuthentication(direction);\nif (auth \u003d\u003d null) {\n  auth \u003d IpSecAlgorithm.NULL; // or DEFAULT, or NONE, ...\n}",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 56
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "577d8a3b_b5973a7d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "This whole thing is very nasty. It\u0027s obvious for cleanup at some point, but I think it needs to wait until I have more room to breathe.",
+      "parentUuid": "4e58490b_6e8179d0",
       "range": {
         "startLine": 329,
         "startChar": 0,
@@ -439,6 +775,30 @@
     },
     {
       "key": {
+        "uuid": "f6b87420_3eaa4878",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "465d29fa_d35741d0",
+      "range": {
+        "startLine": 381,
+        "startChar": 8,
+        "endLine": 381,
+        "endChar": 30
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "922fa332_2e35ec20",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 10
@@ -485,6 +845,30 @@
     },
     {
       "key": {
+        "uuid": "0888386d_87736d0c",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "The failure is detect-able elsewhere but not recoverable. There is a TODO in the Close() method where we can actually do decent logging/error management (even though there\u0027s recovery that can be done).",
+      "parentUuid": "a4fe4b75_fef7e150",
+      "range": {
+        "startLine": 395,
+        "startChar": 52,
+        "endLine": 395,
+        "endChar": 62
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "618b718d_803d59fd",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 10
@@ -496,6 +880,30 @@
       "writtenOn": "2017-03-29T04:05:40Z",
       "side": 1,
       "message": "Should be in the sync block",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 29
+      },
+      "revId": "f2c69718d6afb86e2c9fb3a3b02896351c668e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bccc613_d5ae9405",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-30T02:38:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "618b718d_803d59fd",
       "range": {
         "startLine": 408,
         "startChar": 8,
