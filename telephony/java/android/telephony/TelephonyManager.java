@@ -1706,7 +1706,11 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public int getDataNetworkType() {
-        return getDataNetworkType(getSubId());
+        int subId = SubscriptionManager.getDefaultDataSubscriptionId();
+        if (subId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+          return NETWORK_TYPE_UNKNOWN;
+        }
+        return getDataNetworkType(subId);
     }
 
     /**
