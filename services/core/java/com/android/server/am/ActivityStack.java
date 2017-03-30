@@ -1898,7 +1898,8 @@ final class ActivityStack {
     }
 
     private void makeInvisible(ActivityRecord r, ActivityRecord visibleBehind) {
-        if (!r.visible) {
+        // add nowVisible check to ensure that the activity actually already invisible.
+        if (!r.visible && !r.nowVisible) {
             if (DEBUG_VISIBILITY) Slog.v(TAG_VISIBILITY, "Already invisible: " + r);
             return;
         }
