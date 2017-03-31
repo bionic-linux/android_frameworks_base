@@ -1062,6 +1062,14 @@
     <integer name="config_autoBrightnessBrighteningLightDebounce">4000</integer>
     <integer name="config_autoBrightnessDarkeningLightDebounce">8000</integer>
 
+    <!-- Ignore the light sensor debounce in milliseconds when the display transitions to STATE_ON.
+
+		 When user double tap the display to wake up wearable device, it might be easily get a lower
+         lux value because of the lux affected by finger or something else, user will see a lower
+         brightness then have to wait a seconds to get correct brightness which depended on 
+         config_autoBrightnessBrighteningLightDebounce. -->
+    <integer name="config_autoBrightnessScreenOnNoDebounce">0</integer>
+
     <!-- Light sensor event rate in milliseconds for automatic brightness control. -->
     <integer name="config_autoBrightnessLightSensorRate">250</integer>
 
