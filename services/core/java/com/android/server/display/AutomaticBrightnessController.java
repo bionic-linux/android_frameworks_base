@@ -133,6 +133,10 @@ class AutomaticBrightnessController {
     private float mBrighteningLuxThreshold;
     private float mDarkeningLuxThreshold;
 
+    // The time to ignore debounce when screen turning on.
+    private long mScreenOnNoLightDebounce;
+    private long mTimeWhenNoDebounce;
+
     // The most recent light sample.
     private float mLastObservedLux;
 
@@ -191,7 +195,7 @@ class AutomaticBrightnessController {
             int lightSensorRate, long brighteningLightDebounceConfig,
             long darkeningLightDebounceConfig, boolean resetAmbientLuxAfterWarmUpConfig,
             int ambientLightHorizon, float autoBrightnessAdjustmentMaxGamma,
-            LuxLevels luxLevels) {
+            LuxLevels luxLevels, long screenOnNoLightDebounce) {
         mCallbacks = callbacks;
         mTwilight = LocalServices.getService(TwilightManager.class);
         mSensorManager = sensorManager;
@@ -208,6 +212,7 @@ class AutomaticBrightnessController {
         mWeightingIntercept = ambientLightHorizon;
         mScreenAutoBrightnessAdjustmentMaxGamma = autoBrightnessAdjustmentMaxGamma;
         mLuxLevels = luxLevels;
+        mScreenOnNoLightDebounce = screenOnNoLightDebounce;
 
         mHandler = new AutomaticBrightnessHandler(looper);
         mAmbientLightRingBuffer =
@@ -280,6 +285,7 @@ class AutomaticBrightnessController {
         pw.println("  mBrighteningLightDebounceConfig=" + mBrighteningLightDebounceConfig);
         pw.println("  mDarkeningLightDebounceConfig=" + mDarkeningLightDebounceConfig);
         pw.println("  mResetAmbientLuxAfterWarmUpConfig=" + mResetAmbientLuxAfterWarmUpConfig);
+        pw.println("  mScreenOnNoLightDebounce=" + mScreenOnNoLightDebounce);
 
         pw.println();
         pw.println("Automatic Brightness Controller State:");
@@ -433,6 +439,13 @@ class AutomaticBrightnessController {
         return earliestValidTime + mDarkeningLightDebounceConfig;
     }
 
+    private long nextAmbientLightNoDebounceTransition(long time) {
+        if (time < mTimeWhenNoDebounce)
+            return time + mLightSensorRate;
+        else
+            return Long.MAX_VALUE;
+    }
+
     private void updateAmbientLux() {
         long time = SystemClock.uptimeMillis();
         mAmbientLightRingBuffer.prune(time - mAmbientLightHorizon);
@@ -445,6 +458,10 @@ class AutomaticBrightnessController {
         if (!mAmbientLuxValid) {
             final long timeWhenSensorWarmedUp =
                 mLightSensorWarmUpTimeConfig + mLightSensorEnableTime;
+
+            // Calculating the taget time that won't debeounce when display transitions to STATE_ON.
+            mTimeWhenNoDebounce = mScreenOnNoLightDebounce + timeWhenSensorWarmedUp;
+
             if (time < timeWhenSensorWarmedUp) {
                 if (DEBUG) {
                     Slog.d(TAG, "updateAmbientLux: Sensor not  ready yet: "
@@ -467,10 +484,12 @@ class AutomaticBrightnessController {
 
         long nextBrightenTransition = nextAmbientLightBrighteningTransition(time);
         long nextDarkenTransition = nextAmbientLightDarkeningTransition(time);
+        long nextNoDebounceTransition = nextAmbientLightNoDebounceTransition(time);
         float ambientLux = calculateAmbientLux(time);
 
         if (ambientLux >= mBrighteningLuxThreshold && nextBrightenTransition <= time
-                || ambientLux <= mDarkeningLuxThreshold && nextDarkenTransition <= time) {
+                || ambientLux <= mDarkeningLuxThreshold && nextDarkenTransition <= time
+                || ambientLux >= mBrighteningLuxThreshold && mTimeWhenNoDebounce >= time) {
             setAmbientLux(ambientLux);
             if (DEBUG) {
                 Slog.d(TAG, "updateAmbientLux: "
@@ -482,8 +501,9 @@ class AutomaticBrightnessController {
             updateAutoBrightness(true);
             nextBrightenTransition = nextAmbientLightBrighteningTransition(time);
             nextDarkenTransition = nextAmbientLightDarkeningTransition(time);
+            nextNoDebounceTransition = nextAmbientLightNoDebounceTransition(time);
         }
-        long nextTransitionTime = Math.min(nextDarkenTransition, nextBrightenTransition);
+        long nextTransitionTime = Math.min(Math.min(nextDarkenTransition, nextBrightenTransition), nextNoDebounceTransition);
         // If one of the transitions is ready to occur, but the total weighted ambient lux doesn't
         // exceed the necessary threshold, then it's possible we'll get a transition time prior to
         // now. Rather than continually checking to see whether the weighted lux exceeds the
