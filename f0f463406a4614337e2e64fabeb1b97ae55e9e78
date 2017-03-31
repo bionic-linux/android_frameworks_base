@@ -69,6 +69,30 @@
       "revId": "f0f463406a4614337e2e64fabeb1b97ae55e9e78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57d2e354_39d1ddf7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-03-31T05:01:34Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right. If TelephonyManager is for a specific subId, it should return data network type of current sub id right? Or is the conclusion that we haven\u0027t completely converted it to be per subId yet?",
+      "parentUuid": "698f0d3b_c49382e8",
+      "range": {
+        "startLine": 1709,
+        "startChar": 40,
+        "endLine": 1709,
+        "endChar": 68
+      },
+      "revId": "f0f463406a4614337e2e64fabeb1b97ae55e9e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
