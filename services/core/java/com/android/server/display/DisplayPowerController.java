@@ -332,6 +332,8 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             final float dozeScaleFactor = resources.getFraction(
                     com.android.internal.R.fraction.config_screenAutoBrightnessDozeScaleFactor,
                     1, 1);
+            long screenOnNoLightDebounce = resources.getInteger(
+                    com.android.internal.R.integer.config_autoBrightnessScreenOnNoDebounce);
 
             // hysteresis configs
             int[] brightHysteresisLevels = resources.getIntArray(
@@ -377,7 +379,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                         mScreenBrightnessRangeMaximum, dozeScaleFactor, lightSensorRate,
                         brighteningLightDebounce, darkeningLightDebounce,
                         autoBrightnessResetAmbientLuxAfterWarmUp, ambientLightHorizon,
-                        autoBrightnessAdjustmentMaxGamma, luxLevels);
+                        autoBrightnessAdjustmentMaxGamma, luxLevels, screenOnNoLightDebounce);
             }
         }
 
