@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65e18e2c_723088ec",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-03-31T18:36:05Z",
+      "side": 1,
+      "message": "this seems like an API change, which is fine if intentional, just checking.",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "0a536c6cb313ac60576b90768dac21790475612c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
