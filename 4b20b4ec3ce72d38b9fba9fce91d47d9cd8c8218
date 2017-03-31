@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "af17140b_4205bcc8",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-31T15:21:14Z",
+      "side": 1,
+      "message": "Nit: in general, for this sort of reliability check, it seems safest to put it in the lowest-level method possible. But since this method is private and only has one caller, this is OK too.",
+      "parentUuid": "9b5bff92_cd4024ae",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "4b20b4ec3ce72d38b9fba9fce91d47d9cd8c8218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fef4f8d3_926b3744",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 9
