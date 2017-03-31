@@ -322,6 +322,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
     }
 
+    // DONOTSUBMIT: Remove this method.
+    public void setLocalOnlyWifiHotspotEnable(boolean enable) {
+        final WifiManager wifiManager = (WifiManager) mContext.getSystemService(WifiManager.class);
+        wifiManager.setWifiApEnabled(null /* use existing wifi config */, enable);
+    }
+
     /**
      * Check if the device requires a provisioning check in order to enable tethering.
      *
