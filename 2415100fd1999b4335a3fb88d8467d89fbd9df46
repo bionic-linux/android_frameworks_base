@@ -966,6 +966,30 @@
     },
     {
       "key": {
+        "uuid": "825f15c9_a340a04d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-04-01T01:24:42Z",
+      "side": 1,
+      "message": "This can be called both within the user\u0027s context AND from the system server (binder death).",
+      "parentUuid": "2bd5e2b3_8637e933",
+      "range": {
+        "startLine": 150,
+        "startChar": 28,
+        "endLine": 150,
+        "endChar": 51
+      },
+      "revId": "2415100fd1999b4335a3fb88d8467d89fbd9df46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec71e280_cab52923",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 14
