@@ -148,9 +148,7 @@ public class PackageDexOptimizer {
         final boolean profileUpdated = checkForProfileUpdates &&
                 isProfileUpdated(pkg, sharedGid, compilerFilter);
 
-        // TODO(calin,jeffhao): shared library paths should be adjusted to include previous code
-        // paths (b/34169257).
-        final String sharedLibrariesPath = getSharedLibrariesPath(sharedLibraries);
+        String sharedLibrariesPath = getSharedLibrariesPath(sharedLibraries);
         final int dexoptFlags = getDexFlags(pkg, compilerFilter);
 
         int result = DEX_OPT_SKIPPED;
@@ -164,6 +162,14 @@ public class PackageDexOptimizer {
                 //  - SKIPPED when all paths are up to date
                 if ((result != DEX_OPT_FAILED) && (newResult != DEX_OPT_SKIPPED)) {
                     result = newResult;
+                }
+                // Add the relative path of code we just compiled to the shared libraries.
+                int slashIndex = path.lastIndexOf('/');
+                String relativePath = slashIndex == -1 ? path : path.substring(slashIndex + 1);
+                if (sharedLibrariesPath == null) {
+                    sharedLibrariesPath = relativePath;
+                } else {
+                    sharedLibrariesPath += ":" + relativePath;
                 }
             }
         }
