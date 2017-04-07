@@ -22,6 +22,30 @@
       "revId": "865f6eb3a5e14eb7df63dbd6beaa65dbff9f2d8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21050c2b_e7060378",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1010108
+      },
+      "writtenOn": "2017-04-07T00:11:22Z",
+      "side": 1,
+      "message": "I think you\u0027re right. Andreas says we can get it in like this for now, and work on fixing it soon in a later CL.",
+      "parentUuid": "b53d10d3_3a3fe1a5",
+      "range": {
+        "startLine": 166,
+        "startChar": 14,
+        "endLine": 173,
+        "endChar": 17
+      },
+      "revId": "865f6eb3a5e14eb7df63dbd6beaa65dbff9f2d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
