@@ -26,6 +26,7 @@ import android.net.NetworkStats;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.util.ArrayMap;
+import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -38,6 +39,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ProtocolException;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -63,16 +65,27 @@ public class NetworkStatsFactory {
     private final File mStatsXtUid;
 
     // TODO: to improve testability and avoid global state, do not use a static variable.
-    @GuardedBy("sStackedIfaces")
+    private static final Object sConnectivityServiceLock = new Object();
+
+    @GuardedBy("sConnectivityServiceLock")
     private static final ArrayMap<String, String> sStackedIfaces = new ArrayMap<>();
 
     public static void noteStackedIface(String stackedIface, String baseIface) {
-        synchronized (sStackedIfaces) {
+        synchronized (sConnectivityServiceLock) {
             if (baseIface != null) {
                 sStackedIfaces.put(stackedIface, baseIface);
             } else {
                 sStackedIfaces.remove(stackedIface);
             }
+        }
+    }
+
+    @GuardedBy("sConnectivityServiceLock")
+    private static HashSet<String> sDefaultIfaces = new HashSet<>();
+
+    public static void setDefaultNetworkIfaces(HashSet<String> ifaces) {
+        synchronized(sConnectivityServiceLock) {
+            sDefaultIfaces = ifaces;
         }
     }
 
@@ -193,9 +206,21 @@ public class NetworkStatsFactory {
         final NetworkStats stats =
               readNetworkStatsDetailInternal(limitUid, limitIfaces, limitTag, lastStats);
         final ArrayMap<String, String> stackedIfaces;
-        synchronized (sStackedIfaces) {
+        synchronized (sConnectivityServiceLock) {
             stackedIfaces = new ArrayMap<>(sStackedIfaces);
+
+Log.d("NetworkStatsFactory", "Amending with default interfaces: " + sDefaultIfaces.toString());
+            NetworkStats.Entry entry = null;
+            for (int i = 0; i < stats.size(); i++) {
+                entry = stats.getValues(i, entry);
+                entry.defaultNetwork = sDefaultIfaces.contains(entry.iface) ?
+                    NetworkStats.DEFAULT_NETWORK_YES : NetworkStats.DEFAULT_NETWORK_NO;
+if (entry.defaultNetwork == NetworkStats.DEFAULT_NETWORK_YES) {
+Log.d("NetworkStatsFactory", "matched " + entry.iface);
+}
+            }
         }
+
         // Total 464xlat traffic to subtract from uid 0 on all base interfaces.
         final NetworkStats adjustments = new NetworkStats(0, stackedIfaces.size());
 
@@ -217,7 +242,7 @@ public class NetworkStatsFactory {
             }
 
             NetworkStats.Entry adjust =
-                    new NetworkStats.Entry(baseIface, 0, 0, 0, 0L, 0L, 0L, 0L, 0L);
+                    new NetworkStats.Entry(baseIface, 0, 0, 0, 0, 0L, 0L, 0L, 0L, 0L);
             // Subtract any 464lat traffic seen for the root UID on the current base interface.
             adjust.rxBytes -= (entry.rxBytes + entry.rxPackets * IPV4V6_HEADER_DELTA);
             adjust.txBytes -= (entry.txBytes + entry.txPackets * IPV4V6_HEADER_DELTA);

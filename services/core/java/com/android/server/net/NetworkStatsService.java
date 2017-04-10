@@ -25,6 +25,8 @@ import static android.content.Intent.ACTION_USER_REMOVED;
 import static android.content.Intent.EXTRA_UID;
 import static android.net.ConnectivityManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.ConnectivityManager.isNetworkTypeMobile;
+import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
+import static android.net.NetworkStats.DEFAULT_NETWORK_YES;
 import static android.net.NetworkStats.IFACE_ALL;
 import static android.net.NetworkStats.METERED_ALL;
 import static android.net.NetworkStats.ROAMING_ALL;
@@ -581,11 +583,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     NetworkTemplate template, int uid, int set, int tag, int fields) {
                 // NOTE: We don't augment UID-level statistics
                 if (tag == TAG_NONE) {
-                    return getUidComplete().getHistory(template, null, uid, set, tag, fields,
-                            Long.MIN_VALUE, Long.MAX_VALUE, mAccessLevel, mCallingUid);
+                    return getUidComplete().getHistory(template, null, uid, set, tag,
+                            DEFAULT_NETWORK_ALL, fields, Long.MIN_VALUE, Long.MAX_VALUE,
+                            mAccessLevel, mCallingUid);
                 } else {
-                    return getUidTagComplete().getHistory(template, null, uid, set, tag, fields,
-                            Long.MIN_VALUE, Long.MAX_VALUE, mAccessLevel, mCallingUid);
+                    return getUidTagComplete().getHistory(template, null, uid, set, tag,
+                            DEFAULT_NETWORK_ALL, fields, Long.MIN_VALUE, Long.MAX_VALUE,
+                            mAccessLevel, mCallingUid);
                 }
             }
 
@@ -595,11 +599,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     long start, long end) {
                 // NOTE: We don't augment UID-level statistics
                 if (tag == TAG_NONE) {
-                    return getUidComplete().getHistory(template, null, uid, set, tag, fields,
-                            start, end, mAccessLevel, mCallingUid);
+                    return getUidComplete().getHistory(template, null, uid, set, tag,
+                            DEFAULT_NETWORK_ALL, fields, start, end, mAccessLevel, mCallingUid);
                 } else if (uid == Binder.getCallingUid()) {
-                    return getUidTagComplete().getHistory(template, null, uid, set, tag, fields,
-                            start, end, mAccessLevel, mCallingUid);
+                    return getUidTagComplete().getHistory(template, null, uid, set, tag,
+                            DEFAULT_NETWORK_ALL, fields, start, end, mAccessLevel, mCallingUid);
                 } else {
                     throw new SecurityException("Calling package " + mCallingPackage
                             + " cannot access tag information from a different uid");
@@ -666,9 +670,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final NetworkStatsHistory.Entry entry = history.getValues(start, end, now, null);
 
         final NetworkStats stats = new NetworkStats(end - start, 1);
-        stats.addValues(new NetworkStats.Entry(IFACE_ALL, UID_ALL, SET_ALL, TAG_NONE, METERED_ALL,
-                ROAMING_ALL, entry.rxBytes, entry.rxPackets, entry.txBytes, entry.txPackets,
-                entry.operations));
+        stats.addValues(new NetworkStats.Entry(IFACE_ALL, UID_ALL, SET_ALL, DEFAULT_NETWORK_ALL,
+                TAG_NONE, METERED_ALL, ROAMING_ALL, entry.rxBytes, entry.rxPackets,
+                entry.txBytes, entry.txPackets, entry.operations));
         return stats;
     }
 
@@ -683,8 +687,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final SubscriptionPlan augmentPlan = resolveSubscriptionPlan(template, flags);
         synchronized (mStatsLock) {
             return mXtStatsCached.getHistory(template, augmentPlan,
-                    UID_ALL, SET_ALL, TAG_NONE, fields, Long.MIN_VALUE, Long.MAX_VALUE,
-                    accessLevel, callingUid);
+                    UID_ALL, SET_ALL, DEFAULT_NETWORK_ALL, TAG_NONE, fields,
+                    Long.MIN_VALUE, Long.MAX_VALUE, accessLevel, callingUid);
         }
     }
 
@@ -758,9 +762,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         synchronized (mStatsLock) {
             final int set = mActiveUidCounterSet.get(uid, SET_DEFAULT);
             mUidOperations.combineValues(
-                    mActiveIface, uid, set, tag, 0L, 0L, 0L, 0L, operationCount);
+                    mActiveIface, uid, set, tag, DEFAULT_NETWORK_YES, 0L, 0L, 0L, 0L,
+                    operationCount);
             mUidOperations.combineValues(
-                    mActiveIface, uid, set, TAG_NONE, 0L, 0L, 0L, 0L, operationCount);
+                    mActiveIface, uid, set, TAG_NONE, DEFAULT_NETWORK_YES, 0L, 0L, 0L, 0L,
+                    operationCount);
         }
     }
 

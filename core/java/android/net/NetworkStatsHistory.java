@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
 import static android.net.NetworkStats.IFACE_ALL;
 import static android.net.NetworkStats.SET_DEFAULT;
 import static android.net.NetworkStats.TAG_NONE;
@@ -308,7 +309,8 @@ public class NetworkStatsHistory implements Parcelable {
     @Deprecated
     public void recordData(long start, long end, long rxBytes, long txBytes) {
         recordData(start, end, new NetworkStats.Entry(
-                IFACE_ALL, UID_ALL, SET_DEFAULT, TAG_NONE, rxBytes, 0L, txBytes, 0L, 0L));
+                IFACE_ALL, UID_ALL, SET_DEFAULT, TAG_NONE, DEFAULT_NETWORK_ALL,
+                rxBytes, 0L, txBytes, 0L, 0L));
     }
 
     /**
@@ -382,7 +384,7 @@ public class NetworkStatsHistory implements Parcelable {
      */
     public void recordHistory(NetworkStatsHistory input, long start, long end) {
         final NetworkStats.Entry entry = new NetworkStats.Entry(
-                IFACE_ALL, UID_ALL, SET_DEFAULT, TAG_NONE, 0L, 0L, 0L, 0L, 0L);
+                IFACE_ALL, UID_ALL, SET_DEFAULT, TAG_NONE, DEFAULT_NETWORK_ALL, 0L, 0L, 0L, 0L, 0L);
         for (int i = 0; i < input.bucketCount; i++) {
             final long bucketStart = input.bucketStart[i];
             final long bucketEnd = bucketStart + input.bucketDuration;
@@ -571,7 +573,7 @@ public class NetworkStatsHistory implements Parcelable {
         ensureBuckets(start, end);
 
         final NetworkStats.Entry entry = new NetworkStats.Entry(
-                IFACE_ALL, UID_ALL, SET_DEFAULT, TAG_NONE, 0L, 0L, 0L, 0L, 0L);
+                IFACE_ALL, UID_ALL, SET_DEFAULT, TAG_NONE, DEFAULT_NETWORK_ALL, 0L, 0L, 0L, 0L, 0L);
         while (rxBytes > 1024 || rxPackets > 128 || txBytes > 1024 || txPackets > 128
                 || operations > 32) {
             final long curStart = randomLong(r, start, end);

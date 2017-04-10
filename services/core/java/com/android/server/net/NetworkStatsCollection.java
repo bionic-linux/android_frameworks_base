@@ -17,6 +17,9 @@
 package com.android.server.net;
 
 import static android.net.NetworkStats.IFACE_ALL;
+import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
+import static android.net.NetworkStats.DEFAULT_NETWORK_NO;
+import static android.net.NetworkStats.DEFAULT_NETWORK_YES;
 import static android.net.NetworkStats.METERED_NO;
 import static android.net.NetworkStats.METERED_YES;
 import static android.net.NetworkStats.ROAMING_NO;
@@ -89,6 +92,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
     private static final int VERSION_UID_WITH_SET = 4;
 
     private static final int VERSION_UNIFIED_INIT = 16;
+    private static final int VERSION_WITH_DEFAULT_NETWORK = 17;
 
     private ArrayMap<Key, NetworkStatsHistory> mStats = new ArrayMap<>();
 
@@ -231,7 +235,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
      * the requested parameters.
      */
     public NetworkStatsHistory getHistory(NetworkTemplate template, SubscriptionPlan augmentPlan,
-            int uid, int set, int tag, int fields, long start, long end,
+            int uid, int set, int tag, int defaultNetwork, int fields, long start, long end,
             @NetworkStatsAccess.Level int accessLevel, int callerUid) {
         if (!NetworkStatsAccess.isAccessibleToUser(uid, callerUid, accessLevel)) {
             throw new SecurityException("Network stats history of uid " + uid
@@ -280,6 +284,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
         for (int i = 0; i < mStats.size(); i++) {
             final Key key = mStats.keyAt(i);
             if (key.uid == uid && NetworkStats.setMatches(set, key.set) && key.tag == tag
+                    && NetworkStats.defaultNetworkMatches(defaultNetwork, key.defaultNetwork)
                     && templateMatches(template, key.ident)) {
                 final NetworkStatsHistory value = mStats.valueAt(i);
                 combined.recordHistory(value, collectStart, collectEnd);
@@ -364,6 +369,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
                 entry.uid = key.uid;
                 entry.set = key.set;
                 entry.tag = key.tag;
+                entry.defaultNetwork = key.defaultNetwork;
                 entry.metered = key.ident.isAnyMemberMetered() ? METERED_YES : METERED_NO;
                 entry.roaming = key.ident.isAnyMemberRoaming() ? ROAMING_YES : ROAMING_NO;
                 entry.rxBytes = historyEntry.rxBytes;
@@ -384,9 +390,10 @@ public class NetworkStatsCollection implements FileRotator.Reader {
     /**
      * Record given {@link android.net.NetworkStats.Entry} into this collection.
      */
-    public void recordData(NetworkIdentitySet ident, int uid, int set, int tag, long start,
-            long end, NetworkStats.Entry entry) {
-        final NetworkStatsHistory history = findOrCreateHistory(ident, uid, set, tag);
+    public void recordData(NetworkIdentitySet ident, int uid, int set, int tag, int defaultNetwork,
+            long start, long end, NetworkStats.Entry entry) {
+        final NetworkStatsHistory history = findOrCreateHistory(ident, uid, set, tag,
+                defaultNetwork);
         history.recordData(start, end, entry);
         noteRecordedHistory(history.getStart(), history.getEnd(), entry.rxBytes + entry.txBytes);
     }
@@ -419,8 +426,8 @@ public class NetworkStatsCollection implements FileRotator.Reader {
     }
 
     private NetworkStatsHistory findOrCreateHistory(
-            NetworkIdentitySet ident, int uid, int set, int tag) {
-        final Key key = new Key(ident, uid, set, tag);
+            NetworkIdentitySet ident, int uid, int set, int tag, int defaultNetwork) {
+        final Key key = new Key(ident, uid, set, tag, defaultNetwork);
         final NetworkStatsHistory existing = mStats.get(key);
 
         // update when no existing, or when bucket duration changed
@@ -453,7 +460,8 @@ public class NetworkStatsCollection implements FileRotator.Reader {
 
         final int version = in.readInt();
         switch (version) {
-            case VERSION_UNIFIED_INIT: {
+            case VERSION_UNIFIED_INIT:
+            case VERSION_WITH_DEFAULT_NETWORK: {
                 // uid := size *(NetworkIdentitySet size *(uid set tag NetworkStatsHistory))
                 final int identSize = in.readInt();
                 for (int i = 0; i < identSize; i++) {
@@ -464,8 +472,10 @@ public class NetworkStatsCollection implements FileRotator.Reader {
                         final int uid = in.readInt();
                         final int set = in.readInt();
                         final int tag = in.readInt();
+                        final int defaultNetwork = (version >= VERSION_WITH_DEFAULT_NETWORK) ?
+                            in.readInt() : DEFAULT_NETWORK_YES;
 
-                        final Key key = new Key(ident, uid, set, tag);
+                        final Key key = new Key(ident, uid, set, tag, defaultNetwork);
                         final NetworkStatsHistory history = new NetworkStatsHistory(in);
                         recordHistory(key, history);
                     }
@@ -491,7 +501,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
         }
 
         out.writeInt(FILE_MAGIC);
-        out.writeInt(VERSION_UNIFIED_INIT);
+        out.writeInt(VERSION_WITH_DEFAULT_NETWORK);
 
         out.writeInt(keysByIdent.size());
         for (NetworkIdentitySet ident : keysByIdent.keySet()) {
@@ -504,6 +514,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
                 out.writeInt(key.uid);
                 out.writeInt(key.set);
                 out.writeInt(key.tag);
+                out.writeInt(key.defaultNetwork);
                 history.writeToStream(out);
             }
         }
@@ -534,7 +545,8 @@ public class NetworkStatsCollection implements FileRotator.Reader {
                         final NetworkIdentitySet ident = new NetworkIdentitySet(in);
                         final NetworkStatsHistory history = new NetworkStatsHistory(in);
 
-                        final Key key = new Key(ident, UID_ALL, SET_ALL, TAG_NONE);
+                        final Key key = new Key(ident, UID_ALL, SET_ALL, TAG_NONE,
+                                DEFAULT_NETWORK_ALL);
                         recordHistory(key, history);
                     }
                     break;
@@ -594,7 +606,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
                                     : SET_DEFAULT;
                             final int tag = in.readInt();
 
-                            final Key key = new Key(ident, uid, set, tag);
+                            final Key key = new Key(ident, uid, set, tag, DEFAULT_NETWORK_ALL);
                             final NetworkStatsHistory history = new NetworkStatsHistory(in);
 
                             if ((tag == TAG_NONE) != onlyTags) {
@@ -631,7 +643,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
                 if (key.tag == TAG_NONE) {
                     final NetworkStatsHistory uidHistory = mStats.get(key);
                     final NetworkStatsHistory removedHistory = findOrCreateHistory(
-                            key.ident, UID_REMOVED, SET_DEFAULT, TAG_NONE);
+                            key.ident, UID_REMOVED, SET_DEFAULT, TAG_NONE, DEFAULT_NETWORK_ALL);
                     removedHistory.recordEntireHistory(uidHistory);
                 }
                 mStats.remove(key);
@@ -664,7 +676,9 @@ public class NetworkStatsCollection implements FileRotator.Reader {
             pw.print("ident="); pw.print(key.ident.toString());
             pw.print(" uid="); pw.print(key.uid);
             pw.print(" set="); pw.print(NetworkStats.setToString(key.set));
-            pw.print(" tag="); pw.println(NetworkStats.tagToString(key.tag));
+            pw.print(" tag="); pw.print(NetworkStats.tagToString(key.tag));
+            pw.print(" defaultNetwork="); pw.println(NetworkStats.defaultNetworkToString(
+                    key.defaultNetwork));
 
             final NetworkStatsHistory history = mStats.get(key);
             pw.increaseIndent();
@@ -685,6 +699,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
             proto.write(NetworkStatsCollectionKeyProto.UID, key.uid);
             proto.write(NetworkStatsCollectionKeyProto.SET, key.set);
             proto.write(NetworkStatsCollectionKeyProto.TAG, key.tag);
+            // proto.write(NetworkStatsCollectionKeyProto.DEFAULT_NETWORK, key.defaultNetwork);
             proto.end(startKey);
 
             // Value
@@ -719,7 +734,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
             if (!templateMatches(groupTemplate, key.ident)) continue;
             if (key.set >= NetworkStats.SET_DEBUG_START) continue;
 
-            final Key groupKey = new Key(null, key.uid, key.set, key.tag);
+            final Key groupKey = new Key(null, key.uid, key.set, key.tag, key.defaultNetwork);
             NetworkStatsHistory groupHistory = grouped.get(groupKey);
             if (groupHistory == null) {
                 groupHistory = new NetworkStatsHistory(value.getBucketDuration());
@@ -763,15 +778,17 @@ public class NetworkStatsCollection implements FileRotator.Reader {
         public final int uid;
         public final int set;
         public final int tag;
+        public final int defaultNetwork;
 
         private final int hashCode;
 
-        public Key(NetworkIdentitySet ident, int uid, int set, int tag) {
+        public Key(NetworkIdentitySet ident, int uid, int set, int tag, int defaultNetwork) {
             this.ident = ident;
             this.uid = uid;
             this.set = set;
             this.tag = tag;
-            hashCode = Objects.hash(ident, uid, set, tag);
+            this.defaultNetwork = defaultNetwork;
+            hashCode = Objects.hash(ident, uid, set, tag, defaultNetwork);
         }
 
         @Override
@@ -784,6 +801,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
             if (obj instanceof Key) {
                 final Key key = (Key) obj;
                 return uid == key.uid && set == key.set && tag == key.tag
+                        && defaultNetwork == key.defaultNetwork
                         && Objects.equals(ident, key.ident);
             }
             return false;
@@ -803,6 +821,9 @@ public class NetworkStatsCollection implements FileRotator.Reader {
             }
             if (res == 0) {
                 res = Integer.compare(tag, another.tag);
+            }
+            if (res == 0) {
+                res = Integer.compare(defaultNetwork, another.defaultNetwork);
             }
             return res;
         }

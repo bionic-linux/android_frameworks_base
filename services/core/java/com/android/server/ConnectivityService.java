@@ -4836,8 +4836,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } catch (Exception e) {
             loge("Exception setting default network :" + e);
         }
+
+        LinkProperties lp = newNetwork.linkProperties;
+        notifyDefaultNetworkForNetworkStats(lp);
         notifyLockdownVpn(newNetwork);
-        handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
+        handleApplyDefaultProxy(lp.getHttpProxy());
         updateTcpBufferSizes(newNetwork);
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
     }
@@ -5422,6 +5425,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } catch (Exception ignored) {
         }
     }
+
+    /**
+     * Notify NetworkStatsService that the default network has changed.
+     */
+    private void notifyDefaultNetworkForNetworkStats(LinkProperties lp) {
+        // Perform a poll so that data is properly attributed to the previous default network.
+        try {
+            mStatsService.forceUpdate();
+        } catch (RemoteException ignored) {}
+
+        // Tell the stats factory about the new interfaces.
+        NetworkStatsFactory.setDefaultNetworkIfaces(new HashSet<>(lp.getAllInterfaceNames()));
+    }
+
 
     @Override
     public boolean addVpnAddress(String address, int prefixLength) {

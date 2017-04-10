@@ -410,7 +410,7 @@ class NetworkStatsObservers {
             try {
                 NetworkStatsHistory history = mCollection.getHistory(template, null, uid,
                         NetworkStats.SET_ALL, NetworkStats.TAG_NONE,
-                        NetworkStatsHistory.FIELD_ALL,
+                        NetworkStats.DEFAULT_NETWORK_ALL, NetworkStatsHistory.FIELD_ALL,
                         Long.MIN_VALUE /* start */, Long.MAX_VALUE /* end */,
                         mAccessLevel, mCallingUid);
                 return history.getTotalBytes();

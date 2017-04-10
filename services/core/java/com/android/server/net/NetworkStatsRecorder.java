@@ -253,17 +253,20 @@ public class NetworkStatsRecorder {
             // only record tag data when requested
             if ((entry.tag == TAG_NONE) != mOnlyTags) {
                 if (mPending != null) {
-                    mPending.recordData(ident, entry.uid, entry.set, entry.tag, start, end, entry);
+                    mPending.recordData(ident, entry.uid, entry.set, entry.tag,
+                            entry.defaultNetwork, start, end, entry);
                 }
 
                 // also record against boot stats when present
                 if (mSinceBoot != null) {
-                    mSinceBoot.recordData(ident, entry.uid, entry.set, entry.tag, start, end, entry);
+                    mSinceBoot.recordData(ident, entry.uid, entry.set, entry.tag,
+                            entry.defaultNetwork, start, end, entry);
                 }
 
                 // also record against complete dataset when present
                 if (complete != null) {
-                    complete.recordData(ident, entry.uid, entry.set, entry.tag, start, end, entry);
+                    complete.recordData(ident, entry.uid, entry.set, entry.tag,
+                            entry.defaultNetwork, start, end, entry);
                 }
             }
         }
