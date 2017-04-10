@@ -126,12 +126,16 @@ public class DataUsageController {
 
     public DataUsageInfo getDataUsageInfo(NetworkTemplate template) {
         final INetworkStatsSession session = getSession();
+
+Log.w(TAG, "Getting data usage info template=" + template);
         if (session == null) {
             return warn("no stats session");
         }
         final NetworkPolicy policy = findNetworkPolicy(template);
+Log.w(TAG, "Found policy=" + policy);
         try {
             final NetworkStatsHistory history = session.getHistoryForNetwork(template, FIELDS);
+Log.w(TAG, "History: " + history);
             final long now = System.currentTimeMillis();
             final long start, end;
             if (policy != null) {

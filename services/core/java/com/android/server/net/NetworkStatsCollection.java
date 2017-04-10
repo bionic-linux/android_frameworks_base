@@ -17,6 +17,9 @@
 package com.android.server.net;
 
 import static android.net.NetworkStats.IFACE_ALL;
+import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
+import static android.net.NetworkStats.DEFAULT_NETWORK_NO;
+import static android.net.NetworkStats.DEFAULT_NETWORK_YES;
 import static android.net.NetworkStats.METERED_NO;
 import static android.net.NetworkStats.METERED_YES;
 import static android.net.NetworkStats.ROAMING_NO;
@@ -277,6 +280,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
             collectEnd = roundUp(collectEnd);
         }
 
+Slog.d(TAG, "Reading " + mStats.size() + " stats rows");
         for (int i = 0; i < mStats.size(); i++) {
             final Key key = mStats.keyAt(i);
             if (key.uid == uid && NetworkStats.setMatches(set, key.set) && key.tag == tag
@@ -364,6 +368,8 @@ public class NetworkStatsCollection implements FileRotator.Reader {
                 entry.uid = key.uid;
                 entry.set = key.set;
                 entry.tag = key.tag;
+                entry.defaultNetwork = key.ident.areAllMembersOnDefaultNetwork() ?
+                        DEFAULT_NETWORK_YES : DEFAULT_NETWORK_NO;
                 entry.metered = key.ident.isAnyMemberMetered() ? METERED_YES : METERED_NO;
                 entry.roaming = key.ident.isAnyMemberRoaming() ? ROAMING_YES : ROAMING_NO;
                 entry.rxBytes = historyEntry.rxBytes;
@@ -664,7 +670,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
             pw.print("ident="); pw.print(key.ident.toString());
             pw.print(" uid="); pw.print(key.uid);
             pw.print(" set="); pw.print(NetworkStats.setToString(key.set));
-            pw.print(" tag="); pw.println(NetworkStats.tagToString(key.tag));
+            pw.print(" tag="); pw.print(NetworkStats.tagToString(key.tag));
 
             final NetworkStatsHistory history = mStats.get(key);
             pw.increaseIndent();
