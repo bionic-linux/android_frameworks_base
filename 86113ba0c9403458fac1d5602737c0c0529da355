@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a419c6cf_f94ff6f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-11T03:01:02Z",
+      "side": 1,
+      "message": "This smells a bit like pseudo-crypto to me.  The ephemeral keys will always be different between two different TLS sessions and other parts of TLS are supposed to protect against replay attacks.\n\nYou might consider striking this paragraph.",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 66
+      },
+      "revId": "86113ba0c9403458fac1d5602737c0c0529da355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a14a93a3_930731e6",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-11T03:01:02Z",
+      "side": 1,
+      "message": "Technically this is fine, even if there is another query part indicator already in URL (https://tools.ietf.org/html/rfc3986#section-3.4).\n\nWe\u0027ll just have to say that failure of the HTTPS server to handle \"?foo?unused_argument\u003d\" correctly is a configuration error, I guess.",
+      "range": {
+        "startLine": 684,
+        "startChar": 16,
+        "endLine": 684,
+        "endChar": 17
+      },
+      "revId": "86113ba0c9403458fac1d5602737c0c0529da355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
