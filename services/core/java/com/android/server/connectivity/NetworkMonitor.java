@@ -303,7 +303,7 @@ public class NetworkMonitor extends StateMachine {
                 Settings.Global.CAPTIVE_PORTAL_USE_HTTPS, 1) == 1;
 
         mCaptivePortalUserAgent = getCaptivePortalUserAgent(context);
-        mCaptivePortalHttpsUrl = makeURL(getCaptivePortalServerHttpsUrl(context));
+        mCaptivePortalHttpsUrl = makeCaptivePortalServerHttpsUrl(context);
         mCaptivePortalHttpUrl = makeURL(getCaptivePortalServerHttpUrl(context));
         mCaptivePortalFallbackUrls = makeCaptivePortalFallbackUrls(context);
 
@@ -672,6 +672,17 @@ public class NetworkMonitor extends StateMachine {
     private static String getCaptivePortalFallbackUrl(Context context) {
         return getSetting(context,
                 Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL, DEFAULT_FALLBACK_URL);
+    }
+
+    private URL makeCaptivePortalServerHttpsUrl(Context context) {
+        String url = getCaptivePortalServerHttpsUrl(context);
+        if (url == null) {
+            return null;
+        }
+        // Add random length argument that once encrypted is not visible to portals in the middle.
+        String extra = "0123456789abcdef";
+        url += "?unused_argument=" + extra.substring((new Random()).nextInt(extra.length()));
+        return makeURL(url);
     }
 
     private URL[] makeCaptivePortalFallbackUrls(Context context) {
