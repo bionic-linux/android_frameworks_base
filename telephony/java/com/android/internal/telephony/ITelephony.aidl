@@ -38,6 +38,7 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyHistogram;
 import android.telephony.VisualVoicemailSmsFilterSettings;
+
 import com.android.ims.internal.IImsServiceController;
 import com.android.ims.internal.IImsServiceFeatureListener;
 import com.android.internal.telephony.CellNetworkScanResult;
@@ -1358,4 +1359,12 @@ interface ITelephony {
      * @hide
      */
     SignalStrength getSignalStrength(int subId);
+
+    /**
+     * @param subId Subscription index
+     * @param callingPackage package making the call.
+     * @return Integer array of system id and network id of CDMA network if available,
+     * otherwise null.
+     */
+    int[] getCdmaNetworkSidNid(int subId, String callingPackage);
 }
