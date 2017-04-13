@@ -682,7 +682,7 @@ public class NetworkMonitor extends StateMachine {
     }
 
     private URL[] makeCaptivePortalFallbackUrls(Context context) {
-        String separator = "|";
+        String separator = ",";
         String firstUrl = getSetting(context,
                 Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL, DEFAULT_FALLBACK_URL);
         String joinedUrls = firstUrl + separator + getSetting(context,

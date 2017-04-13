@@ -8183,7 +8183,7 @@ public final class Settings {
         public static final String CAPTIVE_PORTAL_FALLBACK_URL = "captive_portal_fallback_url";
 
         /**
-         * A "|" separated list of URLs used for captive portal detection in addition to the
+         * A comma separated list of URLs used for captive portal detection in addition to the
          * fallback HTTP url associated with the CAPTIVE_PORTAL_FALLBACK_URL settings.
          *
          * @hide
