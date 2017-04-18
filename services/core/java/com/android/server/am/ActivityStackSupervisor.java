@@ -2499,6 +2499,17 @@ public final class ActivityStackSupervisor implements DisplayListener {
         stack.moveToFrontAndResumeStateIfNeeded(
                 r, forceFocus || wasFocused || wasFront, wasResumed, reason);
 
+        // If the mPausingActivity in the moved task, we should
+        // reset it to the stack which it moved into.
+        final int activityNdx = task.mActivities.indexOf(prevStack.mPausingActivity);
+        if (activityNdx != -1) {
+            Slog.i(TAG_STATES, "moveTaskToStackUncheckedLocked: moving mPausingActivity:"
+                    + prevStack.mPausingActivity + " from prevStack: " + prevStack + " to "
+                    + " stack: " + stack);
+            stack.mPausingActivity = prevStack.mPausingActivity;
+            prevStack.mPausingActivity = null;
+        }
+
         return stack;
     }
 
