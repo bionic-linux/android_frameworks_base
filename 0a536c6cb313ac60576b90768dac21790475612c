@@ -22,6 +22,30 @@
       "revId": "0a536c6cb313ac60576b90768dac21790475612c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abffc626_6ed1c901",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-04-18T12:55:00Z",
+      "side": 1,
+      "message": "Internal API only. It was intentional. I think using the concrete class over an interface used to provide a speed boost on early dalvik but no longer needed. Prevents changes like making the list unmodifiable so I thought I\u0027d remove it.",
+      "parentUuid": "65e18e2c_723088ec",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "0a536c6cb313ac60576b90768dac21790475612c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
