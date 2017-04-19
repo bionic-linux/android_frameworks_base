@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "109f8a84_2e222b0c",
+        "filename": "libs/hwui/renderstate/RenderState.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1010334
+      },
+      "writtenOn": "2017-04-19T17:21:59Z",
+      "side": 1,
+      "message": "instead of mHasES3, can instead do:\n\nmCaches-\u003eextensions().getMajorGlVersion() \u003e\u003d 3",
+      "revId": "6b103fb0d62fc914da61c6e100cdda71f2b90c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
