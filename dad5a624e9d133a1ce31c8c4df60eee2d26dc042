@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d23dd3dc_b8753b12",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-04-20T15:48:01Z",
+      "side": 1,
+      "message": "I\u0027d prefer we not import the icu.util.Timezone and make java.util.TimeZone the default in this file as it\u0027s returning this thing.  The icu.util.Timezone is an internal impl detail.\n\nAlternatively replace all uses of TimeZone with the new icu version throughout the system (if we really want to replace it).  Mixing the two seems bad",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "dad5a624e9d133a1ce31c8c4df60eee2d26dc042",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d8ef46e_80dd3cb1",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-04-20T15:48:01Z",
+      "side": 1,
+      "message": "so you\u0027re switching what this returns?  :(  I think we need to be  consistent, esp given the function names don\u0027t provide any hints",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "dad5a624e9d133a1ce31c8c4df60eee2d26dc042",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
