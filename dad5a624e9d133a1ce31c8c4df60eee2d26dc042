@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c6f80a5_f255b0cf",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-04-20T16:25:58Z",
+      "side": 1,
+      "message": "Context: The API method here needs to stay stable because it\u0027s public. \n\nI can import java.util.TimeZone instead, and fully qualify the other instead.\n\nFWIW - you should expect to see more use of icu in the system over time, especially given it\u0027s now part of the public API for Android.",
+      "parentUuid": "d23dd3dc_b8753b12",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "dad5a624e9d133a1ce31c8c4df60eee2d26dc042",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d8ef46e_80dd3cb1",
         "filename": "core/java/android/util/TimeUtils.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-20T15:48:01Z",
       "side": 1,
       "message": "so you\u0027re switching what this returns?  :(  I think we need to be  consistent, esp given the function names don\u0027t provide any hints",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "dad5a624e9d133a1ce31c8c4df60eee2d26dc042",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09eef92b_587be14a",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-04-20T16:25:58Z",
+      "side": 1,
+      "message": "This is not a public API. I can change this without issue providing I change the users too.\n\nBut, yes. I\u0027m changing the List type and the contained object.\n\nThe List type because it makes it possible to return an immutable List rather than asking people please not to modify it.\n\nThe TimeZone type because the ICU one generally makes more sense and it\u0027s an internal detail.\n\nBecause it\u0027s not public I can move this method elsewhere if you prefer. Please suggest an alternative location. I\u0027d be worried about cohesion because it shares internal methods with other methods, so likely I would still have to expose some public methods and to keep a consistent (bad) API I\u0027d need to do some adaptation from java.util to icu at some point, which is potentially expensive.\n\nGenerally I\u0027d like to push back on the assertion that it needs to be consistent. I don\u0027t think it does.\n\nHow about I change the name to getIcuTimeZonesWithUniqueOffsets()?",
+      "parentUuid": "7d8ef46e_80dd3cb1",
       "range": {
         "startLine": 77,
         "startChar": 23,
