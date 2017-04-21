@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dfaba83_798942f7",
+        "filename": "core/java/com/android/internal/util/BitUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-21T10:20:32Z",
+      "side": 1,
+      "message": "\"syntactic sugar\", perhaps?",
+      "range": {
+        "startLine": 29,
+        "startChar": 87,
+        "endLine": 29,
+        "endChar": 92
+      },
+      "revId": "267208c24b2613d235829edb5ae5c65d8ea54522",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08cc98fb_b4cf16db",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-21T10:20:32Z",
+      "side": 1,
+      "message": "Do all static imports belong in the same block, up above?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "267208c24b2613d235829edb5ae5c65d8ea54522",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
