@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6088c5b7_a0e46c75",
+        "filename": "core/java/com/android/internal/util/BitUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-22T01:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dfaba83_798942f7",
+      "range": {
+        "startLine": 29,
+        "startChar": 87,
+        "endLine": 29,
+        "endChar": 92
+      },
+      "revId": "267208c24b2613d235829edb5ae5c65d8ea54522",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08cc98fb_b4cf16db",
         "filename": "services/net/java/android/net/apf/ApfFilter.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-21T10:20:32Z",
       "side": 1,
       "message": "Do all static imports belong in the same block, up above?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "267208c24b2613d235829edb5ae5c65d8ea54522",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de365aca_d12fa584",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-22T01:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08cc98fb_b4cf16db",
       "range": {
         "startLine": 44,
         "startChar": 7,
