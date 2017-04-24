@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb7b601e_6a2660df",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16964,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-04-24T12:57:07Z",
+      "side": 1,
+      "message": "the addition of synchronized to most of these methods (but not the format() ones?) feels weird to be because traditionally DecimalFormat (both of the java.util and ICU variety) were always documented to be not thread safe. Does adding sychronized here really make it more useful. Or put differently: is the potential performance impact worth it?",
+      "range": {
+        "startLine": 16964,
+        "startChar": 18,
+        "endLine": 16964,
+        "endChar": 30
+      },
+      "revId": "a08f374e1cc99db0b5558d4ab63ad590903a13b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
