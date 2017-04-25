@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cf91047_dd10e982",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 33852,
+      "author": {
+        "id": 1097644
+      },
+      "writtenOn": "2017-04-25T00:50:28Z",
+      "side": 1,
+      "message": "this CL is using the value with a type, can you run make update-api?",
+      "range": {
+        "startLine": 33852,
+        "startChar": 68,
+        "endLine": 33852,
+        "endChar": 84
+      },
+      "revId": "2989e91e2722cc24217295722ab92469703da2cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
