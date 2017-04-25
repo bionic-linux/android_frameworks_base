@@ -53,8 +53,25 @@ public class OffloadController {
             }
         }
 
-        // TODO: Create and register ITetheringOffloadCallback.
-        mControlInitialized = mHwInterface.initOffloadControl();
+        mControlInitialized = mHwInterface.initOffloadControl(
+                new OffloadHardwareInterface.ControlCallback() {
+                    @Override
+                    public void onOffloadEvent(int event) {
+                        mLog.log("got offload event: " + event);
+                    }
+
+                    @Override
+                    public void onNatTimeoutUpdate(int proto,
+                                                   String srcAddr, int srcPort,
+                                                   String dstAddr, int dstPort) {
+                        mLog.log(String.format("NAT timeout update: %s (%s,%s) -> (%s,%s)",
+                                proto, srcAddr, srcPort, dstAddr, dstPort));
+                    }
+                });
+        if (!mControlInitialized) {
+            mLog.i("tethering offload control not supported");
+            stop();
+        }
     }
 
     public void stop() {
