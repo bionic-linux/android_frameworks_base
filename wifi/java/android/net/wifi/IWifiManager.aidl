@@ -131,6 +131,14 @@ interface IWifiManager
 
     boolean stopSoftAp();
 
+    WifiConfiguration startLocalOnlyHotspot();
+
+    void stopLocalOnlyHotspot();
+
+    boolean startWatchLocalOnlyHotspot();
+
+    void stopWatchLocalOnlyHotspot();
+
     int getWifiApEnabledState();
 
     WifiConfiguration getWifiApConfiguration();
