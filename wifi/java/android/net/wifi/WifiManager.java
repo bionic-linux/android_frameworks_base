@@ -44,6 +44,8 @@ import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 import com.android.server.net.NetworkPinner;
 
+import dalvik.system.CloseGuard;
+
 import java.net.InetAddress;
 import java.util.Collections;
 import java.util.List;
@@ -1799,6 +1801,119 @@ public class WifiManager {
     }
 
     /**
+     * Starts a local only hotspot that applications can use to communicate between co-located
+     * devices connected to the created WiFi hotspot.  The network created by this method will not
+     * have Internet access.
+     * <p>
+     * Each call to this method will register the caller for updates pertaining to their
+     * LocalOnlyHotspot request.  If the LocalOnlyHotspot request is successful, the caller will be
+     * notified via the {@link LocalOnlyHotspotCallback#onStarted(LocalOnlyHotspotReservation)}
+     * method.  This method will supply the requestor with a LocalOnlyHotspotReservation that
+     * contains a WifiConfiguration with the SSID, security type and credentials needed to connect
+     * to the hotspot.  Communicating this information is up to the application.  If the Local Only
+     * Hotspot cannot be created, the {@link LocalOnlyHotspotCallback#onFailed(int)} method will be
+     * called.  This will be called if there is an underlying issue with starting the hotspot or if
+     * there is an incompatible operating mode.  For example, if the user is currently using Wifi
+     * Tethering to provide an upstream to another device, LocalOnlyHotspot will not start due to
+     * an incompatible mode.
+     * <p>
+     * The possible error codes include: {@link LocalOnlyHotspotCallback#ERROR_NO_CHANNEL}, {@link
+     * LocalOnlyHotspotCallback#ERROR_GENERIC} and {@link
+     * LocalOnlyHotspotCallback#ERROR_INCOMPATIBLE_MODE}.
+     * <p>
+     * Internally, requests will be tracked to prevent the hotspot from being torn down while apps
+     * are still using it.  The {@link LocalOnlyHotspotReservation} object passed in the  {@link
+     * LocalOnlyHotspotCallback#onStarted(LocalOnlyHotspotReservation)} call should be closed when
+     * the Local Only Hotspot is no longer needed {@link LocalOnlyHotspotReservation#close()}. If
+     * the application was the final user of the hotspot, it will be torn down completely.
+     *
+     * Applications should be aware that the user may also stop the local only hotspot through the
+     * Settings UI; it is not guaranteed to stay up as long as there is a requesting application.
+     * The requestors will be notified of this case via
+     * {@link LocalOnlyHotspotCallback#onStopped()}.
+     * Applications should also be aware that this network will be shared with other applications.
+     * Applications are responsible for protecting their data on this network (e.g., TLS).
+     *
+     * Applications need to have the following permissions to start the Local Only Hotspot: {@link
+     * android.Manifest.permission.CHANGE_WIFI_STATE} and {@link
+     * android.Manifest.permission.ACCESS_COARSE_LOCATION}.  Callers without the permissions will
+     * trigger a {@link java.lang.SecurityException}.
+     *
+     * @param callback LocalOnlyHotspotCallback for the application to receive updates about
+     * operating status.
+     * @param handler Handler to be used for callbacks
+     *
+     * @hide
+     */
+    public void startLocalOnlyHotspot(LocalOnlyHotspotCallback callback,
+            @Nullable Handler handler) {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+    /**
+     * Cancels a pending local only hotspot request.  This can be used by the calling application to
+     * cancel the existing request if the provided callback has not been triggered.  Calling this
+     * method will be equivalent to closing the returned LocalOnlyHotspotReservation, but it is not
+     * explicitly required.
+     *
+     * When cancelling this request, application developers should be aware that there may still be
+     * outstanding local only hotspot requests and the hotspot may still start, or continue running.
+     * Additionally, if a callback was registered, it will no longer be triggered after calling
+     * cancel.
+     *
+     * @hide
+     */
+    public void cancelLocalOnlyHotspotRequest() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+    /**
+     *  Method used to inform WifiService that the LocalOnlyHotspot is no longer needed.  This
+     *  method is used by WifiManager to release LocalOnlyHotspotReservations held by calling
+     *  applications and removes the internal tracking for the hotspot request.  When all requesting
+     *  applications are finished using the hotspot, it will be stopped and WiFi will return to the
+     *  previous operational mode.
+     *
+     *  This method should not be called by applications.  Instead, they should call the close()
+     *  method on their LocalOnlyHotspotReservation.
+     */
+    private void stopLocalOnlyHotspot() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+    /**
+     * Allow callers to watch LocalOnlyHotspot state changes.  Callers will receive a
+     * {@link LocalOnlyHotspotSubscription} object as a parameter of the
+     * {@link LocalOnlyHotspotObserver#onRegistered(LocalOnlyHotspotSubscription)}. The registered
+     * callers will receive the {@link LocalOnlyHotspotObserver#onStarted(WifiConfiguration)} and
+     * {@link LocalOnlyHotspotSubscription#onStopped()} callbacks.
+     * <p>
+     * Applications should have the {@link android.Manifest.permission.ACCESS_COARSE_LOCATION}
+     * permission.  Callers without the permission will trigger a
+     * {@link java.lang.SecurityException}.
+     * <p>
+     * @param observer LocalOnlyHotspotObserver callback.
+     * @param handler Handler to use for callbacks
+     * <p>
+     * @hide
+     */
+    public void watchLocalOnlyHotspot(LocalOnlyHotspotObserver observer,
+            @Nullable Handler handler) {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+    /**
+     * Allow callers to stop watching LocalOnlyHotspot state changes.  After calling this method,
+     * applications will no longer receive callbacks.
+     * <p>
+     * @hide
+     */
+    public void unregisterLocalOnlyHotspotObserver() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+
+    /**
      * Gets the Wi-Fi enabled state.
      * @return One of {@link #WIFI_AP_STATE_DISABLED},
      *         {@link #WIFI_AP_STATE_DISABLING}, {@link #WIFI_AP_STATE_ENABLED},
@@ -2052,6 +2167,148 @@ public class WifiManager {
          * {@link #ERROR}, {@link #IN_PROGRESS} or {@link #BUSY}
          */
         public void onFailure(int reason);
+    }
+
+    /**
+     * LocalOnlyHotspotReservation that contains the WifiConfiguration for the active
+     * LocalOnlyHotspot and is AutoCloseable to clean up LocalOnlyHotspot requests.
+     * <p>
+     * Applications requesting LocalOnlyHotspot for sharing will receive an instance of the
+     * LocalOnlyHotspotReservation in the LocalOnlyHotspotCallback.onStarted call.  This reservation
+     * contains the relevant WifiConfiguration and also implements AutoCloseable.  When an
+     * application is done with the LocalOnlyHotspot, they should call close().  If the
+     * LocalOnlyHotspot is stopped due to a user triggered mode change, applications will be
+     * notified via the onStopped callback.  In this case, the close() call is not needed.
+     *
+     * @hide
+     */
+    public class LocalOnlyHotspotReservation implements AutoCloseable {
+
+        private final CloseGuard mCloseGuard = CloseGuard.get();
+        private final WifiConfiguration mConfig;
+
+        public LocalOnlyHotspotReservation(WifiConfiguration config) {
+            mConfig = config;
+            mCloseGuard.open("close");
+        }
+
+        public WifiConfiguration getConfig() {
+            return mConfig;
+        }
+
+        @Override
+        public void close() {
+            try {
+                stopLocalOnlyHotspot();
+                mCloseGuard.close();
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to stop Local Only Hotspot.");
+            }
+        }
+
+        @Override
+        protected void finalize() throws Throwable {
+            try {
+                if (mCloseGuard != null) {
+                    mCloseGuard.warnIfOpen();
+                }
+                close();
+            } finally {
+                super.finalize();
+            }
+        }
+    }
+
+    /**
+     * Callback class for applications to receive updates about the LocalOnlyHotspot status.
+     *
+     * @hide
+     */
+    public static class LocalOnlyHotspotCallback {
+        public static final int ERROR_NO_CHANNEL = 1;
+        public static final int ERROR_GENERIC = 2;
+        public static final int ERROR_INCOMPATIBLE_MODE = 3;
+
+        /** LocalOnlyHotspot start succeeded. */
+        public void onStarted(LocalOnlyHotspotReservation reservation) {};
+
+        /**
+         * LocalOnlyHotspot stopped.
+         * <p>
+         * The LocalOnlyHotspot can be disabled at any time by the user.  When this happens,
+         * applications will be notified that it was stopped.  Application requests will be cleaned
+         * up and LocalOnlyHotspotReservation.close() is not necessary.
+         */
+        public void onStopped() {};
+
+        /**
+         * LocalOnlyHotspot failed to start.
+         * <p>
+         * Applications can attempt to call startLocalOnlyHotspot again at a later time.
+         * <p>
+         * @param reason The reason for failure could be one of: {@link #ERROR_INCOMPATIBLE_MODE},
+         * {@link #ERROR_NO_CHANNEL}, or {@link #ERROR_GENERAL}.
+         */
+        public void onFailed(int reason) { };
+    }
+
+    /**
+     * LocalOnlyHotspotSubscription that is an AutoCloseable object for tracking applications
+     * watching for LocalOnlyHotspot changes.
+     *
+     * @hide
+     */
+    public class LocalOnlyHotspotSubscription implements AutoCloseable {
+        private final CloseGuard mCloseGuard = CloseGuard.get();
+
+        /** @hide */
+        public LocalOnlyHotspotSubscription() {
+            mCloseGuard.open("close");
+        }
+
+        @Override
+        public void close() {
+            try {
+                mCloseGuard.close();
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to unregister LocalOnlyHotspotObserver.");
+            }
+        }
+
+        @Override
+        protected void finalize() throws Throwable {
+            try {
+                if (mCloseGuard != null) {
+                    mCloseGuard.warnIfOpen();
+                }
+                close();
+            } finally {
+                super.finalize();
+            }
+        }
+    }
+
+    /**
+     * Class to notify calling applications that watch for changes in LocalOnlyHotspot of updates.
+     *
+     * @hide
+     */
+    public static class LocalOnlyHotspotObserver {
+        /**
+         * Confirm registration for LocalOnlyHotspotChanges by returning a
+         * LocalOnlyHotspotSubscription.
+         */
+        public void onRegistered(LocalOnlyHotspotSubscription subscription) {};
+
+        /**
+         * LocalOnlyHotspot started with the supplied config.
+         */
+        public void onStarted(WifiConfiguration config) {};
+
+        /**
+         * LocalOnlyHotspot stopped.
+         */
+        public void onStopped() {};
     }
 
     // Ensure that multiple ServiceHandler threads do not interleave message dispatch.
