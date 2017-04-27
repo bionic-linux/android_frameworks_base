@@ -16,7 +16,13 @@
 
 package android.telephony;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.telephony.mbms.IMbmsStreamingManagerCallback;
 import android.telephony.mbms.IStreamingServiceCallback;
@@ -26,15 +32,51 @@ import android.telephony.mbms.StreamingServiceInfo;
 import android.telephony.mbms.vendor.IMbmsStreamingService;
 import android.util.Log;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 /** @hide */
 public class MbmsStreamingManager {
+    private interface ServiceListener {
+        void onServiceConnected();
+        void onServiceDisconnected();
+    }
+
     private static final String LOG_TAG = "MbmsStreamingManager";
+    public static final String MBMS_STREAMING_SERVICE_ACTION =
+            "android.telephony.action.EmbmsStreaming";
+
     private static final boolean DEBUG = true;
+    private static final int BIND_TIMEOUT_MS = 3000;
+
     private IMbmsStreamingService mService;
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            if (service != null) {
+                Log.i(LOG_TAG, String.format("Connected to service %s", name));
+                synchronized (MbmsStreamingManager.this) {
+                    mService = IMbmsStreamingService.Stub.asInterface(service);
+                    mServiceListeners.forEach(ServiceListener::onServiceConnected);
+                }
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.i(LOG_TAG, String.format("Disconnected from service %s", name));
+            synchronized (MbmsStreamingManager.this) {
+                mService = null;
+                mServiceListeners.forEach(ServiceListener::onServiceDisconnected);
+            }
+        }
+    };
+    private List<ServiceListener> mServiceListeners = new LinkedList<>();
+
     private IMbmsStreamingManagerCallback mCallbackToApp;
     private final String mAppName;
 
@@ -54,9 +96,8 @@ public class MbmsStreamingManager {
      * Create a new MbmsStreamingManager using the given subscription ID.
      *
      * Note that this call will bind a remote service and that may take a bit.  This
-     * may throw an IllegalArgumentException or RemoteException.
-     * TODO: document this and add exceptions that can be thrown for synchronous
-     * initialization/bind errors
+     * may throw an {@link MbmsInitializationException}, indicating errors that may happen during
+     * the initialization or binding process.
      *
      * @param context
      * @param listener
@@ -82,8 +123,7 @@ public class MbmsStreamingManager {
     public static MbmsStreamingManager create(Context context,
             IMbmsStreamingManagerCallback listener, String streamingAppName)
             throws MbmsInitializationException {
-        // TODO: get default sub id
-        int subId = INVALID_SUBSCRIPTION_ID;
+        int subId = SubscriptionManager.getDefaultSubscriptionId();
         MbmsStreamingManager manager = new MbmsStreamingManager(context, listener,
                 streamingAppName, subId);
         manager.bindAndInitialize();
@@ -95,7 +135,17 @@ public class MbmsStreamingManager {
      * any streaming services spawned from this instance.
      */
     public void dispose() {
-        // service.dispose(streamingAppName);
+        synchronized (this) {
+            if (mService == null) {
+                // Ignore and return, assume already disposed.
+                return;
+            }
+            try {
+                mService.dispose(mAppName, mSubscriptionId);
+            } catch (RemoteException e) {
+                // Ignore for now
+            }
+        }
     }
 
     /**
@@ -155,23 +205,85 @@ public class MbmsStreamingManager {
         return 0;
     }
 
-    private void logd(String str) {
-        Log.d(LOG_TAG, str);
-    }
-
     private boolean isServiceConnected() {
-        return mService != null;
+        synchronized (this) {
+            return mService != null;
+        }
     }
 
     private void bindAndInitialize() throws MbmsInitializationException {
-        // TODO: bind to the service
-        try {
-            int returnCode = mService.initialize(mCallbackToApp, mAppName, mSubscriptionId);
-            if (returnCode != 0) {
-                throw new MbmsInitializationException(returnCode);
+        // Query for the proper service
+        PackageManager packageManager = mContext.getPackageManager();
+        Intent queryIntent = new Intent();
+        queryIntent.setAction(MBMS_STREAMING_SERVICE_ACTION);
+        List<ResolveInfo> streamingServices = packageManager.queryIntentServices(queryIntent,
+                PackageManager.MATCH_SYSTEM_ONLY);
+
+        if (streamingServices == null || streamingServices.size() == 0) {
+            throw new MbmsInitializationException(
+                    MbmsInitializationException.ERROR_NO_SERVICE_INSTALLED);
+        }
+        if (streamingServices.size() > 1) {
+            throw new MbmsInitializationException(
+                    MbmsInitializationException.ERROR_MULTIPLE_SERVICES_INSTALLED);
+        }
+
+        // Kick off the binding, and synchronously wait until binding is complete
+        final CountDownLatch latch = new CountDownLatch(1);
+        ServiceListener bindListener = new ServiceListener() {
+            @Override
+            public void onServiceConnected() {
+                latch.countDown();
             }
-        } catch (RemoteException e) {
-            throw new MbmsInitializationException(/* some error */ 0);
+
+            @Override
+            public void onServiceDisconnected() {
+            }
+        };
+
+        synchronized (this) {
+            mServiceListeners.add(bindListener);
+        }
+
+        Intent bindIntent = new Intent();
+        bindIntent.setComponent(streamingServices.get(0).getComponentInfo().getComponentName());
+
+        mContext.bindService(bindIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+
+        waitOnLatchWithTimeout(latch, BIND_TIMEOUT_MS);
+
+        // Remove the listener and call the initialization method through the interface.
+        synchronized (this) {
+            mServiceListeners.remove(bindListener);
+
+            if (mService == null) {
+                throw new MbmsInitializationException(
+                        MbmsInitializationException.ERROR_BIND_TIMEOUT_OR_FAILURE);
+            }
+
+            try {
+                int returnCode = mService.initialize(mCallbackToApp, mAppName, mSubscriptionId);
+                if (returnCode != 0) {
+                    throw new MbmsInitializationException(returnCode);
+                }
+            } catch (RemoteException e) {
+                throw new MbmsInitializationException(
+                        MbmsInitializationException.ERROR_INITIALIZATION_REMOTE_EXCEPTION);
+            }
+        }
+    }
+
+    private static void waitOnLatchWithTimeout(CountDownLatch l, long timeoutMs) {
+        long endTime = System.currentTimeMillis() + timeoutMs;
+        while (System.currentTimeMillis() < endTime) {
+            try {
+                l.await(timeoutMs, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                // keep waiting
+            }
+            if (l.getCount() <= 0) {
+                return;
+            }
         }
     }
 }

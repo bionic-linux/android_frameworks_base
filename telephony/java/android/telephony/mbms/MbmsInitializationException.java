@@ -18,6 +18,12 @@ package android.telephony.mbms;
 
 /** @hide */
 public class MbmsInitializationException extends Exception {
+    public static final int ERROR_NO_SERVICE_INSTALLED = 1;
+    public static final int ERROR_MULTIPLE_SERVICES_INSTALLED = 2;
+    public static final int ERROR_BIND_TIMEOUT_OR_FAILURE = 3;
+    public static final int ERROR_INITIALIZATION_REMOTE_EXCEPTION = 4;
+    public static final int ERROR_ALREADY_INITIALIZED = 5;
+
     private final int mErrorCode;
 
     /** @hide */
