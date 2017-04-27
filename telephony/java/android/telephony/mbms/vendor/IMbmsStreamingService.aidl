@@ -34,7 +34,7 @@ interface IMbmsStreamingService
      * Registers this listener, subId with this appName
      *
      */
-    int initialize(IMbmsStreamingManagerCallback listener, String appName, int subId);
+    void initialize(IMbmsStreamingManagerCallback listener, String appName, int subId);
 
 
     /**

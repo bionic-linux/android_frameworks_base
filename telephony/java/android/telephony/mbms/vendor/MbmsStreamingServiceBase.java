@@ -31,9 +31,8 @@ import java.util.List;
 public class MbmsStreamingServiceBase extends IMbmsStreamingService.Stub {
 
     @Override
-    public int initialize(IMbmsStreamingManagerCallback listener, String appName, int subId)
+    public void initialize(IMbmsStreamingManagerCallback listener, String appName, int subId)
             throws RemoteException {
-        return 0;
     }
 
     @Override
