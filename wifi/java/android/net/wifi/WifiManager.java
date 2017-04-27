@@ -46,6 +46,7 @@ import com.android.server.net.NetworkPinner;
 
 import dalvik.system.CloseGuard;
 
+import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.util.Collections;
 import java.util.List;
@@ -849,6 +850,16 @@ public class WifiManager {
     private AsyncChannel mAsyncChannel;
     private CountDownLatch mConnected;
     private Looper mLooper;
+
+    /* LocalOnlyHotspot callback message types */
+    /** @hide */
+    private static final int HOTSPOT_STARTED = 0;
+    /** @hide */
+    private static final int HOTSPOT_STOPPED = 1;
+    /** @hide */
+    private static final int HOTSPOT_FAILED = 2;
+    /** @hide */
+    private static final int HOTSPOT_OBSERVER_REGISTERED = 3;
 
     /**
      * Create a new WifiManager instance.
@@ -2252,6 +2263,91 @@ public class WifiManager {
          * {@link #ERROR_NO_CHANNEL}, or {@link #ERROR_GENERAL}.
          */
         public void onFailed(int reason) { };
+    }
+
+    /**
+     * Callback proxy for LocalOnlyHotspotCallback objects.
+     */
+    private static class LocalOnlyHotspotCallbackProxy extends LocalOnlyHotspotCallback {
+        private final Handler mHandler;
+        private final WeakReference<WifiManager> mWifiManager;
+        private final Looper mLooper;
+
+        /**
+         * Constructs a {@link LocalOnlyHotspotCallback} using the specified looper.  All callbacks
+         * will be delivered on the thread of the specified looper.
+         *
+         * @param manager WifiManager
+         * @param looper Looper for delivering callbacks
+         * @param callback LocalOnlyHotspotCallback to notify the calling application.
+         */
+        LocalOnlyHotspotCallbackProxy(WifiManager manager, Looper looper,
+                final LocalOnlyHotspotCallback callback) {
+            mWifiManager = new WeakReference<>(manager);
+            mLooper = looper;
+
+            mHandler = new Handler(looper) {
+                @Override
+                public void handleMessage(Message msg) {
+                    Log.d(TAG, "LocalOnlyHotspotCallbackProxy: handle message what: "
+                            + msg.what + " msg: " + msg);
+
+                    WifiManager manager = mWifiManager.get();
+                    if (manager == null) {
+                        Log.w(TAG, "LocalOnlyHotspotCallbackProxy: handle message post GC");
+                        return;
+                    }
+
+                    switch (msg.what) {
+                        case HOTSPOT_STARTED:
+                            LocalOnlyHotspotReservation rsv = (LocalOnlyHotspotReservation) msg.obj;
+                            if (rsv == null) {
+                                Log.e(TAG, "LocalOnlyHotspotCallbackProxy: "
+                                        + "reservation cannot be null.");
+                                return;
+                            }
+                            callback.onStarted(rsv);
+                            break;
+                        case HOTSPOT_STOPPED:
+                            Log.w(TAG, "LocalOnlyHotspotCallbackProxy: hotspot stopped");
+                            callback.onStopped();
+                            break;
+                        case HOTSPOT_FAILED:
+                            int reasonCode = msg.arg1;
+                            Log.w(TAG, "LocalOnlyHotspotCallbackProxy: failed to start.  reason: "
+                                    + reasonCode);
+                            callback.onFailed(reasonCode);
+                            Log.w(TAG, "done with the callback...");
+                            break;
+                        default:
+                            Log.e(TAG, "LocalOnlyHotspotCallbackProxy unhandled message.  type: "
+                                    + msg.what);
+                    }
+                }
+            };
+        }
+
+        @Override
+        public void onStarted(LocalOnlyHotspotReservation rsv) {
+            Log.d(TAG, "in CallbackProxy - LOHS onStarted");
+            Message msg = mHandler.obtainMessage(HOTSPOT_STARTED);
+            msg.obj = rsv;
+            mHandler.sendMessage(msg);
+        }
+
+        @Override
+        public void onStopped() {
+            Log.d(TAG, "in CallbackProxy - LOHS onStopped");
+            mHandler.sendMessage(mHandler.obtainMessage(HOTSPOT_STOPPED));
+        }
+
+        @Override
+        public void onFailed(int reasonCode) {
+            Log.d(TAG, "in CallbackProxy - LOHS onFailed");
+            Message msg = mHandler.obtainMessage(HOTSPOT_FAILED);
+            msg.arg1 = reasonCode;
+            mHandler.sendMessage(msg);
+        }
     }
 
     /**
