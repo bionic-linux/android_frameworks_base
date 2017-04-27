@@ -1719,19 +1719,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mInitialBroadcast = null;
             }
         }
-        // load the global proxy at startup
+        // Load the global proxy at startup.
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_APPLY_GLOBAL_HTTP_PROXY));
-
-        // Try bringing up tracker, but KeyStore won't be ready yet for secondary users so wait
-        // for user to unlock device too.
-        updateLockdownVpn();
-
         // Configure whether mobile data is always on.
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_CONFIGURE_MOBILE_DATA_ALWAYS_ON));
-
+        // Defer to internal handler work that is not critical to the bootup phase.
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
-
-        mPermissionMonitor.startMonitoring();
     }
 
     /**
@@ -2951,6 +2944,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case EVENT_SYSTEM_READY: {
+                    // Try bringing up tracker, but KeyStore won't be ready yet for secondary
+                    // users so wait for user to unlock device too.
+                    updateLockdownVpn();
+                    mPermissionMonitor.startMonitoring();
                     for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
                         nai.networkMonitor.systemReady = true;
                     }
