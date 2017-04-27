@@ -1944,7 +1944,18 @@ public class WifiManager {
      */
     public void watchLocalOnlyHotspot(LocalOnlyHotspotObserver observer,
             @Nullable Handler handler) {
-        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+        synchronized (mLock) {
+            Looper looper = (handler == null) ? mContext.getMainLooper() : handler.getLooper();
+            mLOHSObserverProxy = new LocalOnlyHotspotObserverProxy(this, looper, observer);
+            try {
+                mService.startWatchLocalOnlyHotspot(
+                        mLOHSObserverProxy.getMessenger(), new Binder());
+                mLOHSObserverProxy.registered();
+            } catch (RemoteException e) {
+                mLOHSObserverProxy = null;
+                throw e.rethrowFromSystemServer();
+            }
+        }
     }
 
     /**
@@ -1954,9 +1965,19 @@ public class WifiManager {
      * @hide
      */
     public void unregisterLocalOnlyHotspotObserver() {
-        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+        synchronized (mLock) {
+            if (mLOHSObserverProxy == null) {
+                // nothing to do, the callback was already cleaned up
+                return;
+            }
+            mLOHSObserverProxy = null;
+            try {
+                mService.stopWatchLocalOnlyHotspot();
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
     }
-
 
     /**
      * Gets the Wi-Fi enabled state.
