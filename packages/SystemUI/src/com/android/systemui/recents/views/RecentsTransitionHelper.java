@@ -169,7 +169,7 @@ public class RecentsTransitionHelper {
             }
         }
         Recents.getSystemServices().sendCloseSystemWindows(
-                BaseStatusBar.SYSTEM_DIALOG_REASON_HOME_KEY);
+                BaseStatusBar.SYSTEM_DIALOG_REASON_RECENT_APPS);
     }
 
     public IRemoteCallback wrapStartedListener(final OnAnimationStartedListener listener) {
