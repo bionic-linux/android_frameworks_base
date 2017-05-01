@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03639263_5faf53d3",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-05-01T02:50:57Z",
+      "side": 1,
+      "message": "After a discussion with quiche@ and silberst@, we think a better solution is to throw an error if an attempt is made to open a new channel when one already exists, thus requiring the app to close the old one first.",
+      "range": {
+        "startLine": 911,
+        "startChar": 0,
+        "endLine": 911,
+        "endChar": 66
+      },
+      "revId": "866eeb686ef44af5ed4a67b6cb2f06a6503adcc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
