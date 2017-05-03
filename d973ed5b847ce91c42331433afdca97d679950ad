@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c661e5bc_0ca95a02",
+        "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-03T02:33:24Z",
+      "side": 1,
+      "message": "Synchronized method",
+      "parentUuid": "e6a83980_2f1e4523",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 20
+      },
+      "revId": "d973ed5b847ce91c42331433afdca97d679950ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e446eed_d1d54b46",
         "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-03T00:35:02Z",
       "side": 1,
       "message": "should probably set mService to null before leaving synch block.  Only think the synch does for you is prevent multiple dispose calls but that requires setting to null..",
+      "range": {
+        "startLine": 144,
+        "startChar": 25,
+        "endLine": 144,
+        "endChar": 32
+      },
+      "revId": "d973ed5b847ce91c42331433afdca97d679950ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70b21305_f633ec02",
+        "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-03T02:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e446eed_d1d54b46",
       "range": {
         "startLine": 144,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fa0b06bb_709225ba",
+        "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-03T02:33:24Z",
+      "side": 1,
+      "message": "Removing -- not too sure why it was there in the first place",
+      "parentUuid": "c5c66593_02c609dc",
+      "range": {
+        "startLine": 208,
+        "startChar": 20,
+        "endLine": 208,
+        "endChar": 38
+      },
+      "revId": "d973ed5b847ce91c42331433afdca97d679950ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ebc5db0_b5d38bd5",
         "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-03T00:35:02Z",
       "side": 1,
       "message": "log e?",
+      "range": {
+        "startLine": 266,
+        "startChar": 21,
+        "endLine": 266,
+        "endChar": 36
+      },
+      "revId": "d973ed5b847ce91c42331433afdca97d679950ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a41450f0_ddbf5286",
+        "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-03T02:33:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ebc5db0_b5d38bd5",
       "range": {
         "startLine": 266,
         "startChar": 21,

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8169803b_3530de4e",
+        "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-03T02:33:24Z",
+      "side": 1,
+      "message": "Changed this back -- apparently you can\u0027t throw arbitrary exceptions across AIDLs.",
+      "range": {
+        "startLine": 258,
+        "startChar": 20,
+        "endLine": 258,
+        "endChar": 30
+      },
+      "revId": "5223fecabd043cde8286bc457fab6344d182cf0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2d8d7b0_34585426",
+        "filename": "telephony/java/android/telephony/mbms/MbmsException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-03T02:33:24Z",
+      "side": 1,
+      "message": "I know this looks a bit weird, but I wasn\u0027t sure where else to put it. Apparently it\u0027s frowned upon to have a top level class just for constants.",
+      "range": {
+        "startLine": 23,
+        "startChar": 28,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "5223fecabd043cde8286bc457fab6344d182cf0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
