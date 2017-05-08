@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eff4bca5_715cae15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-08T03:19:01Z",
+      "side": 1,
+      "message": "\"it\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "4dc37ebbb78c93596b496468e9ac908559ba8713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8f40676_539425da",
+        "filename": "core/java/android/net/SntpClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-08T03:19:01Z",
+      "side": 1,
+      "message": "It might be better to keep the fraction name here.  The NTP RFCs mention fractional parts of seconds and multi-precision numbers where the fraction point is located on some bit boundary and so on.\n\nThis part will become milliseconds, after you\u0027re done with the multiplication bits a few lines later.\n\nI\u0027m just wondering how we can keep some \"expected terminology\" for someone comparing the code to the RFCs.",
+      "range": {
+        "startLine": 230,
+        "startChar": 13,
+        "endLine": 230,
+        "endChar": 25
+      },
+      "revId": "4dc37ebbb78c93596b496468e9ac908559ba8713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdf19102_d9ada4b8",
+        "filename": "core/java/android/net/SntpClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-08T03:19:01Z",
+      "side": 1,
+      "message": "Even though it may be redundant, can we add an explicit ByteBuffer.BIG_ENDING call, perhaps up where the ByteBuffer is created?\n\nI recognize it\u0027s only real function would be as documentation...",
+      "range": {
+        "startLine": 242,
+        "startChar": 34,
+        "endLine": 242,
+        "endChar": 44
+      },
+      "revId": "4dc37ebbb78c93596b496468e9ac908559ba8713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
