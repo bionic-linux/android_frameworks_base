@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f073ae4b_b46e147a",
+        "filename": "obex/javax/obex/ServerOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-05-09T16:18:50Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t clearer.  It\u0027s never being set to true, so we could remove it and the code that depends on it being true.",
+      "parentUuid": "c279d017_1fc09a4a",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 33
+      },
+      "revId": "6d9f3aed3c694b43cfa14d67769ed6ed1ea7af52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b02e10_d493ffce",
         "filename": "obex/javax/obex/ServerOperation.java",
         "patchSetId": 8
