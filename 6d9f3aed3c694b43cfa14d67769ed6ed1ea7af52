@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f718b233_b915d6af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-05-09T15:38:23Z",
+      "side": 1,
+      "message": "nit: no period",
+      "range": {
+        "startLine": 7,
+        "startChar": 53,
+        "endLine": 7,
+        "endChar": 54
+      },
+      "revId": "6d9f3aed3c694b43cfa14d67769ed6ed1ea7af52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8243fd7_8ac3e372",
+        "filename": "obex/javax/obex/ServerOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-05-09T15:38:23Z",
+      "side": 1,
+      "message": "this looks unused.  Should we be using it or remove it?",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 33
+      },
+      "revId": "6d9f3aed3c694b43cfa14d67769ed6ed1ea7af52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0b02e10_d493ffce",
+        "filename": "obex/javax/obex/ServerOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-05-09T15:38:23Z",
+      "side": 1,
+      "message": "mSrmActive?",
+      "range": {
+        "startLine": 203,
+        "startChar": 30,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "6d9f3aed3c694b43cfa14d67769ed6ed1ea7af52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
