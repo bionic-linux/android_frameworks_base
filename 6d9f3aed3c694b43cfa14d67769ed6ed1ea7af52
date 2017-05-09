@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "4c7d1ef5_06e8c453",
+        "filename": "obex/javax/obex/ServerOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-05-09T16:36:53Z",
+      "side": 1,
+      "message": "You\u0027re right, it can be handled in a future CL.  Thanks",
+      "parentUuid": "a8f83633_0143ea23",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 33
+      },
+      "revId": "6d9f3aed3c694b43cfa14d67769ed6ed1ea7af52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b02e10_d493ffce",
         "filename": "obex/javax/obex/ServerOperation.java",
         "patchSetId": 8
