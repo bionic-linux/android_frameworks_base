@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efc8804d_5f39024e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1043980
+      },
+      "writtenOn": "2017-05-09T16:13:03Z",
+      "side": 1,
+      "message": "will update",
+      "parentUuid": "f718b233_b915d6af",
+      "range": {
+        "startLine": 7,
+        "startChar": 53,
+        "endLine": 7,
+        "endChar": 54
+      },
+      "revId": "6d9f3aed3c694b43cfa14d67769ed6ed1ea7af52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8243fd7_8ac3e372",
         "filename": "obex/javax/obex/ServerOperation.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c279d017_1fc09a4a",
+        "filename": "obex/javax/obex/ServerOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1043980
+      },
+      "writtenOn": "2017-05-09T16:13:03Z",
+      "side": 1,
+      "message": "this is used at line 396 in same file",
+      "parentUuid": "b8243fd7_8ac3e372",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 33
+      },
+      "revId": "6d9f3aed3c694b43cfa14d67769ed6ed1ea7af52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b02e10_d493ffce",
         "filename": "obex/javax/obex/ServerOperation.java",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-05-09T15:38:23Z",
       "side": 1,
       "message": "mSrmActive?",
+      "range": {
+        "startLine": 203,
+        "startChar": 30,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "6d9f3aed3c694b43cfa14d67769ed6ed1ea7af52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0402248_e49f9807",
+        "filename": "obex/javax/obex/ServerOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1043980
+      },
+      "writtenOn": "2017-05-09T16:13:03Z",
+      "side": 1,
+      "message": "this maps to srm enabled as per spec. SRM active is no such entity as per obex spec.",
+      "parentUuid": "f0b02e10_d493ffce",
       "range": {
         "startLine": 203,
         "startChar": 30,
