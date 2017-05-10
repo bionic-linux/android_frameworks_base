@@ -22,6 +22,30 @@
       "revId": "261cc2d7c4f8c08e517ca69398b785e44bc940c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "462eeff1_2f2802a6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6436,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-10T20:59:02Z",
+      "side": 1,
+      "message": "I had a permission in here because I expected that this would end up querying the modem. From discussion with Robert, he is comfortable with not requiring a permission, even if the system decides in some instances to request updated SignalStrength from the modem. So given that he believes it to be safe, I\u0027m removing the permission check.",
+      "parentUuid": "2c88c90e_9c93bd5b",
+      "range": {
+        "startLine": 6436,
+        "startChar": 44,
+        "endLine": 6436,
+        "endChar": 60
+      },
+      "revId": "261cc2d7c4f8c08e517ca69398b785e44bc940c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
