@@ -37,6 +37,52 @@
     },
     {
       "key": {
+        "uuid": "b730ce13_282d6fef",
+        "filename": "core/java/android/bluetooth/BluetoothInputDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-05-10T00:32:53Z",
+      "side": 1,
+      "message": "android",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 19
+      },
+      "revId": "556d6f5f469a9dc05722c4d5e3be74ecd42662c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b730ce13_c83b2325",
+        "filename": "core/java/android/bluetooth/BluetoothInputDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-05-10T00:32:53Z",
+      "side": 1,
+      "message": "android",
+      "range": {
+        "startLine": 211,
+        "startChar": 50,
+        "endLine": 211,
+        "endChar": 60
+      },
+      "revId": "556d6f5f469a9dc05722c4d5e3be74ecd42662c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77af3690_380cc996",
         "filename": "core/java/android/bluetooth/IBluetoothInputDevice.aidl",
         "patchSetId": 2
