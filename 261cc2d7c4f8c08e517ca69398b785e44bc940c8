@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c88c90e_9c93bd5b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6436,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-10T20:04:45Z",
+      "side": 1,
+      "message": "Looking at TelephonyRegistry it doesn\u0027t look like listening for SignalStrength requires a permission - we should mimic other accessors of SignalStrength in this regard.",
+      "range": {
+        "startLine": 6436,
+        "startChar": 44,
+        "endLine": 6436,
+        "endChar": 60
+      },
+      "revId": "261cc2d7c4f8c08e517ca69398b785e44bc940c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
