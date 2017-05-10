@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cc5e3e0_d1191fcd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6433,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-10T00:17:41Z",
+      "side": 1,
+      "message": "most recent?",
+      "range": {
+        "startLine": 6433,
+        "startChar": 15,
+        "endLine": 6433,
+        "endChar": 22
+      },
+      "revId": "2113cbd0c75c7d3cce1e9e795ba6eb27695902e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

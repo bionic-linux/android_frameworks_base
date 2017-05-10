@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "104cc90f_f7ae3e41",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6112,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-10T00:17:41Z",
+      "side": 1,
+      "message": "If you don\u0027t explicitly grant carrier then carrier apps can\u0027t use this.  I\u0027m ok with that, but I don\u0027t know who the customer is.",
+      "parentUuid": "e9df583b_73258082",
+      "range": {
+        "startLine": 6112,
+        "startChar": 7,
+        "endLine": 6112,
+        "endChar": 23
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1de98079_302dab69",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Why not accurate?",
       "parentUuid": "1de98079_302dab69",
+      "range": {
+        "startLine": 6113,
+        "startChar": 59,
+        "endLine": 6113,
+        "endChar": 73
+      },
+      "revId": "d40ca5463a642bb795cf14a59734df68a66170af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77c83959_47991e98",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6113,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-10T00:17:41Z",
+      "side": 1,
+      "message": "Huh..  I don\u0027t know what I was thinking here. :(",
+      "parentUuid": "4e822fd8_cff2888c",
       "range": {
         "startLine": 6113,
         "startChar": 59,
