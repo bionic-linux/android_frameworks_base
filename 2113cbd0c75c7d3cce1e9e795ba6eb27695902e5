@@ -22,6 +22,53 @@
       "revId": "2113cbd0c75c7d3cce1e9e795ba6eb27695902e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e272b4e8_ecf82e3b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6433,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-10T00:50:05Z",
+      "side": 1,
+      "message": "Done. Also copied this docstring over to ITelephony.aidl so they match.",
+      "parentUuid": "6cc5e3e0_d1191fcd",
+      "range": {
+        "startLine": 6433,
+        "startChar": 15,
+        "endLine": 6433,
+        "endChar": 22
+      },
+      "revId": "2113cbd0c75c7d3cce1e9e795ba6eb27695902e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c8c2370_9f23463c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6436,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-10T00:50:05Z",
+      "side": 1,
+      "message": "Since this is only going to get the cached version (it\u0027s a polled equivalent of LISTEN_SIGNAL_STRENGTHS), it only needs READ not MODIFY, which is consistent with the implementation that only requires READ.",
+      "range": {
+        "startLine": 6436,
+        "startChar": 44,
+        "endLine": 6436,
+        "endChar": 62
+      },
+      "revId": "2113cbd0c75c7d3cce1e9e795ba6eb27695902e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
