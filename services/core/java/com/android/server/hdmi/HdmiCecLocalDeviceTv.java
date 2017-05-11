@@ -875,6 +875,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         synchronized (mLock) {
             if (mSystemAudioActivated != on) {
                 mSystemAudioActivated = on;
+                if (getAvrDeviceInfo() != null) {
+                    RequestShortAudioDescriptorAction action = new RequestShortAudioDescriptorAction(this,
+                        getAvrDeviceInfo().getLogicalAddress(), getAvrDeviceInfo().getPortId(), on);
+                    addAndStartAction(action);
+                }
                 mService.announceSystemAudioModeChange(on);
             }
         }
@@ -964,6 +969,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         mService.getAudioManager().setWiredDeviceConnectionState(
                 AudioSystem.DEVICE_OUT_HDMI_ARC,
                 enabled ? 1 : 0, "", "");
+    }
+
+    public void setAudioParameters(String keyValuePairs) {
+        mService.getAudioManager().setParameters(keyValuePairs);
     }
 
     /**
@@ -1481,6 +1490,13 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     final void removeCecDevice(int address) {
         assertRunOnServiceThread();
+
+        HdmiDeviceInfo avr = getAvrDeviceInfo();
+        if ((avr != null) && (address == avr.getLogicalAddress())) {
+            removeAction(RequestShortAudioDescriptorAction.class);
+            RequestShortAudioDescriptorAction.removeAudioFormat();
+        }
+
         HdmiDeviceInfo info = removeDeviceInfo(HdmiDeviceInfo.idForCecDevice(address));
 
         mCecMessageCache.flushMessagesFrom(address);
@@ -1678,6 +1694,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             return;
         }
 
+        removeAction(RequestShortAudioDescriptorAction.class);
+        RequestShortAudioDescriptorAction.removeAudioFormat();
         // Seq #44.
         removeAction(RequestArcInitiationAction.class);
         if (!hasAction(RequestArcTerminationAction.class) && isArcEstablished()) {
