@@ -24,6 +24,7 @@ import com.android.internal.textservice.ISpellCheckerSession;
 import com.android.internal.textservice.ISpellCheckerSessionListener;
 import com.android.internal.textservice.ITextServicesManager;
 import com.android.internal.textservice.ITextServicesSessionListener;
+import com.android.internal.view.IInputMethodManager;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -48,6 +49,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -484,10 +486,17 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
         String candidateLocale = null;
         if (subtypeHashCode == 0) {
             // Spell checker language settings == "auto"
-            final InputMethodManager imm = mContext.getSystemService(InputMethodManager.class);
-            if (imm != null) {
-                final InputMethodSubtype currentInputMethodSubtype =
-                        imm.getCurrentInputMethodSubtype();
+            final IInputMethodManager service = IInputMethodManager.Stub.asInterface(
+                    ServiceManager.getService(Context.INPUT_METHOD_SERVICE));
+            if (service != null) {
+                InputMethodSubtype currentInputMethodSubtype = null;
+                try {
+                    currentInputMethodSubtype = service.getCurrentInputMethodSubtype();
+                } catch (RemoteException e) {
+                    if (DBG) {
+                        Slog.w(TAG, "get subtype from remote fail.");
+                    }
+                }
                 if (currentInputMethodSubtype != null) {
                     final String localeString = currentInputMethodSubtype.getLocale();
                     if (!TextUtils.isEmpty(localeString)) {
