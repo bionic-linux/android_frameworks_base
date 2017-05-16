@@ -164,6 +164,30 @@
       "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54ece63c_a5881517",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2017-05-16T20:28:14Z",
+      "side": 1,
+      "message": "Isn\u0027t it more that master has a \"regression\" in that N was pinning one thing which could not exceed MAX_CAMERA_PIN_SIZE, but with the introduction of vdex that one thing (odex) became smaller? Maybe you should now fix that and divide by files.length?",
+      "parentUuid": "c4cda418_5f3d35e8",
+      "range": {
+        "startLine": 256,
+        "startChar": 49,
+        "endLine": 256,
+        "endChar": 68
+      },
+      "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
