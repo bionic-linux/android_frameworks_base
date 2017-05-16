@@ -1101,6 +1101,7 @@ LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
 
+ifndef SANITIZE_TARGET
 static_doc_index_redirect := $(out_dir)/index.html
 $(static_doc_index_redirect): \
 	$(LOCAL_PATH)/docs/docs-preview-index.html | $(ACP)
@@ -1109,7 +1110,7 @@ $(static_doc_index_redirect): \
 
 $(full_target): $(static_doc_index_redirect)
 $(full_target): $(framework_built)
-
+endif
 
 # ====  static html in the sdk ==================================
 include $(CLEAR_VARS)
@@ -1138,6 +1139,7 @@ LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
 
+ifndef SANITIZE_TARGET
 static_doc_index_redirect := $(out_dir)/index.html
 $(static_doc_index_redirect): $(LOCAL_PATH)/docs/docs-documentation-redirect.html
 	$(copy-file-to-target)
@@ -1151,7 +1153,7 @@ $(static_doc_properties): \
 $(full_target): $(static_doc_index_redirect)
 $(full_target): $(static_doc_properties)
 $(full_target): $(framework_built)
-
+endif
 
 # ==== docs for the web (on the androiddevdocs app engine server) =======================
 include $(CLEAR_VARS)
