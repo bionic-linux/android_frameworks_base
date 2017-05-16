@@ -45,6 +45,29 @@
       "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5a210bb_63e7befa",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2017-05-16T09:48:07Z",
+      "side": 1,
+      "message": "MAX_CAMERA_PIN_SIZE can now be exceeded if the sum of the sizes of files returned by getDexFileOutputPaths exceeds it. Is that intentional?",
+      "range": {
+        "startLine": 256,
+        "startChar": 49,
+        "endLine": 256,
+        "endChar": 68
+      },
+      "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
