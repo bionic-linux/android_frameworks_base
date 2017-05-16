@@ -140,6 +140,30 @@
       "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b898180b_66e76abd",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1059028
+      },
+      "writtenOn": "2017-05-16T18:55:55Z",
+      "side": 1,
+      "message": "Nope, this is fine. Historically the odex files were significantly smaller than the APK file itself (Which is what currently limits what we can include in the app) and for the odex / vdex files the check is more of a sanity check than anything.",
+      "parentUuid": "c4cda418_5f3d35e8",
+      "range": {
+        "startLine": 256,
+        "startChar": 49,
+        "endLine": 256,
+        "endChar": 68
+      },
+      "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
