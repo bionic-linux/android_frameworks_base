@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8ff8a7_47dae7c3",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-16T23:28:57Z",
+      "side": 1,
+      "message": "is this needed on a private function?",
+      "range": {
+        "startLine": 131,
+        "startChar": 27,
+        "endLine": 131,
+        "endChar": 43
+      },
+      "revId": "357296c2d59d52964c3ee7807b2cbce75d57cd50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7436f36c_37632630",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-16T23:28:57Z",
+      "side": 1,
+      "message": "if you think Lists should be made unmodifiable for private functions, this should be converted for consistency.",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "357296c2d59d52964c3ee7807b2cbce75d57cd50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
