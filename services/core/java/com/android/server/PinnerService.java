@@ -243,20 +243,22 @@ public final class PinnerService extends SystemService {
 
         // get the path to the odex or oat file
         String baseCodePath = cameraInfo.getBaseCodePath();
-        String odex = null;
+        String[] optimizedCode = null;
         try {
-            odex = DexFile.getDexFileOutputPath(baseCodePath, arch);
+            optimizedCode = DexFile.getDexFileOutputPath(baseCodePath, arch);
         } catch (IOException ioe) {}
-        if (odex == null) {
+        if (optimizedCode == null) {
             return true;
         }
 
         //not pinning the oat/odex is not a fatal error
-        pf = pinFile(odex, 0, 0, MAX_CAMERA_PIN_SIZE);
-        if (pf != null) {
-            mPinnedCameraFiles.add(pf);
-            if (DEBUG) {
-                Slog.i(TAG, "Pinned " + pf.mFilename);
+        for (int i = 0; i < optimizedCode.length; i++) {
+            pf = pinFile(optimizedCode[i], 0, 0, MAX_CAMERA_PIN_SIZE);
+            if (pf != null) {
+                mPinnedCameraFiles.add(pf);
+                if (DEBUG) {
+                    Slog.i(TAG, "Pinned " + pf.mFilename);
+                }
             }
         }
 
