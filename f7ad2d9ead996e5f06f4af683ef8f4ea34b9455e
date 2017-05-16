@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc490c70_fdba1e6b",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2017-05-16T18:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e540e7_ddf6e943",
+      "range": {
+        "startLine": 246,
+        "startChar": 17,
+        "endLine": 246,
+        "endChar": 30
+      },
+      "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adaf3c24_bec6cbe7",
         "filename": "services/core/java/com/android/server/PinnerService.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a368a64f_558c5172",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2017-05-16T18:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adaf3c24_bec6cbe7",
+      "range": {
+        "startLine": 255,
+        "startChar": 13,
+        "endLine": 255,
+        "endChar": 53
+      },
+      "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5a210bb_63e7befa",
         "filename": "services/core/java/com/android/server/PinnerService.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-05-16T09:48:07Z",
       "side": 1,
       "message": "MAX_CAMERA_PIN_SIZE can now be exceeded if the sum of the sizes of files returned by getDexFileOutputPaths exceeds it. Is that intentional?",
+      "range": {
+        "startLine": 256,
+        "startChar": 49,
+        "endLine": 256,
+        "endChar": 68
+      },
+      "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4cda418_5f3d35e8",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2017-05-16T18:46:42Z",
+      "side": 1,
+      "message": "We essentially keep the N behaviour here. (N odex ~\u003d O odex + O vdex). The difference should be small and I\u0027ll defer to the camera team to asses if they wanna update it.",
+      "parentUuid": "d5a210bb_63e7befa",
       "range": {
         "startLine": 256,
         "startChar": 49,
