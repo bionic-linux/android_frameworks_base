@@ -188,6 +188,30 @@
       "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9dc5a11_cf9199ec",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2017-05-17T22:26:45Z",
+      "side": 1,
+      "message": "Right... so basically we allow to pin more now if either the vdex or the odex go overboard...\n\nI wouldn\u0027t divide by 2 since the vdex are not quite the same.\n\nBut anyway, 80MB seems excessive anyway. The camera app odex is about ~18MB (speed) and the vdex about ~8MB.\n\nI\u0027ll defer to the camera people to adjust this.",
+      "parentUuid": "54ece63c_a5881517",
+      "range": {
+        "startLine": 256,
+        "startChar": 49,
+        "endLine": 256,
+        "endChar": 68
+      },
+      "revId": "f7ad2d9ead996e5f06f4af683ef8f4ea34b9455e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
