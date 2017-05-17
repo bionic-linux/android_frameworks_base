@@ -29,6 +29,7 @@ import android.nfc.INfcCardEmulation;
 import android.nfc.INfcFCardEmulation;
 import android.nfc.INfcUnlockHandler;
 import android.nfc.ITagRemovedCallback;
+import com.nxp.nfc.INxpNfcAdapter;
 import android.os.Bundle;
 
 /**
@@ -40,7 +41,7 @@ interface INfcAdapter
     INfcCardEmulation getNfcCardEmulationInterface();
     INfcFCardEmulation getNfcFCardEmulationInterface();
     INfcAdapterExtras getNfcAdapterExtrasInterface(in String pkg);
-
+    INxpNfcAdapter getNxpNfcAdapterInterface();
     int getState();
     boolean disable(boolean saveState);
     boolean enable();
