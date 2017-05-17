@@ -626,6 +626,23 @@ public final class NfcAdapter {
     }
 
     /**
+     * Returns the binder interface to the NFC-DTA test interface.
+     * @hide
+     */
+    public INfcDta getNfcDtaInterface() {
+        if (mContext == null) {
+            throw new UnsupportedOperationException("You need a context on NfcAdapter to use the "
+                    + " NFC extras APIs");
+        }
+        try {
+            return sService.getNfcDtaInterface(mContext.getPackageName());
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return null;
+        }
+    }
+
+    /**
      * NFC service dead - attempt best effort recovery
      * @hide
      */
