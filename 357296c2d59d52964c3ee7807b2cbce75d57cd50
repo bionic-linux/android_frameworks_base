@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a55a26f2_43259223",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-17T18:45:26Z",
+      "side": 1,
+      "message": "The zone IDs list object leaves the scope of this class, so I prefer to. It doesn\u0027t have to happen here - it could happen in the caller method, but this seemed a reasonable place to stash it since there\u0027s no caller that needs to mutate the list.",
+      "parentUuid": "4c8ff8a7_47dae7c3",
+      "range": {
+        "startLine": 131,
+        "startChar": 27,
+        "endLine": 131,
+        "endChar": 43
+      },
+      "revId": "357296c2d59d52964c3ee7807b2cbce75d57cd50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7436f36c_37632630",
         "filename": "core/java/android/util/TimeUtils.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-16T23:28:57Z",
       "side": 1,
       "message": "if you think Lists should be made unmodifiable for private functions, this should be converted for consistency.",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 24
+      },
+      "revId": "357296c2d59d52964c3ee7807b2cbce75d57cd50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a879cfb0_f1d4bc49",
+        "filename": "core/java/android/util/TimeUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-17T18:45:26Z",
+      "side": 1,
+      "message": "lookupTimeZonesByCountry() already returns an unmodifiable list and Collections.emptyList() is also immutable.\n\nGenerally the docs could be improved in this regard, here and TimeZoneFinder (generally Android code doesn\u0027t bother, but I\u0027ll happily add it if you\u0027re happy to +2).",
+      "parentUuid": "7436f36c_37632630",
       "range": {
         "startLine": 155,
         "startChar": 15,
