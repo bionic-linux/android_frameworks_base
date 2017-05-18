@@ -17,8 +17,6 @@
 package android.telephony.mbms;
 
 import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.os.RemoteException;
 import android.telephony.mbms.vendor.IMbmsStreamingService;
 import android.util.Log;
@@ -76,19 +74,23 @@ public class StreamingService {
     }
 
     /**
-     * Stop streaming this service.  Terminal.
-     *
-     * This may throw a RemoteException.
+     * Stop streaming this service.
+     * This may throw a {@link MbmsException} with the error code
+     * {@link MbmsException#ERROR_UNKNOWN_REMOTE_EXCEPTION}
      */
-    public void stopStreaming() {
+    public void stopStreaming() throws MbmsException {
+        try {
+            mService.stopStreaming(mAppName, mSubscriptionId, mServiceInfo.getServiceId());
+        } catch (RemoteException e) {
+            Log.w(LOG_TAG, "Caught remote exception calling stopStreaming: " + e);
+            throw new MbmsException(MbmsException.ERROR_UNKNOWN_REMOTE_EXCEPTION);
+        }
     }
 
     public void dispose() throws MbmsException {
         try {
             mService.disposeStream(mAppName, mSubscriptionId, mServiceInfo.getServiceId());
         } catch (RemoteException e) {
-            Log.w(LOG_TAG, "Caught remote exception calling disposeStream: " + e);
-            throw new MbmsException(MbmsException.ERROR_UNKNOWN_REMOTE_EXCEPTION);
         }
     }
 }
