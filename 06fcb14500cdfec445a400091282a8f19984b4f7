@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feded845_9000d183",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-18T20:40:12Z",
+      "side": 1,
+      "message": "can we tell the diff between mService being lost and an exception thrown by the service?\n\nif this is called repeatedly it should throw IllegalStateException or some internally defined version of that.",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "06fcb14500cdfec445a400091282a8f19984b4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
