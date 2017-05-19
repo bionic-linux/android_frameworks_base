@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6413070d_1eefdebd",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-19T00:37:29Z",
+      "side": 1,
+      "message": "Nit: there should be spaces between the statement and the\nsurrounding brackets.",
+      "range": {
+        "startLine": 782,
+        "startChar": 41,
+        "endLine": 782,
+        "endChar": 66
+      },
+      "revId": "a12006f69c02e7a9bcfcb479f7b2163ea3ec1707",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9cc1d5c_0e640124",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-19T00:37:29Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "range": {
+        "startLine": 799,
+        "startChar": 41,
+        "endLine": 799,
+        "endChar": 66
+      },
+      "revId": "a12006f69c02e7a9bcfcb479f7b2163ea3ec1707",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
