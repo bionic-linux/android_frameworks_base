@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ccc3df2_0ea73c2d",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3254,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2017-05-19T07:21:47Z",
+      "side": 1,
+      "message": "NULL?",
+      "range": {
+        "startLine": 3254,
+        "startChar": 42,
+        "endLine": 3254,
+        "endChar": 45
+      },
+      "revId": "fc228d16c34390b144ad2f334565c925d80f18ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
