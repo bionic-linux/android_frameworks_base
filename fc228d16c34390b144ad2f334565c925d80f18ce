@@ -22,6 +22,30 @@
       "revId": "fc228d16c34390b144ad2f334565c925d80f18ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0142e6f3_bad3076e",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3254,
+      "author": {
+        "id": 1096239
+      },
+      "writtenOn": "2017-05-19T07:26:40Z",
+      "side": 1,
+      "message": "new patchset uploaded.",
+      "parentUuid": "4ccc3df2_0ea73c2d",
+      "range": {
+        "startLine": 3254,
+        "startChar": 42,
+        "endLine": 3254,
+        "endChar": 45
+      },
+      "revId": "fc228d16c34390b144ad2f334565c925d80f18ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
