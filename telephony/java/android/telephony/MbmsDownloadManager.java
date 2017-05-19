@@ -16,18 +16,27 @@
 
 package android.telephony;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.telephony.mbms.DownloadCallback;
 import android.telephony.mbms.DownloadRequest;
 import android.telephony.mbms.DownloadStatus;
 import android.telephony.mbms.IMbmsDownloadManagerCallback;
 import android.telephony.mbms.MbmsException;
+import android.telephony.mbms.MbmsUtils;
 import android.telephony.mbms.vendor.IMbmsDownloadService;
 import android.util.Log;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
@@ -35,6 +44,8 @@ import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 public class MbmsDownloadManager {
     private static final String LOG_TAG = MbmsDownloadManager.class.getSimpleName();
 
+    public static final String MBMS_DOWNLOAD_SERVICE_ACTION =
+            "android.telephony.action.EmbmsDownload";
     /**
      * The MBMS middleware should send this when a download of single file has completed or
      * failed. Mandatory extras are
@@ -142,10 +153,13 @@ public class MbmsDownloadManager {
     public static final String EXTRA_TEMP_FILES_IN_USE =
             "android.telephony.mbms.extra.TEMP_FILES_IN_USE";
 
+    public static final int RESULT_VOID = 0;
     public static final int RESULT_SUCCESSFUL = 1;
     public static final int RESULT_CANCELLED  = 2;
     public static final int RESULT_EXPIRED    = 3;
     // TODO - more results!
+
+    private static final long BIND_TIMEOUT_MS = 3000;
 
     private final Context mContext;
     private int mSubId = INVALID_SUBSCRIPTION_ID;
@@ -198,12 +212,47 @@ public class MbmsDownloadManager {
     }
 
     private void bindAndInitialize() throws MbmsException {
-        // TODO: bind
-        try {
-            mService.initialize(mDownloadAppName, mSubId, mCallback);
-        } catch (RemoteException e) {
-            throw new MbmsException(0); // TODO: proper error code
+        // TODO: fold binding for download and streaming into a common utils class.
+
+        // Query for the proper service
+        PackageManager packageManager = mContext.getPackageManager();
+        Intent queryIntent = new Intent();
+        queryIntent.setAction(MBMS_DOWNLOAD_SERVICE_ACTION);
+        List<ResolveInfo> streamingServices = packageManager.queryIntentServices(queryIntent,
+                PackageManager.MATCH_SYSTEM_ONLY);
+
+        if (streamingServices == null || streamingServices.size() == 0) {
+            throw new MbmsException(
+                    MbmsException.ERROR_NO_SERVICE_INSTALLED);
         }
+        if (streamingServices.size() > 1) {
+            throw new MbmsException(
+                    MbmsException.ERROR_MULTIPLE_SERVICES_INSTALLED);
+        }
+
+        // Kick off the binding, and synchronously wait until binding is complete
+        final CountDownLatch latch = new CountDownLatch(1);
+        ServiceConnection bindListener = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                mService = IMbmsDownloadService.Stub.asInterface(service);
+                latch.countDown();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mService = null;
+            }
+        };
+
+        Intent bindIntent = new Intent();
+        bindIntent.setComponent(streamingServices.get(0).getComponentInfo().getComponentName());
+
+        mContext.bindService(bindIntent, bindListener, Context.BIND_AUTO_CREATE);
+
+        MbmsUtils.waitOnLatchWithTimeout(latch, BIND_TIMEOUT_MS);
+
+        // TODO: initialize
     }
 
     /**
@@ -243,6 +292,11 @@ public class MbmsDownloadManager {
      * Asynchronous errors through the listener include any of the errors
      */
     public DownloadRequest download(DownloadRequest downloadRequest, DownloadCallback listener) {
+        try {
+            mService.download(mDownloadAppName, downloadRequest, listener);
+        } catch (RemoteException e) {
+            mService = null;
+        }
         return null;
     }
 

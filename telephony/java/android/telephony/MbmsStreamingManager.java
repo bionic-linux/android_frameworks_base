@@ -27,6 +27,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.telephony.mbms.MbmsException;
 import android.telephony.mbms.MbmsStreamingManagerCallback;
+import android.telephony.mbms.MbmsUtils;
 import android.telephony.mbms.StreamingService;
 import android.telephony.mbms.StreamingServiceCallback;
 import android.telephony.mbms.StreamingServiceInfo;
@@ -62,7 +63,9 @@ public class MbmsStreamingManager {
                 Log.i(LOG_TAG, String.format("Connected to service %s", name));
                 synchronized (MbmsStreamingManager.this) {
                     mService = IMbmsStreamingService.Stub.asInterface(service);
-                    mServiceListeners.forEach(ServiceListener::onServiceConnected);
+                    for (ServiceListener l : mServiceListeners) {
+                        l.onServiceConnected();
+                    }
                 }
             }
         }
@@ -72,10 +75,13 @@ public class MbmsStreamingManager {
             Log.i(LOG_TAG, String.format("Disconnected from service %s", name));
             synchronized (MbmsStreamingManager.this) {
                 mService = null;
-                mServiceListeners.forEach(ServiceListener::onServiceDisconnected);
+                for (ServiceListener l : mServiceListeners) {
+                    l.onServiceDisconnected();
+                }
             }
         }
     };
+
     private List<ServiceListener> mServiceListeners = new LinkedList<>();
 
     private MbmsStreamingManagerCallback mCallbackToApp;
@@ -262,9 +268,9 @@ public class MbmsStreamingManager {
 
         mContext.bindService(bindIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 
-        waitOnLatchWithTimeout(latch, BIND_TIMEOUT_MS);
+        MbmsUtils.waitOnLatchWithTimeout(latch, BIND_TIMEOUT_MS);
 
-        // Remove the listener and call the initialization method through the interface.
+       // Remove the listener and call the initialization method through the interface.
         synchronized (this) {
             mServiceListeners.remove(bindListener);
 
@@ -289,17 +295,4 @@ public class MbmsStreamingManager {
         }
     }
 
-    private static void waitOnLatchWithTimeout(CountDownLatch l, long timeoutMs) {
-        long endTime = System.currentTimeMillis() + timeoutMs;
-        while (System.currentTimeMillis() < endTime) {
-            try {
-                l.await(timeoutMs, TimeUnit.MILLISECONDS);
-            } catch (InterruptedException e) {
-                // keep waiting
-            }
-            if (l.getCount() <= 0) {
-                return;
-            }
-        }
-    }
 }
