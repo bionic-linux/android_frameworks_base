@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.File;
 import java.net.URISyntaxException;
 
 /**
@@ -123,6 +124,15 @@ public class DownloadRequest implements Parcelable {
         out.writeParcelable(destinationUri, flags);
         out.writeInt(subId);
         out.writeString(serializedResultIntentForApp);
+    }
+
+    /**
+     * @hide
+     * @return
+     */
+    public boolean isMultiFileDownload() {
+        File destFile = new File(destinationUri.getSchemeSpecificPart());
+        return destFile.isDirectory();
     }
 
     public int getDownloadId() {

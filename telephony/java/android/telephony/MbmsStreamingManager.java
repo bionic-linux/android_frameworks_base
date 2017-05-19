@@ -76,6 +76,7 @@ public class MbmsStreamingManager {
             }
         }
     };
+
     private List<ServiceListener> mServiceListeners = new LinkedList<>();
 
     private MbmsStreamingManagerCallback mCallbackToApp;
