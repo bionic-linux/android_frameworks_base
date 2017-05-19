@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fad6bdf0_e2150902",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-19T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d2883c_eb8c2a96",
+      "range": {
+        "startLine": 124,
+        "startChar": 43,
+        "endLine": 124,
+        "endChar": 60
+      },
+      "revId": "6fbbd335d5c65d781c78f8fcde9e22a349775869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0f6e912_ea5a167f",
         "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-19T00:17:04Z",
       "side": 1,
       "message": "appName doesn\u0027t identify this session.  appName, subId and uid identify the session.  Another app could use the same appName string.",
+      "range": {
+        "startLine": 138,
+        "startChar": 86,
+        "endLine": 138,
+        "endChar": 93
+      },
+      "revId": "6fbbd335d5c65d781c78f8fcde9e22a349775869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08655519_30b8a128",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-19T00:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0f6e912_ea5a167f",
       "range": {
         "startLine": 138,
         "startChar": 86,
