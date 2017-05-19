@@ -22,6 +22,30 @@
       "revId": "9a20e2c105d08013b617892db456459e53e282bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9403049_ed6d99bd",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-05-19T19:15:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95bc8cfd_34af75a6",
+      "range": {
+        "startLine": 778,
+        "startChar": 18,
+        "endLine": 778,
+        "endChar": 42
+      },
+      "revId": "9a20e2c105d08013b617892db456459e53e282bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
