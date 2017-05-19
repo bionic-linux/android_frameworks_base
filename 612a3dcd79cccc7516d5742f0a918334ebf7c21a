@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c00fc03c_6df1af61",
+        "filename": "core/java/android/bluetooth/IBluetoothHeadset.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-05-19T19:19:05Z",
+      "side": 1,
+      "message": "Is this really necessary?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "612a3dcd79cccc7516d5742f0a918334ebf7c21a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
