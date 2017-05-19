@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0d2883c_eb8c2a96",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-19T00:17:04Z",
+      "side": 1,
+      "message": "another app could be streaming that service.\n\nDispose the stream identified by appName, subId, serviceId and uid.",
+      "range": {
+        "startLine": 124,
+        "startChar": 43,
+        "endLine": 124,
+        "endChar": 60
+      },
+      "revId": "6fbbd335d5c65d781c78f8fcde9e22a349775869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0f6e912_ea5a167f",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-19T00:17:04Z",
+      "side": 1,
+      "message": "appName doesn\u0027t identify this session.  appName, subId and uid identify the session.  Another app could use the same appName string.",
+      "range": {
+        "startLine": 138,
+        "startChar": 86,
+        "endLine": 138,
+        "endChar": 93
+      },
+      "revId": "6fbbd335d5c65d781c78f8fcde9e22a349775869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
