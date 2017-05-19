@@ -201,6 +201,15 @@ import java.util.TimeZone;
     private static final int LAST_SYSTEM = 31;
     private static final int FIRST_CUSTOM = 8192;
 
+    /**
+     * {@hide}
+     */
+    public static final int SEEK_RANGE_START        = 8193; // Integer
+    /**
+     * {@hide}
+     */
+    public static final int SEEK_RANGE_END          = 8194; // Integer
+
     // Shorthands to set the MediaPlayer's metadata filter.
     /**
      * {@hide}
