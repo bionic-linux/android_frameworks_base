@@ -69,7 +69,7 @@ public class FileInfo implements Parcelable {
     };
 
     private FileInfo(Parcel in) {
-        uri = in.readParcelable(null);
+        uri = in.readParcelable(getClass().getClassLoader());
         mimeType = in.readString();
         size = in.readLong();
         int arraySize = in.readInt();
