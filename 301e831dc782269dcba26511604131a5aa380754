@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19747797_d2735bab",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-19T23:22:42Z",
+      "side": 1,
+      "message": "I thought we were gonna stick with passing in a DownloadRequest from the app.",
+      "range": {
+        "startLine": 247,
+        "startChar": 36,
+        "endLine": 248,
+        "endChar": 59
+      },
+      "revId": "301e831dc782269dcba26511604131a5aa380754",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
