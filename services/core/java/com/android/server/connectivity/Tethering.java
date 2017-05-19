@@ -232,7 +232,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
     }
 
     private void updateConfiguration() {
-        mConfig = new TetheringConfiguration(mContext);
+        mConfig = new TetheringConfiguration(mContext, mLog);
     }
 
     @Override
