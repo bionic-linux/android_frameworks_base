@@ -22,6 +22,30 @@
       "revId": "612a3dcd79cccc7516d5742f0a918334ebf7c21a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aba3c5e9_e04451ac",
+        "filename": "core/java/android/bluetooth/IBluetoothHeadset.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-05-19T19:24:45Z",
+      "side": 1,
+      "message": "Not really. \n\nTheoretically, user of the setForceScoAudio(boolean) interface should be able to track its state. getForceScoAudio() is just a convenience method.",
+      "parentUuid": "c00fc03c_6df1af61",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "612a3dcd79cccc7516d5742f0a918334ebf7c21a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
