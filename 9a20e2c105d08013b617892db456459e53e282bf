@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95bc8cfd_34af75a6",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-05-19T18:34:01Z",
+      "side": 1,
+      "message": "For this debug log, it may be useful to add the \"forced\" parameter to the debug message to give more information.",
+      "range": {
+        "startLine": 778,
+        "startChar": 18,
+        "endLine": 778,
+        "endChar": 42
+      },
+      "revId": "9a20e2c105d08013b617892db456459e53e282bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
