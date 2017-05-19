@@ -27,6 +27,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.telephony.mbms.MbmsException;
 import android.telephony.mbms.MbmsStreamingManagerCallback;
+import android.telephony.mbms.MbmsUtils;
 import android.telephony.mbms.StreamingService;
 import android.telephony.mbms.StreamingServiceCallback;
 import android.telephony.mbms.StreamingServiceInfo;
@@ -76,6 +77,7 @@ public class MbmsStreamingManager {
             }
         }
     };
+
     private List<ServiceListener> mServiceListeners = new LinkedList<>();
 
     private MbmsStreamingManagerCallback mCallbackToApp;
@@ -262,7 +264,7 @@ public class MbmsStreamingManager {
 
         mContext.bindService(bindIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 
-        waitOnLatchWithTimeout(latch, BIND_TIMEOUT_MS);
+        MbmsUtils.waitOnLatchWithTimeout(latch, BIND_TIMEOUT_MS);
 
         // Remove the listener and call the initialization method through the interface.
         synchronized (this) {
@@ -289,17 +291,4 @@ public class MbmsStreamingManager {
         }
     }
 
-    private static void waitOnLatchWithTimeout(CountDownLatch l, long timeoutMs) {
-        long endTime = System.currentTimeMillis() + timeoutMs;
-        while (System.currentTimeMillis() < endTime) {
-            try {
-                l.await(timeoutMs, TimeUnit.MILLISECONDS);
-            } catch (InterruptedException e) {
-                // keep waiting
-            }
-            if (l.getCount() <= 0) {
-                return;
-            }
-        }
-    }
 }
