@@ -626,7 +626,7 @@ public class IpSecService extends IIpSecService.Stub {
                                         encapType,
                                         encapLocalPort,
                                         encapRemotePort);
-                if (result != spi) {
+                if (result != IpSecManager.Status.OK) {
                     // TODO: cleanup the first SA if creation of second SA fails
                     return new IpSecTransformResponse(
                             IpSecManager.Status.SPI_UNAVAILABLE, INVALID_RESOURCE_ID);
