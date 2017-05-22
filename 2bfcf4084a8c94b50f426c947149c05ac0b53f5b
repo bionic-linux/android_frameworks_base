@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87376908_ff91a66f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-22T12:52:08Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "4f2b36f7_8e7fcd3b",
+      "range": {
+        "startLine": 134,
+        "startChar": 8,
+        "endLine": 134,
+        "endChar": 29
+      },
+      "revId": "2bfcf4084a8c94b50f426c947149c05ac0b53f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbceafc2_d96bdc70",
         "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c346860b_70e256b5",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-22T12:52:08Z",
+      "side": 1,
+      "message": "Meh, with the arguments thrown in it\u0027s fairly specific.\n\nI tried \"makeString\" instead.",
+      "parentUuid": "fbceafc2_d96bdc70",
+      "range": {
+        "startLine": 152,
+        "startChar": 26,
+        "endLine": 152,
+        "endChar": 35
+      },
+      "revId": "2bfcf4084a8c94b50f426c947149c05ac0b53f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bceb5b76_18db4744",
         "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-05-19T23:37:38Z",
       "side": 1,
       "message": "should be \u0027d right ?",
+      "range": {
+        "startLine": 184,
+        "startChar": 48,
+        "endLine": 184,
+        "endChar": 49
+      },
+      "revId": "2bfcf4084a8c94b50f426c947149c05ac0b53f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c085f97b_e866f820",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-22T12:52:08Z",
+      "side": 1,
+      "message": "I always feel like s is safer, since pretty much everything is convertable via an implicit call to a toString() method.",
+      "parentUuid": "bceb5b76_18db4744",
       "range": {
         "startLine": 184,
         "startChar": 48,
