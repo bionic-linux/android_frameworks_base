@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "408ec584_655d0ef1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2458,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-22T02:29:55Z",
+      "side": 1,
+      "message": "So we now wait for 10 time the connect time, but assert the total duration is \u003c\u003d the connect time, is that correct?",
+      "range": {
+        "startLine": 2458,
+        "startChar": 8,
+        "endLine": 2458,
+        "endChar": 18
+      },
+      "revId": "842a864d51d40d6032ca6496c74f3deb9bdd4ef8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
