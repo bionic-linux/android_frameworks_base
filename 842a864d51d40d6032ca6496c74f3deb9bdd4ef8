@@ -22,6 +22,30 @@
       "revId": "842a864d51d40d6032ca6496c74f3deb9bdd4ef8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75ca0f3b_d9536f84",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2458,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-22T03:51:04Z",
+      "side": 1,
+      "message": "Yes, we wait up to 10 times the deadline. This is so that the error msg can print how much we actually had to wait and overshoot the test deadline. This will make it possible to tune the deadlines from the test results of go/apct-net.\n\nMy intuition is that for most failures in this test, the deadline is overshoot by a lot (because GC, or some other external conditions).",
+      "parentUuid": "408ec584_655d0ef1",
+      "range": {
+        "startLine": 2458,
+        "startChar": 8,
+        "endLine": 2458,
+        "endChar": 18
+      },
+      "revId": "842a864d51d40d6032ca6496c74f3deb9bdd4ef8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
