@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f896bbd4_b1cee823",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-05-23T11:04:12Z",
+      "side": 1,
+      "message": "Why don\u0027t you just call resetShortAudioDescriptor() here if system audio mode are turned off, rather than passing the activated status.",
+      "range": {
+        "startLine": 880,
+        "startChar": 96,
+        "endLine": 880,
+        "endChar": 98
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be7fd347_79892d95",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-05-23T11:04:12Z",
+      "side": 1,
+      "message": "Is it mandatory to request audio descriptor always? I couldn\u0027t find any requirements in the spec. So I don\u0027t think every Android TV needs to send \u003cRequest Short Audio Descriptor\u003e by default.",
+      "range": {
+        "startLine": 881,
+        "startChar": 20,
+        "endLine": 881,
+        "endChar": 37
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e56d146c_d76773bc",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-05-23T11:04:12Z",
+      "side": 1,
+      "message": "isn\u0027t package-private enough here?",
+      "range": {
+        "startLine": 974,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 10
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "749dfe88_65fe65d2",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-05-23T11:04:12Z",
+      "side": 1,
+      "message": "How about moving it to HdmiCecLocalDeviceTv? and you can access it with tv().xxx from the action class.",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fdbfe60_de898ad1",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-05-23T11:04:12Z",
+      "side": 1,
+      "message": "How about moving these into Constants.java with proper javadoc?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b209ce8_f4292877",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-05-23T11:04:12Z",
+      "side": 1,
+      "message": "Can\u0027t this list be different on other models? I think it should be more customizable.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 43
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
