@@ -22,6 +22,30 @@
       "revId": "301e831dc782269dcba26511604131a5aa380754",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ef2c89e_9c400377",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-25T17:40:07Z",
+      "side": 1,
+      "message": "but then we don\u0027t have a nice way to insert the appname and we don\u0027t want the app to have to set that twice.  I guess we could copy into a new DownloadRequest, but that also seems ugly.  Or we make the appName mutable.\n\nThoughts?",
+      "parentUuid": "19747797_d2735bab",
+      "range": {
+        "startLine": 247,
+        "startChar": 36,
+        "endLine": 248,
+        "endChar": 59
+      },
+      "revId": "301e831dc782269dcba26511604131a5aa380754",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
