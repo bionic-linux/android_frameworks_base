@@ -46,6 +46,30 @@
       "revId": "301e831dc782269dcba26511604131a5aa380754",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "320e20e3_f403b07b",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-25T20:46:35Z",
+      "side": 1,
+      "message": "Wouldn\u0027t be that bad to make it mutable as long we hide it from the app -- just @SystemApi the getAppName method on DownloadRequest and @hide the setAppName method.",
+      "parentUuid": "8ef2c89e_9c400377",
+      "range": {
+        "startLine": 247,
+        "startChar": 36,
+        "endLine": 248,
+        "endChar": 59
+      },
+      "revId": "301e831dc782269dcba26511604131a5aa380754",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
