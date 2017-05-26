@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f50d39e_6f8c171f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-26T06:59:37Z",
+      "side": 1,
+      "message": "Right now it\u0027s an int. I\u0027m debating having an enum in the hardware interface class or just turning each type into a separate method, so this would become \"onOffloadAvailable\", \"onOffloadStopped\", etc.\n\nIf you have thoughts there let me know.  I\u0027m basically trying to make this class the \"logical interface\" and the OffloadHardwareInterface class where all the HIDL ugliness hides away.",
+      "parentUuid": "be07270f_e147e72b",
+      "range": {
+        "startLine": 60,
+        "startChar": 57,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "57697cd99b07c164b4bbb7e84f6d5898b1137c3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4463f1ca_5610c72e",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-26T01:08:57Z",
       "side": 1,
       "message": "Just checking: here you call stop(), but in the return branch for !mConfigInitialized, you don\u0027t. It looks correct to me to do it that way, just want to be sure (especially does calling stopOffloadControl() here makes sense ?).",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 19
+      },
+      "revId": "57697cd99b07c164b4bbb7e84f6d5898b1137c3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65ad4b33_9d3c99ca",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-26T06:59:37Z",
+      "side": 1,
+      "message": "It\u0027s harmless to call stop earlier (it MUST be harmless) so I\u0027ll fix that.",
+      "parentUuid": "4463f1ca_5610c72e",
       "range": {
         "startLine": 73,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a77c50f0_efff1b62",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-26T06:59:37Z",
+      "side": 1,
+      "message": "D\u0027oh!  Those are both great ideas.  I was struggling with the compiler last night, when I finally realized that all 8 calls in the control HIDL take these (bool,String) callbacks so I might as well have a struct to capture them.  :-/\n\nAt least this kind of thing is confined to this file.",
+      "parentUuid": "49c96550_794ee78d",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "57697cd99b07c164b4bbb7e84f6d5898b1137c3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e508e68_fc846804",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-26T01:08:57Z",
       "side": 1,
       "message": "Just curious: why not passing the NatTimeoutUpdate object directly to the ControlCallback ?",
+      "range": {
+        "startLine": 120,
+        "startChar": 34,
+        "endLine": 120,
+        "endChar": 57
+      },
+      "revId": "57697cd99b07c164b4bbb7e84f6d5898b1137c3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdf0d67e_374307cc",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-26T06:59:37Z",
+      "side": 1,
+      "message": "I didn\u0027t think that part of the code needed to know about HIDL types.  I\u0027m trying to avoid having \"import android.hardware...V1_0...\" crap in too many files.",
+      "parentUuid": "9e508e68_fc846804",
       "range": {
         "startLine": 120,
         "startChar": 34,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c8f08ce1_b220816c",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-26T06:59:37Z",
+      "side": 1,
+      "message": "Changed the names to duplicate the cb argument names.",
+      "parentUuid": "024fdc52_4eef2fcd",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 21
+      },
+      "revId": "57697cd99b07c164b4bbb7e84f6d5898b1137c3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb54b330_bd98656b",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-05-26T01:08:57Z",
       "side": 1,
       "message": "Is this used now ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 15,
+        "endLine": 132,
+        "endChar": 18
+      },
+      "revId": "57697cd99b07c164b4bbb7e84f6d5898b1137c3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa664857_1c2fc04c",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-26T06:59:37Z",
+      "side": 1,
+      "message": "It is now; I\u0027ve moved the initOffload error logging out of the callback method.\n\nIn future, every one of the six remaining HIDL interface methods takes one of these (bool,String) callbacks, so I foresee this getting use (but maybe I\u0027m wrong).",
+      "parentUuid": "eb54b330_bd98656b",
       "range": {
         "startLine": 132,
         "startChar": 15,
