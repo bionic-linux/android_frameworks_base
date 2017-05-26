@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5df9e29e_26985213",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-26T23:51:40Z",
+      "side": 1,
+      "message": "Guard constant to use in case the download complete intent didn\u0027t include a result code. In retrospect, probably better to just call hasExtra.",
+      "parentUuid": "daac2d22_beb624d0",
+      "range": {
+        "startLine": 156,
+        "startChar": 28,
+        "endLine": 156,
+        "endChar": 39
+      },
+      "revId": "f32a33e6574eeaa03e656b1ebcf3b082439dc5cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a48cb03_0f14e24a",
         "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-26T22:44:35Z",
       "side": 1,
       "message": "@Override",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 10
+      },
+      "revId": "f32a33e6574eeaa03e656b1ebcf3b082439dc5cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346d3b4f_30260e93",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-26T23:51:40Z",
+      "side": 1,
+      "message": "Not an override. This class is a subclass of ContentProvider, not FileProvider",
+      "parentUuid": "1a48cb03_0f14e24a",
       "range": {
         "startLine": 105,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f060a9bc_7698066c",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-26T23:51:40Z",
+      "side": 1,
+      "message": "The app shouldn\u0027t care where the temp files are created. This method is only ever called on the temp files that the manager code creates, since we\u0027re never giving the middleware a handle to the final location of the downloaded file.",
+      "parentUuid": "ccb939ea_ed564d09",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 19
+      },
+      "revId": "f32a33e6574eeaa03e656b1ebcf3b082439dc5cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8ffdc86_2c08d95b",
         "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-26T22:44:35Z",
       "side": 1,
       "message": "do we need to grant permissions, or does it default to everything?",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "f32a33e6574eeaa03e656b1ebcf3b082439dc5cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508b1c80_e6944dca",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-26T23:51:40Z",
+      "side": 1,
+      "message": "This is a comment I forgot to delete when copying from FileProvider. Permissions are granted in MbmsDownloadReceiver via context.grantUriPermission",
+      "parentUuid": "b8ffdc86_2c08d95b",
       "range": {
         "startLine": 139,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6fdc7464_3f1474d7",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-26T23:51:40Z",
+      "side": 1,
+      "message": "not overriden",
+      "parentUuid": "8471f128_127dbc0a",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 10
+      },
+      "revId": "f32a33e6574eeaa03e656b1ebcf3b082439dc5cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88221f5d_db8a4ed4",
         "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-05-26T22:44:35Z",
       "side": 1,
       "message": "not temp..",
+      "range": {
+        "startLine": 170,
+        "startChar": 54,
+        "endLine": 170,
+        "endChar": 58
+      },
+      "revId": "f32a33e6574eeaa03e656b1ebcf3b082439dc5cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f005bfd_e1df829d",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-26T23:51:40Z",
+      "side": 1,
+      "message": "it\u0027s a directory for the temp files that the manager creates",
+      "parentUuid": "88221f5d_db8a4ed4",
       "range": {
         "startLine": 170,
         "startChar": 54,
