@@ -67,6 +67,7 @@ import com.android.server.car.CarServiceHelperService;
 import com.android.server.clipboard.ClipboardService;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.coverage.CoverageService;
+import com.android.server.debug.DebugService;
 import com.android.server.devicepolicy.DevicePolicyManagerService;
 import com.android.server.display.DisplayManagerService;
 import com.android.server.display.NightDisplayService;
@@ -1853,6 +1854,14 @@ public final class SystemServer {
             }
             traceEnd();
         }, BOOT_TIMINGS_TRACE_LOG);
+
+        if (!"user".equals(Build.TYPE)) {
+            try {
+                ServiceManager.addService("debug", new DebugService());
+            } catch (Throwable e) {
+                reportWtf("starting DebugService", e);
+            }
+        }
     }
 
     static final void startSystemUi(Context context, WindowManagerService windowManager) {
