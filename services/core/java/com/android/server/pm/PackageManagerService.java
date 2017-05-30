@@ -385,33 +385,33 @@ import java.util.zip.GZIPInputStream;
 public class PackageManagerService extends IPackageManager.Stub
         implements PackageSender {
     static final String TAG = "PackageManager";
-    static final boolean DEBUG_SETTINGS = false;
-    static final boolean DEBUG_PREFERRED = false;
-    static final boolean DEBUG_UPGRADE = false;
-    static final boolean DEBUG_DOMAIN_VERIFICATION = false;
-    private static final boolean DEBUG_BACKUP = false;
-    private static final boolean DEBUG_INSTALL = false;
-    private static final boolean DEBUG_REMOVE = false;
-    private static final boolean DEBUG_BROADCASTS = false;
-    private static final boolean DEBUG_SHOW_INFO = false;
-    private static final boolean DEBUG_PACKAGE_INFO = false;
-    private static final boolean DEBUG_INTENT_MATCHING = false;
-    private static final boolean DEBUG_PACKAGE_SCANNING = false;
-    private static final boolean DEBUG_VERIFY = false;
-    private static final boolean DEBUG_FILTERS = false;
-    private static final boolean DEBUG_PERMISSIONS = false;
-    private static final boolean DEBUG_SHARED_LIBRARIES = false;
-    private static final boolean DEBUG_COMPRESSION = Build.IS_DEBUGGABLE;
+    static boolean DEBUG_SETTINGS = false;
+    static boolean DEBUG_PREFERRED = false;
+    static boolean DEBUG_UPGRADE = false;
+    static boolean DEBUG_DOMAIN_VERIFICATION = false;
+    private static boolean DEBUG_BACKUP = false;
+    private static boolean DEBUG_INSTALL = false;
+    private static boolean DEBUG_REMOVE = false;
+    private static boolean DEBUG_BROADCASTS = false;
+    private static boolean DEBUG_SHOW_INFO = false;
+    private static boolean DEBUG_PACKAGE_INFO = false;
+    private static boolean DEBUG_INTENT_MATCHING = false;
+    private static boolean DEBUG_PACKAGE_SCANNING = false;
+    private static boolean DEBUG_VERIFY = false;
+    private static boolean DEBUG_FILTERS = false;
+    private static boolean DEBUG_PERMISSIONS = false;
+    private static boolean DEBUG_SHARED_LIBRARIES = false;
+    private static boolean DEBUG_COMPRESSION = Build.IS_DEBUGGABLE;
 
     // Debug output for dexopting. This is shared between PackageManagerService, OtaDexoptService
     // and PackageDexOptimizer. All these classes have their own flag to allow switching a single
     // user, but by default initialize to this.
-    public static final boolean DEBUG_DEXOPT = false;
+    public static boolean DEBUG_DEXOPT = false;
 
-    private static final boolean DEBUG_ABI_SELECTION = false;
-    private static final boolean DEBUG_EPHEMERAL = Build.IS_DEBUGGABLE;
-    private static final boolean DEBUG_TRIAGED_MISSING = false;
-    private static final boolean DEBUG_APP_DATA = false;
+    private static boolean DEBUG_ABI_SELECTION = false;
+    private static boolean DEBUG_EPHEMERAL = Build.IS_DEBUGGABLE;
+    private static boolean DEBUG_TRIAGED_MISSING = false;
+    private static boolean DEBUG_APP_DATA = false;
 
     /** REMOVE. According to Svet, this was only used to reset permissions during development. */
     static final boolean CLEAR_RUNTIME_PERMISSIONS_ON_UPGRADE = false;
