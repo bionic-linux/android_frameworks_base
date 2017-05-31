@@ -175,6 +175,24 @@ final class Constants {
     static final int SYSTEM_AUDIO_STATUS_OFF = 0;
     static final int SYSTEM_AUDIO_STATUS_ON = 1;
 
+    /// Audio Digital Output Codec type
+    static final int MSAPI_CODEC_NONE = 0x0;
+    static final int MSAPI_CODEC_LPCM = 0x1;       ///< Support LPCM
+    static final int MSAPI_CODEC_DD = 0x2;         ///< Support DD
+    static final int MSAPI_CODEC_MPEG1 = 0x3;      ///< Support MPEG1
+    static final int MSAPI_CODEC_MP3 = 0x4;        ///< Support MP3
+    static final int MSAPI_CODEC_MPEG2 = 0x5;      ///< Support MPEG2
+    static final int MSAPI_CODEC_AAC = 0x6;        ///< Support AAC
+    static final int MSAPI_CODEC_DTS = 0x7;        ///< Support DTS
+    static final int MSAPI_CODEC_ATRAC = 0x8;      ///< Support ATRAC
+    static final int MSAPI_CODEC_ONEBITAUDIO = 0x9;///< Support One-Bit Audio
+    static final int MSAPI_CODEC_DDP = 0xA;        ///< Support DDP
+    static final int MSAPI_CODEC_DTSHD = 0xB;      ///< Support DTSHD
+    static final int MSAPI_CODEC_TRUEHD = 0xC;     ///< Support MLP/TRUE-HD
+    static final int MSAPI_CODEC_DST = 0xD;        ///< Support DST
+    static final int MSAPI_CODEC_WMAPRO = 0xE;     ///< Support WMA-Pro
+    static final int MSAPI_CODEC_MAX = 0xF;
+
     // [Menu State]
     static final int MENU_STATE_ACTIVATED = 0;
     static final int MENU_STATE_DEACTIVATED = 1;
