@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c39b2f6f_c99f7ac6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-05-31T06:42:31Z",
+      "side": 1,
+      "message": "Because we also need to get AVR LA and port id.",
+      "parentUuid": "f896bbd4_b1cee823",
+      "range": {
+        "startLine": 880,
+        "startChar": 96,
+        "endLine": 880,
+        "endChar": 98
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be7fd347_79892d95",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-23T11:04:12Z",
       "side": 1,
       "message": "Is it mandatory to request audio descriptor always? I couldn\u0027t find any requirements in the spec. So I don\u0027t think every Android TV needs to send \u003cRequest Short Audio Descriptor\u003e by default.",
+      "range": {
+        "startLine": 881,
+        "startChar": 20,
+        "endLine": 881,
+        "endChar": 37
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6929e4dc_3bdf24c3",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-05-31T06:42:31Z",
+      "side": 1,
+      "message": "Since we only can get short audio descriptor from AVR by CEC command, we think it is necessary to add this by default. Otherwise, there is no other way to get ARC device capability.",
+      "parentUuid": "be7fd347_79892d95",
       "range": {
         "startLine": 881,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "faa0c6f6_086a116a",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-05-31T06:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e56d146c_d76773bc",
+      "range": {
+        "startLine": 974,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 10
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "749dfe88_65fe65d2",
         "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-23T11:04:12Z",
       "side": 1,
       "message": "How about moving it to HdmiCecLocalDeviceTv? and you can access it with tv().xxx from the action class.",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "258d1492_b96edbab",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-05-31T06:42:31Z",
+      "side": 1,
+      "message": "Why is this needed to move to HdmiCecLocalDeviceTv? It\u0027s only use in this file.",
+      "parentUuid": "749dfe88_65fe65d2",
       "range": {
         "startLine": 25,
         "startChar": 12,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b8208249_164f7df3",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-05-31T06:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fdbfe60_de898ad1",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b209ce8_f4292877",
         "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-05-23T11:04:12Z",
       "side": 1,
       "message": "Can\u0027t this list be different on other models? I think it should be more customizable.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 43
+      },
+      "revId": "35a3ad544609c75600df9c236e3bf73a6af1c38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61618098_211835f8",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-05-31T06:42:31Z",
+      "side": 1,
+      "message": "Because these four formats are the most common ones, we ask ARC device if these formats supported. Besides, the other formats are supported by board commonly.",
+      "parentUuid": "2b209ce8_f4292877",
       "range": {
         "startLine": 85,
         "startChar": 0,
