@@ -22,6 +22,30 @@
       "revId": "b9221484d4ebe1b7758268e14ef934136ae7c804",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29c4e813_79c1eeea",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T20:22:36Z",
+      "side": 1,
+      "message": "It\u0027s not the \"right\" way to handle it, but SPI unavailable is not the one-true error here. In fact, This is EITHER ResourceUnavailable or something else entirely. For now let\u0027s use ResourceUnavailable.",
+      "parentUuid": "40c7a398_0f333ed7",
+      "range": {
+        "startLine": 630,
+        "startChar": 15,
+        "endLine": 631,
+        "endChar": 82
+      },
+      "revId": "b9221484d4ebe1b7758268e14ef934136ae7c804",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
