@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4ac311a9_46b16a8b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-06-02T23:28:22Z",
+      "side": 1,
+      "message": "Seems like the fix for b/62056515 should further revise this block to interpret e.errorCode, once that field is being properly set in netd.",
+      "range": {
+        "startLine": 629,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 96
+      },
+      "revId": "b9221484d4ebe1b7758268e14ef934136ae7c804",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40c7a398_0f333ed7",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
