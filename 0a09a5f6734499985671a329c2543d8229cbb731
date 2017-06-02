@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "4c915360_52ab6073",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-02T23:54:44Z",
+      "side": 1,
+      "message": "remove?  or document what it\u0027s for",
+      "range": {
+        "startLine": 156,
+        "startChar": 28,
+        "endLine": 156,
+        "endChar": 39
+      },
+      "revId": "0a09a5f6734499985671a329c2543d8229cbb731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24e5cc48_14f4a8a3",
         "filename": "telephony/java/android/telephony/mbms/MbmsDownloadReceiver.java",
         "patchSetId": 5
@@ -409,6 +432,98 @@
         "startChar": 19,
         "endLine": 278,
         "endChar": 39
+      },
+      "revId": "0a09a5f6734499985671a329c2543d8229cbb731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e73b5e9_79ef4815",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-02T23:54:44Z",
+      "side": 1,
+      "message": "TODO update after TBD doc is written/ratified",
+      "range": {
+        "startLine": 116,
+        "startChar": 11,
+        "endLine": 116,
+        "endChar": 19
+      },
+      "revId": "0a09a5f6734499985671a329c2543d8229cbb731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3b1450_334fac2b",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-02T23:54:44Z",
+      "side": 1,
+      "message": "after temp directory?",
+      "range": {
+        "startLine": 132,
+        "startChar": 39,
+        "endLine": 132,
+        "endChar": 49
+      },
+      "revId": "0a09a5f6734499985671a329c2543d8229cbb731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c919f6e7_21d820e5",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-02T23:54:44Z",
+      "side": 1,
+      "message": "shouldn\u0027t we know the format of that path given by getEmbmsTempFileDir and whether it always ends with / or not?",
+      "range": {
+        "startLine": 134,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 76
+      },
+      "revId": "0a09a5f6734499985671a329c2543d8229cbb731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d1babd_a731976e",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-02T23:54:44Z",
+      "side": 1,
+      "message": "TODO - revisit after doc ratification",
+      "range": {
+        "startLine": 172,
+        "startChar": 23,
+        "endLine": 172,
+        "endChar": 42
       },
       "revId": "0a09a5f6734499985671a329c2543d8229cbb731",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
