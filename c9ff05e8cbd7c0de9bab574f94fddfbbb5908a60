@@ -22,6 +22,30 @@
       "revId": "c9ff05e8cbd7c0de9bab574f94fddfbbb5908a60",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e5119dc_88cb8f79",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-05T02:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3a80cb9_151b91c1",
+      "range": {
+        "startLine": 1235,
+        "startChar": 100,
+        "endLine": 1235,
+        "endChar": 102
+      },
+      "revId": "c9ff05e8cbd7c0de9bab574f94fddfbbb5908a60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
