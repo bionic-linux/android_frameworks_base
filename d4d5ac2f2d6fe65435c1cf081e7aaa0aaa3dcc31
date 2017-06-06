@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e7b571d0_149dc984",
+        "filename": "telephony/java/android/telephony/mbms/MbmsDownloadReceiver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-06-06T23:25:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78d9ab45_286f9741",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "d4d5ac2f2d6fe65435c1cf081e7aaa0aaa3dcc31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9640327_25cd217c",
         "filename": "telephony/java/android/telephony/mbms/MbmsDownloadReceiver.java",
         "patchSetId": 7
@@ -139,6 +163,30 @@
       "revId": "d4d5ac2f2d6fe65435c1cf081e7aaa0aaa3dcc31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa2d021_ece49af4",
+        "filename": "telephony/java/android/telephony/mbms/MbmsDownloadReceiver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-06-06T23:25:31Z",
+      "side": 1,
+      "message": "There\u0027s no manifest impact. apps don\u0027t need to specify an intent filter since we\u0027re using explicit intents.",
+      "parentUuid": "d9640327_25cd217c",
+      "range": {
+        "startLine": 58,
+        "startChar": 32,
+        "endLine": 61,
+        "endChar": 68
+      },
+      "revId": "d4d5ac2f2d6fe65435c1cf081e7aaa0aaa3dcc31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a0d2178f_90d53ac7",
+        "filename": "telephony/java/android/telephony/mbms/MbmsDownloadReceiver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-06-06T23:25:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79260b96_ed70dfa3",
+      "range": {
+        "startLine": 63,
+        "startChar": 9,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "d4d5ac2f2d6fe65435c1cf081e7aaa0aaa3dcc31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe1a875_cff07d27",
         "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
         "patchSetId": 7
@@ -185,6 +257,30 @@
       "revId": "d4d5ac2f2d6fe65435c1cf081e7aaa0aaa3dcc31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e60db9_4688eb29",
+        "filename": "telephony/java/android/telephony/mbms/MbmsTempFileProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-06-06T23:25:31Z",
+      "side": 1,
+      "message": "line 162",
+      "parentUuid": "bfe1a875_cff07d27",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 36
+      },
+      "revId": "d4d5ac2f2d6fe65435c1cf081e7aaa0aaa3dcc31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
