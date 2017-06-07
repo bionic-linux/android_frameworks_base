@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29812d20_0ae46366",
+        "filename": "core/java/com/nxp/nfc/NxpNfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-07T14:35:57Z",
+      "side": 1,
+      "message": "Instead of creating a new \"*Adapter\" class here, simply add a method to NfcAdapter (getDtaTestInterface() for example).\n\nAlso, assuming this is not chip vendor specific?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "4b4fe521f78438b476b522ba17b5a87c69d6b384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
