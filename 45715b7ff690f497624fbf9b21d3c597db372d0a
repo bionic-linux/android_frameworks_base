@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431fa9b6_be2bf792",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-06-07T21:39:00Z",
+      "side": 1,
+      "message": "Does this fit on one line? You should get in the habit of auto-formatting changes so as not to miss things like this.",
+      "range": {
+        "startLine": 612,
+        "startChar": 16,
+        "endLine": 613,
+        "endChar": 66
+      },
+      "revId": "45715b7ff690f497624fbf9b21d3c597db372d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
