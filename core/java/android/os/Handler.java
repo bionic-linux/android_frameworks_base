@@ -22,6 +22,7 @@ import android.util.Log;
 import android.util.Printer;
 
 import java.lang.reflect.Modifier;
+import java.util.concurrent.Executor;
 
 /**
  * A Handler allows you to send and process {@link Message} and Runnable
@@ -63,7 +64,7 @@ import java.lang.reflect.Modifier;
  * your new thread.  The given Runnable or Message will then be scheduled
  * in the Handler's message queue and processed when appropriate.
  */
-public class Handler {
+public class Handler implements Executor {
     /*
      * Set this flag to true to detect anonymous, local or member classes
      * that extend this Handler class and that are not static. These kind
@@ -357,6 +358,19 @@ public class Handler {
        return  sendMessageDelayed(getPostMessage(r), 0);
     }
     
+    /**
+     * Adds a runnable to the message queue for execution. The
+     * runnable will be run on the thread to which this handler is
+     * attached.
+     *
+     * @param r The Runnable that will be executed.
+     * @throws RejectedExecutionException on failure
+     */
+    public final void execute(Runnable r)
+    {
+        if (!post(r)) throws New RejectedExecutionException();
+    }
+
     /**
      * Causes the Runnable r to be added to the message queue, to be run
      * at a specific time given by <var>uptimeMillis</var>.
