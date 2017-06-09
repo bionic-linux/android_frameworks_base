@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7a11c05_1569b896",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-09T08:53:37Z",
+      "side": 1,
+      "message": "Code looks good to me like this. Since no matter what mWifiTetherRequested is set to false, one alternative style involving less nesting that I would recommend would look like:\n\nmWifiTetherRequested \u003d false;\n\nif (!TextUtils.isEmpty(ifname)) {\n  final TetherState ts \u003d mTetherStates.get(ifname);\n  if (ts !\u003d null) {\n    ts.stateMachine.unwanted();\n    return;\n  }\n}\n\nfor (int i \u003d 0; i \u003c mTetherStates.size(); i++) {\n  TetherInterfaceStateMachine tism \u003d ...\n  if (...) {\n    tism.unwanted();\n    return;\n  }\n}\n\nmLog.log(\"Error ...\");",
+      "range": {
+        "startLine": 827,
+        "startChar": 8,
+        "endLine": 827,
+        "endChar": 30
+      },
+      "revId": "ad8fcbd6ffbf9d4f88243a7d82a0236b51bb52a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10a509e3_2300dae3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-09T08:53:37Z",
+      "side": 1,
+      "message": "should this mention that ifname was not found ?",
+      "range": {
+        "startLine": 845,
+        "startChar": 22,
+        "endLine": 845,
+        "endChar": 88
+      },
+      "revId": "ad8fcbd6ffbf9d4f88243a7d82a0236b51bb52a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a8339b6_b5aaf6be",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-09T08:53:37Z",
+      "side": 1,
+      "message": "Just checking: I noticed that mWifiTetherRequested is not volatile. Is this fine to set this variable to false in this thread context. In the HEAD code it is done on the tism\u0027s thread right ?",
+      "range": {
+        "startLine": 849,
+        "startChar": 8,
+        "endLine": 849,
+        "endChar": 37
+      },
+      "revId": "ad8fcbd6ffbf9d4f88243a7d82a0236b51bb52a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
