@@ -222,7 +222,7 @@ public class DhcpClient extends StateMachine {
     }
 
     private DhcpClient(Context context, StateMachine controller, String iface) {
-        super(TAG);
+        super(TAG, controller.getHandler());
 
         mContext = context;
         mController = controller;
