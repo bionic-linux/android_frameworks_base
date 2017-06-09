@@ -813,26 +813,36 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                     case WifiManager.WIFI_AP_STATE_DISABLING:
                     case WifiManager.WIFI_AP_STATE_FAILED:
                     default:
-                        disableWifiIpServingLocked(curState);
+                        disableWifiIpServingLocked(ifname, curState);
                         break;
                 }
             }
         }
     }
 
-    // TODO: Pass in the interface name and, if non-empty, only turn down IP
-    // serving on that one interface.
-    private void disableWifiIpServingLocked(int apState) {
+    private void disableWifiIpServingLocked(String ifname, int apState) {
         if (DBG) Log.d(TAG, "Canceling WiFi tethering request - AP_STATE=" + apState);
 
-        // Tell appropriate interface state machines that they should tear
-        // themselves down.
-        for (int i = 0; i < mTetherStates.size(); i++) {
-            TetherInterfaceStateMachine tism = mTetherStates.valueAt(i).stateMachine;
-            if (tism.interfaceType() == ConnectivityManager.TETHERING_WIFI) {
-                tism.sendMessage(TetherInterfaceStateMachine.CMD_TETHER_UNREQUESTED);
-                break;  // There should be at most one of these.
+        // Tell appropriate interface state machine that it should tear itself down.
+        boolean found = false;
+        if (!TextUtils.isEmpty(ifname)) {
+            final TetherState ts = mTetherStates.get(ifname);
+            if (ts != null) {
+                ts.stateMachine.unwanted();
+                found = true;
             }
+        } else {
+            for (int i = 0; i < mTetherStates.size(); i++) {
+                TetherInterfaceStateMachine tism = mTetherStates.valueAt(i).stateMachine;
+                if (tism.interfaceType() == ConnectivityManager.TETHERING_WIFI) {
+                    tism.unwanted();
+                    found = true;
+                    break;  // There should be at most one of these.
+                }
+            }
+        }
+        if (!found) {
+            mLog.log("Error disabling Wi-Fi IP serving; referenced interface: " + ifname);
         }
         // Regardless of whether we requested this transition, the AP has gone
         // down.  Don't try to tether again unless we're requested to do so.
