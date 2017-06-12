@@ -85,13 +85,16 @@ public class OffloadController {
             mLog.i("tethering offload control not supported");
             stop();
         }
+        mLog.log("tethering offload started");
     }
 
     public void stop() {
+        final boolean hadBeenStarted = started();
         mUpstreamLinkProperties = null;
         mHwInterface.stopOffloadControl();
         mControlInitialized = false;
         mConfigInitialized = false;
+        if (hadBeenStarted) mLog.log("tethering offload stopped");
     }
 
     public void setUpstreamLinkProperties(LinkProperties lp) {

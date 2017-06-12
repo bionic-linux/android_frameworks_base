@@ -61,12 +61,18 @@ public class IPv6TetheringInterfaceServices {
     private LinkProperties mLastIPv6LinkProperties;
     private RouterAdvertisementDaemon mRaDaemon;
     private RaParams mLastRaParams;
+    // The LinkProperties of this interface, to be updated so that the data
+    // can be passed upward from the TetherInterfaceStateMachine.
+    //
+    // TODO: Merge this class into TetherInterfaceStateMachine and remove this.
+    private LinkProperties mInterfaceLinkProperties;
 
     public IPv6TetheringInterfaceServices(
-            String ifname, INetworkManagementService nms, SharedLog log) {
+            String ifname, INetworkManagementService nms, LinkProperties lp, SharedLog log) {
         mIfName = ifname;
         mNMService = nms;
-        mLog = log.forSubComponent(mIfName);
+        mInterfaceLinkProperties = lp;
+        mLog = log;
     }
 
     public boolean start() {
@@ -170,6 +176,8 @@ public class IPv6TetheringInterfaceServices {
             } catch (RemoteException e) {
                 mLog.e("Failed to remove IPv6 routes from local table: " + e);
             }
+
+            for (RouteInfo route : toBeRemoved) mInterfaceLinkProperties.removeRoute(route);
         }
 
         // [2] Add only the routes that have not previously been added.
@@ -200,6 +208,8 @@ public class IPv6TetheringInterfaceServices {
                 } catch (RemoteException e) {
                     mLog.e("Failed to add IPv6 routes to local table: " + e);
                 }
+
+                for (RouteInfo route : toBeAdded) mInterfaceLinkProperties.addRoute(route);
             }
         }
     }
@@ -222,6 +232,9 @@ public class IPv6TetheringInterfaceServices {
                 } catch (ServiceSpecificException | RemoteException e) {
                     mLog.e("Failed to remove local dns IP " + dnsString + ": " + e);
                 }
+
+                mInterfaceLinkProperties.removeLinkAddress(
+                        new LinkAddress(dns, RFC7421_PREFIX_LENGTH));
             }
         }
 
@@ -240,6 +253,9 @@ public class IPv6TetheringInterfaceServices {
                     mLog.e("Failed to add local dns IP " + dnsString + ": " + e);
                     newDnses.remove(dns);
                 }
+
+                mInterfaceLinkProperties.addLinkAddress(
+                        new LinkAddress(dns, RFC7421_PREFIX_LENGTH));
             }
         }
 
