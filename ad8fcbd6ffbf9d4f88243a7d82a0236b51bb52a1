@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "068959ff_bfbe66e4",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-12T03:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7a11c05_1569b896",
+      "range": {
+        "startLine": 827,
+        "startChar": 8,
+        "endLine": 827,
+        "endChar": 30
+      },
+      "revId": "ad8fcbd6ffbf9d4f88243a7d82a0236b51bb52a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10a509e3_2300dae3",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6fded0d3_792f4b31",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-12T03:48:21Z",
+      "side": 1,
+      "message": "Changed this message to be a bit more easily when the interface is specified and when it\u0027s not specified.\n\nIf the interface is specified then we\u0027ll know the TISM wasn\u0027t found.",
+      "parentUuid": "10a509e3_2300dae3",
+      "range": {
+        "startLine": 845,
+        "startChar": 22,
+        "endLine": 845,
+        "endChar": 88
+      },
+      "revId": "ad8fcbd6ffbf9d4f88243a7d82a0236b51bb52a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a8339b6_b5aaf6be",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-09T08:53:37Z",
       "side": 1,
       "message": "Just checking: I noticed that mWifiTetherRequested is not volatile. Is this fine to set this variable to false in this thread context. In the HEAD code it is done on the tism\u0027s thread right ?",
+      "range": {
+        "startLine": 849,
+        "startChar": 8,
+        "endLine": 849,
+        "endChar": 37
+      },
+      "revId": "ad8fcbd6ffbf9d4f88243a7d82a0236b51bb52a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fecde55_648d10d2",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-12T03:48:21Z",
+      "side": 1,
+      "message": "I believe it\u0027s always read and modified under lock.\n\nOnce the Wi-Fi system reliably sends us the interface name in every WIFI_AP_STATE_CHANGED broadcast we can delete this variable altogether.",
+      "parentUuid": "7a8339b6_b5aaf6be",
       "range": {
         "startLine": 849,
         "startChar": 8,
