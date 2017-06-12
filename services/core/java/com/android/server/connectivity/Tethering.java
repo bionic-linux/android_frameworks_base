@@ -1786,7 +1786,8 @@ public class Tethering extends BaseNetworkObserver {
             }
         }
 
-        mLog.log(String.format("OBSERVED LinkProperties update iface=%s state=%s", iface, state));
+        mLog.log(String.format(
+                "OBSERVED LinkProperties update iface=%s state=%s lp=%s", iface, state, newLp));
         final int which = TetherMasterSM.EVENT_IFACE_UPDATE_LINKPROPERTIES;
         mTetherMasterSM.sendMessage(which, state, 0, newLp);
     }
