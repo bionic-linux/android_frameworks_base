@@ -22,6 +22,7 @@ import android.net.InterfaceConfiguration;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkUtils;
+import android.net.RouteInfo;
 import android.net.util.SharedLog;
 import android.os.INetworkManagementService;
 import android.os.Looper;
@@ -37,9 +38,10 @@ import com.android.internal.util.StateMachine;
 import java.net.InetAddress;
 
 /**
- * @hide
+ * Provides the interface to IP-layer serving functionality for a given network
+ * interface, e.g. for tethering or "local-only hotspot" mode.
  *
- * Tracks the eligibility of a given network interface for tethering.
+ * @hide
  */
 public class TetherInterfaceStateMachine extends StateMachine {
     private static final String USB_NEAR_IFACE_ADDR = "192.168.42.129";
@@ -99,7 +101,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
     public TetherInterfaceStateMachine(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
             INetworkManagementService nMService, INetworkStatsService statsService,
-            IControlsTethering tetherController, IPv6TetheringInterfaceServices ipv6Svc) {
+            IControlsTethering tetherController) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
         mNMService = nMService;
@@ -108,8 +110,9 @@ public class TetherInterfaceStateMachine extends StateMachine {
         mIfaceName = ifaceName;
         mInterfaceType = interfaceType;
         mLinkProperties = new LinkProperties();
-        mLinkProperties.setInterfaceName(mIfaceName);
-        mIPv6TetherSvc = ipv6Svc;
+        resetLinkProperties();
+        mIPv6TetherSvc = new IPv6TetheringInterfaceServices(
+                ifaceName, nMService, mLinkProperties, mLog);
         mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
 
         mInitialState = new InitialState();
@@ -133,8 +136,8 @@ public class TetherInterfaceStateMachine extends StateMachine {
     public void stop() { sendMessage(CMD_INTERFACE_DOWN); }
 
     // configured when we start tethering and unconfig'd on error or conclusion
-    private boolean configureIfaceIp(boolean enabled) {
-        if (VDBG) Log.d(TAG, "configureIfaceIp(" + enabled + ")");
+    private boolean configureIPv4(boolean enabled) {
+        if (VDBG) Log.d(TAG, "configureIPv4(" + enabled + ")");
 
         String ipAsString = null;
         int prefixLen = 0;
@@ -149,12 +152,13 @@ public class TetherInterfaceStateMachine extends StateMachine {
             return true;
         }
 
-        InterfaceConfiguration ifcg = null;
+        LinkAddress linkAddr = null;
         try {
-            ifcg = mNMService.getInterfaceConfig(mIfaceName);
+            final InterfaceConfiguration ifcg = mNMService.getInterfaceConfig(mIfaceName);
             if (ifcg != null) {
                 InetAddress addr = NetworkUtils.numericToInetAddress(ipAsString);
-                ifcg.setLinkAddress(new LinkAddress(addr, prefixLen));
+                linkAddr = new LinkAddress(addr, prefixLen);
+                ifcg.setLinkAddress(linkAddr);
                 if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
                     // The WiFi stack has ownership of the interface up/down state.
                     // It is unclear whether the bluetooth or USB stacks will manage their own
@@ -169,12 +173,22 @@ public class TetherInterfaceStateMachine extends StateMachine {
                 }
                 ifcg.clearFlag("running");
                 mNMService.setInterfaceConfig(mIfaceName, ifcg);
+            } else {
+                mLog.e("Received null interface config");
+                return false;
             }
         } catch (Exception e) {
             mLog.e("Error configuring interface " + e);
             return false;
         }
 
+        if (enabled) {
+            mLinkProperties.addLinkAddress(linkAddr);
+            mLinkProperties.addRoute(new RouteInfo(linkAddr));
+        } else {
+            mLinkProperties.removeLinkAddress(linkAddr);
+            mLinkProperties.removeRoute(new RouteInfo(linkAddr));
+        }
         return true;
     }
 
@@ -189,10 +203,17 @@ public class TetherInterfaceStateMachine extends StateMachine {
     private void sendInterfaceState(int newInterfaceState) {
         mTetherController.updateInterfaceState(
                 TetherInterfaceStateMachine.this, newInterfaceState, mLastError);
-        // TODO: Populate mLinkProperties correctly, and send more sensible
-        // updates more frequently (not just here).
+        sendLinkProperties();
+    }
+
+    private void sendLinkProperties() {
         mTetherController.updateLinkProperties(
                 TetherInterfaceStateMachine.this, new LinkProperties(mLinkProperties));
+    }
+
+    private void resetLinkProperties() {
+        mLinkProperties.clear();
+        mLinkProperties.setInterfaceName(mIfaceName);
     }
 
     class InitialState extends State {
@@ -235,7 +256,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
     class BaseServingState extends State {
         @Override
         public void enter() {
-            if (!configureIfaceIp(true)) {
+            if (!configureIPv4(true)) {
                 mLastError = ConnectivityManager.TETHER_ERROR_IFACE_CFG_ERROR;
                 return;
             }
@@ -269,7 +290,9 @@ public class TetherInterfaceStateMachine extends StateMachine {
                 mLog.e("Failed to untether interface: " + e);
             }
 
-            configureIfaceIp(false);
+            configureIPv4(false);
+
+            resetLinkProperties();
         }
 
         @Override
@@ -287,6 +310,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
                 case CMD_IPV6_TETHER_UPDATE:
                     mIPv6TetherSvc.updateUpstreamIPv6LinkProperties(
                             (LinkProperties) message.obj);
+                    sendLinkProperties();
                     break;
                 case CMD_IP_FORWARDING_ENABLE_ERROR:
                 case CMD_IP_FORWARDING_DISABLE_ERROR:
