@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0a472bd_0c6393ce",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringInterfaceServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-13T00:39:31Z",
+      "side": 0,
+      "message": "this is in preparation of merging this class with TetherInterfaceStateMachine ?",
+      "range": {
+        "startLine": 69,
+        "startChar": 18,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "a1df5b25e65321562f82df1cab884bffcde8c33b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
