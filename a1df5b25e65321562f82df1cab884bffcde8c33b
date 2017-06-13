@@ -22,6 +22,30 @@
       "revId": "a1df5b25e65321562f82df1cab884bffcde8c33b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8253b89_7d6eb8e4",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringInterfaceServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-13T05:10:17Z",
+      "side": 0,
+      "message": "Yes, and also a result of the changing the way it\u0027s instantiated.\n\nBecause IPv6TetheringInterfaceServices was instantiated outside of the TISM I manually tried make the log components the same.  That\u0027s no longer needed.",
+      "parentUuid": "e0a472bd_0c6393ce",
+      "range": {
+        "startLine": 69,
+        "startChar": 18,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "a1df5b25e65321562f82df1cab884bffcde8c33b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

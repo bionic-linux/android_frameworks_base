@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03e56dd4_1be50b13",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-13T05:10:17Z",
+      "side": 1,
+      "message": "It does now, yes.",
+      "parentUuid": "42952f56_123e759b",
+      "revId": "20309e9fa3e5db2568be89ecc54434f2cb9f192d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b31d3a2_fa03e335",
         "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4d25f524_04aee55a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-13T05:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b31d3a2_fa03e335",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 13
+      },
+      "revId": "20309e9fa3e5db2568be89ecc54434f2cb9f192d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3580457_1145ffaa",
         "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-13T00:39:31Z",
       "side": 1,
       "message": "you don\u0027t need to send link properties here ?",
+      "range": {
+        "startLine": 248,
+        "startChar": 20,
+        "endLine": 248,
+        "endChar": 26
+      },
+      "revId": "20309e9fa3e5db2568be89ecc54434f2cb9f192d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d1bafe7_78bee167",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-13T05:10:17Z",
+      "side": 1,
+      "message": "This is not a serving state, so (a) we shouldn\u0027t be forming any link properties anyway and (b) nobody is really listening for them (since we\u0027re not serving).\n\nThis message handling was mostly here to keep track of upstream updates as they come in (mostly they\u0027re null).  I didn\u0027t want to see \"unhandled\" messages in the logs.\n\nProbably this can be considered for deletion or short-circuiting with just a \"break\".",
+      "parentUuid": "f3580457_1145ffaa",
       "range": {
         "startLine": 248,
         "startChar": 20,
