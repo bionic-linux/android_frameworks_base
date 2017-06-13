@@ -128,6 +128,30 @@
       "revId": "20309e9fa3e5db2568be89ecc54434f2cb9f192d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbc7200a_de0a80f3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-13T05:49:44Z",
+      "side": 1,
+      "message": "ok got it. Looks good to me as is then.",
+      "parentUuid": "6d1bafe7_78bee167",
+      "range": {
+        "startLine": 248,
+        "startChar": 20,
+        "endLine": 248,
+        "endChar": 26
+      },
+      "revId": "20309e9fa3e5db2568be89ecc54434f2cb9f192d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
