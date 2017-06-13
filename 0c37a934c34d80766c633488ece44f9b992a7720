@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a26b8473_74be8363",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-06-13T07:37:54Z",
+      "side": 1,
+      "message": "Line length limit is 100 characters.",
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf196572_ee6228c4",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-06-13T07:37:54Z",
+      "side": 1,
+      "message": "We use 8 space indents for line wraps, including function calls and assignments",
+      "range": {
+        "startLine": 880,
+        "startChar": 20,
+        "endLine": 880,
+        "endChar": 24
+      },
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53e85585_28574ebd",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-06-13T07:37:54Z",
+      "side": 1,
+      "message": "What about adding callback in RequestShortAudioDescriptorAction for this instead?",
+      "range": {
+        "startLine": 974,
+        "startChar": 0,
+        "endLine": 976,
+        "endChar": 5
+      },
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9494c805_697a6aab",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-06-13T07:37:54Z",
+      "side": 1,
+      "message": "Is it ok not to request short audio descriptor when an AVR device is added?",
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
