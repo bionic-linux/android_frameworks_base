@@ -166,6 +166,30 @@
       "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a46caeec_0a9b19e3",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-06-15T22:20:39Z",
+      "side": 1,
+      "message": "We do guarantee at least a base level of naming.",
+      "parentUuid": "8222c2e6_4361db20",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 846,
+        "endChar": 25
+      },
+      "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
