@@ -118,6 +118,54 @@
       "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cdf480c_adb988de",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2017-06-15T22:04:01Z",
+      "side": 1,
+      "message": "Ah, right, I had my Android filter on cs/. Thanks!",
+      "parentUuid": "5b57dd33_379b04bf",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 846,
+        "endChar": 25
+      },
+      "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8222c2e6_4361db20",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2017-06-15T22:04:01Z",
+      "side": 1,
+      "message": "Even base.split.apk then I guess?\n\nSo the code line 734 is not a guaranteed naming?",
+      "parentUuid": "7a400454_c0f9e490",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 846,
+        "endChar": 25
+      },
+      "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
