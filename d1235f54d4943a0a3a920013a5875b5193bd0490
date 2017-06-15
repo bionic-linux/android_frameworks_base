@@ -46,6 +46,30 @@
       "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fd88841_66672d93",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2017-06-15T21:50:23Z",
+      "side": 1,
+      "message": "Adam/Todd, can you guys confirm? I thought there were pretty strong assumptions from PM that base.apk cannot be a split.\n\nAlso, it seems this code is run when the installation mode is MODE_INHERIT_EXISTING.  A quick search in cs/ and my internal tree shows that this is only set in PackageManagerShellCommand.java. Is that really the path that is taken for a split update though play store?",
+      "parentUuid": "ba065175_65a4bf06",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 846,
+        "endChar": 25
+      },
+      "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
