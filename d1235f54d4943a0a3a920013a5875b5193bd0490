@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "279ef418_6a251368",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2017-06-15T21:34:30Z",
+      "side": 1,
+      "message": "The PM code often mentions \"base\". WDYT about just checking oatFile.getName().startsWith(\"base\")?",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 846,
+        "endChar": 25
+      },
+      "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
