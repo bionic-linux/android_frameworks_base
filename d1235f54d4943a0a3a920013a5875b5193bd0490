@@ -70,6 +70,30 @@
       "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b57dd33_379b04bf",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-06-15T22:00:10Z",
+      "side": 1,
+      "message": "All packages _must_ have a base.apk. It\u0027s a failure if it does not exist.\n\nSplits can be named anything.\n\nI think your \u0027cs\u0027 foo needs some work :)\nhttps://cs.corp.google.com/piper///depot/google3/java/com/google/android/apps/play/store/modules/com/google/android/finsky/instantapps/install/InstallSession.java?rcl\u003d158335726\u0026l\u003d80\n\nNote: This is currently only for instant apps since finsky does not [yet] support splits for \"regular\" apps; there\u0027s an issue with their serving statck. :/",
+      "parentUuid": "6fd88841_66672d93",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 846,
+        "endChar": 25
+      },
+      "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
