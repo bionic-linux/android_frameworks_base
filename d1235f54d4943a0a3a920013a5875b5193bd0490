@@ -22,6 +22,30 @@
       "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba065175_65a4bf06",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1010108
+      },
+      "writtenOn": "2017-06-15T21:44:48Z",
+      "side": 1,
+      "message": "I agree this check is clunky, but splits can have any name. A check that the name starts with base could catch splits with names that begin with base as well.",
+      "parentUuid": "279ef418_6a251368",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 846,
+        "endChar": 25
+      },
+      "revId": "d1235f54d4943a0a3a920013a5875b5193bd0490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
