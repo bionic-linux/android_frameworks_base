@@ -29,6 +29,6 @@ interface IDownloadCallback
      * Gives progress callbacks for a given DownloadRequest.  Includes a FileInfo
      * as the list of files may not have been known at request-time.
      */
-    void progress(in DownloadRequest request, in FileInfo fileInfo, int downloadSize,
-            int currentSize, int decodedPercent);
+    void progress(in DownloadRequest request, in FileInfo fileInfo, int currentDownloadSize,
+            int fullDownloadSize, int currentDecodedSize, int fullDecodedSize);
 }
