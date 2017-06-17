@@ -21,7 +21,7 @@ import android.net.Uri;
 import android.telephony.mbms.DownloadRequest;
 import android.telephony.mbms.FileInfo;
 import android.telephony.mbms.IMbmsDownloadManagerCallback;
-import android.telephony.mbms.IDownloadCallback;
+import android.telephony.mbms.IDownloadProgressCallback;
 
 /**
  * @hide
@@ -34,7 +34,7 @@ interface IMbmsDownloadService
 
     int setTempFileRootDirectory(int subId, String rootDirectoryPath);
 
-    int download(in DownloadRequest downloadRequest, IDownloadCallback listener);
+    int download(in DownloadRequest downloadRequest, IDownloadProgressCallback listener);
 
     List<DownloadRequest> listPendingDownloads(int subscriptionId);
 
