@@ -119,7 +119,7 @@ public class CaptivePortalLoginActivity extends Activity {
             finishAndRemoveTask();
             return;
         }
-        mNetworkCallback = new NetworkCallback() {
+        NetworkCallback networkCallback = new NetworkCallback() {
             @Override
             public void onLost(Network lostNetwork) {
                 if (mNetwork.equals(lostNetwork)) done(Result.UNWANTED);
@@ -129,7 +129,8 @@ public class CaptivePortalLoginActivity extends Activity {
         for (int transportType : networkCapabilities.getTransportTypes()) {
             builder.addTransportType(transportType);
         }
-        mCm.registerNetworkCallback(builder.build(), mNetworkCallback);
+        mCm.registerNetworkCallback(builder.build(), networkCallback);
+        mNetworkCallback = networkCallback; // Only set mNetworkCallback if registration succeeded.
 
         getActionBar().setDisplayShowHomeEnabled(false);
         getActionBar().setElevation(0); // remove shadow
@@ -182,10 +183,7 @@ public class CaptivePortalLoginActivity extends Activity {
         if (DBG) {
             Log.d(TAG, String.format("Result %s for %s", result.name(), mUrl.toString()));
         }
-        if (mNetworkCallback != null) {
-            mCm.unregisterNetworkCallback(mNetworkCallback);
-            mNetworkCallback = null;
-        }
+        ensureNetworkCallbackUnregistered();
         logMetricsEvent(result.metricsEvent);
         switch (result) {
             case DISMISSED:
@@ -244,10 +242,7 @@ public class CaptivePortalLoginActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mNetworkCallback != null) {
-            mCm.unregisterNetworkCallback(mNetworkCallback);
-            mNetworkCallback = null;
-        }
+        ensureNetworkCallbackUnregistered();
         if (mLaunchBrowser) {
             // Give time for this network to become default. After 500ms just proceed.
             for (int i = 0; i < 5; i++) {
@@ -474,6 +469,15 @@ public class CaptivePortalLoginActivity extends Activity {
         public void onProgressChanged(WebView view, int newProgress) {
             getProgressBar().setProgress(newProgress);
         }
+    }
+
+    private void ensureNetworkCallbackUnregistered() {
+        if (mNetworkCallback == null) {
+            return;
+        }
+        final NetworkCallback networkCallback = mNetworkCallback;
+        mCm.unregisterNetworkCallback(networkCallback);
+        mNetworkCallback = null;
     }
 
     private ProgressBar getProgressBar() {
