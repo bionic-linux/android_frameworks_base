@@ -203,6 +203,27 @@ public final class BluetoothDevice implements Parcelable {
             "android.bluetooth.device.action.BOND_STATE_CHANGED";
 
     /**
+     * Broadcast Action: Indicates the battery level of a remote device has
+     * been retrieved for the first time, or changed since the last retrieval
+     * <p>Always contains the extra fields {@link #EXTRA_DEVICE} and {@link
+     * #EXTRA_BATTERY_LEVEL}.
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} to receive.
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_BATTERY_LEVEL_CHANGED =
+            "android.bluetooth.device.action.BATTERY_LEVEL_CHANGED";
+
+    /**
+     * Used as an Integer extra field in {@link #ACTION_BATTERY_LEVEL_CHANGED}
+     * intent. It contains the most recently retrieved battery level information
+     * ranging from 0% to 100% for a remote device
+     * @hide
+     */
+    public static final String EXTRA_BATTERY_LEVEL =
+            "android.bluetooth.device.extra.BATTERY_LEVEL";
+
+    /**
      * Used as a Parcelable {@link BluetoothDevice} extra field in every intent
      * broadcast by this class. It contains the {@link BluetoothDevice} that
      * the intent applies to.
@@ -861,6 +882,25 @@ public final class BluetoothDevice implements Parcelable {
             name = getName();
         }
         return name;
+    }
+
+    /**
+     * Get the most recent identified battery level of this Bluetooth device
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH}
+     *
+     * @return Battery Percentage 0-100, or -1 on error or not supported
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public int getBatteryLevel() {
+        if (sService == null) {
+            Log.e(TAG, "Bluetooth disabled. Cannot get remote device battery level");
+            return -1;
+        }
+        try {
+            return sService.getBatteryLevel(this);
+        } catch (RemoteException e) {Log.e(TAG, "", e);}
+        return 0;
     }
 
     /**
