@@ -336,6 +336,7 @@ public class CaptivePortalLoginActivity extends Activity {
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1,
                     getResources().getDisplayMetrics());
         private int mPagesLoaded;
+        private String mHostname; // the page that this webview is currently loading or showing.
 
         // If we haven't finished cleaning up the history, don't allow going back.
         public boolean allowBack() {
@@ -343,8 +344,8 @@ public class CaptivePortalLoginActivity extends Activity {
         }
 
         @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            if (url.contains(mBrowserBailOutToken)) {
+        public void onPageStarted(WebView view, String urlString, Bitmap favicon) {
+            if (urlString.contains(mBrowserBailOutToken)) {
                 mLaunchBrowser = true;
                 done(Result.WANTED_AS_IS);
                 return;
@@ -355,10 +356,14 @@ public class CaptivePortalLoginActivity extends Activity {
             if (mPagesLoaded == 0) return;
             // For internally generated pages, leave URL bar listing prior URL as this is the URL
             // the page refers to.
-            if (!url.startsWith(INTERNAL_ASSETS)) {
-                getActionBar().setSubtitle(getHeaderSubtitle(url));
+            if (!urlString.startsWith(INTERNAL_ASSETS)) {
+                getActionBar().setSubtitle(getHeaderSubtitle(urlString));
             }
             getProgressBar().setVisibility(View.VISIBLE);
+            URL url = makeURL(urlString);
+            if (url != null) {
+                mHostname = url.getHost();
+            }
             testForCaptivePortal();
         }
 
@@ -395,6 +400,12 @@ public class CaptivePortalLoginActivity extends Activity {
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            URL url = makeURL(error.getUrl());
+            if (url == null || mHostname == null || !mHostname.equals(url.getHost())) {
+                // Ignore ssl errors for resources coming from a different hostname than the page
+                // that we are currently loading.
+                return;
+            }
             logMetricsEvent(MetricsEvent.CAPTIVE_PORTAL_LOGIN_ACTIVITY_SSL_ERROR);
             Log.w(TAG, "SSL error (error: " + error.getPrimaryError() + " host: " +
                     // Only show host to avoid leaking private info.
