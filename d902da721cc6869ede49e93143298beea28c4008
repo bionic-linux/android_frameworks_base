@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a19f7cc_b5ab23a7",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:30:19Z",
+      "side": 1,
+      "message": "Sigh.  It looks like if mUrl is null (which shouldn\u0027t happen in normal operation), then mNetworkCallback will be null, and this will crash with an NPE on exit.\n\nNot sure what to do about that. We could either create and register the network callback before checking mUrl, or put this unregister call behind an if.",
+      "range": {
+        "startLine": 250,
+        "startChar": 38,
+        "endLine": 250,
+        "endChar": 54
+      },
+      "revId": "d902da721cc6869ede49e93143298beea28c4008",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
