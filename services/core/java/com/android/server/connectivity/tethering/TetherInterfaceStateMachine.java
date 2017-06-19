@@ -99,6 +99,8 @@ public class TetherInterfaceStateMachine extends StateMachine {
     public static final int CMD_TETHER_CONNECTION_CHANGED   = BASE_IFACE + 12;
     // new IPv6 tethering parameters need to be processed
     public static final int CMD_IPV6_TETHER_UPDATE          = BASE_IFACE + 13;
+    // new IP delegation available
+    public static final int CMD_IP_DELEGATION_UPDATE        = BASE_IFACE + 14;
 
     private final State mInitialState;
     private final State mLocalHotspotState;
