@@ -45,6 +45,30 @@
       "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35ca82bf_1a43a70b",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T03:55:33Z",
+      "side": 1,
+      "message": "I hear your concern about still having potential paths to unregisterNetworkCallback, but I would like to point out that this might allow to achieve other guarantees more easily.\n\nFor instance onLost() calls done(), and if done() does not unregister the callback anymore, then we might be introducing new conditions in which done is called more than once.\n\nWill investigate more.",
+      "parentUuid": "170146dc_8fe00498",
+      "range": {
+        "startLine": 474,
+        "startChar": 17,
+        "endLine": 474,
+        "endChar": 50
+      },
+      "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
