@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "274c2938_3c4fd743",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T05:45:12Z",
+      "side": 1,
+      "message": "Optional: add a comment saying this needs to be atomic because done() can be called on lots of different threads.\n\nFrom a readability perspective, I\u0027d prefer:\n\n    if (isDone.getAndSet(true) \u003d\u003d true) {\n        // done() already called.\n        return;\n    }",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 49
+      },
+      "revId": "346c95e3148726874438abb9837899926e6028cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
