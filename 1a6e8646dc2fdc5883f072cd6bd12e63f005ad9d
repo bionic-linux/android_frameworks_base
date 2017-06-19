@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e798bbaa_4f77b2d2",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T03:22:13Z",
+      "side": 1,
+      "message": "How is this different than the previous code? registerNetworkCallback is void, and it either succeeds or throws an exception. ISTM that in both the new code and the previous code:\n\n- If it succeeds, mNetworkCallback is set.\n- If it throws, the app crashes.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 99
+      },
+      "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "170146dc_8fe00498",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T03:22:13Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea to have multiple codepaths unregister the callback. Can we do it in only one place? Given that the callback is registered in onCreate, onDestroy seems like the right place. So we should probably just remove it from done().",
+      "range": {
+        "startLine": 474,
+        "startChar": 17,
+        "endLine": 474,
+        "endChar": 50
+      },
+      "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
