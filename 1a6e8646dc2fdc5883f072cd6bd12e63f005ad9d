@@ -69,6 +69,30 @@
       "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "758a09e5_319f73df",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T04:01:03Z",
+      "side": 1,
+      "message": "Done calls finishAndRemoveTask() which I think will cause onDestroy() to be called and the process to exist. In either case the callback will be unregistered by the system.",
+      "parentUuid": "35ca82bf_1a43a70b",
+      "range": {
+        "startLine": 474,
+        "startChar": 17,
+        "endLine": 474,
+        "endChar": 50
+      },
+      "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
