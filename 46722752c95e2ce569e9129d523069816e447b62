@@ -46,6 +46,30 @@
       "revId": "46722752c95e2ce569e9129d523069816e447b62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d12b035_738bec3e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T07:48:12Z",
+      "side": 1,
+      "message": "Added clearCapabilities. Changed name. I used the builder because it is shorter.\n\nWe could use a special net id value, but I would prefer to use pointer equality with a static singleton because that is a stronger check.",
+      "parentUuid": "e749b13f_d202de31",
+      "range": {
+        "startLine": 607,
+        "startChar": 89,
+        "endLine": 607,
+        "endChar": 90
+      },
+      "revId": "46722752c95e2ce569e9129d523069816e447b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
