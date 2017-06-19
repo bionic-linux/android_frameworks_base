@@ -84,7 +84,7 @@ import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.server.connectivity.tethering.IControlsTethering;
-import com.android.server.connectivity.tethering.IPv6TetheringCoordinator;
+import com.android.server.connectivity.tethering.IpDelegationCoordinator;
 import com.android.server.connectivity.tethering.OffloadController;
 import com.android.server.connectivity.tethering.SimChangeListener;
 import com.android.server.connectivity.tethering.TetherInterfaceStateMachine;
@@ -102,7 +102,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -1139,7 +1138,7 @@ public class Tethering extends BaseNetworkObserver {
         // so that the garbage collector does not clean up the state machine before it has a chance
         // to tear itself down.
         private final ArrayList<TetherInterfaceStateMachine> mNotifyList;
-        private final IPv6TetheringCoordinator mIPv6TetheringCoordinator;
+        private final IpDelegationCoordinator mIpDelegationCoordinator;
 
         private static final int UPSTREAM_SETTLE_TIME_MS     = 10000;
 
@@ -1163,7 +1162,7 @@ public class Tethering extends BaseNetworkObserver {
             addState(mSetDnsForwardersErrorState);
 
             mNotifyList = new ArrayList<>();
-            mIPv6TetheringCoordinator = new IPv6TetheringCoordinator(mNotifyList, mLog);
+            mIpDelegationCoordinator = new IpDelegationCoordinator(mNotifyList, mLog);
             setInitialState(mInitialState);
         }
 
@@ -1327,7 +1326,7 @@ public class Tethering extends BaseNetworkObserver {
             }
 
             protected void handleNewUpstreamNetworkState(NetworkState ns) {
-                mIPv6TetheringCoordinator.updateUpstreamNetworkState(ns);
+                mIpDelegationCoordinator.updateUpstreamNetworkState(ns);
                 mOffloadController.setUpstreamLinkProperties(
                         (ns != null) ? ns.linkProperties : null);
             }
@@ -1336,7 +1335,7 @@ public class Tethering extends BaseNetworkObserver {
         private void handleInterfaceServingStateActive(int mode, TetherInterfaceStateMachine who) {
             if (mNotifyList.indexOf(who) < 0) {
                 mNotifyList.add(who);
-                mIPv6TetheringCoordinator.addActiveDownstream(who, mode);
+                mIpDelegationCoordinator.addActiveDownstream(who, mode);
             }
 
             if (mode == IControlsTethering.STATE_TETHERED) {
@@ -1366,7 +1365,7 @@ public class Tethering extends BaseNetworkObserver {
 
         private void handleInterfaceServingStateInactive(TetherInterfaceStateMachine who) {
             mNotifyList.remove(who);
-            mIPv6TetheringCoordinator.removeActiveDownstream(who);
+            mIpDelegationCoordinator.removeActiveDownstream(who);
             mOffloadController.removeDownstreamInterface(who.interfaceName());
             mForwardedDownstreams.remove(who);
 
