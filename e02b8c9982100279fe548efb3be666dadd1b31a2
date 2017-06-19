@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d4712b1_ec260c66",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:00:30Z",
+      "side": 1,
+      "message": "I wonder if we\u0027d be better served by a different data structure. Not in this CL.",
+      "range": {
+        "startLine": 121,
+        "startChar": 70,
+        "endLine": 123,
+        "endChar": 12
+      },
+      "revId": "e02b8c9982100279fe548efb3be666dadd1b31a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d2905f5_40339c1f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:00:30Z",
+      "side": 1,
+      "message": "Nit: this doesn\u0027t need to be outside the try.\n\nIn fact, you could delete it altogether by doing:\n\n    ifcfg.setLinkAddress(new LinkAddress(addr, prefixlen));",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 35
+      },
+      "revId": "e02b8c9982100279fe548efb3be666dadd1b31a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
