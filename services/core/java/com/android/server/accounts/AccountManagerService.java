@@ -607,7 +607,7 @@ public class AccountManagerService
                          *
                          */
                         if (knownUids == null) {
-                            knownUids = getUidsOfInstalledOrUpdatedPackagesAsUser(accounts.userId); 
+                            knownUids = getUidsOfInstalledOrUpdatedPackagesAsUser(accounts.userId);
                         }
                         if (!knownUids.get(Integer.parseInt(uid))) {
                             // The authenticator is not presently available to the cache. And the
@@ -1815,15 +1815,21 @@ public class AccountManagerService
                             TABLE_ACCOUNTS,
                             ACCOUNTS_NAME + "=? AND " + ACCOUNTS_TYPE + "=?",
                             new String[]{ account.name, account.type });
-                    if (userUnlocked) {
-                        // Delete from CE table
+                    isChanged = true;
+                }
+
+                if (userUnlocked) {
+                    accountId = getAccountIdFromCeTableLocked(db, account);
+                    if (accountId >= 0) {
                         db.delete(
                                 CE_TABLE_ACCOUNTS,
                                 ACCOUNTS_NAME + "=? AND " + ACCOUNTS_TYPE + "=?",
                                 new String[]{ account.name, account.type });
+                        isChanged = true;
                     }
+                }
+                if (isChanged) {
                     db.setTransactionSuccessful();
-                    isChanged = true;
                 }
             } finally {
                 db.endTransaction();
@@ -4054,6 +4060,19 @@ public class AccountManagerService
 
     private long getAccountIdLocked(SQLiteDatabase db, Account account) {
         Cursor cursor = db.query(TABLE_ACCOUNTS, new String[]{ACCOUNTS_ID},
+                "name=? AND type=?", new String[]{account.name, account.type}, null, null, null);
+        try {
+            if (cursor.moveToNext()) {
+                return cursor.getLong(0);
+            }
+            return -1;
+        } finally {
+            cursor.close();
+        }
+    }
+
+    private long getAccountIdFromCeTableLocked(SQLiteDatabase db, Account account) {
+        Cursor cursor = db.query(CE_TABLE_ACCOUNTS, new String[]{ACCOUNTS_ID},
                 "name=? AND type=?", new String[]{account.name, account.type}, null, null, null);
         try {
             if (cursor.moveToNext()) {
