@@ -22,6 +22,30 @@
       "revId": "46722752c95e2ce569e9129d523069816e447b62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e749b13f_d202de31",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T06:13:37Z",
+      "side": 1,
+      "message": "I\u0027d also (mildly) agree that using the explicit constructor instead of the Builder might improve readability. That said, this should be safe regardless of the actual value of NOT_IN_USE, because the code uses pointer equality.\n\nIs NOT_IN_USE the best name? Technically it means that it was unregistered, not that it\u0027s not in use. ALREADY_UNREGISTERED?",
+      "parentUuid": "28437c66_9c73f904",
+      "range": {
+        "startLine": 607,
+        "startChar": 89,
+        "endLine": 607,
+        "endChar": 90
+      },
+      "revId": "46722752c95e2ce569e9129d523069816e447b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
