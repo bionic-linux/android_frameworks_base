@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d7c9624_c488f46d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T12:58:55Z",
+      "side": 1,
+      "message": "How about an IpDelegation class! With a Set\u003cIpPrefix\u003e to apply and a Set\u003cLinkAddress\u003e that need to be applied as well.  That way it would work for v4 and v6.\n\nI will work that in a coming CL.  It might be possible to move the !@#$ hardcoded stuff out of here (and into another location where it would also be hardcoded at first, but... :-).",
+      "parentUuid": "7d4712b1_ec260c66",
+      "range": {
+        "startLine": 121,
+        "startChar": 70,
+        "endLine": 123,
+        "endChar": 12
+      },
+      "revId": "e02b8c9982100279fe548efb3be666dadd1b31a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d2905f5_40339c1f",
         "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-19T11:00:30Z",
       "side": 1,
       "message": "Nit: this doesn\u0027t need to be outside the try.\n\nIn fact, you could delete it altogether by doing:\n\n    ifcfg.setLinkAddress(new LinkAddress(addr, prefixlen));",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 35
+      },
+      "revId": "e02b8c9982100279fe548efb3be666dadd1b31a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67e8f331_5f34ff03",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T12:58:55Z",
+      "side": 1,
+      "message": "Not quite.  I need it down in the mLinkProperties.add/remove block as well.",
+      "parentUuid": "3d2905f5_40339c1f",
       "range": {
         "startLine": 194,
         "startChar": 8,
