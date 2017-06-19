@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28437c66_9c73f904",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T05:51:26Z",
+      "side": 1,
+      "message": "I think this creates a NetworkRequest with the default settings, which includes NOT_VPN and NOT_RESTRICTED capabilities.  Perhaps clear all the capabilities?\n\nIs it reasonable to consider a netid value of, say, -1 as an indicator?",
+      "range": {
+        "startLine": 607,
+        "startChar": 89,
+        "endLine": 607,
+        "endChar": 90
+      },
+      "revId": "46722752c95e2ce569e9129d523069816e447b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
