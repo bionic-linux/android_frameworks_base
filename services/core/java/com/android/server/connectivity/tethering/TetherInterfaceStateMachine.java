@@ -46,6 +46,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.server.connectivity.tethering.IpDelegationCoordinator.IpDelegation;
 
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -100,6 +101,8 @@ public class TetherInterfaceStateMachine extends StateMachine {
     public static final int CMD_TETHER_CONNECTION_CHANGED   = BASE_IFACE + 12;
     // new IPv6 tethering parameters need to be processed
     public static final int CMD_IPV6_TETHER_UPDATE          = BASE_IFACE + 13;
+    // new IP delegation available
+    public static final int CMD_IP_DELEGATION_UPDATE        = BASE_IFACE + 14;
 
     private final State mInitialState;
     private final State mLocalHotspotState;
@@ -115,6 +118,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
 
     private final String mIfaceName;
     private final int mInterfaceType;
+    private final IpDelegation mIpDelegation;
     private final LinkProperties mLinkProperties;
 
     private int mLastError;
@@ -145,6 +149,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
         mInterfaceCtrl = new InterfaceController(ifaceName, nMService, mNetd, mLog);
         mIfaceName = ifaceName;
         mInterfaceType = interfaceType;
+        mIpDelegation = new IpDelegation();
         mLinkProperties = new LinkProperties();
         resetLinkProperties();
         mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
@@ -186,24 +191,19 @@ public class TetherInterfaceStateMachine extends StateMachine {
 
     // TODO: Refactor this in terms of calls to InterfaceController.
     private boolean configureIPv4(boolean enabled) {
-        if (VDBG) Log.d(TAG, "configureIPv4(" + enabled + ")");
+        mLog.log("configureIPv4(" + enabled + ")");
 
-        // TODO: Replace this hard-coded information with dynamically selected
-        // config passed down to us by a higher layer IP-coordinating element.
-        String ipAsString = null;
-        int prefixLen = 0;
-        if (mInterfaceType == ConnectivityManager.TETHERING_USB) {
-            ipAsString = USB_NEAR_IFACE_ADDR;
-            prefixLen = USB_PREFIX_LENGTH;
-        } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
-            ipAsString = WIFI_HOST_IFACE_ADDR;
-            prefixLen = WIFI_HOST_IFACE_PREFIX_LENGTH;
-        } else {
-            // Nothing to do, BT does this elsewhere.
+        final LinkAddress linkAddr = mIpDelegation.getIPv4Address();
+        final IpPrefix prefix = mIpDelegation.getIPv4LocalRoute();
+        if (linkAddr == null && prefix == null) {
+            mLog.log("No IPv4 delegation. That's fine.");
             return true;
+        } else if (linkAddr == null || prefix == null) {
+            mLog.log(String.format("Invalid IPv4 configuration: LinkAddress{%s} IpPrefix{%s}",
+                     linkAddr, prefix));
+            return false;
         }
 
-        final LinkAddress linkAddr;
         try {
             final InterfaceConfiguration ifcg = mNMService.getInterfaceConfig(mIfaceName);
             if (ifcg == null) {
@@ -211,8 +211,6 @@ public class TetherInterfaceStateMachine extends StateMachine {
                 return false;
             }
 
-            InetAddress addr = NetworkUtils.numericToInetAddress(ipAsString);
-            linkAddr = new LinkAddress(addr, prefixLen);
             ifcg.setLinkAddress(linkAddr);
             if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
                 // The WiFi stack has ownership of the interface up/down state.
@@ -234,7 +232,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
         }
 
         // Directly-connected route.
-        final RouteInfo route = new RouteInfo(linkAddr);
+        final RouteInfo route = new RouteInfo(prefix, null, mIfaceName);
         if (enabled) {
             mLinkProperties.addLinkAddress(linkAddr);
             mLinkProperties.addRoute(route);
@@ -480,6 +478,10 @@ public class TetherInterfaceStateMachine extends StateMachine {
                     break;
                 case CMD_IPV6_TETHER_UPDATE:
                     updateUpstreamIPv6LinkProperties((LinkProperties) message.obj);
+                    break;
+                case CMD_IP_DELEGATION_UPDATE:
+                    // Just stash any addresses/routes for later use.
+                    mIpDelegation.clone((IpDelegation) message.obj);
                     break;
                 default:
                     return NOT_HANDLED;
