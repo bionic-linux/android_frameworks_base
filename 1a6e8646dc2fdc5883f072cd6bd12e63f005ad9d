@@ -93,6 +93,30 @@
       "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22fb91d8_02df4933",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T04:10:12Z",
+      "side": 1,
+      "message": "Yes it seems finishAndRemoveTask() eventually causes onDestroy() to be called, but documentation clearly says to not count on onDestroy() to actually do work.\n\nI agree to have a single call to unregisterNetworkCallback, and I think this should be in done().\n\nFurthermore, instead of protecting unregisterNetworkCallback against more than one calls, I would rather protect done() against more than one calls.",
+      "parentUuid": "758a09e5_319f73df",
+      "range": {
+        "startLine": 474,
+        "startChar": 17,
+        "endLine": 474,
+        "endChar": 50
+      },
+      "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
