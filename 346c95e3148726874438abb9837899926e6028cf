@@ -22,6 +22,30 @@
       "revId": "346c95e3148726874438abb9837899926e6028cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecb65080_9c85353a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T07:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274c2938_3c4fd743",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 49
+      },
+      "revId": "346c95e3148726874438abb9837899926e6028cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
