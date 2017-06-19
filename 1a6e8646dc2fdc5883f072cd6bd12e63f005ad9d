@@ -117,6 +117,30 @@
       "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1be39e1d_e5ac71a4",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T05:11:42Z",
+      "side": 1,
+      "message": "From offline discussion, we decided to leave the one call to unregisterNetworkCallback in onDestroy to avoid leaks in situation like orientation changes.\n\nIn addition done() must be protected from multiple calls anyway.",
+      "parentUuid": "22fb91d8_02df4933",
+      "range": {
+        "startLine": 474,
+        "startChar": 17,
+        "endLine": 474,
+        "endChar": 50
+      },
+      "revId": "1a6e8646dc2fdc5883f072cd6bd12e63f005ad9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
