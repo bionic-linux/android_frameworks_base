@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1902a2d5_843a172f",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T15:34:03Z",
+      "side": 1,
+      "message": "My initial thought was to ignore SSL errors only if the URL is not the top-level URL of the page (i.e., if the URL matches the latest URL received in onPageStarted).\n\nI still think that\u0027s correct, but it\u0027s probably identical to what you have here. It seems unlikely/impossible that some URLs on mHostname will have errors, but some will not - because certs are per-hostname, the URLs on mHostname will either all be valid, or all be invalid.\n\nSo in practice, the two will be mostly identical - onPageStarted can either save the URL, or it can save the hostname.\n\nThoughts?",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 49
+      },
+      "revId": "0711f229b0971d4c9f1029385d4bc8d6449a1704",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
