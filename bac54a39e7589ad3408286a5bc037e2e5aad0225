@@ -22,6 +22,29 @@
       "revId": "bac54a39e7589ad3408286a5bc037e2e5aad0225",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c503b408_9af5c322",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-20T06:47:45Z",
+      "side": 1,
+      "message": "Per in-person discussion, maybe we can log the full URL on debug builds?",
+      "range": {
+        "startLine": 414,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 75
+      },
+      "revId": "bac54a39e7589ad3408286a5bc037e2e5aad0225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
