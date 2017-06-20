@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a50383c_f4b7ee73",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-20T06:40:46Z",
+      "side": 1,
+      "message": "I think there\u0027s some code duplication between here and getHeaderSubtitle. Maybe assign mHostname before calling getHeaderSubtitle, and use mHostname inside getHeaderSubtitle?",
+      "range": {
+        "startLine": 366,
+        "startChar": 0,
+        "endLine": 369,
+        "endChar": 13
+      },
+      "revId": "bac54a39e7589ad3408286a5bc037e2e5aad0225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
