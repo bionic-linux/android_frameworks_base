@@ -22,6 +22,23 @@
       "revId": "c2d39550adea35b406e50630511a431a71c94668",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c7fc215_6c0987d8",
+        "filename": "core/jni/android/opengl/util.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2017-06-21T18:57:08Z",
+      "side": 1,
+      "message": "lol. changed my mind halfway through this line. will clean this up.",
+      "revId": "c2d39550adea35b406e50630511a431a71c94668",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
