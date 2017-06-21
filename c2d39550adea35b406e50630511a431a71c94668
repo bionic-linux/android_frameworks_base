@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f722373_6b68aaea",
+        "filename": "core/jni/android/opengl/util.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-06-21T18:55:28Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be malloc if you\u0027re using free ?",
+      "range": {
+        "startLine": 96,
+        "startChar": 51,
+        "endLine": 96,
+        "endChar": 87
+      },
+      "revId": "c2d39550adea35b406e50630511a431a71c94668",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
