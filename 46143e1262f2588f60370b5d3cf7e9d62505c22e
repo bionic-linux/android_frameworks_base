@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "413a12f2_b3c6d18f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2017-06-21T19:05:15Z",
+      "side": 1,
+      "message": "there are zero callers in the platform, not even a test. (but it is public API so we can\u0027t just remove it.)",
+      "revId": "46143e1262f2588f60370b5d3cf7e9d62505c22e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
