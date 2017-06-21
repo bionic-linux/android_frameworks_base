@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff79bfbf_14799c9f",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-21T15:21:49Z",
+      "side": 1,
+      "message": "I think you just want Build.IS_DEBUGGABLE. While you\u0027re at it, make this static too?",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 79
+      },
+      "revId": "46729ec7122b6a373967700779dd352910e0e2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a547270a_c88eda8e",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-21T15:21:49Z",
+      "side": 1,
+      "message": "Nit: space between : and \".",
+      "range": {
+        "startLine": 423,
+        "startChar": 43,
+        "endLine": 423,
+        "endChar": 45
+      },
+      "revId": "46729ec7122b6a373967700779dd352910e0e2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34ae28fb_d98713f4",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-21T15:21:49Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 423,
+        "startChar": 60,
+        "endLine": 423,
+        "endChar": 62
+      },
+      "revId": "46729ec7122b6a373967700779dd352910e0e2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
