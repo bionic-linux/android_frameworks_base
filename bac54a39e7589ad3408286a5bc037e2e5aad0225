@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "553597f6_0191e322",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-21T01:14:37Z",
+      "side": 1,
+      "message": "It is not really duplicated, because I would have to write a slightly different logic in getHeaderSubtitle anyway because of the different handler for http or https.\n\nI introduced a safe host() method that reduces duplication of null guards.",
+      "parentUuid": "0a50383c_f4b7ee73",
+      "range": {
+        "startLine": 366,
+        "startChar": 0,
+        "endLine": 369,
+        "endChar": 13
+      },
+      "revId": "bac54a39e7589ad3408286a5bc037e2e5aad0225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c503b408_9af5c322",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 6
