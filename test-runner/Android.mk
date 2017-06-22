@@ -28,6 +28,22 @@ LOCAL_MODULE:= android.test.runner
 
 include $(BUILD_JAVA_LIBRARY)
 
+# Build the test-runner-tests library
+# ===================================
+# Run the tests using the following command:
+# java -cp ${ANDROID_BUILD_TOP}/out/host/linux-x86/framework/vogar-tests.jar \
+       org.junit.runner.JUnitCore vogar.AllTests
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+    $(call all-java-files-under, tests)
+LOCAL_MODULE := test-runner-tests
+LOCAL_NO_STANDARD_LIBRARIES := true
+LOCAL_JAVA_LIBRARIES := core-oj core-libart framework junit
+LOCAL_STATIC_JAVA_LIBRARIES := legacy-android-test
+
+include $(BUILD_STATIC_JAVA_LIBRARY)
+
 # Build the android.test.mock library
 # ===================================
 include $(CLEAR_VARS)
