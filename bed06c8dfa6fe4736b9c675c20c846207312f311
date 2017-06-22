@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2161a0f6_7a363ca8",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-06-22T22:36:25Z",
+      "side": 1,
+      "message": "I fought battery level was a profile, not a property of device. We wouldn\u0027t add Volume level, or pressure here, right ? Why make exception for battery level.\n\nWhy use magic \"-1\" if you can\u0027t obtain battery level? How about the magic 0 if the call failed ?",
+      "range": {
+        "startLine": 895,
+        "startChar": 15,
+        "endLine": 895,
+        "endChar": 30
+      },
+      "revId": "bed06c8dfa6fe4736b9c675c20c846207312f311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
