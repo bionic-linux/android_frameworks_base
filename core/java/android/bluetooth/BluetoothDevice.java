@@ -943,6 +943,10 @@ public final class BluetoothDevice implements Parcelable {
      * @hide
      */
     public boolean createBondOutOfBand(int transport, OobData oobData) {
+        if (sService == null) {
+            Log.e(TAG, "BT not enabled. Cannot create Remote Device bond");
+            return false;
+        }
         try {
             return sService.createBondOutOfBand(this, transport, oobData);
         } catch (RemoteException e) {Log.e(TAG, "", e);}
@@ -951,6 +955,10 @@ public final class BluetoothDevice implements Parcelable {
 
     /** @hide */
     public boolean isBondingInitiatedLocally() {
+        if (sService == null) {
+            Log.e(TAG, "BT not enabled. Cannot decide Remote Device bond intiated");
+            return false;
+        }
         try {
             return sService.isBondingInitiatedLocally(this);
         } catch (RemoteException e) {Log.e(TAG, "", e);}
