@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14b9bf8c_8901d1be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-06-22T12:33:21Z",
+      "side": 1,
+      "message": "I know you\u0027ve used this elsewhere, but I\u0027d make this clearer. In particular, it should touch upon the difference between building from source and building from stubs - @hide primarily. Not a huge deal anyway..",
+      "range": {
+        "startLine": 11,
+        "startChar": 59,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "935ea219f358aca64b555229d86a23d53585776a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
