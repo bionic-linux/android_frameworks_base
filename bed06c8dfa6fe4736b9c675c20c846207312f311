@@ -22,6 +22,30 @@
       "revId": "bed06c8dfa6fe4736b9c675c20c846207312f311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c00821ec_bb14de9d",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-06-22T23:50:26Z",
+      "side": 1,
+      "message": "Actually, battery level does not refer to a profile in this context. Although there is a Battery Service Profile in Bluetooth Low Energy, it is not the solo method of obtaining battery level information from a remote device. We can also obtain battery level information through HFP, HID, and even AVRCP profiles. This getter here provides an abstraction for the backend mechanism so that users of this API do not need to understand how battery level information was obtained. The backend also handles normalization from whatever native format to the 0-100 standard format. \n\nUsing -1 as error value because [0-100] is the valid range for battery level percentage.",
+      "parentUuid": "2161a0f6_7a363ca8",
+      "range": {
+        "startLine": 895,
+        "startChar": 15,
+        "endLine": 895,
+        "endChar": 30
+      },
+      "revId": "bed06c8dfa6fe4736b9c675c20c846207312f311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
