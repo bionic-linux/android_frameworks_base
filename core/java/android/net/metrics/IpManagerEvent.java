@@ -42,6 +42,8 @@ public final class IpManagerEvent implements Parcelable {
     /** @hide */ public static final int ERROR_STARTING_IPV6 = 5;
     /** @hide */ public static final int ERROR_STARTING_IPREACHABILITYMONITOR = 6;
 
+    /** @hide */ public static final int ERROR_INVALID_PROVISIONING = 7;
+
     /** {@hide} */
     @IntDef(value = {
             PROVISIONING_OK, PROVISIONING_FAIL, COMPLETE_LIFECYCLE,
