@@ -23,6 +23,7 @@ import android.content.Context;
 import android.net.DhcpResults;
 import android.net.INetd;
 import android.net.InterfaceConfiguration;
+import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties.ProvisioningChange;
 import android.net.LinkProperties;
@@ -35,6 +36,7 @@ import android.net.dhcp.DhcpClient;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
 import android.net.util.MultinetworkPolicyTracker;
+import android.net.util.NetworkConstants;
 import android.os.INetworkManagementService;
 import android.os.Message;
 import android.os.RemoteException;
@@ -50,17 +52,23 @@ import android.util.SparseArray;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.IState;
+import com.android.internal.util.Preconditions;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.server.net.NetlinkTracker;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.function.Predicate;
 
 
 /**
@@ -307,6 +315,11 @@ public class IpManager extends StateMachine {
                 return this;
             }
 
+            public Builder withInitialConfiguration(InitialConfiguration initialConfig) {
+                mConfig.mInitialConfig = initialConfig;
+                return this;
+            }
+
             public Builder withStaticConfiguration(StaticIpConfiguration staticConfig) {
                 mConfig.mStaticIpConfig = staticConfig;
                 return this;
@@ -341,18 +354,20 @@ public class IpManager extends StateMachine {
         /* package */ boolean mEnableIPv6 = true;
         /* package */ boolean mUsingIpReachabilityMonitor = true;
         /* package */ int mRequestedPreDhcpActionMs;
+        /* package */ InitialConfiguration mInitialConfig;
         /* package */ StaticIpConfiguration mStaticIpConfig;
         /* package */ ApfCapabilities mApfCapabilities;
         /* package */ int mProvisioningTimeoutMs = DEFAULT_TIMEOUT_MS;
         /* package */ int mIPv6AddrGenMode = INetd.IPV6_ADDR_GEN_MODE_STABLE_PRIVACY;
 
-        public ProvisioningConfiguration() {}
+        public ProvisioningConfiguration() {} // used by Builder
 
         public ProvisioningConfiguration(ProvisioningConfiguration other) {
             mEnableIPv4 = other.mEnableIPv4;
             mEnableIPv6 = other.mEnableIPv6;
             mUsingIpReachabilityMonitor = other.mUsingIpReachabilityMonitor;
             mRequestedPreDhcpActionMs = other.mRequestedPreDhcpActionMs;
+            mInitialConfig = InitialConfiguration.copy(other.mInitialConfig);
             mStaticIpConfig = other.mStaticIpConfig;
             mApfCapabilities = other.mApfCapabilities;
             mProvisioningTimeoutMs = other.mProvisioningTimeoutMs;
@@ -365,11 +380,123 @@ public class IpManager extends StateMachine {
                     .add("mEnableIPv6: " + mEnableIPv6)
                     .add("mUsingIpReachabilityMonitor: " + mUsingIpReachabilityMonitor)
                     .add("mRequestedPreDhcpActionMs: " + mRequestedPreDhcpActionMs)
+                    .add("mInitialConfig: " + mInitialConfig)
                     .add("mStaticIpConfig: " + mStaticIpConfig)
                     .add("mApfCapabilities: " + mApfCapabilities)
                     .add("mProvisioningTimeoutMs: " + mProvisioningTimeoutMs)
                     .add("mIPv6AddrGenMode: " + mIPv6AddrGenMode)
                     .toString();
+        }
+    }
+
+    public static class InitialConfiguration {
+        public final Set<LinkAddress> ipAddresses = new HashSet<>();
+        public final Set<IpPrefix> directlyConnectedRoutes = new HashSet<>();
+        public final Set<InetAddress> dnsServers = new HashSet<>();
+
+        public static InitialConfiguration copy(InitialConfiguration config) {
+            if (config == null) {
+                return null;
+            }
+            InitialConfiguration configCopy = new InitialConfiguration();
+            configCopy.ipAddresses.addAll(config.ipAddresses);
+            configCopy.directlyConnectedRoutes.addAll(config.directlyConnectedRoutes);
+            configCopy.dnsServers.addAll(config.dnsServers);
+            return configCopy;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("InitialConfiguration(IPs: %s, prefixes: %s, DNS: %s)",
+                    join(",", ipAddresses), join(",", directlyConnectedRoutes),
+                    join(",", dnsServers));
+        }
+
+        // TODO: decide on place to call isValid:
+        //  - at ProvisioningConfiguration.Builder.build() with exception
+        //  - at startProvisioning(ProvisioningConfiguration) with exception
+        //  - inside state machine with onProvisioningFailure callback
+        public boolean isValid() {
+            // For every IP address, there must be at least one prefix containing that address.
+            for (LinkAddress addr : ipAddresses) {
+                if (all(directlyConnectedRoutes, (prefix) -> !prefix.contains(addr.getAddress()))) {
+                    return false;
+                }
+            }
+            // For every dns server, there must be at least one prefix containing that address.
+            for (InetAddress dnsAddr : dnsServers) {
+                if (all(directlyConnectedRoutes, (prefix) -> !prefix.contains(dnsAddr))) {
+                    return false;
+                }
+            }
+            // All IPv6 LinkAddresses have an RFC7421-suitable prefix length
+            // (read: compliant with RFC4291#section2.5.4).
+            if (any(ipAddresses, not(InitialConfiguration::isPrefixLengthCompliant))) {
+                return false;
+            }
+            // If directlyConnectedRoutes contains an IPv6 default route
+            // then ipAddresses MUST contain at least one non-ULA GUA.
+            if (any(directlyConnectedRoutes, InitialConfiguration::isIPv6DefaultRoute)
+                    && all(ipAddresses, not(InitialConfiguration::isIPv6GUA))) {
+                return false;
+            }
+            // The prefix length of routes in directlyConnectedRoutes be within reasonable
+            // bounds for IPv6: /48-/64 just as we’d accept in RIOs.
+            if (any(directlyConnectedRoutes, not(InitialConfiguration::isPrefixLengthCompliant))) {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static boolean isPrefixLengthCompliant(LinkAddress addr) {
+            return (addr.getAddress() instanceof Inet4Address)
+                    || isCompliantIPv6PrefixLength(addr.getPrefixLength());
+        }
+
+        private static boolean isPrefixLengthCompliant(IpPrefix prefix) {
+            return (prefix.getAddress() instanceof Inet4Address)
+                    || isCompliantIPv6PrefixLength(prefix.getPrefixLength());
+        }
+
+        private static boolean isCompliantIPv6PrefixLength(int prefixLength) {
+            return (NetworkConstants.RFC4291_MIN_PREFIX_LENGTH <= prefixLength)
+                    && (prefixLength <= NetworkConstants.RFC7421_PREFIX_LENGTH);
+        }
+
+        private static boolean isIPv6DefaultRoute(IpPrefix prefix) {
+            return prefix.getAddress().equals(Inet6Address.ANY);
+        }
+
+        private static boolean isIPv6GUA(LinkAddress addr) {
+            return (addr.getAddress() instanceof Inet6Address) && addr.isGlobalPreferred();
+        }
+
+        private static <T> boolean any(Iterable<T> coll, Predicate<T> fn) {
+            for (T t : coll) {
+                if (fn.test(t)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static <T> boolean all(Iterable<T> coll, Predicate<T> fn) {
+            return !any(coll, not(fn));
+        }
+
+        private static <T> Predicate<T> not(Predicate<T> fn) {
+            return (t) -> !fn.test(t);
+        }
+
+        private static <T> String join(String delimiter, Iterable<T> coll) {
+            StringBuilder buf = new StringBuilder();
+            String d = "";
+            for (T t : coll) {
+                buf.append(d).append(t);
+                d = delimiter;
+            }
+            return buf.toString();
         }
     }
 
