@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ad73395_20f4b3e7",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-06-23T00:31:58Z",
+      "side": 1,
+      "message": "why hide ?",
+      "range": {
+        "startLine": 229,
+        "startChar": 7,
+        "endLine": 229,
+        "endChar": 12
+      },
+      "revId": "8d31c974f0b7ada0dcaa1766f36442378f75ed4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0ba2fde_54441984",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-06-23T00:31:58Z",
+      "side": 1,
+      "message": "in percents ?",
+      "range": {
+        "startLine": 898,
+        "startChar": 29,
+        "endLine": 898,
+        "endChar": 45
+      },
+      "revId": "8d31c974f0b7ada0dcaa1766f36442378f75ed4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7acadabd_66498f04",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-06-23T00:31:58Z",
+      "side": 1,
+      "message": "if device is disconnected, or doesn\u0027t have any battery reporting service, or the value returned is invalid ?",
+      "range": {
+        "startLine": 898,
+        "startChar": 81,
+        "endLine": 899,
+        "endChar": 42
+      },
+      "revId": "8d31c974f0b7ada0dcaa1766f36442378f75ed4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9da1679_01610767",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-06-23T00:31:58Z",
+      "side": 1,
+      "message": "how is this error log ? We shouldn\u0027t log that at all.",
+      "range": {
+        "startLine": 905,
+        "startChar": 12,
+        "endLine": 905,
+        "endChar": 17
+      },
+      "revId": "8d31c974f0b7ada0dcaa1766f36442378f75ed4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
