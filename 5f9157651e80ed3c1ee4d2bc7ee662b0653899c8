@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aaab7ab_54171e15",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-23T08:37:12Z",
+      "side": 0,
+      "message": "Why delete this?",
+      "range": {
+        "startLine": 330,
+        "startChar": 20,
+        "endLine": 330,
+        "endChar": 90
+      },
+      "revId": "5f9157651e80ed3c1ee4d2bc7ee662b0653899c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

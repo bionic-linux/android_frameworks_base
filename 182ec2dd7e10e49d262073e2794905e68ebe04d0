@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "416bf08e_737b6f59",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-23T08:37:12Z",
+      "side": 1,
+      "message": "These changes don\u0027t seem to belong in this CL. Did you intend to include them? Would suggest either moving them to another change or amending the commit description to mention them.",
+      "range": {
+        "startLine": 432,
+        "startChar": 0,
+        "endLine": 434,
+        "endChar": 5
+      },
+      "revId": "182ec2dd7e10e49d262073e2794905e68ebe04d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75dcde2b_21754f56",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-23T08:37:12Z",
+      "side": 1,
+      "message": "Instead of adding an extra constructor you could make transportToLegacyType return -1 instead of throwing an exception when encountering an unknown type.\n\nI don\u0027t think it\u0027s useful to have the exception any more, because after this CL, all new network types will probably have a legacy type of TYPE_NONE and we\u0027ll never need to add any more cases to transportToLegacyType.",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 51
+      },
+      "revId": "182ec2dd7e10e49d262073e2794905e68ebe04d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fceb5f3_877824d0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3257,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-23T08:37:12Z",
+      "side": 1,
+      "message": "Long line.",
+      "range": {
+        "startLine": 3257,
+        "startChar": 100,
+        "endLine": 3257,
+        "endChar": 101
+      },
+      "revId": "182ec2dd7e10e49d262073e2794905e68ebe04d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
