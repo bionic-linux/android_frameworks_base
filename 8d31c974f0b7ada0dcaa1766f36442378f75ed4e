@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f82c31b3_54d8bd3d",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-06-23T04:20:34Z",
+      "side": 1,
+      "message": "Not sure if this will be a public API yet.",
+      "parentUuid": "6ad73395_20f4b3e7",
+      "range": {
+        "startLine": 229,
+        "startChar": 7,
+        "endLine": 229,
+        "endChar": 12
+      },
+      "revId": "8d31c974f0b7ada0dcaa1766f36442378f75ed4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0ba2fde_54441984",
         "filename": "core/java/android/bluetooth/BluetoothDevice.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-23T00:31:58Z",
       "side": 1,
       "message": "in percents ?",
+      "range": {
+        "startLine": 898,
+        "startChar": 29,
+        "endLine": 898,
+        "endChar": 45
+      },
+      "revId": "8d31c974f0b7ada0dcaa1766f36442378f75ed4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35759ed3_4f13b9bf",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-06-23T04:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ba2fde_54441984",
       "range": {
         "startLine": 898,
         "startChar": 29,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1722bfb5_a2dfef22",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-06-23T04:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7acadabd_66498f04",
+      "range": {
+        "startLine": 898,
+        "startChar": 81,
+        "endLine": 899,
+        "endChar": 42
+      },
+      "revId": "8d31c974f0b7ada0dcaa1766f36442378f75ed4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9da1679_01610767",
         "filename": "core/java/android/bluetooth/BluetoothDevice.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-23T00:31:58Z",
       "side": 1,
       "message": "how is this error log ? We shouldn\u0027t log that at all.",
+      "range": {
+        "startLine": 905,
+        "startChar": 12,
+        "endLine": 905,
+        "endChar": 17
+      },
+      "revId": "8d31c974f0b7ada0dcaa1766f36442378f75ed4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c51b1a0_0881fd2c",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-06-23T04:20:34Z",
+      "side": 1,
+      "message": "setAlias() also log this as error. I think warning log is more appropriate, but I want to be consistent with the rest of the code. If wanted we should modify the log level in one single CL.",
+      "parentUuid": "f9da1679_01610767",
       "range": {
         "startLine": 905,
         "startChar": 12,
