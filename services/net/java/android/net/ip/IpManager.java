@@ -718,6 +718,18 @@ public class IpManager extends StateMachine {
         sendMessage(EVENT_PRE_DHCP_ACTION_COMPLETE);
     }
 
+    public void addDirectlyConnectedRoute(IpPrefix prefix) {
+    }
+
+    public void removeDirectlyConnectedRoute(IpPrefix prefix) {
+    }
+
+    public void addAddress(LinkAddress addr) {
+    }
+
+    public void removeAddress(LinkAddress addr) {
+    }
+
     /**
      * Set the TCP buffer sizes to use.
      *
