@@ -22,6 +22,30 @@
       "revId": "5f9157651e80ed3c1ee4d2bc7ee662b0653899c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0ff32d9_f23dc539",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-26T01:37:58Z",
+      "side": 0,
+      "message": "That was the quickest hack available until I had a LOWPAN constant. Reverted.",
+      "parentUuid": "7aaab7ab_54171e15",
+      "range": {
+        "startLine": 330,
+        "startChar": 20,
+        "endLine": 330,
+        "endChar": 90
+      },
+      "revId": "5f9157651e80ed3c1ee4d2bc7ee662b0653899c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
