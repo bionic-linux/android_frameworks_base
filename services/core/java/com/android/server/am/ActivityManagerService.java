@@ -527,11 +527,6 @@ public final class ActivityManagerService extends ActivityManagerNative
     private static final String INTENT_REMOTE_BUGREPORT_FINISHED =
             "android.intent.action.REMOTE_BUGREPORT_FINISHED";
 
-    // Delay to disable app launch boost
-    static final int APP_BOOST_MESSAGE_DELAY = 3000;
-    // Lower delay than APP_BOOST_MESSAGE_DELAY to disable the boost
-    static final int APP_BOOST_TIMEOUT = 2500;
-
     // Used to indicate that a task is removed it should also be removed from recents.
     private static final boolean REMOVE_FROM_RECENTS = true;
     // Used to indicate that an app transition should be animated.
@@ -540,11 +535,6 @@ public final class ActivityManagerService extends ActivityManagerNative
     // Determines whether to take full screen screenshots
     static final boolean TAKE_FULLSCREEN_SCREENSHOTS = true;
     public static final float FULLSCREEN_SCREENSHOT_SCALE = 0.6f;
-
-    private static native int nativeMigrateToBoost();
-    private static native int nativeMigrateFromBoost();
-    private boolean mIsBoosted = false;
-    private long mBoostStartTime = 0;
 
     /** All system services */
     SystemServiceManager mSystemServiceManager;
@@ -1536,19 +1526,19 @@ public final class ActivityManagerService extends ActivityManagerNative
     static final int REPORT_TIME_TRACKER_MSG = 55;
     static final int REPORT_USER_SWITCH_COMPLETE_MSG = 56;
     static final int SHUTDOWN_UI_AUTOMATION_CONNECTION_MSG = 57;
-    static final int APP_BOOST_DEACTIVATE_MSG = 58;
-    static final int CONTENT_PROVIDER_PUBLISH_TIMEOUT_MSG = 59;
-    static final int IDLE_UIDS_MSG = 60;
-    static final int SYSTEM_USER_UNLOCK_MSG = 61;
-    static final int LOG_STACK_STATE = 62;
-    static final int VR_MODE_CHANGE_MSG = 63;
-    static final int NOTIFY_ACTIVITY_PINNED_LISTENERS_MSG = 64;
-    static final int NOTIFY_PINNED_ACTIVITY_RESTART_ATTEMPT_LISTENERS_MSG = 65;
-    static final int NOTIFY_PINNED_STACK_ANIMATION_ENDED_LISTENERS_MSG = 66;
-    static final int NOTIFY_FORCED_RESIZABLE_MSG = 67;
-    static final int NOTIFY_ACTIVITY_DISMISSING_DOCKED_STACK_MSG = 68;
-    static final int SHOW_UNSUPPORTED_DISPLAY_SIZE_DIALOG_MSG = 69;
-    static final int NOTIFY_VR_SLEEPING_MSG = 70;
+    static final int APP_BOOST_DEACTIVATE_MSG = 59;
+    static final int CONTENT_PROVIDER_PUBLISH_TIMEOUT_MSG = 60;
+    static final int IDLE_UIDS_MSG = 61;
+    static final int SYSTEM_USER_UNLOCK_MSG = 62;
+    static final int LOG_STACK_STATE = 63;
+    static final int VR_MODE_CHANGE_MSG = 64;
+    static final int NOTIFY_ACTIVITY_PINNED_LISTENERS_MSG = 65;
+    static final int NOTIFY_PINNED_ACTIVITY_RESTART_ATTEMPT_LISTENERS_MSG = 66;
+    static final int NOTIFY_PINNED_STACK_ANIMATION_ENDED_LISTENERS_MSG = 67;
+    static final int NOTIFY_FORCED_RESIZABLE_MSG = 68;
+    static final int NOTIFY_ACTIVITY_DISMISSING_DOCKED_STACK_MSG = 69;
+    static final int SHOW_UNSUPPORTED_DISPLAY_SIZE_DIALOG_MSG = 70;
+    static final int NOTIFY_VR_SLEEPING_MSG = 71;
 
     static final int FIRST_ACTIVITY_STACK_MSG = 100;
     static final int FIRST_BROADCAST_QUEUE_MSG = 200;
@@ -2301,20 +2291,6 @@ public final class ActivityManagerService extends ActivityManagerNative
                 // Only a UiAutomation can set this flag and now that
                 // it is finished we make sure it is reset to its default.
                 mUserIsMonkey = false;
-            } break;
-            case APP_BOOST_DEACTIVATE_MSG: {
-                synchronized(ActivityManagerService.this) {
-                    if (mIsBoosted) {
-                        if (mBoostStartTime < (SystemClock.uptimeMillis() - APP_BOOST_TIMEOUT)) {
-                            nativeMigrateFromBoost();
-                            mIsBoosted = false;
-                            mBoostStartTime = 0;
-                        } else {
-                            Message newmsg = mHandler.obtainMessage(APP_BOOST_DEACTIVATE_MSG);
-                            mHandler.sendMessageDelayed(newmsg, APP_BOOST_TIMEOUT);
-                        }
-                    }
-                }
             } break;
             case IDLE_UIDS_MSG: {
                 idleUids();
@@ -3590,14 +3566,6 @@ public final class ActivityManagerService extends ActivityManagerNative
             // If this is an isolated process, it can't re-use an existing process.
             app = null;
         }
-
-        // app launch boost for big.little configurations
-        // use cpusets to migrate freshly launched tasks to big cores
-        nativeMigrateToBoost();
-        mIsBoosted = true;
-        mBoostStartTime = SystemClock.uptimeMillis();
-        Message msg = mHandler.obtainMessage(APP_BOOST_DEACTIVATE_MSG);
-        mHandler.sendMessageDelayed(msg, APP_BOOST_MESSAGE_DELAY);
 
         // We don't have to do anything more if:
         // (1) There is an existing application record; and
