@@ -68,6 +68,98 @@
       "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65c84fa0_a88ccbf6",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T08:17:26Z",
+      "side": 1,
+      "message": "This be /64, and we should probably not be happy with /128s (in the current validation code).",
+      "range": {
+        "startLine": 91,
+        "startChar": 51,
+        "endLine": 91,
+        "endChar": 54
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b8799b5_fa188c6a",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T08:17:26Z",
+      "side": 1,
+      "message": "line length",
+      "range": {
+        "startLine": 91,
+        "startChar": 130,
+        "endLine": 91,
+        "endChar": 131
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af5a3dce_952a9082",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T08:17:26Z",
+      "side": 1,
+      "message": "These conf() args don\u0027t seem to match the intent of their preceding comments.",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 85
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30ff8944_8e884365",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T08:17:26Z",
+      "side": 1,
+      "message": "\"ips\"?  These aren\u0027t really \"nets\" at all.",
+      "range": {
+        "startLine": 144,
+        "startChar": 28,
+        "endLine": 144,
+        "endChar": 32
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
