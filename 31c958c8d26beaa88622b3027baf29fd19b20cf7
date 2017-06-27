@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f251fc_3a123a91",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T08:09:49Z",
+      "side": 1,
+      "message": "I find the reading of these \"!\"s in the check a bit weird.  I think it might read just fine English-wise as:\n\n    if (not(any(directlyConnectedRoutes, (p) -\u003e p.contains(dnsAddr)))) {\n        return false;\n    }\n\nIf we s/prefix/p/g (or pfx or rte) then it should fix on one line and still be ok?",
+      "range": {
+        "startLine": 428,
+        "startChar": 61,
+        "endLine": 428,
+        "endChar": 62
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e3e722d_9b0e7b8b",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T08:09:49Z",
+      "side": 1,
+      "message": "Humourously this code allows us to have an IPv6 link address of 2001:db8::1/48, but that\u0027s cool.  :-)",
+      "range": {
+        "startLine": 452,
+        "startChar": 73,
+        "endLine": 452,
+        "endChar": 74
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41efae7b_1077ac80",
+        "filename": "services/net/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T08:09:49Z",
+      "side": 1,
+      "message": "6177 might be better?",
+      "range": {
+        "startLine": 105,
+        "startChar": 31,
+        "endLine": 105,
+        "endChar": 35
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
