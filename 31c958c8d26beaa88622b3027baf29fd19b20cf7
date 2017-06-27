@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85b44892_ffad92f0",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T14:20:11Z",
+      "side": 1,
+      "message": "Agreed that the inner ! is very easy to miss.\n\nChanged to !any(coll, p -\u003e p.contains(dnsAddr)",
+      "parentUuid": "15f251fc_3a123a91",
+      "range": {
+        "startLine": 428,
+        "startChar": 61,
+        "endLine": 428,
+        "endChar": 62
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e3e722d_9b0e7b8b",
         "filename": "services/net/java/android/net/ip/IpManager.java",
         "patchSetId": 4
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-27T08:09:49Z",
       "side": 1,
       "message": "6177 might be better?",
+      "range": {
+        "startLine": 105,
+        "startChar": 31,
+        "endLine": 105,
+        "endChar": 35
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ce3a794_45484a08",
+        "filename": "services/net/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T14:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41efae7b_1077ac80",
       "range": {
         "startLine": 105,
         "startChar": 31,
@@ -117,6 +165,54 @@
     },
     {
       "key": {
+        "uuid": "f77d84a3_dedbb63e",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T14:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b8799b5_fa188c6a",
+      "range": {
+        "startLine": 91,
+        "startChar": 130,
+        "endLine": 91,
+        "endChar": 131
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d081f28_728edc52",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T14:20:11Z",
+      "side": 1,
+      "message": "Fixed and added a copy of that to the invalid list.",
+      "parentUuid": "65c84fa0_a88ccbf6",
+      "range": {
+        "startLine": 91,
+        "startChar": 51,
+        "endLine": 91,
+        "endChar": 54
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af5a3dce_952a9082",
         "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
         "patchSetId": 4
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "0744d400_de03c66d",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T14:20:11Z",
+      "side": 1,
+      "message": "Removed and replaced with TODOs for now.",
+      "parentUuid": "af5a3dce_952a9082",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 85
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30ff8944_8e884365",
         "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
         "patchSetId": 4
@@ -151,6 +271,30 @@
       "writtenOn": "2017-06-27T08:17:26Z",
       "side": 1,
       "message": "\"ips\"?  These aren\u0027t really \"nets\" at all.",
+      "range": {
+        "startLine": 144,
+        "startChar": 28,
+        "endLine": 144,
+        "endChar": 32
+      },
+      "revId": "31c958c8d26beaa88622b3027baf29fd19b20cf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c152ba1_9c057b0f",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T14:20:11Z",
+      "side": 1,
+      "message": "Agreed this is a weird names. This came from previous iteration where I had a specialized function for InetAddress, so I called it nets by distinction with LinkAddress ... anyway fixed now.",
+      "parentUuid": "30ff8944_8e884365",
       "range": {
         "startLine": 144,
         "startChar": 28,
