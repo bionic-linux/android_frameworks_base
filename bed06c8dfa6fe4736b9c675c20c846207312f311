@@ -92,6 +92,29 @@
       "revId": "bed06c8dfa6fe4736b9c675c20c846207312f311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4627cac6_65bbb1f6",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-06-28T00:47:12Z",
+      "side": 1,
+      "message": "While it is good to cleanup and update our comments, I wonder if this unrelated change should be mixed into this battery-related CL.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 99
+      },
+      "revId": "bed06c8dfa6fe4736b9c675c20c846207312f311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
