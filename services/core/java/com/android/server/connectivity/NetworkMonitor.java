@@ -29,6 +29,7 @@ import android.content.IntentFilter;
 import android.net.CaptivePortal;
 import android.net.ConnectivityManager;
 import android.net.ICaptivePortal;
+import android.net.Network;
 import android.net.NetworkRequest;
 import android.net.ProxyInfo;
 import android.net.TrafficStats;
@@ -71,8 +72,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.LinkedHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -228,6 +231,7 @@ public class NetworkMonitor extends StateMachine {
     private final Context mContext;
     private final Handler mConnectivityServiceHandler;
     private final NetworkAgentInfo mNetworkAgentInfo;
+    private final Network mNetwork;
     private final int mNetId;
     private final TelephonyManager mTelephonyManager;
     private final WifiManager mWifiManager;
@@ -286,7 +290,8 @@ public class NetworkMonitor extends StateMachine {
         mMetricsLog = logger;
         mConnectivityServiceHandler = handler;
         mNetworkAgentInfo = networkAgentInfo;
-        mNetId = mNetworkAgentInfo.network.netId;
+        mNetwork = new OneAddressPerFamilyNetwork(networkAgentInfo.network);
+        mNetId = mNetwork.netId;
         mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -415,7 +420,7 @@ public class NetworkMonitor extends StateMachine {
             maybeLogEvaluationResult(
                     networkEventType(validationStage(), EvaluationResult.VALIDATED));
             mConnectivityServiceHandler.sendMessage(obtainMessage(EVENT_NETWORK_TESTED,
-                    NETWORK_TEST_RESULT_VALID, mNetworkAgentInfo.network.netId, null));
+                    NETWORK_TEST_RESULT_VALID, mNetId, null));
             mValidations++;
         }
 
@@ -440,7 +445,7 @@ public class NetworkMonitor extends StateMachine {
                 case CMD_LAUNCH_CAPTIVE_PORTAL_APP:
                     final Intent intent = new Intent(
                             ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN);
-                    intent.putExtra(ConnectivityManager.EXTRA_NETWORK, mNetworkAgentInfo.network);
+                    intent.putExtra(ConnectivityManager.EXTRA_NETWORK, mNetwork);
                     intent.putExtra(ConnectivityManager.EXTRA_CAPTIVE_PORTAL,
                             new CaptivePortal(new ICaptivePortal.Stub() {
                                 @Override
@@ -468,8 +473,7 @@ public class NetworkMonitor extends StateMachine {
 
         @Override
         public void exit() {
-            Message message = obtainMessage(EVENT_PROVISIONING_NOTIFICATION, 0,
-                    mNetworkAgentInfo.network.netId, null);
+            Message message = obtainMessage(EVENT_PROVISIONING_NOTIFICATION, 0, mNetId, null);
             mConnectivityServiceHandler.sendMessage(message);
         }
     }
@@ -623,7 +627,7 @@ public class NetworkMonitor extends StateMachine {
         CustomIntentReceiver(String action, int token, int what) {
             mToken = token;
             mWhat = what;
-            mAction = action + "_" + mNetworkAgentInfo.network.netId + "_" + token;
+            mAction = action + "_" + mNetId + "_" + token;
             mContext.registerReceiver(this, new IntentFilter(mAction));
         }
         public PendingIntent getPendingIntent() {
@@ -659,8 +663,7 @@ public class NetworkMonitor extends StateMachine {
                         CMD_LAUNCH_CAPTIVE_PORTAL_APP);
             }
             // Display the sign in notification.
-            Message message = obtainMessage(EVENT_PROVISIONING_NOTIFICATION, 1,
-                    mNetworkAgentInfo.network.netId,
+            Message message = obtainMessage(EVENT_PROVISIONING_NOTIFICATION, 1, mNetId,
                     mLaunchCaptivePortalAppBroadcastReceiver.getPendingIntent());
             mConnectivityServiceHandler.sendMessage(message);
             // Retest for captive portal occasionally.
@@ -672,6 +675,39 @@ public class NetworkMonitor extends StateMachine {
         @Override
         public void exit() {
             removeMessages(CMD_CAPTIVE_PORTAL_RECHECK);
+        }
+    }
+
+    // Limits the list of IP addresses returned by getAllByName or tried by openConnection to at
+    // most one per address family. This ensures we only wait up to 20 seconds for TCP connections
+    // to complete, regardless of how many IP addresses a host has.
+    private static class OneAddressPerFamilyNetwork extends Network {
+        public OneAddressPerFamilyNetwork(Network network) {
+            super(network);
+        }
+
+        @Override
+        public InetAddress[] getAllByName(String host) throws UnknownHostException {
+            // Groups all addresses in each family, in the order in which each family appears.
+            LinkedHashMap<Class, ArrayList<InetAddress>> addressesByFamily = new LinkedHashMap<>();
+
+            for (InetAddress addr : super.getAllByName(host)) {
+                Class family = addr.getClass();
+                if (!addressesByFamily.containsKey(family)) {
+                    addressesByFamily.put(family, new ArrayList<InetAddress>());
+                }
+                addressesByFamily.get(family).add(addr);
+            }
+
+            // Pick one random address from each family.
+            InetAddress[] out = new InetAddress[addressesByFamily.keySet().size()];
+            Random r = new Random();
+            int pos = 0;
+            for (List<InetAddress> addresses : addressesByFamily.values()) {
+                out[pos++] = addresses.get(r.nextInt(addresses.size()));
+            }
+
+            return out;
         }
     }
 
@@ -805,7 +841,7 @@ public class NetworkMonitor extends StateMachine {
         int result;
         String connectInfo;
         try {
-            InetAddress[] addresses = mNetworkAgentInfo.network.getAllByName(host);
+            InetAddress[] addresses = mNetwork.getAllByName(host);
             StringBuffer buffer = new StringBuffer();
             for (InetAddress address : addresses) {
                 buffer.append(',').append(address.getHostAddress());
@@ -833,7 +869,7 @@ public class NetworkMonitor extends StateMachine {
         String redirectUrl = null;
         final Stopwatch probeTimer = new Stopwatch().start();
         try {
-            urlConnection = (HttpURLConnection) mNetworkAgentInfo.network.openConnection(url);
+            urlConnection = (HttpURLConnection) mNetwork.openConnection(url);
             urlConnection.setInstanceFollowRedirects(probeType == ValidationProbeEvent.PROBE_PAC);
             urlConnection.setConnectTimeout(SOCKET_TIMEOUT_MS);
             urlConnection.setReadTimeout(SOCKET_TIMEOUT_MS);
