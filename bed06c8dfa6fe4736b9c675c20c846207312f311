@@ -115,6 +115,30 @@
       "revId": "bed06c8dfa6fe4736b9c675c20c846207312f311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14d699e8_80af8f61",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-06-28T00:50:40Z",
+      "side": 1,
+      "message": "HF indicator is actually related to battery level. However, I do agree that this might fit better in the next set of CLs. Since this is comment only, I\u0027ll just let it pass.",
+      "parentUuid": "4627cac6_65bbb1f6",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 99
+      },
+      "revId": "bed06c8dfa6fe4736b9c675c20c846207312f311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
