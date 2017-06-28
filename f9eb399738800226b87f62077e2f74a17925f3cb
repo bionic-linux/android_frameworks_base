@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abb1c912_c838b4b0",
+        "filename": "telephony/java/android/telephony/mbms/MbmsDownloadReceiver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-28T00:12:28Z",
+      "side": 1,
+      "message": "why not just use filesInUse.contains below and skip this?  Yeah, doing the contains from a hash will be faster, but this object allocation and copying adds too and unless we\u0027re dealing with large numbers I think it\u0027s a waste.",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 9
+      },
+      "revId": "f9eb399738800226b87f62077e2f74a17925f3cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
