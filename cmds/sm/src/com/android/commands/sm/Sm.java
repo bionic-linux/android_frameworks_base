@@ -130,7 +130,12 @@ public final class Sm {
     }
 
     public void runHasAdoptable() {
-        System.out.println(SystemProperties.getBoolean(StorageManager.PROP_HAS_ADOPTABLE, false));
+        boolean hasAdoptable = SystemProperties.getBoolean(StorageManager.PROP_HAS_ADOPTABLE, false);
+        // Adoptable storage isn't currently supported on FBE devices
+        if (StorageManager.isFileEncryptedNativeOnly()) {
+            hasAdoptable = false;
+        }
+        System.out.println(hasAdoptable);
     }
 
     public void runGetPrimaryStorageUuid() throws RemoteException {
