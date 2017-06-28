@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8317861a_5fb096e3",
+        "filename": "core/java/android/nfc/dta/NfcDta.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-28T15:10:43Z",
+      "side": 1,
+      "message": "Needs @hide",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "69924a651ef3f56e7a639cd85eadda7c05517d5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
