@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb860f3_05e0ed38",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-28T08:58:33Z",
+      "side": 1,
+      "message": "There\u0027s also StringJoiner, fwiw",
+      "range": {
+        "startLine": 493,
+        "startChar": 36,
+        "endLine": 493,
+        "endChar": 49
+      },
+      "revId": "06ef2bd6f4ab179cbbe7cc52a17cd373e2ab8d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
