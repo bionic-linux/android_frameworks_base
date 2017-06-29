@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "50949d30_5f9d2ae0",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-29T01:34:52Z",
+      "side": 1,
+      "message": "If you want to shuffle the input, you can do:\n\nList\u003cInetAddress\u003e addrs \u003d Arrays.asList(super.getAllByName(host));\nCollections.shuffle(addrs);\nfor (InetAddress addr  : addrs) {\n...",
+      "parentUuid": "793546a5_cd6cccb9",
+      "range": {
+        "startLine": 690,
+        "startChar": 12,
+        "endLine": 690,
+        "endChar": 59
+      },
+      "revId": "2a3eadc2312a40e75c212ae7cea11b4803c92a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d90066a7_299962ec",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 1
