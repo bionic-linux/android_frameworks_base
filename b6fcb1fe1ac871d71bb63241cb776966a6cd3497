@@ -69,6 +69,30 @@
       "revId": "b6fcb1fe1ac871d71bb63241cb776966a6cd3497",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ea61930_aaed392d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-29T14:23:34Z",
+      "side": 1,
+      "message": "We can\u0027t shuffle first because we want to preserve the order of address families. For example, if getaddrinfo() returns one IPv6 address followed by 5 IPv4 address, we must return the IPv6 address first, followed by one of the IPv4 addresses.\n\nThe code could probably be made faster and simpler by making it less generic, along the lines of:\n\n    InetAddress[] addrs \u003d super.getAllByName(host);\n    boolean v6first \u003d addrs[0] instanceof Inet6Address;\n    InetAddress[] out \u003d new InetAddress[2];\n\n    Collections.shuffle(addrs);\n    for (InetAddress addr : addrs) {\n        if ((v6first \u0026\u0026 addr instanceof Inet6Address) ||\n            (!v6first \u0026\u0026 addr instanceof Inet4Address)) {\n            out[0] \u003d addr;\n            break;\n        }\n    }\n    for (InetAddress addr : addrs) {\n        if ((v6first \u0026\u0026 addr instanceof Inet4Address) ||\n            (!v6first \u0026\u0026 addr instanceof Inet6Address)) {\n            out[1] \u003d addr;\n            break;\n        }\n    }\n    return out;\n\nI\u0027m not sure if that\u0027s any better than what\u0027s in this patchset. I don\u0027t feel strongly about any of these options, as long as they get the order right.",
+      "parentUuid": "eb0f6bd9_1241d89d",
+      "range": {
+        "startLine": 694,
+        "startChar": 12,
+        "endLine": 708,
+        "endChar": 13
+      },
+      "revId": "b6fcb1fe1ac871d71bb63241cb776966a6cd3497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
