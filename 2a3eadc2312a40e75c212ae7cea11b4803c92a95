@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cf89897_7ce4fb81",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-29T01:39:02Z",
+      "side": 1,
+      "message": "Sorry let me amend this: you meant to say 10sec timeout for connect + 10sec timeout for reading the http resp. In that case 20secs is correct and already what we have today I believe.",
+      "parentUuid": "39b5dfd5_1f8e932a",
+      "range": {
+        "startLine": 688,
+        "startChar": 42,
+        "endLine": 688,
+        "endChar": 52
+      },
+      "revId": "2a3eadc2312a40e75c212ae7cea11b4803c92a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "358de3a6_a1ddc72c",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 1
