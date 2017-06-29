@@ -22,6 +22,30 @@
       "revId": "b6fcb1fe1ac871d71bb63241cb776966a6cd3497",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5998689a_b6c4a24f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-29T13:39:16Z",
+      "side": 1,
+      "message": "Yes please keep this as Network.",
+      "parentUuid": "42264aac_18e9f6d1",
+      "range": {
+        "startLine": 234,
+        "startChar": 18,
+        "endLine": 234,
+        "endChar": 44
+      },
+      "revId": "b6fcb1fe1ac871d71bb63241cb776966a6cd3497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
