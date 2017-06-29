@@ -22,6 +22,30 @@
       "revId": "06ef2bd6f4ab179cbbe7cc52a17cd373e2ab8d17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bf924c3_5effeb6d",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-29T07:08:37Z",
+      "side": 1,
+      "message": "Unfortunately it does not work so well with non-Stringy objects.\n\nYou would hope that StringJoiner would have a addAll(Collection\u003cObject\u003e) method ... but there is only add(CharSequence).\n\nSince I am in a functional mood, I replaced with the java 8 stream version.",
+      "parentUuid": "1eb860f3_05e0ed38",
+      "range": {
+        "startLine": 493,
+        "startChar": 36,
+        "endLine": 493,
+        "endChar": 49
+      },
+      "revId": "06ef2bd6f4ab179cbbe7cc52a17cd373e2ab8d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
