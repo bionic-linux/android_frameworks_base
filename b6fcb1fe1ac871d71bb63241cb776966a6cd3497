@@ -117,6 +117,30 @@
       "revId": "b6fcb1fe1ac871d71bb63241cb776966a6cd3497",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc0bd732_99d8bbbf",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-29T15:14:25Z",
+      "side": 1,
+      "message": "Putting the first address in the map only preserves the ordering if it is guaranteed that there are only two types of addresses. Since that\u0027s the case here (at least for a few more decades), done.",
+      "parentUuid": "5ef0940e_21188186",
+      "range": {
+        "startLine": 694,
+        "startChar": 12,
+        "endLine": 708,
+        "endChar": 13
+      },
+      "revId": "b6fcb1fe1ac871d71bb63241cb776966a6cd3497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
