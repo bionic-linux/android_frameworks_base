@@ -46,6 +46,29 @@
       "revId": "b6fcb1fe1ac871d71bb63241cb776966a6cd3497",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb0f6bd9_1241d89d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-29T13:52:35Z",
+      "side": 1,
+      "message": "This is unnecessary regression from patch set #1 in term of complexity.\n\nThis is much easier if your shuffle first and then group by in the map. Also please don\u0027t reimplement shuffle, use Collections.shuffle instead.\n\nYou don\u0027t even need to care about overwriting anymore. Just do:\n\nList\u003c...\u003e addrs \u003d Arrays.asList(getAllByName)\nCollection.shuffle(addrs);\nfor (InetAddress addr : addrs) {\n  map.put(addr.getClass(), addr); // last write wins\n}\nreturn map.values.toArray(new InetAddress[]);\n\n\nShuffle + group by is technically 2 iterations whereas here you have only one, but much more allocations + fetching in subarrays. Since this is getAllByName returns a small array the second iteration is free because caching.",
+      "range": {
+        "startLine": 694,
+        "startChar": 12,
+        "endLine": 708,
+        "endChar": 13
+      },
+      "revId": "b6fcb1fe1ac871d71bb63241cb776966a6cd3497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
