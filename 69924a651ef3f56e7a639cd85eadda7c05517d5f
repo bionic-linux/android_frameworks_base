@@ -22,6 +22,30 @@
       "revId": "69924a651ef3f56e7a639cd85eadda7c05517d5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89862607_3e3d5642",
+        "filename": "core/java/android/nfc/dta/NfcDta.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1073593
+      },
+      "writtenOn": "2017-06-30T10:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8317861a_5fb096e3",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "69924a651ef3f56e7a639cd85eadda7c05517d5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
