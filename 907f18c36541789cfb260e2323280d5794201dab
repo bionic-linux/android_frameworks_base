@@ -46,6 +46,30 @@
       "revId": "907f18c36541789cfb260e2323280d5794201dab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca44e076_faea35bd",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-30T05:45:33Z",
+      "side": 1,
+      "message": "Yeah, as far as I checked your theory is correct I think. Or in other words, it is a bug in getAllByName if it does not throw UnknownHostException and returns an empty array.\n\nLGTM that way.",
+      "parentUuid": "aaca64cc_96e0f830",
+      "range": {
+        "startLine": 696,
+        "startChar": 32,
+        "endLine": 696,
+        "endChar": 69
+      },
+      "revId": "907f18c36541789cfb260e2323280d5794201dab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
