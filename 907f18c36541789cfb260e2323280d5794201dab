@@ -22,6 +22,30 @@
       "revId": "907f18c36541789cfb260e2323280d5794201dab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaca64cc_96e0f830",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T01:13:47Z",
+      "side": 1,
+      "message": "I think getAllByName can never return null. It will either throw UnknownHostException or return a non-empty array.\n\nLooking at the code I see that Linux_android_getaddrinfo will return NULL if there are no IPv4 or IPv6 addresses, but AFAICS Inet6AddressImpl#lookupHostByName does:\n\n            InetAddress[] addresses \u003d Libcore.os.android_getaddrinfo(host, hints, netId);\n            for (InetAddress address : addresses) {\n\nwhich I think will throw NPE before it gets a chance to return null to us.\n\nI think that in practice this never happens because android_getaddrinfo never returns success unless it has at least one address to return.\n\nCan you double-check?",
+      "parentUuid": "cdcf5b4a_289d143c",
+      "range": {
+        "startLine": 696,
+        "startChar": 32,
+        "endLine": 696,
+        "endChar": 69
+      },
+      "revId": "907f18c36541789cfb260e2323280d5794201dab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
