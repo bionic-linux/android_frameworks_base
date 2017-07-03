@@ -508,12 +508,12 @@ final class SystemServiceRegistry {
             }});
 
         registerService(Context.WIFI_SERVICE, WifiManager.class,
-                new CachedServiceFetcher<WifiManager>() {
+                new StaticApplicationContextServiceFetcher<WifiManager>() {
             @Override
-            public WifiManager createService(ContextImpl ctx) {
+            public WifiManager createService(Context ctx) {
                 IBinder b = ServiceManager.getService(Context.WIFI_SERVICE);
                 IWifiManager service = IWifiManager.Stub.asInterface(b);
-                return new WifiManager(ctx.getOuterContext(), service,
+                return new WifiManager(ctx, service,
                         ConnectivityThread.getInstanceLooper());
             }});
 
