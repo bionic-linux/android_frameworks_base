@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "154a641c_ece918bc",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-03T01:53:37Z",
+      "side": 1,
+      "message": "Nit: this could be factored out into a new checkTransportTypeOrThrow helper method. Or not, up to you.",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 463,
+        "endChar": 9
+      },
+      "revId": "a39059a923096483529877be86eb30ddd1c6986c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8bf8b74_b671daed",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1851,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-03T01:53:37Z",
+      "side": 1,
+      "message": "Nit: the previous code didn\u0027t add this.",
+      "range": {
+        "startLine": 1851,
+        "startChar": 16,
+        "endLine": 1851,
+        "endChar": 56
+      },
+      "revId": "a39059a923096483529877be86eb30ddd1c6986c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29d9c4fa_f13865b3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-03T01:53:37Z",
+      "side": 1,
+      "message": "It\u0027s not really OK to expose TYPE_NONE to apps until we remove the @hide.\n\nFortunately, lowpan can never become the default network, because it doesn\u0027t have NET_CAPABILITY_INTERNET, and thus it will never be returned by getActiveNetworkInfo.\n\nSo perhaps make this test a bit more realistic by ensuring that if the transport is TRANSPORT_LOWPAN, that the MockNetworkAgent doesn\u0027t declare NET_CAPABILITY_INTERNET?",
+      "range": {
+        "startLine": 3281,
+        "startChar": 8,
+        "endLine": 3281,
+        "endChar": 48
+      },
+      "revId": "a39059a923096483529877be86eb30ddd1c6986c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47c5fc2f_435b0e4e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3306,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-03T01:53:37Z",
+      "side": 1,
+      "message": "Is this new behaviour? Or does startUsingNetworkFeature(TYPE_NONE, xxx) throw UnsupportedOperationException?\n\nIf the current behaviour is to return APN_REQUEST_FAILED or some such, then we might want to continue to do that even after this change.",
+      "range": {
+        "startLine": 3306,
+        "startChar": 80,
+        "endLine": 3306,
+        "endChar": 91
+      },
+      "revId": "a39059a923096483529877be86eb30ddd1c6986c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
