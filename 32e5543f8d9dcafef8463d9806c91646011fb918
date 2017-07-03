@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d7b526d_a9ed1335",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-03T12:40:13Z",
+      "side": 1,
+      "message": "Can you also check that getAllNetworkInfo returns an empty array?",
+      "revId": "32e5543f8d9dcafef8463d9806c91646011fb918",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
