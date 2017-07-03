@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18c9cfdd_2a46ec80",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-03T06:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "154a641c_ece918bc",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 463,
+        "endChar": 9
+      },
+      "revId": "a39059a923096483529877be86eb30ddd1c6986c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8bf8b74_b671daed",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-03T01:53:37Z",
       "side": 1,
       "message": "Nit: the previous code didn\u0027t add this.",
+      "range": {
+        "startLine": 1851,
+        "startChar": 16,
+        "endLine": 1851,
+        "endChar": 56
+      },
+      "revId": "a39059a923096483529877be86eb30ddd1c6986c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a53fbccc_40d4293f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1851,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-03T06:53:34Z",
+      "side": 1,
+      "message": "Undone. Bad copy paste.",
+      "parentUuid": "b8bf8b74_b671daed",
       "range": {
         "startLine": 1851,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "532d61f3_eb5c83ee",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-03T06:53:34Z",
+      "side": 1,
+      "message": "Done for more realistic test that does not assume NET_CAPABILITY_INTERNET.\n\nI ll do the unhiding of TYPE_NONE separately in a small and well scoped patch.",
+      "parentUuid": "29d9c4fa_f13865b3",
+      "range": {
+        "startLine": 3281,
+        "startChar": 8,
+        "endLine": 3281,
+        "endChar": 48
+      },
+      "revId": "a39059a923096483529877be86eb30ddd1c6986c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47c5fc2f_435b0e4e",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-03T01:53:37Z",
       "side": 1,
       "message": "Is this new behaviour? Or does startUsingNetworkFeature(TYPE_NONE, xxx) throw UnsupportedOperationException?\n\nIf the current behaviour is to return APN_REQUEST_FAILED or some such, then we might want to continue to do that even after this change.",
+      "range": {
+        "startLine": 3306,
+        "startChar": 80,
+        "endLine": 3306,
+        "endChar": 91
+      },
+      "revId": "a39059a923096483529877be86eb30ddd1c6986c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5530c778_27690985",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3306,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-03T06:53:34Z",
+      "side": 1,
+      "message": "This throws UnsupportedOperationException because of checkLegacyRoutingApiAccess actually, not because of TYPE_NONE.\n\nIn a pre M scenario, it should send back APN_REQUEST_FAILED as you said.\n\nBut to test this I need to split this test function in two for pre M and post M mock context, but this requires some additional hooks in context ...\n\nI added a TODO to add a new test. If I am serious about getting rid of networkType, I need a unit test for legacy pre-M behavior anyway.",
+      "parentUuid": "47c5fc2f_435b0e4e",
       "range": {
         "startLine": 3306,
         "startChar": 80,
