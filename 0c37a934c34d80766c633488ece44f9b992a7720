@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7af8a577_cc22b774",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-07-04T09:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a26b8473_74be8363",
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf196572_ee6228c4",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-13T07:37:54Z",
       "side": 1,
       "message": "We use 8 space indents for line wraps, including function calls and assignments",
+      "range": {
+        "startLine": 880,
+        "startChar": 20,
+        "endLine": 880,
+        "endChar": 24
+      },
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c51aae8_2cba0fce",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-07-04T09:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf196572_ee6228c4",
       "range": {
         "startLine": 880,
         "startChar": 20,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "78a38684_5121f9cb",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-07-04T09:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e85585_28574ebd",
+      "range": {
+        "startLine": 974,
+        "startChar": 0,
+        "endLine": 976,
+        "endChar": 5
+      },
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9494c805_697a6aab",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-06-13T07:37:54Z",
       "side": 1,
       "message": "Is it ok not to request short audio descriptor when an AVR device is added?",
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e67342f6_7de4a073",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1158195
+      },
+      "writtenOn": "2017-07-04T09:39:26Z",
+      "side": 1,
+      "message": "Since if volume will output from AVR, \u003cset system audio mode\u003e [on] is needed, we don\u0027t need to request short audio descriptor at this moment.",
+      "parentUuid": "9494c805_697a6aab",
       "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
