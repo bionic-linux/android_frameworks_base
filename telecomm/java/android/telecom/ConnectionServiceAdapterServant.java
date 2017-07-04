@@ -601,6 +601,10 @@ final class ConnectionServiceAdapterServant {
             args.arg2 = pHandle;
             mHandler.obtainMessage(MSG_SET_PHONE_ACCOUNT_CHANGED, args).sendToTarget();
         }
+
+        public void resetCdmaConnectionTime(String callId, Session.Info sessionInfo) {
+            // Do nothing
+        }
     };
 
     public ConnectionServiceAdapterServant(IConnectionServiceAdapter delegate) {

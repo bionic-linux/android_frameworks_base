@@ -118,4 +118,6 @@ oneway interface IConnectionServiceAdapter {
 
     void onPhoneAccountChanged(String callId, in PhoneAccountHandle pHandle,
     in Session.Info sessionInfo);
+
+    void resetCdmaConnectionTime(String callIdi, in Session.Info sessionInfo);
 }
