@@ -2357,7 +2357,8 @@ public class TelephonyManager {
      *        {@link TelephonyManager#KEY_TYPE_WLAN}.
      * @return ImsiEncryptionInfo Carrier specific information that will be used to encrypt the
      *         IMSI and IMPI. This includes the public key and the key identifier. This information
-     *         will be stored in the device keystore.
+     *         will be stored in the device keystore. If the key is required, but it is not
+     *         retrieved then an Illegal state exception will be thrown.
      * @hide
      */
     public ImsiEncryptionInfo getCarrierInfoForImsiEncryption(int keyType) {
@@ -2368,8 +2369,12 @@ public class TelephonyManager {
             if (keyType != KEY_TYPE_EPDDG && keyType != KEY_TYPE_WLAN) {
                 throw new IllegalArgumentException("Invalid key type");
             }
-            return info.getCarrierInfoForImsiEncryption(subId, keyType,
-                    mContext.getOpPackageName());
+            ImsiEncryptionInfo imsiEncryptionInfo = info.getCarrierInfoForImsiEncryption(
+                    subId, keyType, mContext.getOpPackageName());
+            if (imsiEncryptionInfo  == null && isImsiRequired(subId, keyType)) {
+                throw new IllegalStateException("Key required but not found");
+            }
+            return imsiEncryptionInfo;
         } catch (RemoteException ex) {
             Rlog.e(TAG, "getCarrierInfoForImsiEncryption RemoteException", ex);
             return null;
@@ -2378,6 +2383,35 @@ public class TelephonyManager {
             Rlog.e(TAG, "getCarrierInfoForImsiEncryption NullPointerException", ex);
             return null;
         }
+    }
+
+    /**
+     * @hide
+     */
+    private static int isKeyEnabled(int n, int k) {
+        return (n >> k) & 1;
+    }
+
+    /**
+     * @hide
+     */
+    private boolean isImsiRequired(int subId, int keyType) {
+        CarrierConfigManager configManager =
+                (CarrierConfigManager) mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configManager == null) {
+            return false;
+        }
+        PersistableBundle pb = configManager.getConfigForSubId(subId);
+        if (pb == null) {
+            return false;
+        }
+        int key_availability = pb.getInt(CarrierConfigManager.IMSI_KEY_AVAILABILITY_INT);
+        int key_expiration = pb.getInt(CarrierConfigManager.IMSI_KEY_EXPIRATION_DAYS_TIME_INT);
+        if (key_expiration == CarrierConfigManager.IMSI_ENCRYPTION_DAYS_TIME_DISABLED
+                || isKeyEnabled(key_availability, keyType) == 0) {
+            return false;
+        }
+        return true;
     }
 
     /**
