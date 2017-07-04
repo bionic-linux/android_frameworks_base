@@ -16,6 +16,24 @@
       "revId": "32e5543f8d9dcafef8463d9806c91646011fb918",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "214653ae_9368d905",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-04T07:26:18Z",
+      "side": 1,
+      "message": "That\u0027s not possible so easily because the state of mService is dirty since the beginning of the method: if I call getAllNetworkInfo right from the beginning before doing anything I get 4 things.\n\nAdded another TODO",
+      "parentUuid": "6d7b526d_a9ed1335",
+      "revId": "32e5543f8d9dcafef8463d9806c91646011fb918",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
