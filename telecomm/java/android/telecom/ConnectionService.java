@@ -1474,6 +1474,11 @@ public abstract class ConnectionService extends Service {
                 mAdapter.onPhoneAccountChanged(id, pHandle);
             }
         }
+
+        public void onConnectionTimeReset(Connection c) {
+            String id = mIdByConnection.get(c);
+            mAdapter.resetConnectionTime(id);
+        }
     };
 
     /** {@inheritDoc} */
