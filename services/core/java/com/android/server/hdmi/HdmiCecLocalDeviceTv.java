@@ -1698,6 +1698,19 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                     mAddress, Constants.ADDR_BROADCAST));
         }
     }
+    @Override
+    @ServiceThreadOnly
+    protected void onStandby(boolean initiatedByCec, int standbyAction, SendMessageCallback callback) {
+        assertRunOnServiceThread();
+        // Seq #11
+        if (!mService.isControlEnabled()) {
+            return;
+        }
+        if (!initiatedByCec && mAutoDeviceOff) {
+            mService.sendCecCommand(HdmiCecMessageBuilder.buildStandby(
+                    mAddress, Constants.ADDR_BROADCAST), callback);
+        }
+    }
 
     boolean isProhibitMode() {
         return mService.isProhibitMode();
