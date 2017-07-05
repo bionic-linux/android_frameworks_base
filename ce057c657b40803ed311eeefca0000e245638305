@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b93b56c7_fa07c88b",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you check the value of \u0027on\u0027?",
+      "range": {
+        "startLine": 879,
+        "startChar": 20,
+        "endLine": 879,
+        "endChar": 46
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "593cd13e_a761194a",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Break lines after \u0027\u003d\u0027",
+      "range": {
+        "startLine": 881,
+        "startChar": 28,
+        "endLine": 881,
+        "endChar": 29
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd86e056_ff35261f",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Add 8 more spaces.",
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53aa23f7_33441596",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Do you want to keep your copyright instead that of Android Open Source Project?\nI\u0027m not sure about this, but I guess if the case we can\u0027t take the code.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 18
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "484b946e_1c124ccf",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Add an empty line after \u0027package\u0027",
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f22e576_7fe578cd",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Check the import order and import style.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 24
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "018e6b68_e5b1c8dd",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "mParamsBackup",
+      "range": {
+        "startLine": 106,
+        "startChar": 26,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff16e44a_0d6913cc",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Remove \u0027@\u0027",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 8
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33be520a_2d84ea92",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "\u003e 100 characters",
+      "range": {
+        "startLine": 182,
+        "startChar": 86,
+        "endLine": 182,
+        "endChar": 107
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5978256c_7526a797",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "add a space before and after operations.",
+      "range": {
+        "startLine": 216,
+        "startChar": 41,
+        "endLine": 216,
+        "endChar": 42
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f88b21cc_67e9fdd7",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "\u003e 100",
+      "range": {
+        "startLine": 217,
+        "startChar": 87,
+        "endLine": 217,
+        "endChar": 111
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cd83dfb_71e665de",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "add spaces",
+      "range": {
+        "startLine": 238,
+        "startChar": 38,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90a5b099_31c15791",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "add spaces",
+      "range": {
+        "startLine": 239,
+        "startChar": 36,
+        "endLine": 239,
+        "endChar": 38
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d2a249e_a10fc91b",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Do not break line before \u0027{\u0027",
+      "range": {
+        "startLine": 240,
+        "startChar": 12,
+        "endLine": 240,
+        "endChar": 13
+      },
+      "revId": "ce057c657b40803ed311eeefca0000e245638305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

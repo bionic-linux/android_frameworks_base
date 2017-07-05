@@ -163,6 +163,23 @@
       "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19bec159_666d49cd",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-05T02:42:27Z",
+      "side": 1,
+      "message": "Please keep the line.",
+      "revId": "0c37a934c34d80766c633488ece44f9b992a7720",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
