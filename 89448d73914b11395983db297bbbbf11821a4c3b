@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67ec1cee_9417b256",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-07T06:46:34Z",
+      "side": 1,
+      "message": "file:// is a valid protocol and URL class will parse it as expected, extracting the host as in scheme://user@host:port/path?query\n\nI checked that this is the case by parsing some strings with URL.\n\nTO answer the second part of your question, the error page is loaded with base url INTERNAL_ASSETS, which returns android_asset for the host.",
+      "parentUuid": "cd977cfe_aca3b277",
+      "range": {
+        "startLine": 372,
+        "startChar": 12,
+        "endLine": 372,
+        "endChar": 34
+      },
+      "revId": "89448d73914b11395983db297bbbbf11821a4c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2938ca0c_65fe72bf",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f3a22206_33268c1e",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-07T06:46:34Z",
+      "side": 1,
+      "message": "(There is no mHost variable here, I suppose you are talking about \u0027host ?)\n\n\u0027host is generated from the passed-in error.getUrl(), so we can assume that host is never null.\n\nmHostname is generated from the String url passed-in by the webview, but judging from the doc that String url could be incorrect and not parse, so mHostname can be null.\n\nSo if mHostname is null, then the conditional at 422 is true and we ignore the ssl error.\n\nWe could discuss if this is a WAI corner case with respect to the policy that we don\u0027t show the error page for resources not coming from the same host name. i.e when we don\u0027t know the domain of the top lvl domain (mHostname), should we consider all resources are the same domain or not ?",
+      "parentUuid": "2938ca0c_65fe72bf",
+      "range": {
+        "startLine": 420,
+        "startChar": 60,
+        "endLine": 420,
+        "endChar": 77
+      },
+      "revId": "89448d73914b11395983db297bbbbf11821a4c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a09f902_f0aa1bfe",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-22T03:57:37Z",
       "side": 1,
       "message": "Just for paranoia\u0027s sake, should we do something like:\n\n    if (TextUtils.empty(host)) return url?\n\nNot sure if this can ever happen though.",
+      "range": {
+        "startLine": 523,
+        "startChar": 31,
+        "endLine": 523,
+        "endChar": 32
+      },
+      "revId": "89448d73914b11395983db297bbbbf11821a4c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf46343d_a98d073a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-07T06:46:34Z",
+      "side": 1,
+      "message": "Instance creation of URL class always involves validation of the passed-in String representation, therefore getHost() cannot return \"\". When the host is undefined it returns null.",
+      "parentUuid": "3a09f902_f0aa1bfe",
       "range": {
         "startLine": 523,
         "startChar": 31,
