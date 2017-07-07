@@ -3713,4 +3713,46 @@ public class ConnectivityManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * HACK HACK HACK
+     * @hide
+     */
+    public boolean markCurrentDnsServersAsPrivate() {
+        try {
+            INetd netd = getNetworkManagementService().getNetdService();
+            if (netd == null) {
+                return false;
+            }
+            int netId = getProcessDefaultNetwork().netId;
+            String[] servers = {}, domains = {};
+            int[] params = {}, stats = {};
+            try {
+                netd.getResolverInfo(netId, servers, domains, params, stats);
+            } catch (ServiceSpecificException e) {
+                Log.e(TAG, "Failed to get resolver info", e);
+                return false;
+            }
+            try {
+                for (String server : servers) {
+                    final int DNS_OVER_TLS_PORT = 853;
+                    netd.addPrivateDnsServer(server, DNS_OVER_TLS_PORT, "", new String[0]);
+                }
+            } catch (ServiceSpecificException e) {
+                Log.e(TAG, "Failed to add private dns server", e);
+                return false;
+            }
+            try {
+                // Refresh the servers to trigger TLS validation.
+                netd.setResolverConfiguration(netId, servers, domains, params);
+            } catch (ServiceSpecificException e) {
+                Log.e(TAG, "Failed to set resolver info", e);
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "RemoteException while setting private DNS", e);
+            return false;
+        }
+        return true;
+    }
 }
