@@ -5650,4 +5650,46 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static int encodeBool(boolean b) {
         return b ? 1 : 0;
     }
+
+    /**
+     * Add the current DNS servers to Netd list of servers that may support
+     * DNS over TLS (on port 853).  This enables opportunistic DNS privacy.
+     * @Override
+     */
+    public boolean allowTlsOnCurrentDnsServers() {
+        try {
+            Network network = getActiveNetwork();
+            if (network == null) {
+                Log.e(TAG, "Failed to get active network");
+                return false;
+            }
+            int netId = network.netId;
+            LinkProperties linkProperties = getActiveLinkProperties();
+            if (linkProperties == null) {
+                Log.e(TAG, "Failed to get active link properties");
+                return false;
+            }
+            String[] servers = NetworkUtils.makeStrings(linkProperties.getDnsServers());
+            try {
+                for (String server : servers) {
+                    final int DNS_OVER_TLS_PORT = 853;
+                    mNetd.getNetdService().addPrivateDnsServer(server, DNS_OVER_TLS_PORT, "", new String[0]);
+                }
+            } catch (ServiceSpecificException e) {
+                Log.e(TAG, "Failed to add private dns server", e);
+                return false;
+            }
+            try {
+                mNetd.setDnsConfigurationForNetwork(netId, servers, linkProperties.getDomains());
+            } catch (Exception e) {
+                Log.e(TAG, "Failed to reset network configuration", e);
+                return false;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "RemoteException while setting private DNS", e);
+            return false;
+        }
+        return true;
+    }
+
 }
