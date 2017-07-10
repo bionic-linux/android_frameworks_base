@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "357cc7ab_e0fab4d7",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-10T05:30:54Z",
+      "side": 1,
+      "message": "For usefulness of the BGs, I went with logging all onPageStarted sanitizing the urls the same way: that will add a lot more info about the user/portal interaction.",
+      "parentUuid": "48fe2f34_03a79744",
+      "range": {
+        "startLine": 420,
+        "startChar": 60,
+        "endLine": 420,
+        "endChar": 77
+      },
+      "revId": "89448d73914b11395983db297bbbbf11821a4c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a09f902_f0aa1bfe",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 8
