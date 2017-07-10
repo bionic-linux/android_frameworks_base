@@ -65,7 +65,7 @@ public class ConnectivityPacketTracker {
     private final LocalLog mLog;
     private final BlockingSocketReader mPacketListener;
 
-    public ConnectivityPacketTracker(NetworkInterface netif, LocalLog log) {
+    public ConnectivityPacketTracker(Handler h, NetworkInterface netif, LocalLog log) {
         final String ifname;
         final int ifindex;
         final byte[] hwaddr;
@@ -81,9 +81,9 @@ public class ConnectivityPacketTracker {
         }
 
         mTag = TAG + "." + ifname;
-        mHandler = new Handler();
+        mHandler = h;
         mLog = log;
-        mPacketListener = new PacketListener(ifindex, hwaddr, mtu);
+        mPacketListener = new PacketListener(mHandler, ifindex, hwaddr, mtu);
     }
 
     public void start() {
@@ -100,8 +100,8 @@ public class ConnectivityPacketTracker {
         private final int mIfIndex;
         private final byte mHwAddr[];
 
-        PacketListener(int ifindex, byte[] hwaddr, int mtu) {
-            super(mtu);
+        PacketListener(Handler h, int ifindex, byte[] hwaddr, int mtu) {
+            super(h, mtu);
             mIfIndex = ifindex;
             mHwAddr = hwaddr;
         }
@@ -110,9 +110,6 @@ public class ConnectivityPacketTracker {
         protected FileDescriptor createSocket() {
             FileDescriptor s = null;
             try {
-                // TODO: Evaluate switching to SOCK_DGRAM and changing the
-                // BlockingSocketReader's read() to recvfrom(), so that this
-                // might work on non-ethernet-like links (via SLL).
                 s = Os.socket(AF_PACKET, SOCK_RAW, 0);
                 NetworkUtils.attachControlPacketFilter(s, ARPHRD_ETHER);
                 Os.bind(s, new PacketSocketAddress((short) ETH_P_ALL, mIfIndex));
