@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "48fe2f34_03a79744",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-10T02:26:23Z",
+      "side": 1,
+      "message": "I think I was just generally saying that it might be useful to log mHostname as well, just so we have more information in bugreports.\n\nThe case where mHostname is null is a special case, but it\u0027s a relevant one because if mHostname is null, then every SSL error will be logged and we will never show the SSL warning page.\n\nIt could be that that can\u0027t happen though.",
+      "parentUuid": "f3a22206_33268c1e",
+      "range": {
+        "startLine": 420,
+        "startChar": 60,
+        "endLine": 420,
+        "endChar": 77
+      },
+      "revId": "89448d73914b11395983db297bbbbf11821a4c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a09f902_f0aa1bfe",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 8
