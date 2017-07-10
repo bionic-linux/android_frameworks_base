@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "326c76ec_af047280",
+        "filename": "core/java/android/net/metrics/IpManagerEvent.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-10T03:39:20Z",
+      "side": 1,
+      "message": "[nit]\n\nOk with me to trim some of these blanks lines.",
+      "range": {
+        "startLine": 45,
+        "startChar": 71,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "4390cd7dab34e0290e321d903987fee1e1685298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7201bd2d_ed5e9a6b",
+        "filename": "core/java/android/net/metrics/IpManagerEvent.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-10T03:39:20Z",
+      "side": 1,
+      "message": "Do you need to update this IntDef as well?",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "4390cd7dab34e0290e321d903987fee1e1685298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95b0afd0_04102df2",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-10T03:39:20Z",
+      "side": 1,
+      "message": "Abundant use of \"import static\" works for me too, if it makes your life easier.",
+      "range": {
+        "startLine": 473,
+        "startChar": 40,
+        "endLine": 473,
+        "endChar": 57
+      },
+      "revId": "4390cd7dab34e0290e321d903987fee1e1685298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69398e5d_42c4fe28",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-10T03:39:20Z",
+      "side": 1,
+      "message": "Java question for you:\n\nThis surprises me.  I would expect this to call the default Object::toString() method explicitly bypassing any T::toString() override that might exist.  Is there no \"T::toString\" syntax permitted here?  And does this call any overrides in T magically?",
+      "range": {
+        "startLine": 502,
+        "startChar": 37,
+        "endLine": 502,
+        "endChar": 53
+      },
+      "revId": "4390cd7dab34e0290e321d903987fee1e1685298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78b46dcf_aeae1bf4",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-10T03:39:20Z",
+      "side": 1,
+      "message": "I know that strictly speaking \"ips\" is descriptive of what the method does, but seeing it here doesn\u0027t read as smoothly as it might.\n\nWould it possible to add something like:\n\n    Set\u003cInetAddress\u003e dns(String... addresses) {\n        return ips(addresses);\n    }\n\n?",
+      "range": {
+        "startLine": 89,
+        "startChar": 70,
+        "endLine": 89,
+        "endChar": 73
+      },
+      "revId": "4390cd7dab34e0290e321d903987fee1e1685298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76d2ae9_95a3fdc8",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-10T03:39:20Z",
+      "side": 1,
+      "message": "This is a GUA.  Does our isGUA code explicitly exclude the documentation prefix?\n\nMy intuition is that this configuration would appear valid, unless we do in fact explicitly ban the doc prefix.\n\nAdditionally, this would be more clear as a ULA.  Changing \"2001\" to \"fd01\" should suffice, I think.",
+      "range": {
+        "startLine": 120,
+        "startChar": 27,
+        "endLine": 120,
+        "endChar": 57
+      },
+      "revId": "4390cd7dab34e0290e321d903987fee1e1685298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
