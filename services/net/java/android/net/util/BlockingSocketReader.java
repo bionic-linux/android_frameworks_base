@@ -16,12 +16,21 @@
 
 package android.net.util;
 
+import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_INPUT;
+import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_ERROR;
+
 import android.annotation.Nullable;
+import android.os.Looper;
+import android.os.MessageQueue;
+import android.os.MessageQueue.OnFileDescriptorEventListener;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
+// XXX
+import android.util.Log;
 
 import libcore.io.IoBridge;
+import libcore.io.IoUtils;
 
 import java.io.FileDescriptor;
 import java.io.InterruptedIOException;
@@ -50,9 +59,11 @@ public abstract class BlockingSocketReader {
     // Make it slightly easier for subclasses to properly close a socket
     // without having to know this incantation.
     public static final void closeSocket(@Nullable FileDescriptor fd) {
+    	if (fd == null) return;
         try {
             IoBridge.closeAndSignalBlockedThreads(fd);
         } catch (IOException ignored) {}
+        IoUtils.closeQuietly(fd);
     }
 
     protected BlockingSocketReader() {
@@ -117,12 +128,49 @@ public abstract class BlockingSocketReader {
      */
     protected void onExit() {}
 
+    private static Looper getMyLooper() {
+        final Looper looper = Looper.myLooper();
+        if (looper != null) return looper;
+        Looper.prepare();
+        return Looper.myLooper();
+    }
+
     private final void mainLoop() {
+        final Looper looper = getMyLooper();
+        final MessageQueue queue = looper.getQueue();
+        final int eventsOfInterest = EVENT_INPUT | EVENT_ERROR;
+        queue.addOnFileDescriptorEventListener(
+                mSocket,
+                eventsOfInterest,
+                new OnFileDescriptorEventListener() {
+                    @Override
+                    public int onFileDescriptorEvents(FileDescriptor fd, int events) {
+  Log.e("XXX", "fd " + fd + " got " + events);
+                        final boolean hasInput = ((events & EVENT_INPUT) != 0);
+  Log.e("XXX", "hasInput " + hasInput);
+                        final boolean hasError = ((events & EVENT_ERROR) != 0);
+  Log.e("XXX", "hasError " + hasError);
+                        if (hasError || (hasInput && !handleInput())) {
+                            stop();
+                            queue.removeOnFileDescriptorEventListener(fd);
+                            onExit();
+                            looper.quitSafely();
+                            return 0;  // unregisters this listener
+                        }
+                        return eventsOfInterest;
+                    }
+                });
+        looper.loop();
+    }
+
+    // Keep trying to read until we get EAGAIN/EWOULDBLOCK.
+    private boolean handleInput() {
         while (isRunning()) {
             final int bytesRead;
 
             try {
-                // Blocking read.
+                // Nonblocking read.
+                IoUtils.setBlocking(mSocket, false);
                 // TODO: See if this can be converted to recvfrom.
                 bytesRead = Os.read(mSocket, mPacket, 0, mPacket.length);
                 if (bytesRead < 1) {
@@ -131,6 +179,10 @@ public abstract class BlockingSocketReader {
                 }
                 mPacketsReceived++;
             } catch (ErrnoException e) {
+                if (e.errno == OsConstants.EAGAIN) {
+                    // We've read everything there is to read this time around.
+                    return true;
+                }
                 if (e.errno != OsConstants.EINTR) {
                     if (isRunning()) logError("read error: ", e);
                     break;
@@ -149,7 +201,6 @@ public abstract class BlockingSocketReader {
             }
         }
 
-        stop();
-        onExit();
+        return false;
     }
 }
