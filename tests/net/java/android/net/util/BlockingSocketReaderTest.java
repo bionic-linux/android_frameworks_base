@@ -18,6 +18,7 @@ package android.net.util;
 
 import static android.system.OsConstants.*;
 
+import android.os.HandlerThread;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructTimeval;
@@ -53,7 +54,8 @@ public class BlockingSocketReaderTest extends TestCase {
     protected FileDescriptor mLocalSocket;
     protected InetSocketAddress mLocalSockName;
     protected byte[] mLastRecvBuf;
-    protected boolean mExited;
+    protected boolean mStopped;
+    protected HandlerThread mHandlerThread;
     protected BlockingSocketReader mReceiver;
 
     @Override
@@ -62,11 +64,13 @@ public class BlockingSocketReaderTest extends TestCase {
         mLocalSocket = null;
         mLocalSockName = null;
         mLastRecvBuf = null;
-        mExited = false;
+        mStopped = false;
 
-        mReceiver = new BlockingSocketReader() {
+        mHandlerThread = new HandlerThread(BlockingSocketReaderTest.class.getSimpleName());
+        mHandlerThread.start();
+        mReceiver = new BlockingSocketReader(mHandlerThread.getThreadHandler()) {
             @Override
-            protected FileDescriptor createSocket() {
+            protected FileDescriptor createFd() {
                 FileDescriptor s = null;
                 try {
                     s = Os.socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
@@ -74,7 +78,7 @@ public class BlockingSocketReaderTest extends TestCase {
                     mLocalSockName = (InetSocketAddress) Os.getsockname(s);
                     Os.setsockoptTimeval(s, SOL_SOCKET, SO_SNDTIMEO, TIMEO);
                 } catch (ErrnoException|SocketException e) {
-                    closeSocket(s);
+                    closeFd(s);
                     fail();
                     return null;
                 }
@@ -90,8 +94,8 @@ public class BlockingSocketReaderTest extends TestCase {
             }
 
             @Override
-            protected void onExit() {
-                mExited = true;
+            protected void onStop() {
+                mStopped = true;
                 mLatch.countDown();
             }
         };
@@ -101,12 +105,14 @@ public class BlockingSocketReaderTest extends TestCase {
     public void tearDown() {
         if (mReceiver != null) mReceiver.stop();
         mReceiver = null;
+        mHandlerThread.quit();
+        mHandlerThread = null;
     }
 
     void resetLatch() { mLatch = new CountDownLatch(1); }
 
     void waitForActivity() throws Exception {
-        assertTrue(mLatch.await(500, TimeUnit.MILLISECONDS));
+        assertTrue(mLatch.await(1000, TimeUnit.MILLISECONDS));
         resetLatch();
     }
 
@@ -123,26 +129,26 @@ public class BlockingSocketReaderTest extends TestCase {
         assertEquals(LOOPBACK6, mLocalSockName.getAddress());
         assertTrue(0 < mLocalSockName.getPort());
         assertTrue(mLocalSocket != null);
-        assertFalse(mExited);
+        assertFalse(mStopped);
 
         final byte[] one = "one 1".getBytes("UTF-8");
         sendPacket(one);
         waitForActivity();
         assertEquals(1, mReceiver.numPacketsReceived());
         assertTrue(Arrays.equals(one, mLastRecvBuf));
-        assertFalse(mExited);
+        assertFalse(mStopped);
 
         final byte[] two = "two 2".getBytes("UTF-8");
         sendPacket(two);
         waitForActivity();
         assertEquals(2, mReceiver.numPacketsReceived());
         assertTrue(Arrays.equals(two, mLastRecvBuf));
-        assertFalse(mExited);
+        assertFalse(mStopped);
 
         mReceiver.stop();
         waitForActivity();
         assertEquals(2, mReceiver.numPacketsReceived());
         assertTrue(Arrays.equals(two, mLastRecvBuf));
-        assertTrue(mExited);
+        assertTrue(mStopped);
     }
 }
