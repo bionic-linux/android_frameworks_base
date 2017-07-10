@@ -106,7 +106,7 @@ public class BlockingSocketReaderTest extends TestCase {
     void resetLatch() { mLatch = new CountDownLatch(1); }
 
     void waitForActivity() throws Exception {
-        assertTrue(mLatch.await(500, TimeUnit.MILLISECONDS));
+        assertTrue(mLatch.await(1000, TimeUnit.MILLISECONDS));
         resetLatch();
     }
 
