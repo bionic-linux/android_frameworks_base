@@ -18,6 +18,7 @@ package android.net.util;
 
 import static android.system.OsConstants.*;
 
+import android.os.HandlerThread;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructTimeval;
@@ -54,6 +55,7 @@ public class BlockingSocketReaderTest extends TestCase {
     protected InetSocketAddress mLocalSockName;
     protected byte[] mLastRecvBuf;
     protected boolean mExited;
+    protected HandlerThread mHandlerThread;
     protected BlockingSocketReader mReceiver;
 
     @Override
@@ -64,7 +66,9 @@ public class BlockingSocketReaderTest extends TestCase {
         mLastRecvBuf = null;
         mExited = false;
 
-        mReceiver = new BlockingSocketReader() {
+        mHandlerThread = new HandlerThread(BlockingSocketReaderTest.class.getSimpleName());
+        mHandlerThread.start();
+        mReceiver = new BlockingSocketReader(mHandlerThread.getThreadHandler()) {
             @Override
             protected FileDescriptor createSocket() {
                 FileDescriptor s = null;
@@ -101,12 +105,14 @@ public class BlockingSocketReaderTest extends TestCase {
     public void tearDown() {
         if (mReceiver != null) mReceiver.stop();
         mReceiver = null;
+        mHandlerThread.quit();
+        mHandlerThread = null;
     }
 
     void resetLatch() { mLatch = new CountDownLatch(1); }
 
     void waitForActivity() throws Exception {
-        assertTrue(mLatch.await(500, TimeUnit.MILLISECONDS));
+        assertTrue(mLatch.await(1000, TimeUnit.MILLISECONDS));
         resetLatch();
     }
 
