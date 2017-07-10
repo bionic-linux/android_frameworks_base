@@ -16,15 +16,21 @@
 
 package android.net.util;
 
+import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_INPUT;
+import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_ERROR;
+
 import android.annotation.Nullable;
+import android.os.Handler;
+import android.os.MessageQueue;
+import android.os.MessageQueue.OnFileDescriptorEventListener;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
 
 import libcore.io.IoBridge;
+import libcore.io.IoUtils;
 
 import java.io.FileDescriptor;
-import java.io.InterruptedIOException;
 import java.io.IOException;
 
 
@@ -40,31 +46,33 @@ import java.io.IOException;
  */
 public abstract class BlockingSocketReader {
     public static final int DEFAULT_RECV_BUF_SIZE = 2 * 1024;
+    private static final int FD_EVENTS = EVENT_INPUT | EVENT_ERROR;
+    private static final int UNREGISTER_THIS_FD = 0;
 
+    private final MessageQueue mQueue;
     private final byte[] mPacket;
-    private final Thread mThread;
     private volatile FileDescriptor mSocket;
-    private volatile boolean mRunning;
     private volatile long mPacketsReceived;
 
     // Make it slightly easier for subclasses to properly close a socket
     // without having to know this incantation.
     public static final void closeSocket(@Nullable FileDescriptor fd) {
+        if (fd == null) return;
         try {
             IoBridge.closeAndSignalBlockedThreads(fd);
         } catch (IOException ignored) {}
     }
 
-    protected BlockingSocketReader() {
-        this(DEFAULT_RECV_BUF_SIZE);
+    protected BlockingSocketReader(Handler h) {
+        this(h, DEFAULT_RECV_BUF_SIZE);
     }
 
-    protected BlockingSocketReader(int recvbufsize) {
+    protected BlockingSocketReader(Handler h, int recvbufsize) {
+        mQueue = h.getLooper().getQueue();
         if (recvbufsize < DEFAULT_RECV_BUF_SIZE) {
             recvbufsize = DEFAULT_RECV_BUF_SIZE;
         }
         mPacket = new byte[recvbufsize];
-        mThread = new Thread(() -> { mainLoop(); });
     }
 
     public final boolean start() {
@@ -72,25 +80,48 @@ public abstract class BlockingSocketReader {
 
         try {
             mSocket = createSocket();
+            if (mSocket != null) {
+                // Force sockets to be non-blocking.
+                IoUtils.setBlocking(mSocket, false);
+            }
         } catch (Exception e) {
             logError("Failed to create socket: ", e);
+            closeSocket(mSocket);
+            mSocket = null;
             return false;
         }
 
         if (mSocket == null) return false;
 
-        mRunning = true;
-        mThread.start();
+        mQueue.addOnFileDescriptorEventListener(
+                mSocket,
+                FD_EVENTS,
+                new OnFileDescriptorEventListener() {
+                    @Override
+                    public int onFileDescriptorEvents(FileDescriptor fd, int events) {
+                        if (fd != mSocket) return UNREGISTER_THIS_FD;
+
+                        final boolean hasInput = ((events & EVENT_INPUT) != 0);
+                        final boolean hasError = ((events & EVENT_ERROR) != 0);
+                        if (hasError || (hasInput && !handleInput())) {
+                            return UNREGISTER_THIS_FD;
+                        }
+                        return FD_EVENTS;
+                    }
+                });
         return true;
     }
 
     public final void stop() {
-        mRunning = false;
+        if (!isRunning()) return;
+
+        mQueue.removeOnFileDescriptorEventListener(mSocket);
         closeSocket(mSocket);
         mSocket = null;
+        onExit();
     }
 
-    public final boolean isRunning() { return mRunning; }
+    public final boolean isRunning() { return (mSocket != null); }
 
     public final long numPacketsReceived() { return mPacketsReceived; }
 
@@ -101,8 +132,18 @@ public abstract class BlockingSocketReader {
     protected abstract FileDescriptor createSocket();
 
     /**
+     * Subclasses MAY override this to change the default read() implementation
+     * in favour of, say, recvfrom().
+     *
+     * Implementations MUST return the bytes read or throw an Exception.
+     */
+    protected int readPacket(FileDescriptor fd, byte[] packetBuffer) throws Exception {
+        return Os.read(fd, packetBuffer, 0, packetBuffer.length);
+    }
+
+    /**
      * Called by the main loop for every packet.  Any desired copies of
-     * |recvbuf| should be made in here, and the underlying byte array is
+     * |recvbuf| should be made in here, as the underlying byte array is
      * reused across all reads.
      */
     protected void handlePacket(byte[] recvbuf, int length) {}
@@ -117,27 +158,30 @@ public abstract class BlockingSocketReader {
      */
     protected void onExit() {}
 
-    private final void mainLoop() {
+    // Keep trying to read until we get EAGAIN/EWOULDBLOCK.
+    private boolean handleInput() {
         while (isRunning()) {
             final int bytesRead;
 
             try {
-                // Blocking read.
-                // TODO: See if this can be converted to recvfrom.
-                bytesRead = Os.read(mSocket, mPacket, 0, mPacket.length);
+                bytesRead = readPacket(mSocket, mPacket);
                 if (bytesRead < 1) {
                     if (isRunning()) logError("Socket closed, exiting", null);
                     break;
                 }
                 mPacketsReceived++;
             } catch (ErrnoException e) {
+                if (e.errno == OsConstants.EAGAIN) {
+                    // We've read everything there is to read this time around.
+                    return true;
+                }
                 if (e.errno != OsConstants.EINTR) {
                     if (isRunning()) logError("read error: ", e);
                     break;
                 }
                 continue;
-            } catch (IOException ioe) {
-                if (isRunning()) logError("read error: ", ioe);
+            } catch (Exception e) {
+                if (isRunning()) logError("read error: ", e);
                 continue;
             }
 
@@ -149,7 +193,6 @@ public abstract class BlockingSocketReader {
             }
         }
 
-        stop();
-        onExit();
+        return false;
     }
 }
