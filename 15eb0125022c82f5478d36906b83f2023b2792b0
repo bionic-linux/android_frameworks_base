@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09555190_80103be5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2376,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-10T23:43:52Z",
+      "side": 1,
+      "message": "if we make this an exception we may want to go with a checked exception so we get build-time assurance that this wont lead to a crash (there must be a declared catcher in the stack).",
+      "range": {
+        "startLine": 2376,
+        "startChar": 26,
+        "endLine": 2376,
+        "endChar": 47
+      },
+      "revId": "15eb0125022c82f5478d36906b83f2023b2792b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c38cb7_25a9a87b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2395,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-10T23:43:52Z",
+      "side": 1,
+      "message": "better var names - keyCapability, capability?",
+      "range": {
+        "startLine": 2395,
+        "startChar": 43,
+        "endLine": 2395,
+        "endChar": 52
+      },
+      "revId": "15eb0125022c82f5478d36906b83f2023b2792b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e77a47b_ff02cbd4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2414,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-10T23:43:52Z",
+      "side": 1,
+      "message": "why do we need disable-mechanisms in both availability and expiration?  Maybe get rid of *_TIME_DISABLED?",
+      "range": {
+        "startLine": 2414,
+        "startChar": 0,
+        "endLine": 2414,
+        "endChar": 89
+      },
+      "revId": "15eb0125022c82f5478d36906b83f2023b2792b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
