@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "795aa44d_94256bb7",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-11T13:36:38Z",
+      "side": 1,
+      "message": "Well spotted. Yes this is a bug: I need to return true when mInitialConfig \u003d\u003d true. Funnily I fixed it in the follow-up cl (which is not ready for review yet).",
+      "parentUuid": "61169615_2b574c00",
+      "range": {
+        "startLine": 394,
+        "startChar": 23,
+        "endLine": 394,
+        "endChar": 30
+      },
+      "revId": "49798b23732da2a69870108347cb9abddb842921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6cbba02_e0f74cf2",
         "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
         "patchSetId": 9
