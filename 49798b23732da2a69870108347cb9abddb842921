@@ -93,6 +93,30 @@
       "revId": "49798b23732da2a69870108347cb9abddb842921",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82736b28_fcdc86fa",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-12T14:34:49Z",
+      "side": 1,
+      "message": "I think this is fine for now.  What I realize is that because the InitialConfiguration class doesn\u0027t allow you to specify any default v6gateways we cannot in effect be given anything that would cause a default route to be create later on by CS.",
+      "parentUuid": "cf095fdd_26db1a48",
+      "range": {
+        "startLine": 120,
+        "startChar": 58,
+        "endLine": 120,
+        "endChar": 74
+      },
+      "revId": "49798b23732da2a69870108347cb9abddb842921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
