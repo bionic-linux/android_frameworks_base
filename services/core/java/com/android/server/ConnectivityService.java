@@ -2151,16 +2151,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_PROPERTIES_CHANGED: {
-                    if (VDBG) {
+                    LinkProperties oldLp = nai.linkProperties;
+                    LinkProperties newLp = (LinkProperties) msg.obj;
+                    if (DBG) {
                         log("Update of LinkProperties for " + nai.name() +
                                 "; created=" + nai.created +
-                                "; everConnected=" + nai.everConnected);
+                                "; everConnected=" + nai.everConnected +
+                                "; oldLp=" + oldLp +
+                                "; newLp=" + newLp);
                     }
-                    LinkProperties oldLp = nai.linkProperties;
                     synchronized (nai) {
-                        nai.linkProperties = (LinkProperties)msg.obj;
+                        nai.linkProperties = newLp;
                     }
-                    if (nai.everConnected) updateLinkProperties(nai, oldLp);
+                    if (nai.created) updateLinkProperties(nai, oldLp);
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_INFO_CHANGED: {
@@ -4562,15 +4565,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void updateInterfaces(LinkProperties newLp, LinkProperties oldLp, int netId,
                                   NetworkCapabilities caps) {
-        CompareResult<String> interfaceDiff = new CompareResult<String>();
+        final CompareResult<String> interfaceDiff;
         if (oldLp != null) {
             interfaceDiff = oldLp.compareAllInterfaceNames(newLp);
         } else if (newLp != null) {
+            interfaceDiff = new CompareResult<>();
             interfaceDiff.added = newLp.getAllInterfaceNames();
+        } else {
+            return; // both null
+        }
+        if (DBG) {
+            log("Adding/removing interfaces: " + interfaceDiff);
         }
         for (String iface : interfaceDiff.added) {
             try {
-                if (DBG) log("Adding iface " + iface + " to network " + netId);
                 mNetd.addInterfaceToNetwork(iface, netId);
                 wakeupModifyInterface(iface, caps, true);
             } catch (Exception e) {
@@ -4579,7 +4587,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         for (String iface : interfaceDiff.removed) {
             try {
-                if (DBG) log("Removing iface " + iface + " from network " + netId);
                 wakeupModifyInterface(iface, caps, false);
                 mNetd.removeInterfaceFromNetwork(iface, netId);
             } catch (Exception e) {
@@ -4605,7 +4612,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // do this twice, adding non-nexthop routes first, then routes they are dependent on
         for (RouteInfo route : routeDiff.added) {
             if (route.hasGateway()) continue;
-            if (VDBG) log("Adding Route [" + route + "] to network " + netId);
+            if (DBG) log("Adding Route [" + route + "] to network " + netId);
             try {
                 mNetd.addRoute(netId, route);
             } catch (Exception e) {
@@ -4616,7 +4623,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         for (RouteInfo route : routeDiff.added) {
             if (route.hasGateway() == false) continue;
-            if (VDBG) log("Adding Route [" + route + "] to network " + netId);
+            if (DBG) log("Adding Route [" + route + "] to network " + netId);
             try {
                 mNetd.addRoute(netId, route);
             } catch (Exception e) {
@@ -4627,7 +4634,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         for (RouteInfo route : routeDiff.removed) {
-            if (VDBG) log("Removing Route [" + route + "] from network " + netId);
+            if (DBG) log("Removing Route [" + route + "] from network " + netId);
             try {
                 mNetd.removeRoute(netId, route);
             } catch (Exception e) {
@@ -5257,6 +5264,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo newInfo) {
+        if (networkAgent.linkProperties.getInterfaceName() == null) {
+            Slog.wtf(TAG, networkAgent.name() + " had LinkProperties with a null interface name");
+        }
         final NetworkInfo.State state = newInfo.getState();
         NetworkInfo oldInfo = null;
         final int oldScore = networkAgent.getCurrentScore();
@@ -5280,10 +5290,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     " to " + state);
         }
 
-        if (!networkAgent.created
-                && (state == NetworkInfo.State.CONNECTED
-                || (state == NetworkInfo.State.CONNECTING && networkAgent.isVPN()))) {
-
+        if (!networkAgent.created) {
             // A network that has just connected has zero requests and is thus a foreground network.
             networkAgent.networkCapabilities.addCapability(NET_CAPABILITY_FOREGROUND);
 
@@ -5304,12 +5311,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 return;
             }
             networkAgent.created = true;
+            updateLinkProperties(networkAgent, null);
         }
 
         if (!networkAgent.everConnected && state == NetworkInfo.State.CONNECTED) {
             networkAgent.everConnected = true;
 
-            updateLinkProperties(networkAgent, null);
             notifyIfacesChangedForNetworkStats();
 
             networkAgent.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_CONNECTED);

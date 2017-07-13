@@ -17,6 +17,8 @@
 package android.net.ip;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
@@ -34,6 +36,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
+import android.net.LinkProperties;
+import android.net.RouteInfo;
 import android.net.ip.IpManager.Callback;
 import android.net.ip.IpManager.InitialConfiguration;
 import android.net.ip.IpManager.ProvisioningConfiguration;
@@ -55,6 +59,8 @@ import org.mockito.MockitoAnnotations;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.util.Arrays;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -128,6 +134,49 @@ public class IpManagerTest {
         ipm.stop();
         verify(mNMService, timeout(100).times(1)).disableIpv6(iface);
         verify(mNMService, timeout(100).times(1)).clearInterfaceAddresses(iface);
+    }
+
+    @Test
+    public void testIsProvisioned() throws Exception {
+        IsProvisionedTestCase[] testcases = {
+            // FIXME: why is this failing ??
+            provisionedCase(links(), routes(), links(), prefixes())
+            // TODO
+        };
+
+        for (IsProvisionedTestCase testcase : testcases) {
+            if (IpManager.isProvisioned(testcase.lp, testcase.config) != testcase.isProvisioned) {
+                fail(testcase.errorMessage());
+            }
+        }
+    }
+
+    static class IsProvisionedTestCase {
+        String descr;
+        boolean isProvisioned;
+        LinkProperties lp;
+        InitialConfiguration config;
+
+        String errorMessage() {
+            return String.format("%s: expected %s with config %s to be %s, but was %s",
+                    descr, lp, config, provisioned(isProvisioned), provisioned(!isProvisioned));
+        }
+    }
+
+    static IsProvisionedTestCase provisionedCase(Set<LinkAddress> lpAddrs, Set<RouteInfo> lpRoutes,
+            Set<LinkAddress> configAddrs, Set<IpPrefix> configRoutes) {
+        IsProvisionedTestCase testcase = new IsProvisionedTestCase();
+        testcase.descr = "isprovisioned";
+        testcase.isProvisioned = true;
+        testcase.lp = new LinkProperties();
+        testcase.lp.setLinkAddresses(lpAddrs);
+        testcase.lp.addAllRoutes(lpRoutes);
+        testcase.config = conf(configAddrs, configRoutes, new HashSet<>());
+        return testcase;
+    }
+
+    static String provisioned(boolean isProvisioned) {
+        return isProvisioned ? "provisioned" : "not provisioned";
     }
 
     @Test
@@ -214,6 +263,13 @@ public class IpManagerTest {
         return testcase;
     }
 
+    static LinkProperties linkproperties(Set<LinkAddress> addresses, Set<RouteInfo> routes) {
+        LinkProperties lp = new LinkProperties();
+        lp.setLinkAddresses(addresses);
+        lp.addAllRoutes(routes);
+        return lp;
+    }
+
     static InitialConfiguration conf(
             Set<LinkAddress> links, Set<IpPrefix> prefixes, Set<InetAddress> dns) {
         InitialConfiguration conf = new InitialConfiguration();
@@ -221,6 +277,10 @@ public class IpManagerTest {
         conf.directlyConnectedRoutes.addAll(prefixes);
         conf.dnsServers.addAll(dns);
         return conf;
+    }
+
+    static Set<RouteInfo> routes(String... routes) {
+        return mapIntoSet(routes, (r) -> new RouteInfo(new IpPrefix(r)));
     }
 
     static Set<IpPrefix> prefixes(String... prefixes) {
@@ -253,5 +313,73 @@ public class IpManagerTest {
 
     interface Fn<A,B> {
         B call(A a) throws Exception;
+    }
+
+    @Test
+    public void testAll() {
+        List<String> list1 = Arrays.asList();
+        List<String> list2 = Arrays.asList("foo");
+        List<String> list3 = Arrays.asList("bar", "baz");
+        List<String> list4 = Arrays.asList("foo", "bar", "baz");
+
+        assertTrue(IpManager.all(list1, (x) -> false));
+        assertFalse(IpManager.all(list2, (x) -> false));
+        assertTrue(IpManager.all(list3, (x) -> true));
+        assertTrue(IpManager.all(list2, (x) -> x.charAt(0) == 'f'));
+        assertFalse(IpManager.all(list4, (x) -> x.charAt(0) == 'f'));
+    }
+
+    @Test
+    public void testAny() {
+        List<String> list1 = Arrays.asList();
+        List<String> list2 = Arrays.asList("foo");
+        List<String> list3 = Arrays.asList("bar", "baz");
+        List<String> list4 = Arrays.asList("foo", "bar", "baz");
+
+        assertFalse(IpManager.any(list1, (x) -> true));
+        assertTrue(IpManager.any(list2, (x) -> true));
+        assertTrue(IpManager.any(list2, (x) -> x.charAt(0) == 'f'));
+        assertFalse(IpManager.any(list3, (x) -> x.charAt(0) == 'f'));
+        assertTrue(IpManager.any(list4, (x) -> x.charAt(0) == 'f'));
+    }
+
+    @Test
+    public void testFindAll() {
+        List<String> list1 = Arrays.asList();
+        List<String> list2 = Arrays.asList("foo");
+        List<String> list3 = Arrays.asList("foo", "bar", "baz");
+
+        assertEquals(list1, IpManager.findAll(list1, (x) -> true));
+        assertEquals(list1, IpManager.findAll(list3, (x) -> false));
+        assertEquals(list3, IpManager.findAll(list3, (x) -> true));
+        assertEquals(list2, IpManager.findAll(list3, (x) -> x.charAt(0) == 'f'));
+    }
+
+    @Test
+    public void testSubset() {
+        List<String> list1 = Arrays.asList();
+        List<String> list2 = Arrays.asList("foo");
+        List<String> list3 = Arrays.asList("bar", "baz");
+        List<String> list4 = Arrays.asList("foo", "bar", "baz");
+
+        assertTrue(IpManager.isSubset(list1, list1));
+        assertTrue(IpManager.isSubset(list1, list2));
+        assertTrue(IpManager.isSubset(list1, list3));
+        assertTrue(IpManager.isSubset(list1, list4));
+
+        assertFalse(IpManager.isSubset(list2, list1));
+        assertTrue(IpManager.isSubset(list2, list2));
+        assertFalse(IpManager.isSubset(list2, list3));
+        assertTrue(IpManager.isSubset(list2, list4));
+
+        assertFalse(IpManager.isSubset(list3, list1));
+        assertFalse(IpManager.isSubset(list3, list2));
+        assertTrue(IpManager.isSubset(list3, list3));
+        assertTrue(IpManager.isSubset(list3, list4));
+
+        assertFalse(IpManager.isSubset(list4, list1));
+        assertFalse(IpManager.isSubset(list4, list2));
+        assertFalse(IpManager.isSubset(list4, list3));
+        assertTrue(IpManager.isSubset(list4, list4));
     }
 }

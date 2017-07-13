@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * Describes the properties of a network link.
@@ -71,17 +72,20 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     public static class CompareResult<T> {
-        public List<T> removed = new ArrayList<T>();
-        public List<T> added = new ArrayList<T>();
+        public List<T> removed = new ArrayList<>();
+        public List<T> added = new ArrayList<>();
 
         @Override
         public String toString() {
-            String retVal = "removed=[";
-            for (T addr : removed) retVal += addr.toString() + ",";
-            retVal += "] added=[";
-            for (T addr : added) retVal += addr.toString() + ",";
-            retVal += "]";
-            return retVal;
+            return "removed=[" + join(removed) + "] added=[" + join(added) + "]";
+        }
+
+        private static <T> String join(List<T> ts) {
+            StringJoiner joiner = new StringJoiner(",");
+            for (T t : ts) {
+                joiner.add(t.toString());
+            }
+            return joiner.toString();
         }
     }
 
@@ -477,6 +481,25 @@ public final class LinkProperties implements Parcelable {
             }
         }
         return false;
+    }
+
+    /**
+     * Adds all {@link RouteInfo} to this {@code LinkProperties}, if not already present. Route
+     * addition has the same semantics has {@link addRoute}.
+     *
+     * @param routes A collection of {@link RouteInfo} to add to this object.
+     * @return {@code false} if all the routes were already present, {@code true} if any was added.
+     *
+     * @hide
+     */
+    public int addAllRoutes(Iterable<RouteInfo> routes) {
+        int added = 0;
+        for (RouteInfo route : routes) {
+            if (addRoute(route)) {
+                added++;
+            }
+        }
+        return added;
     }
 
     /**
