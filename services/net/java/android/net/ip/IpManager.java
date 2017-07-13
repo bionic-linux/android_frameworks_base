@@ -36,6 +36,7 @@ import android.net.dhcp.DhcpClient;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
 import android.net.util.MultinetworkPolicyTracker;
+import android.net.util.NetdService;
 import android.net.util.NetworkConstants;
 import android.net.util.SharedLog;
 import android.os.INetworkManagementService;
@@ -66,9 +67,11 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.function.Predicate;
@@ -90,8 +93,8 @@ import java.util.stream.Collectors;
  * @hide
  */
 public class IpManager extends StateMachine {
-    private static final boolean DBG = false;
-    private static final boolean VDBG = false;
+    private static final boolean DBG = true;
+    private static final boolean VDBG = true;
 
     // For message logging.
     private static final Class[] sMessageClasses = { IpManager.class, DhcpClient.class };
@@ -422,6 +425,14 @@ public class IpManager extends StateMachine {
                     join(", ", dnsServers), gateway);
         }
 
+        public List<RouteInfo> getRoutes() {
+            List<RouteInfo> routes = new ArrayList<>();
+            for (IpPrefix prefix : directlyConnectedRoutes) {
+                routes.add(new RouteInfo(prefix));
+            }
+            return routes;
+        }
+
         public boolean isValid() {
             // For every IP address, there must be at least one prefix containing that address.
             for (LinkAddress addr : ipAddresses) {
@@ -460,13 +471,11 @@ public class IpManager extends StateMachine {
         }
 
         private static boolean isPrefixLengthCompliant(LinkAddress addr) {
-            return (addr.getAddress() instanceof Inet4Address)
-                    || isCompliantIPv6PrefixLength(addr.getPrefixLength());
+            return addr.isIPv4() || isCompliantIPv6PrefixLength(addr.getPrefixLength());
         }
 
         private static boolean isPrefixLengthCompliant(IpPrefix prefix) {
-            return (prefix.getAddress() instanceof Inet4Address)
-                    || isCompliantIPv6PrefixLength(prefix.getPrefixLength());
+            return prefix.isIPv4() || isCompliantIPv6PrefixLength(prefix.getPrefixLength());
         }
 
         private static boolean isCompliantIPv6PrefixLength(int prefixLength) {
@@ -479,28 +488,7 @@ public class IpManager extends StateMachine {
         }
 
         private static boolean isIPv6GUA(LinkAddress addr) {
-            return (addr.getAddress() instanceof Inet6Address) && addr.isGlobalPreferred();
-        }
-
-        private static <T> boolean any(Iterable<T> coll, Predicate<T> fn) {
-            for (T t : coll) {
-                if (fn.test(t)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static <T> boolean all(Iterable<T> coll, Predicate<T> fn) {
-            return !any(coll, not(fn));
-        }
-
-        private static <T> Predicate<T> not(Predicate<T> fn) {
-            return (t) -> !fn.test(t);
-        }
-
-        private static <T> String join(String delimiter, Collection<T> coll) {
-            return coll.stream().map(Object::toString).collect(Collectors.joining(delimiter));
+            return addr.isIPv6() && addr.isGlobalPreferred();
         }
     }
 
@@ -549,6 +537,7 @@ public class IpManager extends StateMachine {
     private final LocalLog mConnectivityPacketLog;
     private final MessageHandlingLogger mMsgStateLogger;
     private final IpConnectivityLog mMetricsLog = new IpConnectivityLog();
+    private final INetd mNetd = NetdService.getInstance(); // FIXME for testing
 
     private NetworkInterface mNetworkInterface;
 
@@ -898,10 +887,25 @@ public class IpManager extends StateMachine {
     // object that is a correct and complete assessment of what changed, taking
     // account of the asymmetries described in the comments in this function.
     // Then switch to using it everywhere (IpReachabilityMonitor, etc.).
-    private ProvisioningChange compareProvisioning(
-            LinkProperties oldLp, LinkProperties newLp) {
-        ProvisioningChange delta;
+    private ProvisioningChange compareProvisioning(LinkProperties oldLp, LinkProperties newLp) {
+        // When an InitialConfiguration is specified, ignore any difference with previous properties
+        // and instead check if properties observed match the desired properties.
+        // TODO: handle loss of provisioning as well
+        InitialConfiguration config = mConfiguration.mInitialConfig;
+        if (config != null) {
+            boolean hasAllAddrs = isSubset(config.ipAddresses, newLp.getLinkAddresses());
+            boolean hasAllRoutes = isSubset(config.getRoutes(), newLp.getRoutes());
+            // REMOVEME
+            Log.d(mTag, String.format("InitialConfig (hasAllAddrs, hasAllRoutes) = (%s, %s)",
+                    hasAllAddrs, hasAllRoutes));
+            if (hasAllAddrs && hasAllRoutes) {
+                return ProvisioningChange.GAINED_PROVISIONING;
+            } else {
+                return ProvisioningChange.STILL_NOT_PROVISIONED;
+            }
+        }
 
+        ProvisioningChange delta;
         final boolean wasProvisioned = isProvisioned(oldLp);
         final boolean isProvisioned = isProvisioned(newLp);
 
@@ -1016,10 +1020,6 @@ public class IpManager extends StateMachine {
         return delta;
     }
 
-    private boolean linkPropertiesUnchanged(LinkProperties newLp) {
-        return Objects.equals(newLp, mLinkProperties);
-    }
-
     private LinkProperties assembleLinkProperties() {
         // [1] Create a new LinkProperties object to populate.
         LinkProperties newLp = new LinkProperties();
@@ -1037,9 +1037,7 @@ public class IpManager extends StateMachine {
         // so as to track all required information directly.
         LinkProperties netlinkLinkProperties = mNetlinkTracker.getLinkProperties();
         newLp.setLinkAddresses(netlinkLinkProperties.getLinkAddresses());
-        for (RouteInfo route : netlinkLinkProperties.getRoutes()) {
-            newLp.addRoute(route);
-        }
+        newLp.addAllRoutes(netlinkLinkProperties.getRoutes());
         addAllReachableDnsServers(newLp, netlinkLinkProperties.getDnsServers());
 
         // [3] Add in data from DHCPv4, if available.
@@ -1047,9 +1045,7 @@ public class IpManager extends StateMachine {
         // mDhcpResults is never shared with any other owner so we don't have
         // to worry about concurrent modification.
         if (mDhcpResults != null) {
-            for (RouteInfo route : mDhcpResults.getRoutes(mInterfaceName)) {
-                newLp.addRoute(route);
-            }
+            newLp.addAllRoutes(mDhcpResults.getRoutes(mInterfaceName));
             addAllReachableDnsServers(newLp, mDhcpResults.dnsServers);
             newLp.setDomains(mDhcpResults.domains);
 
@@ -1066,8 +1062,21 @@ public class IpManager extends StateMachine {
             newLp.setHttpProxy(mHttpProxy);
         }
 
+        // [5] Add data from InitialConfiguration
+        InitialConfiguration config = mConfiguration.mInitialConfig;
+        if (config != null) {
+            // Add InitialConfiguration routes and dns server addresses once all addresses specified
+            // in the InitialConfiguration have been observed with Netwlink.
+            boolean hasAll = isSubset(config.ipAddresses, newLp.getLinkAddresses());
+            if (hasAll) {
+                newLp.addAllRoutes(config.getRoutes());
+                addAllReachableDnsServers(newLp, config.dnsServers);
+            }
+        }
+        final LinkProperties oldLp = mLinkProperties;
         if (VDBG) {
-            Log.d(mTag, "newLp{" + newLp + "}");
+            Log.d(mTag, String.format("Netlink-seen LPs: %s, new LPs: %s; old LPs: %s",
+                    netlinkLinkProperties, newLp, oldLp));
         }
         return newLp;
     }
@@ -1086,11 +1095,16 @@ public class IpManager extends StateMachine {
 
     // Returns false if we have lost provisioning, true otherwise.
     private boolean handleLinkPropertiesUpdate(boolean sendCallbacks) {
+        final LinkProperties oldLp = mLinkProperties;
         final LinkProperties newLp = assembleLinkProperties();
-        if (linkPropertiesUnchanged(newLp)) {
+        if (Objects.equals(newLp, mLinkProperties)) {
+            // REMOVEME
+            Log.d(mTag, "no LinkProperties change");
             return true;
         }
         final ProvisioningChange delta = setLinkProperties(newLp);
+        // REMOVEME
+        Log.d(mTag, String.format("provisioning delta %s for %s -> %s", delta, oldLp, newLp));
         if (sendCallbacks) {
             dispatchCallback(delta, newLp);
         }
@@ -1215,6 +1229,33 @@ public class IpManager extends StateMachine {
             return false;
         }
 
+        return true;
+    }
+
+    private boolean applyInitialConfig(InitialConfiguration config) {
+        if (config.ipAddresses.isEmpty()) {
+            // TODO: handle this case in isValid() instead
+            return false;
+        }
+
+        if (mNetd == null) {
+            logError("tried to add %s to %s but INetd was null", config, mInterfaceName);
+            return false;
+        }
+
+        for (LinkAddress addr : findAll(config.ipAddresses, LinkAddress::isIPv6)) {
+            try {
+                mNetd.interfaceAddAddress(
+                        mInterfaceName, addr.getAddress().getHostAddress(), addr.getPrefixLength());
+            } catch (ServiceSpecificException | RemoteException e) {
+                logError("failed to add %s to %s: %s", addr, mInterfaceName, e);
+                return false;
+            }
+            // REMOVEME
+            Log.d(mTag, "added InitialConfiguration addresses " + join(", ", config.ipAddresses));
+        }
+
+        // TODO: migrate IPv4 StaticIpConfiguration here.
         return true;
     }
 
@@ -1446,6 +1487,14 @@ public class IpManager extends StateMachine {
                 return;
             }
 
+            InitialConfiguration config = mConfiguration.mInitialConfig;
+            if ((config != null) && !applyInitialConfig(config)) {
+                // TODO introduce a new IpManagerEvent constant to distinguish this error case.
+                doImmediateProvisioningFailure(IpManagerEvent.ERROR_INVALID_PROVISIONING);
+                transitionTo(mStoppingState);
+                return;
+            }
+
             if (mConfiguration.mUsingIpReachabilityMonitor && !startIpReachabilityMonitor()) {
                 doImmediateProvisioningFailure(
                         IpManagerEvent.ERROR_STARTING_IPREACHABILITYMONITOR);
@@ -1651,5 +1700,47 @@ public class IpManager extends StateMachine {
             return String.format("rcvd_in=%s, proc_in=%s",
                                  receivedInState, processedInState);
         }
+    }
+
+    // TODO: extract out into collection utility class.
+    private static <T> boolean any(Iterable<T> coll, Predicate<T> fn) {
+        for (T t : coll) {
+            if (fn.test(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static <T> boolean all(Iterable<T> coll, Predicate<T> fn) {
+        return !any(coll, not(fn));
+    }
+
+    private static <T> Predicate<T> not(Predicate<T> fn) {
+        return (t) -> !fn.test(t);
+    }
+
+    private static <T> String join(String delimiter, Collection<T> coll) {
+        return coll.stream().map(Object::toString).collect(Collectors.joining(delimiter));
+    }
+
+    private static <T> T find(Iterable<T> coll, Predicate<T> fn) {
+        for (T t: coll) {
+            if (fn.test(t)) {
+              return t;
+            }
+        }
+        return null;
+    }
+
+    private static <T> List<T> findAll(Collection<T> coll, Predicate<T> fn) {
+        return coll.stream().filter(fn).collect(Collectors.toList());
+    }
+
+    /**
+     * @return true if all items of a are contained in b.
+     */
+    private static <T> boolean isSubset(Collection<T> a, Collection<T> b) {
+        return all(a, (x) -> b.contains(x));
     }
 }
