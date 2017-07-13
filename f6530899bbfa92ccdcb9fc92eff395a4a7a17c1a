@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6673a487_d3ca13fb",
+        "filename": "telephony/java/android/telephony/mbms/DownloadCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-13T22:19:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08e62773_dae8bd24",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "f6530899bbfa92ccdcb9fc92eff395a4a7a17c1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aef4dd00_0c6511f7",
         "filename": "telephony/java/android/telephony/mbms/DownloadCallback.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-17T01:10:20Z",
       "side": 1,
       "message": "Is this redundant? the FileInfo already contains a size field. If it\u0027s the size of the whole DownloadRequest, that should be clarified.",
+      "range": {
+        "startLine": 31,
+        "startChar": 70,
+        "endLine": 31,
+        "endChar": 88
+      },
+      "revId": "f6530899bbfa92ccdcb9fc92eff395a4a7a17c1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a04ae1ba_76254802",
+        "filename": "telephony/java/android/telephony/mbms/DownloadCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-13T22:19:56Z",
+      "side": 1,
+      "message": "It is redundant with fullDecodedSize, but the symmetry here is pleasing.  Do you strongly object?",
+      "parentUuid": "aef4dd00_0c6511f7",
       "range": {
         "startLine": 31,
         "startChar": 70,
