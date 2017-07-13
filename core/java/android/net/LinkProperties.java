@@ -480,6 +480,23 @@ public final class LinkProperties implements Parcelable {
     }
 
     /**
+     * Adds all {@link RouteInfo} to this {@code LinkProperties}, if not already present. Route
+     * addition has the same semantics has {@link addRoute}.
+     *
+     * @param routes A collection of {@link RouteInfo} to add to this object.
+     * @return {@code false} if all the routes were already present, {@code true} if any was added.
+     *
+     * @hide
+     */
+    public boolean addAllRoutes(Iterable<RouteInfo> routes) {
+        boolean anyAdded = false;
+        for (RouteInfo route : routes) {
+            anyAdded |= addRoute(route);
+        }
+        return anyAdded;
+    }
+
+    /**
      * Removes a {@link RouteInfo} from this {@code LinkProperties}, if present. The route must
      * specify an interface and the interface must match the interface of this
      * {@code LinkProperties}, or it will not be removed.
