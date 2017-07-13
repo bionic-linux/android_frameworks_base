@@ -36,6 +36,7 @@ import android.net.dhcp.DhcpClient;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
 import android.net.util.MultinetworkPolicyTracker;
+import android.net.util.NetdService;
 import android.net.util.NetworkConstants;
 import android.net.util.SharedLog;
 import android.os.INetworkManagementService;
@@ -548,6 +549,7 @@ public class IpManager extends StateMachine {
     private final LocalLog mConnectivityPacketLog;
     private final MessageHandlingLogger mMsgStateLogger;
     private final IpConnectivityLog mMetricsLog = new IpConnectivityLog();
+    private final INetd mNetd = NetdService.getInstance(); // FIXME for testing
 
     private NetworkInterface mNetworkInterface;
 
@@ -1046,9 +1048,7 @@ public class IpManager extends StateMachine {
         // mDhcpResults is never shared with any other owner so we don't have
         // to worry about concurrent modification.
         if (mDhcpResults != null) {
-            for (RouteInfo route : mDhcpResults.getRoutes(mInterfaceName)) {
-                newLp.addRoute(route);
-            }
+            newLp.addAllroutes(mDhcpResults.getRoutes(mInterfaceName));
             addAllReachableDnsServers(newLp, mDhcpResults.dnsServers);
             newLp.setDomains(mDhcpResults.domains);
 
@@ -1064,6 +1064,20 @@ public class IpManager extends StateMachine {
         if (mHttpProxy != null) {
             newLp.setHttpProxy(mHttpProxy);
         }
+
+//        // [5] Add data from InitialConfiguration
+//        if (mConfiguration.mInitialConfig != null) {
+//            // InitialConfiguration addresses are added via NMS and acked with the normal Netlink +
+//            // BaseNetworkObserver mechanism. Only add InitialConfiguration routes if all wanted
+//            // addresses have been acked.
+//            List<LinkAddresses> got = newLp.getAddresses();
+//            List<LinkAddresses> want = mConfiguration.mInitialConfig.ipAddresses;
+//            boolean hasAll = all(want, (ip) -> got.contains(ip));
+//            if (hasAll) {
+//                addAllReachableDnsServers(newLp, mConfiguration.mInitialConfig.dnsServers);
+//                newLp.addAllRoutes(mConfiguration.mInitialConfig.directlyConnectedRoutes);
+//            }
+//        }
 
         if (VDBG) {
             Log.d(mTag, "newLp{" + newLp + "}");
@@ -1214,7 +1228,37 @@ public class IpManager extends StateMachine {
             return false;
         }
 
+        // Apply initial configuration addresses manually
+        if (mConfiguration.mInitialConfig != null) {
+            applyInitialConfig(mConfiguration.mInitialConfig);
+        }
+
         return true;
+    }
+
+    private boolean applyInitialConfig(InitialConfiguration config) {
+        List<LinkAddress> addrs = findAll(config.ipAddresses, LinkAddress::isIPv6);
+        for (LinkAddress addr : addrs) {
+            interfaceAddAddr(addr);
+        }
+
+        // TODO: migrate StaticIpConfiguration here for IPv4.
+    }
+
+    private boolean interfaceAddAddr(LinkAddress addr) {
+        if (mNetd == null) {
+            logError("tried to add %s to %s but INetd was null", addr, mInterfaceName);
+            return false;
+        }
+
+        try {
+            String address = addr.getAddress().getHostAddress();
+            int prefixLength = addr.getPrefixLength();
+            mNetd.interfaceAddAddress(mIfaceName, address, prefixLength);
+        } catch (ServiceSpecificException | RemoteException e) {
+            logError("failed to add %s to %s: %s", addr, mInterfaceName, e);
+            return false;
+        }
     }
 
     private boolean startIpReachabilityMonitor() {

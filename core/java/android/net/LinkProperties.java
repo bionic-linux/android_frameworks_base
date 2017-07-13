@@ -479,6 +479,13 @@ public final class LinkProperties implements Parcelable {
         return false;
     }
 
+    public boolean addAllRoutes(Iterable<RouteInfo> routes) {
+        for (RouteInfo route : routes) {
+            addRoute(route);
+        }
+        return true; // FIXME
+    }
+
     /**
      * Removes a {@link RouteInfo} from this {@code LinkProperties}, if present. The route must
      * specify an interface and the interface must match the interface of this
