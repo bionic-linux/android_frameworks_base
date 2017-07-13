@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "11893266_0017c82d",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-13T19:04:51Z",
+      "side": 1,
+      "message": "CEA-861-D-SADx might be better?",
+      "parentUuid": "6cfd5b27_13d12586",
+      "range": {
+        "startLine": 888,
+        "startChar": 85,
+        "endLine": 888,
+        "endChar": 98
+      },
+      "revId": "7a2069c383b7287f160596fdb200abf770787721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58a6bd8a_80d2d476",
         "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
         "patchSetId": 6
