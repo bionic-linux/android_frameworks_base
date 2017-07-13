@@ -2151,14 +2151,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_PROPERTIES_CHANGED: {
-                    if (VDBG) {
+                    LinkProperties oldLp = nai.linkProperties;
+                    LinkProperties newLp = (LinkProperties) msg.obj;
+                    if (DBG) {
                         log("Update of LinkProperties for " + nai.name() +
                                 "; created=" + nai.created +
-                                "; everConnected=" + nai.everConnected);
+                                "; everConnected=" + nai.everConnected +
+                                "; oldLp=" + oldLp +
+                                "; newLp=" + newLp);
                     }
-                    LinkProperties oldLp = nai.linkProperties;
                     synchronized (nai) {
-                        nai.linkProperties = (LinkProperties)msg.obj;
+                        nai.linkProperties = newLp;
                     }
                     if (nai.everConnected) updateLinkProperties(nai, oldLp);
                     break;
@@ -4605,7 +4608,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // do this twice, adding non-nexthop routes first, then routes they are dependent on
         for (RouteInfo route : routeDiff.added) {
             if (route.hasGateway()) continue;
-            if (VDBG) log("Adding Route [" + route + "] to network " + netId);
+            if (DBG) log("Adding Route [" + route + "] to network " + netId);
             try {
                 mNetd.addRoute(netId, route);
             } catch (Exception e) {
@@ -4616,7 +4619,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         for (RouteInfo route : routeDiff.added) {
             if (route.hasGateway() == false) continue;
-            if (VDBG) log("Adding Route [" + route + "] to network " + netId);
+            if (DBG) log("Adding Route [" + route + "] to network " + netId);
             try {
                 mNetd.addRoute(netId, route);
             } catch (Exception e) {
@@ -4627,7 +4630,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         for (RouteInfo route : routeDiff.removed) {
-            if (VDBG) log("Removing Route [" + route + "] from network " + netId);
+            if (DBG) log("Removing Route [" + route + "] from network " + netId);
             try {
                 mNetd.removeRoute(netId, route);
             } catch (Exception e) {
