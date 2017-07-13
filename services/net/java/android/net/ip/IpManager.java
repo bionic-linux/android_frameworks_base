@@ -36,6 +36,7 @@ import android.net.dhcp.DhcpClient;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
 import android.net.util.MultinetworkPolicyTracker;
+import android.net.util.NetdService;
 import android.net.util.NetworkConstants;
 import android.net.util.SharedLog;
 import android.os.INetworkManagementService;
@@ -68,6 +69,7 @@ import java.net.SocketException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.function.Predicate;
@@ -459,13 +461,11 @@ public class IpManager extends StateMachine {
         }
 
         private static boolean isPrefixLengthCompliant(LinkAddress addr) {
-            return (addr.getAddress() instanceof Inet4Address)
-                    || isCompliantIPv6PrefixLength(addr.getPrefixLength());
+            return addr.isIPv4() || isCompliantIPv6PrefixLength(addr.getPrefixLength());
         }
 
         private static boolean isPrefixLengthCompliant(IpPrefix prefix) {
-            return (prefix.getAddress() instanceof Inet4Address)
-                    || isCompliantIPv6PrefixLength(prefix.getPrefixLength());
+            return prefix.isIPv4() || isCompliantIPv6PrefixLength(prefix.getPrefixLength());
         }
 
         private static boolean isCompliantIPv6PrefixLength(int prefixLength) {
@@ -478,28 +478,7 @@ public class IpManager extends StateMachine {
         }
 
         private static boolean isIPv6GUA(LinkAddress addr) {
-            return (addr.getAddress() instanceof Inet6Address) && addr.isGlobalPreferred();
-        }
-
-        private static <T> boolean any(Iterable<T> coll, Predicate<T> fn) {
-            for (T t : coll) {
-                if (fn.test(t)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static <T> boolean all(Iterable<T> coll, Predicate<T> fn) {
-            return !any(coll, not(fn));
-        }
-
-        private static <T> Predicate<T> not(Predicate<T> fn) {
-            return (t) -> !fn.test(t);
-        }
-
-        private static <T> String join(String delimiter, Collection<T> coll) {
-            return coll.stream().map(Object::toString).collect(Collectors.joining(delimiter));
+            return addr.isIPv6() && addr.isGlobalPreferred();
         }
     }
 
@@ -548,6 +527,7 @@ public class IpManager extends StateMachine {
     private final LocalLog mConnectivityPacketLog;
     private final MessageHandlingLogger mMsgStateLogger;
     private final IpConnectivityLog mMetricsLog = new IpConnectivityLog();
+    private final INetd mNetd = NetdService.getInstance(); // FIXME for testing
 
     private NetworkInterface mNetworkInterface;
 
@@ -1046,9 +1026,7 @@ public class IpManager extends StateMachine {
         // mDhcpResults is never shared with any other owner so we don't have
         // to worry about concurrent modification.
         if (mDhcpResults != null) {
-            for (RouteInfo route : mDhcpResults.getRoutes(mInterfaceName)) {
-                newLp.addRoute(route);
-            }
+            newLp.addAllRoutes(mDhcpResults.getRoutes(mInterfaceName));
             addAllReachableDnsServers(newLp, mDhcpResults.dnsServers);
             newLp.setDomains(mDhcpResults.domains);
 
@@ -1064,6 +1042,20 @@ public class IpManager extends StateMachine {
         if (mHttpProxy != null) {
             newLp.setHttpProxy(mHttpProxy);
         }
+
+//        // [5] Add data from InitialConfiguration
+//        if (mConfiguration.mInitialConfig != null) {
+//            // InitialConfiguration addresses are added via NMS and acked with the normal Netlink +
+//            // BaseNetworkObserver mechanism. Only add InitialConfiguration routes if all wanted
+//            // addresses have been acked.
+//            List<LinkAddresses> got = newLp.getAddresses();
+//            List<LinkAddresses> want = mConfiguration.mInitialConfig.ipAddresses;
+//            boolean hasAll = all(want, (ip) -> got.contains(ip));
+//            if (hasAll) {
+//                addAllReachableDnsServers(newLp, mConfiguration.mInitialConfig.dnsServers);
+//                newLp.addAllRoutes(mConfiguration.mInitialConfig.directlyConnectedRoutes);
+//            }
+//        }
 
         if (VDBG) {
             Log.d(mTag, "newLp{" + newLp + "}");
@@ -1211,6 +1203,39 @@ public class IpManager extends StateMachine {
             mNwService.enableIpv6(mInterfaceName);
         } catch (IllegalStateException | RemoteException | ServiceSpecificException e) {
             logError("Unable to change interface settings: %s", e);
+            return false;
+        }
+
+        // Apply initial configuration addresses manually
+        if (mConfiguration.mInitialConfig != null) {
+            applyInitialConfig(mConfiguration.mInitialConfig);
+        }
+
+        return true;
+    }
+
+    private boolean applyInitialConfig(InitialConfiguration config) {
+        List<LinkAddress> addrs = findAll(config.ipAddresses, LinkAddress::isIPv6);
+        for (LinkAddress addr : addrs) {
+            interfaceAddAddr(addr);
+        }
+
+        // TODO: migrate StaticIpConfiguration here for IPv4.
+        return false;
+    }
+
+    private boolean interfaceAddAddr(LinkAddress addr) {
+        if (mNetd == null) {
+            logError("tried to add %s to %s but INetd was null", addr, mInterfaceName);
+            return false;
+        }
+
+        try {
+            String address = addr.getAddress().getHostAddress();
+            int prefixLength = addr.getPrefixLength();
+            mNetd.interfaceAddAddress(mInterfaceName, address, prefixLength);
+        } catch (ServiceSpecificException | RemoteException e) {
+            logError("failed to add %s to %s: %s", addr, mInterfaceName, e);
             return false;
         }
 
@@ -1646,5 +1671,40 @@ public class IpManager extends StateMachine {
             return String.format("rcvd_in=%s, proc_in=%s",
                                  receivedInState, processedInState);
         }
+    }
+
+    // TODO: extract out into collection utility files.
+    private static <T> boolean any(Iterable<T> coll, Predicate<T> fn) {
+        for (T t : coll) {
+            if (fn.test(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static <T> boolean all(Iterable<T> coll, Predicate<T> fn) {
+        return !any(coll, not(fn));
+    }
+
+    private static <T> Predicate<T> not(Predicate<T> fn) {
+        return (t) -> !fn.test(t);
+    }
+
+    private static <T> String join(String delimiter, Collection<T> coll) {
+        return coll.stream().map(Object::toString).collect(Collectors.joining(delimiter));
+    }
+
+    private static <T> T find(Iterable<T> coll, Predicate<T> fn) {
+        for (T t: coll) {
+            if (fn.test(t)) {
+              return t;
+            }
+        }
+        return null;
+    }
+
+    private static <T> List<T> findAll(Collection<T> coll, Predicate<T> fn) {
+        return coll.stream().filter(fn).collect(Collectors.toList());
     }
 }
