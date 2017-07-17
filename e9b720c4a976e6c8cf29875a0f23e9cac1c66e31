@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ce6ae09_5e4ea121",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-07-17T22:27:14Z",
+      "side": 1,
+      "message": "updated to fix.",
+      "parentUuid": "6c0890a1_e5dfb419",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "e9b720c4a976e6c8cf29875a0f23e9cac1c66e31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77db3a00_cb9a7242",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
