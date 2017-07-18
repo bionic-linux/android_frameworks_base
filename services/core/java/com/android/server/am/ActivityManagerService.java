@@ -21767,6 +21767,8 @@ public final class ActivityManagerService extends ActivityManagerNative
             }
             if (DEBUG_PSS) Slog.d(TAG_PSS, "Dump heap finished for " + path);
             mHandler.sendEmptyMessage(POST_DUMP_HEAP_NOTIFICATION_MSG);
+
+            System.gc();
         }
     }
 
