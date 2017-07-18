@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "836494f7_232a925f",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-18T23:53:02Z",
+      "side": 1,
+      "message": "API guidelines say that this should be IDownloadProgressListener",
+      "range": {
+        "startLine": 396,
+        "startChar": 67,
+        "endLine": 396,
+        "endChar": 75
+      },
+      "revId": "ff33b7ca172bf5973f8dbc63eb071924046f6600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4d0b812_e48ede43",
+        "filename": "telephony/java/android/telephony/mbms/DownloadProgressCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-18T23:53:02Z",
+      "side": 1,
+      "message": "Listener",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "ff33b7ca172bf5973f8dbc63eb071924046f6600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
