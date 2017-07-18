@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1df61d62_ce83cf2d",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21771,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2017-07-18T19:13:37Z",
+      "side": 1,
+      "message": "This is a nop in many cases, please use Runtime.getRuntime().gc().",
+      "range": {
+        "startLine": 21771,
+        "startChar": 12,
+        "endLine": 21771,
+        "endChar": 21
+      },
+      "revId": "4eac8d2adb0096a61f10f0cd8662e235e3409dfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
