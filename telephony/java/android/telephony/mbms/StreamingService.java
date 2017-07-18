@@ -26,7 +26,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * @hide
+ * Class used to represent a single MBMS stream. After a stream has been started with
+ * {@link android.telephony.MbmsStreamingManager#startStreaming(StreamingServiceInfo, StreamingServiceCallback)},
+ * this class is used to hold information about the stream and control it.
  */
 public class StreamingService {
     private static final String LOG_TAG = "MbmsStreamingService";

@@ -16,6 +16,7 @@
 
 package android.telephony.mbms;
 
+import android.annotation.SystemApi;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -61,6 +62,10 @@ public class FileInfo implements Parcelable {
         }
     };
 
+    /**
+     * @hide
+     * TODO: systemapi
+     */
     public FileInfo(Uri uri, String mimeType, long size, byte[] md5Hash) {
         this.uri = uri;
         this.mimeType = mimeType;
