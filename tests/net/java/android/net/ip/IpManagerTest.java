@@ -111,6 +111,8 @@ public class IpManagerTest {
 
         ipm.startProvisioning(config);
         verify(mCb, times(1)).setNeighborDiscoveryOffload(true);
+        verify(mNMService, timeout(100).times(1)).disableIpv6(iface);
+        verify(mNMService, timeout(100).times(1)).clearInterfaceAddresses(iface);
         verify(mCb, timeout(100).times(1)).setFallbackMulticastFilter(false);
         verify(mCb, never()).onProvisioningFailure(any());
 
