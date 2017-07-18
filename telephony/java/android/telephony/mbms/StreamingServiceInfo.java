@@ -25,9 +25,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * A Parcelable class Cell-Broadcast media stream information.
- * This may not have any more info than ServiceInfo, but kept for completeness.
- * @hide
+ * Describes a single MBMS streaming service.
  */
 public class StreamingServiceInfo extends ServiceInfo implements Parcelable {
 
@@ -49,7 +47,7 @@ public class StreamingServiceInfo extends ServiceInfo implements Parcelable {
         }
     };
 
-    StreamingServiceInfo(Parcel in) {
+    private StreamingServiceInfo(Parcel in) {
         super(in);
     }
 

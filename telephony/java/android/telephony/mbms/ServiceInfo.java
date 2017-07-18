@@ -30,43 +30,21 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * A Parcelable class with Cell-Broadcast service information.
- * @hide
+ * Describes a cell-broadcast service. This class should not be instantiated directly -- use
+ * {@link StreamingServiceInfo} or FileServiceInfo TODO: add link once that's unhidden
  */
 public class ServiceInfo implements Parcelable {
     // arbitrary limit on the number of locale -> name pairs we support
     final static int MAP_LIMIT = 1000;
-    /**
-     * User displayable names listed by language.  Unmodifiable.
-     */
-    final Map<Locale, String> names;
 
-    /**
-     * The class name for this service - used to catagorize and filter
-     */
-    final String className;
+    private final Map<Locale, String> names;
+    private final String className;
+    private final List<Locale> locales;
+    private final String serviceId;
+    private final Date sessionStartTime;
+    private final Date sessionEndTime;
 
-    /**
-     * The languages available for this service content
-     */
-    final List<Locale> locales;
-
-    /**
-     * The carrier's identifier for the service.
-     */
-    final String serviceId;
-
-    /**
-     * The start time indicating when this service will be available.
-     */
-    final Date sessionStartTime;
-
-    /**
-     * The end time indicating when this sesion stops being available.
-     */
-    final Date sessionEndTime;
-
-
+    /** @hide */
     public ServiceInfo(Map<Locale, String> newNames, String newClassName, List<Locale> newLocales,
             String newServiceId, Date start, Date end) {
         if (newNames == null || newNames.isEmpty() || TextUtils.isEmpty(newClassName)
@@ -102,7 +80,7 @@ public class ServiceInfo implements Parcelable {
         }
     };
 
-    ServiceInfo(Parcel in) {
+    protected ServiceInfo(Parcel in) {
         int mapCount = in.readInt();
         if (mapCount > MAP_LIMIT || mapCount < 0) {
             throw new RuntimeException("bad map length" + mapCount);
@@ -152,26 +130,44 @@ public class ServiceInfo implements Parcelable {
         return 0;
     }
 
+    /**
+     * User displayable names listed by language. Do not modify the map returned from this method.
+     */
     public Map<Locale, String> getNames() {
         return names;
     }
 
+    /**
+     * The class name for this service - used to catagorize and filter
+     */
     public String getClassName() {
         return className;
     }
 
+    /**
+     * The languages available for this service content
+     */
     public List<Locale> getLocales() {
         return locales;
     }
 
+    /**
+     * The carrier's identifier for the service.
+     */
     public String getServiceId() {
         return serviceId;
     }
 
+    /**
+     * The start time indicating when this service will be available.
+     */
     public Date getSessionStartTime() {
         return sessionStartTime;
     }
 
+    /**
+     * The end time indicating when this session stops being available.
+     */
     public Date getSessionEndTime() {
         return sessionEndTime;
     }
