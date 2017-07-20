@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c220197_6fde1088",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 38517,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-20T16:55:40Z",
+      "side": 1,
+      "message": "Yup. Ideally I would only expose this one and not the base ServiceInfo, but I don\u0027t think that\u0027s possible. There\u0027s a FileServiceInfo coming a bit later on that also inherits from ServiceInfo, but actually has more fields.",
+      "parentUuid": "c57e404e_373bc6ef",
+      "range": {
+        "startLine": 38515,
+        "startChar": 2,
+        "endLine": 38517,
+        "endChar": 3
+      },
+      "revId": "c7217e092c65bb8790f6b3c605e703b2acf62636",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b878ecf_7c2f14d0",
         "filename": "telephony/java/android/telephony/mbms/MbmsException.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T15:26:28Z",
       "side": 1,
       "message": "TODO still?",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "c7217e092c65bb8790f6b3c605e703b2acf62636",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df69257_1699a410",
+        "filename": "telephony/java/android/telephony/mbms/MbmsException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-20T16:55:40Z",
+      "side": 1,
+      "message": "The download-side APIs aren\u0027t quite ready yet, so I\u0027m not exposing them in this CL. The TODO is to avoid a docs compilation error.",
+      "parentUuid": "0b878ecf_7c2f14d0",
       "range": {
         "startLine": 33,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "021eb2f7_4a3ac242",
+        "filename": "telephony/java/android/telephony/mbms/MbmsStreamingManagerCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-20T16:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae4d0d00_c0c9ca71",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "c7217e092c65bb8790f6b3c605e703b2acf62636",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9456e799_5e4e11b1",
         "filename": "telephony/java/android/telephony/mbms/ServiceInfo.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-20T15:26:28Z",
       "side": 1,
       "message": "If this is going to be unhidden soon this is okay, otherwise just remove for now.",
+      "range": {
+        "startLine": 34,
+        "startChar": 52,
+        "endLine": 34,
+        "endChar": 86
+      },
+      "revId": "c7217e092c65bb8790f6b3c605e703b2acf62636",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adfdf41a_301f1a3e",
+        "filename": "telephony/java/android/telephony/mbms/ServiceInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-20T16:55:40Z",
+      "side": 1,
+      "message": "Should be in the next two weeks.",
+      "parentUuid": "9456e799_5e4e11b1",
       "range": {
         "startLine": 34,
         "startChar": 52,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c6e000de_2684f16c",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-20T16:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf6d3a91_7403e826",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 113
+      },
+      "revId": "c7217e092c65bb8790f6b3c605e703b2acf62636",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "806565eb_aa46cf56",
         "filename": "telephony/java/android/telephony/mbms/StreamingServiceCallback.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-20T15:26:28Z",
       "side": 1,
       "message": "Ooops",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 55
+      },
+      "revId": "c7217e092c65bb8790f6b3c605e703b2acf62636",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "848a3195_3ced62ea",
+        "filename": "telephony/java/android/telephony/mbms/StreamingServiceCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-20T16:55:40Z",
+      "side": 1,
+      "message": "how did that happen",
+      "parentUuid": "806565eb_aa46cf56",
       "range": {
         "startLine": 1,
         "startChar": 3,
