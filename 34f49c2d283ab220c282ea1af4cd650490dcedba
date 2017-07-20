@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23ab35cc_727e12bd",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2017-07-20T15:31:34Z",
+      "side": 1,
+      "message": "also delete local ref to jAudioPortConfig here.",
+      "range": {
+        "startLine": 1149,
+        "startChar": 4,
+        "endLine": 1149,
+        "endChar": 5
+      },
+      "revId": "34f49c2d283ab220c282ea1af4cd650490dcedba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
