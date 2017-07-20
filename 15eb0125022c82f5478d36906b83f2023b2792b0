@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13457cc4_57630e90",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2376,
+      "author": {
+        "id": 1072138
+      },
+      "writtenOn": "2017-07-20T21:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09555190_80103be5",
+      "range": {
+        "startLine": 2376,
+        "startChar": 26,
+        "endLine": 2376,
+        "endChar": 47
+      },
+      "revId": "15eb0125022c82f5478d36906b83f2023b2792b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4c38cb7_25a9a87b",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8bd1c15d_095a2454",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2395,
+      "author": {
+        "id": 1072138
+      },
+      "writtenOn": "2017-07-20T21:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c38cb7_25a9a87b",
+      "range": {
+        "startLine": 2395,
+        "startChar": 43,
+        "endLine": 2395,
+        "endChar": 52
+      },
+      "revId": "15eb0125022c82f5478d36906b83f2023b2792b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e77a47b_ff02cbd4",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-10T23:43:52Z",
       "side": 1,
       "message": "why do we need disable-mechanisms in both availability and expiration?  Maybe get rid of *_TIME_DISABLED?",
+      "range": {
+        "startLine": 2414,
+        "startChar": 0,
+        "endLine": 2414,
+        "endChar": 89
+      },
+      "revId": "15eb0125022c82f5478d36906b83f2023b2792b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d2a16a_c9a0fccb",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2414,
+      "author": {
+        "id": 1072138
+      },
+      "writtenOn": "2017-07-20T21:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e77a47b_ff02cbd4",
       "range": {
         "startLine": 2414,
         "startChar": 0,
