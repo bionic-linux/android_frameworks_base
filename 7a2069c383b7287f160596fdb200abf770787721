@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "2c61bb4b_a2f905fb",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-20T18:59:41Z",
+      "side": 1,
+      "message": "This value is not only for MStart, so I want to make it human readable format so that other partners can understand what they are.",
+      "parentUuid": "8aa62888_66973e29",
+      "range": {
+        "startLine": 888,
+        "startChar": 85,
+        "endLine": 888,
+        "endChar": 98
+      },
+      "revId": "7a2069c383b7287f160596fdb200abf770787721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58a6bd8a_80d2d476",
         "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
         "patchSetId": 6
