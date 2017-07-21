@@ -22,6 +22,30 @@
       "revId": "a08f374e1cc99db0b5558d4ab63ad590903a13b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67559402_03c964f4",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16964,
+      "author": {
+        "id": 1024310
+      },
+      "writtenOn": "2017-07-21T09:22:48Z",
+      "side": 1,
+      "message": "For the record, this was made as part of the ICU number formatting overhaul and redesign:\n\nhttp://bugs.icu-project.org/trac/ticket/7467",
+      "parentUuid": "fb7b601e_6a2660df",
+      "range": {
+        "startLine": 16964,
+        "startChar": 18,
+        "endLine": 16964,
+        "endChar": 30
+      },
+      "revId": "a08f374e1cc99db0b5558d4ab63ad590903a13b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
