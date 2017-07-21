@@ -2119,12 +2119,19 @@ public final class HdmiControlService extends SystemService {
         }
         mPowerStatus = HdmiControlManager.POWER_STATUS_STANDBY;
         for (HdmiCecLocalDevice device : mCecController.getLocalDeviceList()) {
-            device.onStandby(mStandbyMessageReceived, standbyAction);
+            device.onStandby(mStandbyMessageReceived, standbyAction, new SendMessageCallback() {
+                @Override
+                public void onSendCompleted(int error) {
+                    if (error != Constants.SEND_RESULT_SUCCESS) {
+                        Slog.w(TAG, "onStandbyCompleted error:" + error);
+                    }
+                    mStandbyMessageReceived = false;
+                    mAddressAllocated = false;
+                    mCecController.setOption(OPTION_CEC_SERVICE_CONTROL, DISABLED);
+                    mMhlController.setOption(OPTION_MHL_SERVICE_CONTROL, DISABLED);
+                }
+            });
         }
-        mStandbyMessageReceived = false;
-        mAddressAllocated = false;
-        mCecController.setOption(OPTION_CEC_SERVICE_CONTROL, DISABLED);
-        mMhlController.setOption(OPTION_MHL_SERVICE_CONTROL, DISABLED);
     }
 
     private void addVendorCommandListener(IHdmiVendorCommandListener listener, int deviceType) {
