@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f6af1d_ee9756aa",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-24T14:13:17Z",
+      "side": 1,
+      "message": "More than 100 chars",
+      "range": {
+        "startLine": 1691,
+        "startChar": 97,
+        "endLine": 1691,
+        "endChar": 103
+      },
+      "revId": "072aac3397333705bf0a8d794308f4946ce3620f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
