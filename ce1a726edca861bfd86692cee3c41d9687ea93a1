@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e47d7ee_c78dfa97",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2017-07-24T17:30:57Z",
+      "side": 1,
+      "message": "This is kind of a weird way to do the timeout calculation.\n\nWouldn\u0027t it be better to init elapsedTimeMs to zero, then check elapsedTimeMs \u003c\u003d WRAPPED_PID_TIMEOUT_MS in the while loop?",
+      "range": {
+        "startLine": 827,
+        "startChar": 20,
+        "endLine": 828,
+        "endChar": 83
+      },
+      "revId": "ce1a726edca861bfd86692cee3c41d9687ea93a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
