@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5b10c30_942fcc4d",
+        "filename": "core/java/com/android/internal/os/ZygoteConnectionConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2017-07-24T16:31:29Z",
+      "side": 1,
+      "message": "s/SLEEP/TIMEOUT/?",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "0250363eeff1dd5224439a406a7a279266e019aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
