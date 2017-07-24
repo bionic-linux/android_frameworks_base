@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc1eefff_330b5c35",
+        "filename": "services/net/java/android/net/ip/IpReachabilityMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-24T11:20:33Z",
+      "side": 1,
+      "message": "Nit: Config brings to mind configuration (which in the case of IPRM might configure, for example, how many probes to send).\n\nOther parts of the code call this type of thing Facade, Dependencies, or Injector. Suggest using one of those.",
+      "range": {
+        "startLine": 156,
+        "startChar": 14,
+        "endLine": 156,
+        "endChar": 20
+      },
+      "revId": "527f1553328f4224b23ed25be116dd46cc23131c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
