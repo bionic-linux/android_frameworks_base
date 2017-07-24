@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc1cd18a_e676ae53",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-24T14:16:05Z",
+      "side": 1,
+      "message": "Just in case you missed my comment at patch set 6.\n\n\"This value is not only for MStart, so I want to make it human readable format so that other partners can understand what they are.\"",
+      "range": {
+        "startLine": 888,
+        "startChar": 85,
+        "endLine": 888,
+        "endChar": 98
+      },
+      "revId": "9513689442733ffe71f4613d52bfc4d1687da7a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
