@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48b8c6ad_b750bb2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-24T13:46:06Z",
+      "side": 1,
+      "message": "Nit: might want to fix the spacing here.",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "4e80fbefb65de4d8ff7d08cd089af711b1224d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78aa3776_062b4214",
+        "filename": "services/net/java/android/net/ip/IpReachabilityMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-24T13:46:06Z",
+      "side": 1,
+      "message": "Erik will be able to confirm, but I think we\u0027ve seen in the past that NetworkInterface.getByName can return null without throwing. You should probably check for null here, or catch NPE like the old code did.",
+      "range": {
+        "startLine": 464,
+        "startChar": 52,
+        "endLine": 464,
+        "endChar": 53
+      },
+      "revId": "4e80fbefb65de4d8ff7d08cd089af711b1224d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
