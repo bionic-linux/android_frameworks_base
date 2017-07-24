@@ -22,6 +22,30 @@
       "revId": "0250363eeff1dd5224439a406a7a279266e019aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50c3d76d_5501677b",
+        "filename": "core/java/com/android/internal/os/ZygoteConnectionConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-07-24T17:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5b10c30_942fcc4d",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "0250363eeff1dd5224439a406a7a279266e019aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
