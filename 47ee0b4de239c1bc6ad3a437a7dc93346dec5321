@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e777d845_156f7296",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1132703
+      },
+      "writtenOn": "2017-07-24T14:25:43Z",
+      "side": 1,
+      "message": "This permission depends on ag/2234371 which is not merged in aosp yet. Shall I also cherry-pick that CL to this topic? Otherwise, the current topic won\u0027t build.",
+      "range": {
+        "startLine": 1609,
+        "startChar": 44,
+        "endLine": 1609,
+        "endChar": 60
+      },
+      "revId": "47ee0b4de239c1bc6ad3a437a7dc93346dec5321",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
