@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "2db94a92_95ae4273",
+        "filename": "services/net/java/android/net/ip/IpReachabilityMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-25T02:43:21Z",
+      "side": 1,
+      "message": "Actually, what I\u0027d like to do is register the netlink socket filedescriptor with a passed-in Looper\u0027s MessageQueue and handle reads on the callback.\n\nSee oag/442852 for a first step in that direction, albeit one that doesn\u0027t pass unittests yet :/",
+      "range": {
+        "startLine": 269,
+        "startChar": 11,
+        "endLine": 269,
+        "endChar": 15
+      },
+      "revId": "4e80fbefb65de4d8ff7d08cd089af711b1224d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78aa3776_062b4214",
         "filename": "services/net/java/android/net/ip/IpReachabilityMonitor.java",
         "patchSetId": 3
@@ -36,6 +59,30 @@
       "writtenOn": "2017-07-24T13:46:06Z",
       "side": 1,
       "message": "Erik will be able to confirm, but I think we\u0027ve seen in the past that NetworkInterface.getByName can return null without throwing. You should probably check for null here, or catch NPE like the old code did.",
+      "range": {
+        "startLine": 464,
+        "startChar": 52,
+        "endLine": 464,
+        "endChar": 53
+      },
+      "revId": "4e80fbefb65de4d8ff7d08cd089af711b1224d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e099823_38e40938",
+        "filename": "services/net/java/android/net/ip/IpReachabilityMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-25T02:43:21Z",
+      "side": 1,
+      "message": "I can\u0027t recall under what circumstances we could have seen an NPE, but it\u0027s not the kind of thing I routinely check for so it seems likely we must have been been bitten.",
+      "parentUuid": "78aa3776_062b4214",
       "range": {
         "startLine": 464,
         "startChar": 52,
