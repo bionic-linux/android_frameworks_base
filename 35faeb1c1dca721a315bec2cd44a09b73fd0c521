@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "267cc66f_2a99deb2",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 1132703
+      },
+      "writtenOn": "2017-07-25T12:55:56Z",
+      "side": 0,
+      "message": "Merge conflict: parent 1 keeps this chunk, whereas parent 2 (this commit) removes it. Manually resolved by using parent 2.",
+      "range": {
+        "startLine": 3140,
+        "startChar": 0,
+        "endLine": 3152,
+        "endChar": 93
+      },
+      "revId": "35faeb1c1dca721a315bec2cd44a09b73fd0c521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d17d7dce_69f5b5d6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1132703
+      },
+      "writtenOn": "2017-07-25T12:55:56Z",
+      "side": 0,
+      "message": "This line was deleted in the internal CL and was merged automatically. However it\u0027s still used in AOSP, so I\u0027ve added it back manually.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "35faeb1c1dca721a315bec2cd44a09b73fd0c521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
