@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ec4432_55a6d961",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-25T02:12:52Z",
+      "side": 1,
+      "message": "Seems like and int count of the number added would work too, and be able to provide more information (in the event it\u0027s needed).",
+      "range": {
+        "startLine": 491,
+        "startChar": 11,
+        "endLine": 491,
+        "endChar": 18
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd864b5_cb0f15fa",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-25T02:12:52Z",
+      "side": 1,
+      "message": "Another option is to move these isIPvX() methods out of the classes to which you\u0027ve added them and have them be methods of android.net.util.IpUtils or android.net.util.PrefixUtils and just static import them at the top.",
+      "range": {
+        "startLine": 473,
+        "startChar": 24,
+        "endLine": 473,
+        "endChar": 30
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70291ac6_99157882",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-25T02:12:52Z",
+      "side": 1,
+      "message": "I think the way you have things set up now DhcpClient will get started when an InitialConfiguration is meant to be used.\n\nOne way to handle things is to apply all IPv4 parts (currently none?) of InitialConfig in startIPv4() and all IPv6 parts in startIPv6().",
+      "range": {
+        "startLine": 1194,
+        "startChar": 20,
+        "endLine": 1194,
+        "endChar": 29
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1700a28a_92ad4fa6",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-25T02:12:52Z",
+      "side": 1,
+      "message": "Fold this into both startIPv4 and startIPv6?\n\nIf you don\u0027t want to do this, we need to be careful to not start DhcpClient when there\u0027s a config.\n\nWe could split the startIPvX functions into startManualIPvX and startDynamicIPvX (or something), if that helps more useful, smaller functions.",
+      "range": {
+        "startLine": 1489,
+        "startChar": 65,
+        "endLine": 1489,
+        "endChar": 66
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5233a32_813046a3",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1703,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-25T02:12:52Z",
+      "side": 1,
+      "message": "+1 to do this soon; in this change is fine too.\n\nandroid.net.util.CollectionUtils?",
+      "range": {
+        "startLine": 1703,
+        "startChar": 7,
+        "endLine": 1703,
+        "endChar": 11
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
