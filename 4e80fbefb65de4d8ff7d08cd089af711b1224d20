@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9fa7e71b_04ae6d50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-25T06:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b8c6ad_b750bb2e",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "4e80fbefb65de4d8ff7d08cd089af711b1224d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db94a92_95ae4273",
         "filename": "services/net/java/android/net/ip/IpReachabilityMonitor.java",
         "patchSetId": 3
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "That seems to be a pretty good approach. Is go/oag/442852 something that should go in before this patch, or can it go after ?",
       "parentUuid": "2db94a92_95ae4273",
+      "range": {
+        "startLine": 269,
+        "startChar": 11,
+        "endLine": 269,
+        "endChar": 15
+      },
+      "revId": "4e80fbefb65de4d8ff7d08cd089af711b1224d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95bbc3c5_83f608d2",
+        "filename": "services/net/java/android/net/ip/IpReachabilityMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-25T06:01:09Z",
+      "side": 1,
+      "message": "Removed TODO.",
+      "parentUuid": "affd6b22_37291fa7",
       "range": {
         "startLine": 269,
         "startChar": 11,
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Ack. Thanks for the additional context.\n\nIn general catching an NPE is an antipattern because it can swallow real buggy NPE accesses that need to be fixed.\n\nI will put back a null guard against NetworkInterface.getByName() and relog the error separately.",
       "parentUuid": "3e099823_38e40938",
+      "range": {
+        "startLine": 464,
+        "startChar": 52,
+        "endLine": 464,
+        "endChar": 53
+      },
+      "revId": "4e80fbefb65de4d8ff7d08cd089af711b1224d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d065e603_cee3cd1c",
+        "filename": "services/net/java/android/net/ip/IpReachabilityMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-25T06:01:09Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e74c6f7a_dad3fce8",
       "range": {
         "startLine": 464,
         "startChar": 52,
