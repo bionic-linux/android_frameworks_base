@@ -17,9 +17,11 @@ package android.service.carrier;
 import android.annotation.CallSuper;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PersistableBundle;
 import android.os.RemoteException;
+import android.os.ResultReceiver;
 import android.os.ServiceManager;
 
 import com.android.internal.telephony.ITelephonyRegistry;
@@ -136,8 +138,17 @@ public abstract class CarrierService extends Service {
      */
     private class ICarrierServiceWrapper extends ICarrierService.Stub {
         @Override
-        public PersistableBundle getCarrierConfig(CarrierIdentifier id) {
-            return CarrierService.this.onLoadConfig(id);
+        public void getCarrierConfig(CarrierIdentifier id, ResultReceiver result) {
+            Bundle config = null;
+            try {
+                config = new Bundle(CarrierService.this.onLoadConfig(id));
+            } catch (Exception e) {
+                // TODO: Send an error code so that CarrierConfigLoader can treat this case
+                // differently.
+                config = new Bundle();
+            } finally {
+                result.send(0 /* error code ignored */, config);
+            }
         }
     }
 }
