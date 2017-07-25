@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fa78c57_bff71b51",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-25T03:35:41Z",
+      "side": 1,
+      "message": "Yes that would be better. Will do.",
+      "parentUuid": "50ec4432_55a6d961",
+      "range": {
+        "startLine": 491,
+        "startChar": 11,
+        "endLine": 491,
+        "endChar": 18
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcd864b5_cb0f15fa",
         "filename": "services/net/java/android/net/ip/IpManager.java",
         "patchSetId": 6
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b19c669e_ef1c1efc",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-25T03:35:41Z",
+      "side": 1,
+      "message": "I am not sure yet exactly what to do. For the time being I was going to not support InitialConfiguration with ipv4 stuff in it.\n\nI should probably put a \"temporary\" warning about this.\n\nOne thing I think could be possible would be to translate StaticIpConfig into initial configuration and cover the static handleIPv4Success in the applyInitialConfiguration codepath actually. So this method would effectively be only the dhcp codepath.",
+      "parentUuid": "70291ac6_99157882",
+      "range": {
+        "startLine": 1194,
+        "startChar": 20,
+        "endLine": 1194,
+        "endChar": 29
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1700a28a_92ad4fa6",
         "filename": "services/net/java/android/net/ip/IpManager.java",
         "patchSetId": 6
@@ -105,6 +153,30 @@
       "writtenOn": "2017-07-25T02:12:52Z",
       "side": 1,
       "message": "+1 to do this soon; in this change is fine too.\n\nandroid.net.util.CollectionUtils?",
+      "range": {
+        "startLine": 1703,
+        "startChar": 7,
+        "endLine": 1703,
+        "endChar": 11
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "939cb3aa_4b61ede2",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1703,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-25T03:35:41Z",
+      "side": 1,
+      "message": "I might do it earlier in a separate change because the InitialConfiguration support is likely to take more time.",
+      "parentUuid": "b5233a32_813046a3",
       "range": {
         "startLine": 1703,
         "startChar": 7,
