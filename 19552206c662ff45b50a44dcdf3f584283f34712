@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb5c6d8_e2924c6d",
+        "filename": "core/java/android/service/carrier/ICarrierService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-07-26T20:26:11Z",
+      "side": 1,
+      "message": "Sorry for the drive-by review but are you sure this is safe? I\u0027m not :) You typically can\u0027t change an AIDL method definition once it\u0027s been published.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 84
+      },
+      "revId": "19552206c662ff45b50a44dcdf3f584283f34712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
