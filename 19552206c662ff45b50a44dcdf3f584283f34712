@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "739fd234_8fe5c4f8",
+        "filename": "core/java/android/service/carrier/CarrierService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-26T23:38:54Z",
+      "side": 1,
+      "message": "This changes the error behavior from \"don\u0027t do anything\" to \"store an empty bundle\". I think the old behavior is actually wrong, as we can keep a stale config in memory. There is no \"clear state before fetching\" behavior today.\n\nI think this is specifically relevant when the CarrierConfigLoader entry point is updateConfigForPhoneId (called by SubscriptionInfoUpdater)",
+      "parentUuid": "11c8b9d6_0981a0e7",
+      "revId": "19552206c662ff45b50a44dcdf3f584283f34712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edb5c6d8_e2924c6d",
         "filename": "core/java/android/service/carrier/ICarrierService.aidl",
         "patchSetId": 2
@@ -77,6 +95,30 @@
       "side": 1,
       "message": "I think it\u0027s safe. That general advice is true when the client and server which are communicating are compiled against the two different definitions (e.g. live in two different APKs and have a non-platform AIDL).\n\nHowever, since this class is part of frameworks.jar, any changes to it should simultaneously impact both the platform server and the carrier app client.",
       "parentUuid": "edb5c6d8_e2924c6d",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 84
+      },
+      "revId": "19552206c662ff45b50a44dcdf3f584283f34712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cff47bf_a949a33a",
+        "filename": "core/java/android/service/carrier/ICarrierService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-26T23:38:54Z",
+      "side": 1,
+      "message": "Hi Jeremy, to add on to that answer, the other end of this interface is in frameworks/base/core/java/android/service/carrier/CarrierService.java.",
+      "parentUuid": "6c89d91a_3d61d40b",
       "range": {
         "startLine": 32,
         "startChar": 4,
