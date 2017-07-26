@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "20b00a80_3acadcde",
+        "filename": "core/java/android/service/carrier/CarrierService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2017-07-26T21:14:55Z",
+      "side": 1,
+      "message": "we should at least log the error so that it\u0027s apparent that it occurred, like we previously did in CarrierConfigLoader:\n\n// The bound app could throw exceptions that binder will pass to us.\nloge(\"Failed to get carrier config: \" + ex.toString());",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 31
+      },
+      "revId": "19552206c662ff45b50a44dcdf3f584283f34712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11c8b9d6_0981a0e7",
+        "filename": "core/java/android/service/carrier/CarrierService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2017-07-26T21:14:55Z",
+      "side": 1,
+      "message": "I think the answer is yes, but could you confirm that this effectively amounts to the same behavior as the previous in the event of an exception?",
+      "revId": "19552206c662ff45b50a44dcdf3f584283f34712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edb5c6d8_e2924c6d",
         "filename": "core/java/android/service/carrier/ICarrierService.aidl",
         "patchSetId": 2
@@ -13,6 +53,30 @@
       "writtenOn": "2017-07-26T20:26:11Z",
       "side": 1,
       "message": "Sorry for the drive-by review but are you sure this is safe? I\u0027m not :) You typically can\u0027t change an AIDL method definition once it\u0027s been published.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 84
+      },
+      "revId": "19552206c662ff45b50a44dcdf3f584283f34712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c89d91a_3d61d40b",
+        "filename": "core/java/android/service/carrier/ICarrierService.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2017-07-26T21:14:55Z",
+      "side": 1,
+      "message": "I think it\u0027s safe. That general advice is true when the client and server which are communicating are compiled against the two different definitions (e.g. live in two different APKs and have a non-platform AIDL).\n\nHowever, since this class is part of frameworks.jar, any changes to it should simultaneously impact both the platform server and the carrier app client.",
+      "parentUuid": "edb5c6d8_e2924c6d",
       "range": {
         "startLine": 32,
         "startChar": 4,
