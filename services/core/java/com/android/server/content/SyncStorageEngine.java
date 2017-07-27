@@ -396,6 +396,25 @@ public class SyncStorageEngine extends Handler {
         }
     }
 
+    /**
+     * Dummy validator used by test instances that always validates both accounts and authorities
+     */
+    private static class DummyAccountAuthorityValidator extends AccountAuthorityValidator {
+        DummyAccountAuthorityValidator(Context context) {
+            super(context);
+        }
+
+        @Override
+        boolean isAccountValid(Account account, int userId) {
+            return true;
+        }
+
+        @Override
+        boolean isAuthorityValid(String authority, int userId) {
+            return true;
+        }
+    }
+
     // Primary list of all syncable authorities.  Also our global lock.
     private final SparseArray<AuthorityInfo> mAuthorities =
             new SparseArray<AuthorityInfo>();
@@ -428,6 +447,7 @@ public class SyncStorageEngine extends Handler {
     private int mYearInDays;
 
     private final Context mContext;
+    private final AccountAuthorityValidator mValidator;
 
     private static volatile SyncStorageEngine sSyncStorageEngine = null;
 
@@ -462,8 +482,9 @@ public class SyncStorageEngine extends Handler {
 
     private boolean mGrantSyncAdaptersAccountAccess;
 
-    private SyncStorageEngine(Context context, File dataDir) {
+    private SyncStorageEngine(Context context, File dataDir, AccountAuthorityValidator validator) {
         mContext = context;
+        mValidator = validator;
         sSyncStorageEngine = this;
 
         mCal = Calendar.getInstance(TimeZone.getTimeZone("GMT+0"));
@@ -491,7 +512,8 @@ public class SyncStorageEngine extends Handler {
     }
 
     public static SyncStorageEngine newTestInstance(Context context) {
-        return new SyncStorageEngine(context, context.getFilesDir());
+        return new SyncStorageEngine(context, context.getFilesDir(),
+            new DummyAccountAuthorityValidator(context));
     }
 
     public static void init(Context context) {
@@ -499,7 +521,8 @@ public class SyncStorageEngine extends Handler {
             return;
         }
         File dataDir = Environment.getDataDirectory();
-        sSyncStorageEngine = new SyncStorageEngine(context, dataDir);
+        sSyncStorageEngine = new SyncStorageEngine(context, dataDir,
+            new AccountAuthorityValidator(context));
     }
 
     public static SyncStorageEngine getSingleton() {
@@ -1548,13 +1571,12 @@ public class SyncStorageEngine extends Handler {
                 eventType = parser.next();
                 AuthorityInfo authority = null;
                 PeriodicSync periodicSync = null;
-                AccountAuthorityValidator validator = new AccountAuthorityValidator(mContext);
                 do {
                     if (eventType == XmlPullParser.START_TAG) {
                         tagName = parser.getName();
                         if (parser.getDepth() == 2) {
                             if ("authority".equals(tagName)) {
-                                authority = parseAuthority(parser, version, validator);
+                                authority = parseAuthority(parser, version);
                                 periodicSync = null;
                                 if (authority != null) {
                                     if (authority.ident > highestAuthorityId) {
@@ -1683,8 +1705,7 @@ public class SyncStorageEngine extends Handler {
         mMasterSyncAutomatically.put(userId, listen);
     }
 
-    private AuthorityInfo parseAuthority(XmlPullParser parser, int version,
-            AccountAuthorityValidator validator) {
+    private AuthorityInfo parseAuthority(XmlPullParser parser, int version) {
         AuthorityInfo authority = null;
         int id = -1;
         try {
@@ -1728,8 +1749,8 @@ public class SyncStorageEngine extends Handler {
                     EndPoint info = new EndPoint(
                             new Account(accountName, accountType),
                             authorityName, userId);
-                    if (validator.isAccountValid(info.account, userId)
-                            && validator.isAuthorityValid(authorityName, userId)) {
+                    if (mValidator.isAccountValid(info.account, userId)
+                            && mValidator.isAuthorityValid(authorityName, userId)) {
                         authority = getOrCreateAuthorityLocked(info, id, false);
                         // If the version is 0 then we are upgrading from a file format that did not
                         // know about periodic syncs. In that case don't clear the list since we
