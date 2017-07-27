@@ -23,8 +23,10 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.PeriodicSync;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Looper;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import android.test.mock.MockContentResolver;
@@ -65,6 +67,12 @@ public class SyncStorageEngineTest extends AndroidTestCase {
 
     @Override
     public void setUp() {
+        // InstrumentationTestRunner prepares a looper, but AndroidJUnitRunner does not.
+        // http://b/25897652 .
+        if (Looper.myLooper() == null) {
+            Looper.prepare();
+        }
+
         account1 = new Account("a@example.com", "example.type");
         account2 = new Account("b@example.com", "example.type");
         syncService1 = new ComponentName("com.example", "SyncService");
@@ -245,7 +253,7 @@ public class SyncStorageEngineTest extends AndroidTestCase {
         SyncStorageEngine engine = SyncStorageEngine.newTestInstance(testContext);
 
         assertEquals(-1, engine.getIsSyncable(account, 0, "other1"));
-        assertEquals(1, engine.getIsSyncable(account, 0, "other2"));
+        assertEquals(-1, engine.getIsSyncable(account, 0, "other2"));
         assertEquals(0, engine.getIsSyncable(account, 0, "other3"));
         assertEquals(1, engine.getIsSyncable(account, 0, "other4"));
     }
@@ -339,5 +347,20 @@ class TestContext extends ContextWrapper {
     @Override
     public ContentResolver getContentResolver() {
         return mResolver;
+    }
+
+    @Override
+    public String getSystemServiceName(Class<?> serviceClass) {
+        return mRealContext.getSystemServiceName(serviceClass);
+    }
+
+    @Override
+    public Object getSystemService(String name) {
+        return mRealContext.getSystemService(name);
+    }
+
+    @Override
+    public PackageManager getPackageManager() {
+        return mRealContext.getPackageManager();
     }
 }

@@ -396,6 +396,25 @@ public class SyncStorageEngine extends Handler {
         }
     }
 
+    /**
+     * Dummy validator used by test instances that always validates both accounts and authorities
+     */
+    private static class DummyAccountAuthorityValidator extends AccountAuthorityValidator {
+        DummyAccountAuthorityValidator(Context context) {
+            super(context);
+        }
+
+        @Override
+        boolean isAccountValid(Account account, int userId) {
+            return true;
+        }
+
+        @Override
+        boolean isAuthorityValid(String authority, int userId) {
+            return true;
+        }
+    }
+
     // Primary list of all syncable authorities.  Also our global lock.
     private final SparseArray<AuthorityInfo> mAuthorities =
             new SparseArray<AuthorityInfo>();
@@ -462,7 +481,7 @@ public class SyncStorageEngine extends Handler {
 
     private boolean mGrantSyncAdaptersAccountAccess;
 
-    private SyncStorageEngine(Context context, File dataDir) {
+    private SyncStorageEngine(Context context, File dataDir, AccountAuthorityValidator validator) {
         mContext = context;
         sSyncStorageEngine = this;
 
@@ -481,7 +500,7 @@ public class SyncStorageEngine extends Handler {
         mStatusFile = new AtomicFile(new File(syncDir, "status.bin"));
         mStatisticsFile = new AtomicFile(new File(syncDir, "stats.bin"));
 
-        readAccountInfoLocked();
+        readAccountInfoLocked(validator);
         readStatusLocked();
         readStatisticsLocked();
         readAndDeleteLegacyAccountInfoLocked();
@@ -491,7 +510,8 @@ public class SyncStorageEngine extends Handler {
     }
 
     public static SyncStorageEngine newTestInstance(Context context) {
-        return new SyncStorageEngine(context, context.getFilesDir());
+        return new SyncStorageEngine(context, context.getFilesDir(),
+            new DummyAccountAuthorityValidator(context));
     }
 
     public static void init(Context context) {
@@ -499,7 +519,8 @@ public class SyncStorageEngine extends Handler {
             return;
         }
         File dataDir = Environment.getDataDirectory();
-        sSyncStorageEngine = new SyncStorageEngine(context, dataDir);
+        sSyncStorageEngine = new SyncStorageEngine(context, dataDir,
+            new AccountAuthorityValidator(context));
     }
 
     public static SyncStorageEngine getSingleton() {
@@ -1479,7 +1500,7 @@ public class SyncStorageEngine extends Handler {
             mSyncStatus.clear();
             mSyncHistory.clear();
 
-            readAccountInfoLocked();
+            readAccountInfoLocked(new DummyAccountAuthorityValidator(mContext));
             readStatusLocked();
             readStatisticsLocked();
             readAndDeleteLegacyAccountInfoLocked();
@@ -1492,7 +1513,7 @@ public class SyncStorageEngine extends Handler {
     /**
      * Read all account information back in to the initial engine state.
      */
-    private void readAccountInfoLocked() {
+    private void readAccountInfoLocked(AccountAuthorityValidator validator) {
         int highestAuthorityId = -1;
         FileInputStream fis = null;
         try {
@@ -1548,7 +1569,6 @@ public class SyncStorageEngine extends Handler {
                 eventType = parser.next();
                 AuthorityInfo authority = null;
                 PeriodicSync periodicSync = null;
-                AccountAuthorityValidator validator = new AccountAuthorityValidator(mContext);
                 do {
                     if (eventType == XmlPullParser.START_TAG) {
                         tagName = parser.getName();
