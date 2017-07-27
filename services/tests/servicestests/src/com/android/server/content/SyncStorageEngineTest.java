@@ -245,7 +245,7 @@ public class SyncStorageEngineTest extends AndroidTestCase {
         SyncStorageEngine engine = SyncStorageEngine.newTestInstance(testContext);
 
         assertEquals(-1, engine.getIsSyncable(account, 0, "other1"));
-        assertEquals(1, engine.getIsSyncable(account, 0, "other2"));
+        assertEquals(-1, engine.getIsSyncable(account, 0, "other2"));
         assertEquals(0, engine.getIsSyncable(account, 0, "other3"));
         assertEquals(1, engine.getIsSyncable(account, 0, "other4"));
     }
