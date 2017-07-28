@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e65008d_fe58c513",
+        "filename": "core/java/android/view/ViewGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2314,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2017-07-28T17:28:15Z",
+      "side": 1,
+      "message": "Can you explain why this fixes the issue? Where would mFirstTouchTarget be set to null without target also being set null?\n\nBug report was missing a stack trace, so it\u0027s unclear what this CL is attempting to fix.",
+      "range": {
+        "startLine": 2314,
+        "startChar": 41,
+        "endLine": 2314,
+        "endChar": 66
+      },
+      "revId": "e1e8b375baefaa31faf1a26c8ad5b52fc7b1be90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
