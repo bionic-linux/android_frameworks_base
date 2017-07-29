@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d402cb_491bbcb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-07-29T03:04:45Z",
+      "side": 1,
+      "message": "I don\u0027t understand this, and your bug doesn\u0027t give any real motivation. Why, exactly, can\u0027t libutils do what SystemProperties is doing and use regular infrastructure to watch for property updates? It basically makes zero sense as an API on SystemProperties.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
