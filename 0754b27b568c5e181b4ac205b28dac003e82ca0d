@@ -22,6 +22,30 @@
       "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e38343c_660d5061",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2017-07-29T06:45:39Z",
+      "side": 1,
+      "message": "What do you mean by \u0027regular infrastructure\u0027? The way that sysprop updates are propagated is through binder; for process that only have Java binder threads, they need to call back into native code to let libutils know that a prop has been updated, since libutils is the one keeping track of the change callbacks.\n\nRegular binder does something similar, but it catches it earlier (before it ends up in Java):\n\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/jni/android_util_Binder.cpp#311\n\nThe rationale in context of the bug is that to be able to support tracing of HIDL HALs that run a server in Java, we need to be able to tell them a tracing prop has been updated. So, we send a regular SYSPROPS_TRANSACTION, and when our auto-generated code for HwBinder interfaces receives that, it calls SystemProperties.reportSyspropChanged(), which calls libutils, which in turn calls registered callbacks.",
+      "parentUuid": "d5d402cb_491bbcb9",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
