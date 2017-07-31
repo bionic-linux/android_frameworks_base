@@ -46,6 +46,30 @@
       "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83952983_c333b6ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-07-31T15:38:23Z",
+      "side": 1,
+      "message": "What I don\u0027t understand is why you need transactions to see the world state. Would __system_property_wait not work for you? The API is simply very strange for anyone who has worked with properties on a regular Java platform - why would I manually have to update properties that got changed somewhere else?",
+      "parentUuid": "8e38343c_660d5061",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
