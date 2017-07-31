@@ -70,6 +70,30 @@
       "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dddfece_9074253d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-07-31T16:25:08Z",
+      "side": 1,
+      "message": "It\u0027s definitely not the most convenient architecture.\n\nAll these processes are already waiting on binder \ntransactions, and report_sysprop_change will call all of the callbacks synchronously, so this will technically save you from creating a thread (that most likely won\u0027t be used) in all relevant processes.\n\n__system_property_wait also doesn\u0027t appear to give an efficient solution for waiting on a specific set of properties",
+      "parentUuid": "83952983_c333b6ef",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
