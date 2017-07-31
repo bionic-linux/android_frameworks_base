@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09ae175d_6bb0f908",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1071688
+      },
+      "writtenOn": "2017-07-31T13:16:25Z",
+      "side": 1,
+      "message": "good point. I will fix it in next patch",
+      "parentUuid": "5d0e8d01_c566ef9d",
+      "range": {
+        "startLine": 788,
+        "startChar": 68,
+        "endLine": 788,
+        "endChar": 69
+      },
+      "revId": "c99928c6ab08a9a8197d7101d9fdc0ac7a299edf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff12e186_14f17f9d",
         "filename": "services/tests/servicestests/src/com/android/server/NetworkManagementServiceTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-31T08:54:20Z",
       "side": 1,
       "message": "100 character line length for each of this.  Suggest: breaking the line here, just before this first eq(...).",
+      "range": {
+        "startLine": 151,
+        "startChar": 63,
+        "endLine": 151,
+        "endChar": 65
+      },
+      "revId": "c99928c6ab08a9a8197d7101d9fdc0ac7a299edf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "907e1824_163a9578",
+        "filename": "services/tests/servicestests/src/com/android/server/NetworkManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1071688
+      },
+      "writtenOn": "2017-07-31T13:16:25Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "ff12e186_14f17f9d",
       "range": {
         "startLine": 151,
         "startChar": 63,
