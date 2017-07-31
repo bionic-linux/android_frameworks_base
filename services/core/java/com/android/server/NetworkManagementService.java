@@ -59,6 +59,7 @@ import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkStats;
 import android.net.NetworkUtils;
@@ -114,6 +115,7 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.IntStream;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -275,12 +277,12 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     /** Set of interfaces with active idle timers. */
     private static class IdleTimerParams {
         public final int timeout;
-        public final int type;
+        public final int transports[];
         public int networkCount;
 
-        IdleTimerParams(int timeout, int type) {
+        IdleTimerParams(int timeout, int[] transports) {
             this.timeout = timeout;
-            this.type = type;
+            this.transports = transports;
             this.networkCount = 1;
         }
     }
@@ -446,9 +448,19 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     /**
      * Notify our observers of a change in the data activity state of the interface
      */
-    private void notifyInterfaceClassActivity(int type, int powerState, long tsNanos,
+    private void notifyInterfaceClassActivity(String iface, int powerState, long tsNanos,
             int uid, boolean fromRadio) {
-        final boolean isMobile = ConnectivityManager.isNetworkTypeMobile(type);
+        // find transport associated to this iface
+        int transports[] = new int[0];
+        synchronized (mIdleTimerLock) {
+            final IdleTimerParams params = mActiveIdleTimers.get(iface);
+            if (params != null) {
+                transports = params.transports;
+            }
+        }
+
+        final boolean isMobile = IntStream.of(transports).anyMatch(
+                transport -> transport == NetworkCapabilities.TRANSPORT_CELLULAR);
         if (isMobile) {
             if (!fromRadio) {
                 if (mMobileActivityFromRadio) {
@@ -469,7 +481,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             }
         }
 
-        if (ConnectivityManager.isNetworkTypeWifi(type)) {
+        if (IntStream.of(transports).anyMatch(
+                transport -> transport == NetworkCapabilities.TRANSPORT_WIFI)) {
             if (mLastPowerStateFromWifi != powerState) {
                 mLastPowerStateFromWifi = powerState;
                 try {
@@ -489,7 +502,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             // the radio is the authority for the current state.
             final boolean active = isActive;
             invokeForAllObservers(o -> o.interfaceClassDataActivityChanged(
-                    Integer.toString(type), active, tsNanos));
+                    iface, active, tsNanos));
         }
 
         boolean report = false;
@@ -785,7 +798,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             case NetdResponseCode.InterfaceClassActivity:
                     /*
                      * An network interface class state changed (active/idle)
-                     * Format: "NNN IfaceClass <active/idle> <label>"
+                     * Format: "NNN IfaceClass <active/idle> <iface> [<timestamp> [<uid>]]"
                      */
                     if (cooked.length < 4 || !cooked[1].equals("IfaceClass")) {
                         throw new IllegalStateException(errorMessage);
@@ -803,7 +816,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                         timestampNanos = SystemClock.elapsedRealtimeNanos();
                     }
                     boolean isActive = cooked[2].equals("active");
-                    notifyInterfaceClassActivity(Integer.parseInt(cooked[3]),
+                    notifyInterfaceClassActivity(cooked[3],
                             isActive ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
                             : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW,
                             timestampNanos, processUid, false);
@@ -1426,7 +1439,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     }
 
     @Override
-    public void addIdleTimer(String iface, int timeout, final int type) {
+    public void addIdleTimer(String iface, int timeout, final int[] transports) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
 
         if (DBG) Slog.d(TAG, "Adding idletimer");
@@ -1441,19 +1454,20 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
             try {
                 mConnector.execute("idletimer", "add", iface, Integer.toString(timeout),
-                        Integer.toString(type));
+                        iface);
             } catch (NativeDaemonConnectorException e) {
                 throw e.rethrowAsParcelableException();
             }
-            mActiveIdleTimers.put(iface, new IdleTimerParams(timeout, type));
+            mActiveIdleTimers.put(iface, new IdleTimerParams(timeout, transports));
 
             // Networks start up.
-            if (ConnectivityManager.isNetworkTypeMobile(type)) {
+            if (IntStream.of(transports).anyMatch(
+                    transport -> transport == NetworkCapabilities.TRANSPORT_CELLULAR)) {
                 mNetworkActive = false;
             }
             mDaemonHandler.post(new Runnable() {
                 @Override public void run() {
-                    notifyInterfaceClassActivity(type,
+                    notifyInterfaceClassActivity(iface,
                             DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH,
                             SystemClock.elapsedRealtimeNanos(), -1, false);
                 }
@@ -1475,14 +1489,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
             try {
                 mConnector.execute("idletimer", "remove", iface,
-                        Integer.toString(params.timeout), Integer.toString(params.type));
+                        Integer.toString(params.timeout), iface);
             } catch (NativeDaemonConnectorException e) {
                 throw e.rethrowAsParcelableException();
             }
             mActiveIdleTimers.remove(iface);
             mDaemonHandler.post(new Runnable() {
                 @Override public void run() {
-                    notifyInterfaceClassActivity(params.type,
+                    notifyInterfaceClassActivity(iface,
                             DataConnectionRealTimeInfo.DC_POWER_STATE_LOW,
                             SystemClock.elapsedRealtimeNanos(), -1, false);
                 }
@@ -2338,7 +2352,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                 pw.print("  "); pw.print(ent.getKey()); pw.println(":");
                 IdleTimerParams params = ent.getValue();
                 pw.print("    timeout="); pw.print(params.timeout);
-                pw.print(" type="); pw.print(params.type);
+                pw.print(" transports="); pw.print(params.transports);
                 pw.print(" networkCount="); pw.println(params.networkCount);
             }
         }

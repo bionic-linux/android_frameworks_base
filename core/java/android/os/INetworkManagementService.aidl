@@ -314,12 +314,13 @@ interface INetworkManagementService
      * reference-counting if an idletimer already exists for given
      * {@code iface}.
      *
-     * {@code type} is the type of the interface, such as TYPE_MOBILE.
+     * {@code transports} is an array with the supported transports,
+     * such as TRANSPORT_CELLULAR.
      *
      * Every {@code addIdleTimer} should be paired with a
      * {@link removeIdleTimer} to cleanup when the network disconnects.
      */
-    void addIdleTimer(String iface, int timeout, int type);
+    void addIdleTimer(String iface, int timeout, in int[] transports);
 
     /**
      * Removes idletimer for an interface.
