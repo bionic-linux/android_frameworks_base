@@ -26,6 +26,8 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.android.server.net.BaseNetworkObserver;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -144,19 +146,19 @@ public class NetworkManagementServiceTest extends AndroidTestCase {
          */
 
         sendMessage("613 IfaceClass active rmnet0");
-        expectSoon(observer).interfaceClassDataActivityChanged("rmnet0", true, 0);
+        expectSoon(observer).interfaceClassDataActivityChanged(eq("rmnet0"), eq(true), anyLong());
 
         sendMessage("613 IfaceClass active rmnet0 1234");
-        expectSoon(observer).interfaceClassDataActivityChanged("rmnet0", true, 1234);
+        expectSoon(observer).interfaceClassDataActivityChanged(eq("rmnet0"), eq(true), eq(1234l));
 
         sendMessage("613 IfaceClass idle eth0");
-        expectSoon(observer).interfaceClassDataActivityChanged("eth0", false, 0);
+        expectSoon(observer).interfaceClassDataActivityChanged(eq("eth0"), eq(false), anyLong());
 
         sendMessage("613 IfaceClass idle eth0 1234");
-        expectSoon(observer).interfaceClassDataActivityChanged("eth0", false, 1234);
+        expectSoon(observer).interfaceClassDataActivityChanged(eq("eth0"), eq(false), eq(1234l));
 
         sendMessage("613 IfaceClass reallyactive rmnet0 1234");
-        expectSoon(observer).interfaceClassDataActivityChanged("rmnet0", false, 1234);
+        expectSoon(observer).interfaceClassDataActivityChanged(eq("rmnet0"), eq(false), eq(1234l));
 
         sendMessage("613 InterfaceClass reallyactive rmnet0");
         // Invalid group.

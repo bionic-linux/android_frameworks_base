@@ -1756,28 +1756,28 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final String iface = networkAgent.linkProperties.getInterfaceName();
 
         final int timeout;
-        int type = ConnectivityManager.TYPE_NONE;
+        int transport = -1;
 
         if (networkAgent.networkCapabilities.hasTransport(
                 NetworkCapabilities.TRANSPORT_CELLULAR)) {
             timeout = Settings.Global.getInt(mContext.getContentResolver(),
                                              Settings.Global.DATA_ACTIVITY_TIMEOUT_MOBILE,
                                              10);
-            type = ConnectivityManager.TYPE_MOBILE;
+            transport = NetworkCapabilities.TRANSPORT_CELLULAR;
         } else if (networkAgent.networkCapabilities.hasTransport(
                 NetworkCapabilities.TRANSPORT_WIFI)) {
             timeout = Settings.Global.getInt(mContext.getContentResolver(),
                                              Settings.Global.DATA_ACTIVITY_TIMEOUT_WIFI,
                                              15);
-            type = ConnectivityManager.TYPE_WIFI;
+            transport = NetworkCapabilities.TRANSPORT_WIFI;
         } else {
             // do not track any other networks
             timeout = 0;
         }
 
-        if (timeout > 0 && iface != null && type != ConnectivityManager.TYPE_NONE) {
+        if (timeout > 0 && iface != null && transport != -1) {
             try {
-                mNetd.addIdleTimer(iface, timeout, type);
+                mNetd.addIdleTimer(iface, timeout, transport);
             } catch (Exception e) {
                 // You shall not crash!
                 loge("Exception in setupDataActivityTracking " + e);
