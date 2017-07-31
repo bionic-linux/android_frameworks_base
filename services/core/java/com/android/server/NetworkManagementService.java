@@ -58,7 +58,9 @@ import android.net.ITetheringStatsProvider;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
+import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkStats;
 import android.net.NetworkUtils;
@@ -85,6 +87,7 @@ import android.telephony.DataConnectionRealTimeInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseBooleanArray;
@@ -446,9 +449,24 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     /**
      * Notify our observers of a change in the data activity state of the interface
      */
-    private void notifyInterfaceClassActivity(int type, int powerState, long tsNanos,
+    private void notifyInterfaceClassActivity(String iface, int powerState, long tsNanos,
             int uid, boolean fromRadio) {
-        final boolean isMobile = ConnectivityManager.isNetworkTypeMobile(type);
+        // Find NetworkCapabilities associated to iface
+        NetworkCapabilities networkCapabilities = null;
+        final ConnectivityManager cm = ConnectivityManager.from(mContext);
+        if (!TextUtils.isEmpty(iface)) {
+            for (Network network : cm.getAllNetworks()) {
+                final LinkProperties lp = cm.getLinkProperties(network);
+                if (lp != null && iface.equals(lp.getInterfaceName())) {
+                    networkCapabilities = cm.getNetworkCapabilities(network);
+                    break;
+                }
+            }
+        }
+
+        //TODO if (networkCapabilities == null)
+
+        final boolean isMobile = networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
         if (isMobile) {
             if (!fromRadio) {
                 if (mMobileActivityFromRadio) {
@@ -469,7 +487,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             }
         }
 
-        if (ConnectivityManager.isNetworkTypeWifi(type)) {
+        if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
             if (mLastPowerStateFromWifi != powerState) {
                 mLastPowerStateFromWifi = powerState;
                 try {
@@ -489,7 +507,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             // the radio is the authority for the current state.
             final boolean active = isActive;
             invokeForAllObservers(o -> o.interfaceClassDataActivityChanged(
-                    Integer.toString(type), active, tsNanos));
+                    iface, active, tsNanos));
         }
 
         boolean report = false;
@@ -785,7 +803,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             case NetdResponseCode.InterfaceClassActivity:
                     /*
                      * An network interface class state changed (active/idle)
-                     * Format: "NNN IfaceClass <active/idle> <label>"
+                     * Format: "NNN IfaceClass <active/idle> <iface> [<timestamp> [<uid>]]"
                      */
                     if (cooked.length < 4 || !cooked[1].equals("IfaceClass")) {
                         throw new IllegalStateException(errorMessage);
@@ -803,7 +821,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                         timestampNanos = SystemClock.elapsedRealtimeNanos();
                     }
                     boolean isActive = cooked[2].equals("active");
-                    notifyInterfaceClassActivity(Integer.parseInt(cooked[3]),
+                    notifyInterfaceClassActivity(cooked[3],
                             isActive ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
                             : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW,
                             timestampNanos, processUid, false);
@@ -1453,7 +1471,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             }
             mDaemonHandler.post(new Runnable() {
                 @Override public void run() {
-                    notifyInterfaceClassActivity(type,
+                    notifyInterfaceClassActivity(iface,
                             DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH,
                             SystemClock.elapsedRealtimeNanos(), -1, false);
                 }
@@ -1482,7 +1500,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             mActiveIdleTimers.remove(iface);
             mDaemonHandler.post(new Runnable() {
                 @Override public void run() {
-                    notifyInterfaceClassActivity(params.type,
+                    notifyInterfaceClassActivity(iface,
                             DataConnectionRealTimeInfo.DC_POWER_STATE_LOW,
                             SystemClock.elapsedRealtimeNanos(), -1, false);
                 }
