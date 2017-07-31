@@ -94,6 +94,30 @@
       "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6dca6fb_1c7d1688",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2017-07-31T18:18:26Z",
+      "side": 1,
+      "message": "Right - hanging up a thread in every process on __system_property_wait() isn\u0027t the greatest thing either, and the prop filtering options don\u0027t look great.\n\nPlatform/3P code really shouldn\u0027t call this API directly - but I didn\u0027t really find a more logical place to put it. If you know of a better place to put this code I\u0027m happy to move it.",
+      "parentUuid": "9dddfece_9074253d",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "0754b27b568c5e181b4ac205b28dac003e82ca0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
