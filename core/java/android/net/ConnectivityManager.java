@@ -43,6 +43,7 @@ import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
+import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -989,6 +990,20 @@ public class ConnectivityManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /** {@hide} */
+    public int findConnectionTypeForIface(String iface) {
+        if (!TextUtils.isEmpty(iface)) {
+            for (Network network : getAllNetworks()) {
+                final LinkProperties lp = getLinkProperties(network);
+                if (lp != null && iface.equals(lp.getInterfaceName())) {
+                    final NetworkInfo networkInfo = getNetworkInfo(network);
+                    if (networkInfo != null) return networkInfo.getType();
+                }
+            }
+        }
+        return TYPE_NONE;
     }
 
     /**
