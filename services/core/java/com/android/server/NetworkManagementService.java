@@ -785,7 +785,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             case NetdResponseCode.InterfaceClassActivity:
                     /*
                      * An network interface class state changed (active/idle)
-                     * Format: "NNN IfaceClass <active/idle> <label>"
+                     * Format: "NNN IfaceClass <active/idle> <iface>"
                      */
                     if (cooked.length < 4 || !cooked[1].equals("IfaceClass")) {
                         throw new IllegalStateException(errorMessage);
@@ -803,7 +803,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                         timestampNanos = SystemClock.elapsedRealtimeNanos();
                     }
                     boolean isActive = cooked[2].equals("active");
-                    notifyInterfaceClassActivity(Integer.parseInt(cooked[3]),
+                    final ConnectivityManager cm = ConnectivityManager.from(mContext);
+                    final int type = cm.findConnectionTypeForIface(cooked[3]);
+                    notifyInterfaceClassActivity(type,
                             isActive ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
                             : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW,
                             timestampNanos, processUid, false);
