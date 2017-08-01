@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae71d11_1b38924b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-01T02:30:14Z",
+      "side": 1,
+      "message": "Network types are deprecated and NetworkInfo is quasi deprecated and we tried to discourage its usage. We cannot really accept this function here.\n\nAlso we don\u0027t use iface names has an api surfaced thing, and we restrict networking users to talk about Network objects. iface and iface names are implementation details and should stay hidden.",
+      "range": {
+        "startLine": 996,
+        "startChar": 15,
+        "endLine": 996,
+        "endChar": 41
+      },
+      "revId": "a34fdf37bb582cca1fecf02d0d75d76d7f22f17c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
