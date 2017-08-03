@@ -186,8 +186,16 @@ class LockFindingClassVisitor extends ClassVisitor {
     public static void insertMethodCallAfter(MethodNode mn, List<Frame> frameMap,
             List<List<TryCatchBlockNode>> handlersMap, AbstractInsnNode node, int index,
             MethodInsnNode call) {
-        List<TryCatchBlockNode> handlers = handlersMap.get(index + 1);
         InsnList instructions = mn.instructions;
+
+        // Move index and node forward until the following instruction has an opcode so it has
+        // correct handlers.
+        while (index + 1 < instructions.size() && instructions.get(index + 1).getOpcode() == -1) {
+            index++;
+            node = node.getNext();
+        }
+
+        List<TryCatchBlockNode> handlers = handlersMap.get(index + 1);
 
         LabelNode end = new LabelNode();
         instructions.insert(node, end);
