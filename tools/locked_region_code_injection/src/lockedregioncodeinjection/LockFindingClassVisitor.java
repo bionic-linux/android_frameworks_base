@@ -140,10 +140,17 @@ class LockFindingClassVisitor extends ClassVisitor {
                     if (operand instanceof LockTargetState) {
                         LockTargetState state = (LockTargetState) operand;
                         for (int j = 0; j < state.getTargets().size(); j++) {
+                            // The instruction after a monitor_exit should be a label for the end of the implicit
+                            // catch block that surrounds the synchronized block to call monitor_exit when an exception
+                            // occurs.
+                            if (instructions.get(i + 1).getType() != AbstractInsnNode.LABEL) {
+                                throw new RuntimeException("Expected to find label after monitor exit!");
+                            }
+
                             LockTarget target = state.getTargets().get(j);
                             MethodInsnNode call = new MethodInsnNode(Opcodes.INVOKESTATIC,
                                     target.getPostOwner(), target.getPostMethod(), "()V", false);
-                            insertMethodCallAfter(mn, frameMap, handlersMap, s, i, call);
+                            insertMethodCallAfter(mn, frameMap, handlersMap, s.getNext(), i + 1, call);
                         }
                     }
                 }
