@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab67a0fb_a15e56d6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-08-06T23:04:10Z",
+      "side": 1,
+      "message": "The exception is actually IllegalArgumentException.\n\nI don\u0027t think this is what Robert meant by \u0027checked exception\u0027. He\u0027s probably suggesting throwing an exception that we know will be caught, by adding throws to the function prototype.",
+      "range": {
+        "startLine": 2372,
+        "startChar": 79,
+        "endLine": 2372,
+        "endChar": 89
+      },
+      "revId": "8fabdad65842d7b4ec82a58931d8fd4597863a8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22f8b293_537a59f6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2388,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-08-06T23:04:10Z",
+      "side": 1,
+      "message": "Is this really a case of invalid argument?",
+      "range": {
+        "startLine": 2387,
+        "startChar": 16,
+        "endLine": 2388,
+        "endChar": 63
+      },
+      "revId": "8fabdad65842d7b4ec82a58931d8fd4597863a8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4216d0dd_94986672",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2403,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-08-06T23:04:10Z",
+      "side": 1,
+      "message": "This doesn\u0027t match whats in CarrierConfigManager. There the comment doesn\u0027t suggest that it\u0027s a bitmask.",
+      "range": {
+        "startLine": 2403,
+        "startChar": 30,
+        "endLine": 2403,
+        "endChar": 37
+      },
+      "revId": "8fabdad65842d7b4ec82a58931d8fd4597863a8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
