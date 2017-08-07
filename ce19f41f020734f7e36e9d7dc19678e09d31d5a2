@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d89ffb81_af28789c",
+        "filename": "services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-08-07T03:10:33Z",
+      "side": 1,
+      "message": "Please add AOSP copyright",
+      "revId": "ce19f41f020734f7e36e9d7dc19678e09d31d5a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
