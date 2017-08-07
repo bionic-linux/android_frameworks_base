@@ -66,7 +66,7 @@ public class Media extends BaseCommand {
                 "\n" +
                 "media dispatch: dispatch a media key to the system.\n" +
                 "                KEY may be: play, pause, play-pause, mute, headsethook,\n" +
-                "                stop, next, previous, rewind, record, fast-forword.\n" +
+                "                stop, next, previous, rewind, record, fast-forward.\n" +
                 "media list-sessions: print a list of the current sessions.\n" +
                         "media monitor: monitor updates to the specified session.\n" +
                 "                       Use the tag from list-sessions.\n"
