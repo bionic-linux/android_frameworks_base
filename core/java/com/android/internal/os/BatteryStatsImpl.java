@@ -4010,19 +4010,6 @@ public class BatteryStatsImpl extends BatteryStats {
         }
     }
 
-    private int fixPhoneServiceState(int state, int signalBin) {
-        if (mPhoneSimStateRaw == TelephonyManager.SIM_STATE_ABSENT) {
-            // In this case we will always be STATE_OUT_OF_SERVICE, so need
-            // to infer that we are scanning from other data.
-            if (state == ServiceState.STATE_OUT_OF_SERVICE
-                    && signalBin > SignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN) {
-                state = ServiceState.STATE_IN_SERVICE;
-            }
-        }
-
-        return state;
-    }
-
     private void updateAllPhoneStateLocked(int state, int simState, int strengthBin) {
         boolean scanning = false;
         boolean newHistory = false;
@@ -4047,9 +4034,11 @@ public class BatteryStatsImpl extends BatteryStats {
         if (state == ServiceState.STATE_POWER_OFF) {
             strengthBin = -1;
 
-        // If we are in service, make sure the correct signal string timer is running.
-        } else if (state == ServiceState.STATE_IN_SERVICE) {
-            // Bin will be changed below.
+        // If we are in emergency service, then we are camped on a cell. Scans will
+        // happen more frequently than in other modes, but the power profile should
+        // be much closer to IN_SERVICE than OUT_OF_SERVICE.
+        } else if (state == ServiceState.STATE_EMERGENCY_ONLY) {
+            state = ServiceState.STATE_IN_SERVICE;
 
         // If we're out of service, we are in the lowest signal strength
         // bin and have the scanning bit set.
@@ -4063,6 +4052,10 @@ public class BatteryStatsImpl extends BatteryStats {
                         + Integer.toHexString(mHistoryCur.states));
                 mPhoneSignalScanningTimer.startRunningLocked(elapsedRealtime);
             }
+
+        // If we are in service, make sure the correct signal string timer is running.
+        } else if (state == ServiceState.STATE_IN_SERVICE) {
+            // Bin will be changed below.
         }
 
         if (!scanning) {
@@ -11286,7 +11279,7 @@ public class BatteryStatsImpl extends BatteryStats {
         mMobileRadioPowerState = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
         mMobileRadioActiveTimer = new StopwatchTimer(mClocks, null, -400, null,
                 mOnBatteryTimeBase, in);
-        mMobileRadioActivePerAppTimer = new StopwatchTimer(mClocks, null, -401, null, 
+        mMobileRadioActivePerAppTimer = new StopwatchTimer(mClocks, null, -401, null,
                 mOnBatteryTimeBase, in);
         mMobileRadioActiveAdjustedTime = new LongSamplingCounter(mOnBatteryTimeBase, in);
         mMobileRadioActiveUnknownTime = new LongSamplingCounter(mOnBatteryTimeBase, in);
