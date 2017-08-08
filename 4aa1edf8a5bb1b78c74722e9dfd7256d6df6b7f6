@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "4810c248_fadf52c7",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-08T01:28:14Z",
+      "side": 1,
+      "message": "There are lots of races here. LinkProperties and NetworkCapabilities can be updated at any time by network agents, so there\u0027s no way of getting a consistent view of what is happening.\n\nIf we want to take this approach, then it might be better to add a hidden API to CM that would return the transport type for an interface.\n\nBut... where does this data come from? If it comes from idle timers that we program into netd, then perhaps we can just program the idle timers so that they return a label that we specify instead of reporting the interface name.",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 465,
+        "endChar": 13
+      },
+      "revId": "4aa1edf8a5bb1b78c74722e9dfd7256d6df6b7f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba3ffcc_c72f4308",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 4
