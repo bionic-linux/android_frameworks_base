@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65423e48_80e8ac91",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-08-08T21:33:24Z",
+      "side": 1,
+      "message": "Why not open this up for P?",
+      "range": {
+        "startLine": 601,
+        "startChar": 7,
+        "endLine": 601,
+        "endChar": 12
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a834ff7_f722be18",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-08-08T21:33:24Z",
+      "side": 1,
+      "message": "link?",
+      "range": {
+        "startLine": 629,
+        "startChar": 52,
+        "endLine": 629,
+        "endChar": 56
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75adb698_9b467d51",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-08-08T21:33:24Z",
+      "side": 1,
+      "message": "value of",
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7d0e61e_d8d01ef1",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-08-08T21:33:24Z",
+      "side": 1,
+      "message": "user",
+      "range": {
+        "startLine": 634,
+        "startChar": 30,
+        "endLine": 634,
+        "endChar": 33
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f62756c2_5ba119f9",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-08-08T21:33:24Z",
+      "side": 1,
+      "message": "nnnn",
+      "range": {
+        "startLine": 1804,
+        "startChar": 57,
+        "endLine": 1804,
+        "endChar": 68
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "440bbb52_26caa669",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-08-08T21:33:24Z",
+      "side": 1,
+      "message": "ibid.",
+      "range": {
+        "startLine": 1811,
+        "startChar": 44,
+        "endLine": 1811,
+        "endChar": 55
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3ddead8_5e7a7fe5",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-08-08T21:33:24Z",
+      "side": 1,
+      "message": "should be the value returned by?",
+      "range": {
+        "startLine": 2230,
+        "startChar": 69,
+        "endLine": 2230,
+        "endChar": 91
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
