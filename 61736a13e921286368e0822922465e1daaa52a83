@@ -22,6 +22,30 @@
       "revId": "61736a13e921286368e0822922465e1daaa52a83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1959cf5_f6c9051c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-09T00:39:35Z",
+      "side": 1,
+      "message": "That should not be needed. Outside of networking stack we would prefer if people used arrays of ints, in which case TRANSPORT_NONE is representable by an empty array.\n\nInside the NetworkCapabilities, we use a int bitmap flag, where TRANSPORT_NONE is 0 (no flag up).\n\nHere the issue you are having is because you are trying to think of a single transport. Instead this code should support multiple transports. I think VPN networks can already have multiple transports, and in the future this might be the case for new type of \"compound\" networks.\n\nI suggest to change int transport to either int[] transports (could be initially null or just an empty new int[]). Then you can to something like transport \u003d new int[] { NetworkCapabilities.TRANSPORT_CELLULAR } at line 1766.",
+      "parentUuid": "79cb06ca_22f6d019",
+      "range": {
+        "startLine": 1759,
+        "startChar": 24,
+        "endLine": 1759,
+        "endChar": 26
+      },
+      "revId": "61736a13e921286368e0822922465e1daaa52a83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
