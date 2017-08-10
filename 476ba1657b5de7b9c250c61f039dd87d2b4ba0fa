@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfcad92e_07f9f174",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1071688
+      },
+      "writtenOn": "2017-08-10T13:32:36Z",
+      "side": 1,
+      "message": "It can be decided later what happens with the timeout if a NetworkAgent has both TRANSPORT_CELLULAR and TRANSPORT_WIFE.\n\nFor the moment I will leave the current behavior.",
+      "range": {
+        "startLine": 1766,
+        "startChar": 8,
+        "endLine": 1766,
+        "endChar": 12
+      },
+      "revId": "476ba1657b5de7b9c250c61f039dd87d2b4ba0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18cd6efe_433ad498",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1071688
+      },
+      "writtenOn": "2017-08-10T13:32:36Z",
+      "side": 1,
+      "message": "I changed the label to be the network interface. This is to keep consistency between this layer and the iptables used underneath. Iptables use this label as key value for the idle timer, same as we are doing in mActiveIdleTimers.",
+      "range": {
+        "startLine": 1457,
+        "startChar": 24,
+        "endLine": 1457,
+        "endChar": 29
+      },
+      "revId": "476ba1657b5de7b9c250c61f039dd87d2b4ba0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1979e_3fb3227c",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1071688
+      },
+      "writtenOn": "2017-08-10T13:32:36Z",
+      "side": 1,
+      "message": "see comment in line 1457",
+      "range": {
+        "startLine": 1492,
+        "startChar": 58,
+        "endLine": 1492,
+        "endChar": 63
+      },
+      "revId": "476ba1657b5de7b9c250c61f039dd87d2b4ba0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
