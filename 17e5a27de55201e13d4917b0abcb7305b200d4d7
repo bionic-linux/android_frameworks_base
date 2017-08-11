@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "1713da9e_2f308dd8",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1093143
+      },
+      "writtenOn": "2017-08-11T22:08:35Z",
+      "side": 1,
+      "message": "Just to put it on the record here in the CL... This check isn\u0027t right because it relies on the equals() method, which also compares the flags and scope. The flags are highly likely to be different. \n\nThis could be accomplished in a number of ways, but have a look at \u003cag/2697227\u003e if you want to see how I did it.",
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c33a20e_df6f3060",
         "filename": "services/net/java/android/net/ip/IpManager.java",
         "patchSetId": 10
