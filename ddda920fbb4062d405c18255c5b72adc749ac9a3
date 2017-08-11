@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "01df538c_79818b43",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-11T23:33:22Z",
+      "side": 1,
+      "message": "I\u0027ll make it public for now; when I merge over to our friendly neighborhood MR1 I\u0027ll hide it.",
+      "parentUuid": "73ada2a9_5ce92e7c",
+      "range": {
+        "startLine": 601,
+        "startChar": 7,
+        "endLine": 601,
+        "endChar": 12
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a834ff7_f722be18",
         "filename": "telecomm/java/android/telecom/Conference.java",
         "patchSetId": 1
