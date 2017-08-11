@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6e1dcb_5db6abb2",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-08-11T20:12:49Z",
+      "side": 1,
+      "message": "This comment needs updating.",
+      "range": {
+        "startLine": 491,
+        "startChar": 8,
+        "endLine": 491,
+        "endChar": 14
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a6be1b0_687bf644",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-08-11T20:12:49Z",
+      "side": 1,
+      "message": "Is this change required in this CL?  Up to you and Lorenzo, but you might consider whether it\u0027s better to have this one line change in a separate CL.",
+      "range": {
+        "startLine": 2166,
+        "startChar": 28,
+        "endLine": 2166,
+        "endChar": 35
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c33a20e_df6f3060",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-08-11T20:12:49Z",
+      "side": 1,
+      "message": "s/w//  :-)",
+      "range": {
+        "startLine": 1079,
+        "startChar": 70,
+        "endLine": 1079,
+        "endChar": 71
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "436dcf72_2ea50465",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-08-11T20:12:49Z",
+      "side": 1,
+      "message": "oldLp?",
+      "range": {
+        "startLine": 1110,
+        "startChar": 34,
+        "endLine": 1110,
+        "endChar": 49
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aeaa28ea_1a329947",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-08-11T20:12:49Z",
+      "side": 1,
+      "message": "\"subset\" is a misleading name.  Technically, this is more like \"setsEqual\", \"isProperSubset\", or \"containsAll\" or something...",
+      "range": {
+        "startLine": 1747,
+        "startChar": 23,
+        "endLine": 1747,
+        "endChar": 31
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
