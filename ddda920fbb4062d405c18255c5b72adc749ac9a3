@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfdde575_625e9a35",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-11T21:38:25Z",
+      "side": 1,
+      "message": "This is an MR1 fix.  \u003ccue disappointed music\u003e\nSounds like a good P candidate.",
+      "parentUuid": "65423e48_80e8ac91",
+      "range": {
+        "startLine": 601,
+        "startChar": 7,
+        "endLine": 601,
+        "endChar": 12
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a834ff7_f722be18",
         "filename": "telecomm/java/android/telecom/Conference.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T21:33:24Z",
       "side": 1,
       "message": "link?",
+      "range": {
+        "startLine": 629,
+        "startChar": 52,
+        "endLine": 629,
+        "endChar": 56
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d3bd8c9_6b3af2cb",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-11T21:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a834ff7_f722be18",
       "range": {
         "startLine": 629,
         "startChar": 52,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a39c8d66_00639b2a",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-11T21:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75adb698_9b467d51",
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d0e61e_d8d01ef1",
         "filename": "telecomm/java/android/telecom/Conference.java",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-08T21:33:24Z",
       "side": 1,
       "message": "user",
+      "range": {
+        "startLine": 634,
+        "startChar": 30,
+        "endLine": 634,
+        "endChar": 33
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5d4a283_ace5a640",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-11T21:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d0e61e_d8d01ef1",
       "range": {
         "startLine": 634,
         "startChar": 30,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "55e1e6dc_0b6c0008",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-11T21:38:25Z",
+      "side": 1,
+      "message": "More 133tz0r this way.",
+      "parentUuid": "f62756c2_5ba119f9",
+      "range": {
+        "startLine": 1804,
+        "startChar": 57,
+        "endLine": 1804,
+        "endChar": 68
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "440bbb52_26caa669",
         "filename": "telecomm/java/android/telecom/Connection.java",
         "patchSetId": 1
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "7358a8dd_45dd322d",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-11T21:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "440bbb52_26caa669",
+      "range": {
+        "startLine": 1811,
+        "startChar": 44,
+        "endLine": 1811,
+        "endChar": 55
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3ddead8_5e7a7fe5",
         "filename": "telecomm/java/android/telecom/Connection.java",
         "patchSetId": 1
@@ -145,6 +283,30 @@
       "writtenOn": "2017-08-08T21:33:24Z",
       "side": 1,
       "message": "should be the value returned by?",
+      "range": {
+        "startLine": 2230,
+        "startChar": 69,
+        "endLine": 2230,
+        "endChar": 91
+      },
+      "revId": "ddda920fbb4062d405c18255c5b72adc749ac9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5630e6cc_cac04114",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-11T21:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3ddead8_5e7a7fe5",
       "range": {
         "startLine": 2230,
         "startChar": 69,
