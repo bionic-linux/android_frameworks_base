@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "226ea1bc_638e81da",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-12T01:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa78c57_bff71b51",
+      "range": {
+        "startLine": 491,
+        "startChar": 11,
+        "endLine": 491,
+        "endChar": 18
+      },
+      "revId": "25122592d546ef35089ebcf3f22721cc45d5a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcd864b5_cb0f15fa",
         "filename": "services/net/java/android/net/ip/IpManager.java",
         "patchSetId": 6
