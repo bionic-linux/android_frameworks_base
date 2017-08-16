@@ -22,6 +22,30 @@
       "revId": "62dfbce5094a4d0e79fb329cdbc61117152232c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ff87508_84010fd2",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1066743
+      },
+      "writtenOn": "2017-08-16T15:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d07af82_e4cac7a8",
+      "range": {
+        "startLine": 695,
+        "startChar": 59,
+        "endLine": 695,
+        "endChar": 63
+      },
+      "revId": "62dfbce5094a4d0e79fb329cdbc61117152232c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
