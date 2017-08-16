@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08341b14_6de2b2f4",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Removed from go/oag/454756.",
+      "parentUuid": "0d6e1dcb_5db6abb2",
+      "range": {
+        "startLine": 491,
+        "startChar": 8,
+        "endLine": 491,
+        "endChar": 14
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82cc9f02_9f242ec8",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T14:41:30Z",
       "side": 1,
       "message": "Suggest changing this back to VDBG before submit, since it could get very verbose.",
+      "range": {
+        "startLine": 2156,
+        "startChar": 24,
+        "endLine": 2156,
+        "endChar": 27
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9144f0c4_b2425e7b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2156,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Done for the purpose of the experiment. Irrelevant in go/oag/454756",
+      "parentUuid": "82cc9f02_9f242ec8",
       "range": {
         "startLine": 2156,
         "startChar": 24,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8d20bb2a_42958ef5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Done for the purpose of the experiment. Irrelevant in go/oag/454756.\n\nWill carve out this change separately, but not for oc-mr1-dev anyway.",
+      "parentUuid": "3d622bd2_6b9ed7e4",
+      "range": {
+        "startLine": 2166,
+        "startChar": 28,
+        "endLine": 2166,
+        "endChar": 35
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3010f28d_e7d889a6",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 10
@@ -106,6 +178,30 @@
       "writtenOn": "2017-08-15T14:41:30Z",
       "side": 1,
       "message": "Suggest changing these to VDBG before submit as well.",
+      "range": {
+        "startLine": 4615,
+        "startChar": 16,
+        "endLine": 4615,
+        "endChar": 19
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2891f5e_e43750c6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4615,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Done for the purpose of the experiment. Irrelevant in go/oag/454756",
+      "parentUuid": "3010f28d_e7d889a6",
       "range": {
         "startLine": 4615,
         "startChar": 16,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "a45a289f_fe53b8db",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5268,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Done for the purpose of the experiment. Irrelevant in go/oag/454756",
+      "parentUuid": "f29faf9a_7f1e5d18",
+      "range": {
+        "startLine": 5268,
+        "startChar": 12,
+        "endLine": 5268,
+        "endChar": 98
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e20969_9fa43f39",
         "filename": "services/net/java/android/net/ip/IpManager.java",
         "patchSetId": 10
@@ -152,6 +272,30 @@
       "writtenOn": "2017-08-15T14:41:30Z",
       "side": 1,
       "message": "I\u0027m not a fan of RouteInfo objects that have an empty interface name. Those objects really don\u0027t make sense, and LinkProperties#routeWithInterface shows some of the consequences. \n\nBut if we don\u0027t have an interface name yet, then perhaps we don\u0027t have a choice. Is it feasible to keep these as IpPrefix objects?",
+      "range": {
+        "startLine": 431,
+        "startChar": 27,
+        "endLine": 431,
+        "endChar": 48
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9d58a3e_f9c8ef3b",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Done for the purpose of the experiment. Irrelevant in go/oag/454756 where I do it the other way around.",
+      "parentUuid": "45e20969_9fa43f39",
       "range": {
         "startLine": 431,
         "startChar": 27,
@@ -199,6 +343,24 @@
     },
     {
       "key": {
+        "uuid": "5c616fee_a417d28c",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Fixed in go/oag/454756",
+      "parentUuid": "8ac5a888_b388f756",
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c33a20e_df6f3060",
         "filename": "services/net/java/android/net/ip/IpManager.java",
         "patchSetId": 10
@@ -210,6 +372,30 @@
       "writtenOn": "2017-08-11T20:12:49Z",
       "side": 1,
       "message": "s/w//  :-)",
+      "range": {
+        "startLine": 1079,
+        "startChar": 70,
+        "endLine": 1079,
+        "endChar": 71
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04f8bafc_92d37f2c",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Fixed in go/oag/454756",
+      "parentUuid": "2c33a20e_df6f3060",
       "range": {
         "startLine": 1079,
         "startChar": 70,
@@ -245,6 +431,30 @@
     },
     {
       "key": {
+        "uuid": "fa84c317_9f61060c",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "Removed from go/oag/454756",
+      "parentUuid": "436dcf72_2ea50465",
+      "range": {
+        "startLine": 1110,
+        "startChar": 34,
+        "endLine": 1110,
+        "endChar": 49
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeaa28ea_1a329947",
         "filename": "services/net/java/android/net/ip/IpManager.java",
         "patchSetId": 10
@@ -256,6 +466,30 @@
       "writtenOn": "2017-08-11T20:12:49Z",
       "side": 1,
       "message": "\"subset\" is a misleading name.  Technically, this is more like \"setsEqual\", \"isProperSubset\", or \"containsAll\" or something...",
+      "range": {
+        "startLine": 1747,
+        "startChar": 23,
+        "endLine": 1747,
+        "endChar": 31
+      },
+      "revId": "17e5a27de55201e13d4917b0abcb7305b200d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a66a5920_4b45aaf9",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T01:38:59Z",
+      "side": 1,
+      "message": "That\u0027s gone in go/oag/454756. I couldn\u0027t do it that way anyway because I can\u0027t use equality for LinkAddress, and for routes it is heterogeneous anyway with RouteInfo on one side and IpPrefix on the other.",
+      "parentUuid": "aeaa28ea_1a329947",
       "range": {
         "startLine": 1747,
         "startChar": 23,
