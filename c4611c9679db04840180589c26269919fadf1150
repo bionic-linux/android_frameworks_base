@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17e2e786_d2967c7a",
+        "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-16T16:58:36Z",
+      "side": 1,
+      "message": "API guidelines would have you use the main thread.  \u003csad panda\u003e",
+      "range": {
+        "startLine": 88,
+        "startChar": 68,
+        "endLine": 89,
+        "endChar": 79
+      },
+      "revId": "c4611c9679db04840180589c26269919fadf1150",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
