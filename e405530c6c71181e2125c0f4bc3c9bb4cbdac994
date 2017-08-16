@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c364ef5_d3999a6f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2361,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-08-16T05:58:43Z",
+      "side": 1,
+      "message": "when carrier does not require encryption for the key.",
+      "range": {
+        "startLine": 2360,
+        "startChar": 84,
+        "endLine": 2361,
+        "endChar": 20
+      },
+      "revId": "e405530c6c71181e2125c0f4bc3c9bb4cbdac994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00f16dbe_36811714",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2371,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-08-16T05:58:43Z",
+      "side": 1,
+      "message": "Add some string to the exception. May be just that IPhoneSubInfo/Subscriber Info is null or something.",
+      "revId": "e405530c6c71181e2125c0f4bc3c9bb4cbdac994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e560789f_498db1ae",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2387,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-08-16T05:58:43Z",
+      "side": 1,
+      "message": "same here and below",
+      "revId": "e405530c6c71181e2125c0f4bc3c9bb4cbdac994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
