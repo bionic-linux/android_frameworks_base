@@ -30,6 +30,7 @@ import com.android.internal.app.LocalePicker;
 import com.android.internal.app.LocalePicker.LocaleInfo;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
+import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -163,7 +164,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
 
     @Override
     @ServiceThreadOnly
-    protected void onStandby(boolean initiatedByCec, int standbyAction) {
+    protected void onStandby(boolean initiatedByCec, int standbyAction,
+            SendMessageCallback callback) {
         assertRunOnServiceThread();
         if (!mService.isControlEnabled() || initiatedByCec || !mAutoTvOff) {
             return;
@@ -171,12 +173,13 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         switch (standbyAction) {
             case HdmiControlService.STANDBY_SCREEN_OFF:
                 mService.sendCecCommand(
-                        HdmiCecMessageBuilder.buildStandby(mAddress, Constants.ADDR_TV));
+                        HdmiCecMessageBuilder.buildStandby(mAddress, Constants.ADDR_TV), callback);
                 break;
             case HdmiControlService.STANDBY_SHUTDOWN:
                 // ACTION_SHUTDOWN is taken as a signal to power off all the devices.
                 mService.sendCecCommand(
-                        HdmiCecMessageBuilder.buildStandby(mAddress, Constants.ADDR_BROADCAST));
+                        HdmiCecMessageBuilder.buildStandby(mAddress, Constants.ADDR_BROADCAST),
+                                callback);
                 break;
         }
     }
