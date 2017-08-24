@@ -772,6 +772,11 @@ public class ConnectivityServiceTest extends AndroidTestCase {
             return new FakeWakeupMessage(context, handler, cmdName, cmd, 0, 0, obj);
         }
 
+        @Override
+        public boolean hasService(String name) {
+            return Context.ETHERNET_SERVICE.equals(name);
+        }
+
         public WrappedNetworkMonitor getLastCreatedWrappedNetworkMonitor() {
             return mLastCreatedNetworkMonitor;
         }
@@ -919,6 +924,7 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         // will fail. Failing here is much easier to debug.
         assertTrue(mCm.isNetworkSupported(TYPE_WIFI));
         assertTrue(mCm.isNetworkSupported(TYPE_MOBILE));
+        assertTrue(mCm.isNetworkSupported(TYPE_ETHERNET));
     }
 
     @SmallTest
