@@ -43,7 +43,7 @@ public class ColorFilter {
     }
 
     void discardNativeInstance() {
-        if (mNativeInstance != 0) {
+        if (mNativeInstance != 0 && mNativeInstance != -1) {
             nSafeUnref(mNativeInstance);
             mNativeInstance = 0;
         }
