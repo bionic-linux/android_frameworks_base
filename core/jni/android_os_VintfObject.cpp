@@ -56,7 +56,7 @@ static inline jobjectArray toJavaStringArray(JNIEnv* env, const V& v) {
 }
 
 template<typename T>
-static void tryAddSchema(const T* object, const XmlConverter<T>& converter,
+static void tryAddSchema(const std::shared_ptr<T>& object, const XmlConverter<T>& converter,
         const std::string& description,
         std::vector<std::string>* cStrings) {
     if (object == nullptr) {
@@ -66,7 +66,7 @@ static void tryAddSchema(const T* object, const XmlConverter<T>& converter,
     }
 }
 
-static void tryAddHalNamesAndVersions(const HalManifest *manifest,
+static void tryAddHalNamesAndVersions(const std::shared_ptr<HalManifest>& manifest,
         const std::string& description,
         std::set<std::string> *output) {
     if (manifest == nullptr) {
