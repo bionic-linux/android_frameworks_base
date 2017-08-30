@@ -32,7 +32,7 @@ using vintf::VintfObject;
 #define MAP_STRING_METHOD(javaMethod, cppString)                                       \
     static jstring android_os_VintfRuntimeInfo_##javaMethod(JNIEnv* env, jclass clazz) \
     {                                                                                  \
-        const RuntimeInfo *info = VintfObject::GetRuntimeInfo();                       \
+        std::shared_ptr<const RuntimeInfo> info = VintfObject::GetRuntimeInfo();       \
         if (info == nullptr) return nullptr;                                           \
         return env->NewStringUTF((cppString).c_str());                                 \
     }                                                                                  \
