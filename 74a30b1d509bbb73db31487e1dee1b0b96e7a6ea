@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4b677e_f755604e",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-09-01T18:43:10Z",
+      "side": 1,
+      "message": "Should this be -fprofile-use?",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 247,
+        "endChar": 27
+      },
+      "revId": "74a30b1d509bbb73db31487e1dee1b0b96e7a6ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a557a1ff_90afb0cc",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-09-01T18:43:10Z",
+      "side": 1,
+      "message": "Where is this warning triggered?  I searched clang for \"warn_fe_backend_plugin\" which is the only warning in the backend-plugin group but couldn\u0027t find any place where this was issued.",
+      "revId": "74a30b1d509bbb73db31487e1dee1b0b96e7a6ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "247af9a8_9ccc98ff",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-09-01T18:43:10Z",
+      "side": 1,
+      "message": "Assuming this should be \u0027-fprofile-use\u0027, based on the filename: I don\u0027t think we should use profiles for hwuimacro.  We should only use it for libhwui and not the benchmark.\n\n(But we should use -fprofile-genreate to hwuimacro since libhwui\u0027s static library is used here).",
+      "revId": "74a30b1d509bbb73db31487e1dee1b0b96e7a6ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
