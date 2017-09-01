@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec4ed1a8_65483e81",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1126348
+      },
+      "writtenOn": "2017-09-01T18:55:34Z",
+      "side": 1,
+      "message": "Sorry for the mistake. Fixed.",
+      "parentUuid": "eb4b677e_f755604e",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 247,
+        "endChar": 27
+      },
+      "revId": "74a30b1d509bbb73db31487e1dee1b0b96e7a6ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a557a1ff_90afb0cc",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5e08b20b_d11bfd91",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1126348
+      },
+      "writtenOn": "2017-09-01T18:55:34Z",
+      "side": 1,
+      "message": "All warnings such as function not marching, profdata out-of-date, are all handled by this flag unfortunately. This is added here to avoid build error if the profile is out of date. It will hide all the errors related to pgo.\n\nI think I can run a nightly test on the dashboard to track pgo vs non-pgo, if a regression was made by the PGO data, we can find it and try to re-collect.",
+      "parentUuid": "a557a1ff_90afb0cc",
+      "revId": "74a30b1d509bbb73db31487e1dee1b0b96e7a6ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "247af9a8_9ccc98ff",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-01T18:43:10Z",
       "side": 1,
       "message": "Assuming this should be \u0027-fprofile-use\u0027, based on the filename: I don\u0027t think we should use profiles for hwuimacro.  We should only use it for libhwui and not the benchmark.\n\n(But we should use -fprofile-genreate to hwuimacro since libhwui\u0027s static library is used here).",
+      "revId": "74a30b1d509bbb73db31487e1dee1b0b96e7a6ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "651667f8_d05ceda0",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1126348
+      },
+      "writtenOn": "2017-09-01T18:55:34Z",
+      "side": 1,
+      "message": "The flags for benchmark is to provide a easier way for us to monitor the performance affected by PGO. Assume we could get a great profdata for hwui somehow, then we need to build the benchmarks with fprofile-use to check if it really works.",
+      "parentUuid": "247af9a8_9ccc98ff",
       "revId": "74a30b1d509bbb73db31487e1dee1b0b96e7a6ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
