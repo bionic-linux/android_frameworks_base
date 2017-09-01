@@ -243,6 +243,19 @@ cc_defaults {
 cc_library {
     name: "libhwui",
     defaults: ["libhwui_defaults"],
+    cflags: [
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+        "-Wno-backend-plugin",
+    ],
+    ldflags: [
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+        "-Wno-backend-plugin",
+    ],
+}
+
+cc_library {
+    name: "libhwui_non_pgo",
+    defaults: ["libhwui_defaults"],
 }
 
 // ------------------------
@@ -333,7 +346,7 @@ cc_test {
         "tests/unit/TestUtilsTests.cpp",
         "tests/unit/TextDropShadowCacheTests.cpp",
         "tests/unit/TextureCacheTests.cpp",
-	"tests/unit/TypefaceTests.cpp",
+        "tests/unit/TypefaceTests.cpp",
         "tests/unit/VectorDrawableTests.cpp",
     ],
 }
@@ -354,6 +367,30 @@ cc_benchmark {
         "tests/macrobench/TestSceneRunner.cpp",
         "tests/macrobench/main.cpp",
     ],
+    cflags: [
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+        "-Wno-backend-plugin",
+    ],
+    ldflags: [
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+        "-Wno-backend-plugin",
+    ],
+
+}
+
+cc_benchmark {
+    name: "hwuimacro_non_pgo",
+    defaults: ["hwui_test_defaults"],
+
+    // set to libhwui_static_debug to skip actual GL commands
+    whole_static_libs: ["libhwui_non_pgo"],
+    shared_libs: ["libmemunreachable"],
+
+    srcs: [
+        "tests/macrobench/TestSceneRunner.cpp",
+        "tests/macrobench/main.cpp",
+    ],
+
 }
 
 // ------------------------
@@ -362,6 +399,38 @@ cc_benchmark {
 
 cc_benchmark {
     name: "hwuimicro",
+    defaults: ["hwui_test_defaults"],
+
+    cflags: [
+        "-include debug/wrap_gles.h",
+        "-DHWUI_NULL_GPU",
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+        "-Wno-backend-plugin",
+    ],
+
+    ldflags: [
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+        "-Wno-backend-plugin",
+    ],
+
+    whole_static_libs: ["libhwui_static_debug"],
+    shared_libs: ["libmemunreachable"],
+
+    srcs: [
+        "tests/microbench/main.cpp",
+        "tests/microbench/DisplayListCanvasBench.cpp",
+        "tests/microbench/FontBench.cpp",
+        "tests/microbench/FrameBuilderBench.cpp",
+        "tests/microbench/LinearAllocatorBench.cpp",
+        "tests/microbench/PathParserBench.cpp",
+        "tests/microbench/RenderNodeBench.cpp",
+        "tests/microbench/ShadowBench.cpp",
+        "tests/microbench/TaskManagerBench.cpp",
+    ],
+}
+
+cc_benchmark {
+    name: "hwuimicro_non_pgo",
     defaults: ["hwui_test_defaults"],
 
     cflags: [
