@@ -243,6 +243,19 @@ cc_defaults {
 cc_library {
     name: "libhwui",
     defaults: ["libhwui_defaults"],
+    cflags: [
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+        "-Wno-backend-plugin",
+    ],
+    ldflags: [
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+        "-Wno-backend-plugin",
+    ],
+}
+
+cc_library {
+    name: "libhwui_non_pgo",
+    defaults: ["libhwui_defaults"],
 }
 
 // ------------------------
@@ -251,6 +264,26 @@ cc_library {
 
 cc_library_static {
     name: "libhwui_static_debug",
+    defaults: [
+        "libhwui_defaults",
+        "hwui_debug",
+    ],
+    cflags: [
+        "-DHWUI_NULL_GPU",
+	"-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+	"-Wno-backend-plugin",
+    ],
+    ldflags: [
+        "-fprofile-use=toolchain/benchmark/out/hwui.profdata",
+	"-Wno-backend-plugin",
+    ],
+    srcs: [
+        "debug/nullegl.cpp",
+    ],
+}
+
+cc_library_static {
+    name: "libhwui_static_debug_non_pgo",
     defaults: [
         "libhwui_defaults",
         "hwui_debug",
@@ -333,7 +366,7 @@ cc_test {
         "tests/unit/TestUtilsTests.cpp",
         "tests/unit/TextDropShadowCacheTests.cpp",
         "tests/unit/TextureCacheTests.cpp",
-	"tests/unit/TypefaceTests.cpp",
+        "tests/unit/TypefaceTests.cpp",
         "tests/unit/VectorDrawableTests.cpp",
     ],
 }
