@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3abb9168_266e4c98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2017-09-05T15:46:10Z",
+      "side": 1,
+      "message": "Can you check if the following two commits are included in your system?\n - https://android.googlesource.com/platform/frameworks/base/+/fa1886feea55785f413f5efcd86bccca92f26759\n - https://android.googlesource.com/platform/frameworks/base/+/e3e31a880169a5d685ea4bf7efae81430a62b4fe",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 60
+      },
+      "revId": "6b28ca75e4232709840326464b778462e36b9f1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
