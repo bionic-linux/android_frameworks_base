@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e532bbe_0adf304d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4041,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-09-05T23:51:55Z",
+      "side": 1,
+      "message": "this will cause us to lie about the state of the device in the history.  Might it be better to intepret the emergency state from history more like in_service?",
+      "range": {
+        "startLine": 4041,
+        "startChar": 0,
+        "endLine": 4041,
+        "endChar": 50
+      },
+      "revId": "6a682bd3d1b8e92ef37d53e823a54ef9f9f0d367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
