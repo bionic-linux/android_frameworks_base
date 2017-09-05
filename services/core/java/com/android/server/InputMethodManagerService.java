@@ -198,6 +198,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
     static final int MSG_HARD_KEYBOARD_SWITCH_CHANGED = 4000;
 
     static final int MSG_SYSTEM_UNLOCK_USER = 5000;
+    static final int MSG_SWITCH_USER = 5010;
 
     static final long TIME_TO_RECONNECT = 3 * 1000;
 
@@ -1382,9 +1383,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
         }
 
         if (initialUserSwitch) {
-            InputMethodUtils.setNonSelectedSystemImesDisabledUntilUsed(mIPackageManager,
-                    mSettings.getEnabledInputMethodListLocked(), newUserId,
-                    mContext.getBasePackageName());
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_SWITCH_USER, newUserId, 0));
         }
 
         if (DEBUG) Slog.d(TAG, "Switching user stage 3/3. newUserId=" + newUserId
@@ -3344,6 +3343,11 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
             case MSG_SYSTEM_UNLOCK_USER:
                 final int userId = msg.arg1;
                 onUnlockUser(userId);
+                return true;
+            case MSG_SWITCH_USER:
+                 InputMethodUtils.setNonSelectedSystemImesDisabledUntilUsed(mIPackageManager,
+                     mSettings.getEnabledInputMethodListLocked(), msg.arg1,
+                     mContext.getBasePackageName());
                 return true;
         }
         return false;
