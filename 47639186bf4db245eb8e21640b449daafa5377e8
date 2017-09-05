@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "751aa02b_3631092d",
+        "filename": "services/core/java/com/android/server/content/SyncStorageEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2017-09-05T19:39:52Z",
+      "side": 1,
+      "message": "I remember explicitly putting it in readAccountInfo so all this extra memory is released when not needed. It doesn\u0027t seem right to bring this memory overhead to make it testable. Maybe clear the caches after the reading is done?",
+      "range": {
+        "startLine": 525,
+        "startChar": 12,
+        "endLine": 525,
+        "endChar": 50
+      },
+      "revId": "47639186bf4db245eb8e21640b449daafa5377e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
