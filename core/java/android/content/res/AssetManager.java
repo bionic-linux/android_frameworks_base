@@ -28,8 +28,6 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 
-import dalvik.annotation.optimization.FastNative;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -623,6 +621,9 @@ public final class AssetManager implements AutoCloseable {
             return len > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)len;
         }
         public final void close() throws IOException {
+            if (mAsset == 0) {
+                return;
+            }
             synchronized (AssetManager.this) {
                 if (mAsset != 0) {
                     destroyAsset(mAsset);
