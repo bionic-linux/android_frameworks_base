@@ -1696,13 +1696,12 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_CARRIER_SETUP_APP_STRING, "");
         sDefaults.putStringArray(KEY_CARRIER_APP_WAKE_SIGNAL_CONFIG_STRING_ARRAY,
                 new String[]{
-                        "com.android.carrierdefaultapp/.CarrierDefaultBroadcastReceiver:" +
-                                "com.android.internal.telephony.CARRIER_SIGNAL_REDIRECTED," +
-                                "com.android.internal.telephony.CARRIER_SIGNAL_RESET"
+                        "com.android.carrierdefaultapp/.CarrierDefaultBroadcastReceiver:"
+                                + "com.android.internal.telephony.CARRIER_SIGNAL_RESET"
                 });
         sDefaults.putStringArray(KEY_CARRIER_APP_NO_WAKE_SIGNAL_CONFIG_STRING_ARRAY, null);
 
-
+      
         // Default carrier app configurations
         sDefaults.putStringArray(KEY_CARRIER_DEFAULT_ACTIONS_ON_REDIRECTION_STRING_ARRAY,
                 new String[]{
