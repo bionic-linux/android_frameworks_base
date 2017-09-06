@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beb62910_55ee25cc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-06T00:20:45Z",
+      "side": 1,
+      "message": "That feels a bit hard-coded. I would say simply return true, and. At least I would like a comment to say this is for ETHERNET support checked at place X in ConnectivityService.",
+      "range": {
+        "startLine": 777,
+        "startChar": 19,
+        "endLine": 777,
+        "endChar": 43
+      },
+      "revId": "f2139e7622e253b37f50afa8024a27cd992bc460",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
