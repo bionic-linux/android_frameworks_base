@@ -22,6 +22,30 @@
       "revId": "47639186bf4db245eb8e21640b449daafa5377e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54882736_c8fa3da6",
+        "filename": "services/core/java/com/android/server/content/SyncStorageEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1071688
+      },
+      "writtenOn": "2017-09-06T08:31:41Z",
+      "side": 1,
+      "message": "I see your point. What if I just pass an extra argument to readAccountInfo indicating whether to validate or not?",
+      "parentUuid": "751aa02b_3631092d",
+      "range": {
+        "startLine": 525,
+        "startChar": 12,
+        "endLine": 525,
+        "endChar": 50
+      },
+      "revId": "47639186bf4db245eb8e21640b449daafa5377e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
