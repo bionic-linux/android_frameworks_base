@@ -22,6 +22,29 @@
       "revId": "f2139e7622e253b37f50afa8024a27cd992bc460",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d02c18dc_7d495f01",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-06T04:17:09Z",
+      "side": 1,
+      "message": "For proper testability, should these also be listed in hasService()?\n\n...or have we just been passing this test because we run it on the right kinds of devices?",
+      "range": {
+        "startLine": 926,
+        "startChar": 55,
+        "endLine": 926,
+        "endChar": 56
+      },
+      "revId": "f2139e7622e253b37f50afa8024a27cd992bc460",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
