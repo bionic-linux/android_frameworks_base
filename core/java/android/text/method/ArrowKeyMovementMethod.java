@@ -309,7 +309,7 @@ public class ArrowKeyMovementMethod extends BaseMovementMethod implements Moveme
 
     @Override
     public void initialize(TextView widget, Spannable text) {
-        Selection.setSelection(text, 0);
+        Selection.setSelection(text, text.length());
     }
 
     @Override
