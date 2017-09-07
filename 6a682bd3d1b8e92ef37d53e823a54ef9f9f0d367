@@ -46,6 +46,30 @@
       "revId": "6a682bd3d1b8e92ef37d53e823a54ef9f9f0d367",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e54917_08ea4844",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4041,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-09-07T21:04:09Z",
+      "side": 1,
+      "message": "Spoke to Robert offline and I understand the concern now. I also went back and looked at the original bug, and upon further inspection I think it\u0027s something that can/should only be solved in the modem. I\u0027m going to remove this portion of the CL.",
+      "parentUuid": "d14c5210_c67354d2",
+      "range": {
+        "startLine": 4041,
+        "startChar": 0,
+        "endLine": 4041,
+        "endChar": 50
+      },
+      "revId": "6a682bd3d1b8e92ef37d53e823a54ef9f9f0d367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
