@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "246e2617_4f72caca",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-09-13T17:35:29Z",
+      "side": 1,
+      "message": "When mCallback is free, what happens? Do you need a try-catch RemoteException to handle it? I am comparing the change in https://android-review.googlesource.com/#/c/platform/frameworks/base/+/460596/ where there is always a catch.",
+      "range": {
+        "startLine": 169,
+        "startChar": 36,
+        "endLine": 169,
+        "endChar": 68
+      },
+      "revId": "f715509807c69644907f2dc286127baa949828bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
