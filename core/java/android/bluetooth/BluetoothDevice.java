@@ -1824,8 +1824,12 @@ public final class BluetoothDevice implements Parcelable {
      * @param phy preferred PHY for connections to remote LE device. Bitwise OR of any of {@link
      * BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK}, and {@link
      * BluetoothDevice#PHY_LE_CODED_MASK}. This option does not take effect if {@code autoConnect}
-     * is set to true.
+     * is set to true. Use {@link BluetoothAdapter#isLeCodedPhySupported} and
+     * {@link BluetoothAdapter#isLe2MPhySupported} to determine if LE Coded PHY or 2M PHY is
+     * supported on this device.
+     *
      * @throws NullPointerException if callback is null
+     * @throws IllegalArgumentException if unsupported PHY is used
      */
     public BluetoothGatt connectGatt(Context context, boolean autoConnect,
             BluetoothGattCallback callback, int transport, int phy) {
@@ -1852,6 +1856,7 @@ public final class BluetoothDevice implements Parcelable {
      * @param handler The handler to use for the callback. If {@code null}, callbacks will happen on
      * an un-specified background thread.
      * @throws NullPointerException if callback is null
+     * @throws IllegalArgumentException if unsupported PHY is used
      */
     public BluetoothGatt connectGatt(Context context, boolean autoConnect,
             BluetoothGattCallback callback, int transport, int phy,
@@ -1892,9 +1897,21 @@ public final class BluetoothDevice implements Parcelable {
             throw new NullPointerException("callback is null");
         }
 
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if (phy != BluetoothDevice.PHY_LE_1M_MASK
+                && (transport == BluetoothDevice.TRANSPORT_AUTO
+                   || transport == BluetoothDevice.TRANSPORT_LE)) {
+            boolean supportCodedPhy = adapter.isLeCodedPhySupported();
+            boolean support2MPhy = adapter.isLe2MPhySupported();
+            boolean codedPhy = (phy & BluetoothDevice.PHY_LE_CODED_MASK) != 0;
+            boolean a2mPhy = (phy & BluetoothDevice.PHY_LE_2M_MASK) != 0;
+            if ((codedPhy && !supportCodedPhy) || (a2mPhy && !support2MPhy)) {
+                throw new IllegalArgumentException("Unsupported PHY selected");
+            }
+        }
+
         // TODO(Bluetooth) check whether platform support BLE
         //     Do the check here or in GattServer?
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
         IBluetoothManager managerService = adapter.getBluetoothManager();
         try {
             IBluetoothGatt iGatt = managerService.getBluetoothGatt();

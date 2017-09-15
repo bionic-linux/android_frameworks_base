@@ -917,6 +917,10 @@ public final class BluetoothGatt implements BluetoothProfile {
      * {@link BluetoothGattCallback#onPhyUpdate} will be triggered as a result of this call, even
      * if no PHY change happens. It is also triggered when remote device updates the PHY.
      *
+     * Use {@link BluetoothAdapter#isLeCodedPhySupported} and
+     * {@link BluetoothAdapter#isLe2MPhySupported} to determine if LE Coded PHY or 2M PHY is
+     * supported on this device.
+     *
      * @param txPhy preferred transmitter PHY. Bitwise OR of any of {@link
      * BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK}, and {@link
      * BluetoothDevice#PHY_LE_CODED_MASK}.
@@ -926,8 +930,23 @@ public final class BluetoothGatt implements BluetoothProfile {
      * @param phyOptions preferred coding to use when transmitting on the LE Coded PHY. Can be one
      * of {@link BluetoothDevice#PHY_OPTION_NO_PREFERRED}, {@link BluetoothDevice#PHY_OPTION_S2} or
      * {@link BluetoothDevice#PHY_OPTION_S8}
+     *
+     * @throws IllegalArgumentException if unsupported PHY is used
      */
     public void setPreferredPhy(int txPhy, int rxPhy, int phyOptions) {
+        if (txPhy != BluetoothDevice.PHY_LE_1M_MASK || rxPhy != BluetoothDevice.PHY_LE_1M_MASK) {
+            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+            boolean supportCodedPhy = adapter.isLeCodedPhySupported();
+            boolean support2MPhy = adapter.isLe2MPhySupported();
+            boolean codedPhy = ((txPhy & BluetoothDevice.PHY_LE_CODED_MASK) != 0)
+                               || ((rxPhy & BluetoothDevice.PHY_LE_CODED_MASK) != 0);
+            boolean a2mPhy = ((txPhy & BluetoothDevice.PHY_LE_2M_MASK) != 0)
+                             || ((rxPhy & BluetoothDevice.PHY_LE_2M_MASK) != 0);
+            if ((codedPhy && !supportCodedPhy) || (a2mPhy && !support2MPhy)) {
+                throw new IllegalArgumentException("Unsupported PHY selected");
+            }
+        }
+
         try {
             mService.clientSetPreferredPhy(mClientIf, mDevice.getAddress(), txPhy, rxPhy,
                     phyOptions);
