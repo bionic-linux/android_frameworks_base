@@ -1824,7 +1824,10 @@ public final class BluetoothDevice implements Parcelable {
      * @param phy preferred PHY for connections to remote LE device. Bitwise OR of any of {@link
      * BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK}, and {@link
      * BluetoothDevice#PHY_LE_CODED_MASK}. This option does not take effect if {@code autoConnect}
-     * is set to true.
+     * is set to true. Use {@link BluetoothAdapter#isLeCodedPhySupported} and
+     * {@link BluetoothAdapter#isLe2MPhySupported} to determine if LE Coded PHY or 2M PHY is
+     * supported on this device.
+     *
      * @throws NullPointerException if callback is null
      */
     public BluetoothGatt connectGatt(Context context, boolean autoConnect,

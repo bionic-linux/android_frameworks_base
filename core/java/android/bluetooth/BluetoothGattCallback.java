@@ -31,7 +31,8 @@ public abstract class BluetoothGattCallback {
      * @param rxPhy the receiver PHY in use. One of {@link BluetoothDevice#PHY_LE_1M}, {@link
      * BluetoothDevice#PHY_LE_2M}, and {@link BluetoothDevice#PHY_LE_CODED}.
      * @param status Status of the PHY update operation. {@link BluetoothGatt#GATT_SUCCESS} if the
-     * operation succeeds.
+     * operation succeeds. {@link BluetoothGatt#GATT_REQUEST_NOT_SUPPORTED} if the operation can't
+     * be completed because local or remote controller don't support PHY update.
      */
     public void onPhyUpdate(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
     }
@@ -45,7 +46,8 @@ public abstract class BluetoothGattCallback {
      * @param rxPhy the receiver PHY in use. One of {@link BluetoothDevice#PHY_LE_1M}, {@link
      * BluetoothDevice#PHY_LE_2M}, and {@link BluetoothDevice#PHY_LE_CODED}.
      * @param status Status of the PHY read operation. {@link BluetoothGatt#GATT_SUCCESS} if the
-     * operation succeeds.
+     * operation succeeds. {@link BluetoothGatt#GATT_REQUEST_NOT_SUPPORTED} if the operation can't
+     * be completed because local controller don't support PHY read.
      */
     public void onPhyRead(BluetoothGatt gatt, int txPhy, int rxPhy, int status) {
     }
