@@ -917,6 +917,10 @@ public final class BluetoothGatt implements BluetoothProfile {
      * {@link BluetoothGattCallback#onPhyUpdate} will be triggered as a result of this call, even
      * if no PHY change happens. It is also triggered when remote device updates the PHY.
      *
+     * Use {@link BluetoothAdapter#isLeCodedPhySupported} and
+     * {@link BluetoothAdapter#isLe2MPhySupported} to determine if LE Coded PHY or 2M PHY is
+     * supported on this device.
+     *
      * @param txPhy preferred transmitter PHY. Bitwise OR of any of {@link
      * BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK}, and {@link
      * BluetoothDevice#PHY_LE_CODED_MASK}.

@@ -1824,7 +1824,10 @@ public final class BluetoothDevice implements Parcelable {
      * @param phy preferred PHY for connections to remote LE device. Bitwise OR of any of {@link
      * BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK}, and {@link
      * BluetoothDevice#PHY_LE_CODED_MASK}. This option does not take effect if {@code autoConnect}
-     * is set to true.
+     * is set to true. Use {@link BluetoothAdapter#isLeCodedPhySupported} and
+     * {@link BluetoothAdapter#isLe2MPhySupported} to determine if LE Coded PHY or 2M PHY is
+     * supported on this device.
+     *
      * @throws NullPointerException if callback is null
      */
     public BluetoothGatt connectGatt(Context context, boolean autoConnect,
@@ -1846,9 +1849,11 @@ public final class BluetoothDevice implements Parcelable {
      * BluetoothDevice#TRANSPORT_AUTO} or {@link BluetoothDevice#TRANSPORT_BREDR} or {@link
      * BluetoothDevice#TRANSPORT_LE}
      * @param phy preferred PHY for connections to remote LE device. Bitwise OR of any of {@link
-     * BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK}, an d{@link
+     * BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK}, and {@link
      * BluetoothDevice#PHY_LE_CODED_MASK}. This option does not take effect if {@code autoConnect}
-     * is set to true.
+     * is set to true. Use {@link BluetoothAdapter#isLeCodedPhySupported} and
+     * {@link BluetoothAdapter#isLe2MPhySupported} to determine if LE Coded PHY or 2M PHY is
+     * supported on this device.
      * @param handler The handler to use for the callback. If {@code null}, callbacks will happen on
      * an un-specified background thread.
      * @throws NullPointerException if callback is null
@@ -1878,7 +1883,9 @@ public final class BluetoothDevice implements Parcelable {
      * @param phy preferred PHY for connections to remote LE device. Bitwise OR of any of {@link
      * BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK}, an d{@link
      * BluetoothDevice#PHY_LE_CODED_MASK}. This option does not take effect if {@code autoConnect}
-     * is set to true.
+     * is set to true. Use {@link BluetoothAdapter#isLeCodedPhySupported} and
+     * {@link BluetoothAdapter#isLe2MPhySupported} to determine if LE Coded PHY or 2M PHY is
+     * supported on this device.
      * @param handler The handler to use for the callback. If {@code null}, callbacks will happen on
      * an un-specified background thread.
      * @return A BluetoothGatt instance. You can use BluetoothGatt to conduct GATT client
