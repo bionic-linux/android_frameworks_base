@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d01e9d1_af91bc4e",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-09-16T01:33:18Z",
+      "side": 1,
+      "message": "Why is this a public method if it is an internal method?\n\nThis will cause API change and will cause compilation to fail",
+      "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "366830f5_69e29c63",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-09-16T01:33:18Z",
+      "side": 1,
+      "message": "Why is this a public method if it is an internal method?\n\nThis will cause API change and will cause compilation to fail",
+      "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
