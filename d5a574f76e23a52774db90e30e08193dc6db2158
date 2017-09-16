@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c840cf_2ee7dec3",
+        "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-09-16T00:02:47Z",
+      "side": 1,
+      "message": "Nit: preferable: \"can\u0027t\" -\u003e \"cannot\"",
+      "range": {
+        "startLine": 34,
+        "startChar": 93,
+        "endLine": 34,
+        "endChar": 98
+      },
+      "revId": "d5a574f76e23a52774db90e30e08193dc6db2158",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90f49f8c_e4a468b6",
+        "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-09-16T00:02:47Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "range": {
+        "startLine": 49,
+        "startChar": 93,
+        "endLine": 49,
+        "endChar": 98
+      },
+      "revId": "d5a574f76e23a52774db90e30e08193dc6db2158",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
