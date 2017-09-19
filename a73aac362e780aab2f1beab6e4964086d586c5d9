@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d46ce0a1_c6546333",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2017-09-19T06:16:47Z",
+      "side": 1,
+      "message": "change to private",
+      "parentUuid": "3d01e9d1_af91bc4e",
+      "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "366830f5_69e29c63",
         "filename": "telephony/java/android/telephony/SmsManager.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-16T01:33:18Z",
       "side": 1,
       "message": "Why is this a public method if it is an internal method?\n\nThis will cause API change and will cause compilation to fail",
+      "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a09fd28_fb3992c0",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2017-09-19T06:16:47Z",
+      "side": 1,
+      "message": "change to private",
+      "parentUuid": "366830f5_69e29c63",
       "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-18T17:17:22Z",
       "side": 1,
       "message": "Why should this be a SystemApi?",
+      "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "421850c3_c16be0e9",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2017-09-19T06:16:47Z",
+      "side": 1,
+      "message": "reference line#633",
+      "parentUuid": "d22e04ae_f8172631",
       "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
