@@ -121,6 +121,42 @@
       "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24669821_3c994b3c",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-09-19T18:27:04Z",
+      "side": 1,
+      "message": "If you need to update system API, you need to generate the API file and upload it along with this change. Otherwise, this change will fail all automated builds and fail to merge.",
+      "parentUuid": "421850c3_c16be0e9",
+      "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c921636_1f20e4e8",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-09-19T18:27:04Z",
+      "side": 1,
+      "message": "If you need to update system API, you need to generate the API file and also upload it along with this change. Otherwise, this change will fail to build and merge.",
+      "parentUuid": "421850c3_c16be0e9",
+      "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
