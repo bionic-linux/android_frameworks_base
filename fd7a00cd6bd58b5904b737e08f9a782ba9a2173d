@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7108acb8_5768b3ef",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-20T01:27:22Z",
+      "side": 1,
+      "message": "I would rather avoid having to store these variables here as non final if we can get them with HandlerThread.getLooper() and HandlerThread.getThreadHandler().\n\nmLooper and mHandler are only used in a couple of places in start() and stop(). Do you foresee more use of these variables in future patches ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70c24658_f64ae65a",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-20T01:27:22Z",
+      "side": 1,
+      "message": "How can this happen if mHandler is obtained from HandlerThread.getThreadHandler() ?\n\nIf stop() is called before start(), inspecting mRunning should prevent any issue, wouldn\u0027t it ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 31
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7ff4214_7cd33e93",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-20T01:27:22Z",
+      "side": 1,
+      "message": "Maybe make this a static constant too ?",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 63
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b848d926_124b60d9",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-20T01:27:22Z",
+      "side": 1,
+      "message": "I don\u0027t see EWOULDBLOCK case being handled ? It is always equivalent to EAGAIN ?",
+      "range": {
+        "startLine": 168,
+        "startChar": 47,
+        "endLine": 168,
+        "endChar": 58
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23bdac4d_5e9beb49",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-20T01:27:22Z",
+      "side": 1,
+      "message": "Is this something we could try to do once only in start() or in the ctor() ?",
+      "range": {
+        "startLine": 175,
+        "startChar": 16,
+        "endLine": 175,
+        "endChar": 52
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
