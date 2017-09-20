@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "740df34e_8e23665f",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3877,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2017-09-20T17:59:11Z",
+      "side": 1,
+      "message": "add comments why we are doing it and why it\u0027s OK to disable the verifier.",
+      "range": {
+        "startLine": 3876,
+        "startChar": 16,
+        "endLine": 3877,
+        "endChar": 64
+      },
+      "revId": "1f88ad66e14e5c4470eff7c450ee25f804d9ff72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
