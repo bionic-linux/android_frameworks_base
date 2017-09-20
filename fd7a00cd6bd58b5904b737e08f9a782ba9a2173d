@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "bfef5d71_aaca6bbe",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-20T01:33:47Z",
+      "side": 1,
+      "message": "This is only used at stop time which presumably will be called only once – there is little point in storing this in a member.",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 15
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b70e6b64_31469c1a",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-20T01:33:47Z",
+      "side": 1,
+      "message": "I think this now needs comments that the actual stopping is asynchronous, as it\u0027s not unlikely to make a difference to subclasses and/or users of this class. Granted onExit() is there for this reason, but it didn\u0027t use to be called at least by this class.",
+      "range": {
+        "startLine": 104,
+        "startChar": 22,
+        "endLine": 104,
+        "endChar": 26
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c24658_f64ae65a",
         "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
         "patchSetId": 2
@@ -41,6 +87,29 @@
         "startChar": 8,
         "endLine": 106,
         "endChar": 31
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bdbe1d5_33998653",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-20T01:33:47Z",
+      "side": 1,
+      "message": "This can be expressed with (null !\u003d mHandler) and do away with the boolean. Or, the handler can be obtained from the thread every time and have the boolean be the Source of Truth.",
+      "range": {
+        "startLine": 121,
+        "startChar": 46,
+        "endLine": 121,
+        "endChar": 54
       },
       "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
