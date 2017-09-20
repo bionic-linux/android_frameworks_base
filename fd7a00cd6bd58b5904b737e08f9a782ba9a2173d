@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "094048e9_d811d89d",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7108acb8_5768b3ef",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfef5d71_aaca6bbe",
         "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-20T01:33:47Z",
       "side": 1,
       "message": "This is only used at stop time which presumably will be called only once – there is little point in storing this in a member.",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 15
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e40c673_0960f121",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfef5d71_aaca6bbe",
       "range": {
         "startLine": 97,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "753f82ba_8b060f9c",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-20T07:34:35Z",
+      "side": 1,
+      "message": "This is now synchronous.",
+      "parentUuid": "b70e6b64_31469c1a",
+      "range": {
+        "startLine": 104,
+        "startChar": 22,
+        "endLine": 104,
+        "endChar": 26
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c24658_f64ae65a",
         "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-20T01:27:22Z",
       "side": 1,
       "message": "How can this happen if mHandler is obtained from HandlerThread.getThreadHandler() ?\n\nIf stop() is called before start(), inspecting mRunning should prevent any issue, wouldn\u0027t it ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 31
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eefa801f_436e3bdb",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70c24658_f64ae65a",
       "range": {
         "startLine": 106,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3ad5febd_a9e692a1",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bdbe1d5_33998653",
+      "range": {
+        "startLine": 121,
+        "startChar": 46,
+        "endLine": 121,
+        "endChar": 54
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ff4214_7cd33e93",
         "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-20T01:27:22Z",
       "side": 1,
       "message": "Maybe make this a static constant too ?",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 63
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5015d785_90bff705",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7ff4214_7cd33e93",
       "range": {
         "startLine": 151,
         "startChar": 8,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0dd65b14_d5399ccc",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-20T07:34:35Z",
+      "side": 1,
+      "message": "They\u0027re generally #defined to be the same:\n\n    bionic/libc/kernel/uapi/asm-generic/errno.h",
+      "parentUuid": "b848d926_124b60d9",
+      "range": {
+        "startLine": 168,
+        "startChar": 47,
+        "endLine": 168,
+        "endChar": 58
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23bdac4d_5e9beb49",
         "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-20T01:27:22Z",
       "side": 1,
       "message": "Is this something we could try to do once only in start() or in the ctor() ?",
+      "range": {
+        "startLine": 175,
+        "startChar": 16,
+        "endLine": 175,
+        "endChar": 52
+      },
+      "revId": "fd7a00cd6bd58b5904b737e08f9a782ba9a2173d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55f46a7a_0fc9ac25",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23bdac4d_5e9beb49",
       "range": {
         "startLine": 175,
         "startChar": 16,
