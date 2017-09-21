@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fc40621_1a03b4ef",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-21T09:45:24Z",
+      "side": 0,
+      "message": "Should we add a TODO to change this back to isConnected() if we decide to make isConnected() returns true even when the network is in  SUSPENDED state ?",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 64
+      },
+      "revId": "29fc1d78a99537dde0f634633fe1950997dd4c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
