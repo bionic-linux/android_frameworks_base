@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "923a5c7e_651d323b",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-09-21T18:33:12Z",
+      "side": 1,
+      "message": "You should remove this or regenerate the system-api.txt along with this CL.",
+      "revId": "09ff89c218470654708f9511d33f32c6b4b1597f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
