@@ -157,6 +157,24 @@
       "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa59b67_a09b2d65",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2017-09-21T02:21:02Z",
+      "side": 1,
+      "message": "sure, will remove this",
+      "parentUuid": "24669821_3c994b3c",
+      "revId": "a73aac362e780aab2f1beab6e4964086d586c5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
