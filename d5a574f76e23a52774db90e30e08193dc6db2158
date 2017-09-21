@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "acaf9cc9_6e22213f",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-09-21T08:27:20Z",
+      "side": 1,
+      "message": "an d{",
+      "revId": "d5a574f76e23a52774db90e30e08193dc6db2158",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c840cf_2ee7dec3",
         "filename": "core/java/android/bluetooth/BluetoothGattCallback.java",
         "patchSetId": 3
