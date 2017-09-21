@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5aa68cb5_d2e822c4",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-21T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ee39576_fd6a2f47",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "926a873109316a2e8a0a5a6c465563b53b00ec97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c11f7368_66cd2038",
         "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-21T09:55:10Z",
       "side": 1,
       "message": "Do you need to check for isRunning() here? Particularly, I\u0027m worried that this can be called after stop().",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 24
+      },
+      "revId": "926a873109316a2e8a0a5a6c465563b53b00ec97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eade7281_52a993c8",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-21T12:37:37Z",
+      "side": 1,
+      "message": "Reorg\u0027d a bit.  The isRunning check is implicit, but I could make it explicit, if it helps...",
+      "parentUuid": "c11f7368_66cd2038",
       "range": {
         "startLine": 102,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fd4f0ba2_61bd767a",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-21T12:37:37Z",
+      "side": 1,
+      "message": "I now always call handleInput() and we post(stop()) to the handler so that proper cleanup happens after we\u0027re done being called in this context.",
+      "parentUuid": "c2dc7b0f_8ab08cff",
+      "range": {
+        "startLine": 107,
+        "startChar": 35,
+        "endLine": 107,
+        "endChar": 53
+      },
+      "revId": "926a873109316a2e8a0a5a6c465563b53b00ec97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa24a20c_25fe7874",
         "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-21T09:55:10Z",
       "side": 1,
       "message": "Is it worth trying to be more specific here?",
+      "range": {
+        "startLine": 140,
+        "startChar": 69,
+        "endLine": 140,
+        "endChar": 85
+      },
+      "revId": "926a873109316a2e8a0a5a6c465563b53b00ec97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f84c385_39180005",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-21T12:37:37Z",
+      "side": 1,
+      "message": "I don\u0027t know.  Given that this overrideable what should we say?",
+      "parentUuid": "fa24a20c_25fe7874",
       "range": {
         "startLine": 140,
         "startChar": 69,
