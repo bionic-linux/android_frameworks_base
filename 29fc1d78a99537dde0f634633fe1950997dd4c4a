@@ -22,6 +22,30 @@
       "revId": "29fc1d78a99537dde0f634633fe1950997dd4c4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cabcc392_67f9124a",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-21T10:03:10Z",
+      "side": 0,
+      "message": "My opinion is that when we move 464xlat under IpManager all this crap goes away.  We just start 464xlat whenever we detect v6 and no v4--network states won\u0027t matter one whit.",
+      "parentUuid": "5fc40621_1a03b4ef",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 64
+      },
+      "revId": "29fc1d78a99537dde0f634633fe1950997dd4c4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
