@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97f4069c_caef645d",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-21T08:57:44Z",
+      "side": 1,
+      "message": "Nit: I think the style guide says 4-space indent here.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 12
+      },
+      "revId": "ebac30b0f3be971a383cbabe38c136ab0b0887dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
