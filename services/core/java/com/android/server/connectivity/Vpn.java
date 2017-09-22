@@ -117,6 +117,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -889,6 +890,42 @@ public class Vpn {
                 .compareTo(MOST_IPV6_ADDRESSES_COUNT) >= 0;
     }
 
+    /**
+     * Attempt to perform a seamless handover of VPNs by only updating LinkProperties without
+     * registering a new NetworkAgent. This is not always possible if the new VPN configuration
+     * has certain changes, in which case this method would just return {@code false}.
+     */
+    private boolean updateLinkPropertiesInPlaceIfPossible(NetworkAgent agent, VpnConfig oldConfig) {
+        // NetworkMisc cannot be updated without registering a new NetworkAgent.
+        if (oldConfig.allowBypass != mConfig.allowBypass) {
+            Log.i(TAG, "Handover not possible due to changes to allowBypass");
+            return false;
+        }
+
+        // TODO: we currently do not support seamless handover if the allowed or disallowed
+        // applications have changed. Consider diffing UID ranges and only applying the delta.
+        if (!Objects.equals(oldConfig.allowedApplications, mConfig.allowedApplications) ||
+                !Objects.equals(oldConfig.disallowedApplications, mConfig.disallowedApplications)) {
+            Log.i(TAG, "Handover not possible due to changes to whitelisted/blacklisted apps");
+            return false;
+        }
+
+        LinkProperties lp = makeLinkProperties();
+        final boolean hadInternetCapability = mNetworkCapabilities.hasCapability(
+                NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        final boolean willHaveInternetCapability = providesRoutesToMostDestinations(lp);
+        if (hadInternetCapability != willHaveInternetCapability) {
+            // A seamless handover would have led to a change to INTERNET capability, which
+            // is supposed to be immutable for a given network. In this case bail out and do not
+            // perform handover.
+            Log.i(TAG, "Handover not possible due to changes to INTERNET capability");
+            return false;
+        }
+
+        agent.sendLinkProperties(lp);
+        return true;
+    }
+
     private void agentConnect() {
         LinkProperties lp = makeLinkProperties();
 
@@ -1031,15 +1068,23 @@ public class Vpn {
             mConfig = config;
 
             // Set up forwarding and DNS rules.
-            agentConnect();
+            // First attempt to do a seamless handover that only changes the interface name and
+            // parameters. If that fails, disconnect.
+            if (oldConfig != null
+                    && updateLinkPropertiesInPlaceIfPossible(oldNetworkAgent, oldConfig)) {
+                mNetworkAgent = oldNetworkAgent;
+            } else {
+                agentConnect();
+                // Remove the old tun's user forwarding rules
+                // The new tun's user rules have already been added above so they will take over
+                // as rules are deleted. This prevents data leakage as the rules are moved over.
+                agentDisconnect(oldNetworkAgent);
+            }
 
             if (oldConnection != null) {
                 mContext.unbindService(oldConnection);
             }
-            // Remove the old tun's user forwarding rules
-            // The new tun's user rules have already been added so they will take over
-            // as rules are deleted. This prevents data leakage as the rules are moved over.
-            agentDisconnect(oldNetworkAgent);
+
             if (oldInterface != null && !oldInterface.equals(interfaze)) {
                 jniReset(oldInterface);
             }
