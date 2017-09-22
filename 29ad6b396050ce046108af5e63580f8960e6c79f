@@ -16,6 +16,24 @@
       "revId": "29ad6b396050ce046108af5e63580f8960e6c79f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5836c82_8ad80278",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1074523
+      },
+      "writtenOn": "2017-09-22T18:16:06Z",
+      "side": 1,
+      "message": "Will fix this in a follow up in AOSP, since this is a cherry-pick.",
+      "parentUuid": "2bcd466f_878ef0d2",
+      "revId": "29ad6b396050ce046108af5e63580f8960e6c79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
