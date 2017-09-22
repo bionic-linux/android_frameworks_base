@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a73e89a9_9a0db79d",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-09-22T21:25:14Z",
+      "side": 1,
+      "message": "This should just be a relative path under the profiles directory.  Currently the build system looks under toolchain/pgo-profiles, but based on b/65975078, it\u0027ll look at the internal profiles dir.",
+      "revId": "5c13f52b831327d00144b52cab435833b9199126",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
