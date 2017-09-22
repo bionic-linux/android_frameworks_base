@@ -22,6 +22,30 @@
       "revId": "db1d9b0a69b3950403c97aa84fe629ca034bec59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2aafe668_3dd219c4",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1102318
+      },
+      "writtenOn": "2017-09-22T09:30:26Z",
+      "side": 1,
+      "message": "Thanks for your review. If someone modify Tethering.java and it adds calling tetherMatchingInterfaces() from another thread, then this issue happens again. So I think this patch is more safety.",
+      "parentUuid": "b42322d3_b5b7c0e2",
+      "range": {
+        "startLine": 1009,
+        "startChar": 17,
+        "endLine": 1009,
+        "endChar": 41
+      },
+      "revId": "db1d9b0a69b3950403c97aa84fe629ca034bec59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
