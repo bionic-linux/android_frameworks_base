@@ -117,6 +117,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -889,14 +890,39 @@ public class Vpn {
                 .compareTo(MOST_IPV6_ADDRESSES_COUNT) >= 0;
     }
 
-    private void agentConnect() {
-        LinkProperties lp = makeLinkProperties();
-
+    private void updateNetworkCapabilities(LinkProperties lp) {
         if (providesRoutesToMostDestinations(lp)) {
             mNetworkCapabilities.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
         } else {
             mNetworkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
         }
+    }
+
+    private boolean performSeamlessHandover(NetworkAgent agent, VpnConfig oldConfig) {
+        // NetworkMisc cannot be updated without registering a new NetworkAgent.
+        if (oldConfig.allowBypass != mConfig.allowBypass) {
+            return false;
+        }
+
+        // TODO: we currently do not support seamless handover if the allowed or disallowed
+        // applications have changed. Consider diffing UID ranges and only applying the delta.
+        if (!Objects.equals(oldConfig.allowedApplications, mConfig.allowedApplications) ||
+                !Objects.equals(oldConfig.disallowedApplications, mConfig.disallowedApplications)) {
+            return false;
+        }
+        Log.i(TAG, "performSeamlessHandover");
+        LinkProperties lp = makeLinkProperties();
+        updateNetworkCapabilities(lp);
+
+        agent.sendLinkProperties(lp);
+        agent.sendNetworkCapabilities(mNetworkCapabilities);
+
+        return true;
+    }
+
+    private void agentConnect() {
+        LinkProperties lp = makeLinkProperties();
+        updateNetworkCapabilities(lp);
 
         mNetworkInfo.setDetailedState(DetailedState.CONNECTING, null, null);
 
@@ -1031,15 +1057,22 @@ public class Vpn {
             mConfig = config;
 
             // Set up forwarding and DNS rules.
-            agentConnect();
+            // First attempt to do a seamless handover that only changes the interface name and
+            // parameters. If that fails, disconnect.
+            if (oldConfig != null && performSeamlessHandover(oldNetworkAgent, oldConfig)) {
+                mNetworkAgent = oldNetworkAgent;
+            } else {
+                agentConnect();
+                // Remove the old tun's user forwarding rules
+                // The new tun's user rules have already been added above so they will take over
+                // as rules are deleted. This prevents data leakage as the rules are moved over.
+                agentDisconnect(oldNetworkAgent);
+            }
 
             if (oldConnection != null) {
                 mContext.unbindService(oldConnection);
             }
-            // Remove the old tun's user forwarding rules
-            // The new tun's user rules have already been added so they will take over
-            // as rules are deleted. This prevents data leakage as the rules are moved over.
-            agentDisconnect(oldNetworkAgent);
+
             if (oldInterface != null && !oldInterface.equals(interfaze)) {
                 jniReset(oldInterface);
             }
