@@ -240,8 +240,20 @@ cc_defaults {
     export_shared_lib_headers: ["libRScpp"],
 }
 
+// Build libhwui with PGO by default
 cc_library {
     name: "libhwui",
+    defaults: ["libhwui_defaults"],
+
+    pgo: {
+        instrumentation: true,
+	profile_file: "Hwui/hwui.profdata",
+	benchmarks: ["hwui"],
+    },
+}
+
+cc_library {
+    name: "libhwui_non_PGO",
     defaults: ["libhwui_defaults"],
 }
 
