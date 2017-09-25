@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e2f39b8_b62d53e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-25T10:23:29Z",
+      "side": 1,
+      "message": "albeit",
+      "range": {
+        "startLine": 10,
+        "startChar": 54,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "6a000b7eea5a324a0350e77d924afc5b9a447282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67b343e2_49b60529",
+        "filename": "services/net/java/android/net/ip/ConnectivityPacketTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-25T10:23:29Z",
+      "side": 1,
+      "message": "Isn\u0027t this typically considered a negative meaning ? Usually it\u0027s more like mRunning or so.\n\nNo strong opinion though.",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "6a000b7eea5a324a0350e77d924afc5b9a447282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82ed561d_d7135797",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-25T10:23:29Z",
+      "side": 1,
+      "message": "Unused",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "6a000b7eea5a324a0350e77d924afc5b9a447282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d496a76c_0272f524",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-25T10:23:29Z",
+      "side": 1,
+      "message": "MUST if only to be consistent with the RFC-like vocabulary elsewhere in this file (which makes it crystal-clear IMO)",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "6a000b7eea5a324a0350e77d924afc5b9a447282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2579352b_990a8851",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-25T10:23:29Z",
+      "side": 1,
+      "message": "s/sockets/socket/",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 32
+      },
+      "revId": "6a000b7eea5a324a0350e77d924afc5b9a447282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
