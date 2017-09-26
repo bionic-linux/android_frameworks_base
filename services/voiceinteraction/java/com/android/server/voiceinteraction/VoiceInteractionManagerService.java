@@ -323,7 +323,11 @@ public class VoiceInteractionManagerService extends SystemService {
 
             // Initializing settings, look for an interactor first (but only on non-svelte).
             if (curInteractorInfo == null && mEnableService) {
-                curInteractorInfo = findAvailInteractor(userHandle, null);
+                String defaultInteractorPackage =
+                        getDefaultVoiceInteractionServicePackage(mContext.getResources());
+                if (DEBUG) Slog.d(TAG, "getDefaultVoiceInteractionServicePackage "
+                        + "defaultInteractorPackage=" + defaultInteractorPackage);
+                curInteractorInfo = findAvailInteractor(userHandle, defaultInteractorPackage);
             }
 
             if (curInteractorInfo != null) {
@@ -362,6 +366,12 @@ public class VoiceInteractionManagerService extends SystemService {
         private String getForceVoiceInteractionServicePackage(Resources res) {
             String interactorPackage =
                     res.getString(com.android.internal.R.string.config_forceVoiceInteractionServicePackage);
+            return TextUtils.isEmpty(interactorPackage) ? null : interactorPackage;
+        }
+
+        private String getDefaultVoiceInteractionServicePackage(Resources res) {
+            String interactorPackage =
+                    res.getString(com.android.internal.R.string.config_defaultVoiceInteractionServicePackage);
             return TextUtils.isEmpty(interactorPackage) ? null : interactorPackage;
         }
 
