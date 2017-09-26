@@ -29,10 +29,13 @@ namespace android {
 using vintf::RuntimeInfo;
 using vintf::VintfObject;
 
+static constexpr auto gFlags =
+    RuntimeInfo::CPU_VERSION | RuntimeInfo::CPU_INFO | RuntimeInfo::POLICYVERS | RuntimeInfo::AVB;
+
 #define MAP_STRING_METHOD(javaMethod, cppString)                                       \
     static jstring android_os_VintfRuntimeInfo_##javaMethod(JNIEnv* env, jclass clazz) \
     {                                                                                  \
-        std::shared_ptr<const RuntimeInfo> info = VintfObject::GetRuntimeInfo();       \
+        std::shared_ptr<const RuntimeInfo> info = VintfObject::GetRuntimeInfo(gFlags); \
         if (info == nullptr) return nullptr;                                           \
         return env->NewStringUTF((cppString).c_str());                                 \
     }                                                                                  \
