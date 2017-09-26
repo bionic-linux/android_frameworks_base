@@ -2643,6 +2643,13 @@
          It declares the package name of VoiceInteractionService that should be started. -->
     <string translatable="false" name="config_forceVoiceInteractionServicePackage"></string>
 
+    <!-- The component name, flattened to a string, for the default voice interaction service
+         to be enabled for an user. This service must be trusted, as it can be activated
+         without explicit consent of the user. If no voice interaction service is specified
+         or the service with specified name does not exist on the device, system will decide
+         the default service from the candidate packages. -->
+    <string translatable="false" name="config_defaultVoiceInteractionServicePackage"></string>
+
     <!-- This config is ued to determine whether animations are allowed in low power mode. -->
     <bool name="config_allowAnimationsInLowPowerMode">false</bool>
 
