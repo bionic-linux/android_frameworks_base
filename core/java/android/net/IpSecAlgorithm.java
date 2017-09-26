@@ -19,9 +19,12 @@ import android.annotation.StringDef;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.android.internal.util.HexDump;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Arrays;
 
 /**
  * IpSecAlgorithm specifies a single algorithm that can be applied to an IpSec Transform. Refer to
@@ -75,13 +78,7 @@ public final class IpSecAlgorithm implements Parcelable {
     public static final String AUTH_HMAC_SHA512 = "hmac(sha512)";
 
     /** @hide */
-    @StringDef({
-        CRYPT_AES_CBC,
-        AUTH_HMAC_MD5,
-        AUTH_HMAC_SHA1,
-        AUTH_HMAC_SHA256,
-        AUTH_HMAC_SHA512
-    })
+    @StringDef({CRYPT_AES_CBC, AUTH_HMAC_MD5, AUTH_HMAC_SHA1, AUTH_HMAC_SHA256, AUTH_HMAC_SHA512})
     @Retention(RetentionPolicy.SOURCE)
     public @interface AlgorithmName {}
 
@@ -196,5 +193,14 @@ public final class IpSecAlgorithm implements Parcelable {
                 .append(mTruncLenBits)
                 .append("}")
                 .toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof IpSecAlgorithm == false) return false;
+        IpSecAlgorithm rhs = (IpSecAlgorithm) obj;
+        return (mName.equals(rhs.mName)
+                && Arrays.equals(mKey, rhs.mKey)
+                && mTruncLenBits == rhs.mTruncLenBits);
     }
 };

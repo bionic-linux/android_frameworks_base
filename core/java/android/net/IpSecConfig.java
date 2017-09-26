@@ -62,6 +62,17 @@ public final class IpSecConfig implements Parcelable {
                     .append("}")
                     .toString();
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof IpSecConfig.Flow == false) return false;
+            IpSecConfig.Flow rhs = (IpSecConfig.Flow) obj;
+            return (mSpiResourceId == rhs.mSpiResourceId
+                    && ((mEncryption != null && mEncryption.equals(rhs.mEncryption))
+                            || mEncryption == rhs.mEncryption)
+                    && ((mAuthentication != null && mAuthentication.equals(rhs.mAuthentication))
+                            || mAuthentication == rhs.mAuthentication));
+        }
     }
 
     private final Flow[] mFlow = new Flow[] {new Flow(), new Flow()};
@@ -198,6 +209,7 @@ public final class IpSecConfig implements Parcelable {
         out.writeInt(mEncapType);
         out.writeInt(mEncapSocketResourceId);
         out.writeInt(mEncapRemotePort);
+        out.writeInt(mNattKeepaliveInterval);
     }
 
     @VisibleForTesting
@@ -221,6 +233,7 @@ public final class IpSecConfig implements Parcelable {
         mEncapType = in.readInt();
         mEncapSocketResourceId = in.readInt();
         mEncapRemotePort = in.readInt();
+        mNattKeepaliveInterval = in.readInt();
     }
 
     @Override
@@ -262,4 +275,24 @@ public final class IpSecConfig implements Parcelable {
                     return new IpSecConfig[size];
                 }
             };
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof IpSecConfig == false) return false;
+        IpSecConfig rhs = (IpSecConfig) obj;
+
+        return (mMode == rhs.mMode
+                && mLocalAddress.equals(rhs.mLocalAddress)
+                && mRemoteAddress.equals(rhs.mRemoteAddress)
+                && ((mNetwork != null && mNetwork.equals(rhs.mNetwork))
+                        || (mNetwork == rhs.mNetwork))
+                && mEncapType == rhs.mEncapType
+                && mEncapSocketResourceId == rhs.mEncapSocketResourceId
+                && mEncapRemotePort == rhs.mEncapRemotePort
+                && mNattKeepaliveInterval == rhs.mNattKeepaliveInterval
+                && mFlow[IpSecTransform.DIRECTION_OUT].equals(
+                        rhs.mFlow[IpSecTransform.DIRECTION_OUT])
+                && mFlow[IpSecTransform.DIRECTION_IN].equals(
+                        rhs.mFlow[IpSecTransform.DIRECTION_IN]));
+    }
 }
