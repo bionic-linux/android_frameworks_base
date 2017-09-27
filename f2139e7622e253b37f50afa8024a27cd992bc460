@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7bc1909_696e6039",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T04:02:31Z",
+      "side": 1,
+      "message": "Added a comment. The thinking was that this way it\u0027s more likely to catch bugs - as soon as CS is updated to do X only if service Y is available, the test will immediately fail and we\u0027ll know that it needs to be updated.",
+      "parentUuid": "beb62910_55ee25cc",
+      "range": {
+        "startLine": 777,
+        "startChar": 19,
+        "endLine": 777,
+        "endChar": 43
+      },
+      "revId": "f2139e7622e253b37f50afa8024a27cd992bc460",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d02c18dc_7d495f01",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-06T04:17:09Z",
       "side": 1,
       "message": "For proper testability, should these also be listed in hasService()?\n\n...or have we just been passing this test because we run it on the right kinds of devices?",
+      "range": {
+        "startLine": 926,
+        "startChar": 55,
+        "endLine": 926,
+        "endChar": 56
+      },
+      "revId": "f2139e7622e253b37f50afa8024a27cd992bc460",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a86263d0_62403d69",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T04:02:31Z",
+      "side": 1,
+      "message": "TYPE_WIFI and TYPE_MOBILE (and TYPE_MOBILE_MMS, actually) are guaranteed to be supported because we mock the networkAttributes config variable.\n\nTYPE_ETHERNET is supported if the ConnectivityService code is correct, and this assert is the unit test for it. Added a comment to clarify.",
+      "parentUuid": "d02c18dc_7d495f01",
       "range": {
         "startLine": 926,
         "startChar": 55,
