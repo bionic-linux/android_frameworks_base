@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f6b90a1_bba0b97a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-27T04:13:12Z",
+      "side": 1,
+      "message": "What happens if we don\u0027t do this?  Folks are just forced to use the new APIs?  If true, is that so bad?",
+      "range": {
+        "startLine": 790,
+        "startChar": 12,
+        "endLine": 790,
+        "endChar": 30
+      },
+      "revId": "7bbe3eee52c08ee92a81b7bed395ca5499554cc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e37aa67_a4bffc18",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5565,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-27T04:13:12Z",
+      "side": 1,
+      "message": "this can be static?",
+      "range": {
+        "startLine": 5565,
+        "startChar": 4,
+        "endLine": 5565,
+        "endChar": 10
+      },
+      "revId": "7bbe3eee52c08ee92a81b7bed395ca5499554cc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
