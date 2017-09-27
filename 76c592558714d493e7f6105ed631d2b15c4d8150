@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d50be3d_103fd51e",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-09-27T01:28:42Z",
+      "side": 1,
+      "message": "Didn\u0027t forget at the time, but forgot when I was adding the .equals() method, and it was easier to just parcel it here.",
+      "parentUuid": "2ce15471_59882c99",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 45
+      },
+      "revId": "76c592558714d493e7f6105ed631d2b15c4d8150",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6b8ccce_58bc5751",
         "filename": "tests/net/java/android/net/IpSecConfigTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T01:26:37Z",
       "side": 1,
       "message": "did you mean to rotate this one so it starts with 3?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 98
+      },
+      "revId": "76c592558714d493e7f6105ed631d2b15c4d8150",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d32ab1d8_ef933de9",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-09-27T01:28:42Z",
+      "side": 1,
+      "message": "They\u0027re not rotated. I just arbitrarily fiddled with them as an afterthought.",
+      "parentUuid": "b6b8ccce_58bc5751",
       "range": {
         "startLine": 85,
         "startChar": 0,
