@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae548c19_b3fbcf3d",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T09:55:09Z",
+      "side": 1,
+      "message": "Optional: given that this class is a library whose customers may be relatively far away, is it worth trying to protect against callers calling these functions from the wrong thread? Possible ways to do so would be:\n\n1. Post to the handler.\n2. Throw an exception if this is being called on the wrong thread.\n3. Take locks (probably a bad idea)?\n4. Somehow make fd final?",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "5e716fcf2bb0fd7750d15ce3b6aa7e2d471a8b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa28fe1_97eac04b",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T09:55:09Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think fd !\u003d mFd can ever happen.",
+      "range": {
+        "startLine": 122,
+        "startChar": 28,
+        "endLine": 122,
+        "endChar": 39
+      },
+      "revId": "5e716fcf2bb0fd7750d15ce3b6aa7e2d471a8b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9f370b2_677af66a",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T09:55:09Z",
+      "side": 1,
+      "message": "Is there a reason to take an extra trip around the handler loop, as opposed to just calling stop() inline? What if there are already messages or Runnables queued on the handler? Then those events would happen out of order.",
+      "range": {
+        "startLine": 126,
+        "startChar": 28,
+        "endLine": 126,
+        "endChar": 61
+      },
+      "revId": "5e716fcf2bb0fd7750d15ce3b6aa7e2d471a8b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d7d1a8c_657f653a",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T09:55:09Z",
+      "side": 1,
+      "message": "Random musing: it\u0027s not immediately obvious to the reader that the invariant of this code is that isRunning() \u003d\u003d\u003d mFd !\u003d null.",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 24
+      },
+      "revId": "5e716fcf2bb0fd7750d15ce3b6aa7e2d471a8b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b480f6b_cf02d306",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T09:55:09Z",
+      "side": 1,
+      "message": "Also consider:\n\n    return Math.max(requested, DEFAULT_RECV_BUF_SIZE);",
+      "range": {
+        "startLine": 228,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 28
+      },
+      "revId": "5e716fcf2bb0fd7750d15ce3b6aa7e2d471a8b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5879971d_b3e96aee",
+        "filename": "tests/net/java/android/net/util/BlockingSocketReaderTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T09:55:09Z",
+      "side": 1,
+      "message": "Nit: if tearDown posts the stop but the handler thread is somehow blocked for more than one second and the latch times out, is there a risk that when we create another BlockingSocketReader on the same thread, that the stop() call that we posted to the thread in tearDown() will come back to haunt us, thus leading to a flaky test?\n\nWe might want to consider fail() if the latch times out instead of being counted down.",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "5e716fcf2bb0fd7750d15ce3b6aa7e2d471a8b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
