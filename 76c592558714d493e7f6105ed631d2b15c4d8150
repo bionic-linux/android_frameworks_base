@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ce15471_59882c99",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-09-27T01:26:37Z",
+      "side": 1,
+      "message": "Did we just forget to add this previously?",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 45
+      },
+      "revId": "76c592558714d493e7f6105ed631d2b15c4d8150",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6b8ccce_58bc5751",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-09-27T01:26:37Z",
+      "side": 1,
+      "message": "did you mean to rotate this one so it starts with 3?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 98
+      },
+      "revId": "76c592558714d493e7f6105ed631d2b15c4d8150",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
