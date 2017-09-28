@@ -258,7 +258,7 @@ public final class AdvertisingSetParameters implements Parcelable {
          * Set whether the advertisement type should be connectable or
          * non-connectable.
          * Legacy advertisements can be both connectable and scannable. Non-legacy
-         * advertisements can be only scannable or only connectable.
+         * advertisements shall not be both connectable and scannable.
          *
          * @param connectable Controls whether the advertisement type will be connectable (true) or
          * non-connectable (false).
@@ -271,7 +271,7 @@ public final class AdvertisingSetParameters implements Parcelable {
         /**
          * Set whether the advertisement type should be scannable.
          * Legacy advertisements can be both connectable and scannable. Non-legacy
-         * advertisements can be only scannable or only connectable.
+         * advertisements shall not be both connectable and scannable.
          *
          * @param scannable Controls whether the advertisement type will be scannable (true) or
          * non-scannable (false).
