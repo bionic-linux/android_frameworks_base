@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "239c3e38_5ff6f48a",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2017-09-28T09:48:15Z",
+      "side": 1,
+      "message": "add a comment here why we are making a copy",
+      "revId": "8493e646e1b29127aa4e9caa451b9a7a36e8ab23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9f3f564_e420a38c",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2017-09-28T09:48:15Z",
+      "side": 1,
+      "message": "break line",
+      "range": {
+        "startLine": 132,
+        "startChar": 63,
+        "endLine": 132,
+        "endChar": 122
+      },
+      "revId": "8493e646e1b29127aa4e9caa451b9a7a36e8ab23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36b7385e_36a1d90b",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2017-09-28T09:48:15Z",
+      "side": 1,
+      "message": "new ArraySet\u003c\u003e(persistentTaskIds)",
+      "range": {
+        "startLine": 132,
+        "startChar": 76,
+        "endLine": 132,
+        "endChar": 83
+      },
+      "revId": "8493e646e1b29127aa4e9caa451b9a7a36e8ab23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
