@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b3fdb6a_4c4a386d",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-28T10:29:24Z",
+      "side": 1,
+      "message": "I wonder if the caller is going to be OK for onStart() to be called on a different thread. I suppose we can say that given that they\u0027re calling start() on the wrong thread, it\u0027s OK for us to call them back on the wrong thread :-)",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 15
+      },
+      "revId": "f840e07f821cb17c9ae1e6583a28eff548b90892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0316592_ab5db966",
+        "filename": "services/net/java/android/net/util/BlockingSocketReader.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-28T10:29:24Z",
+      "side": 1,
+      "message": "Nit: compared to the previous patchset, I think you\u0027ve lost the check for isRunning() here.",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 8
+      },
+      "revId": "f840e07f821cb17c9ae1e6583a28eff548b90892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
