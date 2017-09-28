@@ -62,6 +62,72 @@
       "revId": "8493e646e1b29127aa4e9caa451b9a7a36e8ab23",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "759d46e2_f89ff16c",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1124914
+      },
+      "writtenOn": "2017-09-28T13:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36b7385e_36a1d90b",
+      "range": {
+        "startLine": 132,
+        "startChar": 76,
+        "endLine": 132,
+        "endChar": 83
+      },
+      "revId": "8493e646e1b29127aa4e9caa451b9a7a36e8ab23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6caa5aaf_06651c2a",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1124914
+      },
+      "writtenOn": "2017-09-28T13:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "239c3e38_5ff6f48a",
+      "revId": "8493e646e1b29127aa4e9caa451b9a7a36e8ab23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b98912ac_eee8bb64",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1124914
+      },
+      "writtenOn": "2017-09-28T13:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9f3f564_e420a38c",
+      "range": {
+        "startLine": 132,
+        "startChar": 63,
+        "endLine": 132,
+        "endChar": 122
+      },
+      "revId": "8493e646e1b29127aa4e9caa451b9a7a36e8ab23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
