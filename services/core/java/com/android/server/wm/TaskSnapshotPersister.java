@@ -129,7 +129,7 @@ class TaskSnapshotPersister {
     void removeObsoleteFiles(ArraySet<Integer> persistentTaskIds, int[] runningUserIds) {
         synchronized (mLock) {
             mPersistedTaskIdsSinceLastRemoveObsolete.clear();
-            sendToQueueLocked(new RemoveObsoleteFilesQueueItem(persistentTaskIds, runningUserIds));
+            sendToQueueLocked(new RemoveObsoleteFilesQueueItem(new ArraySet<Integer>(persistentTaskIds), runningUserIds));
         }
     }
 
