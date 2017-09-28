@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bc379d8_196120e9",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2017-09-28T13:49:07Z",
+      "side": 1,
+      "message": "manipulating it at the same time.",
+      "range": {
+        "startLine": 132,
+        "startChar": 58,
+        "endLine": 132,
+        "endChar": 89
+      },
+      "revId": "7a37c1d76e50ffe1cc3ba96649f60789746747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e16c6e7d_3f880a5e",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2017-09-28T13:49:07Z",
+      "side": 1,
+      "message": "line length",
+      "range": {
+        "startLine": 133,
+        "startChar": 98,
+        "endLine": 133,
+        "endChar": 112
+      },
+      "revId": "7a37c1d76e50ffe1cc3ba96649f60789746747f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
