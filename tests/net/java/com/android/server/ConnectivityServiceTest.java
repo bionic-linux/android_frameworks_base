@@ -87,6 +87,7 @@ import android.os.Process;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.support.test.filters.FlakyTest;
 import android.test.AndroidTestCase;
 import android.test.mock.MockContentResolver;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -3212,11 +3213,12 @@ public class ConnectivityServiceTest extends AndroidTestCase {
     }
 
     @SmallTest
-    public void testNetworkRequestMaximum() {
+    public void testNetworkCallbackMaximum() {
         final int MAX_REQUESTS = 100;
         // Test that the limit is enforced when MAX_REQUESTS simultaneous requests are added.
         NetworkRequest networkRequest = new NetworkRequest.Builder().build();
-        ArrayList<NetworkCallback> networkCallbacks = new ArrayList<NetworkCallback>();
+        ArrayList<NetworkCallback> networkCallbacks = new ArrayList<>();
+
         try {
             for (int i = 0; i < MAX_REQUESTS; i++) {
                 NetworkCallback networkCallback = new NetworkCallback();
@@ -3229,6 +3231,7 @@ public class ConnectivityServiceTest extends AndroidTestCase {
             mCm.unregisterNetworkCallback(networkCallback);
         }
         networkCallbacks.clear();
+        waitForIdle();
 
         try {
             for (int i = 0; i < MAX_REQUESTS; i++) {
@@ -3242,8 +3245,32 @@ public class ConnectivityServiceTest extends AndroidTestCase {
             mCm.unregisterNetworkCallback(networkCallback);
         }
         networkCallbacks.clear();
+        waitForIdle();
 
-        ArrayList<PendingIntent> pendingIntents = new ArrayList<PendingIntent>();
+        // Test that the limit is not hit when MAX_REQUESTS requests are added and removed.
+        for (int i = 0; i < MAX_REQUESTS; i++) {
+            NetworkCallback networkCallback = new NetworkCallback();
+            mCm.requestNetwork(networkRequest, networkCallback);
+            mCm.unregisterNetworkCallback(networkCallback);
+        }
+        waitForIdle();
+
+        for (int i = 0; i < MAX_REQUESTS; i++) {
+            NetworkCallback networkCallback = new NetworkCallback();
+            mCm.registerNetworkCallback(networkRequest, networkCallback);
+            mCm.unregisterNetworkCallback(networkCallback);
+        }
+        waitForIdle();
+    }
+
+    @FlakyTest
+    @SmallTest
+    public void testPendingIntentMaximum() {
+        final int MAX_REQUESTS = 100;
+        // Test that the limit is enforced when MAX_REQUESTS simultaneous requests are added.
+        NetworkRequest networkRequest = new NetworkRequest.Builder().build();
+        ArrayList<PendingIntent> pendingIntents = new ArrayList<>();
+
         try {
             for (int i = 0; i < MAX_REQUESTS + 1; i++) {
                 PendingIntent pendingIntent =
@@ -3258,11 +3285,12 @@ public class ConnectivityServiceTest extends AndroidTestCase {
             mCm.unregisterNetworkCallback(pendingIntent);
         }
         pendingIntents.clear();
+        waitForIdle(5000);
 
         try {
             for (int i = 0; i < MAX_REQUESTS + 1; i++) {
                 PendingIntent pendingIntent =
-                        PendingIntent.getBroadcast(mContext, 0, new Intent("a" + i), 0);
+                        PendingIntent.getBroadcast(mContext, 0, new Intent("b" + i), 0);
                 mCm.registerNetworkCallback(networkRequest, pendingIntent);
                 pendingIntents.add(pendingIntent);
             }
@@ -3275,32 +3303,21 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         pendingIntents.clear();
         waitForIdle(5000);
 
-        // Test that the limit is not hit when MAX_REQUESTS requests are added and removed.
-        for (int i = 0; i < MAX_REQUESTS; i++) {
-            NetworkCallback networkCallback = new NetworkCallback();
-            mCm.requestNetwork(networkRequest, networkCallback);
-            mCm.unregisterNetworkCallback(networkCallback);
-        }
-        waitForIdle();
-        for (int i = 0; i < MAX_REQUESTS; i++) {
-            NetworkCallback networkCallback = new NetworkCallback();
-            mCm.registerNetworkCallback(networkRequest, networkCallback);
-            mCm.unregisterNetworkCallback(networkCallback);
-        }
-        waitForIdle();
         for (int i = 0; i < MAX_REQUESTS; i++) {
             PendingIntent pendingIntent =
-                    PendingIntent.getBroadcast(mContext, 0, new Intent("b" + i), 0);
+                    PendingIntent.getBroadcast(mContext, 0, new Intent("c" + i), 0);
             mCm.requestNetwork(networkRequest, pendingIntent);
             mCm.unregisterNetworkCallback(pendingIntent);
         }
         waitForIdle();
+
         for (int i = 0; i < MAX_REQUESTS; i++) {
             PendingIntent pendingIntent =
-                    PendingIntent.getBroadcast(mContext, 0, new Intent("c" + i), 0);
+                    PendingIntent.getBroadcast(mContext, 0, new Intent("d" + i), 0);
             mCm.registerNetworkCallback(networkRequest, pendingIntent);
             mCm.unregisterNetworkCallback(pendingIntent);
         }
+        waitForIdle();
     }
 
     @SmallTest
