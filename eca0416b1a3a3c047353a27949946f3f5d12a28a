@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "307bb8bf_eb57988b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3249,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-02T06:55:49Z",
+      "side": 1,
+      "message": "network requests",
+      "range": {
+        "startLine": 3249,
+        "startChar": 51,
+        "endLine": 3249,
+        "endChar": 66
+      },
+      "revId": "eca0416b1a3a3c047353a27949946f3f5d12a28a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83310e81_6b119052",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-02T06:55:49Z",
+      "side": 1,
+      "message": "network callbacks",
+      "range": {
+        "startLine": 3253,
+        "startChar": 51,
+        "endLine": 3253,
+        "endChar": 66
+      },
+      "revId": "eca0416b1a3a3c047353a27949946f3f5d12a28a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d062f777_9fd8c1dc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3258,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-02T06:55:49Z",
+      "side": 1,
+      "message": "PendingIntent requests",
+      "range": {
+        "startLine": 3258,
+        "startChar": 51,
+        "endLine": 3258,
+        "endChar": 66
+      },
+      "revId": "eca0416b1a3a3c047353a27949946f3f5d12a28a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "160405e6_88115822",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3263,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-02T06:55:49Z",
+      "side": 1,
+      "message": "PendingIntent callbacks",
+      "range": {
+        "startLine": 3263,
+        "startChar": 51,
+        "endLine": 3263,
+        "endChar": 66
+      },
+      "revId": "eca0416b1a3a3c047353a27949946f3f5d12a28a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
