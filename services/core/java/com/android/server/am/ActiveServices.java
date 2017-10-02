@@ -3372,7 +3372,8 @@ public final class ActiveServices {
 
         if (app != null) {
             mAm.mAppErrors.appNotResponding(app, null, null, false,
-                    "Context.startForegroundService() did not then call Service.startForeground()");
+                    "Context.startForegroundService() did not then call Service.startForeground(): "
+                    + r);
         }
     }
 
