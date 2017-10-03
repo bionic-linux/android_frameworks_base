@@ -56,6 +56,8 @@ import java.util.Enumeration;
 
 import libcore.util.Objects;
 
+import com.android.internal.mirrorpowersave.LcdPowerSaveManager;
+
 /**
  * Manages all of the various asynchronous interactions with the {@link WifiP2pManager}
  * on behalf of {@link WifiDisplayAdapter}.
@@ -146,6 +148,8 @@ final class WifiDisplayController implements DumpUtils.Dump {
 
     // True if RTSP has connected.
     private boolean mRemoteDisplayConnected;
+
+    private LcdPowerSaveManager.PowerSaveRequest mPowerSaveRequest = null;
 
     // The information we have most recently told WifiDisplayAdapter about.
     private WifiDisplay mAdvertisedDisplay;
@@ -745,6 +749,7 @@ final class WifiDisplayController implements DumpUtils.Dump {
                                 + mConnectedDevice.deviceName);
                         mRemoteDisplayConnected = true;
                         mHandler.removeCallbacks(mRtspTimeout);
+                        setLcdPowerSaveEnabled(true);
 
                         if (mWifiDisplayCertMode) {
                             mListener.onDisplaySessionInfo(
@@ -762,6 +767,7 @@ final class WifiDisplayController implements DumpUtils.Dump {
                         Slog.i(TAG, "Closed RTSP connection with Wifi display: "
                                 + mConnectedDevice.deviceName);
                         mHandler.removeCallbacks(mRtspTimeout);
+                        setLcdPowerSaveEnabled(false);
                         disconnect();
                     }
                 }
@@ -783,6 +789,40 @@ final class WifiDisplayController implements DumpUtils.Dump {
 
             mHandler.postDelayed(mRtspTimeout, rtspTimeout * 1000);
         }
+    }
+
+    private static boolean isLcdPowerSaveSupported(Context context) {
+        boolean ret = false;
+        try {
+            Class.forName("com.android.internal.mirrorpowersave.LcdPowerSaveManager");
+            ret = context != null &&
+                    context.getSystemService(LcdPowerSaveManager.LCD_POWER_SAVE_SERVICE) != null;
+        } catch (ClassNotFoundException e) {
+        } catch (LinkageError e) {
+        }
+        Slog.i(TAG, "isLcdPowerSaveSupported[" + ret + "]");
+        return ret;
+    }
+
+    private void setLcdPowerSaveEnabled(boolean enable) {
+        Slog.i(TAG, "setLcdPowerSaveEnabled/in[" + enable + "]");
+        if (isLcdPowerSaveSupported(mContext)) {
+            if (enable && mPowerSaveRequest == null) {
+                LcdPowerSaveManager manager = (LcdPowerSaveManager)mContext.
+                        getSystemService(LcdPowerSaveManager.LCD_POWER_SAVE_SERVICE);
+                int flag = LcdPowerSaveManager.FLAG_LOCAL_TOUCH_ACTIVATED;
+                Slog.i(TAG, "flag[" + flag + "]");
+                mPowerSaveRequest = manager.newPowerSaveRequest(flag, this.getClass().getName());
+                mPowerSaveRequest.acquire();
+                manager = null;
+            } else if (!enable && mPowerSaveRequest != null) {
+                if (mPowerSaveRequest.isHeld()) {
+                    mPowerSaveRequest.release();
+                }
+                mPowerSaveRequest = null;
+            }
+        }
+        Slog.i(TAG, "setLcdPowerSaveEnabled/out");
     }
 
     private WifiDisplaySessionInfo getSessionInfo(WifiP2pGroup info, int session) {
