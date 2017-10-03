@@ -19,11 +19,11 @@
 // ==========================================================
 cc_binary_host {
     name: "incident-section-gen",
-    // b/34740546, work around clang-tidy segmentation fault.
-    tidy_checks: ["-modernize*"],
     cflags: [
         "-g",
         "-O0",
+        "-Wall",
+        "-Werror",
     ],
     srcs: ["main.cpp"],
     shared_libs: [

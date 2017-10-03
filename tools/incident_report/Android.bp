@@ -31,8 +31,5 @@ cc_binary_host {
         "libprotobuf-cpp-full",
     ],
 
-    cflags: ["-Wno-unused-parameter"],
-
-    // b/34740546, work around clang-tidy segmentation fault.
-    tidy_checks: ["-modernize*"],
+    cflags: ["-Wall", "-Werror"],
 }
