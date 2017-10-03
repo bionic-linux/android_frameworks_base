@@ -34,6 +34,24 @@
       "revId": "5c13f52b831327d00144b52cab435833b9199126",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12cb87fe_3c6c6345",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-10-03T21:34:42Z",
+      "side": 1,
+      "message": "Yes, we\u0027ll only keep the latest profile in there. \n Hwui/hwui.profdata seems fine to me.",
+      "parentUuid": "cdfed09e_fc675455",
+      "revId": "5c13f52b831327d00144b52cab435833b9199126",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

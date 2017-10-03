@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6652ce0c_b5233e28",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-10-03T21:34:42Z",
+      "side": 1,
+      "message": "Lets pass this universally instead of every place where we turn on PGO: https://android-review.googlesource.com/#/c/platform/build/soong/+/501385/",
+      "revId": "4b5e7260cf58b2ba844ccba4876af10987f6ad40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
