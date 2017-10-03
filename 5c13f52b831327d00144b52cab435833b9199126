@@ -16,6 +16,24 @@
       "revId": "5c13f52b831327d00144b52cab435833b9199126",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdfed09e_fc675455",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1126348
+      },
+      "writtenOn": "2017-10-03T21:28:22Z",
+      "side": 1,
+      "message": "Any suggestions about the profdata name? Do we only keep the most up-to-date profdata in this dir?",
+      "parentUuid": "a73e89a9_9a0db79d",
+      "revId": "5c13f52b831327d00144b52cab435833b9199126",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
