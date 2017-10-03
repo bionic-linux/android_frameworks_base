@@ -105,7 +105,7 @@ get_command_output(const Command& command, int* err, bool quiet)
     }
 
     int fds[2];
-    pipe(fds);
+    (void) pipe(fds); // ignore return result
 
     pid_t pid = fork();
 

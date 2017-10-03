@@ -584,7 +584,7 @@ run_phases(vector<Target*> targets, const Options& options)
     const string buildOut = get_out_dir();
 
     // TODO: print_command("cd", buildTop.c_str());
-    chdir(buildTop.c_str());
+    (void) chdir(buildTop.c_str()); // ignore return value
 
     // Get the modules for the targets
     map<string,Module> modules;
@@ -952,7 +952,7 @@ run_tab_completion(const string& word)
     const string buildProduct = get_required_env("TARGET_PRODUCT", false);
     const string buildOut = get_out_dir();
 
-    chdir(buildTop.c_str());
+    (void) chdir(buildTop.c_str()); // ignore return value
 
     string buildDevice = sniff_device_name(buildOut, buildProduct);
 
