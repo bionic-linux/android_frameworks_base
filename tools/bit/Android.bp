@@ -30,6 +30,13 @@ cc_binary_host {
         "util.cpp",
     ],
 
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-error=unused-result",
+        "-Wno-error=unused-variable",
+    ],
+
     static_libs: [
         "libexpat",
         "libinstrumentation",
