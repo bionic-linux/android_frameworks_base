@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8f0fbf3a_361eff02",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1134734
+      },
+      "writtenOn": "2017-10-04T15:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c0953bf_0f24e431",
+      "range": {
+        "startLine": 100,
+        "startChar": 22,
+        "endLine": 100,
+        "endChar": 34
+      },
+      "revId": "942ce471999b660022ef45e0223004c71dea1492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f123b27_45f3c763",
         "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-10-04T00:29:15Z",
       "side": 1,
       "message": "Please name this better since it represents only CARD_IO_ERROR carrier text. Maybe: carrierTextForSimIOError",
+      "range": {
+        "startLine": 132,
+        "startChar": 21,
+        "endLine": 132,
+        "endChar": 43
+      },
+      "revId": "942ce471999b660022ef45e0223004c71dea1492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5d98929_e7fe069a",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1134734
+      },
+      "writtenOn": "2017-10-04T15:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f123b27_45f3c763",
       "range": {
         "startLine": 132,
         "startChar": 21,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "038217db_c1325baf",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1134734
+      },
+      "writtenOn": "2017-10-04T15:27:55Z",
+      "side": 1,
+      "message": "noSims can be returned as true if there are no sim cards detected, which can mean that either there are no sim cards inserted, or invalid card(s) is inserted. On line 135 there is a check to confirm if a Invalid Card has been reported.",
+      "parentUuid": "54e0616d_1d41bf5c",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 40
+      },
+      "revId": "942ce471999b660022ef45e0223004c71dea1492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0415edb_96200d57",
         "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2017-10-04T00:29:15Z",
       "side": 1,
       "message": "How come a difference in prepend vs concatenate depending on the slot?",
+      "range": {
+        "startLine": 145,
+        "startChar": 20,
+        "endLine": 146,
+        "endChar": 69
+      },
+      "revId": "942ce471999b660022ef45e0223004c71dea1492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25d02e4e_e25101dc",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1134734
+      },
+      "writtenOn": "2017-10-04T15:27:55Z",
+      "side": 1,
+      "message": "the 2 else if statements would only be reached if noSims \u003d\u003d false, so that means there is a valid card inserted in either slot 0 or slot 1. We prepend or concatenate in order to preserve the correct order of the carrier strings for a multisim device.",
+      "parentUuid": "c0415edb_96200d57",
       "range": {
         "startLine": 145,
         "startChar": 20,
