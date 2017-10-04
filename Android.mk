@@ -595,6 +595,8 @@ LOCAL_PROTOC_FLAGS := \
 
 LOCAL_MODULE := framework
 
+LOCAL_JAVAC_INPUT_SOURCES_NUM := 100
+
 LOCAL_DX_FLAGS := --core-library --multi-dex
 LOCAL_JACK_FLAGS := --multi-dex native
 
