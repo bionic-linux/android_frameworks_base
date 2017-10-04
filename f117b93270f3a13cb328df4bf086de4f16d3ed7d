@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9c3e23_c81baaa6",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-04T04:12:12Z",
+      "side": 1,
+      "message": "If this is the",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "f117b93270f3a13cb328df4bf086de4f16d3ed7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
