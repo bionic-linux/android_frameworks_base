@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efede314_91d9d5e1",
+        "filename": "tools/bit/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2017-10-04T05:25:55Z",
+      "side": 1,
+      "message": "-Wno-unused-result \u003d This is a bit weird, since this means someone is deliberately ignoring a \"required\" result attribute. We really should ask the owner of that file/module to fix it.\n\n-Wno-unused-variable",
+      "revId": "0d1a9ae6a7d3c4569095683b1471a92aebf63545",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
