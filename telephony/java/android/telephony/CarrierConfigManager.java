@@ -1542,6 +1542,22 @@ public class CarrierConfigManager {
     public static final String KEY_SKIP_CF_FAIL_TO_DISABLE_DIALOG_BOOL =
             "skip_cf_fail_to_disable_dialog_bool";
 
+    /**
+     * Flag specifying whether to show the notification when the mobile data setting is enabled,
+     * default to false.
+     * @hide
+     */
+    public static final String KEY_SHOW_MOBILE_DATA_ENABLED_NOTIFICATION_BOOL =
+            "show_mobile_data_enabled_notification_bool";
+
+    /**
+     * Flag specifying whether to show the notification when the mobile data setting is disabled,
+     * default to true.
+     * @hide
+     */
+    public static final String KEY_SHOW_MOBILE_DATA_DISABLED_NOTIFICATION_BOOL =
+            "show_mobile_data_disabled_notification_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1798,6 +1814,8 @@ public class CarrierConfigManager {
         sDefaults.putString(IMSI_KEY_DOWNLOAD_URL_STRING, null);
         sDefaults.putBoolean(KEY_SHOW_IMS_REGISTRATION_STATUS_BOOL, false);
         sDefaults.putBoolean(KEY_DISABLE_CHARGE_INDICATION_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_MOBILE_DATA_ENABLED_NOTIFICATION_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_MOBILE_DATA_DISABLED_NOTIFICATION_BOOL, false);
     }
 
     /**
