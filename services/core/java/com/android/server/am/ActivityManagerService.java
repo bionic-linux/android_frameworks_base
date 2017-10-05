@@ -3241,6 +3241,10 @@ public class ActivityManagerService extends IActivityManager.Stub
     }
 
     final void applyUpdateVrModeLocked(ActivityRecord r) {
+        // No need to update this if VR mode is unsupported
+        if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_VR_MODE)) {
+            return;
+        }
         mHandler.sendMessage(
                 mHandler.obtainMessage(VR_MODE_CHANGE_MSG, 0, 0, r));
     }
