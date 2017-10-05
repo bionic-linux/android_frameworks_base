@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "54eb83dd_af14a696",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1138138
+      },
+      "writtenOn": "2017-10-05T16:55:07Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "038217db_c1325baf",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 40
+      },
+      "revId": "942ce471999b660022ef45e0223004c71dea1492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0415edb_96200d57",
         "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
         "patchSetId": 2
