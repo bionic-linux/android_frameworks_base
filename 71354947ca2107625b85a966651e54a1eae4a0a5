@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dc506cf_067e7926",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-10-05T18:07:31Z",
+      "side": 1,
+      "message": "My understanding is that mEnable is supposed to mean that the user enabled Bluetooth.\n\nFrom the repro steps in the bug, it seems that the root cause is that mEnable is out of sync with the user\u0027s actions.\n\nUse case:\n1. Turn BT ON\n2. Turn BLE ON\n3. Turn BT OFF\n4. Turn BLE OFF\n\nObservation:\nTurn BLE OFF Fails",
+      "range": {
+        "startLine": 694,
+        "startChar": 29,
+        "endLine": 694,
+        "endChar": 36
+      },
+      "revId": "71354947ca2107625b85a966651e54a1eae4a0a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
