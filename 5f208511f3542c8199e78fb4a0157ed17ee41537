@@ -22,6 +22,30 @@
       "revId": "5f208511f3542c8199e78fb4a0157ed17ee41537",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d0c8d05_fe323f24",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-10-06T13:33:54Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "d3ef882c_e5195bae",
+      "range": {
+        "startLine": 100,
+        "startChar": 22,
+        "endLine": 100,
+        "endChar": 44
+      },
+      "revId": "5f208511f3542c8199e78fb4a0157ed17ee41537",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
