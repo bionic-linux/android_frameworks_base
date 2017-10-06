@@ -813,6 +813,14 @@ public class CarrierConfigManager {
     public static final String KEY_HIDE_ENHANCED_4G_LTE_BOOL = "hide_enhanced_4g_lte_bool";
 
     /**
+     * Default Enhanced 4G LTE mode enabled: true Enhanced 4G LTE mode by default is on
+     *                                       false Enhanced 4G LTE mode by default is off
+     * @hide
+     */
+    public static final String KEY_CARRIER_DEFAULT_ENHANCED_4G_LTE_ENABLED_BOOL =
+            "carrier_default_enhanced_4g_lte_enabled_bool";
+
+    /**
      * Determine whether IMS apn can be shown.
      */
     public static final String KEY_HIDE_IMS_APN_BOOL = "hide_ims_apn_bool";
@@ -1662,6 +1670,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_DISPLAY_HD_AUDIO_PROPERTY_BOOL, true);
         sDefaults.putBoolean(KEY_EDITABLE_ENHANCED_4G_LTE_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_ENHANCED_4G_LTE_BOOL, false);
+        sDefaults.putBoolean(KEY_CARRIER_DEFAULT_ENHANCED_4G_LTE_ENABLED_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_IMS_APN_BOOL, false);
         sDefaults.putBoolean(KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL, false);
         sDefaults.putBoolean(KEY_ALLOW_EMERGENCY_VIDEO_CALLS_BOOL, false);
