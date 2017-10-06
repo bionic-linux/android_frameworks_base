@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0cccbe3_2af1fe1a",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-10-06T17:13:23Z",
+      "side": 1,
+      "message": "Remove or guard by debug flag, we don\u0027t want to span the logs with this.",
+      "revId": "3c9646a1928cfac6853e7ea719c2f6d2f99340a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
