@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca83c03_1a76adcb",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierText.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1138138
+      },
+      "writtenOn": "2017-10-07T00:18:17Z",
+      "side": 1,
+      "message": "need to change this to the new name",
+      "range": {
+        "startLine": 325,
+        "startChar": 45,
+        "endLine": 325,
+        "endChar": 88
+      },
+      "revId": "8f43c043757ee47e0d694cd93d4bf8e69ab1949e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
