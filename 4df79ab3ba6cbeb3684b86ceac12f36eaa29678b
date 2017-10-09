@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "891745bb_be0fbd85",
+        "filename": "tools/bit/adb.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-10-09T19:22:57Z",
+      "side": 1,
+      "message": "if (0 !\u003d pipe(fds)) return errno;",
+      "range": {
+        "startLine": 296,
+        "startChar": 11,
+        "endLine": 296,
+        "endChar": 15
+      },
+      "revId": "4df79ab3ba6cbeb3684b86ceac12f36eaa29678b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c310276_c4a4da4f",
+        "filename": "tools/bit/command.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-10-09T19:22:57Z",
+      "side": 1,
+      "message": "same",
+      "revId": "4df79ab3ba6cbeb3684b86ceac12f36eaa29678b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813c87cc_a1550c4a",
+        "filename": "tools/bit/main.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-10-09T19:22:57Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 587,
+        "startChar": 11,
+        "endLine": 587,
+        "endChar": 16
+      },
+      "revId": "4df79ab3ba6cbeb3684b86ceac12f36eaa29678b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90134b84_1ebe7dc3",
+        "filename": "tools/bit/main.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-10-09T19:22:57Z",
+      "side": 1,
+      "message": "same",
+      "revId": "4df79ab3ba6cbeb3684b86ceac12f36eaa29678b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f54e6f5_3a7a357f",
+        "filename": "tools/bit/util.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-10-09T19:22:57Z",
+      "side": 1,
+      "message": "if (size !\u003d fread(..)) return string()",
+      "range": {
+        "startLine": 243,
+        "startChar": 11,
+        "endLine": 243,
+        "endChar": 16
+      },
+      "revId": "4df79ab3ba6cbeb3684b86ceac12f36eaa29678b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
