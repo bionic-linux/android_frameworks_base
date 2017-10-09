@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e861a80e_b1fb8af4",
+        "filename": "telephony/java/android/telephony/mbms/DownloadRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-10-09T21:36:32Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "9aeb87aaa6ecfc9d23d514cdfc14754490a25e74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
