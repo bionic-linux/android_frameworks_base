@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9b3dfb9_6fbed9d1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-10-10T13:26:59Z",
+      "side": 1,
+      "message": "How is this different than CarrierText? Can we just use that instead?",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
