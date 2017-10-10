@@ -22,6 +22,30 @@
       "revId": "e1ba7e1f0948e9fd0aa648526a8275e5d5df45e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f74ae45_5259807e",
+        "filename": "tools/bit/main.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2017-10-10T22:17:06Z",
+      "side": 1,
+      "message": "What should be changed?",
+      "parentUuid": "386e47d7_edf46b1b",
+      "range": {
+        "startLine": 604,
+        "startChar": 4,
+        "endLine": 606,
+        "endChar": 5
+      },
+      "revId": "e1ba7e1f0948e9fd0aa648526a8275e5d5df45e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
