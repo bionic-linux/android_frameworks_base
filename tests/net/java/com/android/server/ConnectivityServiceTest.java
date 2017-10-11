@@ -148,6 +148,12 @@ public class ConnectivityServiceTest {
     private static final int TIMEOUT_MS = 500;
     private static final int TEST_LINGER_DELAY_MS = 120;
 
+    // Maximum number of possible requests that can be effectively registered in unit tests.
+    // FIXME: why does this number need to be 2 below the theorical maximum ?
+    // Is this because of the default request and the mobile data always on request ?
+    private static final int MAX_NETWORK_REQUESTS_PER_UID =
+            ConnectivityService.MAX_NETWORK_REQUESTS_PER_UID - 2;
+
     private MockContext mServiceContext;
     private WrappedConnectivityService mService;
     private WrappedConnectivityManager mCm;
@@ -860,6 +866,7 @@ public class ConnectivityServiceTest {
 
     @After
     public void tearDown() throws Exception {
+        verifyNoCallbackLeaks();
         setMobileDataAlwaysOn(false);
         if (mCellNetworkAgent != null) {
             mCellNetworkAgent.disconnect();
@@ -872,6 +879,28 @@ public class ConnectivityServiceTest {
         if (mEthernetNetworkAgent != null) {
             mEthernetNetworkAgent.disconnect();
             mEthernetNetworkAgent = null;
+        }
+    }
+
+    public void verifyNoCallbackLeaks() {
+        waitForIdle(); // Ensure that all pending unregistrations from tests are effective.
+
+        final NetworkRequest req = new NetworkRequest.Builder().build();
+        final ArrayList<NetworkCallback> registered = new ArrayList<>();
+
+        try {
+            for (int i = 0; i < MAX_NETWORK_REQUESTS_PER_UID; i++) {
+                NetworkCallback cb = new NetworkCallback();
+                mCm.registerNetworkCallback(req, cb);
+                registered.add(cb);
+            }
+        } catch (Exception e) {
+            fail("could not register " + MAX_NETWORK_REQUESTS_PER_UID + " requests");
+        } finally {
+            for (NetworkCallback cb : registered) {
+                mCm.unregisterNetworkCallback(cb);
+            }
+            waitForIdle();
         }
     }
 
@@ -1491,6 +1520,10 @@ public class ConnectivityServiceTest {
         genericNetworkCallback.expectCallback(CallbackState.LOST, mCellNetworkAgent);
         cellNetworkCallback.expectCallback(CallbackState.LOST, mCellNetworkAgent);
         assertNoCallbacks(genericNetworkCallback, wifiNetworkCallback, cellNetworkCallback);
+
+        mCm.unregisterNetworkCallback(genericNetworkCallback);
+        mCm.unregisterNetworkCallback(wifiNetworkCallback);
+        mCm.unregisterNetworkCallback(cellNetworkCallback);
     }
 
     @Test
@@ -1793,6 +1826,8 @@ public class ConnectivityServiceTest {
         callback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
         callback.expectCallback(CallbackState.LOST, mCellNetworkAgent);
         callback.expectCallback(CallbackState.LOST, mEthernetNetworkAgent);
+
+        mCm.unregisterNetworkCallback(callback);
     }
 
     private void tryNetworkFactoryRequests(int capability) throws Exception {
@@ -2042,6 +2077,9 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.getWrappedNetworkMonitor().gen204ProbeResult = 500;
         mCm.reportNetworkConnectivity(mWiFiNetworkAgent.getNetwork(), false);
         validatedCallback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
+
+        mCm.unregisterNetworkCallback(captivePortalCallback);
+        mCm.unregisterNetworkCallback(validatedCallback);
     }
 
     @Test
@@ -2129,6 +2167,9 @@ public class ConnectivityServiceTest {
         validatedCallback.expectAvailableCallbacks(mWiFiNetworkAgent);
         // But there should be no CaptivePortal callback.
         captivePortalCallback.assertNoCallback();
+
+        mCm.unregisterNetworkCallback(captivePortalCallback);
+        mCm.unregisterNetworkCallback(validatedCallback);
     }
 
     private NetworkRequest.Builder newWifiRequestBuilder() {
@@ -2194,6 +2235,13 @@ public class ConnectivityServiceTest {
         }
 
         assertNoCallbacks(cEmpty1, cEmpty2, cEmpty3, cFoo, cBar);
+
+        mCm.unregisterNetworkCallback(cEmpty1);
+        mCm.unregisterNetworkCallback(cEmpty2);
+        mCm.unregisterNetworkCallback(cEmpty3);
+        mCm.unregisterNetworkCallback(cEmpty4);
+        mCm.unregisterNetworkCallback(cFoo);
+        mCm.unregisterNetworkCallback(cBar);
     }
 
     @Test
@@ -2338,6 +2386,9 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.disconnect();
         cellNetworkCallback.expectCallback(CallbackState.LOST, mCellNetworkAgent);
         defaultNetworkCallback.expectCallback(CallbackState.LOST, mCellNetworkAgent);
+
+        mCm.unregisterNetworkCallback(defaultNetworkCallback);
+        mCm.unregisterNetworkCallback(cellNetworkCallback);
     }
 
     @Test
@@ -2477,6 +2528,7 @@ public class ConnectivityServiceTest {
 
         mCm.unregisterNetworkCallback(callback);
         mCm.unregisterNetworkCallback(fgCallback);
+        setMobileDataAlwaysOn(false);
     }
 
     @Ignore // This test has instrinsic chances of spurious failures: ignore for continuous testing.
@@ -2838,6 +2890,8 @@ public class ConnectivityServiceTest {
 
         // pass timeout and validate that UNAVAILABLE is not called
         networkCallback.assertNoCallback();
+
+        mCm.unregisterNetworkCallback(networkCallback);
     }
 
     /**
@@ -2861,6 +2915,8 @@ public class ConnectivityServiceTest {
 
         // Validate that UNAVAILABLE is not called
         networkCallback.assertNoCallback();
+
+        mCm.unregisterNetworkCallback(networkCallback);
     }
 
     /**
@@ -2883,6 +2939,8 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
         mWiFiNetworkAgent.connect(false);
         networkCallback.assertNoCallback();
+
+        mCm.unregisterNetworkCallback(networkCallback);
     }
 
     /**
@@ -3224,6 +3282,8 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.connect(true);
         waitFor(cv);
         assertPinnedToWifiWithCellDefault();
+
+        TestNetworkPinner.unpin();
     }
 
     @Test

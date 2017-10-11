@@ -3947,7 +3947,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private final HashMap<NetworkRequest, NetworkRequestInfo> mNetworkRequests =
             new HashMap<NetworkRequest, NetworkRequestInfo>();
 
-    private static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
+    @VisibleForTesting
+    static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
     // Map from UID to number of NetworkRequests that UID has filed.
     @GuardedBy("mUidToNetworkRequestCount")
     private final SparseIntArray mUidToNetworkRequestCount = new SparseIntArray();
