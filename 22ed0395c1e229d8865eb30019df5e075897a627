@@ -16,6 +16,24 @@
       "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2445ef1a_6bbd63a9",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1234082
+      },
+      "writtenOn": "2017-10-11T03:22:38Z",
+      "side": 1,
+      "message": "\u003e How is this different than CarrierText? \n\nThe deferences are below:\n- OperatorNameView shows the network name only when the SIM is ready and the service state is in service, so \"No service\", \"Airplane mode\" or \"Emergency call only\" will not be displayed.\n- OperatorNameView shows only one of the network names in multi-SIM case since the status bar area is limited.\n\n\u003e Can we just use that instead?\n\nWe can use CarrierText, but have to add some modifications.\nDo you prefer to use CarrierText?",
+      "parentUuid": "e9b3dfb9_6fbed9d1",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
