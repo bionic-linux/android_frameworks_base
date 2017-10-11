@@ -860,6 +860,7 @@ public class ConnectivityServiceTest {
 
     @After
     public void tearDown() throws Exception {
+        verifyNoCallbackLeaking();
         setMobileDataAlwaysOn(false);
         if (mCellNetworkAgent != null) {
             mCellNetworkAgent.disconnect();
@@ -873,6 +874,21 @@ public class ConnectivityServiceTest {
             mEthernetNetworkAgent.disconnect();
             mEthernetNetworkAgent = null;
         }
+    }
+
+    public void verifyNoCallbackLeaking() {
+        final int MAX_REQUESTS = 99;
+        NetworkRequest req = new NetworkRequest.Builder().build();
+        ArrayList<NetworkCallback> registered = new ArrayList<>();
+        for (int i = 0; i < MAX_REQUESTS; i++) {
+            NetworkCallback cb = new NetworkCallback();
+            mCm.registerNetworkCallback(req, cb);
+            registered.add(cb);
+        }
+        for (NetworkCallback cb : registered) {
+            mCm.unregisterNetworkCallback(cb);
+        }
+        waitForIdle();
     }
 
     private static int transportToLegacyType(int transport) {
@@ -3224,6 +3240,10 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.connect(true);
         waitFor(cv);
         assertPinnedToWifiWithCellDefault();
+    }
+
+    @Test
+    public void testNothing() {
     }
 
     @Test
