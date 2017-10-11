@@ -2756,7 +2756,7 @@ public class ConnectivityManager {
     private static RuntimeException convertServiceException(ServiceSpecificException e) {
         switch (e.errorCode) {
             case Errors.TOO_MANY_REQUESTS:
-                return new TooManyRequestsException();
+                return new TooManyRequestsException(e);
             default:
                 Log.w(TAG, "Unknown service error code " + e.errorCode);
                 return new RuntimeException(e);
