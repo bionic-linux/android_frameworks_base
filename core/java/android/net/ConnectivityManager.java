@@ -619,7 +619,6 @@ public class ConnectivityManager {
      */
     public static final int NETID_UNSET = 0;
 
-    private final IConnectivityManager mService;
     /**
      * A kludge to facilitate static access where a Context pointer isn't available, like in the
      * case of the static set/getProcessDefaultNetwork methods and from the Network class.
@@ -628,10 +627,22 @@ public class ConnectivityManager {
      */
     private static ConnectivityManager sInstance;
 
+    // Map of all currently registered callbacks for this process. It is shared by all
+    // ConnectivityManager instances to avoid inconsistencies.
+    private static final HashMap<NetworkRequest, NetworkCallback> sCallbacks = new HashMap<>();
+
+    // Constant indicating that a NetworkCallback is registered for listening to notifications.
+    private static final int LISTEN  = 1;
+    // Constant indicating that a NetworkCallback is registered for requesting a network.
+    private static final int REQUEST = 2;
+
     private final Context mContext;
+    private final HashMap<NetworkRequest, NetworkCallback> mCallbacks;
+    private final IConnectivityManager mService;
 
     private INetworkManagementService mNMService;
     private INetworkPolicyManager mNPManager;
+    private CallbackHandler mCallbackHandler;
 
     /**
      * Tests if a given integer represents a valid network type.
@@ -1874,12 +1885,17 @@ public class ConnectivityManager {
         }
     }
 
-    /**
-     * {@hide}
-     */
+    /** {@hide} */
     public ConnectivityManager(Context context, IConnectivityManager service) {
+        this(context, service, sCallbacks);
+    }
+
+    /** {@hide} */
+    protected ConnectivityManager(Context context, IConnectivityManager service,
+            HashMap<NetworkRequest, NetworkCallback> callbacks) {
         mContext = Preconditions.checkNotNull(context, "missing context");
         mService = Preconditions.checkNotNull(service, "missing IConnectivityManager");
+        mCallbacks = callbacks;
         sInstance = this;
     }
 
@@ -2751,12 +2767,16 @@ public class ConnectivityManager {
     }
 
     /** @hide */
-    public static class TooManyRequestsException extends RuntimeException {}
+    public static class TooManyRequestsException extends RuntimeException {
+        public TooManyRequestsException(Throwable cause) {
+            super(cause);
+        }
+    }
 
     private static RuntimeException convertServiceException(ServiceSpecificException e) {
         switch (e.errorCode) {
             case Errors.TOO_MANY_REQUESTS:
-                return new TooManyRequestsException();
+                return new TooManyRequestsException(e);
             default:
                 Log.w(TAG, "Unknown service error code " + e.errorCode);
                 return new RuntimeException(e);
@@ -2825,8 +2845,8 @@ public class ConnectivityManager {
             final NetworkRequest request = getObject(message, NetworkRequest.class);
             final Network network = getObject(message, Network.class);
             final NetworkCallback callback;
-            synchronized (sCallbacks) {
-                callback = sCallbacks.get(request);
+            synchronized (mCallbacks) {
+                callback = mCallbacks.get(request);
             }
             if (DBG) {
                 Log.d(TAG, getCallbackName(message.what) + " for network " + network);
@@ -2884,19 +2904,13 @@ public class ConnectivityManager {
     }
 
     private CallbackHandler getDefaultHandler() {
-        synchronized (sCallbacks) {
-            if (sCallbackHandler == null) {
-                sCallbackHandler = new CallbackHandler(ConnectivityThread.getInstanceLooper());
+        synchronized (mCallbacks) {
+            if (mCallbackHandler == null) {
+                mCallbackHandler = new CallbackHandler(ConnectivityThread.getInstanceLooper());
             }
-            return sCallbackHandler;
+            return mCallbackHandler;
         }
     }
-
-    private static final HashMap<NetworkRequest, NetworkCallback> sCallbacks = new HashMap<>();
-    private static CallbackHandler sCallbackHandler;
-
-    private static final int LISTEN  = 1;
-    private static final int REQUEST = 2;
 
     private NetworkRequest sendRequestForNetwork(NetworkCapabilities need, NetworkCallback callback,
             int timeoutMs, int action, int legacyType, CallbackHandler handler) {
@@ -2904,7 +2918,7 @@ public class ConnectivityManager {
         Preconditions.checkArgument(action == REQUEST || need != null, "null NetworkCapabilities");
         final NetworkRequest request;
         try {
-            synchronized(sCallbacks) {
+            synchronized (mCallbacks) {
                 if (callback.networkRequest != null
                         && callback.networkRequest != ALREADY_UNREGISTERED) {
                     // TODO: throw exception instead and enforce 1:1 mapping of callbacks
@@ -2920,7 +2934,7 @@ public class ConnectivityManager {
                             need, messenger, timeoutMs, binder, legacyType);
                 }
                 if (request != null) {
-                    sCallbacks.put(request, callback);
+                    mCallbacks.put(request, callback);
                 }
                 callback.networkRequest = request;
             }
@@ -3351,12 +3365,12 @@ public class ConnectivityManager {
         final List<NetworkRequest> reqs = new ArrayList<>();
         // Find all requests associated to this callback and stop callback triggers immediately.
         // Callback is reusable immediately. http://b/20701525, http://b/35921499.
-        synchronized (sCallbacks) {
+        synchronized (mCallbacks) {
             Preconditions.checkArgument(networkCallback.networkRequest != null,
                     "NetworkCallback was not registered");
             Preconditions.checkArgument(networkCallback.networkRequest != ALREADY_UNREGISTERED,
                     "NetworkCallback was already unregistered");
-            for (Map.Entry<NetworkRequest, NetworkCallback> e : sCallbacks.entrySet()) {
+            for (Map.Entry<NetworkRequest, NetworkCallback> e : mCallbacks.entrySet()) {
                 if (e.getValue() == networkCallback) {
                     reqs.add(e.getKey());
                 }
@@ -3369,7 +3383,7 @@ public class ConnectivityManager {
                     throw e.rethrowFromSystemServer();
                 }
                 // Only remove mapping if rpc was successful.
-                sCallbacks.remove(r);
+                mCallbacks.remove(r);
             }
             networkCallback.networkRequest = ALREADY_UNREGISTERED;
         }
