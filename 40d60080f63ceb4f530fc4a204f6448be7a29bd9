@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6124a5d3_f559d648",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1096946
+      },
+      "writtenOn": "2017-10-12T18:21:31Z",
+      "side": 1,
+      "message": "Drive-by nit: looks like the rest of this file uses spaces.",
+      "revId": "40d60080f63ceb4f530fc4a204f6448be7a29bd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
