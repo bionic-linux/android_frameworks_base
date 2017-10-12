@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "03d6e8cc_4febd800",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-10-12T20:37:01Z",
+      "side": 1,
+      "message": "The profiles are closely tied to the sources.  So for e.g., the AOSP profiles don\u0027t improve (and maybe regress) when applied to internal branches, and vice versa.\n\nThe scripts and benchmarks to collect the profiles are in AOSP, but to start with, we are only collecting and managing profiles in the internal branches.",
+      "parentUuid": "11939b88_87745ee4",
+      "revId": "64c844bc8921a104783e1358a5ebf5a08757bfd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d401aef5_afdbc10e",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 8
