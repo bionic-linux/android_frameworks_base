@@ -243,6 +243,14 @@ cc_defaults {
 cc_library {
     name: "libhwui",
     defaults: ["libhwui_defaults"],
+
+    // Build libhwui with PGO by default. To turn it off,
+    // set ANDROID_PGO_NO_PROFILE_USE environment variable.
+    pgo: {
+        instrumentation: true,
+	profile_file: "Hwui/hwui.profdata",
+	benchmarks: ["hwui"],
+    },
 }
 
 // ------------------------
