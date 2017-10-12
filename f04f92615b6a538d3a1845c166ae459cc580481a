@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9624f15e_fce79ed5",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-10-12T17:25:18Z",
+      "side": 1,
+      "message": "Can you move this line before the \u0027pgo\u0027 property?",
+      "revId": "f04f92615b6a538d3a1845c166ae459cc580481a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43492dc2_fcf27faa",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-10-12T17:25:18Z",
+      "side": 1,
+      "message": "We can build without PGO using the ANDROID_PGO_NO_PROFILE_USE environment variable.  Do we still need this?",
+      "revId": "f04f92615b6a538d3a1845c166ae459cc580481a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
