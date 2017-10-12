@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e199f63_97fc85d0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-12T07:16:32Z",
+      "side": 1,
+      "message": "Yes, I think so. In the test, everything runs as the same UID, so both the built-in requests and the test requests contribute to the limit of 100.",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 85
+      },
+      "revId": "63d74b5b664bb8120720bc0c1cb3ea6f13d8dc64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
