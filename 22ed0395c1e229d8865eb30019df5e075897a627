@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "1cadd5c4_a1d078a1",
+        "filename": "packages/SystemUI/res/layout/status_bar.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-10-12T19:49:26Z",
+      "side": 1,
+      "message": "if The parent is horizontal do you really need this extra wrapper?",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e54b8f5_7156c4ca",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-10-12T19:49:26Z",
+      "side": 1,
+      "message": "Can you listen with NetworkController to avoid having another broadcast receiver registered.",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "beab72a4_1a214413",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-10-12T19:49:26Z",
+      "side": 1,
+      "message": "This should probably be in secure settings, and then you can use the Tuner code to cut down on all this listening.",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a34cee63_19c6dd8b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-10-12T19:49:26Z",
+      "side": 1,
+      "message": "This should be at the top with other members.",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9b3dfb9_6fbed9d1",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
         "patchSetId": 4
@@ -31,6 +99,24 @@
       "side": 1,
       "message": "\u003e How is this different than CarrierText? \n\nThe deferences are below:\n- OperatorNameView shows the network name only when the SIM is ready and the service state is in service, so \"No service\", \"Airplane mode\" or \"Emergency call only\" will not be displayed.\n- OperatorNameView shows only one of the network names in multi-SIM case since the status bar area is limited.\n\n\u003e Can we just use that instead?\n\nWe can use CarrierText, but have to add some modifications.\nDo you prefer to use CarrierText?",
       "parentUuid": "e9b3dfb9_6fbed9d1",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "400bc047_249e228f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-10-12T19:49:26Z",
+      "side": 1,
+      "message": "This is relatively small, we can keep it as is, I didn\u0027t realize first time around that its pulling from KeyguardUpdateMonitor so it should have the same info.",
+      "parentUuid": "2445ef1a_6bbd63a9",
       "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
