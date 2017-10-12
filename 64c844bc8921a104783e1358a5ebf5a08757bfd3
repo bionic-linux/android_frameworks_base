@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d92fd7bf_b9d2d679",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2017-10-12T19:54:15Z",
+      "side": 1,
+      "message": "put a comment in here that the PGO file is somewhere totally different.\n\nAlso does the PGO data need to be in google/ ? is it private for some reason?",
+      "revId": "64c844bc8921a104783e1358a5ebf5a08757bfd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d401aef5_afdbc10e",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2017-10-12T19:54:15Z",
+      "side": 1,
+      "message": "lowercase \u0027hwui\u0027 ?",
+      "range": {
+        "startLine": 251,
+        "startChar": 23,
+        "endLine": 251,
+        "endChar": 27
+      },
+      "revId": "64c844bc8921a104783e1358a5ebf5a08757bfd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
