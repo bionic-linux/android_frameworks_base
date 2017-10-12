@@ -16,6 +16,24 @@
       "revId": "40d60080f63ceb4f530fc4a204f6448be7a29bd9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53552d12_043c972d",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1126348
+      },
+      "writtenOn": "2017-10-12T18:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6124a5d3_f559d648",
+      "revId": "40d60080f63ceb4f530fc4a204f6448be7a29bd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
