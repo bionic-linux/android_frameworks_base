@@ -46,6 +46,30 @@
       "revId": "e1ba7e1f0948e9fd0aa648526a8275e5d5df45e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d80cfa_3ffd9c52",
+        "filename": "tools/bit/main.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-10-12T23:28:22Z",
+      "side": 1,
+      "message": "\"// caller should check errno\" above. This is a utility so we should probably just exit(1)",
+      "parentUuid": "8f74ae45_5259807e",
+      "range": {
+        "startLine": 604,
+        "startChar": 4,
+        "endLine": 606,
+        "endChar": 5
+      },
+      "revId": "e1ba7e1f0948e9fd0aa648526a8275e5d5df45e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
