@@ -243,6 +243,16 @@ cc_defaults {
 cc_library {
     name: "libhwui",
     defaults: ["libhwui_defaults"],
+
+    // Build libhwui with PGO by default.
+    // Location of PGO profile data is defined in build/soong/cc/pgo.go
+    // and is separate from hwui.
+    // To turn it off, set ANDROID_PGO_NO_PROFILE_USE environment variable.
+    pgo: {
+        instrumentation: true,
+        profile_file: "hwui/hwui.profdata",
+        benchmarks: ["hwui"],
+    },
 }
 
 // ------------------------
