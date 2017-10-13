@@ -45,6 +45,30 @@
       "revId": "230f3d1632104257653bc2f68eea7152741f58ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbb00cde_6b9f85de",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-13T14:20:35Z",
+      "side": 1,
+      "message": "I looked a bit more at that this afternoon but I actually don\u0027t like much the idea of adding more artificial probes on top of WrapperConnectivityService or another wrapper.\n\nYou convinced me that the benefits is not worth the cost if going down that path.\n\nThe method I had here has the nice benefit of adding zero test boilerplate or other scaffolding since it relies purely on the api, but unfortunately it is not free if I need to wait until unregistration is done for all ~100 requests.\n\nI could actually skip the unregistration and completely remove the crosstal by doing something about the ConnectivityManager static map for test.\n\nSo here is the middle ground I am proposing:\n - add a package private ctor to ConnectivityManager for accepting a request map that is non-static for tests.\n - the real ConnectivityManager uses the static map (no functional change)\n - I keep the verification step as is, but without unregistration.\n\nI am going to test this and see how much time this adds to the tests.",
+      "parentUuid": "0d874057_e59a3dbf",
+      "range": {
+        "startLine": 870,
+        "startChar": 0,
+        "endLine": 872,
+        "endChar": 9
+      },
+      "revId": "230f3d1632104257653bc2f68eea7152741f58ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
