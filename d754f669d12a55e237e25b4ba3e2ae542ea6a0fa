@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "098b1864_a40e1991",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-10-13T21:46:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this changed can improve user experience, what is the difference between those two messages?",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 58
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "081b4d6e_6f0ad365",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPukView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-10-13T21:46:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this can improve the user experience, both messages show the \"remaining attempts\" information to the user.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 59
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
