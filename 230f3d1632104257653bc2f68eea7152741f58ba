@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d874057_e59a3dbf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-13T04:04:46Z",
+      "side": 1,
+      "message": "Per in-person discussion, if we want to ensure that people don\u0027t forget to unregister callbacks, then let\u0027s do it in a way that doesn\u0027t cost us anything.\n\nFor example, you could add a method to WrappedConnectivityService to count the number of requests that have been filed, and throw an exception if it\u0027s zero.\n\nOr, you could have WrappedConnectivityManager keep track of all requests that have been filed, and in tearDown, scan through them and call unregisterNetworkCallback on each of them. This is similar to the code right below here that tears down all mock network agents.",
+      "range": {
+        "startLine": 870,
+        "startChar": 0,
+        "endLine": 872,
+        "endChar": 9
+      },
+      "revId": "230f3d1632104257653bc2f68eea7152741f58ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
