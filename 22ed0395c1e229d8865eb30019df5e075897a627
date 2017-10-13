@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7feee387_89da7227",
+        "filename": "packages/SystemUI/res/layout/status_bar.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1234082
+      },
+      "writtenOn": "2017-10-13T10:07:38Z",
+      "side": 1,
+      "message": "Thank you for pointing out it.\nI don\u0027t need this extra wrapper.",
+      "parentUuid": "1cadd5c4_a1d078a1",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e54b8f5_7156c4ca",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T19:49:26Z",
       "side": 1,
       "message": "Can you listen with NetworkController to avoid having another broadcast receiver registered.",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f58fd73_4252299b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1234082
+      },
+      "writtenOn": "2017-10-13T10:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e54b8f5_7156c4ca",
       "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1e0b90a4_f55d0a13",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1234082
+      },
+      "writtenOn": "2017-10-13T10:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beab72a4_1a214413",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a34cee63_19c6dd8b",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-12T19:49:26Z",
       "side": 1,
       "message": "This should be at the top with other members.",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e097d264_aba3c0b5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1234082
+      },
+      "writtenOn": "2017-10-13T10:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a34cee63_19c6dd8b",
       "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -117,6 +189,24 @@
       "side": 1,
       "message": "This is relatively small, we can keep it as is, I didn\u0027t realize first time around that its pulling from KeyguardUpdateMonitor so it should have the same info.",
       "parentUuid": "2445ef1a_6bbd63a9",
+      "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47176660_66897f4f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/OperatorNameView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1234082
+      },
+      "writtenOn": "2017-10-13T10:07:38Z",
+      "side": 1,
+      "message": "OK. I\u0027ll keep it as is.",
+      "parentUuid": "400bc047_249e228f",
       "revId": "22ed0395c1e229d8865eb30019df5e075897a627",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
