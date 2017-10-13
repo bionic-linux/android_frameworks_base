@@ -70,6 +70,30 @@
       "revId": "e1ba7e1f0948e9fd0aa648526a8275e5d5df45e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221ceb2a_b5f98293",
+        "filename": "tools/bit/main.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2017-10-13T23:26:46Z",
+      "side": 1,
+      "message": "Done. See latest patch.",
+      "parentUuid": "24d80cfa_3ffd9c52",
+      "range": {
+        "startLine": 604,
+        "startChar": 4,
+        "endLine": 606,
+        "endChar": 5
+      },
+      "revId": "e1ba7e1f0948e9fd0aa648526a8275e5d5df45e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
