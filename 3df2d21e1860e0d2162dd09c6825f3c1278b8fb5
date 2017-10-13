@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec5acd02_b96de601",
+        "filename": "packages/Keyguard/src/com/android/keyguard/KeyguardSecurityModel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-10-13T12:47:55Z",
+      "side": 1,
+      "message": "This code fix merged in master view below change, removing this fix from this gerrit.\n\n\ncommit 4b267dfe12c79c7b67bac57111a6a83c3b4ba9d0\nAuthor: Pengquan Meng \u003cmpq@google.com\u003e\nDate:   Wed Oct 11 17:43:33 2017 -0700\n\n    MSIM: Fix to show PUK view when two sims locked on PIN.\n\n    Currently when both sims are locked on PIN, upon exhausting\n    PIN attempts for SIM1 PIN, SIM1 PUK view is not displayed\n    and the user is not able to unlock the PUK.\n\n    This is due to while fetching the getSecurityMode in Key\n    -GuardSecurityModel, the ordering of checking the security\n    mode is PIN first and PUK later.So when one sim is locked\n    on PUK and the other is locked on PIN the ordering of checking\n    the PIN first is causing to return PIN as security mode in place\n    of PUK. This will lead to PUK lock screen not been shown to user.\n\n    Fix: In KeyGuardSecurityModel.java, while querying the security Mode\n    modify the order to check for security mode i.e PUK locked state first\n    and then PIN locked state.\n\n    In KeyGuardSimPinView and KeyGuardSimPukView, check for sim locked on\n    PIN and reset the flags to show the default message.\n\n    Test: manually test\n    Bug: 34796244\n\n    Change-Id: I157959d9eb313b9d3af84f86e1429448a0f7f065",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 9
+      },
+      "revId": "3df2d21e1860e0d2162dd09c6825f3c1278b8fb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
