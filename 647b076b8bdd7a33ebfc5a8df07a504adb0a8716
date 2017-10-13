@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e54bb931_c91e9814",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2017-10-13T17:26:39Z",
+      "side": 1,
+      "message": "Can you put a bug line here: \"Bug: http://b/63768402\"?",
+      "revId": "647b076b8bdd7a33ebfc5a8df07a504adb0a8716",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
