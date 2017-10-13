@@ -93,6 +93,30 @@
       "revId": "230f3d1632104257653bc2f68eea7152741f58ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87c2b1fa_2daaf4fe",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-13T15:35:56Z",
+      "side": 1,
+      "message": "For posterity I uploaded the patchset that does what I proposed and this is not too much intrusive.\n\nHowever this does add a few additional seconds.\nSo my conclusion is that this is not worth adding.\n\nI ll abandon this change. Thanks for the discussion.",
+      "parentUuid": "e78efd18_870f175e",
+      "range": {
+        "startLine": 870,
+        "startChar": 0,
+        "endLine": 872,
+        "endChar": 9
+      },
+      "revId": "230f3d1632104257653bc2f68eea7152741f58ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
