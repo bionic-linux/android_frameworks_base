@@ -69,6 +69,30 @@
       "revId": "230f3d1632104257653bc2f68eea7152741f58ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e78efd18_870f175e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-13T15:21:26Z",
+      "side": 1,
+      "message": "Ack.\n\nI\u0027m still not convinced it\u0027s worth forcing ourselves to include cleanup code in every testcase just in case someone copy+pastes code from this test and thinks it\u0027s not necessary to unregister callbacks in non-test code.\n\nBut if it can be done with no performance penalty and not too much additional complexity I guess it\u0027s OK.",
+      "parentUuid": "bbb00cde_6b9f85de",
+      "range": {
+        "startLine": 870,
+        "startChar": 0,
+        "endLine": 872,
+        "endChar": 9
+      },
+      "revId": "230f3d1632104257653bc2f68eea7152741f58ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
