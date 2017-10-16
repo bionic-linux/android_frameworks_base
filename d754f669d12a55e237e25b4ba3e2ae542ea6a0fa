@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c6c7b92_f8015832",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-10-16T12:34:41Z",
+      "side": 1,
+      "message": "When isDefault is true below message displayed\n- \"Enter SIM PIN, you have 1 remaining attempt before you must contact your carrier to unlock your device.\"\n- \"Enter SIM PIN, you have 2/3 remaining attempts\"\n\n\nWhen isDefault is false below message displayed\n- \"Incorrect SIM PIN code, you have 2/3  remaining attempts\"\n- \"Incorrect SIM PIN code, you have 1 remaining attempt  before you must contact your carrier to unlock your device\"\n\nThe default message(when isDefault is true) would be displayed on PIN lock screen  when device just powered-up, this is an enhancement to inform user about number of reaming attempts on device power-up.",
+      "parentUuid": "098b1864_a40e1991",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 58
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "081b4d6e_6f0ad365",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPukView.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T21:46:04Z",
       "side": 1,
       "message": "I don\u0027t think this can improve the user experience, both messages show the \"remaining attempts\" information to the user.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 59
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d69203b_bdb616de",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPukView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-10-16T12:34:41Z",
+      "side": 1,
+      "message": "When isDefault is true below message starts with\n- \"SIM is now disabled. Enter PUK code to continue. You have ....\"\n\nIt is to inform user about number of attempts remaining when device just power-up\n\n\n\nWhen isDefault is false the message starts with\n- \"Incorrect SIM PUK code, you have  .... \"\n\nThis message would convey user that the input PUK request failed and x number of attempts remaining.",
+      "parentUuid": "081b4d6e_6f0ad365",
       "range": {
         "startLine": 169,
         "startChar": 0,
