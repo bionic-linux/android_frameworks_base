@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb5d1d3e_3dff257e",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-18T23:45:28Z",
+      "side": 0,
+      "message": "Should we still be doing this when the carrier config value is true?",
+      "range": {
+        "startLine": 1839,
+        "startChar": 12,
+        "endLine": 1852,
+        "endChar": 13
+      },
+      "revId": "5f123e6ad6603c83e6f32ccdcdb0576c647bc2df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "343908bf_98e275f1",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2637,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-18T23:45:28Z",
+      "side": 0,
+      "message": "Same question, do we no longer need to do this if key_enhanced_4g_lte_on_by_default \u003d true?",
+      "range": {
+        "startLine": 2636,
+        "startChar": 12,
+        "endLine": 2637,
+        "endChar": 56
+      },
+      "revId": "5f123e6ad6603c83e6f32ccdcdb0576c647bc2df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
