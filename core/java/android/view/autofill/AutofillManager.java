@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import sun.misc.Cleaner;
+
 /**
  * The {@link AutofillManager} provides ways for apps and custom views to integrate with the
  * Autofill Framework lifecycle.
@@ -223,6 +225,9 @@ public final class AutofillManager {
 
     @GuardedBy("mLock")
     private IAutoFillManagerClient mServiceClient;
+
+    @GuardedBy("mLock")
+    private Cleaner mServiceClientCleaner;
 
     @GuardedBy("mLock")
     private AutofillCallback mCallback;
@@ -958,10 +963,19 @@ public final class AutofillManager {
         if (mServiceClient == null) {
             mServiceClient = new AutofillManagerClient(this);
             try {
-                final int flags = mService.addClient(mServiceClient, mContext.getUserId());
+                final int userId = mContext.getUserId();
+                final int flags = mService.addClient(mServiceClient, userId);
                 mEnabled = (flags & FLAG_ADD_CLIENT_ENABLED) != 0;
                 sDebug = (flags & FLAG_ADD_CLIENT_DEBUG) != 0;
                 sVerbose = (flags & FLAG_ADD_CLIENT_VERBOSE) != 0;
+                final IAutoFillManager service = mService;
+                final IAutoFillManagerClient serviceClient = mServiceClient;
+                mServiceClientCleaner = Cleaner.create(this, () -> {
+                    try {
+                        service.removeClient(serviceClient, userId);
+                    } catch (RemoteException e) {
+                    }
+                });
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
@@ -1068,6 +1082,10 @@ public final class AutofillManager {
             if (resetClient) {
                 // Reset connection to system
                 mServiceClient = null;
+                if (mServiceClientCleaner != null) {
+                    mServiceClientCleaner.clean();
+                    mServiceClientCleaner = null;
+                }
             }
         }
     }
