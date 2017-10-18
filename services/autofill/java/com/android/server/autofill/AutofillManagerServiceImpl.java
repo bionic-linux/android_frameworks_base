@@ -261,6 +261,12 @@ final class AutofillManagerServiceImpl {
         return isEnabled();
     }
 
+    void removeClientLocked(IAutoFillManagerClient client) {
+        if (mClients != null) {
+            mClients.unregister(client);
+        }
+    }
+
     void setAuthenticationResultLocked(Bundle data, int sessionId, int authenticationId, int uid) {
         if (!isEnabled()) {
             return;
@@ -478,6 +484,9 @@ final class AutofillManagerServiceImpl {
         }
 
         sendStateToClients(true);
+        if (mClients != null) {
+            mClients.kill();
+        }
     }
 
     CharSequence getServiceLabel() {
