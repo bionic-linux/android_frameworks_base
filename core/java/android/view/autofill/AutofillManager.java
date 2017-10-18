@@ -968,6 +968,13 @@ public final class AutofillManager {
         }
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        if (mService != null && mServiceClient != null && mContext != null) {
+            mService.removeClient(mServiceClient, mContext.getUserId());
+        }
+    }
+
     /**
      * Registers a {@link AutofillCallback} to receive autofill events.
      *
