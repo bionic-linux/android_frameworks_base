@@ -21,7 +21,6 @@ import android.os.Parcelable;
 
 import java.util.Random;
 
-/** @hide */
 public final class BluetoothHidDeviceAppConfiguration implements Parcelable {
     private final long mHash;
 

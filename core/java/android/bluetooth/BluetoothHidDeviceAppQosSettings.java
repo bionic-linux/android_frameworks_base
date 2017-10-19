@@ -19,7 +19,6 @@ package android.bluetooth;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/** @hide */
 public final class BluetoothHidDeviceAppQosSettings implements Parcelable {
 
     public final int serviceType;

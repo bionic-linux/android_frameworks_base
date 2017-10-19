@@ -19,7 +19,6 @@ package android.bluetooth;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/** @hide */
 public final class BluetoothHidDeviceAppSdpSettings implements Parcelable {
 
     public final String name;

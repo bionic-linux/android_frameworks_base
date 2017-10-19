@@ -18,7 +18,6 @@ package android.bluetooth;
 
 import android.util.Log;
 
-/** @hide */
 public abstract class BluetoothHidDeviceCallback {
 
     private static final String TAG = BluetoothHidDeviceCallback.class.getSimpleName();
