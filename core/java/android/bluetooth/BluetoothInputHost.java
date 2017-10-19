@@ -28,9 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @hide
- */
 public final class BluetoothInputHost implements BluetoothProfile {
 
     private static final String TAG = BluetoothInputHost.class.getSimpleName();
