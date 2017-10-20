@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ffd59e7f_e298d2b5",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-20T13:03:51Z",
+      "side": 0,
+      "message": "No, this method is called before SIM load. So, we can\u0027t get correct carrier config value. And if Settings.Global.ENHANCED_4G_MODE_ENABLED exists, we can\u0027t control the default value by CarrierConfig in ImsManager#isEnhanced4gLteModeSettingEnabledByUser since Settings.Globals.ENHANCED_4G_MODE_ENABLED has priority in the method.",
+      "parentUuid": "bb5d1d3e_3dff257e",
+      "range": {
+        "startLine": 1839,
+        "startChar": 12,
+        "endLine": 1852,
+        "endChar": 13
+      },
+      "revId": "5f123e6ad6603c83e6f32ccdcdb0576c647bc2df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "343908bf_98e275f1",
         "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
         "patchSetId": 2

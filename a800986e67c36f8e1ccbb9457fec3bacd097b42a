@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9652ae7_a32a0e88",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-20T13:03:51Z",
+      "side": 1,
+      "message": "Thank you for your comment. We will fix it.",
+      "parentUuid": "00ee46c7_6e81fa5c",
+      "range": {
+        "startLine": 816,
+        "startChar": 45,
+        "endLine": 816,
+        "endChar": 49
+      },
+      "revId": "a800986e67c36f8e1ccbb9457fec3bacd097b42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d81fe39c_4fd4ca54",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T23:45:28Z",
       "side": 1,
       "message": "\u003cremove whitespace\u003e otherwise if {@code false},",
+      "range": {
+        "startLine": 817,
+        "startChar": 45,
+        "endLine": 817,
+        "endChar": 50
+      },
+      "revId": "a800986e67c36f8e1ccbb9457fec3bacd097b42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ec6d116_f1f66fc6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-20T13:03:51Z",
+      "side": 1,
+      "message": "Thank you for your comment. We will fix it.",
+      "parentUuid": "d81fe39c_4fd4ca54",
       "range": {
         "startLine": 817,
         "startChar": 45,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bec9bf3e_ce41a82b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-20T13:03:51Z",
+      "side": 1,
+      "message": "Thank you for your comment. We will fix it.",
+      "parentUuid": "0f802dbd_d8f6c5d4",
+      "range": {
+        "startLine": 820,
+        "startChar": 31,
+        "endLine": 820,
+        "endChar": 79
+      },
+      "revId": "a800986e67c36f8e1ccbb9457fec3bacd097b42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3d4f18_bdd86413",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-18T23:45:28Z",
       "side": 1,
       "message": "enhanced_4g_lte_on_by_default_bool",
+      "range": {
+        "startLine": 821,
+        "startChar": 13,
+        "endLine": 821,
+        "endChar": 57
+      },
+      "revId": "a800986e67c36f8e1ccbb9457fec3bacd097b42a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a740d33_97d0452e",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-20T13:03:51Z",
+      "side": 1,
+      "message": "Thank you for your comment. We will fix it.",
+      "parentUuid": "ba3d4f18_bdd86413",
       "range": {
         "startLine": 821,
         "startChar": 13,
