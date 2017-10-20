@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "063de7b9_0d967e7c",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-20T17:39:35Z",
+      "side": 0,
+      "message": "I see. So for a user updating from a version \u003e\u003d 116, this setting would already exist, and it doesn\u0027t matter that we won\u0027t be loading it anymore. Will it still have priority in ImsManager? Do we need to add something like\n\nif (upgradeVersion \u003c 119) {\n    // unset the setting\n}",
+      "parentUuid": "ffd59e7f_e298d2b5",
+      "range": {
+        "startLine": 1839,
+        "startChar": 12,
+        "endLine": 1852,
+        "endChar": 13
+      },
+      "revId": "5f123e6ad6603c83e6f32ccdcdb0576c647bc2df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "343908bf_98e275f1",
         "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
         "patchSetId": 2
