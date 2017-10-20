@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "171307ed_95b6b66a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-20T08:52:22Z",
+      "side": 1,
+      "message": "This will effectively flip useTls from false to true, if I\u0027m not mistaken.\n\nI\u0027m fine with that, but just wanted to note it.",
+      "range": {
+        "startLine": 1984,
+        "startChar": 57,
+        "endLine": 1984,
+        "endChar": 58
+      },
+      "revId": "bccbd009edf909747a47cdfaa4cbd34343fb13b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
