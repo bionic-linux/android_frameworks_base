@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "adc1dee4_baa7f8f0",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-23T08:59:05Z",
+      "side": 1,
+      "message": "Thank you for your comments. I agree with you.",
+      "parentUuid": "9c07ac73_0d4d4747",
+      "range": {
+        "startLine": 1817,
+        "startChar": 77,
+        "endLine": 1817,
+        "endChar": 81
+      },
+      "revId": "39b1fff9be56341e3d5a4448b2699071a0788742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f705e037_5c8c6010",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T21:28:50Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 1818,
+        "startChar": 78,
+        "endLine": 1818,
+        "endChar": 82
+      },
+      "revId": "39b1fff9be56341e3d5a4448b2699071a0788742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb44be35_8095a015",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-23T08:59:05Z",
+      "side": 1,
+      "message": "Yes, I agree with you.",
+      "parentUuid": "f705e037_5c8c6010",
       "range": {
         "startLine": 1818,
         "startChar": 78,
