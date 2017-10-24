@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e9bf0b3_750a4b86",
+        "filename": "core/java/android/bluetooth/BluetoothHidDeviceAppConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-10-24T18:19:18Z",
+      "side": 0,
+      "message": "May want to add the documentation for this new API now.",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "b1f1e5add343c11fa5cd48c66137f9492ac97961",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
