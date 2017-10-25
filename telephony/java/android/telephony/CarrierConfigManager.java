@@ -2477,6 +2477,14 @@ public class CarrierConfigManager {
             "cdma_enhanced_roaming_indicator_for_home_network_int_array";
 
     /**
+     * Determines whether wifi calling location privacy policy is shown.
+     *
+     * @hide
+     */
+    public static final String KEY_SHOW_WFC_LOCATION_PRIVACY_POLICY_BOOL =
+            "show_wfc_location_privacy_policy_bool";
+
+    /**
      * This configuration allow the system UI to display different 5G icon for different 5G status.
      *
      * There are four 5G status:
@@ -2884,6 +2892,7 @@ public class CarrierConfigManager {
                 new int[] {
                         1 /* Roaming Indicator Off */
                 });
+        sDefaults.putBoolean(KEY_SHOW_WFC_LOCATION_PRIVACY_POLICY_BOOL, true);
         sDefaults.putString(KEY_5G_ICON_CONFIGURATION_STRING,
                 "connected_mmwave:None,connected:5G,not_restricted:None,restricted:None");
         sDefaults.putBoolean(KEY_AUTO_CANCEL_CS_REJECT_NOTIFICATION, false);
