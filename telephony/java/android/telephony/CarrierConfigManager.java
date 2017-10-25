@@ -2491,6 +2491,12 @@ public class CarrierConfigManager {
     public static final String KEY_5G_ICON_CONFIGURATION_STRING =
             "5g_icon_configuration_string";
 
+    /**
+     * Determines whether wifi calling location privacy policy is shown.
+     */
+    public static final String KEY_SHOW_WFC_LOCATION_PRIVACY_POLICY_BOOL =
+            "show_wfc_location_privacy_policy_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2875,6 +2881,7 @@ public class CarrierConfigManager {
                 });
         sDefaults.putString(KEY_5G_ICON_CONFIGURATION_STRING,
                 "connected_mmwave:None,connected:5G,not_restricted:None,restricted:None");
+        sDefaults.putBoolean(KEY_SHOW_WFC_LOCATION_PRIVACY_POLICY_BOOL, true);
     }
 
     /**
