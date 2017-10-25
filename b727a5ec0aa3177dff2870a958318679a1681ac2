@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b194f99e_bbd7487f",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5078,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-10-25T18:15:14Z",
+      "side": 1,
+      "message": "I was wondering if you can check that the user is stopped before executing the query? E.g.:\n            public void run() {\n                synchronized (mUsers) {\n                    if (mUsers.get(userAccount.userId) \u003d\u003d null) {\n                        Slog.w(TAG, \"Cannot insert a log record accountId\u003d\" + accountId\n                                + \" action\u003d\" + action + \" tableName\u003d\" + tableName + \". User \"\n                                + userAccount.userId + \" is no longer running\");\n                        return;\n                    }\n                }",
+      "range": {
+        "startLine": 5078,
+        "startChar": 16,
+        "endLine": 5078,
+        "endChar": 79
+      },
+      "revId": "b727a5ec0aa3177dff2870a958318679a1681ac2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
