@@ -1828,6 +1828,12 @@ public class CarrierConfigManager {
      */
     public static final String KEY_CARRIER_NETWORK_SERVICE_WWAN_PACKAGE_OVERRIDE_STRING
             = "carrier_network_service_wwan_package_override_string";
+    /**
+     * Determines whether wifi calling location privacy policy is shown.
+     * @hide
+     */
+    public static final String KEY_SHOW_WFC_LOCATION_PRIVACY_POLICY_BOOL =
+            "show_wfc_location_privacy_policy_bool";
 
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
@@ -2130,6 +2136,7 @@ public class CarrierConfigManager {
                         -108, /* SIGNAL_STRENGTH_GOOD */
                         -98,  /* SIGNAL_STRENGTH_GREAT */
                 });
+        sDefaults.putBoolean(KEY_SHOW_WFC_LOCATION_PRIVACY_POLICY_BOOL, true);
     }
 
     /**
