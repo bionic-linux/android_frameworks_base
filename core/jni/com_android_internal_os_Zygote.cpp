@@ -475,6 +475,16 @@ static void FillFileDescriptorVector(JNIEnv* env,
   }
 }
 
+void PrintForkDelta(const std::string& caption, const struct timeval& before) {
+  struct timeval after;
+  if (gettimeofday(&after, NULL) < 0) {
+    return;
+  }
+  double before_usec = before.tv_sec * 1000000 + before.tv_usec;
+  double after_usec = after.tv_sec * 1000000 + after.tv_usec;
+  ALOGE("=================== %s (usec): %f\n", caption.c_str(), after_usec - before_usec);
+}
+
 // Utility routine to fork zygote and specialize the child process.
 static pid_t ForkAndSpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray javaGids,
                                      jint runtime_flags, jobjectArray javaRlimits,
@@ -484,6 +494,10 @@ static pid_t ForkAndSpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArra
                                      bool is_system_server, jintArray fdsToClose,
                                      jintArray fdsToIgnore,
                                      jstring instructionSet, jstring dataDir) {
+  struct timeval before;
+  if (gettimeofday(&before, NULL) < 0) {
+    return 1;
+  }
   SetSigChldHandler();
 
   sigset_t sigchld;
@@ -593,6 +607,8 @@ static pid_t ForkAndSpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArra
       ScopedUtfChars data_dir(env, dataDir);
       android::PreInitializeNativeBridge(data_dir.c_str(), isa_string.c_str());
     }
+
+    PrintForkDelta("FORK: BEFORE SETTING UID/GID", before);
 
     int rc = setresgid(gid, gid, gid);
     if (rc == -1) {
