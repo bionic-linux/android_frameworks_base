@@ -2232,6 +2232,12 @@ public class CarrierConfigManager {
     public static final String KEY_CALL_WAITING_OVER_UT_WARNING_BOOL =
             "call_waiting_over_ut_warning_bool";
 
+    /**
+     * Determines whether wifi calling location privacy policy is shown.
+     */
+    public static final String KEY_SHOW_WFC_LOCATION_PRIVACY_POLICY_BOOL =
+            "show_wfc_location_privacy_policy_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2580,6 +2586,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CALL_BARRING_OVER_UT_WARNING_BOOL, false);
         sDefaults.putBoolean(KEY_CALLER_ID_OVER_UT_WARNING_BOOL, false);
         sDefaults.putBoolean(KEY_CALL_WAITING_OVER_UT_WARNING_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_WFC_LOCATION_PRIVACY_POLICY_BOOL, true);
     }
 
     /**
