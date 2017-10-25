@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cd0058f0_099509ee",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-10-25T03:04:48Z",
+      "side": 0,
+      "message": "No, ImsManager has not priority if  ENHANCED_4G_MODE_ENABLED alady exists. But we can\u0027t know whether user had changed the setting or not. So, if we unset the setting here, we may delete user setting during update. So, we would not like to unset it here.",
+      "parentUuid": "063de7b9_0d967e7c",
+      "range": {
+        "startLine": 1839,
+        "startChar": 12,
+        "endLine": 1852,
+        "endChar": 13
+      },
+      "revId": "5f123e6ad6603c83e6f32ccdcdb0576c647bc2df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "343908bf_98e275f1",
         "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
         "patchSetId": 2
