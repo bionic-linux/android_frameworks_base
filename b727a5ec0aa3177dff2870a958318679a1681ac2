@@ -70,6 +70,29 @@
       "revId": "b727a5ec0aa3177dff2870a958318679a1681ac2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64dffc28_515e557d",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5088,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-10-26T15:53:55Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why catch is needed, e.g.:\n// Guard against crash, DB can already be closed since this statement is executed on a handler thread",
+      "range": {
+        "startLine": 5088,
+        "startChar": 20,
+        "endLine": 5088,
+        "endChar": 27
+      },
+      "revId": "b727a5ec0aa3177dff2870a958318679a1681ac2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
