@@ -46,6 +46,30 @@
       "revId": "b727a5ec0aa3177dff2870a958318679a1681ac2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59d6f443_d0cbc2bc",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5078,
+      "author": {
+        "id": 1235718
+      },
+      "writtenOn": "2017-10-26T07:55:09Z",
+      "side": 1,
+      "message": "Actually, the scenario can happen, if this implementation take into account it here, we need to implement sync operations b/w onStopUser \u0026 LogRecord to avoid \"TOCTOU\". (Because, there is no guarantee that onStopUser \u0026 LogRecord run on the same thread.)\n\nI think it\u0027s a bit complicated. So we implement this logic as exception catch, it\u0027s enough to avoid system crash.",
+      "parentUuid": "4265ed37_0c62a80d",
+      "range": {
+        "startLine": 5078,
+        "startChar": 16,
+        "endLine": 5078,
+        "endChar": 79
+      },
+      "revId": "b727a5ec0aa3177dff2870a958318679a1681ac2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
