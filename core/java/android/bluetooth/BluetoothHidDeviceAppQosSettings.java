@@ -27,8 +27,6 @@ import android.os.Parcelable;
  * app during registration.
  *
  * {@see BluetoothHidDevice}
- *
- * {@hide}
  */
 public final class BluetoothHidDeviceAppQosSettings implements Parcelable {
 

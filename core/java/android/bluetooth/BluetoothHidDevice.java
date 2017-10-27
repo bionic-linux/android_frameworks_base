@@ -37,8 +37,6 @@ import java.util.List;
  * BluetoothHidDevice is a proxy object for controlling the Bluetooth HID
  * Device Service via IPC. Use {@link BluetoothAdapter#getProfileProxy} to get
  * the BluetoothHidDevice proxy object.
- *
- * {@hide}
  */
 public final class BluetoothHidDevice implements BluetoothProfile {
 

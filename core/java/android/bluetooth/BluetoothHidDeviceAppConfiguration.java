@@ -28,8 +28,6 @@ import java.util.Random;
  * the Bluetooth HID Device service.
  *
  * {@see BluetoothHidDevice}
- *
- * {@hide}
  */
 public final class BluetoothHidDeviceAppConfiguration implements Parcelable {
     private final long mHash;
