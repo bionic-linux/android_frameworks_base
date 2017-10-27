@@ -93,6 +93,30 @@
       "revId": "b727a5ec0aa3177dff2870a958318679a1681ac2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ad1c8f2_ba686558",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5088,
+      "author": {
+        "id": 1235718
+      },
+      "writtenOn": "2017-10-27T02:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64dffc28_515e557d",
+      "range": {
+        "startLine": 5088,
+        "startChar": 20,
+        "endLine": 5088,
+        "endChar": 27
+      },
+      "revId": "b727a5ec0aa3177dff2870a958318679a1681ac2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
