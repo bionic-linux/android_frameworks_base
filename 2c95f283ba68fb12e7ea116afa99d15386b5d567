@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24baaa74_e57abae6",
+        "filename": "telephony/java/com/android/internal/telephony/ISms.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-10-27T06:25:24Z",
+      "side": 1,
+      "message": "not described in comments above",
+      "range": {
+        "startLine": 235,
+        "startChar": 64,
+        "endLine": 235,
+        "endChar": 73
+      },
+      "revId": "2c95f283ba68fb12e7ea116afa99d15386b5d567",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
