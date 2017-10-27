@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67e2e66_78d9640a",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 18043,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-10-27T23:06:35Z",
+      "side": 0,
+      "message": "I\u0027m not sure why these happened.",
+      "range": {
+        "startLine": 18043,
+        "startChar": 0,
+        "endLine": 18043,
+        "endChar": 64
+      },
+      "revId": "6d0f1eff8be0e11b4bb360ebffcfaa8a3d1949a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
