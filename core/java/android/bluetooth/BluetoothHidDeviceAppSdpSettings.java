@@ -28,8 +28,6 @@ import android.os.Parcelable;
  * HID Device.
  *
  * {@see BluetoothHidDevice}
- *
- * {@hide}
  */
 public final class BluetoothHidDeviceAppSdpSettings implements Parcelable {
 
