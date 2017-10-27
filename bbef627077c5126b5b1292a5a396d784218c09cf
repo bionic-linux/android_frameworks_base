@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14099e88_df2d06c5",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2017-10-27T06:28:20Z",
+      "side": 1,
+      "message": "Please rephrase to something like this \"expectMore is a boolean to indicate that the caller wants to send more messages through the same link\"",
+      "revId": "bbef627077c5126b5b1292a5a396d784218c09cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
