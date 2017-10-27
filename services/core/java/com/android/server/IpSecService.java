@@ -57,6 +57,8 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import libcore.io.IoUtils;
@@ -119,6 +121,151 @@ public class IpSecService extends IIpSecService.Stub {
     }
 
     private final IpSecServiceConfiguration mSrvConfig;
+
+    @VisibleForTesting
+    public interface IResource {
+        // Removal of IpSecService resources
+        void cleanup() throws RemoteException;
+
+        // Deallocation of quota or kernel resources
+        void releaseResourcesAndQuota() throws RemoteException;
+    }
+
+    @VisibleForTesting
+    public class RefcountedResource<T extends IResource> implements IBinder.DeathRecipient {
+        private final T mResource;
+        private final AtomicInteger mRefCount = new AtomicInteger(1); // starts at 1 for userRef.
+        private final List<RefcountedResource> mDependencies = new LinkedList<>();
+        private IBinder mBinder;
+
+        RefcountedResource(
+                T resource,
+                IBinder binder,
+                RefcountedResource<? extends IResource>... dependencies) {
+            this.mResource = resource;
+            this.mBinder = binder;
+
+            for (RefcountedResource dependency : dependencies) {
+                addDependency(dependency);
+            }
+
+            try {
+                mBinder.linkToDeath(this, 0);
+            } catch (RemoteException e) {
+                binderDied();
+            }
+        }
+
+        /**
+         * Adds a dependency to this refcounted resource, incrementing the other resource's
+         * reference count.
+         *
+         * <p>This method must ONLY EVER BE CALLED FROM THE CONSTRUCTOR; otherwise we could end up
+         * with cyclical dependencies.
+         */
+        private void addDependency(RefcountedResource refcountedResource) {
+            mDependencies.add(refcountedResource);
+            refcountedResource.incrementReferenceCount();
+        }
+
+        /**
+         * If the Binder object dies, this function is called to free the system resources that are
+         * being managed by this record and to subsequently release this record for garbage
+         * collection
+         */
+        public void binderDied() {
+            synchronized (IpSecService.this) {
+                try {
+                    cleanupAndRelease();
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to release resource: " + e);
+                }
+            }
+        }
+
+        public T getResource() {
+            return mResource;
+        }
+
+        private void incrementReferenceCount() {
+            mRefCount.incrementAndGet();
+        }
+
+        private void decrementReferenceCount() {
+            mRefCount.decrementAndGet();
+        }
+
+        public int getReferenceCount() {
+            return mRefCount.get();
+        }
+
+        /**
+         * User-initiated cleanup of resources (or called upon binder death)
+         *
+         * <p>If mBinder is already null, cleanupAndRelease has already been called, and should
+         * abort in order to ensure reference counts do not enter an invalid state
+         */
+        @GuardedBy("IpSecService.this")
+        public void cleanupAndRelease() throws RemoteException {
+            // This check prevents users from putting reference counts into a bad state by
+            // calling cleanupAndRelease() multiple times.
+            if (mBinder == null) {
+                return;
+            }
+
+            mBinder.unlinkToDeath(this, 0);
+            mBinder = null;
+
+            mResource.cleanup();
+
+            decrementReferenceCount();
+            releaseIfUnreferencedRecursively();
+        }
+
+        /**
+         * Common release/cleanup method for user and dependency-chain based cleanup paths.
+         *
+         * <p>Checks reference counts and releases kernel resources + quota if unreferenced. Also
+         * releases reference on dependencies.
+         */
+        @VisibleForTesting
+        @GuardedBy("IpSecService.this")
+        public void releaseIfUnreferencedRecursively() throws RemoteException {
+            if (getReferenceCount() > 0) {
+                return;
+            } else if (getReferenceCount() < 0) {
+                throw new IllegalStateException(
+                        "Reference count in illegal state - negative refcount");
+            }
+
+            // Cleanup own resources
+            mResource.releaseResourcesAndQuota();
+
+            // Cleanup dependencies as needed
+            for (RefcountedResource<? extends IResource> resource : mDependencies) {
+                resource.decrementReferenceCount();
+                resource.releaseIfUnreferencedRecursively();
+            }
+
+            // Enforce that resource cleanup can only be called once
+            // By decrementing the refcount (from 0 to -1), the next call will throw an
+            // IllegalStateException - it has already been released fully.
+            decrementReferenceCount();
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuilder()
+                    .append("{mResource=")
+                    .append(mResource)
+                    .append(", mRefCount=")
+                    .append(mRefCount)
+                    .append(", mDependencies=")
+                    .append(mDependencies)
+                    .append("}")
+                    .toString();
+        }
+    }
 
     /* Very simple counting class that looks much like a counting semaphore */
     public static class ResourceTracker {
