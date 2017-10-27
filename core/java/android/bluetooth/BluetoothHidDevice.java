@@ -37,8 +37,6 @@ import java.util.List;
  * BluetoothHidDevice is a proxy object for controlling the Bluetooth HID
  * Device Service via IPC. Use {@link BluetoothAdapter#getProfileProxy} to get
  * the BluetoothHidDevice proxy object.
- *
- * {@hide}
  */
 public final class BluetoothHidDevice implements BluetoothProfile {
 
@@ -64,7 +62,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_CONNECTION_STATE_CHANGED =
-            "android.bluetooth.hiddevice.profile.action.CONNECTION_STATE_CHANGED";
+            "android.bluetooth.action.CONNECTION_STATE_CHANGED";
 
     /**
      * Constants representing device subclass.
