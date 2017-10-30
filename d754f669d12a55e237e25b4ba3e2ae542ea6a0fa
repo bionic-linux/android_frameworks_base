@@ -72,6 +72,75 @@
     },
     {
       "key": {
+        "uuid": "de103f1d_3c48ba82",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-30T21:48:17Z",
+      "side": 1,
+      "message": "why do we need to add this here?",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 9
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1f96ea4_39dca314",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-30T21:48:17Z",
+      "side": 1,
+      "message": "It\u0027s a little unclear what is meant by \"Default\" in mShowDefaultMessage. What is the reasoning behind this?",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 51
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22ca65e4_2bd590d5",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-30T21:48:17Z",
+      "side": 1,
+      "message": "Do we have to do this here? What about the CheckSimPin() in verifyPasswordAndUnlock?",
+      "range": {
+        "startLine": 363,
+        "startChar": 1,
+        "endLine": 373,
+        "endChar": 18
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "081b4d6e_6f0ad365",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPukView.java",
         "patchSetId": 2
