@@ -139,6 +139,14 @@ public class HwParcel {
         writeStringVector(val.toArray(new String[val.size()]));
     }
 
+    public native final void writeBoolArray(int size, boolean[] val);
+    public native final void writeInt8Array(int size, byte[] val);
+    public native final void writeInt16Array(int size, short[] val);
+    public native final void writeInt32Array(int size, int[] val);
+    public native final void writeInt64Array(int size, long[] val);
+    public native final void writeFloatArray(int size, float[] val);
+    public native final void writeDoubleArray(int size, double[] val);
+
     public native final void writeStrongBinder(IHwBinder binder);
 
     public native final void enforceInterface(String interfaceName);
@@ -205,6 +213,14 @@ public class HwParcel {
     public final ArrayList<String> readStringVector() {
         return new ArrayList<String>(Arrays.asList(readStringVectorAsArray()));
     }
+
+    public native final boolean[] readBoolArray(int size);
+    public native final byte[] readInt8Array(int size);
+    public native final short[] readInt16Array(int size);
+    public native final int[] readInt32Array(int size);
+    public native final long[] readInt64Array(int size);
+    public native final float[] readFloatArray(int size);
+    public native final double[] readDoubleArray(int size);
 
     public native final IHwBinder readStrongBinder();
 

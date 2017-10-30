@@ -432,6 +432,35 @@ static void JHwParcel_native_writeString(
     signalExceptionForError(env, err);
 }
 
+#define DEFINE_PARCEL_ARRAY_WRITER(Suffix,Type)                                \
+static void JHwParcel_native_write ## Suffix ## Array(                         \
+        JNIEnv *env, jobject thiz, jint size, Type ## Array valObj) {          \
+    if (valObj == NULL) {                                                      \
+        jniThrowException(env, "java/lang/NullPointerException", NULL);        \
+        return;                                                                \
+    }                                                                          \
+                                                                               \
+    jsize len = env->GetArrayLength(valObj);                                   \
+                                                                               \
+    if (len != size) {                                                         \
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);    \
+        return;                                                                \
+    }                                                                          \
+                                                                               \
+    sp<JHwParcel> impl = JHwParcel::GetNativeContext(env, thiz);               \
+                                                                               \
+    const Type *val =                                                          \
+        impl->getStorage()->allocTemporary ## Suffix ## Array(env, valObj);    \
+                                                                               \
+    hardware::Parcel *parcel = impl->getParcel();                              \
+                                                                               \
+    size_t parentHandle;                                                       \
+    status_t err = parcel->writeBuffer(                                        \
+            val, size * sizeof(*val), &parentHandle);                          \
+                                                                               \
+    signalExceptionForError(env, err);                                         \
+}
+
 #define DEFINE_PARCEL_VECTOR_WRITER(Suffix,Type)                               \
 static void JHwParcel_native_write ## Suffix ## Vector(                        \
         JNIEnv *env, jobject thiz, Type ## Array valObj) {                     \
@@ -464,12 +493,56 @@ static void JHwParcel_native_write ## Suffix ## Vector(                        \
     signalExceptionForError(env, err);                                         \
 }
 
+DEFINE_PARCEL_ARRAY_WRITER(Int8,jbyte)
+DEFINE_PARCEL_ARRAY_WRITER(Int16,jshort)
+DEFINE_PARCEL_ARRAY_WRITER(Int32,jint)
+DEFINE_PARCEL_ARRAY_WRITER(Int64,jlong)
+DEFINE_PARCEL_ARRAY_WRITER(Float,jfloat)
+DEFINE_PARCEL_ARRAY_WRITER(Double,jdouble)
+
 DEFINE_PARCEL_VECTOR_WRITER(Int8,jbyte)
 DEFINE_PARCEL_VECTOR_WRITER(Int16,jshort)
 DEFINE_PARCEL_VECTOR_WRITER(Int32,jint)
 DEFINE_PARCEL_VECTOR_WRITER(Int64,jlong)
 DEFINE_PARCEL_VECTOR_WRITER(Float,jfloat)
 DEFINE_PARCEL_VECTOR_WRITER(Double,jdouble)
+
+static void JHwParcel_native_writeBoolArray(
+        JNIEnv *env, jobject thiz, jint size, jbooleanArray valObj) {
+    if (valObj == NULL) {
+        jniThrowException(env, "java/lang/NullPointerException", NULL);
+        return;
+    }
+
+    jsize len = env->GetArrayLength(valObj);
+
+    if (len != size) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return;
+    }
+
+    sp<JHwParcel> impl = JHwParcel::GetNativeContext(env, thiz);
+
+    jboolean *src = env->GetBooleanArrayElements(valObj, nullptr);
+
+    bool *dst =
+        (bool *)impl->getStorage()->allocTemporaryStorage(size * sizeof(bool));
+
+    for (jint i = 0; i < size; ++i) {
+        dst[i] = src[i];
+    }
+
+    env->ReleaseBooleanArrayElements(valObj, src, 0 /* mode */);
+    src = nullptr;
+
+    hardware::Parcel *parcel = impl->getParcel();
+
+    size_t parentHandle;
+    status_t err = parcel->writeBuffer(
+            dst, size * sizeof(*dst), &parentHandle);
+
+    signalExceptionForError(env, err);
+}
 
 static void JHwParcel_native_writeBoolVector(
         JNIEnv *env, jobject thiz, jbooleanArray valObj) {
@@ -583,6 +656,31 @@ static jstring JHwParcel_native_readString(JNIEnv *env, jobject thiz) {
     return MakeStringObjFromHidlString(env, *s);
 }
 
+#define DEFINE_PARCEL_ARRAY_READER(Suffix,Type,NewType)                        \
+static Type ## Array JHwParcel_native_read ## Suffix ## Array(                 \
+        JNIEnv *env, jobject thiz, jint size) {                                \
+    hardware::Parcel *parcel =                                                 \
+        JHwParcel::GetNativeContext(env, thiz)->getParcel();                   \
+                                                                               \
+    size_t parentHandle;                                                       \
+    const Type *val;                                                           \
+    status_t err =                                                             \
+        parcel->readBuffer(                                                    \
+                size * sizeof(Type),                                           \
+                &parentHandle,                                                 \
+                reinterpret_cast<const void **>(&val));                        \
+                                                                               \
+    if (err != OK) {                                                           \
+        signalExceptionForError(env, err);                                     \
+        return NULL;                                                           \
+    }                                                                          \
+                                                                               \
+    Type ## Array valObj = env->New ## NewType ## Array(size);                 \
+    env->Set ## NewType ## ArrayRegion(valObj, 0, size, val);                  \
+                                                                               \
+    return valObj;                                                             \
+}
+
 #define DEFINE_PARCEL_VECTOR_READER(Suffix,Type,NewType)                       \
 static Type ## Array JHwParcel_native_read ## Suffix ## Vector(                \
         JNIEnv *env, jobject thiz) {                                           \
@@ -619,12 +717,46 @@ static Type ## Array JHwParcel_native_read ## Suffix ## Vector(                \
     return valObj;                                                             \
 }
 
+DEFINE_PARCEL_ARRAY_READER(Int8,jbyte,Byte)
+DEFINE_PARCEL_ARRAY_READER(Int16,jshort,Short)
+DEFINE_PARCEL_ARRAY_READER(Int32,jint,Int)
+DEFINE_PARCEL_ARRAY_READER(Int64,jlong,Long)
+DEFINE_PARCEL_ARRAY_READER(Float,jfloat,Float)
+DEFINE_PARCEL_ARRAY_READER(Double,jdouble,Double)
+
 DEFINE_PARCEL_VECTOR_READER(Int8,jbyte,Byte)
 DEFINE_PARCEL_VECTOR_READER(Int16,jshort,Short)
 DEFINE_PARCEL_VECTOR_READER(Int32,jint,Int)
 DEFINE_PARCEL_VECTOR_READER(Int64,jlong,Long)
 DEFINE_PARCEL_VECTOR_READER(Float,jfloat,Float)
 DEFINE_PARCEL_VECTOR_READER(Double,jdouble,Double)
+
+static jbooleanArray JHwParcel_native_readBoolArray(
+        JNIEnv *env, jobject thiz, jint size) {
+    hardware::Parcel *parcel =
+        JHwParcel::GetNativeContext(env, thiz)->getParcel();
+
+    size_t parentHandle;
+    const bool *val;
+    status_t err = parcel->readBuffer(
+            size * sizeof(bool),
+            &parentHandle,
+            reinterpret_cast<const void **>(&val));
+
+    if (err != OK) {
+        signalExceptionForError(env, err);
+        return NULL;
+    }
+
+    jbooleanArray valObj = env->NewBooleanArray(size);
+
+    for (jint i = 0; i < size; ++i) {
+        jboolean x = val[i];
+        env->SetBooleanArrayRegion(valObj, i, 1, &x);
+    }
+
+    return valObj;
+}
 
 static jbooleanArray JHwParcel_native_readBoolVector(
         JNIEnv *env, jobject thiz) {
@@ -886,12 +1018,19 @@ static JNINativeMethod gMethods[] = {
     { "writeString", "(Ljava/lang/String;)V",
         (void *)JHwParcel_native_writeString },
 
+    { "writeBoolArray", "(I[Z)V", (void *)JHwParcel_native_writeBoolArray },
     { "writeBoolVector", "([Z)V", (void *)JHwParcel_native_writeBoolVector },
+    { "writeInt8Array", "(I[B)V", (void *)JHwParcel_native_writeInt8Array },
     { "writeInt8Vector", "([B)V", (void *)JHwParcel_native_writeInt8Vector },
+    { "writeInt16Array", "(I[S)V", (void *)JHwParcel_native_writeInt16Array },
     { "writeInt16Vector", "([S)V", (void *)JHwParcel_native_writeInt16Vector },
+    { "writeInt32Array", "(I[I)V", (void *)JHwParcel_native_writeInt32Array },
     { "writeInt32Vector", "([I)V", (void *)JHwParcel_native_writeInt32Vector },
+    { "writeInt64Array", "(I[J)V", (void *)JHwParcel_native_writeInt64Array },
     { "writeInt64Vector", "([J)V", (void *)JHwParcel_native_writeInt64Vector },
+    { "writeFloatArray", "(I[F)V", (void *)JHwParcel_native_writeFloatArray },
     { "writeFloatVector", "([F)V", (void *)JHwParcel_native_writeFloatVector },
+    { "writeDoubleArray", "(I[D)V", (void *)JHwParcel_native_writeDoubleArray },
 
     { "writeDoubleVector", "([D)V",
         (void *)JHwParcel_native_writeDoubleVector },
@@ -939,6 +1078,14 @@ static JNINativeMethod gMethods[] = {
 
     { "readStringVectorAsArray", "()[Ljava/lang/String;",
         (void *)JHwParcel_native_readStringVector },
+
+    { "readBoolArray", "(I)[Z", (void *)JHwParcel_native_readBoolArray },
+    { "readInt8Array", "(I)[B", (void *)JHwParcel_native_readInt8Array },
+    { "readInt16Array", "(I)[S", (void *)JHwParcel_native_readInt16Array },
+    { "readInt32Array", "(I)[I", (void *)JHwParcel_native_readInt32Array },
+    { "readInt64Array", "(I)[J", (void *)JHwParcel_native_readInt64Array },
+    { "readFloatArray", "(I)[F", (void *)JHwParcel_native_readFloatArray },
+    { "readDoubleArray", "(I)[D", (void *)JHwParcel_native_readDoubleArray },
 
     { "readStrongBinder", "()L" PACKAGE_PATH "/IHwBinder;",
         (void *)JHwParcel_native_readStrongBinder },
