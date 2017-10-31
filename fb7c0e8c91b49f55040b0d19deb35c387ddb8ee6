@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49a38df6_a9fc7fed",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-31T18:50:49Z",
+      "side": 0,
+      "message": "Can you add to the documentation of the definition in frameworks/base/core/java/android/provider/Settings.java\n\n/**\n * Whether the Volte is enabled. If this setting is not set then we use\n * the Carrier Config value {@link CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL}.\n * \u003cp\u003e\n * Type: int (0 for false, 1 for true)\n * @hide\n */",
+      "range": {
+        "startLine": 1845,
+        "startChar": 38,
+        "endLine": 1845,
+        "endChar": 78
+      },
+      "revId": "fb7c0e8c91b49f55040b0d19deb35c387ddb8ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
