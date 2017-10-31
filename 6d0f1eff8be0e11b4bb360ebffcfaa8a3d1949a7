@@ -46,6 +46,30 @@
       "revId": "6d0f1eff8be0e11b4bb360ebffcfaa8a3d1949a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b8c07e2_af57ae92",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 18043,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-10-31T23:26:40Z",
+      "side": 0,
+      "message": "Thanks, Stanley! I tried generating API from git master and cherry-pick it to AOSP, and now it looks correct.\n\nHowever, the inconsistency is a problem, and the API council people suspect this is due to AOSP external/doclava/ diverging from MR1/master.",
+      "parentUuid": "080ed0ff_6c67c03f",
+      "range": {
+        "startLine": 18043,
+        "startChar": 0,
+        "endLine": 18043,
+        "endChar": 64
+      },
+      "revId": "6d0f1eff8be0e11b4bb360ebffcfaa8a3d1949a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
