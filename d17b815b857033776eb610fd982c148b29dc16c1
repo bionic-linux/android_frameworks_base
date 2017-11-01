@@ -46,6 +46,30 @@
       "revId": "d17b815b857033776eb610fd982c148b29dc16c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba789221_8e5b040d",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-11-01T23:41:02Z",
+      "side": 1,
+      "message": "Also, it only assumes that lft and rgt are IHwInterface, but there are no requirement that they have to be an IFoo.Proxy or IFoo.Stub (you can totally write your own IHwInterface class with asBinder() return null).",
+      "parentUuid": "076e8c92_1e835d07",
+      "range": {
+        "startLine": 180,
+        "startChar": 30,
+        "endLine": 180,
+        "endChar": 44
+      },
+      "revId": "d17b815b857033776eb610fd982c148b29dc16c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
