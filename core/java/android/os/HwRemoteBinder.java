@@ -63,4 +63,12 @@ public class HwRemoteBinder implements IHwBinder {
     }
 
     private long mNativeContext;
+
+    @Override
+    public final boolean equals(Object other) {
+        return (other instanceof HwRemoteBinder) && native_equals((HwRemoteBinder)other);
+    }
+    private native boolean native_equals(HwRemoteBinder rgt);
+    @Override
+    public native final int hashCode();
 }
