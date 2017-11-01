@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a994131c_5ad22aae",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-11-01T23:35:01Z",
+      "side": 1,
+      "message": "nit: lft.asBinder().equals(..) ?",
+      "range": {
+        "startLine": 180,
+        "startChar": 30,
+        "endLine": 180,
+        "endChar": 44
+      },
+      "revId": "d17b815b857033776eb610fd982c148b29dc16c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
