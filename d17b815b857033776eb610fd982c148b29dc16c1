@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c6caf800_1ccde25d",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-11-01T23:57:15Z",
+      "side": 1,
+      "message": "As I said in the other command, this should be IBase. Will fix in a follow-up PS.",
+      "range": {
+        "startLine": 170,
+        "startChar": 42,
+        "endLine": 170,
+        "endChar": 54
+      },
+      "revId": "d17b815b857033776eb610fd982c148b29dc16c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a994131c_5ad22aae",
         "filename": "core/java/android/os/HidlSupport.java",
         "patchSetId": 3
