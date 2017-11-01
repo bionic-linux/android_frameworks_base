@@ -22,6 +22,30 @@
       "revId": "d17b815b857033776eb610fd982c148b29dc16c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076e8c92_1e835d07",
+        "filename": "core/java/android/os/HidlSupport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-11-01T23:38:08Z",
+      "side": 1,
+      "message": "TECHNICALLY you can have this code:\n\nclass Foo extends IFoo.Stub {\n    public IHwBinder asBinder() { return null; }\n}\n\nbecause asBinder is not final. Whether it should be final or not is a different discussion. Here, let\u0027s not assume that lft.asBinder always return a non-null object.",
+      "parentUuid": "a994131c_5ad22aae",
+      "range": {
+        "startLine": 180,
+        "startChar": 30,
+        "endLine": 180,
+        "endChar": 44
+      },
+      "revId": "d17b815b857033776eb610fd982c148b29dc16c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
