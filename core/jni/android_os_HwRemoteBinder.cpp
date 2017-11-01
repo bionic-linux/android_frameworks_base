@@ -413,6 +413,35 @@ static jboolean JHwRemoteBinder_unlinkToDeath(JNIEnv* env, jobject thiz,
     return res;
 }
 
+// equals iff other is also a non-null android.os.HwRemoteBinder object
+// and getBinder() returns the same object.
+// In particular, if other is an android.os.HwBinder object (for stubs) then
+// it returns false.
+static jboolean JHwRemoteBinder_equals(JNIEnv* env, jobject thiz, jobject other)
+{
+    if (env->IsSameObject(thiz, other)) {
+        return true;
+    }
+    if (other == NULL) {
+        return false;
+    }
+
+    // HwRemoteBinder.equals is final, so checking instanceof is preferred.
+    ScopedLocalRef<jclass> clazz(env, FindClassOrDie(env, CLASS_PATH));
+    if (!env->IsInstanceOf(other, clazz.get())) {
+        return false;
+    }
+
+    return JHwRemoteBinder::GetNativeContext(env, thiz)->getBinder().get() ==
+           JHwRemoteBinder::GetNativeContext(env, other)->getBinder().get();
+}
+
+static jint JHwRemoteBinder_hashCode(JNIEnv* env, jobject thiz) {
+    jlong longHash = reinterpret_cast<jlong>(
+            JHwRemoteBinder::GetNativeContext(env, thiz)->getBinder().get());
+    return static_cast<jint>(longHash ^ (longHash >> 32)); // See Long.hashCode()
+}
+
 static JNINativeMethod gMethods[] = {
     { "native_init", "()J", (void *)JHwRemoteBinder_native_init },
 
@@ -430,6 +459,11 @@ static JNINativeMethod gMethods[] = {
     {"unlinkToDeath",
         "(Landroid/os/IHwBinder$DeathRecipient;)Z",
         (void*)JHwRemoteBinder_unlinkToDeath},
+
+    {"equals", "(Ljava/lang/Object;)Z",
+        (void*)JHwRemoteBinder_equals},
+
+    {"hashCode", "()I", (void*)JHwRemoteBinder_hashCode},
 };
 
 namespace android {
