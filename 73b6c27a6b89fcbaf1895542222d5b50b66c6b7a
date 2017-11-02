@@ -22,6 +22,29 @@
       "revId": "73b6c27a6b89fcbaf1895542222d5b50b66c6b7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54d0ab2_5f5db1fe",
+        "filename": "core/jni/android_os_HwRemoteBinder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-11-02T01:38:05Z",
+      "side": 1,
+      "message": "also, this comment still seems unnecessary, obviously you need to do something like this to collapse the long into an int",
+      "range": {
+        "startLine": 455,
+        "startChar": 67,
+        "endLine": 455,
+        "endChar": 81
+      },
+      "revId": "73b6c27a6b89fcbaf1895542222d5b50b66c6b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
