@@ -78,7 +78,10 @@ public final class IpSecAlgorithm implements Parcelable {
     /**
      * AES-GCM Authentication/Integrity + Encryption/Ciphering Algorithm.
      *
-     * <p>Valid lengths for this key are {128, 192, 256}.
+     * <p>Valid lengths for keying material are {160, 224, 288}.
+     *
+     * <p>Keying material length consists of a 128, 192, or 256 bit AES key, followed by
+     * a 32-bit salt. The salt must be unique per invocation with the same key.
      *
      * <p>Valid ICV (truncation) lengths are {64, 96, 128}.
      */
