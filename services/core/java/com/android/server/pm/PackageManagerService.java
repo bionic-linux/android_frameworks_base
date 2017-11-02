@@ -17579,6 +17579,13 @@ public class PackageManagerService extends IPackageManager.Stub
             if (newPackage != null) {
                 removeInstalledPackageLI(newPackage, true);
             }
+
+            synchronized (mPackages) {
+                if (disabledSystem) {
+                    enableSystemPackageLPw(deletedPackage);
+                }
+            }
+
             // Add back the old system package
             try {
                 scanPackageTracedLI(deletedPackage, policyFlags, SCAN_UPDATE_SIGNATURE, 0, user);
@@ -17587,10 +17594,6 @@ public class PackageManagerService extends IPackageManager.Stub
             }
 
             synchronized (mPackages) {
-                if (disabledSystem) {
-                    enableSystemPackageLPw(deletedPackage);
-                }
-
                 // Ensure the installer package name up to date
                 setInstallerPackageNameLPw(deletedPackage, installerPackageName);
 
