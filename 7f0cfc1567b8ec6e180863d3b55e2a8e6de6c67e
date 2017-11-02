@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e9dbb69_8c5b7aba",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-02T21:00:30Z",
+      "side": 1,
+      "message": "The spec seems to use the terms KEYMAT and \"keying material\" interchangeably. Probably we would prefer the latter in a public API.",
+      "range": {
+        "startLine": 81,
+        "startChar": 28,
+        "endLine": 81,
+        "endChar": 34
+      },
+      "revId": "7f0cfc1567b8ec6e180863d3b55e2a8e6de6c67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f4680f_f145fe0e",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-02T21:00:30Z",
+      "side": 1,
+      "message": "nit: followed by",
+      "range": {
+        "startLine": 83,
+        "startChar": 63,
+        "endLine": 83,
+        "endChar": 66
+      },
+      "revId": "7f0cfc1567b8ec6e180863d3b55e2a8e6de6c67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d305ab70_b7d58b0a",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-02T21:00:30Z",
+      "side": 1,
+      "message": "nit: 128, 192, or 256",
+      "range": {
+        "startLine": 83,
+        "startChar": 38,
+        "endLine": 83,
+        "endChar": 49
+      },
+      "revId": "7f0cfc1567b8ec6e180863d3b55e2a8e6de6c67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6dfdd7_4caa0e5b",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-02T21:00:30Z",
+      "side": 1,
+      "message": "nit: missing .",
+      "range": {
+        "startLine": 84,
+        "startChar": 43,
+        "endLine": 84,
+        "endChar": 46
+      },
+      "revId": "7f0cfc1567b8ec6e180863d3b55e2a8e6de6c67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
