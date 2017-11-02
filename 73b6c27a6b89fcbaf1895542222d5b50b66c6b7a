@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc6dc50b_7fa23cf6",
+        "filename": "core/jni/android_os_HwRemoteBinder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-11-02T01:37:26Z",
+      "side": 1,
+      "message": "this may be a useful method in other cases. libhidljnisupport one day, maybe :\u0027\u0027D :(",
+      "range": {
+        "startLine": 420,
+        "startChar": 35,
+        "endLine": 420,
+        "endChar": 42
+      },
+      "revId": "73b6c27a6b89fcbaf1895542222d5b50b66c6b7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
