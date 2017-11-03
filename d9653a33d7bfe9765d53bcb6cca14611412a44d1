@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d428caed_9464238d",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-03T00:08:11Z",
+      "side": 1,
+      "message": "It\u0027s always a good idea for something weird like this if you mention the RFC that specifies the format. It will also probably help in the API council review.",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 79
+      },
+      "revId": "d9653a33d7bfe9765d53bcb6cca14611412a44d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
