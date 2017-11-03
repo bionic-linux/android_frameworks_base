@@ -189,6 +189,10 @@ public abstract class ConnectionService extends Service {
     private Object mIdSyncRoot = new Object();
     private int mId = 0;
 
+    // Used by #onHandoverFailed() to pass an error when there are some permission errors while
+    // trying to do handover.
+    public static int HANDOVER_FAILURE_DEST_INVALID_PERM = 3;
+
     private final IBinder mBinder = new IConnectionService.Stub() {
         @Override
         public void addConnectionServiceAdapter(IConnectionServiceAdapter adapter,
@@ -2030,6 +2034,42 @@ public abstract class ConnectionService extends Service {
             PhoneAccountHandle connectionManagerPhoneAccount,
             ConnectionRequest request) {
         return null;
+    }
+
+    /**
+     * Called by Telecom on the initiating side of the handover to create an instance of a
+     * handover connection.
+     * @param fromPhoneAccountHandle {@link PhoneAccountHandle} associated with the
+     *                               ConnectionService which needs to handover the call.
+     * @param request Details about the call which needs to be handover.
+     * @return Connection object corresponding to the handover call.
+     */
+    public Connection onCreateOutgoingHandoverConnection(PhoneAccountHandle fromPhoneAccountHandle,
+                                                         ConnectionRequest request) {
+        return null;
+    }
+
+    /**
+     * Called by Telecom on the receiving side of the handover to request the
+     * {@link ConnectionService} to create an instance of a handover connection.
+     * @param fromPhoneAccountHandle {@link PhoneAccountHandle} associated with the
+     *                               ConnectionService which needs to handover the call.
+     * @param request Details about the call which needs to be handover.
+     * @return Connection object corresponding to the handover call.
+     */
+    public Connection onCreateIncomingHandoverConnection(PhoneAccountHandle fromPhoneAccountHandle,
+                                                         ConnectionRequest request) {
+        return null;
+    }
+
+    /**
+     * Called by Telecom in response to a TelecomManager#acceptHandover()
+     * invocation which failed.
+     * @param request Details about the call which needs to be handover.
+     * @param error Reason for handover failure.
+     */
+    public void onHandoverFailed(ConnectionRequest request, int error) {
+        return;
     }
 
     /**
