@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f3e79bb_b6abd3fb",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-11-03T17:31:28Z",
+      "side": 1,
+      "message": "- Intentionally not defined as file name",
+      "range": {
+        "startLine": 2386,
+        "startChar": 56,
+        "endLine": 2386,
+        "endChar": 63
+      },
+      "revId": "9cadc13e8ecf2aadc5198050065747176f7cde81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb9b5a1d_0156df70",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2389,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-11-03T17:31:28Z",
+      "side": 1,
+      "message": "It would be great if we could get rid of this restriction and pass library and options down as separate fields.",
+      "revId": "9cadc13e8ecf2aadc5198050065747176f7cde81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
