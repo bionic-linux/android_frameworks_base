@@ -189,6 +189,10 @@ public abstract class ConnectionService extends Service {
     private Object mIdSyncRoot = new Object();
     private int mId = 0;
 
+    // Used by #onHandoverFailed() to pass an error when current call and destination call did
+    // not match.
+    public static int HANDOVER_FAILURE_DEST_INVALID = 3;
+
     private final IBinder mBinder = new IConnectionService.Stub() {
         @Override
         public void addConnectionServiceAdapter(IConnectionServiceAdapter adapter,
@@ -2030,6 +2034,36 @@ public abstract class ConnectionService extends Service {
             PhoneAccountHandle connectionManagerPhoneAccount,
             ConnectionRequest request) {
         return null;
+    }
+
+    /**
+     * Called by Telecom on the initiating side of the handover to request the
+     * {@link ConnectionService} identified by dstAcct to create an instance of a
+     * handover connection.
+     * @param request Details about the call which needs to be handover.
+     * @return Connection object corresponding to the handover call.
+     */
+    public Connection onCreateOutgoingHandoverConnection(ConnectionRequest request) {
+        return null;
+    }
+
+    /**
+     * Called by Telecom on the receiving side of the handover to request the
+     * {@link ConnectionService} create an instance of a handover connection.
+     * @param request Details about the call which needs to be handover.
+     * @return Connection object corresponding to the handover call.
+     */
+    public Connection onCreateIncomingHandoverConnection(ConnectionRequest request) {
+        return null;
+    }
+
+    /**
+     * Called by Telecom in response to a TelecomManager#acceptHandover()
+     * invocation which failed.
+     * @param request Details about the call which needs to be handover.
+     */
+    public void onHandoverFailed(ConnectionRequest request) {
+        return;
     }
 
     /**
