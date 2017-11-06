@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae4b2312_6914e24d",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2017-11-06T19:32:22Z",
+      "side": 1,
+      "message": "When can/should this method be called?",
+      "range": {
+        "startLine": 2379,
+        "startChar": 7,
+        "endLine": 2379,
+        "endChar": 64
+      },
+      "revId": "fd8ed85adb84b2822eb2a15550b17976758e44dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef7da466_2f28d3c9",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2382,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2017-11-06T19:32:22Z",
+      "side": 1,
+      "message": "What are these options?",
+      "range": {
+        "startLine": 2382,
+        "startChar": 14,
+        "endLine": 2382,
+        "endChar": 49
+      },
+      "revId": "fd8ed85adb84b2822eb2a15550b17976758e44dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
