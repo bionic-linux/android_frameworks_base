@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "cd7e5a8f_49a4af26",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-08T17:42:34Z",
+      "side": 1,
+      "message": "Ivan,\n\nMaybe we provide a builder for this kind of class?\n\n(Parameters very long, of the same type)",
+      "range": {
+        "startLine": 359,
+        "startChar": 31,
+        "endLine": 360,
+        "endChar": 92
+      },
+      "revId": "d95524ac4e1eba69a6d4ac4ee018aa88ea6b2aea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be3db3b3_7af0c759",
         "filename": "core/res/AndroidManifest.xml",
         "patchSetId": 7
