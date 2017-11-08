@@ -22,6 +22,30 @@
       "revId": "fb7c0e8c91b49f55040b0d19deb35c387ddb8ee6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0c45250_3885bffe",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-11-08T10:39:59Z",
+      "side": 0,
+      "message": "Okay. I updated it in the latest patchset.",
+      "parentUuid": "49a38df6_a9fc7fed",
+      "range": {
+        "startLine": 1845,
+        "startChar": 38,
+        "endLine": 1845,
+        "endChar": 78
+      },
+      "revId": "fb7c0e8c91b49f55040b0d19deb35c387ddb8ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
