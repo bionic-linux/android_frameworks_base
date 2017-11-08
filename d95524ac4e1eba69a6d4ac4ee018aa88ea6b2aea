@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "714bdae4_0c0987aa",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-11-08T11:25:09Z",
+      "side": 1,
+      "message": "Hm... Why was it changed?\nThat is, have a look at the other profiles, e.g. BluetoothMapClient, BluetoothA2dp, BluetoothPan, BluetoothPbap, BluetoothHeadsetClient: all of them have this constant in the form of \"android.bluetooth.{$profile_name}.profile.action.CONNECTION_STATE_CHANGED\", so that we can filter intents by profile-specific actions.",
+      "range": {
+        "startLine": 65,
+        "startChar": 13,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "d95524ac4e1eba69a6d4ac4ee018aa88ea6b2aea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be3db3b3_7af0c759",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-11-08T11:25:09Z",
+      "side": 1,
+      "message": "Same question here. Looking at the constants around, it doesn\u0027t make a lot of sense.",
+      "range": {
+        "startLine": 201,
+        "startChar": 22,
+        "endLine": 201,
+        "endChar": 71
+      },
+      "revId": "d95524ac4e1eba69a6d4ac4ee018aa88ea6b2aea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
