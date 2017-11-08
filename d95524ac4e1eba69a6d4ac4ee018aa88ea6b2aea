@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4cadc425_747e74f2",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-11-08T18:09:13Z",
+      "side": 1,
+      "message": "I like the idea, especially for HidDeviceAppQosSettings: that six-integer constructor without a javadoc is kind of intimidating. :)\nNit: For the registerApp method we should really document which parameters are required (sdp and callback) and which are optional (inQos/outQos).",
+      "parentUuid": "cd7e5a8f_49a4af26",
+      "range": {
+        "startLine": 359,
+        "startChar": 31,
+        "endLine": 360,
+        "endChar": 92
+      },
+      "revId": "d95524ac4e1eba69a6d4ac4ee018aa88ea6b2aea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be3db3b3_7af0c759",
         "filename": "core/res/AndroidManifest.xml",
         "patchSetId": 7
