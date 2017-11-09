@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d9cd2be_895935c6",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-11-09T10:53:08Z",
+      "side": 0,
+      "message": "Please don\u0027t forget to bring this back: right now the new action name is too generic.",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "107141be5ce933064b30c94aa82cd55170cba88d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
