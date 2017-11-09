@@ -307,7 +307,12 @@ public class NetworkRequest implements Parcelable {
         return 0;
     }
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(networkCapabilities, flags);
+        if (networkCapabilities != null) {
+            dest.writeInt(1);
+            networkCapabilities.writeToParcel(dest, flags);
+        } else {
+            dest.writeInt(0);
+        }
         dest.writeInt(legacyType);
         dest.writeInt(requestId);
         dest.writeString(type.name());
@@ -315,7 +320,12 @@ public class NetworkRequest implements Parcelable {
     public static final Creator<NetworkRequest> CREATOR =
         new Creator<NetworkRequest>() {
             public NetworkRequest createFromParcel(Parcel in) {
-                NetworkCapabilities nc = (NetworkCapabilities)in.readParcelable(null);
+                final NetworkCapabilities nc;
+                if (in.readInt() != 0) {
+                    nc = NetworkCapabilities.CREATOR.createFromParcel(in);
+                } else {
+                    nc = null;
+                }
                 int legacyType = in.readInt();
                 int requestId = in.readInt();
                 Type type = Type.valueOf(in.readString());  // IllegalArgumentException if invalid.
