@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e40a826_33721a82",
+        "filename": "core/java/android/view/autofill/AutofillManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2017-11-09T20:26:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure a cleaner is the best approach here, it\u0027s an internal Java class and it doesn\u0027t seems to be used much on framework.\n\nIs there any reason you\u0027re not using finalize() instead?",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 42
+      },
+      "revId": "1772d99854068b3d932762146113baed01b1a381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba349ce7_805609d4",
+        "filename": "services/autofill/java/com/android/server/autofill/AutofillManagerServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2017-11-09T20:26:51Z",
+      "side": 1,
+      "message": "I think  should also set mClients to null here, as it\u0027s in an unusable state now (it should be fine because the ServiceImpl itself is destroyed, but I guess it doesn\u0027t hurt to be cautions)",
+      "range": {
+        "startLine": 488,
+        "startChar": 21,
+        "endLine": 488,
+        "endChar": 25
+      },
+      "revId": "1772d99854068b3d932762146113baed01b1a381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
