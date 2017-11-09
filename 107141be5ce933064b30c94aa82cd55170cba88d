@@ -70,6 +70,30 @@
       "revId": "107141be5ce933064b30c94aa82cd55170cba88d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "668c1c0d_80572e0a",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-11-09T17:55:14Z",
+      "side": 0,
+      "message": "I would rather keep it consistent with the other profiles\u0027 names. Consider the existing examples which look like this:\n\nIntentFilter filter \u003d new IntentFilter();\nfilter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED);\nfilter.addAction(BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);\nfilter.addAction(BluetoothHidDevice.ACTION_CONNECTION_STATE_CHANGED);\n\nwhich is consistent, readable and neat. If we change the constant name, we\u0027ll get:\n\nIntentFilter filter \u003d new IntentFilter();\nfilter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED);\nfilter.addAction(BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);\nfilter.addAction(BluetoothHidDevice.HID_DEVICE_PROFILE_ACTION_CONNECTION_STATE_CHANGED);\n\nwhich is hard to read, tautological and long.",
+      "parentUuid": "4fad21ab_15d7348e",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "107141be5ce933064b30c94aa82cd55170cba88d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
