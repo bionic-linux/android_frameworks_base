@@ -52,6 +52,8 @@ import android.telephony.VisualVoicemailService.VisualVoicemailTask;
 import android.telephony.ims.feature.ImsFeature;
 import android.util.Log;
 
+import com.android.ims.internal.IImsMMTelFeature;
+import com.android.ims.internal.IImsRcsFeature;
 import com.android.ims.internal.IImsServiceController;
 import com.android.ims.internal.IImsServiceFeatureListener;
 import com.android.internal.annotations.VisibleForTesting;
@@ -4584,27 +4586,78 @@ public class TelephonyManager {
     public @interface Feature {}
 
     /**
-     * Returns the {@link IImsServiceController} that corresponds to the given slot Id and IMS
-     * feature or {@link null} if the service is not available. If an ImsServiceController is
-     * available, the {@link IImsServiceFeatureListener} callback is registered as a listener for
-     * feature updates.
-     * @param slotIndex The SIM slot that we are requesting the {@link IImsServiceController} for.
-     * @param feature The IMS Feature we are requesting, corresponding to {@link ImsFeature}.
+     * Returns the {@link IImsMMTelFeature} that corresponds to the given slot Id and MMTel
+     * feature or {@link null} if the service is not available. If an MMTelFeature is available, the
+     * {@link IImsServiceFeatureListener} callback is registered as a listener for feature updates.
+     * @param slotIndex The SIM slot that we are requesting the {@link IImsMMTelFeature} for.
      * @param callback Listener that will send updates to ImsManager when there are updates to
      * ImsServiceController.
-     * @return {@link IImsServiceController} interface for the feature specified or {@link null} if
+     * @return {@link IImsMMTelFeature} interface for the feature specified or {@link null} if
      * it is unavailable.
      * @hide
      */
-    public IImsServiceController getImsServiceControllerAndListen(int slotIndex, @Feature int feature,
+    public IImsMMTelFeature getImsMMTelFeatureAndListen(int slotIndex,
             IImsServiceFeatureListener callback) {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.getImsServiceControllerAndListen(slotIndex, feature, callback);
+                return telephony.getMMTelFeatureAndListen(slotIndex, callback);
             }
         } catch (RemoteException e) {
-            Rlog.e(TAG, "getImsServiceControllerAndListen, RemoteException: " + e.getMessage());
+            Rlog.e(TAG, "getImsMMTelFeatureAndListen, RemoteException: "
+                    + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Returns the {@link IImsMMTelFeature} that corresponds to the given slot Id and MMTel
+     * feature for emergency calling or {@link null} if the service is not available. If an
+     * MMTelFeature is available, the {@link IImsServiceFeatureListener} callback is registered as a
+     * listener for feature updates.
+     * @param slotIndex The SIM slot that we are requesting the {@link IImsMMTelFeature} for.
+     * @param callback Listener that will send updates to ImsManager when there are updates to
+     * ImsServiceController.
+     * @return {@link IImsMMTelFeature} interface for the feature specified or {@link null} if
+     * it is unavailable.
+     * @hide
+     */
+    public IImsMMTelFeature getImsEmergencyMMTelFeatureAndListen(int slotIndex,
+            IImsServiceFeatureListener callback) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                return telephony.getEmergencyMMTelFeatureAndListen(slotIndex, callback);
+            }
+        } catch (RemoteException e) {
+            Rlog.e(TAG, "getImsEmergencyMMTelFeatureAndListen, RemoteException: "
+                    + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Returns the {@link IImsRcsFeature} that corresponds to the given slot Id and RCS
+     * feature for emergency calling or {@link null} if the service is not available. If an
+     * RcsFeature is available, the {@link IImsServiceFeatureListener} callback is registered as a
+     * listener for feature updates.
+     * @param slotIndex The SIM slot that we are requesting the {@link IImsRcsFeature} for.
+     * @param callback Listener that will send updates to ImsManager when there are updates to
+     * ImsServiceController.
+     * @return {@link IImsRcsFeature} interface for the feature specified or {@link null} if
+     * it is unavailable.
+     * @hide
+     */
+    public IImsRcsFeature getImsRcsFeatureAndListen(int slotIndex,
+            IImsServiceFeatureListener callback) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                return telephony.getRcsFeatureAndListen(slotIndex, callback);
+            }
+        } catch (RemoteException e) {
+            Rlog.e(TAG, "getImsRcsFeatureAndListen, RemoteException: "
+                    + e.getMessage());
         }
         return null;
     }
