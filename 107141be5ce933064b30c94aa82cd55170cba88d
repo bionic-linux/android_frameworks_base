@@ -22,6 +22,30 @@
       "revId": "107141be5ce933064b30c94aa82cd55170cba88d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fad21ab_15d7348e",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-09T17:48:39Z",
+      "side": 0,
+      "message": "How about, we change the constant name to \nHID_DEVICE_PROFILE_ACTION_CONNECTION_STATE_CHANGED ?",
+      "parentUuid": "9d9cd2be_895935c6",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 49
+      },
+      "revId": "107141be5ce933064b30c94aa82cd55170cba88d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
