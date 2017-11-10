@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e60fd187_fb6704ab",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4616,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-10T21:35:40Z",
+      "side": 1,
+      "message": "is it a listener or a callback?",
+      "range": {
+        "startLine": 4616,
+        "startChar": 73,
+        "endLine": 4616,
+        "endChar": 81
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "065b8749_2f9f224a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4621,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-10T21:35:40Z",
+      "side": 1,
+      "message": "@code null?",
+      "range": {
+        "startLine": 4621,
+        "startChar": 80,
+        "endLine": 4621,
+        "endChar": 90
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9176c941_b71c96a2",
+        "filename": "telephony/java/android/telephony/ims/ImsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-10T21:35:40Z",
+      "side": 1,
+      "message": "Might be good to mention that the inner array is indexed by feature id",
+      "range": {
+        "startLine": 83,
+        "startChar": 27,
+        "endLine": 83,
+        "endChar": 42
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
