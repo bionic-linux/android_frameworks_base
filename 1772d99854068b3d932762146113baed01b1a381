@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a939fce_b42a526a",
+        "filename": "core/java/android/view/autofill/AutofillManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2017-11-10T03:37:10Z",
+      "side": 1,
+      "message": "At first, I used finalize().\nBut execution order of finalize() caused an issue.\nSometimes BinderProxy#finalize() of mService is called earlier than AutofillManager#finalize(). We can\u0027t call mService.removeClient() from AutofillManager#finalize().\n\nSo I use Cleaner. GC doesn\u0027t release Cleaner object until AutofillManager is released or Cleaner#clean() is called. And the Cleaner object refers mService. So the Cleaner object ensure calling mService.removeClient().",
+      "parentUuid": "1e40a826_33721a82",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 42
+      },
+      "revId": "1772d99854068b3d932762146113baed01b1a381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba349ce7_805609d4",
         "filename": "services/autofill/java/com/android/server/autofill/AutofillManagerServiceImpl.java",
         "patchSetId": 2
