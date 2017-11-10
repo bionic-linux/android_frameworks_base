@@ -68,6 +68,46 @@
       "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95a60a24_2d3439aa",
+        "filename": "telephony/java/android/telephony/ims/ImsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-11-10T23:30:46Z",
+      "side": 1,
+      "message": "nit: nullable",
+      "range": {
+        "startLine": 136,
+        "startChar": 29,
+        "endLine": 136,
+        "endChar": 64
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19f4d03f_a880b3e0",
+        "filename": "telephony/java/android/telephony/ims/feature/MMTelFeature.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061207
+      },
+      "writtenOn": "2017-11-10T23:30:46Z",
+      "side": 1,
+      "message": "Do we not need to enforce permissions here?",
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
