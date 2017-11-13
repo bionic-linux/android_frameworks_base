@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "365745d2_82cc50cf",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4599,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-13T18:46:59Z",
+      "side": 1,
+      "message": "I put these methods in TelephonyManager with the intention that this API will never become public, perhaps I can just use these methods from ITelephony directly...\n\nThe user will ever only interact with ImsManager",
+      "parentUuid": "5eecd00d_387d3e1e",
+      "range": {
+        "startLine": 4599,
+        "startChar": 28,
+        "endLine": 4599,
+        "endChar": 55
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60fd187_fb6704ab",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -136,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "95de8d12_53b94f6f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4624,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-13T18:46:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b778dd_49730e30",
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c70ff359_9b668c96",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -147,6 +189,30 @@
       "writtenOn": "2017-11-13T18:25:29Z",
       "side": 1,
       "message": "As per offline discussion with brad... we no longer need to support a separate Emergency MMTel feature, so I guess this goes away in a future CL?",
+      "range": {
+        "startLine": 4625,
+        "startChar": 28,
+        "endLine": 4625,
+        "endChar": 64
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07264b10_654b376f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4625,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-13T18:46:59Z",
+      "side": 1,
+      "message": "Yep, going away",
+      "parentUuid": "c70ff359_9b668c96",
       "range": {
         "startLine": 4625,
         "startChar": 28,
