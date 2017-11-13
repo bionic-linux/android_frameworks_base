@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5eecd00d_387d3e1e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4599,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-13T18:25:29Z",
+      "side": 1,
+      "message": "While I always defer to the wisdom of API council, it feels strange to me to be getting IMS feature stuff from TelephonyManager directly. It feels (to me) like it should be at least part of an inner class or something that groups these methods. Having it in a separate file (even if it still goes through phoneinterfacecontroller) seems cleaner still. Is this not the kind of thing for which we can re-purpose IMS manager?",
+      "range": {
+        "startLine": 4599,
+        "startChar": 28,
+        "endLine": 4599,
+        "endChar": 55
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60fd187_fb6704ab",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -89,6 +112,46 @@
         "startChar": 80,
         "endLine": 4621,
         "endChar": 90
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6b778dd_49730e30",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4624,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-13T18:25:29Z",
+      "side": 1,
+      "message": "suggest @Nullable annotation.",
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c70ff359_9b668c96",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4625,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-13T18:25:29Z",
+      "side": 1,
+      "message": "As per offline discussion with brad... we no longer need to support a separate Emergency MMTel feature, so I guess this goes away in a future CL?",
+      "range": {
+        "startLine": 4625,
+        "startChar": 28,
+        "endLine": 4625,
+        "endChar": 64
       },
       "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -219,6 +282,29 @@
       "side": 1,
       "message": "The contained AIDL is only accessible via the ImsService interface, which has permissions gating access.",
       "parentUuid": "19f4d03f_a880b3e0",
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c099a18_72104bd4",
+        "filename": "telephony/java/com/android/ims/internal/IImsMMTelFeature.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-11-13T18:25:29Z",
+      "side": 1,
+      "message": "I know this is all legacy and subject to significant change. I\u0027m very interested to see what that looks like.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 50
+      },
       "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
