@@ -374,6 +374,30 @@
       "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "660b8f69_1aa2ca6a",
+        "filename": "telephony/java/com/android/ims/internal/IImsMMTelFeature.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-13T18:48:12Z",
+      "side": 1,
+      "message": "see Appendix A of go/ims-apis-design! :)",
+      "parentUuid": "1c099a18_72104bd4",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
