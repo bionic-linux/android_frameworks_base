@@ -108,6 +108,24 @@
       "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00204179_ebd061c0",
+        "filename": "telephony/java/android/telephony/ims/feature/MMTelFeature.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-11-13T17:15:35Z",
+      "side": 1,
+      "message": "The contained AIDL is only accessible via the ImsService interface, which has permissions gating access.",
+      "parentUuid": "19f4d03f_a880b3e0",
+      "revId": "1f56910f2dbbd7bcae9d006dba56b554e01951a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
