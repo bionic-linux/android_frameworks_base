@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ea913ff_1421f86f",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 39089,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "already in Call.Callback?",
+      "range": {
+        "startLine": 39089,
+        "startChar": 0,
+        "endLine": 39089,
+        "endChar": 58
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c143ca03_56312ae6",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "Would be good to have an intdef here",
+      "range": {
+        "startLine": 1035,
+        "startChar": 48,
+        "endLine": 1035,
+        "endChar": 65
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c884c23_4217ece9",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "link",
+      "range": {
+        "startLine": 1412,
+        "startChar": 38,
+        "endLine": 1412,
+        "endChar": 42
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0e12235_c7914412",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "@code",
+      "range": {
+        "startLine": 1413,
+        "startChar": 10,
+        "endLine": 1413,
+        "endChar": 18
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac3b632c_f27284e5",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "If this is somehow different from the one in Call.Callback, write down why/how it\u0027s different (since this is exposed to 3pty devs)",
+      "range": {
+        "startLine": 192,
+        "startChar": 5,
+        "endLine": 193,
+        "endChar": 29
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "636f4083_e033b9ed",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "@link",
+      "range": {
+        "startLine": 2058,
+        "startChar": 15,
+        "endLine": 2058,
+        "endChar": 25
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "529a877f_64db6b9e",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "@link",
+      "range": {
+        "startLine": 2066,
+        "startChar": 42,
+        "endLine": 2066,
+        "endChar": 73
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4b590b9_4892771a",
+        "filename": "telecomm/java/android/telecom/InCallAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "@link",
+      "range": {
+        "startLine": 441,
+        "startChar": 36,
+        "endLine": 441,
+        "endChar": 40
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca26c654_47a135f0",
+        "filename": "telecomm/java/android/telecom/PhoneAccount.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "This field is still hidden -- if the new API deprecates it, you should remove the reference to it so that the doc compiler doesn\u0027t complain",
+      "range": {
+        "startLine": 89,
+        "startChar": 23,
+        "endLine": 89,
+        "endChar": 74
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45140f47_158a3451",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "handover",
+      "range": {
+        "startLine": 1759,
+        "startChar": 63,
+        "endLine": 1759,
+        "endChar": 72
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "986bad95_3634abb6",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1771,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "This is sorta redundant -- CAPABILITY_SELF_MANAGED is how a PhoneAccount declares its connection service as a self-managed one",
+      "range": {
+        "startLine": 1770,
+        "startChar": 96,
+        "endLine": 1771,
+        "endChar": 90
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34b862b6_1f0bf71f",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-11-14T02:01:38Z",
+      "side": 1,
+      "message": "@link android.net.Uri (since java.net.URI is a different class unfortunately...)",
+      "range": {
+        "startLine": 1774,
+        "startChar": 26,
+        "endLine": 1774,
+        "endChar": 29
+      },
+      "revId": "b02d90512766191413ca6435c9e014a7d86525f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
