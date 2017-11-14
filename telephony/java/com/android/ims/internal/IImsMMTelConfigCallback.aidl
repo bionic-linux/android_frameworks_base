@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 The Android Open Source Project
+ * Copyright (c) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
-
 package com.android.ims.internal;
 
-import com.android.ims.internal.IImsConfigCallback;
+import android.telephony.ims.MMTelCapabilityConfig;
 
 /**
- * See {@link android.telephony.ims.stub.ImsConfigImplBase} for more information.
- *
  * {@hide}
  */
-oneway interface IImsConfig {
-
-    void addImsConfigCallback(IImsConfigCallback c);
-    void setProvisionedValue(int item, int value);
-    void setProvisionedStringValue(int item, String value);
-    void getProvisionedValue(int item, IImsConfigCallback c);
+oneway interface IImsMMTelConfigCallback {
+    void onQueryCapabilities(MMTelCapabilityConfig c);
+    void onSetCapabilityValues(int result, MMTelCapabilityConfig c);
+    void onCapabilityValuesChanged(MMTelCapabilityConfig c);
 }

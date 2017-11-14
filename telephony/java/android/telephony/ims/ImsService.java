@@ -26,9 +26,11 @@ import android.telephony.CarrierConfigManager;
 import android.telephony.ims.feature.ImsFeature;
 import android.telephony.ims.feature.MMTelFeature;
 import android.telephony.ims.feature.RcsFeature;
+import android.telephony.ims.stub.ImsConfigImplBase;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.android.ims.internal.IImsConfig;
 import com.android.ims.internal.IImsFeatureStatusCallback;
 import com.android.ims.internal.IImsMMTelFeature;
 import com.android.ims.internal.IImsRcsFeature;
@@ -112,6 +114,11 @@ public class ImsService extends Service {
         public void removeImsFeature(int slotId, int featureType, IImsFeatureStatusCallback c)
                 throws RemoteException {
             ImsService.this.removeImsFeature(slotId, featureType, c);
+        }
+
+        @Override
+        public IImsConfig getConfig(int slotId) {
+            return ImsService.this.getConfig(slotId).getBinder();
         }
     };
 
@@ -235,5 +242,13 @@ public class ImsService extends Service {
      */
     public @Nullable RcsFeature onCreateRcsFeature(int slotId) {
         return null;
+    }
+
+    /**
+     * @return TBD
+     * @hide
+     */
+    public ImsConfigImplBase getConfig(int slotId) {
+        return new ImsConfigImplBase();
     }
 }

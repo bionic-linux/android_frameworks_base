@@ -14,13 +14,12 @@
  * limitations under the License
  */
 
-package android.telephony.ims.stub;
+package android.telephony.ims.compat.stub;
 
 import android.os.RemoteException;
 
 import com.android.ims.ImsConfig;
-import com.android.ims.internal.IImsConfig;
-import com.android.ims.internal.IImsConfigCallback;
+import com.android.ims.ImsConfigListener;
 
 /**
  * Base implementation of ImsConfig, which implements stub versions of the methods
@@ -37,32 +36,7 @@ import com.android.ims.internal.IImsConfigCallback;
  * @hide
  */
 
-public class ImsConfigImplBase {
-
-    public final IImsConfig mImsConfigBinder = new IImsConfig.Stub() {
-        @Override
-        public void addImsConfigCallback(IImsConfigCallback c) throws RemoteException {
-
-        }
-
-        @Override
-        public void setProvisionedValue(int item, int value) throws RemoteException {
-
-        }
-
-        @Override
-        public void setProvisionedStringValue(int item, String value) throws RemoteException {
-
-        }
-
-        @Override
-        public void getProvisionedValue(int item, IImsConfigCallback c) throws RemoteException {
-        }
-    };
-
-    public IImsConfig getBinder() {
-        return mImsConfigBinder;
-    }
+public class ImsConfigImplBase extends android.telephony.ims.stub.ImsConfigImplBase{
 
     /**
      * Gets the value for ims service/capabilities parameters from the provisioned
@@ -71,6 +45,7 @@ public class ImsConfigImplBase {
      * @param item, as defined in com.android.ims.ImsConfig#ConfigConstants.
      * @return value in Integer format.
      */
+    @Override
     public int getProvisionedValue(int item) throws RemoteException {
         return -1;
     }
@@ -82,6 +57,7 @@ public class ImsConfigImplBase {
      * @param item, as defined in com.android.ims.ImsConfig#ConfigConstants.
      * @return value in String format.
      */
+    @Override
     public String getProvisionedStringValue(int item) throws RemoteException {
         return null;
     }
@@ -95,6 +71,7 @@ public class ImsConfigImplBase {
      * @param value in Integer format.
      * @return as defined in com.android.ims.ImsConfig#OperationStatusConstants.
      */
+    @Override
     public int setProvisionedValue(int item, int value) throws RemoteException {
         return ImsConfig.OperationStatusConstants.FAILED;
     }
@@ -108,7 +85,35 @@ public class ImsConfigImplBase {
      * @param value in String format.
      * @return as defined in com.android.ims.ImsConfig#OperationStatusConstants.
      */
+    @Override
     public int setProvisionedStringValue(int item, String value) throws RemoteException {
         return ImsConfig.OperationStatusConstants.FAILED;
+    }
+
+    /**
+     * Gets the value of the specified IMS feature item for specified network type.
+     * This operation gets the feature config value from the master storage (i.e. final
+     * value). Asynchronous non-blocking call.
+     *
+     * @param feature as defined in com.android.ims.ImsConfig#FeatureConstants.
+     * @param network as defined in android.telephony.TelephonyManager#NETWORK_TYPE_XXX.
+     * @param listener feature value returned asynchronously through listener.
+     */
+    public void getFeatureValue(int feature, int network, ImsConfigListener listener)
+            throws RemoteException {
+    }
+
+    /**
+     * Sets the value for IMS feature item for specified network type.
+     * This operation stores the user setting in setting db from which master db
+     * is derived.
+     *
+     * @param feature as defined in com.android.ims.ImsConfig#FeatureConstants.
+     * @param network as defined in android.telephony.TelephonyManager#NETWORK_TYPE_XXX.
+     * @param value as defined in com.android.ims.ImsConfig#FeatureValueConstants.
+     * @param listener, provided if caller needs to be notified for set result.
+     */
+    public void setFeatureValue(int feature, int network, int value, ImsConfigListener listener)
+            throws RemoteException {
     }
 }

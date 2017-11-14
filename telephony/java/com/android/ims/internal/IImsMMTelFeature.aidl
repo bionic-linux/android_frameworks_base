@@ -23,6 +23,7 @@ import com.android.ims.internal.IImsCallSession;
 import com.android.ims.internal.IImsCallSessionListener;
 import com.android.ims.internal.IImsConfig;
 import com.android.ims.internal.IImsEcbm;
+import com.android.ims.internal.IImsMMTelConfigCallback;
 import com.android.ims.internal.IImsMultiEndpoint;
 import com.android.ims.internal.IImsRegistrationListener;
 import com.android.ims.internal.IImsUt;
@@ -53,4 +54,5 @@ interface IImsMMTelFeature {
     IImsEcbm getEcbmInterface();
     void setUiTTYMode(int uiTtyMode, in Message onComplete);
     IImsMultiEndpoint getMultiEndpointInterface();
+    oneway void addMMTelConfigCallback(IImsMMTelConfigCallback c);
 }
