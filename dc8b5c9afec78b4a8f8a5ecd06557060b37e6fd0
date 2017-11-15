@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff4a92d2_c31ba055",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2017-11-15T00:20:32Z",
+      "side": 1,
+      "message": "Yea, i changed it as per android developer doc.",
+      "parentUuid": "755ba945_a9008af2",
+      "range": {
+        "startLine": 859,
+        "startChar": 8,
+        "endLine": 864,
+        "endChar": 40
+      },
+      "revId": "dc8b5c9afec78b4a8f8a5ecd06557060b37e6fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05456478_7348b70b",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "23930cea_5e19dcbe",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2017-11-15T00:20:32Z",
+      "side": 1,
+      "message": "yes, that was a mistake. I think its done as @HandoverFailureErrors int failureReason.",
+      "parentUuid": "05456478_7348b70b",
+      "range": {
+        "startLine": 1039,
+        "startChar": 48,
+        "endLine": 1039,
+        "endChar": 69
+      },
+      "revId": "dc8b5c9afec78b4a8f8a5ecd06557060b37e6fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02031b8_89b61334",
         "filename": "telecomm/java/android/telecom/Call.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-14T23:47:15Z",
       "side": 1,
       "message": "\u003e100",
+      "range": {
+        "startLine": 1417,
+        "startChar": 99,
+        "endLine": 1417,
+        "endChar": 107
+      },
+      "revId": "dc8b5c9afec78b4a8f8a5ecd06557060b37e6fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f0c12a9_63ed0adf",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2017-11-15T00:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f02031b8_89b61334",
       "range": {
         "startLine": 1417,
         "startChar": 99,
