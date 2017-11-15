@@ -179,4 +179,11 @@ public class HidlSupport {
         }
         return Objects.equals(lft.asBinder(), ((IHwInterface) rgt).asBinder());
     }
+
+    /**
+     * Return PID of process if sharable to clients.
+     */
+    public static int getPid() {
+        return android.os.Build.IS_DEBUGGABLE ? android.os.Process.myPid() : -1 /* no PID */;
+    }
 }
