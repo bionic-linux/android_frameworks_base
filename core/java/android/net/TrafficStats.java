@@ -467,7 +467,12 @@ public class TrafficStats {
     public static long getMobileTcpRxPackets() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
-            final long stat = nativeGetIfaceStat(iface, TYPE_TCP_RX_PACKETS);
+            long stat = UNSUPPORTED;
+            try {
+                stat = getStatsService().getIfaceStats(iface, TYPE_TCP_RX_PACKETS);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
             if (stat != UNSUPPORTED) {
                 total += stat;
             }
@@ -479,7 +484,12 @@ public class TrafficStats {
     public static long getMobileTcpTxPackets() {
         long total = 0;
         for (String iface : getMobileIfaces()) {
-            final long stat = nativeGetIfaceStat(iface, TYPE_TCP_TX_PACKETS);
+            long stat = UNSUPPORTED;
+            try {
+                stat = getStatsService().getIfaceStats(iface, TYPE_TCP_TX_PACKETS);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
             if (stat != UNSUPPORTED) {
                 total += stat;
             }
@@ -489,22 +499,38 @@ public class TrafficStats {
 
     /** {@hide} */
     public static long getTxPackets(String iface) {
-        return nativeGetIfaceStat(iface, TYPE_TX_PACKETS);
+        try {
+            return getStatsService().getIfaceStats(iface, TYPE_TX_PACKETS);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** {@hide} */
     public static long getRxPackets(String iface) {
-        return nativeGetIfaceStat(iface, TYPE_RX_PACKETS);
+        try {
+            return getStatsService().getIfaceStats(iface, TYPE_RX_PACKETS);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** {@hide} */
     public static long getTxBytes(String iface) {
-        return nativeGetIfaceStat(iface, TYPE_TX_BYTES);
+        try {
+            return getStatsService().getIfaceStats(iface, TYPE_TX_BYTES);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** {@hide} */
     public static long getRxBytes(String iface) {
-        return nativeGetIfaceStat(iface, TYPE_RX_BYTES);
+        try {
+            return getStatsService().getIfaceStats(iface, TYPE_RX_BYTES);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -517,7 +543,11 @@ public class TrafficStats {
      * return {@link #UNSUPPORTED} on devices where statistics aren't available.
      */
     public static long getTotalTxPackets() {
-        return nativeGetTotalStat(TYPE_TX_PACKETS);
+        try {
+            return getStatsService().getTotalStats(TYPE_TX_PACKETS);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -530,7 +560,11 @@ public class TrafficStats {
      * return {@link #UNSUPPORTED} on devices where statistics aren't available.
      */
     public static long getTotalRxPackets() {
-        return nativeGetTotalStat(TYPE_RX_PACKETS);
+        try {
+            return getStatsService().getTotalStats(TYPE_RX_PACKETS);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -543,7 +577,11 @@ public class TrafficStats {
      * return {@link #UNSUPPORTED} on devices where statistics aren't available.
      */
     public static long getTotalTxBytes() {
-        return nativeGetTotalStat(TYPE_TX_BYTES);
+        try {
+            return getStatsService().getTotalStats(TYPE_TX_BYTES);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -556,7 +594,11 @@ public class TrafficStats {
      * return {@link #UNSUPPORTED} on devices where statistics aren't available.
      */
     public static long getTotalRxBytes() {
-        return nativeGetTotalStat(TYPE_RX_BYTES);
+        try {
+            return getStatsService().getTotalStats(TYPE_RX_BYTES);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -578,13 +620,11 @@ public class TrafficStats {
      * @see android.content.pm.ApplicationInfo#uid
      */
     public static long getUidTxBytes(int uid) {
-        // This isn't actually enforcing any security; it just returns the
-        // unsupported value. The real filtering is done at the kernel level.
-        final int callingUid = android.os.Process.myUid();
-        if (callingUid == android.os.Process.SYSTEM_UID || callingUid == uid) {
-            return nativeGetUidStat(uid, TYPE_TX_BYTES);
-        } else {
-            return UNSUPPORTED;
+        // The security check for the uid is moved into system server.
+        try {
+            return getStatsService().getUidStats(uid, TYPE_TX_BYTES);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 
@@ -611,7 +651,11 @@ public class TrafficStats {
         // unsupported value. The real filtering is done at the kernel level.
         final int callingUid = android.os.Process.myUid();
         if (callingUid == android.os.Process.SYSTEM_UID || callingUid == uid) {
-            return nativeGetUidStat(uid, TYPE_RX_BYTES);
+            try {
+                return getStatsService().getUidStats(uid, TYPE_RX_BYTES);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } else {
             return UNSUPPORTED;
         }
@@ -640,7 +684,11 @@ public class TrafficStats {
         // unsupported value. The real filtering is done at the kernel level.
         final int callingUid = android.os.Process.myUid();
         if (callingUid == android.os.Process.SYSTEM_UID || callingUid == uid) {
-            return nativeGetUidStat(uid, TYPE_TX_PACKETS);
+            try {
+                return getStatsService().getUidStats(uid, TYPE_TX_PACKETS);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } else {
             return UNSUPPORTED;
         }
@@ -669,7 +717,11 @@ public class TrafficStats {
         // unsupported value. The real filtering is done at the kernel level.
         final int callingUid = android.os.Process.myUid();
         if (callingUid == android.os.Process.SYSTEM_UID || callingUid == uid) {
-            return nativeGetUidStat(uid, TYPE_RX_PACKETS);
+            try {
+                return getStatsService().getUidStats(uid, TYPE_RX_PACKETS);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } else {
             return UNSUPPORTED;
         }
@@ -797,8 +849,4 @@ public class TrafficStats {
     private static final int TYPE_TX_PACKETS = 3;
     private static final int TYPE_TCP_RX_PACKETS = 4;
     private static final int TYPE_TCP_TX_PACKETS = 5;
-
-    private static native long nativeGetTotalStat(int type);
-    private static native long nativeGetIfaceStat(String iface, int type);
-    private static native long nativeGetUidStat(int uid, int type);
 }
