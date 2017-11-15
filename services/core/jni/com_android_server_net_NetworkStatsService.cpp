@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "TrafficStats"
+#define LOG_TAG "NetworkStatsService"
 
 #include <dirent.h>
 #include <errno.h>
@@ -28,11 +28,13 @@
 #include <nativehelper/ScopedUtfChars.h>
 #include <utils/misc.h>
 #include <utils/Log.h>
+#include "com_android_server_net_BpfNetworkStats.h"
 
 namespace android {
 
 static const char* QTAGUID_IFACE_STATS = "/proc/net/xt_qtaguid/iface_stat_fmt";
 static const char* QTAGUID_UID_STATS = "/proc/net/xt_qtaguid/stats";
+
 
 // NOTE: keep these in sync with TrafficStats.java
 static const uint64_t UNKNOWN = -1;
@@ -44,15 +46,6 @@ enum StatsType {
     TX_PACKETS = 3,
     TCP_RX_PACKETS = 4,
     TCP_TX_PACKETS = 5
-};
-
-struct Stats {
-    uint64_t rxBytes;
-    uint64_t rxPackets;
-    uint64_t txBytes;
-    uint64_t txPackets;
-    uint64_t tcpRxPackets;
-    uint64_t tcpTxPackets;
 };
 
 static uint64_t getStatsType(struct Stats* stats, StatsType type) {
@@ -153,7 +146,24 @@ static int parseUidStats(const uint32_t uid, struct Stats* stats) {
 static jlong getTotalStat(JNIEnv* env, jclass clazz, jint type) {
     struct Stats stats;
     memset(&stats, 0, sizeof(Stats));
+
+    struct Stats testStats;
+    memset(&testStats, 0, sizeof(Stats));
+
+    if (hasBpfSupport()) {
+        if (bpfGetIfaceStats(NULL, &testStats) == 0) {
+            ALOGI("bpf get all stats success:");
+            ALOGI("rxBytes: %" PRId64 ", rxPackets: %" PRId64 ", txBytes: %" PRId64 ", txPackets:"
+                  " %" PRId64 "", testStats.rxBytes, testStats.rxPackets, testStats.txBytes,
+                  testStats.txPackets);
+        } else {
+            ALOGI("BPF get all stats failed: %s", strerror(errno));
+        }
+    }
     if (parseIfaceStats(NULL, &stats) == 0) {
+        ALOGI("qtaguid get all stats success:");
+        ALOGI("rxBytes: %" PRId64 ", rxPackets: %" PRId64 ", txBytes: %" PRId64 ", txPackets:"
+              " %" PRId64 "", stats.rxBytes, stats.rxPackets, stats.txBytes, stats.txPackets);
         return getStatsType(&stats, (StatsType) type);
     } else {
         return UNKNOWN;
@@ -168,6 +178,7 @@ static jlong getIfaceStat(JNIEnv* env, jclass clazz, jstring iface, jint type) {
 
     struct Stats stats;
     memset(&stats, 0, sizeof(Stats));
+
     if (parseIfaceStats(iface8.c_str(), &stats) == 0) {
         return getStatsType(&stats, (StatsType) type);
     } else {
@@ -178,8 +189,24 @@ static jlong getIfaceStat(JNIEnv* env, jclass clazz, jstring iface, jint type) {
 static jlong getUidStat(JNIEnv* env, jclass clazz, jint uid, jint type) {
     struct Stats stats;
     memset(&stats, 0, sizeof(Stats));
+    struct Stats testStats;
+    memset(&testStats, 0, sizeof(Stats));
+
+    if (hasBpfSupport()) {
+        if (bpfGetUidStats(uid, &testStats) == 0) {
+            ALOGE("bpf get uid(%d) stats success:", uid);
+            ALOGE("rxBytes: %" PRId64 ", rxPackets: %" PRId64 ", txBytes: %" PRId64 ", txPackets:"
+                  " %" PRId64 "", testStats.rxBytes, testStats.rxPackets, testStats.txBytes,
+                  testStats.txPackets);
+        } else {
+            ALOGE("BPF get uid(%d) stats failed", uid);
+        }
+    }
     if (parseUidStats(uid, &stats) == 0) {
         return getStatsType(&stats, (StatsType) type);
+        ALOGE("qtaguid get uid(%d) stats success:", uid);
+        ALOGE("rxBytes: %" PRId64 ", rxPackets: %" PRId64 ", txBytes: %" PRId64 ", txPackets:"
+              " %" PRId64 "", stats.rxBytes, stats.rxPackets, stats.txBytes, stats.txPackets);
     } else {
         return UNKNOWN;
     }
@@ -191,8 +218,10 @@ static const JNINativeMethod gMethods[] = {
     {"nativeGetUidStat", "(II)J", (void*) getUidStat},
 };
 
-int register_android_net_TrafficStats(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/net/TrafficStats", gMethods, NELEM(gMethods));
+int register_android_server_NetworkStatsService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/net/NetworkStatsService", gMethods,
+                                    NELEM(gMethods));
 }
 
 }
+
