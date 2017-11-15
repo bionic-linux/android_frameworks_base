@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "TrafficStats"
+#define LOG_TAG "NetworkStatsService"
 
 #include <dirent.h>
 #include <errno.h>
@@ -191,8 +191,9 @@ static const JNINativeMethod gMethods[] = {
     {"nativeGetUidStat", "(II)J", (void*) getUidStat},
 };
 
-int register_android_net_TrafficStats(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/net/TrafficStats", gMethods, NELEM(gMethods));
+int register_android_server_NetworkStatsService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/net/NetworkStatsService", gMethods,
+                                    NELEM(gMethods));
 }
 
 }
