@@ -873,6 +873,21 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
+    @Override
+    public long getUidStats(int uid, int type) {
+        return nativeGetUidStat(uid, type);
+    }
+
+    @Override
+    public long getIfaceStats(String iface, int type) {
+        return nativeGetIfaceStat(iface, type);
+    }
+
+    @Override
+    public long getTotalStats(int type) {
+        return nativeGetTotalStat(type);
+    }
+
     /**
      * Update {@link NetworkStatsRecorder} and {@link #mGlobalAlertBytes} to
      * reflect current {@link #mPersistThreshold} value. Always defers to
@@ -1626,4 +1641,16 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             return getGlobalLong(NETSTATS_UID_TAG_PERSIST_BYTES, def);
         }
     }
+
+    // NOTE: keep these in sync with com_android_server_net_NetworkStatsService.cpp
+    private static final int TYPE_RX_BYTES = 0;
+    private static final int TYPE_RX_PACKETS = 1;
+    private static final int TYPE_TX_BYTES = 2;
+    private static final int TYPE_TX_PACKETS = 3;
+    private static final int TYPE_TCP_RX_PACKETS = 4;
+    private static final int TYPE_TCP_TX_PACKETS = 5;
+
+    private static native long nativeGetTotalStat(int type);
+    private static native long nativeGetIfaceStat(String iface, int type);
+    private static native long nativeGetUidStat(int uid, int type);
 }
