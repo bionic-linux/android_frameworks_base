@@ -275,6 +275,7 @@ cc_library_shared {
 
         "libhwui",
         "libdl",
+	"libbpf",
     ],
 
     local_include_dirs: ["android/graphics"],

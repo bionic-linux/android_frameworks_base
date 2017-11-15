@@ -18,8 +18,11 @@
 
 #include <errno.h>
 #include <inttypes.h>
+#include <net/if.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
 
 #include <core_jni_helpers.h>
 #include <jni.h>
@@ -31,6 +34,8 @@
 #include <utils/Log.h>
 #include <utils/misc.h>
 #include <utils/Vector.h>
+
+#include <bpf/BpfUtils.h>
 
 namespace android {
 
@@ -96,6 +101,116 @@ static jlongArray get_long_array(JNIEnv* env, jobject obj, jfieldID field, int s
     return env->NewLongArray(size);
 }
 
+static int parseBpfNetworkStatsDetail(Vector<stats_line>* lines, const Vector<String8>& limitIfaces,
+                                      int limitTag, int limitUid) {
+
+
+    struct StatsKey curKey, nextKey;
+    memset(&curKey, 0, sizeof(curKey));
+    curKey.uid = DEFAULT_OVERFLOWUID;
+    if (limitTag == -1 || limitTag > 0) {
+        int uidStatsMap = mapRetrieve(BPF_UID_STATS_MAP, 0);
+        if (uidStatsMap < 0)
+            return -1;
+        while (getNextMapKey(uidStatsMap, &curKey, &nextKey) > -1) {
+            curKey = nextKey;
+            char ifname[32];
+            char *if_ptr = if_indextoname(curKey.ifaceIndex, ifname);
+            if (if_ptr == nullptr)
+                return -1;
+            if (limitIfaces.size() > 0) {
+                // Is this an iface the caller is interested in?
+                int i = 0;
+                while (i < (int)limitIfaces.size()) {
+                    if (limitIfaces[i] == ifname) {
+                        break;
+                    }
+                    i++;
+                }
+                if (i >= (int)limitIfaces.size()) {
+                    // Nothing matched; skip this line.
+                    //ALOGI("skipping due to iface: %s", buffer);
+                    continue;
+                }
+            }
+            if ((limitTag != -1 && limitTag != int(curKey.tag)) ||
+                (limitUid != -1 && limitUid != int(curKey.uid)))
+                continue;
+            StatsValue statsEntry;
+            if (findMapEntry(uidStatsMap, &curKey, &statsEntry) < 0)
+                return -1;
+            stats_line newLine;
+
+            strcpy(newLine.iface, ifname);
+            newLine.uid = curKey.uid;
+            newLine.set = curKey.counterSet;
+            newLine.tag = curKey.tag;
+            newLine.rxPackets = statsEntry.rxTcpPackets + statsEntry.rxUdpPackets +
+                statsEntry.rxOtherPackets;
+            newLine.txPackets = statsEntry.txTcpPackets + statsEntry.txUdpPackets +
+                statsEntry.txOtherPackets;
+            newLine.rxBytes = statsEntry.rxTcpBytes + statsEntry.rxUdpBytes +
+                statsEntry.rxOtherBytes;
+            newLine.txBytes = statsEntry.txTcpBytes + statsEntry.txUdpBytes +
+                statsEntry.txOtherBytes;
+            lines->push_back(newLine);
+        }
+    }
+
+    if (limitTag > 0)
+        return 0;
+
+    int tagStatsMap = mapRetrieve(BPF_TAG_STATS_MAP, 0);
+    if (tagStatsMap < 0)
+        return -1;
+
+    memset(&curKey, 0, sizeof(curKey));
+    curKey.uid = DEFAULT_OVERFLOWUID;
+    while (getNextMapKey(tagStatsMap, &curKey, &nextKey) > -1) {
+        curKey = nextKey;
+        char ifname[32];
+        char *if_ptr = if_indextoname(curKey.ifaceIndex, ifname);
+        if (if_ptr == nullptr)
+            return -1;
+        if (limitIfaces.size() > 0) {
+            // Is this an iface the caller is interested in?
+            int i = 0;
+            while (i < (int)limitIfaces.size()) {
+                if (limitIfaces[i] == ifname) {
+                    break;
+                }
+                i++;
+            }
+            if (i >= (int)limitIfaces.size()) {
+                // Nothing matched; skip this line.
+                //ALOGI("skipping due to iface: %s", buffer);
+                continue;
+            }
+        }
+        if ((limitTag != -1 && limitTag != int(curKey.tag)) ||
+            (limitUid != -1 && limitUid != int(curKey.uid)))
+            continue;
+        StatsValue statsEntry;
+        if (findMapEntry(tagStatsMap, &curKey, &statsEntry) < 0)
+            return -1;
+        stats_line newLine;
+        strcpy(newLine.iface, ifname);
+        newLine.uid = curKey.uid;
+        newLine.set = curKey.counterSet;
+        newLine.tag = curKey.tag;
+        newLine.rxPackets = statsEntry.rxTcpPackets + statsEntry.rxUdpPackets +
+            statsEntry.rxOtherPackets;
+        newLine.txPackets = statsEntry.txTcpPackets + statsEntry.txUdpPackets +
+            statsEntry.txOtherPackets;
+        newLine.rxBytes = statsEntry.rxTcpBytes + statsEntry.rxUdpBytes +
+            statsEntry.rxOtherBytes;
+        newLine.txBytes = statsEntry.txTcpBytes + statsEntry.txUdpBytes +
+            statsEntry.txOtherBytes;
+        lines->push_back(newLine);
+    }
+    return 0;
+}
+
 static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats,
         jstring path, jint limitUid, jobjectArray limitIfacesObj, jint limitTag) {
     ScopedUtfChars path8(env, path);
@@ -122,7 +237,10 @@ static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats,
     }
 
     Vector<stats_line> lines;
-
+    if (hasBpfSupport()) {
+        if (parseBpfNetworkStatsDetail(&lines, limitIfaces, limitTag, limitUid) < 0)
+            return -1;
+    }
     int lastIdx = 1;
     int idx;
     char buffer[384];

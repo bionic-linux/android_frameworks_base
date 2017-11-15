@@ -20,6 +20,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <inttypes.h>
+#include <net/if.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
@@ -28,11 +29,14 @@
 #include <nativehelper/ScopedUtfChars.h>
 #include <utils/misc.h>
 #include <utils/Log.h>
+#include <bpf/BpfUtils.h>
 
 namespace android {
 
 static const char* QTAGUID_IFACE_STATS = "/proc/net/xt_qtaguid/iface_stat_fmt";
 static const char* QTAGUID_UID_STATS = "/proc/net/xt_qtaguid/stats";
+
+static bool bpfStatsSupported = hasBpfSupport();
 
 // NOTE: keep these in sync with TrafficStats.java
 static const uint64_t UNKNOWN = -1;
@@ -150,9 +154,86 @@ static int parseUidStats(const uint32_t uid, struct Stats* stats) {
     return 0;
 }
 
+static int bpfGetUidStats(uid_t uid, struct Stats* stats) {
+
+    int mUidStatsMap = mapRetrieve(BPF_UID_STATS_MAP, 0);
+    if (mUidStatsMap < 0)
+        return -1;
+
+    struct StatsKey curKey, nextKey;
+    memset(&curKey, 0, sizeof(curKey));
+    curKey.uid = DEFAULT_OVERFLOWUID;
+    while (getNextMapKey(mUidStatsMap, &curKey, &nextKey) > -1) {
+        curKey = nextKey;
+        if (curKey.uid == uid) {
+            StatsValue statsEntry;
+            if (findMapEntry(mUidStatsMap, &curKey, &statsEntry) < 0) {
+                close(mUidStatsMap);
+                return -1;
+            }
+            stats->rxPackets += statsEntry.rxTcpPackets + statsEntry.rxUdpPackets +
+                statsEntry.rxOtherPackets;
+            stats->txPackets += statsEntry.txTcpPackets + statsEntry.txUdpPackets +
+                statsEntry.txOtherPackets;
+            stats->rxBytes += statsEntry.rxTcpBytes + statsEntry.rxUdpBytes +
+                statsEntry.rxOtherBytes;
+            stats->txBytes += statsEntry.txTcpBytes + statsEntry.txUdpBytes +
+                statsEntry.txOtherBytes;
+        }
+    }
+    close(mUidStatsMap);
+    return 0;
+}
+
+static int bpfGetIfaceStats(const char *iface, struct Stats* stats) {
+
+    int res = 0;
+    struct StatsKey curKey, nextKey;
+    int mUidStatsMap = mapRetrieve(BPF_UID_STATS_MAP, 0);
+    if (mUidStatsMap < 0)
+        return -1;
+
+    memset(&curKey, 0, sizeof(curKey));
+    curKey.uid = DEFAULT_OVERFLOWUID;
+    while (getNextMapKey(mUidStatsMap, &curKey, &nextKey) > -1) {
+        curKey = nextKey;
+        char curIface[32];
+        char *if_ptr = if_indextoname(curKey.ifaceIndex, curIface);
+        if (if_ptr == nullptr) {
+            close(mUidStatsMap);
+            return -1;
+        }
+        if (!iface || strcmp(iface, curIface) == 0) {
+            StatsValue statsEntry;
+            if (findMapEntry(mUidStatsMap, &curKey, &statsEntry) < 0) {
+                close(mUidStatsMap);
+                return -1;
+            }
+
+            stats->rxPackets += statsEntry.rxTcpPackets + statsEntry.rxUdpPackets +
+                statsEntry.rxOtherPackets;
+            stats->txPackets += statsEntry.txTcpPackets + statsEntry.txUdpPackets +
+                statsEntry.txOtherPackets;
+            stats->rxBytes += statsEntry.rxTcpBytes + statsEntry.rxUdpBytes +
+                statsEntry.rxOtherBytes;
+            stats->txBytes += statsEntry.txTcpBytes + statsEntry.txUdpBytes +
+                statsEntry.txOtherBytes;
+            stats->tcpRxPackets += statsEntry.rxTcpPackets;
+            stats->tcpTxPackets += statsEntry.txTcpPackets;
+        }
+    }
+    close(mUidStatsMap);
+    return res;
+}
+
 static jlong getTotalStat(JNIEnv* env, jclass clazz, jint type) {
     struct Stats stats;
     memset(&stats, 0, sizeof(Stats));
+    if (bpfStatsSupported) {
+        if (bpfGetIfaceStats(NULL, &stats) == 0)
+            return getStatsType(&stats, (StatsType) type);
+    }
+
     if (parseIfaceStats(NULL, &stats) == 0) {
         return getStatsType(&stats, (StatsType) type);
     } else {
@@ -168,6 +249,11 @@ static jlong getIfaceStat(JNIEnv* env, jclass clazz, jstring iface, jint type) {
 
     struct Stats stats;
     memset(&stats, 0, sizeof(Stats));
+    if (bpfStatsSupported) {
+        if (bpfGetIfaceStats(iface8.c_str(), &stats) == 0)
+            return getStatsType(&stats, (StatsType) type);
+    }
+
     if (parseIfaceStats(iface8.c_str(), &stats) == 0) {
         return getStatsType(&stats, (StatsType) type);
     } else {
@@ -178,6 +264,11 @@ static jlong getIfaceStat(JNIEnv* env, jclass clazz, jstring iface, jint type) {
 static jlong getUidStat(JNIEnv* env, jclass clazz, jint uid, jint type) {
     struct Stats stats;
     memset(&stats, 0, sizeof(Stats));
+    if (bpfStatsSupported) {
+        if (bpfGetUidStats(uid, &stats) == 0)
+            return getStatsType(&stats, (StatsType) type);
+    }
+
     if (parseUidStats(uid, &stats) == 0) {
         return getStatsType(&stats, (StatsType) type);
     } else {
