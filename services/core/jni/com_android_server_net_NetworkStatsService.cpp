@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "TrafficStats"
+#define LOG_TAG "NetworkStatsService"
 
 #include <dirent.h>
 #include <errno.h>
@@ -28,6 +28,7 @@
 #include <nativehelper/ScopedUtfChars.h>
 #include <utils/misc.h>
 #include <utils/Log.h>
+#include "com_android_server_net_BpfNetworkStats.h"
 
 namespace android {
 
@@ -191,8 +192,9 @@ static const JNINativeMethod gMethods[] = {
     {"nativeGetUidStat", "(II)J", (void*) getUidStat},
 };
 
-int register_android_net_TrafficStats(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/net/TrafficStats", gMethods, NELEM(gMethods));
+int register_android_server_NetworkStatsService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/net/NetworkStatsService", gMethods,
+                                    NELEM(gMethods));
 }
 
 }
