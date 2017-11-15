@@ -44,7 +44,6 @@ import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.system.ErrnoException;
 import android.system.Os;
-
 import java.io.FileDescriptor;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -52,7 +51,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -270,8 +268,8 @@ public class IpSecServiceTest {
     }
 
     /**
-     * This function checks if the number of encap UDP socket that one UID can reserve
-     * has a reasonable limit.
+     * This function checks if the number of encap UDP socket that one UID can reserve has a
+     * reasonable limit.
      */
     @Test
     public void testSocketResourceTrackerLimitation() throws Exception {
@@ -287,9 +285,10 @@ public class IpSecServiceTest {
             openUdpEncapSockets.add(newUdpEncapSocket);
         }
         // Assert that the total sockets quota has a reasonable limit.
+        assertTrue("Number of open UDP encap sockets is negative", openUdpEncapSockets.size() > 0);
         assertTrue(
-                openUdpEncapSockets.size() > 0
-                        && openUdpEncapSockets.size() < MAX_NUM_ENCAP_SOCKETS);
+                "Number of open UDP encap sockets is out of bound",
+                openUdpEncapSockets.size() < MAX_NUM_ENCAP_SOCKETS);
 
         // Try to reserve one more UDP encapsulation socket, and should fail.
         IpSecUdpEncapResponse extraUdpEncapSocket =
@@ -297,7 +296,7 @@ public class IpSecServiceTest {
         assertNotNull(extraUdpEncapSocket);
         assertEquals(IpSecManager.Status.RESOURCE_UNAVAILABLE, extraUdpEncapSocket.status);
 
-        // Close one of the open UDP encapsulation scokets.
+        // Close one of the open UDP encapsulation sockets.
         mIpSecService.closeUdpEncapsulationSocket(openUdpEncapSockets.get(0).resourceId);
         openUdpEncapSockets.get(0).fileDescriptor.close();
         openUdpEncapSockets.remove(0);
@@ -316,10 +315,9 @@ public class IpSecServiceTest {
     }
 
     /**
-     * This function checks if the number of SPI that one UID can reserve
-     * has a reasonable limit.
-     * This test does not test for both address families or duplicate SPIs because resource
-     * tracking code does not depend on them.
+     * This function checks if the number of SPI that one UID can reserve has a reasonable limit.
+     * This test does not test for both address families or duplicate SPIs because resource tracking
+     * code does not depend on them.
      */
     @Test
     public void testSpiResourceTrackerLimitation() throws Exception {
