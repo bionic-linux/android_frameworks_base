@@ -43,10 +43,12 @@ public class DiskInfo implements Parcelable {
     public static final String EXTRA_VOLUME_COUNT =
             "android.os.storage.extra.VOLUME_COUNT";
 
+    /** Keep it sync with the vold. */
     public static final int FLAG_ADOPTABLE = 1 << 0;
     public static final int FLAG_DEFAULT_PRIMARY = 1 << 1;
     public static final int FLAG_SD = 1 << 2;
     public static final int FLAG_USB = 1 << 3;
+    public static final int FLAG_VISIBLE = 1 << 5;
 
     public final String id;
     public final int flags;
@@ -126,6 +128,10 @@ public class DiskInfo implements Parcelable {
 
     public boolean isUsb() {
         return (flags & FLAG_USB) != 0;
+    }
+
+    public boolean isVisible() {
+        return (flags & FLAG_VISIBLE) != 0;
     }
 
     @Override

@@ -1078,8 +1078,9 @@ class StorageManagerService extends IStorageManager.Stub
                     flags |= DiskInfo.FLAG_ADOPTABLE;
                 }
                 // Adoptable storage isn't currently supported on FBE devices
-                if (StorageManager.isFileEncryptedNativeOnly()) {
+                if (StorageManager.isFileEncryptedNativeOnly() && (flags & DiskInfo.FLAG_ADOPTABLE) != 0) {
                     flags &= ~DiskInfo.FLAG_ADOPTABLE;
+                    flags &= ~DiskInfo.FLAG_VISIBLE;
                 }
                 mDisks.put(id, new DiskInfo(id, flags));
                 break;
@@ -1315,6 +1316,10 @@ class StorageManagerService extends IStorageManager.Stub
             // Adoptable public disks are visible to apps, since they meet
             // public API requirement of being in a stable location.
             if (vol.disk.isAdoptable()) {
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
+            }
+
+            if (vol.disk.isVisible()) {
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
             }
 
