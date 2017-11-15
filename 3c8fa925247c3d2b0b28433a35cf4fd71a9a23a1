@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d94f94c0_1bf2574c",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T10:44:34Z",
+      "side": 1,
+      "message": "I don\u0027t think this can ever be null. It\u0027s final, and all the constructors seem to either reject null input or explicitly create a new object.\n\nEven if it can be final, does this optimization really matter in practice? If not, I\u0027d prefer readability over (micro-)optimization.",
+      "range": {
+        "startLine": 310,
+        "startChar": 8,
+        "endLine": 310,
+        "endChar": 42
+      },
+      "revId": "3c8fa925247c3d2b0b28433a35cf4fd71a9a23a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5f1f2a9_d0016f84",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T10:44:34Z",
+      "side": 1,
+      "message": "Ditto, I think this is guaranteed to be true. Remove the if?",
+      "range": {
+        "startLine": 324,
+        "startChar": 16,
+        "endLine": 324,
+        "endChar": 40
+      },
+      "revId": "3c8fa925247c3d2b0b28433a35cf4fd71a9a23a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a3c93ba_527a033f",
+        "filename": "core/java/android/net/NetworkState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T10:44:34Z",
+      "side": 1,
+      "message": "Do we need a similar check for metered?",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 48
+      },
+      "revId": "3c8fa925247c3d2b0b28433a35cf4fd71a9a23a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a112c2eb_bbe116b6",
+        "filename": "core/java/android/net/NetworkState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T10:44:34Z",
+      "side": 1,
+      "message": "I think there may very well be codepaths that violate this constraint, but I guess that\u0027s the point of this check.",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 20
+      },
+      "revId": "3c8fa925247c3d2b0b28433a35cf4fd71a9a23a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
