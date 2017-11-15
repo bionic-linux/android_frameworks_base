@@ -18,8 +18,11 @@
 
 #include <errno.h>
 #include <inttypes.h>
+#include <net/if.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
 
 #include <core_jni_helpers.h>
 #include <jni.h>
@@ -31,6 +34,8 @@
 #include <utils/Log.h>
 #include <utils/misc.h>
 #include <utils/Vector.h>
+
+#include "android_net_BpfNetworkStats.h"
 
 namespace android {
 
@@ -51,17 +56,6 @@ static struct {
     jfieldID txPackets;
     jfieldID operations;
 } gNetworkStatsClassInfo;
-
-struct stats_line {
-    char iface[32];
-    int32_t uid;
-    int32_t set;
-    int32_t tag;
-    int64_t rxBytes;
-    int64_t rxPackets;
-    int64_t txBytes;
-    int64_t txPackets;
-};
 
 static jobjectArray get_string_array(JNIEnv* env, jobject obj, jfieldID field, int size, bool grow)
 {
@@ -122,7 +116,6 @@ static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats,
     }
 
     Vector<stats_line> lines;
-
     int lastIdx = 1;
     int idx;
     char buffer[384];
@@ -225,7 +218,32 @@ static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats,
         return -1;
     }
 
+    Vector<stats_line> testLines;
+    if (hasBpfSupport()) {
+        parseBpfNetworkStatsDetail(&testLines, limitIfaces, limitTag, limitUid);
+    }
+
     int size = lines.size();
+    int testsize = testLines.size();
+    //Test purpose only
+    ALOGE("qtaguid parsed size: %d bpf parsed size: %d", size, testsize);
+    ALOGE("qtaguid parsed content:");
+    for(size_t i = 0; i < lines.size(); i++) {
+        ALOGE("iface: %s, uid: %" PRIu32 ", set: %" PRIu32 ", tag: %" PRIu32 ", rxBytes: %" PRId64
+              ", rxPackets: %" PRId64 ", txBytes: %" PRId64 ", txPackets: %" PRId64 "",
+              lines[i].iface, lines[i].uid, lines[i].set, lines[i].tag, lines[i].rxBytes,
+              lines[i].rxPackets, lines[i].txBytes, lines[i].txPackets);
+    }
+
+    ALOGE("bpf parsed content:");
+    for(size_t i = 0; i < testLines.size(); i++) {
+        ALOGE("iface: %s, uid: %" PRIu32 ", set: %" PRIu32 ", tag: %" PRIu32 ", rxBytes: %" PRId64
+              ", rxPackets: %" PRId64 ", txBytes: %" PRId64 ",txPackets: %" PRId64 "",
+              testLines[i].iface, testLines[i].uid, testLines[i].set, testLines[i].tag,
+              testLines[i].rxBytes, testLines[i].rxPackets, testLines[i].txBytes,
+              lines[i].txPackets);
+    }
+
     bool grow = size > env->GetIntField(stats, gNetworkStatsClassInfo.capacity);
 
     ScopedLocalRef<jobjectArray> iface(env, get_string_array(env, stats,
