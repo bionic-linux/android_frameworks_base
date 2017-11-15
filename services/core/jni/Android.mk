@@ -39,6 +39,7 @@ LOCAL_SRC_FILES += \
     $(LOCAL_REL_DIR)/com_android_server_VibratorService.cpp \
     $(LOCAL_REL_DIR)/com_android_server_PersistentDataBlockService.cpp \
     $(LOCAL_REL_DIR)/com_android_server_GraphicsStatsService.cpp \
+    $(LOCAL_REL_DIR)/com_android_server_net_NetworkStatsService.cpp \
     $(LOCAL_REL_DIR)/onload.cpp
 
 LOCAL_C_INCLUDES += \
