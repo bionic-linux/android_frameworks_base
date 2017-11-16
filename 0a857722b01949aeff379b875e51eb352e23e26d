@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a64635d_d64cbe2b",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-16T21:42:30Z",
+      "side": 1,
+      "message": "nit: opened",
+      "range": {
+        "startLine": 288,
+        "startChar": 44,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "0a857722b01949aeff379b875e51eb352e23e26d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452b1111_42ec3baa",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-16T21:42:30Z",
+      "side": 1,
+      "message": "nit: bounds",
+      "range": {
+        "startLine": 290,
+        "startChar": 60,
+        "endLine": 290,
+        "endChar": 65
+      },
+      "revId": "0a857722b01949aeff379b875e51eb352e23e26d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
