@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "009252dc_3f9b1ff3",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-11-16T09:37:02Z",
+      "side": 1,
+      "message": "You do have a point, although in my personal experience (i.e. as a user) it was sometimes quite helpful to have a registered (and connected) app in the background.\nFor an app that is registered, but not connected — there\u0027s probably not as much sense to keep it. Although, if it gets crashed or OOM-evicted, it will be unregistered automatically.",
+      "parentUuid": "3d1d966f_e47796a7",
+      "range": {
+        "startLine": 348,
+        "startChar": 46,
+        "endLine": 349,
+        "endChar": 35
+      },
+      "revId": "42cd9e49d3d67d6892ddcce9ddf4af8bd108bf30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d74b2e5b_8d925162",
         "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
         "patchSetId": 8
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-15T23:52:59Z",
       "side": 1,
       "message": "What does it mean by connect here? If there is no App registered, should connect fail? Should an App register then connect?",
+      "range": {
+        "startLine": 529,
+        "startChar": 7,
+        "endLine": 530,
+        "endChar": 25
+      },
+      "revId": "42cd9e49d3d67d6892ddcce9ddf4af8bd108bf30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b51582a7_dc5db398",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-11-16T09:37:02Z",
+      "side": 1,
+      "message": "Yes, app should be registered before connecting.\nYes, connect() will fail otherwise.",
+      "parentUuid": "d07ed657_86552bde",
       "range": {
         "startLine": 529,
         "startChar": 7,
