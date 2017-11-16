@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45820dee_b2fb1ac3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-16T00:28:22Z",
+      "side": 1,
+      "message": "unless of course it\u0027s zero...",
+      "range": {
+        "startLine": 288,
+        "startChar": 53,
+        "endLine": 288,
+        "endChar": 64
+      },
+      "revId": "25f0b04abe8e101cf3d0e4614585a6e9b98b0809",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
