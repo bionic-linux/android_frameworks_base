@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "d74b2e5b_8d925162",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-16T01:04:56Z",
+      "side": 1,
+      "message": "I don\u0027t want to open this API to app.",
+      "range": {
+        "startLine": 500,
+        "startChar": 4,
+        "endLine": 505,
+        "endChar": 51
+      },
+      "revId": "42cd9e49d3d67d6892ddcce9ddf4af8bd108bf30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d07ed657_86552bde",
         "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
         "patchSetId": 8
