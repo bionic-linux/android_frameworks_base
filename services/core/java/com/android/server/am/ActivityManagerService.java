@@ -380,6 +380,7 @@ import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.os.BackgroundThread;
 import com.android.internal.os.BatteryStatsImpl;
+import com.android.internal.os.FilePrefetch;
 import com.android.internal.os.IResultReceiver;
 import com.android.internal.os.ProcessCpuTracker;
 import com.android.internal.os.TransferPipe;
@@ -3909,6 +3910,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "Start proc: " +
                     app.processName);
             checkTime(startTime, "startProcess: asking zygote to start proc");
+
             ProcessStartResult startResult;
             if (hostingType.equals("webview_service")) {
                 startResult = startWebView(entryPoint,
@@ -3923,7 +3925,22 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
             checkTime(startTime, "startProcess: returned from zygote!");
             Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
-
+            // +++++++++++++++++++++ DCS +++++++++++++++++++++
+            Slog.i(TAG,
+                "=========== Data: '" + app.info.dataDir + "' Source: '" + app.info.sourceDir + "'");
+            int slashLoc = app.info.sourceDir.lastIndexOf("/");
+            int apkLoc = app.info.sourceDir.lastIndexOf(".apk");
+            String path = app.info.sourceDir.substring(0, slashLoc);
+            String appName = app.info.sourceDir.substring(slashLoc + 1, apkLoc);
+            String vdexChunkString = SystemProperties.get("vdex.chunks", "0");
+            if (vdexChunkString != "0") {
+              FilePrefetch.prefetchFileChunk(
+                  path + "/oat/arm64/" + appName + ".odex", 0, 32 * 4096);
+              int vdexChunkCount = Integer.parseInt(vdexChunkString);
+              FilePrefetch.prefetchFileChunk(
+                  path + "/oat/arm64/" + appName + ".vdex", 0, vdexChunkCount * 32 * 4096);
+            }
+            // +++++++++++++++++++++ DCS +++++++++++++++++++++
             mBatteryStatsService.noteProcessStart(app.processName, app.info.uid);
             checkTime(startTime, "startProcess: done updating battery stats");
 

@@ -205,6 +205,7 @@ extern int register_android_content_res_Configuration(JNIEnv* env);
 extern int register_android_animation_PropertyValuesHolder(JNIEnv *env);
 extern int register_com_android_internal_content_NativeLibraryHelper(JNIEnv *env);
 extern int register_com_android_internal_net_NetworkStatsFactory(JNIEnv *env);
+extern int register_com_android_internal_os_FilePrefetch(JNIEnv* env);
 extern int register_com_android_internal_os_FuseAppLoop(JNIEnv* env);
 extern int register_com_android_internal_os_PathClassLoaderFactory(JNIEnv* env);
 extern int register_com_android_internal_os_Zygote(JNIEnv *env);
@@ -1406,6 +1407,7 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_android_net_NetworkUtils),
     REG_JNI(register_android_net_TrafficStats),
     REG_JNI(register_android_os_MemoryFile),
+    REG_JNI(register_com_android_internal_os_FilePrefetch),
     REG_JNI(register_com_android_internal_os_PathClassLoaderFactory),
     REG_JNI(register_com_android_internal_os_Zygote),
     REG_JNI(register_com_android_internal_os_ZygoteInit),

@@ -182,6 +182,7 @@ cc_library_shared {
         "android_animation_PropertyValuesHolder.cpp",
         "com_android_internal_net_NetworkStatsFactory.cpp",
         "com_android_internal_os_FuseAppLoop.cpp",
+        "com_android_internal_os_FilePrefetch.cpp",
         "com_android_internal_os_PathClassLoaderFactory.cpp",
         "com_android_internal_os_Zygote.cpp",
         "com_android_internal_os_ZygoteInit.cpp",

@@ -207,6 +207,12 @@ public class ZygoteProcess {
                                                   String invokeWith,
                                                   String[] zygoteArgs) {
         try {
+            Log.e(LOG_TAG,
+                    "============= Starting process PC: " + processClass);
+            if (niceName != null) {
+                Log.e(LOG_TAG,
+                        "============= niceName: " + niceName);
+            }
             return startViaZygote(processClass, niceName, uid, gid, gids,
                     runtimeFlags, mountExternal, targetSdkVersion, seInfo,
                     abi, instructionSet, appDataDir, invokeWith, zygoteArgs);
