@@ -173,6 +173,8 @@ public class VideoView extends SurfaceView
 
         setFocusable(true);
         setFocusableInTouchMode(true);
+        // specific behavior for mouse/keyboard navigation
+        setDefaultFocusHighlightEnabled(false);
         requestFocus();
 
         mCurrentState = STATE_IDLE;
