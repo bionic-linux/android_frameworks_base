@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d7f3549_827d2acf",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-11-17T22:08:18Z",
+      "side": 1,
+      "message": "Please update the comments for all Cellidentity*.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 31
+      },
+      "revId": "ae5885d54e21d7d5e45838572479db5835edabfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
