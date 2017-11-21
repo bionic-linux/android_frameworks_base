@@ -169,6 +169,29 @@
     },
     {
       "key": {
+        "uuid": "2b99c10e_6be407f9",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-21T00:13:34Z",
+      "side": 0,
+      "message": "Also we should explicitly let developer know that once the app is registered, HID host service will be disabled.",
+      "range": {
+        "startLine": 361,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 50
+      },
+      "revId": "107141be5ce933064b30c94aa82cd55170cba88d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "baad0865_3fa21475",
         "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
         "patchSetId": 8
