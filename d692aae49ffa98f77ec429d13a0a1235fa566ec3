@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa9feef1_55da0019",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-11-21T22:41:45Z",
+      "side": 1,
+      "message": "would rather not define a new constant. instead, use INSTALL_FAILED_CPU_ABI_INCOMPATIBLE or INSTALL_FAILED_UPDATE_INCOMPATIBLE",
+      "range": {
+        "startLine": 1154,
+        "startChar": 28,
+        "endLine": 1154,
+        "endChar": 81
+      },
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97ab9c2e_7c24d982",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6878,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-11-21T22:41:45Z",
+      "side": 1,
+      "message": "please limit extraneous changes",
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83e4677a_3c5ef6c6",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17237,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-11-21T22:41:45Z",
+      "side": 1,
+      "message": "nit: follow format of the other errors above:\n                \n  res.setError(INSTALL_FAILED_UPDATE_INCOMPATIBLE,\n                        \"Update to package \" + pkgName + \n                        \" doesn\u0027t support multi arch\");",
+      "range": {
+        "startLine": 17236,
+        "startChar": 0,
+        "endLine": 17237,
+        "endChar": 91
+      },
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
