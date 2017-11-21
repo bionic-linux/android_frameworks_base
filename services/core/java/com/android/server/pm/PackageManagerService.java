@@ -51,6 +51,7 @@ import static android.content.pm.PackageManager.INSTALL_FAILED_PACKAGE_CHANGED;
 import static android.content.pm.PackageManager.INSTALL_FAILED_REPLACE_COULDNT_DELETE;
 import static android.content.pm.PackageManager.INSTALL_FAILED_SANDBOX_VERSION_DOWNGRADE;
 import static android.content.pm.PackageManager.INSTALL_FAILED_SHARED_USER_INCOMPATIBLE;
+import static android.content.pm.PackageManager.INSTALL_FAILED_SYSTEM_APP_UPDATE_CPU_ABI_INSUFFICIENT;
 import static android.content.pm.PackageManager.INSTALL_FAILED_TEST_ONLY;
 import static android.content.pm.PackageManager.INSTALL_FAILED_UPDATE_INCOMPATIBLE;
 import static android.content.pm.PackageManager.INSTALL_FAILED_USER_RESTRICTED;
@@ -6874,6 +6875,7 @@ public class PackageManagerService extends IPackageManager.Stub
             String resolvedType, int flags, int filterCallingUid, int userId,
             boolean resolveForStart) {
         if (!sUserManager.exists(userId)) return Collections.emptyList();
+
         final String instantAppPkgName = getInstantAppPackageName(filterCallingUid);
         enforceCrossUserPermission(Binder.getCallingUid(), userId,
                 false /* requireFullPermission */, false /* checkShell */,
@@ -17222,6 +17224,17 @@ public class PackageManagerService extends IPackageManager.Stub
                 res.setError(INSTALL_FAILED_SHARED_USER_INCOMPATIBLE,
                         "Package " + invalidPackageName + " tried to change user "
                                 + oldPackage.mSharedUserId);
+                return;
+            }
+
+            // check if the new package supports all of the abis which the old package supports
+            boolean oldPkgSupportMultiArch = oldPackage.applicationInfo.secondaryCpuAbi != null;
+            // allow new package containing no native libs to pass this check
+            boolean newPkgSupportMultiArch = pkg.applicationInfo.primaryCpuAbi == null
+                    || pkg.applicationInfo.secondaryCpuAbi != null;
+            if (isSystemApp(oldPackage) && oldPkgSupportMultiArch && !newPkgSupportMultiArch) {
+                res.setError(INSTALL_FAILED_SYSTEM_APP_UPDATE_CPU_ABI_INSUFFICIENT,
+                        "Abort upgrade system package from multi-arch to single-arch app");
                 return;
             }
 
