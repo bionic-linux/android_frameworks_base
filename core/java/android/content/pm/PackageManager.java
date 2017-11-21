@@ -1032,6 +1032,7 @@ public abstract class PackageManager {
     @SystemApi
     public static final int INSTALL_FAILED_CPU_ABI_INCOMPATIBLE = -16;
 
+
     /**
      * Installation return code: this is passed to the
      * {@link IPackageInstallObserver} if the new package uses a feature that is
@@ -1141,6 +1142,16 @@ public abstract class PackageManager {
      */
     @SystemApi
     public static final int INSTALL_FAILED_SANDBOX_VERSION_DOWNGRADE = -27;
+
+    /**
+     * Installation return code: this is passed to the
+     * {@link IPackageInstallObserver} if the new package is an update to a system app
+     * but does not support multi-arch like the old one
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int INSTALL_FAILED_SYSTEM_APP_UPDATE_CPU_ABI_INSUFFICIENT = -28;
 
     /**
      * Installation parse return code: this is passed to the
@@ -5552,6 +5563,7 @@ public abstract class PackageManager {
             case INSTALL_FAILED_PACKAGE_CHANGED: return "INSTALL_FAILED_PACKAGE_CHANGED";
             case INSTALL_FAILED_UID_CHANGED: return "INSTALL_FAILED_UID_CHANGED";
             case INSTALL_FAILED_VERSION_DOWNGRADE: return "INSTALL_FAILED_VERSION_DOWNGRADE";
+            case INSTALL_FAILED_SYSTEM_APP_UPDATE_CPU_ABI_INSUFFICIENT: return "INSTALL_FAILED_SYSTEM_APP_UPDATE_CPU_ABI_INSUFFICIENT";
             case INSTALL_PARSE_FAILED_NOT_APK: return "INSTALL_PARSE_FAILED_NOT_APK";
             case INSTALL_PARSE_FAILED_BAD_MANIFEST: return "INSTALL_PARSE_FAILED_BAD_MANIFEST";
             case INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION: return "INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION";
@@ -5601,6 +5613,7 @@ public abstract class PackageManager {
             case INSTALL_FAILED_UID_CHANGED: return PackageInstaller.STATUS_FAILURE_INVALID;
             case INSTALL_FAILED_VERSION_DOWNGRADE: return PackageInstaller.STATUS_FAILURE_INVALID;
             case INSTALL_FAILED_PERMISSION_MODEL_DOWNGRADE: return PackageInstaller.STATUS_FAILURE_INVALID;
+            case INSTALL_FAILED_SYSTEM_APP_UPDATE_CPU_ABI_INSUFFICIENT: return PackageInstaller.STATUS_FAILURE_INVALID;
             case INSTALL_PARSE_FAILED_NOT_APK: return PackageInstaller.STATUS_FAILURE_INVALID;
             case INSTALL_PARSE_FAILED_BAD_MANIFEST: return PackageInstaller.STATUS_FAILURE_INVALID;
             case INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION: return PackageInstaller.STATUS_FAILURE_INVALID;
