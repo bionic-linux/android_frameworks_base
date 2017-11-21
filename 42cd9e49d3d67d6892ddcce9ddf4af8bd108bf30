@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "f280d636_3765e4d7",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-21T17:33:19Z",
+      "side": 1,
+      "message": "You mean, we can set a timeout, after which the app will be unregistered if not connected?\n\nWe can add an explicit Unregister button in Settings also, and we want to let user know the HID Device mode is on?",
+      "parentUuid": "009252dc_3f9b1ff3",
+      "range": {
+        "startLine": 348,
+        "startChar": 46,
+        "endLine": 349,
+        "endChar": 35
+      },
+      "revId": "42cd9e49d3d67d6892ddcce9ddf4af8bd108bf30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8532d524_a1bf7475",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-21T17:33:19Z",
+      "side": 1,
+      "message": "Enforce it in HID Device service?",
+      "range": {
+        "startLine": 367,
+        "startChar": 8,
+        "endLine": 370,
+        "endChar": 0
+      },
+      "revId": "42cd9e49d3d67d6892ddcce9ddf4af8bd108bf30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d74b2e5b_8d925162",
         "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
         "patchSetId": 8
