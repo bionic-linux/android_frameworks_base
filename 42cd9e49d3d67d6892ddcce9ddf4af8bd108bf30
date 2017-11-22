@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "d96a83c5_ca78bc8c",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-22T01:01:45Z",
+      "side": 1,
+      "message": "Also, an app can use other app\u0027s registration and device (HID Device service) and send data, without any other app\u0027s permission!",
+      "range": {
+        "startLine": 429,
+        "startChar": 4,
+        "endLine": 429,
+        "endChar": 74
+      },
+      "revId": "42cd9e49d3d67d6892ddcce9ddf4af8bd108bf30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d74b2e5b_8d925162",
         "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
         "patchSetId": 8
