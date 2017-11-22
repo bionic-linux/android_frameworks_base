@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c434d022_3bae2b2c",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T00:50:53Z",
+      "side": 0,
+      "message": "Are you sure these blank lines need to be removed ? Either way works for me, but I thought the format linter on master now enforced blank lines between groups of qualified import names ?",
+      "revId": "cf1a4614e1817bedd16b9716bfe5d9cb91c605bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
