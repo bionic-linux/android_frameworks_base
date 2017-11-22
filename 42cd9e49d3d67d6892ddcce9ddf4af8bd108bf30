@@ -186,6 +186,29 @@
       "revId": "42cd9e49d3d67d6892ddcce9ddf4af8bd108bf30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ee836db_a455cfd1",
+        "filename": "core/java/android/bluetooth/BluetoothHidDeviceCallback.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-22T22:18:43Z",
+      "side": 1,
+      "message": "What if blocking method in callback function?\nMust let the application use its own handler thread. Not in HidDeviceService main thread/handler thread!",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "42cd9e49d3d67d6892ddcce9ddf4af8bd108bf30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
