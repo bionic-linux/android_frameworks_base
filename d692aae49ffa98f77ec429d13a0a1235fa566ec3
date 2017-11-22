@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "688dd9f8_c493ac7f",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-11-22T11:20:49Z",
+      "side": 1,
+      "message": "Please revert this change.",
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa9feef1_55da0019",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 2
@@ -36,6 +53,29 @@
       "writtenOn": "2017-11-21T22:41:45Z",
       "side": 1,
       "message": "please limit extraneous changes",
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94864805_bb612e0b",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17232,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-11-22T11:20:49Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this check is different from newPkgSupportMultiArch.\n\nAlso, shouldn\u0027t we check whether the packages declare themselves as multiArch by looking at that flag ?",
+      "range": {
+        "startLine": 17231,
+        "startChar": 10,
+        "endLine": 17232,
+        "endChar": 77
+      },
       "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
