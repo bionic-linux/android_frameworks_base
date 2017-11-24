@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "980faabe_104cc154",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17232,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2017-11-24T05:54:53Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this check is different from newPkgSupportMultiArch.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nFirstly thanks for the comments!\n\nThe reason is I thought of a conditon that all native libs might be removed cause they are really not need any more in the new package（no other apps relying on them neither).\n\nBut normally that is not going to happen, so I will just delelte the extra check then. \nPlease have a look at PS4, thanks!",
+      "parentUuid": "c7811fe5_24e17384",
+      "range": {
+        "startLine": 17231,
+        "startChar": 10,
+        "endLine": 17232,
+        "endChar": 77
+      },
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83e4677a_3c5ef6c6",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 2
