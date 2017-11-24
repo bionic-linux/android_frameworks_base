@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08f54119_f696d1a3",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2017-11-24T05:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "688dd9f8_c493ac7f",
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa9feef1_55da0019",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-21T22:41:45Z",
       "side": 1,
       "message": "would rather not define a new constant. instead, use INSTALL_FAILED_CPU_ABI_INCOMPATIBLE or INSTALL_FAILED_UPDATE_INCOMPATIBLE",
+      "range": {
+        "startLine": 1154,
+        "startChar": 28,
+        "endLine": 1154,
+        "endChar": 81
+      },
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60cc06cd_e66eef99",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2017-11-24T05:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa9feef1_55da0019",
       "range": {
         "startLine": 1154,
         "startChar": 28,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3376c2f3_6c9e03a6",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6878,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2017-11-24T05:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ab9c2e_7c24d982",
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94864805_bb612e0b",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 2
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c7811fe5_24e17384",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17232,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2017-11-24T05:35:12Z",
+      "side": 1,
+      "message": "Also, shouldn\u0027t we check whether the packages declare themselves as multiArch by looking at that flag ?\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nAt this step, derivePackageAbi() was executed already, and in that method, we already used the \u0027FLAG_MULTIARCH\u0027 flag to extract native lilbs corespondingly, so I think here we don\u0027t need to check it again",
+      "parentUuid": "94864805_bb612e0b",
+      "range": {
+        "startLine": 17231,
+        "startChar": 10,
+        "endLine": 17232,
+        "endChar": 77
+      },
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83e4677a_3c5ef6c6",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 2
@@ -93,6 +177,30 @@
       "writtenOn": "2017-11-21T22:41:45Z",
       "side": 1,
       "message": "nit: follow format of the other errors above:\n                \n  res.setError(INSTALL_FAILED_UPDATE_INCOMPATIBLE,\n                        \"Update to package \" + pkgName + \n                        \" doesn\u0027t support multi arch\");",
+      "range": {
+        "startLine": 17236,
+        "startChar": 0,
+        "endLine": 17237,
+        "endChar": 91
+      },
+      "revId": "d692aae49ffa98f77ec429d13a0a1235fa566ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64a274df_4f29b374",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17237,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2017-11-24T05:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83e4677a_3c5ef6c6",
       "range": {
         "startLine": 17236,
         "startChar": 0,
