@@ -610,6 +610,7 @@ LOCAL_STATIC_JAVA_LIBRARIES :=                          \
     android.hardware.vibrator-V1.0-java-constants        \
     android.hardware.vibrator-V1.1-java-constants        \
     android.hardware.wifi-V1.0-java-constants            \
+    android.hardware.radio-V1.0-java                     \
 
 # Loaded with System.loadLibrary by android.view.textclassifier
 LOCAL_REQUIRED_MODULES += libtextclassifier
