@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02646b01_e0997ab7",
+        "filename": "telephony/java/com/android/ims/ImsUtInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-27T20:44:02Z",
+      "side": 1,
+      "message": "Overloaded methods should have optional parameters at the end\n\npublic void queryCallBarring(int cbType, Message result, int serviceClass);",
+      "range": {
+        "startLine": 115,
+        "startChar": 45,
+        "endLine": 115,
+        "endChar": 61
+      },
+      "revId": "2ce682925af999b2c0fe9399ad32706d733a21de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
