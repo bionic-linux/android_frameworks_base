@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4d15f79_4f48eb49",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-11-27T17:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d94f94c0_1bf2574c",
+      "range": {
+        "startLine": 310,
+        "startChar": 8,
+        "endLine": 310,
+        "endChar": 42
+      },
+      "revId": "3c8fa925247c3d2b0b28433a35cf4fd71a9a23a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f1f2a9_d0016f84",
         "filename": "core/java/android/net/NetworkRequest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-15T10:44:34Z",
       "side": 1,
       "message": "Ditto, I think this is guaranteed to be true. Remove the if?",
+      "range": {
+        "startLine": 324,
+        "startChar": 16,
+        "endLine": 324,
+        "endChar": 40
+      },
+      "revId": "3c8fa925247c3d2b0b28433a35cf4fd71a9a23a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ff8293a_b6bddacf",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-11-27T17:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f1f2a9_d0016f84",
       "range": {
         "startLine": 324,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f2f30324_ae43809c",
+        "filename": "core/java/android/net/NetworkState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-11-27T17:50:36Z",
+      "side": 1,
+      "message": "Thankfully no, since I was able to *fully* purge the concept of metered from NetworkInfo; it was never part of the public API.  isRoaming() was part of the API, which is why I had to maintain it.",
+      "parentUuid": "3a3c93ba_527a033f",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 48
+      },
+      "revId": "3c8fa925247c3d2b0b28433a35cf4fd71a9a23a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a112c2eb_bbe116b6",
         "filename": "core/java/android/net/NetworkState.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-15T10:44:34Z",
       "side": 1,
       "message": "I think there may very well be codepaths that violate this constraint, but I guess that\u0027s the point of this check.",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 20
+      },
+      "revId": "3c8fa925247c3d2b0b28433a35cf4fd71a9a23a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fb46b34_c35cdb22",
+        "filename": "core/java/android/net/NetworkState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-11-27T17:50:36Z",
+      "side": 1,
+      "message": "Yep, I\u0027ll see what shows up and triage from there.",
+      "parentUuid": "a112c2eb_bbe116b6",
       "range": {
         "startLine": 52,
         "startChar": 17,
