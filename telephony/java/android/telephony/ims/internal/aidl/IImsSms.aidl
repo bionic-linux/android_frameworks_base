@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package com.android.ims.internal;
+package com.android.ims.internal.aidl;
+
+import com.android.ims.internal.aidl.IImsSmsListener;
 
 /**
  * See SmsFeature for more information.
+ *
  * {@hide}
  */
-interface ISmsListener {
-    void onSendSmsResult(in int messageRef, in int result);
-    void onSmsStatusReportReceived(in int messageRef, in int format, in byte[] pdu);
-    void onSmsReceived(in int format, in byte[] pdu);
+interface IImsSms {
+    void registerSmsListener(in ISmsListener listener);
+    void sendSms(in int format, in int messageRef, in boolean retry, in byte[] pdu);
+    void acknowledgeSms(in int messageRef, in int result);
+    int getSmsFormat();
 }
