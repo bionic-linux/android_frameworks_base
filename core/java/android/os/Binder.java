@@ -183,7 +183,7 @@ public class Binder implements IBinder {
         try {
             if (binder instanceof BinderProxy) {
                 ((BinderProxy) binder).mWarnOnBlocking = false;
-            } else if (binder != null
+            } else if (binder != null && binder.getInterfaceDescriptor() != null
                     && binder.queryLocalInterface(binder.getInterfaceDescriptor()) == null) {
                 Log.w(TAG, "Unable to allow blocking on interface " + binder);
             }
@@ -434,7 +434,7 @@ public class Binder implements IBinder {
      * descriptor.
      */
     public @Nullable IInterface queryLocalInterface(@NonNull String descriptor) {
-        if (mDescriptor.equals(descriptor)) {
+        if (mDescriptor != null && mDescriptor.equals(descriptor)) {
             return mOwner;
         }
         return null;
