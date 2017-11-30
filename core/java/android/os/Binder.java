@@ -434,7 +434,7 @@ public class Binder implements IBinder {
      * descriptor.
      */
     public @Nullable IInterface queryLocalInterface(@NonNull String descriptor) {
-        if (mDescriptor.equals(descriptor)) {
+        if (mDescriptor != null && mDescriptor.equals(descriptor)) {
             return mOwner;
         }
         return null;
