@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69e164d3_257926a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-11-30T02:25:31Z",
+      "side": 1,
+      "message": "Stephen, does this sound correct?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "fb4ed78bde052502861c913e1853f888ea297d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c769e04_75b2808f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-11-30T02:25:31Z",
+      "side": 1,
+      "message": "Windows executables aren\u0027t currently linking in my tree, so I can\u0027t test that yet",
+      "revId": "fb4ed78bde052502861c913e1853f888ea297d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
