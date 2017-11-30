@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca949664_ee7ce63c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2017-11-30T07:12:13Z",
+      "side": 1,
+      "message": "Yes, this is indeed https://cplusplus.github.io/LWG/issue2193, which was resolved in libc++. Since our libstdc++ is older than C++14, it likely isn\u0027t fixed (or going to be fixed). Specifying the parameter more explicitly is a little ugly, but probably the best solution here (until we can switch to libc++).",
+      "parentUuid": "69e164d3_257926a4",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "fb4ed78bde052502861c913e1853f888ea297d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c769e04_75b2808f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
