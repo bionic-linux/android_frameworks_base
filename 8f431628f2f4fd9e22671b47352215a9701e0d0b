@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fe35318_ccd1346f",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-11-30T12:31:33Z",
+      "side": 1,
+      "message": "can we get rid of this method?",
+      "revId": "8f431628f2f4fd9e22671b47352215a9701e0d0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd24195_b02fa7a2",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-11-30T12:31:33Z",
+      "side": 1,
+      "message": "Should be made private and only used with the static factory method",
+      "revId": "8f431628f2f4fd9e22671b47352215a9701e0d0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce453364_279e25f8",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-11-30T12:31:33Z",
+      "side": 1,
+      "message": "Also add a empty constructor that DPC can use",
+      "revId": "8f431628f2f4fd9e22671b47352215a9701e0d0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e3f625_d0bc5792",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-11-30T12:31:33Z",
+      "side": 1,
+      "message": "@hide",
+      "revId": "8f431628f2f4fd9e22671b47352215a9701e0d0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f2460a_610c0535",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-11-30T12:31:33Z",
+      "side": 1,
+      "message": "@hide ?",
+      "revId": "8f431628f2f4fd9e22671b47352215a9701e0d0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dde5492_934dd5f4",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-11-30T12:31:33Z",
+      "side": 1,
+      "message": "@hide",
+      "revId": "8f431628f2f4fd9e22671b47352215a9701e0d0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767d1138_780f64d5",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-11-30T12:31:33Z",
+      "side": 1,
+      "message": "should be private",
+      "revId": "8f431628f2f4fd9e22671b47352215a9701e0d0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e126a0fa_0ef97244",
+        "filename": "telephony/java/android/telephony/ApnTypeConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-11-30T12:31:33Z",
+      "side": 1,
+      "message": "Can we have a inner class of ApnSetting?\n\ne.g. \n\nApnSetting.Type.All\nApnSetting.Type.Mms\nApnSetting.Type.Ia",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "8f431628f2f4fd9e22671b47352215a9701e0d0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
