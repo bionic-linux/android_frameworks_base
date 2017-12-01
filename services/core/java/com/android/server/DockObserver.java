@@ -20,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -149,6 +150,17 @@ final class DockObserver extends SystemService {
         mHandler.sendEmptyMessage(MSG_DOCK_STATE_CHANGED);
     }
 
+    private final class ProvisionedObserver extends ContentObserver {
+        public ProvisionedObserver() {
+            super(mHandler);
+        }
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            handleDockStateChange();
+            getContext().getContentResolver().unregisterContentObserver(this);
+        }
+    }
+
     private void handleDockStateChange() {
         synchronized (mLock) {
             Slog.i(TAG, "Dock state changed from " + mPreviousDockState + " to "
@@ -160,7 +172,10 @@ final class DockObserver extends SystemService {
             final ContentResolver cr = getContext().getContentResolver();
             if (Settings.Global.getInt(cr,
                     Settings.Global.DEVICE_PROVISIONED, 0) == 0) {
-                Slog.i(TAG, "Device not provisioned, skipping dock broadcast");
+                ProvisionedObserver provisionedObserver = new ProvisionedObserver();
+
+                cr.registerContentObserver(Settings.Global.getUriFor(Settings.Global.DEVICE_PROVISIONED), false, provisionedObserver);
+                Slog.i(TAG, "Device not provisioned, deferring dock broadcast");
                 return;
             }
 
