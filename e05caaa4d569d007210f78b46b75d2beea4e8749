@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06c42170_9f77338c",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2017-12-01T21:20:11Z",
+      "side": 1,
+      "message": "Can we instead just change this to descriptor.equals(mDescriptor) ?",
+      "range": {
+        "startLine": 437,
+        "startChar": 8,
+        "endLine": 437,
+        "endChar": 68
+      },
+      "revId": "e05caaa4d569d007210f78b46b75d2beea4e8749",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
