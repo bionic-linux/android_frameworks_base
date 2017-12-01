@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "15aaf040_c0eae148",
+        "filename": "packages/SystemUI/res-keyguard/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-01T21:03:14Z",
+      "side": 1,
+      "message": "Presumably if we are showing kg_password_wrong_pin_code then the user entered a wrong PIN before rebooting the device, though.",
+      "parentUuid": "b13b1213_9500ba4c",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 14
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "098b1864_a40e1991",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
