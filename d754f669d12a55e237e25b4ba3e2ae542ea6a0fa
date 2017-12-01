@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b13b1213_9500ba4c",
+        "filename": "packages/SystemUI/res-keyguard/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-01T10:47:15Z",
+      "side": 1,
+      "message": "This particular string \"kg_password_default_pin_message\" will be shown when SIM PIN lock screen is shown to user on booting the device.\n\nIt is giving information to user on the available PIN attempts and asking to enter the sim pin.\n\nBut on the other hand, this string \u0027kg_password_wrong_pin_code\u0027 cannot be shown\nwhen user has not yet entered any SIM PIN it will convey wrong information to user.",
+      "parentUuid": "daf3a909_b5e0b785",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 14
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "098b1864_a40e1991",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1cd7de9d_cd6a2008",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-01T10:47:15Z",
+      "side": 1,
+      "message": "This is not needed now since showDefaultMessage() in onSimStateChanged()--\u003eresetState() will take care of showing the SIM PIN attempts to user on bootup.\n\nWill upload new patch-set by removing it.",
+      "parentUuid": "de103f1d_3c48ba82",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 9
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1f96ea4_39dca314",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "623187b6_3a24e6c8",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-01T10:47:15Z",
+      "side": 1,
+      "message": "Default is used since the message shown is without any user intervention i.e message in SIM PIN lock screen\non bootup even before user enters any sim pin.",
+      "parentUuid": "a1f96ea4_39dca314",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 51
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22ca65e4_2bd590d5",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
@@ -129,6 +201,30 @@
       "writtenOn": "2017-10-30T21:48:17Z",
       "side": 1,
       "message": "Do we have to do this here? What about the CheckSimPin() in verifyPasswordAndUnlock?",
+      "range": {
+        "startLine": 363,
+        "startChar": 1,
+        "endLine": 373,
+        "endChar": 18
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b4ba114_4a44ae48",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-01T10:47:15Z",
+      "side": 1,
+      "message": "Yes, here we are starting the CheckSimPin thread inorder to send empty PIN string to modem\nto get the number of SIM PIN attempts remaining even before user enters any SIM PIN.\n\nThe CheckSimPin() in verifyPasswordAndUnlock is called when user enters SIM PIN.",
+      "parentUuid": "22ca65e4_2bd590d5",
       "range": {
         "startLine": 363,
         "startChar": 1,
