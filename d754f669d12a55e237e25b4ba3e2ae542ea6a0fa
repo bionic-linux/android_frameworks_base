@@ -73,6 +73,23 @@
     },
     {
       "key": {
+        "uuid": "84eb82eb_dd9fa07d",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-01T21:14:39Z",
+      "side": 1,
+      "message": "else should we show the non-bootup (non-default) message?",
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "098b1864_a40e1991",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
@@ -214,6 +231,53 @@
     },
     {
       "key": {
+        "uuid": "410673c6_dd6dd394",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-01T21:14:39Z",
+      "side": 1,
+      "message": "Can we go with mShowBootupMessage and isBootup instead?",
+      "parentUuid": "623187b6_3a24e6c8",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 51
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "964272e7_09033bbb",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-01T21:14:39Z",
+      "side": 1,
+      "message": "why do we need to set this to true on pin success?",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 58
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22ca65e4_2bd590d5",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
@@ -249,6 +313,30 @@
       "side": 1,
       "message": "Yes, here we are starting the CheckSimPin thread inorder to send empty PIN string to modem\nto get the number of SIM PIN attempts remaining even before user enters any SIM PIN.\n\nThe CheckSimPin() in verifyPasswordAndUnlock is called when user enters SIM PIN.",
       "parentUuid": "22ca65e4_2bd590d5",
+      "range": {
+        "startLine": 363,
+        "startChar": 1,
+        "endLine": 373,
+        "endChar": 18
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ac59bdf_bed00274",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-01T21:14:39Z",
+      "side": 1,
+      "message": "I see, so is this going to asynchronously change the message? That behavior seems odd.\n\nAlso can you add a comment explaining why we send an empty PIN",
+      "parentUuid": "5b4ba114_4a44ae48",
       "range": {
         "startLine": 363,
         "startChar": 1,
