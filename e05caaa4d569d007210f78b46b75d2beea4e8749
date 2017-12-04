@@ -22,6 +22,30 @@
       "revId": "e05caaa4d569d007210f78b46b75d2beea4e8749",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81401e8_3e447051",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1254278
+      },
+      "writtenOn": "2017-12-04T11:48:42Z",
+      "side": 1,
+      "message": "The result is same,because the descriptor is null too.",
+      "parentUuid": "06c42170_9f77338c",
+      "range": {
+        "startLine": 437,
+        "startChar": 8,
+        "endLine": 437,
+        "endChar": 68
+      },
+      "revId": "e05caaa4d569d007210f78b46b75d2beea4e8749",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
