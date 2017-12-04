@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.RemoteCallback;
 import android.os.UserHandle;
+import android.telephony.ApnSetting;
 
 import java.util.List;
 
@@ -355,4 +356,8 @@ interface IDevicePolicyManager {
 
     boolean isCurrentInputMethodSetByOwner();
     StringParceledListSlice getOwnerInstalledCaCerts(in UserHandle user);
+
+    int addOrUpdateApn(in ComponentName admin, in ApnSetting apnSetting);
+    boolean removeApn(in ComponentName admin, int apnId);
+    List<ApnSetting> getApn(in ComponentName admin);
 }

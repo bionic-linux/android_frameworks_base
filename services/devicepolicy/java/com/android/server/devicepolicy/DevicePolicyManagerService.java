@@ -88,6 +88,7 @@ import android.app.backup.IBackupManager;
 import android.app.trust.TrustManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -105,6 +106,7 @@ import android.content.pm.StringParceledListSlice;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -143,11 +145,13 @@ import android.provider.ContactsContract.QuickContact;
 import android.provider.ContactsInternal;
 import android.provider.Settings;
 import android.provider.Settings.Global;
+import android.provider.Telephony;
 import android.security.IKeyChainAliasCallback;
 import android.security.IKeyChainService;
 import android.security.KeyChain;
 import android.security.KeyChain.KeyChainConnection;
 import android.service.persistentdata.PersistentDataBlockManager;
+import android.telephony.ApnSetting;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArrayMap;
@@ -11142,5 +11146,94 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             return new StringParceledListSlice(
                     new ArrayList<>(getUserData(userId).mOwnerInstalledCaCerts));
         }
+    }
+
+    @Override
+    public int addOrUpdateApn(@NonNull ComponentName who, @NonNull ApnSetting apnSetting) {
+        Preconditions.checkNotNull(who, "ComponentName is null in addOrUpdateApn");
+        Preconditions.checkNotNull(apnSetting, "ApnSetting is null in addOrUpdateApn");
+        getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
+
+        final Uri URI_DPC = Uri.parse("content://telephony/carriers/dpc");
+        ContentValues apnValue= apnSetting.toContentValues();
+        int operatedId = 0;
+        if (apnSetting.id == 0) {
+            Uri resultUri = mContext.getContentResolver().insert(URI_DPC, apnValue);
+            if (resultUri != null) {
+                try {
+                    operatedId = Integer.parseInt(resultUri.getPathSegments().get(1));
+                }
+                catch (NumberFormatException e) {
+                }
+            }
+        } else {
+            String where = Telephony.Carriers._ID + "=?";
+            String[] whereArgs = { Integer.toString(apnSetting.id) };
+            long id = mInjector.binderClearCallingIdentity();
+            try {
+                mContext.getContentResolver().update(URI_DPC, apnValue, where, whereArgs);
+            } finally {
+                mInjector.binderRestoreCallingIdentity(id);
+            }
+            operatedId = apnSetting.id;
+        }
+        return operatedId;
+    }
+
+    @Override
+    public boolean removeApn(@NonNull ComponentName who, int apnId) {
+        Preconditions.checkNotNull(who, "ComponentName is null in removeApn");
+        getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
+
+        final Uri URI_DPC = Uri.parse("content://telephony/carriers/dpc");
+        String where = Telephony.Carriers._ID + "=?";
+        String[] whereArgs = { Integer.toString(apnId) };
+        return mContext.getContentResolver().delete(URI_DPC, where, whereArgs) > 0;
+    }
+
+    @Override
+    public List<ApnSetting> getApn(@NonNull ComponentName who) {
+        Preconditions.checkNotNull(who, "ComponentName is null in getApn");
+        getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
+        ArrayList<ApnSetting> apnList = new ArrayList<ApnSetting>();
+
+        final Uri URI_DPC = Uri.parse("content://telephony/carriers/dpc");
+        // The columns to get in table.
+        final String[] projection =
+                {
+                        Telephony.Carriers.APN,
+                        Telephony.Carriers.NAME,
+                        Telephony.Carriers.CURRENT,
+                        Telephony.Carriers.APN,
+                        Telephony.Carriers.PROXY,
+                        Telephony.Carriers.PORT,
+                        Telephony.Carriers.MMSC,
+                        Telephony.Carriers.MMSPROXY,
+                        Telephony.Carriers.MMSPORT,
+                        Telephony.Carriers.USER,
+                        Telephony.Carriers.PASSWORD,
+                        Telephony.Carriers.AUTH_TYPE,
+                        Telephony.Carriers.TYPE,
+                        Telephony.Carriers.PROTOCOL,
+                        Telephony.Carriers.ROAMING_PROTOCOL,
+                        Telephony.Carriers.CARRIER_ENABLED,
+                        Telephony.Carriers.BEARER_BITMASK,
+                        Telephony.Carriers.MVNO_TYPE,
+                };
+        String selection = null;
+        String[] selectionArgs = {""};
+        Cursor cursor = mContext.getContentResolver().query(URI_DPC, projection, selection,
+                selectionArgs, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ApnSetting apn = ApnSetting.makeApnSetting(cursor);
+                if (apn == null) {
+                    continue;
+                }
+                apnList.add(apn);
+            } while (cursor.moveToNext());
+        }
+        return apnList;
     }
 }

@@ -57,6 +57,7 @@ import android.os.UserManager;
 import android.provider.ContactsContract.Directory;
 import android.security.Credentials;
 import android.service.restrictions.RestrictionsReceiver;
+import android.telephony.ApnSetting;
 import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.Log;
@@ -8108,4 +8109,67 @@ public class DevicePolicyManager {
             throw re.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Called by device owner to add or update APN. If
+     * {@link com.android.internal.telephony.dataconnection.ApnSetting#id} is provided, replace the
+     * existing APN. Otherwise insert a new APN. May replace existing APN if conflicted.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with
+     * @param apnSetting the APN to insert or update
+     * @return The id of inserted or updated APN.
+     * @throws SecurityException if {@code admin} is not a device owner.
+     */
+    public int addOrUpdateApn(@NonNull ComponentName admin, @NonNull ApnSetting apnSetting) {
+        throwIfParentInstance("addOrUpdateApn");
+        if (mService != null) {
+            try {
+                return mService.addOrUpdateApn(admin, apnSetting);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Called by device owner to remove an existing APN.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with
+     * @param apnId the id of the APN to remove
+     * @return {@code true} if successfully removed this APN, {@code false} otherwise.
+     * @throws SecurityException if {@code admin} is not a device owner.
+     */
+    public boolean removeApn(@NonNull ComponentName admin, int apnId) {
+        throwIfParentInstance("removeApn");
+        if (mService != null) {
+            try {
+                return mService.removeApn(admin, apnId);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Called by device owner to get all APN records inserted by device owner.
+     *
+     * @param admin Which {@link DeviceAdminReceiver} this request is associated with
+     * @return A list of APN inserted by device owner.
+     * @throws SecurityException if {@code admin} is not a device owner.
+     */
+    @Nullable
+    public List<ApnSetting> getApn(@NonNull ComponentName admin) {
+        throwIfParentInstance("getApn");
+        if (mService != null) {
+            try {
+                return mService.getApn(admin);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return null;
+    }
+
 }
