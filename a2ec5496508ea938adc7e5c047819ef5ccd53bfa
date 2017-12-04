@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac64ae8_b0fa0156",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "A class representing an APN configuration.",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24111868_1edd916d",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 35,
+        "startChar": 45,
+        "endLine": 35,
+        "endChar": 1
+      },
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bc2c40_25fd184d",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "it\u0027s not public, so don\u0027t need @hide",
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f905d978_71a6845e",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5082a9ef_d3e137c4",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "we\u0027ll need javadoc for each field",
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9281b8_c5ef5454",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "add a line before @hide",
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74813d0e_a9211ac1",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "I think using null is better",
+      "range": {
+        "startLine": 165,
+        "startChar": 17,
+        "endLine": 165,
+        "endChar": 18
+      },
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb07d54a_3fdcbe43",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "no need to @hide private method",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 16
+      },
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12dc067f_3e805d8c",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "remove \"APN_TYPE\" prefix and make it camel case\ne.g. public static final String All \u003d \"*\";",
+      "range": {
+        "startLine": 593,
+        "startChar": 35,
+        "endLine": 593,
+        "endChar": 44
+      },
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d6ed10_27ed1d5b",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-04T21:12:26Z",
+      "side": 1,
+      "message": "next line",
+      "range": {
+        "startLine": 616,
+        "startChar": 50,
+        "endLine": 616,
+        "endChar": 66
+      },
+      "revId": "a2ec5496508ea938adc7e5c047819ef5ccd53bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
