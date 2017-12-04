@@ -34,6 +34,7 @@ import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
 import android.net.IpSecUdpEncapResponse;
 import android.net.NetworkUtils;
+import android.net.TrafficStats;
 import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.IBinder;
@@ -50,6 +51,8 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+
+import dalvik.system.SocketTagger;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -792,12 +795,14 @@ public class IpSecService extends IIpSecService.Stub {
 
         int resourceId = mNextResourceId.getAndIncrement();
         FileDescriptor sockFd = null;
+        int callingUid = Binder.getCallingUid();
         try {
-            if (!mUserQuotaTracker.getUserRecord(Binder.getCallingUid()).socket.isAvailable()) {
+            if (!mUserQuotaTracker.getUserRecord(callingUid).socket.isAvailable()) {
                 return new IpSecUdpEncapResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
             }
 
             sockFd = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+            setSockStatsUid(sockFd, callingUid);
 
             if (port != 0) {
                 Log.v(TAG, "Binding to port " + port);
@@ -828,6 +833,18 @@ public class IpSecService extends IIpSecService.Stub {
     public void closeUdpEncapsulationSocket(int resourceId) throws RemoteException {
 
         releaseManagedResource(mUdpSocketRecords, resourceId, "UdpEncapsulationSocket");
+    }
+
+    /**
+     * Sets socket tag to assign all traffic to the provided UID.
+     *
+     * <p>Since the socket is created on behalf of a userspace application, all traffic should be
+     * accounted to the UID of the userspace application.
+     */
+    @VisibleForTesting
+    public void setSockStatsUid(FileDescriptor fd, int uid) throws IOException {
+        TrafficStats.setThreadStatsUid(uid);
+        SocketTagger.get().tag(fd);
     }
 
     /**
