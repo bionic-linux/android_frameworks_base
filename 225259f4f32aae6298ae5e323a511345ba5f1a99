@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6bc8783_0e35aa82",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-05T17:21:27Z",
+      "side": 1,
+      "message": "can we @link PDP_type class?",
+      "range": {
+        "startLine": 97,
+        "startChar": 25,
+        "endLine": 97,
+        "endChar": 33
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3f0a5e_b096b08f",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-05T17:21:27Z",
+      "side": 1,
+      "message": "Some calls calls may crash when the LHS variable (non primitive) is null. Maybe use Objects.equal",
+      "range": {
+        "startLine": 335,
+        "startChar": 19,
+        "endLine": 335,
+        "endChar": 21
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7dee9f_b4e6abe1",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-05T17:21:27Z",
+      "side": 1,
+      "message": "same problem here",
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e89349_6d406636",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-05T17:21:27Z",
+      "side": 1,
+      "message": "ALL_TYEPS\nmaybe we can @hide this one.",
+      "range": {
+        "startLine": 664,
+        "startChar": 37,
+        "endLine": 664,
+        "endChar": 46
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
