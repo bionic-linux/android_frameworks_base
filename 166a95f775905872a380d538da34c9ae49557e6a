@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f3fe58_e96e87f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1099761
+      },
+      "writtenOn": "2017-12-05T01:19:37Z",
+      "side": 1,
+      "message": "nit: privilege",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "166a95f775905872a380d538da34c9ae49557e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1241e008_c99b64f5",
+        "filename": "core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1099761
+      },
+      "writtenOn": "2017-12-05T01:19:37Z",
+      "side": 1,
+      "message": "I assume this log is mostly for machine parsing during the test. Do you want to make it easier to parse by changing it to something like\n\n\"Copied to DropBox: filename \u003d ..., maxSize \u003d ..., tag \u003d ...\"\n\nwhere ... is the variable\u0027s toString()?\n\nNote that this log also exposes implementation details so the string can\u0027t be changed without a corresponding change to the test, and it might be tricky to handle in the test if there are different strings in different versions of the OS.",
+      "range": {
+        "startLine": 294,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 58
+      },
+      "revId": "166a95f775905872a380d538da34c9ae49557e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
