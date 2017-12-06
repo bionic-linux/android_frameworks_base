@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4c3d53a2_e0705ff9",
+        "filename": "packages/SystemUI/res-keyguard/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-06T09:26:10Z",
+      "side": 1,
+      "message": "That is not correct always, considering below cases\n- In previous boot if user did not input any PIN.\n- When SIM PIN Locked, user tried inputting PIN one time on a device, remove Sim card from that device inserted in another device.\n\n\nAlso, when device powered up its more appropriate to show \"Enter SIM PIN, ...\" message instead of displaying \"Incorrect SIM PIN code ...\" which happened in previous boot.",
+      "parentUuid": "15aaf040_c0eae148",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 14
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84eb82eb_dd9fa07d",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
@@ -84,6 +108,24 @@
       "writtenOn": "2017-12-01T21:14:39Z",
       "side": 1,
       "message": "else should we show the non-bootup (non-default) message?",
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de5c8d3d_2df46fe2",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-06T09:26:10Z",
+      "side": 1,
+      "message": "no, its not needed.\n\nnon-default message would be displayed only when there is a user interaction(i.e user input a PIN and it failed), displaying of that message is done from line number 300 and onward logic.",
+      "parentUuid": "84eb82eb_dd9fa07d",
       "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -278,6 +320,54 @@
     },
     {
       "key": {
+        "uuid": "0806c3fb_9b01c320",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-06T09:26:10Z",
+      "side": 1,
+      "message": "Actually this message would be displayed when new PIN locked SIM inserted on the fly(via SIM hot-swap), such hot-swap scenarios are not boot-up cases hence we felt the name DefaultMessage as more appropriate.",
+      "parentUuid": "410673c6_dd6dd394",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 51
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a756fab_e2789998",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-06T09:26:10Z",
+      "side": 1,
+      "message": "The default value of mShowDefaultMessage is true.\nIn PIN success case we are setting this to true, reason is:  Later in case  user insert and new PIN locked SIM(by SIM hot-swap), we need to display default message and for doing that we are setting mShowDefaultMessage to true.",
+      "parentUuid": "964272e7_09033bbb",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 58
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22ca65e4_2bd590d5",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
@@ -337,6 +427,30 @@
       "side": 1,
       "message": "I see, so is this going to asynchronously change the message? That behavior seems odd.\n\nAlso can you add a comment explaining why we send an empty PIN",
       "parentUuid": "5b4ba114_4a44ae48",
+      "range": {
+        "startLine": 363,
+        "startChar": 1,
+        "endLine": 373,
+        "endChar": 18
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f5e502c_c888055b",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1019829
+      },
+      "writtenOn": "2017-12-06T09:26:10Z",
+      "side": 1,
+      "message": "We are sending the empty PIN to get the number of remaining current remaining attempts, will add the comment in code.",
+      "parentUuid": "9ac59bdf_bed00274",
       "range": {
         "startLine": 363,
         "startChar": 1,
