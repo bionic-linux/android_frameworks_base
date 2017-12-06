@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f1253076_dbb8feba",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-12-06T17:32:38Z",
+      "side": 1,
+      "message": "Last time I heard from API council that they would prefer a getter instead of directly accessing a public member variable. You can double check.",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3693bc3_8c30f8d2",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 5
