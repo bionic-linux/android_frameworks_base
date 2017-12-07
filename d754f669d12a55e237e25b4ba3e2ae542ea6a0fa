@@ -440,6 +440,54 @@
     },
     {
       "key": {
+        "uuid": "785d7d32_1ec89851",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1153084
+      },
+      "writtenOn": "2017-12-07T09:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f8dea1_74417b87",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 51
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cfae63b_5df525e0",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1153084
+      },
+      "writtenOn": "2017-12-07T09:01:58Z",
+      "side": 1,
+      "message": "Is this same as above comment where you suggested to add comment about mShowDefaultMessage ? \n\nPls clarify me if this is different from above.",
+      "parentUuid": "9b05cadb_5c2859ce",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 58
+      },
+      "revId": "d754f669d12a55e237e25b4ba3e2ae542ea6a0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22ca65e4_2bd590d5",
         "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardSimPinView.java",
         "patchSetId": 2
