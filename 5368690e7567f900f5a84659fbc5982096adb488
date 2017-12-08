@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9b78f01_74d2e3d0",
+        "filename": "services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-12-08T04:44:32Z",
+      "side": 1,
+      "message": "What about this?\n\ntry {\n    if (cmd.getOpcode() \u003d\u003d Constants.MESSAGE_FEATURE_ABORT) {\n        displayName \u003d HdmiUtils.getDefaultDeviceName(current.mLogicalAddress);\n    } else {\n        displayName \u003d new String(cmd.getParams(), \"US-ASCII\");\n    }\n} catch (UnsupportedEncodingException e) {\n    Slog.w(TAG, \"Failed to decode display name: \" + cmd.toString());\n    // If failed to get display name, use the default name of device.\n    displayName \u003d HdmiUtils.getDefaultDeviceName(current.mLogicalAddress);\n}",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 9
+      },
+      "revId": "5368690e7567f900f5a84659fbc5982096adb488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
