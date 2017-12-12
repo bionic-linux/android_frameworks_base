@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "326282d0_7dce752c",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-12T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3693bc3_8c30f8d2",
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36079f4d_6ad56f9b",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 5
@@ -56,6 +74,24 @@
       "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9d25e0_bb26810a",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-12T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36079f4d_6ad56f9b",
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "498b8afa_b8a4a5da",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-12T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "953796c3_8545a552",
+      "range": {
+        "startLine": 91,
+        "startChar": 49,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6bc8783_0e35aa82",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 5
@@ -93,6 +153,30 @@
       "writtenOn": "2017-12-05T17:21:27Z",
       "side": 1,
       "message": "can we @link PDP_type class?",
+      "range": {
+        "startLine": 97,
+        "startChar": 25,
+        "endLine": 97,
+        "endChar": 33
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90fa182_445614e4",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-12T20:48:13Z",
+      "side": 1,
+      "message": "is there such a class?",
+      "parentUuid": "c6bc8783_0e35aa82",
       "range": {
         "startLine": 97,
         "startChar": 25,
@@ -128,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "4a93e874_32f9a566",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-12T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b18d451c_2b140250",
+      "range": {
+        "startLine": 103,
+        "startChar": 33,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a3f0a5e_b096b08f",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 5
@@ -151,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "ca9feedd_1fe95fe8",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-12T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a3f0a5e_b096b08f",
+      "range": {
+        "startLine": 335,
+        "startChar": 19,
+        "endLine": 335,
+        "endChar": 21
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b7dee9f_b4e6abe1",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 5
@@ -165,6 +297,24 @@
       "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b31e271_437154ce",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-12T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b7dee9f_b4e6abe1",
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +338,30 @@
       "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff7e098_e20ea6ac",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-12T20:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30e89349_6d406636",
+      "range": {
+        "startLine": 664,
+        "startChar": 37,
+        "endLine": 664,
+        "endChar": 46
+      },
+      "revId": "225259f4f32aae6298ae5e323a511345ba5f1a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
