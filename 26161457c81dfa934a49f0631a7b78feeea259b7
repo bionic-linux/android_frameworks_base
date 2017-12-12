@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "669752bc_5ac40fe6",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-12-12T21:55:04Z",
+      "side": 1,
+      "message": "Maybe we should be more consistent to have getters for all of them?",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "26161457c81dfa934a49f0631a7b78feeea259b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9e0fa03_627ebaa5",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-12-12T21:55:04Z",
+      "side": 1,
+      "message": "Learned from Lint warnings that the API councils prefer List\u003cString\u003e other than the array for params and return values. Please check with the API councils.",
+      "range": {
+        "startLine": 313,
+        "startChar": 11,
+        "endLine": 313,
+        "endChar": 19
+      },
+      "revId": "26161457c81dfa934a49f0631a7b78feeea259b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbaa7fe0_9d0c6870",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-12-12T21:55:04Z",
+      "side": 1,
+      "message": "Maybe turn it into a constructor?\n\nAlso unlike the constructor that takes Parcel, it is a little bit weird to have this method here. The input param is a generic cursor but internally it relies on the knowledge of Telephony.Carriers.*.\n\nDo we have a util or helper class that we can have this method?",
+      "range": {
+        "startLine": 856,
+        "startChar": 4,
+        "endLine": 856,
+        "endChar": 60
+      },
+      "revId": "26161457c81dfa934a49f0631a7b78feeea259b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9610e014_6b90fff3",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-12-12T21:55:04Z",
+      "side": 1,
+      "message": "incorrect indentation. You can run /prebuilts/checkstyle/checkstyle.py to identify all the style issues.",
+      "range": {
+        "startLine": 860,
+        "startChar": 8,
+        "endLine": 863,
+        "endChar": 79
+      },
+      "revId": "26161457c81dfa934a49f0631a7b78feeea259b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
