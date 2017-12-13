@@ -41,9 +41,6 @@ import java.lang.annotation.RetentionPolicy;
  * {@link Context#getSystemService(String)} and {@link Context#EUICC_SERVICE}.
  *
  * <p>See {@link #isEnabled} before attempting to use these APIs.
- *
- * TODO(b/35851809): Make this public.
- * @hide
  */
 public class EuiccManager {
 
@@ -83,9 +80,8 @@ public class EuiccManager {
      *
      * <p>The activity will immediately finish with {@link android.app.Activity#RESULT_CANCELED} if
      * {@link #isEnabled} is false or if the device is already provisioned.
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     @SdkConstant(SdkConstant.SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_PROVISION_EMBEDDED_SUBSCRIPTION =
             "android.telephony.euicc.action.PROVISION_EMBEDDED_SUBSCRIPTION";
@@ -132,9 +128,8 @@ public class EuiccManager {
      * Key for an extra set on {@link #getDownloadableSubscriptionMetadata} PendingIntent result
      * callbacks providing the downloadable subscription metadata.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public static final String EXTRA_EMBEDDED_SUBSCRIPTION_DOWNLOADABLE_SUBSCRIPTION =
             "android.telephony.euicc.extra.EMBEDDED_SUBSCRIPTION_DOWNLOADABLE_SUBSCRIPTION";
 
@@ -142,9 +137,8 @@ public class EuiccManager {
      * Key for an extra set on {@link #getDefaultDownloadableSubscriptionList} PendingIntent result
      * callbacks providing the list of available downloadable subscriptions.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public static final String EXTRA_EMBEDDED_SUBSCRIPTION_DOWNLOADABLE_SUBSCRIPTIONS =
             "android.telephony.euicc.extra.EMBEDDED_SUBSCRIPTION_DOWNLOADABLE_SUBSCRIPTIONS";
 
@@ -348,9 +342,8 @@ public class EuiccManager {
      *     For example, this may indicate whether the user has consented or may include the input
      *     they provided.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public void continueOperation(Intent resolutionIntent, Bundle resolutionExtras) {
         if (!isEnabled()) {
             PendingIntent callbackIntent =
@@ -384,9 +377,8 @@ public class EuiccManager {
      * @param subscription the subscription which needs metadata filled in
      * @param callbackIntent a PendingIntent to launch when the operation completes.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public void getDownloadableSubscriptionMetadata(
             DownloadableSubscription subscription, PendingIntent callbackIntent) {
         if (!isEnabled()) {
@@ -415,9 +407,8 @@ public class EuiccManager {
      *
      * @param callbackIntent a PendingIntent to launch when the operation completes.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public void getDefaultDownloadableSubscriptionList(PendingIntent callbackIntent) {
         if (!isEnabled()) {
             sendUnavailableError(callbackIntent);

@@ -3583,8 +3583,6 @@ public abstract class Context {
      *
      * @see #getSystemService
      * @see android.telephony.euicc.EuiccManager
-     * TODO(b/35851809): Unhide this API.
-     * @hide
      */
     public static final String EUICC_SERVICE = "euicc_service";
 
