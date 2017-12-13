@@ -22,6 +22,420 @@
       "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7166053f_7df397ee",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "getApnName?\n\nThis naming is odd in the context of ApnSetting; it makes it seem like you\u0027re getting the Apn itself, not the name of it.",
+      "range": {
+        "startLine": 308,
+        "startChar": 18,
+        "endLine": 308,
+        "endChar": 24
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2753873d_67b2c7b1",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "Should use a java.net.Url since it looks like proxy addresses are just URLs.",
+      "range": {
+        "startLine": 328,
+        "startChar": 11,
+        "endLine": 328,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef7f041e_d130c020",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "Internet address ports are typically integers, this should be one as well.",
+      "range": {
+        "startLine": 348,
+        "startChar": 11,
+        "endLine": 348,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d668a8a_9d97e245",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "java.net.Url",
+      "range": {
+        "startLine": 368,
+        "startChar": 11,
+        "endLine": 368,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "181e46b7_d0c5fd72",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "java.net.InetAddress (if its not a full fledged URL, which I don\u0027t think it is)",
+      "range": {
+        "startLine": 388,
+        "startChar": 11,
+        "endLine": 388,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6f8b155_cc5b2520",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "int",
+      "range": {
+        "startLine": 408,
+        "startChar": 11,
+        "endLine": 408,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "316fd875_3fb0a146",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "These should be well defined constants in the system somewhere.",
+      "range": {
+        "startLine": 475,
+        "startChar": 7,
+        "endLine": 475,
+        "endChar": 95
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3974631d_1f00eb79",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "You should @link to some of the values applicable.\n\nAlso, its good practice to use a StringDef to help consumers of the API know what valid values are:\n\n/**\n     * @hide\n     */\n    @Retention(RetentionPolicy.SOURCE)\n    @StringDef(value \u003d {\n        TYPE_BLAH,\n        TYPE_THINGS\n        })\n    public @interface Types {}",
+      "range": {
+        "startLine": 501,
+        "startChar": 24,
+        "endLine": 501,
+        "endChar": 43
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dff95cd3_ddf98f17",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "Is it valid to get/set the internal ID for the APN?  That\u0027s usually just a sequence number in the provider which likely has no relevance outside of the provider.",
+      "range": {
+        "startLine": 505,
+        "startChar": 4,
+        "endLine": 523,
+        "endChar": 5
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca1d7826_883c1d52",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "getOperatorNumeric (consistent with other usages)",
+      "range": {
+        "startLine": 533,
+        "startChar": 18,
+        "endLine": 533,
+        "endChar": 28
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76d3b6f4_bc84dcdd",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "setOperatorNumeric",
+      "range": {
+        "startLine": 543,
+        "startChar": 16,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f43cc80c_5a149124",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "These should be well defined constants somewhere.",
+      "range": {
+        "startLine": 551,
+        "startChar": 20,
+        "endLine": 551,
+        "endChar": 77
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf8e43d7_aa2887d2",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "Mispelling:\nsetRoamingProtocol",
+      "range": {
+        "startLine": 588,
+        "startChar": 16,
+        "endLine": 588,
+        "endChar": 35
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a00ed95f_254eb456",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "isEnabled",
+      "range": {
+        "startLine": 601,
+        "startChar": 19,
+        "endLine": 601,
+        "endChar": 36
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9107ba1e_f99d8802",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "Please @link to the specific values which are applicable here.",
+      "range": {
+        "startLine": 618,
+        "startChar": 7,
+        "endLine": 621,
+        "endChar": 57
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c51e804_0dd59ee9",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "These should be well defined constants somewhere, not hardcoded strings.",
+      "range": {
+        "startLine": 644,
+        "startChar": 5,
+        "endLine": 647,
+        "endChar": 23
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2e52e38_61a7bf0a",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "Are public versions of these constructors needed?",
+      "range": {
+        "startLine": 708,
+        "startChar": 4,
+        "endLine": 720,
+        "endChar": 5
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6787190_c2539820",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-12-13T23:48:12Z",
+      "side": 1,
+      "message": "Rather than declaring a sub-class just put these in ApnSetting and prefix with TYPE_",
+      "range": {
+        "startLine": 1126,
+        "startChar": 3,
+        "endLine": 1126,
+        "endChar": 30
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
