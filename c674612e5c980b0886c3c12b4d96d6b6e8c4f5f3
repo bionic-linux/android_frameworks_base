@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f43c67c_7ba67877",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-12-13T19:33:11Z",
+      "side": 1,
+      "message": "please double check if all non-static private member variables need to start with \u0027m\u0027. Also see b/37125359.",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "c674612e5c980b0886c3c12b4d96d6b6e8c4f5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a614a73a_26893df5",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-12-13T19:33:11Z",
+      "side": 1,
+      "message": "incorrect indentation?",
+      "range": {
+        "startLine": 669,
+        "startChar": 0,
+        "endLine": 674,
+        "endChar": 61
+      },
+      "revId": "c674612e5c980b0886c3c12b4d96d6b6e8c4f5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
