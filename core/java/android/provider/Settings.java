@@ -7837,10 +7837,8 @@ public final class Settings {
          * provisioning or in settings without needing the user to enter an activation code.
          *
          * @see android.service.euicc.EuiccService
-         * @hide
-         *
-         * TODO(b/35851809): Make this a SystemApi.
          */
+        @SystemApi
         public static final String DEFAULT_SM_DP_PLUS = "default_sm_dp_plus";
 
         /**
