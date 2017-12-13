@@ -23,6 +23,11 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemService;
 import android.content.Context;
 import android.content.Intent;
+<<<<<<< HEAD
+=======
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+>>>>>>> 4f73b9c09ac... Public EuiccManager APIs.
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.INetworkPolicyManager;
@@ -751,10 +756,13 @@ public class SubscriptionManager {
      * if the list is non-empty the list is sorted by {@link SubscriptionInfo#getSimSlotIndex}
      * then by {@link SubscriptionInfo#getSubscriptionId}.
      * </ul>
-     * @hide
      *
-     * TODO(b/35851809): Make this a SystemApi.
+     * <p>
+     * Permissions android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE is required
+     * for #getAvailableSubscriptionInfoList to be invoked.
+     * @hide
      */
+    @SystemApi
     public List<SubscriptionInfo> getAvailableSubscriptionInfoList() {
         List<SubscriptionInfo> result = null;
 
@@ -792,9 +800,6 @@ public class SubscriptionManager {
      * if the list is non-empty the list is sorted by {@link SubscriptionInfo#getSimSlotIndex}
      * then by {@link SubscriptionInfo#getSubscriptionId}.
      * </ul>
-     * @hide
-     *
-     * TODO(b/35851809): Make this public.
      */
     public List<SubscriptionInfo> getAccessibleSubscriptionInfoList() {
         List<SubscriptionInfo> result = null;
@@ -820,9 +825,8 @@ public class SubscriptionManager {
      *
      * <p>Requires the {@link android.Manifest.permission#WRITE_EMBEDDED_SUBSCRIPTIONS} permission.
      * @hide
-     *
-     * TODO(b/35851809): Make this a SystemApi.
      */
+    @SystemApi
     public void requestEmbeddedSubscriptionInfoListRefresh() {
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
@@ -1668,4 +1672,204 @@ public class SubscriptionManager {
             throw e.rethrowFromSystemServer();
         }
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Temporarily override the billing relationship plan between a carrier and
+     * a specific subscriber to be considered unmetered. This will be reflected
+     * to apps via {@link NetworkCapabilities#NET_CAPABILITY_NOT_METERED}.
+     * <p>
+     * This method is only accessible to the following narrow set of apps:
+     * <ul>
+     * <li>The carrier app for this subscriberId, as determined by
+     * {@link TelephonyManager#hasCarrierPrivileges()}.
+     * <li>The carrier app explicitly delegated access through
+     * {@link CarrierConfigManager#KEY_CONFIG_PLANS_PACKAGE_OVERRIDE_STRING}.
+     * </ul>
+     *
+     * @param subId the subscriber this override applies to.
+     * @param overrideUnmetered set if the billing relationship should be
+     *            considered unmetered.
+     * @param timeoutMillis the timeout after which the requested override will
+     *            be automatically cleared, or {@code 0} to leave in the
+     *            requested state until explicitly cleared, or the next reboot,
+     *            whichever happens first.
+     */
+    @SystemApi
+    public void setSubscriptionOverrideUnmetered(int subId, boolean overrideUnmetered,
+            @DurationMillisLong long timeoutMillis) {
+        try {
+            final int overrideValue = overrideUnmetered ? OVERRIDE_UNMETERED : 0;
+            mNetworkPolicy.setSubscriptionOverride(subId, OVERRIDE_UNMETERED, overrideValue,
+                    timeoutMillis, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Temporarily override the billing relationship plan between a carrier and
+     * a specific subscriber to be considered congested. This will cause the
+     * device to delay certain network requests when possible, such as developer
+     * jobs that are willing to run in a flexible time window.
+     * <p>
+     * This method is only accessible to the following narrow set of apps:
+     * <ul>
+     * <li>The carrier app for this subscriberId, as determined by
+     * {@link TelephonyManager#hasCarrierPrivileges()}.
+     * <li>The carrier app explicitly delegated access through
+     * {@link CarrierConfigManager#KEY_CONFIG_PLANS_PACKAGE_OVERRIDE_STRING}.
+     * </ul>
+     *
+     * @param subId the subscriber this override applies to.
+     * @param overrideCongested set if the subscription should be considered
+     *            congested.
+     * @param timeoutMillis the timeout after which the requested override will
+     *            be automatically cleared, or {@code 0} to leave in the
+     *            requested state until explicitly cleared, or the next reboot,
+     *            whichever happens first.
+     */
+    @SystemApi
+    public void setSubscriptionOverrideCongested(int subId, boolean overrideCongested,
+            @DurationMillisLong long timeoutMillis) {
+        try {
+            final int overrideValue = overrideCongested ? OVERRIDE_CONGESTED : 0;
+            mNetworkPolicy.setSubscriptionOverride(subId, OVERRIDE_CONGESTED, overrideValue,
+                    timeoutMillis, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Create an {@link Intent} that can be launched towards the carrier app
+     * that is currently defining the billing relationship plan through
+     * {@link #setSubscriptionPlans(int, List)}.
+     *
+     * @return ready to launch Intent targeted towards the carrier app, or
+     *         {@code null} if no carrier app is defined, or if the defined
+     *         carrier app provides no management activity.
+     * @hide
+     */
+    public @Nullable Intent createManageSubscriptionIntent(int subId) {
+        // Bail if no owner
+        final String owner = getSubscriptionPlansOwner(subId);
+        if (owner == null) return null;
+
+        // Bail if no plans
+        final List<SubscriptionPlan> plans = getSubscriptionPlans(subId);
+        if (plans.isEmpty()) return null;
+
+        final Intent intent = new Intent(ACTION_MANAGE_SUBSCRIPTION_PLANS);
+        intent.setPackage(owner);
+        intent.putExtra(EXTRA_SUBSCRIPTION_INDEX, subId);
+
+        // Bail if not implemented
+        if (mContext.getPackageManager().queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY).isEmpty()) {
+            return null;
+        }
+
+        return intent;
+    }
+
+    /** @hide */
+    private @Nullable Intent createRefreshSubscriptionIntent(int subId) {
+        // Bail if no owner
+        final String owner = getSubscriptionPlansOwner(subId);
+        if (owner == null) return null;
+
+        // Bail if no plans
+        final List<SubscriptionPlan> plans = getSubscriptionPlans(subId);
+        if (plans.isEmpty()) return null;
+
+        final Intent intent = new Intent(ACTION_REFRESH_SUBSCRIPTION_PLANS);
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        intent.setPackage(owner);
+        intent.putExtra(EXTRA_SUBSCRIPTION_INDEX, subId);
+
+        // Bail if not implemented
+        if (mContext.getPackageManager().queryBroadcastReceivers(intent, 0).isEmpty()) {
+            return null;
+        }
+
+        return intent;
+    }
+
+    /**
+     * Check if there is a carrier app that is currently defining the billing
+     * relationship plan through {@link #setSubscriptionPlans(int, List)} that
+     * supports refreshing of subscription plans.
+     *
+     * @hide
+     */
+    public boolean isSubscriptionPlansRefreshSupported(int subId) {
+        return createRefreshSubscriptionIntent(subId) != null;
+    }
+
+    /**
+     * Request that the carrier app that is currently defining the billing
+     * relationship plan through {@link #setSubscriptionPlans(int, List)}
+     * refresh its subscription plans.
+     * <p>
+     * If the app is able to successfully update the plans, you'll expect to
+     * receive the {@link #ACTION_SUBSCRIPTION_PLANS_CHANGED} broadcast.
+     *
+     * @hide
+     */
+    public void requestSubscriptionPlansRefresh(int subId) {
+        final Intent intent = createRefreshSubscriptionIntent(subId);
+        final BroadcastOptions options = BroadcastOptions.makeBasic();
+        options.setTemporaryAppWhitelistDuration(TimeUnit.MINUTES.toMillis(1));
+        mContext.sendBroadcast(intent, null, options.toBundle());
+    }
+
+    /**
+     * Checks whether the app with the given context is authorized to manage the given subscription
+     * according to its metadata. Only supported for embedded subscriptions (if
+     * {@code SubscriptionInfo#isEmbedded} returns true).
+     *
+     * @param info The subscription to check.
+     * @return whether the app is authorized to manage this subscription per its metadata.
+     * @throws UnsupportedOperationException if this subscription is not embedded.
+     */
+    public boolean canManageSubscription(SubscriptionInfo info) {
+        return canManageSubscription(info, mContext.getPackageName());
+    }
+
+    /**
+     * Checks whether the given app is authorized to manage the given subscription according to its
+     * metadata. Only supported for embedded subscriptions (if {@code SubscriptionInfo#isEmbedded}
+     * returns true).
+     *
+     * @param info The subscription to check.
+     * @param packageName Package name of the app to check.
+     * @return whether the app is authorized to manage this subscription per its metadata.
+     * @throws UnsupportedOperationException if this subscription is not embedded.
+     * @hide
+     */
+    public boolean canManageSubscription(SubscriptionInfo info, String packageName) {
+        if (!info.isEmbedded()) {
+            throw new UnsupportedOperationException("Not an embedded subscription");
+        }
+        if (info.getAccessRules() == null) {
+            return false;
+        }
+        PackageManager packageManager = mContext.getPackageManager();
+        PackageInfo packageInfo;
+        try {
+            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new IllegalArgumentException("Unknown package: " + packageName, e);
+        }
+        for (UiccAccessRule rule : info.getAccessRules()) {
+            if (rule.getCarrierPrivilegeStatus(packageInfo)
+                    == TelephonyManager.CARRIER_PRIVILEGE_STATUS_HAS_ACCESS) {
+                return true;
+            }
+        }
+        return false;
+    }
+>>>>>>> 4f73b9c09ac... Public EuiccManager APIs.
 }
