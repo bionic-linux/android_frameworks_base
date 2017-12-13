@@ -17,6 +17,7 @@ package android.service.euicc;
 
 import android.annotation.CallSuper;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -64,10 +65,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * {@link android.Manifest.permission#BIND_EUICC_SERVICE} permission. Each should have an intent
  * filter with the appropriate action, the {@link #CATEGORY_EUICC_UI} category, and a non-zero
  * priority.
- *
- * TODO(b/35851809): Make this a SystemApi.
- * @hide
  */
+@SystemApi
 public abstract class EuiccService extends Service {
     /** Action which must be included in this service's intent filter. */
     public static final String EUICC_SERVICE_INTERFACE = "android.service.euicc.EuiccService";

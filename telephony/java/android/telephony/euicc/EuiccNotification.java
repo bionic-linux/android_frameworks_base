@@ -17,6 +17,7 @@ package android.telephony.euicc;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -29,11 +30,8 @@ import java.util.Objects;
  * This represents a signed notification which is defined in SGP.22. It can be either a profile
  * installation result or a notification generated for profile operations (e.g., enabling,
  * disabling, or deleting).
- *
- * @hide
- *
- * TODO(b/35851809): Make this a @SystemApi.
  */
+@SystemApi
 public class EuiccNotification implements Parcelable {
     /** Event */
     @Retention(RetentionPolicy.SOURCE)

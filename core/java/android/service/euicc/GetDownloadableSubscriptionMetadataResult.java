@@ -16,16 +16,13 @@
 package android.service.euicc;
 
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.euicc.DownloadableSubscription;
 
-/**
- * Result of a {@link EuiccService#onGetDownloadableSubscriptionMetadata} operation.
- * @hide
- *
- * TODO(b/35851809): Make this a SystemApi.
- */
+/** Result of a {@link EuiccService#onGetDownloadableSubscriptionMetadata} operation. */
+@SystemApi
 public final class GetDownloadableSubscriptionMetadataResult implements Parcelable {
 
     public static final Creator<GetDownloadableSubscriptionMetadataResult> CREATOR =
