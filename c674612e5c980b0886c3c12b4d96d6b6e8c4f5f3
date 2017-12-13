@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b6aec44_6214af94",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-13T21:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f43c67c_7ba67877",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "c674612e5c980b0886c3c12b4d96d6b6e8c4f5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a614a73a_26893df5",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-13T19:33:11Z",
       "side": 1,
       "message": "incorrect indentation?",
+      "range": {
+        "startLine": 669,
+        "startChar": 0,
+        "endLine": 674,
+        "endChar": 61
+      },
+      "revId": "c674612e5c980b0886c3c12b4d96d6b6e8c4f5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3294d38a_aa6f3f93",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2017-12-13T21:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a614a73a_26893df5",
       "range": {
         "startLine": 669,
         "startChar": 0,
