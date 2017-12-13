@@ -24,9 +24,6 @@ import com.android.internal.util.Preconditions;
 
 /**
  * Information about a subscription which is available for download.
- *
- * TODO(b/35851809): Make this public.
- * @hide
  */
 public final class DownloadableSubscription implements Parcelable {
 
