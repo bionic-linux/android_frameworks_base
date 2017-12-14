@@ -355,10 +355,19 @@ public class UserGridView extends ViewPager {
         }
 
         @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override
         public void onLayoutChange(View v, int left, int top, int right, int bottom,
                 int oldLeft, int oldTop, int oldRight, int oldBottom) {
-            mContainerWidth = Math.max(left - right, right - left);
-            notifyDataSetChanged();
+            int width = Math.max(left - right, right - left);
+            if (mContainerWidth != width) {
+                // Call notifyDataSetChanged() only the mContainerWidth is changed.
+                mContainerWidth = width;
+                notifyDataSetChanged();
+            }
         }
     }
 
