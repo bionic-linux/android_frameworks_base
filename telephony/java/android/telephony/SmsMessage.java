@@ -433,6 +433,51 @@ public class SmsMessage {
         return calculateLength((CharSequence)messageBody, use7bitOnly);
     }
 
+    /**
+     * Find the limit index according to SMS message size limit.
+     *
+     * @param msg the SMS message
+     * @return the limit index, or the length of the entire message if message is within the limit
+     */
+    public static int findSizeLimitIndex(String msg) {
+        if (msg == null) {
+            return 0;
+        }
+        TextEncodingDetails ted = (useCdmaFormatForMoSms()) ?
+                com.android.internal.telephony.cdma.SmsMessage.calculateLength(msg, false, true) :
+                com.android.internal.telephony.gsm.SmsMessage.calculateLength(msg, false);
+
+        int limit = 0;
+        if (ted.codeUnitSize == SmsConstants.ENCODING_7BIT) {
+            limit = SmsConstants.MAX_USER_DATA_SEPTETS;
+        } else {
+            limit = SmsConstants.MAX_USER_DATA_BYTES;
+        }
+
+        String newMsg = null;
+        Resources r = Resources.getSystem();
+        if (r.getBoolean(com.android.internal.R.bool.config_sms_force_7bit_encoding)) {
+            newMsg  = Sms7BitEncodingTranslator.translate(msg);
+        }
+        if (TextUtils.isEmpty(newMsg)) {
+            newMsg = msg;
+        }
+
+        int limitIndex = 0;
+        int megLen = newMsg.length();
+        if (ted.codeUnitSize == SmsConstants.ENCODING_7BIT) {
+            if (useCdmaFormatForMoSms()) {
+                limitIndex = Math.min(limit, megLen);
+            } else {
+                limitIndex = GsmAlphabet.findGsmSeptetLimitIndex(newMsg, 0, limit,
+                        ted.languageTable, ted.languageShiftTable);
+            }
+        } else {
+            limitIndex = SmsMessageBase.findNextUnicodePosition(0, limit, newMsg);
+        }
+        return limitIndex;
+    }
+
     /*
      * TODO(cleanup): It looks like there is now no useful reason why
      * apps should generate pdus themselves using these routines,
