@@ -107,6 +107,8 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_CAPTIVE_PORTAL,
             NET_CAPABILITY_NOT_ROAMING,
             NET_CAPABILITY_FOREGROUND,
+            NET_CAPABILITY_PUSH_TO_TALK_VOICE,
+            NET_CAPABILITY_PUBLIC_SAFETY_DATA,
     })
     public @interface NetCapability { }
 
@@ -234,8 +236,20 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int NET_CAPABILITY_FOREGROUND = 19;
 
+    /**
+     * Indicates this is a network that has the ability to reach a carrier's PTT servers, used
+     * for Push-to-talk communication.
+     */
+    public static final int NET_CAPABILITY_PUSH_TO_TALK_VOICE = 20;
+
+    /**
+     * Indicates this is a network that has the ability to reach a carrier's private closed
+     * network, such as Public Safety Agency Data Applications network.
+    */
+    public static final int NET_CAPABILITY_PUBLIC_SAFETY_DATA = 21;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_FOREGROUND;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_PUBLIC_SAFETY_DATA;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -1036,27 +1050,29 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static String capabilityNameOf(@NetCapability int capability) {
         switch (capability) {
-            case NET_CAPABILITY_MMS:            return "MMS";
-            case NET_CAPABILITY_SUPL:           return "SUPL";
-            case NET_CAPABILITY_DUN:            return "DUN";
-            case NET_CAPABILITY_FOTA:           return "FOTA";
-            case NET_CAPABILITY_IMS:            return "IMS";
-            case NET_CAPABILITY_CBS:            return "CBS";
-            case NET_CAPABILITY_WIFI_P2P:       return "WIFI_P2P";
-            case NET_CAPABILITY_IA:             return "IA";
-            case NET_CAPABILITY_RCS:            return "RCS";
-            case NET_CAPABILITY_XCAP:           return "XCAP";
-            case NET_CAPABILITY_EIMS:           return "EIMS";
-            case NET_CAPABILITY_NOT_METERED:    return "NOT_METERED";
-            case NET_CAPABILITY_INTERNET:       return "INTERNET";
-            case NET_CAPABILITY_NOT_RESTRICTED: return "NOT_RESTRICTED";
-            case NET_CAPABILITY_TRUSTED:        return "TRUSTED";
-            case NET_CAPABILITY_NOT_VPN:        return "NOT_VPN";
-            case NET_CAPABILITY_VALIDATED:      return "VALIDATED";
-            case NET_CAPABILITY_CAPTIVE_PORTAL: return "CAPTIVE_PORTAL";
-            case NET_CAPABILITY_NOT_ROAMING:    return "NOT_ROAMING";
-            case NET_CAPABILITY_FOREGROUND:     return "FOREGROUND";
-            default:                            return Integer.toString(capability);
+            case NET_CAPABILITY_MMS:                return "MMS";
+            case NET_CAPABILITY_SUPL:               return "SUPL";
+            case NET_CAPABILITY_DUN:                return "DUN";
+            case NET_CAPABILITY_FOTA:               return "FOTA";
+            case NET_CAPABILITY_IMS:                return "IMS";
+            case NET_CAPABILITY_CBS:                return "CBS";
+            case NET_CAPABILITY_WIFI_P2P:           return "WIFI_P2P";
+            case NET_CAPABILITY_IA:                 return "IA";
+            case NET_CAPABILITY_RCS:                return "RCS";
+            case NET_CAPABILITY_XCAP:               return "XCAP";
+            case NET_CAPABILITY_EIMS:               return "EIMS";
+            case NET_CAPABILITY_NOT_METERED:        return "NOT_METERED";
+            case NET_CAPABILITY_INTERNET:           return "INTERNET";
+            case NET_CAPABILITY_NOT_RESTRICTED:     return "NOT_RESTRICTED";
+            case NET_CAPABILITY_TRUSTED:            return "TRUSTED";
+            case NET_CAPABILITY_NOT_VPN:            return "NOT_VPN";
+            case NET_CAPABILITY_VALIDATED:          return "VALIDATED";
+            case NET_CAPABILITY_CAPTIVE_PORTAL:     return "CAPTIVE_PORTAL";
+            case NET_CAPABILITY_NOT_ROAMING:        return "NOT_ROAMING";
+            case NET_CAPABILITY_FOREGROUND:         return "FOREGROUND";
+            case NET_CAPABILITY_PUSH_TO_TALK_VOICE: return "PUSH_TO_TALK_VOICE";
+            case NET_CAPABILITY_PUBLIC_SAFETY_DATA: return "PUBLIC_SAFETY_DATA";
+            default:                                return Integer.toString(capability);
         }
     }
 

@@ -122,7 +122,9 @@ public class DctConstants {
     public static final int APN_CBS_ID = 7;
     public static final int APN_IA_ID = 8;
     public static final int APN_EMERGENCY_ID = 9;
-    public static final int APN_NUM_TYPES = 10;
+    public static final int APN_PUSH_TO_TALK_VOICE_ID = 10;
+    public static final int APN_PUBLIC_SAFETY_DATA_ID = 11;
+    public static final int APN_NUM_TYPES = 12;
 
     public static final int INVALID = -1;
     public static final int DISABLED = 0;

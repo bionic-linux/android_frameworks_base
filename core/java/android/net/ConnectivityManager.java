@@ -576,11 +576,21 @@ public class ConnectivityManager {
      */
     public static final int TYPE_VPN = 17;
 
-    /** {@hide} */
-    public static final int MAX_RADIO_TYPE   = TYPE_VPN;
+    /**
+     * Push-to-talk Communication.
+     */
+    public static final int TYPE_MOBILE_PUSH_TO_TALK_VOICE = 18;
+
+    /**
+     * Public Safety Data.
+     */
+    public static final int TYPE_MOBILE_PUBLIC_SAFETY_DATA = 19;
 
     /** {@hide} */
-    public static final int MAX_NETWORK_TYPE = TYPE_VPN;
+    public static final int MAX_RADIO_TYPE   = TYPE_MOBILE_PUBLIC_SAFETY_DATA;
+
+    /** {@hide} */
+    public static final int MAX_NETWORK_TYPE = TYPE_MOBILE_PUBLIC_SAFETY_DATA;
 
     private static final int MIN_NETWORK_TYPE = TYPE_MOBILE;
 
@@ -722,6 +732,10 @@ public class ConnectivityManager {
                 return "PROXY";
             case TYPE_VPN:
                 return "VPN";
+            case TYPE_MOBILE_PUSH_TO_TALK_VOICE:
+                return "MOBILE_PUSH_TO_TALK_VOICE";
+            case TYPE_MOBILE_PUBLIC_SAFETY_DATA:
+                return "MOBILE_PUBLIC_SAFETY_DATA";
             default:
                 return Integer.toString(type);
         }
@@ -746,6 +760,8 @@ public class ConnectivityManager {
             case TYPE_MOBILE_CBS:
             case TYPE_MOBILE_IA:
             case TYPE_MOBILE_EMERGENCY:
+            case TYPE_MOBILE_PUSH_TO_TALK_VOICE:
+            case TYPE_MOBILE_PUBLIC_SAFETY_DATA:
                 return true;
             default:
                 return false;
@@ -1277,6 +1293,10 @@ public class ConnectivityManager {
                     return networkCapabilitiesForType(TYPE_MOBILE_MMS);
                 case "enableSUPL":
                     return networkCapabilitiesForType(TYPE_MOBILE_SUPL);
+                case "enablePUSH_TO_TALK_VOICE":
+                    return networkCapabilitiesForType(TYPE_MOBILE_PUSH_TO_TALK_VOICE);
+                case "enablePUBLIC_SAFETY_DATA":
+                    return networkCapabilitiesForType(TYPE_MOBILE_PUBLIC_SAFETY_DATA);
                 default:
                     return null;
             }
@@ -1354,6 +1374,12 @@ public class ConnectivityManager {
         } else if (netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
             type = "enableHIPRI";
             result = TYPE_MOBILE_HIPRI;
+        } else if (netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_PUSH_TO_TALK_VOICE)) {
+            type = "enablePUSH_TO_TALK_VOICE";
+            result = TYPE_MOBILE_PUSH_TO_TALK_VOICE;
+        } else if (netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_PUBLIC_SAFETY_DATA)) {
+            type = "enablePUBLIC_SAFETY_DATA";
+            result = TYPE_MOBILE_PUBLIC_SAFETY_DATA;
         }
         if (type != null) {
             NetworkCapabilities testCap = networkCapabilitiesForFeature(TYPE_MOBILE, type);
@@ -1389,6 +1415,12 @@ public class ConnectivityManager {
         }
         if (netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_WIFI_P2P)) {
             return TYPE_WIFI_P2P;
+        }
+        if (netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_PUSH_TO_TALK_VOICE)) {
+            return TYPE_MOBILE_PUSH_TO_TALK_VOICE;
+        }
+        if (netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_PUBLIC_SAFETY_DATA)) {
+            return TYPE_MOBILE_PUBLIC_SAFETY_DATA;
         }
         return TYPE_NONE;
     }
