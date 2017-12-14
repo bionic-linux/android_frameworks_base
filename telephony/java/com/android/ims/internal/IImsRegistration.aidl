@@ -15,10 +15,9 @@
  */
 
 
-package android.telephony.ims.internal.aidl;
+package com.android.ims.internal;
 
-import android.telephony.ims.internal.aidl.IImsRegistrationCallback;
-import android.telephony.ims.internal.stub.ImsFeatureConfiguration;
+import com.android.ims.internal.IImsRegistrationCallback;
 
 /**
  * See ImsRegistration for more information.

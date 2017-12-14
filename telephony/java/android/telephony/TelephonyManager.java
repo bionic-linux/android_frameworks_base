@@ -54,6 +54,7 @@ import android.util.Log;
 
 import com.android.ims.internal.IImsMMTelFeature;
 import com.android.ims.internal.IImsRcsFeature;
+import com.android.ims.internal.IImsRegistration;
 import com.android.ims.internal.IImsServiceFeatureCallback;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telecom.ITelecomService;
@@ -4660,6 +4661,23 @@ public class TelephonyManager {
             }
         } catch (RemoteException e) {
             Rlog.e(TAG, "getImsRcsFeatureAndListen, RemoteException: "
+                    + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * @return the {@IImsRegistration} interface that corresponds with the slot index and feature.
+     * @hide
+     */
+    public @Nullable IImsRegistration getImsRegistration(int slotIndex, int feature) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                return telephony.getImsRegistration(slotIndex, feature);
+            }
+        } catch (RemoteException e) {
+            Rlog.e(TAG, "getImsRegistration, RemoteException: "
                     + e.getMessage());
         }
         return null;

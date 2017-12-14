@@ -26,12 +26,14 @@ import android.telephony.CarrierConfigManager;
 import android.telephony.ims.feature.ImsFeature;
 import android.telephony.ims.feature.MMTelFeature;
 import android.telephony.ims.feature.RcsFeature;
+import android.telephony.ims.stub.ImsRegistrationImplBase;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.android.ims.internal.IImsFeatureStatusCallback;
 import com.android.ims.internal.IImsMMTelFeature;
 import com.android.ims.internal.IImsRcsFeature;
+import com.android.ims.internal.IImsRegistration;
 import com.android.ims.internal.IImsServiceController;
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -112,6 +114,12 @@ public class ImsService extends Service {
         public void removeImsFeature(int slotId, int featureType, IImsFeatureStatusCallback c)
                 throws RemoteException {
             ImsService.this.removeImsFeature(slotId, featureType, c);
+        }
+
+        @Override
+        public IImsRegistration getRegistration(int slotId) throws RemoteException {
+            ImsRegistrationImplBase r = ImsService.this.getRegistration(slotId);
+            return r != null ? r.getBinder() : null;
         }
     };
 
@@ -235,5 +243,14 @@ public class ImsService extends Service {
      */
     public @Nullable RcsFeature onCreateRcsFeature(int slotId) {
         return null;
+    }
+
+    /**
+     * @param slotId The slot that is associated with the IMS Registration.
+     * @return the ImsRegistration implementation associated with the slot.
+     * @hide
+     */
+    public ImsRegistrationImplBase getRegistration(int slotId) {
+        return new ImsRegistrationImplBase();
     }
 }

@@ -15,7 +15,7 @@
  */
 
 
-package android.telephony.ims.internal.aidl;
+package com.android.ims.internal;
 
 import android.telephony.ims.internal.stub.ImsFeatureConfiguration;
 
