@@ -14,16 +14,18 @@
  * limitations under the License
  */
 
-package android.telephony.ims.internal.stub;
+package android.telephony.ims.stub;
 
 import android.annotation.IntDef;
+import android.net.Uri;
+import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
-import android.telephony.ims.internal.aidl.IImsRegistration;
-import android.telephony.ims.internal.aidl.IImsRegistrationCallback;
 import android.util.Log;
 
 import com.android.ims.ImsReasonInfo;
+import com.android.ims.internal.IImsRegistration;
+import com.android.ims.internal.IImsRegistrationCallback;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -70,7 +72,42 @@ public class ImsRegistrationImplBase {
     /**
      * Callback class for receiving Registration callback events.
      */
-    public static class Callback extends IImsRegistrationCallback.Stub {
+    public static class Callback {
+
+        private final IImsRegistrationCallback mBinder = new IImsRegistrationCallback.Stub() {
+            @Override
+            public void onRegistered(int imsRadioTech) {
+                Callback.this.onRegistered(imsRadioTech);
+            }
+
+            @Override
+            public void onRegistering(int imsRadioTech) {
+                Callback.this.onRegistering(imsRadioTech);
+            }
+
+            @Override
+            public void onDeregistered(ImsReasonInfo imsReasonInfo) {
+                Callback.this.onDeregistered(imsReasonInfo);
+            }
+
+            @Override
+            public void onTechnologyChangeFailed(int imsRadioTech, ImsReasonInfo imsReasonInfo) {
+                Callback.this.onTechnologyChangeFailed(imsRadioTech, imsReasonInfo);
+            }
+
+            @Override
+            public void onSubscriberAssociatedUriChanged(Uri[] uris) {
+                Callback.this.onSubscriberAssociatedUriChanged(uris);
+            }
+        };
+
+        /**
+         * @return underlying binder implementation for IPC.
+         * @hide
+         */
+        public IImsRegistrationCallback getBinder() {
+            return mBinder;
+        }
 
         /**
          * Notifies the framework when the IMS Provider is connected to the IMS network.
@@ -78,7 +115,6 @@ public class ImsRegistrationImplBase {
          * @param imsRadioTech the radio access technology. Valid values are defined in
          * {@link ImsRegistrationTech}.
          */
-        @Override
         public void onRegistered(@ImsRegistrationTech int imsRadioTech) {
         }
 
@@ -88,7 +124,6 @@ public class ImsRegistrationImplBase {
          * @param imsRadioTech the radio access technology. Valid values are defined in
          * {@link ImsRegistrationTech}.
          */
-        @Override
         public void onRegistering(@ImsRegistrationTech int imsRadioTech) {
         }
 
@@ -97,7 +132,6 @@ public class ImsRegistrationImplBase {
          *
          * @param info the {@link ImsReasonInfo} associated with why registration was disconnected.
          */
-        @Override
         public void onDeregistered(ImsReasonInfo info) {
         }
 
@@ -108,9 +142,18 @@ public class ImsRegistrationImplBase {
          * @param imsRadioTech The {@link ImsRegistrationTech} type that has failed
          * @param info A {@link ImsReasonInfo} that identifies the reason for failure.
          */
-        @Override
         public void onTechnologyChangeFailed(@ImsRegistrationTech int imsRadioTech,
                 ImsReasonInfo info) {
+        }
+
+        /**
+         * Returns a list of subscriber {@link Uri}s associated with this IMS subscription when
+         * it changes.
+         * @param uris new array of subscriber {@link Uri}s that are associated with this IMS
+         *         subscription.
+         */
+        public void onSubscriberAssociatedUriChanged(Uri[] uris) {
+
         }
     }
 
