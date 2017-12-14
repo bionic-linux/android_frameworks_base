@@ -46,6 +46,30 @@
       "revId": "5368690e7567f900f5a84659fbc5982096adb488",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9572127e_9c509a31",
+        "filename": "services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-12-14T05:41:08Z",
+      "side": 1,
+      "message": "Yes, please.",
+      "parentUuid": "50d63d62_ac96df42",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 9
+      },
+      "revId": "5368690e7567f900f5a84659fbc5982096adb488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
