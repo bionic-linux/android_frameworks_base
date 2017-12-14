@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "314cb878_ab63dab9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2017-12-14T23:32:27Z",
+      "side": 1,
+      "message": "Can you add a test stanza here explaining how this change has been tested? The format should be like the following\n\nTest: how this change has been tested",
+      "revId": "79b0f9f880eeaf92a226017f355f8358a1928305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
