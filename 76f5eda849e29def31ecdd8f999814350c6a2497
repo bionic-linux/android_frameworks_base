@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a2ed759_83f804d0",
+        "filename": "telephony/java/android/telephony/ApnSetting.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-15T16:11:58Z",
+      "side": 1,
+      "message": "Your copyright looks weird, I remember we have a single \"*\" instead of double everywhere",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 2
+      },
+      "revId": "76f5eda849e29def31ecdd8f999814350c6a2497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605e2472_647f38cc",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-15T16:11:58Z",
+      "side": 1,
+      "message": "spacing looks weird",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 2
+      },
+      "revId": "76f5eda849e29def31ecdd8f999814350c6a2497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5e0409_3530e589",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-15T16:11:58Z",
+      "side": 1,
+      "message": "missing \"s\", all of them",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "76f5eda849e29def31ecdd8f999814350c6a2497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1dad68_b8d549ec",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-15T16:11:58Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 106,
+        "startChar": 53,
+        "endLine": 106,
+        "endChar": 55
+      },
+      "revId": "76f5eda849e29def31ecdd8f999814350c6a2497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba435364_cd325bc6",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-15T16:11:58Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 116,
+        "startChar": 50,
+        "endLine": 116,
+        "endChar": 52
+      },
+      "revId": "76f5eda849e29def31ecdd8f999814350c6a2497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca334db4_cebbec75",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2017-12-15T16:11:58Z",
+      "side": 1,
+      "message": "why is \"entry name\" called \"carrier\"?",
+      "range": {
+        "startLine": 299,
+        "startChar": 18,
+        "endLine": 299,
+        "endChar": 28
+      },
+      "revId": "76f5eda849e29def31ecdd8f999814350c6a2497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
