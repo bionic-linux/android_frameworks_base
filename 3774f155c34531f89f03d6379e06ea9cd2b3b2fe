@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88d773dd_a42aafd6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-15T05:55:54Z",
+      "side": 1,
+      "message": "I guess we can delete this comment now :-)",
+      "range": {
+        "startLine": 2328,
+        "startChar": 15,
+        "endLine": 2333,
+        "endChar": 25
+      },
+      "revId": "3774f155c34531f89f03d6379e06ea9cd2b3b2fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
