@@ -2987,6 +2987,13 @@ class StorageManagerService extends IStorageManager.Stub
             throw e.rethrowAsParcelableException();
         }
 
+        if (StorageManager.isFileEncryptedNativeOrEmulated()) {
+            if (mLockPatternUtils.isSecure(userId)) {
+                mLockPatternUtils.requireStrongAuth(
+                    LockPatternUtils.StrongAuthTracker.STRONG_AUTH_REQUIRED_AFTER_BOOT, userId);
+            }
+        }
+
         synchronized (mLock) {
             mLocalUnlockedUsers = ArrayUtils.removeInt(mLocalUnlockedUsers, userId);
         }
