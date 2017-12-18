@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b2e6a3e_ab8212f1",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1590,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2017-12-18T23:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d23ed50_8df17617",
+      "range": {
+        "startLine": 1590,
+        "startChar": 37,
+        "endLine": 1590,
+        "endChar": 61
+      },
+      "revId": "7b25f8af02fdbfba053929661a07d05f20caae2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0146c892_7456e294",
         "filename": "services/core/jni/com_android_server_net_NetworkStatsService.cpp",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "613c8513_045a2906",
+        "filename": "services/core/jni/com_android_server_net_NetworkStatsService.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2017-12-18T23:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0146c892_7456e294",
+      "range": {
+        "startLine": 194,
+        "startChar": 27,
+        "endLine": 194,
+        "endChar": 28
+      },
+      "revId": "7b25f8af02fdbfba053929661a07d05f20caae2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e079e328_840c2f12",
         "filename": "services/core/jni/onload.cpp",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "7b25f8af02fdbfba053929661a07d05f20caae2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c518fb9_fe71940b",
+        "filename": "services/core/jni/onload.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2017-12-18T23:15:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e079e328_840c2f12",
+      "range": {
+        "startLine": 102,
+        "startChar": 27,
+        "endLine": 102,
+        "endChar": 28
+      },
+      "revId": "7b25f8af02fdbfba053929661a07d05f20caae2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
