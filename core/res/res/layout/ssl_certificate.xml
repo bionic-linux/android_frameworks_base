@@ -71,6 +71,7 @@
             android:id="@+id/to_common"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -88,6 +89,7 @@
             android:id="@+id/to_org"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -105,6 +107,7 @@
             android:id="@+id/to_org_unit"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -122,6 +125,7 @@
             android:id="@+id/serial_number"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -151,6 +155,7 @@
             android:id="@+id/by_common"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -168,6 +173,7 @@
             android:id="@+id/by_org"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -185,6 +191,7 @@
             android:id="@+id/by_org_unit"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -214,6 +221,7 @@
             android:id="@+id/issued_on"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -231,6 +239,7 @@
             android:id="@+id/expires_on"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -260,6 +269,7 @@
             android:id="@+id/sha256_fingerprint"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
@@ -277,6 +287,7 @@
             android:id="@+id/sha1_fingerprint"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:textAlignment="viewStart"
             android:layout_marginStart="20dip"
             android:layout_marginEnd="20dip"
             android:layout_marginBottom="7dip" />
