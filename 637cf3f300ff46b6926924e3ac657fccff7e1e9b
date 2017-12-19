@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ba4572a_3014b5ca",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-12-19T16:50:58Z",
+      "side": 1,
+      "message": "Technically the check you\u0027re looking for here is checking an app-op; feel free to copy/paste this method verbatim:\n\nhttps://cs.corp.google.com/android/frameworks/base/services/usage/java/com/android/server/usage/StorageStatsService.java?type\u003dcs\u0026q\u003dStorageStatsService+enforcePermission\u0026l\u003d139\n\nAnd then invoke like this:\n\n        if (Binder.getCallingUid() \u003d\u003d appInfo.uid) {\n            // No permissions required when asking about themselves\n        } else {\n            enforcePermission(Binder.getCallingUid(), callingPackage);\n        }\n\nThis assumes that the Studio folks are still interested in using this API for their tools.",
+      "range": {
+        "startLine": 880,
+        "startChar": 50,
+        "endLine": 880,
+        "endChar": 76
+      },
+      "revId": "637cf3f300ff46b6926924e3ac657fccff7e1e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33dd547_e12274af",
+        "filename": "services/core/jni/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-12-19T16:50:58Z",
+      "side": 1,
+      "message": "Spaces not tabs?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 1
+      },
+      "revId": "637cf3f300ff46b6926924e3ac657fccff7e1e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
