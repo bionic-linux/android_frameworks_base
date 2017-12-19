@@ -660,7 +660,7 @@ abstract class HdmiCecLocalDevice {
     @ServiceThreadOnly
     void startQueuedActions() {
         assertRunOnServiceThread();
-        for (HdmiCecFeatureAction action : mActions) {
+        for (HdmiCecFeatureAction action : new ArrayList<>(mActions)) {
             if (!action.started()) {
                 Slog.i(TAG, "Starting queued action:" + action);
                 action.start();
