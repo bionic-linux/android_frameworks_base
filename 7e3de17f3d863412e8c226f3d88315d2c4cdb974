@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f71e37fd_561e6cbe",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-19T16:37:38Z",
+      "side": 0,
+      "message": "why remove this?",
+      "range": {
+        "startLine": 283,
+        "startChar": 66,
+        "endLine": 283,
+        "endChar": 97
+      },
+      "revId": "7e3de17f3d863412e8c226f3d88315d2c4cdb974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

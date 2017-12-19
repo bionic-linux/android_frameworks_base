@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaad9970_856fe3ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-19T16:37:38Z",
+      "side": 1,
+      "message": "can you also write a unit test for this new feature?",
+      "revId": "c929d2751d5316964aae229a214b6184d6e2e311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90557466_f1d9c299",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-19T16:37:38Z",
+      "side": 1,
+      "message": "do we know how often this would be triggered? Maybe it would be better to allow per-capability registering so we are only called when the capability we care about changes",
+      "range": {
+        "startLine": 588,
+        "startChar": 20,
+        "endLine": 588,
+        "endChar": 51
+      },
+      "revId": "c929d2751d5316964aae229a214b6184d6e2e311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbb599d2_c8daecb9",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-19T16:37:38Z",
+      "side": 1,
+      "message": ".append(\u0027,\u0027);",
+      "revId": "c929d2751d5316964aae229a214b6184d6e2e311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0009bf6_39a19a2a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-12-19T16:37:38Z",
+      "side": 1,
+      "message": "How about just KEY_SHOW_WIFI_CALLING_ICON_BOOL\n\n(similar to existing key KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL)",
+      "range": {
+        "startLine": 1726,
+        "startChar": 31,
+        "endLine": 1726,
+        "endChar": 76
+      },
+      "revId": "c929d2751d5316964aae229a214b6184d6e2e311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
