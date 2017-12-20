@@ -1088,7 +1088,8 @@ public class StorageManager {
 
     /** {@hide} */
     public long getPrimaryStorageSize() {
-        return FileUtils.roundStorageSize(Environment.getDataDirectory().getTotalSpace());
+        return FileUtils.roundStorageSize(Environment.getDataDirectory().getTotalSpace()
+                + Environment.getRootDirectory().getTotalSpace());
     }
 
     /** @removed */
