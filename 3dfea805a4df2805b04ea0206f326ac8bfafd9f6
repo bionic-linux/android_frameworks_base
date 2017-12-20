@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b478b0e4_dec7dfbe",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-20T01:56:49Z",
+      "side": 1,
+      "message": "Nit: seems like there should be a way to keep these in sync via code. Perhaps load them in register_android_server_net_NetworkStatsService?",
+      "range": {
+        "startLine": 1645,
+        "startChar": 4,
+        "endLine": 1645,
+        "endChar": 83
+      },
+      "revId": "3dfea805a4df2805b04ea0206f326ac8bfafd9f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2444a659_1a377490",
+        "filename": "services/core/jni/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-12-20T01:56:49Z",
+      "side": 1,
+      "message": "Looks like these are in alphabetical order. Should this be just after com_android_server_locksettings_SyntheticPasswordManager.cpp ?",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "3dfea805a4df2805b04ea0206f326ac8bfafd9f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
