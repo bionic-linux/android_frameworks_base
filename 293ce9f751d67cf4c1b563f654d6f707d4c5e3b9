@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d59a3a7_6a896cfa",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-12-21T21:09:29Z",
+      "side": 1,
+      "message": "You\u0027ll want to replace this with a call to getPrimaryStorageSize() to ensure that your updated logic is applied in both places.",
+      "range": {
+        "startLine": 1086,
+        "startChar": 15,
+        "endLine": 1086,
+        "endChar": 90
+      },
+      "revId": "293ce9f751d67cf4c1b563f654d6f707d4c5e3b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
