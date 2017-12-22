@@ -251,13 +251,17 @@ public class MediaSessionService extends SystemService implements Monitor {
     }
 
     public void onSessionPlaystateChanged(MediaSessionRecord record, int oldState, int newState) {
+        boolean updateSessions = false;
         synchronized (mLock) {
             FullUserRecord user = getFullUserRecordLocked(record.getUserId());
             if (user == null || !user.mPriorityStack.contains(record)) {
                 Log.d(TAG, "Unknown session changed playback state. Ignoring.");
                 return;
             }
-            user.mPriorityStack.onPlaystateChanged(record, oldState, newState);
+            updateSessions = user.mPriorityStack.onPlaystateChanged(record, oldState, newState);
+        }
+        if (updateSessions) {
+            mHandler.postSessionsChanged(record.getUserId());
         }
     }
 

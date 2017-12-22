@@ -142,12 +142,15 @@ class MediaSessionStack {
      * @param record The record that changed.
      * @param oldState Its old playback state.
      * @param newState Its new playback state.
+     * @return true if the priority order was updated, false otherwise.
      */
-    public void onPlaystateChanged(MediaSessionRecord record, int oldState, int newState) {
+    public boolean onPlaystateChanged(MediaSessionRecord record, int oldState, int newState) {
+        boolean updateSessions = false;
         if (shouldUpdatePriority(oldState, newState)) {
             mSessions.remove(record);
             mSessions.add(0, record);
             clearCache(record.getUserId());
+            updateSessions = true;
         } else if (!MediaSession.isActiveState(newState)) {
             // Just clear the volume cache when a state goes inactive
             mCachedVolumeDefault = null;
@@ -164,6 +167,7 @@ class MediaSessionStack {
                 updateMediaButtonSession(newMediaButtonSession);
             }
         }
+        return updateSessions;
     }
 
     /**
