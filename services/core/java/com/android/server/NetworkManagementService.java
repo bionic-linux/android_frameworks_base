@@ -1768,6 +1768,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
     @Override
     public boolean setDataSaverModeEnabled(boolean enable) {
+        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+
         if (DBG) Log.d(TAG, "setDataSaverMode: " + enable);
         synchronized (mQuotaLock) {
             if (mDataSaverMode == enable) {
