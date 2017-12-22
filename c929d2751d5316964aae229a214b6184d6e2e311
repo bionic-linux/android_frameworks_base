@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "2300a0a3_812e5bdc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-12-22T10:04:12Z",
+      "side": 1,
+      "message": "This method is not called often. It is called only when user changes IMS setting or current network is changed.\n\nI think your idea is correct. But there will be clients that want to check some capabilities at onetime. What do you think about that?",
+      "parentUuid": "90557466_f1d9c299",
+      "range": {
+        "startLine": 588,
+        "startChar": 20,
+        "endLine": 588,
+        "endChar": 51
+      },
+      "revId": "c929d2751d5316964aae229a214b6184d6e2e311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb599d2_c8daecb9",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
         "patchSetId": 2
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "77cc3a04_81cd5290",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-12-22T10:04:12Z",
+      "side": 1,
+      "message": "Thank you. I will do that.",
+      "parentUuid": "fbb599d2_c8daecb9",
+      "revId": "c929d2751d5316964aae229a214b6184d6e2e311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0009bf6_39a19a2a",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -70,6 +112,30 @@
       "writtenOn": "2017-12-19T16:37:38Z",
       "side": 1,
       "message": "How about just KEY_SHOW_WIFI_CALLING_ICON_BOOL\n\n(similar to existing key KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL)",
+      "range": {
+        "startLine": 1726,
+        "startChar": 31,
+        "endLine": 1726,
+        "endChar": 76
+      },
+      "revId": "c929d2751d5316964aae229a214b6184d6e2e311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc00abe3_c8f27a30",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-12-22T10:04:12Z",
+      "side": 1,
+      "message": "I think there is possibility that Wi-Fi calling icon is displayed call screen, call log, dial button, etc. regardless of current AOSP implementation. So, I think it is better to have \"IN_STATUS_BAR\" text. What do you think about that?",
+      "parentUuid": "b0009bf6_39a19a2a",
       "range": {
         "startLine": 1726,
         "startChar": 31,

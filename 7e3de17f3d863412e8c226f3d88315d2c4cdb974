@@ -22,6 +22,30 @@
       "revId": "7e3de17f3d863412e8c226f3d88315d2c4cdb974",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30f0df6c_6f4ff2fd",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-12-22T10:04:12Z",
+      "side": 0,
+      "message": "Wi-Fi calling icon can be displayed in airplane mode. So, I placed it outside of mobile_combo.\n\nVisibility of these view groups is controlled according to the value of mIsAirplaneMode and mMobileVisible in SignalClusterView#apply().\nmIsAirplaneMode is updated correctly according to airplane mode, but mMobileVisible is set to false by this condition in airplane mode.\nTherefore I removed this to judge state of airplane mode only by mIsAirplaneMode.",
+      "parentUuid": "f71e37fd_561e6cbe",
+      "range": {
+        "startLine": 283,
+        "startChar": 66,
+        "endLine": 283,
+        "endChar": 97
+      },
+      "revId": "7e3de17f3d863412e8c226f3d88315d2c4cdb974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

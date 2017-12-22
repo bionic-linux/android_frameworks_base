@@ -22,6 +22,30 @@
       "revId": "735516b14e1afe471cf145c55bc4ecc71443161f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e401d05_f2e77907",
+        "filename": "packages/SystemUI/res/layout/mobile_signal_group.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-12-22T10:04:12Z",
+      "side": 1,
+      "message": "Because W-Fi calling icon can be displayed in airplane mode.\n\nThe mobile_combo is not displayed in airplane mode. If this is in the main LinearLayout, Wi-Fi calling icon is not displayed in airplane mode.",
+      "parentUuid": "14d97c7c_078dcc86",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "735516b14e1afe471cf145c55bc4ecc71443161f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
