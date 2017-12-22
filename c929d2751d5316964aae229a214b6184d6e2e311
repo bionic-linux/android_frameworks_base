@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a30eff9_cb9a1e23",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2017-12-22T10:05:36Z",
+      "side": 1,
+      "message": "Okay. I will consider that.",
+      "parentUuid": "eaad9970_856fe3ae",
+      "revId": "c929d2751d5316964aae229a214b6184d6e2e311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90557466_f1d9c299",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
         "patchSetId": 2
