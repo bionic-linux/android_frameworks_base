@@ -1798,6 +1798,14 @@ public class CarrierConfigManager {
             "skip_cf_fail_to_disable_dialog_bool";
 
     /**
+     * Flag specifying whether the carrier supports the request CFNRy with no-reply timer
+     * when a user sets CFNRy in settings UI.
+     * @hide
+     */
+    public static final String KEY_SUPPORT_NO_REPLY_TIMER_FOR_CFNRY_BOOL =
+            "support_no_reply_timer_for_cfnry_bool";
+
+    /**
      * List of the FAC (feature access codes) to dial as a normal call.
      * @hide
      */
@@ -2194,6 +2202,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_SHOW_IMS_REGISTRATION_STATUS_BOOL, false);
         sDefaults.putBoolean(KEY_RTT_SUPPORTED_BOOL, false);
         sDefaults.putBoolean(KEY_DISABLE_CHARGE_INDICATION_BOOL, false);
+        sDefaults.putBoolean(KEY_SUPPORT_NO_REPLY_TIMER_FOR_CFNRY_BOOL, true);
         sDefaults.putStringArray(KEY_FEATURE_ACCESS_CODES_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_IDENTIFY_HIGH_DEFINITION_CALLS_IN_CALL_LOG_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_PRECISE_FAILED_CAUSE_BOOL, false);
