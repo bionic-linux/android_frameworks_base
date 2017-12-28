@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016916f3_cba0303f",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-12-28T08:55:34Z",
+      "side": 1,
+      "message": "would\u0027ve preferred a more descriptive name such as \"dumpProxyMapCounts\" or something like that. No need to change it now.",
+      "range": {
+        "startLine": 908,
+        "startChar": 21,
+        "endLine": 908,
+        "endChar": 36
+      },
+      "revId": "3fc030f08354343885281becf91a1ce053620f86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
