@@ -22,6 +22,30 @@
       "revId": "3fc030f08354343885281becf91a1ce053620f86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f205cd03_24d828b4",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2017-12-28T17:32:41Z",
+      "side": 1,
+      "message": "If we can agree on a name, I\u0027m happy to change it in the next CL. I do think the name should indicate that it crashes the process.",
+      "parentUuid": "016916f3_cba0303f",
+      "range": {
+        "startLine": 908,
+        "startChar": 21,
+        "endLine": 908,
+        "endChar": 36
+      },
+      "revId": "3fc030f08354343885281becf91a1ce053620f86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
