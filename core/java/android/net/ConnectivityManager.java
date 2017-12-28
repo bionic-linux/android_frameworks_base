@@ -864,6 +864,49 @@ public class ConnectivityManager {
     }
 
     /**
+     * Checks if queries should be sent to a private DNS server. Applications
+     * should use private DNS (either relying on the system DNS or using their
+     * own implementation of private DNS) if the private dns setting is in
+     * strict mode or if there is a validated DNS-over-TLS server in
+     * opportunistic mode.
+     *
+     * @param network the network to check
+     * @return a boolean - {@code true} if private DNS lookup should be used,
+     * else {@code false}
+    */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    public boolean isPrivateDnsEnabled(Network network) {
+        // Use private DNS when in strict mode
+        if (Settings.Global.PRIVATE_DNS_MODE == PRIVATE_DNS_MODE_PROVIDER_HOSTNAME) {
+            return true;
+        }
+
+        // Don't use private DNS when the private dns mode is turned off
+        if (Settings.Global.PRIVATE_DNS_MODE == PRIVATE_DNS_MODE_OFF) {
+            return false;
+        }
+
+        // Check for a validated DNS-over-TLS server otherwise
+        int netId = (network == null) ? NETID_UNSET : network.netId;
+        String[] servers = new String[INetd.RESOLVER_MAXNS];
+        String[] domains = new String[INetd.RESOLVER_MAXDNSRCH];
+        int[] params = new int[INetd.RESOLVER_PARAMS_COUNT];
+        int[] stats = new int[INetd.RESOLVER_MAXNS * INetd.RESOLVER_STATS_COUNT];
+        boolean has_validated_server = false;
+        try {
+            mNMService.getNetdService().getResolverInfo(netId, servers, domains, params, stats);
+            for (int i = 0; i < servers.length; i++) {
+                if (stats[i * INetd.RESOLVER_STATS_COUNT + INetd.RESOLVER_STATS_TLS] == 1) {
+                    has_validated_server = true;
+                }
+            }
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        return has_validated_server;
+    }
+
+    /**
      * Checks if a VPN app supports always-on mode.
      *
      * In order to support the always-on feature, an app has to
