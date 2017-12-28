@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbe094f1_849c6610",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1161323
+      },
+      "writtenOn": "2017-12-28T21:36:23Z",
+      "side": 1,
+      "message": "I would prefer to move the for-loop after the try-catch.",
+      "range": {
+        "startLine": 898,
+        "startChar": 12,
+        "endLine": 898,
+        "endChar": 15
+      },
+      "revId": "332f7cd8fd45d26443c4777b9301d318df76248f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8620e4_b72ab7c5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1161323
+      },
+      "writtenOn": "2017-12-28T21:36:23Z",
+      "side": 1,
+      "message": "I would prefer to add a break; statement after this.",
+      "range": {
+        "startLine": 900,
+        "startChar": 20,
+        "endLine": 900,
+        "endChar": 47
+      },
+      "revId": "332f7cd8fd45d26443c4777b9301d318df76248f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
