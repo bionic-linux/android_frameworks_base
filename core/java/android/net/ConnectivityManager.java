@@ -23,6 +23,7 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -44,6 +45,7 @@ import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
+import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -1122,7 +1124,48 @@ public class ConnectivityManager {
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public LinkProperties getLinkProperties(Network network) {
         try {
-            return mService.getLinkProperties(network);
+            LinkProperties lp = mService.getLinkProperties(network);
+            INetd netdService = getNetworkManagementService().getNetdService();
+            boolean hasValidatedServer = false;
+
+            // Get the DNS-over-TLS validation status for each DNS server
+            // on this link and use it to populate the private DNS list.
+            for (InetAddress dns : lp.getDnsServers()) {
+                boolean validated =
+                        netdService.getValidationStatusForPrivateDnsServer(
+                        network.netId, dns.getHostAddress());
+                hasValidatedServer |= validated;
+                lp.addPrivateDnsServer(dns, validated);
+            }
+
+            // Set the private DNS state, which depends on both the private
+            // DNS setting and the DNS-over-TLS validation status of servers
+            // on the link.
+            ContentResolver cr = mContext.getContentResolver();
+            String privateDnsMode = Settings.Global.getString(cr,
+                    Settings.Global.PRIVATE_DNS_MODE);
+            if (TextUtils.isEmpty(privateDnsMode)) {
+                privateDnsMode = PRIVATE_DNS_DEFAULT_MODE;
+            }
+            switch (privateDnsMode) {
+                case PRIVATE_DNS_MODE_OFF:
+                    lp.setPrivateDnsState(LinkProperties.PrivateDnsState.OFF);
+                    break;
+                case PRIVATE_DNS_MODE_OPPORTUNISTIC:
+                    if (hasValidatedServer) {
+                        lp.setPrivateDnsState(LinkProperties.PrivateDnsState
+                                .OPPORTUNISTIC_SUCCESSFUL);
+                    } else {
+                        lp.setPrivateDnsState(LinkProperties.PrivateDnsState
+                                .OPPORTUNISTIC_NOT_SUCCESSFUL);
+                    }
+                    break;
+                case PRIVATE_DNS_MODE_PROVIDER_HOSTNAME:
+                    lp.setPrivateDnsState(LinkProperties.PrivateDnsState
+                            .STRICT);
+                    break;
+            }
+            return lp;
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
