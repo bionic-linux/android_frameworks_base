@@ -46,6 +46,30 @@
       "revId": "3fc030f08354343885281becf91a1ce053620f86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83ec799c_d0804a5c",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-12-28T17:44:08Z",
+      "side": 1,
+      "message": "I don\u0027t mind the throwing code being moved out to the caller, again, if that makes name-matching easier...",
+      "parentUuid": "f205cd03_24d828b4",
+      "range": {
+        "startLine": 908,
+        "startChar": 21,
+        "endLine": 908,
+        "endChar": 36
+      },
+      "revId": "3fc030f08354343885281becf91a1ce053620f86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
