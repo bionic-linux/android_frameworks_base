@@ -46,10 +46,63 @@ import java.util.Objects;
  *
  */
 public final class LinkProperties implements Parcelable {
+
+    /**
+     * A simple class that represents a DNS server and its DNS-over-TLS
+     * validation status.
+     */
+    public class PrivateDnsServer {
+        private PrivateDnsServer(InetAddress address, boolean validated) {
+            mAddress = address;
+            mValidated = validated;
+        }
+
+        /**
+         * Address of the DNS server.
+         */
+        public InetAddress mAddress;
+
+        /**
+         * Whether or not the DNS server has been successfully validated for
+         * DNS-over-TLS.
+         */
+        public boolean mValidated;
+    }
+
+    /**
+     * The fine-grained state of private DNS for the network link. Apps should
+     * respect the user's wishes and use private DNS when it has been requested
+     * and is suppported by a DNS server on the link.
+     */
+    public enum PrivateDnsState {
+        /**
+         * Private DNS has not been requested.
+         */
+        OFF,
+        /**
+         * The user has requested that Private DNS be used when possible, but
+         * there are no DNS servers on this link that have passed the system's
+         * DNS-over-TLS validation check.
+         */
+        OPPORTUNISTIC_NOT_SUCCESSFUL,
+        /**
+         * The user has requested that Private DNS be used when possible, and
+         * there is at least one DNS server on this link that has passed the
+         * system's DNS-over-TLS validation check.
+         */
+        OPPORTUNISTIC_SUCCESSFUL,
+        /**
+         * Private DNS to a specific server has been requested.
+         */
+        STRICT
+    }
+
     // The interface described by the network link.
     private String mIfaceName;
     private ArrayList<LinkAddress> mLinkAddresses = new ArrayList<LinkAddress>();
     private ArrayList<InetAddress> mDnses = new ArrayList<InetAddress>();
+    private PrivateDnsState mPrivateDnsState;
+    private ArrayList<PrivateDnsServer> mPrivateDnses = new ArrayList<PrivateDnsServer>();
     private String mDomains;
     private ArrayList<RouteInfo> mRoutes = new ArrayList<RouteInfo>();
     private ProxyInfo mHttpProxy;
@@ -388,6 +441,51 @@ public final class LinkProperties implements Parcelable {
      */
     public List<InetAddress> getDnsServers() {
         return Collections.unmodifiableList(mDnses);
+    }
+
+    /**
+     * Sets the private DNS state of this {@code LinkProperties}.
+     *
+     * @param privateDnsState The state.
+     * @hide
+     */
+    public void setPrivateDnsState(PrivateDnsState privateDnsState) {
+        mPrivateDnsState = privateDnsState;
+    }
+
+    /**
+     * Returns the private DNS state of this link. Apps should respect the
+     * user's wishes and use private DNS when it has been requested and is
+     * suppported by a DNS server on the link. Use {@link #getPrivateDnsServers}
+     * to determined which DNS servers have passed the system's DNS-over-TLS
+     * validation.
+     *
+     * @return The private DNS state.
+     */
+    public PrivateDnsState getPrivateDnsState() {
+        return mPrivateDnsState;
+    }
+
+    /**
+     * Creates and adds a new @{link PrivateDnsServer} to this {@code LinkProperties}.
+     *
+     * @param address The server @{link InetAddress}
+     * @param validated The server's DNS-over-TLS validation status.
+     * @hide
+     */
+    public void addPrivateDnsServer(InetAddress address, boolean validated) {
+        mPrivateDnses.add(new PrivateDnsServer(address, validated));
+    }
+
+    /**
+     * Returns all of the {@link PrivateDnsServer} representing DNS servers
+     * on this link and their corresponding DNS-over-TLS validation status.
+     *
+     * @return An unmodifiable {@link List} of {@link PrivateDnsServer} for
+     *         DNS servers on this link.
+     */
+    public List<PrivateDnsServer> getPrivateDnsServers() {
+        return Collections.unmodifiableList(mPrivateDnses);
     }
 
     /**
