@@ -1817,9 +1817,6 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         }
 
         final DisplayContent dc = getDisplayContent();
-        if (mService.mInputMethodTarget == this) {
-            dc.computeImeTarget(true /* updateImeTarget */);
-        }
 
         final int type = mAttrs.type;
         if (WindowManagerService.excludeWindowTypeFromTapOutTask(type)) {
@@ -1832,6 +1829,11 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         mWinAnimator.destroyDeferredSurfaceLocked();
         mWinAnimator.destroySurfaceLocked();
         mSession.windowRemovedLocked();
+
+        if (mService.mInputMethodTarget == this) {
+            dc.computeImeTarget(true /* updateImeTarget */);
+        }
+
         try {
             mClient.asBinder().unlinkToDeath(mDeathRecipient, 0);
         } catch (RuntimeException e) {
