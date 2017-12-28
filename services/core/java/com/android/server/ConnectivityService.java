@@ -1291,7 +1291,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public LinkProperties getLinkProperties(Network network) {
         enforceAccessPermission();
-        return getLinkProperties(getNetworkAgentInfoForNetwork(network));
+        LinkProperties lp = getLinkProperties(getNetworkAgentInfoForNetwork(network));
+        mDnsManager.updateLinkPropertiesPrivateDns(network.netId, lp);
+        return lp;
     }
 
     private LinkProperties getLinkProperties(NetworkAgentInfo nai) {
