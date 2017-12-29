@@ -724,25 +724,6 @@ interface ITelephony {
     String sendEnvelopeWithStatus(int subId, String content);
 
     /**
-     * Read one of the NV items defined in {@link RadioNVItems} / {@code ril_nv_items.h}.
-     * Used for device configuration by some CDMA operators.
-     *
-     * @param itemID the ID of the item to read.
-     * @return the NV item as a String, or null on any failure.
-     */
-    String nvReadItem(int itemID);
-
-    /**
-     * Write one of the NV items defined in {@link RadioNVItems} / {@code ril_nv_items.h}.
-     * Used for device configuration by some CDMA operators.
-     *
-     * @param itemID the ID of the item to read.
-     * @param itemValue the value to write, as a String.
-     * @return true on success; false on any failure.
-     */
-    boolean nvWriteItem(int itemID, String itemValue);
-
-    /**
      * Update the CDMA Preferred Roaming List (PRL) in the radio NV storage.
      * Used for device configuration by some CDMA operators.
      *

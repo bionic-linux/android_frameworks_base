@@ -4451,59 +4451,6 @@ public class TelephonyManager {
     }
 
     /**
-     * Read one of the NV items defined in com.android.internal.telephony.RadioNVItems.
-     * Used for device configuration by some CDMA operators.
-     * <p>
-     * Requires Permission:
-     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
-     * Or the calling app has carrier privileges. @see #hasCarrierPrivileges
-     *
-     * @param itemID the ID of the item to read.
-     * @return the NV item as a String, or null on any failure.
-     *
-     * @hide
-     */
-    public String nvReadItem(int itemID) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.nvReadItem(itemID);
-        } catch (RemoteException ex) {
-            Rlog.e(TAG, "nvReadItem RemoteException", ex);
-        } catch (NullPointerException ex) {
-            Rlog.e(TAG, "nvReadItem NPE", ex);
-        }
-        return "";
-    }
-
-    /**
-     * Write one of the NV items defined in com.android.internal.telephony.RadioNVItems.
-     * Used for device configuration by some CDMA operators.
-     * <p>
-     * Requires Permission:
-     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
-     * Or the calling app has carrier privileges. @see #hasCarrierPrivileges
-     *
-     * @param itemID the ID of the item to read.
-     * @param itemValue the value to write, as a String.
-     * @return true on success; false on any failure.
-     *
-     * @hide
-     */
-    public boolean nvWriteItem(int itemID, String itemValue) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.nvWriteItem(itemID, itemValue);
-        } catch (RemoteException ex) {
-            Rlog.e(TAG, "nvWriteItem RemoteException", ex);
-        } catch (NullPointerException ex) {
-            Rlog.e(TAG, "nvWriteItem NPE", ex);
-        }
-        return false;
-    }
-
-    /**
      * Update the CDMA Preferred Roaming List (PRL) in the radio NV storage.
      * Used for device configuration by some CDMA operators.
      * <p>
