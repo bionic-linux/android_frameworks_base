@@ -281,6 +281,30 @@
       "revId": "76f5eda849e29def31ecdd8f999814350c6a2497",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e0ee8f_939c3e62",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2018-01-02T17:51:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3895b5e8_174e2ce6",
+      "range": {
+        "startLine": 299,
+        "startChar": 18,
+        "endLine": 299,
+        "endChar": 28
+      },
+      "revId": "76f5eda849e29def31ecdd8f999814350c6a2497",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

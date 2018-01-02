@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "1eff4b1c_0cd5d6dc",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2018-01-02T17:51:04Z",
+      "side": 1,
+      "message": "the assignment should be done in set methods of the builder instead:\n\nclass Builder {\n private ApnSetting mApnSetting;\n ...\n Builder setEntryName(String entryName) {\n   mApnSetting.entryName \u003d entryName;\n   return this;\n }\n\n ApnSetting build(){\n   ...\n   return mApnSetting;\n }\n}",
+      "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42c5fc5_d9439e9d",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2018-01-02T17:51:04Z",
+      "side": 1,
+      "message": "We should remove this method, and use builder instead. Can probably make a convenient static method:\n\n/* @hide */\npublic static ApnSetting makeApnSetting(...) {\n  // invoke builder.set and build\n}\n\nRe-use this static method with the one that takes a Cursor object:\npublic static ApnSetting makeApnSetting(Cursor cursor) {\n  return makeApnSetting(\n      cursor.get...(),\n      cursor.get...(),\n      ...);\n}",
+      "range": {
+        "startLine": 466,
+        "startChar": 11,
+        "endLine": 466,
+        "endChar": 21
+      },
+      "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b53efb0d_700abe3c",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 10
@@ -25,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "2828b65c_57865811",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2018-01-02T17:51:04Z",
+      "side": 1,
+      "message": "should be a private static method, same for the methods below",
+      "range": {
+        "startLine": 841,
+        "startChar": 22,
+        "endLine": 841,
+        "endChar": 35
+      },
+      "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bed897f3_5638e223",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 10
@@ -41,6 +104,29 @@
         "startChar": 44,
         "endLine": 899,
         "endChar": 66
+      },
+      "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6def41f3_cdcca860",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2018-01-02T17:51:04Z",
+      "side": 1,
+      "message": "Can remove the fields",
+      "range": {
+        "startLine": 1093,
+        "startChar": 8,
+        "endLine": 1119,
+        "endChar": 38
       },
       "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
