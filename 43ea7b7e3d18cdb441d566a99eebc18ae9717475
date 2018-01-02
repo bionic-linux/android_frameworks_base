@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a36de16e_576eda38",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc0b45e0_afdd1aa9",
+      "range": {
+        "startLine": 154,
+        "startChar": 46,
+        "endLine": 154,
+        "endChar": 69
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7166053f_7df397ee",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-13T23:48:12Z",
       "side": 1,
       "message": "getApnName?\n\nThis naming is odd in the context of ApnSetting; it makes it seem like you\u0027re getting the Apn itself, not the name of it.",
+      "range": {
+        "startLine": 308,
+        "startChar": 18,
+        "endLine": 308,
+        "endChar": 24
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55ba85df_34a95fb0",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "renamed the field to mApnName",
+      "parentUuid": "7166053f_7df397ee",
       "range": {
         "startLine": 308,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3a7ed334_a3eaeda1",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Hi Tyler, thanks for the suggestion. I\u0027ve changed this field to URL type. The telephony db I downloaded from my SIM card doesn\u0027t include proxy field in its data entry, so I\u0027m not sure that proxy is an url but not a IP address as mmscProxy. May I ask if there\u0027s someway to verify this?",
+      "parentUuid": "2753873d_67b2c7b1",
+      "range": {
+        "startLine": 328,
+        "startChar": 11,
+        "endLine": 328,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef7f041e_d130c020",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-13T23:48:12Z",
       "side": 1,
       "message": "Internet address ports are typically integers, this should be one as well.",
+      "range": {
+        "startLine": 348,
+        "startChar": 11,
+        "endLine": 348,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b50f5ae_fb059f43",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef7f041e_d130c020",
       "range": {
         "startLine": 348,
         "startChar": 11,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "dacaef42_b0fc1c19",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d668a8a_9d97e245",
+      "range": {
+        "startLine": 368,
+        "startChar": 11,
+        "endLine": 368,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "181e46b7_d0c5fd72",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-13T23:48:12Z",
       "side": 1,
       "message": "java.net.InetAddress (if its not a full fledged URL, which I don\u0027t think it is)",
+      "range": {
+        "startLine": 388,
+        "startChar": 11,
+        "endLine": 388,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45cb1954_21381bd0",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "May I ask if mMmsProxy could include hostname and what would be the exact string format in db if so? In my local DB this field is 212.183.137.12 which doesn\u0027t include host name but I\u0027m not sure if it\u0027s the general situation.",
+      "parentUuid": "181e46b7_d0c5fd72",
       "range": {
         "startLine": 388,
         "startChar": 11,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8b98a1af_40010146",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f8b155_cc5b2520",
+      "range": {
+        "startLine": 408,
+        "startChar": 11,
+        "endLine": 408,
+        "endChar": 17
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "316fd875_3fb0a146",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-13T23:48:12Z",
       "side": 1,
       "message": "These should be well defined constants in the system somewhere.",
+      "range": {
+        "startLine": 475,
+        "startChar": 7,
+        "endLine": 475,
+        "endChar": 95
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f252b3a7_6ab1f20f",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "I can\u0027t find elsewhere that has well defined all the possible values for AuthType so I put the possible values as constant fields below, same for some other constants.",
+      "parentUuid": "316fd875_3fb0a146",
       "range": {
         "startLine": 475,
         "startChar": 7,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "f2c11708_f181db85",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3974631d_1f00eb79",
+      "range": {
+        "startLine": 501,
+        "startChar": 24,
+        "endLine": 501,
+        "endChar": 43
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dff95cd3_ddf98f17",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -220,6 +436,30 @@
       "writtenOn": "2017-12-13T23:48:12Z",
       "side": 1,
       "message": "Is it valid to get/set the internal ID for the APN?  That\u0027s usually just a sequence number in the provider which likely has no relevance outside of the provider.",
+      "range": {
+        "startLine": 505,
+        "startChar": 4,
+        "endLine": 523,
+        "endChar": 5
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9daa5672_3f0d9cd2",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Hi Tyler,\n\nWe need to get and set id field since it\u0027s used in our DPM API: https://android-review.googlesource.com/c/platform/frameworks/base/+/549359. Typically for updateOverrideApn(), DPC(caller of DPM) needs to get and set id from a ApnSetting.",
+      "parentUuid": "dff95cd3_ddf98f17",
       "range": {
         "startLine": 505,
         "startChar": 4,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "41d4364c_9ab8a82d",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Changed the field name to mOperatorNumeric accordingly.",
+      "parentUuid": "ca1d7826_883c1d52",
+      "range": {
+        "startLine": 533,
+        "startChar": 18,
+        "endLine": 533,
+        "endChar": 28
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d3b6f4_bc84dcdd",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -266,6 +530,30 @@
       "writtenOn": "2017-12-13T23:48:12Z",
       "side": 1,
       "message": "setOperatorNumeric",
+      "range": {
+        "startLine": 543,
+        "startChar": 16,
+        "endLine": 543,
+        "endChar": 26
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8594d430_1f79ea77",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d3b6f4_bc84dcdd",
       "range": {
         "startLine": 543,
         "startChar": 16,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "2e08a051_b079ac0a",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f43cc80c_5a149124",
+      "range": {
+        "startLine": 551,
+        "startChar": 20,
+        "endLine": 551,
+        "endChar": 77
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf8e43d7_aa2887d2",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "fcd21268_e1ec9dc5",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf8e43d7_aa2887d2",
+      "range": {
+        "startLine": 588,
+        "startChar": 16,
+        "endLine": 588,
+        "endChar": 35
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a00ed95f_254eb456",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -335,6 +671,30 @@
       "writtenOn": "2017-12-13T23:48:12Z",
       "side": 1,
       "message": "isEnabled",
+      "range": {
+        "startLine": 601,
+        "startChar": 19,
+        "endLine": 601,
+        "endChar": 36
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d419db02_ac50cfb3",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a00ed95f_254eb456",
       "range": {
         "startLine": 601,
         "startChar": 19,
@@ -393,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "a92bdb41_8a55f0da",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c51e804_0dd59ee9",
+      "range": {
+        "startLine": 644,
+        "startChar": 5,
+        "endLine": 647,
+        "endChar": 23
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2e52e38_61a7bf0a",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -416,6 +800,30 @@
     },
     {
       "key": {
+        "uuid": "dfdcb5ba_13169d60",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Hi Tyler, I\u0027ve replaced the first constructor for DPC to builder. \n\nThe second constructor is used by DcTracker(and some other telephony tests) and can be hided for now?",
+      "parentUuid": "b2e52e38_61a7bf0a",
+      "range": {
+        "startLine": 708,
+        "startChar": 4,
+        "endLine": 720,
+        "endChar": 5
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6787190_c2539820",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 8
@@ -427,6 +835,30 @@
       "writtenOn": "2017-12-13T23:48:12Z",
       "side": 1,
       "message": "Rather than declaring a sub-class just put these in ApnSetting and prefix with TYPE_",
+      "range": {
+        "startLine": 1126,
+        "startChar": 3,
+        "endLine": 1126,
+        "endChar": 30
+      },
+      "revId": "43ea7b7e3d18cdb441d566a99eebc18ae9717475",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c857102c_7812e3eb",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6787190_c2539820",
       "range": {
         "startLine": 1126,
         "startChar": 3,
