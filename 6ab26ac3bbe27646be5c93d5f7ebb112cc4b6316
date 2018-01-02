@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b53efb0d_700abe3c",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:28:37Z",
+      "side": 1,
+      "message": "Not sure if I can use this as https://cs.corp.google.com/aosp-master/libcore/ojluni/src/main/java/java/net/InetAddress.java?type\u003dcs\u0026q\u003dInetAddress.equals+package:%5Eaosp-master$\u0026l\u003d727 always returns false.",
+      "range": {
+        "startLine": 734,
+        "startChar": 50,
+        "endLine": 734,
+        "endChar": 69
+      },
+      "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed897f3_5638e223",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-02T17:28:37Z",
+      "side": 1,
+      "message": "InetAddress.toString() returns hostname + \"\\\" + ip_address. May I ask if mmsProxy could contain host name?",
+      "range": {
+        "startLine": 899,
+        "startChar": 44,
+        "endLine": 899,
+        "endChar": 66
+      },
+      "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
