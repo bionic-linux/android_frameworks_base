@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "651b1c75_a9af3944",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-03T19:44:32Z",
+      "side": 1,
+      "message": "Should we undo the bucket warning size increment here?",
+      "range": {
+        "startLine": 932,
+        "startChar": 20,
+        "endLine": 932,
+        "endChar": 21
+      },
+      "revId": "a63a77ad95b09d87a0dcbf1e75d21e4e89332196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
