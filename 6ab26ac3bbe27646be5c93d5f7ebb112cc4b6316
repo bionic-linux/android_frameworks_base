@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c38c120_448672bc",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2018-01-03T11:56:52Z",
+      "side": 1,
+      "message": "As fields are final, we should keep this method",
+      "parentUuid": "1eff4b1c_0cd5d6dc",
+      "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f42c5fc5_d9439e9d",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 10
@@ -131,6 +149,30 @@
       "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7433e9ab_8bda3133",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1061229
+      },
+      "writtenOn": "2018-01-03T11:56:52Z",
+      "side": 1,
+      "message": "as ApnSetting is final, this has to be kept.",
+      "parentUuid": "6def41f3_cdcca860",
+      "range": {
+        "startLine": 1093,
+        "startChar": 8,
+        "endLine": 1119,
+        "endChar": 38
+      },
+      "revId": "6ab26ac3bbe27646be5c93d5f7ebb112cc4b6316",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
