@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "c33047fd_c9dba062",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-01-04T09:43:58Z",
+      "side": 1,
+      "message": "nit: private; size() above should be private as well.",
+      "range": {
+        "startLine": 809,
+        "startChar": 8,
+        "endLine": 809,
+        "endChar": 11
+      },
+      "revId": "a63a77ad95b09d87a0dcbf1e75d21e4e89332196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47e16252_a2d5f7d5",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-01-04T09:43:58Z",
+      "side": 1,
+      "message": "nit: \u0027uncleared after GC\u0027 (but perhaps this is obvious)",
+      "range": {
+        "startLine": 927,
+        "startChar": 55,
+        "endLine": 927,
+        "endChar": 60
+      },
+      "revId": "a63a77ad95b09d87a0dcbf1e75d21e4e89332196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "768ea2aa_d58f2850",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-01-04T09:43:58Z",
+      "side": 1,
+      "message": "nit: printing uncleared here is slightly contra-intuitive, as the previous part of the message says \u0027many cleared\u0027. Maybe print totalSize - totalUnclearedSize as \u0027cleared\u0027?",
+      "range": {
+        "startLine": 931,
+        "startChar": 37,
+        "endLine": 931,
+        "endChar": 46
+      },
+      "revId": "a63a77ad95b09d87a0dcbf1e75d21e4e89332196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "651b1c75_a9af3944",
         "filename": "core/java/android/os/Binder.java",
         "patchSetId": 1
