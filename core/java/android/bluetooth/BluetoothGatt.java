@@ -1507,6 +1507,38 @@ public final class BluetoothGatt implements BluetoothProfile {
     }
 
     /**
+     * Request an LE connection parameter update.
+     *
+     * <p>This function will send an LE connection parameters update request to the remote device.
+     *
+     * @throws IllegalArgumentException If the parameters are outside of their specified range.
+     * @hide
+     */
+    public boolean requestLeConnectionParameters(int minConnectionInterval,
+                                                 int maxConnectionInterval,
+                                                 int slaveLatency, int supervisionTimeout) {
+        if (DBG) {
+            Log.d(TAG, "requestLeConnectionParameters() - min=(" + minConnectionInterval
+                       + ")" + (1.25 * minConnectionInterval)
+                       + "msec, max=(" + maxConnectionInterval + ")"
+                        + (1.25 * maxConnectionInterval) + "msec, latency=" + slaveLatency
+                       + ", timeout=" + supervisionTimeout + "msec");
+        }
+        if (mService == null || mClientIf == 0) return false;
+
+        try {
+            mService.rawLeConnectionParametersUpdate(mClientIf, mDevice.getAddress(),
+                                               minConnectionInterval, maxConnectionInterval,
+                                               slaveLatency, supervisionTimeout);
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Not supported - please use {@link BluetoothManager#getConnectedDevices(int)}
      * with {@link BluetoothProfile#GATT} as argument
      *
