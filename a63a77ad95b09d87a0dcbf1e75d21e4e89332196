@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3aa43af_0503dd8c",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-01-05T22:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c33047fd_c9dba062",
+      "range": {
+        "startLine": 809,
+        "startChar": 8,
+        "endLine": 809,
+        "endChar": 11
+      },
+      "revId": "a63a77ad95b09d87a0dcbf1e75d21e4e89332196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ec27af2_29847839",
         "filename": "core/java/android/os/Binder.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-04T10:38:47Z",
       "side": 1,
       "message": "optional mega nit : if it\u0027s CRASH_AT_SIZE, this should be \u003e\u003d :)",
+      "range": {
+        "startLine": 922,
+        "startChar": 43,
+        "endLine": 922,
+        "endChar": 44
+      },
+      "revId": "a63a77ad95b09d87a0dcbf1e75d21e4e89332196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f38d46a_dd308ffd",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-01-05T22:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ec27af2_29847839",
       "range": {
         "startLine": 922,
         "startChar": 43,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8f08cf5e_14d400ee",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-01-05T22:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e16252_a2d5f7d5",
+      "range": {
+        "startLine": 927,
+        "startChar": 55,
+        "endLine": 927,
+        "endChar": 60
+      },
+      "revId": "a63a77ad95b09d87a0dcbf1e75d21e4e89332196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "768ea2aa_d58f2850",
         "filename": "core/java/android/os/Binder.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-04T09:43:58Z",
       "side": 1,
       "message": "nit: printing uncleared here is slightly contra-intuitive, as the previous part of the message says \u0027many cleared\u0027. Maybe print totalSize - totalUnclearedSize as \u0027cleared\u0027?",
+      "range": {
+        "startLine": 931,
+        "startChar": 37,
+        "endLine": 931,
+        "endChar": 46
+      },
+      "revId": "a63a77ad95b09d87a0dcbf1e75d21e4e89332196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "265d60e1_eca3d509",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-01-05T22:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "768ea2aa_d58f2850",
       "range": {
         "startLine": 931,
         "startChar": 37,
