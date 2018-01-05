@@ -126,14 +126,30 @@ public class SubscriptionInfo implements Parcelable {
     private UiccAccessRule[] mAccessRules;
 
     /**
+     * The ID of the UICC card. It is the ICCID for pSIM and EID for eSIM, empty if unknown
+     */
+    private String mCardId;
+
+    /**
+     * @hide
+     */
+    public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
+        CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
+        Bitmap icon, int mcc, int mnc, String countryIso) {
+        this(id, iccId, simSlotIndex, displayName, carrierName, nameSource, iconTint, number,
+            roaming, icon, mcc, mnc, countryIso, false /* isEmbedded */,
+            null /* accessRules */, null /* accessRules */);
+    }
+
+    /**
      * @hide
      */
     public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
             CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
-            Bitmap icon, int mcc, int mnc, String countryIso) {
+            Bitmap icon, int mcc, int mnc, String countryIso,  boolean isEmbedded,
+            @Nullable UiccAccessRule[] accessRules) {
         this(id, iccId, simSlotIndex, displayName, carrierName, nameSource, iconTint, number,
-                roaming, icon, mcc, mnc, countryIso, false /* isEmbedded */,
-                null /* accessRules */);
+                roaming, icon, mcc, mnc, countryIso, isEmbedded, accessRules, null /* cardId */);
     }
 
     /**
@@ -142,7 +158,7 @@ public class SubscriptionInfo implements Parcelable {
     public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
             CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
             Bitmap icon, int mcc, int mnc, String countryIso, boolean isEmbedded,
-            @Nullable UiccAccessRule[] accessRules) {
+            @Nullable UiccAccessRule[] accessRules, String cardId) {
         this.mId = id;
         this.mIccId = iccId;
         this.mSimSlotIndex = simSlotIndex;
@@ -158,6 +174,7 @@ public class SubscriptionInfo implements Parcelable {
         this.mCountryIso = countryIso;
         this.mIsEmbedded = isEmbedded;
         this.mAccessRules = accessRules;
+        this.mCardId = cardId;
     }
 
     /**
@@ -387,6 +404,12 @@ public class SubscriptionInfo implements Parcelable {
         return mAccessRules;
     }
 
+    /**
+     * @return the ID of the UICC card which contains the subscription.
+     * @hide
+     */
+    public String getCardId() {return this.mCardId == null ? "" : this.mCardId;}
+
     public static final Parcelable.Creator<SubscriptionInfo> CREATOR = new Parcelable.Creator<SubscriptionInfo>() {
         @Override
         public SubscriptionInfo createFromParcel(Parcel source) {
@@ -405,10 +428,11 @@ public class SubscriptionInfo implements Parcelable {
             Bitmap iconBitmap = Bitmap.CREATOR.createFromParcel(source);
             boolean isEmbedded = source.readBoolean();
             UiccAccessRule[] accessRules = source.createTypedArray(UiccAccessRule.CREATOR);
+            String cardId = source.readString();
 
             return new SubscriptionInfo(id, iccId, simSlotIndex, displayName, carrierName,
                     nameSource, iconTint, number, dataRoaming, iconBitmap, mcc, mnc, countryIso,
-                    isEmbedded, accessRules);
+                    isEmbedded, accessRules, cardId);
         }
 
         @Override
@@ -434,6 +458,7 @@ public class SubscriptionInfo implements Parcelable {
         mIconBitmap.writeToParcel(dest, flags);
         dest.writeBoolean(mIsEmbedded);
         dest.writeTypedArray(mAccessRules, flags);
+        dest.writeString(mCardId);
     }
 
     @Override
@@ -464,6 +489,7 @@ public class SubscriptionInfo implements Parcelable {
                 + " nameSource=" + mNameSource + " iconTint=" + mIconTint
                 + " dataRoaming=" + mDataRoaming + " iconBitmap=" + mIconBitmap + " mcc " + mMcc
                 + " mnc " + mMnc + " isEmbedded " + mIsEmbedded
-                + " accessRules " + Arrays.toString(mAccessRules) + "}";
+                + " accessRules " + Arrays.toString(mAccessRules)
+                + " cardId=" + mCardId + "}";
     }
 }
