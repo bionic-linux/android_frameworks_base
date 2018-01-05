@@ -16,6 +16,24 @@
       "revId": "bf49aeee4e765975ccfa83ef77e7839d2bdd8239",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cbaead_0b74343e",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1771,
+      "author": {
+        "id": 1259735
+      },
+      "writtenOn": "2018-01-05T10:03:16Z",
+      "side": 1,
+      "message": "I changed to NETWORK_SETTINGS for this check as you recommended.",
+      "parentUuid": "b3f19373_60175a5f",
+      "revId": "bf49aeee4e765975ccfa83ef77e7839d2bdd8239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
