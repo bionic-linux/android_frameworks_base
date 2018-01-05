@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcee3f2c_83303827",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-05T01:05:29Z",
+      "side": 1,
+      "message": "if this is only Mission Critical PTT, MC should appear in these names.  How about TYPE_MOBILE_MCPTT?\n\nAlso, update ConnectivityManagerTest for the new types.\n\nActually, Lorenzo, do you want to stop adding these TYPEs now (deprecated for a while).",
+      "range": {
+        "startLine": 582,
+        "startChar": 28,
+        "endLine": 582,
+        "endChar": 58
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273be2a2_5620a939",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-05T01:05:29Z",
+      "side": 1,
+      "message": "update these two?",
+      "range": {
+        "startLine": 1538,
+        "startChar": 0,
+        "endLine": 1538,
+        "endChar": 94
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ea4054_b1a32fb1",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-05T01:05:29Z",
+      "side": 1,
+      "message": "shouldn\u0027t these be added here?",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 39
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9073101_f3b9e55c",
+        "filename": "telephony/java/com/android/internal/telephony/DctConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-05T01:05:29Z",
+      "side": 1,
+      "message": "MC?  Also, the second seems to just be used for MC type work - not sure if it should change.  But PTT is different from MCPTT so we should probably be clear.",
+      "range": {
+        "startLine": 125,
+        "startChar": 28,
+        "endLine": 125,
+        "endChar": 53
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ce1e1b_1245acbe",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-05T01:05:29Z",
+      "side": 1,
+      "message": "ditto MC",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 39
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
