@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d498c420_7e0b7c13",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-07T00:24:06Z",
+      "side": 1,
+      "message": "Same \u003e\u003d here, then?",
+      "range": {
+        "startLine": 916,
+        "startChar": 53,
+        "endLine": 916,
+        "endChar": 54
+      },
+      "revId": "40b95fdd2b07b7d1d1d1708bf06bc76aed499c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
