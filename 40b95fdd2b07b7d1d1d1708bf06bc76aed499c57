@@ -22,6 +22,30 @@
       "revId": "40b95fdd2b07b7d1d1d1708bf06bc76aed499c57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e3f7ab_c50a9060",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-01-08T23:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d498c420_7e0b7c13",
+      "range": {
+        "startLine": 916,
+        "startChar": 53,
+        "endLine": 916,
+        "endChar": 54
+      },
+      "revId": "40b95fdd2b07b7d1d1d1708bf06bc76aed499c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
