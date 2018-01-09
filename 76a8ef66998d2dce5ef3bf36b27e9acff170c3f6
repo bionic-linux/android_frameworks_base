@@ -34,6 +34,52 @@
       "revId": "76a8ef66998d2dce5ef3bf36b27e9acff170c3f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ffe9b50_210f95cc",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T20:16:11Z",
+      "side": 1,
+      "message": "The Location Mode settings screen has 3 options:\nHigh Accuracy - use GPS, wifi, bluetooth or mobile networks to determine location\nBattery Saving - Use wifi, bluetooth, or mobile networks to determine location.\nDevice only - use GPS and device sensors to determine location\n\nGiven that wording, I think we should NOT return true here if the location mode is LOCATION_MODE_SENSORS_ONLY.  The wording for sensors only does not explicitly indicate that it will use mobile networks to track location, only that it\u0027ll use GPS and device sensors (which I presume is GPS, accelerometer, magnetometer, or gyro).",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 65
+      },
+      "revId": "76a8ef66998d2dce5ef3bf36b27e9acff170c3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65279c3c_9b07a50c",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T20:16:11Z",
+      "side": 1,
+      "message": "This also includes IMPORTANCE_FOREGROUND_SERVICE, which would be a service playing music or something perhaps not immediately visible to the user.  Is that still ok?",
+      "range": {
+        "startLine": 124,
+        "startChar": 81,
+        "endLine": 124,
+        "endChar": 99
+      },
+      "revId": "76a8ef66998d2dce5ef3bf36b27e9acff170c3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
