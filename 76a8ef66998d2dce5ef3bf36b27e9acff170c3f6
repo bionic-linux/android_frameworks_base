@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4bb31985_9251e898",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-09T21:33:12Z",
+      "side": 1,
+      "message": "Talked offline -- should be fine.",
+      "parentUuid": "0ffe9b50_210f95cc",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 65
+      },
+      "revId": "76a8ef66998d2dce5ef3bf36b27e9acff170c3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65279c3c_9b07a50c",
         "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
         "patchSetId": 3
@@ -71,6 +95,30 @@
       "writtenOn": "2018-01-09T20:16:11Z",
       "side": 1,
       "message": "This also includes IMPORTANCE_FOREGROUND_SERVICE, which would be a service playing music or something perhaps not immediately visible to the user.  Is that still ok?",
+      "range": {
+        "startLine": 124,
+        "startChar": 81,
+        "endLine": 124,
+        "endChar": 99
+      },
+      "revId": "76a8ef66998d2dce5ef3bf36b27e9acff170c3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfb904b5_bd8de023",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-09T21:33:12Z",
+      "side": 1,
+      "message": "The documentation says that it\u0027s actively visible to the user (presumably in the form of a persistent notification).",
+      "parentUuid": "65279c3c_9b07a50c",
       "range": {
         "startLine": 124,
         "startChar": 81,
