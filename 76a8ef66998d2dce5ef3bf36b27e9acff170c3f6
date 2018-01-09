@@ -16,6 +16,24 @@
       "revId": "76a8ef66998d2dce5ef3bf36b27e9acff170c3f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c025f9c_c97fe694",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-09T19:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb139f78_a338427f",
+      "revId": "76a8ef66998d2dce5ef3bf36b27e9acff170c3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
