@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb6bfe04_75adb11c",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2018-01-09T04:51:08Z",
+      "side": 1,
+      "message": "Does this mean action.start() will change the order of actions in mActions?\nCould you share an example?\nand, please add a comment like line 318.",
+      "range": {
+        "startLine": 663,
+        "startChar": 42,
+        "endLine": 663,
+        "endChar": 59
+      },
+      "revId": "373dfa792ceae1acd7400bfe529c81eb8a9451db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
