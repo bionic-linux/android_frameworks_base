@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "341358df_bee0b177",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T16:21:21Z",
+      "side": 1,
+      "message": "I\u0027d recommend against linking the design into the AOSP commit message; you\u0027ll get constant requests for access if you put this in here.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 103
+      },
+      "revId": "1da748683ceaad01ef3e0dd18dc6241e24a698a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

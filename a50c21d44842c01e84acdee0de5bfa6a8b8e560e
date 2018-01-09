@@ -22,6 +22,145 @@
       "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4621a98a_de3505bb",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T16:21:21Z",
+      "side": 1,
+      "message": "I think its reasonable to use InetSocketAddress for this and to compile the proxy port into it.\nEverything I find about the APN Proxy shows it being either a host name or ip address, and a port.  This corresponds with how proxy servers work elsewhere to, so it seems reasonable.",
+      "parentUuid": "019ba8da_fb42971e",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 5
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206ef337_b5f7266d",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T16:21:21Z",
+      "side": 1,
+      "message": "Feel free to combine this into a InetSocketAddress as well.",
+      "range": {
+        "startLine": 266,
+        "startChar": 5,
+        "endLine": 282,
+        "endChar": 5
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a7a6a3a_b09e4114",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T16:21:21Z",
+      "side": 1,
+      "message": "Mark this @hide; it shouldn\u0027t show up in the public API (seems strange, but this is here mainly for source annotation in IDEs).",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 309,
+        "endChar": 33
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "053a5242_7609a60c",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T16:21:21Z",
+      "side": 1,
+      "message": "Mark this @hide; it shouldn\u0027t show up in the public API (seems strange, but this is here mainly for source annotation in IDEs).",
+      "range": {
+        "startLine": 334,
+        "startChar": 3,
+        "endLine": 335,
+        "endChar": 38
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b301c7f_b16ec0bd",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T16:21:21Z",
+      "side": 1,
+      "message": "Mark this @hide; it shouldn\u0027t show up in the public API (seems strange, but this is here mainly for source annotation in IDEs).",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 37
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33c0a876_6f1b68c7",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-09T16:21:21Z",
+      "side": 1,
+      "message": "Mark this @hide; it shouldn\u0027t show up in the public API (seems strange, but this is here mainly for source annotation in IDEs).",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 33
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
