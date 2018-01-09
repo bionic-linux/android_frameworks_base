@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "019ba8da_fb42971e",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-09T15:15:50Z",
+      "side": 1,
+      "message": "Hi Tyler,\n\nTo my understanding, proxy should actually be either a host name or an IP address(same as mmscProxy) so should be InetAddress too?\n\nAnd we are considering to combine proxy and port(as well as mmscProxy and mmscPort) into InetSocketAddress. May I ask your opinion on this?\n\nThanks,\nYueming",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 5
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
