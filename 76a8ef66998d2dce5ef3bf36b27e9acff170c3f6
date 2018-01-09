@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb139f78_a338427f",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2018-01-09T19:54:39Z",
+      "side": 1,
+      "message": "You probably want noteOpNoThrow as this code as some access checks are not made on a binder thread.",
+      "revId": "76a8ef66998d2dce5ef3bf36b27e9acff170c3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
