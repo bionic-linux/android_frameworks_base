@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "29231a0c_1755afc0",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-09T19:36:54Z",
+      "side": 1,
+      "message": "Found InetSocketAddress requires to specify port in the constructor, however port can be \nempty \"\" in the provider, which cause a problem: when port for entry A is empty in the db, how do we convert this data to InetSocketAddress? If we set port\u003d0 for InetSocketAddress, then DcTracker is going to use port 0, however according to this code:  https://cs.corp.google.com/android/frameworks/opt/telephony/src/java/com/android/internal/telephony/dataconnection/DcTracker.java?type\u003dcs\u0026q\u003dapn.port+package:%5Eandroid$\u0026l\u003d2900, DcTracker uses port\u003d8080 when port is empty in the db entry. So this is going to change the default behavior. I think it might be better not to introduce  InetSocketAddress now, may I ask your opinion?\n\nThank you!",
+      "parentUuid": "4621a98a_de3505bb",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 5
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "206ef337_b5f7266d",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 15
@@ -60,6 +84,30 @@
       "writtenOn": "2018-01-09T16:21:21Z",
       "side": 1,
       "message": "Feel free to combine this into a InetSocketAddress as well.",
+      "range": {
+        "startLine": 266,
+        "startChar": 5,
+        "endLine": 282,
+        "endChar": 5
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffac9fc_882d0b18",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-09T19:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "206ef337_b5f7266d",
       "range": {
         "startLine": 266,
         "startChar": 5,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "237d3e93_3907d10c",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-09T19:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a7a6a3a_b09e4114",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 309,
+        "endChar": 33
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "053a5242_7609a60c",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 15
@@ -106,6 +178,30 @@
       "writtenOn": "2018-01-09T16:21:21Z",
       "side": 1,
       "message": "Mark this @hide; it shouldn\u0027t show up in the public API (seems strange, but this is here mainly for source annotation in IDEs).",
+      "range": {
+        "startLine": 334,
+        "startChar": 3,
+        "endLine": 335,
+        "endChar": 38
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24ead2c9_f7ee691a",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-09T19:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "053a5242_7609a60c",
       "range": {
         "startLine": 334,
         "startChar": 3,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "b4bc28e8_6b7ac766",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-09T19:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b301c7f_b16ec0bd",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 37
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33c0a876_6f1b68c7",
         "filename": "telephony/java/android/telephony/ApnSetting.java",
         "patchSetId": 15
@@ -152,6 +272,30 @@
       "writtenOn": "2018-01-09T16:21:21Z",
       "side": 1,
       "message": "Mark this @hide; it shouldn\u0027t show up in the public API (seems strange, but this is here mainly for source annotation in IDEs).",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 33
+      },
+      "revId": "a50c21d44842c01e84acdee0de5bfa6a8b8e560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8bc8b57_c07b4a6f",
+        "filename": "telephony/java/android/telephony/ApnSetting.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1247187
+      },
+      "writtenOn": "2018-01-09T19:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c0a876_6f1b68c7",
       "range": {
         "startLine": 421,
         "startChar": 4,
