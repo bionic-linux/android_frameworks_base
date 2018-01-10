@@ -35,7 +35,7 @@ import com.android.internal.util.IndentingPrintWriter;
 /**
  * Maintains all {@link UsbUserSettingsManager} for all users.
  */
-class UsbSettingsManager {
+public class UsbSettingsManager {
     private static final String LOG_TAG = UsbSettingsManager.class.getSimpleName();
     private static final boolean DEBUG = false;
 

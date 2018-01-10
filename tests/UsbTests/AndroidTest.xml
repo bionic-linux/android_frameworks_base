@@ -1,0 +1,15 @@
+<configuration description="Runs sample instrumentation test.">
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup"/>
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="UsbTests.apk"/>
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer"/>
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer"/>
+    <option name="test-suite-tag" value="apct"/>
+    <option name="test-tag" value="UsbTests"/>
+
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest">
+        <option name="package" value="com.android.server.usb"/>
+        <option name="runner" value="android.support.test.runner.AndroidJUnitRunner"/>
+    </test>
+</configuration>

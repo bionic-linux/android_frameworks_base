@@ -46,7 +46,7 @@ import java.util.HashMap;
 /**
  * UsbAlsaManager manages USB audio and MIDI devices.
  */
-public final class UsbAlsaManager {
+public class UsbAlsaManager {
     private static final String TAG = UsbAlsaManager.class.getSimpleName();
     private static final boolean DEBUG = false;
 

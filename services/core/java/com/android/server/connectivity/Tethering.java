@@ -43,6 +43,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.hardware.usb.UsbFunction;
+import android.hardware.usb.UsbFunctions;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.net.INetworkPolicyManager;
@@ -1038,7 +1040,8 @@ public class Tethering extends BaseNetworkObserver {
         if (VDBG) Log.d(TAG, "setUsbTethering(" + enable + ")");
         UsbManager usbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
         synchronized (mPublicSync) {
-            usbManager.setCurrentFunction(enable ? UsbManager.USB_FUNCTION_RNDIS : null, false);
+            usbManager.setCurrentFunctions(enable ? new UsbFunctions(UsbFunction.RNDIS)
+                    : new UsbFunctions());
         }
         return ConnectivityManager.TETHER_ERROR_NO_ERROR;
     }
