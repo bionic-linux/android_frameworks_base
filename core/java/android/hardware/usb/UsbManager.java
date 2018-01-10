@@ -19,8 +19,8 @@ package android.hardware.usb;
 
 import android.annotation.Nullable;
 import android.annotation.SdkConstant;
-import android.annotation.SystemService;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SystemService;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
@@ -67,7 +67,7 @@ public class UsbManager {
      * MTP function is enabled
      * <li> {@link #USB_FUNCTION_PTP} boolean extra indicating whether the
      * PTP function is enabled
-     * <li> {@link #USB_FUNCTION_PTP} boolean extra indicating whether the
+     * <li> {@link #USB_FUNCTION_ACCESSORY} boolean extra indicating whether the
      * accessory function is enabled
      * <li> {@link #USB_FUNCTION_AUDIO_SOURCE} boolean extra indicating whether the
      * audio source function is enabled
@@ -193,21 +193,12 @@ public class UsbManager {
     public static final String USB_CONFIG_CHANGED = "config_changed";
 
     /**
-     * A placeholder indicating that no USB function is being specified.
-     * Used to distinguish between selecting no function vs. the default function in
-     * {@link #setCurrentFunction(String)}.
-     *
-     * {@hide}
-     */
-    public static final String USB_FUNCTION_NONE = "none";
-
-    /**
      * Name of the adb USB function.
      * Used in extras for the {@link #ACTION_USB_STATE} broadcast
      *
      * {@hide}
      */
-    public static final String USB_FUNCTION_ADB = "adb";
+    public static final String USB_FUNCTION_ADB = UsbFunction.ADB.toString();
 
     /**
      * Name of the RNDIS ethernet USB function.
@@ -215,7 +206,7 @@ public class UsbManager {
      *
      * {@hide}
      */
-    public static final String USB_FUNCTION_RNDIS = "rndis";
+    public static final String USB_FUNCTION_RNDIS = UsbFunction.RNDIS.toString();
 
     /**
      * Name of the MTP USB function.
@@ -223,7 +214,7 @@ public class UsbManager {
      *
      * {@hide}
      */
-    public static final String USB_FUNCTION_MTP = "mtp";
+    public static final String USB_FUNCTION_MTP = UsbFunction.MTP.toString();
 
     /**
      * Name of the PTP USB function.
@@ -231,15 +222,7 @@ public class UsbManager {
      *
      * {@hide}
      */
-    public static final String USB_FUNCTION_PTP = "ptp";
-
-    /**
-     * Name of the audio source USB function.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast
-     *
-     * {@hide}
-     */
-    public static final String USB_FUNCTION_AUDIO_SOURCE = "audio_source";
+    public static final String USB_FUNCTION_PTP = UsbFunction.PTP.toString();
 
     /**
      * Name of the MIDI USB function.
@@ -247,7 +230,7 @@ public class UsbManager {
      *
      * {@hide}
      */
-    public static final String USB_FUNCTION_MIDI = "midi";
+    public static final String USB_FUNCTION_MIDI = UsbFunction.MIDI.toString();
 
     /**
      * Name of the Accessory USB function.
@@ -255,7 +238,23 @@ public class UsbManager {
      *
      * {@hide}
      */
-    public static final String USB_FUNCTION_ACCESSORY = "accessory";
+    public static final String USB_FUNCTION_ACCESSORY = UsbFunction.ACCESSORY.toString();
+
+    /**
+     * Name of the audio source USB function.
+     * Used in extras for the {@link #ACTION_USB_STATE} broadcast
+     *
+     * {@hide}
+     */
+    public static final String USB_FUNCTION_AUDIO_SOURCE = UsbFunction.AUDIO_SOURCE.toString();
+
+    /**
+     * A placeholder indicating that no USB function is being specified.
+     * Used for compatibility with old init scripts to indicate no functions vs. charging function.
+     *
+     * {@hide}
+     */
+    public static final String USB_FUNCTION_NONE = "none";
 
     /**
      * Name of extra for {@link #ACTION_USB_PORT_CHANGED}
@@ -531,30 +530,7 @@ public class UsbManager {
     }
 
     /**
-     * Returns true if the specified USB function is currently enabled when in device mode.
-     * <p>
-     * USB functions represent interfaces which are published to the host to access
-     * services offered by the device.
-     * </p>
-     *
-     * @param function name of the USB function
-     * @return true if the USB function is enabled
-     *
-     * {@hide}
-     */
-    public boolean isFunctionEnabled(String function) {
-        if (mService == null) {
-            return false;
-        }
-        try {
-            return mService.isFunctionEnabled(function);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
-    }
-
-    /**
-     * Sets the current USB function when in device mode.
+     * Sets the current USB functions when in device mode.
      * <p>
      * USB functions represent interfaces which are published to the host to access
      * services offered by the device.
@@ -563,27 +539,42 @@ public class UsbManager {
      * automatically activate additional functions such as {@link #USB_FUNCTION_ADB}
      * or {@link #USB_FUNCTION_ACCESSORY} based on other settings and states.
      * </p><p>
-     * The allowed values are: {@link #USB_FUNCTION_NONE}, {@link #USB_FUNCTION_AUDIO_SOURCE},
-     * {@link #USB_FUNCTION_MIDI}, {@link #USB_FUNCTION_MTP}, {@link #USB_FUNCTION_PTP},
-     * or {@link #USB_FUNCTION_RNDIS}.
-     * </p><p>
-     * Also sets whether USB data (for example, MTP exposed pictures) should be made available
-     * on the USB connection when in device mode. Unlocking usb data should only be done with
-     * user involvement, since exposing pictures or other data could leak sensitive
-     * user information.
+     * Accepts any input that satisfies {@link UsbFunctions#isSettableFunctions}
+     * An empty UsbFunctions indicates that the device is charging, and can pick any
+     * appropriate function for that purpose.
      * </p><p>
      * Note: This function is asynchronous and may fail silently without applying
      * the requested changes.
      * </p>
      *
-     * @param function name of the USB function, or null to restore the default function
-     * @param usbDataUnlocked whether user data is accessible
+     * @param functions the USB function(s) to set.
      *
      * {@hide}
      */
-    public void setCurrentFunction(String function, boolean usbDataUnlocked) {
+    public void setCurrentFunctions(UsbFunctions functions) {
         try {
-            mService.setCurrentFunction(function, usbDataUnlocked);
+            mService.setCurrentFunctions(functions);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Returns the current USB functions in device mode.
+     * <p>
+     * This function returns the state of primary USB functions and can return a
+     * set containing any UsbFunction(s) except for {@link UsbFunction#ADB}.
+     * </p>
+     * <p>
+     * An empty return set indicates that the current function is the charging function.
+     * </p>
+     * @return The currently enabled functions.
+     *
+     * {@hide}
+     */
+    public UsbFunctions getCurrentFunctions() {
+        try {
+            return mService.getCurrentFunctions();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -593,23 +584,38 @@ public class UsbManager {
      * Sets the screen unlocked functions, which are persisted and set as the current functions
      * whenever the screen is unlocked.
      * <p>
-     * The allowed values are: {@link #USB_FUNCTION_NONE},
-     * {@link #USB_FUNCTION_MIDI}, {@link #USB_FUNCTION_MTP}, {@link #USB_FUNCTION_PTP},
-     * or {@link #USB_FUNCTION_RNDIS}.
-     * {@link #USB_FUNCTION_NONE} has the effect of switching off this feature, so functions
+     * Accepts any input that satisfies {@link UsbFunctions#isSettableFunctions}
+     * An empty UsbFunctions has the effect of switching off this feature, so functions
      * no longer change on screen unlock.
      * </p><p>
      * Note: When the screen is on, this method will apply given functions as current functions,
      * which is asynchronous and may fail silently without applying the requested changes.
      * </p>
      *
-     * @param function function to set as default
+     * @param functions functions to set
      *
      * {@hide}
      */
-    public void setScreenUnlockedFunctions(String function) {
+    public void setScreenUnlockedFunctions(UsbFunctions functions) {
         try {
-            mService.setScreenUnlockedFunctions(function);
+            mService.setScreenUnlockedFunctions(functions);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Gets the current screen unlocked functions.
+     * <p>
+     * An empty return set indicates that the screen unlocked functions feature is not enabled.
+     * </p>
+     * @return The currently set screen enabled functions.
+     *
+     * {@hide}
+     */
+    public UsbFunctions getScreenUnlockedFunctions() {
+        try {
+            return mService.getScreenUnlockedFunctions();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -706,53 +712,5 @@ public class UsbManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
-    }
-
-    /** @hide */
-    public static String addFunction(String functions, String function) {
-        if (USB_FUNCTION_NONE.equals(functions)) {
-            return function;
-        }
-        if (!containsFunction(functions, function)) {
-            if (functions.length() > 0) {
-                functions += ",";
-            }
-            functions += function;
-        }
-        return functions;
-    }
-
-    /** @hide */
-    public static String removeFunction(String functions, String function) {
-        String[] split = functions.split(",");
-        for (int i = 0; i < split.length; i++) {
-            if (function.equals(split[i])) {
-                split[i] = null;
-            }
-        }
-        if (split.length == 1 && split[0] == null) {
-            return USB_FUNCTION_NONE;
-        }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < split.length; i++) {
-            String s = split[i];
-            if (s != null) {
-                if (builder.length() > 0) {
-                    builder.append(",");
-                }
-                builder.append(s);
-            }
-        }
-        return builder.toString();
-    }
-
-    /** @hide */
-    public static boolean containsFunction(String functions, String function) {
-        int index = functions.indexOf(function);
-        if (index < 0) return false;
-        if (index > 0 && functions.charAt(index - 1) != ',') return false;
-        int charAfter = index + function.length();
-        if (charAfter < functions.length() && functions.charAt(charAfter) != ',') return false;
-        return true;
     }
 }

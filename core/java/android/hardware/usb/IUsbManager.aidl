@@ -20,6 +20,8 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbFunctions;
+import android.hardware.usb.UsbFunction;
 import android.hardware.usb.UsbPort;
 import android.hardware.usb.UsbPortStatus;
 import android.os.Bundle;
@@ -85,21 +87,19 @@ interface IUsbManager
     /* Clears default preferences and permissions for the package */
     void clearDefaults(String packageName, int userId);
 
-    /* Returns true if the specified USB function is enabled. */
-    boolean isFunctionEnabled(String function);
+    /* Sets the current USB function. */
+    void setCurrentFunctions(in UsbFunctions functions);
 
-    /* Sets the current USB function as well as whether USB data
-     * (for example, MTP exposed pictures) should be made available
-     * on the USB connection. Unlocking data should only be done with
-     * user involvement, since exposing pictures or other data could
-     * leak sensitive user information.
-     */
-    void setCurrentFunction(String function, boolean usbDataUnlocked);
+    /* Gets the current USB functions. */
+    UsbFunctions getCurrentFunctions();
 
     /* Sets the screen unlocked USB function(s), which will be set automatically
      * when the screen is unlocked.
      */
-    void setScreenUnlockedFunctions(String function);
+    void setScreenUnlockedFunctions(in UsbFunctions functions);
+
+    /* Gets the current screen unlocked functions. */
+    UsbFunctions getScreenUnlockedFunctions();
 
     /* Allow USB debugging from the attached host. If alwaysAllow is true, add the
      * the public key to list of host keys that the user has approved.

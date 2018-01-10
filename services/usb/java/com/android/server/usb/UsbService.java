@@ -29,7 +29,7 @@ import android.content.pm.PackageManager;
 import android.hardware.usb.IUsbManager;
 import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
+import android.hardware.usb.UsbFunctions;
 import android.hardware.usb.UsbPort;
 import android.hardware.usb.UsbPortStatus;
 import android.os.Binder;
@@ -379,59 +379,51 @@ public class UsbService extends IUsbManager.Stub {
     }
 
     @Override
-    public boolean isFunctionEnabled(String function) {
+    public void setCurrentFunctions(UsbFunctions functions) {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_USB, null);
-        return mDeviceManager != null && mDeviceManager.isFunctionEnabled(function);
-    }
-
-    @Override
-    public void setCurrentFunction(String function, boolean usbDataUnlocked) {
-        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_USB, null);
-
-        if (!isSupportedCurrentFunction(function)) {
-            Slog.w(TAG, "Caller of setCurrentFunction() requested unsupported USB function: "
-                    + function);
-            function = UsbManager.USB_FUNCTION_NONE;
+        if (!UsbFunctions.isSettableFunctions(functions)) {
+            throw new IllegalArgumentException("Unsupported functions requested! " + functions);
         }
 
         if (mDeviceManager != null) {
-            mDeviceManager.setCurrentFunctions(function, usbDataUnlocked);
+            mDeviceManager.setCurrentFunctions(functions);
         } else {
             throw new IllegalStateException("USB device mode not supported");
         }
     }
 
     @Override
-    public void setScreenUnlockedFunctions(String function) {
+    public UsbFunctions getCurrentFunctions() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_USB, null);
-
-        if (!isSupportedCurrentFunction(function)) {
-            Slog.w(TAG, "Caller of setScreenUnlockedFunctions() requested unsupported USB function:"
-                    + function);
-            function = UsbManager.USB_FUNCTION_NONE;
-        }
-
         if (mDeviceManager != null) {
-            mDeviceManager.setScreenUnlockedFunctions(function);
+            return mDeviceManager.getCurrentFunctions();
         } else {
             throw new IllegalStateException("USB device mode not supported");
         }
     }
 
-    private static boolean isSupportedCurrentFunction(String function) {
-        if (function == null) return true;
-
-        switch (function) {
-            case UsbManager.USB_FUNCTION_NONE:
-            case UsbManager.USB_FUNCTION_AUDIO_SOURCE:
-            case UsbManager.USB_FUNCTION_MIDI:
-            case UsbManager.USB_FUNCTION_MTP:
-            case UsbManager.USB_FUNCTION_PTP:
-            case UsbManager.USB_FUNCTION_RNDIS:
-                return true;
+    @Override
+    public void setScreenUnlockedFunctions(UsbFunctions functions) {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_USB, null);
+        if (!UsbFunctions.isSettableFunctions(functions)) {
+            throw new IllegalArgumentException("Unsupported functions requested! " + functions);
         }
 
-        return false;
+        if (mDeviceManager != null) {
+            mDeviceManager.setScreenUnlockedFunctions(functions);
+        } else {
+            throw new IllegalStateException("USB device mode not supported");
+        }
+    }
+
+    @Override
+    public UsbFunctions getScreenUnlockedFunctions() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_USB, null);
+        if (mDeviceManager != null) {
+            return mDeviceManager.getScreenUnlockedFunctions();
+        } else {
+            throw new IllegalStateException("USB device mode not supported");
+        }
     }
 
     @Override
