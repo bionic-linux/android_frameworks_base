@@ -93,6 +93,30 @@
       "revId": "01869cc4ae36e66189c4cd8f1fce25776f212a27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9f23ddc_f676edda",
+        "filename": "telephony/java/android/telephony/ims/ImsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-01-11T21:09:11Z",
+      "side": 1,
+      "message": "Talking about this actually made me realize there is a bug:\n\nThe base implementation of ImsRegistrationImplBase will always callback with the current registration status (registered/registering/not registered) when we add a callback. If using the old implementation, it will respond immediately with NOT_REGISTERED, although it is not being used. So, I have to modify ImsRegistrationImplBase to not respond if the registration status is never updated.",
+      "parentUuid": "4137f3de_fa7caa5e",
+      "range": {
+        "startLine": 256,
+        "startChar": 19,
+        "endLine": 256,
+        "endChar": 42
+      },
+      "revId": "01869cc4ae36e66189c4cd8f1fce25776f212a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
