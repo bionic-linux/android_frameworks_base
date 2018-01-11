@@ -1352,6 +1352,18 @@ public final class BroadcastQueue {
             if (DEBUG_BROADCAST)  Slog.v(TAG_BROADCAST,
                     "Need to start app ["
                     + mQueueName + "] " + targetProcess + " for broadcast " + r);
+
+            if (mService.isShuttingDownLocked() {
+                Slog.w(TAG_BROADCAST, "Skip delivering: " + r.intent + " to "
+                    + component.flattenToShortString() + " - system is shutting down.");
+                logBroadcastReceiverDiscardLocked(r);
+                finishReceiverLocked(r, r.resultCode, r.resultData,
+                        r.resultExtras, r.resultAbort, false);
+                scheduleBroadcastsLocked();
+                r.state = BroadcastRecord.IDLE;
+                return;
+            }
+
             if ((r.curApp=mService.startProcessLocked(targetProcess,
                     info.activityInfo.applicationInfo, true,
                     r.intent.getFlags() | Intent.FLAG_FROM_BACKGROUND,
