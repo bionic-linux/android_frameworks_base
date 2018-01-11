@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f92a84fb_6e3f830f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4735,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-01-11T19:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c4f8af_a2f8c2c7",
+      "range": {
+        "startLine": 4735,
+        "startChar": 22,
+        "endLine": 4735,
+        "endChar": 23
+      },
+      "revId": "01869cc4ae36e66189c4cd8f1fce25776f212a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59929265_43057406",
         "filename": "telephony/java/android/telephony/ims/ImsService.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-11T18:21:26Z",
       "side": 1,
       "message": "should not this be implemented by clients? should it return null?",
+      "range": {
+        "startLine": 256,
+        "startChar": 19,
+        "endLine": 256,
+        "endChar": 42
+      },
+      "revId": "01869cc4ae36e66189c4cd8f1fce25776f212a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4137f3de_fa7caa5e",
+        "filename": "telephony/java/android/telephony/ims/ImsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-01-11T19:48:04Z",
+      "side": 1,
+      "message": "We are in a weird state right now:\n\n- \"Old\" implementations still use MmTelFeature.addRegistrationListener.\n- \"New\" implementations being tested by vendors are using getRegistration().addRegistrationCallback().\n\nWe need to make the \"new\" implementation a no-op on old implementations (and vice-versa).\n\nBy returning the base class, we will be \"registering for a callback\", which will do nothing.\n\nIn a subsequent CL, i will instead translate getRegistration().addRegistrationCallback() -\u003e MmTelFeature.addRegistrationCallback and this will be removed.",
+      "parentUuid": "59929265_43057406",
       "range": {
         "startLine": 256,
         "startChar": 19,
