@@ -1767,6 +1767,7 @@ public class KeyguardViewMediator extends SystemUI {
                     flags |= WindowManagerPolicy.KEYGUARD_GOING_AWAY_FLAG_WITH_WALLPAPER;
                 }
 
+                setShowingLocked(false);
                 mUpdateMonitor.setKeyguardGoingAway(true /* goingAway */);
                 // Don't actually hide the Keyguard at the moment, wait for window
                 // manager until it tells us it's safe to do so with
