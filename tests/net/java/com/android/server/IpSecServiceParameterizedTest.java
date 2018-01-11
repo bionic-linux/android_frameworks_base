@@ -153,7 +153,9 @@ public class IpSecServiceParameterizedTest {
                         anyInt(),
                         anyString(),
                         anyString(),
-                        eq(TEST_SPI_OUT));
+                        eq(TEST_SPI_OUT),
+                        anyInt(),
+                        anyInt());
 
         // Verify quota and RefcountedResource objects cleaned up
         IpSecService.UserRecord userRecord =
@@ -194,7 +196,9 @@ public class IpSecServiceParameterizedTest {
                         anyInt(),
                         anyString(),
                         anyString(),
-                        eq(TEST_SPI_OUT));
+                        eq(TEST_SPI_OUT),
+                        anyInt(),
+                        anyInt());
 
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mSpiQuotaTracker.mCurrent);
@@ -256,6 +260,8 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         anyLong(),
                         eq(TEST_SPI_OUT),
+                        anyInt(),
+                        anyInt(),
                         eq(IpSecAlgorithm.AUTH_HMAC_SHA256),
                         eq(AUTH_KEY),
                         anyInt(),
@@ -277,6 +283,8 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         anyLong(),
                         eq(TEST_SPI_IN),
+                        anyInt(),
+                        anyInt(),
                         eq(IpSecAlgorithm.AUTH_HMAC_SHA256),
                         eq(AUTH_KEY),
                         anyInt(),
@@ -312,6 +320,8 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         anyLong(),
                         eq(TEST_SPI_OUT),
+                        anyInt(),
+                        anyInt(),
                         eq(""),
                         eq(new byte[] {}),
                         eq(0),
@@ -333,6 +343,8 @@ public class IpSecServiceParameterizedTest {
                         anyString(),
                         anyLong(),
                         eq(TEST_SPI_IN),
+                        anyInt(),
+                        anyInt(),
                         eq(""),
                         eq(new byte[] {}),
                         eq(0),
@@ -363,14 +375,18 @@ public class IpSecServiceParameterizedTest {
                         eq(IpSecTransform.DIRECTION_OUT),
                         anyString(),
                         anyString(),
-                        eq(TEST_SPI_OUT));
+                        eq(TEST_SPI_OUT),
+                        anyInt(),
+                        anyInt());
         verify(mMockNetd)
                 .ipSecDeleteSecurityAssociation(
                         eq(createTransformResp.resourceId),
                         eq(IpSecTransform.DIRECTION_IN),
                         anyString(),
                         anyString(),
-                        eq(TEST_SPI_IN));
+                        eq(TEST_SPI_IN),
+                        anyInt(),
+                        anyInt());
 
         // Verify quota and RefcountedResource objects cleaned up
         IpSecService.UserRecord userRecord =
@@ -408,14 +424,18 @@ public class IpSecServiceParameterizedTest {
                         eq(IpSecTransform.DIRECTION_OUT),
                         anyString(),
                         anyString(),
-                        eq(TEST_SPI_OUT));
+                        eq(TEST_SPI_OUT),
+                        anyInt(),
+                        anyInt());
         verify(mMockNetd)
                 .ipSecDeleteSecurityAssociation(
                         eq(createTransformResp.resourceId),
                         eq(IpSecTransform.DIRECTION_IN),
                         anyString(),
                         anyString(),
-                        eq(TEST_SPI_IN));
+                        eq(TEST_SPI_IN),
+                        anyInt(),
+                        anyInt());
 
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mTransformQuotaTracker.mCurrent);

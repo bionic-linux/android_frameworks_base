@@ -568,7 +568,9 @@ public class IpSecService extends IIpSecService.Stub {
                                     direction,
                                     mConfig.getLocalAddress(),
                                     mConfig.getRemoteAddress(),
-                                    spi);
+                                    spi,
+                                    0, // TODO: Need to change to the correct value
+                                    0); // TODO: Need to change to the correct value
                 } catch (ServiceSpecificException e) {
                     // FIXME: get the error code and throw is at an IOException from Errno Exception
                 } catch (RemoteException e) {
@@ -646,7 +648,9 @@ public class IpSecService extends IIpSecService.Stub {
                 mSrvConfig
                         .getNetdInstance()
                         .ipSecDeleteSecurityAssociation(
-                                mResourceId, mDirection, mLocalAddress, mRemoteAddress, mSpi);
+                                mResourceId, mDirection, mLocalAddress, mRemoteAddress, mSpi,
+                                0, // TODO: Need to change to the correct value
+                                0); // TODO: Need to change to the correct value
             } catch (ServiceSpecificException e) {
                 // FIXME: get the error code and throw is at an IOException from Errno Exception
             } catch (RemoteException e) {
@@ -1172,6 +1176,8 @@ public class IpSecService extends IIpSecService.Stub {
                                 c.getRemoteAddress(),
                                 (c.getNetwork() != null) ? c.getNetwork().getNetworkHandle() : 0,
                                 spi,
+                                0, // TODO: Need to change to the correct value
+                                0, // TODO: Need to change to the correct value
                                 (auth != null) ? auth.getName() : "",
                                 (auth != null) ? auth.getKey() : new byte[] {},
                                 (auth != null) ? auth.getTruncationLengthBits() : 0,
