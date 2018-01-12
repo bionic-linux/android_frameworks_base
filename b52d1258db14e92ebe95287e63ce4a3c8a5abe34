@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e718677f_701f10db",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-12T17:10:10Z",
+      "side": 1,
+      "message": "For now lets just comment out the return and put in a TODO indicating we\u0027ll do this later.  I don\u0027t want to break Duo integration in P since they won\u0027t have upgraded to the new APIs yet.",
+      "range": {
+        "startLine": 1433,
+        "startChar": 20,
+        "endLine": 1433,
+        "endChar": 27
+      },
+      "revId": "b52d1258db14e92ebe95287e63ce4a3c8a5abe34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
