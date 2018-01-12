@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "330e0201_43408a3a",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2018-01-12T19:29:03Z",
+      "side": 1,
+      "message": "Do you mind renaming this to getRulesAuthTable() to be more clear.\nRat in telephony world is mostly used for radio access technology.",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed96b9de_0c16a375",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2018-01-12T19:29:03Z",
+      "side": 1,
+      "message": "Is there a code link or spec you can document here so that one can understand what is info1",
+      "range": {
+        "startLine": 176,
+        "startChar": 22,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6b6f00b_0e8e5e8f",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2018-01-12T19:29:03Z",
+      "side": 1,
+      "message": "When is this supposed to be sent ? Can you please document.",
+      "range": {
+        "startLine": 218,
+        "startChar": 51,
+        "endLine": 218,
+        "endChar": 63
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "792b21b1_a5a04f4b",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2018-01-12T19:29:03Z",
+      "side": 1,
+      "message": "Can you please differentiate the description of each arg ?",
+      "range": {
+        "startLine": 219,
+        "startChar": 13,
+        "endLine": 222,
+        "endChar": 83
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f3d79c9_c06de395",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2018-01-12T19:29:03Z",
+      "side": 1,
+      "message": "Is there any particular reason for suffix \"1\" added to args ?",
+      "range": {
+        "startLine": 226,
+        "startChar": 61,
+        "endLine": 226,
+        "endChar": 74
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a1c4022_72bf646d",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2018-01-12T19:29:03Z",
+      "side": 1,
+      "message": "please differentiate description of arg.",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 256,
+        "endChar": 81
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea418074_943240a1",
+        "filename": "telephony/java/android/telephony/euicc/EuiccNotification.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2018-01-12T19:29:03Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
