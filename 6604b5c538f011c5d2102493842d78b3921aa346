@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "99bbcd2a_6a9fefd8",
+        "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-01-12T19:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca367726_4edfe960",
+      "range": {
+        "startLine": 129,
+        "startChar": 95,
+        "endLine": 129,
+        "endChar": 99
+      },
+      "revId": "6604b5c538f011c5d2102493842d78b3921aa346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1ac80a1_b7efafd7",
+        "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-01-12T19:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca1fd540_08b4705b",
+      "range": {
+        "startLine": 129,
+        "startChar": 74,
+        "endLine": 129,
+        "endChar": 78
+      },
+      "revId": "6604b5c538f011c5d2102493842d78b3921aa346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32dec7a6_d919a0d0",
         "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-11T19:21:49Z",
       "side": 1,
       "message": "You said \"empty if unknown\" in above comment for mCardId. Should this be an empty string instead of a null?",
+      "range": {
+        "startLine": 153,
+        "startChar": 78,
+        "endLine": 153,
+        "endChar": 82
+      },
+      "revId": "6604b5c538f011c5d2102493842d78b3921aa346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bad3800_56a90ad2",
+        "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-01-12T19:08:54Z",
+      "side": 1,
+      "message": "If there is no input, null will be stored but empty string will be returned when user query the value, I have modified the comment of the getter to make it more clear.",
+      "parentUuid": "32dec7a6_d919a0d0",
       "range": {
         "startLine": 153,
         "startChar": 78,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c55e66ee_aa8c284e",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-01-12T19:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c358d16f_aa6e8aef",
+      "range": {
+        "startLine": 274,
+        "startChar": 67,
+        "endLine": 274,
+        "endChar": 71
+      },
+      "revId": "6604b5c538f011c5d2102493842d78b3921aa346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e77d59_9efa811b",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 3
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1b2848a6_ece2aa51",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-01-12T19:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11e77d59_9efa811b",
+      "range": {
+        "startLine": 275,
+        "startChar": 54,
+        "endLine": 275,
+        "endChar": 58
+      },
+      "revId": "6604b5c538f011c5d2102493842d78b3921aa346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1719e18a_9d21f8a6",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 3
@@ -131,6 +251,24 @@
       "revId": "6604b5c538f011c5d2102493842d78b3921aa346",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d024598_db543ada",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-01-12T19:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1719e18a_9d21f8a6",
+      "revId": "6604b5c538f011c5d2102493842d78b3921aa346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
