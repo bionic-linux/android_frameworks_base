@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8689862e_3b85d009",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/policy/NetworkControllerSignalTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-01-12T00:25:11Z",
+      "side": 1,
+      "message": "any idea why this new test is flaky? I\u0027m assuming its related to why most of the tests in this file are flaky",
+      "range": {
+        "startLine": 610,
+        "startChar": 0,
+        "endLine": 610,
+        "endChar": 20
+      },
+      "revId": "0b9a3141f7d703ba77a1adf413623f0700f94294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
