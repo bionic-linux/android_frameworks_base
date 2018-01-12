@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "230bd1fb_2a717347",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-12T02:01:10Z",
+      "side": 1,
+      "message": "This may be fine for opportunistic mode, but for strict mode we\u0027ll need to ask about the set of private dns servers.\n\nAlso, please see if this can be extracted into DnsManager (I\u0027ve been trying to encapsulate and extract the DNS handling code out of CS).\n\nAlso: this is potentially a lot of calls to netd from the app (here in CM).  I think it would be better to have one call to netd from CS instead.  I can maybe have two out parameters that are an array of strings (nameservers) and an array of bools?",
+      "range": {
+        "startLine": 1133,
+        "startChar": 38,
+        "endLine": 1133,
+        "endChar": 51
+      },
+      "revId": "fc06932d8500fb65addb8404008c4b3b4ccc2b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce0e6a9_ad55c2b2",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-12T02:01:10Z",
+      "side": 1,
+      "message": "We have to be able to marshall and unmarshall this new data too.",
+      "range": {
+        "startLine": 1196,
+        "startChar": 21,
+        "endLine": 1196,
+        "endChar": 31
+      },
+      "revId": "fc06932d8500fb65addb8404008c4b3b4ccc2b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
