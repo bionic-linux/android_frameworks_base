@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d5437e6b_b212d9ca",
+        "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-01-12T19:13:23Z",
+      "side": 1,
+      "message": "Actually null will be stored and returned if unknown, just like other strings",
+      "parentUuid": "5bad3800_56a90ad2",
+      "range": {
+        "startLine": 153,
+        "startChar": 78,
+        "endLine": 153,
+        "endChar": 82
+      },
+      "revId": "6604b5c538f011c5d2102493842d78b3921aa346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c358d16f_aa6e8aef",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 3
