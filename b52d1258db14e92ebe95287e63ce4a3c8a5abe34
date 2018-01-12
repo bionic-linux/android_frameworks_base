@@ -22,6 +22,30 @@
       "revId": "b52d1258db14e92ebe95287e63ce4a3c8a5abe34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25e9de48_adf6af7d",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2018-01-12T18:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e718677f_701f10db",
+      "range": {
+        "startLine": 1433,
+        "startChar": 20,
+        "endLine": 1433,
+        "endChar": 27
+      },
+      "revId": "b52d1258db14e92ebe95287e63ce4a3c8a5abe34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
