@@ -962,16 +962,16 @@ final class SystemServiceRegistry {
         @SuppressWarnings("unchecked")
         public final T getService(ContextImpl ctx) {
             final Object[] cache = ctx.mServiceCache;
+            Object service = cache[mCacheIndex];
+            if (service != null) return (T)service;
+
             synchronized (cache) {
                 // Fetch or create the service.
-                Object service = cache[mCacheIndex];
-                if (service == null) {
-                    try {
-                        service = createService(ctx);
-                        cache[mCacheIndex] = service;
-                    } catch (ServiceNotFoundException e) {
-                        onServiceNotFound(e);
-                    }
+                try {
+                    service = createService(ctx);
+                    cache[mCacheIndex] = service;
+                } catch (ServiceNotFoundException e) {
+                    onServiceNotFound(e);
                 }
                 return (T)service;
             }
