@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "f0503a57_ad226e9f",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-12T05:20:47Z",
+      "side": 1,
+      "message": "Enums are frowned upon for public APIs. After discussion with Erik, I wonder if we could simplify the changes to LinkProperties to just the following two elements?\n\n     /**\n      * Whether private DNS is in currently use on this network. When private DNS is in use,\n      * applications must not send unencrypted DNS queries, as doing so could reveal private\n      * user information.\n      */\n     boolean usePrivateDns;\n\n     /**\n      * The private DNS server server name that is in use. If null, indicates that private DNS\n      * on this network is in opportunistic mode and encrypted DNS queries are being directed\n      * to the DNS servers returned by {@link #getDnsServers}. If non-null, indicates that\n      * private DNS is in strict mode. In this mode, applications should ensure that all DNS\n      * queries are sent to the given hostname, and sent only if that hostname\u0027s certificate\n      * has been validated.\n      *\n      * Note that if the server name is non-null applications, should refrain from sending\n      * unencrypted DNS queries even if private DNS is not operable, or if certificate\n      * validation fails.\n      */\n     String privateDnsServerName;\n\nSo for an app there are three combinations:\n\n - usePrivateDns\u003dfalse. Do whatever you want.\n - usePrivateDns\u003dtrue, hostname null. Traffic must be encrypted, and should go to the network-provided DNS servers.\n - usePrivateDns\u003dtrue, hostname non-null. Traffic must be encrypted, and must be sent to the specified DNS server.\n\nNot having a custom class and not passing around the IP addresses has two advantages:\n1. It should make implementation much easier due to having to write less parceling code.\n2. It reduces the number of onLinkPropertiesChanged callbacks that an app has to deal with. If\n   we provide the IP addresses, then we\u0027ll have to send a callback every time a DNS server\n   validates.",
+      "range": {
+        "startLine": 77,
+        "startChar": 11,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "fc06932d8500fb65addb8404008c4b3b4ccc2b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ce0e6a9_ad55c2b2",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 7
