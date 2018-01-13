@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97c6df00_e6abe2b9",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-13T02:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "330e0201_43408a3a",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed96b9de_0c16a375",
         "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-12T19:29:03Z",
       "side": 1,
       "message": "Is there a code link or spec you can document here so that one can understand what is info1",
+      "range": {
+        "startLine": 176,
+        "startChar": 22,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cac08791_02937ecf",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-13T02:00:45Z",
+      "side": 1,
+      "message": "Added \"defined in spec\" for explanation. The spec just says info1. I think it means information group 1.",
+      "parentUuid": "ed96b9de_0c16a375",
       "range": {
         "startLine": 176,
         "startChar": 22,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a88dd90a_388c5755",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-13T02:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b6f00b_0e8e5e8f",
+      "range": {
+        "startLine": 218,
+        "startChar": 51,
+        "endLine": 218,
+        "endChar": 63
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "792b21b1_a5a04f4b",
         "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-12T19:29:03Z",
       "side": 1,
       "message": "Can you please differentiate the description of each arg ?",
+      "range": {
+        "startLine": 219,
+        "startChar": 13,
+        "endLine": 222,
+        "endChar": 83
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc6b5ad9_37572367",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-13T02:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "792b21b1_a5a04f4b",
       "range": {
         "startLine": 219,
         "startChar": 13,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e6e28445_d161ab53",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-13T02:00:45Z",
+      "side": 1,
+      "message": "This name is following the GSMA specs. I think it should be similar to EuiccInfo1. They are group 1 data.",
+      "parentUuid": "2f3d79c9_c06de395",
+      "range": {
+        "startLine": 226,
+        "startChar": 61,
+        "endLine": 226,
+        "endChar": 74
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1c4022_72bf646d",
         "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d7e393dc_1810a6b1",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-13T02:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a1c4022_72bf646d",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 256,
+        "endChar": 81
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea418074_943240a1",
         "filename": "telephony/java/android/telephony/euicc/EuiccNotification.aidl",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-12T19:29:03Z",
       "side": 1,
       "message": "2018",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "5ff3041d10443162de62620020b7ac1d0c92b5e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "717f6933_624e9ccc",
+        "filename": "telephony/java/android/telephony/euicc/EuiccNotification.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-13T02:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea418074_943240a1",
       "range": {
         "startLine": 2,
         "startChar": 17,
