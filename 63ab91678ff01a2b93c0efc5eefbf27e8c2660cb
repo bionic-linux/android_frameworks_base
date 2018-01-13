@@ -25,6 +25,99 @@
     },
     {
       "key": {
+        "uuid": "1b4f3ea9_ac3a7a85",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:37:59Z",
+      "side": 1,
+      "message": "Yes, these types are deprecated and we should stop adding new ones.",
+      "parentUuid": "fcee3f2c_83303827",
+      "range": {
+        "startLine": 582,
+        "startChar": 28,
+        "endLine": 582,
+        "endChar": 58
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3969fb9d_5474e7dc",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:37:59Z",
+      "side": 1,
+      "message": "These are also deprecated and we should not be adding more.",
+      "range": {
+        "startLine": 1296,
+        "startChar": 0,
+        "endLine": 1299,
+        "endChar": 86
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ef549e_f0bc016b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:37:59Z",
+      "side": 1,
+      "message": "Ditto, don\u0027t add these.",
+      "range": {
+        "startLine": 1377,
+        "startChar": 0,
+        "endLine": 1382,
+        "endChar": 52
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e098c45b_687b7327",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:37:59Z",
+      "side": 1,
+      "message": "Ditto, don\u0027t add these.",
+      "range": {
+        "startLine": 1419,
+        "startChar": 0,
+        "endLine": 1424,
+        "endChar": 9
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "273be2a2_5620a939",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -36,6 +129,30 @@
       "writtenOn": "2018-01-05T01:05:29Z",
       "side": 1,
       "message": "update these two?",
+      "range": {
+        "startLine": 1538,
+        "startChar": 0,
+        "endLine": 1538,
+        "endChar": 94
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7695a86e_c271a5c7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:37:59Z",
+      "side": 1,
+      "message": "Actually, I think these are deprecated as well.",
+      "parentUuid": "273be2a2_5620a939",
       "range": {
         "startLine": 1538,
         "startChar": 0,
@@ -64,6 +181,53 @@
         "startChar": 0,
         "endLine": 298,
         "endChar": 39
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6caadc_238f72d2",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:37:59Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "88ea4054_b1a32fb1",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 39
+      },
+      "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3fd120_34f2e01b",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-13T13:37:59Z",
+      "side": 1,
+      "message": "Ditto, don\u0027t add these.",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 66
       },
       "revId": "63ab91678ff01a2b93c0efc5eefbf27e8c2660cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
