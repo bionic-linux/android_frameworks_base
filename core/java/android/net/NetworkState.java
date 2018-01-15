@@ -18,6 +18,7 @@ package android.net;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.SubscriptionManager;
 import android.util.Slog;
 
 /**
@@ -26,23 +27,34 @@ import android.util.Slog;
  * @hide
  */
 public class NetworkState implements Parcelable {
-    public static final NetworkState EMPTY = new NetworkState(null, null, null, null, null, null);
+    public static final NetworkState EMPTY = new NetworkState(null, null, null, null, null,
+            SubscriptionManager.INVALID_SUBSCRIPTION_ID, null);
 
     public final NetworkInfo networkInfo;
     public final LinkProperties linkProperties;
     public final NetworkCapabilities networkCapabilities;
     public final Network network;
     public final String subscriberId;
+    public final int subId;
     public final String networkId;
 
+    @Deprecated
     public NetworkState(NetworkInfo networkInfo, LinkProperties linkProperties,
             NetworkCapabilities networkCapabilities, Network network, String subscriberId,
             String networkId) {
+        this(networkInfo, linkProperties, networkCapabilities, network, subscriberId,
+                SubscriptionManager.INVALID_SUBSCRIPTION_ID, networkId);
+    }
+
+    public NetworkState(NetworkInfo networkInfo, LinkProperties linkProperties,
+            NetworkCapabilities networkCapabilities, Network network, String subscriberId,
+            int subId, String networkId) {
         this.networkInfo = networkInfo;
         this.linkProperties = linkProperties;
         this.networkCapabilities = networkCapabilities;
         this.network = network;
         this.subscriberId = subscriberId;
+        this.subId = subId;
         this.networkId = networkId;
 
         // This object is an atomic view of a network, so the various components
@@ -62,6 +74,7 @@ public class NetworkState implements Parcelable {
         networkCapabilities = in.readParcelable(null);
         network = in.readParcelable(null);
         subscriberId = in.readString();
+        subId = in.readInt();
         networkId = in.readString();
     }
 
@@ -77,6 +90,7 @@ public class NetworkState implements Parcelable {
         out.writeParcelable(networkCapabilities, flags);
         out.writeParcelable(network, flags);
         out.writeString(subscriberId);
+        out.writeInt(subId);
         out.writeString(networkId);
     }
 

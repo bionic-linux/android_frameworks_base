@@ -31,6 +31,7 @@ import android.os.INetworkManagementService;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.telephony.SubscriptionManager;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -468,10 +469,19 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         synchronized (this) {
             // Network objects are outwardly immutable so there is no point to duplicating.
             // Duplicating also precludes sharing socket factories and connection pools.
-            final String subscriberId = (networkMisc != null) ? networkMisc.subscriberId : null;
+            final String subscriberId;
+            final int subId;
+            if (networkMisc != null) {
+                subscriberId = networkMisc.subscriberId;
+                subId = networkMisc.subId;
+            } else {
+                subscriberId = null;
+                subId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+            }
             return new NetworkState(new NetworkInfo(networkInfo),
                     new LinkProperties(linkProperties),
-                    new NetworkCapabilities(networkCapabilities), network, subscriberId, null);
+                    new NetworkCapabilities(networkCapabilities),
+                    network, subscriberId, subId, null);
         }
     }
 
