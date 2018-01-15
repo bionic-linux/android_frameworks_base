@@ -18,6 +18,7 @@ package android.net;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.SubscriptionManager;
 
 /**
  * A grab-bag of information (metadata, policies, properties, etc) about a
@@ -65,6 +66,11 @@ public class NetworkMisc implements Parcelable {
      */
     public String subscriberId;
 
+    /**
+     * For mobile networks, this is the sub ID (SIM slot sumber).
+     */
+    public int subId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+
     public NetworkMisc() {
     }
 
@@ -74,6 +80,7 @@ public class NetworkMisc implements Parcelable {
             explicitlySelected = nm.explicitlySelected;
             acceptUnvalidated = nm.acceptUnvalidated;
             subscriberId = nm.subscriberId;
+            subId = nm.subId;
             provisioningNotificationDisabled = nm.provisioningNotificationDisabled;
         }
     }
@@ -89,6 +96,7 @@ public class NetworkMisc implements Parcelable {
         out.writeInt(explicitlySelected ? 1 : 0);
         out.writeInt(acceptUnvalidated ? 1 : 0);
         out.writeString(subscriberId);
+        out.writeInt(subId);
         out.writeInt(provisioningNotificationDisabled ? 1 : 0);
     }
 
@@ -100,6 +108,7 @@ public class NetworkMisc implements Parcelable {
             networkMisc.explicitlySelected = in.readInt() != 0;
             networkMisc.acceptUnvalidated = in.readInt() != 0;
             networkMisc.subscriberId = in.readString();
+            networkMisc.subId = in.readInt();
             networkMisc.provisioningNotificationDisabled = in.readInt() != 0;
             return networkMisc;
         }
