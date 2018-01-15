@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e58cd457_01137ec6",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyTestServicesTests2/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1023201
+      },
+      "writtenOn": "2018-01-15T17:17:49Z",
+      "side": 1,
+      "message": "With https://android-review.googlesource.com/588557, those tests are still failing on sdk 14 to 18, I don\u0027t know yet about below 14.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 42
+      },
+      "revId": "051b6aed7a27ffb0bcfa1d1f2272d9f5b150ed5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
