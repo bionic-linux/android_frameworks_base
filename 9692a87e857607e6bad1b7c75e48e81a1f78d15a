@@ -105,6 +105,30 @@
       "revId": "9692a87e857607e6bad1b7c75e48e81a1f78d15a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99a31b8d_dc8125e8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4727,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-01-15T22:20:58Z",
+      "side": 1,
+      "message": "Multiple features may return the same registration interface (they will in most cases), but we have to accommodate the multiple registration case, where RCS has a different registration interface than MmTel, for example.",
+      "parentUuid": "1c287a94_3fb9a93b",
+      "range": {
+        "startLine": 4727,
+        "startChar": 38,
+        "endLine": 4727,
+        "endChar": 56
+      },
+      "revId": "9692a87e857607e6bad1b7c75e48e81a1f78d15a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
