@@ -45,6 +45,75 @@
       "revId": "63b597d5fba0259ba9150c82d19c8ad15cc3e31c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72d8099_d330f833",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T02:38:21Z",
+      "side": 1,
+      "message": "Nit: if you like you could just use \"+ mUsePrivateDns\", which will print \"PrivateDns: true\".",
+      "range": {
+        "startLine": 711,
+        "startChar": 46,
+        "endLine": 711,
+        "endChar": 81
+      },
+      "revId": "63b597d5fba0259ba9150c82d19c8ad15cc3e31c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30ace5d_b65ce8ba",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T02:38:21Z",
+      "side": 1,
+      "message": "UsePrivateDns?",
+      "range": {
+        "startLine": 711,
+        "startChar": 32,
+        "endLine": 711,
+        "endChar": 42
+      },
+      "revId": "63b597d5fba0259ba9150c82d19c8ad15cc3e31c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16f4eb1_762c2963",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-15T02:38:21Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do this fixup in the accessor methods, because that way, the information around private DNS servers inside the asynchronous NetworkCallbacks we send to apps will be incorrect.\n\nI think it\u0027s better to ensure that the LinkProperties stored in the NetworkAgentInfo object for the network are always up to date.\n\nWhat I thinkt that would mean is:\n\n1. Ensure that any time a NetworkAgent sends us new LinkProperties via\n   EVENT_NETWORK_PROPERTIES_CHANGED, we properly fix them up.\n2. Ensure that any time netd tells us that private DNS has changed for a given NetId, we fix up\n   the LinkProperties accordingly\n\nLook at updateLinkProperties and what we do for clat. I think this case will be a bit simpler than that, because ConnectivityService doesn\u0027t need to take action based on diffs. But the basic idea will be similar.",
+      "range": {
+        "startLine": 1295,
+        "startChar": 8,
+        "endLine": 1295,
+        "endChar": 70
+      },
+      "revId": "63b597d5fba0259ba9150c82d19c8ad15cc3e31c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
