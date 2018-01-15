@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "259d0f8c_26b96659",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-01-15T03:50:43Z",
+      "side": 1,
+      "message": "Consider supporting a port number via \"hostname:port\", since users may want to run their DNS server over non-standard ports.",
+      "range": {
+        "startLine": 446,
+        "startChar": 18,
+        "endLine": 446,
+        "endChar": 41
+      },
+      "revId": "93b7b111c312b24b85f646bd7f8e592d531d9a54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f341c55_6ab8ed84",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-01-15T03:50:43Z",
+      "side": 1,
+      "message": "Add relevant @Nullable/@NonNull annotations.",
+      "range": {
+        "startLine": 446,
+        "startChar": 11,
+        "endLine": 446,
+        "endChar": 17
+      },
+      "revId": "93b7b111c312b24b85f646bd7f8e592d531d9a54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
