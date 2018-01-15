@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be2bd171_17b68356",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4725,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-15T21:44:51Z",
+      "side": 1,
+      "message": "even though this is hidden, I think it would be good to have a reference in TelephonyManager to the ImsFeature constants. Appropriate to add the @param docstrings?",
+      "revId": "9692a87e857607e6bad1b7c75e48e81a1f78d15a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cd96444_1d9e6a00",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4727,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-15T21:44:51Z",
+      "side": 1,
+      "message": "For whatever reason, I feel like this should be getImsRegistrationForFeature(), though I do defer to the wisdom of tgunn@.\n\nI was just thinking:\n1) would a default method (with no specified feature) simply return the registration for MMTEL?\n2) How does this surface look when used with single registration?",
+      "range": {
+        "startLine": 4727,
+        "startChar": 38,
+        "endLine": 4727,
+        "endChar": 56
+      },
+      "revId": "9692a87e857607e6bad1b7c75e48e81a1f78d15a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
