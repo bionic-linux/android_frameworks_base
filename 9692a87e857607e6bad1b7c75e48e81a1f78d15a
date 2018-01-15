@@ -81,6 +81,30 @@
       "revId": "9692a87e857607e6bad1b7c75e48e81a1f78d15a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c287a94_3fb9a93b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4727,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-15T22:09:58Z",
+      "side": 1,
+      "message": "The purpose of this is to get the registration interface for a particular feature... so when multiple features return the same registration interface? I\u0027m just thinking out loud and wondering whether we\u0027d ever want to be able to get the registration object with a different set of inputs.",
+      "parentUuid": "56311fbc_95dd04b2",
+      "range": {
+        "startLine": 4727,
+        "startChar": 38,
+        "endLine": 4727,
+        "endChar": 56
+      },
+      "revId": "9692a87e857607e6bad1b7c75e48e81a1f78d15a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
