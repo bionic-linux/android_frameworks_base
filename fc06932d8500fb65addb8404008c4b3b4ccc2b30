@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "92d34dde_83928bb9",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-15T02:39:49Z",
+      "side": 1,
+      "message": "This API sounds good to me.",
+      "parentUuid": "f0503a57_ad226e9f",
+      "range": {
+        "startLine": 77,
+        "startChar": 11,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "fc06932d8500fb65addb8404008c4b3b4ccc2b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ce0e6a9_ad55c2b2",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 7
@@ -68,6 +92,30 @@
       "revId": "fc06932d8500fb65addb8404008c4b3b4ccc2b30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a488be3a_02dd00e8",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-15T02:39:49Z",
+      "side": 1,
+      "message": "I tried to update all of the functions that seem to use all of the member variables - hopefully that was the right thing to do.",
+      "parentUuid": "9ce0e6a9_ad55c2b2",
+      "range": {
+        "startLine": 1196,
+        "startChar": 21,
+        "endLine": 1196,
+        "endChar": 31
+      },
+      "revId": "fc06932d8500fb65addb8404008c4b3b4ccc2b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

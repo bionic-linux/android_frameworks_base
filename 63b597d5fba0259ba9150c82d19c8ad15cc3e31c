@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c34d786e_ff9549a9",
+        "filename": "api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 25846,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-15T02:39:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f2ab826_9afdd864",
+      "range": {
+        "startLine": 25846,
+        "startChar": 23,
+        "endLine": 25846,
+        "endChar": 46
+      },
+      "revId": "63b597d5fba0259ba9150c82d19c8ad15cc3e31c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d846907_e508480c",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "63b597d5fba0259ba9150c82d19c8ad15cc3e31c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f346dc60_ce2925af",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-15T02:39:49Z",
+      "side": 1,
+      "message": "Yep, my bad.",
+      "parentUuid": "8d846907_e508480c",
+      "range": {
+        "startLine": 425,
+        "startChar": 5,
+        "endLine": 425,
+        "endChar": 6
+      },
+      "revId": "63b597d5fba0259ba9150c82d19c8ad15cc3e31c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
