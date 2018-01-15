@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f609402_258acfbd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4727,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-15T23:05:26Z",
+      "side": 1,
+      "message": "nit: indent.",
+      "revId": "ea1abbb9f0a7414bbff39784a7c396ed35b26150",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
