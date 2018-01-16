@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "092f7c29_f4ccf637",
+        "filename": "services/core/java/com/android/server/debug/DebugService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2018-01-16T20:34:37Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to allow the shell to modify any static boolean variable in the class?  That seems super undersireable.",
+      "range": {
+        "startLine": 48,
+        "startChar": 41,
+        "endLine": 48,
+        "endChar": 84
+      },
+      "revId": "5eacbc2ebd4706ed0b4dfb97353f7fe0ecfc134e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
