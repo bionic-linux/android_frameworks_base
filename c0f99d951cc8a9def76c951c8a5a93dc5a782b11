@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d0ea27aa_60d1f2bd",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-01-16T22:15:17Z",
+      "side": 1,
+      "message": "Add a comment.",
+      "range": {
+        "startLine": 579,
+        "startChar": 28,
+        "endLine": 579,
+        "endChar": 53
+      },
+      "revId": "c0f99d951cc8a9def76c951c8a5a93dc5a782b11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9a2bc4d_ad743d91",
         "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
         "patchSetId": 1
