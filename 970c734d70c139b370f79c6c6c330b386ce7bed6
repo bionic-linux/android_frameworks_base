@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b956a22_3dd166a4",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyTestServicesTests2/src/com/android/framework/multidexlegacytestservices/test2/ServicesTests.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1109283
+      },
+      "writtenOn": "2018-01-16T18:39:41Z",
+      "side": 1,
+      "message": "Extra \u0027c\u0027 in the method name.",
+      "range": {
+        "startLine": 309,
+        "startChar": 17,
+        "endLine": 309,
+        "endChar": 40
+      },
+      "revId": "970c734d70c139b370f79c6c6c330b386ce7bed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
