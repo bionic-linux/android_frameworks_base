@@ -66,6 +66,7 @@ import com.android.internal.os.SomeArgs;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.FgThread;
 import com.android.server.LocalServices;
+import com.android.server.adb.UsbDebuggingManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;

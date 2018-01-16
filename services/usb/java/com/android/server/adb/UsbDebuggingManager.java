@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.usb;
+package com.android.server.adb;
 
 import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
