@@ -50,8 +50,8 @@ import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
-public class UsbDebuggingManager {
-    private static final String TAG = "UsbDebuggingManager";
+public class AdbDebuggingManager {
+    private static final String TAG = "AdbDebuggingManager";
     private static final boolean DEBUG = false;
 
     private static final String ADBD_SOCKET = "adbd";
@@ -65,7 +65,7 @@ public class UsbDebuggingManager {
     private boolean mAdbEnabled = false;
     private String mFingerprints;
 
-    public UsbDebuggingManager(Context context) {
+    public AdbDebuggingManager(Context context) {
         mHandler = new UsbDebuggingHandler(FgThread.get().getLooper());
         mContext = context;
     }

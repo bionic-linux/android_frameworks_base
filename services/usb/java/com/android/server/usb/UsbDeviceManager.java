@@ -66,7 +66,7 @@ import com.android.internal.os.SomeArgs;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.FgThread;
 import com.android.server.LocalServices;
-import com.android.server.adb.UsbDebuggingManager;
+import com.android.server.adb.AdbDebuggingManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -178,7 +178,7 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
     private int mMidiDevice;
     private HashMap<String, HashMap<String, Pair<String, String>>> mOemModeMap;
     private String[] mAccessoryStrings;
-    private UsbDebuggingManager mDebuggingManager;
+    private AdbDebuggingManager mDebuggingManager;
     private final UsbAlsaManager mUsbAlsaManager;
     private final UsbSettingsManager mSettingsManager;
     private Intent mBroadcastedIntent;
@@ -280,7 +280,7 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
         boolean secureAdbEnabled = SystemProperties.getBoolean("ro.adb.secure", false);
         boolean dataEncrypted = "1".equals(SystemProperties.get("vold.decrypt"));
         if (secureAdbEnabled && !dataEncrypted) {
-            mDebuggingManager = new UsbDebuggingManager(context);
+            mDebuggingManager = new AdbDebuggingManager(context);
         }
 
         BroadcastReceiver portReceiver = new BroadcastReceiver() {
@@ -1542,7 +1542,7 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
             mDebuggingManager.clearUsbDebuggingKeys();
         } else {
             throw new RuntimeException("Cannot clear Usb Debugging keys, "
-                    + "UsbDebuggingManager not enabled");
+                    + "AdbDebuggingManager not enabled");
         }
     }
 
