@@ -313,9 +313,7 @@ public final class IpSecManager {
     public void applyTransportModeTransform(
             Socket socket, int direction, IpSecTransform transform)
             throws IOException {
-        try (ParcelFileDescriptor pfd = ParcelFileDescriptor.fromSocket(socket)) {
-            applyTransportModeTransform(pfd, direction, transform);
-        }
+        applyTransportModeTransform(socket.getFileDescriptor$(), direction, transform);
     }
 
     /**
@@ -347,9 +345,7 @@ public final class IpSecManager {
      */
     public void applyTransportModeTransform(
             DatagramSocket socket, int direction, IpSecTransform transform) throws IOException {
-        try (ParcelFileDescriptor pfd = ParcelFileDescriptor.fromDatagramSocket(socket)) {
-            applyTransportModeTransform(pfd, direction, transform);
-        }
+        applyTransportModeTransform(socket.getFileDescriptor$(), direction, transform);
     }
 
     /**
@@ -387,14 +383,6 @@ public final class IpSecManager {
         // This is behaviorally the same as the other versions, but the PFD constructor does not
         // dup() automatically, whereas PFD.fromSocket() and PDF.fromDatagramSocket() do dup().
         try (ParcelFileDescriptor pfd = ParcelFileDescriptor.dup(socket)) {
-            applyTransportModeTransform(pfd, direction, transform);
-        }
-    }
-
-    /* Call down to activate a transform */
-    private void applyTransportModeTransform(
-            ParcelFileDescriptor pfd, int direction, IpSecTransform transform) throws IOException {
-        try {
             mService.applyTransportModeTransform(pfd, direction, transform.getResourceId());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -433,9 +421,7 @@ public final class IpSecManager {
      */
     public void removeTransportModeTransforms(Socket socket, IpSecTransform transform)
             throws IOException {
-        try (ParcelFileDescriptor pfd = ParcelFileDescriptor.fromSocket(socket)) {
-            removeTransportModeTransforms(pfd, transform);
-        }
+            removeTransportModeTransforms(socket.getFileDescriptor$(), transform);
     }
 
     /**
@@ -455,9 +441,7 @@ public final class IpSecManager {
      */
     public void removeTransportModeTransforms(DatagramSocket socket, IpSecTransform transform)
             throws IOException {
-        try (ParcelFileDescriptor pfd = ParcelFileDescriptor.fromDatagramSocket(socket)) {
-            removeTransportModeTransforms(pfd, transform);
-        }
+            removeTransportModeTransforms(socket.getFileDescriptor$(), transform);
     }
 
     /**
@@ -478,13 +462,6 @@ public final class IpSecManager {
     public void removeTransportModeTransforms(FileDescriptor socket, IpSecTransform transform)
             throws IOException {
         try (ParcelFileDescriptor pfd = ParcelFileDescriptor.dup(socket)) {
-            removeTransportModeTransforms(pfd, transform);
-        }
-    }
-
-    /* Call down to remove a transform */
-    private void removeTransportModeTransforms(ParcelFileDescriptor pfd, IpSecTransform transform) {
-        try {
             mService.removeTransportModeTransforms(pfd, transform.getResourceId());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
