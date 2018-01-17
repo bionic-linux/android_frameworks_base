@@ -22,6 +22,30 @@
       "revId": "970c734d70c139b370f79c6c6c330b386ce7bed6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b1f6b5_d139596d",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyTestServicesTests2/src/com/android/framework/multidexlegacytestservices/test2/ServicesTests.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1023201
+      },
+      "writtenOn": "2018-01-17T13:46:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b956a22_3dd166a4",
+      "range": {
+        "startLine": 309,
+        "startChar": 17,
+        "endLine": 309,
+        "endChar": 40
+      },
+      "revId": "970c734d70c139b370f79c6c6c330b386ce7bed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
