@@ -22,6 +22,30 @@
       "revId": "5bdf121bd9d56bffaadcf8bf6e62a427cb988605",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863f5c9c_2d484707",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-17T05:30:49Z",
+      "side": 1,
+      "message": "Actually, the second half of the comment was our understanding, but either a bug was fixed, a bug was introduced, or we didn\u0027t understand it. I think I should go fix this comment now since it\u0027s now misleading. *done*",
+      "parentUuid": "b2cc3ab8_bc66be3b",
+      "range": {
+        "startLine": 384,
+        "startChar": 32,
+        "endLine": 384,
+        "endChar": 94
+      },
+      "revId": "5bdf121bd9d56bffaadcf8bf6e62a427cb988605",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
