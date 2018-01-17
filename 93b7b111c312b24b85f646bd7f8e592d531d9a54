@@ -45,6 +45,54 @@
       "revId": "93b7b111c312b24b85f646bd7f8e592d531d9a54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074e654f_967bf3f8",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-17T22:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f341c55_6ab8ed84",
+      "range": {
+        "startLine": 446,
+        "startChar": 11,
+        "endLine": 446,
+        "endChar": 17
+      },
+      "revId": "93b7b111c312b24b85f646bd7f8e592d531d9a54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f5a922b_35ceffed",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-01-17T22:20:16Z",
+      "side": 1,
+      "message": "I\u0027m hesitant to incorporate the port into this field given that there aren\u0027t currently any plans (that I\u0027m aware of) to allow Android users to specify a port other than 853 in the private DNS settings.  If we did modify the UI to support entering an alternate port in the future, then we could also add a new method, getPrivateDnsServerPort(), to the API.",
+      "parentUuid": "259d0f8c_26b96659",
+      "range": {
+        "startLine": 446,
+        "startChar": 18,
+        "endLine": 446,
+        "endChar": 41
+      },
+      "revId": "93b7b111c312b24b85f646bd7f8e592d531d9a54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
