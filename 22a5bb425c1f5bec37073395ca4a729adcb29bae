@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4bf796d_59702e65",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-01-17T03:54:49Z",
+      "side": 1,
+      "message": "If you\u0027re renaming Rat to RulesAuthTable, change it everywhere?",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "22a5bb425c1f5bec37073395ca4a729adcb29bae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
