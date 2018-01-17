@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8877103c_37213d34",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRulesAuthTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-01-17T07:35:39Z",
+      "side": 1,
+      "message": "long line?",
+      "revId": "c20dacbcca50f48800e7edb75aec48e7878cabbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
