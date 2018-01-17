@@ -22,6 +22,30 @@
       "revId": "22a5bb425c1f5bec37073395ca4a729adcb29bae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689f4aff_c0a5700d",
+        "filename": "telephony/java/android/telephony/euicc/EuiccRat.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-17T04:58:59Z",
+      "side": 1,
+      "message": "Done. Also renamed EuiccRat.java to EuiccRulesAuthTable.java.",
+      "parentUuid": "f4bf796d_59702e65",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "22a5bb425c1f5bec37073395ca4a729adcb29bae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
