@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "f7d54944_13024a00",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4064,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T12:36:26Z",
+      "side": 1,
+      "message": "Instead of defining a new system-visible service here, can we just have ConnectivityService (or DnsManager, if it has a proper Handler) register for InetdEventListenerService events through IpConnectivityMetrics#addNetdEventCallback()?\n\nYou could do this either using the (preferred, I think) LocalService approach that ConnectivityService uses to get the IpConnectivityMetrics.Logger class, or the less-convenient (need to catch RemoteException all over the place) way used by DevicePolicyManagerService#getIIpConnectivityMetrics.",
+      "range": {
+        "startLine": 4064,
+        "startChar": 31,
+        "endLine": 4064,
+        "endChar": 52
+      },
+      "revId": "a3d916169863f04bae177bd58e685e314cae87b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44c881b_cd714ddb",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1797,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T12:36:26Z",
+      "side": 1,
+      "message": "Is this a spurious change?",
+      "range": {
+        "startLine": 1797,
+        "startChar": 36,
+        "endLine": 1797,
+        "endChar": 50
+      },
+      "revId": "a3d916169863f04bae177bd58e685e314cae87b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d7377e_e13aa7ec",
+        "filename": "core/java/android/net/INetdEventCallback.aidl",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T12:36:26Z",
+      "side": 1,
+      "message": "Per comment on the other CL, maybe add \"String dnsServer\" and \"bool success\"?",
+      "range": {
+        "startLine": 41,
+        "startChar": 46,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "a3d916169863f04bae177bd58e685e314cae87b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a07363b_a67a525c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T12:36:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure if you can safely call this from the thread you\u0027re on here. Suggest instead doing:\n\n    public void onPrivateDnsValidationEvent(int netId, String dnsServer, bool success) {\n        mHandler.sendMessage(mhandler.obtainMessage(EVENT_PRIVATE_DNS_VALIDATION,\n                netId, encodeBool(success), dnsServer));\n    }\n\nand then adding to InternalHandler#handleMessage:\n\n    case EVENT_PRIVATE_DNS_VALIDATION:\n        Network network \u003d new Network(netId);\n        NetworkAgentInfo nai \u003d getNetworkAgentInfoForNetwork(network);\n        // I\u0027m not quite sure what to do yet here. Erik would know.\n        // but at least you\u0027re on the right thread.\n        break;",
+      "range": {
+        "startLine": 1484,
+        "startChar": 23,
+        "endLine": 1484,
+        "endChar": 53
+      },
+      "revId": "a3d916169863f04bae177bd58e685e314cae87b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f09f7000_8bfd836d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -60,6 +152,29 @@
       "writtenOn": "2018-01-17T03:37:01Z",
       "side": 1,
       "message": "Should I be calling mDnsManager.updateLinkPropertiesPrivateDns(netId, newLp) here as well?",
+      "revId": "a3d916169863f04bae177bd58e685e314cae87b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f7bd33_dfe74876",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-17T12:36:26Z",
+      "side": 1,
+      "message": "Do you need to add an entry here for ConnectivityService or DnsManager to be able to register?",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 6
+      },
       "revId": "a3d916169863f04bae177bd58e685e314cae87b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
