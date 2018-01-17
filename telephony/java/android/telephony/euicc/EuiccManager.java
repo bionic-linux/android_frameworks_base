@@ -216,6 +216,7 @@ public class EuiccManager {
     public static final int EUICC_OTA_STATUS_UNAVAILABLE = 5;
 
     private final Context mContext;
+    private IEuiccController mController;
 
     /** @hide */
     public EuiccManager(Context context) {
@@ -251,8 +252,10 @@ public class EuiccManager {
         if (!isEnabled()) {
             return null;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return null;
         try {
-            return getIEuiccController().getEid();
+            return controller.getEid();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -271,8 +274,10 @@ public class EuiccManager {
         if (!isEnabled()) {
             return EUICC_OTA_STATUS_UNAVAILABLE;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return EUICC_OTA_STATUS_UNAVAILABLE;
         try {
-            return getIEuiccController().getOtaStatus();
+            return controller.getOtaStatus();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -297,8 +302,10 @@ public class EuiccManager {
             sendUnavailableError(callbackIntent);
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().downloadSubscription(subscription, switchAfterDownload,
+            controller.downloadSubscription(subscription, switchAfterDownload,
                     mContext.getOpPackageName(), callbackIntent);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -361,8 +368,10 @@ public class EuiccManager {
             }
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().continueOperation(resolutionIntent, resolutionExtras);
+            controller.continueOperation(resolutionIntent, resolutionExtras);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -393,8 +402,10 @@ public class EuiccManager {
             sendUnavailableError(callbackIntent);
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().getDownloadableSubscriptionMetadata(
+            controller.getDownloadableSubscriptionMetadata(
                     subscription, mContext.getOpPackageName(), callbackIntent);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -423,8 +434,10 @@ public class EuiccManager {
             sendUnavailableError(callbackIntent);
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().getDefaultDownloadableSubscriptionList(
+            controller.getDefaultDownloadableSubscriptionList(
                     mContext.getOpPackageName(), callbackIntent);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -442,8 +455,10 @@ public class EuiccManager {
         if (!isEnabled()) {
             return null;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return null;
         try {
-            return getIEuiccController().getEuiccInfo();
+            return controller.getEuiccInfo();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -467,8 +482,10 @@ public class EuiccManager {
             sendUnavailableError(callbackIntent);
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().deleteSubscription(
+            controller.deleteSubscription(
                     subscriptionId, mContext.getOpPackageName(), callbackIntent);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -494,8 +511,10 @@ public class EuiccManager {
             sendUnavailableError(callbackIntent);
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().switchToSubscription(
+            controller.switchToSubscription(
                     subscriptionId, mContext.getOpPackageName(), callbackIntent);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -520,9 +539,10 @@ public class EuiccManager {
             sendUnavailableError(callbackIntent);
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().updateSubscriptionNickname(
-                    subscriptionId, nickname, callbackIntent);
+            controller.updateSubscriptionNickname(subscriptionId, nickname, callbackIntent);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -543,8 +563,10 @@ public class EuiccManager {
             sendUnavailableError(callbackIntent);
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().eraseSubscriptions(callbackIntent);
+            controller.eraseSubscriptions(callbackIntent);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -573,8 +595,10 @@ public class EuiccManager {
             sendUnavailableError(callbackIntent);
             return;
         }
+        IEuiccController controller = getIEuiccController();
+        if (controller == null) return;
         try {
-            getIEuiccController().retainSubscriptionsForFactoryReset(callbackIntent);
+            controller.retainSubscriptionsForFactoryReset(callbackIntent);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -588,7 +612,11 @@ public class EuiccManager {
         }
     }
 
-    private static IEuiccController getIEuiccController() {
-        return IEuiccController.Stub.asInterface(ServiceManager.getService("econtroller"));
+    private IEuiccController getIEuiccController() {
+        if (mController != null) {
+            return mController;
+        }
+        mController = IEuiccController.Stub.asInterface(ServiceManager.getService("econtroller"));
+        return mController;
     }
 }
