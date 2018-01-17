@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2cc3ab8_bc66be3b",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-01-17T05:26:51Z",
+      "side": 1,
+      "message": "This comment seems like maybe it\u0027s mistaken?",
+      "range": {
+        "startLine": 384,
+        "startChar": 32,
+        "endLine": 384,
+        "endChar": 94
+      },
+      "revId": "5bdf121bd9d56bffaadcf8bf6e62a427cb988605",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
