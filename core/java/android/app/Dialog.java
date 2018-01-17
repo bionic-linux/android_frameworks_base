@@ -595,7 +595,7 @@ public class Dialog implements DialogInterface, Window.Callback,
      */
     @Override
     public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE) {
             event.startTracking();
             return true;
         }
@@ -624,7 +624,8 @@ public class Dialog implements DialogInterface, Window.Callback,
      */
     @Override
     public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.isTracking()
+        if ((keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE)
+                && event.isTracking()
                 && !event.isCanceled()) {
             onBackPressed();
             return true;
