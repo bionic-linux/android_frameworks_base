@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2175895_46fa8c48",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-01-18T23:06:54Z",
+      "side": 1,
+      "message": "And this TODO will never happen because of OWNERS  :P",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 89
+      },
+      "revId": "bdd41a616413cdd8f6d9e265080d5ca4790cea85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
