@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "311cbc65_f59f2174",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-18T22:09:50Z",
+      "side": 1,
+      "message": "setMarkValue()",
+      "range": {
+        "startLine": 128,
+        "startChar": 16,
+        "endLine": 128,
+        "endChar": 32
+      },
+      "revId": "7dfff40d98c0abfb9dac88223270f5a2fad7dc7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0034507f_6659366a",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-18T22:09:50Z",
+      "side": 1,
+      "message": "setMarkMask()",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 132,
+        "endChar": 31
+      },
+      "revId": "7dfff40d98c0abfb9dac88223270f5a2fad7dc7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
