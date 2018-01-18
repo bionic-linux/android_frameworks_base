@@ -3766,6 +3766,17 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService} to retrieve a {@link
+     * android.debug.AdbManager} for access to ADB debug functions.
+     *
+     * @see #getSystemService
+     * @see android.debug.AdbManager
+     *
+     * @hide
+     */
+    public static final String ADB_SERVICE = "adb";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a {@link
      * android.hardware.SerialManager} for access to serial ports.
      *
      * @see #getSystemService

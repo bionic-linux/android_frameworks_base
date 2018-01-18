@@ -204,6 +204,8 @@ public final class SystemServer {
             "com.android.server.autofill.AutofillManagerService";
     private static final String TIME_ZONE_RULES_MANAGER_SERVICE_CLASS =
             "com.android.server.timezone.RulesManagerService$Lifecycle";
+    private static final String ADB_SERVICE_CLASS =
+            "com.android.server.adb.AdbService$Lifecycle";
 
     private static final String PERSISTENT_DATA_BLOCK_PROP = "ro.frp.pst";
 
@@ -1267,6 +1269,15 @@ public final class SystemServer {
                     mSystemServiceManager.startService(USB_SERVICE_CLASS);
                     traceEnd();
                 }
+
+                // Start ADB Debugging Service
+                traceBeginAndSlog("StartAdbService");
+                try {
+                    mSystemServiceManager.startService(ADB_SERVICE_CLASS);
+                } catch (Throwable e) {
+                    Slog.e(TAG, "Failure starting AdbService");
+                }
+                traceEnd();
 
                 if (!disableSerial) {
                     traceBeginAndSlog("StartSerialService");
