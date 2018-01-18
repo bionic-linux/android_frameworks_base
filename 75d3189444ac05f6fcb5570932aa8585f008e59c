@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4454e10e_e215e7d1",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-18T23:01:29Z",
+      "side": 1,
+      "message": "Nit: no space between { and } ?",
+      "range": {
+        "startLine": 357,
+        "startChar": 71,
+        "endLine": 357,
+        "endChar": 74
+      },
+      "revId": "75d3189444ac05f6fcb5570932aa8585f008e59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a9117e_3fdf260d",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-18T23:01:29Z",
+      "side": 1,
+      "message": "Nit: fix long line.",
+      "range": {
+        "startLine": 361,
+        "startChar": 100,
+        "endLine": 361,
+        "endChar": 104
+      },
+      "revId": "75d3189444ac05f6fcb5570932aa8585f008e59c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
