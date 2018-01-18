@@ -208,6 +208,29 @@
       "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc85465a_8f982490",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1269489
+      },
+      "writtenOn": "2018-01-18T22:05:08Z",
+      "side": 1,
+      "message": "Can we make this protected and non-static so I can override in CTS?",
+      "range": {
+        "startLine": 582,
+        "startChar": 4,
+        "endLine": 582,
+        "endChar": 18
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
