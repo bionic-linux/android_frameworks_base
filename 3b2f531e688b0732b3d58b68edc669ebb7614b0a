@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5388af17_2b95f6b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-19T23:00:44Z",
+      "side": 1,
+      "message": "the proper way to do this:\nBug: XXX\nBug: YYY",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "3b2f531e688b0732b3d58b68edc669ebb7614b0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
