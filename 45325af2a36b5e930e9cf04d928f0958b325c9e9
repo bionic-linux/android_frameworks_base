@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56837ef8_815daf28",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7841,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-01-19T22:54:23Z",
+      "side": 1,
+      "message": "throughout this CL, anything that is marked as @SystemApi must *also* have @hide. That is why these things are showing up in current.txt which is all public APIs. Be sure to look through current.txt and make sure everything in there is actually intended to be fully public and not just system.",
+      "revId": "45325af2a36b5e930e9cf04d928f0958b325c9e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

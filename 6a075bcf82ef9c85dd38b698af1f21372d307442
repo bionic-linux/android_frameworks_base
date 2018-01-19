@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "c67d3847_d8833483",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-01-19T22:54:23Z",
+      "side": 1,
+      "message": "I think nickname updating should be done via an API in SubscriptionManager (e.g. SubscriptionManager#setDisplayName), because it\u0027s a more general concept than just applying to embedded subscriptions, and the implementation should propagate the nickname down to the eSIM if the subscription is an embedded one. (b/37355373). Writing the raw nickname shouldn\u0027t be public API. This could probably be removed altogether in favor of EuiccCardManager APIs.\n\nErase shouldn\u0027t need to be public. Maybe @System if the LUI needs to do it, but public (carrier) apps don\u0027t need it. Again, might be appropriate in EuiccCardManager instead if it\u0027s not there already.\n\nRetainSubscriptionsForFactoryReset is a hack to work around the inability to wipe subscriptions from fastboot. At best it should be a system API if we need to continue to support devices without the needed hardware support (SPI, IIUC). But it\u0027d be preferable to keep it hidden or remove it altogether if we could.",
+      "parentUuid": "bfb01298_b269cf66",
+      "range": {
+        "startLine": 506,
+        "startChar": 7,
+        "endLine": 506,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a78c79d_d876398e",
         "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
         "patchSetId": 2
