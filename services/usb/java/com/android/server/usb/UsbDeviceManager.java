@@ -33,6 +33,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.debug.AdbManager;
+import android.debug.IAdbTransport;
 import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbConfiguration;
 import android.hardware.usb.UsbConstants;
@@ -58,7 +60,6 @@ import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.util.Pair;
 import android.util.Slog;
-
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
@@ -169,6 +170,7 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
     @GuardedBy("mLock")
     private UsbProfileGroupSettingsManager mCurrentSettings;
     private NotificationManager mNotificationManager;
+    private AdbManager mAdbManager;
     private final boolean mHasUsbAccessory;
     private boolean mUseUsbNotification;
     private boolean mAdbEnabled;
@@ -348,6 +350,9 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
 
         mNotificationManager = (NotificationManager)
                 mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mAdbManager = (AdbManager) mContext.getSystemService(Context.ADB_SERVICE);
+        mAdbManager.registerTransport(new AdbTransport(this));
 
         // Ensure that the notification channels are set up
         if (isTv()) {
@@ -1562,4 +1567,12 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
     private native boolean nativeIsStartRequested();
 
     private native int nativeGetAudioMode();
+
+    private static class AdbTransport extends IAdbTransport.Stub {
+        private final UsbDeviceManager mManager;
+
+        public AdbTransport(UsbDeviceManager manager) {
+            mManager = manager;
+        }
+    }
 }
