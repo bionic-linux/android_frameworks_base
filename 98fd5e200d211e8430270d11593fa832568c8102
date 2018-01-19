@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e2fae68_a160c9e5",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2018-01-19T18:15:04Z",
+      "side": 1,
+      "message": "What is the significance of this value? Can you use a named constant\ninstead?",
+      "range": {
+        "startLine": 1527,
+        "startChar": 45,
+        "endLine": 1527,
+        "endChar": 46
+      },
+      "revId": "98fd5e200d211e8430270d11593fa832568c8102",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
