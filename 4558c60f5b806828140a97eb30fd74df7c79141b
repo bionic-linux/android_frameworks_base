@@ -16,6 +16,24 @@
       "revId": "4558c60f5b806828140a97eb30fd74df7c79141b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5092aaa2_02cc3205",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2018-01-19T20:02:51Z",
+      "side": 1,
+      "message": "Good catch ! Will fix that ..",
+      "parentUuid": "658d8d5d_a0aacaec",
+      "revId": "4558c60f5b806828140a97eb30fd74df7c79141b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
