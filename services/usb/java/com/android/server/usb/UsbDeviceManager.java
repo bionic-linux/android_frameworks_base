@@ -768,7 +768,7 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
             if (functions == null) {
                 functions = "";
             }
-            if (mAdbEnabled) {
+            if (mAdbManager.isAdbEnabled()) {
                 functions = UsbManager.addFunction(functions, UsbManager.USB_FUNCTION_ADB);
             } else {
                 functions = UsbManager.removeFunction(functions, UsbManager.USB_FUNCTION_ADB);

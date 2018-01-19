@@ -49,6 +49,8 @@ public class AdbService extends IAdbManager.Stub {
     private final Context mContext;
     private final HashMap<IBinder, IAdbTransport> mTransports = new HashMap<>();
 
+    private boolean mAdbEnabled;
+
     private AdbService(Context context) {
         mContext = context;
     }
@@ -61,6 +63,11 @@ public class AdbService extends IAdbManager.Stub {
     @Override
     public void unregisterTransport(IAdbTransport transport) throws RemoteException {
         mTransports.remove(transport.asBinder());
+    }
+
+    @Override
+    public boolean isAdbEnabled() throws RemoteException {
+        return mAdbEnabled;
     }
 
     @Override

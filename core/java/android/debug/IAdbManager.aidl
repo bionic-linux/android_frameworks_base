@@ -25,4 +25,7 @@ interface IAdbManager {
 
     /* Used to unregister an ADB transport. */
     void unregisterTransport(in IAdbTransport transport);
+
+    /* Returns true if ADB debugging is enabled. */
+    boolean isAdbEnabled();
 }

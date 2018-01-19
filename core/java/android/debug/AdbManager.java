@@ -62,4 +62,17 @@ public class AdbManager {
             e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Returns {@code true} if the ADB function is currently enabled.
+     */
+    public boolean isAdbEnabled() {
+        try {
+            return mService.isAdbEnabled();
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+        // This is never reached.
+        return false;
+    }
 }
