@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "658d8d5d_a0aacaec",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1113594
+      },
+      "writtenOn": "2018-01-19T19:58:18Z",
+      "side": 1,
+      "message": "It seems like this will never happen in the legacy handler because mCurrentUsbFunctionsReceived is never set to true in that class.",
+      "revId": "4558c60f5b806828140a97eb30fd74df7c79141b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
