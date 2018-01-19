@@ -426,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "38abde93_8969c1e2",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-19T23:20:36Z",
+      "side": 1,
+      "message": "Sounds good. Memory reset has already been added to EuiccCardManager and currently we don\u0027t need RetainSubscriptionsForFactoryReset for now because we have decided not to provide the option to the user if the device doesn\u0027t support reset under fastboot. All these three can be hidden and removed later.",
+      "parentUuid": "c67d3847_d8833483",
+      "range": {
+        "startLine": 506,
+        "startChar": 7,
+        "endLine": 506,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a78c79d_d876398e",
         "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
         "patchSetId": 2
@@ -494,6 +518,30 @@
       "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2765b53_d631d603",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2018-01-19T23:20:36Z",
+      "side": 1,
+      "message": "My bad. I was confused with the delete method.",
+      "parentUuid": "77d8a271_bc8700ba",
+      "range": {
+        "startLine": 530,
+        "startChar": 7,
+        "endLine": 530,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
