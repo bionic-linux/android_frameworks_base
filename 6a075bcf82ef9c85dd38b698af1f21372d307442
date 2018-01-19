@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "208d8e4f_b0cd712f",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42e25505_46e138b1",
+      "range": {
+        "startLine": 1740,
+        "startChar": 49,
+        "endLine": 1740,
+        "endChar": 77
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "850250fe_772bca52",
         "filename": "core/res/AndroidManifest.xml",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6ac1845d_98b49c37",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "850250fe_772bca52",
+      "range": {
+        "startLine": 1746,
+        "startChar": 49,
+        "endLine": 1746,
+        "endChar": 67
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c44def7_a72e9e38",
         "filename": "telephony/java/android/telephony/euicc/DownloadableSubscription.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-19T02:22:35Z",
       "side": 1,
       "message": "remove and add @SystemApi.\n\nMake sure you grep the tree for references to this TODO and resolve them all.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 47
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6374f4c_69b15be8",
+        "filename": "telephony/java/android/telephony/euicc/DownloadableSubscription.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Done. This also gets the other CL (make EuiccCardManager as @SystemApi covered). I\u0027ll abandon that one.",
+      "parentUuid": "3c44def7_a72e9e38",
       "range": {
         "startLine": 48,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8ad9872a_4cf3ec00",
+        "filename": "telephony/java/android/telephony/euicc/DownloadableSubscription.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71b46c25_6f00f772",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68bc5de6_e0796f63",
         "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f54048_54765210",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68bc5de6_e0796f63",
+      "range": {
+        "startLine": 344,
+        "startChar": 7,
+        "endLine": 344,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "38093bc0_ded05b34",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d4e5bfe_6690aa82",
+      "range": {
+        "startLine": 379,
+        "startChar": 7,
+        "endLine": 379,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9466dd22_1b671e7a",
         "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17ba679_c3583488",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9466dd22_1b671e7a",
+      "range": {
+        "startLine": 409,
+        "startChar": 7,
+        "endLine": 409,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +366,30 @@
       "side": 1,
       "message": "internal system use only?",
       "parentUuid": "c48aed84_3df6ec8a",
+      "range": {
+        "startLine": 506,
+        "startChar": 7,
+        "endLine": 506,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb01298_b269cf66",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Unchanged here. What\u0027s our plan?\nI think we want to public updateSubscriptionNickname(), eraseSubscriptions()? Not sure about retainSubscriptionsForFactoryReset.",
+      "parentUuid": "5925c5e8_3aa5e7d9",
       "range": {
         "startLine": 506,
         "startChar": 7,
@@ -257,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "77d8a271_bc8700ba",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "Unchanged for now.",
+      "parentUuid": "4a85ded4_7ee0248f",
+      "range": {
+        "startLine": 530,
+        "startChar": 7,
+        "endLine": 530,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc85465a_8f982490",
         "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
         "patchSetId": 2
@@ -268,6 +484,30 @@
       "writtenOn": "2018-01-18T22:05:08Z",
       "side": 1,
       "message": "Can we make this protected and non-static so I can override in CTS?",
+      "range": {
+        "startLine": 582,
+        "startChar": 4,
+        "endLine": 582,
+        "endChar": 18
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37098e39_0e2f42d6",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-19T18:23:58Z",
+      "side": 1,
+      "message": "I see. Will do this in another CL.",
+      "parentUuid": "fc85465a_8f982490",
       "range": {
         "startLine": 582,
         "startChar": 4,
