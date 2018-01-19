@@ -16,13 +16,6 @@
 
 package android.debug;
 
-import android.debug.IAdbTransport;
-
 /** @hide */
-interface IAdbManager {
-    /* Used to register an ADB transport (e.g., USB). */
-    void registerTransport(in IAdbTransport transport);
-
-    /* Used to unregister an ADB transport. */
-    void unregisterTransport(in IAdbTransport transport);
+interface IAdbTransport {
 }

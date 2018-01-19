@@ -18,6 +18,7 @@ package android.debug;
 
 import android.annotation.SystemService;
 import android.content.Context;
+import android.os.RemoteException;
 
 /**
  * This class allows the control of ADB-related functions. Currently only ADB over USB is
@@ -38,5 +39,27 @@ public class AdbManager {
     public AdbManager(Context context, IAdbManager service) {
         mContext = context;
         mService = service;
+    }
+
+    /**
+     * Registers a previously registered ADB transport mechanism.
+     */
+    public void registerTransport(IAdbTransport transport) {
+        try {
+            mService.registerTransport(transport);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Unregisters a previously registered ADB transport mechanism.
+     */
+    public void unregisterTransport(IAdbTransport transport) {
+        try {
+            mService.unregisterTransport(transport);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
     }
 }

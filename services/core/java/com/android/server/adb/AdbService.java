@@ -17,13 +17,17 @@ package com.android.server.adb;
 
 import android.content.Context;
 import android.debug.IAdbManager;
+import android.debug.IAdbTransport;
 import android.os.Binder;
+import android.os.IBinder;
+import android.os.RemoteException;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.SystemService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 public class AdbService extends IAdbManager.Stub {
     public static class Lifecycle extends SystemService {
@@ -43,9 +47,20 @@ public class AdbService extends IAdbManager.Stub {
     private static final String TAG = "AdbService";
 
     private final Context mContext;
+    private final HashMap<IBinder, IAdbTransport> mTransports = new HashMap<>();
 
     private AdbService(Context context) {
         mContext = context;
+    }
+
+    @Override
+    public void registerTransport(IAdbTransport transport) throws RemoteException {
+        mTransports.put(transport.asBinder(), transport);
+    }
+
+    @Override
+    public void unregisterTransport(IAdbTransport transport) throws RemoteException {
+        mTransports.remove(transport.asBinder());
     }
 
     @Override
@@ -58,8 +73,8 @@ public class AdbService extends IAdbManager.Stub {
             if (args == null || args.length == 0 || "-a".equals(args[0])) {
                 pw.println("ADB Manager State:");
                 pw.increaseIndent();
-                pw.println("None");
-                // TODO: flesh out with status.
+                pw.print("Number of registered transports: ");
+                pw.println(mTransports.size());
             } else {
                 pw.println("Dump current ADB state");
                 pw.println("  No commands available");
@@ -67,4 +82,5 @@ public class AdbService extends IAdbManager.Stub {
         } finally {
             Binder.restoreCallingIdentity(ident);
         }
+    }
 }
