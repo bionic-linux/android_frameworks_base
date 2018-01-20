@@ -450,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "21653a9f_405ad62a",
+        "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-20T00:23:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38abde93_8969c1e2",
+      "range": {
+        "startLine": 506,
+        "startChar": 7,
+        "endLine": 506,
+        "endChar": 12
+      },
+      "revId": "6a075bcf82ef9c85dd38b698af1f21372d307442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a78c79d_d876398e",
         "filename": "telephony/java/android/telephony/euicc/EuiccManager.java",
         "patchSetId": 2

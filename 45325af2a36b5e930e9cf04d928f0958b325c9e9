@@ -16,6 +16,24 @@
       "revId": "45325af2a36b5e930e9cf04d928f0958b325c9e9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a26019d9_01620bc2",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7841,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-20T00:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56837ef8_815daf28",
+      "revId": "45325af2a36b5e930e9cf04d928f0958b325c9e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
