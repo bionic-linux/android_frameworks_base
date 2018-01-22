@@ -147,7 +147,8 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         WifiIconState newState = mWifiIconState.copy();
 
         newState.visible = visible;
-        newState.resId = statusIcon.icon;
+        newState.signalResId = statusIcon.icon;
+        newState.resId = isWifiCallingVisible() ? getWificallingStrengthId() : newState.signalResId;
         newState.activityIn = in;
         newState.activityOut = out;
         newState.slot = mSlotWifi;
@@ -209,6 +210,20 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         }
     }
 
+    @Override
+    public void setWifiCallingIndicator(boolean show, int subId) {
+        MobileIconState state = getState(subId);
+        if (state == null) {
+            return;
+        }
+
+        state.wifiCallingVisible = show;
+        WifiIconState newState = mWifiIconState.copy();
+        newState.resId = isWifiCallingVisible() ? getWificallingStrengthId() : newState.signalResId;
+        updateWifiIconWithState(newState);
+        mWifiIconState = newState;
+    }
+
     private MobileIconState getState(int subId) {
         for (MobileIconState state : mMobileStates) {
             if (state.subId == subId) {
@@ -227,6 +242,29 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         return null;
     }
 
+    private boolean isWifiCallingVisible() {
+        for (MobileIconState state : mMobileStates) {
+            if (state.wifiCallingVisible) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int getWificallingStrengthId() {
+        switch (mNetworkController.getConnectedWifiLevel()) {
+            case 0:
+            case 1:
+                return R.drawable.ic_wifi_calling_1_24dp;
+            case 2:
+            case 3:
+                return R.drawable.ic_wifi_calling_2_24dp;
+            case 4:
+                return R.drawable.ic_wifi_calling_3_24dp;
+            default:
+                return com.android.internal.R.drawable.ic_wifi_signal_0;
+        }
+    }
 
     /**
      * It is expected that a call to setSubs will be immediately followed by setMobileDataIndicators
@@ -336,6 +374,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
 
     public static class WifiIconState extends SignalIconState{
         public int resId;
+        public int signalResId; // for WiFi calling icon replacement.
         public boolean airplaneSpacerVisible;
         public boolean signalSpacerVisible;
 
@@ -349,14 +388,16 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
                 return false;
             }
             WifiIconState that = (WifiIconState) o;
-            return resId == that.resId &&
-                    airplaneSpacerVisible == that.airplaneSpacerVisible &&
-                    signalSpacerVisible == that.signalSpacerVisible;
+            return resId == that.resId
+                    && signalResId == that.signalResId
+                    && airplaneSpacerVisible == that.airplaneSpacerVisible
+                    && signalSpacerVisible == that.signalSpacerVisible;
         }
 
         public void copyTo(WifiIconState other) {
             super.copyTo(other);
             other.resId = resId;
+            other.signalResId = signalResId;
             other.airplaneSpacerVisible = airplaneSpacerVisible;
             other.signalSpacerVisible = signalSpacerVisible;
         }
@@ -370,11 +411,12 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         @Override
         public int hashCode() {
             return Objects.hash(super.hashCode(),
-                    resId, airplaneSpacerVisible, signalSpacerVisible);
+                    resId, signalResId, airplaneSpacerVisible, signalSpacerVisible);
         }
 
         @Override public String toString() {
-            return "WifiIconState(resId=" + resId + ", visible=" + visible + ")";
+            return "WifiIconState(resId=" + resId + ", signalResId=" + signalResId
+                    + ", visible=" + visible + ")";
         }
     }
 
@@ -388,6 +430,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         public boolean roaming;
         public boolean needsLeadingPadding;
         public String typeContentDescription;
+        public boolean wifiCallingVisible;
 
         private MobileIconState(int subId) {
             super();
@@ -403,12 +446,13 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
                 return false;
             }
             MobileIconState that = (MobileIconState) o;
-            return subId == that.subId &&
-                    strengthId == that.strengthId &&
-                    typeId == that.typeId &&
-                    roaming == that.roaming &&
-                    needsLeadingPadding == that.needsLeadingPadding &&
-                    Objects.equals(typeContentDescription, that.typeContentDescription);
+            return subId == that.subId
+                    && strengthId == that.strengthId
+                    && typeId == that.typeId
+                    && roaming == that.roaming
+                    && needsLeadingPadding == that.needsLeadingPadding
+                    && Objects.equals(typeContentDescription, that.typeContentDescription)
+                    && wifiCallingVisible == that.wifiCallingVisible;
         }
 
         @Override
@@ -416,7 +460,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
 
             return Objects
                     .hash(super.hashCode(), subId, strengthId, typeId, roaming, needsLeadingPadding,
-                            typeContentDescription);
+                            typeContentDescription, wifiCallingVisible);
         }
 
         public MobileIconState copy() {
@@ -433,6 +477,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
             other.roaming = roaming;
             other.needsLeadingPadding = needsLeadingPadding;
             other.typeContentDescription = typeContentDescription;
+            other.wifiCallingVisible = wifiCallingVisible;
         }
 
         private static List<MobileIconState> copyStates(List<MobileIconState> inStates) {
@@ -448,7 +493,8 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
 
         @Override public String toString() {
             return "MobileIconState(subId=" + subId + ", strengthId=" + strengthId + ", roaming="
-                    + roaming + ", typeId=" + typeId + ", visible=" + visible + ")";
+                    + roaming + ", typeId=" + typeId + ", visible=" + visible
+                    + ", wifiCallingVisible=" + wifiCallingVisible + ")";
         }
     }
 }
