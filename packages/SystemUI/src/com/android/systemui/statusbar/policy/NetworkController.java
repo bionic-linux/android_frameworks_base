@@ -47,6 +47,11 @@ public interface NetworkController extends CallbackController<SignalCallback>, D
 
     boolean isRadioOn();
 
+    /**
+     * Returns the signal strength of the connected wifi.
+     */
+    int getConnectedWifiLevel();
+
     public interface SignalCallback {
         default void setWifiIndicators(boolean enabled, IconState statusIcon, IconState qsIcon,
                 boolean activityIn, boolean activityOut, String description, boolean isTransient,
@@ -84,6 +89,11 @@ public interface NetworkController extends CallbackController<SignalCallback>, D
         default void setIsAirplaneMode(IconState icon) {}
 
         default void setMobileDataEnabled(boolean enabled) {}
+
+        /**
+         * Sets the icon to show a wifi calling indicator.
+         */
+        default void setWifiCallingIndicator(boolean show, int subId) {}
     }
 
     public interface EmergencyListener {
