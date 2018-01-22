@@ -266,7 +266,7 @@ public class PhoneStateListener {
      * @see TelephonyRegistry#notifyImsRegisteredChangedForSubscriber(int, boolean)
      * @hide
      */
-    public static final int LISTEN_IMS_REGISTERED_STATE_CHANGE              = 0x00080000;
+    public static final int LISTEN_IMS_REGISTERED_STATE_CHANGE              = 0x00200000;
 
     /**
      * Listen for IMS features capabilities changes.
@@ -276,7 +276,7 @@ public class PhoneStateListener {
      *          int, ImsFeatureCapabilities)
      * @hide
      */
-    public static final int LISTEN_IMS_FEATURE_CAPABILITIES_CHANGE          = 0x00100000;
+    public static final int LISTEN_IMS_FEATURE_CAPABILITIES_CHANGE          = 0x00400000;
 
     /**
      * Subscription used to listen to the phone state changes
