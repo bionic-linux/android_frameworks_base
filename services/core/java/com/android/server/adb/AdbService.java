@@ -19,11 +19,15 @@ import android.content.Context;
 import android.debug.IAdbManager;
 import android.debug.IAdbTransport;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.os.RemoteException;
 import android.util.Slog;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.server.FgThread;
 import com.android.server.SystemService;
 
 import java.io.FileDescriptor;
@@ -52,16 +56,42 @@ public class AdbService extends IAdbManager.Stub {
         }
     }
 
+    private final class AdbHandler extends Handler {
+        public AdbHandler(Looper looper) {
+            super(looper);
+            try {
+            } catch (Exception e) {
+                Slog.e(TAG, "Error initializing AdbHandler", e);
+            }
+        }
+
+        public void sendMessage(int what, boolean arg) {
+            removeMessages(what);
+            Message m = Message.obtain(this, what);
+            m.arg1 = (arg ? 1 : 0);
+            sendMessage(m);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+            }
+        }
+    }
+
     private static final String TAG = "AdbService";
     private static final boolean DEBUG = false;
 
     private final Context mContext;
+    private final AdbService.AdbHandler mHandler;
     private final HashMap<IBinder, IAdbTransport> mTransports = new HashMap<>();
 
     private boolean mAdbEnabled;
 
     private AdbService(Context context) {
         mContext = context;
+
+        mHandler = new AdbHandler(FgThread.get().getLooper());
     }
 
     public void systemReady() {
