@@ -69,6 +69,7 @@ android_library {
 
     libs: [
         "telephony-common",
+        "ims-common",
     ],
 
     aaptflags: [
@@ -127,6 +128,7 @@ android_library {
     libs: [
         "android.test.runner",
         "telephony-common",
+        "ims-common",
         "android.test.base",
     ],
     kotlincflags: ["-Xjvm-default=enable"],
@@ -155,6 +157,7 @@ android_app {
 
     libs: [
         "telephony-common",
+        "ims-common",
     ],
 
     kotlincflags: ["-Xjvm-default=enable"],
