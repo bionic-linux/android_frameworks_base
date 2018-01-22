@@ -105,7 +105,7 @@ public class NetworkControllerDataTest extends NetworkControllerBaseTest {
         // Switch to showing 4g icon and re-initialize the NetworkController.
         mConfig.show4gForLte = true;
         mNetworkController = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                mConfig, Looper.getMainLooper(), mCallbackHandler,
+                Looper.getMainLooper(), mCallbackHandler,
                 mock(AccessPointControllerImpl.class),
                 mock(DataUsageController.class), mMockSubDefaults,
                 mock(DeviceProvisionedController.class));

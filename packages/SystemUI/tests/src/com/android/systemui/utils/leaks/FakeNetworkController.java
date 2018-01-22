@@ -98,4 +98,9 @@ public class FakeNetworkController extends BaseLeakChecker<SignalCallback>
     public int getNumberSubscriptions() {
         return 0;
     }
+
+    @Override
+    public int getConnectedWifiLevel() {
+        return -1;
+    }
 }

@@ -15,6 +15,7 @@
  */
 package com.android.systemui.statusbar.policy;
 
+import android.annotation.Nullable;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
@@ -23,6 +24,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings.Global;
+import android.telephony.AccessNetworkConstants;
 import android.telephony.CellSignalStrength;
 import android.telephony.CellSignalStrengthCdma;
 import android.telephony.NetworkRegistrationInfo;
@@ -32,6 +34,11 @@ import android.telephony.SignalStrength;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.telephony.ims.ImsException;
+import android.telephony.ims.ImsMmTelManager;
+import android.telephony.ims.ImsReasonInfo;
+import android.telephony.ims.RegistrationManager;
+import android.telephony.ims.feature.MmTelFeature.MmTelCapabilities;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -70,6 +77,12 @@ public class MobileSignalController extends SignalController<
     private final ContentObserver mObserver;
     @VisibleForTesting
     final PhoneStateListener mPhoneStateListener;
+    @VisibleForTesting
+    final RegistrationManager.RegistrationCallback mImsMmTelRegistrationListener =
+            new ImsMmTelRegistrationListener();
+    @VisibleForTesting
+    final ImsMmTelManager.CapabilityCallback mImsMmTelCapabilityListener =
+            new ImsMmTelCapabilityListener();
     // Save entire info for logging, we only use the id.
     final SubscriptionInfo mSubscriptionInfo;
 
@@ -81,11 +94,17 @@ public class MobileSignalController extends SignalController<
     // of code.
     private int mDataNetType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
     private int mDataState = TelephonyManager.DATA_DISCONNECTED;
+    private int mImsRegisteredRadioTech = AccessNetworkConstants.TRANSPORT_TYPE_INVALID;
     private ServiceState mServiceState;
     private SignalStrength mSignalStrength;
     private MobileIconGroup mDefaultIcons;
     private Config mConfig;
+    private final SubscriptionManager mSubscriptionManager;
+    private MmTelCapabilities mMmTelCapabilities = new MmTelCapabilities();
     private final Handler mDisplayGraceHandler;
+    private boolean mIsListeningForImsMmTelCallbacks = false;
+    @VisibleForTesting
+    ImsMmTelManager mImsMmTelMgr;
     @VisibleForTesting
     boolean mInflateSignalStrengths = false;
     @VisibleForTesting
@@ -139,6 +158,13 @@ public class MobileSignalController extends SignalController<
                 }
             }
         };
+
+        mSubscriptionManager = context.getSystemService(SubscriptionManager.class);
+        try {
+            mImsMmTelMgr = ImsMmTelManager.createForSubscriptionId(info.getSubscriptionId());
+        } catch (IllegalArgumentException e) {
+            Log.w(mTag, "MobileSignalController e:" + e);
+        }
     }
 
     public void setConfiguration(Config config) {
@@ -189,6 +215,7 @@ public class MobileSignalController extends SignalController<
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
                 Global.MOBILE_DATA + mSubscriptionInfo.getSubscriptionId()),
                 true, mObserver);
+        mSubscriptionManager.addOnSubscriptionsChangedListener(mOnSubscriptionsChangedListener);
     }
 
     /**
@@ -197,6 +224,7 @@ public class MobileSignalController extends SignalController<
     public void unregisterListener() {
         mPhone.listen(mPhoneStateListener, 0);
         mContext.getContentResolver().unregisterContentObserver(mObserver);
+        mSubscriptionManager.removeOnSubscriptionsChangedListener(mOnSubscriptionsChangedListener);
     }
 
     /**
@@ -358,6 +386,8 @@ public class MobileSignalController extends SignalController<
                 activityIn, activityOut, dataContentDescription, dataContentDescriptionHtml,
                 description, icons.mIsWide, mSubscriptionInfo.getSubscriptionId(),
                 mCurrentState.roaming);
+        callback.setWifiCallingIndicator(mConfig.showWifiCallingIcon
+                && mCurrentState.wifiCallingAvailable, mSubscriptionInfo.getSubscriptionId());
     }
 
     @Override
@@ -560,6 +590,7 @@ public class MobileSignalController extends SignalController<
             mCurrentState.networkNameData = mServiceState.getOperatorAlphaShort();
         }
 
+        mCurrentState.wifiCallingAvailable = isWifiCallingAvailable();
         notifyListenersIfNecessary();
     }
 
@@ -660,6 +691,38 @@ public class MobileSignalController extends SignalController<
         return !mPhone.isDataCapable();
     }
 
+    private boolean isWifiCallingAvailable() {
+        return (mImsRegisteredRadioTech == AccessNetworkConstants.TRANSPORT_TYPE_WLAN)
+                && (mMmTelCapabilities.isCapable(MmTelCapabilities.CAPABILITY_TYPE_VOICE)
+                || mMmTelCapabilities.isCapable(MmTelCapabilities.CAPABILITY_TYPE_VIDEO));
+    }
+
+    private void startListeningForImsMmTelCallbacks() {
+        if (!mIsListeningForImsMmTelCallbacks) {
+            try {
+                mImsMmTelMgr.registerImsRegistrationCallback(mContext.getMainExecutor(),
+                        mImsMmTelRegistrationListener);
+                mImsMmTelMgr.registerMmTelCapabilityCallback(mContext.getMainExecutor(),
+                        mImsMmTelCapabilityListener);
+                mIsListeningForImsMmTelCallbacks = true;
+            } catch (IllegalArgumentException | ImsException e) {
+                Log.w(mTag, "startListeningForImsCapabilities e:" + e);
+            }
+        }
+    }
+
+    private void stopListeningForImsMmTelCallbacks() {
+        if (mIsListeningForImsMmTelCallbacks) {
+            try {
+                mImsMmTelMgr.unregisterImsRegistrationCallback(mImsMmTelRegistrationListener);
+                mImsMmTelMgr.unregisterMmTelCapabilityCallback(mImsMmTelCapabilityListener);
+                mIsListeningForImsMmTelCallbacks = false;
+            } catch (IllegalArgumentException e) {
+                Log.w(mTag, "stopListeningForImsCapabilities e:" + e);
+            }
+        }
+    }
+
     @VisibleForTesting
     void setActivity(int activity) {
         mCurrentState.activityIn = activity == TelephonyManager.DATA_ACTIVITY_INOUT
@@ -682,6 +745,9 @@ public class MobileSignalController extends SignalController<
         pw.println("  mInflateSignalStrengths=" + mInflateSignalStrengths + ",");
         pw.println("  isDataDisabled=" + isDataDisabled() + ",");
         pw.println("  mIsShowingIconGracefully=" + mIsShowingIconGracefully + ",");
+        pw.println("  mIsListeningForImsMmTelCallbacks=" + mIsListeningForImsMmTelCallbacks + ",");
+        pw.println("  mImsRegisteredRadioTech=" + mImsRegisteredRadioTech + ",");
+        pw.println("  mMmTelCapabilities=" + mMmTelCapabilities + ",");
     }
 
     class MobilePhoneStateListener extends PhoneStateListener {
@@ -760,6 +826,60 @@ public class MobileSignalController extends SignalController<
         }
     };
 
+    @VisibleForTesting
+    final SubscriptionManager.OnSubscriptionsChangedListener mOnSubscriptionsChangedListener =
+            new SubscriptionManager.OnSubscriptionsChangedListener() {
+        @Override
+        public void onSubscriptionsChanged() {
+            if (mPhone.getSimState(mSubscriptionInfo.getSimSlotIndex())
+                    == TelephonyManager.SIM_STATE_READY) {
+                startListeningForImsMmTelCallbacks();
+            } else {
+                stopListeningForImsMmTelCallbacks();
+            }
+        }
+    };
+
+    private class ImsMmTelRegistrationListener extends RegistrationManager.RegistrationCallback {
+        @Override
+        public void onRegistered(@AccessNetworkConstants.TransportType int imsRadioTech) {
+            if (DEBUG) {
+                Log.d(mTag, "onRegistered imsRadioTech=" + imsRadioTech);
+            }
+            mImsRegisteredRadioTech = imsRadioTech;
+            updateTelephony();
+        }
+
+        @Override
+        public void onRegistering(@AccessNetworkConstants.TransportType int imsRadioTech) {
+            if (DEBUG) {
+                Log.d(mTag, "onRegistering imsRadioTech=" + imsRadioTech);
+            }
+            mImsRegisteredRadioTech = AccessNetworkConstants.TRANSPORT_TYPE_INVALID;
+            updateTelephony();
+        }
+
+        @Override
+        public void onUnregistered(@Nullable ImsReasonInfo info) {
+            if (DEBUG) {
+                Log.d(mTag, "onUnregistered info=" + info);
+            }
+            mImsRegisteredRadioTech = AccessNetworkConstants.TRANSPORT_TYPE_INVALID;
+            updateTelephony();
+        }
+    }
+
+    private class ImsMmTelCapabilityListener extends ImsMmTelManager.CapabilityCallback {
+        @Override
+        public void onCapabilitiesStatusChanged(MmTelCapabilities capabilities) {
+            if (DEBUG) {
+                Log.d(mTag, "onCapabilitiesStatusChanged capabilities=" + capabilities);
+            }
+            mMmTelCapabilities = capabilities;
+            updateTelephony();
+        }
+    }
+
     static class MobileIconGroup extends SignalController.IconGroup {
         final int mDataContentDescription; // mContentDescriptionDataType
         final int mDataType;
@@ -790,6 +910,7 @@ public class MobileSignalController extends SignalController<
         boolean userSetup;
         boolean roaming;
         boolean defaultDataOff;  // Tracks the on/off state of the defaultDataSubscription
+        boolean wifiCallingAvailable;
 
         @Override
         public void copyFrom(State s) {
@@ -806,6 +927,7 @@ public class MobileSignalController extends SignalController<
             userSetup = state.userSetup;
             roaming = state.roaming;
             defaultDataOff = state.defaultDataOff;
+            wifiCallingAvailable = state.wifiCallingAvailable;
         }
 
         @Override
@@ -824,6 +946,7 @@ public class MobileSignalController extends SignalController<
                     .append(',');
             builder.append("userSetup=").append(userSetup).append(',');
             builder.append("defaultDataOff=").append(defaultDataOff);
+            builder.append("wifiCallingAvailable=").append(wifiCallingAvailable);
         }
 
         @Override
@@ -839,7 +962,8 @@ public class MobileSignalController extends SignalController<
                     && ((MobileState) o).userSetup == userSetup
                     && ((MobileState) o).isDefault == isDefault
                     && ((MobileState) o).roaming == roaming
-                    && ((MobileState) o).defaultDataOff == defaultDataOff;
+                    && ((MobileState) o).defaultDataOff == defaultDataOff
+                    && ((MobileState) o).wifiCallingAvailable == wifiCallingAvailable;
         }
     }
 }
