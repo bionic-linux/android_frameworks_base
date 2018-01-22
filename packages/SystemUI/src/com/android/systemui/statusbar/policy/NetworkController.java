@@ -44,6 +44,7 @@ public interface NetworkController extends CallbackController<SignalCallback>, D
     void removeEmergencyListener(EmergencyListener listener);
     boolean hasEmergencyCryptKeeperText();
     boolean isRadioOn();
+    int getConnectedWifiLevel();
 
     public interface SignalCallback {
         default void setWifiIndicators(boolean enabled, IconState statusIcon, IconState qsIcon,
@@ -61,6 +62,8 @@ public interface NetworkController extends CallbackController<SignalCallback>, D
         default void setIsAirplaneMode(IconState icon) {}
 
         default void setMobileDataEnabled(boolean enabled) {}
+
+        default void setWifiCallingIndicator(boolean show, int subId) {}
     }
 
     public interface EmergencyListener {

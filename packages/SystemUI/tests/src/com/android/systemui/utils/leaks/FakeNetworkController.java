@@ -93,4 +93,9 @@ public class FakeNetworkController extends BaseLeakChecker<SignalCallback>
     public String getMobileDataNetworkName() {
         return "";
     }
+
+    @Override
+    public int getConnectedWifiLevel() {
+        return -1;
+    }
 }

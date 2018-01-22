@@ -65,6 +65,7 @@ android_library {
     libs: [
         "telephony-common",
         "android.car",
+        "ims-common",
     ],
 
     aaptflags: [
@@ -90,6 +91,7 @@ android_app {
     libs: [
         "telephony-common",
         "android.car",
+        "ims-common",
     ],
 
     dxflags: ["--multi-dex"],
