@@ -21,6 +21,7 @@ import android.debug.IAdbTransport;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Slog;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.SystemService;
@@ -42,9 +43,17 @@ public class AdbService extends IAdbManager.Stub {
             mAdbService = new AdbService(getContext());
             publishBinderService(Context.ADB_SERVICE, mAdbService);
         }
+
+        @Override
+        public void onBootPhase(int phase) {
+            if (phase == SystemService.PHASE_ACTIVITY_MANAGER_READY) {
+                mAdbService.systemReady();
+            }
+        }
     }
 
     private static final String TAG = "AdbService";
+    private static final boolean DEBUG = false;
 
     private final Context mContext;
     private final HashMap<IBinder, IAdbTransport> mTransports = new HashMap<>();
@@ -53,6 +62,10 @@ public class AdbService extends IAdbManager.Stub {
 
     private AdbService(Context context) {
         mContext = context;
+    }
+
+    public void systemReady() {
+        if (DEBUG) Slog.d(TAG, "systemReady");
     }
 
     @Override
