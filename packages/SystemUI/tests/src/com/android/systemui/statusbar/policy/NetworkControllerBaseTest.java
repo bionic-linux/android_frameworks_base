@@ -22,6 +22,7 @@ import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
@@ -39,12 +40,17 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.provider.Settings;
 import android.provider.Settings.Global;
+import android.telephony.AccessNetworkConstants;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.telephony.ims.ImsMmTelManager;
+import android.telephony.ims.ImsReasonInfo;
+import android.telephony.ims.RegistrationManager;
+import android.telephony.ims.feature.MmTelFeature.MmTelCapabilities;
 import android.testing.TestableLooper;
 import android.testing.TestableResources;
 import android.util.Log;
@@ -99,6 +105,10 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
     protected DeviceProvisionedController mMockProvisionController;
     protected DeviceProvisionedListener mUserCallback;
     protected Instrumentation mInstrumentation;
+    protected ImsMmTelManager mMockImsMmTelMgr;
+    protected SubscriptionManager.OnSubscriptionsChangedListener mOnSubscriptionsChangedListener;
+    protected RegistrationManager.RegistrationCallback mImsMmTelRegistrationListener;
+    protected ImsMmTelManager.CapabilityCallback mImsMmTelCapabilityListener;
 
     protected int mSubId;
 
@@ -131,6 +141,7 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
         mMockSm = mock(SubscriptionManager.class);
         mMockCm = mock(ConnectivityManager.class);
         mMockSubDefaults = mock(SubscriptionDefaults.class);
+        mMockImsMmTelMgr = mock(ImsMmTelManager.class);
         mNetCapabilities = new NetworkCapabilities();
         when(mMockCm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)).thenReturn(true);
         when(mMockCm.getDefaultNetworkCapabilitiesForUser(0)).thenReturn(
@@ -154,8 +165,11 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
             return null;
         }).when(mMockProvisionController).addCallback(any());
 
+        if (TestableLooper.get(this).getLooper().myLooper() == null) {
+            TestableLooper.get(this).getLooper().prepare();
+        }
         mNetworkController = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                mConfig, TestableLooper.get(this).getLooper(), mCallbackHandler,
+                TestableLooper.get(this).getLooper(), mCallbackHandler,
                 mock(AccessPointControllerImpl.class), mock(DataUsageController.class),
                 mMockSubDefaults, mMockProvisionController);
         setupNetworkController();
@@ -173,7 +187,13 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
         setDefaultSubId(mSubId);
         setSubscriptions(mSubId);
         mMobileSignalController = mNetworkController.mMobileSignalControllers.get(mSubId);
+        mNetworkController.mConfigs.put(mSubId, mConfig);
+        mNetworkController.handleConfigurationChanged();
         mPhoneStateListener = mMobileSignalController.mPhoneStateListener;
+        mMobileSignalController.mImsMmTelMgr = mMockImsMmTelMgr;
+        mOnSubscriptionsChangedListener = mMobileSignalController.mOnSubscriptionsChangedListener;
+        mImsMmTelRegistrationListener = mMobileSignalController.mImsMmTelRegistrationListener;
+        mImsMmTelCapabilityListener = mMobileSignalController.mImsMmTelCapabilityListener;
 
         ArgumentCaptor<ConnectivityManager.NetworkCallback> callbackArg =
             ArgumentCaptor.forClass(ConnectivityManager.NetworkCallback.class);
@@ -205,7 +225,7 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
       when(mMockCm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)).thenReturn(false);
       NetworkControllerImpl networkControllerNoMobile
               = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                        mConfig, TestableLooper.get(this).getLooper(), mCallbackHandler,
+                        TestableLooper.get(this).getLooper(), mCallbackHandler,
                         mock(AccessPointControllerImpl.class),
                         mock(DataUsageController.class), mMockSubDefaults,
                         mock(DeviceProvisionedController.class));
@@ -360,6 +380,35 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
         mPhoneStateListener.onCarrierNetworkChange(enable);
     }
 
+    protected void setImsRegisteredChange(boolean isRegistered) {
+        if (isRegistered) {
+            mImsMmTelRegistrationListener.onRegistered(AccessNetworkConstants.TRANSPORT_TYPE_WLAN);
+        } else {
+            mImsMmTelRegistrationListener.onUnregistered(new ImsReasonInfo());
+        }
+    }
+
+    protected void setImsMmTelCapabilities(MmTelCapabilities capabilities) {
+        mImsMmTelCapabilityListener.onCapabilitiesStatusChanged(capabilities);
+    }
+
+    protected void setRegisterListener(boolean isReg) {
+        if (isReg) {
+            mMobileSignalController.registerListener();
+        } else {
+            mMobileSignalController.unregisterListener();
+        }
+    }
+
+    protected void setRegisterImsMmTelCallbacks(boolean isReady) {
+        if (isReady) {
+            when(mMockTm.getSimState(anyInt())).thenReturn(TelephonyManager.SIM_STATE_READY);
+        } else {
+            when(mMockTm.getSimState(anyInt())).thenReturn(TelephonyManager.SIM_STATE_NOT_READY);
+        }
+        mOnSubscriptionsChangedListener.onSubscriptionsChanged();
+    }
+
     protected void verifyHasNoSims(boolean hasNoSimsVisible) {
         Mockito.verify(mCallbackHandler, Mockito.atLeastOnce()).setNoSims(
                 eq(hasNoSimsVisible), eq(false));
@@ -480,6 +529,20 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
             assertEquals("Type content description", typeContentDescription,
                     typeContentDescriptionArg.getValue());
         }
+    }
+
+    protected void verifyImsMmTelListenersRegistered() throws Exception {
+        Mockito.verify(mMockImsMmTelMgr).registerImsRegistrationCallback(
+                anyObject(), isA(RegistrationManager.RegistrationCallback.class));
+        Mockito.verify(mMockImsMmTelMgr).registerMmTelCapabilityCallback(
+                anyObject(), isA(ImsMmTelManager.CapabilityCallback.class));
+    }
+
+    protected void verifyWifiCallingIcon(boolean wifiIconVisible) {
+        ArgumentCaptor<Boolean> wifiIconArg = ArgumentCaptor.forClass(Boolean.class);
+        Mockito.verify(mCallbackHandler, Mockito.atLeastOnce())
+                .setWifiCallingIndicator(wifiIconArg.capture(), anyInt());
+        assertEquals("Wifi calling icon", wifiIconVisible, (boolean) wifiIconArg.getValue());
     }
 
     protected void assertNetworkNameEquals(String expected) {
