@@ -22,6 +22,30 @@
       "revId": "98fd5e200d211e8430270d11593fa832568c8102",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02f0e8ea_2e102515",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-01-22T21:17:32Z",
+      "side": 1,
+      "message": "The value 0 means that the client interface is invalid. Yes, a named constant would be better. However, this value 0 is used in \u003e20 places in this class and I think this needs to be in a different CL.",
+      "parentUuid": "4e2fae68_a160c9e5",
+      "range": {
+        "startLine": 1527,
+        "startChar": 45,
+        "endLine": 1527,
+        "endChar": 46
+      },
+      "revId": "98fd5e200d211e8430270d11593fa832568c8102",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
