@@ -81,6 +81,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     private boolean mWifiVisible = false;
     private int mWifiStrengthId = 0;
     private int mLastWifiStrengthId = -1;
+    private boolean mLastWifiCallingVisible = false;
     private boolean mWifiIn;
     private boolean mWifiOut;
     private boolean mIsAirplaneMode = false;
@@ -386,6 +387,16 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     }
 
     @Override
+    public void setWifiCallingIndicator(boolean show, int subId) {
+        PhoneState state = getState(subId);
+        if (state == null) {
+            return;
+        }
+        state.mWifiCallingVisible = show;
+        apply();
+    }
+
+    @Override
     public boolean dispatchPopulateAccessibilityEventInternal(AccessibilityEvent event) {
         // Standard group layout onPopulateAccessibilityEvent() implementations
         // ignore content description, so populate manually
@@ -414,6 +425,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             mWifi.setImageDrawable(null);
             mWifiDark.setImageDrawable(null);
             mLastWifiStrengthId = -1;
+            mLastWifiCallingVisible = false;
         }
 
         for (PhoneState state : mPhoneStates) {
@@ -472,10 +484,14 @@ public class SignalClusterView extends LinearLayout implements NetworkController
                     (mEthernetVisible ? "VISIBLE" : "GONE")));
 
         if (mWifiVisible) {
-            if (mWifiStrengthId != mLastWifiStrengthId) {
-                setIconForView(mWifi, mWifiStrengthId);
-                setIconForView(mWifiDark, mWifiStrengthId);
+            boolean wifiCallingVisible = isWifiCallingVisible();
+            if (mWifiStrengthId != mLastWifiStrengthId
+                    || mLastWifiCallingVisible != wifiCallingVisible) {
+                int iconId = wifiCallingVisible ? getWificallingStrengthId() : mWifiStrengthId;
+                setIconForView(mWifi, iconId);
+                setIconForView(mWifiDark, iconId);
                 mLastWifiStrengthId = mWifiStrengthId;
+                mLastWifiCallingVisible = wifiCallingVisible;
             }
             mIconLogger.onIconShown(SLOT_WIFI);
             mWifiGroup.setContentDescription(mWifiDescription);
@@ -598,6 +614,30 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         return isBranded ? R.drawable.stat_sys_branded_vpn : R.drawable.stat_sys_vpn_ic;
     }
 
+    private boolean isWifiCallingVisible() {
+        for (PhoneState state : mPhoneStates) {
+            if (state.mWifiCallingVisible) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int getWificallingStrengthId() {
+        switch (mNetworkController.getConnectedWifiLevel()) {
+            case 0:
+            case 1:
+                return R.drawable.ic_wifi_calling_1_24dp;
+            case 2:
+            case 3:
+                return R.drawable.ic_wifi_calling_2_24dp;
+            case 4:
+                return R.drawable.ic_wifi_calling_3_24dp;
+            default:
+                return R.drawable.stat_sys_wifi_signal_null;
+        }
+    }
+
     private class PhoneState {
         private final int mSubId;
         private boolean mMobileVisible = false;
@@ -615,6 +655,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         public boolean mActivityIn;
         public boolean mActivityOut;
         private SignalDrawable mMobileSignalDrawable;
+        public boolean mWifiCallingVisible;
 
         public PhoneState(int subId, Context context) {
             ViewGroup root = (ViewGroup) LayoutInflater.from(context)

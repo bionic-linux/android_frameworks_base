@@ -24,6 +24,7 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.SubscriptionInfo;
 import android.telephony.TelephonyManager;
+import android.telephony.ims.feature.MmTelFeature.MmTelCapabilities;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper.RunWithLooper;
@@ -58,7 +59,7 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         Mockito.when(mMockCm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)).thenReturn(false);
         // Create a new NetworkController as this is currently handled in constructor.
         mNetworkController = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                mConfig, Looper.getMainLooper(), mCallbackHandler,
+                Looper.getMainLooper(), mCallbackHandler,
                 mock(AccessPointControllerImpl.class), mock(DataUsageController.class),
                 mMockSubDefaults, mock(DeviceProvisionedController.class));
         setupNetworkController();
@@ -120,7 +121,7 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         Mockito.when(mMockCm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)).thenReturn(false);
         // Create a new NetworkController as this is currently handled in constructor.
         mNetworkController = new NetworkControllerImpl(mContext, mMockCm, mMockTm, mMockWm, mMockSm,
-                mConfig, Looper.getMainLooper(), mCallbackHandler,
+                Looper.getMainLooper(), mCallbackHandler,
                 mock(AccessPointControllerImpl.class), mock(DataUsageController.class),
                 mMockSubDefaults, mock(DeviceProvisionedController.class));
         setupNetworkController();
@@ -576,6 +577,20 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
               strength /* strengthIcon */,
               DEFAULT_ICON /* typeIcon */,
               true /* roaming */);
+    }
+
+    @Test
+    public void testWifiCallingIcon() throws Exception {
+        setupNetworkController();
+        setRegisterListener(true);
+        verifyImsCapabilitiesListenerRegistered();
+
+        mConfig.showWifiCallingIcon = true;
+        setImsRegisteredChange(true);
+        MmTelCapabilities capabilities = new MmTelCapabilities();
+        capabilities.addCapabilities(MmTelCapabilities.CAPABILITY_TYPE_VOICE);
+        setImsMmTelCapabilities(capabilities);
+        verifyWifiCallingIcon(true);
     }
 
     private void verifyEmergencyOnly(boolean isEmergencyOnly) {
