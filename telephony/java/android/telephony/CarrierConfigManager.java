@@ -2371,6 +2371,13 @@ public class CarrierConfigManager {
             "support_emergency_dialer_shortcut_bool";
 
     /**
+     * Controls whether to show wifi calling icon in statusbar when wifi calling is available.
+     * @hide
+     */
+    public static final String KEY_SHOW_WIFI_CALLING_ICON_IN_STATUS_BAR_BOOL =
+            "show_wifi_calling_icon_in_status_bar_bool";
+
+    /**
      * Controls RSRP threshold at which OpportunisticNetworkService will decide whether
      * the opportunistic network is good enough for internet data.
      */
@@ -2780,6 +2787,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CALL_WAITING_OVER_UT_WARNING_BOOL, false);
         sDefaults.putBoolean(KEY_SUPPORT_CLIR_NETWORK_DEFAULT_BOOL, true);
         sDefaults.putBoolean(KEY_SUPPORT_EMERGENCY_DIALER_SHORTCUT_BOOL, true);
+        sDefaults.putBoolean(KEY_SHOW_WIFI_CALLING_ICON_IN_STATUS_BAR_BOOL, true);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_GOOD */
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSRP_INT, -108);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_MODERATE */

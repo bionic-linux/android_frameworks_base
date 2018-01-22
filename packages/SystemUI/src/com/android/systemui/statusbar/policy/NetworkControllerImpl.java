@@ -92,7 +92,6 @@ public class NetworkControllerImpl extends BroadcastReceiver
     private final SubscriptionDefaults mSubDefaults;
     private final DataSaverController mDataSaverController;
     private final CurrentUserTracker mUserTracker;
-    private Config mConfig;
 
     // Subcontrollers.
     @VisibleForTesting
@@ -103,6 +102,9 @@ public class NetworkControllerImpl extends BroadcastReceiver
 
     @VisibleForTesting
     final SparseArray<MobileSignalController> mMobileSignalControllers = new SparseArray<>();
+
+    @VisibleForTesting
+    final SparseArray<Config> mConfigs = new SparseArray<>();
     // When no SIMs are around at setup, and one is added later, it seems to default to the first
     // SIM for most actions.  This may be null if there aren't any SIMs around.
     private MobileSignalController mDefaultSignalController;
@@ -152,7 +154,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
         this(context, (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE),
                 (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE),
                 (WifiManager) context.getSystemService(Context.WIFI_SERVICE),
-                SubscriptionManager.from(context), Config.readConfig(context), bgLooper,
+                SubscriptionManager.from(context), bgLooper,
                 new CallbackHandler(),
                 new AccessPointControllerImpl(context),
                 new DataUsageController(context),
@@ -164,14 +166,13 @@ public class NetworkControllerImpl extends BroadcastReceiver
     @VisibleForTesting
     NetworkControllerImpl(Context context, ConnectivityManager connectivityManager,
             TelephonyManager telephonyManager, WifiManager wifiManager,
-            SubscriptionManager subManager, Config config, Looper bgLooper,
+            SubscriptionManager subManager, Looper bgLooper,
             CallbackHandler callbackHandler,
             AccessPointControllerImpl accessPointController,
             DataUsageController dataUsageController,
             SubscriptionDefaults defaultsHandler,
             DeviceProvisionedController deviceProvisionedController) {
         mContext = context;
-        mConfig = config;
         mReceiverHandler = new Handler(bgLooper);
         mCallbackHandler = callbackHandler;
         mDataSaverController = new DataSaverControllerImpl(context);
@@ -298,6 +299,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
         mContext.unregisterReceiver(this);
     }
 
+    @Override
     public int getConnectedWifiLevel() {
         return mWifiSignalController.getState().level;
     }
@@ -458,8 +460,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
                     MobileSignalController controller = mMobileSignalControllers.valueAt(i);
                     controller.handleBroadcast(intent);
                 }
-                mConfig = Config.readConfig(mContext);
-                mReceiverHandler.post(this::handleConfigurationChanged);
+                updateConfiguration();
                 break;
             case TelephonyIntents.ACTION_SIM_STATE_CHANGED:
                 // Avoid rebroadcast because SysUI is direct boot aware.
@@ -478,8 +479,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 }
                 break;
             case CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED:
-                mConfig = Config.readConfig(mContext);
-                mReceiverHandler.post(this::handleConfigurationChanged);
+                updateConfiguration();
                 break;
             default:
                 int subId = intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
@@ -500,22 +500,29 @@ public class NetworkControllerImpl extends BroadcastReceiver
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
-        mConfig = Config.readConfig(mContext);
-        mReceiverHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                handleConfigurationChanged();
-            }
-        });
+        updateConfiguration();
     }
 
     @VisibleForTesting
     void handleConfigurationChanged() {
         for (int i = 0; i < mMobileSignalControllers.size(); i++) {
             MobileSignalController controller = mMobileSignalControllers.valueAt(i);
-            controller.setConfiguration(mConfig);
+            controller.setConfiguration(mConfigs.get(mMobileSignalControllers.keyAt(i)));
         }
         refreshLocale();
+    }
+
+    private void updateConfiguration() {
+        for (int i = 0; i < mConfigs.size(); i++) {
+            int subId = mConfigs.keyAt(i);
+            mConfigs.put(subId, Config.readConfig(mContext, subId));
+        }
+        mReceiverHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                handleConfigurationChanged();
+            }
+        });
     }
 
     private void updateMobileControllers() {
@@ -587,19 +594,28 @@ public class NetworkControllerImpl extends BroadcastReceiver
                     mMobileSignalControllers.valueAt(i));
         }
         mMobileSignalControllers.clear();
+
+        SparseArray<Config> cachedConfigs = new SparseArray<Config>();
+        for (int i = 0; i < mConfigs.size(); i++) {
+            cachedConfigs.put(mConfigs.keyAt(i), mConfigs.valueAt(i));
+        }
+        mConfigs.clear();
         final int num = subscriptions.size();
         for (int i = 0; i < num; i++) {
             int subId = subscriptions.get(i).getSubscriptionId();
             // If we have a copy of this controller already reuse it, otherwise make a new one.
             if (cachedControllers.indexOfKey(subId) >= 0) {
                 mMobileSignalControllers.put(subId, cachedControllers.get(subId));
+                mConfigs.put(subId, cachedConfigs.get(subId));
                 cachedControllers.remove(subId);
             } else {
-                MobileSignalController controller = new MobileSignalController(mContext, mConfig,
-                        mHasMobileDataFeature, mPhone, mCallbackHandler,
+                Config config = Config.readConfig(mContext, subId);
+                MobileSignalController controller = new MobileSignalController(mContext,
+                        config, mHasMobileDataFeature, mPhone, mCallbackHandler,
                         this, subscriptions.get(i), mSubDefaults, mReceiverHandler.getLooper());
                 controller.setUserSetupComplete(mUserSetup);
                 mMobileSignalControllers.put(subId, controller);
+                mConfigs.put(subId, config);
                 if (subscriptions.get(i).getSimSlotIndex() == 0) {
                     mDefaultSignalController = controller;
                 }
@@ -897,6 +913,19 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 mHasNoSubs = nosim.equals("show");
                 mCallbackHandler.setNoSims(mHasNoSubs, mSimDetected);
             }
+            String wificalling = args.getString("wificalling");
+            if (wificalling != null) {
+                boolean show = wificalling.equals("show");
+                String slotString = args.getString("slot");
+                int slot = TextUtils.isEmpty(slotString) ? 0 : Integer.parseInt(slotString);
+                slot = MathUtils.constrain(slot, 0, 8);
+                int[] subIds = SubscriptionManager.getSubId(slot);
+                int subId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+                if (subIds != null && subIds.length >= 1) {
+                    subId = subIds[0];
+                }
+                mCallbackHandler.setWifiCallingIndicator(show, subId);
+            }
             String mobile = args.getString("mobile");
             if (mobile != null) {
                 boolean show = mobile.equals("show");
@@ -980,8 +1009,10 @@ public class NetworkControllerImpl extends BroadcastReceiver
     private SubscriptionInfo addSignalController(int id, int simSlotIndex) {
         SubscriptionInfo info = new SubscriptionInfo(id, "", simSlotIndex, "", "", 0, 0, "", 0,
                 null, null, null, "", false, null, null);
+        Config config = Config.readConfig(mContext, info.getSubscriptionId());
+        mConfigs.put(info.getSubscriptionId(), config);
         MobileSignalController controller = new MobileSignalController(mContext,
-                mConfig, mHasMobileDataFeature, mPhone, mCallbackHandler, this, info,
+                config, mHasMobileDataFeature, mPhone, mCallbackHandler, this, info,
                 mSubDefaults, mReceiverHandler.getLooper());
         mMobileSignalControllers.put(id, controller);
         controller.getState().userSetup = true;
@@ -1033,8 +1064,9 @@ public class NetworkControllerImpl extends BroadcastReceiver
         boolean hspaDataDistinguishable;
         boolean inflateSignalStrengths = false;
         boolean alwaysShowDataRatIcon = false;
+        boolean showWifiCallingIcon = false;
 
-        static Config readConfig(Context context) {
+        static Config readConfig(Context context, int subId) {
             Config config = new Config();
             Resources res = context.getResources();
 
@@ -1047,10 +1079,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
 
             CarrierConfigManager configMgr = (CarrierConfigManager)
                     context.getSystemService(Context.CARRIER_CONFIG_SERVICE);
-            // Handle specific carrier config values for the default data SIM
-            int defaultDataSubId = SubscriptionManager.from(context)
-                    .getDefaultDataSubscriptionId();
-            PersistableBundle b = configMgr.getConfigForSubId(defaultDataSubId);
+            PersistableBundle b = configMgr.getConfigForSubId(subId);
             if (b != null) {
                 config.alwaysShowDataRatIcon = b.getBoolean(
                         CarrierConfigManager.KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL);
@@ -1058,6 +1087,8 @@ public class NetworkControllerImpl extends BroadcastReceiver
                         CarrierConfigManager.KEY_SHOW_4G_FOR_LTE_DATA_ICON_BOOL);
                 config.hideLtePlus = b.getBoolean(
                         CarrierConfigManager.KEY_HIDE_LTE_PLUS_DATA_ICON_BOOL);
+                config.showWifiCallingIcon = b.getBoolean(
+                        CarrierConfigManager.KEY_SHOW_WIFI_CALLING_ICON_IN_STATUS_BAR_BOOL);
             }
             return config;
         }
