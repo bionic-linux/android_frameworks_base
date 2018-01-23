@@ -46,6 +46,30 @@
       "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba617ad_0350075a",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-23T18:32:16Z",
+      "side": 1,
+      "message": "I think it *is* easiest to use the property_get_bool default value. Considering you probably want opt-in, just make it true, and add to the ART config page on source.android.com so people know how to turn it off.",
+      "parentUuid": "5d1c6b5f_fe621bcb",
+      "range": {
+        "startLine": 973,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 39
+      },
+      "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
