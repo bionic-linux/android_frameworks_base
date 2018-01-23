@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "215e3a13_e82641d9",
+        "filename": "core/java/android/hardware/usb/UsbFunction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-01-23T20:59:04Z",
+      "side": 1,
+      "message": "I think the reason we do it is that value performance over type safety. I don\u0027t think this is a big performance drain here, but it falls in the same category as non final static DEBUGs. This is not how the rest of the code is written, hence people will wonder why this is done.\n\nSo, leave it if you absolutely need to. If you can just send a mask of integers use that.",
+      "parentUuid": "e99f8723_4601374d",
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0069d81_b795d4d7",
         "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
         "patchSetId": 1
