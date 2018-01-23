@@ -118,6 +118,30 @@
       "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1789fed_1596934a",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1065473
+      },
+      "writtenOn": "2018-01-23T20:36:23Z",
+      "side": 1,
+      "message": "Well, my idea was the if we don\u0027t force set the option here, then the compiler is still be free to decide on reasonable default (e.g. the compiler would do JIT mini-debug-info by default if it is used for boot.oat or if the app is debuggable). It does feel ideal though.\n\nSomewhat verbose, but consistent approach would be to have something like this in the build system:\ndalvik.vm.dex2oat-minidebuginfo \u003d default-minidebuginfo\ndalvik.vm.jit-minidebuginfo \u003d default-minidebuginfo\ndalvik.vm.debuggable-minidebuginfo \u003d true\nSo by default AOT/JIT follow whatever we do for boot.oat, and debuggable apps are force set to true, still with the option to control this later.\n\nAnother option is to hard-code that debuggable apps get mini-debug-info, always.\n\nI am kind of grasping at straws here, I welcome any suggestions :-)",
+      "parentUuid": "5bfab419_60afab97",
+      "range": {
+        "startLine": 973,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 39
+      },
+      "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
