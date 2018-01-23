@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fea339a0_ea7e3f40",
+        "filename": "core/java/android/hardware/usb/UsbFunction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-01-23T16:49:21Z",
+      "side": 1,
+      "message": "We generally don\u0027t use enums in the android framework as usually just ints or masks are sufficient. You can mark set of ints as @Intdef to make clear that they are such a primitive enum.",
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0069d81_b795d4d7",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-01-23T16:49:21Z",
+      "side": 1,
+      "message": "having it \"private final\" let\u0027s the compiler optimize better and make the code faster. Hence you might have this set to true until you fixed all your tests but before shipping this should be false.",
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e381f189_fb0b2136",
+        "filename": "services/usb/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-01-23T16:49:21Z",
+      "side": 1,
+      "message": "why?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 6
+      },
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
