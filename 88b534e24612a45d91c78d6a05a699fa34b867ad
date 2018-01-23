@@ -22,6 +22,30 @@
       "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1c6b5f_fe621bcb",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1065473
+      },
+      "writtenOn": "2018-01-23T18:19:35Z",
+      "side": 1,
+      "message": "I did that on purpose as, I want it to be a no-op if the property is not set.\n\nproperty_get_bool can not recognize non-set property.\n\nOf course, what I would really like to do is to default this value of mini-debug-info from the build system... (either here or noop-here+default-in-art)",
+      "parentUuid": "5f7e7553_e7c428d3",
+      "range": {
+        "startLine": 973,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 39
+      },
+      "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
