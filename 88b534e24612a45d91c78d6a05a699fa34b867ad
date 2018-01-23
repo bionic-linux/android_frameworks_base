@@ -70,6 +70,30 @@
       "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a259a8e2_ae29d3f3",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1065473
+      },
+      "writtenOn": "2018-01-23T20:18:07Z",
+      "side": 1,
+      "message": "Any thoughts on debuggable apps?  It might be reasonable to generate JIT mini-debug-info for them even if it is generally off for the system as a whole.",
+      "parentUuid": "0ba617ad_0350075a",
+      "range": {
+        "startLine": 973,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 39
+      },
+      "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
