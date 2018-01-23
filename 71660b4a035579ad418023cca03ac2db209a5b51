@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "432838ca_2261f8b8",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-01-23T22:11:03Z",
+      "side": 1,
+      "message": "you don\u0027t really throw anything here, do you ?\nInformation about Data Length Extension is not up in this layer, so you just have to accept anything provided.",
+      "range": {
+        "startLine": 1514,
+        "startChar": 7,
+        "endLine": 1514,
+        "endChar": 95
+      },
+      "revId": "71660b4a035579ad418023cca03ac2db209a5b51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
