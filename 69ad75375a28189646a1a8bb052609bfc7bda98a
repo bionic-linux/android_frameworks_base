@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e99f8723_4601374d",
+        "filename": "core/java/android/hardware/usb/UsbFunction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113594
+      },
+      "writtenOn": "2018-01-23T20:28:10Z",
+      "side": 1,
+      "message": "I think the enum is essential here for type safety",
+      "parentUuid": "fea339a0_ea7e3f40",
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0069d81_b795d4d7",
         "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3c9853_238ea128",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113594
+      },
+      "writtenOn": "2018-01-23T20:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36f0c51d_c06fdcbd",
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +176,30 @@
       "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164dc33f_08c82bc8",
+        "filename": "services/usb/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113594
+      },
+      "writtenOn": "2018-01-23T20:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb2983f2_e2f8bc1e",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 6
+      },
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
