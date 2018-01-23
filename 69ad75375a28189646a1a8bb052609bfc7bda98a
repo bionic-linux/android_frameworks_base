@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "36f0c51d_c06fdcbd",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-01-23T19:31:53Z",
+      "side": 1,
+      "message": "This is what we usually do. Unless there is a good reason, I\u0027d rather not go against \u0027usually\u0027.",
+      "parentUuid": "e006e05b_967640d4",
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e381f189_fb0b2136",
         "filename": "services/usb/java/com/android/server/usb/UsbSettingsManager.java",
         "patchSetId": 1
@@ -89,6 +107,30 @@
       "side": 1,
       "message": "mockito wouldn\u0027t let me make a mock of it otherwise",
       "parentUuid": "e381f189_fb0b2136",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 6
+      },
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2983f2_e2f8bc1e",
+        "filename": "services/usb/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-01-23T19:31:53Z",
+      "side": 1,
+      "message": "You can\n- either us mockito-target-inline,\n- or set the \u0027dexmaker.share_classloader\u0027 property\n\nThis should allow you to mock these classes",
+      "parentUuid": "a1925f81_fe6eb17a",
       "range": {
         "startLine": 38,
         "startChar": 0,
