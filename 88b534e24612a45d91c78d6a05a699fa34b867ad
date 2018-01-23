@@ -142,6 +142,30 @@
       "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca3bb22_f640acc2",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-23T20:38:59Z",
+      "side": 1,
+      "message": "Just hardcode the debug path. It\u0027s the easiest, and makes sense (as we\u0027re punting everything to JIT).",
+      "parentUuid": "b1789fed_1596934a",
+      "range": {
+        "startLine": 973,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 39
+      },
+      "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
