@@ -94,6 +94,30 @@
       "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfab419_60afab97",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-23T20:21:23Z",
+      "side": 1,
+      "message": "You can\u0027t really configure this here, though. This would only apply to wrap-style stuff, then.\n\nIf you want that, you need to add modify the ZygoteHooks code in ART. (It seems fine to me to hardcode debug\u003dyes there.)",
+      "parentUuid": "a259a8e2_ae29d3f3",
+      "range": {
+        "startLine": 973,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 39
+      },
+      "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
