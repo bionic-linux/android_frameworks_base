@@ -22,6 +22,30 @@
       "revId": "e2230eabd67374a1f082f3836ebc3fd5118e18c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc7e4af_394deaaa",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2646,
+      "author": {
+        "id": 1233205
+      },
+      "writtenOn": "2018-01-23T06:55:16Z",
+      "side": 1,
+      "message": "Thank you for the comment. That\u0027s true. I updated the comment here on patchset#3.",
+      "parentUuid": "3c38ac6c_f4e5b8c3",
+      "range": {
+        "startLine": 2646,
+        "startChar": 9,
+        "endLine": 2646,
+        "endChar": 50
+      },
+      "revId": "e2230eabd67374a1f082f3836ebc3fd5118e18c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
