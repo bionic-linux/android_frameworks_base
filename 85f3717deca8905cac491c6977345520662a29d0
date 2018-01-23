@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f4962b3_9a62aaa2",
+        "filename": "api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 41084,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-01-23T23:59:48Z",
+      "side": 1,
+      "message": "I think this should be a system API. Carrier apps don\u0027t need to know about OTA status, just the LUI, right?",
+      "range": {
+        "startLine": 41084,
+        "startChar": 0,
+        "endLine": 41084,
+        "endChar": 37
+      },
+      "revId": "85f3717deca8905cac491c6977345520662a29d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "037a0892_90d7f458",
+        "filename": "api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 41096,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-01-23T23:59:48Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 41092,
+        "startChar": 0,
+        "endLine": 41096,
+        "endChar": 65
+      },
+      "revId": "85f3717deca8905cac491c6977345520662a29d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
