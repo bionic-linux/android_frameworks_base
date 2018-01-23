@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c38ac6c_f4e5b8c3",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2646,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2018-01-23T06:11:04Z",
+      "side": 1,
+      "message": "This config is for denoting package name, no?",
+      "range": {
+        "startLine": 2646,
+        "startChar": 9,
+        "endLine": 2646,
+        "endChar": 50
+      },
+      "revId": "e2230eabd67374a1f082f3836ebc3fd5118e18c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
