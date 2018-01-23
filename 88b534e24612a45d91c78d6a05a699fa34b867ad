@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7e7553_e7c428d3",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-01-23T18:06:30Z",
+      "side": 1,
+      "message": "Can replace with property_get_bool, or base::GetBoolProperty.",
+      "range": {
+        "startLine": 973,
+        "startChar": 4,
+        "endLine": 974,
+        "endChar": 39
+      },
+      "revId": "88b534e24612a45d91c78d6a05a699fa34b867ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
