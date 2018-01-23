@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e006e05b_967640d4",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113594
+      },
+      "writtenOn": "2018-01-23T18:32:42Z",
+      "side": 1,
+      "message": "I changed this so that in UsbHandlerTest, it could set sDebug to true while running the test only, thus providing more helpful logs if the test fails in continuous testing. Is it worth changing for the compiler optimization?",
+      "parentUuid": "b0069d81_b795d4d7",
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e381f189_fb0b2136",
         "filename": "services/usb/java/com/android/server/usb/UsbSettingsManager.java",
         "patchSetId": 1
@@ -47,6 +65,30 @@
       "writtenOn": "2018-01-23T16:49:21Z",
       "side": 1,
       "message": "why?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 6
+      },
+      "revId": "69ad75375a28189646a1a8bb052609bfc7bda98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1925f81_fe6eb17a",
+        "filename": "services/usb/java/com/android/server/usb/UsbSettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113594
+      },
+      "writtenOn": "2018-01-23T18:32:42Z",
+      "side": 1,
+      "message": "mockito wouldn\u0027t let me make a mock of it otherwise",
+      "parentUuid": "e381f189_fb0b2136",
       "range": {
         "startLine": 38,
         "startChar": 0,
