@@ -969,6 +969,16 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote)
         addOption("--generate-debug-info");
     }
 
+    // JIT mini-debug-info makes it possible to backtrace through JIT code.
+    property_get("dalvik.vm.jit-minidebuginfo", propBuf, "");
+    if (strcmp(propBuf, "true") == 0) {
+        addOption("-Xjit-compiler-option");
+        addOption("--generate-mini-debug-info");
+    } else if (strcmp(propBuf, "false") == 0) {
+        addOption("-Xjit-compiler-option");
+        addOption("--no-generate-mini-debug-info");
+    }
+
     /*
      * Retrieve the build fingerprint and provide it to the runtime. That way, ANR dumps will
      * contain the fingerprint and can be parsed.
