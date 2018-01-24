@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0f86159_2cb0a9eb",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-01-24T18:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "206e4b63_01f1dd7e",
+      "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "396e18c1_8185e230",
         "filename": "telephony/java/android/telephony/data/DataService.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-24T01:56:47Z",
       "side": 1,
       "message": "We can probably create mBinder in constructor and just return mBinder here.",
+      "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66203c98_4a35ddde",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-01-24T18:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396e18c1_8185e230",
       "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1ec06747_2cfe05b1",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-01-24T18:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0269d102_e6415eac",
+      "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69acc78c_8de1f401",
         "filename": "telephony/java/android/telephony/data/DataService.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-24T01:56:47Z",
       "side": 1,
       "message": "As we discussed, quit thread here.",
+      "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd6dd6f_a2cadd24",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-01-24T18:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69acc78c_8de1f401",
       "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
