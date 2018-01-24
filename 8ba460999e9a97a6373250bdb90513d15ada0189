@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b3d03a_dce165f5",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-01-24T15:55:52Z",
+      "side": 1,
+      "message": "As discussed, I\u0027d drop this.",
+      "range": {
+        "startLine": 974,
+        "startChar": 21,
+        "endLine": 974,
+        "endChar": 25
+      },
+      "revId": "8ba460999e9a97a6373250bdb90513d15ada0189",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
