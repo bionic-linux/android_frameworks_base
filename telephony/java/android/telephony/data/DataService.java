@@ -86,15 +86,17 @@ public abstract class DataService extends Service {
     /** The reason of the data request is IWLAN handover */
     public static final int REQUEST_REASON_HANDOVER = 3;
 
-    private static final int DATA_SERVICE_INTERNAL_REQUEST_INITIALIZE_SERVICE          = 1;
-    private static final int DATA_SERVICE_REQUEST_SETUP_DATA_CALL                      = 2;
-    private static final int DATA_SERVICE_REQUEST_DEACTIVATE_DATA_CALL                 = 3;
-    private static final int DATA_SERVICE_REQUEST_SET_INITIAL_ATTACH_APN               = 4;
-    private static final int DATA_SERVICE_REQUEST_SET_DATA_PROFILE                     = 5;
-    private static final int DATA_SERVICE_REQUEST_GET_DATA_CALL_LIST                   = 6;
-    private static final int DATA_SERVICE_REQUEST_REGISTER_DATA_CALL_LIST_CHANGED      = 7;
-    private static final int DATA_SERVICE_REQUEST_UNREGISTER_DATA_CALL_LIST_CHANGED    = 8;
-    private static final int DATA_SERVICE_INDICATION_DATA_CALL_LIST_CHANGED            = 9;
+    private static final int DATA_SERVICE_CREATE_DATA_SERVICE_PROVIDER                 = 1;
+    private static final int DATA_SERVICE_REMOVE_DATA_SERVICE_PROVIDER                 = 2;
+    private static final int DATA_SERVICE_REMOVE_ALL_DATA_SERVICE_PROVIDERS            = 3;
+    private static final int DATA_SERVICE_REQUEST_SETUP_DATA_CALL                      = 4;
+    private static final int DATA_SERVICE_REQUEST_DEACTIVATE_DATA_CALL                 = 5;
+    private static final int DATA_SERVICE_REQUEST_SET_INITIAL_ATTACH_APN               = 6;
+    private static final int DATA_SERVICE_REQUEST_SET_DATA_PROFILE                     = 7;
+    private static final int DATA_SERVICE_REQUEST_GET_DATA_CALL_LIST                   = 8;
+    private static final int DATA_SERVICE_REQUEST_REGISTER_DATA_CALL_LIST_CHANGED      = 9;
+    private static final int DATA_SERVICE_REQUEST_UNREGISTER_DATA_CALL_LIST_CHANGED    = 10;
+    private static final int DATA_SERVICE_INDICATION_DATA_CALL_LIST_CHANGED            = 11;
 
     private final HandlerThread mHandlerThread;
 
@@ -102,7 +104,7 @@ public abstract class DataService extends Service {
 
     private final SparseArray<DataServiceProvider> mServiceMap = new SparseArray<>();
 
-    private final SparseArray<IDataServiceWrapper> mBinderMap = new SparseArray<>();
+    private final IBinder mBinder = new IDataServiceWrapper();
 
     /**
      * The abstract class of the actual data service implementation. The data service provider
@@ -321,18 +323,29 @@ public abstract class DataService extends Service {
         public void handleMessage(Message message) {
             IDataServiceCallback callback;
             final int slotId = message.arg1;
-            DataServiceProvider service;
-
-            synchronized (mServiceMap) {
-                service = mServiceMap.get(slotId);
-            }
+            DataServiceProvider service = mServiceMap.get(slotId);
 
             switch (message.what) {
-                case DATA_SERVICE_INTERNAL_REQUEST_INITIALIZE_SERVICE:
+                case DATA_SERVICE_CREATE_DATA_SERVICE_PROVIDER:
                     service = createDataServiceProvider(message.arg1);
                     if (service != null) {
                         mServiceMap.put(slotId, service);
                     }
+                    break;
+                case DATA_SERVICE_REMOVE_DATA_SERVICE_PROVIDER:
+                    if (service != null) {
+                        service.onDestroy();
+                        mServiceMap.remove(slotId);
+                    }
+                    break;
+                case DATA_SERVICE_REMOVE_ALL_DATA_SERVICE_PROVIDERS:
+                    for (int i = 0; i < mServiceMap.size(); i++) {
+                        DataServiceProvider serviceImpl = mServiceMap.get(i);
+                        if (serviceImpl != null) {
+                            serviceImpl.onDestroy();
+                        }
+                    }
+                    mServiceMap.clear();
                     break;
                 case DATA_SERVICE_REQUEST_SETUP_DATA_CALL:
                     if (service == null) break;
@@ -423,67 +436,19 @@ public abstract class DataService extends Service {
             loge("Unexpected intent " + intent);
             return null;
         }
-
-        int slotId = intent.getIntExtra(
-                DATA_SERVICE_EXTRA_SLOT_ID, SubscriptionManager.INVALID_SIM_SLOT_INDEX);
-
-        if (!SubscriptionManager.isValidSlotIndex(slotId)) {
-            loge("Invalid slot id " + slotId);
-            return null;
-        }
-
-        log("onBind: slot id=" + slotId);
-
-        IDataServiceWrapper binder = mBinderMap.get(slotId);
-        if (binder == null) {
-            Message msg = mHandler.obtainMessage(DATA_SERVICE_INTERNAL_REQUEST_INITIALIZE_SERVICE);
-            msg.arg1 = slotId;
-            msg.sendToTarget();
-
-            binder = new IDataServiceWrapper(slotId);
-            mBinderMap.put(slotId, binder);
-        }
-
-        return binder;
+        return mBinder;
     }
 
     /** @hide */
     @Override
     public boolean onUnbind(Intent intent) {
-        int slotId = intent.getIntExtra(DATA_SERVICE_EXTRA_SLOT_ID,
-                SubscriptionManager.INVALID_SIM_SLOT_INDEX);
-        if (mBinderMap.get(slotId) != null) {
-            DataServiceProvider serviceImpl;
-            synchronized (mServiceMap) {
-                serviceImpl = mServiceMap.get(slotId);
-            }
-            if (serviceImpl != null) {
-                serviceImpl.onDestroy();
-            }
-            mBinderMap.remove(slotId);
-        }
-
-        // If all clients unbinds, quit the handler thread
-        if (mBinderMap.size() == 0) {
-            mHandlerThread.quit();
-        }
-
+        mHandler.obtainMessage(DATA_SERVICE_REMOVE_ALL_DATA_SERVICE_PROVIDERS).sendToTarget();
         return false;
     }
 
     /** @hide */
     @Override
     public void onDestroy() {
-        synchronized (mServiceMap) {
-            for (int i = 0; i < mServiceMap.size(); i++) {
-                DataServiceProvider serviceImpl = mServiceMap.get(i);
-                if (serviceImpl != null) {
-                    serviceImpl.onDestroy();
-                }
-            }
-            mServiceMap.clear();
-        }
-
         mHandlerThread.quit();
     }
 
@@ -491,68 +456,74 @@ public abstract class DataService extends Service {
      * A wrapper around IDataService that forwards calls to implementations of {@link DataService}.
      */
     private class IDataServiceWrapper extends IDataService.Stub {
-
-        private final int mSlotId;
-
-        IDataServiceWrapper(int slotId) {
-            mSlotId = slotId;
+        @Override
+        public void createDataServiceProvider(int slotId) {
+            mHandler.obtainMessage(DATA_SERVICE_CREATE_DATA_SERVICE_PROVIDER, slotId, 0)
+                    .sendToTarget();
         }
 
         @Override
-        public void setupDataCall(int accessNetworkType, DataProfile dataProfile,
+        public void removeDataServiceProvider(int slotId) {
+            mHandler.obtainMessage(DATA_SERVICE_REMOVE_DATA_SERVICE_PROVIDER, slotId, 0)
+                    .sendToTarget();
+        }
+
+        @Override
+        public void setupDataCall(int slotId, int accessNetworkType, DataProfile dataProfile,
                                   boolean isRoaming, boolean allowRoaming, int reason,
                                   LinkProperties linkProperties, IDataServiceCallback callback) {
-            mHandler.obtainMessage(DATA_SERVICE_REQUEST_SETUP_DATA_CALL, mSlotId, 0,
+            mHandler.obtainMessage(DATA_SERVICE_REQUEST_SETUP_DATA_CALL, slotId, 0,
                     new SetupDataCallRequest(accessNetworkType, dataProfile, isRoaming,
                             allowRoaming, reason, linkProperties, callback))
                     .sendToTarget();
         }
 
         @Override
-        public void deactivateDataCall(int cid, int reason, IDataServiceCallback callback) {
-            mHandler.obtainMessage(DATA_SERVICE_REQUEST_DEACTIVATE_DATA_CALL, mSlotId, 0,
+        public void deactivateDataCall(int slotId, int cid, int reason,
+                                       IDataServiceCallback callback) {
+            mHandler.obtainMessage(DATA_SERVICE_REQUEST_DEACTIVATE_DATA_CALL, slotId, 0,
                     new DeactivateDataCallRequest(cid, reason, callback))
                     .sendToTarget();
         }
 
         @Override
-        public void setInitialAttachApn(DataProfile dataProfile, boolean isRoaming,
+        public void setInitialAttachApn(int slotId, DataProfile dataProfile, boolean isRoaming,
                                         IDataServiceCallback callback) {
-            mHandler.obtainMessage(DATA_SERVICE_REQUEST_SET_INITIAL_ATTACH_APN, mSlotId, 0,
+            mHandler.obtainMessage(DATA_SERVICE_REQUEST_SET_INITIAL_ATTACH_APN, slotId, 0,
                     new SetInitialAttachApnRequest(dataProfile, isRoaming, callback))
                     .sendToTarget();
         }
 
         @Override
-        public void setDataProfile(List<DataProfile> dps, boolean isRoaming,
+        public void setDataProfile(int slotId, List<DataProfile> dps, boolean isRoaming,
                                    IDataServiceCallback callback) {
-            mHandler.obtainMessage(DATA_SERVICE_REQUEST_SET_DATA_PROFILE, mSlotId, 0,
+            mHandler.obtainMessage(DATA_SERVICE_REQUEST_SET_DATA_PROFILE, slotId, 0,
                     new SetDataProfileRequest(dps, isRoaming, callback)).sendToTarget();
         }
 
         @Override
-        public void getDataCallList(IDataServiceCallback callback) {
-            mHandler.obtainMessage(DATA_SERVICE_REQUEST_GET_DATA_CALL_LIST, mSlotId, 0,
+        public void getDataCallList(int slotId, IDataServiceCallback callback) {
+            mHandler.obtainMessage(DATA_SERVICE_REQUEST_GET_DATA_CALL_LIST, slotId, 0,
                     callback).sendToTarget();
         }
 
         @Override
-        public void registerForDataCallListChanged(IDataServiceCallback callback) {
+        public void registerForDataCallListChanged(int slotId, IDataServiceCallback callback) {
             if (callback == null) {
                 loge("Callback is null");
                 return;
             }
-            mHandler.obtainMessage(DATA_SERVICE_REQUEST_REGISTER_DATA_CALL_LIST_CHANGED, mSlotId,
+            mHandler.obtainMessage(DATA_SERVICE_REQUEST_REGISTER_DATA_CALL_LIST_CHANGED, slotId,
                     0, callback).sendToTarget();
         }
 
         @Override
-        public void unregisterForDataCallListChanged(IDataServiceCallback callback) {
+        public void unregisterForDataCallListChanged(int slotId, IDataServiceCallback callback) {
             if (callback == null) {
                 loge("Callback is null");
                 return;
             }
-            mHandler.obtainMessage(DATA_SERVICE_REQUEST_UNREGISTER_DATA_CALL_LIST_CHANGED, mSlotId,
+            mHandler.obtainMessage(DATA_SERVICE_REQUEST_UNREGISTER_DATA_CALL_LIST_CHANGED, slotId,
                     0, callback).sendToTarget();
         }
     }
