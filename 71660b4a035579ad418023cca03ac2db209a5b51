@@ -22,6 +22,30 @@
       "revId": "71660b4a035579ad418023cca03ac2db209a5b51",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc604063_81870291",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-01-24T00:46:24Z",
+      "side": 1,
+      "message": "Yes, we are not checking the parameters. However, we will throw an exception when BLUETOOTH_PERM permission is unavailable. I have updated the comments.",
+      "parentUuid": "432838ca_2261f8b8",
+      "range": {
+        "startLine": 1514,
+        "startChar": 7,
+        "endLine": 1514,
+        "endChar": 95
+      },
+      "revId": "71660b4a035579ad418023cca03ac2db209a5b51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
