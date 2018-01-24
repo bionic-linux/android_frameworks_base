@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bb15cf4_84a78c11",
+        "filename": "api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 41084,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-24T05:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f4962b3_9a62aaa2",
+      "range": {
+        "startLine": 41084,
+        "startChar": 0,
+        "endLine": 41084,
+        "endChar": 37
+      },
+      "revId": "85f3717deca8905cac491c6977345520662a29d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "037a0892_90d7f458",
         "filename": "api/current.txt",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-23T23:59:48Z",
       "side": 1,
       "message": "and here",
+      "range": {
+        "startLine": 41092,
+        "startChar": 0,
+        "endLine": 41096,
+        "endChar": 65
+      },
+      "revId": "85f3717deca8905cac491c6977345520662a29d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57de5713_9c589943",
+        "filename": "api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 41096,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-24T05:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "037a0892_90d7f458",
       "range": {
         "startLine": 41092,
         "startChar": 0,
