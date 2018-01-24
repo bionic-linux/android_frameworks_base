@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b0d459_29add50c",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3173,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-01-24T16:09:03Z",
+      "side": 1,
+      "message": "I can see how the old implementation is wrong, but doesn\u0027t the new implementation have the same issue? in.mLength is based on new DataInputStream(inputStream).available().\n\nI suspect that we can\u0027t reliably determine the real thumbnailLength here, so this line probably needs to be dropped. I suspect that in line 3196, we probably need to read *up to* thumbnailLength (or until EOF, whichever comes sooner), rather than assuming that we already know the exact number of bytes to be read.\n\nBut I\u0027m not familiar with this code, so this is just a guess. I\u0027ll leave it to the owners of this code to fix this.",
+      "range": {
+        "startLine": 3173,
+        "startChar": 0,
+        "endLine": 3173,
+        "endChar": 86
+      },
+      "revId": "372d32497c46fc087ca69532bba0cbe001ca6aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
