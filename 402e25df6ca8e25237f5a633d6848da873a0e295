@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "206e4b63_01f1dd7e",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-24T01:56:47Z",
+      "side": 1,
+      "message": "Can we just create IDataServiceWrapper here?",
+      "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396e18c1_8185e230",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-24T01:56:47Z",
+      "side": 1,
+      "message": "We can probably create mBinder in constructor and just return mBinder here.",
+      "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0269d102_e6415eac",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-24T01:56:47Z",
+      "side": 1,
+      "message": "As we discussed, clear mServiceMap and call serviceImpl.onDestroy() here.",
+      "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69acc78c_8de1f401",
+        "filename": "telephony/java/android/telephony/data/DataService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-01-24T01:56:47Z",
+      "side": 1,
+      "message": "As we discussed, quit thread here.",
+      "revId": "402e25df6ca8e25237f5a633d6848da873a0e295",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
