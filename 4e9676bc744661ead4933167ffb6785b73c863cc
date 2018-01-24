@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "697f27bc_324fdde2",
+        "filename": "core/java/com/android/internal/car/ICarServiceHelper.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1061103
+      },
+      "writtenOn": "2018-01-24T06:20:36Z",
+      "side": 1,
+      "message": "I think we actually want this to be a synchronous call.  The return value will tell CarPowerManager whether suspend actually happened or not.  If suspend did not happen, then we have to shutdown.",
+      "parentUuid": "193822a5_245ca642",
+      "revId": "4e9676bc744661ead4933167ffb6785b73c863cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89ed242a_bf4fff9a",
         "filename": "services/core/java/com/android/server/car/CarServiceHelperService.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4e9676bc744661ead4933167ffb6785b73c863cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45e13cb_40f8156d",
+        "filename": "services/core/java/com/android/server/car/CarServiceHelperService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1061103
+      },
+      "writtenOn": "2018-01-24T06:20:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ed242a_bf4fff9a",
+      "revId": "4e9676bc744661ead4933167ffb6785b73c863cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
