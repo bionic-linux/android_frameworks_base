@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "193822a5_245ca642",
+        "filename": "core/java/com/android/internal/car/ICarServiceHelper.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-01-24T06:02:25Z",
+      "side": 1,
+      "message": "oneway",
+      "revId": "4e9676bc744661ead4933167ffb6785b73c863cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ed242a_bf4fff9a",
+        "filename": "services/core/java/com/android/server/car/CarServiceHelperService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-01-24T06:02:25Z",
+      "side": 1,
+      "message": "Add a line between method and class declarations",
+      "revId": "4e9676bc744661ead4933167ffb6785b73c863cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
