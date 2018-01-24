@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d3bc131_e50cf042",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-24T22:50:55Z",
+      "side": 1,
+      "message": "If this is a system API only, the right way to do it would:\n\u003c!-- Allows an application to manage embedded subscriptions (those on a eUICC) through\n         EuiccManager APIs.\n         \u003cp\u003eProtection level: signature|privileged|development\n         @hide\n    --\u003e\n@SystemApi",
+      "range": {
+        "startLine": 1739,
+        "startChar": 8,
+        "endLine": 1740,
+        "endChar": 7
+      },
+      "revId": "578eea6c1b942cd79e47e0a754a2f15aa15197a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3b9ab73_5cff92d8",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-01-24T22:50:55Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 1746,
+        "startChar": 8,
+        "endLine": 1746,
+        "endChar": 19
+      },
+      "revId": "578eea6c1b942cd79e47e0a754a2f15aa15197a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
