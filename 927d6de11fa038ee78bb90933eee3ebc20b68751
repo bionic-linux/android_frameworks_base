@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "104579f0_f79d2904",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7070,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-01-25T14:26:17Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you add a TODO that adds a property like line 7048?",
+      "range": {
+        "startLine": 7070,
+        "startChar": 8,
+        "endLine": 7070,
+        "endChar": 49
+      },
+      "revId": "927d6de11fa038ee78bb90933eee3ebc20b68751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
