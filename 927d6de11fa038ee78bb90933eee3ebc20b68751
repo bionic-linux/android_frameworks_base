@@ -46,6 +46,30 @@
       "revId": "927d6de11fa038ee78bb90933eee3ebc20b68751",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fddaa784_b7f1efd5",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7070,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-01-25T19:56:17Z",
+      "side": 1,
+      "message": "Oops, sorry narayan. Was too eager. I\u0027ll do it now.",
+      "parentUuid": "5c7270fc_17a4cf17",
+      "range": {
+        "startLine": 7070,
+        "startChar": 8,
+        "endLine": 7070,
+        "endChar": 49
+      },
+      "revId": "927d6de11fa038ee78bb90933eee3ebc20b68751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
