@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e77827e_8b2a0940",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-01-25T17:53:16Z",
+      "side": 1,
+      "message": "nit: inconsistent with names above, should it be mini-debug-info?",
+      "range": {
+        "startLine": 973,
+        "startChar": 37,
+        "endLine": 973,
+        "endChar": 50
+      },
+      "revId": "3bb32503d47be30e5083acd1fe1bd6e74fd64697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
