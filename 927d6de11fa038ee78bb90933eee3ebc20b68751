@@ -70,6 +70,30 @@
       "revId": "927d6de11fa038ee78bb90933eee3ebc20b68751",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37694f96_58e3755f",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7070,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-01-25T19:58:03Z",
+      "side": 1,
+      "message": "No worries :)",
+      "parentUuid": "fddaa784_b7f1efd5",
+      "range": {
+        "startLine": 7070,
+        "startChar": 8,
+        "endLine": 7070,
+        "endChar": 49
+      },
+      "revId": "927d6de11fa038ee78bb90933eee3ebc20b68751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
