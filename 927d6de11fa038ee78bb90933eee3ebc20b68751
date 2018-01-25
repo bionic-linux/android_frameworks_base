@@ -22,6 +22,30 @@
       "revId": "927d6de11fa038ee78bb90933eee3ebc20b68751",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c7270fc_17a4cf17",
+        "filename": "core/java/android/app/Activity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7070,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-01-25T19:20:06Z",
+      "side": 1,
+      "message": "I\u0027d suggest doing it in this change itself, it\u0027s not a huge delta and I think it should be flag guarded from the outset.",
+      "parentUuid": "104579f0_f79d2904",
+      "range": {
+        "startLine": 7070,
+        "startChar": 8,
+        "endLine": 7070,
+        "endChar": 49
+      },
+      "revId": "927d6de11fa038ee78bb90933eee3ebc20b68751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
