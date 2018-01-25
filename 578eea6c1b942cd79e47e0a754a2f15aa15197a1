@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fcbfad7_7a1ada64",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-25T01:03:20Z",
+      "side": 1,
+      "message": "Added @hide.\nIn EuiccManager, we have some comments using {@link android.Manifest.permission#WRITE_EMBEDDED_SUBSCRIPTIONS}. It works for those APIs also with @SystemApi + @hide, but it doesn\u0027t work for those public APIs. We can:\n1) make the permission public. The permission is supposed to be only used by system app. Can they be public?\nAlso, I wonder why MODIFY_PHONE_STATE is only @SystemApi without @hide (https://cs.corp.google.com/android/frameworks/base/core/res/AndroidManifest.xml?l\u003d1671).\n2) changed the comments to @code instead of @link as what I did now\n3) don\u0027t refer to this link for those public APIs comments\n\nTyler - What\u0027s your suggestion? Thanks!",
+      "parentUuid": "1d3bc131_e50cf042",
+      "range": {
+        "startLine": 1739,
+        "startChar": 8,
+        "endLine": 1740,
+        "endChar": 7
+      },
+      "revId": "578eea6c1b942cd79e47e0a754a2f15aa15197a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3b9ab73_5cff92d8",
         "filename": "core/res/AndroidManifest.xml",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-24T22:50:55Z",
       "side": 1,
       "message": "same here.",
+      "range": {
+        "startLine": 1746,
+        "startChar": 8,
+        "endLine": 1746,
+        "endChar": 19
+      },
+      "revId": "578eea6c1b942cd79e47e0a754a2f15aa15197a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3ff468f_799b2597",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-01-25T01:03:20Z",
+      "side": 1,
+      "message": "Done. Added @hide.",
+      "parentUuid": "d3b9ab73_5cff92d8",
       "range": {
         "startLine": 1746,
         "startChar": 8,
