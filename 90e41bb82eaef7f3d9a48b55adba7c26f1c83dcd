@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b98d37_1e7f25bf",
+        "filename": "telephony/java/android/telephony/euicc/EuiccCardManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-01-27T01:40:18Z",
+      "side": 1,
+      "message": "this seems out of place - not part of unhiding CL.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 54
+      },
+      "revId": "90e41bb82eaef7f3d9a48b55adba7c26f1c83dcd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
