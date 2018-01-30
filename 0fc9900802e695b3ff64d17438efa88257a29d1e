@@ -22,6 +22,30 @@
       "revId": "0fc9900802e695b3ff64d17438efa88257a29d1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5d301b_99b82503",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69418,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-01-30T22:51:58Z",
+      "side": 0,
+      "message": "How does a client tell? Object still has a finalize() method.\n\nSome more details:\n\nThe spec says: \"Ensures that the key stored away by this ExemptionMechanism object will be wiped out when there are no more references to it.\" Which it never did. In fact it preserved the key longer by adding a nontrivial finalizer. And the finalizer just cleared the reference to the key, not the key.\n\nAFAICT, the only visible change is that it\u0027s moving from doing the wrong thing to doing nothing at all.\n\nIt disappeared from the upstream source without deprecation, after I pointed out the problem.",
+      "parentUuid": "536b3f78_df4f63e5",
+      "range": {
+        "startLine": 69418,
+        "startChar": 26,
+        "endLine": 69418,
+        "endChar": 34
+      },
+      "revId": "0fc9900802e695b3ff64d17438efa88257a29d1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
