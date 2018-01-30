@@ -614,6 +614,10 @@ public class SmsMessage extends SmsMessageBase {
                         }
                         addr.origBytes = data;
                         Rlog.i(LOG_TAG, "Originating Addr=" + addr.toString());
+                        if (parameterId == DESTINATION_ADDRESS) {
+                            env.destAddress = addr;
+                            mRecipientAddress = addr;
+                        }
                         break;
                     case ORIGINATING_SUB_ADDRESS:
                     case DESTINATION_SUB_ADDRESS:
@@ -668,7 +672,7 @@ public class SmsMessage extends SmsMessageBase {
     }
 
     /**
-     * Parses a SMS message from its BearerData stream. (mobile-terminated only)
+     * Parses a SMS message from its BearerData stream.
      */
     public void parseSms() {
         // Message Waiting Info Record defined in 3GPP2 C.S-0005, 3.7.5.6
@@ -732,7 +736,8 @@ public class SmsMessage extends SmsMessageBase {
                 status = mBearerData.errorClass << 8;
                 status |= mBearerData.messageStatus;
             }
-        } else if (mBearerData.messageType != BearerData.MESSAGE_TYPE_DELIVER) {
+        } else if (mBearerData.messageType != BearerData.MESSAGE_TYPE_DELIVER
+                && mBearerData.messageType != BearerData.MESSAGE_TYPE_SUBMIT) {
             throw new RuntimeException("Unsupported message type: " + mBearerData.messageType);
         }
 
