@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "536b3f78_df4f63e5",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69418,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2018-01-30T22:29:26Z",
+      "side": 0,
+      "message": "This already shipped it can\u0027t be removed, not really anyway. It needs to go through a deprecation phase at least, unless API Council will give an exemption if it turns out actually nobody ever used this.",
+      "range": {
+        "startLine": 69418,
+        "startChar": 26,
+        "endLine": 69418,
+        "endChar": 34
+      },
+      "revId": "0fc9900802e695b3ff64d17438efa88257a29d1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
