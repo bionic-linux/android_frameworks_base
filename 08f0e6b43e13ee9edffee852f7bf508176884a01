@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8ef26b1_2118d37a",
+        "filename": "telecomm/java/android/telecom/PhoneAccount.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-01-30T19:33:22Z",
+      "side": 1,
+      "message": "nit: has an effect",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 33
+      },
+      "revId": "08f0e6b43e13ee9edffee852f7bf508176884a01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e418139a_2196ffc5",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-01-30T19:33:22Z",
+      "side": 1,
+      "message": "nit: device overlay",
+      "range": {
+        "startLine": 136,
+        "startChar": 80,
+        "endLine": 136,
+        "endChar": 86
+      },
+      "revId": "08f0e6b43e13ee9edffee852f7bf508176884a01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
