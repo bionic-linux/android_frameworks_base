@@ -46,6 +46,30 @@
       "revId": "0fc9900802e695b3ff64d17438efa88257a29d1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118c4d45_04f10e9f",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69418,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2018-01-30T22:54:23Z",
+      "side": 0,
+      "message": "ah, ok",
+      "parentUuid": "0d5d301b_99b82503",
+      "range": {
+        "startLine": 69418,
+        "startChar": 26,
+        "endLine": 69418,
+        "endChar": 34
+      },
+      "revId": "0fc9900802e695b3ff64d17438efa88257a29d1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
