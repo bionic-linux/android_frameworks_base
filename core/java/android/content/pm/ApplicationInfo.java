@@ -17,6 +17,7 @@
 package android.content.pm;
 
 import static android.os.Build.VERSION_CODES.DONUT;
+import static android.os.Build.VERSION_CODES.O_MR1;
 
 import android.annotation.IntDef;
 import android.annotation.SystemApi;
@@ -1459,7 +1460,8 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * @hide
      */
     public boolean isAllowedToUseHiddenApi() {
-        return isSystemApp();
+         //Allow use HiddenAPI when targetSdkVersion <= O_MR1
+         return isSystemApp() || targetSdkVersion <= O_MR1;
     }
 
     /**
