@@ -50,10 +50,28 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
     /**
      * Constructor
      *
+     * @param ss SignalStrength as ASU value
+     * @param ber is Bit Error Rate
+     *
      * @hide
      */
     public CellSignalStrengthGsm(int ss, int ber) {
-        initialize(ss, ber);
+        this(ss, ber, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param ss SignalStrength as ASU value
+     * @param ber is Bit Error Rate
+     * @param ta timing advance
+     *
+     * @hide
+     */
+    public CellSignalStrengthGsm(int ss, int ber, int ta) {
+        mSignalStrength = ss;
+        mBitErrorRate = ber;
+        mTimingAdvance = ta;
     }
 
     /**
@@ -65,35 +83,6 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
      */
     public CellSignalStrengthGsm(CellSignalStrengthGsm s) {
         copyFrom(s);
-    }
-
-    /**
-     * Initialize all the values
-     *
-     * @param ss SignalStrength as ASU value
-     * @param ber is Bit Error Rate
-     *
-     * @hide
-     */
-    public void initialize(int ss, int ber) {
-        mSignalStrength = ss;
-        mBitErrorRate = ber;
-        mTimingAdvance = Integer.MAX_VALUE;
-    }
-
-    /**
-     * Initialize all the values
-     *
-     * @param ss SignalStrength as ASU value
-     * @param ber is Bit Error Rate
-     * @param ta timing advance
-     *
-     * @hide
-     */
-    public void initialize(int ss, int ber, int ta) {
-        mSignalStrength = ss;
-        mBitErrorRate = ber;
-        mTimingAdvance = ta;
     }
 
     /**

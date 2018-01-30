@@ -49,11 +49,23 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     /**
      * Constructor
      *
+     * @param signalStrength
+     * @param rsrp
+     * @param rsrq
+     * @param rssnr
+     * @param cqi
+     * @param timingAdvance
+     *
      * @hide
      */
     public CellSignalStrengthLte(int signalStrength, int rsrp, int rsrq, int rssnr, int cqi,
             int timingAdvance) {
-        initialize(signalStrength, rsrp, rsrq, rssnr, cqi, timingAdvance);
+        mSignalStrength = signalStrength;
+        mRsrp = rsrp;
+        mRsrq = rsrq;
+        mRssnr = rssnr;
+        mCqi = cqi;
+        mTimingAdvance = timingAdvance;
     }
 
     /**
@@ -65,43 +77,6 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      */
     public CellSignalStrengthLte(CellSignalStrengthLte s) {
         copyFrom(s);
-    }
-
-    /**
-     * Initialize all the values
-     *
-     * @param lteSignalStrength
-     * @param rsrp
-     * @param rsrq
-     * @param rssnr
-     * @param cqi
-     *
-     * @hide
-     */
-    public void initialize(int lteSignalStrength, int rsrp, int rsrq, int rssnr, int cqi,
-            int timingAdvance) {
-        mSignalStrength = lteSignalStrength;
-        mRsrp = rsrp;
-        mRsrq = rsrq;
-        mRssnr = rssnr;
-        mCqi = cqi;
-        mTimingAdvance = timingAdvance;
-    }
-
-    /**
-     * Initialize from the SignalStrength structure.
-     *
-     * @param ss
-     *
-     * @hide
-     */
-    public void initialize(SignalStrength ss, int timingAdvance) {
-        mSignalStrength = ss.getLteSignalStrength();
-        mRsrp = ss.getLteRsrp();
-        mRsrq = ss.getLteRsrq();
-        mRssnr = ss.getLteRssnr();
-        mCqi = ss.getLteCqi();
-        mTimingAdvance = timingAdvance;
     }
 
     /**
