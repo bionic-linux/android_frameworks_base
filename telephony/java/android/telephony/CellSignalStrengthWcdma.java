@@ -49,10 +49,14 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     /**
      * Constructor
      *
+     * @param ss SignalStrength as ASU value
+     * @param ber is Bit Error Rate
+     *
      * @hide
      */
     public CellSignalStrengthWcdma(int ss, int ber) {
-        initialize(ss, ber);
+        mSignalStrength = ss;
+        mBitErrorRate = ber;
     }
 
     /**
@@ -64,19 +68,6 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
      */
     public CellSignalStrengthWcdma(CellSignalStrengthWcdma s) {
         copyFrom(s);
-    }
-
-    /**
-     * Initialize all the values
-     *
-     * @param ss SignalStrength as ASU value
-     * @param ber is Bit Error Rate
-     *
-     * @hide
-     */
-    public void initialize(int ss, int ber) {
-        mSignalStrength = ss;
-        mBitErrorRate = ber;
     }
 
     /**

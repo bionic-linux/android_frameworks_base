@@ -45,14 +45,25 @@ public final class CellSignalStrengthCdma extends CellSignalStrength implements 
         setDefaultValues();
     }
 
+
     /**
      * Constructor
+     *
+     * @param cdmaDbm
+     * @param cdmaEcio
+     * @param evdoDbm
+     * @param evdoEcio
+     * @param evdoSnr
      *
      * @hide
      */
     public CellSignalStrengthCdma(int cdmaDbm, int cdmaEcio, int evdoDbm, int evdoEcio,
             int evdoSnr) {
-        initialize(cdmaDbm, cdmaEcio, evdoDbm, evdoEcio, evdoSnr);
+        mCdmaDbm = cdmaDbm;
+        mCdmaEcio = cdmaEcio;
+        mEvdoDbm = evdoDbm;
+        mEvdoEcio = evdoEcio;
+        mEvdoSnr = evdoSnr;
     }
 
     /**
@@ -64,25 +75,6 @@ public final class CellSignalStrengthCdma extends CellSignalStrength implements 
      */
     public CellSignalStrengthCdma(CellSignalStrengthCdma s) {
         copyFrom(s);
-    }
-
-    /**
-     * Initialize all the values
-     *
-     * @param cdmaDbm
-     * @param cdmaEcio
-     * @param evdoDbm
-     * @param evdoEcio
-     * @param evdoSnr
-     *
-     * @hide
-     */
-    public void initialize(int cdmaDbm, int cdmaEcio, int evdoDbm, int evdoEcio, int evdoSnr) {
-        mCdmaDbm = cdmaDbm;
-        mCdmaEcio = cdmaEcio;
-        mEvdoDbm = evdoDbm;
-        mEvdoEcio = evdoEcio;
-        mEvdoSnr = evdoSnr;
     }
 
     /**
