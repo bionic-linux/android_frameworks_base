@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4c271d9_81d36ed4",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-31T12:02:02Z",
+      "side": 1,
+      "message": "Nit: s/CAPBILITIES/CAPABILITIES/",
+      "range": {
+        "startLine": 59,
+        "startChar": 39,
+        "endLine": 59,
+        "endChar": 67
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15d2ca9_cf233b10",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-31T12:02:02Z",
+      "side": 1,
+      "message": "How about renaming this to something that makes it clear it\u0027s a pair with the following int ? For example mRequiredCapabilities and mForbiddenCapabilities or something similar ?",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 37
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae50fbfb_2f8df987",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 1
@@ -22,6 +68,29 @@
       "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39517a21_d3ee0693",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-31T12:02:02Z",
+      "side": 1,
+      "message": "I may have missed something, but :\nIn the margins of Lorenzo\u0027s explanation that the API council will be reviewing the naming of this anyway, my observation would be that the last part of this comment is what matters here : not that the OEM is paying for this, but that the consumer is not being charged. This would suggest a name along the lines of NET_CAPABILITIES_FREE_OF_CHARGE or similar.",
+      "range": {
+        "startLine": 265,
+        "startChar": 72,
+        "endLine": 266,
+        "endChar": 24
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +209,53 @@
     },
     {
       "key": {
+        "uuid": "7dc01165_01fff01c",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-31T12:02:02Z",
+      "side": 1,
+      "message": "...and likewise for the equalsNetCapabilities method above",
+      "parentUuid": "13f56a16_76654a94",
+      "range": {
+        "startLine": 460,
+        "startChar": 76,
+        "endLine": 460,
+        "endChar": 77
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56059629_6f72349c",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-31T12:02:02Z",
+      "side": 1,
+      "message": "Just for visual comfort I\u0027d suggest making an equalsUnwantedNetCapabilities and putting it immediately after this line instead.\n\n(obviously, this comment is moot if equalsNetCapabilities is made to include this check)",
+      "range": {
+        "startLine": 1182,
+        "startChar": 15,
+        "endLine": 1182,
+        "endChar": 36
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75dda44c_1f86012b",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 1
@@ -183,6 +299,29 @@
       "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2ffc66_c038074b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-01-31T12:02:02Z",
+      "side": 1,
+      "message": "Optionally put this line in 1210 just after parceling mNetworkCapabilities. Parcels explicitly do not have to keep backward binary compatibility, and I think it would look prettier. Not very important though.",
+      "range": {
+        "startLine": 1216,
+        "startChar": 13,
+        "endLine": 1216,
+        "endChar": 22
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
