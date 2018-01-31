@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3afff9b5_1849a542",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-31T22:25:26Z",
+      "side": 1,
+      "message": "yup",
+      "parentUuid": "0a425d94_aea947ec",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 150,
+        "endChar": 73
+      },
+      "revId": "c6eb6aaa6303211c0dba18f48ff4fa9054882433",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e954b1e_2727694d",
         "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-31T21:55:09Z",
       "side": 1,
       "message": "checkPermissionOrSelf?",
+      "range": {
+        "startLine": 75,
+        "startChar": 24,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "c6eb6aaa6303211c0dba18f48ff4fa9054882433",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49e21550_f705b450",
+        "filename": "telephony/java/android/telephony/LocationAccessPolicy.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-01-31T22:25:26Z",
+      "side": 1,
+      "message": "The \"self\" case never gets here -- if it\u0027s called from the phone UID, it returns true immediately",
+      "parentUuid": "1e954b1e_2727694d",
       "range": {
         "startLine": 75,
         "startChar": 24,
