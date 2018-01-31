@@ -116,6 +116,7 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_NOT_ROAMING,
             NET_CAPABILITY_FOREGROUND,
             NET_CAPABILITY_NOT_CONGESTED,
+            NET_CAPABILITY_OEM_PAID,
     })
     public @interface NetCapability { }
 
@@ -252,8 +253,15 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int NET_CAPABILITY_NOT_CONGESTED = 20;
 
+    /**
+     * Indicates that traffic that goes through this network is paid by oem. For example,
+     * this network can be used by system apps to upload telemetry data.
+     * @hide
+     */
+    public static final int NET_CAPABILITY_OEM_PAID = 21;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_NOT_CONGESTED;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_OEM_PAID;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -300,7 +308,8 @@ public final class NetworkCapabilities implements Parcelable {
             (1 << NET_CAPABILITY_IA) |
             (1 << NET_CAPABILITY_IMS) |
             (1 << NET_CAPABILITY_RCS) |
-            (1 << NET_CAPABILITY_XCAP);
+            (1 << NET_CAPABILITY_XCAP) |
+            (1 << NET_CAPABILITY_OEM_PAID);
 
     /**
      * Capabilities that suggest that a network is unrestricted.
@@ -1276,6 +1285,7 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_NOT_ROAMING:    return "NOT_ROAMING";
             case NET_CAPABILITY_FOREGROUND:     return "FOREGROUND";
             case NET_CAPABILITY_NOT_CONGESTED:  return "NOT_CONGESTED";
+            case NET_CAPABILITY_OEM_PAID:       return "OEM_PAID";
             default:                            return Integer.toString(capability);
         }
     }
