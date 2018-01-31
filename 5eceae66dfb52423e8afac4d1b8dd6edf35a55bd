@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae50fbfb_2f8df987",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-31T07:28:45Z",
+      "side": 1,
+      "message": "Suggest doing this in a separate CL.",
+      "range": {
+        "startLine": 126,
+        "startChar": 12,
+        "endLine": 126,
+        "endChar": 36
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b00d88_03dfc7ba",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-31T07:28:45Z",
+      "side": 1,
+      "message": "Instead of silently removing the unwanted capability, how about throwing if it\u0027s set? It\u0027s clearly a programming error to have a capability be both unwanted and wanted.",
+      "range": {
+        "startLine": 353,
+        "startChar": 8,
+        "endLine": 353,
+        "endChar": 45
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e6a6f2_5cd18ce1",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-31T07:28:45Z",
+      "side": 1,
+      "message": "These are signed integers, so this should be \"!\u003d\" instead of \"\u003e\".",
+      "range": {
+        "startLine": 446,
+        "startChar": 69,
+        "endLine": 446,
+        "endChar": 70
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75dda44c_1f86012b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-31T07:28:45Z",
+      "side": 1,
+      "message": "These are just longs, so use \"mUnwantedNetworkCapabilities \u003d\u003d that.mUnwantedNetworkCapabilities\".",
+      "range": {
+        "startLine": 1188,
+        "startChar": 19,
+        "endLine": 1188,
+        "endChar": 99
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e593681_5caebe95",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-01-31T07:28:45Z",
+      "side": 1,
+      "message": "I\u0027d prefer if you did not change this to Objects.hash. Calling Objects.hash on primitive types causes performance problems due to the overhead of auto-boxing, and most of what we\u0027re hashing here are primitive types.",
+      "range": {
+        "startLine": 1193,
+        "startChar": 15,
+        "endLine": 1193,
+        "endChar": 27
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
