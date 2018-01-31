@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75c49c34_dafe9f97",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-01-31T11:12:08Z",
+      "side": 1,
+      "message": "Thank you. I removed.",
+      "parentUuid": "cf11072e_ceccfb6a",
+      "range": {
+        "startLine": 1502,
+        "startChar": 28,
+        "endLine": 1502,
+        "endChar": 30
+      },
+      "revId": "9b22836badf3953b5c1559f178f083ac8001de1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6375ab8a_31c033fa",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-31T00:11:37Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 1503,
+        "startChar": 28,
+        "endLine": 1503,
+        "endChar": 30
+      },
+      "revId": "9b22836badf3953b5c1559f178f083ac8001de1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2c838d0_4d851edd",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2018-01-31T11:12:08Z",
+      "side": 1,
+      "message": "Thank you. I removed.",
+      "parentUuid": "6375ab8a_31c033fa",
       "range": {
         "startLine": 1503,
         "startChar": 28,
