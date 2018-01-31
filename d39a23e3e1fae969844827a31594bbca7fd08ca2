@@ -93,6 +93,30 @@
       "revId": "d39a23e3e1fae969844827a31594bbca7fd08ca2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bb45352_28e83817",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2018-01-31T19:26:59Z",
+      "side": 1,
+      "message": "Sounds good. We should just delete it.",
+      "parentUuid": "cd9e4337_5cd5e965",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "d39a23e3e1fae969844827a31594bbca7fd08ca2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
