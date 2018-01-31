@@ -69,6 +69,30 @@
       "revId": "d39a23e3e1fae969844827a31594bbca7fd08ca2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd9e4337_5cd5e965",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-01-31T18:31:54Z",
+      "side": 1,
+      "message": "This is hidden as well; as per our chat the suggestion was to just delete it. It certainly isn\u0027t adding any value.",
+      "parentUuid": "54ee12e7_cc6a0e74",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "d39a23e3e1fae969844827a31594bbca7fd08ca2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
