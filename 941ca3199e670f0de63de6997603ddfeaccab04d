@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4143c92c_7b0cc221",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-02-01T19:46:56Z",
+      "side": 1,
+      "message": "you need min_ce_len, and max_ce_len here to test same parameters as Hearing Aid will request.",
+      "revId": "941ca3199e670f0de63de6997603ddfeaccab04d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4495ae4_c30e723b",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-02-01T19:46:56Z",
+      "side": 1,
+      "message": "please also update naming in lower layers, leConnectionUpdate(...)",
+      "range": {
+        "startLine": 1530,
+        "startChar": 21,
+        "endLine": 1530,
+        "endChar": 52
+      },
+      "revId": "941ca3199e670f0de63de6997603ddfeaccab04d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
