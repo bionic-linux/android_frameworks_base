@@ -46,6 +46,30 @@
       "revId": "fc52eb646bc5f19c1608a75d3ce60ee0671d5085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eddc2a0_2f1c7a22",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-02-01T23:19:32Z",
+      "side": 1,
+      "message": "Let me take my previous comment back. Yes, we don\u0027t throw any exception. Let me update this comment.",
+      "parentUuid": "f4eb05c1_1e890e30",
+      "range": {
+        "startLine": 1514,
+        "startChar": 6,
+        "endLine": 1514,
+        "endChar": 74
+      },
+      "revId": "fc52eb646bc5f19c1608a75d3ce60ee0671d5085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
