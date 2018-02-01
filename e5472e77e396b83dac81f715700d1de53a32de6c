@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4e3a72b_8d48fc9d",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-02-01T02:17:28Z",
+      "side": 1,
+      "message": "Maybe use name similar to what\u0027s in bt spec \"LE Connection Update\" ?",
+      "range": {
+        "startLine": 1517,
+        "startChar": 19,
+        "endLine": 1517,
+        "endChar": 48
+      },
+      "revId": "e5472e77e396b83dac81f715700d1de53a32de6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
