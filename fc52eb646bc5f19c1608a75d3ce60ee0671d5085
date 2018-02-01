@@ -22,6 +22,30 @@
       "revId": "fc52eb646bc5f19c1608a75d3ce60ee0671d5085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4eb05c1_1e890e30",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-02-01T22:54:12Z",
+      "side": 1,
+      "message": "In GattService::leConnectionUpdate(), we will call enforceCallingOrSelfPermission(BLUETOOTH_PERM). But you are right, the correct exception is SecurityException.\nIf I update the comment with the right SecurityException exception, is this OK?",
+      "parentUuid": "bf4fdfe8_012e505a",
+      "range": {
+        "startLine": 1514,
+        "startChar": 6,
+        "endLine": 1514,
+        "endChar": 74
+      },
+      "revId": "fc52eb646bc5f19c1608a75d3ce60ee0671d5085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
