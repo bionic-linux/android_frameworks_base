@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "756c3679_929e7883",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-02-01T20:18:13Z",
+      "side": 1,
+      "message": "Like I said before, this is not in scope of this CL which is to change the LE Connection Parameters. There are many other parameters that could be changed and tested. But I do like to keep each CL small. Please note that adding each new parameter here means that we need need to add new suites of SL4A tests which is a huge change.",
+      "parentUuid": "4143c92c_7b0cc221",
+      "revId": "941ca3199e670f0de63de6997603ddfeaccab04d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4495ae4_c30e723b",
         "filename": "core/java/android/bluetooth/BluetoothGatt.java",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2018-02-01T19:46:56Z",
       "side": 1,
       "message": "please also update naming in lower layers, leConnectionUpdate(...)",
+      "range": {
+        "startLine": 1530,
+        "startChar": 21,
+        "endLine": 1530,
+        "endChar": 52
+      },
+      "revId": "941ca3199e670f0de63de6997603ddfeaccab04d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b815e028_14391058",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-02-01T20:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4495ae4_c30e723b",
       "range": {
         "startLine": 1530,
         "startChar": 21,
