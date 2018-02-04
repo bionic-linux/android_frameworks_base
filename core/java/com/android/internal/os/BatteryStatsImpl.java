@@ -4071,6 +4071,15 @@ public class BatteryStatsImpl extends BatteryStats {
         mCurStepStatIdleTime += statIdleTime;
     }
 
+    public void noteCpuStepDetailsLocked(int uid, int uTime, int sTime) {
+        uid = mapUid(uid);
+        Uid u = mUidStats.get(uid);
+        if (u != null) {
+            u.mCurStepUserTime += uTime;
+            u.mCurStepSystemTime += sTime;
+        }
+    }
+
     public void noteProcessDiedLocked(int uid, int pid) {
         uid = mapUid(uid);
         Uid u = mUidStats.get(uid);

@@ -3025,6 +3025,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                                     }
                                     ps.addCpuTimeLocked(st.rel_utime, st.rel_stime);
                                     pr.curCpuTime += st.rel_utime + st.rel_stime;
+                                    bstats.noteCpuStepDetailsLocked(pr.info.uid, st.rel_utime, st.rel_stime);
                                     if (pr.lastCpuTime == 0) {
                                         pr.lastCpuTime = pr.curCpuTime;
                                     }
@@ -3035,6 +3036,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                                                 bstats.mapUid(st.uid), st.name);
                                     }
                                     ps.addCpuTimeLocked(st.rel_utime, st.rel_stime);
+                                    bstats.noteCpuStepDetailsLocked(bstats.mapUid(st.uid), st.rel_utime, st.rel_stime);
                                 }
                             }
                             final int userTime = mProcessCpuTracker.getLastUserTime();
