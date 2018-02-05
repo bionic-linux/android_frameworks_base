@@ -1286,6 +1286,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub {
                 .isUserUnlockingOrUnlocked(userState.mUserId);
 
         for (int i = 0, count = userState.mInstalledServices.size(); i < count; i++) {
+        	//Resolve random auto reboot issue begin
+        	try {
             AccessibilityServiceInfo installedService = userState.mInstalledServices.get(i);
             ComponentName componentName = ComponentName.unflattenFromString(
                     installedService.getId());
@@ -1314,6 +1316,10 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub {
                     service.unbindLocked();
                 }
             }
+			} catch (Exception e) {
+				Slog.e(LOG_TAG, "updateServicesLocked " + e);
+			}
+			// Resolve random auto reboot issue end
         }
 
         updateAccessibilityEnabledSetting(userState);
