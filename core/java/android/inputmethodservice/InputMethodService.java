@@ -1689,8 +1689,8 @@ public class InputMethodService extends AbstractInputMethodService {
         }
         if ((previousImeWindowStatus & IME_ACTIVE) == 0) {
             if (DEBUG) Log.v(TAG, "showWindow: showing!");
-            onWindowShown();
             mWindow.show();
+            onWindowShown();
             // Put here rather than in onWindowShown() in case people forget to call
             // super.onWindowShown().
             mShouldClearInsetOfPreviousIme = false;
