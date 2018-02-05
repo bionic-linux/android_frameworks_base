@@ -2987,6 +2987,8 @@ public class DevicePolicyManager {
      *
      * <p>Trust agents can also be disabled altogether using {@link #KEYGUARD_DISABLE_TRUST_AGENTS}.
      *
+     * <p>Iris can also be disabled altogether using {@link #KEYGUARD_DISABLE_IRIS}.
+     *
      * <p>The calling device admin must be a device or profile owner. If it is not,
      * a {@link SecurityException} will be thrown.
      *
@@ -3004,7 +3006,7 @@ public class DevicePolicyManager {
      *         The minimum and maximum timeouts are platform-defined and are typically 1 hour and
      *         72 hours, respectively. Though discouraged, the admin may choose to require strong
      *         auth at all times using {@link #KEYGUARD_DISABLE_FINGERPRINT} and/or
-     *         {@link #KEYGUARD_DISABLE_TRUST_AGENTS}.
+     *         {@link #KEYGUARD_DISABLE_TRUST_AGENTS} and/or {@link #KEYGUARD_DISABLE_IRIS}.
      *
      * @throws SecurityException if {@code admin} is not a device or profile owner.
      */
@@ -3376,6 +3378,11 @@ public class DevicePolicyManager {
      * Disable text entry into notifications on secure keyguard screens (e.g. PIN/Pattern/Password).
      */
     public static final int KEYGUARD_DISABLE_REMOTE_INPUT = 1 << 6;
+
+    /**
+     * Disable iris on keyguard secure screens (e.g. PIN/Pattern/Password).
+     */
+    public static final int KEYGUARD_DISABLE_IRIS = 1 << 7;
 
     /**
      * Disable all current and future keyguard customizations.
@@ -4222,6 +4229,8 @@ public class DevicePolicyManager {
      * is no separate challenge set on the managed profile.
      * <li>{@link #KEYGUARD_DISABLE_FINGERPRINT} which affects the managed profile challenge if
      * there is one, or the parent user otherwise.
+     * <li>{@link #KEYGUARD_DISABLE_IRIS} which affects the managed profile challenge if
+     * there is one, or the parent user otherwise.
      * <li>{@link #KEYGUARD_DISABLE_UNREDACTED_NOTIFICATIONS} which affects notifications generated
      * by applications in the managed profile.
      * </ul>
@@ -4241,7 +4250,8 @@ public class DevicePolicyManager {
      *            {@link #KEYGUARD_DISABLE_SECURE_NOTIFICATIONS},
      *            {@link #KEYGUARD_DISABLE_TRUST_AGENTS},
      *            {@link #KEYGUARD_DISABLE_UNREDACTED_NOTIFICATIONS},
-     *            {@link #KEYGUARD_DISABLE_FINGERPRINT}, {@link #KEYGUARD_DISABLE_FEATURES_ALL}
+     *            {@link #KEYGUARD_DISABLE_FINGERPRINT},
+     *            {@link #KEYGUARD_DISABLE_IRIS}, {@link #KEYGUARD_DISABLE_FEATURES_ALL}
      * @throws SecurityException if {@code admin} is not an active administrator or does not user
      *             {@link DeviceAdminInfo#USES_POLICY_DISABLE_KEYGUARD_FEATURES}
      */
