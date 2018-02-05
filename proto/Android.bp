@@ -8,6 +8,8 @@ java_library_static {
     no_framework_libs: true,
     target: {
         android: {
+            // Decouple repackaged targets from toolchain version. http://b/72703434
+            java_version: "1.8",
             jarjar_rules: "jarjar-rules.txt",
         },
         host: {
