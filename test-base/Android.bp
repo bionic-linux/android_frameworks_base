@@ -23,6 +23,7 @@ java_library {
     name: "android.test.base",
 
     srcs: ["src/**/*.java"],
+    java_version: "1.8",
 
     no_framework_libs: true,
     hostdex: true,
@@ -55,7 +56,7 @@ java_library_static {
     name: "repackaged.android.test.base",
 
     static_libs: ["android.test.base"],
-
+    java_version: "1.8",
     no_framework_libs: true,
     libs: [
         "framework",

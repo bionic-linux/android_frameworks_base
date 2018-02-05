@@ -27,6 +27,7 @@ java_library {
         "android.test.base",
         "android.test.mock",
     ],
+    java_version: "1.8",
 }
 
 // Build the android.test.runner-minus-junit library
@@ -54,4 +55,5 @@ java_library_static {
     static_libs: ["android.test.runner"],
 
     jarjar_rules: "jarjar-rules.txt",
+    java_version: "1.8",
 }

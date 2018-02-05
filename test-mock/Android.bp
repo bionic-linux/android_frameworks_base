@@ -18,7 +18,7 @@
 // ===================================
 java_library {
     name: "android.test.mock",
-
+    java_version: "1.8",
     srcs: ["src/**/*.java"],
 
     no_framework_libs: true,
@@ -31,7 +31,7 @@ java_library {
 // ==============================================
 java_library_static {
     name: "repackaged.android.test.mock",
-
+    java_version: "1.8",
     static_libs: ["android.test.mock"],
 
     jarjar_rules: "jarjar-rules.txt",
