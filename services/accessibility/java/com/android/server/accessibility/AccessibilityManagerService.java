@@ -3484,7 +3484,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub {
             }
             final long identity = Binder.clearCallingIdentity();
             try {
-                return getMagnificationController().getCenterX();
+                MagnificationController magnificationController = getMagnificationController();
+                if (!magnificationController.isRegisteredLocked()) {
+                    magnificationController.register();
+                }
+                return magnificationController.getCenterX();
             } finally {
                 Binder.restoreCallingIdentity(identity);
             }
@@ -3499,7 +3503,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub {
             }
             final long identity = Binder.clearCallingIdentity();
             try {
-                return getMagnificationController().getCenterY();
+                MagnificationController magnificationController = getMagnificationController();
+                if (!magnificationController.isRegisteredLocked()) {
+                    magnificationController.register();
+                }
+                return magnificationController.getCenterY();
             } finally {
                 Binder.restoreCallingIdentity(identity);
             }
