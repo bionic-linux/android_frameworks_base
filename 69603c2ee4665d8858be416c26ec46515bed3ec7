@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f59426c7_49ee79a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-02-06T06:25:38Z",
+      "side": 1,
+      "message": "For instance, I suppose IME developers can explicitly register a callback to be notified *after* the window is shown as follows.\n\n        getWindow().setOnShowListener(new DialogInterface.OnShowListener() {\n            @Override\n            public void onShow(DialogInterface dialog) {\n                // Do something\n            }\n        });\n\nIf it helps, I\u0027m OK to add CTS test to make sure that the system keeps this callback available for IME developers (because only one callback can be registered to Dialog#setOnShowListener() at the same time).",
+      "parentUuid": "2490c632_a7b9a82f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "69603c2ee4665d8858be416c26ec46515bed3ec7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cc8ed3e_8a654195",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
