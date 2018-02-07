@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "211316a0_160452f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-02-07T14:00:32Z",
+      "side": 1,
+      "message": "Bug: 72922821",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 68
+      },
+      "revId": "b4a6643f96d9486ddfdc527677ce0ddca969bf16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d3a2e7_ec39bf40",
+        "filename": "core/java/android/inputmethodservice/InputMethodService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-02-07T14:00:32Z",
+      "side": 1,
+      "message": "immediately before the input method window is shown",
+      "range": {
+        "startLine": 1729,
+        "startChar": 14,
+        "endLine": 1729,
+        "endChar": 50
+      },
+      "revId": "b4a6643f96d9486ddfdc527677ce0ddca969bf16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
