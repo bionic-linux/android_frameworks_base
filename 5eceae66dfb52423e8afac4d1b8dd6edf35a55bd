@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "36617203_12c216a4",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-02-07T22:11:14Z",
+      "side": 1,
+      "message": "Point taken, and I think your conclusion is sound. Thanks.",
+      "parentUuid": "2f2fe926_6d78c606",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 37
+      },
+      "revId": "5eceae66dfb52423e8afac4d1b8dd6edf35a55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae50fbfb_2f8df987",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 1
