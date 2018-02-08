@@ -386,7 +386,7 @@ import java.util.List;
  *         <td>The final call you receive before your
  *             activity is destroyed.  This can happen either because the
  *             activity is finishing (someone called {@link Activity#finish} on
- *             it, or because the system is temporarily destroying this
+ *             it), or because the system is temporarily destroying this
  *             instance of the activity to save space.  You can distinguish
  *             between these two scenarios with the {@link
  *             Activity#isFinishing} method.</td>
