@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9227b88_d0526fa7",
+        "filename": "core/java/android/hardware/usb/UsbRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-02-08T17:12:07Z",
+      "side": 0,
+      "message": "Technically an API change as you could not send bigger buffers before but you can now. I think it is find to change the API even for older targetSDKs as before the app would most likely crash.",
+      "revId": "afd65d9d1cd4c61b4992fe07f10568e5da003c09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
