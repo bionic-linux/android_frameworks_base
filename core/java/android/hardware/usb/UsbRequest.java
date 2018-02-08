@@ -42,9 +42,6 @@ public class UsbRequest {
 
     private static final String TAG = "UsbRequest";
 
-    // From drivers/usb/core/devio.c
-    private static final int MAX_USBFS_BUFFER_SIZE = 16384;
-
     // used by the JNI code
     private long mNativeContext;
 
@@ -244,10 +241,6 @@ public class UsbRequest {
                 mIsUsingNewQueue = true;
                 wasQueued = native_queue(null, 0, 0);
             } else {
-                // Can only send/receive MAX_USBFS_BUFFER_SIZE bytes at once
-                Preconditions.checkArgumentInRange(buffer.remaining(), 0, MAX_USBFS_BUFFER_SIZE,
-                        "number of remaining bytes");
-
                 // Can not receive into read-only buffers.
                 Preconditions.checkArgument(!(buffer.isReadOnly() && !isSend), "buffer can not be "
                         + "read-only when receiving data");
