@@ -22,6 +22,30 @@
       "revId": "abbfac26bb88ed3043fce6967e3dc2c1e68a4ad7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78028947_0ecc19fb",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-02-13T19:31:24Z",
+      "side": 1,
+      "message": "Seems it doesn\u0027t. My guess is it doesn\u0027t really send anything to the other side, which makes sense because it should be already died.",
+      "parentUuid": "2d35b090_8b2c3509",
+      "range": {
+        "startLine": 744,
+        "startChar": 35,
+        "endLine": 744,
+        "endChar": 48
+      },
+      "revId": "abbfac26bb88ed3043fce6967e3dc2c1e68a4ad7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
