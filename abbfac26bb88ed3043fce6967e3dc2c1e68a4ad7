@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d35b090_8b2c3509",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-02-13T19:14:49Z",
+      "side": 1,
+      "message": "Doesnt unlinktodeath throw a remote exception?",
+      "range": {
+        "startLine": 744,
+        "startChar": 35,
+        "endLine": 744,
+        "endChar": 48
+      },
+      "revId": "abbfac26bb88ed3043fce6967e3dc2c1e68a4ad7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
