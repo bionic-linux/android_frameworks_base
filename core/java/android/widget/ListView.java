@@ -2501,7 +2501,7 @@ public class ListView extends AbsListView {
         final boolean down;
 
         if (direction == FOCUS_UP) {
-            nextPage = Math.max(0, mSelectedPosition - getChildCount() - 1);
+            nextPage = Math.max(0, mSelectedPosition - getChildCount() + 1);
             down = false;
         } else if (direction == FOCUS_DOWN) {
             nextPage = Math.min(mItemCount - 1, mSelectedPosition + getChildCount() - 1);
