@@ -30,6 +30,7 @@ import android.view.KeyEvent;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
+import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -845,8 +846,11 @@ abstract class HdmiCecLocalDevice {
      * @param standbyAction Intent action that drives the standby process,
      *        either {@link HdmiControlService#STANDBY_SCREEN_OFF} or
      *        {@link HdmiControlService#STANDBY_SHUTDOWN}
+     * @param callback SendMessageCallback instance called when
+     *        {@link HdmiControlService#sendCecCommand} is completed.
      */
-    protected void onStandby(boolean initiatedByCec, int standbyAction) {}
+    protected void onStandby(boolean initiatedByCec, int standbyAction,
+            SendMessageCallback callback) {}
 
     /**
      * Disable device. {@code callback} is used to get notified when all pending
