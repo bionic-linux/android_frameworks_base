@@ -22,6 +22,30 @@
       "revId": "8dd9f4671df5b322cb3eb2d9ac9c8ddffc4c857e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38fa77ce_2dcb09cb",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3777,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-02-13T21:17:48Z",
+      "side": 1,
+      "message": "Hmm, `disableHiddenApiChecks`? This is meant to override the rest of the logic towards disabling the checks. `hiddenApiChecks \u003d true` might still result in the checks being disabled",
+      "parentUuid": "7da37554_c0419400",
+      "range": {
+        "startLine": 3777,
+        "startChar": 43,
+        "endLine": 3777,
+        "endChar": 60
+      },
+      "revId": "8dd9f4671df5b322cb3eb2d9ac9c8ddffc4c857e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
