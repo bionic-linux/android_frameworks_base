@@ -1667,7 +1667,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     @Override
     @ServiceThreadOnly
-    protected void onStandby(boolean initiatedByCec, int standbyAction) {
+    protected void onStandby(boolean initiatedByCec, int standbyAction,
+            SendMessageCallback callback) {
         assertRunOnServiceThread();
         // Seq #11
         if (!mService.isControlEnabled()) {
@@ -1675,7 +1676,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         }
         if (!initiatedByCec && mAutoDeviceOff) {
             mService.sendCecCommand(HdmiCecMessageBuilder.buildStandby(
-                    mAddress, Constants.ADDR_BROADCAST));
+                    mAddress, Constants.ADDR_BROADCAST), callback);
         }
     }
 
