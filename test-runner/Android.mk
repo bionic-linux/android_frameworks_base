@@ -25,10 +25,8 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
+LOCAL_SDK_VERSION := current
 LOCAL_JAVA_LIBRARIES := \
-    core-oj \
-    core-libart \
-    framework \
     android.test.base \
     android.test.mock \
 

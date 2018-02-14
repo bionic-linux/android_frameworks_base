@@ -23,9 +23,8 @@ java_library {
     java_version: "1.8",
     srcs: ["src/**/*.java"],
 
-    no_framework_libs: true,
+    sdk_version: "current",
     libs: [
-        "framework",
         "android.test.base",
         "android.test.mock",
     ],
@@ -40,9 +39,8 @@ java_library {
 
     srcs: ["src/android/**/*.java"],
 
-    no_framework_libs: true,
+    sdk_version: "current",
     libs: [
-        "framework",
         "android.test.base",
         "android.test.mock",
         "junit",
@@ -54,6 +52,7 @@ java_library {
 java_library_static {
     name: "repackaged.android.test.runner",
 
+    sdk_version: "current",
     static_libs: ["android.test.runner"],
 
     jarjar_rules: "jarjar-rules.txt",
