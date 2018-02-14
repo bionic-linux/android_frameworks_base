@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e1af5d8_47822ea2",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2747,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-02-14T09:58:59Z",
+      "side": 1,
+      "message": "APIs ?",
+      "range": {
+        "startLine": 2747,
+        "startChar": 92,
+        "endLine": 2747,
+        "endChar": 95
+      },
+      "revId": "3bde2851294cacd1116dd86434bbd7a5efea05ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
