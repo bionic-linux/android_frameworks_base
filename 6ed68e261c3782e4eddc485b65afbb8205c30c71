@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a88975_f868f9d6",
+        "filename": "test-legacy/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-02-14T13:00:24Z",
+      "side": 1,
+      "message": "Oh, I see. This was the real reason. Cool.",
+      "range": {
+        "startLine": 30,
+        "startChar": 42,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "6ed68e261c3782e4eddc485b65afbb8205c30c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
