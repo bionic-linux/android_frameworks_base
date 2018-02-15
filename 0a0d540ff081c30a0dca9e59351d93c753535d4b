@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55288ffe_563df581",
+        "filename": "core/java/android/hardware/usb/UsbDeviceConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-02-15T17:33:14Z",
+      "side": 1,
+      "message": "That used to be nasty apis ...\n\nJust dropping data, tsk, tsk...",
+      "revId": "0a0d540ff081c30a0dca9e59351d93c753535d4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3514a714_2f4b1124",
+        "filename": "core/java/android/hardware/usb/UsbDeviceConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-02-15T17:33:14Z",
+      "side": 1,
+      "message": "That used to be nasty apis ...\n\nJust dropping data, tsk, tsk...",
+      "revId": "0a0d540ff081c30a0dca9e59351d93c753535d4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f617a05_95d3ed6e",
+        "filename": "core/java/android/hardware/usb/UsbRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2018-02-15T17:33:14Z",
+      "side": 1,
+      "message": "Ouch, that used to be a nasty.",
+      "revId": "0a0d540ff081c30a0dca9e59351d93c753535d4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
