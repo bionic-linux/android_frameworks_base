@@ -340,7 +340,7 @@ final class OverlayManagerSettings {
         private static final String ATTR_USER_ID = "userId";
         private static final String ATTR_VERSION = "version";
 
-        private static final int CURRENT_VERSION = 3;
+        private static final int CURRENT_VERSION = 4;
 
         public static void restore(@NonNull final ArrayList<SettingsItem> table,
                 @NonNull final InputStream is) throws IOException, XmlPullParserException {
@@ -372,6 +372,7 @@ final class OverlayManagerSettings {
                 case 0:
                 case 1:
                 case 2:
+                case 3:
                     // Throw an exception which will cause the overlay file to be ignored
                     // and overwritten.
                     throw new XmlPullParserException("old version " + oldVersion + "; ignoring");
