@@ -103,7 +103,7 @@ public final class OverlayInfo implements Parcelable {
      * <p>
      * Change how Android (including the status bar, dialogs, ...) looks.
      */
-    public static final String CATEGORY_THEME = "android.theme";
+    public static final String CATEGORY_THEME = "android.overlay.category.THEME";
 
     /**
      * Package name of the overlay package
@@ -198,6 +198,9 @@ public final class OverlayInfo implements Parcelable {
         }
         if (targetPackageName == null) {
             throw new IllegalArgumentException("targetPackageName must not be null");
+        }
+        if (category == null) {
+            throw new IllegalArgumentException("category must not be null");
         }
         if (baseCodePath == null) {
             throw new IllegalArgumentException("baseCodePath must not be null");

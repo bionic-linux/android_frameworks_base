@@ -2066,6 +2066,13 @@ public class PackageParser {
                     return null;
                 }
 
+                // An overlay's category is identical to its target package
+                // unless explicitly set to something else (see OverlayInfo for
+                // predefined categories)
+                if (pkg.mOverlayCategory == null) {
+                    pkg.mOverlayCategory = pkg.mOverlayTarget;
+                }
+
                 // check to see if overlay should be excluded based on system property condition
                 if (!checkOverlayRequiredSystemProperty(propName, propValue)) {
                     Slog.i(TAG, "Skipping target and overlay pair " + pkg.mOverlayTarget + " and "
