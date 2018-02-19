@@ -70,6 +70,30 @@
       "revId": "8dd9f4671df5b322cb3eb2d9ac9c8ddffc4c857e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9071d2e6_de2e77ac",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3777,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-02-19T15:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1877ea5a_f633907c",
+      "range": {
+        "startLine": 3777,
+        "startChar": 43,
+        "endLine": 3777,
+        "endChar": 60
+      },
+      "revId": "8dd9f4671df5b322cb3eb2d9ac9c8ddffc4c857e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
