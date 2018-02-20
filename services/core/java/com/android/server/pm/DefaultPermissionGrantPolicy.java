@@ -153,6 +153,12 @@ final class DefaultPermissionGrantPolicy {
         STORAGE_PERMISSIONS.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
+    private static final Set<String> DATA_SERVICE_PERMISSIONS = new ArraySet<>();
+    static {
+        DATA_SERVICE_PERMISSIONS.add(Manifest.permission.READ_PHONE_STATE);
+        DATA_SERVICE_PERMISSIONS.add(Manifest.permission.MANAGE_IPSEC_TUNNELS);
+    }
+
     private static final int MSG_READ_DEFAULT_PERMISSION_EXCEPTIONS = 1;
 
     private static final String ACTION_TRACK = "com.android.fitness.TRACK";
@@ -849,6 +855,23 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(imsServicePackage, MICROPHONE_PERMISSIONS, userId);
                 grantRuntimePermissionsLPw(imsServicePackage, LOCATION_PERMISSIONS, userId);
                 grantRuntimePermissionsLPw(imsServicePackage, CAMERA_PERMISSIONS, userId);
+            }
+        }
+    }
+
+    public void grantDefaultPermissionsToEnabledTelephonyDataServicesLPr(
+            String[] packageNames, int userId) {
+        Log.i(TAG, "Granting permissions to enabled Telephony Data Services for user:" + userId);
+        if (packageNames == null) {
+            return;
+        }
+        for (String packageName : packageNames) {
+            PackageParser.Package dataServicePackage = getSystemPackageLPr(packageName);
+            if (dataServicePackage != null
+                    && doesPackageSupportRuntimePermissions(dataServicePackage)) {
+                grantRuntimePermissionsLPw(dataServicePackage, DATA_SERVICE_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(dataServicePackage, LOCATION_PERMISSIONS, userId);
+
             }
         }
     }
