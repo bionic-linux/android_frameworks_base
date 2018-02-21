@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18cfb918_98f3eafb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-02-21T23:35:12Z",
+      "side": 1,
+      "message": "May be good to mention that \"The actual function is currently a stub.\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "9f4e3eb5df0070cc8faa072a583b22020c229564",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
