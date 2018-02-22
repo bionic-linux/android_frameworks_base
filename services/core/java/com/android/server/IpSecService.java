@@ -1440,7 +1440,7 @@ public class IpSecService extends IIpSecService.Stub {
             case IpSecTransform.MODE_TRANSPORT:
                 break;
             case IpSecTransform.MODE_TUNNEL:
-                enforceNetworkStackPermission();
+                enforceTunnelModePermission("createTunnelModeTransform");
                 break;
             default:
                 throw new IllegalArgumentException(
@@ -1448,9 +1448,15 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
-    private void enforceNetworkStackPermission() {
-        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_STACK,
-                "IpSecService");
+    private void enforceTunnelModePermission(String method) {
+        try {
+            mContext.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_STACK,
+                    "IpSecService");
+        } catch (SecurityException se) {
+            mContext.enforceCallingOrSelfPermission(
+                    android.Manifest.permission.MANAGE_IPSEC_TUNNELS,
+                    method + "() requires permission MANAGE_IPSEC_TUNNELS");
+        }
     }
 
     private void createOrUpdateTransform(
@@ -1622,7 +1628,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized void applyTunnelModeTransform(
             int tunnelResourceId, int direction, int transformResourceId) throws RemoteException {
-        enforceNetworkStackPermission();
+        enforceTunnelModePermission("applyTunnelModeTransform");
         checkDirection(direction);
 
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
