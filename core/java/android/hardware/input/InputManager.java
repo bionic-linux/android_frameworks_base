@@ -23,6 +23,8 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemService;
 import android.app.IInputForwarder;
 import android.content.Context;
+import android.hardware.Battery;
+import android.hardware.BatteryState;
 import android.media.AudioAttributes;
 import android.os.Binder;
 import android.os.Handler;
@@ -1103,6 +1105,15 @@ public final class InputManager {
     }
 
     /**
+     * Gets the battery associated with an input device, assuming it has one.
+     * @return The battery, never null.
+     * @hide
+     */
+    public Battery getInputDeviceBattery(int deviceId) {
+        return new InputDeviceBattery(deviceId);
+    }
+
+    /**
      * Listens for changes in input devices.
      */
     public interface InputDeviceListener {
@@ -1265,6 +1276,56 @@ public final class InputManager {
         public void cancel() {
             try {
                 mIm.cancelVibrate(mDeviceId, mToken);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    private final class InputDeviceBattery extends Battery {
+        private final int mDeviceId;
+        private final Binder mToken;
+
+        InputDeviceBattery(int deviceId) {
+            mDeviceId = deviceId;
+            mToken = new Binder();
+        }
+
+        @Override
+        public String getScope() {
+            try {
+                BatteryState state = mIm.getBatteryState(mDeviceId, mToken);
+                return state.scope;
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+
+        @Override
+        public String getType() {
+            try {
+                BatteryState state = mIm.getBatteryState(mDeviceId, mToken);
+                return state.type;
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+
+        @Override
+        public int getCapacity() {
+            try {
+                BatteryState state = mIm.getBatteryState(mDeviceId, mToken);
+                return state.capacity;
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+        }
+
+        @Override
+        public String getStatus() {
+            try {
+                BatteryState state = mIm.getBatteryState(mDeviceId, mToken);
+                return state.status;
             } catch (RemoteException ex) {
                 throw ex.rethrowFromSystemServer();
             }

@@ -986,6 +986,13 @@ package android.content.pm.permission {
 
 package android.hardware {
 
+  public abstract class Battery {
+    method public abstract int getCapacity();
+    method public abstract java.lang.String getScope();
+    method public abstract java.lang.String getStatus();
+    method public abstract java.lang.String getType();
+  }
+
   public final class Sensor {
     method public java.util.UUID getUuid();
     method public boolean isDataInjectionSupported();

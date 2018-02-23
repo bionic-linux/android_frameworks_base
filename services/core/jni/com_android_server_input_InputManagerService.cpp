@@ -1643,6 +1643,33 @@ static void nativeSetCustomPointerIcon(JNIEnv* env, jclass /* clazz */,
     im->setCustomPointerIcon(spriteIcon);
 }
 
+static jobject nativeGetBatteryState(JNIEnv* env, jclass /* clazz */, jlong ptr,
+        jint deviceId) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    jstring scope = env->NewStringUTF(
+            im->getInputManager()->getReader()->getBatteryState(deviceId)->scope.string());
+    jstring type = env->NewStringUTF(
+            im->getInputManager()->getReader()->getBatteryState(deviceId)->type.string());
+    jint capacity = im->getInputManager()->getReader()->getBatteryState(deviceId)->capacity;
+    jstring status = env->NewStringUTF(
+            im->getInputManager()->getReader()->getBatteryState(deviceId)->status.string());
+
+    jclass batteryStateClass = env->FindClass("android/hardware/BatteryState");
+    jmethodID batteryStateConstructor = env->GetMethodID(batteryStateClass, "<init>",
+            "()V");
+    jfieldID scopeField = env->GetFieldID(batteryStateClass, "scope", "Ljava/lang/String;");
+    jfieldID typeField = env->GetFieldID(batteryStateClass, "type", "Ljava/lang/String;");
+    jfieldID capacityField = env->GetFieldID(batteryStateClass, "capacity", "I");
+    jfieldID statusField = env->GetFieldID(batteryStateClass, "status", "Ljava/lang/String;");
+
+    jobject state = env->NewObject(batteryStateClass, batteryStateConstructor);
+    env->SetObjectField(state, scopeField, scope);
+    env->SetObjectField(state, typeField, type);
+    env->SetIntField(state, capacityField, capacity);
+    env->SetObjectField(state, statusField, status);
+    return state;
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gInputManagerMethods[] = {
@@ -1719,6 +1746,8 @@ static const JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeReloadPointerIcons },
     { "nativeSetCustomPointerIcon", "(JLandroid/view/PointerIcon;)V",
             (void*) nativeSetCustomPointerIcon },
+    { "nativeGetBatteryState" , "(JI)Landroid/hardware/BatteryState;",
+            (void*) nativeGetBatteryState },
 };
 
 #define FIND_CLASS(var, className) \

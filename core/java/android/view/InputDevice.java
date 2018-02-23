@@ -19,6 +19,8 @@ package android.view;
 import android.annotation.RequiresPermission;
 import android.annotation.TestApi;
 import android.content.Context;
+import android.hardware.Battery;
+import android.hardware.NullBattery;
 import android.hardware.input.InputDeviceIdentifier;
 import android.hardware.input.InputManager;
 import android.os.NullVibrator;
@@ -58,11 +60,13 @@ public final class InputDevice implements Parcelable {
     private final int mKeyboardType;
     private final KeyCharacterMap mKeyCharacterMap;
     private final boolean mHasVibrator;
+    private final boolean mHasBattery;
     private final boolean mHasMicrophone;
     private final boolean mHasButtonUnderPad;
     private final ArrayList<MotionRange> mMotionRanges = new ArrayList<MotionRange>();
 
     private Vibrator mVibrator; // guarded by mMotionRanges during initialization
+    private Battery mBattery; // guarded by mMotionRanges during initialization
 
     /**
      * A mask for input source classes.
@@ -407,8 +411,8 @@ public final class InputDevice implements Parcelable {
     // Called by native code.
     private InputDevice(int id, int generation, int controllerNumber, String name, int vendorId,
             int productId, String descriptor, boolean isExternal, int sources, int keyboardType,
-            KeyCharacterMap keyCharacterMap, boolean hasVibrator, boolean hasMicrophone,
-            boolean hasButtonUnderPad) {
+            KeyCharacterMap keyCharacterMap, boolean hasVibrator, boolean hasBattery,
+            boolean hasMicrophone, boolean hasButtonUnderPad) {
         mId = id;
         mGeneration = generation;
         mControllerNumber = controllerNumber;
@@ -421,6 +425,7 @@ public final class InputDevice implements Parcelable {
         mKeyboardType = keyboardType;
         mKeyCharacterMap = keyCharacterMap;
         mHasVibrator = hasVibrator;
+        mHasBattery = hasBattery;
         mHasMicrophone = hasMicrophone;
         mHasButtonUnderPad = hasButtonUnderPad;
         mIdentifier = new InputDeviceIdentifier(descriptor, vendorId, productId);
@@ -439,6 +444,7 @@ public final class InputDevice implements Parcelable {
         mKeyboardType = in.readInt();
         mKeyCharacterMap = KeyCharacterMap.CREATOR.createFromParcel(in);
         mHasVibrator = in.readInt() != 0;
+        mHasBattery = in.readInt() != 0;
         mHasMicrophone = in.readInt() != 0;
         mHasButtonUnderPad = in.readInt() != 0;
         mIdentifier = new InputDeviceIdentifier(mDescriptor, mVendorId, mProductId);
@@ -800,6 +806,27 @@ public final class InputDevice implements Parcelable {
     }
 
     /**
+     * Gets the battery associated with the device, if there is one.
+     * Even if the device does not have a battery, the result is never null.
+     * @@@ Use {@link Battery#hasBattery} to determine whether a battery is
+     * present.
+     *
+     * @return The battery associated with the device, never null.
+     */
+    public Battery getBattery() {
+        synchronized (mMotionRanges) {
+            if (mBattery == null) {
+                if (mHasBattery) {
+                    mBattery = InputManager.getInstance().getInputDeviceBattery(mId);
+                } else {
+                    mBattery = NullBattery.getInstance();
+                }
+            }
+            return mBattery;
+        }
+    }
+
+    /**
      * Reports whether the device has a built-in microphone.
      * @return Whether the device has a built-in microphone.
      */
@@ -959,6 +986,7 @@ public final class InputDevice implements Parcelable {
         out.writeInt(mKeyboardType);
         mKeyCharacterMap.writeToParcel(out, flags);
         out.writeInt(mHasVibrator ? 1 : 0);
+        out.writeInt(mHasBattery ? 1 : 0);
         out.writeInt(mHasMicrophone ? 1 : 0);
         out.writeInt(mHasButtonUnderPad ? 1 : 0);
 
@@ -1004,6 +1032,8 @@ public final class InputDevice implements Parcelable {
         description.append("\n");
 
         description.append("  Has Vibrator: ").append(mHasVibrator).append("\n");
+
+        description.append("  Has Battery: ").append(mHasBattery).append("\n");
 
         description.append("  Has mic: ").append(mHasMicrophone).append("\n");
 

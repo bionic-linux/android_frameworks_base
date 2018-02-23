@@ -58,6 +58,7 @@ import android.content.res.Resources.NotFoundException;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.database.ContentObserver;
+import android.hardware.BatteryState;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayViewport;
 import android.hardware.input.IInputDevicesChangedListener;
@@ -242,6 +243,7 @@ public class InputManagerService extends IInputManager.Stub
     private static native void nativeReloadPointerIcons(long ptr);
     private static native void nativeSetCustomPointerIcon(long ptr, PointerIcon icon);
     private static native void nativeSetPointerCapture(long ptr, boolean detached);
+    private static native BatteryState nativeGetBatteryState(long ptr, int deviceId);
 
     // Input event injection constants defined in InputDispatcher.h.
     private static final int INPUT_EVENT_INJECTION_SUCCEEDED = 0;
@@ -1774,6 +1776,12 @@ public class InputManagerService extends IInputManager.Stub
                 v.mVibrating = false;
             }
         }
+    }
+
+    // Binder call
+    @Override
+    public BatteryState getBatteryState(int deviceId, IBinder binder) {
+        return nativeGetBatteryState(mPtr, deviceId);
     }
 
     // Binder call

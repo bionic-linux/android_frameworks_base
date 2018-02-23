@@ -16,6 +16,7 @@
 
 package android.hardware.input;
 
+import android.hardware.BatteryState;
 import android.app.IInputForwarder;
 import android.hardware.input.InputDeviceIdentifier;
 import android.hardware.input.KeyboardLayout;
@@ -84,6 +85,9 @@ interface IInputManager {
     // Input device vibrator control.
     void vibrate(int deviceId, in long[] pattern, int repeat, IBinder token);
     void cancelVibrate(int deviceId, IBinder token);
+
+    // Input device battery state.
+    BatteryState getBatteryState(int deviceId, IBinder token);
 
     void setPointerIconType(int typeId);
     void setCustomPointerIcon(in PointerIcon icon);
