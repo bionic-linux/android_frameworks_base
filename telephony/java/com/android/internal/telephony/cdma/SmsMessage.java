@@ -455,7 +455,7 @@ public class SmsMessage extends SmsMessageBase {
             env.causeCode = dis.readByte();
 
             //encoded BearerData:
-            bearerDataLength = dis.readInt();
+            bearerDataLength = dis.readUnsignedByte();
             // sanity check on the length
             if (bearerDataLength > pdu.length) {
                 throw new RuntimeException(
