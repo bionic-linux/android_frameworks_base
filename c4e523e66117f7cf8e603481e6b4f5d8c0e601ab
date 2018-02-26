@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51bae145_9a077511",
+        "filename": "services/core/java/com/android/server/display/WifiDisplayController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1090594
+      },
+      "writtenOn": "2018-02-26T21:56:33Z",
+      "side": 1,
+      "message": "you sure about that?",
+      "range": {
+        "startLine": 797,
+        "startChar": 27,
+        "endLine": 797,
+        "endChar": 77
+      },
+      "revId": "c4e523e66117f7cf8e603481e6b4f5d8c0e601ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
