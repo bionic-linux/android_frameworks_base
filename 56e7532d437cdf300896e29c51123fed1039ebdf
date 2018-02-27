@@ -22,6 +22,30 @@
       "revId": "56e7532d437cdf300896e29c51123fed1039ebdf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8de7c839_0cd46f5f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-02-27T04:32:49Z",
+      "side": 1,
+      "message": "we use a factor of 10 to cope with rounding issues when re scaling indexes from one stream type to another stream type with different ranges.\n\nBut this is a legacy trick that we want to remove by only using a single range from 0 to 100 internally for all stream types and rescale from actual stream range at the API",
+      "parentUuid": "3c4969d6_1a03a8e5",
+      "range": {
+        "startLine": 1553,
+        "startChar": 53,
+        "endLine": 1553,
+        "endChar": 66
+      },
+      "revId": "56e7532d437cdf300896e29c51123fed1039ebdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
