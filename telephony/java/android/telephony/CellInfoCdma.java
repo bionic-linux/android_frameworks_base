@@ -39,6 +39,13 @@ public final class CellInfoCdma extends CellInfo implements Parcelable {
     }
 
     /** @hide */
+    public CellInfoCdma(CellIdentityCdma id, CellSignalStrengthCdma ss) {
+        super();
+        mCellIdentityCdma = id;
+        mCellSignalStrengthCdma = ss;
+    }
+
+    /** @hide */
     public CellInfoCdma(CellInfoCdma ci) {
         super(ci);
         this.mCellIdentityCdma = ci.mCellIdentityCdma.copy();
