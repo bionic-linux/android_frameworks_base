@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c4969d6_1a03a8e5",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-02-27T04:28:27Z",
+      "side": 1,
+      "message": "This seems really magical to me.  I didn\u0027t expect getIndex(device) to return the volume * 10 ...",
+      "range": {
+        "startLine": 1553,
+        "startChar": 53,
+        "endLine": 1553,
+        "endChar": 66
+      },
+      "revId": "56e7532d437cdf300896e29c51123fed1039ebdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
