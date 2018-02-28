@@ -677,10 +677,12 @@ public class IpSecService extends IIpSecService.Stub {
         @Override
         public void freeUnderlyingResources() {
             try {
-                mSrvConfig
-                        .getNetdInstance()
-                        .ipSecDeleteSecurityAssociation(
-                                mResourceId, mSourceAddress, mDestinationAddress, mSpi, 0, 0);
+                if (!mOwnedByTransform) {
+                    mSrvConfig
+                            .getNetdInstance()
+                            .ipSecDeleteSecurityAssociation(
+                                    mResourceId, mSourceAddress, mDestinationAddress, mSpi, 0, 0);
+                }
             } catch (ServiceSpecificException e) {
                 // FIXME: get the error code and throw is at an IOException from Errno Exception
             } catch (RemoteException e) {
