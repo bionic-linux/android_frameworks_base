@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5cb6038_bb03c7ed",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-28T18:39:21Z",
+      "side": 1,
+      "message": "Because we want to verify that it was NOT called. :-)",
+      "parentUuid": "389ee0bb_929cee7c",
+      "range": {
+        "startLine": 362,
+        "startChar": 32,
+        "endLine": 362,
+        "endChar": 33
+      },
+      "revId": "5b1f5ba3ad78ac7fa6d030b799960abea73c493e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee61d4f0_8bbb210f",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-28T18:36:01Z",
       "side": 1,
       "message": "Perhaps we could use the same matchers as above? \n\nSpecifically the resourceId and TEST_SPI checks?",
+      "range": {
+        "startLine": 364,
+        "startChar": 24,
+        "endLine": 369,
+        "endChar": 32
+      },
+      "revId": "5b1f5ba3ad78ac7fa6d030b799960abea73c493e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb2fffa_ae3863cc",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-02-28T18:39:21Z",
+      "side": 1,
+      "message": "I changed it because I want to match all the things... there should be no calls. Thus I want the error to be \"you called it\", not the possibly confusing \"it was called, but with the wrong thing\".",
+      "parentUuid": "ee61d4f0_8bbb210f",
       "range": {
         "startLine": 364,
         "startChar": 24,
