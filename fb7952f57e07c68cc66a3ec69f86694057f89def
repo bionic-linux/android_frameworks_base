@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e66dfbb4_c2abc3eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-02-28T12:37:14Z",
+      "side": 1,
+      "message": "just noticed though many are already submitted - this should say \"utils/Atomic.h\".",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "fb7952f57e07c68cc66a3ec69f86694057f89def",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
