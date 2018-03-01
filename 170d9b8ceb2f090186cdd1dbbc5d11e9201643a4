@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc6a2c48_414f0585",
+        "filename": "core/java/android/text/format/DateFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-03-01T14:13:18Z",
+      "side": 1,
+      "message": "Huh. This is hidden. Forget I mentioned it on the docs CL.",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 12
+      },
+      "revId": "170d9b8ceb2f090186cdd1dbbc5d11e9201643a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
