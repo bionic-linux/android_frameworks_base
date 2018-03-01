@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ce3a26_a0a8ce20",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-01T22:44:22Z",
+      "side": 1,
+      "message": "isn\u0027t this Integer.MAX_VALUE? Also can you use SignalStrength.INVALID (\u003d the same value)",
+      "range": {
+        "startLine": 57,
+        "startChar": 68,
+        "endLine": 57,
+        "endChar": 70
+      },
+      "revId": "3ffbf86e1e4701ea316146c1686f06193166c2a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
