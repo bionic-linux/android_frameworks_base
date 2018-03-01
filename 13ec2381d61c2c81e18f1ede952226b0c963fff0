@@ -22,6 +22,30 @@
       "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56bf7df_79aa1112",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-03-01T12:41:43Z",
+      "side": 1,
+      "message": "Actually, in AOSP they need to be generated as part of the stubs as they have not yet been removed from there. Internally they have been removed from these stubs (into their own separate libraries) so need to be excluded from these stubs.\n\nIn both cases they should be in the generated docs.",
+      "parentUuid": "3e0a7835_cca860e8",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 34
+      },
+      "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
