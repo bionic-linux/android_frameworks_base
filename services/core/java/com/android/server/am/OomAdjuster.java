@@ -1767,10 +1767,10 @@ public final class OomAdjuster {
                             if (mService.mUseFifoUiScheduling) {
                                 // Switch UI pipeline for app to SCHED_FIFO
                                 app.savedPriority = Process.getThreadPriority(app.pid);
-                                mService.scheduleAsFifoPriority(app.pid, /* suppressLogs */true);
+                                mService.scheduleAsFifoPriority(app.pid, /*prio*/1,
+                                        /*suppressLogs*/true);
                                 if (app.renderThreadTid != 0) {
-                                    mService.scheduleAsFifoPriority(app.renderThreadTid,
-                                            /* suppressLogs */true);
+                                    mService.scheduleAsFifoPriority(app.renderThreadTid, 1, true);
                                     if (DEBUG_OOM_ADJ) {
                                         Slog.d("UI_FIFO", "Set RenderThread (TID " +
                                                 app.renderThreadTid + ") to FIFO");
@@ -1799,11 +1799,11 @@ public final class OomAdjuster {
                         if (mService.mUseFifoUiScheduling) {
                             try {
                                 // Reset UI pipeline to SCHED_OTHER
-                                setThreadScheduler(app.pid, SCHED_OTHER, 0);
+                                mService.scheduleAsRegularPriority(app.pid,
+                                        /* suppressLogs */ true);
                                 setThreadPriority(app.pid, app.savedPriority);
                                 if (app.renderThreadTid != 0) {
-                                    setThreadScheduler(app.renderThreadTid,
-                                            SCHED_OTHER, 0);
+                                    mService.scheduleAsRegularPriority(app.renderThreadTid, true);
                                 }
                             } catch (IllegalArgumentException e) {
                                 Slog.w(TAG,

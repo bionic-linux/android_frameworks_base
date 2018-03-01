@@ -78,7 +78,6 @@ import static android.os.Process.readProcFile;
 import static android.os.Process.removeAllProcessGroups;
 import static android.os.Process.sendSignal;
 import static android.os.Process.setThreadPriority;
-import static android.os.Process.setThreadScheduler;
 import static android.provider.Settings.Global.ALWAYS_FINISH_ACTIVITIES;
 import static android.provider.Settings.Global.DEBUG_APP;
 import static android.provider.Settings.Global.NETWORK_ACCESS_TIMEOUT_MS;
@@ -4838,6 +4837,10 @@ public class ActivityManagerService extends IActivityManager.Stub
             handleAppDiedLocked(app, true, true);
         }
 
+        if (UserHandle.isApp(app.uid) || UserHandle.isIsolated(app.uid)) {
+            Cgroups.putProc(app.pid, app.uid);
+        }
+
         // Tell the process all about itself.
 
         if (DEBUG_ALL) Slog.v(
@@ -8349,6 +8352,10 @@ public class ActivityManagerService extends IActivityManager.Stub
     public static boolean scheduleAsRegularPriority(int tid, boolean suppressLogs) {
         try {
             Process.setThreadScheduler(tid, Process.SCHED_OTHER, 0);
+            int uid = Process.getUidForPid(tid);
+            if (UserHandle.isApp(uid) || UserHandle.isIsolated(uid)) {
+                Cgroups.putProc(tid, uid);
+            }
             return true;
         } catch (IllegalArgumentException e) {
             if (!suppressLogs) {
@@ -8370,9 +8377,10 @@ public class ActivityManagerService extends IActivityManager.Stub
      *
      * @return {@code true} if this succeeded.
      */
-    public static boolean scheduleAsFifoPriority(int tid, boolean suppressLogs) {
+    public static boolean scheduleAsFifoPriority(int tid, int prio, boolean suppressLogs) {
         try {
-            Process.setThreadScheduler(tid, Process.SCHED_FIFO | Process.SCHED_RESET_ON_FORK, 1);
+            Cgroups.putThreadInRoot(tid);
+            Process.setThreadScheduler(tid, Process.SCHED_FIFO | Process.SCHED_RESET_ON_FORK, prio);
             return true;
         } catch (IllegalArgumentException e) {
             if (!suppressLogs) {
@@ -8411,8 +8419,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                     if (proc.getCurrentSchedulingGroup() == ProcessList.SCHED_GROUP_TOP_APP) {
                         if (DEBUG_OOM_ADJ) Slog.d("UI_FIFO", "Promoting " + tid + "out of band");
                         if (mUseFifoUiScheduling) {
-                            setThreadScheduler(proc.renderThreadTid,
-                                SCHED_FIFO | SCHED_RESET_ON_FORK, 1);
+                            scheduleAsFifoPriority(proc.renderThreadTid, /*prio*/1, /*noLogs*/true);
                         } else {
                             setThreadPriority(proc.renderThreadTid, TOP_APP_PRIORITY_BOOST);
                         }
