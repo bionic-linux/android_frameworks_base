@@ -36,7 +36,7 @@ aidl_parcelables :=
 define stubs-to-aidl-parcelables
   gen := $(TARGET_OUT_COMMON_INTERMEDIATES)/$1.aidl
   aidl_parcelables += $$(gen)
-  $$(gen): $(call java-lib-header-files,$1) | $(HOST_OUT_EXECUTABLES)/sdkparcelables
+  $$(gen): $(call java-lib-header-files,$1) $(HOST_OUT_EXECUTABLES)/sdkparcelables
 	@echo Extract SDK parcelables: $$@
 	rm -f $$@
 	$(HOST_OUT_EXECUTABLES)/sdkparcelables $$< $$@
@@ -151,7 +151,6 @@ framework_docs_LOCAL_API_CHECK_JAVA_LIBRARIES := \
 	bouncycastle \
 	okhttp \
 	ext \
-	icu4j \
 	framework \
 	voip-common \
 	android.test.mock \
@@ -694,6 +693,8 @@ LOCAL_SOURCE_FILES_ALL_GENERATED := true
 LOCAL_SRC_FILES := \
     $(call all-proto-files-under, core/proto) \
     $(call all-proto-files-under, libs/incident/proto)
+# b/72714520
+LOCAL_ERROR_PRONE_FLAGS := -Xep:MissingOverride:OFF
 include $(BUILD_HOST_JAVA_LIBRARY)
 
 

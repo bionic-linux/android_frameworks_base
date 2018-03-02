@@ -38,9 +38,10 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyHistogram;
 import android.telephony.VisualVoicemailSmsFilterSettings;
-import com.android.ims.internal.IImsMMTelFeature;
-import com.android.ims.internal.IImsRcsFeature;
-import com.android.ims.internal.IImsRegistration;
+import android.telephony.ims.aidl.IImsConfig;
+import android.telephony.ims.aidl.IImsMmTelFeature;
+import android.telephony.ims.aidl.IImsRcsFeature;
+import android.telephony.ims.aidl.IImsRegistration;
 import com.android.ims.internal.IImsServiceFeatureCallback;
 import com.android.internal.telephony.CellNetworkScanResult;
 import com.android.internal.telephony.OperatorInfo;
@@ -788,20 +789,21 @@ interface ITelephony {
     int getTetherApnRequired();
 
     /**
-     *  Get IImsMMTelFeature binder from ImsResolver that corresponds to the subId and MMTel feature
-     *  as well as registering the MMTelFeature for callbacks using the IImsServiceFeatureCallback
-     *  interface.
-     */
-    IImsMMTelFeature getMMTelFeatureAndListen(int slotId, in IImsServiceFeatureCallback callback);
+    * Enables framework IMS and triggers IMS Registration.
+    */
+    void enableIms(int slotId);
 
     /**
-     *  Get IImsMMTelFeature binder from ImsResolver that corresponds to the subId and MMTel feature
-     *  as well as registering the MMTelFeature for callbacks using the IImsServiceFeatureCallback
+    * Disables framework IMS and triggers IMS deregistration.
+    */
+    void disableIms(int slotId);
+
+    /**
+     *  Get IImsMmTelFeature binder from ImsResolver that corresponds to the subId and MMTel feature
+     *  as well as registering the MmTelFeature for callbacks using the IImsServiceFeatureCallback
      *  interface.
-     *  Used for emergency calling only.
      */
-    IImsMMTelFeature getEmergencyMMTelFeatureAndListen(int slotId,
-            in IImsServiceFeatureCallback callback);
+    IImsMmTelFeature getMmTelFeatureAndListen(int slotId, in IImsServiceFeatureCallback callback);
 
     /**
      *  Get IImsRcsFeature binder from ImsResolver that corresponds to the subId and RCS feature
@@ -814,6 +816,17 @@ interface ITelephony {
     * Returns the IImsRegistration associated with the slot and feature specified.
     */
     IImsRegistration getImsRegistration(int slotId, int feature);
+
+    /**
+    * Returns the IImsConfig associated with the slot and feature specified.
+    */
+    IImsConfig getImsConfig(int slotId, int feature);
+
+    /**
+    * Returns true if emergency calling is available for the MMTEL feature associated with the
+    * slot specified.
+    */
+    boolean isEmergencyMmTelAvailable(int slotId);
 
     /**
      * Set the network selection mode to automatic.
@@ -943,6 +956,11 @@ interface ITelephony {
      * @return carrier privilege status defined in TelephonyManager.
      */
     int getCarrierPrivilegeStatus(int subId);
+
+    /**
+     * Similar to above, but check for the given uid.
+     */
+    int getCarrierPrivilegeStatusForUid(int subId, int uid);
 
     /**
      * Similar to above, but check for the package whose name is pkgName.
@@ -1116,33 +1134,33 @@ interface ITelephony {
     boolean isHearingAidCompatibilitySupported();
 
     /**
-     * Get IMS Registration Status
-     */
-    boolean isImsRegistered();
-
-    /**
      * Get IMS Registration Status on a particular subid.
      *
      * @param subId user preferred subId.
      *
      * @return {@code true} if the IMS status is registered.
      */
-    boolean isImsRegisteredForSubscriber(int subId);
+    boolean isImsRegistered(int subId);
 
     /**
-     * Returns the Status of Wi-Fi Calling
+     * Returns the Status of Wi-Fi Calling for the subscription id specified.
      */
-    boolean isWifiCallingAvailable();
+    boolean isWifiCallingAvailable(int subId);
 
     /**
-     * Returns the Status of Volte
+     * Returns the Status of VoLTE for the subscription ID specified.
      */
-    boolean isVolteAvailable();
+    boolean isVolteAvailable(int subId);
 
      /**
-     * Returns the Status of VT (video telephony)
+     * Returns the Status of VT (video telephony) for the subscription ID specified.
      */
-    boolean isVideoTelephonyAvailable();
+    boolean isVideoTelephonyAvailable(int subId);
+
+    /**
+    * Returns the MMTEL IMS registration technology for the subsciption ID specified.
+    */
+    int getImsRegTechnologyForMmTel(int subId);
 
     /**
       * Returns the unique device ID of phone, for example, the IMEI for
@@ -1461,4 +1479,12 @@ interface ITelephony {
      * @return boolean Return true if the switch succeeds, false if the switch fails.
      */
     boolean switchSlots(in int[] physicalSlots);
+
+    /**
+     * Sets radio indication update mode. This can be used to control the behavior of indication
+     * update from modem to Android frameworks. For example, by default several indication updates
+     * are turned off when screen is off, but in some special cases (e.g. carkit is connected but
+     * screen is off) we want to turn on those indications even when the screen is off.
+     */
+    void setRadioIndicationUpdateMode(int subId, int filters, int mode);
 }

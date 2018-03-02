@@ -21,7 +21,6 @@ import android.net.ConnectivityManager.NetworkCallback;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.ArraySet;
-import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.BitUtils;
@@ -116,6 +115,8 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_NOT_ROAMING,
             NET_CAPABILITY_FOREGROUND,
             NET_CAPABILITY_NOT_CONGESTED,
+            NET_CAPABILITY_NOT_SUSPENDED,
+            NET_CAPABILITY_OEM_PAID,
     })
     public @interface NetCapability { }
 
@@ -239,7 +240,6 @@ public final class NetworkCapabilities implements Parcelable {
     /**
      * Indicates that this network is available for use by apps, and not a network that is being
      * kept up in the background to facilitate fast network switching.
-     * @hide
      */
     public static final int NET_CAPABILITY_FOREGROUND = 19;
 
@@ -252,8 +252,27 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int NET_CAPABILITY_NOT_CONGESTED = 20;
 
+    /**
+     * Indicates that this network is not currently suspended.
+     * <p>
+     * When a network is suspended, the network's IP addresses and any connections
+     * established on the network remain valid, but the network is temporarily unable
+     * to transfer data. This can happen, for example, if a cellular network experiences
+     * a temporary loss of signal, such as when driving through a tunnel, etc.
+     * A network with this capability is not suspended, so is expected to be able to
+     * transfer data.
+     */
+    public static final int NET_CAPABILITY_NOT_SUSPENDED = 21;
+
+    /**
+     * Indicates that traffic that goes through this network is paid by oem. For example,
+     * this network can be used by system apps to upload telemetry data.
+     * @hide
+     */
+    public static final int NET_CAPABILITY_OEM_PAID = 22;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_NOT_CONGESTED;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_OEM_PAID;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -262,12 +281,13 @@ public final class NetworkCapabilities implements Parcelable {
     private static final long MUTABLE_CAPABILITIES =
             // TRUSTED can change when user explicitly connects to an untrusted network in Settings.
             // http://b/18206275
-            (1 << NET_CAPABILITY_TRUSTED) |
-            (1 << NET_CAPABILITY_VALIDATED) |
-            (1 << NET_CAPABILITY_CAPTIVE_PORTAL) |
-            (1 << NET_CAPABILITY_NOT_ROAMING) |
-            (1 << NET_CAPABILITY_FOREGROUND) |
-            (1 << NET_CAPABILITY_NOT_CONGESTED);
+            (1 << NET_CAPABILITY_TRUSTED)
+            | (1 << NET_CAPABILITY_VALIDATED)
+            | (1 << NET_CAPABILITY_CAPTIVE_PORTAL)
+            | (1 << NET_CAPABILITY_NOT_ROAMING)
+            | (1 << NET_CAPABILITY_FOREGROUND)
+            | (1 << NET_CAPABILITY_NOT_CONGESTED)
+            | (1 << NET_CAPABILITY_NOT_SUSPENDED);
 
     /**
      * Network capabilities that are not allowed in NetworkRequests. This exists because the
@@ -300,7 +320,8 @@ public final class NetworkCapabilities implements Parcelable {
             (1 << NET_CAPABILITY_IA) |
             (1 << NET_CAPABILITY_IMS) |
             (1 << NET_CAPABILITY_RCS) |
-            (1 << NET_CAPABILITY_XCAP);
+            (1 << NET_CAPABILITY_XCAP) |
+            (1 << NET_CAPABILITY_OEM_PAID);
 
     /**
      * Capabilities that suggest that a network is unrestricted.
@@ -1207,34 +1228,68 @@ public final class NetworkCapabilities implements Parcelable {
 
     @Override
     public String toString() {
-        // TODO: enumerate bits for transports and capabilities instead of creating arrays.
-        // TODO: use a StringBuilder instead of string concatenation.
-        int[] types = getTransportTypes();
-        String transports = (types.length > 0) ? " Transports: " + transportNamesOf(types) : "";
-
-        types = getCapabilities();
-        String capabilities = (types.length > 0 ? " Capabilities: " : "");
-        for (int i = 0; i < types.length; ) {
-            capabilities += capabilityNameOf(types[i]);
-            if (++i < types.length) capabilities += "&";
+        final StringBuilder sb = new StringBuilder("[");
+        if (0 != mTransportTypes) {
+            sb.append(" Transports: ");
+            appendStringRepresentationOfBitMaskToStringBuilder(sb, mTransportTypes,
+                    NetworkCapabilities::transportNameOf, "|");
+        }
+        if (0 != mNetworkCapabilities) {
+            sb.append(" Capabilities: ");
+            appendStringRepresentationOfBitMaskToStringBuilder(sb, mNetworkCapabilities,
+                    NetworkCapabilities::capabilityNameOf, "&");
+        }
+        if (mLinkUpBandwidthKbps > 0) {
+            sb.append(" LinkUpBandwidth>=").append(mLinkUpBandwidthKbps).append("Kbps");
+        }
+        if (mLinkDownBandwidthKbps > 0) {
+            sb.append(" LinkDnBandwidth>=").append(mLinkDownBandwidthKbps).append("Kbps");
+        }
+        if (mNetworkSpecifier != null) {
+            sb.append(" Specifier: <").append(mNetworkSpecifier).append(">");
+        }
+        if (hasSignalStrength()) {
+            sb.append(" SignalStrength: ").append(mSignalStrength);
         }
 
-        String upBand = ((mLinkUpBandwidthKbps > 0) ? " LinkUpBandwidth>=" +
-                mLinkUpBandwidthKbps + "Kbps" : "");
-        String dnBand = ((mLinkDownBandwidthKbps > 0) ? " LinkDnBandwidth>=" +
-                mLinkDownBandwidthKbps + "Kbps" : "");
+        if (null != mUids) {
+            if ((1 == mUids.size()) && (mUids.valueAt(0).count() == 1)) {
+                sb.append(" Uid: ").append(mUids.valueAt(0).start);
+            } else {
+                sb.append(" Uids: <").append(mUids).append(">");
+            }
+        }
+        if (mEstablishingVpnAppUid != INVALID_UID) {
+            sb.append(" EstablishingAppUid: ").append(mEstablishingVpnAppUid);
+        }
 
-        String specifier = (mNetworkSpecifier == null ?
-                "" : " Specifier: <" + mNetworkSpecifier + ">");
+        sb.append("]");
+        return sb.toString();
+    }
 
-        String signalStrength = (hasSignalStrength() ? " SignalStrength: " + mSignalStrength : "");
 
-        String uids = (null != mUids ? " Uids: <" + mUids + ">" : "");
-
-        String establishingAppUid = " EstablishingAppUid: " + mEstablishingVpnAppUid;
-
-        return "[" + transports + capabilities + upBand + dnBand + specifier + signalStrength
-            + uids + establishingAppUid + "]";
+    private interface NameOf {
+        String nameOf(int value);
+    }
+    /**
+     * @hide
+     */
+    public static void appendStringRepresentationOfBitMaskToStringBuilder(StringBuilder sb,
+            long bitMask, NameOf nameFetcher, String separator) {
+        int bitPos = 0;
+        boolean firstElementAdded = false;
+        while (bitMask != 0) {
+            if ((bitMask & 1) != 0) {
+                if (firstElementAdded) {
+                    sb.append(separator);
+                } else {
+                    firstElementAdded = true;
+                }
+                sb.append(nameFetcher.nameOf(bitPos));
+            }
+            bitMask >>= 1;
+            ++bitPos;
+        }
     }
 
     /**
@@ -1276,6 +1331,8 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_NOT_ROAMING:    return "NOT_ROAMING";
             case NET_CAPABILITY_FOREGROUND:     return "FOREGROUND";
             case NET_CAPABILITY_NOT_CONGESTED:  return "NOT_CONGESTED";
+            case NET_CAPABILITY_NOT_SUSPENDED:  return "NOT_SUSPENDED";
+            case NET_CAPABILITY_OEM_PAID:       return "OEM_PAID";
             default:                            return Integer.toString(capability);
         }
     }

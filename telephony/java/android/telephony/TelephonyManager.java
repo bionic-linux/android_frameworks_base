@@ -47,12 +47,14 @@ import android.service.carrier.CarrierIdentifier;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.VisualVoicemailService.VisualVoicemailTask;
+import android.telephony.ims.aidl.IImsConfig;
+import android.telephony.ims.aidl.IImsMmTelFeature;
+import android.telephony.ims.aidl.IImsRcsFeature;
+import android.telephony.ims.aidl.IImsRegistration;
 import android.telephony.ims.feature.ImsFeature;
+import android.telephony.ims.stub.ImsRegistrationImplBase;
 import android.util.Log;
 
-import com.android.ims.internal.IImsMMTelFeature;
-import com.android.ims.internal.IImsRcsFeature;
-import com.android.ims.internal.IImsRegistration;
 import com.android.ims.internal.IImsServiceFeatureCallback;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telecom.ITelecomService;
@@ -891,6 +893,61 @@ public class TelephonyManager {
     public static final String EVENT_CALL_FORWARDED =
             "android.telephony.event.EVENT_CALL_FORWARDED";
 
+    /**
+     * {@link android.telecom.Connection} event used to indicate that a supplementary service
+     * notification has been received.
+     * <p>
+     * Sent via {@link android.telecom.Connection#sendConnectionEvent(String, Bundle)}.
+     * The {@link Bundle} parameter is expected to include the following extras:
+     * <ul>
+     *     <li>{@link #EXTRA_NOTIFICATION_TYPE} - the notification type.</li>
+     *     <li>{@link #EXTRA_NOTIFICATION_CODE} - the notification code.</li>
+     *     <li>{@link #EXTRA_NOTIFICATION_MESSAGE} - human-readable message associated with the
+     *     supplementary service notification.</li>
+     * </ul>
+     * @hide
+     */
+    public static final String EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION =
+            "android.telephony.event.EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION";
+
+    /**
+     * Integer extra key used with {@link #EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION} which indicates
+     * the type of supplementary service notification which occurred.
+     * Will be either
+     * {@link com.android.internal.telephony.gsm.SuppServiceNotification#NOTIFICATION_TYPE_CODE_1}
+     * or
+     * {@link com.android.internal.telephony.gsm.SuppServiceNotification#NOTIFICATION_TYPE_CODE_2}
+     * <p>
+     * Set in the extras for the {@link #EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION} connection event.
+     * @hide
+     */
+    public static final String EXTRA_NOTIFICATION_TYPE =
+            "android.telephony.extra.NOTIFICATION_TYPE";
+
+    /**
+     * Integer extra key used with {@link #EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION} which indicates
+     * the supplementary service notification which occurred.
+     * <p>
+     * Depending on the {@link #EXTRA_NOTIFICATION_TYPE}, the code will be one of the {@code CODE_*}
+     * codes defined in {@link com.android.internal.telephony.gsm.SuppServiceNotification}.
+     * <p>
+     * Set in the extras for the {@link #EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION} connection event.
+     * @hide
+     */
+    public static final String EXTRA_NOTIFICATION_CODE =
+            "android.telephony.extra.NOTIFICATION_CODE";
+
+    /**
+     * {@link CharSequence} extra key used with {@link #EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION}
+     * which contains a human-readable message which can be displayed to the user for the
+     * supplementary service notification.
+     * <p>
+     * Set in the extras for the {@link #EVENT_SUPPLEMENTARY_SERVICE_NOTIFICATION} connection event.
+     * @hide
+     */
+    public static final String EXTRA_NOTIFICATION_MESSAGE =
+            "android.telephony.extra.NOTIFICATION_MESSAGE";
+
     /* Visual voicemail protocols */
 
     /**
@@ -1155,12 +1212,14 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns the NAI. Return null if NAI is not available.
-     *
+     * Returns the Network Access Identifier (NAI). Return null if NAI is not available.
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
-    /** {@hide}*/
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public String getNai() {
-        return getNai(getSlotIndex());
+        return getNaiBySubscriberId(getSubId());
     }
 
     /**
@@ -1171,11 +1230,18 @@ public class TelephonyManager {
     /** {@hide}*/
     public String getNai(int slotIndex) {
         int[] subId = SubscriptionManager.getSubId(slotIndex);
+        if (subId == null) {
+            return null;
+        }
+        return getNaiBySubscriberId(subId[0]);
+    }
+
+    private String getNaiBySubscriberId(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
             if (info == null)
                 return null;
-            String nai = info.getNaiForSubscriber(subId[0], mContext.getOpPackageName());
+            String nai = info.getNaiForSubscriber(subId, mContext.getOpPackageName());
             if (Log.isLoggable(TAG, Log.VERBOSE)) {
                 Rlog.v(TAG, "Nai = " + nai);
             }
@@ -3814,6 +3880,9 @@ public class TelephonyManager {
      * To unregister a listener, pass the listener object and set the
      * events argument to
      * {@link PhoneStateListener#LISTEN_NONE LISTEN_NONE} (0).
+     * Note: if you call this method while in the middle of a binder transaction, you <b>must</b>
+     * call {@link android.os.Binder#clearCallingIdentity()} before calling this method. A
+     * {@link SecurityException} will be thrown otherwise.
      *
      * @param listener The {@link PhoneStateListener} object to register
      *                 (or unregister)
@@ -4562,7 +4631,7 @@ public class TelephonyManager {
     }
 
     /**
-     * Sets the telephony property with the value specified.
+     * Sets a per-phone telephony property with the value specified.
      *
      * @hide
      */
@@ -4606,9 +4675,21 @@ public class TelephonyManager {
             return;
         }
 
-        Rlog.d(TAG, "setTelephonyProperty: success phoneId=" + phoneId +
-                " property=" + property + " value: " + value + " propVal=" + propVal);
         SystemProperties.set(property, propVal);
+    }
+
+    /**
+     * Sets a global telephony property with the value specified.
+     *
+     * @hide
+     */
+    public static void setTelephonyProperty(String property, String value) {
+        if (value == null) {
+            value = "";
+        }
+        Rlog.d(TAG, "setTelephonyProperty: success" + " property=" +
+                property + " value: " + value);
+        SystemProperties.set(property, value);
     }
 
     /**
@@ -4700,7 +4781,7 @@ public class TelephonyManager {
     }
 
     /**
-     * Gets the telephony property.
+     * Gets a per-phone telephony property.
      *
      * @hide
      */
@@ -4713,6 +4794,19 @@ public class TelephonyManager {
                 propVal = values[phoneId];
             }
         }
+        return propVal == null ? defaultVal : propVal;
+    }
+
+    /**
+     * Gets a global telephony property.
+     *
+     * See also getTelephonyProperty(phoneId, property, defaultVal). Most telephony properties are
+     * per-phone.
+     *
+     * @hide
+     */
+    public static String getTelephonyProperty(String property, String defaultVal) {
+        String propVal = SystemProperties.get(property);
         return propVal == null ? defaultVal : propVal;
     }
 
@@ -4889,57 +4983,60 @@ public class TelephonyManager {
         }
     }
 
-    /** @hide */
-    @IntDef({ImsFeature.EMERGENCY_MMTEL, ImsFeature.MMTEL, ImsFeature.RCS})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Feature {}
-
     /**
-     * Returns the {@link IImsMMTelFeature} that corresponds to the given slot Id and MMTel
-     * feature or {@link null} if the service is not available. If an MMTelFeature is available, the
-     * {@link IImsServiceFeatureCallback} callback is registered as a listener for feature updates.
-     * @param slotIndex The SIM slot that we are requesting the {@link IImsMMTelFeature} for.
-     * @param callback Listener that will send updates to ImsManager when there are updates to
-     * ImsServiceController.
-     * @return {@link IImsMMTelFeature} interface for the feature specified or {@code null} if
-     * it is unavailable.
+     * Enables IMS for the framework. This will trigger IMS registration and ImsFeature capability
+     * status updates, if not already enabled.
      * @hide
      */
-    public @Nullable IImsMMTelFeature getImsMMTelFeatureAndListen(int slotIndex,
-            IImsServiceFeatureCallback callback) {
+    public void enableIms(int slotId) {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.getMMTelFeatureAndListen(slotIndex, callback);
+                telephony.enableIms(slotId);
             }
         } catch (RemoteException e) {
-            Rlog.e(TAG, "getImsMMTelFeatureAndListen, RemoteException: "
+            Rlog.e(TAG, "enableIms, RemoteException: "
                     + e.getMessage());
         }
-        return null;
     }
 
     /**
-     * Returns the {@link IImsMMTelFeature} that corresponds to the given slot Id and MMTel
-     * feature for emergency calling or {@link null} if the service is not available. If an
-     * MMTelFeature is available, the {@link IImsServiceFeatureCallback} callback is registered as a
-     * listener for feature updates.
-     * @param slotIndex The SIM slot that we are requesting the {@link IImsMMTelFeature} for.
+     * Disables IMS for the framework. This will trigger IMS de-registration and trigger ImsFeature
+     * status updates to disabled.
+     * @hide
+     */
+    public void disableIms(int slotId) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                telephony.disableIms(slotId);
+            }
+        } catch (RemoteException e) {
+            Rlog.e(TAG, "disableIms, RemoteException: "
+                    + e.getMessage());
+        }
+    }
+
+    /**
+     * Returns the {@link IImsMmTelFeature} that corresponds to the given slot Id and MMTel
+     * feature or {@link null} if the service is not available. If an MMTelFeature is available, the
+     * {@link IImsServiceFeatureCallback} callback is registered as a listener for feature updates.
+     * @param slotIndex The SIM slot that we are requesting the {@link IImsMmTelFeature} for.
      * @param callback Listener that will send updates to ImsManager when there are updates to
      * ImsServiceController.
-     * @return {@link IImsMMTelFeature} interface for the feature specified or {@code null} if
+     * @return {@link IImsMmTelFeature} interface for the feature specified or {@code null} if
      * it is unavailable.
      * @hide
      */
-    public @Nullable IImsMMTelFeature getImsEmergencyMMTelFeatureAndListen(int slotIndex,
+    public @Nullable IImsMmTelFeature getImsMmTelFeatureAndListen(int slotIndex,
             IImsServiceFeatureCallback callback) {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.getEmergencyMMTelFeatureAndListen(slotIndex, callback);
+                return telephony.getMmTelFeatureAndListen(slotIndex, callback);
             }
         } catch (RemoteException e) {
-            Rlog.e(TAG, "getImsEmergencyMMTelFeatureAndListen, RemoteException: "
+            Rlog.e(TAG, "getImsMmTelFeatureAndListen, RemoteException: "
                     + e.getMessage());
         }
         return null;
@@ -4988,6 +5085,43 @@ public class TelephonyManager {
             Rlog.e(TAG, "getImsRegistration, RemoteException: " + e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * @return the {@IImsConfig} interface that corresponds with the slot index and feature.
+     * @param slotIndex The SIM slot corresponding to the ImsService ImsConfig is active for.
+     * @param feature An integer indicating the feature that we wish to get the ImsConfig for.
+     * Corresponds to features defined in ImsFeature.
+     * @hide
+     */
+    public @Nullable IImsConfig getImsConfig(int slotIndex, int feature) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                return telephony.getImsConfig(slotIndex, feature);
+            }
+        } catch (RemoteException e) {
+            Rlog.e(TAG, "getImsRegistration, RemoteException: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Determines if emergency calling is allowed for the MMTEL feature on the slot provided.
+     * @param slotIndex The SIM slot of the MMTEL feature
+     * @return true if emergency calling is allowed, false otherwise.
+     * @hide
+     */
+    public boolean isEmergencyMmTelAvailable(int slotIndex) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                return telephony.isEmergencyMmTelAvailable(slotIndex);
+            }
+        } catch (RemoteException e) {
+            Rlog.e(TAG, "isEmergencyMmTelAvailable, RemoteException: " + e.getMessage());
+        }
+        return false;
     }
 
     /**
@@ -6122,83 +6256,105 @@ public class TelephonyManager {
         return false;
     }
 
-   /**
-    * Returns the IMS Registration Status
-    * @hide
-    */
-   public boolean isImsRegistered() {
-       try {
-           ITelephony telephony = getITelephony();
-           if (telephony == null)
-               return false;
-           return telephony.isImsRegistered();
-       } catch (RemoteException ex) {
-           return false;
-       } catch (NullPointerException ex) {
-           return false;
-       }
-   }
-
     /**
-     * Returns the IMS Registration Status for a particular Subscription ID
+     * Returns the IMS Registration Status for a particular Subscription ID.
      *
      * @param subId Subscription ID
      * @return true if IMS status is registered, false if the IMS status is not registered or a
      * RemoteException occurred.
-     *
      * @hide
      */
     public boolean isImsRegistered(int subId) {
-       try {
-           return getITelephony().isImsRegisteredForSubscriber(subId);
-       } catch (RemoteException ex) {
-           return false;
-       } catch (NullPointerException ex) {
-           return false;
-       }
-    }
-
-    /**
-     * Returns the Status of Volte
-     * @hide
-     */
-    public boolean isVolteAvailable() {
-       try {
-           return getITelephony().isVolteAvailable();
-       } catch (RemoteException ex) {
-           return false;
-       } catch (NullPointerException ex) {
-           return false;
-       }
-   }
-
-    /**
-     * Returns the Status of video telephony (VT)
-     * @hide
-     */
-    public boolean isVideoTelephonyAvailable() {
         try {
-            return getITelephony().isVideoTelephonyAvailable();
-        } catch (RemoteException ex) {
-            return false;
-        } catch (NullPointerException ex) {
+            return getITelephony().isImsRegistered(subId);
+        } catch (RemoteException | NullPointerException ex) {
             return false;
         }
     }
 
     /**
-     * Returns the Status of Wi-Fi Calling
+     * Returns the IMS Registration Status for a particular Subscription ID, which is determined
+     * when the TelephonyManager is created using {@link #createForSubscriptionId(int)}. If an
+     * invalid subscription ID is used during creation, will the default subscription ID will be
+     * used.
+     *
+     * @return true if IMS status is registered, false if the IMS status is not registered or a
+     * RemoteException occurred.
+     * @see SubscriptionManager#getDefaultSubscriptionId()
+     * @hide
+     */
+    public boolean isImsRegistered() {
+       try {
+           return getITelephony().isImsRegistered(getSubId());
+       } catch (RemoteException | NullPointerException ex) {
+           return false;
+       }
+    }
+
+    /**
+     * The current status of Voice over LTE for the subscription associated with this instance when
+     * it was created using {@link #createForSubscriptionId(int)}. If an invalid subscription ID was
+     * used during creation, the default subscription ID will be used.
+     * @return true if Voice over LTE is available or false if it is unavailable or unknown.
+     * @see SubscriptionManager#getDefaultSubscriptionId()
+     * @hide
+     */
+    public boolean isVolteAvailable() {
+        try {
+            return getITelephony().isVolteAvailable(getSubId());
+        } catch (RemoteException | NullPointerException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * The availability of Video Telephony (VT) for the subscription ID specified when this instance
+     * was created using {@link #createForSubscriptionId(int)}. If an invalid subscription ID was
+     * used during creation, the default subscription ID will be used. To query the
+     * underlying technology that VT is available on, use {@link #getImsRegTechnologyForMmTel}.
+     * @return true if VT is available, or false if it is unavailable or unknown.
+     * @hide
+     */
+    public boolean isVideoTelephonyAvailable() {
+        try {
+            return getITelephony().isVideoTelephonyAvailable(getSubId());
+        } catch (RemoteException | NullPointerException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the Status of Wi-Fi calling (Voice over WiFi) for the subscription ID specified.
+     * @param subId the subscription ID.
+     * @return true if VoWiFi is available, or false if it is unavailable or unknown.
      * @hide
      */
     public boolean isWifiCallingAvailable() {
        try {
-           return getITelephony().isWifiCallingAvailable();
-       } catch (RemoteException ex) {
-           return false;
-       } catch (NullPointerException ex) {
+           return getITelephony().isWifiCallingAvailable(getSubId());
+       } catch (RemoteException | NullPointerException ex) {
            return false;
        }
    }
+
+    /**
+     * The technology that IMS is registered for for the MMTEL feature.
+     * @param subId subscription ID to get IMS registration technology for.
+     * @return The IMS registration technology that IMS is registered to for the MMTEL feature.
+     * Valid return results are:
+     *  - {@link ImsRegistrationImplBase#REGISTRATION_TECH_LTE} for LTE registration,
+     *  - {@link ImsRegistrationImplBase#REGISTRATION_TECH_IWLAN} for IWLAN registration, or
+     *  - {@link ImsRegistrationImplBase#REGISTRATION_TECH_NONE} if we are not registered or the
+     *  result is unavailable.
+     *  @hide
+     */
+    public @ImsRegistrationImplBase.ImsRegistrationTech int getImsRegTechnologyForMmTel() {
+        try {
+            return getITelephony().getImsRegTechnologyForMmTel(getSubId());
+        } catch (RemoteException ex) {
+            return ImsRegistrationImplBase.REGISTRATION_TECH_NONE;
+        }
+    }
 
    /**
     * Set TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC for the default phone.
@@ -6830,18 +6986,16 @@ public class TelephonyManager {
      *
      * @return Carrier id of the current subscription. Return {@link #UNKNOWN_CARRIER_ID} if the
      * subscription is unavailable or the carrier cannot be identified.
-     * @throws IllegalStateException if telephony service is unavailable.
      */
     public int getAndroidCarrierIdForSubscription() {
         try {
             ITelephony service = getITelephony();
-            return service.getSubscriptionCarrierId(getSubId());
+            if (service != null) {
+                return service.getSubscriptionCarrierId(getSubId());
+            }
         } catch (RemoteException ex) {
             // This could happen if binder process crashes.
             ex.rethrowAsRuntimeException();
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing.
-            throw new IllegalStateException("Telephony service unavailable");
         }
         return UNKNOWN_CARRIER_ID;
     }
@@ -6857,18 +7011,16 @@ public class TelephonyManager {
      *
      * @return Carrier name of the current subscription. Return {@code null} if the subscription is
      * unavailable or the carrier cannot be identified.
-     * @throws IllegalStateException if telephony service is unavailable.
      */
     public CharSequence getAndroidCarrierNameForSubscription() {
         try {
             ITelephony service = getITelephony();
-            return service.getSubscriptionCarrierName(getSubId());
+            if (service != null) {
+                return service.getSubscriptionCarrierName(getSubId());
+            }
         } catch (RemoteException ex) {
             // This could happen if binder process crashes.
             ex.rethrowAsRuntimeException();
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing.
-            throw new IllegalStateException("Telephony service unavailable");
         }
         return null;
     }
@@ -7311,6 +7463,85 @@ public class TelephonyManager {
                 telephony.setUserDataEnabled(subId, enable);
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling ITelephony#setUserDataEnabled", e);
+        }
+    }
+
+    /**
+     * In this mode, modem will not send specified indications when screen is off.
+     * @hide
+     */
+    public static final int INDICATION_UPDATE_MODE_NORMAL                   = 1;
+
+    /**
+     * In this mode, modem will still send specified indications when screen is off.
+     * @hide
+     */
+    public static final int INDICATION_UPDATE_MODE_IGNORE_SCREEN_OFF        = 2;
+
+    /** @hide */
+    @IntDef(prefix = { "INDICATION_UPDATE_MODE_" }, value = {
+            INDICATION_UPDATE_MODE_NORMAL,
+            INDICATION_UPDATE_MODE_IGNORE_SCREEN_OFF
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface IndicationUpdateMode{}
+
+    /**
+     * The indication for signal strength update.
+     * @hide
+     */
+    public static final int INDICATION_FILTER_SIGNAL_STRENGTH               = 0x1;
+
+    /**
+     * The indication for full network state update.
+     * @hide
+     */
+    public static final int INDICATION_FILTER_FULL_NETWORK_STATE            = 0x2;
+
+    /**
+     * The indication for data call dormancy changed update.
+     * @hide
+     */
+    public static final int INDICATION_FILTER_DATA_CALL_DORMANCY_CHANGED    = 0x4;
+
+    /** @hide */
+    @IntDef(flag = true, prefix = { "INDICATION_FILTER_" }, value = {
+            INDICATION_FILTER_SIGNAL_STRENGTH,
+            INDICATION_FILTER_FULL_NETWORK_STATE,
+            INDICATION_FILTER_DATA_CALL_DORMANCY_CHANGED
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface IndicationFilters{}
+
+    /**
+     * Sets radio indication update mode. This can be used to control the behavior of indication
+     * update from modem to Android frameworks. For example, by default several indication updates
+     * are turned off when screen is off, but in some special cases (e.g. carkit is connected but
+     * screen is off) we want to turn on those indications even when the screen is off.
+     *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
+     *
+     * @param filters Indication filters. Should be a bitmask of INDICATION_FILTER_XXX.
+     * @see #INDICATION_FILTER_SIGNAL_STRENGTH
+     * @see #INDICATION_FILTER_FULL_NETWORK_STATE
+     * @see #INDICATION_FILTER_DATA_CALL_DORMANCY_CHANGED
+     * @param updateMode The voice activation state
+     * @see #INDICATION_UPDATE_MODE_NORMAL
+     * @see #INDICATION_UPDATE_MODE_IGNORE_SCREEN_OFF
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public void setRadioIndicationUpdateMode(@IndicationFilters int filters,
+                                             @IndicationUpdateMode int updateMode) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                telephony.setRadioIndicationUpdateMode(getSubId(), filters, updateMode);
+            }
+        } catch (RemoteException ex) {
+            // This could happen if binder process crashes.
+            ex.rethrowAsRuntimeException();
         }
     }
 }

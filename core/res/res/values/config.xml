@@ -1578,6 +1578,9 @@
     <!-- Operating volatage for bluetooth controller. 0 by default-->
     <integer translatable="false" name="config_bluetooth_operating_voltage_mv">0</integer>
 
+    <!-- Max number of connected audio devices supported by Bluetooth stack -->
+    <integer name="config_bluetooth_max_connected_audio_devices">1</integer>
+
     <!-- Whether supported profiles should be reloaded upon enabling bluetooth -->
     <bool name="config_bluetooth_reload_supported_profiles_when_enabled">false</bool>
 
@@ -2400,6 +2403,32 @@
          in the display pipeline plus some slack just to be sure. -->
     <integer name="config_drawLockTimeoutMillis">120</integer>
 
+    <!-- An array of device capabilities defined by GSMA SGP.22 v2.0.
+         The first item is the capability name that the device supports. The second item is the
+         major version. The minor and revision versions are default to 0s.
+         The device capabilities and their definition in the spec are:
+             gsm : gsmSupportedRelease
+             utran : utranSupportedRelease
+             cdma1x : cdma2000onexSupportedRelease
+             hrpd : cdma2000hrpdSupportedRelease
+             ehrpd : cdma2000ehrpdSupportedRelease
+             eutran : eutranSupportedRelease
+             nfc : contactlessSupportedRelease
+             crl : rspCrlSupportedVersion
+    -->
+    <string-array translatable="false" name="config_telephonyEuiccDeviceCapabilities">
+        <!-- Example:
+        <item>"gsm,11"</item>
+        <item>"utran,11"</item>
+        <item>"cdma1x,1"</item>
+        <item>"hrpd,3"</item>
+        <item>"ehrpd,12"</item>
+        <item>"eutran,11"</item>
+        <item>"nfc,1"</item>
+        <item>"crl,1"</item>
+        -->
+    </string-array>
+
     <!-- default telephony hardware configuration for this platform.
     -->
     <!-- this string array should be overridden by the device to present a list
@@ -3122,4 +3151,11 @@
     <bool name="config_display_no_service_when_sim_unready">false</bool>
 
     <bool name="config_supportBluetoothPersistedState">true</bool>
+
+    <!-- Cellular network service package name to bind to by default. -->
+    <string name="config_wwan_network_service_package" translatable="false">com.android.phone</string>
+
+    <!-- IWLAN network service package name to bind to by default. If none is specified in an overlay, an
+         empty string is passed in -->
+    <string name="config_wlan_network_service_package" translatable="false"></string>
 </resources>

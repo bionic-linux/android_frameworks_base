@@ -19,6 +19,7 @@ package com.android.server.connectivity;
 import static android.hardware.usb.UsbManager.USB_CONFIGURED;
 import static android.hardware.usb.UsbManager.USB_CONNECTED;
 import static android.hardware.usb.UsbManager.USB_FUNCTION_RNDIS;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_INTERFACE_NAME;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_MODE;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_STATE;
@@ -70,6 +71,9 @@ import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.UserHandle;
+import android.os.UserManager;
+import android.os.UserManagerInternal;
+import android.os.UserManagerInternal.UserRestrictionsListener;
 import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.text.TextUtils;
@@ -86,6 +90,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.server.LocalServices;
 import com.android.server.connectivity.tethering.IControlsTethering;
 import com.android.server.connectivity.tethering.IPv6TetheringCoordinator;
 import com.android.server.connectivity.tethering.OffloadController;
@@ -99,6 +104,7 @@ import com.android.server.net.BaseNetworkObserver;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -243,6 +249,13 @@ public class Tethering extends BaseNetworkObserver {
         filter.addAction(Intent.ACTION_MEDIA_UNSHARED);
         filter.addDataScheme("file");
         mContext.registerReceiver(mStateReceiver, filter, null, smHandler);
+
+        UserManagerInternal userManager = LocalServices.getService(UserManagerInternal.class);
+
+        // this check is useful only for some unit tests; example: ConnectivityServiceTest
+        if (userManager != null) {
+            userManager.addUserRestrictionsListener(new TetheringUserRestrictionListener(this));
+        }
 
         // load device config info
         updateConfiguration();
@@ -731,6 +744,11 @@ public class Tethering extends BaseNetworkObserver {
     }
 
     private void showTetheredNotification(int id) {
+        showTetheredNotification(id, true);
+    }
+
+    @VisibleForTesting
+    protected void showTetheredNotification(int id, boolean tetheringOn) {
         NotificationManager notificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager == null) {
@@ -767,9 +785,16 @@ public class Tethering extends BaseNetworkObserver {
                 null, UserHandle.CURRENT);
 
         Resources r = Resources.getSystem();
-        CharSequence title = r.getText(com.android.internal.R.string.tethered_notification_title);
-        CharSequence message = r.getText(com.android.internal.R.string.
-                tethered_notification_message);
+        final CharSequence title;
+        final CharSequence message;
+
+        if (tetheringOn) {
+            title = r.getText(com.android.internal.R.string.tethered_notification_title);
+            message = r.getText(com.android.internal.R.string.tethered_notification_message);
+        } else {
+            title = r.getText(com.android.internal.R.string.disable_tether_notification_title);
+            message = r.getText(com.android.internal.R.string.disable_tether_notification_message);
+        }
 
         if (mTetheredNotificationBuilder == null) {
             mTetheredNotificationBuilder =
@@ -791,7 +816,8 @@ public class Tethering extends BaseNetworkObserver {
                 mTetheredNotificationBuilder.buildInto(new Notification()), UserHandle.ALL);
     }
 
-    private void clearTetheredNotification() {
+    @VisibleForTesting
+    protected void clearTetheredNotification() {
         NotificationManager notificationManager =
             (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null && mLastNotificationId != 0) {
@@ -890,6 +916,38 @@ public class Tethering extends BaseNetworkObserver {
                         disableWifiIpServingLocked(ifname, curState);
                         break;
                 }
+            }
+        }
+    }
+
+    @VisibleForTesting
+    protected static class TetheringUserRestrictionListener implements UserRestrictionsListener {
+        private final Tethering mWrapper;
+
+        public TetheringUserRestrictionListener(Tethering wrapper) {
+            mWrapper = wrapper;
+        }
+
+        public void onUserRestrictionsChanged(int userId,
+                                              Bundle newRestrictions,
+                                              Bundle prevRestrictions) {
+            final boolean newlyDisallowed =
+                    newRestrictions.getBoolean(UserManager.DISALLOW_CONFIG_TETHERING);
+            final boolean previouslyDisallowed =
+                    prevRestrictions.getBoolean(UserManager.DISALLOW_CONFIG_TETHERING);
+            final boolean tetheringDisallowedChanged = (newlyDisallowed != previouslyDisallowed);
+
+            if (!tetheringDisallowedChanged) {
+                return;
+            }
+
+            mWrapper.clearTetheredNotification();
+            final boolean isTetheringActiveOnDevice = (mWrapper.getTetheredIfaces().length != 0);
+
+            if (newlyDisallowed && isTetheringActiveOnDevice) {
+                mWrapper.showTetheredNotification(
+                        com.android.internal.R.drawable.stat_sys_tether_general, false);
+                mWrapper.untetherAll();
             }
         }
     }
@@ -1302,19 +1360,16 @@ public class Tethering extends BaseNetworkObserver {
 
         protected void setUpstreamNetwork(NetworkState ns) {
             String iface = null;
-            if (ns != null && ns.linkProperties != null) {
+            if (ns != null) {
                 // Find the interface with the default IPv4 route. It may be the
                 // interface described by linkProperties, or one of the interfaces
                 // stacked on top of it.
-                mLog.i("Finding IPv4 upstream interface on: " + ns.linkProperties);
-                RouteInfo ipv4Default = RouteInfo.selectBestRoute(
-                    ns.linkProperties.getAllRoutes(), Inet4Address.ANY);
-                if (ipv4Default != null) {
-                    iface = ipv4Default.getInterface();
-                    mLog.i("Found interface " + ipv4Default.getInterface());
-                } else {
-                    mLog.i("No IPv4 upstream interface, giving up.");
-                }
+                mLog.i("Looking for default routes on: " + ns.linkProperties);
+                final String iface4 = getIPv4DefaultRouteInterface(ns);
+                final String iface6 = getIPv6DefaultRouteInterface(ns);
+                mLog.i("IPv4/IPv6 upstream interface(s): " + iface4 + "/" + iface6);
+
+                iface = (iface4 != null) ? iface4 : null /* TODO: iface6 */;
             }
 
             if (iface != null) {
@@ -1955,6 +2010,31 @@ public class Tethering extends BaseNetworkObserver {
         tetherState.stateMachine.stop();
         mLog.log("removing TetheringInterfaceStateMachine for: " + iface);
         mTetherStates.remove(iface);
+    }
+
+    private static String getIPv4DefaultRouteInterface(NetworkState ns) {
+        if (ns == null) return null;
+        return getInterfaceForDestination(ns.linkProperties, Inet4Address.ANY);
+    }
+
+    private static String getIPv6DefaultRouteInterface(NetworkState ns) {
+        if (ns == null) return null;
+        // An upstream network's IPv6 capability is currently only useful if it
+        // can be 64share'd downstream (RFC 7278). For now, that means mobile
+        // upstream networks only.
+        if (ns.networkCapabilities == null ||
+                !ns.networkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
+            return null;
+        }
+
+        return getInterfaceForDestination(ns.linkProperties, Inet6Address.ANY);
+    }
+
+    private static String getInterfaceForDestination(LinkProperties lp, InetAddress dst) {
+        final RouteInfo ri = (lp != null)
+                ? RouteInfo.selectBestRoute(lp.getAllRoutes(), dst)
+                : null;
+        return (ri != null) ? ri.getInterface() : null;
     }
 
     private static String[] copy(String[] strarray) {

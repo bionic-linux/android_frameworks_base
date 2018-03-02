@@ -533,6 +533,10 @@ public class ActivityManagerService extends IActivityManager.Stub
     // How long we wait until we timeout on key dispatching during instrumentation.
     static final int INSTRUMENTATION_KEY_DISPATCHING_TIMEOUT = 60*1000;
 
+    // Disable hidden API checks for the newly started instrumentation.
+    // Must be kept in sync with Am.
+    private static final int INSTRUMENTATION_FLAG_DISABLE_HIDDEN_API_CHECKS = 1 << 0;
+
     // How long to wait in getAssistContextExtras for the activity and foreground services
     // to respond with the result.
     static final int PENDING_ASSIST_EXTRAS_TIMEOUT = 500;
@@ -1738,6 +1742,9 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     final ActivityManagerConstants mConstants;
 
+    // Encapsulates the global setting "hidden_api_blacklist_exemptions"
+    final HiddenApiBlacklist mHiddenApiBlacklist;
+
     PackageManagerInternal mPackageManagerInt;
 
     // VoiceInteraction session ID that changes for each new request except when
@@ -2687,6 +2694,42 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    /**
+     * Encapsulates the globla setting "hidden_api_blacklist_exemptions", including tracking the
+     * latest value via a content observer.
+     */
+    static class HiddenApiBlacklist extends ContentObserver {
+
+        private final Context mContext;
+        private boolean mBlacklistDisabled;
+
+        public HiddenApiBlacklist(Handler handler, Context context) {
+            super(handler);
+            mContext = context;
+        }
+
+        public void registerObserver() {
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.Global.getUriFor(Settings.Global.HIDDEN_API_BLACKLIST_EXEMPTIONS),
+                    false,
+                    this);
+            update();
+        }
+
+        private void update() {
+            mBlacklistDisabled = "*".equals(Settings.Global.getString(mContext.getContentResolver(),
+                    Settings.Global.HIDDEN_API_BLACKLIST_EXEMPTIONS));
+        }
+
+        boolean isDisabled() {
+            return mBlacklistDisabled;
+        }
+
+        public void onChange(boolean selfChange) {
+            update();
+        }
+    }
+
     @VisibleForTesting
     public ActivityManagerService(Injector injector) {
         mInjector = injector;
@@ -2716,6 +2759,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         mUiHandler = injector.getUiHandler(null);
         mUserController = null;
         mVrController = null;
+        mHiddenApiBlacklist = null;
     }
 
     // Note: This method is invoked on the main thread but may need to attach various
@@ -2847,6 +2891,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
             }
         };
+
+        mHiddenApiBlacklist = new HiddenApiBlacklist(mHandler, mContext);
 
         Watchdog.getInstance().addMonitor(this);
         Watchdog.getInstance().addThread(mHandler);
@@ -3628,6 +3674,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             info.className = entryPoint;
             info.packageName = "android";
             info.seInfoUser = SELinuxUtil.COMPLETE_STR;
+            info.targetSdkVersion = Build.VERSION.SDK_INT;
             ProcessRecord proc = startProcessLocked(processName, info /* info */,
                     false /* knownToBeDead */, 0 /* intentFlags */, ""  /* hostingType */,
                     null /* hostingName */, true /* allowWhileBooting */, true /* isolated */,
@@ -3770,6 +3817,13 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     private final void startProcessLocked(ProcessRecord app, String hostingType,
             String hostingNameStr, String abiOverride, String entryPoint, String[] entryPointArgs) {
+        startProcessLocked(app, hostingType, hostingNameStr, false /* disableHiddenApiChecks */,
+                null /* abiOverride */, null /* entryPoint */, null /* entryPointArgs */);
+    }
+
+    private final void startProcessLocked(ProcessRecord app, String hostingType,
+            String hostingNameStr, boolean disableHiddenApiChecks, String abiOverride,
+            String entryPoint, String[] entryPointArgs) {
         long startTime = SystemClock.elapsedRealtime();
         if (app.pid > 0 && app.pid != MY_PID) {
             checkTime(startTime, "startProcess: removing from pids map");
@@ -3890,10 +3944,12 @@ public class ActivityManagerService extends IActivityManager.Stub
                 runtimeFlags |= Zygote.ONLY_USE_SYSTEM_OAT_FILES;
             }
 
-            if (app.info.isAllowedToUseHiddenApi()) {
-                // This app is allowed to use undocumented and private APIs. Set
-                // up its runtime with the appropriate flag.
-                runtimeFlags |= Zygote.DISABLE_HIDDEN_API_CHECKS;
+            if (!app.info.isAllowedToUseHiddenApi() &&
+                    !disableHiddenApiChecks &&
+                    !mHiddenApiBlacklist.isDisabled()) {
+                // This app is not allowed to use undocumented and private APIs, or blacklisting is
+                // enabled. Set up its runtime with the appropriate flag.
+                runtimeFlags |= Zygote.ENABLE_HIDDEN_API_CHECKS;
             }
 
             String invokeWith = null;
@@ -12413,6 +12469,12 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     final ProcessRecord addAppLocked(ApplicationInfo info, String customProcess, boolean isolated,
             String abiOverride) {
+        return addAppLocked(info, customProcess, isolated, false /* disableHiddenApiChecks */,
+                abiOverride);
+    }
+
+    final ProcessRecord addAppLocked(ApplicationInfo info, String customProcess, boolean isolated,
+            boolean disableHiddenApiChecks, String abiOverride) {
         ProcessRecord app;
         if (!isolated) {
             app = getProcessRecordLocked(customProcess != null ? customProcess : info.processName,
@@ -12444,8 +12506,8 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (app.thread == null && mPersistentStartingProcesses.indexOf(app) < 0) {
             mPersistentStartingProcesses.add(app);
             startProcessLocked(app, "added application",
-                    customProcess != null ? customProcess : app.processName, abiOverride,
-                    null /* entryPoint */, null /* entryPointArgs */);
+                    customProcess != null ? customProcess : app.processName, disableHiddenApiChecks,
+                    abiOverride, null /* entryPoint */, null /* entryPointArgs */);
         }
 
         return app;
@@ -14164,6 +14226,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                 NETWORK_ACCESS_TIMEOUT_MS, NETWORK_ACCESS_TIMEOUT_DEFAULT_MS);
         final boolean supportsLeanbackOnly =
                 mContext.getPackageManager().hasSystemFeature(FEATURE_LEANBACK_ONLY);
+        mHiddenApiBlacklist.registerObserver();
 
         // Transfer any global setting for forcing RTL layout, into a System Property
         SystemProperties.set(DEVELOPMENT_FORCE_RTL, forceRtl ? "1":"0");
@@ -17480,6 +17543,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         final long myTotalPss = mi.getTotalPss();
                         final long myTotalSwapPss = mi.getTotalSwappedOutPss();
                         totalPss += myTotalPss;
+                        totalSwapPss += myTotalSwapPss;
                         nativeProcTotalPss += myTotalPss;
 
                         MemItem pssItem = new MemItem(st.name + " (pid " + st.pid + ")",
@@ -20108,7 +20172,10 @@ public class ActivityManagerService extends IActivityManager.Stub
             // Instrumentation can kill and relaunch even persistent processes
             forceStopPackageLocked(ii.targetPackage, -1, true, false, true, true, false, userId,
                     "start instr");
-            ProcessRecord app = addAppLocked(ai, defProcess, false, abiOverride);
+            boolean disableHiddenApiChecks =
+                    (flags & INSTRUMENTATION_FLAG_DISABLE_HIDDEN_API_CHECKS) != 0;
+            ProcessRecord app = addAppLocked(ai, defProcess, false, disableHiddenApiChecks,
+                    abiOverride);
             app.instr = activeInstr;
             activeInstr.mFinished = false;
             activeInstr.mRunningProcesses.add(app);

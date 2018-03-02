@@ -266,6 +266,8 @@
   <java-symbol type="bool" name="config_dynamic_bind_ims" />
   <java-symbol type="string" name="config_wwan_data_service_package" />
   <java-symbol type="string" name="config_wlan_data_service_package" />
+  <java-symbol type="string" name="config_wwan_network_service_package" />
+  <java-symbol type="string" name="config_wlan_network_service_package" />
   <java-symbol type="bool" name="config_networkSamplingWakesDevice" />
   <java-symbol type="bool" name="config_showMenuShortcutsWhenKeyboardPresent" />
   <java-symbol type="bool" name="config_sip_wifi_only" />
@@ -393,6 +395,7 @@
   <java-symbol type="integer" name="config_wifi_framework_current_network_boost" />
   <java-symbol type="integer" name="config_bluetooth_max_advertisers" />
   <java-symbol type="integer" name="config_bluetooth_max_scan_filters" />
+  <java-symbol type="integer" name="config_bluetooth_max_connected_audio_devices" />
   <java-symbol type="integer" name="config_burnInProtectionMinHorizontalOffset" />
   <java-symbol type="integer" name="config_burnInProtectionMaxHorizontalOffset" />
   <java-symbol type="integer" name="config_burnInProtectionMinVerticalOffset" />
@@ -1193,6 +1196,7 @@
   <java-symbol type="array" name="config_disabledUntilUsedPreinstalledCarrierApps" />
   <java-symbol type="array" name="config_callBarringMMI" />
   <java-symbol type="array" name="config_globalActionsList" />
+  <java-symbol type="array" name="config_telephonyEuiccDeviceCapabilities" />
   <java-symbol type="array" name="config_telephonyHardware" />
   <java-symbol type="array" name="config_keySystemUuidMapping" />
   <java-symbol type="array" name="config_gpsParameters" />
@@ -1963,6 +1967,8 @@
   <java-symbol type="string" name="smv_process" />
   <java-symbol type="string" name="tethered_notification_message" />
   <java-symbol type="string" name="tethered_notification_title" />
+  <java-symbol type="string" name="disable_tether_notification_message" />
+  <java-symbol type="string" name="disable_tether_notification_title" />
   <java-symbol type="string" name="adb_debugging_notification_channel_tv" />
   <java-symbol type="string" name="usb_accessory_notification_title" />
   <java-symbol type="string" name="usb_mtp_notification_title" />

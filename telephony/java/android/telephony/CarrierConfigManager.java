@@ -27,8 +27,8 @@ import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.service.carrier.CarrierService;
+import android.telephony.ims.ImsReasonInfo;
 
-import com.android.ims.ImsReasonInfo;
 import com.android.internal.telephony.ICarrierConfigLoader;
 
 /**
@@ -1370,6 +1370,12 @@ public class CarrierConfigManager {
      */
     public static final String KEY_ALLOW_HOLD_IN_IMS_CALL_BOOL = "allow_hold_in_ims_call";
 
+    /**
+     * Flag indicating whether the carrier supports call deflection for an incoming IMS call.
+     * @hide
+     */
+    public static final String KEY_CARRIER_ALLOW_DEFLECT_IMS_CALL_BOOL =
+            "carrier_allow_deflect_ims_call_bool";
 
     /**
      * Flag indicating whether the carrier always wants to play an "on-hold" tone when a call has
@@ -1423,7 +1429,7 @@ public class CarrierConfigManager {
             "allow_video_calling_fallback_bool";
 
     /**
-     * Defines operator-specific {@link com.android.ims.ImsReasonInfo} mappings.
+     * Defines operator-specific {@link ImsReasonInfo} mappings.
      *
      * Format: "ORIGINAL_CODE|MESSAGE|NEW_CODE"
      * Where {@code ORIGINAL_CODE} corresponds to a {@link ImsReasonInfo#getCode()} code,
@@ -1794,11 +1800,34 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_CONFIG_APPLIED_BOOL = "carrier_config_applied_bool";
 
     /**
-     * List of thresholds of RSRP for determining the display level of LTE signal bar.
+     * A list of 4 LTE RSRP thresholds above which a signal level is considered POOR,
+     * MODERATE, GOOD, or EXCELLENT, to be used in SignalStrength reporting.
+     *
+     * Note that the min and max thresholds are fixed at -140 and -44, as explained in
+     * TS 36.133 9.1.4 - RSRP Measurement Report Mapping.
+     * <p>
+     * See SignalStrength#MAX_LTE_RSRP and SignalStrength#MIN_LTE_RSRP. Any signal level outside
+     * these boundaries is considered invalid.
      * @hide
      */
     public static final String KEY_LTE_RSRP_THRESHOLDS_INT_ARRAY =
             "lte_rsrp_thresholds_int_array";
+
+    /**
+     * Decides when clients try to bind to iwlan network service, which package name will
+     * the binding intent go to.
+     * @hide
+     */
+    public static final String KEY_CARRIER_NETWORK_SERVICE_WLAN_PACKAGE_OVERRIDE_STRING
+             = "carrier_network_service_wlan_package_override_string";
+
+    /**
+     * Decides when clients try to bind to wwan (cellular) network service, which package name will
+     * the binding intent go to.
+     * @hide
+     */
+    public static final String KEY_CARRIER_NETWORK_SERVICE_WWAN_PACKAGE_OVERRIDE_STRING
+            = "carrier_network_service_wwan_package_override_string";
 
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
@@ -1806,6 +1835,7 @@ public class CarrierConfigManager {
     static {
         sDefaults = new PersistableBundle();
         sDefaults.putBoolean(KEY_ALLOW_HOLD_IN_IMS_CALL_BOOL, true);
+        sDefaults.putBoolean(KEY_CARRIER_ALLOW_DEFLECT_IMS_CALL_BOOL, false);
         sDefaults.putBoolean(KEY_ALWAYS_PLAY_REMOTE_HOLD_TONE_BOOL, false);
         sDefaults.putBoolean(KEY_ADDITIONAL_CALL_SETTING_BOOL, true);
         sDefaults.putBoolean(KEY_ALLOW_EMERGENCY_NUMBERS_IN_CALL_LOG_BOOL, false);
@@ -1832,13 +1862,15 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CARRIER_FORCE_DISABLE_ETWS_CMAS_TEST_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_VOLTE_OVERRIDE_WFC_PROVISIONING_BOOL, false);
-        sDefaults.putBoolean(KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL, true);
+        sDefaults.putBoolean(KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_ALLOW_TURNOFF_IMS_BOOL, true);
         sDefaults.putBoolean(KEY_CARRIER_IMS_GBA_REQUIRED_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_INSTANT_LETTERING_AVAILABLE_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_USE_IMS_FIRST_FOR_EMERGENCY_BOOL, true);
         sDefaults.putString(KEY_CARRIER_DATA_SERVICE_WWAN_PACKAGE_OVERRIDE_STRING, "");
         sDefaults.putString(KEY_CARRIER_DATA_SERVICE_WLAN_PACKAGE_OVERRIDE_STRING, "");
+        sDefaults.putString(KEY_CARRIER_NETWORK_SERVICE_WWAN_PACKAGE_OVERRIDE_STRING, "");
+        sDefaults.putString(KEY_CARRIER_NETWORK_SERVICE_WLAN_PACKAGE_OVERRIDE_STRING, "");
         sDefaults.putString(KEY_CARRIER_INSTANT_LETTERING_INVALID_CHARS_STRING, "");
         sDefaults.putString(KEY_CARRIER_INSTANT_LETTERING_ESCAPED_CHARS_STRING, "");
         sDefaults.putString(KEY_CARRIER_INSTANT_LETTERING_ENCODING_STRING, "");
@@ -2093,12 +2125,10 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CARRIER_CONFIG_APPLIED_BOOL, false);
         sDefaults.putIntArray(KEY_LTE_RSRP_THRESHOLDS_INT_ARRAY,
                 new int[] {
-                        -140, /* SIGNAL_STRENGTH_NONE_OR_UNKNOWN */
                         -128, /* SIGNAL_STRENGTH_POOR */
                         -118, /* SIGNAL_STRENGTH_MODERATE */
                         -108, /* SIGNAL_STRENGTH_GOOD */
                         -98,  /* SIGNAL_STRENGTH_GREAT */
-                        -44
                 });
     }
 
