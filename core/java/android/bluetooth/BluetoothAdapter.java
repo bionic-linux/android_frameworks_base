@@ -537,13 +537,17 @@ public final class BluetoothAdapter {
             "android.bluetooth.adapter.action.BLE_ACL_DISCONNECTED";
 
     /** The profile is in disconnected state */
-    public static final int STATE_DISCONNECTED = 0;
+    public static final int STATE_DISCONNECTED =
+            BluetoothProtoEnums.CONNECTION_STATE_DISCONNECTED; // = 0.
     /** The profile is in connecting state */
-    public static final int STATE_CONNECTING = 1;
+    public static final int STATE_CONNECTING =
+            BluetoothProtoEnums.CONNECTION_STATE_CONNECTING; // = 1.
     /** The profile is in connected state */
-    public static final int STATE_CONNECTED = 2;
+    public static final int STATE_CONNECTED =
+            BluetoothProtoEnums.CONNECTION_STATE_CONNECTED; // = 2.
     /** The profile is in disconnecting state */
-    public static final int STATE_DISCONNECTING = 3;
+    public static final int STATE_DISCONNECTING =
+            BluetoothProtoEnums.CONNECTION_STATE_DISCONNECTING; // = 3.
 
     /** @hide */
     public static final String BLUETOOTH_MANAGER_SERVICE = "bluetooth_manager";
