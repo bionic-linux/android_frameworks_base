@@ -22,6 +22,30 @@
       "revId": "3ffbf86e1e4701ea316146c1686f06193166c2a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a402c239_172a0e4b",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-02T01:43:21Z",
+      "side": 1,
+      "message": "No, the input value for invalid is -1 for this structure. (experimentally determined... it\u0027s not documented https://cs.corp.google.com/android/hardware/interfaces/radio/1.0/types.hal?l\u003d1246). Fortunately, if someone uses Integer.MAX_VALUE, the same logic will work now that there\u0027s a range check, but that\u0027s not what\u0027s used by HALs today. :-/ It\u0027s just another thing that makes CDMA special.\n\nYes, I can use SignalStrength.INVALID.",
+      "parentUuid": "02ce3a26_a0a8ce20",
+      "range": {
+        "startLine": 57,
+        "startChar": 68,
+        "endLine": 57,
+        "endChar": 70
+      },
+      "revId": "3ffbf86e1e4701ea316146c1686f06193166c2a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
