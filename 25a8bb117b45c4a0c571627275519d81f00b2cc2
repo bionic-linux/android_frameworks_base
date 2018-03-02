@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "149bb29b_874c003f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2018-03-02T21:37:51Z",
+      "side": 1,
+      "message": "please make these import from enums.proto in ag/632220. You can import android.bluetooth.BluetoothProtoEnums and use the values from the enum there.",
+      "revId": "25a8bb117b45c4a0c571627275519d81f00b2cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
