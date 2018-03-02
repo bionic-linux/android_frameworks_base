@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db4599a_3d524bfb",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-03-02T21:39:53Z",
+      "side": 1,
+      "message": "How does this look like in the generated documentation ?\ncomments like \"// \u003d 0\" are very hard to maintain, I suggest dropping them.",
+      "range": {
+        "startLine": 541,
+        "startChar": 12,
+        "endLine": 541,
+        "endChar": 70
+      },
+      "revId": "2ba1b88e2aec8e2c5f8474f6d23877f81a1d73e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
