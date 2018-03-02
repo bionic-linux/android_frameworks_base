@@ -649,6 +649,7 @@ gensrcs {
     depfile: true,
 
     tools: [
+
         "aprotoc",
         "protoc-gen-javastream",
         "soong_zip",
