@@ -46,6 +46,30 @@
       "revId": "3ffbf86e1e4701ea316146c1686f06193166c2a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e98bc0ac_c9d38c1e",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-02T01:47:32Z",
+      "side": 1,
+      "message": "Actually, scratch that, this is NOT the SignalStrength class. These classes *do* use Integer.MAX_VALUE.\n\nhttps://android.googlesource.com/platform/frameworks/base/+/56a2301/telephony/java/android/telephony/CellSignalStrengthLte.java#127",
+      "parentUuid": "a402c239_172a0e4b",
+      "range": {
+        "startLine": 57,
+        "startChar": 68,
+        "endLine": 57,
+        "endChar": 70
+      },
+      "revId": "3ffbf86e1e4701ea316146c1686f06193166c2a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
