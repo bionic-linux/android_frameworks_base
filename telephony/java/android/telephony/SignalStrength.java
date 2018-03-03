@@ -74,7 +74,7 @@ public class SignalStrength implements Parcelable {
     private int mLteRsrq;
     private int mLteRssnr;
     private int mLteCqi;
-    private int mTdScdmaRscp;
+    private int mTdScdmaRscp; // Valid values are -24...-120dBm or INVALID if unknown
 
     /** Parameters from the framework */
     private int mLteRsrpBoost; // offset to be reduced from the rsrp threshold while calculating
@@ -328,8 +328,8 @@ public class SignalStrength implements Parcelable {
         mLteRssnr = ((mLteRssnr >= -200) && (mLteRssnr <= 300)) ? mLteRssnr
                 : SignalStrength.INVALID;
 
-        mTdScdmaRscp = ((mTdScdmaRscp >= 25) && (mTdScdmaRscp <= 120))
-                ? -mTdScdmaRscp : SignalStrength.INVALID;
+        mTdScdmaRscp = ((mTdScdmaRscp >= 0) && (mTdScdmaRscp <= 96))
+                ? (mTdScdmaRscp - 120) : SignalStrength.INVALID;
         // Cqi no change
         if (DBG) log("Signal after validate=" + this);
     }
