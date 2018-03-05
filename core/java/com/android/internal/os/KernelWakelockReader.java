@@ -85,7 +85,11 @@ public class KernelWakelockReader {
                 }
             }
 
-            len = is.read(buffer);
+            int cnt;
+            while ((cnt = is.read(buffer, len, buffer.length - len)) > 0) {
+                len += cnt;
+            }
+
             is.close();
         } catch (java.io.IOException e) {
             Slog.wtf(TAG, "failed to read kernel wakelocks", e);
