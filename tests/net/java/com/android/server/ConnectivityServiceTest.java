@@ -137,6 +137,7 @@ import com.android.internal.util.WakeupMessage;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
 import com.android.server.connectivity.ConnectivityConstants;
+import com.android.server.connectivity.DnsManager.PrivateDnsConfig;
 import com.android.server.connectivity.DefaultNetworkMetrics;
 import com.android.server.connectivity.DnsManager;
 import com.android.server.connectivity.IpConnectivityMetrics;
@@ -161,6 +162,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -877,6 +879,10 @@ public class ConnectivityServiceTest {
         @Override
         protected IpConnectivityMetrics.Logger metricsLogger() {
             return mMetricsService;
+        }
+
+        @Override
+        protected void registerNetdEventCallback() {
         }
 
         public WrappedNetworkMonitor getLastCreatedWrappedNetworkMonitor() {
@@ -3848,6 +3854,13 @@ public class ConnectivityServiceTest {
         List<RouteInfo> observedRoutes = lp.getRoutes();
         assertEquals(expectedRoutes.size(), observedRoutes.size());
         assertTrue(observedRoutes.containsAll(expectedRoutes));
+    }
+
+    private static void checkDnsServers(Object callbackObj, Set<InetAddress> dnsServers) {
+        assertTrue(callbackObj instanceof LinkProperties);
+        LinkProperties lp = (LinkProperties) callbackObj;
+        assertEquals(dnsServers.size(), lp.getDnsServers().size());
+        assertTrue(lp.getDnsServers().containsAll(dnsServers));
     }
 
     private static <T> void assertEmpty(T[] ts) {
