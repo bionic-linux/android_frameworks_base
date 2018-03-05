@@ -52,6 +52,8 @@ import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.PacketKeepalive;
 import android.net.IConnectivityManager;
+import android.net.IIpConnectivityMetrics;
+import android.net.INetdEventCallback;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
@@ -151,6 +153,7 @@ import com.android.server.connectivity.PermissionMonitor;
 import com.android.server.connectivity.Tethering;
 import com.android.server.connectivity.Vpn;
 import com.android.server.connectivity.tethering.TetheringDependencies;
+import com.android.server.net.BaseNetdEventCallback;
 import com.android.server.net.BaseNetworkObserver;
 import com.android.server.net.LockdownVpnTracker;
 import com.android.server.net.NetworkPolicyManagerInternal;
@@ -251,6 +254,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private INetworkStatsService mStatsService;
     private INetworkPolicyManager mPolicyManager;
     private NetworkPolicyManagerInternal mPolicyManagerInternal;
+    private IIpConnectivityMetrics mIpConnectivityMetrics;
 
     private String mCurrentTcpBufferSizes;
 
@@ -408,6 +412,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // Handle changes in Private DNS settings.
     private static final int EVENT_PRIVATE_DNS_SETTINGS_CHANGED = 37;
+
+    // Handle private DNS validation status updates.
+    private static final int EVENT_PRIVATE_DNS_VALIDATION_UPDATE = 38;
 
     private static String eventName(int what) {
         return sMagicDecoderRing.get(what, Integer.toString(what));
@@ -1520,6 +1527,39 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return true;
     }
 
+    @VisibleForTesting
+    protected final INetdEventCallback mNetdEventCallback = new BaseNetdEventCallback() {
+        @Override
+        public void onPrivateDnsValidationEvent(int netId, String ipAddress,
+                String hostname, boolean validated) {
+            try {
+                mHandler.sendMessage(mHandler.obtainMessage(
+                        EVENT_PRIVATE_DNS_VALIDATION_UPDATE,
+                        new DnsManager.PrivateDnsValidationUpdate(netId,
+                                InetAddress.parseNumericAddress(ipAddress),
+                                hostname, validated)));
+            } catch (IllegalArgumentException e) {}
+        }
+    };
+
+    @VisibleForTesting
+    protected void registerNetdEventCallback() {
+        mIpConnectivityMetrics =
+                (IIpConnectivityMetrics) IIpConnectivityMetrics.Stub.asInterface(
+                ServiceManager.getService(IpConnectivityLog.SERVICE_NAME));
+        if (mIpConnectivityMetrics == null) {
+            Slog.wtf(TAG, "Missing IIpConnectivityMetrics");
+        }
+
+        try {
+            mIpConnectivityMetrics.addNetdEventCallback(
+                    INetdEventCallback.CALLBACK_CALLER_CONNECTIVITY_SERVICE,
+                    mNetdEventCallback);
+        } catch (Exception e) {
+            loge("Error registering netd callback: " + e);
+        }
+    }
+
     private final INetworkPolicyListener mPolicyListener = new NetworkPolicyManager.Listener() {
         @Override
         public void onUidRulesChanged(int uid, int uidRules) {
@@ -1704,6 +1744,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     void systemReady() {
         loadGlobalProxy();
+        registerNetdEventCallback();
 
         synchronized (this) {
             mSystemReady = true;
@@ -2241,11 +2282,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mDefaultRequest.networkCapabilities, nai.networkCapabilities);
     }
 
-    private void handlePrivateDnsSettingsChanged() {
+    @VisibleForTesting
+    protected void handlePrivateDnsSettingsChanged() {
         final PrivateDnsConfig cfg = mDnsManager.getPrivateDnsConfig();
 
         for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
             handlePerNetworkPrivateDnsConfig(nai, cfg);
+            // Do a proper LinkProperties update if the private DNS fields are
+            // affected. We can't use null for handleUpdateLinkProperties because
+            // we need to be able to pull in old clatd settings.
+            if (mDnsManager.maybeFixLinkPropertiesPrivateDns(nai.network.netId,
+                    new LinkProperties(nai.linkProperties))) {
+                handleUpdateLinkProperties(nai,
+                        new LinkProperties(nai.linkProperties));
+            }
         }
     }
 
@@ -2268,6 +2318,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void updatePrivateDns(NetworkAgentInfo nai, PrivateDnsConfig newCfg) {
         mDnsManager.updatePrivateDns(nai.network, newCfg);
         updateDnses(nai.linkProperties, null, nai.network.netId);
+    }
+
+    private void handlePrivateDnsValidationUpdate(
+            DnsManager.PrivateDnsValidationUpdate update) {
+        mDnsManager.updatePrivateDnsValidation(update);
+        NetworkAgentInfo nai = getNetworkAgentInfoForNetId(update.netId);
+        if (nai == null) {
+            return;
+        }
+        // If the LinkProperties private DNS fields are affected by
+        // the validation update, do a proper LinkProperties update.
+        if (mDnsManager.maybeFixLinkPropertiesPrivateDns(nai.network.netId,
+                new LinkProperties(nai.linkProperties))) {
+            handleUpdateLinkProperties(nai, new LinkProperties(nai.linkProperties));
+        }
     }
 
     private void updateLingerState(NetworkAgentInfo nai, long now) {
@@ -2953,6 +3018,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case EVENT_PRIVATE_DNS_SETTINGS_CHANGED:
                     handlePrivateDnsSettingsChanged();
+                    break;
+                case EVENT_PRIVATE_DNS_VALIDATION_UPDATE:
+                    handlePrivateDnsValidationUpdate(
+                            (DnsManager.PrivateDnsValidationUpdate) msg.obj);
                     break;
             }
         }
@@ -4500,6 +4569,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         synchronized (mNetworkForNetId) {
             mNetworkForNetId.put(nai.network.netId, nai);
         }
+        // Initialize the private DNS settings in DnsManager.
+        // mDnsManager.updatePrivateDns(nai.network, mDnsManager.getPrivateDnsConfig());
         nai.asyncChannel.connect(mContext, mTrackerHandler, nai.messenger);
         NetworkInfo networkInfo = nai.networkInfo;
         nai.networkInfo = null;
@@ -4527,6 +4598,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId);
+        // Make sure LinkProperties represents the latest private DNS status.
+        mDnsManager.maybeFixLinkPropertiesPrivateDns(netId, newLp);
 
         // Start or stop clat accordingly to network state.
         networkAgent.updateClat(mNetd);
