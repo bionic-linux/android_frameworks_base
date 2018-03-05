@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de320f1_e2abaf02",
+        "filename": "Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-03-05T19:48:18Z",
+      "side": 1,
+      "message": "Add a comment that we can remove this list once droiddoc can take a list of packages to document?",
+      "revId": "1751a713dea39b51862168ab1605a4cbae5ffcff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
