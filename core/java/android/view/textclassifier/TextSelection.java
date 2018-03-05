@@ -136,7 +136,7 @@ public final class TextSelection {
          */
         public Builder(@IntRange(from = 0) int startIndex, @IntRange(from = 0) int endIndex) {
             Preconditions.checkArgument(startIndex >= 0);
-            Preconditions.checkArgument(endIndex > startIndex);
+            //Preconditions.checkArgument(endIndex > startIndex);
             mStartIndex = startIndex;
             mEndIndex = endIndex;
         }

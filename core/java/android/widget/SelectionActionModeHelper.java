@@ -637,7 +637,7 @@ final class SelectionActionModeHelper {
             mTextClassifier = Preconditions.checkNotNull(textClassifier);
             mText = Preconditions.checkNotNull(text).toString();
             mLastClassificationText = null; // invalidate.
-            Preconditions.checkArgument(selectionEnd > selectionStart);
+            //Preconditions.checkArgument(selectionEnd > selectionStart);
             mSelectionStart = selectionStart;
             mSelectionEnd = selectionEnd;
             mLocales = locales;
