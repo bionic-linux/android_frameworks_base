@@ -118,6 +118,30 @@
       "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ba18bf_60c97785",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-03-06T23:43:56Z",
+      "side": 1,
+      "message": "Thanks! waiting for Colin to approve it, and then I can cherry-pick it to internal master first without these test* stuff.",
+      "parentUuid": "c8941f84_f52c27d7",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 34
+      },
+      "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

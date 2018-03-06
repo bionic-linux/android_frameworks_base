@@ -22,6 +22,30 @@
       "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6710ff65_5f57fa1c",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-03-06T23:43:56Z",
+      "side": 1,
+      "message": "the type of args property is string* instead of string, I can\u0027t move args: framework_docs_args to the docs_default, because type:string* would only do replace instead of appending. And currently we are trying to avoid use type:string in Soong properties, since type:string brings some problems before: we can\u0027t distinguish if the property is not set or set but with a \"\" empty value. And I also put arg_files closer to the args to make it more readable, even though they got repeated three times.",
+      "parentUuid": "1f6faa8b_152d404c",
+      "range": {
+        "startLine": 911,
+        "startChar": 0,
+        "endLine": 917,
+        "endChar": 31
+      },
+      "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
