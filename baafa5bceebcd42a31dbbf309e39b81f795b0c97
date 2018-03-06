@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46d7eba7_6852be79",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2018-03-06T04:35:49Z",
+      "side": 1,
+      "message": "callback SendMessageCallback instance called",
+      "range": {
+        "startLine": 849,
+        "startChar": 14,
+        "endLine": 849,
+        "endChar": 52
+      },
+      "revId": "baafa5bceebcd42a31dbbf309e39b81f795b0c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece03ab7_3fa28c58",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2151,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2018-03-06T04:35:49Z",
+      "side": 1,
+      "message": "Should it be executed right after onStandby(), outside of onSendCompleted()?",
+      "range": {
+        "startLine": 2151,
+        "startChar": 20,
+        "endLine": 2151,
+        "endChar": 52
+      },
+      "revId": "baafa5bceebcd42a31dbbf309e39b81f795b0c97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
