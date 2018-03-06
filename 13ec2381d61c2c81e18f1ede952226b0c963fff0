@@ -94,6 +94,30 @@
       "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8941f84_f52c27d7",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-03-06T10:17:44Z",
+      "side": 1,
+      "message": "No it is not easy. Removing them internally took over 350 changes (that\u0027s in addition to the previous 200+ changes that were made in both AOSP and internal). I could not make the changes in both because the merge conflicts just made it untenable.\n\nOnce you have them signed off you will need to cherry pick your changes to internal, remove these from it, test it, submit it. Once that is in you can use Merged-In to avoid this from being merged into internal.",
+      "parentUuid": "15611a33_75906d3e",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 34
+      },
+      "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
