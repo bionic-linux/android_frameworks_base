@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c71eceeb_9f992f0c",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-03-06T00:19:33Z",
+      "side": 1,
+      "message": "how about (mTdScdmaRscp - 120) for consistency",
+      "range": {
+        "startLine": 332,
+        "startChar": 18,
+        "endLine": 332,
+        "endChar": 38
+      },
+      "revId": "29d74967459295b9f530233aeb20bbac2cfef887",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
