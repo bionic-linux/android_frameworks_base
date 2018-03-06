@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f6faa8b_152d404c",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-03-06T05:28:35Z",
+      "side": 1,
+      "message": "is it possible to lift this up to \u0027framework-docs-default\u0027? This is repeated three times.",
+      "range": {
+        "startLine": 911,
+        "startChar": 0,
+        "endLine": 917,
+        "endChar": 31
+      },
+      "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
