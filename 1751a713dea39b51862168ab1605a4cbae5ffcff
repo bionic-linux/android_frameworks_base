@@ -16,6 +16,24 @@
       "revId": "1751a713dea39b51862168ab1605a4cbae5ffcff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06695a93_96bc6e58",
+        "filename": "Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-03-06T00:25:02Z",
+      "side": 1,
+      "message": "Done. but local_sourcepaths still use this list.",
+      "parentUuid": "9de320f1_e2abaf02",
+      "revId": "1751a713dea39b51862168ab1605a4cbae5ffcff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

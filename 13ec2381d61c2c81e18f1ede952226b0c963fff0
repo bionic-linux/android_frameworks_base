@@ -70,6 +70,30 @@
       "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15611a33_75906d3e",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-03-06T00:25:02Z",
+      "side": 1,
+      "message": "Paul/Colin, Would you provide suggestion here? Is it easy to remove these test* from stubs in AOSP?",
+      "parentUuid": "98f0fdd3_dd787bb3",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 34
+      },
+      "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
