@@ -52,6 +52,24 @@
       "revId": "25a8bb117b45c4a0c571627275519d81f00b2cc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccba140_20501379",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2018-03-07T00:09:40Z",
+      "side": 1,
+      "message": "That\u0027s fine now, thanks. If you\u0027d preferred you could have done \n\nprivate static final int REASON_RESTORE_USER_SETTING \u003d BluetoothProtoEnums.ENABLE_DISABLE_REASON_RESTORE_USER_SETTING; // 8\n\netc., and left the rest of your code alone.\nThat\u0027s what we did everywhere else in Android. But if you prefer to use the enum constant directly, that\u0027s fine too.",
+      "parentUuid": "5ce9b43d_5b329c50",
+      "revId": "25a8bb117b45c4a0c571627275519d81f00b2cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
