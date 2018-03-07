@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "1eb96442_0e12ff3d",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-03-07T19:34:52Z",
+      "side": 1,
+      "message": "If the phone process dies, isn\u0027t the scan effectively stopped?\n\nAs a client, I would imagine that if we fail to stop the scan, we\u0027re just going to assume something is going wrong and leave it be. But the important thing is that I don\u0027t think we should expect a client to know to write code that explicitly catches RuntimeException.",
+      "parentUuid": "a153a5fe_f25745da",
+      "revId": "1abe9b187c641de77cfdcb93faa477a1112c2048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acffa73d_9425714a",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
