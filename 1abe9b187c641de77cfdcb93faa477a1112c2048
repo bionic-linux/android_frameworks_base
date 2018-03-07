@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf51a19d_2606dc81",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-03-07T19:11:28Z",
+      "side": 1,
+      "message": "Tyler recommended that I should throw RuntimeException instead of returning errors at \nhttps://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/3673905/5..6/telephony/java/android/telephony/NetworkScan.java",
+      "parentUuid": "e09adbc1_efd48982",
+      "revId": "1abe9b187c641de77cfdcb93faa477a1112c2048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acffa73d_9425714a",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2018-03-07T18:02:36Z",
       "side": 1,
       "message": "note that this is still invalid (@see must begin a line) but I\u0027m fixing it in another CL anyway.",
+      "range": {
+        "startLine": 5225,
+        "startChar": 50,
+        "endLine": 5225,
+        "endChar": 78
+      },
+      "revId": "1abe9b187c641de77cfdcb93faa477a1112c2048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657c0b78_4c450a1c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5225,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-03-07T19:11:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "acffa73d_9425714a",
       "range": {
         "startLine": 5225,
         "startChar": 50,
