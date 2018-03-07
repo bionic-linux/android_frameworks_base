@@ -70,6 +70,30 @@
       "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f920b0_b3584d48",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-03-07T21:14:55Z",
+      "side": 1,
+      "message": "Thanks. I will do a follow-up patch later.",
+      "parentUuid": "e16d32cf_94053e75",
+      "range": {
+        "startLine": 911,
+        "startChar": 0,
+        "endLine": 917,
+        "endChar": 31
+      },
+      "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
