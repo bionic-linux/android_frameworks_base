@@ -70,6 +70,24 @@
       "revId": "25a8bb117b45c4a0c571627275519d81f00b2cc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570a470b_703e8580",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2018-03-07T00:11:37Z",
+      "side": 1,
+      "message": "Sure. I used the enums directly in the latest patch. Just trying to reduce the number of private constants as much as possible. This file is already too long :(",
+      "parentUuid": "2ccba140_20501379",
+      "revId": "25a8bb117b45c4a0c571627275519d81f00b2cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
