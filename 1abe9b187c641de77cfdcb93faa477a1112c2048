@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "7edaa098_276cd406",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-03-07T19:45:54Z",
+      "side": 1,
+      "message": "Hmm, I see the point.  Okay, I\u0027m fine with silently absorbing this and not re-throwing.",
+      "parentUuid": "1eb96442_0e12ff3d",
+      "revId": "1abe9b187c641de77cfdcb93faa477a1112c2048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acffa73d_9425714a",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
