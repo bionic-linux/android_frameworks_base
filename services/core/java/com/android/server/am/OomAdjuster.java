@@ -1760,6 +1760,13 @@ public final class OomAdjuster {
                 mProcessGroupHandler.sendMessage(mProcessGroupHandler.obtainMessage(
                         0 /* unused */, app.pid, processGroup));
                 try {
+                    if (oldSchedGroup != curSchedGroup) {
+                        int decremented = --app.uidRecord.numSchedGroup[oldSchedGroup];
+                        int incremented = ++app.uidRecord.numSchedGroup[curSchedGroup];
+                        if (decremented == 0 || incremented == 1) {
+                            mService.updateCgroupPrioLocked(app.uidRecord);
+                        }
+                    }
                     if (curSchedGroup == ProcessList.SCHED_GROUP_TOP_APP) {
                         // do nothing if we already switched to RT
                         if (oldSchedGroup != ProcessList.SCHED_GROUP_TOP_APP) {
@@ -1778,17 +1785,6 @@ public final class OomAdjuster {
                                 } else {
                                     if (DEBUG_OOM_ADJ) {
                                         Slog.d("UI_FIFO", "Not setting RenderThread TID");
-                                    }
-                                }
-                            } else {
-                                // Boost priority for top app UI and render threads
-                                setThreadPriority(app.pid, TOP_APP_PRIORITY_BOOST);
-                                if (app.renderThreadTid != 0) {
-                                    try {
-                                        setThreadPriority(app.renderThreadTid,
-                                                TOP_APP_PRIORITY_BOOST);
-                                    } catch (IllegalArgumentException e) {
-                                        // thread died, ignore
                                     }
                                 }
                             }
@@ -1812,13 +1808,6 @@ public final class OomAdjuster {
                             } catch (SecurityException e) {
                                 Slog.w(TAG, "Failed to set scheduling policy, not allowed:\n" + e);
                             }
-                        } else {
-                            // Reset priority for top app UI and render threads
-                            setThreadPriority(app.pid, 0);
-                        }
-
-                        if (app.renderThreadTid != 0) {
-                            setThreadPriority(app.renderThreadTid, THREAD_PRIORITY_DISPLAY);
                         }
                     }
                 } catch (Exception e) {

@@ -42,6 +42,8 @@ public final class UidRecord {
     boolean idle;
     boolean setIdle;
     int numProcs;
+    final int[] numSchedGroup = new int[4]; // number of processes in this uid of each schedgroup
+    int setSchedGroup;
 
     /**
      * Sequence number associated with the {@link #mCurProcState}. This is incremented using

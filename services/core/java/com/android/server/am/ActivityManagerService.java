@@ -410,6 +410,9 @@ public class ActivityManagerService extends IActivityManager.Stub
     private static final String SYSTEM_PROPERTY_DEVICE_PROVISIONED =
             "persist.sys.device_provisioned";
 
+    // indexed by SCHED_GROUP_* values
+    static final int[] CGROUP_CPU_SHARES = new int[] {512, 1024, 4096, 2048};
+
     static final String TAG = TAG_WITH_CLASS_NAME ? "ActivityManagerService" : TAG_AM;
     static final String TAG_BACKUP = TAG + POSTFIX_BACKUP;
     private static final String TAG_BROADCAST = TAG + POSTFIX_BROADCAST;
@@ -4712,6 +4715,23 @@ public class ActivityManagerService extends IActivityManager.Stub
         return didSomething;
     }
 
+    final void updateCgroupPrioLocked(final UidRecord uidRec) {
+        int sg = ProcessList.SCHED_GROUP_DEFAULT;
+        if (uidRec.numSchedGroup[ProcessList.SCHED_GROUP_TOP_APP] > 0) {
+            sg = ProcessList.SCHED_GROUP_TOP_APP;
+        } else if (uidRec.numSchedGroup[ProcessList.SCHED_GROUP_TOP_APP_BOUND] > 0) {
+            sg = ProcessList.SCHED_GROUP_TOP_APP_BOUND;
+        } else if (uidRec.numSchedGroup[ProcessList.SCHED_GROUP_BACKGROUND] == uidRec.numProcs) {
+            sg = ProcessList.SCHED_GROUP_BACKGROUND;
+        }
+        if (sg != uidRec.setSchedGroup) {
+            uidRec.setSchedGroup = sg;
+            if (UserHandle.isApp(uidRec.uid) || UserHandle.isIsolated(uidRec.uid)) {
+                Cgroups.uidPrio(uidRec.uid, CGROUP_CPU_SHARES[sg]);
+            }
+        }
+    }
+
     @GuardedBy("this")
     private final void processContentProviderPublishTimedOutLocked(ProcessRecord app) {
         cleanupAppInLaunchingProvidersLocked(app, true);
@@ -8420,9 +8440,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                         if (DEBUG_OOM_ADJ) Slog.d("UI_FIFO", "Promoting " + tid + "out of band");
                         if (mUseFifoUiScheduling) {
                             scheduleAsFifoPriority(proc.renderThreadTid, /*prio*/1, /*noLogs*/true);
-                        } else {
-                            setThreadPriority(proc.renderThreadTid, TOP_APP_PRIORITY_BOOST);
                         }
+                        setThreadPriority(proc.renderThreadTid, TOP_APP_PRIORITY_BOOST);
                     }
                 } else {
                     if (DEBUG_OOM_ADJ) {

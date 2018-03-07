@@ -20,4 +20,5 @@ final class Cgroups {
     private Cgroups() { }
     static native void putProc(int pid, int uid);
     static native void putThreadInRoot(int tid);
+    static native void uidPrio(int uid, int shares);
 }
