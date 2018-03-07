@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a153a5fe_f25745da",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-03-07T19:31:23Z",
+      "side": 1,
+      "message": "I realize all of the other Telephony apis just silently absorb the failure and return null or junk.  However if a calling app calls stopScan and the scan can\u0027t actually be stopped, would it not be more useful to be notified via an exception that there was some kind of Binder issue so that the caller can catch this and retry, or check its binding, or whatnot?",
+      "parentUuid": "edcaf9a3_8d0c6495",
+      "revId": "1abe9b187c641de77cfdcb93faa477a1112c2048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acffa73d_9425714a",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
