@@ -22,6 +22,30 @@
       "revId": "4068e8e6ae7d922e077fe9593e18c5493229d1f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5148fe8f_22827934",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2018-03-07T19:48:54Z",
+      "side": 0,
+      "message": "I moved the following code out from disable() to this here because disable() is supposed to be called by external packages with their package name. Here we are turning off and on from inside of system server and therefore it should just sendDisableMsg() directly without going through all these permission checks in disable() which may throw the RemoteException. Now since there is no exception to catch, we no longer need the try-catch statements. \n\npersistBluetoothSetting(BLUETOOTH_OFF);\n                        mEnableExternal \u003d false;\n                        sendDisableMsg(\n                                BluetoothProtoEnums.ENABLE_DISABLE_REASON_RESTORE_USER_SETTING,\n                                mContext.getPackageName());",
+      "parentUuid": "4a931ce9_035b4725",
+      "range": {
+        "startLine": 1548,
+        "startChar": 20,
+        "endLine": 1548,
+        "endChar": 25
+      },
+      "revId": "4068e8e6ae7d922e077fe9593e18c5493229d1f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
