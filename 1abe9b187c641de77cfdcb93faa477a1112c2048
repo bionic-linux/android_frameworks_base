@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "edcaf9a3_8d0c6495",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-03-07T19:23:54Z",
+      "side": 1,
+      "message": "This makes sense if the binder failure is coming from the system server, because if the system server goes down, the whole phone will restart shortly. But the phone process is only kept persistent on a best-effort level, and apps can and will be running even if it isn\u0027t. Tyler, would you agree that in this case, it\u0027s better to no-op or return an appropriate error code that apps can actually handle?\n\nThis also came up in b/73772776. Note how the rest of TelephonyManager does not throw exceptions when ITelephony is unavailable.",
+      "parentUuid": "bf51a19d_2606dc81",
+      "revId": "1abe9b187c641de77cfdcb93faa477a1112c2048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acffa73d_9425714a",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
