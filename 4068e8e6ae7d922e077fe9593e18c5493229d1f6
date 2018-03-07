@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a931ce9_035b4725",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-03-07T18:57:21Z",
+      "side": 0,
+      "message": "Now it crashes?",
+      "range": {
+        "startLine": 1548,
+        "startChar": 20,
+        "endLine": 1548,
+        "endChar": 25
+      },
+      "revId": "4068e8e6ae7d922e077fe9593e18c5493229d1f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8c405fe_8f469617",
+        "filename": "Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-03-07T18:57:21Z",
+      "side": 1,
+      "message": "?",
+      "revId": "97ef5e2e465e3b4ecd2c165db78b45e4ce68779c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55b3f4d6_5210ce0e",
+        "filename": "core/proto/android/bluetooth/enums.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-03-07T18:57:21Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 55
+      },
+      "revId": "97ef5e2e465e3b4ecd2c165db78b45e4ce68779c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6feb845_74302d97",
+        "filename": "core/proto/android/bluetooth/enums.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-03-07T18:57:21Z",
+      "side": 1,
+      "message": "is this important?",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 63
+      },
+      "revId": "97ef5e2e465e3b4ecd2c165db78b45e4ce68779c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6263d2f_e8a798ef",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2018-03-07T18:57:21Z",
+      "side": 1,
+      "message": "What does this return?",
+      "range": {
+        "startLine": 1103,
+        "startChar": 20,
+        "endLine": 1103,
+        "endChar": 45
+      },
+      "revId": "97ef5e2e465e3b4ecd2c165db78b45e4ce68779c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
