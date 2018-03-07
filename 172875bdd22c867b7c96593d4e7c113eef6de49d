@@ -46,6 +46,30 @@
       "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16d32cf_94053e75",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-03-07T09:46:43Z",
+      "side": 1,
+      "message": "\u003e  args property is string* instead of string\n\nThen it would been nicer if this is []string like Cflags.\n\nBut, yes, this isn\u0027t a deal breaker and I think we can make it better in a follow-up cl.",
+      "parentUuid": "6710ff65_5f57fa1c",
+      "range": {
+        "startLine": 911,
+        "startChar": 0,
+        "endLine": 917,
+        "endChar": 31
+      },
+      "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
