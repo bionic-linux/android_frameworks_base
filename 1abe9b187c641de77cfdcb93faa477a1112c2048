@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09adbc1_efd48982",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-03-07T18:02:36Z",
+      "side": 1,
+      "message": "Please don\u0027t crash callers if telephony is unavailable. The phone process is not the system process and is prone to crashes / dying at any time. Return an error that the client code can handle because otherwise it\u0027s going to have to guard all calls to this API with (catch RuntimeException) to be safe and that\u0027s ugly.",
+      "revId": "1abe9b187c641de77cfdcb93faa477a1112c2048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acffa73d_9425714a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5225,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-03-07T18:02:36Z",
+      "side": 1,
+      "message": "note that this is still invalid (@see must begin a line) but I\u0027m fixing it in another CL anyway.",
+      "range": {
+        "startLine": 5225,
+        "startChar": 50,
+        "endLine": 5225,
+        "endChar": 78
+      },
+      "revId": "1abe9b187c641de77cfdcb93faa477a1112c2048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
