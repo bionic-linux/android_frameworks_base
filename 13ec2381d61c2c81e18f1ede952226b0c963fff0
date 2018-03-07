@@ -142,6 +142,30 @@
       "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adab3cee_fe1ab5a1",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-03-07T22:17:11Z",
+      "side": 1,
+      "message": "I think I can submit this first in AOSP since api-stubs-docs(old target is api-stubs) is new and no user depends on it, and then submit an separate patch in internal master to remove test* stuff, and in the end just submit go/oag/630280 in AOSP to generate the stubs jar",
+      "parentUuid": "a6ba18bf_60c97785",
+      "range": {
+        "startLine": 857,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 34
+      },
+      "revId": "13ec2381d61c2c81e18f1ede952226b0c963fff0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
