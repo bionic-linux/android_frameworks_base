@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d1815b4_ae53eb83",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T14:01:56Z",
+      "side": 1,
+      "message": "Suggest \"Devices may support\". Also elsewhere.",
+      "range": {
+        "startLine": 456,
+        "startChar": 33,
+        "endLine": 456,
+        "endChar": 53
+      },
+      "revId": "4e9a17c98d3f6ed546f4856d21b479686488382a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b7829a_f38945f3",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T14:01:56Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 466,
+        "startChar": 31,
+        "endLine": 466,
+        "endChar": 51
+      },
+      "revId": "4e9a17c98d3f6ed546f4856d21b479686488382a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee1510c_7bfbb981",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T14:01:56Z",
+      "side": 1,
+      "message": "#NET_CAPABILITY_IMS}",
+      "range": {
+        "startLine": 573,
+        "startChar": 49,
+        "endLine": 573,
+        "endChar": 50
+      },
+      "revId": "4e9a17c98d3f6ed546f4856d21b479686488382a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e90af6d_7655c153",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T14:01:56Z",
+      "side": 1,
+      "message": "DISCONNECTED",
+      "range": {
+        "startLine": 41,
+        "startChar": 51,
+        "endLine": 41,
+        "endChar": 61
+      },
+      "revId": "4e9a17c98d3f6ed546f4856d21b479686488382a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091a4310_772e62e1",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T14:01:56Z",
+      "side": 1,
+      "message": "Remove this space.",
+      "range": {
+        "startLine": 174,
+        "startChar": 96,
+        "endLine": 174,
+        "endChar": 97
+      },
+      "revId": "4e9a17c98d3f6ed546f4856d21b479686488382a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e155fd_c75c393a",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T14:01:56Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 226,
+        "startChar": 96,
+        "endLine": 226,
+        "endChar": 97
+      },
+      "revId": "4e9a17c98d3f6ed546f4856d21b479686488382a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
