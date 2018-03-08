@@ -453,133 +453,177 @@ public class ConnectivityManager {
     public static final int TYPE_NONE        = -1;
 
     /**
-     * The Mobile data connection.  When active, all data traffic
-     * will use this network type's interface by default
-     * (it has a default route)
+     * A Mobile data connection. Some devices support more than one.
+     *
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasTransport} or
+     *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request an
+     *         appropriate network. {@see NetworkCapabilities} for supported transports.
      */
+    @Deprecated
     public static final int TYPE_MOBILE      = 0;
+
     /**
-     * The WIFI data connection.  When active, all data traffic
-     * will use this network type's interface by default
-     * (it has a default route).
+     * A WIFI data connection. Some devices support more than one.
+     *
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasTransport} or
+     *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request an
+     *         appropriate network. {@see NetworkCapabilities} for supported transports.
      */
+    @Deprecated
     public static final int TYPE_WIFI        = 1;
+
     /**
      * An MMS-specific Mobile data connection.  This network type may use the
      * same network interface as {@link #TYPE_MOBILE} or it may use a different
      * one.  This is used by applications needing to talk to the carrier's
      * Multimedia Messaging Service servers.
      *
-     * @deprecated Applications should instead use
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasCapability} or
      *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request a network that
      *         provides the {@link NetworkCapabilities#NET_CAPABILITY_MMS} capability.
      */
     @Deprecated
     public static final int TYPE_MOBILE_MMS  = 2;
+
     /**
      * A SUPL-specific Mobile data connection.  This network type may use the
      * same network interface as {@link #TYPE_MOBILE} or it may use a different
      * one.  This is used by applications needing to talk to the carrier's
      * Secure User Plane Location servers for help locating the device.
      *
-     * @deprecated Applications should instead use
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasCapability} or
      *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request a network that
      *         provides the {@link NetworkCapabilities#NET_CAPABILITY_SUPL} capability.
      */
     @Deprecated
     public static final int TYPE_MOBILE_SUPL = 3;
+
     /**
      * A DUN-specific Mobile data connection.  This network type may use the
      * same network interface as {@link #TYPE_MOBILE} or it may use a different
      * one.  This is sometimes by the system when setting up an upstream connection
      * for tethering so that the carrier is aware of DUN traffic.
+     *
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasCapability} or
+     *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request a network that
+     *         provides the {@link NetworkCapabilities#NET_CAPABILITY_DUN} capability.
      */
+    @Deprecated
     public static final int TYPE_MOBILE_DUN  = 4;
+
     /**
      * A High Priority Mobile data connection.  This network type uses the
      * same network interface as {@link #TYPE_MOBILE} but the routing setup
      * is different.
      *
-     * @deprecated Applications should instead use
-     *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request a network that
-     *         uses the {@link NetworkCapabilities#TRANSPORT_CELLULAR} transport.
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasTransport} or
+     *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request an
+     *         appropriate network. {@see NetworkCapabilities} for supported transports.
      */
     @Deprecated
     public static final int TYPE_MOBILE_HIPRI = 5;
+
     /**
-     * The WiMAX data connection.  When active, all data traffic
-     * will use this network type's interface by default
-     * (it has a default route).
+     * A WiMAX data connection.
+     *
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasTransport} or
+     *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request an
+     *         appropriate network. {@see NetworkCapabilities} for supported transports.
      */
+    @Deprecated
     public static final int TYPE_WIMAX       = 6;
 
     /**
-     * The Bluetooth data connection.  When active, all data traffic
-     * will use this network type's interface by default
-     * (it has a default route).
+     * A Bluetooth data connection.
+     *
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasTransport} or
+     *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request an
+     *         appropriate network. {@see NetworkCapabilities} for supported transports.
      */
+    @Deprecated
     public static final int TYPE_BLUETOOTH   = 7;
 
     /**
      * Dummy data connection.  This should not be used on shipping devices.
+     * @deprecated This is not used any more.
      */
+    @Deprecated
     public static final int TYPE_DUMMY       = 8;
 
     /**
-     * The Ethernet data connection.  When active, all data traffic
-     * will use this network type's interface by default
-     * (it has a default route).
+     * An Ethernet data connection.
+     *
+     * @deprecated Applications should instead use {@link NetworkCapabilities#hasTransport} or
+     *         {@link #requestNetwork(NetworkRequest, NetworkCallback)} to request an
+     *         appropriate network. {@see NetworkCapabilities} for supported transports.
      */
+    @Deprecated
     public static final int TYPE_ETHERNET    = 9;
 
     /**
      * Over the air Administration.
+     * @deprecated Use {@link NetworkCapabilities} instead.
      * {@hide}
      */
+    @Deprecated
     public static final int TYPE_MOBILE_FOTA = 10;
 
     /**
      * IP Multimedia Subsystem.
+     * @deprecated Use {@link NetworkCapabilities} instead.
      * {@hide}
      */
+    @Deprecated
     public static final int TYPE_MOBILE_IMS  = 11;
 
     /**
      * Carrier Branded Services.
+     * @deprecated Use {@link NetworkCapabilities#NET_CAPABILITY_CBS} instead.
      * {@hide}
      */
+    @Deprecated
     public static final int TYPE_MOBILE_CBS  = 12;
 
     /**
      * A Wi-Fi p2p connection. Only requesting processes will have access to
      * the peers connected.
+     * @deprecated Use {@link NetworkCapabilities#NET_CAPABILITY_WIFI_P2P} instead.
      * {@hide}
      */
+    @Deprecated
     public static final int TYPE_WIFI_P2P    = 13;
 
     /**
      * The network to use for initially attaching to the network
+     * @deprecated Use {@link NetworkCapabilities#NET_CAPABILITY_IA} instead.
      * {@hide}
      */
+    @Deprecated
     public static final int TYPE_MOBILE_IA = 14;
 
     /**
      * Emergency PDN connection for emergency services.  This
      * may include IMS and MMS in emergency situations.
+     * @deprecated Use {@link NetworkCapabilities#NET_CAPABILITY_EIMS} instead.
      * {@hide}
      */
+    @Deprecated
     public static final int TYPE_MOBILE_EMERGENCY = 15;
 
     /**
      * The network that uses proxy to achieve connectivity.
+     * @deprecated Use {@link NetworkCapabilities} instead.
      * {@hide}
      */
+    @Deprecated
     public static final int TYPE_PROXY = 16;
 
     /**
      * A virtual network using one or more native bearers.
      * It may or may not be providing security services.
+     * @deprecated Applications should use {@link NetworkCapabilities#TRANSPORT_VPN} instead.
      */
+    @Deprecated
     public static final int TYPE_VPN = 17;
 
     /** {@hide} */
