@@ -163,6 +163,30 @@
       "revId": "8491883b94906692e60a71fa00e353102d84b8d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac37f86b_c714f5cc",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T06:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1761346_53021706",
+      "range": {
+        "startLine": 171,
+        "startChar": 19,
+        "endLine": 172,
+        "endChar": 76
+      },
+      "revId": "8491883b94906692e60a71fa00e353102d84b8d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
