@@ -22,6 +22,30 @@
       "revId": "a5046aea6a2452b31d470d84fb1ab6f4aa69fcdf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412e8a20_b970cd38",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T07:03:06Z",
+      "side": 1,
+      "message": "I think @see is appropriate here ; this is deprecated for the same reasons as getType. Avoided the confusion entirely by copying that comment here (and adapting it).",
+      "parentUuid": "4297dbe9_8db8b01a",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 25
+      },
+      "revId": "a5046aea6a2452b31d470d84fb1ab6f4aa69fcdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
