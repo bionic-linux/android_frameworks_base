@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b9c28ab_a3e69303",
+        "filename": "api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 26026,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": "I don\u0027t think we can deprecate this because it\u0027s the way that apps know that they are BLOCKED.",
+      "range": {
+        "startLine": 26026,
+        "startChar": 59,
+        "endLine": 26026,
+        "endChar": 67
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769ea06a_a9f42d07",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": "Hmm. We don\u0027t have a TRANSPORT_WIMAX. Maybe we should not deprecate this? Or maybe given the lack of wimax-capable devices, we can just leave this deprecated.",
+      "range": {
+        "startLine": 534,
+        "startChar": 28,
+        "endLine": 534,
+        "endChar": 38
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86aedb3_cf2df994",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": ".NET_CAPABILITY_CBS",
+      "range": {
+        "startLine": 581,
+        "startChar": 49,
+        "endLine": 581,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39772c1_667c1e78",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": ".NET_CAPABILITY_WIFI_P2P",
+      "range": {
+        "startLine": 590,
+        "startChar": 49,
+        "endLine": 590,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4e914a_ab25dcb2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": ".NET_CAPABILITY_IA",
+      "range": {
+        "startLine": 598,
+        "startChar": 49,
+        "endLine": 598,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da767582_f9a269d1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": ".NET_CAPABILITY_EIMS",
+      "range": {
+        "startLine": 607,
+        "startChar": 49,
+        "endLine": 607,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc46b6a3_252d0cc0",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": "Might want to note that since L, this has always returned true in all cases.",
+      "range": {
+        "startLine": 305,
+        "startChar": 83,
+        "endLine": 305,
+        "endChar": 84
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4666ad83_058ddc35",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": ".NET_CAPABILITY_NOT_ROAMING",
+      "range": {
+        "startLine": 377,
+        "startChar": 49,
+        "endLine": 377,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88b4126_8fa1c0a1",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T07:42:15Z",
+      "side": 1,
+      "message": "I don\u0027t think we can deprecate this since apps need to be able to know if they\u0027re BLOCKED.",
+      "range": {
+        "startLine": 391,
+        "startChar": 8,
+        "endLine": 391,
+        "endChar": 18
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
