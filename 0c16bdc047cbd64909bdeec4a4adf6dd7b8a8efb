@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a189cb69_797b4f04",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsFeatureConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-03-08T18:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6077b03e_3896807c",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "0c16bdc047cbd64909bdeec4a4adf6dd7b8a8efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d9c9f72_70aab9ce",
         "filename": "telephony/java/android/telephony/ims/stub/ImsFeatureConfiguration.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-08T15:48:20Z",
       "side": 1,
       "message": "super-minor-nit space.",
+      "range": {
+        "startLine": 159,
+        "startChar": 62,
+        "endLine": 159,
+        "endChar": 65
+      },
+      "revId": "0c16bdc047cbd64909bdeec4a4adf6dd7b8a8efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708a967a_a2bbbb03",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsFeatureConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-03-08T18:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d9c9f72_70aab9ce",
       "range": {
         "startLine": 159,
         "startChar": 62,
