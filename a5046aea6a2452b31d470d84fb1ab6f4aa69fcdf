@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4297dbe9_8db8b01a",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-08T06:58:51Z",
+      "side": 1,
+      "message": "See {@link #getType} ? Or \"@see #getType\" on its own line, but the former is preferred since @link was created.",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 25
+      },
+      "revId": "a5046aea6a2452b31d470d84fb1ab6f4aa69fcdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
