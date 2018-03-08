@@ -16,6 +16,24 @@
       "revId": "9a2e36f2d8b8e2979eb800aea710bae940a7c9dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5376ce28_5fe9af14",
+        "filename": "api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 26032,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T10:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54550f29_eacd37d2",
+      "revId": "9a2e36f2d8b8e2979eb800aea710bae940a7c9dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
