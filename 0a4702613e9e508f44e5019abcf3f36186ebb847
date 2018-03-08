@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cdeb708e_1c38fa1f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T06:05:45Z",
+      "side": 1,
+      "message": "...kind of ?\nI wrote the non-@hide ones so they are hopefully suitable for publication. @hide ones are internal so they don\u0027t need the same style ; I initially didn\u0027t even include them, but the linter caught me.\n\nBut all right, point taken. Added all the periods. +2, LGTM, would review again, SHIP IIIIIT !!!!",
+      "parentUuid": "7615f822_05058f7c",
+      "range": {
+        "startLine": 614,
+        "startChar": 57,
+        "endLine": 614,
+        "endChar": 58
+      },
+      "revId": "0a4702613e9e508f44e5019abcf3f36186ebb847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094c01e0_fbefb5e5",
         "filename": "core/java/android/net/NetworkInfo.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1b521f9b_a4e842c7",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T06:05:45Z",
+      "side": 1,
+      "message": "Good point. Rephrased.",
+      "parentUuid": "094c01e0_fbefb5e5",
+      "range": {
+        "startLine": 168,
+        "startChar": 87,
+        "endLine": 168,
+        "endChar": 91
+      },
+      "revId": "0a4702613e9e508f44e5019abcf3f36186ebb847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3bae3a_e5310ac9",
         "filename": "core/java/android/net/NetworkInfo.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "0a4702613e9e508f44e5019abcf3f36186ebb847",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bdf22a_1c0b5fe7",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T06:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3bae3a_e5310ac9",
+      "range": {
+        "startLine": 327,
+        "startChar": 50,
+        "endLine": 327,
+        "endChar": 57
+      },
+      "revId": "0a4702613e9e508f44e5019abcf3f36186ebb847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
