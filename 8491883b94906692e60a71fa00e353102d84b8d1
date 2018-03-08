@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b081145_b2ee1927",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-08T06:36:19Z",
+      "side": 1,
+      "message": "\"an appropriate network\" ? Since \"this type\" is not to be used anymore.",
+      "range": {
+        "startLine": 459,
+        "startChar": 83,
+        "endLine": 460,
+        "endChar": 29
+      },
+      "revId": "8491883b94906692e60a71fa00e353102d84b8d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59136c7_e8296972",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-08T06:36:19Z",
+      "side": 1,
+      "message": "Missing @Deprecated annotation ?",
+      "range": {
+        "startLine": 511,
+        "startChar": 4,
+        "endLine": 511,
+        "endChar": 49
+      },
+      "revId": "8491883b94906692e60a71fa00e353102d84b8d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de613834_f86b9868",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-08T06:36:19Z",
+      "side": 1,
+      "message": "Nit: extra \"instead\"",
+      "range": {
+        "startLine": 623,
+        "startChar": 39,
+        "endLine": 623,
+        "endChar": 46
+      },
+      "revId": "8491883b94906692e60a71fa00e353102d84b8d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1761346_53021706",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-08T06:36:19Z",
+      "side": 1,
+      "message": "Should this be @link ? I think @see generates a \"See also\" section (there are also other occurrences below).",
+      "range": {
+        "startLine": 171,
+        "startChar": 19,
+        "endLine": 172,
+        "endChar": 76
+      },
+      "revId": "8491883b94906692e60a71fa00e353102d84b8d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
