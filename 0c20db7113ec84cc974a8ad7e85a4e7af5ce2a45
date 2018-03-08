@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5bf035a_9b605b72",
+        "filename": "api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 26026,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "Point taken, but getState() can\u0027t return BLOCKED ; getDetailedState() is the call that does. Undeprecated getDetailedState(). Not sure whether we should avoid deprecating getState() on grounds that getDetailedState() can\u0027t go, but my opinion is that we should go ahead and deprecate it. Left deprecated in the latest patch set.",
+      "parentUuid": "6b9c28ab_a3e69303",
+      "range": {
+        "startLine": 26026,
+        "startChar": 59,
+        "endLine": 26026,
+        "endChar": 67
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "769ea06a_a9f42d07",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0dda10_b520908e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "I thought of this, but I can\u0027t figure out for the life of me what an app could be after if it wants to know about WIMAX. I think for all intents or purposes, WiMax is TRANSPORT_CELLULAR.",
+      "parentUuid": "769ea06a_a9f42d07",
+      "range": {
+        "startLine": 534,
+        "startChar": 28,
+        "endLine": 534,
+        "endChar": 38
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "13c7f3b4_83de99cb",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a86aedb3_cf2df994",
+      "range": {
+        "startLine": 581,
+        "startChar": 49,
+        "endLine": 581,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d39772c1_667c1e78",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e0d143_8115df49",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39772c1_667c1e78",
+      "range": {
+        "startLine": 590,
+        "startChar": 49,
+        "endLine": 590,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "30508e0d_0a369330",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf4e914a_ab25dcb2",
+      "range": {
+        "startLine": 598,
+        "startChar": 49,
+        "endLine": 598,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da767582_f9a269d1",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d7f3db_c1100f90",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da767582_f9a269d1",
+      "range": {
+        "startLine": 607,
+        "startChar": 49,
+        "endLine": 607,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "14be2b4a_b648eb50",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "dc46b6a3_252d0cc0",
+      "range": {
+        "startLine": 305,
+        "startChar": 83,
+        "endLine": 305,
+        "endChar": 84
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4666ad83_058ddc35",
         "filename": "core/java/android/net/NetworkInfo.java",
         "patchSetId": 6
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "8a6f3498_279f94b0",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4666ad83_058ddc35",
+      "range": {
+        "startLine": 377,
+        "startChar": 49,
+        "endLine": 377,
+        "endChar": 50
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f88b4126_8fa1c0a1",
         "filename": "core/java/android/net/NetworkInfo.java",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a446b815_a90a4058",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-08T08:04:32Z",
+      "side": 1,
+      "message": "See my reply on the api text",
+      "parentUuid": "f88b4126_8fa1c0a1",
+      "range": {
+        "startLine": 391,
+        "startChar": 8,
+        "endLine": 391,
+        "endChar": 18
+      },
+      "revId": "0c20db7113ec84cc974a8ad7e85a4e7af5ce2a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
