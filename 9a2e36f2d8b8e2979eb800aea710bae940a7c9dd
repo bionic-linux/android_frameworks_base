@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54550f29_eacd37d2",
+        "filename": "api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 26032,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-08T09:55:14Z",
+      "side": 1,
+      "message": "Per in-person discussion, this is recommended in our documentation so perhaps we shouldn\u0027t deprecate it until we\u0027re ready to deprecate this whole class.",
+      "revId": "9a2e36f2d8b8e2979eb800aea710bae940a7c9dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
