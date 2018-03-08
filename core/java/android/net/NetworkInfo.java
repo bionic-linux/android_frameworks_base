@@ -163,8 +163,17 @@ public class NetworkInfo implements Parcelable {
      * @return one of {@link ConnectivityManager#TYPE_MOBILE}, {@link
      * ConnectivityManager#TYPE_WIFI}, {@link ConnectivityManager#TYPE_WIMAX}, {@link
      * ConnectivityManager#TYPE_ETHERNET},  {@link ConnectivityManager#TYPE_BLUETOOTH}, or other
-     * types defined by {@link ConnectivityManager}
+     * types defined by {@link ConnectivityManager}.
+     * @deprecated Callers should switch to checking {@link NetworkCapabilities#hasTransport}
+     *             instead with one of the NetworkCapabilities#TRANSPORT_* constants : this API
+     *             cannot account for networks using multiple transports. Note that generally
+     *             apps should not care about transport ;
+     *             {@see NetworkCapabilities#NET_CAPABILITY_NOT_METERED} and
+     *             {@see NetworkCapabilities#getLinkDownstreamBandwidthKbps} are calls that
+     *             apps concerned with meteredness or bandwidth should be looking at, as they
+     *             offer this information with much better accuracy.
      */
+    @Deprecated
     public int getType() {
         synchronized (this) {
             return mNetworkType;
@@ -172,8 +181,10 @@ public class NetworkInfo implements Parcelable {
     }
 
     /**
+     * @deprecated Use {@link NetworkCapabilities} instead
      * @hide
      */
+    @Deprecated
     public void setType(int type) {
         synchronized (this) {
             mNetworkType = type;
@@ -205,7 +216,9 @@ public class NetworkInfo implements Parcelable {
      * Return a human-readable name describe the type of the network,
      * for example "WIFI" or "MOBILE".
      * @return the name of the network type
+     * @deprecated {@see #getType}.
      */
+    @Deprecated
     public String getTypeName() {
         synchronized (this) {
             return mTypeName;
@@ -230,7 +243,15 @@ public class NetworkInfo implements Parcelable {
      * that the network is fully usable.
      * @return {@code true} if network connectivity exists or is in the process
      * of being established, {@code false} otherwise.
+     * @deprecated Apps should instead use the
+     *             {@link android.net.ConnectivityManager.NetworkCallback} API to
+     *             learn about connectivity changes.
+     *             {@see ConnectivityManager#registerDefaultNetworkCallback} and
+     *             {@see ConnectivityManager#registerNetworkCallback}. These will
+     *             give a more accurate picture of the connectivity state of
+     *             the device and let apps react more easily and quickly to changes.
      */
+    @Deprecated
     public boolean isConnectedOrConnecting() {
         synchronized (this) {
             return mState == State.CONNECTED || mState == State.CONNECTING;
@@ -242,7 +263,15 @@ public class NetworkInfo implements Parcelable {
      * connections and pass data.
      * <p>Always call this before attempting to perform data transactions.
      * @return {@code true} if network connectivity exists, {@code false} otherwise.
+     * @deprecated Apps should instead use the
+     *             {@link android.net.ConnectivityManager.NetworkCallback} API to
+     *             learn about connectivity changes.
+     *             {@see ConnectivityManager#registerDefaultNetworkCallback} and
+     *             {@see ConnectivityManager#registerNetworkCallback}. These will
+     *             give a more accurate picture of the connectivity state of
+     *             the device and let apps react more easily and quickly to changes.
      */
+    @Deprecated
     public boolean isConnected() {
         synchronized (this) {
             return mState == State.CONNECTED;
@@ -260,7 +289,15 @@ public class NetworkInfo implements Parcelable {
      * <li>The device's radio is turned off, e.g., because airplane mode is enabled.</li>
      * </ul>
      * @return {@code true} if the network is available, {@code false} otherwise
+     * @deprecated Apps should instead use the
+     *             {@link android.net.ConnectivityManager.NetworkCallback} API to
+     *             learn about connectivity changes.
+     *             {@see ConnectivityManager#registerDefaultNetworkCallback} and
+     *             {@see ConnectivityManager#registerNetworkCallback}. These will
+     *             give a more accurate picture of the connectivity state of
+     *             the device and let apps react more easily and quickly to changes.
      */
+    @Deprecated
     public boolean isAvailable() {
         synchronized (this) {
             return mIsAvailable;
@@ -270,9 +307,11 @@ public class NetworkInfo implements Parcelable {
     /**
      * Sets if the network is available, ie, if the connectivity is possible.
      * @param isAvailable the new availability value.
+     * @deprecated Use {@link NetworkCapabilities} instead
      *
      * @hide
      */
+    @Deprecated
     public void setIsAvailable(boolean isAvailable) {
         synchronized (this) {
             mIsAvailable = isAvailable;
@@ -285,7 +324,10 @@ public class NetworkInfo implements Parcelable {
      * network following a disconnect from another network.
      * @return {@code true} if this is a failover attempt, {@code false}
      * otherwise.
+     * @deprecated This field is not populated in recente Android releases,
+     *             and does not make a lot of sense in a multi-network world.
      */
+    @Deprecated
     public boolean isFailover() {
         synchronized (this) {
             return mIsFailover;
@@ -296,8 +338,10 @@ public class NetworkInfo implements Parcelable {
      * Set the failover boolean.
      * @param isFailover {@code true} to mark the current connection attempt
      * as a failover.
+     * @deprecated This hasn't been set in any recent Android release.
      * @hide
      */
+    @Deprecated
     public void setFailover(boolean isFailover) {
         synchronized (this) {
             mIsFailover = isFailover;
@@ -322,7 +366,10 @@ public class NetworkInfo implements Parcelable {
         }
     }
 
-    /** {@hide} */
+    /**
+     * @deprecated Use {@link NetworkCapabilities} instead
+     * {@hide}
+     */
     @VisibleForTesting
     @Deprecated
     public void setRoaming(boolean isRoaming) {
@@ -334,7 +381,15 @@ public class NetworkInfo implements Parcelable {
     /**
      * Reports the current coarse-grained state of the network.
      * @return the coarse-grained state
+     * @deprecated Apps should instead use the
+     *             {@link android.net.ConnectivityManager.NetworkCallback} API to
+     *             learn about connectivity changes.
+     *             {@see ConnectivityManager#registerDefaultNetworkCallback} and
+     *             {@see ConnectivityManager#registerNetworkCallback}. These will
+     *             give a more accurate picture of the connectivity state of
+     *             the device and let apps react more easily and quickly to changes.
      */
+    @Deprecated
     public State getState() {
         synchronized (this) {
             return mState;
@@ -344,7 +399,15 @@ public class NetworkInfo implements Parcelable {
     /**
      * Reports the current fine-grained state of the network.
      * @return the fine-grained state
+     * @deprecated Apps should instead use the
+     *             {@link android.net.ConnectivityManager.NetworkCallback} API to
+     *             learn about connectivity changes.
+     *             {@see ConnectivityManager#registerDefaultNetworkCallback} and
+     *             {@see ConnectivityManager#registerNetworkCallback}. These will
+     *             give a more accurate picture of the connectivity state of
+     *             the device and let apps react more easily and quickly to changes.
      */
+    @Deprecated
     public DetailedState getDetailedState() {
         synchronized (this) {
             return mDetailedState;
@@ -358,8 +421,10 @@ public class NetworkInfo implements Parcelable {
      * if one was supplied. May be {@code null}.
      * @param extraInfo an optional {@code String} providing addditional network state
      * information passed up from the lower networking layers.
+     * @deprecated Use {@link NetworkCapabilities} instead
      * @hide
      */
+    @Deprecated
     public void setDetailedState(DetailedState detailedState, String reason, String extraInfo) {
         synchronized (this) {
             this.mDetailedState = detailedState;
@@ -385,6 +450,8 @@ public class NetworkInfo implements Parcelable {
      * Report the reason an attempt to establish connectivity failed,
      * if one is available.
      * @return the reason for failure, or null if not available
+     * @deprecated This method does not have a consistent contract that could make it useful
+     *             to callers.
      */
     public String getReason() {
         synchronized (this) {
