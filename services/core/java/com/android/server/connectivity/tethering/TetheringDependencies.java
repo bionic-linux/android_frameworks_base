@@ -29,4 +29,8 @@ public class TetheringDependencies {
     public OffloadHardwareInterface getOffloadHardwareInterface(Handler h, SharedLog log) {
         return new OffloadHardwareInterface(h, log);
     }
+
+    public boolean isTetheringSupported() {
+    	return true;
+    }
 }

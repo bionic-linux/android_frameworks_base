@@ -172,6 +172,7 @@ public class Tethering extends BaseNetworkObserver {
     private final INetworkPolicyManager mPolicyManager;
     private final Looper mLooper;
     private final MockableSystemProperties mSystemProperties;
+    private final TetheringDependencies mDependencies;
     private final StateMachine mTetherMasterSM;
     private final OffloadController mOffloadController;
     private final UpstreamNetworkMonitor mUpstreamNetworkMonitor;
@@ -202,6 +203,7 @@ public class Tethering extends BaseNetworkObserver {
         mPolicyManager = policyManager;
         mLooper = looper;
         mSystemProperties = systemProperties;
+        mDependencies = deps;
 
         mPublicSync = new Object();
 
@@ -212,7 +214,7 @@ public class Tethering extends BaseNetworkObserver {
 
         final Handler smHandler = mTetherMasterSM.getHandler();
         mOffloadController = new OffloadController(smHandler,
-                deps.getOffloadHardwareInterface(smHandler, mLog),
+                mDependencies.getOffloadHardwareInterface(smHandler, mLog),
                 mContext.getContentResolver(), mNMService,
                 mLog);
         mUpstreamNetworkMonitor = new UpstreamNetworkMonitor(
@@ -259,12 +261,6 @@ public class Tethering extends BaseNetworkObserver {
 
         // load device config info
         updateConfiguration();
-    }
-
-    // We can't do this once in the Tethering() constructor and cache the value, because the
-    // CONNECTIVITY_SERVICE is registered only after the Tethering() constructor has completed.
-    private ConnectivityManager getConnectivityManager() {
-        return (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     private WifiManager getWifiManager() {
@@ -581,7 +577,7 @@ public class Tethering extends BaseNetworkObserver {
     }
 
     private void cancelTetherProvisioningRechecks(int type) {
-        if (getConnectivityManager().isTetheringSupported()) {
+        if (mDependencies.isTetheringSupported()) {
             Intent intent = new Intent();
             intent.putExtra(ConnectivityManager.EXTRA_REM_TETHER_TYPE, type);
             intent.setComponent(TETHER_SERVICE);
@@ -671,7 +667,7 @@ public class Tethering extends BaseNetworkObserver {
 
     // TODO: Figure out how to update for local hotspot mode interfaces.
     private void sendTetherStateChangedBroadcast() {
-        if (!getConnectivityManager().isTetheringSupported()) return;
+        if (!mDependencies.isTetheringSupported()) return;
 
         final ArrayList<String> availableList = new ArrayList<>();
         final ArrayList<String> tetherList = new ArrayList<>();
