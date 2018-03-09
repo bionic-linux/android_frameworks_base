@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f4ee8c5_0dede77b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-09T10:56:46Z",
+      "side": 1,
+      "message": "s/?/-/",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "4e5343d8b2c41b0c0d33aa84e1e070954c890adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12097b20_d95bac60",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-09T10:56:46Z",
+      "side": 1,
+      "message": "Tab lurking",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 5
+      },
+      "revId": "4e5343d8b2c41b0c0d33aa84e1e070954c890adb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
