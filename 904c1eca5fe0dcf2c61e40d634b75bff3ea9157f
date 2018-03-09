@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e90f599d_7cd31dbb",
+        "filename": "telephony/java/android/telephony/ims/internal/stub/SmsImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1254195
+      },
+      "writtenOn": "2018-03-09T01:10:49Z",
+      "side": 1,
+      "message": "Don\u0027t we need to send valid message reference here?",
+      "range": {
+        "startLine": 204,
+        "startChar": 38,
+        "endLine": 204,
+        "endChar": 39
+      },
+      "revId": "904c1eca5fe0dcf2c61e40d634b75bff3ea9157f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
