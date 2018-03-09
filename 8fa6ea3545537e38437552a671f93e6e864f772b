@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1189af1f_f9cfa8ea",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-09T13:45:13Z",
+      "side": 1,
+      "message": "Is this blocking?  I can\u0027t tell from the public documentation (sparse!).  But if it is, might we need to setRefreshing(true) /before/ this call?",
+      "range": {
+        "startLine": 167,
+        "startChar": 32,
+        "endLine": 167,
+        "endChar": 33
+      },
+      "revId": "8fa6ea3545537e38437552a671f93e6e864f772b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
