@@ -22,6 +22,30 @@
       "revId": "8fa6ea3545537e38437552a671f93e6e864f772b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c803a63_dbebfcef",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-03-09T13:51:52Z",
+      "side": 1,
+      "message": "No this is not blocking, so it\u0027s fine. I did test visually :)",
+      "parentUuid": "1189af1f_f9cfa8ea",
+      "range": {
+        "startLine": 167,
+        "startChar": 32,
+        "endLine": 167,
+        "endChar": 33
+      },
+      "revId": "8fa6ea3545537e38437552a671f93e6e864f772b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
