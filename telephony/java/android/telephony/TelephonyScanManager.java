@@ -133,7 +133,8 @@ public final class TelephonyScanManager {
                         break;
                     case CALLBACK_SCAN_ERROR:
                         try {
-                            callback.onError(message.arg1);
+                            final int errorCode = message.arg1;
+                            executor.execute(() -> callback.onError(errorCode));
                         } catch (Exception e) {
                             Rlog.e(TAG, "Exception in networkscan callback onError", e);
                         }
