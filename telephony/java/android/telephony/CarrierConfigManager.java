@@ -936,11 +936,14 @@ public class CarrierConfigManager {
     public static final String KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL = "hide_preferred_network_type_bool";
 
     /**
-     * String array for package names that need to be enabled for this carrier.
-     * If user has explicitly disabled some packages in the list, won't re-enable.
-     * Other carrier specific apps which are not in this list may be disabled for current carrier,
-     * and only be re-enabled when this config for another carrier includes it.
+     * String array for bundled apps that need to be enabled for current
+     * carrier to work as intended. Bundled apps not listed in this string array may be
+     * set to {@link android.content.pm.PackageManager#COMPONENT_ENABLED_STATE_DEFAULT} based on
+     * current carrier requirements. Packages found in this string array that user has explicitly
+     * disabled ({@link android.content.pm.PackageManager#COMPONENT_ENABLED_STATE_DISABLED_USER})
+     * will not be re-enabled.
      *
+     * It is recommended that this key should be configured by the OEM only.
      * @hide
      */
     public static final String KEY_ENABLE_APPS_STRING_ARRAY = "enable_apps_string_array";
