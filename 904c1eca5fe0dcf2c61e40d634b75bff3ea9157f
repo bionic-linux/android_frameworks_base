@@ -22,6 +22,30 @@
       "revId": "904c1eca5fe0dcf2c61e40d634b75bff3ea9157f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ce9a57_a29f3708",
+        "filename": "telephony/java/android/telephony/ims/internal/stub/SmsImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-03-12T21:56:23Z",
+      "side": 1,
+      "message": "We should send the messageRef of the message that failed. The token can also be used to match the onSmsReceived(token,...)  call with acknowledgeSms(token,...)",
+      "parentUuid": "e90f599d_7cd31dbb",
+      "range": {
+        "startLine": 204,
+        "startChar": 38,
+        "endLine": 204,
+        "endChar": 39
+      },
+      "revId": "904c1eca5fe0dcf2c61e40d634b75bff3ea9157f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
