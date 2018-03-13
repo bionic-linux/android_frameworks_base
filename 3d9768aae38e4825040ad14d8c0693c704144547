@@ -118,6 +118,30 @@
       "revId": "3d9768aae38e4825040ad14d8c0693c704144547",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63aeaf4_0d2a64cc",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-13T17:50:54Z",
+      "side": 1,
+      "message": "Side note: I tested always_inline, and it works, in that a tombstone stacktrace does not directly show the frame. But a symbolized stacktrace will of course show it again as inlined code.",
+      "parentUuid": "c1c2f36e_5aa9feb0",
+      "range": {
+        "startLine": 553,
+        "startChar": 0,
+        "endLine": 556,
+        "endChar": 4
+      },
+      "revId": "3d9768aae38e4825040ad14d8c0693c704144547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
