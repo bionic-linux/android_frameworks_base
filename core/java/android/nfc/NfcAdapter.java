@@ -486,6 +486,42 @@ public final class NfcAdapter {
     }
 
     /**
+     * Helper to check if this device is NFC UICC capable, by checking for
+     * FEATURE_NFC_UICC_CARD_EMULATION but without using a context.
+     */
+    private static boolean hasNfcUiccFeature() {
+        IPackageManager pm = ActivityThread.getPackageManager();
+        if (pm == null) {
+            Log.e(TAG, "Cannot get package manager, assuming no NFC feature");
+            return false;
+        }
+        try {
+            return pm.hasSystemFeature(PackageManager.FEATURE_NFC_UICC_CARD_EMULATION, 0);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Package manager query failed, assuming no NFC feature", e);
+            return false;
+        }
+    }
+
+    /**
+     * Helper to check if this device is NFC eSE capable, by checking for
+     * FEATURE_NFC_ESE_CARD_EMULATION but without using a context.
+     */
+    private static boolean hasNfcEseFeature() {
+        IPackageManager pm = ActivityThread.getPackageManager();
+        if (pm == null) {
+            Log.e(TAG, "Cannot get package manager, assuming no NFC feature");
+            return false;
+        }
+        try {
+            return pm.hasSystemFeature(PackageManager.FEATURE_NFC_ESE_CARD_EMULATION, 0);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Package manager query failed, assuming no NFC feature", e);
+            return false;
+        }
+    }
+
+    /**
      * Returns the NfcAdapter for application context,
      * or throws if NFC is not available.
      * @hide
