@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11a23388_6f51e258",
+        "filename": "core/java/android/util/AtomicFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-03-13T08:59:03Z",
+      "side": 1,
+      "message": "If a file associated with mBackupName doesn\u0027t exist then previously this would throw an exception and log a warning, but still do the right thing, wouldn\u0027t it?\n\nWith this change, if mBackupName doesn\u0027t exist we wouldn\u0027t delete mBaseName either, leaving a file where previously we wouldn\u0027t have.\n\nCase 1: [Normal case, mBaseName and mBackupName exist before call] - no difference in behavior. After call: mBaseName exists, mBackupName deleted.\n\nCase 2: [First use, mBackupName does not exist]\nAfter call, before change: mBaseName deleted, mBackupName does not exist\nAfter call, after change: mBaseName exists (partial), mBackupName does not exist.\n\nThis doesn\u0027t look like an improvement to me - future uses of AtomicFile would find a potentially corrupt file.",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 31
+      },
+      "revId": "9988069b2dd33a4e6a6c1ffed029dc5bda412e1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b87c7eca_74f018b2",
+        "filename": "core/java/android/util/AtomicFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-03-13T08:59:03Z",
+      "side": 1,
+      "message": "Under what circumstances would str be null?\n\n(startWrite() never returns null)",
+      "range": {
+        "startLine": 158,
+        "startChar": 10,
+        "endLine": 158,
+        "endChar": 14
+      },
+      "revId": "9988069b2dd33a4e6a6c1ffed029dc5bda412e1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
