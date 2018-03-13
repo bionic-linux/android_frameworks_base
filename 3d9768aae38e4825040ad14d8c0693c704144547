@@ -70,6 +70,30 @@
       "revId": "3d9768aae38e4825040ad14d8c0693c704144547",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e41bd6_552a9beb",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-13T17:42:05Z",
+      "side": 1,
+      "message": "The \"follow-up\" is the next CL in the stack, in which fail_fn will add the target process name to the abort message.\n\nI\u0027d rather avoid macros, if possible, and use strongly-typed alternatives. Is avoidance of the single added stack frame worth it?",
+      "parentUuid": "c622d11e_d3eada62",
+      "range": {
+        "startLine": 553,
+        "startChar": 0,
+        "endLine": 556,
+        "endChar": 4
+      },
+      "revId": "3d9768aae38e4825040ad14d8c0693c704144547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
