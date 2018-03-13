@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f9e1bc7_bded8944",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-03-13T09:26:57Z",
+      "side": 1,
+      "message": "add a comment about the deliberate leak.it\u0027s obvious in this context but we all know how much copy pasta there is in our codebase, especially in C++",
+      "range": {
+        "startLine": 558,
+        "startChar": 6,
+        "endLine": 558,
+        "endChar": 54
+      },
+      "revId": "a42cfb720cd34dd70767643090f74a16ae6aff53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2925eba_54a7de9f",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-03-13T09:26:57Z",
+      "side": 1,
+      "message": "this seems to have one variable too many (and is therefore harder to understand). Why not :\n\nstd::string error_msg;\nif (se_name_c_str \u003d\u003d nullptr) {\n  error_msg \u003d msg;\n} else {\n  error_msg \u003d StringPrintf(...);\n}\n\nenv-\u003eFatalError(error_msg.c_str())",
+      "range": {
+        "startLine": 564,
+        "startChar": 4,
+        "endLine": 571,
+        "endChar": 5
+      },
+      "revId": "a42cfb720cd34dd70767643090f74a16ae6aff53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
