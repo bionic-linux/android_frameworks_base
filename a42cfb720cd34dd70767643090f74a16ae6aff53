@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3daa54dd_c5ad9744",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-13T15:09:13Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s true, I should remove the *. This was just a straightforward copy from the regular fork path. (Not that it matter too much, since we\u0027re dying.)",
+      "parentUuid": "75397086_5df84a1a",
+      "range": {
+        "startLine": 558,
+        "startChar": 6,
+        "endLine": 558,
+        "endChar": 54
+      },
+      "revId": "a42cfb720cd34dd70767643090f74a16ae6aff53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2925eba_54a7de9f",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "a42cfb720cd34dd70767643090f74a16ae6aff53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29905579_a94789e6",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-13T15:09:13Z",
+      "side": 1,
+      "message": "Makes a copy of msg which is unnecessary. I guess I can use the lifetime extension of references, make error_msg std::string\u0026.",
+      "parentUuid": "d2925eba_54a7de9f",
+      "range": {
+        "startLine": 564,
+        "startChar": 4,
+        "endLine": 571,
+        "endChar": 5
+      },
+      "revId": "a42cfb720cd34dd70767643090f74a16ae6aff53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
