@@ -22,6 +22,30 @@
       "revId": "3d9768aae38e4825040ad14d8c0693c704144547",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dcd736f_0e4abedc",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-03-13T15:12:39Z",
+      "side": 1,
+      "message": "See the follow-up, that needs more captured variables. A lambda seemed nicer to capture a changing environment while keeping the signature correct. So not a static function, but rather a struct, would be the replacement.\n\nNote that \"RuntimeAbort\" is in old abort stacks. I assume a strategic ALWAYS_INLINE on either would remove that. Considering that this is exceptional, I do not see a strong reason, though.",
+      "parentUuid": "61113e22_895397bb",
+      "range": {
+        "startLine": 553,
+        "startChar": 0,
+        "endLine": 556,
+        "endChar": 4
+      },
+      "revId": "3d9768aae38e4825040ad14d8c0693c704144547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
