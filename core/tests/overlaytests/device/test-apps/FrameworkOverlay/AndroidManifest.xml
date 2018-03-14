@@ -19,5 +19,5 @@
         android:versionCode="1"
         android:versionName="1.0">
         <overlay android:targetPackage="android"
-            android:category="com.android.overlaytest" />
+            category="android:test" />
 </manifest>

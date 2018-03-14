@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+    <overlayable category="android:theme">
+        <item type="color" name="user_icon_1" />
+        <item type="color" name="user_icon_2" />
+        <item type="color" name="user_icon_3" />
+        <item type="color" name="user_icon_4" />
+        <item type="color" name="user_icon_5" />
+        <item type="color" name="user_icon_6" />
+        <item type="color" name="user_icon_7" />
+        <item type="color" name="user_icon_8" />
+        <item type="color" name="background_device_default_light" />
+        <item type="color" name="primary_device_default_dark" />
+        <item type="color" name="primary_device_default_settings" />
+        <item type="color" name="primary_dark_device_default_dark" />
+        <item type="color" name="primary_dark_device_default_settings" />
+        <item type="color" name="secondary_device_default_settings" />
+        <item type="color" name="tertiary_device_default_settings" />
+        <item type="color" name="quaternary_device_default_settings" />
+        <item type="color" name="accent_device_default_light" />
+        <item type="color" name="accent_device_default_dark" />
+    </overlayable>
+
+    <overlayable category="android:display_cutout_emulation">
+        <item type="bool" name="config_fillMainBuiltInDisplayCutout" />
+        <item type="dimen" name="status_bar_height_portrait" />
+        <item type="dimen" name="status_bar_height_landscape" />
+        <item type="dimen" name="quick_qs_offset_height" />
+        <item type="dimen" name="quick_qs_total_height" />
+        <item type="string" name="config_mainBuiltInDisplayCutout" />
+    </overlayable>
+
+    <!-- FIXME: should add a new set of public resources specifically for
+         testing purposes. For now though, include the resources already used
+         in tests. -->
+    <overlayable category="android:test">
+        <item type="string" name="ok" />
+        <item type="bool" name="config_annoy_dianne" />
+    </overlayable>
+</resources>
