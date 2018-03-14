@@ -3,7 +3,7 @@
     android:versionCode="1"
     android:versionName="1.0">
     <overlay android:targetPackage="com.android.systemui"
-            android:category="android.overlay.category.THEME"/>
+            android:category="android:theme"/>
 
     <application android:label="@string/sysui_overlay_dark" android:hasCode="false"/>
 </manifest>

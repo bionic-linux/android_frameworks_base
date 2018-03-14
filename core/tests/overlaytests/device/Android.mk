@@ -21,6 +21,7 @@ LOCAL_PACKAGE_NAME := OverlayDeviceTests
 LOCAL_PRIVATE_PLATFORM_APIS := true
 LOCAL_STATIC_JAVA_LIBRARIES := android-support-test
 LOCAL_COMPATIBILITY_SUITE := device-tests
+LOCAL_USE_AAPT2 := true
 LOCAL_TARGET_REQUIRED_MODULES := \
     OverlayDeviceTests_AppOverlayOne \
     OverlayDeviceTests_AppOverlayTwo \

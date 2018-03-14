@@ -14,7 +14,9 @@
      limitations under the License.
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.server.om.hosttest.framework_overlay">
-    <overlay android:targetPackage="android" category="android:test" />
-</manifest>
+<resources>
+    <overlayable category="android:theme">
+        <item type="color" name="qs_detail_progress_track" />
+        <item type="style" name="qs_base" />
+    </overlayable>
+</resources>

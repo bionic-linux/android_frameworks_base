@@ -16,4 +16,8 @@
 
 <resources>
     <string name="app_resource">App Resource</string>
+
+    <overlayable category="com.android.server.om.hosttest.update_overlay_test:everything">
+        <item type="string" name="app_resource" />
+    </overlayable>
 </resources>
