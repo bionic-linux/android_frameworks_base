@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3608412d_874bbf0c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3057,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-15T06:32:35Z",
+      "side": 1,
+      "message": "[nit] a single space wouldn\u0027t go unappreciated",
+      "range": {
+        "startLine": 3057,
+        "startChar": 67,
+        "endLine": 3057,
+        "endChar": 68
+      },
+      "revId": "6a0c8bd5f0564af15c66a3b91ef398e3e6e0e465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
