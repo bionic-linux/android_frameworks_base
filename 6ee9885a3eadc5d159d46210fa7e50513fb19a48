@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09236f50_617bb556",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2018-03-15T19:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6210bc8_6d4b8c27",
+      "range": {
+        "startLine": 939,
+        "startChar": 60,
+        "endLine": 939,
+        "endChar": 61
+      },
+      "revId": "6ee9885a3eadc5d159d46210fa7e50513fb19a48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae8a2442_22654143",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-15T18:56:23Z",
       "side": 1,
       "message": "COMPONENT_ENABLED_STATE_DISABLED",
+      "range": {
+        "startLine": 941,
+        "startChar": 55,
+        "endLine": 941,
+        "endChar": 86
+      },
+      "revId": "6ee9885a3eadc5d159d46210fa7e50513fb19a48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74632f2_a8853843",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2018-03-15T19:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae8a2442_22654143",
       "range": {
         "startLine": 941,
         "startChar": 55,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "daf8afcf_9b1fd368",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2018-03-15T19:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f557ce6_a1668f7c",
+      "range": {
+        "startLine": 945,
+        "startChar": 0,
+        "endLine": 945,
+        "endChar": 5
+      },
+      "revId": "6ee9885a3eadc5d159d46210fa7e50513fb19a48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "486279e7_84ef875e",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2018-03-15T18:56:23Z",
       "side": 1,
       "message": "A new paragraph in Javadoc should start with \u0027\u003cp\u003e\u0027",
+      "range": {
+        "startLine": 946,
+        "startChar": 6,
+        "endLine": 946,
+        "endChar": 7
+      },
+      "revId": "6ee9885a3eadc5d159d46210fa7e50513fb19a48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4748f4e_7fdb0d29",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1283499
+      },
+      "writtenOn": "2018-03-15T19:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "486279e7_84ef875e",
       "range": {
         "startLine": 946,
         "startChar": 6,
