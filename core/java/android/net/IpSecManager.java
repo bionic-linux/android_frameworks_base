@@ -299,6 +299,11 @@ public final class IpSecManager {
      * will throw IOException if the user deactivates the transform (by calling {@link
      * IpSecTransform#close()}) without calling {@link #removeTransportModeTransforms}.
      *
+     * <p>Note that when applied to TCP sockets, deactivating an applied transform before completion
+     * of graceful shutdown may result in the shutdown sequence from completing. As such,
+     * applications requiring graceful shutdown MUST close the socket prior to deactivating the
+     * applied transform.
+     *
      * <h4>Rekey Procedure</h4>
      *
      * <p>When applying a new tranform to a socket, the previous transform will be removed. However,
@@ -332,6 +337,11 @@ public final class IpSecManager {
      * will throw IOException if the user deactivates the transform (by calling {@link
      * IpSecTransform#close()}) without calling {@link #removeTransportModeTransforms}.
      *
+     * <p>Note that when applied to TCP sockets, deactivating an applied transform before completion
+     * of graceful shutdown may result in the shutdown sequence from completing. As such,
+     * applications requiring graceful shutdown MUST close the socket prior to deactivating the
+     * applied transform.
+     *
      * <h4>Rekey Procedure</h4>
      *
      * <p>When applying a new tranform to a socket, the previous transform will be removed. However,
@@ -363,6 +373,11 @@ public final class IpSecManager {
      * other IP address will result in an IOException. In addition, reads and writes on the socket
      * will throw IOException if the user deactivates the transform (by calling {@link
      * IpSecTransform#close()}) without calling {@link #removeTransportModeTransforms}.
+     *
+     * <p>Note that when applied to TCP sockets, deactivating an applied transform before completion
+     * of graceful shutdown may result in the shutdown sequence from completing. As such,
+     * applications requiring graceful shutdown MUST close the socket prior to deactivating the
+     * applied transform.
      *
      * <h4>Rekey Procedure</h4>
      *
