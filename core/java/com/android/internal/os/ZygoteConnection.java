@@ -47,6 +47,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import libcore.io.IoUtils;
 
 /**
@@ -156,6 +158,11 @@ class ZygoteConnection {
         if (parsedArgs.preloadPackage != null) {
             handlePreloadPackage(parsedArgs.preloadPackage, parsedArgs.preloadPackageLibs,
                     parsedArgs.preloadPackageCacheKey);
+            return null;
+        }
+
+        if (parsedArgs.apiBlacklistExemptions != null) {
+            handleApiBlacklistExemptions(parsedArgs.apiBlacklistExemptions);
             return null;
         }
 
@@ -273,6 +280,15 @@ class ZygoteConnection {
                 preload();
                 mSocketOutStream.writeInt(0);
             }
+        } catch (IOException ioe) {
+            throw new IllegalStateException("Error writing to command socket", ioe);
+        }
+    }
+
+    private void handleApiBlacklistExemptions(String[] exemptions) {
+        try {
+            ZygoteInit.setApiBlacklistExemptions(exemptions);
+            mSocketOutStream.writeInt(0);
         } catch (IOException ioe) {
             throw new IllegalStateException("Error writing to command socket", ioe);
         }
@@ -422,6 +438,8 @@ class ZygoteConnection {
          * should be used for communication.
          */
         boolean startChildZygote;
+
+        String[] apiBlacklistExemptions;
 
         /**
          * Constructs instance and parses args
@@ -576,6 +594,10 @@ class ZygoteConnection {
                     preloadDefault = true;
                 } else if (arg.equals("--start-child-zygote")) {
                     startChildZygote = true;
+                } else if (arg.equals("--set-api-blacklist-exemptions")) {
+                    // consume all remaining args
+                    apiBlacklistExemptions = Arrays.copyOfRange(args, curArg + 1, args.length);
+                    curArg = args.length;
                 } else {
                     break;
                 }
@@ -590,7 +612,7 @@ class ZygoteConnection {
                     throw new IllegalArgumentException(
                             "Unexpected arguments after --preload-package.");
                 }
-            } else if (!preloadDefault) {
+            } else if (!preloadDefault && apiBlacklistExemptions == null) {
                 if (!seenRuntimeArgs) {
                     throw new IllegalArgumentException("Unexpected argument : " + args[curArg]);
                 }

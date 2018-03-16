@@ -18,6 +18,7 @@ package android.os;
 
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 
@@ -32,6 +33,7 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -156,6 +158,8 @@ public class ZygoteProcess {
      * interleaved access.
      */
     private final Object mLock = new Object();
+
+    private List<String> mApiBlacklistExemptions = Collections.emptyList();
 
     /**
      * The state of the connection to the primary zygote.
@@ -454,6 +458,51 @@ public class ZygoteProcess {
     }
 
     /**
+     * Push hidden API blacklisting exemptions into the zygote process(es).
+     *
+     * <p>The list of exemptions will take affect for all new processes forked from the zygote after
+     * this call.
+     *
+     * @param exemptions List of hidden API exemption prefixes.
+     */
+    public void setApiBlacklistExemptions(String exemptions) {
+        synchronized (mLock) {
+            mApiBlacklistExemptions = TextUtils.isEmpty(exemptions)
+                    ? Collections.emptyList()
+                    : Arrays.asList(exemptions.split("\\s+"));
+            maybeSendApiBlacklistExemptions(primaryZygoteState, true);
+            maybeSendApiBlacklistExemptions(secondaryZygoteState, true);
+        }
+    }
+
+    @GuardedBy("mLock")
+    private void maybeSendApiBlacklistExemptions(ZygoteState state, boolean sendIfEmpty) {
+        if (state == null || state.isClosed()) {
+            return;
+        }
+        if (!sendIfEmpty && mApiBlacklistExemptions.isEmpty()) {
+            return;
+        }
+        try {
+            state.writer.write(Integer.toString(mApiBlacklistExemptions.size() + 1));
+            state.writer.newLine();
+            state.writer.write("--set-api-blacklist-exemptions");
+            state.writer.newLine();
+            for (int i = 0; i < mApiBlacklistExemptions.size(); ++i) {
+                state.writer.write(mApiBlacklistExemptions.get(i));
+                state.writer.newLine();
+            }
+            state.writer.flush();
+            int status = state.inputStream.readInt();
+            if (status != 0) {
+                Slog.e(LOG_TAG, "Failed to set API blacklist exemptionsl status " + status);
+            }
+        } catch (IOException ioe) {
+            Slog.e(LOG_TAG, "Failed to set API blacklist exemptions", ioe);
+        }
+    }
+
+    /**
      * Tries to open socket to Zygote process if not already open. If
      * already open, does nothing.  May block and retry.  Requires that mLock be held.
      */
@@ -467,8 +516,8 @@ public class ZygoteProcess {
             } catch (IOException ioe) {
                 throw new ZygoteStartFailedEx("Error connecting to primary zygote", ioe);
             }
+            maybeSendApiBlacklistExemptions(primaryZygoteState, false);
         }
-
         if (primaryZygoteState.matches(abi)) {
             return primaryZygoteState;
         }
@@ -480,6 +529,7 @@ public class ZygoteProcess {
             } catch (IOException ioe) {
                 throw new ZygoteStartFailedEx("Error connecting to secondary zygote", ioe);
             }
+            maybeSendApiBlacklistExemptions(secondaryZygoteState, false);
         }
 
         if (secondaryZygoteState.matches(abi)) {
