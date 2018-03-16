@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "994ba7b6_fbc4a8ea",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-16T02:18:31Z",
+      "side": 1,
+      "message": "Please put this in DeviceStateMonitor or ServiceStateTracker. This really isn\u0027t related to the signal strength. It\u0027s just reporting criteria. Actually SST.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 53
+      },
+      "revId": "8fa5293d1f047e63ac8e63f2f7b5b8cc319a687f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
