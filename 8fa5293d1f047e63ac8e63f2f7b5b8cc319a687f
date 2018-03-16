@@ -46,6 +46,30 @@
       "revId": "8fa5293d1f047e63ac8e63f2f7b5b8cc319a687f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "144ce13a_60d9436f",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-16T19:22:39Z",
+      "side": 1,
+      "message": "I think moving the whole kit and kaboodle to SST is the answer here. If the same function needs to be triggered by both, then Presumably DSM can reach back to SST to make the request, or perhaps the core logic needs to sit in the GsmCdmaPhone and both SST and DSM can call it?",
+      "parentUuid": "cb916423_b266e258",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 53
+      },
+      "revId": "8fa5293d1f047e63ac8e63f2f7b5b8cc319a687f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
