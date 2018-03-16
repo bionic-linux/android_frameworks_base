@@ -22,6 +22,30 @@
       "revId": "8fa5293d1f047e63ac8e63f2f7b5b8cc319a687f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb916423_b266e258",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1244217
+      },
+      "writtenOn": "2018-03-16T16:17:09Z",
+      "side": 1,
+      "message": "These values are needed by both DeviceStateMonitor (for onRilConnected) and ServiceStateTracker (for CARRIER_CONFIG_CHANGED). Rather than duplicate the values I wanted to store them in a central location. Any suggestions?",
+      "parentUuid": "994ba7b6_fbc4a8ea",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 53
+      },
+      "revId": "8fa5293d1f047e63ac8e63f2f7b5b8cc319a687f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
