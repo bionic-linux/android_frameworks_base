@@ -53,6 +53,18 @@ public class SignalStrength implements Parcelable {
     };
 
     /**
+     * Required magnitude change between unsolicited SignalStrength reports.
+     * @hide
+     */
+    public static final int HYSTERESIS_DB = 2;
+
+    /**
+     * Minimum time between unsolicited SignalStrength reports.
+     * @hide
+     */
+    public static final int HYSTERESIS_MILLIS = 3000;
+
+    /**
      * Use Integer.MAX_VALUE because -1 is a valid value in signal strength.
      * @hide
      */
