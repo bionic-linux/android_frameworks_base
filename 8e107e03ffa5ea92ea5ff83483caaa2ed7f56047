@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5548ac6_998c6b0b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1125174
+      },
+      "writtenOn": "2018-03-16T22:18:13Z",
+      "side": 1,
+      "message": "Should we reword this as \"for the device to work as intended on this carrier\"",
+      "range": {
+        "startLine": 940,
+        "startChar": 81,
+        "endLine": 941,
+        "endChar": 34
+      },
+      "revId": "8e107e03ffa5ea92ea5ff83483caaa2ed7f56047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
