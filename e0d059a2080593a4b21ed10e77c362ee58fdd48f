@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4beda3c3_845a7065",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-03-19T03:55:49Z",
+      "side": 1,
+      "message": "Ideally a test in SecurityControllerTest for registerNetworkCallback to be called with proper parameters would be great, but whether it\u0027s likely to catch any regression here is not obvious.",
+      "range": {
+        "startLine": 67,
+        "startChar": 13,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "e0d059a2080593a4b21ed10e77c362ee58fdd48f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
