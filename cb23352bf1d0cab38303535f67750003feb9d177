@@ -46,6 +46,30 @@
       "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75c39cc_4158a264",
+        "filename": "graphics/java/android/graphics/drawable/VectorDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1053203
+      },
+      "writtenOn": "2018-03-20T20:36:40Z",
+      "side": 1,
+      "message": "Why are there draw() calls on the same VectorDrawable instance from multiple threads in the first place? nDraw in native assumes the VectorDrawable.draw() to always be on the UI thread, and accesses the UI thread owned staging properties. Allowing another thread to modify these problems is potentially unsafe.",
+      "parentUuid": "dde44f20_9b6c0bfd",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 44
+      },
+      "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
