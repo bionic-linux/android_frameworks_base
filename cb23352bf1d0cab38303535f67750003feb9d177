@@ -118,6 +118,30 @@
       "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f01e03a_088cadbd",
+        "filename": "graphics/java/android/graphics/drawable/VectorDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-03-20T23:19:06Z",
+      "side": 1,
+      "message": "Good. That helps. The concurrency that\u0027s apparently being attempted here seems to involve modification to the same object by two threads, and thus still isn\u0027t consistent with the rules. Do we agree that this is a client bug, and we don\u0027t need this CL?\n\nSo it sounds like Drawables and most other graphics objects can move between threads, so long as there are no racing accesses (concurrent accesses to the same object, \u003e\u003d 1 write). This exactly matches the usual definition of thread-compatible, and it\u0027s what most of the standard libraries use. Views must in addition stay on the same thread?\n\nIs there a good place to add a comment to that effect? I\u0027d be happy to generate a CL for that.",
+      "parentUuid": "a8a81076_537b9b81",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 44
+      },
+      "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
