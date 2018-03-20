@@ -70,6 +70,30 @@
       "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e72629_354bb56f",
+        "filename": "graphics/java/android/graphics/drawable/VectorDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-03-20T21:01:30Z",
+      "side": 1,
+      "message": "So the intent is that a VectorDrawable is what most parts of Google call \"thread-compatible\", i.e. it\u0027s the caller\u0027s job to ensure that there are no concurrent calls such that one of them modifies the object? That\u0027s appreciably different from the documentation I quoted above, which allows it to be \"thread-hostile\" in Google terminology, i.e. only callable from one thread because e.g. it accesses static data without protection.\n\nI couldn\u0027t find enough of a stack trace or the like to understand the original problem. And it seems hard to track down all the relevant code here.\n\nIt should be OK to call ref and unref from different threads, assuming the destructor doesn\u0027t care where it\u0027s called from. I think that was always required, since both the finalizer and NativeAllocationRegistry Cleaner run in a different threads. But if they\u0027re getting data race warnings, then we presumably have racing assignments to the same reference-counted pointer, and those are very bad.\n\nBased on the code I did find, there seemed to be a surprising(?) type change to the SkSafeUnref argument in ag/2461918/1/core/jni/android/graphics/ColorFilter.cpp. Is that OK/intended?",
+      "parentUuid": "dde44f20_9b6c0bfd",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 44
+      },
+      "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
