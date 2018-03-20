@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd443869_975ab64d",
+        "filename": "graphics/java/android/graphics/drawable/VectorDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-03-20T19:11:24Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand the context here, but purely from a concurrency perspective, this looks wrong.\n\nhttps://developer.android.com/guide/components/processes-and-threads.html says clearly:\n\n2. Do not access the Android UI toolkit from outside the UI thread\n\nSo why are we calling VectorDrawable.draw() from multiple threads, in violation of this condition? Given that nDraw() is presumably not thread-safe because it bottoms out in thread-unsafe Skia calls, how do we know it\u0027s safe to call it concurrently with other Skia code?\n\nIt seems really odd to acquire a lock in only a single method; we really need a clear statement about what data is protected by the VectorDrawable.class lock, and then protect those accesses consistently.\n\nIf you really believe that this is correct, please comment clearly what the concurrent access rules are here.",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 44
+      },
+      "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
