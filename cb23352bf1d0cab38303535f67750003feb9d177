@@ -22,6 +22,30 @@
       "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde44f20_9b6c0bfd",
+        "filename": "graphics/java/android/graphics/drawable/VectorDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2018-03-20T19:23:23Z",
+      "side": 1,
+      "message": "I believe it is the ref \u0026 unref of the colorFilter specifically that this is trying to guard against, and the result of the incorrect threading usage is the ref/unref race condition.\n\nThinking about this more though it\u0027s going to mean that independent objects owned by independent threads will no longer be able to draw concurrently. That is allowable per the threading rules, but this will bottleneck them on the class synchronization.",
+      "parentUuid": "cd443869_975ab64d",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 44
+      },
+      "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
