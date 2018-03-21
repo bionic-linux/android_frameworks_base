@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b8e2369_12dc425a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-21T18:45:39Z",
+      "side": 1,
+      "message": "I\u0027m not super keen on the idea of fixing up users\u0027 sockets like this. It puts us on a rather paternalistic path by entangling the IPsec API with the socket API. I think a better path forward long-term is to document the sharp edge and work to ensure users have the tools to smooth it out. We already have a separate desire to improve the system.Os.setsockopt(), and we can add this to the list.",
+      "parentUuid": "fa37ab3b_681a1266",
+      "range": {
+        "startLine": 305,
+        "startChar": 26,
+        "endLine": 305,
+        "endChar": 88
+      },
+      "revId": "e40e2e60042ac1adf51d4d3d449401e85ccc4486",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6155a8a2_20c903d0",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "e40e2e60042ac1adf51d4d3d449401e85ccc4486",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5990f288_d2ae8d6b",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-21T18:45:39Z",
+      "side": 1,
+      "message": "lol",
+      "parentUuid": "6155a8a2_20c903d0",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 6
+      },
+      "revId": "e40e2e60042ac1adf51d4d3d449401e85ccc4486",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
