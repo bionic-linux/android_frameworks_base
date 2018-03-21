@@ -190,6 +190,30 @@
       "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ddfb9c3_a38eb653",
+        "filename": "graphics/java/android/graphics/drawable/VectorDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2018-03-21T16:16:46Z",
+      "side": 1,
+      "message": "This is John\u0027s call, I presume. But from my perspective, solving this in the app is exactly the correct solution. Concurrent access to graphics objects is defined to be unsafe. We could possibly make such things a bit less dangerous at increased runtime cost, but it\u0027s not clear that\u0027s worth it.\n\nIt looks to me like the \"no races\" assumption is built into the whole Skia stack and APIs, so I don\u0027t think there\u0027s a feasible way to actually make concurrent accesses correct. Making certain use cases a little less broken only confuses the issue. It looks to me like any efforts here should continue to focus on documentation and error reporting. The previously added ad hoc race detection in Skia actually seems to have helped a little bit.",
+      "parentUuid": "248c0ba8_d61353da",
+      "range": {
+        "startLine": 336,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 44
+      },
+      "revId": "cb23352bf1d0cab38303535f67750003feb9d177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
