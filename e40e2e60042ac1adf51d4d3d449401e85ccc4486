@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa37ab3b_681a1266",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-21T10:19:14Z",
+      "side": 1,
+      "message": "I wonder: should we set SO_LINGER on the socket ourselves if it\u0027s not already set? Seems like it would be easier for users.",
+      "range": {
+        "startLine": 305,
+        "startChar": 26,
+        "endLine": 305,
+        "endChar": 88
+      },
+      "revId": "e40e2e60042ac1adf51d4d3d449401e85ccc4486",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6155a8a2_20c903d0",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-03-21T10:19:14Z",
+      "side": 1,
+      "message": "This text doesn\u0027t really make sense here because SO_LINGER doesn\u0027t make sense for a DatagramSocket.",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 6
+      },
+      "revId": "e40e2e60042ac1adf51d4d3d449401e85ccc4486",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
