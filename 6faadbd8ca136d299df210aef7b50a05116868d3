@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9971eaf5_c6fccf72",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-21T19:17:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure how safe this actually is.  It might be better to complain loudly (Log.wtf), but continue on safely if it\u0027s null.",
+      "range": {
+        "startLine": 1528,
+        "startChar": 33,
+        "endLine": 1528,
+        "endChar": 45
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef0de2d_d4d2143c",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-21T19:17:48Z",
+      "side": 1,
+      "message": "Consider a slightly different construction, perhaps:\n\n    final PrivateDnsValidationStatus statuses \u003d mFoo.get(update.netId);\n    if (statuses \u003d\u003d null) return;\n    statuses.updateStatus(update);",
+      "range": {
+        "startLine": 307,
+        "startChar": 78,
+        "endLine": 307,
+        "endChar": 79
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "559c533b_c52f1fef",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-21T19:17:48Z",
+      "side": 1,
+      "message": "They can\u0027t both be the default network.\n\nMight consider adding\n\n    final boolean IS_DEFAULT \u003d true;\n    final boolean NOT_DEFAULT \u003d false;\n\nand use the named constants throughout.",
+      "range": {
+        "startLine": 98,
+        "startChar": 76,
+        "endLine": 98,
+        "endChar": 80
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
