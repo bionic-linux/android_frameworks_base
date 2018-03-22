@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9a65d273_2543f422",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2335,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-22T21:05:19Z",
+      "side": 1,
+      "message": "Yes, that is what I believe is happening.\n\nI see your point about going from strict to off or opportunistic.  I think the proper fix is to move this code into handlePrivateDnsSettingsChanged() in the \"if (!cfg.inStrictMode())\" block.",
+      "parentUuid": "7ddd96a2_c6479ab8",
+      "range": {
+        "startLine": 2332,
+        "startChar": 0,
+        "endLine": 2335,
+        "endChar": 9
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ef0de2d_d4d2143c",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 2
