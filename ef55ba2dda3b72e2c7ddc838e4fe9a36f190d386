@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3e05ac2_dba63540",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1113714
+      },
+      "writtenOn": "2018-03-22T19:08:44Z",
+      "side": 1,
+      "message": "The last pin range can cause total bytesPinned to exceed maxBytesToPin.  So if I want to abuse this I could pin just under 2x the limit.",
+      "range": {
+        "startLine": 505,
+        "startChar": 16,
+        "endLine": 514,
+        "endChar": 41
+      },
+      "revId": "ef55ba2dda3b72e2c7ddc838e4fe9a36f190d386",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
