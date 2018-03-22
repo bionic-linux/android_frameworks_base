@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "79fcb6f1_b9200e0c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2335,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-22T01:25:08Z",
+      "side": 1,
+      "message": "I suspect this is the core of the problem.\n\nWhen a NetworkAgent is registered, we immediately program down the private dns information, and the lack of bypass at this time means we can\u0027t validate networks.\n\nLooking at this again, I think we can just delete this, right?",
+      "range": {
+        "startLine": 2332,
+        "startChar": 0,
+        "endLine": 2335,
+        "endChar": 9
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ef0de2d_d4d2143c",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 2
