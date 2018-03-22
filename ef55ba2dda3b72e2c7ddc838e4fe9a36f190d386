@@ -22,6 +22,30 @@
       "revId": "ef55ba2dda3b72e2c7ddc838e4fe9a36f190d386",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f889ec_edaee47a",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1130394
+      },
+      "writtenOn": "2018-03-22T20:16:50Z",
+      "side": 1,
+      "message": "\u003e The last pin range can cause total bytesPinned to exceed maxBytesToPin\n\nWe clamp pinLength to maxBytesToPin - bytesPinned above, then grow pinLength only enough to clamp to page boundaries --- we can\u0027t exceed the limit by any more than two pages. But we can enforce a stricter limit, sure.",
+      "parentUuid": "d3e05ac2_dba63540",
+      "range": {
+        "startLine": 505,
+        "startChar": 16,
+        "endLine": 514,
+        "endChar": 41
+      },
+      "revId": "ef55ba2dda3b72e2c7ddc838e4fe9a36f190d386",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
