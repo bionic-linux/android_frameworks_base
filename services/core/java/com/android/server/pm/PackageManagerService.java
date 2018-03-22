@@ -2550,6 +2550,24 @@ public class PackageManagerService extends IPackageManager.Stub
                 }
             }
 
+            // Look for any incomplete package installations
+            ArrayList<PackageSetting> deletePkgsList = mSettings.getListOfIncompleteInstallPackagesLPr();
+            for (int i = 0; i < deletePkgsList.size(); i++) {
+                // Actual deletion of code and data will be handled by later
+                // reconciliation step
+                PackageSetting deletedPs = deletePkgsList.get(i);
+                PackageSetting disabledPs = mSettings.getDisabledSystemPkgLPr(deletedPs.name);
+                booelean keepData = disabledPs != null && disabledPs.versionCode >= deletedPs.versionCode;
+                logCriticalInfo(Log.WARN, "Cleaning up incompletely installed app: " + packageName);
+                mSettings.removePackageLPw(deletedPs.name);
+                // If this is a system app, we need to enable it
+                if (keepData) {
+                    mSettings.enableSystemPackageLPw(deletedPs.name)
+                } else if (disabledPs != null) {
+                    mSettings.removeDisabledSystemPackageLPw(deletedPs.name);
+                }
+            }
+
             if (mFirstBoot) {
                 requestCopyPreoptedFiles();
             }
@@ -2737,18 +2755,6 @@ public class PackageManagerService extends IPackageManager.Stub
                             possiblyDeletedUpdatedSystemApps.add(ps.name);
                         }
                     }
-                }
-            }
-
-            //look for any incomplete package installations
-            ArrayList<PackageSetting> deletePkgsList = mSettings.getListOfIncompleteInstallPackagesLPr();
-            for (int i = 0; i < deletePkgsList.size(); i++) {
-                // Actual deletion of code and data will be handled by later
-                // reconciliation step
-                final String packageName = deletePkgsList.get(i).name;
-                logCriticalInfo(Log.WARN, "Cleaning up incompletely installed app: " + packageName);
-                synchronized (mPackages) {
-                    mSettings.removePackageLPw(packageName);
                 }
             }
 
