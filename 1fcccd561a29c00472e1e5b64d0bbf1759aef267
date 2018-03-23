@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1f8653_1246f2e7",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-23T22:08:32Z",
+      "side": 1,
+      "message": "Please be very concrete. You can totally use TCP-specific terminology to explain what happens when a socket is closed after the transform is removed or closed. This is a nasty little corner case, so providing explicit detail will help callers understand+avoid.",
+      "range": {
+        "startLine": 302,
+        "startChar": 10,
+        "endLine": 303,
+        "endChar": 84
+      },
+      "revId": "1fcccd561a29c00472e1e5b64d0bbf1759aef267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
