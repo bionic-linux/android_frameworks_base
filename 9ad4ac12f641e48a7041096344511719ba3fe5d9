@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cbe915b_16a99d55",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-25T09:28:46Z",
+      "side": 1,
+      "message": "nit: deactivating doesn\u0027t actually have meaning in the context of our API. Suggest to refer to close()",
+      "range": {
+        "startLine": 304,
+        "startChar": 79,
+        "endLine": 304,
+        "endChar": 91
+      },
+      "revId": "9ad4ac12f641e48a7041096344511719ba3fe5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d32370d_28332760",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-25T09:28:46Z",
+      "side": 1,
+      "message": "Socket closure behavior is implementation specific. Try to avoid asserting this kind of behavior if possible?",
+      "range": {
+        "startLine": 305,
+        "startChar": 26,
+        "endLine": 305,
+        "endChar": 93
+      },
+      "revId": "9ad4ac12f641e48a7041096344511719ba3fe5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f320cd05_d423349a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-03-25T09:28:46Z",
+      "side": 1,
+      "message": "may",
+      "range": {
+        "startLine": 313,
+        "startChar": 71,
+        "endLine": 313,
+        "endChar": 75
+      },
+      "revId": "9ad4ac12f641e48a7041096344511719ba3fe5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
