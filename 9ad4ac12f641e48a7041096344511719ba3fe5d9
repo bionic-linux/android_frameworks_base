@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "537e2f68_6a41979d",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-03-26T18:37:01Z",
+      "side": 1,
+      "message": "Done. Is this something that we should change above as well? We note that:\n\n\u003e ...will throw IOException if the user deactivates the transform (by calling {@link\n\u003e    IpSecTransform#close()}) without calling {@link #removeTransportModeTransforms}.",
+      "parentUuid": "6cbe915b_16a99d55",
+      "range": {
+        "startLine": 304,
+        "startChar": 79,
+        "endLine": 304,
+        "endChar": 91
+      },
+      "revId": "9ad4ac12f641e48a7041096344511719ba3fe5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d32370d_28332760",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7d44c9ce_0e5c7893",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-03-26T18:37:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d32370d_28332760",
+      "range": {
+        "startLine": 305,
+        "startChar": 26,
+        "endLine": 305,
+        "endChar": 93
+      },
+      "revId": "9ad4ac12f641e48a7041096344511719ba3fe5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f320cd05_d423349a",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2018-03-25T09:28:46Z",
       "side": 1,
       "message": "may",
+      "range": {
+        "startLine": 313,
+        "startChar": 71,
+        "endLine": 313,
+        "endChar": 75
+      },
+      "revId": "9ad4ac12f641e48a7041096344511719ba3fe5d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "469f8757_d3122412",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2018-03-26T18:37:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f320cd05_d423349a",
       "range": {
         "startLine": 313,
         "startChar": 71,
