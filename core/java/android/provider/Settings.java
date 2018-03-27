@@ -10407,6 +10407,15 @@ public final class Settings {
                 "hidden_api_blacklist_exemptions";
 
         /**
+         * Sampling rate for hidden API access event logs, as an integer in the range 0 to 0x10000
+         * inclusive.
+         *
+         * @hide
+         */
+        public static final String HIDDEN_API_ACCESS_LOG_SAMPLING_RATE =
+                "hidden_api_access_log_sampling_rate";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
