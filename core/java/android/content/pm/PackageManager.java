@@ -1865,6 +1865,22 @@ public abstract class PackageManager {
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device supports uicc-
+     * based NFC card emulation.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_NFC_UICC_CARD_EMULATION = "android.hardware.nfc.uicc";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device supports ese-
+     * based NFC card emulation.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_NFC_ESE_CARD_EMULATION = "android.hardware.nfc.ese";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
      * {@link #hasSystemFeature}: The device supports any
      * one of the {@link #FEATURE_NFC}, {@link #FEATURE_NFC_HOST_CARD_EMULATION},
      * or {@link #FEATURE_NFC_HOST_CARD_EMULATION_NFCF} features.
