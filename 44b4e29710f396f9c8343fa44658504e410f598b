@@ -22,6 +22,30 @@
       "revId": "44b4e29710f396f9c8343fa44658504e410f598b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fa528c_506e4795",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1259546
+      },
+      "writtenOn": "2018-03-27T11:48:14Z",
+      "side": 1,
+      "message": "sorry those 2 should be public not private, I will fix.\n\nIn fact this part is not really linked to OMAPI itself but rather to the configuration (software \u0026 hardware) of the NFC controller of the device, that\u0027s why I suggest those 2 features/functions to be part of NfcAdapter.\n\nto give an example, some devices might not support (from a HW perspective) the SWP link between the NFC Ctrl and the UICC, making UICC-NFC impossible to work even with a proper SIM card inserted.  OMAPI will work fine (reader, channel, APDUs) as it is only about APDU exchanges between APK and SE, not directly related to NFC.\n\nIn such situation it is important to give a way to applications to detect such limitations at application runtime.  \ndoes it make more sense ?",
+      "parentUuid": "5ab3efb2_e7f55f4b",
+      "range": {
+        "startLine": 492,
+        "startChar": 3,
+        "endLine": 492,
+        "endChar": 45
+      },
+      "revId": "44b4e29710f396f9c8343fa44658504e410f598b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
