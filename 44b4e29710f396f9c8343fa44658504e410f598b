@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ab3efb2_e7f55f4b",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2018-03-27T00:17:10Z",
+      "side": 1,
+      "message": "If these are private static functions, where would they be called from?\n\nWould it make sense to use OMAPI to get the readers and check if eSE and/or SIM ones are available. That should be a better indicator than these features?",
+      "range": {
+        "startLine": 492,
+        "startChar": 3,
+        "endLine": 492,
+        "endChar": 45
+      },
+      "revId": "44b4e29710f396f9c8343fa44658504e410f598b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
