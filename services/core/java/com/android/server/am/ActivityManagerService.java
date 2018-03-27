@@ -145,7 +145,6 @@ import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_CLEANUP;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_CONFIGURATION;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_FOCUS;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_IMMERSIVE;
-import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_LOCKSCREEN;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_LOCKTASK;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_LRU;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_MU;
@@ -163,7 +162,6 @@ import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_SWITCH;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_UID_OBSERVERS;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_URI_PERMISSION;
 import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_VISIBILITY;
-import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_VISIBLE_BEHIND;
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_AM;
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_WITH_CLASS_NAME;
 import static com.android.server.am.ActivityStackSupervisor.CREATE_IF_NEEDED;
@@ -1744,7 +1742,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     final ActivityManagerConstants mConstants;
 
     // Encapsulates the global setting "hidden_api_blacklist_exemptions"
-    final HiddenApiBlacklist mHiddenApiBlacklist;
+    final HiddenApiSettings mHiddenApiBlacklist;
 
     PackageManagerInternal mPackageManagerInt;
 
@@ -2696,17 +2694,18 @@ public class ActivityManagerService extends IActivityManager.Stub
     }
 
     /**
-     * Encapsulates the global setting "hidden_api_blacklist_exemptions", including tracking the
-     * latest value via a content observer.
+     * Encapsulates global settings related to hidden API enforcement behaviour, including tracking
+     * the latest value via a content observer.
      */
-    static class HiddenApiBlacklist extends ContentObserver {
+    static class HiddenApiSettings extends ContentObserver {
 
         private final Context mContext;
         private boolean mBlacklistDisabled;
         private String mExemptionsStr;
         private List<String> mExemptions = Collections.emptyList();
+        private int mLogSampleRate = -1;
 
-        public HiddenApiBlacklist(Handler handler, Context context) {
+        public HiddenApiSettings(Handler handler, Context context) {
             super(handler);
             mContext = context;
         }
@@ -2714,6 +2713,10 @@ public class ActivityManagerService extends IActivityManager.Stub
         public void registerObserver() {
             mContext.getContentResolver().registerContentObserver(
                     Settings.Global.getUriFor(Settings.Global.HIDDEN_API_BLACKLIST_EXEMPTIONS),
+                    false,
+                    this);
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.Global.getUriFor(Settings.Global.HIDDEN_API_ACCESS_LOG_SAMPLING_RATE),
                     false,
                     this);
             update();
@@ -2735,7 +2738,15 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
                 zygoteProcess.setApiBlacklistExemptions(mExemptions);
             }
-
+            int logSampleRate = Settings.Global.getInt(mContext.getContentResolver(),
+                    Settings.Global.HIDDEN_API_ACCESS_LOG_SAMPLING_RATE, -1);
+            if (logSampleRate < 0 || logSampleRate > 100) {
+                logSampleRate = -1;
+            }
+            if (logSampleRate != -1 && logSampleRate != mLogSampleRate) {
+                mLogSampleRate = logSampleRate;
+                zygoteProcess.setHiddenApiAccessLogSampleRate(mLogSampleRate);
+            }
         }
 
         boolean isDisabled() {
@@ -2909,7 +2920,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
         };
 
-        mHiddenApiBlacklist = new HiddenApiBlacklist(mHandler, mContext);
+        mHiddenApiBlacklist = new HiddenApiSettings(mHandler, mContext);
 
         Watchdog.getInstance().addMonitor(this);
         Watchdog.getInstance().addThread(mHandler);
