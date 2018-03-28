@@ -36,6 +36,8 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
 
     private int mSignalStrength; // in ASU; Valid values are (0-31, 99) as defined in TS 27.007 8.5
     private int mBitErrorRate; // bit error rate (0-7, 99) as defined in TS 27.007 8.5
+    private int mRscp; // bit error rate (0-96, 255) as defined in TS 27.007 8.69
+    private int mEcNo; // signal to noise radio (0-49, 255) as defined in TS 27.007 8.69
 
     /** @hide */
     public CellSignalStrengthWcdma() {
@@ -43,9 +45,11 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     }
 
     /** @hide */
-    public CellSignalStrengthWcdma(int ss, int ber) {
+    public CellSignalStrengthWcdma(int ss, int ber, int rscp, int ecno) {
         mSignalStrength = ss;
         mBitErrorRate = ber;
+        mRscp = rscp;
+        mEcNo = ecno;
     }
 
     /** @hide */
@@ -57,6 +61,8 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     protected void copyFrom(CellSignalStrengthWcdma s) {
         mSignalStrength = s.mSignalStrength;
         mBitErrorRate = s.mBitErrorRate;
+        mRscp = s.mRscp;
+        mEcNo = s.mEcNo;
     }
 
     /** @hide */
@@ -70,6 +76,8 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     public void setDefaultValues() {
         mSignalStrength = Integer.MAX_VALUE;
         mBitErrorRate = Integer.MAX_VALUE;
+        mRscp = Integer.MAX_VALUE;
+        mEcNo = Integer.MAX_VALUE;
     }
 
     /**
@@ -145,7 +153,10 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
             return false;
         }
 
-        return mSignalStrength == s.mSignalStrength && mBitErrorRate == s.mBitErrorRate;
+        return mSignalStrength == s.mSignalStrength
+                && mBitErrorRate == s.mBitErrorRate
+                && mRscp == s.mRscp
+                && mEcNo == s.mEcNo;
     }
 
     /**
@@ -155,7 +166,9 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     public String toString() {
         return "CellSignalStrengthWcdma:"
                 + " ss=" + mSignalStrength
-                + " ber=" + mBitErrorRate;
+                + " ber=" + mBitErrorRate
+                + " rscp=" + mRscp
+                + " ecno=" + mEcNo;
     }
 
     /** Implement the Parcelable interface */
@@ -164,6 +177,8 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
         if (DBG) log("writeToParcel(Parcel, int): " + toString());
         dest.writeInt(mSignalStrength);
         dest.writeInt(mBitErrorRate);
+        dest.writeInt(mRscp);
+        dest.writeInt(mEcNo);
     }
 
     /**
@@ -173,6 +188,8 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     private CellSignalStrengthWcdma(Parcel in) {
         mSignalStrength = in.readInt();
         mBitErrorRate = in.readInt();
+        mRscp = in.readInt();
+        mEcNo = in.readInt();
         if (DBG) log("CellSignalStrengthWcdma(Parcel): " + toString());
     }
 
