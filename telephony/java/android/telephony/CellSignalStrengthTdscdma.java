@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,40 +23,42 @@ import android.telephony.Rlog;
 import java.util.Objects;
 
 /**
- * Wcdma signal strength related information.
+ * Tdscdma signal strength related information.
+ *
+ * @hide
  */
-public final class CellSignalStrengthWcdma extends CellSignalStrength implements Parcelable {
+public final class CellSignalStrengthTdscdma extends CellSignalStrength implements Parcelable {
 
-    private static final String LOG_TAG = "CellSignalStrengthWcdma";
+    private static final String LOG_TAG = "CellSignalStrengthTdscdma";
     private static final boolean DBG = false;
 
-    private static final int WCDMA_SIGNAL_STRENGTH_GREAT = 12;
-    private static final int WCDMA_SIGNAL_STRENGTH_GOOD = 8;
-    private static final int WCDMA_SIGNAL_STRENGTH_MODERATE = 5;
+    private static final int TDSCDMA_SIGNAL_STRENGTH_GREAT = 12;
+    private static final int TDSCDMA_SIGNAL_STRENGTH_GOOD = 8;
+    private static final int TDSCDMA_SIGNAL_STRENGTH_MODERATE = 5;
 
     private int mSignalStrength; // in ASU; Valid values are (0-31, 99) as defined in TS 27.007 8.5
     private int mBitErrorRate; // bit error rate (0-7, 99) as defined in TS 27.007 8.5
     private int mRscp; // bit error rate (0-96, 255) as defined in TS 27.007 8.69
 
     /** @hide */
-    public CellSignalStrengthWcdma() {
+    public CellSignalStrengthTdscdma() {
         setDefaultValues();
     }
 
     /** @hide */
-    public CellSignalStrengthWcdma(int ss, int ber, int rscp) {
+    public CellSignalStrengthTdscdma(int ss, int ber, int rscp) {
         mSignalStrength = ss;
         mBitErrorRate = ber;
         mRscp = rscp;
     }
 
     /** @hide */
-    public CellSignalStrengthWcdma(CellSignalStrengthWcdma s) {
+    public CellSignalStrengthTdscdma(CellSignalStrengthTdscdma s) {
         copyFrom(s);
     }
 
     /** @hide */
-    protected void copyFrom(CellSignalStrengthWcdma s) {
+    protected void copyFrom(CellSignalStrengthTdscdma s) {
         mSignalStrength = s.mSignalStrength;
         mBitErrorRate = s.mBitErrorRate;
         mRscp = s.mRscp;
@@ -64,8 +66,8 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
 
     /** @hide */
     @Override
-    public CellSignalStrengthWcdma copy() {
-        return new CellSignalStrengthWcdma(this);
+    public CellSignalStrengthTdscdma copy() {
+        return new CellSignalStrengthTdscdma(this);
     }
 
     /** @hide */
@@ -89,9 +91,9 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
         // asu = 99 is a special case, where the signal strength is unknown.
         int asu = mSignalStrength;
         if (asu <= 2 || asu == 99) level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
-        else if (asu >= WCDMA_SIGNAL_STRENGTH_GREAT) level = SIGNAL_STRENGTH_GREAT;
-        else if (asu >= WCDMA_SIGNAL_STRENGTH_GOOD)  level = SIGNAL_STRENGTH_GOOD;
-        else if (asu >= WCDMA_SIGNAL_STRENGTH_MODERATE)  level = SIGNAL_STRENGTH_MODERATE;
+        else if (asu >= TDSCDMA_SIGNAL_STRENGTH_GREAT) level = SIGNAL_STRENGTH_GREAT;
+        else if (asu >= TDSCDMA_SIGNAL_STRENGTH_GOOD)  level = SIGNAL_STRENGTH_GOOD;
+        else if (asu >= TDSCDMA_SIGNAL_STRENGTH_MODERATE)  level = SIGNAL_STRENGTH_MODERATE;
         else level = SIGNAL_STRENGTH_POOR;
         if (DBG) log("getLevel=" + level);
         return level;
@@ -136,11 +138,11 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
     }
 
     @Override
-    public boolean equals (Object o) {
-        CellSignalStrengthWcdma s;
+    public boolean equals(Object o) {
+        CellSignalStrengthTdscdma s;
 
         try {
-            s = (CellSignalStrengthWcdma) o;
+            s = (CellSignalStrengthTdscdma) o;
         } catch (ClassCastException ex) {
             return false;
         }
@@ -159,7 +161,7 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
      */
     @Override
     public String toString() {
-        return "CellSignalStrengthWcdma:"
+        return "CellSignalStrengthTdscdma:"
                 + " ss=" + mSignalStrength
                 + " ber=" + mBitErrorRate
                 + " rscp=" + mRscp;
@@ -178,11 +180,11 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
      * Construct a SignalStrength object from the given parcel
      * where the token is already been processed.
      */
-    private CellSignalStrengthWcdma(Parcel in) {
+    private CellSignalStrengthTdscdma(Parcel in) {
         mSignalStrength = in.readInt();
         mBitErrorRate = in.readInt();
         mRscp = in.readInt();
-        if (DBG) log("CellSignalStrengthWcdma(Parcel): " + toString());
+        if (DBG) log("CellSignalStrengthTdscdma(Parcel): " + toString());
     }
 
     /** Implement the Parcelable interface */
@@ -193,16 +195,16 @@ public final class CellSignalStrengthWcdma extends CellSignalStrength implements
 
     /** Implement the Parcelable interface */
     @SuppressWarnings("hiding")
-    public static final Parcelable.Creator<CellSignalStrengthWcdma> CREATOR =
-            new Parcelable.Creator<CellSignalStrengthWcdma>() {
+    public static final Parcelable.Creator<CellSignalStrengthTdscdma> CREATOR =
+            new Parcelable.Creator<CellSignalStrengthTdscdma>() {
         @Override
-        public CellSignalStrengthWcdma createFromParcel(Parcel in) {
-            return new CellSignalStrengthWcdma(in);
+        public CellSignalStrengthTdscdma createFromParcel(Parcel in) {
+            return new CellSignalStrengthTdscdma(in);
         }
 
         @Override
-        public CellSignalStrengthWcdma[] newArray(int size) {
-            return new CellSignalStrengthWcdma[size];
+        public CellSignalStrengthTdscdma[] newArray(int size) {
+            return new CellSignalStrengthTdscdma[size];
         }
     };
 
