@@ -20,6 +20,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.Rlog;
 
+import java.util.Objects;
+
 /**
  * Immutable cell information from a point in time.
  */
@@ -66,7 +68,7 @@ public final class CellInfoWcdma extends CellInfo implements Parcelable {
      */
     @Override
     public int hashCode() {
-        return super.hashCode() + mCellIdentityWcdma.hashCode() + mCellSignalStrengthWcdma.hashCode();
+        return Objects.hash(super.hashCode(), mCellIdentityWcdma, mCellSignalStrengthWcdma);
     }
 
     @Override
