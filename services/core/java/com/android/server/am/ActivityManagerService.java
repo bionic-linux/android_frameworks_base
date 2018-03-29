@@ -65,7 +65,6 @@ import static android.os.Process.SCHED_OTHER;
 import static android.os.Process.SCHED_RESET_ON_FORK;
 import static android.os.Process.SE_UID;
 import static android.os.Process.SHELL_UID;
-import static android.os.Process.SIGNAL_QUIT;
 import static android.os.Process.SIGNAL_USR1;
 import static android.os.Process.SYSTEM_UID;
 import static android.os.Process.THREAD_GROUP_BG_NONINTERACTIVE;
@@ -293,7 +292,6 @@ import android.os.Debug;
 import android.os.DropBoxManager;
 import android.os.Environment;
 import android.os.FactoryTest;
-import android.os.FileObserver;
 import android.os.FileUtils;
 import android.os.Handler;
 import android.os.IBinder;
@@ -2704,6 +2702,8 @@ public class ActivityManagerService extends IActivityManager.Stub
         private String mExemptionsStr;
         private List<String> mExemptions = Collections.emptyList();
         private int mLogSampleRate = -1;
+        @HiddenApiEnforcementPolicy private int mPolicyPreP = -1;
+        @HiddenApiEnforcementPolicy private int mPolicyP = -1;
 
         public HiddenApiSettings(Handler handler, Context context) {
             super(handler);
@@ -2717,6 +2717,14 @@ public class ActivityManagerService extends IActivityManager.Stub
                     this);
             mContext.getContentResolver().registerContentObserver(
                     Settings.Global.getUriFor(Settings.Global.HIDDEN_API_ACCESS_LOG_SAMPLING_RATE),
+                    false,
+                    this);
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.Global.getUriFor(Settings.Global.HIDDEN_API_POLICY_PRE_P_APPS),
+                    false,
+                    this);
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.Global.getUriFor(Settings.Global.HIDDEN_API_POLICY_P_APPS),
                     false,
                     this);
             update();
@@ -2747,10 +2755,29 @@ public class ActivityManagerService extends IActivityManager.Stub
                 mLogSampleRate = logSampleRate;
                 zygoteProcess.setHiddenApiAccessLogSampleRate(mLogSampleRate);
             }
+            mPolicyPreP = getValidEnforcementPolicy(Settings.Global.HIDDEN_API_POLICY_PRE_P_APPS);
+            mPolicyP = getValidEnforcementPolicy(Settings.Global.HIDDEN_API_POLICY_P_APPS);
+        }
+
+        private @HiddenApiEnforcementPolicy int getValidEnforcementPolicy(String settingsKey) {
+            int policy = Settings.Global.getInt(mContext.getContentResolver(), settingsKey, -1);
+            if (ApplicationInfo.isValidHiddenApiEnforcementPolicy(policy)) {
+                return policy;
+            } else {
+                return -1;
+            }
         }
 
         boolean isDisabled() {
             return mBlacklistDisabled;
+        }
+
+        @HiddenApiEnforcementPolicy int getPolicyForPrePApps() {
+            return mPolicyPreP;
+        }
+
+        @HiddenApiEnforcementPolicy int getPolicyForPApps() {
+            return mPolicyP;
         }
 
         public void onChange(boolean selfChange) {
@@ -3973,6 +4000,9 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
 
             if (!disableHiddenApiChecks && !mHiddenApiBlacklist.isDisabled()) {
+                app.info.maybeUpdateHiddenApiEnforcementPolicy(
+                        mHiddenApiBlacklist.getPolicyForPrePApps(),
+                        mHiddenApiBlacklist.getPolicyForPApps());
                 @HiddenApiEnforcementPolicy int policy =
                         app.info.getHiddenApiEnforcementPolicy();
                 int policyBits = (policy << Zygote.API_ENFORCEMENT_POLICY_SHIFT);

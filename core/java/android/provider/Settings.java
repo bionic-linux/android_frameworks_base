@@ -10416,6 +10416,29 @@ public final class Settings {
                 "hidden_api_access_log_sampling_rate";
 
         /**
+         * Hidden API enforcement policy for apps targeting SDK versions prior to the latest
+         * version.
+         *
+         * Values correspond to @{@link
+         * android.content.pm.ApplicationInfo.HiddenApiEnforcementPolicy}
+         *
+         * @hide
+         */
+        public static final String HIDDEN_API_POLICY_PRE_P_APPS =
+                "hidden_api_policy_pre_p_apps";
+
+        /**
+         * Hidden API enforcement policy for apps targeting the current SDK version.
+         *
+         * Values correspond to @{@link
+         * android.content.pm.ApplicationInfo.HiddenApiEnforcementPolicy}
+         *
+         * @hide
+         */
+        public static final String HIDDEN_API_POLICY_P_APPS =
+                "hidden_api_policy_p_apps";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
