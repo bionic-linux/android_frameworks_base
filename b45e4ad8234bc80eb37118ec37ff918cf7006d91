@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaa9835b_6275900d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4612,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-29T02:07:30Z",
+      "side": 1,
+      "message": "We should only do this for networks that purport to have internet access, i.e. the one\u0027s for which NetworkMonitor does validation.",
+      "range": {
+        "startLine": 4612,
+        "startChar": 84,
+        "endLine": 4612,
+        "endChar": 85
+      },
+      "revId": "b45e4ad8234bc80eb37118ec37ff918cf7006d91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
