@@ -22,6 +22,30 @@
       "revId": "77a39b36a18b245e39e809673cb5e3b0381f8f0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d296c4_be1ace04",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-03-30T20:30:55Z",
+      "side": 1,
+      "message": "I\u0027d rather be that the mistake is that the user can use tethering (or more broadly, the full capabilities of their device).  If device makers/carriers want to be hardcore about restricting such usage then the onus would be on them to be careful not to futz with the overriding implementation in CS when it starts Tethering.\n\nIMHO.",
+      "parentUuid": "00286bd5_f1491831",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "77a39b36a18b245e39e809673cb5e3b0381f8f0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
