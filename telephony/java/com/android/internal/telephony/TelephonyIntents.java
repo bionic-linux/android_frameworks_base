@@ -486,4 +486,18 @@ public class TelephonyIntents {
     */
     public static final String ACTION_REQUEST_OMADM_CONFIGURATION_UPDATE =
             "com.android.omadm.service.CONFIGURATION_UPDATE";
+
+    /**
+     * <p>Broadcast Action: when data stall recovery is attempted by Telephony,
+     * intended for report every data stall recovery step attempted
+     * The intent will have the following extra values:</p>
+     * <ul>
+     *   <li>recoveryAction</li><dd>Action associated with the data stall recovery.</dd>
+     * </ul>
+     * <p class="note">This is a protected intent that can only be sent by the system.</p>
+     */
+    public static final String ACTION_DATA_STALL_RECOVERY =
+            "com.android.internal.telephony.DATA_STALL_RECOVERY";
+
+    public static final String EXTRA_RECOVERY_ACTION = "recoveryAction";
 }
