@@ -1023,11 +1023,8 @@ public final class Credential implements Parcelable {
      * @hide
      */
     public boolean validate() {
-        if (TextUtils.isEmpty(mRealm)) {
-            Log.d(TAG, "Missing realm");
-            return false;
-        }
-        if (mRealm.getBytes(StandardCharsets.UTF_8).length > MAX_REALM_BYTES) {
+        if (!TextUtils.isEmpty(mRealm) &&
+            mRealm.getBytes(StandardCharsets.UTF_8).length > MAX_REALM_BYTES) {
             Log.d(TAG, "realm exceeding maximum length: "
                     + mRealm.getBytes(StandardCharsets.UTF_8).length);
             return false;
