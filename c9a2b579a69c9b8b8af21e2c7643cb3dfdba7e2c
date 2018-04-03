@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b51c816_c7fb623c",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-04-03T12:06:48Z",
+      "side": 1,
+      "message": "No very strong reason; it does allow us to avoid a division when sampling though. Happy to change it if you prefer.",
+      "parentUuid": "27d433b9_dc094eae",
+      "range": {
+        "startLine": 490,
+        "startChar": 44,
+        "endLine": 490,
+        "endChar": 51
+      },
+      "revId": "c9a2b579a69c9b8b8af21e2c7643cb3dfdba7e2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33309d25_8966cb85",
         "filename": "core/java/android/os/ZygoteProcess.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c9a2b579a69c9b8b8af21e2c7643cb3dfdba7e2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f76739b_4162f7f0",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-04-03T12:06:48Z",
+      "side": 1,
+      "message": "you mean rolling it into --set-api-blacklist-exemptions?\n\n--set-api-blacklist-exemptions is a little different, since it takes a list with one item per line, so doesn\u0027t mix well with other commands. (note there\u0027s a fixed limit on the number of lines we can pass to the zygote per command, so keeping it separate also means we\u0027re less likely to hit that).\n\nWe could add a new command --set-runtime-config-options (or something), with a list of key/value pairs. That would be more future proof. But we\u0027d still want to keep --set-api-blacklist-exemptions separate.",
+      "parentUuid": "33309d25_8966cb85",
+      "range": {
+        "startLine": 527,
+        "startChar": 3,
+        "endLine": 527,
+        "endChar": 74
+      },
+      "revId": "c9a2b579a69c9b8b8af21e2c7643cb3dfdba7e2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
