@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "127c3bbf_1fc4b014",
+        "filename": "telephony/java/com/android/internal/telephony/TelephonyIntents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-04-03T20:05:25Z",
+      "side": 1,
+      "message": "if this is to be used by system apps, doesn\u0027t it need to be a system API - this is internal and while it will work, it may be a violation of namespaces, etc.",
+      "range": {
+        "startLine": 500,
+        "startChar": 0,
+        "endLine": 500,
+        "endChar": 65
+      },
+      "revId": "695e82cf10391a55c4fef0a2a3cb87eb8dad9f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
