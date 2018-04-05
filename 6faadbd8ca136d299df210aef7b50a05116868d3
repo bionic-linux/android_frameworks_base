@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f78ad5f9_3f363d1c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-05T22:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9971eaf5_c6fccf72",
+      "range": {
+        "startLine": 1528,
+        "startChar": 33,
+        "endLine": 1528,
+        "endChar": 45
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79fcb6f1_b9200e0c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "339ad59d_42685542",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2335,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-05T22:29:13Z",
+      "side": 1,
+      "message": "Changing this back now that bypass is implemented.",
+      "parentUuid": "902d21e0_095f6d52",
+      "range": {
+        "startLine": 2332,
+        "startChar": 0,
+        "endLine": 2335,
+        "endChar": 9
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef0de2d_d4d2143c",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 2
@@ -131,6 +179,30 @@
       "writtenOn": "2018-03-21T19:17:48Z",
       "side": 1,
       "message": "Consider a slightly different construction, perhaps:\n\n    final PrivateDnsValidationStatus statuses \u003d mFoo.get(update.netId);\n    if (statuses \u003d\u003d null) return;\n    statuses.updateStatus(update);",
+      "range": {
+        "startLine": 307,
+        "startChar": 78,
+        "endLine": 307,
+        "endChar": 79
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fa0a111_f97b6ea1",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-05T22:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ef0de2d_d4d2143c",
       "range": {
         "startLine": 307,
         "startChar": 78,
@@ -163,6 +235,30 @@
       "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659ecb68_b7a268e5",
+        "filename": "tests/net/java/com/android/server/connectivity/DnsManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-05T22:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "559c533b_c52f1fef",
+      "range": {
+        "startLine": 98,
+        "startChar": 76,
+        "endLine": 98,
+        "endChar": 80
+      },
+      "revId": "6faadbd8ca136d299df210aef7b50a05116868d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
