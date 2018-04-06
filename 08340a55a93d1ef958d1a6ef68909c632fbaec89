@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa39fd3a_bed69db2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2325,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-04-06T00:35:44Z",
+      "side": 1,
+      "message": "Consider using the new getNetworkAgentInfoForNetId().",
+      "range": {
+        "startLine": 2325,
+        "startChar": 31,
+        "endLine": 2325,
+        "endChar": 60
+      },
+      "revId": "08340a55a93d1ef958d1a6ef68909c632fbaec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
