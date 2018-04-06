@@ -510,7 +510,7 @@ public final class DefaultPermissionGrantPolicy {
         PackageParser.Package cbrPackage =
                 getDefaultSystemHandlerActivityPackage(cbrIntent, userId);
         if (cbrPackage != null && doesPackageSupportRuntimePermissions(cbrPackage)) {
-            grantRuntimePermissions(cbrPackage, SMS_PERMISSIONS, userId);
+            grantRuntimePermissions(cbrPackage, SMS_PERMISSIONS, true, userId);
         }
 
         // Carrier Provisioning Service
