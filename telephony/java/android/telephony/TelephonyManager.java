@@ -50,7 +50,6 @@ import android.provider.Settings.SettingNotFoundException;
 import android.service.carrier.CarrierIdentifier;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
-import android.telecom.TelecomManager;
 import android.telephony.VisualVoicemailService.VisualVoicemailTask;
 import android.telephony.ims.aidl.IImsConfig;
 import android.telephony.ims.aidl.IImsMmTelFeature;
@@ -1092,6 +1091,40 @@ public class TelephonyManager {
      */
     public static final String EXTRA_SUBSCRIPTION_ID = "android.telephony.extra.SUBSCRIPTION_ID";
 
+
+    /**
+     * Broadcast intent action indicating that when data stall recovery is attempted by Telephony,
+     * intended for report every data stall recovery step attempted.
+     *
+     * <p>
+     * The {@link #EXTRA_RECOVERY_ACTION} extra indicates the action associated with the data
+     * stall recovery.
+     * The phone id where the data stall recovery is attempted.
+     *
+     * <p class="note">
+     * Requires the READ_PHONE_STATE permission.
+     *
+     * <p class="note">
+     * This is a protected intent that can only be sent by the system.
+     *
+     * @see #EXTRA_RECOVERY_ACTION
+     *
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public static final String ACTION_DATA_STALL_DETECTED =
+            "android.intent.action.DATA_STALL_DETECTED";
+
+    /**
+     * An int extra used with {@link #ACTION_DATA_STALL_DETECTED} to indicate the
+     * action associated with the data stall recovery.
+     *
+     * @see #ACTION_DATA_STALL_DETECTED
+     *
+     * @hide
+     */
+    public static final String EXTRA_RECOVERY_ACTION = "recoveryAction";
 
     //
     //
