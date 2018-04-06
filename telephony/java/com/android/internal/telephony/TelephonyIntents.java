@@ -190,6 +190,25 @@ public class TelephonyIntents {
             = "android.intent.action.DATA_CONNECTION_FAILED";
 
     /**
+     * <p>Broadcast Action: when data stall recovery is attempted by Telephony,
+     * intended for report every data stall recovery step attempted
+     * The intent will have the following extra values:</p>
+     * <ul>
+     *   <li>phoneId</li><dd>PhoneId where the data stall recovery is attempted</dd>
+     *   <li>recoveryAction</li><dd>Action associated with the data stall recovery</dd>
+     * </ul>
+     *
+     * <p class="note">Requires the READ_PHONE_STATE permission.</p>
+     *
+     * <p class="note">This is a protected intent that can only be sent by the system.</p>
+     */
+    public static final String ACTION_DATA_STALL_DETECTED =
+            "android.intent.action.DATA_STALL_DETECTED";
+
+    public static final String EXTRA_PHONE_ID = "phoneId";
+    public static final String EXTRA_RECOVERY_ACTION = "recoveryAction";
+
+    /**
      * Broadcast Action: The sim card state has changed.
      * The intent will have the following extra values:</p>
      * <dl>
