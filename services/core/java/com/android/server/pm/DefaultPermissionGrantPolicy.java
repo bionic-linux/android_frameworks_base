@@ -426,7 +426,7 @@ final class DefaultPermissionGrantPolicy {
             PackageParser.Package cbrPackage =
                     getDefaultSystemHandlerActivityPackageLPr(cbrIntent, userId);
             if (cbrPackage != null && doesPackageSupportRuntimePermissions(cbrPackage)) {
-                grantRuntimePermissionsLPw(cbrPackage, SMS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(cbrPackage, SMS_PERMISSIONS, true, userId);
             }
 
             // Carrier Provisioning Service
