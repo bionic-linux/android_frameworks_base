@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a5ef934_c0aede32",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2324,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-04-09T08:26:04Z",
+      "side": 1,
+      "message": "\"import static\" at the top if it means you can make your life simpler and fit this one line...",
+      "range": {
+        "startLine": 2324,
+        "startChar": 12,
+        "endLine": 2324,
+        "endChar": 49
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4af38a00_90b585a9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4573,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-04-09T08:26:04Z",
+      "side": 1,
+      "message": "Delete this?",
+      "range": {
+        "startLine": 4573,
+        "startChar": 87,
+        "endLine": 4573,
+        "endChar": 88
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "509dab83_872a1043",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-04-09T08:26:04Z",
+      "side": 1,
+      "message": "[nit]\n\nWe could define at the top\n\n    private static final PrivateDnsConfig PRIVATE_DNS_OFF \u003d new PrivateDnsConfig();\n\nand then here we could use getOrDefault(netId, PRIVATE_DNS_OFF).  We could then lose the null checks below.\n\nDitto inside setDnsConfigurationForNetwork().",
+      "range": {
+        "startLine": 314,
+        "startChar": 62,
+        "endLine": 314,
+        "endChar": 65
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9eaa5cb6_1d5e537f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3854,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-04-09T08:26:04Z",
+      "side": 1,
+      "message": "I\u0027m kinda surprised this doesn\u0027t cause the NetworkMonitor thread to block and the rest of the test framework to complain...",
+      "range": {
+        "startLine": 3854,
+        "startChar": 87,
+        "endLine": 3854,
+        "endChar": 88
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
