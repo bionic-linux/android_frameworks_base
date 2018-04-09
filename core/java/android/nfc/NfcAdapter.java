@@ -486,6 +486,27 @@ public final class NfcAdapter {
     }
 
     /**
+     * Return true if the NFC Controller support UICC-NFC (SIM-NFC).
+     * <p>If this method returns false, this device does not provide an SWP link
+     * between NFC Ctrl and UICC
+     *
+     * @return true if this NFC Controller support UICC-NFC
+     */
+    public boolean hasNfcUiccFeature() {
+        IPackageManager pm = ActivityThread.getPackageManager();
+        if (pm == null) {
+            Log.e(TAG, "Cannot get package manager, assuming no NFC feature");
+            return false;
+        }
+        try {
+            return pm.hasSystemFeature(PackageManager.FEATURE_NFC_UICC_CARD_EMULATION, 0);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Package manager query failed, assuming no NFC feature", e);
+            return false;
+        }
+    }
+
+    /**
      * Returns the NfcAdapter for application context,
      * or throws if NFC is not available.
      * @hide
