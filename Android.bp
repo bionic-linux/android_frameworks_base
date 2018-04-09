@@ -133,6 +133,8 @@ java_library {
         "core/java/android/content/pm/IPackageStatsObserver.aidl",
         "core/java/android/content/pm/IPinItemRequest.aidl",
         "core/java/android/content/pm/IShortcutService.aidl",
+        "core/java/android/content/pm/dex/IArtManager.aidl",
+        "core/java/android/content/pm/dex/ISnapshotRuntimeProfileCallback.aidl",
         "core/java/android/content/pm/permission/IRuntimePermissionPresenter.aidl",
         "core/java/android/database/IContentObserver.aidl",
         ":libcamera_client_aidl",
@@ -200,6 +202,11 @@ java_library {
         "core/java/android/nfc/INfcUnlockHandler.aidl",
         "core/java/android/nfc/INfcDta.aidl",
         "core/java/android/nfc/ITagRemovedCallback.aidl",
+        "core/java/android/se/omapi/ISecureElementService.aidl",
+        "core/java/android/se/omapi/ISecureElementListener.aidl",
+        "core/java/android/se/omapi/ISecureElementChannel.aidl",
+        "core/java/android/se/omapi/ISecureElementReader.aidl",
+        "core/java/android/se/omapi/ISecureElementSession.aidl",
         "core/java/android/os/IBatteryPropertiesListener.aidl",
         "core/java/android/os/IBatteryPropertiesRegistrar.aidl",
         "core/java/android/os/ICancellationSignal.aidl",
@@ -247,6 +254,8 @@ java_library {
         "core/java/android/service/euicc/IGetEidCallback.aidl",
         "core/java/android/service/euicc/IGetEuiccInfoCallback.aidl",
         "core/java/android/service/euicc/IGetEuiccProfileInfoListCallback.aidl",
+        "core/java/android/service/euicc/IGetOtaStatusCallback.aidl",
+        "core/java/android/service/euicc/IOtaStatusChangedCallback.aidl",
         "core/java/android/service/euicc/IRetainSubscriptionsForFactoryResetCallback.aidl",
         "core/java/android/service/euicc/ISwitchToSubscriptionCallback.aidl",
         "core/java/android/service/euicc/IUpdateSubscriptionNicknameCallback.aidl",
@@ -453,12 +462,29 @@ java_library {
         "telecomm/java/com/android/internal/telecom/IInCallService.aidl",
         "telecomm/java/com/android/internal/telecom/ITelecomService.aidl",
         "telecomm/java/com/android/internal/telecom/RemoteServiceCallback.aidl",
+        "telephony/java/android/telephony/data/IDataService.aidl",
+        "telephony/java/android/telephony/data/IDataServiceCallback.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsCallSessionListener.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsCapabilityCallback.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsConfig.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsConfigCallback.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsMmTelFeature.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsMmTelListener.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsRegistration.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsRegistrationCallback.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsRcsFeature.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsServiceController.aidl",
+        "telephony/java/android/telephony/ims/aidl/IImsServiceControllerListener.aidl",
+	    "telephony/java/android/telephony/ims/aidl/IImsSmsListener.aidl",
         "telephony/java/android/telephony/mbms/IMbmsDownloadSessionCallback.aidl",
         "telephony/java/android/telephony/mbms/IMbmsStreamingSessionCallback.aidl",
-        "telephony/java/android/telephony/mbms/IDownloadStateCallback.aidl",
+        "telephony/java/android/telephony/mbms/IDownloadStatusListener.aidl",
+        "telephony/java/android/telephony/mbms/IDownloadProgressListener.aidl",
         "telephony/java/android/telephony/mbms/IStreamingServiceCallback.aidl",
         "telephony/java/android/telephony/mbms/vendor/IMbmsDownloadService.aidl",
         "telephony/java/android/telephony/mbms/vendor/IMbmsStreamingService.aidl",
+        "telephony/java/android/telephony/INetworkService.aidl",
+        "telephony/java/android/telephony/INetworkServiceCallback.aidl",
         "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
         "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
         "telephony/java/com/android/ims/internal/IImsConfig.aidl",
@@ -473,13 +499,11 @@ java_library {
         "telephony/java/com/android/ims/internal/IImsService.aidl",
         "telephony/java/com/android/ims/internal/IImsServiceController.aidl",
         "telephony/java/com/android/ims/internal/IImsServiceFeatureCallback.aidl",
-        "telephony/java/com/android/ims/internal/IImsSmsFeature.aidl",
         "telephony/java/com/android/ims/internal/IImsStreamMediaSession.aidl",
         "telephony/java/com/android/ims/internal/IImsUt.aidl",
         "telephony/java/com/android/ims/internal/IImsUtListener.aidl",
         "telephony/java/com/android/ims/internal/IImsVideoCallCallback.aidl",
         "telephony/java/com/android/ims/internal/IImsVideoCallProvider.aidl",
-        "telephony/java/com/android/ims/internal/ISmsListener.aidl",
         "telephony/java/com/android/ims/internal/uce/uceservice/IUceService.aidl",
         "telephony/java/com/android/ims/internal/uce/uceservice/IUceListener.aidl",
         "telephony/java/com/android/ims/internal/uce/options/IOptionsService.aidl",
@@ -498,7 +522,30 @@ java_library {
         "telephony/java/com/android/internal/telephony/ITelephony.aidl",
         "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
         "telephony/java/com/android/internal/telephony/IWapPushManager.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IAuthenticateServerCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/ICancelSessionCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IDeleteProfileCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IDisableProfileCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IEuiccCardController.aidl",
         "telephony/java/com/android/internal/telephony/euicc/IEuiccController.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IGetAllProfilesCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IGetDefaultSmdpAddressCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IGetEuiccChallengeCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IGetEuiccInfo1Callback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IGetEuiccInfo2Callback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IGetProfileCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IGetRulesAuthTableCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IGetSmdsAddressCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IListNotificationsCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/ILoadBoundProfilePackageCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IPrepareDownloadCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IRemoveNotificationFromListCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IResetMemoryCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IRetrieveNotificationCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/IRetrieveNotificationListCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/ISetDefaultSmdpAddressCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/ISetNicknameCallback.aidl",
+        "telephony/java/com/android/internal/telephony/euicc/ISwitchToProfileCallback.aidl",
         "wifi/java/android/net/wifi/IWifiManager.aidl",
         "wifi/java/android/net/wifi/aware/IWifiAwareEventCallback.aidl",
         "wifi/java/android/net/wifi/aware/IWifiAwareManager.aidl",
@@ -530,18 +577,11 @@ java_library {
         "core/java/android/net/EventLogTags.logtags",
         "core/java/android/webkit/EventLogTags.logtags",
         "core/java/com/android/internal/logging/EventLogTags.logtags",
-    ],
-    logtags: [
-        "core/java/android/app/admin/SecurityLogTags.logtags",
-        "core/java/android/content/EventLogTags.logtags",
-        "core/java/android/speech/tts/EventLogTags.logtags",
-        "core/java/android/net/EventLogTags.logtags",
-        "core/java/android/webkit/EventLogTags.logtags",
-        "core/java/com/android/internal/logging/EventLogTags.logtags",
+        "core/java/com/android/server/DropboxLogTags.logtags",
     ],
 
     aidl: {
-        local_include_dirs: [
+        export_include_dirs: [
             // From build/make/core/pathmap.mk FRAMEWORK_BASE_SUBDIRS
             "core/java",
             "graphics/java",
@@ -591,6 +631,7 @@ java_library {
         "android.hardware.vibrator-V1.0-java-constants",
         "android.hardware.vibrator-V1.1-java-constants",
         "android.hardware.wifi-V1.0-java-constants",
+        "android.hardware.radio-V1.0-java",
     ],
 
     // Loaded with System.loadLibrary by android.view.textclassifier
@@ -743,4 +784,175 @@ python_binary_host {
     libs: [
         "fontTools",
     ],
+}
+
+// TODO: Don't rely on this list once droiddoc can take a list of packages to document
+frameworks_base_subdirs = [
+    "core/java",
+    "graphics/java",
+    "location/java",
+    "media/java",
+    "media/mca/effect/java",
+    "media/mca/filterfw/java",
+    "media/mca/filterpacks/java",
+    "drm/java",
+    "opengl/java",
+    "sax/java",
+    "telecomm/java",
+    "telephony/java",
+    "wifi/java",
+    "lowpan/java",
+    "keystore/java",
+    "rs/java",
+]
+
+packages_to_document = [
+    "android",
+    "javax/microedition/khronos",
+    "org/apache/http/conn",
+    "org/apache/http/params",
+]
+
+// The since flag (-since N.xml API_LEVEL) is used to add API Level information
+// to the reference documentation. Must be in order of oldest to newest.
+//
+// Conscrypt (com.android.org.conscrypt) is an implementation detail and should
+// not be referenced in the documentation.
+framework_docs_args = "-android -manifest $(location core/res/AndroidManifest.xml) " +
+     "-hidePackage com.android.okhttp -hidePackage com.android.org.conscrypt -hidePackage com.android.server " +
+     "-since $(location api/1.xml) 1 " +
+     "-since $(location api/2.xml) 2 " +
+     "-since $(location api/3.xml) 3 " +
+     "-since $(location api/4.xml) 4 " +
+     "-since $(location api/5.xml) 5 " +
+     "-since $(location api/6.xml) 6 " +
+     "-since $(location api/7.xml) 7 " +
+     "-since $(location api/8.xml) 8 " +
+     "-since $(location api/9.xml) 9 " +
+     "-since $(location api/10.xml) 10 " +
+     "-since $(location api/11.xml) 11 " +
+     "-since $(location api/12.xml) 12 " +
+     "-since $(location api/13.xml) 13 " +
+     "-since $(location api/14.txt) 14 " +
+     "-since $(location api/15.txt) 15 " +
+     "-since $(location api/16.txt) 16 " +
+     "-since $(location api/17.txt) 17 " +
+     "-since $(location api/18.txt) 18 " +
+     "-since $(location api/19.txt) 19 " +
+     "-since $(location api/20.txt) 20 " +
+     "-since $(location api/21.txt) 21 " +
+     "-since $(location api/22.txt) 22 " +
+     "-since $(location api/23.txt) 23 " +
+     "-since $(location api/24.txt) 24 " +
+     "-since $(location api/25.txt) 25 " +
+     "-since $(location api/26.txt) 26 " +
+     "-since $(location api/27.txt) 27 " +
+     "-werror -lerror -hide 111 -hide 113 -hide 125 -hide 126 -hide 127 -hide 128 " +
+     "-overview $(location core/java/overview.html) " +
+     // Federate Support Library references against local API file.
+     "-federate SupportLib https://developer.android.com " +
+     "-federationapi SupportLib $(location current/support-api.txt) "
+
+doc_defaults {
+    name: "framework-docs-default",
+    srcs: [
+        // test mock src files.
+        "test-mock/src/android/test/mock/**/*.java",
+        // test runner excluding mock src files.
+        "test-runner/src/**/*.java",
+        "test-base/src/**/*.java",
+        ":opt-telephony-srcs",
+        ":opt-net-voip-srcs",
+        ":openjdk_javadoc_files",
+        ":non_openjdk_javadoc_files",
+        ":android_icu4j_src_files_for_docs",
+        ":gen-ojluni-jaif-annotated-srcs",
+    ],
+    exclude_srcs: [
+        ":annotated_ojluni_files",
+    ],
+    srcs_lib: "framework",
+    srcs_lib_whitelist_dirs: frameworks_base_subdirs,
+    srcs_lib_whitelist_pkgs: packages_to_document,
+    libs: [
+        "core-oj",
+        "core-libart",
+        "conscrypt",
+        "bouncycastle",
+        "okhttp",
+        "ext",
+        "framework",
+        "voip-common",
+        "android.test.mock",
+    ],
+    local_sourcepaths: frameworks_base_subdirs,
+    html_dirs: [
+        "docs/html",
+    ],
+    knowntags: [
+        "docs/knowntags.txt",
+        ":known-oj-tags",
+    ],
+    custom_template: "droiddoc-templates-sdk",
+    hdf: [
+        "dac true",
+        "sdk.codename O",
+        "sdk.preview.version 1",
+        "sdk.version 7.0",
+        "sdk.rel.id 1",
+        "sdk.preview 0",
+    ],
+    resourcesdir: "docs/html/reference/images",
+    resourcesoutdir: "reference/android/images",
+    installable: false,
+}
+
+droiddoc {
+    name: "api-stubs-docs",
+    defaults: ["framework-docs-default"],
+    arg_files: [
+        "core/res/AndroidManifest.xml",
+        ":api-version-xml",
+        "core/java/overview.html",
+        ":current-support-api",
+    ],
+    api_filename: "public_api.txt",
+    private_api_filename: "private.txt",
+    private_dex_api_filename: "private-dex.txt",
+    removed_api_filename: "removed.txt",
+    args: framework_docs_args + " -referenceonly -nodocs",
+}
+
+droiddoc {
+    name: "system-api-stubs-docs",
+    defaults: ["framework-docs-default"],
+    arg_files: [
+        "core/res/AndroidManifest.xml",
+        ":api-version-xml",
+        "core/java/overview.html",
+        ":current-support-api",
+    ],
+    api_tag_name: "SYSTEM",
+    api_filename: "system-api.txt",
+    private_api_filename: "system-private.txt",
+    private_dex_api_filename: "system-private-dex.txt",
+    removed_api_filename: "system-removed.txt",
+    exact_api_filename: "system-exact.txt",
+    args: framework_docs_args + " -referenceonly -showAnnotation android.annotation.SystemApi -nodocs",
+}
+
+droiddoc {
+    name: "test-api-stubs-docs",
+    defaults: ["framework-docs-default"],
+    arg_files: [
+        "core/res/AndroidManifest.xml",
+        ":api-version-xml",
+        "core/java/overview.html",
+        ":current-support-api",
+    ],
+    api_tag_name: "TEST",
+    api_filename: "test-api.txt",
+    removed_api_filename: "test-removed.txt",
+    exact_api_filename: "test-exact.txt",
+    args: framework_docs_args + " -referenceonly -showAnnotation android.annotation.TestApi -nodocs",
 }

@@ -60,7 +60,7 @@ public final class SELinuxMMAC {
     // to synchronize access during policy load and access attempts.
     private static List<Policy> sPolicies = new ArrayList<>();
 
-    // Required MAC permissions files.
+    /** Required MAC permissions files */
     private static List<File> sMacPermissions = new ArrayList<>();
 
     // Append privapp to existing seinfo label
@@ -71,6 +71,33 @@ public final class SELinuxMMAC {
 
     // Append targetSdkVersion=n to existing seinfo label where n is the app's targetSdkVersion
     private static final String TARGETSDKVERSION_STR = ":targetSdkVersion=";
+
+    // Only initialize sMacPermissions once.
+    static {
+        // Platform mac permissions.
+        sMacPermissions.add(new File(
+            Environment.getRootDirectory(), "/etc/selinux/plat_mac_permissions.xml"));
+
+        // Vendor mac permissions.
+        // The filename has been renamed from nonplat_mac_permissions to
+        // vendor_mac_permissions. Either of them should exist.
+        final File vendorMacPermission = new File(
+            Environment.getVendorDirectory(), "/etc/selinux/vendor_mac_permissions.xml");
+        if (vendorMacPermission.exists()) {
+            sMacPermissions.add(vendorMacPermission);
+        } else {
+            // For backward compatibility.
+            sMacPermissions.add(new File(Environment.getVendorDirectory(),
+                                         "/etc/selinux/nonplat_mac_permissions.xml"));
+        }
+
+        // ODM mac permissions (optional).
+        final File odmMacPermission = new File(
+            Environment.getOdmDirectory(), "/etc/selinux/odm_mac_permissions.xml");
+        if (odmMacPermission.exists()) {
+            sMacPermissions.add(odmMacPermission);
+        }
+    }
 
     /**
      * Load the mac_permissions.xml file containing all seinfo assignments used to
@@ -92,38 +119,9 @@ public final class SELinuxMMAC {
         FileReader policyFile = null;
         XmlPullParser parser = Xml.newPullParser();
 
-        synchronized (sMacPermissions) {
-            // Only initialize it once.
-            if (sMacPermissions.isEmpty()) {
-                // Platform mac permissions.
-                sMacPermissions.add(new File(
-                    Environment.getRootDirectory(), "/etc/selinux/plat_mac_permissions.xml"));
-
-                // Vendor mac permissions.
-                // The filename has been renamed from nonplat_mac_permissions to
-                // vendor_mac_permissions. Either of them should exist.
-                File vendorMacPermission = new File(
-                    Environment.getVendorDirectory(), "/etc/selinux/vendor_mac_permissions.xml");
-                if (vendorMacPermission.exists()) {
-                    sMacPermissions.add(vendorMacPermission);
-                } else {
-                    // For backward compatibility.
-                    sMacPermissions.add(new File(Environment.getVendorDirectory(),
-                                                 "/etc/selinux/nonplat_mac_permissions.xml"));
-                }
-
-                // ODM mac permissions (optional).
-                File odmMacPermission = new File(
-                    Environment.getOdmDirectory(), "/etc/selinux/odm_mac_permissions.xml");
-                if (odmMacPermission.exists()) {
-                    sMacPermissions.add(odmMacPermission);
-                }
-            }
-        }
-
         final int count = sMacPermissions.size();
         for (int i = 0; i < count; ++i) {
-            File macPermission = sMacPermissions.get(i);
+            final File macPermission = sMacPermissions.get(i);
             try {
                 policyFile = new FileReader(macPermission);
                 Slog.d(TAG, "Using policy file " + macPermission);

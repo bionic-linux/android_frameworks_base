@@ -19,60 +19,63 @@ package android.bluetooth;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Arrays;
 
 /**
- * Represents the Service Discovery Protocol (SDP) settings for a Bluetooth
- * HID Device application.
+ * Represents the Service Discovery Protocol (SDP) settings for a Bluetooth HID Device application.
  *
- * The BluetoothHidDevice framework adds the SDP record during app
- * registration, so that the Android device can be discovered as a Bluetooth
- * HID Device.
+ * <p>The BluetoothHidDevice framework adds the SDP record during app registration, so that the
+ * Android device can be discovered as a Bluetooth HID Device.
  *
- * {@see BluetoothHidDevice}
- *
- * {@hide}
+ * <p>{@see BluetoothHidDevice}
  */
 public final class BluetoothHidDeviceAppSdpSettings implements Parcelable {
 
-    public final String name;
-    public final String description;
-    public final String provider;
-    public final byte subclass;
-    public final byte[] descriptors;
+    private final String mName;
+    private final String mDescription;
+    private final String mProvider;
+    private final byte mSubclass;
+    private final byte[] mDescriptors;
 
     /**
      * Create a BluetoothHidDeviceAppSdpSettings object for the Bluetooth SDP record.
+     *
      * @param name Name of this Bluetooth HID device. Maximum length is 50 bytes.
      * @param description Description for this Bluetooth HID device. Maximum length is 50 bytes.
      * @param provider Provider of this Bluetooth HID device. Maximum length is 50 bytes.
-     * @param subclass Subclass of this Bluetooth HID device.
-     * See <a href="www.usb.org/developers/hidpage/HID1_11.pdf">
+     * @param subclass Subclass of this Bluetooth HID device. See <a
+     *     href="www.usb.org/developers/hidpage/HID1_11.pdf">
      *     www.usb.org/developers/hidpage/HID1_11.pdf Section 4.2</a>
-     * @param descriptors Descriptors of this Bluetooth HID device.
-     * See <a href="www.usb.org/developers/hidpage/HID1_11.pdf">
+     * @param descriptors Descriptors of this Bluetooth HID device. See <a
+     *     href="www.usb.org/developers/hidpage/HID1_11.pdf">
      *     www.usb.org/developers/hidpage/HID1_11.pdf Chapter 6</a> Maximum length is 2048 bytes.
      */
-    public BluetoothHidDeviceAppSdpSettings(String name, String description, String provider,
-            byte subclass, byte[] descriptors) {
-        this.name = name;
-        this.description = description;
-        this.provider = provider;
-        this.subclass = subclass;
-        this.descriptors = descriptors.clone();
+    public BluetoothHidDeviceAppSdpSettings(
+            String name, String description, String provider, byte subclass, byte[] descriptors) {
+        mName = name;
+        mDescription = description;
+        mProvider = provider;
+        mSubclass = subclass;
+        mDescriptors = descriptors.clone();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof BluetoothHidDeviceAppSdpSettings) {
-            BluetoothHidDeviceAppSdpSettings sdp = (BluetoothHidDeviceAppSdpSettings) o;
-            return this.name.equals(sdp.name)
-                    && this.description.equals(sdp.description)
-                    && this.provider.equals(sdp.provider)
-                    && this.subclass == sdp.subclass
-                    && Arrays.equals(this.descriptors, sdp.descriptors);
-        }
-        return false;
+    public String getName() {
+        return mName;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public String getProvider() {
+        return mProvider;
+    }
+
+    public byte getSubclass() {
+        return mSubclass;
+    }
+
+    public byte[] getDescriptors() {
+        return mDescriptors;
     }
 
     @Override
@@ -102,10 +105,10 @@ public final class BluetoothHidDeviceAppSdpSettings implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeString(name);
-        out.writeString(description);
-        out.writeString(provider);
-        out.writeByte(subclass);
-        out.writeByteArray(descriptors);
+        out.writeString(mName);
+        out.writeString(mDescription);
+        out.writeString(mProvider);
+        out.writeByte(mSubclass);
+        out.writeByteArray(mDescriptors);
     }
 }

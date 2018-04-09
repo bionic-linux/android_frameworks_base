@@ -280,6 +280,43 @@ public class DisconnectCause {
      * {@hide}
      */
     public static final int NORMAL_UNSPECIFIED = 65;
+
+    /**
+     * Stk Call Control modified DIAL request to video DIAL request.
+     * {@hide}
+     */
+    public static final int DIAL_MODIFIED_TO_DIAL_VIDEO = 66;
+
+    /**
+     * Stk Call Control modified Video DIAL request to SS request.
+     * {@hide}
+     */
+    public static final int DIAL_VIDEO_MODIFIED_TO_SS = 67;
+
+    /**
+     * Stk Call Control modified Video DIAL request to USSD request.
+     * {@hide}
+     */
+    public static final int DIAL_VIDEO_MODIFIED_TO_USSD = 68;
+
+    /**
+     * Stk Call Control modified Video DIAL request to DIAL request.
+     * {@hide}
+     */
+    public static final int DIAL_VIDEO_MODIFIED_TO_DIAL = 69;
+
+    /**
+     * Stk Call Control modified Video DIAL request to Video DIAL request.
+     * {@hide}
+     */
+    public static final int DIAL_VIDEO_MODIFIED_TO_DIAL_VIDEO = 70;
+
+    /**
+     * The network has reported that an alternative emergency number has been dialed, but the user
+     * must exit airplane mode to place the call.
+     */
+    public static final int IMS_SIP_ALTERNATE_EMERGENCY_CALL = 71;
+
     //*********************************************************************************************
     // When adding a disconnect type:
     // 1) Update toString() with the newly added disconnect type.
@@ -382,6 +419,16 @@ public class DisconnectCause {
             return "DIAL_MODIFIED_TO_SS";
         case DIAL_MODIFIED_TO_DIAL:
             return "DIAL_MODIFIED_TO_DIAL";
+        case DIAL_MODIFIED_TO_DIAL_VIDEO:
+            return "DIAL_MODIFIED_TO_DIAL_VIDEO";
+        case DIAL_VIDEO_MODIFIED_TO_SS:
+            return "DIAL_VIDEO_MODIFIED_TO_SS";
+        case DIAL_VIDEO_MODIFIED_TO_USSD:
+            return "DIAL_VIDEO_MODIFIED_TO_USSD";
+        case DIAL_VIDEO_MODIFIED_TO_DIAL:
+            return "DIAL_VIDEO_MODIFIED_TO_DIAL";
+        case DIAL_VIDEO_MODIFIED_TO_DIAL_VIDEO:
+            return "DIAL_VIDEO_MODIFIED_TO_DIAL_VIDEO";
         case ERROR_UNSPECIFIED:
             return "ERROR_UNSPECIFIED";
         case OUTGOING_FAILURE:
@@ -422,6 +469,8 @@ public class DisconnectCause {
             return "EMERGENCY_PERM_FAILURE";
         case NORMAL_UNSPECIFIED:
             return "NORMAL_UNSPECIFIED";
+        case IMS_SIP_ALTERNATE_EMERGENCY_CALL:
+            return "IMS_SIP_ALTERNATE_EMERGENCY_CALL";
         default:
             return "INVALID: " + cause;
         }

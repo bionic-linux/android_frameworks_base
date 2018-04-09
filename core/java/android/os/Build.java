@@ -188,7 +188,11 @@ public class Build {
         public static final String INCREMENTAL = getString("ro.build.version.incremental");
 
         /**
-         * The user-visible version string.  E.g., "1.0" or "3.4b5".
+         * The user-visible version string.  E.g., "1.0" or "3.4b5" or "bananas".
+         *
+         * This field is an opaque string. Do not assume that its value
+         * has any particular structure or that values of RELEASE from
+         * different releases can be somehow ordered.
          */
         public static final String RELEASE = getString("ro.build.version.release");
 
@@ -847,7 +851,9 @@ public class Build {
         if (IS_ENG) return true;
 
         if (IS_TREBLE_ENABLED) {
-            int result = VintfObject.verify(new String[0]);
+            // If we can run this code, the device should already pass AVB.
+            // So, we don't need to check AVB here.
+            int result = VintfObject.verifyWithoutAvb();
 
             if (result != 0) {
                 Slog.e(TAG, "Vendor interface is incompatible, error="

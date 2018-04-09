@@ -21,10 +21,12 @@ import android.bluetooth.BluetoothA2dpSink;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothHeadsetClient;
+import android.bluetooth.BluetoothHearingAid;
 import android.bluetooth.BluetoothHidHost;
 import android.bluetooth.BluetoothMap;
 import android.bluetooth.BluetoothMapClient;
 import android.bluetooth.BluetoothPan;
+import android.bluetooth.BluetoothPbap;
 import android.bluetooth.BluetoothPbapClient;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothUuid;
@@ -90,6 +92,7 @@ public class LocalBluetoothProfileManager {
     private final PbapServerProfile mPbapProfile;
     private final boolean mUsePbapPce;
     private final boolean mUseMapClient;
+    private HearingAidProfile mHearingAidProfile;
 
     /**
      * Mapping from profile name, e.g. "HEADSET" to profile object.
@@ -140,10 +143,16 @@ public class LocalBluetoothProfileManager {
                     BluetoothMap.ACTION_CONNECTION_STATE_CHANGED);
         }
 
-       //Create PBAP server profile, but do not add it to list of profiles
-       // as we do not need to monitor the profile as part of profile list
-        mPbapProfile = new PbapServerProfile(context);
+        //Create PBAP server profile
+        if(DEBUG) Log.d(TAG, "Adding local PBAP profile");
 
+        mPbapProfile = new PbapServerProfile(context);
+        addProfile(mPbapProfile, PbapServerProfile.NAME,
+             BluetoothPbap.ACTION_CONNECTION_STATE_CHANGED);
+
+        mHearingAidProfile = new HearingAidProfile(mContext, mLocalAdapter, mDeviceManager, this);
+        addProfile(mHearingAidProfile, HearingAidProfile.NAME,
+                   BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED);
         if (DEBUG) Log.d(TAG, "LocalBluetoothProfileManager construction complete");
     }
 
@@ -249,6 +258,18 @@ public class LocalBluetoothProfileManager {
         } else if (mPbapClientProfile != null) {
             Log.w(TAG,
                 "Warning: PBAP Client profile was previously added but the UUID is now missing.");
+        }
+
+        //Hearing Aid Client
+        if (BluetoothUuid.isUuidPresent(uuids, BluetoothUuid.HearingAid)) {
+            if (mHearingAidProfile == null) {
+                if(DEBUG) Log.d(TAG, "Adding local Hearing Aid profile");
+                mHearingAidProfile = new HearingAidProfile(mContext, mLocalAdapter, mDeviceManager, this);
+                addProfile(mHearingAidProfile, HearingAidProfile.NAME,
+                        BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED);
+            }
+        } else if (mHearingAidProfile != null) {
+            Log.w(TAG, "Warning: Hearing Aid profile was previously added but the UUID is now missing.");
         }
 
         mEventManager.registerProfileIntentReceiver();
@@ -413,6 +434,10 @@ public class LocalBluetoothProfileManager {
         return mMapClientProfile;
     }
 
+    public HearingAidProfile getHearingAidProfile() {
+        return mHearingAidProfile;
+    }
+
     /**
      * Fill in a list of LocalBluetoothProfile objects that are supported by
      * the local device and the remote device.
@@ -495,6 +520,13 @@ public class LocalBluetoothProfileManager {
             mMapProfile.setPreferred(device, true);
         }
 
+        if ((mPbapProfile != null) &&
+            (mPbapProfile.getConnectionStatus(device) == BluetoothProfile.STATE_CONNECTED)) {
+            profiles.add(mPbapProfile);
+            removedProfiles.remove(mPbapProfile);
+            mPbapProfile.setPreferred(device, true);
+        }
+
         if (mMapClientProfile != null) {
             profiles.add(mMapClientProfile);
             removedProfiles.remove(mMapClientProfile);
@@ -503,8 +535,12 @@ public class LocalBluetoothProfileManager {
         if (mUsePbapPce) {
             profiles.add(mPbapClientProfile);
             removedProfiles.remove(mPbapClientProfile);
-            profiles.remove(mPbapProfile);
-            removedProfiles.add(mPbapProfile);
+        }
+
+        if (BluetoothUuid.isUuidPresent(uuids, BluetoothUuid.HearingAid) &&
+            mHearingAidProfile != null) {
+            profiles.add(mHearingAidProfile);
+            removedProfiles.remove(mHearingAidProfile);
         }
 
         if (DEBUG) {

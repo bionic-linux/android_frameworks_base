@@ -194,8 +194,13 @@ public class LocalBluetoothAdapter {
         return mState;
     }
 
-    synchronized void setBluetoothStateInt(int state) {
-        mState = state;
+    void setBluetoothStateInt(int state) {
+        synchronized(this) {
+            if (mState == state) {
+                return;
+            }
+            mState = state;
+        }
 
         if (state == BluetoothAdapter.STATE_ON) {
             // if mProfileManager hasn't been constructed yet, it will
@@ -238,5 +243,9 @@ public class LocalBluetoothAdapter {
 
     public BluetoothDevice getRemoteDevice(String address) {
         return mAdapter.getRemoteDevice(address);
+    }
+
+    public int getMaxConnectedAudioDevices() {
+        return mAdapter.getMaxConnectedAudioDevices();
     }
 }

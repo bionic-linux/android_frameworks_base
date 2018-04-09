@@ -19,8 +19,9 @@ package android.net.ip;
 import static android.system.OsConstants.*;
 
 import android.net.NetworkUtils;
-import android.net.util.BlockingSocketReader;
+import android.net.util.PacketReader;
 import android.net.util.ConnectivityPacketSummary;
+import android.net.util.InterfaceParams;
 import android.os.Handler;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -35,7 +36,6 @@ import libcore.util.HexEncoding;
 import java.io.FileDescriptor;
 import java.io.InterruptedIOException;
 import java.io.IOException;
-import java.net.NetworkInterface;
 import java.net.SocketException;
 
 
@@ -65,28 +65,16 @@ public class ConnectivityPacketTracker {
 
     private final String mTag;
     private final LocalLog mLog;
-    private final BlockingSocketReader mPacketListener;
+    private final PacketReader mPacketListener;
     private boolean mRunning;
     private String mDisplayName;
 
-    public ConnectivityPacketTracker(Handler h, NetworkInterface netif, LocalLog log) {
-        final String ifname;
-        final int ifindex;
-        final byte[] hwaddr;
-        final int mtu;
+    public ConnectivityPacketTracker(Handler h, InterfaceParams ifParams, LocalLog log) {
+        if (ifParams == null) throw new IllegalArgumentException("null InterfaceParams");
 
-        try {
-            ifname = netif.getName();
-            ifindex = netif.getIndex();
-            hwaddr = netif.getHardwareAddress();
-            mtu = netif.getMTU();
-        } catch (NullPointerException|SocketException e) {
-            throw new IllegalArgumentException("bad network interface", e);
-        }
-
-        mTag = TAG + "." + ifname;
+        mTag = TAG + "." + ifParams.name;
         mLog = log;
-        mPacketListener = new PacketListener(h, ifindex, hwaddr, mtu);
+        mPacketListener = new PacketListener(h, ifParams);
     }
 
     public void start(String displayName) {
@@ -101,14 +89,12 @@ public class ConnectivityPacketTracker {
         mDisplayName = null;
     }
 
-    private final class PacketListener extends BlockingSocketReader {
-        private final int mIfIndex;
-        private final byte mHwAddr[];
+    private final class PacketListener extends PacketReader {
+        private final InterfaceParams mInterface;
 
-        PacketListener(Handler h, int ifindex, byte[] hwaddr, int mtu) {
-            super(h, mtu);
-            mIfIndex = ifindex;
-            mHwAddr = hwaddr;
+        PacketListener(Handler h, InterfaceParams ifParams) {
+            super(h, ifParams.defaultMtu);
+            mInterface = ifParams;
         }
 
         @Override
@@ -117,7 +103,7 @@ public class ConnectivityPacketTracker {
             try {
                 s = Os.socket(AF_PACKET, SOCK_RAW, 0);
                 NetworkUtils.attachControlPacketFilter(s, ARPHRD_ETHER);
-                Os.bind(s, new PacketSocketAddress((short) ETH_P_ALL, mIfIndex));
+                Os.bind(s, new PacketSocketAddress((short) ETH_P_ALL, mInterface.index));
             } catch (ErrnoException | IOException e) {
                 logError("Failed to create packet tracking socket: ", e);
                 closeFd(s);
@@ -129,7 +115,7 @@ public class ConnectivityPacketTracker {
         @Override
         protected void handlePacket(byte[] recvbuf, int length) {
             final String summary = ConnectivityPacketSummary.summarize(
-                    mHwAddr, recvbuf, length);
+                    mInterface.macAddr, recvbuf, length);
             if (summary == null) return;
 
             if (DBG) Log.d(mTag, summary);

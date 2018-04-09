@@ -79,8 +79,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * {@link BluetoothDevice} objects representing all paired devices with
  * {@link #getBondedDevices()}; start device discovery with
  * {@link #startDiscovery()}; or create a {@link BluetoothServerSocket} to
- * listen for incoming connection requests with
- * {@link #listenUsingRfcommWithServiceRecord(String, UUID)}; or start a scan for
+ * listen for incoming RFComm connection requests with {@link
+ * #listenUsingRfcommWithServiceRecord(String, UUID)}; listen for incoming L2CAP Connection-oriented
+ * Channels (CoC) connection requests with listenUsingL2capCoc(int)}; or start a scan for
  * Bluetooth LE devices with {@link #startLeScan(LeScanCallback callback)}.
  * </p>
  * <p>This class is thread safe.</p>
@@ -208,6 +209,14 @@ public final class BluetoothAdapter {
      * @hide
      */
     public static final int STATE_BLE_TURNING_OFF = 16;
+
+    /**
+     * UUID of the GATT Read Characteristics for LE_PSM value.
+     *
+     * @hide
+     */
+    public static final UUID LE_PSM_CHARACTERISTIC_UUID =
+            UUID.fromString("2d410339-82b6-42aa-b34e-e2e01df8cc1a");
 
     /**
      * Human-readable string helper for AdapterState
@@ -528,13 +537,14 @@ public final class BluetoothAdapter {
             "android.bluetooth.adapter.action.BLE_ACL_DISCONNECTED";
 
     /** The profile is in disconnected state */
-    public static final int STATE_DISCONNECTED = 0;
+    public static final int STATE_DISCONNECTED = BluetoothProtoEnums.CONNECTION_STATE_DISCONNECTED;
     /** The profile is in connecting state */
-    public static final int STATE_CONNECTING = 1;
+    public static final int STATE_CONNECTING = BluetoothProtoEnums.CONNECTION_STATE_CONNECTING;
     /** The profile is in connected state */
-    public static final int STATE_CONNECTED = 2;
+    public static final int STATE_CONNECTED = BluetoothProtoEnums.CONNECTION_STATE_CONNECTED;
     /** The profile is in disconnecting state */
-    public static final int STATE_DISCONNECTING = 3;
+    public static final int STATE_DISCONNECTING =
+            BluetoothProtoEnums.CONNECTION_STATE_DISCONNECTING;
 
     /** @hide */
     public static final String BLUETOOTH_MANAGER_SERVICE = "bluetooth_manager";
@@ -664,6 +674,10 @@ public final class BluetoothAdapter {
      */
     public BluetoothLeAdvertiser getBluetoothLeAdvertiser() {
         if (!getLeAccess()) {
+            return null;
+        }
+        if (!isMultipleAdvertisementSupported()) {
+            Log.e(TAG, "Bluetooth LE advertising not supported");
             return null;
         }
         synchronized (mLock) {
@@ -1671,6 +1685,27 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Get the maximum number of connected audio devices.
+     *
+     * @return the maximum number of connected audio devices
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public int getMaxConnectedAudioDevices() {
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.getMaxConnectedAudioDevices();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to get getMaxConnectedAudioDevices, error: ", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return 1;
+    }
+
+    /**
      * Return true if hardware has entries available for matching beacons
      *
      * @return true if there are hw entries available for matching beacons
@@ -2135,7 +2170,9 @@ public final class BluetoothAdapter {
                         min16DigitPin);
         int errno = socket.mSocket.bindListen();
         if (port == SOCKET_CHANNEL_AUTO_STATIC_NO_SDP) {
-            socket.setChannel(socket.mSocket.getPort());
+            int assignedChannel = socket.mSocket.getPort();
+            if (DBG) Log.d(TAG, "listenUsingL2capOn: set assigned channel to " + assignedChannel);
+            socket.setChannel(assignedChannel);
         }
         if (errno != 0) {
             //TODO(BT): Throw the same exception error code
@@ -2176,12 +2213,18 @@ public final class BluetoothAdapter {
      * @hide
      */
     public BluetoothServerSocket listenUsingInsecureL2capOn(int port) throws IOException {
+        Log.d(TAG, "listenUsingInsecureL2capOn: port=" + port);
         BluetoothServerSocket socket =
                 new BluetoothServerSocket(BluetoothSocket.TYPE_L2CAP, false, false, port, false,
-                        false);
+                                          false);
         int errno = socket.mSocket.bindListen();
         if (port == SOCKET_CHANNEL_AUTO_STATIC_NO_SDP) {
-            socket.setChannel(socket.mSocket.getPort());
+            int assignedChannel = socket.mSocket.getPort();
+            if (DBG) {
+                Log.d(TAG, "listenUsingInsecureL2capOn: set assigned channel to "
+                        + assignedChannel);
+            }
+            socket.setChannel(assignedChannel);
         }
         if (errno != 0) {
             //TODO(BT): Throw the same exception error code
@@ -2265,6 +2308,9 @@ public final class BluetoothAdapter {
         } else if (profile == BluetoothProfile.HID_DEVICE) {
             BluetoothHidDevice hidDevice = new BluetoothHidDevice(context, listener);
             return true;
+        } else if (profile == BluetoothProfile.HEARING_AID) {
+            BluetoothHearingAid hearingAid = new BluetoothHearingAid(context, listener);
+            return true;
         } else {
             return false;
         }
@@ -2347,6 +2393,9 @@ public final class BluetoothAdapter {
                 BluetoothHidDevice hidDevice = (BluetoothHidDevice) proxy;
                 hidDevice.close();
                 break;
+            case BluetoothProfile.HEARING_AID:
+                BluetoothHearingAid hearingAid = (BluetoothHearingAid) proxy;
+                hearingAid.close();
         }
     }
 
@@ -2425,6 +2474,8 @@ public final class BluetoothAdapter {
      *
      * @hide
      */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN)
     public boolean enableNoAutoConnect() {
         if (isEnabled()) {
             if (DBG) {
@@ -2737,5 +2788,104 @@ public final class BluetoothAdapter {
             }
             scanner.stopScan(scanCallback);
         }
+    }
+
+    /**
+     * Create a secure L2CAP Connection-oriented Channel (CoC) {@link BluetoothServerSocket} and
+     * assign a dynamic protocol/service multiplexer (PSM) value. This socket can be used to listen
+     * for incoming connections.
+     * <p>A remote device connecting to this socket will be authenticated and communication on this
+     * socket will be encrypted.
+     * <p>Use {@link BluetoothServerSocket#accept} to retrieve incoming connections from a listening
+     * {@link BluetoothServerSocket}.
+     * <p>The system will assign a dynamic PSM value. This PSM value can be read from the {#link
+     * BluetoothServerSocket#getPsm()} and this value will be released when this server socket is
+     * closed, Bluetooth is turned off, or the application exits unexpectedly.
+     * <p>The mechanism of disclosing the assigned dynamic PSM value to the initiating peer is
+     * defined and performed by the application.
+     * <p>Use {@link BluetoothDevice#createL2capCocSocket(int, int)} to connect to this server
+     * socket from another Android device that is given the PSM value.
+     *
+     * @param transport Bluetooth transport to use, must be {@link BluetoothDevice#TRANSPORT_LE}
+     * @return an L2CAP CoC BluetoothServerSocket
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions, or unable to start this CoC
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothServerSocket listenUsingL2capCoc(int transport)
+            throws IOException {
+        if (transport != BluetoothDevice.TRANSPORT_LE) {
+            throw new IllegalArgumentException("Unsupported transport: " + transport);
+        }
+        BluetoothServerSocket socket =
+                            new BluetoothServerSocket(BluetoothSocket.TYPE_L2CAP_LE, true, true,
+                                      SOCKET_CHANNEL_AUTO_STATIC_NO_SDP, false, false);
+        int errno = socket.mSocket.bindListen();
+        if (errno != 0) {
+            throw new IOException("Error: " + errno);
+        }
+
+        int assignedPsm = socket.mSocket.getPort();
+        if (assignedPsm == 0) {
+            throw new IOException("Error: Unable to assign PSM value");
+        }
+        if (DBG) {
+            Log.d(TAG, "listenUsingL2capCoc: set assigned PSM to "
+                    + assignedPsm);
+        }
+        socket.setChannel(assignedPsm);
+
+        return socket;
+    }
+
+    /**
+     * Create an insecure L2CAP Connection-oriented Channel (CoC) {@link BluetoothServerSocket} and
+     * assign a dynamic PSM value. This socket can be used to listen for incoming connections.
+     * <p>The link key is not required to be authenticated, i.e the communication may be vulnerable
+     * to man-in-the-middle attacks. Use {@link #listenUsingL2capCoc}, if an encrypted and
+     * authenticated communication channel is desired.
+     * <p>Use {@link BluetoothServerSocket#accept} to retrieve incoming connections from a listening
+     * {@link BluetoothServerSocket}.
+     * <p>The system will assign a dynamic protocol/service multiplexer (PSM) value. This PSM value
+     * can be read from the {#link BluetoothServerSocket#getPsm()} and this value will be released
+     * when this server socket is closed, Bluetooth is turned off, or the application exits
+     * unexpectedly.
+     * <p>The mechanism of disclosing the assigned dynamic PSM value to the initiating peer is
+     * defined and performed by the application.
+     * <p>Use {@link BluetoothDevice#createInsecureL2capCocSocket(int, int)} to connect to this
+     * server socket from another Android device that is given the PSM value.
+     *
+     * @param transport Bluetooth transport to use, must be {@link BluetoothDevice#TRANSPORT_LE}
+     * @return an L2CAP CoC BluetoothServerSocket
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions, or unable to start this CoC
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothServerSocket listenUsingInsecureL2capCoc(int transport)
+            throws IOException {
+        if (transport != BluetoothDevice.TRANSPORT_LE) {
+            throw new IllegalArgumentException("Unsupported transport: " + transport);
+        }
+        BluetoothServerSocket socket =
+                            new BluetoothServerSocket(BluetoothSocket.TYPE_L2CAP_LE, false, false,
+                                      SOCKET_CHANNEL_AUTO_STATIC_NO_SDP, false, false);
+        int errno = socket.mSocket.bindListen();
+        if (errno != 0) {
+            throw new IOException("Error: " + errno);
+        }
+
+        int assignedPsm = socket.mSocket.getPort();
+        if (assignedPsm == 0) {
+            throw new IOException("Error: Unable to assign PSM value");
+        }
+        if (DBG) {
+            Log.d(TAG, "listenUsingInsecureL2capOn: set assigned PSM to "
+                    + assignedPsm);
+        }
+        socket.setChannel(assignedPsm);
+
+        return socket;
     }
 }
