@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "af89e066_aebdb555",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-04-09T23:25:15Z",
+      "side": 1,
+      "message": "That works for the config, but not necessarily the validated status of any servers.\n\nOffhand, I\u0027m not sure how to solve this short of adding an INetd binder call like reportAllPrivateDnsValidationStatuses() and would (probably on another thread) iterate through the netd validation table and re-invoke all the validation status updates.\n\nBut that kind of thing is probably for later.",
+      "parentUuid": "045fd17e_0a035dfb",
+      "range": {
+        "startLine": 1747,
+        "startChar": 8,
+        "endLine": 1747,
+        "endChar": 36
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60c2bfa5_ea76389f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
