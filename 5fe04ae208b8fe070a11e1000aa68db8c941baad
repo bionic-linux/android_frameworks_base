@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f2bda13_1b63ef45",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e785ef08_d35bcc51",
+      "range": {
+        "startLine": 1541,
+        "startChar": 49,
+        "endLine": 1541,
+        "endChar": 51
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "575d11b5_fec8706c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-04-09T17:05:53Z",
       "side": 1,
       "message": "When we get here, some networks might already be connected. Do we need to do something about those?",
+      "range": {
+        "startLine": 1747,
+        "startChar": 8,
+        "endLine": 1747,
+        "endChar": 36
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045fd17e_0a035dfb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Is it sufficient that handlePerNetworkPrivateDnsConfig is called in updateNetworkInfo for connected networks? handlePerNetworkPrivateDnsConfig will populate the DnsManager with the correct private DNS settings.",
+      "parentUuid": "575d11b5_fec8706c",
       "range": {
         "startLine": 1747,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a219ab45_8244a3ed",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60c2bfa5_ea76389f",
+      "range": {
+        "startLine": 2291,
+        "startChar": 0,
+        "endLine": 2298,
+        "endChar": 13
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a5ef934_c0aede32",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2018-04-09T08:26:04Z",
       "side": 1,
       "message": "\"import static\" at the top if it means you can make your life simpler and fit this one line...",
+      "range": {
+        "startLine": 2324,
+        "startChar": 12,
+        "endLine": 2324,
+        "endChar": 49
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cddaf9e7_af7061b1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2324,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done, though just with \"import\" to match the other DnsManager imports.",
+      "parentUuid": "4a5ef934_c0aede32",
       "range": {
         "startLine": 2324,
         "startChar": 12,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7cfe0d89_94923777",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2329,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5253cc4_ea096073",
+      "range": {
+        "startLine": 2326,
+        "startChar": 0,
+        "endLine": 2329,
+        "endChar": 9
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc901ece_c905a32b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a03c6216_cfe50922",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc901ece_c905a32b",
+      "range": {
+        "startLine": 2332,
+        "startChar": 0,
+        "endLine": 2333,
+        "endChar": 58
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4af38a00_90b585a9",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -151,6 +295,30 @@
       "writtenOn": "2018-04-09T08:26:04Z",
       "side": 1,
       "message": "Delete this?",
+      "range": {
+        "startLine": 4573,
+        "startChar": 87,
+        "endLine": 4573,
+        "endChar": 88
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe4708c2_976eee20",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4573,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4af38a00_90b585a9",
       "range": {
         "startLine": 4573,
         "startChar": 87,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "2f14ac26_e9aa230b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4601,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67beebe8_57a87127",
+      "range": {
+        "startLine": 4601,
+        "startChar": 76,
+        "endLine": 4601,
+        "endChar": 77
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0a7c0cd_649a320f",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 8
@@ -206,6 +398,30 @@
       "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ee61c0_caaa3213",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0a7c0cd_649a320f",
+      "range": {
+        "startLine": 271,
+        "startChar": 4,
+        "endLine": 271,
+        "endChar": 86
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "dbd467d7_2f3962a1",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Changed to updatePrivateDnsStatus to be somewhat analogous to the other methods that update parts of LinkProperties.",
+      "parentUuid": "2301f942_41448a77",
+      "range": {
+        "startLine": 309,
+        "startChar": 19,
+        "endLine": 309,
+        "endChar": 51
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "562a14fb_0f880680",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 8
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "dd47beea_feb66e9b",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "The boolean return value is no longer being used to determine if handleUpdateLinkProperties needs to be called, so I changed the method signature to return nothing.",
+      "parentUuid": "562a14fb_0f880680",
+      "range": {
+        "startLine": 310,
+        "startChar": 37,
+        "endLine": 310,
+        "endChar": 60
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "509dab83_872a1043",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 8
@@ -266,6 +530,30 @@
       "writtenOn": "2018-04-09T08:26:04Z",
       "side": 1,
       "message": "[nit]\n\nWe could define at the top\n\n    private static final PrivateDnsConfig PRIVATE_DNS_OFF \u003d new PrivateDnsConfig();\n\nand then here we could use getOrDefault(netId, PRIVATE_DNS_OFF).  We could then lose the null checks below.\n\nDitto inside setDnsConfigurationForNetwork().",
+      "range": {
+        "startLine": 314,
+        "startChar": 62,
+        "endLine": 314,
+        "endChar": 65
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f82b2e9_f71627fe",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509dab83_872a1043",
       "range": {
         "startLine": 314,
         "startChar": 62,
@@ -298,6 +586,30 @@
       "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7a736bd_aedd6527",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3854,
+      "author": {
+        "id": 1257168
+      },
+      "writtenOn": "2018-04-09T20:36:22Z",
+      "side": 1,
+      "message": "I added some logging to investigate, and it appears that we never attempt to resolve the hostname, possibly because mCellNetworkAgent.connect(false) puts us into EvaluatingState rather than ValidatedState?",
+      "parentUuid": "9eaa5cb6_1d5e537f",
+      "range": {
+        "startLine": 3854,
+        "startChar": 87,
+        "endLine": 3854,
+        "endChar": 88
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
