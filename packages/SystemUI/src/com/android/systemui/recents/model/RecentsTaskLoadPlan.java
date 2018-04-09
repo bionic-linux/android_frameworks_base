@@ -169,8 +169,8 @@ public class RecentsTaskLoadPlan {
                     i >= taskCount - TaskGridLayoutAlgorithm.MAX_LAYOUT_TASK_COUNT;
             } else if (Recents.getConfiguration().isLowRamDevice) {
                 // Show a max of 3 items
-                isStackTask = t.lastActiveTime >= lastStackActiveTime &&
-                        i >= taskCount - TaskStackLowRamLayoutAlgorithm.MAX_LAYOUT_TASK_COUNT;
+                isStackTask = !isHistoricalTask(t) || (t.lastActiveTime >= lastStackActiveTime &&
+                        i >= taskCount - TaskStackLowRamLayoutAlgorithm.MAX_LAYOUT_TASK_COUNT);
             } else {
                 isStackTask = isFreeformTask || !isHistoricalTask(t) ||
                     (t.lastActiveTime >= lastStackActiveTime && i >= (taskCount - MIN_NUM_TASKS));
