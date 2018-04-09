@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "e785ef08_d35bcc51",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "Not necessarily in this CL, but we we should log an error here,even though the only possible that can happen is if there is a bug in netd.",
+      "range": {
+        "startLine": 1541,
+        "startChar": 49,
+        "endLine": 1541,
+        "endChar": 51
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575d11b5_fec8706c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "When we get here, some networks might already be connected. Do we need to do something about those?",
+      "range": {
+        "startLine": 1747,
+        "startChar": 8,
+        "endLine": 1747,
+        "endChar": 36
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c2bfa5_ea76389f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "I find this very hard to follow since it makes a copy of lp that it touches and then throws away. It\u0027s also confusing because its name is similar to fixupLinkProperties but it actually behaves differently.\n\nInstead of trying to see here if a change will be made in the future, can we just call handleUpdateLinkProperties and let the fixup call in updateLinkProperties ensure that the new LinkProperties have the new private DNS info?\n\nThe way updateLinkProperties works is that it basically just does a diff between the old LinkProperties and the new ones. When it sees that something has changed, it informs the appropriate parts of the system (including confguring routing, updating interfaces, sending callbacks, etc. etc.).\n\nBecause oldLp will already have the old private DNS config, all we need to do is update the private DNS parameters in the new config. This CL already does that, via a call to maybeFixLinkPropertiesPrivateDns (which I think should be renamed - see other comment) inside updateLinkProperties.\n\nSo if I\u0027m reading this correctly, there\u0027s no need to do any fixups here and you can simplify this to:\n\n    for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {\n        handlePerNetworkPrivateDnsConfig(nai, cfg);\n        if (networkRequiresValidation(nai)) {\n            handleUpdateLinkProperties(nai, new LinkProperties(nai.linkProperties));\n        }\n    }",
+      "range": {
+        "startLine": 2291,
+        "startChar": 0,
+        "endLine": 2298,
+        "endChar": 13
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a5ef934_c0aede32",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -25,6 +94,52 @@
     },
     {
       "key": {
+        "uuid": "b5253cc4_ea096073",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2329,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "Should this check be the first thing in the function? If getNetworkAgentInfoForNetId returns null, then that network has disconnected and there\u0027s nothing to update.",
+      "range": {
+        "startLine": 2326,
+        "startChar": 0,
+        "endLine": 2329,
+        "endChar": 9
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc901ece_c905a32b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "Again, can you just lose the if statement here and let the fixup call in updateLinkProperties do the needful?",
+      "range": {
+        "startLine": 2332,
+        "startChar": 0,
+        "endLine": 2333,
+        "endChar": 58
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4af38a00_90b585a9",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -45,6 +160,98 @@
       "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67beebe8_57a87127",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4601,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "Suggest elaborating:\n\n    // This does not need to be done before updateDnses because the LinkProperties are not the\n    // source of private DNS configuration. updateDnses will fetch that configuration from\n    // DnsManager.",
+      "range": {
+        "startLine": 4601,
+        "startChar": 76,
+        "endLine": 4601,
+        "endChar": 77
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a7c0cd_649a320f",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "Can you add a TODO to turn these two into SparseArrays?",
+      "range": {
+        "startLine": 271,
+        "startChar": 4,
+        "endLine": 271,
+        "endChar": 86
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2301f942_41448a77",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "Generally we use \"maybe\" to indicate that a method may or may not perform an action. But this method always does something. Rename to \"setPrivateDnsInfo\" or some such?",
+      "range": {
+        "startLine": 309,
+        "startChar": 19,
+        "endLine": 309,
+        "endChar": 51
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562a14fb_0f880680",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-09T17:05:53Z",
+      "side": 1,
+      "message": "It looks like this is only used to ensure that the return value is correct. Given that this is a relatively expensive operation, instead of saving a copy of all of lp, can we just save the results of lp.isPrivateDnsActive() and lp.getPrivateDnsServerName()?",
+      "range": {
+        "startLine": 310,
+        "startChar": 37,
+        "endLine": 310,
+        "endChar": 60
+      },
+      "revId": "5fe04ae208b8fe070a11e1000aa68db8c941baad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
