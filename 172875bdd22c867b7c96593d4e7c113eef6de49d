@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f8292dc4_afea4453",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-04-10T14:14:52Z",
+      "side": 1,
+      "message": "Hi, Nan\n\nI still don\u0027t understand the need for these properties. Could you explain? To me, it is equivalent to srcs: property with directory name filtering.\n\nI also wonder why other classes from other place (the ones currently in srcs) are okay to be there. What is special with \"framework\"?\n\nI am asking this question because I am working on to make a new module type (java_sdk_library) that abstracts stubs libs, droiddoc, real runtime libs, xml files, etc.",
+      "range": {
+        "startLine": 873,
+        "startChar": 0,
+        "endLine": 875,
+        "endChar": 50
+      },
+      "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f6faa8b_152d404c",
         "filename": "Android.bp",
         "patchSetId": 6
