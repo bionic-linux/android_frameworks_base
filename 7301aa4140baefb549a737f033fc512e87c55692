@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322174a8_909b50e7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-10T00:59:03Z",
+      "side": 1,
+      "message": "Nit: we should log the IP address as well. :-)",
+      "range": {
+        "startLine": 1543,
+        "startChar": 66,
+        "endLine": 1543,
+        "endChar": 67
+      },
+      "revId": "7301aa4140baefb549a737f033fc512e87c55692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48edde6_3a264aa0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3016,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-04-10T00:59:03Z",
+      "side": 1,
+      "message": "Nit: I think this will fit on one line.",
+      "range": {
+        "startLine": 3015,
+        "startChar": 28,
+        "endLine": 3016,
+        "endChar": 0
+      },
+      "revId": "7301aa4140baefb549a737f033fc512e87c55692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
