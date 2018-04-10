@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "170dd353_b4bea3e0",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-04-10T18:38:39Z",
+      "side": 1,
+      "message": "normally if we want to include a module\u0027s srcs, we can do:\n\nsrcs: [\n    \":framework\"\n]\nhowever, framework here is special because we only want to take a subset from framework\u0027s srcs, that subset is filtered by the whitelist_dircs \u0026 whitelist_pkgs. you can see:\nhttps://cs.corp.google.com/aosp-master/build/soong/java/droiddoc.go?rcl\u003df19b9bb9819fbe36a05c31e193135a9b3b2e8388\u0026l\u003d285",
+      "parentUuid": "f8292dc4_afea4453",
+      "range": {
+        "startLine": 873,
+        "startChar": 0,
+        "endLine": 875,
+        "endChar": 50
+      },
+      "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f6faa8b_152d404c",
         "filename": "Android.bp",
         "patchSetId": 6
