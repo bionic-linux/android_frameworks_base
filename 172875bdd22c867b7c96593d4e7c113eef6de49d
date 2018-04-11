@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "046c8247_24784d13",
+        "filename": "Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-04-11T01:34:10Z",
+      "side": 1,
+      "message": "Thanks, I saw the code. But I am not clear why the filtering is required for framework at the source level. We have -stubpackages.",
+      "parentUuid": "170dd353_b4bea3e0",
+      "range": {
+        "startLine": 873,
+        "startChar": 0,
+        "endLine": 875,
+        "endChar": 50
+      },
+      "revId": "172875bdd22c867b7c96593d4e7c113eef6de49d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f6faa8b_152d404c",
         "filename": "Android.bp",
         "patchSetId": 6
