@@ -19,6 +19,7 @@ package android.media;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.app.ActivityThread;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ContentProvider;
@@ -2089,6 +2090,7 @@ public class MediaPlayer extends PlayerBase
         mOnInfoListener = null;
         mOnVideoSizeChangedListener = null;
         mOnTimedTextListener = null;
+        mOnImsRxNoticeListener = null;
         synchronized (mTimeProviderLock) {
             if (mTimeProvider != null) {
                 mTimeProvider.close();
@@ -3297,6 +3299,7 @@ public class MediaPlayer extends PlayerBase
     private static final int MEDIA_META_DATA = 202;
     private static final int MEDIA_DRM_INFO = 210;
     private static final int MEDIA_TIME_DISCONTINUITY = 211;
+    private static final int MEDIA_IMS_RX_NOTICE = 300;
     private static final int MEDIA_AUDIO_ROUTING_CHANGED = 10000;
 
     private TimeProvider mTimeProvider;
@@ -3603,6 +3606,19 @@ public class MediaPlayer extends PlayerBase
                             }
                         });
                     }
+                }
+                return;
+
+            case MEDIA_IMS_RX_NOTICE:
+                OnImsRxNoticeListener onImsRxNoticeListener =
+                    mOnImsRxNoticeListener;
+                if (onImsRxNoticeListener == null) {
+                    return;
+                }
+                if (msg.obj instanceof Parcel) {
+                    Parcel parcel = (Parcel) msg.obj;
+                    onImsRxNoticeListener.onImsRxNotice(parcel);
+                    parcel.recycle();
                 }
                 return;
 
@@ -4044,6 +4060,30 @@ public class MediaPlayer extends PlayerBase
          */
         public void onTimedMetaDataAvailable(MediaPlayer mp, TimedMetaData data);
     }
+
+    /**
+     * Interface definition of a callback to be invoked when
+     * IMS Rx connection has a notice.
+     *
+     * @hide
+     */
+    @SystemApi
+    public interface OnImsRxNoticeListener
+    {
+        public void onImsRxNotice(@NonNull Parcel parcel);
+    }
+
+    /**
+     * Register a callback to be invoked when IMS Rx connection has a notice.
+     *
+     * @hide
+     */
+    @SystemApi
+    public void setOnImsRxNoticeListener(@Nullable OnImsRxNoticeListener listener) {
+        mOnImsRxNoticeListener = listener;
+    }
+
+    private OnImsRxNoticeListener mOnImsRxNoticeListener;
 
     /**
      * Register a callback to be invoked when a selected track has timed metadata available.
