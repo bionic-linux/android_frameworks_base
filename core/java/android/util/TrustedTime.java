@@ -29,7 +29,16 @@ public interface TrustedTime {
      * Force update with an external trusted time source, returning {@code true}
      * when successful.
      */
+<<<<<<< HEAD
     @UnsupportedAppUsage
+=======
+    public boolean forceSync();
+
+    /**
+     * Force update the cached time with an external trusted time source,
+     * returning {@code true} when successful.
+     */
+>>>>>>> 185e7c3... NtpTrustedTime:Abstract forceSync and forceRefresh
     public boolean forceRefresh();
 
     /**
