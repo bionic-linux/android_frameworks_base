@@ -314,6 +314,7 @@ public class NotificationManagerService extends SystemService {
     private Uri mInCallNotificationUri;
     private AudioAttributes mInCallNotificationAudioAttributes;
     private float mInCallNotificationVolume;
+    private Binder mLasteToken = null;
 
     // used as a mutex for access to all active notifications & listeners
     final Object mNotificationLock = new Object();
@@ -4232,7 +4233,11 @@ public class NotificationManagerService extends SystemService {
                 try {
                     final IRingtonePlayer player = mAudioManager.getRingtonePlayer();
                     if (player != null) {
-                        player.play(new Binder(), mInCallNotificationUri,
+                        if (mLasteToken != null) {
+                            player.stop(mLasteToken);
+                        }
+                        mLasteToken = new Binder();
+                        player.play(mLasteToken, mInCallNotificationUri,
                                 mInCallNotificationAudioAttributes,
                                 mInCallNotificationVolume, false);
                     }
