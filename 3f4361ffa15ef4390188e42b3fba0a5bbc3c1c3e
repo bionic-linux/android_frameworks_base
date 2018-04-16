@@ -22,6 +22,30 @@
       "revId": "3f4361ffa15ef4390188e42b3fba0a5bbc3c1c3e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a477551_f57593d8",
+        "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-04-16T16:18:38Z",
+      "side": 1,
+      "message": "I rephrase it to hopefully, make it clearer. Please note that the return code is to indicate that the \"request\" (but not the actual operation) is acknowledged.",
+      "parentUuid": "5c3ae596_53681bd0",
+      "range": {
+        "startLine": 711,
+        "startChar": 21,
+        "endLine": 711,
+        "endChar": 71
+      },
+      "revId": "3f4361ffa15ef4390188e42b3fba0a5bbc3c1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
