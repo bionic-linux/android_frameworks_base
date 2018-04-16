@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c3ae596_53681bd0",
+        "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-04-16T09:24:07Z",
+      "side": 1,
+      "message": "this sentence makes no sense right now.\n\"if the add service request... \"",
+      "range": {
+        "startLine": 711,
+        "startChar": 21,
+        "endLine": 711,
+        "endChar": 71
+      },
+      "revId": "3f4361ffa15ef4390188e42b3fba0a5bbc3c1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
