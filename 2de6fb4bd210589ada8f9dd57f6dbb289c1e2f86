@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "561af0ff_b34cbbf0",
+        "filename": "services/core/java/com/android/server/InputMethodManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-04-17T20:02:44Z",
+      "side": 1,
+      "message": "Can you merge these two lines into one line?\n\n                executeOrSendMessage(cs.client, mCaller.obtainMessageIO(MSG_SET_ACTIVE, 1, cs));",
+      "range": {
+        "startLine": 1791,
+        "startChar": 0,
+        "endLine": 1792,
+        "endChar": 48
+      },
+      "revId": "2de6fb4bd210589ada8f9dd57f6dbb289c1e2f86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
