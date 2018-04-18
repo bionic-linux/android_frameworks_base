@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9989077_69815a2d",
+        "filename": "telephony/java/com/android/internal/telephony/TelephonyIntents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2018-04-18T19:21:59Z",
+      "side": 1,
+      "message": "This is still defined in an \"internal\" class path and isn\u0027t part of the API.  Note that it\u0027s too late to add to the API anyway, but you should put this in TelephonyManager or Intent.java where public intents are defined and add @hide for this release.",
+      "range": {
+        "startLine": 206,
+        "startChar": 13,
+        "endLine": 206,
+        "endChar": 20
+      },
+      "revId": "6bb4a05fc6d96a2d71da95be8b44c7f36d324a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
