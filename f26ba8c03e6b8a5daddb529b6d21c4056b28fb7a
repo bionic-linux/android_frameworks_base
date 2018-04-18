@@ -16,6 +16,24 @@
       "revId": "f26ba8c03e6b8a5daddb529b6d21c4056b28fb7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987f998f_e24f3c7e",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1046618
+      },
+      "writtenOn": "2018-04-18T01:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "201cbe45_a6f028db",
+      "revId": "f26ba8c03e6b8a5daddb529b6d21c4056b28fb7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
