@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4f12122_b388ed32",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2018-04-19T18:07:31Z",
+      "side": 1,
+      "message": "wasn\u0027t aware of this one, I\u0027ll fix that too (tomorrow).",
+      "parentUuid": "b9bcd989_00aad2c0",
+      "revId": "59e7ac6932688865163cbe7e923c7f45b8d21238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a017abc_4e463318",
         "filename": "Android.mk",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-04-19T17:58:41Z",
       "side": 1,
       "message": "line 185 - line 188 can be converted to:\n\nfinalized_sdks :\u003d $(patsubst $(HISTORICAL_SDK_VERSIONS_ROOT)/%/public/api/android.txt,%,$(wildcard $(HISTORICAL_SDK_VERSIONS_ROOT)/*/public/api/android.txt))\n\nfinalized_sdks +\u003d $(patsubst $(HISTORICAL_SDK_VERSIONS_ROOT)/%/public/api/android.xml,%,$(wildcard $(HISTORICAL_SDK_VERSIONS_ROOT)/*/public/api/android.xml))",
+      "revId": "59e7ac6932688865163cbe7e923c7f45b8d21238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623305a3_380c8d9e",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2018-04-19T18:07:31Z",
+      "side": 1,
+      "message": "yeah I could inline the calls, but I did it this way because the lines end up being shorter and (IMO) easier to read. I can change it if you want.",
+      "parentUuid": "8a017abc_4e463318",
       "revId": "59e7ac6932688865163cbe7e923c7f45b8d21238",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
