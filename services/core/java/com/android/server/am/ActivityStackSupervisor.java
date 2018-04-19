@@ -2256,6 +2256,10 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
             if (mService.mActivityStarter.isValidLaunchStackId(newDynamicStackId, displayId, r)) {
                 return createStackOnDisplay(newDynamicStackId, displayId, true /*onTop*/);
             }
+        } else {
+            // If there is no valid stack on the primary display, create one.
+            return createStackOnDisplay(FULLSCREEN_WORKSPACE_STACK_ID, Display.DEFAULT_DISPLAY,
+                    true /*onTop*/);
         }
 
         Slog.w(TAG, "getValidLaunchStackOnDisplay: can't launch on displayId " + displayId);
