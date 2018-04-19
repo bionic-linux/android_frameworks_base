@@ -26,6 +26,7 @@
 #include <dlfcn.h>
 
 #include <GLES/gl.h>
+#include <GLES3/gl32.h>
 #include <ETC1/etc1.h>
 
 #include <SkBitmap.h>
@@ -639,6 +640,11 @@ static int checkFormat(SkColorType colorType, int format, int type)
                         return 0;
             }
             break;
+        case kRGBA_F16_SkColorType:
+            if ((format == GL_RGBA16F) && (type == GL_HALF_FLOAT)) {
+                return 0;
+            }
+            break;
         default:
             break;
     }
@@ -656,6 +662,8 @@ static int getInternalFormat(SkColorType colorType)
             return GL_RGBA;
         case kRGB_565_SkColorType:
             return GL_RGB;
+        case kRGBA_F16_SkColorType:
+            return GL_RGBA16F;
         default:
             return -1;
     }
@@ -672,6 +680,8 @@ static int getType(SkColorType colorType)
             return GL_UNSIGNED_BYTE;
         case kRGB_565_SkColorType:
             return GL_UNSIGNED_SHORT_5_6_5;
+        case kRGBA_F16_SkColorType:
+            return GL_HALF_FLOAT;
         default:
             return -1;
     }
@@ -698,14 +708,24 @@ static jint util_texImage2D(JNIEnv *env, jclass clazz,
         jobject jbitmap, jint type, jint border)
 {
     SkBitmap bitmap;
+    jint glformat = internalformat;
+
     GraphicsJNI::getSkBitmap(env, jbitmap, &bitmap);
     SkColorType colorType = bitmap.colorType();
+
+    if (colorType == kRGBA_F16_SkColorType) {
+        internalformat = GL_RGBA16F;
+        glformat = GL_RGBA;
+        type = GL_HALF_FLOAT;
+    }
+
     if (internalformat < 0) {
         internalformat = getInternalFormat(colorType);
     }
     if (type < 0) {
         type = getType(colorType);
     }
+
     int err = checkFormat(colorType, internalformat, type);
     if (err)
         return err;
@@ -715,7 +735,7 @@ static jint util_texImage2D(JNIEnv *env, jclass clazz,
     if (internalformat == GL_PALETTE8_RGBA8_OES) {
         err = -1;
     } else {
-        glTexImage2D(target, level, internalformat, w, h, border, internalformat, type, p);
+        glTexImage2D(target, level, internalformat, w, h, border, glformat, type, p);
     }
     return err;
 }
