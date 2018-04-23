@@ -951,6 +951,15 @@ public final class Call {
         public static final int HANDOVER_FAILURE_UNKNOWN = 5;
 
         /**
+         * Handover failure reason returned via {@link #onHandoverFailed(Call, int)} when a handover
+         * fails because the source call disconnected prior to completion of the handover.
+         * <p>
+         * For more information on call handovers, see
+         * {@link #handoverTo(PhoneAccountHandle, int, Bundle)}.
+         */
+        public static final int HANDOVER_FAILURE_SOURCE_DISCONNECTED = 6;
+
+        /**
          * Invoked when the state of this {@code Call} has changed. See {@link #getState()}.
          *
          * @param call The {@code Call} invoking this method.
@@ -1108,6 +1117,31 @@ public final class Call {
          * @param failureReason Error reason for failure.
          */
         public void onHandoverFailed(Call call, @HandoverFailureErrors int failureReason) {}
+
+        /**
+         * Translates a handover failure code to a human-readable string.
+         * @param reason The handover failure reason code.
+         * @return Human-readable string.
+         * @hide
+         */
+        public static final String handoverFailureToString(@HandoverFailureErrors int reason) {
+            switch (reason) {
+                case HANDOVER_FAILURE_DEST_APP_REJECTED:
+                    return "dest app reject";
+                case HANDOVER_FAILURE_NOT_SUPPORTED:
+                    return "not supported";
+                case HANDOVER_FAILURE_USER_REJECTED:
+                    return "user rejected";
+                case HANDOVER_FAILURE_ONGOING_EMERGENCY_CALL:
+                    return "ongoing emergency call";
+                case HANDOVER_FAILURE_UNKNOWN:
+                    return "unknown";
+                case HANDOVER_FAILURE_SOURCE_DISCONNECTED:
+                    return "source disconnected";
+                default:
+                    return "invalid";
+            }
+        }
     }
 
     /**
