@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "612a13ca_0ae9042d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-04-23T16:50:00Z",
+      "side": 1,
+      "message": "nit: or the nearest cell, if available.\n\n1) comma is unneeded\n2) we need people to understand that this country code information is best-effort.",
+      "range": {
+        "startLine": 1814,
+        "startChar": 26,
+        "endLine": 1814,
+        "endChar": 73
+      },
+      "revId": "d33f8a1e91fc207c01f8a05c42f06c85758faddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
