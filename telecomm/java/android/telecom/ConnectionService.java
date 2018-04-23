@@ -2323,7 +2323,7 @@ public abstract class ConnectionService extends Service {
      * {@link android.telecom.Call#handoverTo(PhoneAccountHandle, int, Bundle)}
      *
      * @param request Details about the call which failed to handover.
-     * @param error Reason for handover failure.  Will be one of the
+     * @param error Reason for handover failure.
      */
     public void onHandoverFailed(ConnectionRequest request,
             @Call.Callback.HandoverFailureErrors int error) {
