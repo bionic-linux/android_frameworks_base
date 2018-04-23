@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a7f130_951176d3",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-04-23T17:11:31Z",
+      "side": 1,
+      "message": "Please update the comments for the error code to add something like this:\n\u003cp\u003e\nUsed with implicit call rejection.",
+      "range": {
+        "startLine": 403,
+        "startChar": 5,
+        "endLine": 403,
+        "endChar": 46
+      },
+      "revId": "667d741560ffbd3db9343067307848f0f22096f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c74ed21_11c31a24",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-04-23T17:11:31Z",
+      "side": 1,
+      "message": "Add _HEADERS for consistency.",
+      "range": {
+        "startLine": 436,
+        "startChar": 54,
+        "endLine": 436,
+        "endChar": 55
+      },
+      "revId": "667d741560ffbd3db9343067307848f0f22096f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
