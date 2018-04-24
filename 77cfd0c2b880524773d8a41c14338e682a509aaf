@@ -16,6 +16,24 @@
       "revId": "77cfd0c2b880524773d8a41c14338e682a509aaf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b0164b_5262213d",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1140634
+      },
+      "writtenOn": "2018-04-24T15:30:32Z",
+      "side": 1,
+      "message": "Dint get you. We have used same format like function above setServiceUuid",
+      "parentUuid": "8aea8140_8b33f9c4",
+      "revId": "77cfd0c2b880524773d8a41c14338e682a509aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
