@@ -712,6 +712,7 @@ public final class ImsReasonInfo implements Parcelable {
     public static final int CODE_UNOBTAINABLE_NUMBER = 1515;
 
     /**
+<<<<<<< HEAD
      * Call failed because WiFi call could not complete and circuit switch silent redial
      * is not allowed while roaming on another network.
      */
@@ -875,6 +876,15 @@ public final class ImsReasonInfo implements Parcelable {
      * OEM specific error codes. To be used by OEMs when they don't want to reveal error code which
      * would be replaced by ERROR_UNSPECIFIED.
      */
+=======
+     * @hide
+     * Call failed because WIFI to CS silent redial not allowed in CS Roaming.
+     */
+    public static final int CODE_NO_CSFB_IN_CS_ROAM = 1516;
+
+    /* OEM specific error codes. To be used by OEMs when they don't want to
+   reveal error code which would be replaced by ERROR_UNSPECIFIED */
+>>>>>>> 5ff033f... Avoid WiFi to Cellular silent redial when roaming
     public static final int CODE_OEM_CAUSE_1 = 0xf001;
     public static final int CODE_OEM_CAUSE_2 = 0xf002;
     public static final int CODE_OEM_CAUSE_3 = 0xf003;
