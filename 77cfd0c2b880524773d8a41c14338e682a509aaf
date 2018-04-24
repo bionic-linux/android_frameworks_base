@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aea8140_8b33f9c4",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-04-24T12:25:10Z",
+      "side": 1,
+      "message": "do you also need a check to verify that mask and variable are of same length ?",
+      "revId": "77cfd0c2b880524773d8a41c14338e682a509aaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
