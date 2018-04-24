@@ -59,13 +59,17 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.app.AlarmManager;
+import android.app.AppOpsManager;
 import android.app.usage.NetworkStatsManager;
 import android.content.Context;
 import android.content.Intent;
@@ -165,6 +169,7 @@ public class NetworkStatsServiceTest {
     private @Mock IConnectivityManager mConnManager;
     private @Mock IBinder mBinder;
     private @Mock AlarmManager mAlarmManager;
+    private @Mock AppOpsManager mAppOps;
     private HandlerThread mHandlerThread;
     private Handler mHandler;
 
@@ -177,7 +182,9 @@ public class NetworkStatsServiceTest {
         MockitoAnnotations.initMocks(this);
         final Context context = InstrumentationRegistry.getContext();
 
-        mServiceContext = new BroadcastInterceptingContext(context);
+        mServiceContext = spy(new BroadcastInterceptingContext(context));
+        doReturn(mAppOps).when(mServiceContext).getSystemService(Context.APP_OPS_SERVICE);
+
         mStatsDir = context.getFilesDir();
         if (mStatsDir.exists()) {
             IoUtils.deleteContents(mStatsDir);
@@ -952,6 +959,9 @@ public class NetworkStatsServiceTest {
     public void testRegisterUsageCallback() throws Exception {
         // pretend that wifi network comes online; service should ask about full
         // network state, and poll any existing interfaces before updating.
+        when(mAppOps.checkOp(eq(AppOpsManager.OP_GET_USAGE_STATS), anyInt(), anyString()))
+                .thenReturn(AppOpsManager.MODE_ALLOWED);
+
         expectCurrentTime();
         expectDefaultSettings();
         expectNetworkState(buildWifiState());
