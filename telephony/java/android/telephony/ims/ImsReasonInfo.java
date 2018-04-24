@@ -551,7 +551,13 @@ public final class ImsReasonInfo implements Parcelable {
      * <p>
      * Used with implicit call rejection.
      */
+
     public static final int CODE_REJECT_ONGOING_CS_CALL = 1621;
+    /**
+     * @hide
+     * Call failed because WIFI to CS silent redial not allowed in CS Roaming.
+     */
+    public static final int CODE_NO_CSFB_IN_CS_ROAM = 1516;
 
     /* OEM specific error codes. To be used by OEMs when they don't want to
    reveal error code which would be replaced by ERROR_UNSPECIFIED */
