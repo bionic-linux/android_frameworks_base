@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cefef0e2_4e7a43a9",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-04-25T11:06:18Z",
+      "side": 1,
+      "message": "It now looks like the previous comment pertains to this line and this line only, can you fix this ?",
+      "range": {
+        "startLine": 962,
+        "startChar": 8,
+        "endLine": 962,
+        "endChar": 12
+      },
+      "revId": "9d33e06475019151a749790b33cc85f9a9c38040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
