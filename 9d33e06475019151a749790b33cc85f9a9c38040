@@ -22,6 +22,30 @@
       "revId": "9d33e06475019151a749790b33cc85f9a9c38040",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de4fc8e_89471ff4",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-04-26T09:00:18Z",
+      "side": 1,
+      "message": "Done in master (trying to merge changes there first considering the conflicts)",
+      "parentUuid": "cefef0e2_4e7a43a9",
+      "range": {
+        "startLine": 962,
+        "startChar": 8,
+        "endLine": 962,
+        "endChar": 12
+      },
+      "revId": "9d33e06475019151a749790b33cc85f9a9c38040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
