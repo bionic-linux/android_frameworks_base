@@ -1,0 +1,56 @@
+#include <cstdio>  // fclose
+
+#include "idmap2/Xml.h"
+#include "idmap2/ZipFile.h"
+
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
+
+#include "TestHelpers.h"
+
+using ::testing::IsNull;
+using ::testing::NotNull;
+
+namespace android {
+namespace idmap2 {
+
+TEST(XmlTests, Create) {
+  auto zip = ZipFile::Open(GetTestDataPath() + "/target/target.apk");
+  ASSERT_THAT(zip, NotNull());
+
+  auto data = zip->Uncompress("AndroidManifest.xml");
+  ASSERT_THAT(data, NotNull());
+
+  auto xml = Xml::Create(data->buf, data->size);
+  ASSERT_THAT(xml, NotNull());
+
+  fclose(stderr);  // silence expected warnings from libandroidfw
+  const char* not_xml = "foo";
+  auto fail = Xml::Create(reinterpret_cast<const uint8_t*>(not_xml), strlen(not_xml));
+  ASSERT_THAT(fail, IsNull());
+}
+
+TEST(XmlTests, FindTag) {
+  auto zip = ZipFile::Open(GetTestDataPath() + "/target/target.apk");
+  ASSERT_THAT(zip, NotNull());
+
+  auto data = zip->Uncompress("res/xml/test.xml");
+  ASSERT_THAT(data, NotNull());
+
+  auto xml = Xml::Create(data->buf, data->size);
+  ASSERT_THAT(xml, NotNull());
+
+  auto attrs = xml->FindTag("c");
+  ASSERT_THAT(attrs, NotNull());
+  ASSERT_EQ(attrs->size(), 4u);
+  ASSERT_EQ(attrs->at("type_string"), "fortytwo");
+  ASSERT_EQ(std::stoi(attrs->at("type_int_dec")), 42);
+  ASSERT_EQ(std::stoi(attrs->at("type_int_hex")), 42);
+  ASSERT_NE(std::stoul(attrs->at("type_int_boolean")), 0u);
+
+  auto fail = xml->FindTag("does-not-exist");
+  ASSERT_THAT(fail, IsNull());
+}
+
+}  // namespace idmap2
+}  // namespace android

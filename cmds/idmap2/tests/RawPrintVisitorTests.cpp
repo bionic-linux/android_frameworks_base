@@ -1,0 +1,45 @@
+#include <sstream>
+
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
+
+#include "idmap2/Idmap.h"
+#include "idmap2/RawPrintVisitor.h"
+
+#include "TestHelpers.h"
+
+using ::testing::IsNull;
+using ::testing::NotNull;
+
+namespace android {
+namespace idmap2 {
+
+TEST(RawPrintVisitorTests, CreateRawPrintVisitor) {
+  const std::string target_apk_path(GetTestDataPath() + "/target/target.apk");
+  std::unique_ptr<const ApkAssets> target_apk = ApkAssets::Load(target_apk_path);
+  ASSERT_THAT(target_apk, NotNull());
+
+  const std::string overlay_apk_path(GetTestDataPath() + "/overlay/overlay.apk");
+  std::unique_ptr<const ApkAssets> overlay_apk = ApkAssets::Load(overlay_apk_path);
+  ASSERT_THAT(overlay_apk, NotNull());
+
+  std::stringstream error;
+  std::unique_ptr<const Idmap> idmap =
+      Idmap::FromApkAssets(target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, error);
+  ASSERT_THAT(idmap, NotNull());
+
+  std::stringstream stream;
+  RawPrintVisitor visitor(stream);
+  idmap->accept(visitor);
+
+  // FIXME: print to stdout for now for manual debugging, switch to prodding
+  // with regex at a later point in time
+  printf("%s", stream.str().c_str());
+}
+
+// FIXME: add test where idmap is created FromBinaryStream: this will lead to
+// target apk not possible to open, which should limit the output (i.e. keep
+// "resid -> resid" but don't print "type/name")
+
+}  // namespace idmap2
+}  // namespace android
