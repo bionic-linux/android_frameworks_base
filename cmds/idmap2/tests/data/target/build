@@ -1,0 +1,3 @@
+aapt2 compile --dir res -o compiled.flata
+aapt2 link --manifest AndroidManifest.xml -A assets -o target.apk compiled.flata
+rm compiled.flata

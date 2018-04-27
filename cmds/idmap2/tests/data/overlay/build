@@ -1,0 +1,26 @@
+FRAMEWORK_RES_APK="$(gettop)/out/target/common/obj/APPS/framework-res_intermediates/package-export.apk"
+
+aapt2 compile --dir res -o compiled.flata
+
+aapt2 link \
+    --no-resource-removal \
+    -I "$FRAMEWORK_RES_APK" \
+    --manifest AndroidManifest.xml \
+    -o overlay.apk \
+    compiled.flata
+
+aapt2 link \
+    --no-resource-removal \
+    -I "$FRAMEWORK_RES_APK" \
+    --manifest AndroidManifestStatic1.xml \
+    -o overlay-static-1.apk \
+    compiled.flata
+
+aapt2 link \
+    --no-resource-removal \
+    -I "$FRAMEWORK_RES_APK" \
+    --manifest AndroidManifestStatic2.xml \
+    -o overlay-static-2.apk \
+    compiled.flata
+
+rm compiled.flata

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="a">a</string>
+    <string name="b">b</string>
+    <string name="c">c</string>
+    <string name="str1">target-1</string>
+    <string name="str2">target-2</string>
+    <string name="str3">target-3</string>
+    <string name="str4">target-4</string>
+    <string name="x">x</string>
+    <string name="y">y</string>
+    <string name="z">z</string>
+    <integer name="int1">1</integer>
+</resources>
