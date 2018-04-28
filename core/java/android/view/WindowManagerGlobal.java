@@ -356,7 +356,11 @@ public final class WindowManagerGlobal {
                 root.setView(view, wparams, panelParentView);
             } catch (RuntimeException e) {
                 // BadTokenException or InvalidDisplayException, clean up.
+                // MIUI ADD:
+                index = findViewLocked(view, false);
                 if (index >= 0) {
+                    // MIUI ADD:
+                    Log.e(TAG, "BadTokenException or InvalidDisplayException, clean up.");
                     removeViewLocked(index, true);
                 }
                 throw e;
