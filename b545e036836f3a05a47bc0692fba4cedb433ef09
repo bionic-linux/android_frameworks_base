@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "870720d2_b79e185a",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-05-03T11:43:05Z",
+      "side": 1,
+      "message": "Add a TODO: generate?",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 597,
+        "endChar": 9
+      },
+      "revId": "b545e036836f3a05a47bc0692fba4cedb433ef09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
