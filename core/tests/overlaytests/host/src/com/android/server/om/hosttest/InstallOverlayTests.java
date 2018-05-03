@@ -25,6 +25,7 @@ import com.android.tradefed.testtype.junit4.BaseHostJUnit4Test;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -163,6 +164,62 @@ public class InstallOverlayTests extends BaseHostJUnit4Test {
         } finally {
             setPackageEnabled(DEVICE_TEST_PKG, true);
         }
+    }
+
+    @Ignore("TODO: implement")
+    @Test
+    public void systemOverlaysMustApplyAfterInstallation() throws Exception {
+        // install system overlay
+        // enable system overlay
+        // install 3rd party app
+        // obtain resource from 3rd party app
+        // assert system overlay applied to 3rd party app resources
+    }
+
+    @Ignore("TODO: implement (or remove: required bookkeeping may be to expensive to implement)")
+    @Test
+    public void testEnablingOverlayAffectsAlreadyObtainedResourcesFromOtherPackage()
+            throws Exception {
+        // get resources r from 3rd party app
+        // assert r.getResource(android.foo.bar) == A
+        // enable one of the system overlays
+        // assert r.getResource(android.foo.bar) != A
+    }
+
+    @Ignore("TODO: implement")
+    @Test
+    public void testResourcesFromAndroidPackage() throws Exception {
+        // r = getResourcesForApplication("android");
+        // resid = r.getIdentifier("config_annoy_dianne", "bool", "android");
+        // assertTrue(ResourceId.isValid(resid));
+        // assertTrue(r.getBoolean(resid))
+        // enable system overlay v1
+        // assertFalse(r.getBoolean(resid))
+    }
+
+    @Ignore("TODO: implement")
+    @Test
+    public void testReorderOverlays() throws Exception {
+        // enable two app overlays
+        // assert a resource R
+        // reorder the overlays
+        // assert value change for R
+    }
+
+    @Ignore("TODO: implement")
+    @Test
+    public void testTheOrderInWhichOverlaysAreEnabledDoesNotMatterPart() throws Exception {
+        // enable system overlay
+        // enable app overlay
+        // assert expected resource value == A
+        //
+        // disable system overlay
+        // disable app overlay
+        // assert expected resource value == B
+        //
+        // enable app overlay
+        // enable system overlay
+        // assert expected resource value == C
     }
 
     private void setPackageEnabled(String pkg, boolean enabled) throws Exception {

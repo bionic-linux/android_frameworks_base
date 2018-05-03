@@ -26,6 +26,7 @@ import android.util.ArrayMap;
 import android.util.Slog;
 import android.util.Xml;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.XmlUtils;
@@ -319,7 +320,8 @@ final class OverlayManagerSettings {
         Serializer.persist(mItems, os);
     }
 
-    private static final class Serializer {
+    @VisibleForTesting
+    static final class Serializer {
         private static final String TAG_OVERLAYS = "overlays";
         private static final String TAG_ITEM = "item";
 
@@ -334,7 +336,8 @@ final class OverlayManagerSettings {
         private static final String ATTR_USER_ID = "userId";
         private static final String ATTR_VERSION = "version";
 
-        private static final int CURRENT_VERSION = 4;
+        @VisibleForTesting
+        static final int CURRENT_VERSION = 4;
 
         public static void restore(@NonNull final ArrayList<SettingsItem> table,
                 @NonNull final InputStream is) throws IOException, XmlPullParserException {
