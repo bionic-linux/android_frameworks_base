@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110deb93_6de51ab8",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2018-05-07T17:24:03Z",
+      "side": 1,
+      "message": "isn\u0027t this being called whenever the menu is created? Why do we need an additional call to this besides in the creation?",
+      "revId": "d464f5407adc0f3046c7ba0afa3e14f128f15227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
