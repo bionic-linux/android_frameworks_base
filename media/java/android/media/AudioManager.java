@@ -1224,6 +1224,8 @@ public class AudioManager {
      */
     public void setSpeakerphoneOn(boolean on){
         final IAudioService service = getService();
+        Log.i(TAG, "In setSpeakerphoneOn(), on: " + on + ", calling application: "
+                     + mApplicationContext.getOpPackageName());
         try {
             service.setSpeakerphoneOn(on);
         } catch (RemoteException e) {
@@ -1238,6 +1240,8 @@ public class AudioManager {
      */
     public boolean isSpeakerphoneOn() {
         final IAudioService service = getService();
+        Log.i(TAG, "In isSpeakerphoneOn(), calling application: "
+                    + mApplicationContext.getOpPackageName());
         try {
             return service.isSpeakerphoneOn();
         } catch (RemoteException e) {
@@ -1378,6 +1382,8 @@ public class AudioManager {
      */
     public void startBluetoothSco(){
         final IAudioService service = getService();
+        Log.i(TAG, "In startbluetoothSco(), calling application: "
+                     + mApplicationContext.getOpPackageName());
         try {
             service.startBluetoothSco(mICallBack,
                     getContext().getApplicationInfo().targetSdkVersion);
@@ -1403,6 +1409,8 @@ public class AudioManager {
      */
     public void startBluetoothScoVirtualCall() {
         final IAudioService service = getService();
+        Log.i(TAG, "In startBluetoothScoVirtualCall(), calling application: "
+                    + mApplicationContext.getOpPackageName());
         try {
             service.startBluetoothScoVirtualCall(mICallBack);
         } catch (RemoteException e) {
@@ -1422,6 +1430,8 @@ public class AudioManager {
     // Also used for connections started with {@link #startBluetoothScoVirtualCall()}
     public void stopBluetoothSco(){
         final IAudioService service = getService();
+        Log.i(TAG, "In stopBluetoothSco(), calling application: "
+                    + mApplicationContext.getOpPackageName());
         try {
             service.stopBluetoothSco(mICallBack);
         } catch (RemoteException e) {
@@ -1440,6 +1450,8 @@ public class AudioManager {
      */
     public void setBluetoothScoOn(boolean on){
         final IAudioService service = getService();
+        Log.i(TAG, "In setBluetoothScoOn(), on: " + on + ", calling application: "
+                    + mApplicationContext.getOpPackageName());
         try {
             service.setBluetoothScoOn(on);
         } catch (RemoteException e) {
@@ -1455,6 +1467,8 @@ public class AudioManager {
      */
     public boolean isBluetoothScoOn() {
         final IAudioService service = getService();
+        Log.i(TAG, "In isBluetoothScoOn(), calling application: "
+                    + mApplicationContext.getOpPackageName());
         try {
             return service.isBluetoothScoOn();
         } catch (RemoteException e) {

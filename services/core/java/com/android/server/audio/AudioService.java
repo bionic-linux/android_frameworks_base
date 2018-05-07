@@ -2899,6 +2899,7 @@ public class AudioService extends IAudioService.Stub
         final String eventSource = new StringBuilder("setSpeakerphoneOn(").append(on)
                 .append(") from u/pid:").append(Binder.getCallingUid()).append("/")
                 .append(Binder.getCallingPid()).toString();
+        Log.i(TAG, "In setSpeakerphoneOn(), on: " + on + ", eventSource: " + eventSource);
 
         if (on) {
             if (mForcedUseForComm == AudioSystem.FORCE_BT_SCO) {
@@ -2912,12 +2913,16 @@ public class AudioService extends IAudioService.Stub
         }
 
         mForcedUseForCommExt = mForcedUseForComm;
+        Log.i(TAG, "In setSpeakerphoneOn(), mForcedUseForCommExt: "
+                    + mForcedUseForCommExt);
         sendMsg(mAudioHandler, MSG_SET_FORCE_USE, SENDMSG_QUEUE,
                 AudioSystem.FOR_COMMUNICATION, mForcedUseForComm, eventSource, 0);
     }
 
     /** @see AudioManager#isSpeakerphoneOn() */
     public boolean isSpeakerphoneOn() {
+        Log.i(TAG, "In isSpeakerphoneOn(), mForcedUseForCommExt: "
+                    + mForcedUseForCommExt);
         return (mForcedUseForCommExt == AudioSystem.FORCE_SPEAKER);
     }
 
@@ -2929,6 +2934,9 @@ public class AudioService extends IAudioService.Stub
 
         // Only enable calls from system components
         if (UserHandle.getCallingAppId() >= FIRST_APPLICATION_UID) {
+            Log.i(TAG, "In setBluetoothScoOn(), on: "+on+". The calling application Uid: "
+                  + UserHandle.getCallingUid() + ", is greater than FIRST_APPLICATION_UID"
+                  + " exiting from setBluetoothScoOn()");
             mForcedUseForCommExt = on ? AudioSystem.FORCE_BT_SCO : AudioSystem.FORCE_NONE;
             return;
         }
@@ -2979,6 +2987,8 @@ public class AudioService extends IAudioService.Stub
 
     /** @see AudioManager#isBluetoothScoOn() */
     public boolean isBluetoothScoOn() {
+        Log.i(TAG, "In isBluetoothScoOn(), mForcedUseForCommExt: "
+                    + mForcedUseForCommExt);
         return (mForcedUseForCommExt == AudioSystem.FORCE_BT_SCO);
     }
 
@@ -3007,6 +3017,7 @@ public class AudioService extends IAudioService.Stub
 
     /** @see AudioManager#startBluetoothSco() */
     public void startBluetoothSco(IBinder cb, int targetSdkVersion) {
+        Log.i(TAG, "In startBluetoothSco()");
         int scoAudioMode =
                 (targetSdkVersion < Build.VERSION_CODES.JELLY_BEAN_MR2) ?
                         SCO_MODE_VIRTUAL_CALL : SCO_MODE_UNDEFINED;
@@ -3036,6 +3047,7 @@ public class AudioService extends IAudioService.Stub
 
     /** @see AudioManager#stopBluetoothSco() */
     public void stopBluetoothSco(IBinder cb){
+        Log.i(TAG, "In stopBluetoothSco()");
         if (!checkAudioSettingsPermission("stopBluetoothSco()") ||
                 !mSystemReady) {
             return;
@@ -3078,6 +3090,7 @@ public class AudioService extends IAudioService.Stub
 
         public void incCount(int scoAudioMode) {
             synchronized(mScoClients) {
+                Log.i(TAG, "In incCount(), mStartcount = " + mStartcount);
                 requestScoState(BluetoothHeadset.STATE_AUDIO_CONNECTED, scoAudioMode);
                 if (mStartcount == 0) {
                     try {
@@ -3087,12 +3100,25 @@ public class AudioService extends IAudioService.Stub
                         Log.w(TAG, "ScoClient  incCount() could not link to "+mCb+" binder death");
                     }
                 }
-                mStartcount++;
+                //mStartCount should always be either 0 or 1 only if the startBluetoothSco
+                //is called by the same app multiple times by mistake. This will ensure that
+                //SCO gets disconnected when app calls stopBluetoothSco only once.
+                //Also, if SCO is already there, we just need to select the SCO devices by
+                //calling setBluetoothScoOn(true) in system context.
+                if (mStartcount == 1) {
+                    Log.i(TAG, "mStartcount is 1, calling setBluetoothScoOn(true)"
+                                + "in system context");
+                    setBluetoothScoOn(true);
+                } else if (mStartcount == 0) {
+                    mStartcount++;
+                    Log.i(TAG, "mStartcount is 0, incrementing by 1");
+                }
             }
         }
 
         public void decCount() {
             synchronized(mScoClients) {
+                Log.i(TAG, "In decCount(), mStartcount: " + mStartcount);
                 if (mStartcount == 0) {
                     Log.w(TAG, "ScoClient.decCount() already 0");
                 } else {
