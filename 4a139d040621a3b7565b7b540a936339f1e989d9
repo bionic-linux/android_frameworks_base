@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80564f03_7af4ff02",
+        "filename": "test-runner/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2018-05-08T09:32:53Z",
+      "side": 1,
+      "message": "sorry for the drive-by review, but did you look into making this a java_sdk_library instead? We\u0027re looking to convert all of these stubs into java_sdk_libraries, so we\u0027re duplicating work converting them twice.",
+      "range": {
+        "startLine": 94,
+        "startChar": 38,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "4a139d040621a3b7565b7b540a936339f1e989d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
