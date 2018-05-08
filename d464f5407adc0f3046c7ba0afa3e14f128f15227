@@ -16,6 +16,70 @@
       "revId": "d464f5407adc0f3046c7ba0afa3e14f128f15227",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3cc8b8_f7b8ada5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2018-05-08T00:58:47Z",
+      "side": 1,
+      "message": "As with [CODE1], [CODE2], setAppName() is forcefully invoked whenever menu view is created. However, view is also re-inflated in onNotificationUpdate() method, and we didn\u0027t call setAppName() at this time.\n\n(NotificationMenuRow.onNotificationUpdate())\nhttps://github.com/aosp-mirror/platform_frameworks_base/blob/master/packages/SystemUI/src/com/android/systemui/statusbar/NotificationMenuRow.java#L159",
+      "parentUuid": "110deb93_6de51ab8",
+      "revId": "d464f5407adc0f3046c7ba0afa3e14f128f15227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a851d4_f24e1e0d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2018-05-08T00:58:47Z",
+      "side": 1,
+      "message": "[CODE 1]",
+      "range": {
+        "startLine": 863,
+        "startChar": 12,
+        "endLine": 864,
+        "endChar": 42
+      },
+      "revId": "d464f5407adc0f3046c7ba0afa3e14f128f15227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6973825e_7f19301d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/ExpandableNotificationRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2018-05-08T00:58:47Z",
+      "side": 1,
+      "message": "[CODE 2]",
+      "range": {
+        "startLine": 899,
+        "startChar": 12,
+        "endLine": 900,
+        "endChar": 42
+      },
+      "revId": "d464f5407adc0f3046c7ba0afa3e14f128f15227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
