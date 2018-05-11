@@ -184,6 +184,7 @@ public class InputManagerService extends IInputManager.Stub
 
     private IWindow mFocusedWindow;
     private boolean mFocusedWindowHasCapture;
+    private boolean mFocusedWindowHasRawPointer;
 
     private static native long nativeInit(InputManagerService service,
             Context context, MessageQueue messageQueue);
@@ -237,6 +238,7 @@ public class InputManagerService extends IInputManager.Stub
     private static native void nativeReloadPointerIcons(long ptr);
     private static native void nativeSetCustomPointerIcon(long ptr, PointerIcon icon);
     private static native void nativeSetPointerCapture(long ptr, boolean detached);
+    private static native void nativeSetRawPointer(long ptr, boolean detached);
 
     // Input event injection constants defined in InputDispatcher.h.
     private static final int INPUT_EVENT_INJECTION_SUCCEEDED = 0;
@@ -1475,6 +1477,9 @@ public class InputManagerService extends IInputManager.Stub
             if (mFocusedWindowHasCapture) {
                 setPointerCapture(false);
             }
+            if (mFocusedWindowHasRawPointer) {
+                setRawPointer(false);
+            }
         }
         nativeSetInputWindows(mPtr, windowHandles);
     }
@@ -1505,6 +1510,30 @@ public class InputManagerService extends IInputManager.Stub
     private void setPointerCapture(boolean enabled) {
         mFocusedWindowHasCapture = enabled;
         nativeSetPointerCapture(mPtr, enabled);
+    }
+
+    @Override
+    public void requestRawPointer(IBinder windowToken, boolean enabled) {
+        if (mFocusedWindow == null || mFocusedWindow.asBinder() != windowToken) {
+            Slog.e(TAG, "requestRawPointer called for a window that has no focus: "
+                    + windowToken);
+            return;
+        }
+        if (mFocusedWindowHasRawPointer == enabled) {
+            Slog.i(TAG, "requestRawPointer: already " + (enabled ? "enabled" : "disabled"));
+            return;
+        }
+        setRawPointer(enabled);
+        try {
+            mFocusedWindow.dispatchRawPointerChanged(enabled);
+        } catch (RemoteException ex) {
+            /* ignore */
+        }
+    }
+
+    private void setRawPointer(boolean enabled) {
+        mFocusedWindowHasRawPointer = enabled;
+        nativeSetRawPointer(mPtr, enabled);
     }
 
     public void setInputDispatchMode(boolean enabled, boolean frozen) {

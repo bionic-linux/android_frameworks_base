@@ -1983,6 +1983,19 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
         }
     }
 
+    /** @hide */
+    @Override
+    public void dispatchRawPointerChanged(boolean isRaw) {
+        exitHoverTargets();
+
+        super.dispatchRawPointerChanged(isRaw);
+        final int count = mChildrenCount;
+        final View[] children = mChildren;
+        for (int i = 0; i < count; i++) {
+            children[i].dispatchRawPointerChanged(isRaw);
+        }
+    }
+
     @Override
     public PointerIcon onResolvePointerIcon(MotionEvent event, int pointerIndex) {
         final float x = event.getX(pointerIndex);
