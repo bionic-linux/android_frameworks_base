@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b75de8d_e8d780e7",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-05-11T06:11:01Z",
+      "side": 1,
+      "message": "0x1122",
+      "revId": "3d8e892fe2038524419dd7617122bfc51cf08ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aef7291_4981ea09",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-05-11T06:11:01Z",
+      "side": 1,
+      "message": "You use these often. Maybe make them private static final class members?",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 712,
+        "endChar": 43
+      },
+      "revId": "3d8e892fe2038524419dd7617122bfc51cf08ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c33cf51_1ef21219",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-05-11T06:11:01Z",
+      "side": 1,
+      "message": "Should these all be 4? Is version 3 actually defined?",
+      "range": {
+        "startLine": 717,
+        "startChar": 31,
+        "endLine": 717,
+        "endChar": 32
+      },
+      "revId": "3d8e892fe2038524419dd7617122bfc51cf08ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fb5821_14d3d270",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-05-11T06:11:01Z",
+      "side": 1,
+      "message": "0x1122",
+      "range": {
+        "startLine": 726,
+        "startChar": 67,
+        "endLine": 726,
+        "endChar": 73
+      },
+      "revId": "3d8e892fe2038524419dd7617122bfc51cf08ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1156b614_7ade0a64",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-05-11T06:11:01Z",
+      "side": 1,
+      "message": "0xDEADBEEF",
+      "range": {
+        "startLine": 732,
+        "startChar": 65,
+        "endLine": 732,
+        "endChar": 75
+      },
+      "revId": "3d8e892fe2038524419dd7617122bfc51cf08ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
