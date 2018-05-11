@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d5cbd8a_9606c1a1",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-05-11T14:31:07Z",
+      "side": 1,
+      "message": "shall this also be private ? Then no need for @hide annotation too.",
+      "range": {
+        "startLine": 408,
+        "startChar": 4,
+        "endLine": 408,
+        "endChar": 10
+      },
+      "revId": "061ea241f36aab1f7958b8137ac3173ba1483442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
