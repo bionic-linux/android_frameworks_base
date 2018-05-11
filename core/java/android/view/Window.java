@@ -594,6 +594,14 @@ public abstract class Window {
          * @param hasCapture True if the window has pointer capture.
          */
         default public void onPointerCaptureChanged(boolean hasCapture) { };
+
+        /**
+         * Called when raw pointer is enabled or disabled for the current window.
+         *
+         * @param isRaw True if the window has raw pointer.
+         * @hide
+         */
+        default public void onRawPointerChanged(boolean isRaw) { };
     }
 
     /** @hide */

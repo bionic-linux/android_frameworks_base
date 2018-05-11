@@ -934,6 +934,23 @@ public final class InputManager {
         }
     }
 
+    /**
+     * Request or release raw pointer.
+     * <p>
+     * Raw relative position change of mouse events without velocity control are available through 
+     * {@link MotionEvent#getX} and {@link MotionEvent#getY}.
+     *
+     * @param enable true when requesting raw pointer, false when releasing.
+     *
+     * @hide
+     */
+    public void requestRawPointer(IBinder windowToken, boolean enable) {
+        try {
+            mIm.requestRawPointer(windowToken, enable);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+    }
 
     /**
      * Create an {@link IInputForwarder} targeted to provided display.

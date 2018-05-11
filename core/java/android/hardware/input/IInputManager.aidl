@@ -82,6 +82,7 @@ interface IInputManager {
     void setCustomPointerIcon(in PointerIcon icon);
 
     void requestPointerCapture(IBinder windowToken, boolean enabled);
+    void requestRawPointer(IBinder windowToken, boolean enabled);
 
     /** Create input forwarder to deliver touch events to owned display. */
     IInputForwarder createInputForwarder(int displayId);

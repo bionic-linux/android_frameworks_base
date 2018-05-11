@@ -130,4 +130,8 @@ public class BaseIWindow extends IWindow.Stub {
     @Override
     public void dispatchPointerCaptureChanged(boolean hasCapture) {
     }
+
+    @Override
+    public void dispatchRawPointerChanged(boolean isRaw) {
+    }
 }
