@@ -25632,6 +25632,70 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         getListenerInfo().mOnCapturedPointerListener = l;
     }
 
+    /**
+     * Checks raw pointer status.
+     *
+     * @return true if the view has raw pointer.
+     */
+    public boolean hasRawPointer() {
+        final ViewRootImpl viewRootImpl = getViewRootImpl();
+        if (viewRootImpl == null) {
+            return false;
+        }
+        return viewRootImpl.hasRawPointer();
+    }
+
+    /**
+     * Requests raw pointer mode.
+     * <p>
+     * Mouse events will be dispatched with the source
+     * {@link InputDevice#SOURCE_MOUSE_RELATIVE}, and relative position changes without
+     * velocity control mapping will be available through {@link MotionEvent#getX} and
+     * {@link MotionEvent#getY}.
+     * Non-mouse events(touchscreens, or stylus) will not be affected.
+     * <p>
+     * If the window already has raw pointer , this call does nothing.
+     * <p>
+     * The capture may be released through releaseRawPointer(), or will be lost
+     * automatically when the window loses focus.
+     */
+    public void requestRawPointer() {
+        final ViewRootImpl viewRootImpl = getViewRootImpl();
+        if (viewRootImpl != null) {
+            viewRootImpl.requestRawPointer(true);
+        }
+    }
+
+    /**
+     * Releases the raw pointer mode.
+     * <p>
+     * If the window does not have raw pointer capture, this call will do nothing.
+     * @see #requestRawPointer()
+     * @see #hasRawPointer()
+     */
+    public void releaseRawPointer() {
+        final ViewRootImpl viewRootImpl = getViewRootImpl();
+        if (viewRootImpl != null) {
+            viewRootImpl.requestRawPointer(false);
+        }
+    }
+
+    /**
+     * Called when the window has just acquired or lost raw pointer.
+     *
+     * @param isRaw True if the view now has raw pointer, false otherwise.
+     */
+    @CallSuper
+    public void onRawPointerChange(boolean isRaw) {
+    }
+
+    /**
+     * @see #onRawPointerChange
+     */
+    public void dispatchRawPointerChanged(boolean isRaw) {
+        onRawPointerChange(isRaw);
+    }
+
     // Properties
     //
     /**
