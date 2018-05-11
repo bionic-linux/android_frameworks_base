@@ -2302,6 +2302,14 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
     }
 
     @Override
+    public void dispatchRawPointerChanged(boolean isRaw) {
+        super.dispatchRawPointerChanged(isRaw);
+        if (!mWindow.isDestroyed() && mWindow.getCallback() != null) {
+            mWindow.getCallback().onRawPointerChanged(isRaw);
+        }
+    }
+
+    @Override
     public int getAccessibilityViewId() {
         return AccessibilityNodeInfo.ROOT_ITEM_ID;
     }
