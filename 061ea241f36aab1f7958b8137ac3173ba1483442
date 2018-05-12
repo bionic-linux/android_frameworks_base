@@ -22,6 +22,30 @@
       "revId": "061ea241f36aab1f7958b8137ac3173ba1483442",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e636f0fe_764408d9",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1140634
+      },
+      "writtenOn": "2018-05-12T00:05:48Z",
+      "side": 1,
+      "message": "thanks. Will update in new patchset",
+      "parentUuid": "7d5cbd8a_9606c1a1",
+      "range": {
+        "startLine": 408,
+        "startChar": 4,
+        "endLine": 408,
+        "endChar": 10
+      },
+      "revId": "061ea241f36aab1f7958b8137ac3173ba1483442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
