@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e863b18_b4776234",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2018-05-15T20:36:40Z",
+      "side": 1,
+      "message": "Needs better documentation",
+      "range": {
+        "startLine": 586,
+        "startChar": 8,
+        "endLine": 588,
+        "endChar": 11
+      },
+      "revId": "536f047ab943c8c0a1cfa1e4b55e67b784182750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4fa894_cbbd9c0f",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2018-05-15T20:36:40Z",
+      "side": 1,
+      "message": "Why @hide?",
+      "range": {
+        "startLine": 603,
+        "startChar": 11,
+        "endLine": 603,
+        "endChar": 16
+      },
+      "revId": "536f047ab943c8c0a1cfa1e4b55e67b784182750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efccc07e_74b75f98",
+        "filename": "core/java/android/bluetooth/le/ScanRecord.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2018-05-15T20:36:40Z",
+      "side": 1,
+      "message": "Always \"Bluetooth\", never \"bluetooth\" ;)",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "536f047ab943c8c0a1cfa1e4b55e67b784182750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c9873a_f2891369",
+        "filename": "core/java/android/bluetooth/le/ScanRecord.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2018-05-15T20:36:40Z",
+      "side": 1,
+      "message": "Document return type, add \"Nullable\" (or not) etc.",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "536f047ab943c8c0a1cfa1e4b55e67b784182750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
