@@ -55,8 +55,12 @@ public class CarrierIdentifier implements Parcelable {
     private @Nullable String mImsi;
     private @Nullable String mGid1;
     private @Nullable String mGid2;
+<<<<<<< HEAD
     private int mCarrierId = TelephonyManager.UNKNOWN_CARRIER_ID;
     private int mSpecificCarrierId = TelephonyManager.UNKNOWN_CARRIER_ID;
+=======
+    private @Nullable String mIccid;
+>>>>>>> e2bfc2e... Add ICCID into CarrierIdentifier
 
     public CarrierIdentifier(String mcc, String mnc, @Nullable String spn, @Nullable String imsi,
             @Nullable String gid1, @Nullable String gid2) {
@@ -85,8 +89,19 @@ public class CarrierIdentifier implements Parcelable {
         mImsi = imsi;
         mGid1 = gid1;
         mGid2 = gid2;
+<<<<<<< HEAD
         mCarrierId = carrierid;
         mSpecificCarrierId = specificCarrierId;
+=======
+        mIccid = null;
+    }
+
+    /** @hide */
+    public CarrierIdentifier(String mcc, String mnc, @Nullable String spn, @Nullable String imsi,
+            @Nullable String gid1, @Nullable String gid2I, @Nullable String iccid) {
+        this(mcc, mnc, spn, imsi, gid1, gid2I);
+        mIccid = iccid;
+>>>>>>> e2bfc2e... Add ICCID into CarrierIdentifier
     }
 
     /**
@@ -113,6 +128,7 @@ public class CarrierIdentifier implements Parcelable {
         mGid2 = gid2;
         mSpn = null;
         mImsi = null;
+        mIccid = null;
     }
 
     /** @hide */
@@ -154,6 +170,7 @@ public class CarrierIdentifier implements Parcelable {
         return mGid2;
     }
 
+<<<<<<< HEAD
     /**
      * Returns the carrier id.
      * @see TelephonyManager#getSimCarrierId()
@@ -174,6 +191,13 @@ public class CarrierIdentifier implements Parcelable {
      */
     public int getSpecificCarrierId() {
         return mSpecificCarrierId;
+=======
+    /** Get the ICCID.
+      * @hide */
+    @Nullable
+    public String getIccid() {
+        return mIccid;
+>>>>>>> e2bfc2e... Add ICCID into CarrierIdentifier
     }
 
     @Override
@@ -192,6 +216,7 @@ public class CarrierIdentifier implements Parcelable {
                 && Objects.equals(mImsi, that.mImsi)
                 && Objects.equals(mGid1, that.mGid1)
                 && Objects.equals(mGid2, that.mGid2)
+<<<<<<< HEAD
                 && Objects.equals(mCarrierId, that.mCarrierId)
                 && Objects.equals(mSpecificCarrierId, that.mSpecificCarrierId);
     }
@@ -199,6 +224,22 @@ public class CarrierIdentifier implements Parcelable {
     @Override
     public int hashCode(){
         return Objects.hash(mMcc, mMnc, mSpn, mImsi, mGid1, mGid2, mCarrierId, mSpecificCarrierId);
+=======
+                && Objects.equals(mIccid, that.mIccid);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 31 * result + Objects.hashCode(mMcc);
+        result = 31 * result + Objects.hashCode(mMnc);
+        result = 31 * result + Objects.hashCode(mSpn);
+        result = 31 * result + Objects.hashCode(mImsi);
+        result = 31 * result + Objects.hashCode(mGid1);
+        result = 31 * result + Objects.hashCode(mGid2);
+        result = 31 * result + Objects.hashCode(mIccid);
+        return result;
+>>>>>>> e2bfc2e... Add ICCID into CarrierIdentifier
     }
 
     @Override
@@ -214,13 +255,18 @@ public class CarrierIdentifier implements Parcelable {
         out.writeString(mImsi);
         out.writeString(mGid1);
         out.writeString(mGid2);
+<<<<<<< HEAD
         out.writeInt(mCarrierId);
         out.writeInt(mSpecificCarrierId);
+=======
+        out.writeString(mIccid);
+>>>>>>> e2bfc2e... Add ICCID into CarrierIdentifier
     }
 
     @Override
     public String toString() {
       return "CarrierIdentifier{"
+<<<<<<< HEAD
               + "mcc=" + mMcc
               + ",mnc=" + mMnc
               + ",spn=" + mSpn
@@ -230,6 +276,16 @@ public class CarrierIdentifier implements Parcelable {
               + ",carrierid=" + mCarrierId
               + ",specificCarrierId=" + mSpecificCarrierId
               + "}";
+=======
+          + "mcc=" + mMcc
+          + ",mnc=" + mMnc
+          + ",spn=" + mSpn
+          + ",imsi=" + mImsi
+          + ",gid1=" + mGid1
+          + ",gid2=" + mGid2
+          + ",iccid=" + mIccid
+          + "}";
+>>>>>>> e2bfc2e... Add ICCID into CarrierIdentifier
     }
 
     /** @hide */
@@ -240,8 +296,12 @@ public class CarrierIdentifier implements Parcelable {
         mImsi = in.readString();
         mGid1 = in.readString();
         mGid2 = in.readString();
+<<<<<<< HEAD
         mCarrierId = in.readInt();
         mSpecificCarrierId = in.readInt();
+=======
+        mIccid = in.readString();
+>>>>>>> e2bfc2e... Add ICCID into CarrierIdentifier
     }
 
     /** @hide */
@@ -251,5 +311,6 @@ public class CarrierIdentifier implements Parcelable {
         int IMSI_PREFIX = 2;
         int GID1 = 3;
         int GID2 = 4;
+        int ICCID = 5;
     }
 }
