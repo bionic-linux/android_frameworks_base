@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -199,6 +200,8 @@ public abstract class ConnectionService extends Service {
     private Conference sNullConference;
     private Object mIdSyncRoot = new Object();
     private int mId = 0;
+    private int mBindId = 0;
+    private String mClassAbbreviation;
 
     private final IBinder mBinder = new IConnectionService.Stub() {
         @Override
@@ -1479,6 +1482,15 @@ public abstract class ConnectionService extends Service {
     /** {@inheritDoc} */
     @Override
     public final IBinder onBind(Intent intent) {
+        int bindId;
+        if (intent == null || !intent.hasExtra(TelecomManager.EXTRA_BIND_ID)) {
+            Log.w(this, "onBind: bind id not found; generating new");
+            bindId = new Random().nextInt();
+        } else {
+            bindId = intent.getIntExtra(TelecomManager.EXTRA_BIND_ID, -1);
+        }
+        mBindId = bindId;
+        mClassAbbreviation = getClassAbbreviation();
         return mBinder;
     }
 
@@ -2436,9 +2448,7 @@ public abstract class ConnectionService extends Service {
             // so just use a random UUID.
             id = UUID.randomUUID().toString();
         } else {
-            // Phone account handle was provided, so use the ConnectionService class name as a
-            // prefix for a unique incremental call ID.
-            id = handle.getComponentName().getClassName() + "@" + getNextCallId();
+            id = getNextCallId();
         }
         addConnection(id, connection);
         return id;
@@ -2479,7 +2489,7 @@ public abstract class ConnectionService extends Service {
             // Conferences do not (yet) have a PhoneAccountHandle associated with them, so we
             // cannot determine a ConnectionService class name to associate with the ID, so use
             // a unique UUID (for now).
-            String id = originalId == null ? UUID.randomUUID().toString() : originalId;
+            String id = originalId == null ? getNextCallId() : originalId;
             mConferenceById.put(id, conference);
             mIdByConference.put(conference, id);
             conference.addListener(mConferenceListener);
@@ -2582,13 +2592,41 @@ public abstract class ConnectionService extends Service {
     }
 
     /**
-     * Retrieves the next call ID as maintainted by the connection service.
+     * Retrieves the next call ID as maintained by the connection service.
+     * This consists of the binding ID concatenated with an integer call count within the current
+     * binding.
      *
      * @return The call ID.
      */
-    private int getNextCallId() {
+    private String getNextCallId() {
         synchronized (mIdSyncRoot) {
-            return ++mId;
+            return mClassAbbreviation + "@" + mBindId + ":" + (++mId);
         }
+    }
+
+    /**
+     * Returns an abbreviated form of the full qualified class name.
+     * E.g. com.android.stuff.things.FooBar results in castFB.
+     * @return abbreviated class name
+     */
+    private String getClassAbbreviation() {
+        StringBuilder classAbbrev = new StringBuilder();
+        String className = getClass().getName();
+        String[] parts = className.split("\\.");
+        if (parts.length < 2) {
+            return className;
+        }
+        // Build class abbreviation from first chars of package name.
+        for (int partIx = 0; partIx < (parts.length - 1); partIx++) {
+            classAbbrev.append(parts[partIx].charAt(0));
+        }
+        // Use upper case chars from class name.
+        String lastPart = parts[parts.length - 1];
+        for (char c : lastPart.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                classAbbrev.append(c);
+            }
+        }
+        return classAbbrev.toString();
     }
 }

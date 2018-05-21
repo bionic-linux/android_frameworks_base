@@ -416,6 +416,16 @@ public class TelecomManager {
             "android.telecom.extra.START_CALL_WITH_RTT";
 
     /**
+     * An integer extra which is passed to a {@link ConnectionService} on binding to provide it
+     * with a unique identifier for the current binding.  The {@link ConnectionService} will use
+     * this when it creates calls from its end.  E.g. used when calling
+     * {@link ConnectionService#addExistingConnection(PhoneAccountHandle, Connection)} to add a
+     * connection to Telecom.
+     * @hide
+     */
+    public static final String EXTRA_BIND_ID = "android.telecom.extra.BIND_ID";
+
+    /**
      * A boolean meta-data value indicating whether an {@link InCallService} implements an
      * in-call user interface. Dialer implementations (see {@link #getDefaultDialerPackage()}) which
      * would also like to replace the in-call interface should set this meta-data to {@code true} in
