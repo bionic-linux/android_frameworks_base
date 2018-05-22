@@ -10633,18 +10633,21 @@ public class BatteryStatsImpl extends BatteryStats {
             }
         }
 
-        long totalCpuClustersTimeMs = 0;
+        long[] totalCpuClustersTimeMs = new long[mKernelCpuSpeedReaders.length];
         // Read the time spent for each cluster at various cpu frequencies.
         final long[][] clusterSpeedTimesMs = new long[mKernelCpuSpeedReaders.length][];
         for (int cluster = 0; cluster < mKernelCpuSpeedReaders.length; cluster++) {
-            clusterSpeedTimesMs[cluster] = mKernelCpuSpeedReaders[cluster].readDelta();
-            if (clusterSpeedTimesMs[cluster] != null) {
-                for (int speed = clusterSpeedTimesMs[cluster].length - 1; speed >= 0; --speed) {
-                    totalCpuClustersTimeMs += clusterSpeedTimesMs[cluster][speed];
+            if (true == mKernelCpuSpeedReaders[cluster].getAvailability()) {
+                clusterSpeedTimesMs[cluster] = mKernelCpuSpeedReaders[cluster].readDelta();
+                if (clusterSpeedTimesMs[cluster] != null) {
+                    for (int speed = clusterSpeedTimesMs[cluster].length - 1; speed >= 0; --speed) {
+                        totalCpuClustersTimeMs[cluster] += clusterSpeedTimesMs[cluster][speed];
+                    }
                 }
             }
         }
-        if (totalCpuClustersTimeMs != 0) {
+        for (int cluster = 0; cluster < mKernelCpuSpeedReaders.length; cluster++) {
+            if (totalCpuClustersTimeMs[cluster] == 0) continue;
             // We have cpu times per freq aggregated over all uids but we need the times per uid.
             // So, we distribute total time spent by an uid to different cpu freqs based on the
             // amount of time cpu was running at that freq.
@@ -10674,7 +10677,7 @@ public class BatteryStatsImpl extends BatteryStats {
                         }
                         cpuSpeeds[speed].addCountLocked(appCpuTimeUs
                                 * clusterSpeedTimesMs[cluster][speed]
-                                / totalCpuClustersTimeMs);
+                                / totalCpuClustersTimeMs[cluster]);
                     }
                 }
             }

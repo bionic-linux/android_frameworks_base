@@ -21,6 +21,7 @@ import android.os.StrictMode;
 import android.system.OsConstants;
 import android.util.Slog;
 
+import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class KernelCpuSpeedReader {
     private final String mProcFile;
     private final long[] mLastSpeedTimesMs;
     private final long[] mDeltaSpeedTimesMs;
+    private boolean mAvailable;
 
     // How long a CPU jiffy is in milliseconds.
     private final long mJiffyMillis;
@@ -54,6 +56,12 @@ public class KernelCpuSpeedReader {
         mDeltaSpeedTimesMs = new long[numSpeedSteps];
         long jiffyHz = Os.sysconf(OsConstants._SC_CLK_TCK);
         mJiffyMillis = 1000/jiffyHz;
+        if (new File(mProcFile).exists()) {
+            mAvailable = true;
+        } else {
+            mAvailable = false;
+            Slog.d(TAG, "Cpufreq Stats file is not found at:" + mProcFile + ".");
+        }
     }
 
     /**
@@ -89,5 +97,9 @@ public class KernelCpuSpeedReader {
             StrictMode.setThreadPolicy(policy);
         }
         return mDeltaSpeedTimesMs;
+    }
+
+    public boolean getAvailability() {
+        return mAvailable;
     }
 }
