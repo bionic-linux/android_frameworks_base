@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2007 The Android Open Source Project
+ * Copyright (C) 2006-2007, 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -10637,10 +10637,12 @@ public class BatteryStatsImpl extends BatteryStats {
         // Read the time spent for each cluster at various cpu frequencies.
         final long[][] clusterSpeedTimesMs = new long[mKernelCpuSpeedReaders.length][];
         for (int cluster = 0; cluster < mKernelCpuSpeedReaders.length; cluster++) {
-            clusterSpeedTimesMs[cluster] = mKernelCpuSpeedReaders[cluster].readDelta();
-            if (clusterSpeedTimesMs[cluster] != null) {
-                for (int speed = clusterSpeedTimesMs[cluster].length - 1; speed >= 0; --speed) {
-                    totalCpuClustersTimeMs += clusterSpeedTimesMs[cluster][speed];
+            if (true == mKernelCpuSpeedReaders[cluster].getAvailability()) {
+                clusterSpeedTimesMs[cluster] = mKernelCpuSpeedReaders[cluster].readDelta();
+                if (clusterSpeedTimesMs[cluster] != null) {
+                    for (int speed = clusterSpeedTimesMs[cluster].length - 1; speed >= 0; --speed) {
+                        totalCpuClustersTimeMs[cluster] += clusterSpeedTimesMs[cluster][speed];
+                    }
                 }
             }
         }
