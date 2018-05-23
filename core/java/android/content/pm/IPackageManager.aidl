@@ -301,6 +301,25 @@ interface IPackageManager {
     void setHomeActivity(in ComponentName className, int userId);
 
     /**
+     * Overrides the label of the activity specified by the component name.
+     * The label will be back to the original one after the next power-cycle.
+     *
+     * @param componentName The component name to specify the activity.
+     * @param label The label to be displayed.
+     * @param userId The user id.
+     */
+    void overrideActivityLabel(in ComponentName componentName, String label, int userId);
+
+    /**
+     * Restores the label of the activity specified by the component name
+     * if the label has been overridden.
+     *
+     * @param componentName The component name to specify the activity.
+     * @param userId The user id.
+     */
+    void restoreActivityLabel(in ComponentName componentName, int userId);
+
+    /**
      * As per {@link android.content.pm.PackageManager#setComponentEnabledSetting}.
      */
     void setComponentEnabledSetting(in ComponentName componentName,

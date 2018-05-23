@@ -25,6 +25,7 @@ import android.content.res.Configuration.NativeConfig;
 import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Printer;
 
 import java.lang.annotation.Retention;
@@ -906,6 +907,8 @@ public class ActivityInfo extends ComponentInfo implements Parcelable {
      */
     public String parentActivityName;
 
+    private CharSequence mBackedUpLabel;
+
     /**
      * Screen rotation animation desired by the activity, with values as defined
      * for {@link android.view.WindowManager.LayoutParams#rotationAnimation}.
@@ -970,6 +973,7 @@ public class ActivityInfo extends ComponentInfo implements Parcelable {
         softInputMode = orig.softInputMode;
         uiOptions = orig.uiOptions;
         parentActivityName = orig.parentActivityName;
+        mBackedUpLabel = orig.mBackedUpLabel;
         maxRecents = orig.maxRecents;
         lockTaskLaunchMode = orig.lockTaskLaunchMode;
         windowLayout = orig.windowLayout;
@@ -978,6 +982,35 @@ public class ActivityInfo extends ComponentInfo implements Parcelable {
         rotationAnimation = orig.rotationAnimation;
         colorMode = orig.colorMode;
         maxAspectRatio = orig.maxAspectRatio;
+    }
+
+    /**
+     * Overrides the non-localized label of this activity.
+     *
+     * @return true if the label was changed.
+     * @hide
+     */
+    public boolean overrideNonLocalizedLabel(CharSequence label) {
+        if (label != null) {
+            label = label.toString().trim();
+            if (label.length() > 0 && !TextUtils.equals(nonLocalizedLabel, label)) {
+                // Back up the non-localized lable, if it has not been done yet.
+                if (mBackedUpLabel == null) {
+                    mBackedUpLabel = (nonLocalizedLabel != null) ? nonLocalizedLabel : new String();
+                }
+                nonLocalizedLabel = label;
+                return true;
+            }
+        } else {
+            // Restore the original non-localized label, if exists.
+            if (mBackedUpLabel != null) {
+                nonLocalizedLabel = (mBackedUpLabel.length() > 0) ? mBackedUpLabel : null;
+                mBackedUpLabel = null;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -1169,6 +1202,7 @@ public class ActivityInfo extends ComponentInfo implements Parcelable {
         dest.writeInt(softInputMode);
         dest.writeInt(uiOptions);
         dest.writeString(parentActivityName);
+        TextUtils.writeToParcel(mBackedUpLabel, dest, parcelableFlags);
         dest.writeInt(persistableMode);
         dest.writeInt(maxRecents);
         dest.writeInt(lockTaskLaunchMode);
@@ -1297,6 +1331,7 @@ public class ActivityInfo extends ComponentInfo implements Parcelable {
         softInputMode = source.readInt();
         uiOptions = source.readInt();
         parentActivityName = source.readString();
+        mBackedUpLabel = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
         persistableMode = source.readInt();
         maxRecents = source.readInt();
         lockTaskLaunchMode = source.readInt();
