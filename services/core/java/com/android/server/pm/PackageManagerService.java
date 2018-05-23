@@ -20636,6 +20636,60 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
     }
 
     @Override
+    public void overrideActivityLabel(ComponentName componentName, String label, int userId) {
+        if (TextUtils.isEmpty(label)) {
+            throw new IllegalArgumentException("Activity label should be a valid String.");
+        }
+        updateActivityLabel(componentName, label, userId);
+    }
+
+    @Override
+    public void restoreActivityLabel(ComponentName componentName, int userId) {
+        updateActivityLabel(componentName, null, userId);
+    }
+
+    private void updateActivityLabel(ComponentName componentName, String label, int userId) {
+        if (componentName == null) {
+            throw new IllegalArgumentException("No component is specified to update the label.");
+        }
+
+        String packageName = componentName.getPackageName();
+        int targetUid = getPackageUid(packageName, PackageManager.MATCH_ALL, userId);
+        int callingUid = Binder.getCallingUid();
+        if (!UserHandle.isSameApp(callingUid, targetUid)) {
+            throw new SecurityException("The calling UID (" + callingUid
+                    + ") does not match the target UID (" + targetUid + ")");
+        }
+
+        synchronized (mPackages) {
+            PackageParser.Package p = mPackages.get(packageName);
+            if (p == null || (!p.isSystem() && !p.isUpdatedSystemApp())) {
+                throw new SecurityException("Changing the label is not allowed : " + packageName);
+            }
+
+            PackageParser.Activity activity = mActivities.mActivities.get(componentName);
+            if (activity == null) {
+                throw new IllegalArgumentException("Incorrect component name was specified.");
+            }
+
+            if (activity.info.overrideNonLocalizedLabel(label)) {
+                ArrayList<String> components = mPendingBroadcasts.get(userId, packageName);
+                if (components == null) {
+                    components = new ArrayList<String>();
+                    mPendingBroadcasts.put(userId, packageName, components);
+                }
+                String className = componentName.getClassName();
+                if (!components.contains(className)) {
+                    components.add(className);
+                }
+                if (!mHandler.hasMessages(SEND_PENDING_BROADCAST)) {
+                    mHandler.sendEmptyMessageDelayed(SEND_PENDING_BROADCAST, BROADCAST_DELAY);
+                }
+            }
+        }
+    }
+
+    @Override
     public void setComponentEnabledSetting(ComponentName componentName,
             int newState, int flags, int userId) {
         if (!sUserManager.exists(userId)) return;
