@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3613bc6b_0583fd68",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-05-24T13:52:25Z",
+      "side": 1,
+      "message": "Get",
+      "range": {
+        "startLine": 203,
+        "startChar": 17,
+        "endLine": 203,
+        "endChar": 21
+      },
+      "revId": "a91fbc37b910890c32c97582a7e71b042e6c1a4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290e955a_da43f906",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2018-05-24T13:52:25Z",
+      "side": 1,
+      "message": "buildGetCecVersionCommand",
+      "range": {
+        "startLine": 209,
+        "startChar": 26,
+        "endLine": 209,
+        "endChar": 48
+      },
+      "revId": "a91fbc37b910890c32c97582a7e71b042e6c1a4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
