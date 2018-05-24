@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cbc1209_6be59508",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4444,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2018-05-24T21:20:58Z",
+      "side": 1,
+      "message": "Please wrap at 100 chars.",
+      "range": {
+        "startLine": 4444,
+        "startChar": 93,
+        "endLine": 4444,
+        "endChar": 105
+      },
+      "revId": "d6e647d49682abb5d8b09b16e551dbe6ccf3cfaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b003240_f0e98819",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4476,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2018-05-24T21:20:58Z",
+      "side": 1,
+      "message": "isDigit accepts non-latin digits (e.g. arabic digits).\n\nPlease use this check: \u00270\u0027 \u003c\u003d ch \u0026\u0026 ch \u003c\u003d \u00279\u0027",
+      "range": {
+        "startLine": 4476,
+        "startChar": 36,
+        "endLine": 4476,
+        "endChar": 43
+      },
+      "revId": "d6e647d49682abb5d8b09b16e551dbe6ccf3cfaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
