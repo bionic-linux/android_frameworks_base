@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a340a705_f48cb775",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4445,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2018-05-25T13:44:56Z",
+      "side": 1,
+      "message": "You can just use the realQuality variable above (there are a few more possible values returned from that but that\u0027s fine)",
+      "range": {
+        "startLine": 4445,
+        "startChar": 46,
+        "endLine": 4445,
+        "endChar": 73
+      },
+      "revId": "6638ef3cb3d6b1b2d6e29608e12e953565863991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
