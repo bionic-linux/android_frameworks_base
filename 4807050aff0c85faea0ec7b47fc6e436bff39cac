@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "744ab93c_a20c7e64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-05-25T09:20:08Z",
+      "side": 1,
+      "message": "The code in this patch is fine. Can you please just reword this cover comment for clarity ?\n\nHere is a suggestion of wording :\n\n\n    Fix: ConnectivityManager is initialized with a wrong context\n    \n    ActivityThread#setHttpProxy uses a system context to get\n    a ConnectivityManager instance. If it\u0027s not already cached, the\n    system service registry will cache this instance initialized\n    with the system context, and subsequent calls to get this service\n    will return the bad instance.\n    This patch uses the application context instead, unless it\u0027s\n    not available for some unlikely reason.\n    \n    A possible symptom of this issue is to have Bluetooth tethering\n    failing with a security exception, because it\u0027s requested by\n    the \"android\" package without system uid.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 72
+      },
+      "revId": "4807050aff0c85faea0ec7b47fc6e436bff39cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
