@@ -893,6 +893,9 @@ public class Vpn {
         mNetworkCapabilities.setEstablishingVpnAppUid(Binder.getCallingUid());
         mNetworkCapabilities.setUids(createUserAndRestrictedProfilesRanges(mUserHandle,
                 mConfig.allowedApplications, mConfig.disallowedApplications));
+        if (null != mConfig.splitDnsDomains) {
+            lp.setSplitDnsDomains(mConfig.splitDnsDomains);
+        }
         long token = Binder.clearCallingIdentity();
         try {
             mNetworkAgent = new NetworkAgent(mLooper, mContext, NETWORKTYPE /* logtag */,

@@ -4835,6 +4835,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId);
+        updateSplitDnsDomains(newLp, oldLp, netId);
         // Make sure LinkProperties represents the latest private DNS status.
         // This does not need to be done before updateDnses because the
         // LinkProperties are not the source of the private DNS configuration.
@@ -4981,6 +4982,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mDnsManager.setDnsConfigurationForNetwork(netId, newLp, isDefaultNetwork);
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
+        }
+    }
+
+    private void updateSplitDnsDomains(LinkProperties newLp, LinkProperties oldLp, int netId) {
+        if (oldLp == null && !newLp.hasSplitDns()) {
+            return;  // no need to do anything
+        }
+
+        if (oldLp != null && newLp.isIdenticalSplitDnsDomains(oldLp)) {
+            return;  // no updating necessary
+        }
+
+        final Collection<String> domains = newLp.getSplitDnsDomains();
+        if (DBG) {            
+            log("Setting split DNS domains for network " + netId + " to " + domains);
+        }
+        try {
+            mNMS.setSplitDnsDomainsForNetwork(netId, domains.toArray(new String[domains.size()]));
+        } catch (Exception e) {
+            loge("Exception in setSplitDnsDomainsForNetwork: " + e);
         }
     }
 

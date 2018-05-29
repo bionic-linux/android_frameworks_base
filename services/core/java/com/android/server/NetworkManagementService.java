@@ -162,6 +162,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     static final String NETD_SERVICE_NAME = "netd";
 
     private static final int MAX_UID_RANGES_PER_COMMAND = 10;
+    private static final int MAX_SPLIT_DNS_DOMAINS_PER_COMMAND = 10;
 
     /**
      * Name representing {@link #setGlobalAlert(long)} limit when delivered to
@@ -1824,6 +1825,27 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                     netId, servers, domains, params, tlsHostname, tlsServers, tlsFingerprints);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void setSplitDnsDomainsForNetwork(int netId, String[] domains) {
+        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        Object[] argv = new Object[3 + MAX_SPLIT_DNS_DOMAINS_PER_COMMAND];
+        argv[0] = "splitdns";
+        argv[1] = "set";
+        argv[2] = netId;
+        int argc = 3;
+        for (int i = 0; i < domains.length; i++) {
+            argv[argc++] = domains[i];
+            if (i == (domains.length - 1) || argc == argv.length) {
+                try {
+                    mConnector.execute("network", Arrays.copyOf(argv, argc));
+                } catch (NativeDaemonConnectorException e) {
+                    throw e.rethrowAsParcelableException();
+                }
+                argc = 3;
+            }
         }
     }
 

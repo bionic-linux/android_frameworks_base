@@ -54,6 +54,7 @@ public final class LinkProperties implements Parcelable {
     private ArrayList<LinkAddress> mLinkAddresses = new ArrayList<>();
     private ArrayList<InetAddress> mDnses = new ArrayList<>();
     private ArrayList<InetAddress> mValidatedPrivateDnses = new ArrayList<>();
+    private ArrayList<String> mSplitDnsDomains = new ArrayList<>();
     private boolean mUsePrivateDns;
     private String mPrivateDnsServerName;
     private String mDomains;
@@ -185,6 +186,7 @@ public final class LinkProperties implements Parcelable {
             }
             setMtu(source.mMtu);
             mTcpBufferSizes = source.mTcpBufferSizes;
+            mSplitDnsDomains = source.mSplitDnsDomains;
         }
     }
 
@@ -461,6 +463,32 @@ public final class LinkProperties implements Parcelable {
      */
     public @Nullable String getPrivateDnsServerName() {
         return mPrivateDnsServerName;
+    }
+
+    /**
+     * Replaces the split DNS domains in this {@code LinkProperties} with
+     * the given {@link Collection} of {@link String} objects.
+     *
+     * @param splitDnsDomains The {@link Collection} of split DNS domains to set in this object.
+     * @hide
+     */
+    public void setSplitDnsDomains(Collection<String> splitDnsDomains) {
+        mSplitDnsDomains.clear();
+        for (String domain: splitDnsDomains) {
+            if (!mSplitDnsDomains.contains(domain)) {
+                mSplitDnsDomains.add(domain);
+            }
+        }
+    }
+
+    /**
+     * Returns all the split DNS domains for this network.
+     *
+     * @return An umodifiable {@link List} of {@link String} for Split DNS domains on
+     *         this link.
+     */
+    public List<String> getSplitDnsDomains() {
+        return Collections.unmodifiableList(mSplitDnsDomains);
     }
 
     /**
@@ -765,6 +793,7 @@ public final class LinkProperties implements Parcelable {
         mIfaceName = null;
         mLinkAddresses.clear();
         mDnses.clear();
+        mSplitDnsDomains.clear();
         mUsePrivateDns = false;
         mPrivateDnsServerName = null;
         mDomains = null;
@@ -965,6 +994,16 @@ public final class LinkProperties implements Parcelable {
     }
 
     /**
+     * Returns true if this link has split DNS domains configured.
+     *
+     * @return {@code true} if the link is configured for split DNS, {@code false} otherwise.
+     * @hide
+     */
+    public boolean hasSplitDns() {
+        return !mSplitDnsDomains.isEmpty();
+    }
+
+    /**
      * Returns true if this link is provisioned for global IPv4 connectivity.
      * This requires an IP address, default route, and DNS server.
      *
@@ -1114,6 +1153,20 @@ public final class LinkProperties implements Parcelable {
         Collection<InetAddress> targetDnses = target.getValidatedPrivateDnsServers();
         return (mValidatedPrivateDnses.size() == targetDnses.size())
                 ? mValidatedPrivateDnses.containsAll(targetDnses) : false;
+    }
+
+    /**
+     * Compares this {@code LinkProperties} split DNS domains against the target
+     *
+     * @param target LinkProperties to compare.
+     * @return {@code true} if both are identical, {@code false} otherwise.
+     * @hide
+     */
+    public boolean isIdenticalSplitDnsDomains(LinkProperties target) {
+        Collection<String> targetSplitDnsDomains = target.getSplitDnsDomains();
+
+        return (mSplitDnsDomains.size() == targetSplitDnsDomains.size())
+                ? mSplitDnsDomains.containsAll(targetSplitDnsDomains) : false;
     }
 
     /**
@@ -1373,6 +1426,7 @@ public final class LinkProperties implements Parcelable {
         }
         ArrayList<LinkProperties> stackedLinks = new ArrayList<>(mStackedLinks.values());
         dest.writeList(stackedLinks);
+        dest.writeStringList(mSplitDnsDomains);
     }
 
     /**
@@ -1421,6 +1475,8 @@ public final class LinkProperties implements Parcelable {
                 for (LinkProperties stackedLink: stackedLinks) {
                     netProp.addStackedLink(stackedLink);
                 }
+
+                in.readStringList(netProp.mSplitDnsDomains);
                 return netProp;
             }
 

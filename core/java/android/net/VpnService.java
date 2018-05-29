@@ -563,6 +563,34 @@ public class VpnService extends Service {
         }
 
         /**
+         * Adds a split-DNS domain to the VPN interface. This domain and its subdomains are always
+         * resolved using VPN network.
+         *
+         * <p>If no domains are added (the default), all DNS queries use the VPN DNS servers
+         * configured using {@link #addDnsServer(InetAddress)}.
+         *
+         * <p>If one or more split-DNS domains are added, only matching DNS queries use the VPN DNS
+         * servers. Non-matching queries use the public network's DNS servers.
+         *
+         * <p>For example, if {@code example.com} is set as a split-DNS domain, {@code example.com}
+         * and {@code email.example.com} are resolved on VPN network, while for
+         * {@code myexample.com} and {@code example.com.test} public network DNS is used.
+         *
+         * @throws IllegalArgumentException if the domain is invalid
+         */
+        public Builder addSplitDnsDomain(String domain) {
+            if (null == domain) {
+                throw new IllegalArgumentException("Bad domain");
+            }
+
+            if (mConfig.splitDnsDomains == null) {
+                mConfig.splitDnsDomains = new ArrayList<String>();
+            }
+            mConfig.splitDnsDomains.add(domain);
+            return this;
+        }
+
+        /**
          * Add a DNS server to the VPN connection. Both IPv4 and IPv6
          * addresses are supported. If none is set, the DNS servers of
          * the default network will be used.

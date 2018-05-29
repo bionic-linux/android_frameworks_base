@@ -104,6 +104,7 @@ public class VpnConfig implements Parcelable {
     public boolean allowIPv4;
     public boolean allowIPv6;
     public Network[] underlyingNetworks;
+    public List<String> splitDnsDomains;
 
     public void updateAllowedFamilies(InetAddress address) {
         if (address instanceof Inet4Address) {
@@ -164,6 +165,7 @@ public class VpnConfig implements Parcelable {
         out.writeInt(allowIPv4 ? 1 : 0);
         out.writeInt(allowIPv6 ? 1 : 0);
         out.writeTypedArray(underlyingNetworks, flags);
+        out.writeStringList(splitDnsDomains);
     }
 
     public static final Parcelable.Creator<VpnConfig> CREATOR =
@@ -189,6 +191,7 @@ public class VpnConfig implements Parcelable {
             config.allowIPv4 = in.readInt() != 0;
             config.allowIPv6 = in.readInt() != 0;
             config.underlyingNetworks = in.createTypedArray(Network.CREATOR);
+            config.splitDnsDomains = in.createStringArrayList();   
             return config;
         }
 
