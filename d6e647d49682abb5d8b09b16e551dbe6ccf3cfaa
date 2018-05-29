@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f05176e_4b4ebaec",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4444,
+      "author": {
+        "id": 1268992
+      },
+      "writtenOn": "2018-05-29T03:07:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5cbc1209_6be59508",
+      "range": {
+        "startLine": 4444,
+        "startChar": 93,
+        "endLine": 4444,
+        "endChar": 105
+      },
+      "revId": "d6e647d49682abb5d8b09b16e551dbe6ccf3cfaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b003240_f0e98819",
         "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d6e647d49682abb5d8b09b16e551dbe6ccf3cfaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08003f2a_3ed09b47",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4476,
+      "author": {
+        "id": 1268992
+      },
+      "writtenOn": "2018-05-29T03:07:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b003240_f0e98819",
+      "range": {
+        "startLine": 4476,
+        "startChar": 36,
+        "endLine": 4476,
+        "endChar": 43
+      },
+      "revId": "d6e647d49682abb5d8b09b16e551dbe6ccf3cfaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
