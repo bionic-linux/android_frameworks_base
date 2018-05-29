@@ -563,6 +563,74 @@ public class VpnService extends Service {
         }
 
         /**
+         * Add an exclude route to the VPN interface. Both IPv4 and IPv6
+         * routes are supported.
+         *
+         * Adding a route implicitly allows traffic from that address family
+         * (i.e., IPv4 or IPv6) to be routed outside the VPN. @see #allowFamily
+         *
+         * @throws IllegalArgumentException if the route is invalid.
+         */
+        public Builder addExcludeRoute(InetAddress address, int prefixLength) {
+            check(address, prefixLength);
+
+            int offset = prefixLength / 8;
+            byte[] bytes = address.getAddress();
+            if (offset < bytes.length) {
+                for (bytes[offset] <<= prefixLength % 8; offset < bytes.length; ++offset) {
+                    if (bytes[offset] != 0) {
+                        throw new IllegalArgumentException("Bad address");
+                    }
+                }
+            }
+            mRoutes.add(new RouteInfo(new IpPrefix(address, prefixLength),
+                                        null,
+                                        null, RouteInfo
+                                        .RTN_THROW));
+            mConfig.updateAllowedFamilies(address);
+            return this;
+        }
+
+        /**
+         * Convenience method to add an exclude route to the VPN interface
+         * using a numeric address string. See {@link InetAddress} for the
+         * definitions of numeric address formats.
+         *
+         * Adding a route implicitly allows traffic from that address family
+         * (i.e., IPv4 or IPv6) to be routed outside the VPN. @see #allowFamily
+         *
+         * @throws IllegalArgumentException if the route is invalid.
+         * @see #addRoute(InetAddress, int)
+         */
+        public Builder addExcludeRoute(String address, int prefixLength) {
+            return addExcludeRoute(InetAddress.parseNumericAddress(address), prefixLength);
+        }
+
+        /**
+         * Add a split DNS domain to the VPN interface.
+         *
+         * If none is added (the default), all DNS queries will use the VPN DNS servers
+         * configured using {@link #addDnsServer(InetAddress)}
+         *
+         * If any split DNS domain is added, only matching DNS queries will use the
+         * VPN DNS servers. Non-matching queries will use the public network's DNS servers.
+         *
+         *
+         * @throws IllegalArgumentException if the domain is invalid
+         */
+        public Builder addSplitDnsDomain(String domain) {
+            if (null == domain) {
+                throw new IllegalArgumentException("Bad domain");
+            }
+
+            if (mConfig.splitDnsDomains == null) {
+                mConfig.splitDnsDomains = new ArrayList<String>();
+            }
+            mConfig.splitDnsDomains.add(domain);
+            return this;
+        }
+
+        /**
          * Add a DNS server to the VPN connection. Both IPv4 and IPv6
          * addresses are supported. If none is set, the DNS servers of
          * the default network will be used.
