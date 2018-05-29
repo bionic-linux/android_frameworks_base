@@ -338,6 +338,11 @@ interface INetworkManagementService
     void setDnsConfigurationForNetwork(int netId, in String[] servers, in String[] domains,
             in int[] params, String tlsHostname, in String[] tlsServers);
 
+    /**
+     * Configure split DNS domains for the given network.
+     */
+    void setSplitDnsDomainsForNetwork(int netId, in String[] domains);
+
     void setFirewallEnabled(boolean enabled);
     boolean isFirewallEnabled();
     void setFirewallInterfaceRule(String iface, boolean allow);
