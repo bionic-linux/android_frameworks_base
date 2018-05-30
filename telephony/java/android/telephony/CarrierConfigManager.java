@@ -2105,6 +2105,13 @@ public class CarrierConfigManager {
     public static final String KEY_CALL_REDIRECTION_SERVICE_COMPONENT_NAME_STRING =
             "call_redirection_service_component_name_string";
 
+    /**
+     * Flag indicating whether to support "Network default" option in Caller ID settings for Calling
+     * Line Identification Restriction (CLIR).
+     */
+    public static final String KEY_SUPPORT_CLIR_NETWORK_DEFAULT_BOOL =
+            "support_clir_network_default_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2442,6 +2449,7 @@ public class CarrierConfigManager {
                 });
         sDefaults.putString(KEY_WCDMA_DEFAULT_SIGNAL_STRENGTH_MEASUREMENT_STRING, "");
         sDefaults.putBoolean(KEY_CONFIG_SHOW_ORIG_DIAL_STRING_FOR_CDMA_BOOL, false);
+        sDefaults.putBoolean(KEY_SUPPORT_CLIR_NETWORK_DEFAULT_BOOL, true);
     }
 
     /**
