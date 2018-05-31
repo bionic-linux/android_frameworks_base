@@ -177,6 +177,7 @@ oneway interface IImsCallSessionListener {
      */
     void callSessionRttMessageReceived(in String rttMessage);
 
+<<<<<<< HEAD
     /**
      * While in call, there has been a change in RTT audio indicator.
      * @param profile updated ImsStreamMediaProfile
@@ -188,4 +189,13 @@ oneway interface IImsCallSessionListener {
      * @param callQuality then updated call quality
      */
     void callQualityChanged(in CallQuality callQuality);
+=======
+    /*
+     * While in call, there has been a change in the call session
+     * property.
+     * @param property - an integer containing masks for different properties
+     * {e.g. @see Connection#PROPERTY_RTT_AUDIO_SPEECH}
+     */
+    void callSessionPropertyChanged(in int property);
+>>>>>>> 4f93165... IMS: Propagate call session property changed message
 }

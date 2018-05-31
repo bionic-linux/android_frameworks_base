@@ -505,12 +505,21 @@ public abstract class Connection extends Conferenceable {
             "android.telecom.extra.ORIGINAL_CONNECTION_ID";
 
     /**
+<<<<<<< HEAD
      * Boolean connection extra key set on the extras passed to
      * {@link Connection#sendConnectionEvent} which indicates that audio is present
      * on the RTT call when the extra value is true.
      */
     public static final String EXTRA_IS_RTT_AUDIO_PRESENT =
             "android.telecom.extra.IS_RTT_AUDIO_PRESENT";
+=======
+     * Integer connection extra key on a {@link Connection} to indicate that there is an updated
+     * call property
+     * @hide
+     */
+    public static final String EXTRA_CALL_PROPERTY =
+            "android.telecom.extra.EXTRA_CALL_PROPERTY";
+>>>>>>> 4f93165... IMS: Propagate call session property changed message
 
     /**
      * Connection event used to inform Telecom that it should play the on hold tone.  This is used
@@ -632,6 +641,7 @@ public abstract class Connection extends Conferenceable {
             "android.telecom.event.HANDOVER_FAILED";
 
     /**
+<<<<<<< HEAD
      * Connection extra key used to store SIP invite fields for an incoming call for IMS calls
      */
     public static final String EXTRA_SIP_INVITE = "android.telecom.extra.SIP_INVITE";
@@ -642,9 +652,25 @@ public abstract class Connection extends Conferenceable {
      */
     public static final String EVENT_RTT_AUDIO_INDICATION_CHANGED =
             "android.telecom.event.RTT_AUDIO_INDICATION_CHANGED";
+=======
+     * Connection event used to inform an {@link InCallService} that the call session property
+     * has changed
+     * @hide
+     */
+    public static final String EVENT_CALL_PROPERTY_CHANGED =
+            "android.telecom.event.EVENT_CALL_PROPERTY_CHANGED";
+>>>>>>> 4f93165... IMS: Propagate call session property changed message
 
     // Flag controlling whether PII is emitted into the logs
     private static final boolean PII_DEBUG = Log.isLoggable(android.util.Log.DEBUG);
+
+    /**
+     * Indicates that the connection has speech from remote user for a RTT call when set.
+     * If the property is unset, that indicates silence from remote user
+     *
+     * @hide
+     */
+    public static final int PROPERTY_RTT_AUDIO_SPEECH = 0x1;
 
     /**
      * Whether the given capabilities support the specified capability.
