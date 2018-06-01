@@ -22,6 +22,30 @@
       "revId": "c8cb0f71d2ad872773cd275e5a8d93190d56ee66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3c79ec_a68c6512",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-06-01T09:55:53Z",
+      "side": 1,
+      "message": "Actually, a perfectly valid way to use IpClient would be with an IPv6-only ProvisioningConfiguration and in that context a null IpClient would mean: \"just do automatic IPv6 and this NetworkAgent doesn\u0027t care about provisioning or loss thereof nor any linkproperties updates\".  Or maybe the lowpan case where they just pass in an InitialConfig monitor the rest themselves...\n\nIn general, it does seem suspect if the caller doesn\u0027t need or want LinkProperties at least.  idk",
+      "parentUuid": "af5263f0_104e0de7",
+      "range": {
+        "startLine": 237,
+        "startChar": 24,
+        "endLine": 237,
+        "endChar": 42
+      },
+      "revId": "c8cb0f71d2ad872773cd275e5a8d93190d56ee66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
