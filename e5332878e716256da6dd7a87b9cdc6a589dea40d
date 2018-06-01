@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1a3d021_4f8c3454",
+        "filename": "telephony/java/android/telephony/CellIdentityTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "add spec reference",
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "107afe3a_64ba8d45",
+        "filename": "telephony/java/android/telephony/CellIdentityTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "@param uarfcn 16-bit UMTS Absolute RF Channel Number described in  TS 25.101 section 5.4.3",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 6
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73d97e1b_ace71306",
+        "filename": "telephony/java/android/telephony/CellIdentityTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "still needed?",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 70
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa4b7bc3_805265b2",
+        "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "maybe hash these together?\n\nreturn Objects.hash(super.hashCode(), mCellIdentityTdscdma,\nmCellSignalStrengthTdscdma);",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 106
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d56d8c16_04b58639",
+        "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "is this a public api?",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 13
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96df3375_ca7deb34",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "INT_MAX if unknown",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf81a26f_8a03b462",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "if the asu is \u003e 99 then it\u0027s invalid, right?",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 55
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff067553_d34a4495",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "what is this for?",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 31
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef8ca9af_519a0982",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-06-01T23:30:47Z",
+      "side": 1,
+      "message": "INT_MAX if unknown",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 88
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
