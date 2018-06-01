@@ -221,7 +221,7 @@ public class SmsMessage extends SmsMessageBase {
      */
     public static SubmitPdu getSubmitPdu(String scAddr, String destAddr, String message,
             boolean statusReportRequested, SmsHeader smsHeader) {
-        return getSubmitPdu(scAddr, destAddr, message, statusReportRequested, smsHeader, -1);
+        return getSubmitPdu(scAddr, destAddr, message, statusReportRequested, smsHeader, -1, null);
     }
 
     /**
@@ -241,6 +241,33 @@ public class SmsMessage extends SmsMessageBase {
      */
     public static SubmitPdu getSubmitPdu(String scAddr, String destAddr, String message,
             boolean statusReportRequested, SmsHeader smsHeader, int priority) {
+            return getSubmitPdu(scAddr, destAddr, message, statusReportRequested, smsHeader,
+                    priority, null);
+    }
+
+    /**
+     * Get an SMS-SUBMIT PDU for a destination address and a message
+     *
+     * @param scAddr Service Centre address. Null means use default.
+     * @param destAddr Address of the recipient.
+     * @param message String representation of the message payload.
+     * @param statusReportRequested Indicates whether a report is requested for this message.
+     * @param smsHeader Array containing the data for the User Data Header, preceded by the Element
+     *     Identifiers.
+     * @param priority Priority level of the message
+     * @param callbackNumber Call back number
+     * @return a <code>SubmitPdu</code> containing the encoded SC address, if applicable, and the
+     *     encoded message. Returns null on encode error.
+     * @hide
+     */
+    public static SubmitPdu getSubmitPdu(
+            String scAddr,
+            String destAddr,
+            String message,
+            boolean statusReportRequested,
+            SmsHeader smsHeader,
+            int priority,
+            String callbackNumber) {
 
         /**
          * TODO(cleanup): Do we really want silent failure like this?
@@ -254,7 +281,8 @@ public class SmsMessage extends SmsMessageBase {
         UserData uData = new UserData();
         uData.payloadStr = message;
         uData.userDataHeader = smsHeader;
-        return privateGetSubmitPdu(destAddr, statusReportRequested, uData, priority);
+        return privateGetSubmitPdu(
+                destAddr, statusReportRequested, uData, priority, callbackNumber);
     }
 
     /**
@@ -324,7 +352,29 @@ public class SmsMessage extends SmsMessageBase {
      */
     public static SubmitPdu getSubmitPdu(String destAddr, UserData userData,
             boolean statusReportRequested, int priority) {
-        return privateGetSubmitPdu(destAddr, statusReportRequested, userData, priority);
+        return privateGetSubmitPdu(
+                destAddr, statusReportRequested, userData, priority, null);
+    }
+
+    /**
+     * Get an SMS-SUBMIT PDU for a data message to a destination address &amp; port
+     *
+     * @param destAddr the address of the destination for the message
+     * @param userData the data for the message
+     * @param statusReportRequested Indicates whether a report is requested for this message.
+     * @param priority Priority level of the message
+     * @param callbackNumber Call back number
+     * @return a <code>SubmitPdu</code> containing the encoded SC address, if applicable, and the
+     *     encoded message. Returns null on encode error.
+     */
+    public static SubmitPdu getSubmitPdu(
+            String destAddr,
+            UserData userData,
+            boolean statusReportRequested,
+            int priority,
+            String callbackNumber) {
+        return privateGetSubmitPdu(
+                destAddr, statusReportRequested, userData, priority, callbackNumber);
     }
 
     /**
@@ -790,6 +840,26 @@ public class SmsMessage extends SmsMessageBase {
             mMessageBody = mBearerData.userData.payloadStr;
         }
 
+        if (mBearerData.callbackNumber != null) {
+            Rlog.d(LOG_TAG, "parseSms() callbackNumber = " + mBearerData.callbackNumber);
+            mCallbackNumber = mBearerData.callbackNumber.address;
+        }
+
+        if (mBearerData.priorityIndicatorSet) {
+            Rlog.d(LOG_TAG, "parseSms() priority = " + mBearerData.priority);
+            mSmsPriority = mBearerData.priority;
+        }
+
+        if (mBearerData.privacyIndicatorSet) {
+            Rlog.d(LOG_TAG, "parseSms() privacy indicator = " + mBearerData.privacy);
+            mSmsPrivacy = mBearerData.privacy;
+        }
+
+        if (mBearerData.languageIndicatorSet) {
+            Rlog.d(LOG_TAG, "parseSms() language indicator = " + mBearerData.language);
+            mSmsLanguage = mBearerData.language;
+        }
+
         if (mOriginatingAddress != null) {
             decodeSmsDisplayAddress(mOriginatingAddress);
             if (VDBG) Rlog.v(LOG_TAG, "SMS originating address: " + mOriginatingAddress.address);
@@ -925,15 +995,19 @@ public class SmsMessage extends SmsMessageBase {
      */
     private static SubmitPdu privateGetSubmitPdu(String destAddrStr, boolean statusReportRequested,
             UserData userData) {
-        return privateGetSubmitPdu(destAddrStr, statusReportRequested, userData, -1);
+        return privateGetSubmitPdu(destAddrStr, statusReportRequested, userData, -1, null);
     }
 
     /**
      * Creates BearerData and Envelope from parameters for a Submit SMS.
      * @return byte stream for SubmitPdu.
      */
-    private static SubmitPdu privateGetSubmitPdu(String destAddrStr, boolean statusReportRequested,
-            UserData userData, int priority) {
+    private static SubmitPdu privateGetSubmitPdu(
+            String destAddrStr,
+            boolean statusReportRequested,
+            UserData userData,
+            int priority,
+            String callbackNumber) {
 
         /**
          * TODO(cleanup): give this function a more meaningful name.
@@ -965,6 +1039,13 @@ public class SmsMessage extends SmsMessageBase {
         if (priority >= PRIORITY_NORMAL && priority <= PRIORITY_EMERGENCY) {
             bearerData.priorityIndicatorSet = true;
             bearerData.priority = priority;
+        }
+        if (callbackNumber != null && callbackNumber.length() > 0) {
+            Rlog.d(LOG_TAG, "callback number present: " + callbackNumber);
+            bearerData.callbackNumber = CdmaSmsAddress.parse(callbackNumber);
+            if (bearerData.callbackNumber == null) {
+                Rlog.e(LOG_TAG, "could not assign value. bearerData.callbackNumber = null");
+            }
         }
 
         bearerData.userData = userData;

@@ -735,6 +735,30 @@ public class SmsMessage {
         return mWrappedSmsMessage.getProtocolIdentifier();
     }
 
+    /** Get call back number.
+    */
+    public String getCallbackNumber() {
+        return mWrappedSmsMessage.getCallbackNumber();
+    }
+
+    /** Get sms priority.
+    */
+    public int getSmsPriority() {
+        return mWrappedSmsMessage.getSmsPriority();
+    }
+
+    /** Get sms privacy.
+    */
+    public int getSmsPrivacy() {
+        return mWrappedSmsMessage.getSmsPrivacy();
+    }
+
+    /** Get sms language indicator value
+    */
+    public int getSmsLanguage() {
+        return mWrappedSmsMessage.getSmsLanguage();
+    }
+
     /**
      * See TS 23.040 9.2.3.9 returns true if this is a "replace short message"
      * SMS

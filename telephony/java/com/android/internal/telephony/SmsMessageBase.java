@@ -93,6 +93,18 @@ public abstract class SmsMessageBase {
      */
     protected int mStatusOnIcc = -1;
 
+    /** Call back number for message */
+    protected String mCallbackNumber = null;
+
+    /** Sms priority value */
+    protected int mSmsPriority = -1; /* Priority not set */
+
+    /** Sms privacy indicator */
+    protected int mSmsPrivacy = -1; /* Privacy not set */
+
+    /** Sms language indicator */
+    protected int mSmsLanguage = -1; /* Language indicator not set*/
+
     /**
      * Record index of message in the EF.
      */
@@ -229,6 +241,26 @@ public abstract class SmsMessageBase {
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public abstract int getProtocolIdentifier();
+
+    /** Get call back number. */
+    public String getCallbackNumber() {
+        return mCallbackNumber;
+    }
+
+    /** Get sms priority value */
+    public int getSmsPriority() {
+        return mSmsPriority;
+    }
+
+    /** Get sms priority value */
+    public int getSmsPrivacy() {
+        return mSmsPrivacy;
+    }
+
+    /** Get sms language indicator value */
+    public int getSmsLanguage() {
+        return mSmsLanguage;
+    }
 
     /**
      * See TS 23.040 9.2.3.9 returns true if this is a "replace short message"

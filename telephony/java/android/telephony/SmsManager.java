@@ -666,6 +666,169 @@ public final class SmsManager {
     }
 
     /**
+     * Send a text based SMS with messaging options including callback.
+     *
+     * @param destinationAddress the address to send the message to
+     * @param scAddress is the service center address or null to use
+     *  the current default SMSC
+     * @param text the body of the message to send
+     * @param sentIntent if not NULL this <code>PendingIntent</code> is
+     *  broadcast when the message is successfully sent, or failed.
+     *  The result code will be <code>Activity.RESULT_OK</code> for success,
+     *  or one of these errors:<br>
+     *  <code>RESULT_ERROR_GENERIC_FAILURE</code><br>
+     *  <code>RESULT_ERROR_RADIO_OFF</code><br>
+     *  <code>RESULT_ERROR_NULL_PDU</code><br>
+     *  For <code>RESULT_ERROR_GENERIC_FAILURE</code> the sentIntent may include
+     *  the extra "errorCode" containing a radio technology specific value,
+     *  generally only useful for troubleshooting.<br>
+     *  The per-application based SMS control checks sentIntent. If sentIntent
+     *  is NULL the caller will be checked against all unknown applications,
+     *  which cause smaller number of SMS to be sent in checking period.
+     * @param deliveryIntent if not NULL this <code>PendingIntent</code> is
+     *  broadcast when the message is delivered to the recipient.  The
+     *  raw pdu of the status report is in the extended data ("pdu").
+     * @param priority Priority level of the message
+     *  Refer specification See 3GPP2 C.S0015-B, v2.0, table 4.5.9-1
+     *  ---------------------------------
+     *  PRIORITY      | Level of Priority
+     *  ---------------------------------
+     *      '00'      |     Normal
+     *      '01'      |     Interactive
+     *      '10'      |     Urgent
+     *      '11'      |     Emergency
+     *  ----------------------------------
+     *  Any Other values included Negative considered as Invalid Priority Indicator of the message.
+     * @param callbacknumber callback number for the message
+     * @throws IllegalArgumentException if destinationAddress or text are empty
+     */
+    public void sendTextMessage(
+            String destinationAddress,
+            String scAddress,
+            String text,
+            PendingIntent sentIntent,
+            PendingIntent deliveryIntent,
+            int priority,
+            String callbackNumber) {
+        sendTextMessageInternal(
+                destinationAddress,
+                scAddress,
+                text,
+                sentIntent,
+                deliveryIntent,
+                true /* persistMessage*/,
+                priority,
+                callbackNumber);
+    }
+
+    private void sendTextMessageInternal(
+            String destinationAddress,
+            String scAddress,
+            String text,
+            PendingIntent sentIntent,
+            PendingIntent deliveryIntent,
+            boolean persistMessage,
+            int priority,
+            String callbackNumber) {
+        if (TextUtils.isEmpty(destinationAddress)) {
+            throw new IllegalArgumentException("Invalid destinationAddress");
+        }
+
+        if (TextUtils.isEmpty(text)) {
+            throw new IllegalArgumentException("Invalid message body");
+        }
+
+        if (priority < 0x00 || priority > 0x03) {
+            priority = SMS_MESSAGE_PRIORITY_NOT_SPECIFIED;
+        }
+
+        final int finalPriority = priority;
+        final Context context = ActivityThread.currentApplication().getApplicationContext();
+        // We will only show the SMS disambiguation dialog in the case that the message is being
+        // persisted. This is for two reasons:
+        // 1) Messages that are not persisted are sent by carrier/OEM apps for a specific
+        //    subscription and require special permissions. These messages are usually not sent by
+        //    the device user and should not have an SMS disambiguation dialog associated with them
+        //    because the device user did not trigger them.
+        // 2) The SMS disambiguation dialog ONLY checks to make sure that the user has the SEND_SMS
+        //    permission. If we call resolveSubscriptionForOperation from a carrier/OEM app that has
+        //    the correct MODIFY_PHONE_STATE or carrier permissions, but no SEND_SMS, it will throw
+        //    an incorrect SecurityException.
+        if (persistMessage) {
+            resolveSubscriptionForOperation(new SubscriptionResolverResult() {
+                @Override
+                public void onSuccess(int subId) {
+                    try {
+                        ISms iSms = getISmsServiceOrThrow();
+                        if (iSms != null) {
+                            iSms.sendTextForSubscriberWithCdmaOptions(subId,
+                                    ActivityThread.currentPackageName(), destinationAddress,
+                                    scAddress,
+                                    text, sentIntent, deliveryIntent, persistMessage, finalPriority,
+                                    callbackNumber);
+                        }
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "sendTextMessageInternal: Couldn't send SMS, exception - "
+                                + e.getMessage());
+                        notifySmsGenericError(sentIntent);
+                    }
+                }
+
+                @Override
+                public void onFailure() {
+                    notifySmsErrorNoDefaultSet(context, sentIntent);
+                }
+            });
+        } else {
+            try {
+                ISms iSms = getISmsServiceOrThrow();
+                if (iSms != null) {
+                    iSms.sendTextForSubscriberWithCdmaOptions(getSubscriptionId(),
+                            ActivityThread.currentPackageName(), destinationAddress,
+                            scAddress,
+                            text, sentIntent, deliveryIntent, persistMessage, finalPriority,
+                            callbackNumber);
+                }
+            } catch (RemoteException e) {
+                Log.e(TAG, "sendTextMessageInternal(no persist): Couldn't send SMS, exception - "
+                        + e.getMessage());
+                notifySmsGenericError(sentIntent);
+            }
+        }
+    }
+
+    /**
+     * Send a text based SMS without writing it into the SMS Provider.
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE} or the calling app has carrier
+     * privileges.
+     * </p>
+     *
+     * @see #sendTextMessage(String, String, String, PendingIntent,
+     * PendingIntent, int, String)
+     * @hide
+     */
+    public void sendTextMessageWithoutPersisting(
+            String destinationAddress,
+            String scAddress,
+            String text,
+            PendingIntent sentIntent,
+            PendingIntent deliveryIntent,
+            int priority,
+            String callbackNumber) {
+        sendTextMessageInternal(
+                destinationAddress,
+                scAddress,
+                text,
+                sentIntent,
+                deliveryIntent,
+                false /* persistMessage */,
+                priority,
+                callbackNumber);
+    }
+
+    /**
      *
      * Inject an SMS PDU into the android application framework.
      *
@@ -1109,6 +1272,186 @@ public final class SmsManager {
     }
 
     /**
+     * Send a multi-part text based SMS with messaging options including callback. The callee
+     * should have already divided the message into correctly sized parts by calling
+     * <code>divideMessage</code>.
+     *
+     * <p class="note"><strong>Note:</strong> Using this method requires that your app has the
+     * {@link android.Manifest.permission#SEND_SMS} permission.</p>
+     *
+     * <p class="note"><strong>Note:</strong> Beginning with Android 4.4 (API level 19), if
+     * <em>and only if</em> an app is not selected as the default SMS app, the system automatically
+     * writes messages sent using this method to the SMS Provider (the default SMS app is always
+     * responsible for writing its sent messages to the SMS Provider). For information about
+     * how to behave as the default SMS app, see {@link android.provider.Telephony}.</p>
+     *
+     * @param destinationAddress the address to send the message to
+     * @param scAddress is the service center address or null to use
+     *   the current default SMSC
+     * @param parts an <code>ArrayList</code> of strings that, in order,
+     *   comprise the original message
+     * @param sentIntents if not null, an <code>ArrayList</code> of
+     *   <code>PendingIntent</code>s (one for each message part) that is
+     *   broadcast when the corresponding message part has been sent.
+     *   The result code will be <code>Activity.RESULT_OK</code> for success,
+     *   or one of these errors:<br>
+     *   <code>RESULT_ERROR_GENERIC_FAILURE</code><br>
+     *   <code>RESULT_ERROR_RADIO_OFF</code><br>
+     *   <code>RESULT_ERROR_NULL_PDU</code><br>
+     *   For <code>RESULT_ERROR_GENERIC_FAILURE</code> each sentIntent may include
+     *   the extra "errorCode" containing a radio technology specific value,
+     *   generally only useful for troubleshooting.<br>
+     *   The per-application based SMS control checks sentIntent. If sentIntent
+     *   is NULL the caller will be checked against all unknown applications,
+     *   which cause smaller number of SMS to be sent in checking period.
+     * @param deliveryIntents if not null, an <code>ArrayList</code> of
+     *   <code>PendingIntent</code>s (one for each message part) that is
+     *   broadcast when the corresponding message part has been delivered
+     *   to the recipient.  The raw pdu of the status report is in the
+     *   extended data ("pdu").
+     * @param priority Priority level of the message
+     *  Refer specification See 3GPP2 C.S0015-B, v2.0, table 4.5.9-1
+     *  ---------------------------------
+     *  PRIORITY      | Level of Priority
+     *  ---------------------------------
+     *      '00'      |     Normal
+     *      '01'      |     Interactive
+     *      '10'      |     Urgent
+     *      '11'      |     Emergency
+     *  ----------------------------------
+     *  Any Other values included Negative considered as Invalid Priority Indicator of the message.
+     * @param callbacknumber callback number for the message
+     *
+     * @throws IllegalArgumentException if destinationAddress or data are empty
+     */
+    public void sendMultipartTextMessage(
+            String destinationAddress,
+            String scAddress,
+            ArrayList<String> parts,
+            ArrayList<PendingIntent> sentIntents,
+            ArrayList<PendingIntent> deliveryIntents,
+            int priority,
+            String callbackNumber) {
+        sendMultipartTextMessageInternal(
+                destinationAddress,
+                scAddress,
+                parts,
+                sentIntents,
+                deliveryIntents,
+                true /* persistMessage*/,
+                priority,
+                callbackNumber);
+    }
+
+    private void sendMultipartTextMessageInternal(
+            String destinationAddress,
+            String scAddress,
+            List<String> parts,
+            List<PendingIntent> sentIntents,
+            List<PendingIntent> deliveryIntents,
+            boolean persistMessage,
+            int priority,
+            String callbackNumber) {
+        if (TextUtils.isEmpty(destinationAddress)) {
+            throw new IllegalArgumentException("Invalid destinationAddress");
+        }
+        if (parts == null || parts.size() < 1) {
+            throw new IllegalArgumentException("Invalid message body");
+        }
+
+        if (priority < 0x00 || priority > 0x03) {
+           priority = SMS_MESSAGE_PRIORITY_NOT_SPECIFIED;
+        }
+
+        if (parts.size() > 1) {
+            final int finalPriority = priority;
+            final Context context = ActivityThread.currentApplication().getApplicationContext();
+            if (persistMessage) {
+                resolveSubscriptionForOperation(new SubscriptionResolverResult() {
+                    @Override
+                    public void onSuccess(int subId) {
+                        try {
+                            ISms iSms = getISmsServiceOrThrow();
+                            if (iSms != null) {
+                                iSms.sendMultipartTextForSubscriberWithCdmaOptions(subId,
+                                        ActivityThread.currentPackageName(), destinationAddress,
+                                        scAddress, parts, sentIntents, deliveryIntents,
+                                        persistMessage, finalPriority, callbackNumber);
+                            }
+                        } catch (RemoteException e) {
+                            Log.e(TAG, "sendMultipartTextMessageInternal: Couldn't send SMS - "
+                                    + e.getMessage());
+                            notifySmsGenericError(sentIntents);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        notifySmsErrorNoDefaultSet(context, sentIntents);
+                    }
+                });
+            } else {
+                // Sent by apps that are not user visible, so don't show SIM disambiguation dialog.
+                try {
+                    ISms iSms = getISmsServiceOrThrow();
+                    if (iSms != null) {
+                        iSms.sendMultipartTextForSubscriberWithCdmaOptions(getSubscriptionId(),
+                                ActivityThread.currentPackageName(), destinationAddress,
+                                scAddress, parts, sentIntents, deliveryIntents,
+                                persistMessage, finalPriority, callbackNumber);
+                    }
+                } catch (RemoteException e) {
+                    Log.e(TAG, "sendMultipartTextMessageInternal (no persist): Couldn't send SMS - "
+                            + e.getMessage());
+                    notifySmsGenericError(sentIntents);
+                }
+            }
+        } else {
+            PendingIntent sentIntent = null;
+            PendingIntent deliveryIntent = null;
+            if (sentIntents != null && sentIntents.size() > 0) {
+                sentIntent = sentIntents.get(0);
+            }
+            if (deliveryIntents != null && deliveryIntents.size() > 0) {
+                deliveryIntent = deliveryIntents.get(0);
+            }
+            sendTextMessageInternal(destinationAddress, scAddress, parts.get(0),
+                    sentIntent, deliveryIntent, persistMessage, priority, callbackNumber);
+        }
+    }
+
+    /**
+     * Send a multi-part text based SMS without writing it into the SMS Provider.
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE} or the calling app has carrier
+     * privileges.
+     * </p>
+     *
+     * @see #sendMultipartTextMessage(String, String, ArrayList, ArrayList,
+     * ArrayList, int, boolean, int)
+     * @hide
+     **/
+    public void sendMultipartTextMessageWithoutPersisting(
+            String destinationAddress,
+            String scAddress,
+            List<String> parts,
+            List<PendingIntent> sentIntents,
+            List<PendingIntent> deliveryIntents,
+            int priority,
+            String callbackNumber) {
+        sendMultipartTextMessageInternal(
+                destinationAddress,
+                scAddress,
+                parts,
+                sentIntents,
+                deliveryIntents,
+                false /* persistMessage*/,
+                priority,
+                callbackNumber);
+    }
+
+   /**
      * Send a data based SMS to a specific application port.
      *
      * <p class="note"><strong>Note:</strong> Using this method requires that your app has the

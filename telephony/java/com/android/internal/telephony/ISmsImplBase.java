@@ -82,6 +82,14 @@ public class ISmsImplBase extends ISms.Stub {
     }
 
     @Override
+    public void sendTextForSubscriberWithCdmaOptions(int subId, String callingPkg, String destAddr,
+            String scAddr, String text, PendingIntent sentIntent,
+            PendingIntent deliveryIntent, boolean persistMessageForNonDefaultSmsApp,
+            int priority, String callbackNumber) {
+        throw new UnsupportedOperationException();
+}
+
+    @Override
     public void injectSmsPduForSubscriber(
             int subId, byte[] pdu, String format, PendingIntent receivedIntent) {
         throw new UnsupportedOperationException();
@@ -103,6 +111,14 @@ public class ISmsImplBase extends ISms.Stub {
             int priority, boolean expectMore, int validityPeriod) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public void sendMultipartTextForSubscriberWithCdmaOptions(int subId, String callingPkg,
+            String destinationAddress, String scAddress, List<String> parts,
+            List<PendingIntent> sentIntents, List<PendingIntent> deliveryIntents,
+            boolean persistMessageForNonDefaultSmsApp, int priority, String callbackNumber) {
+        throw new UnsupportedOperationException();
+}
 
     @Override
     public boolean enableCellBroadcastForSubscriber(int subId, int messageIdentifier, int ranType) {
