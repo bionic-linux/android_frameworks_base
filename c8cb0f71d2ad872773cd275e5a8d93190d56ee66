@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af5263f0_104e0de7",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-06-01T07:38:35Z",
+      "side": 1,
+      "message": "Is there any correct way to use IpClient with a null callback? If not, then we should consider throwing an NPE if someone tries to start us with one. Not necessarily in this CL.",
+      "range": {
+        "startLine": 237,
+        "startChar": 24,
+        "endLine": 237,
+        "endChar": 42
+      },
+      "revId": "c8cb0f71d2ad872773cd275e5a8d93190d56ee66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
