@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4c2f45e_3cfb1c1d",
+        "filename": "telephony/java/android/telephony/CellIdentityTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a3d021_4f8c3454",
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "107afe3a_64ba8d45",
         "filename": "telephony/java/android/telephony/CellIdentityTdscdma.java",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2018-06-01T23:30:47Z",
       "side": 1,
       "message": "@param uarfcn 16-bit UMTS Absolute RF Channel Number described in  TS 25.101 section 5.4.3",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 6
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0471735_c68cd45b",
+        "filename": "telephony/java/android/telephony/CellIdentityTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107afe3a_64ba8d45",
       "range": {
         "startLine": 58,
         "startChar": 5,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2b43e3dc_8b448ad1",
+        "filename": "telephony/java/android/telephony/CellIdentityTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d97e1b_ace71306",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 70
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa4b7bc3_805265b2",
         "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2018-06-01T23:30:47Z",
       "side": 1,
       "message": "maybe hash these together?\n\nreturn Objects.hash(super.hashCode(), mCellIdentityTdscdma,\nmCellSignalStrengthTdscdma);",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 106
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b20cb5ff_0c0e7dc5",
+        "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa4b7bc3_805265b2",
       "range": {
         "startLine": 69,
         "startChar": 0,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "35c6363d_b1387e08",
+        "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "Yes, this is part of the parcelable interface and must be public.",
+      "parentUuid": "d56d8c16_04b58639",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 13
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96df3375_ca7deb34",
         "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
         "patchSetId": 8
@@ -122,6 +236,30 @@
       "writtenOn": "2018-06-01T23:30:47Z",
       "side": 1,
       "message": "INT_MAX if unknown",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a298e9a_ff6a3885",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96df3375_ca7deb34",
       "range": {
         "startLine": 36,
         "startChar": 0,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "b71ed31f_f8e5e45a",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "This is in an \"else\", so this is if (asu \u003e\u003d 2 \u0026\u0026 asu !\u003d 99 \u0026\u0026 asu \u003e\u003d STRENGTH_GREAT)... the logic seem correct-ish?",
+      "parentUuid": "cf81a26f_8a03b462",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 55
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff067553_d34a4495",
         "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
         "patchSetId": 8
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "2d1f634f_e9a734fa",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "Well this was copy+paste so I\u0027m just guessing, but since this file extends a base class which is parcelable, this instance of CREATOR will shadow the CREATOR in the base class, which probably generates a warning.",
+      "parentUuid": "ff067553_d34a4495",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 31
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8ca9af_519a0982",
         "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
         "patchSetId": 8
@@ -191,6 +377,30 @@
       "writtenOn": "2018-06-01T23:30:47Z",
       "side": 1,
       "message": "INT_MAX if unknown",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 88
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d227086d_c0271bc9",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-02T02:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef8ca9af_519a0982",
       "range": {
         "startLine": 37,
         "startChar": 0,
