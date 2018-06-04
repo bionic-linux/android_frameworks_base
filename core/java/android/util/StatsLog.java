@@ -16,6 +16,8 @@
 
 package android.util;
 
+import android.os.WorkSource;
+
 /**
  * @hide
  * Temporary dummy class for StatsLog. Will be removed.
@@ -29,6 +31,7 @@ public final class StatsLog {
     public static final int BLUETOOTH_ENABLED_STATE_CHANGED__STATE__DISABLED = 2;
 
     public static final int BLUETOOTH_CONNECTION_STATE_CHANGED = 1;
+    public static final int BLE_SCAN_RESULT_RECEIVED = 2;
 
     public static final int BLUETOOTH_A2DP_AUDIO_STATE_CHANGED = 2;
     public static final int BLUETOOTH_A2DP_AUDIO_STATE_CHANGED__STATE__UNKNOWN = 0;
@@ -56,4 +59,11 @@ public final class StatsLog {
     /** I am a dummy javadoc comment. */
     public static void write_non_chained(int code, int arg1, String arg2, int arg3,
             boolean arg4, boolean arg5, boolean arg6) {};
+
+    /** I am a dummy javadoc comment. */
+    public static void write(int code, WorkSource ws, int arg2) {};
+
+    /** I am a dummy javadoc comment. */
+    public static void write(int code, WorkSource ws, int arg2, boolean arg3, boolean arg4, boolean arg5) {};
+
 }
