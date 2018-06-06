@@ -24,20 +24,13 @@ import com.android.internal.util.StateMachine;
 import com.android.internal.util.WakeupMessage;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.DhcpResults;
-import android.net.InterfaceConfiguration;
-import android.net.LinkAddress;
-import android.net.NetworkUtils;
 import android.net.TrafficStats;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.DhcpClientEvent;
 import android.net.metrics.DhcpErrorEvent;
 import android.net.util.InterfaceParams;
 import android.os.Message;
-import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -49,7 +42,6 @@ import android.util.TimeUtils;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
-import java.lang.Thread;
 import java.net.Inet4Address;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
@@ -58,7 +50,6 @@ import java.util.Random;
 
 import libcore.io.IoBridge;
 
-import static android.system.OsConstants.*;
 import static android.net.dhcp.DhcpPacket.*;
 
 /**
@@ -175,7 +166,8 @@ public class DhcpClient extends StateMachine {
     //   be off-link as well as on-link).
     private FileDescriptor mPacketSock;
     private FileDescriptor mUdpSock;
-    private ReceiveThread mReceiveThread;
+    private DhcpPacketListener mPacketListener;
+    private final DhcpSocketFactory mSocketFactory;
 
     // State variables.
     private final StateMachine mController;
@@ -223,12 +215,14 @@ public class DhcpClient extends StateMachine {
     }
 
     // TODO: Take an InterfaceParams instance instead of an interface name String.
-    private DhcpClient(Context context, StateMachine controller, String iface) {
+    private DhcpClient(Context context, StateMachine controller, String iface,
+            DhcpSocketFactory socketFactory) {
         super(TAG, controller.getHandler());
 
         mContext = context;
         mController = controller;
         mIfaceName = iface;
+        mSocketFactory = socketFactory;
 
         addState(mStoppedState);
         addState(mDhcpState);
@@ -265,7 +259,8 @@ public class DhcpClient extends StateMachine {
 
     public static DhcpClient makeDhcpClient(
             Context context, StateMachine controller, InterfaceParams ifParams) {
-        DhcpClient client = new DhcpClient(context, controller, ifParams.name);
+        DhcpClient client = new DhcpClient(context, controller, ifParams.name,
+                new DhcpSocketFactory());
         client.mIface = ifParams;
         client.start();
         return client;
@@ -294,10 +289,7 @@ public class DhcpClient extends StateMachine {
 
     private boolean initPacketSocket() {
         try {
-            mPacketSock = Os.socket(AF_PACKET, SOCK_RAW, ETH_P_IP);
-            PacketSocketAddress addr = new PacketSocketAddress((short) ETH_P_IP, mIface.index);
-            Os.bind(mPacketSock, addr);
-            NetworkUtils.attachDhcpFilter(mPacketSock);
+            mPacketSock = mSocketFactory.makePacketSocket(mIface);
         } catch(SocketException|ErrnoException e) {
             Log.e(TAG, "Error creating packet socket", e);
             return false;
@@ -308,13 +300,7 @@ public class DhcpClient extends StateMachine {
     private boolean initUdpSocket() {
         final int oldTag = TrafficStats.getAndSetThreadStatsTag(TrafficStats.TAG_SYSTEM_DHCP);
         try {
-            mUdpSock = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-            Os.setsockoptInt(mUdpSock, SOL_SOCKET, SO_REUSEADDR, 1);
-            Os.setsockoptIfreq(mUdpSock, SOL_SOCKET, SO_BINDTODEVICE, mIfaceName);
-            Os.setsockoptInt(mUdpSock, SOL_SOCKET, SO_BROADCAST, 1);
-            Os.setsockoptInt(mUdpSock, SOL_SOCKET, SO_RCVBUF, 0);
-            Os.bind(mUdpSock, Inet4Address.ANY, DhcpPacket.DHCP_CLIENT);
-            NetworkUtils.protectFromVpn(mUdpSock);
+            mUdpSock = mSocketFactory.makeUdpSocket(mIface, DhcpPacket.DHCP_CLIENT);
         } catch(SocketException|ErrnoException e) {
             Log.e(TAG, "Error creating UDP socket", e);
             return false;
@@ -340,54 +326,45 @@ public class DhcpClient extends StateMachine {
         } catch (IOException ignored) {}
     }
 
-    private void closeSockets() {
-        closeQuietly(mUdpSock);
-        closeQuietly(mPacketSock);
-    }
-
-    class ReceiveThread extends Thread {
-
-        private final byte[] mPacket = new byte[DhcpPacket.MAX_LENGTH];
-        private volatile boolean mStopped = false;
-
-        public void halt() {
-            mStopped = true;
-            closeSockets();  // Interrupts the read() call the thread is blocked in.
+    private class PacketListener extends DhcpPacketListener {
+        public PacketListener() {
+            super(mController.getHandler());
         }
 
         @Override
-        public void run() {
-            if (DBG) Log.d(TAG, "Receive thread started");
-            while (!mStopped) {
-                int length = 0;  // Or compiler can't tell it's initialized if a parse error occurs.
-                try {
-                    length = Os.read(mPacketSock, mPacket, 0, mPacket.length);
-                    DhcpPacket packet = null;
-                    packet = DhcpPacket.decodeFullPacket(mPacket, length, DhcpPacket.ENCAP_L2);
-                    if (DBG) Log.d(TAG, "Received packet: " + packet);
-                    sendMessage(CMD_RECEIVED_PACKET, packet);
-                } catch (IOException|ErrnoException e) {
-                    if (!mStopped) {
-                        Log.e(TAG, "Read error", e);
-                        logError(DhcpErrorEvent.RECEIVE_ERROR);
-                    }
-                } catch (DhcpPacket.ParseException e) {
-                    Log.e(TAG, "Can't parse packet: " + e.getMessage());
-                    if (PACKET_DBG) {
-                        Log.d(TAG, HexDump.dumpHexString(mPacket, 0, length));
-                    }
-                    if (e.errorCode == DhcpErrorEvent.DHCP_NO_COOKIE) {
-                        int snetTagId = 0x534e4554;
-                        String bugId = "31850211";
-                        int uid = -1;
-                        String data = DhcpPacket.ParseException.class.getName();
-                        EventLog.writeEvent(snetTagId, bugId, uid, data);
-                    }
-                    logError(e.errorCode);
-                }
-            }
-            if (DBG) Log.d(TAG, "Receive thread stopped");
+        protected void onReceive(DhcpPacket packet) {
+            if (DBG) Log.d(TAG, "Received packet: " + packet);
+            sendMessage(CMD_RECEIVED_PACKET, packet);
         }
+
+        @Override
+        protected void logError(String msg, Exception e) {
+            Log.e(TAG, "Read error", e);
+            DhcpClient.this.logError(DhcpErrorEvent.RECEIVE_ERROR);
+        }
+
+        @Override
+        protected void logParseError(byte[] packet, int length, ParseException e) {
+            Log.e(TAG, "Can't parse packet: " + e.getMessage());
+            if (PACKET_DBG) {
+                Log.d(TAG, HexDump.dumpHexString(packet, 0, length));
+            }
+            if (e.errorCode == DhcpErrorEvent.DHCP_NO_COOKIE) {
+                int snetTagId = 0x534e4554;
+                String bugId = "31850211";
+                int uid = -1;
+                String data = DhcpPacket.ParseException.class.getName();
+                EventLog.writeEvent(snetTagId, bugId, uid, data);
+            }
+            DhcpClient.this.logError(e.errorCode);
+        }
+
+        @Override
+        protected FileDescriptor createFd() {
+            return mPacketSock;
+        }
+
+        // TODO: determine if the listener should be restarted in onStop after read errors
     }
 
     private short getSecs() {
@@ -615,8 +592,8 @@ public class DhcpClient extends StateMachine {
         public void enter() {
             clearDhcpState();
             if (initInterface() && initSockets()) {
-                mReceiveThread = new ReceiveThread();
-                mReceiveThread.start();
+                mPacketListener = new PacketListener();
+                mPacketListener.start();
             } else {
                 notifyFailure();
                 transitionTo(mStoppedState);
@@ -625,9 +602,11 @@ public class DhcpClient extends StateMachine {
 
         @Override
         public void exit() {
-            if (mReceiveThread != null) {
-                mReceiveThread.halt();  // Also closes sockets.
-                mReceiveThread = null;
+            if (mPacketListener != null) {
+                mPacketListener.stop();
+                // mPacketSock closed by the listener
+                closeQuietly(mUdpSock);
+                mPacketListener = null;
             }
             clearDhcpState();
         }
