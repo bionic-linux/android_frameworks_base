@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a416506a_b9f83719",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2018-06-07T07:40:27Z",
+      "side": 1,
+      "message": "Will remove this in a followup CL for master.",
+      "range": {
+        "startLine": 919,
+        "startChar": 0,
+        "endLine": 919,
+        "endChar": 49
+      },
+      "revId": "6fd62b3f2df5e63503ebe4318a9e1702dfff6209",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
