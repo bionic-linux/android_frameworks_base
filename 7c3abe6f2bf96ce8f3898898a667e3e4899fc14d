@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "475ce15b_03f268de",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2488,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-08T17:47:36Z",
+      "side": 1,
+      "message": "Should you also use this for here?",
+      "range": {
+        "startLine": 2488,
+        "startChar": 45,
+        "endLine": 2488,
+        "endChar": 73
+      },
+      "revId": "7c3abe6f2bf96ce8f3898898a667e3e4899fc14d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2713de6_56b27302",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-08T17:47:36Z",
+      "side": 1,
+      "message": "grammar",
+      "range": {
+        "startLine": 421,
+        "startChar": 27,
+        "endLine": 421,
+        "endChar": 48
+      },
+      "revId": "7c3abe6f2bf96ce8f3898898a667e3e4899fc14d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
