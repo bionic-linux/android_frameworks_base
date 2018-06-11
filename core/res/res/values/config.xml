@@ -3590,4 +3590,7 @@
     <!-- Component name for default assistant on this device -->
     <string name="config_defaultAssistantComponentName"></string>
 
+    <!-- If true, try to encode 3GPP2 SMS as Latin-1 encoding before UNICODE encoding -->
+    <bool name="config_sms_latin_encoding_support">false</bool>
+
 </resources>
