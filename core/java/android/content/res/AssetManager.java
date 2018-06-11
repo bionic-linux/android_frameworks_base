@@ -35,15 +35,9 @@ import android.util.TypedValue;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
 
-import libcore.io.IoUtils;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -195,56 +189,22 @@ public final class AssetManager implements AutoCloseable {
             return;
         }
 
-        // Make sure that all IDMAPs are up to date.
-        nativeVerifySystemIdmaps();
-
         try {
             final ArrayList<ApkAssets> apkAssets = new ArrayList<>();
             apkAssets.add(ApkAssets.loadFromPath(FRAMEWORK_APK_PATH, true /*system*/));
-            loadStaticRuntimeOverlays(apkAssets);
-
+            final String[] systemIdmapPaths = nativeVerifySystemIdmaps();
+            if (systemIdmapPaths == null) {
+                throw new IOException("idmap2 scan failed");
+            }
+            for (String idmapPath : systemIdmapPaths) {
+                apkAssets.add(ApkAssets.loadOverlayFromPath(idmapPath, true /*system*/));
+            }
             sSystemApkAssetsSet = new ArraySet<>(apkAssets);
             sSystemApkAssets = apkAssets.toArray(new ApkAssets[apkAssets.size()]);
             sSystem = new AssetManager(true /*sentinel*/);
             sSystem.setApkAssets(sSystemApkAssets, false /*invalidateCaches*/);
         } catch (IOException e) {
             throw new IllegalStateException("Failed to create system AssetManager", e);
-        }
-    }
-
-    /**
-     * Loads the static runtime overlays declared in /data/resource-cache/overlays.list.
-     * Throws an exception if the file is corrupt or if loading the APKs referenced by the file
-     * fails. Returns quietly if the overlays.list file doesn't exist.
-     * @param outApkAssets The list to fill with the loaded ApkAssets.
-     */
-    private static void loadStaticRuntimeOverlays(ArrayList<ApkAssets> outApkAssets)
-            throws IOException {
-        final FileInputStream fis;
-        try {
-            fis = new FileInputStream("/data/resource-cache/overlays.list");
-        } catch (FileNotFoundException e) {
-            // We might not have any overlays, this is fine. We catch here since ApkAssets
-            // loading can also fail with the same exception, which we would want to propagate.
-            Log.i(TAG, "no overlays.list file found");
-            return;
-        }
-
-        try {
-            // Acquire a lock so that any idmap scanning doesn't impact the current set.
-            // The order of this try-with-resources block matters. We must release the lock, and
-            // then close the file streams when exiting the block.
-            try (final BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-                 final FileLock flock = fis.getChannel().lock(0, Long.MAX_VALUE, true /*shared*/)) {
-                for (String line; (line = br.readLine()) != null; ) {
-                    final String idmapPath = line.split(" ")[1];
-                    outApkAssets.add(ApkAssets.loadOverlayFromPath(idmapPath, true /*system*/));
-                }
-            }
-        } finally {
-            // When BufferedReader is closed above, FileInputStream is closed as well. But let's be
-            // paranoid.
-            IoUtils.closeQuietly(fis);
         }
     }
 
@@ -1390,7 +1350,7 @@ public final class AssetManager implements AutoCloseable {
     private static native long nativeAssetGetLength(long assetPtr);
     private static native long nativeAssetGetRemainingLength(long assetPtr);
 
-    private static native void nativeVerifySystemIdmaps();
+    private static native String[] nativeVerifySystemIdmaps();
 
     // Global debug native methods.
     /**

@@ -59,7 +59,6 @@ import com.android.server.FgThread;
 import com.android.server.IoThread;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
-import com.android.server.pm.Installer;
 import com.android.server.pm.UserManagerService;
 
 import libcore.util.EmptyArray;
@@ -78,7 +77,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -221,14 +219,13 @@ public final class OverlayManagerService extends SystemService {
 
     private final AtomicBoolean mPersistSettingsScheduled = new AtomicBoolean(false);
 
-    public OverlayManagerService(@NonNull final Context context,
-            @NonNull final Installer installer) {
+    public OverlayManagerService(@NonNull final Context context) {
         super(context);
         mSettingsFile =
             new AtomicFile(new File(Environment.getDataSystemDirectory(), "overlays.xml"), "overlays");
         mPackageManager = new PackageManagerHelper();
         mUserManager = UserManagerService.getInstance();
-        IdmapManager im = new IdmapManager(installer);
+        IdmapManager im = new IdmapManager();
         mSettings = new OverlayManagerSettings();
         mImpl = new OverlayManagerServiceImpl(mPackageManager, im, mSettings,
                 getDefaultOverlayPackages(), new OverlayChangeListener());
