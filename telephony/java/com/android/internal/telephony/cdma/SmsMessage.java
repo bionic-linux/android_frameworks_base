@@ -16,6 +16,8 @@
 
 package com.android.internal.telephony.cdma;
 
+import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_IDP_STRING;
+
 import android.os.Parcel;
 import android.os.SystemProperties;
 import android.telephony.PhoneNumberUtils;
@@ -698,8 +700,16 @@ public class SmsMessage extends SmsMessageBase {
         }
 
         if (mOriginatingAddress != null) {
+            // PCD(Plus Code Dialing)
+            // 1) Replaces IDD(International Direct Dialing) with the '+' if address starts with it.
+            // 2) Adds the '+' prefix if TON is International
+            // 3) Keeps the '+' if address starts with the '+'
+            String idd = SystemProperties.get(PROPERTY_OPERATOR_IDP_STRING, null);
             mOriginatingAddress.address = new String(mOriginatingAddress.origBytes);
-            if (mOriginatingAddress.ton == CdmaSmsAddress.TON_INTERNATIONAL_OR_IP) {
+            if (idd != null && !idd.isEmpty() && mOriginatingAddress.address.startsWith(idd)) {
+                mOriginatingAddress.address =
+                        "+" + mOriginatingAddress.address.substring(idd.length());
+            } else if (mOriginatingAddress.ton == CdmaSmsAddress.TON_INTERNATIONAL_OR_IP) {
                 if (mOriginatingAddress.address.charAt(0) != '+') {
                     mOriginatingAddress.address = "+" + mOriginatingAddress.address;
                 }
