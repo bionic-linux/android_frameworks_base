@@ -1998,6 +1998,9 @@
          If false, decoded by Latin decoder. -->
     <bool name="config_sms_utf8_support">false</bool>
 
+    <!-- If this value is true, try to encode 3GPP2 SMS as Latin-1 before UNICODE encoding -->
+    <bool name="config_sms_latin_encoding_support">false</bool>
+
     <!-- If this value is true, The mms content-disposition field is supported correctly.
          If false, Content-disposition fragments are ignored -->
     <bool name="config_mms_content_disposition_support">true</bool>

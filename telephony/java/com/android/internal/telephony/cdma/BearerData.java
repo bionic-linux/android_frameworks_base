@@ -31,6 +31,11 @@ import com.android.internal.telephony.uicc.IccUtils;
 import com.android.internal.util.BitwiseInputStream;
 import com.android.internal.util.BitwiseOutputStream;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CodingErrorAction;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -542,6 +547,18 @@ public final class BearerData {
         }
     }
 
+    private static byte[] encodeLatin(String msg) throws CodingException {
+        try {
+            Charset charset = Charset.forName("ISO-8859-1");
+            CharsetEncoder encoder =
+                    charset.newEncoder().onUnmappableCharacter(CodingErrorAction.REPORT);
+            ByteBuffer byteBuff = encoder.encode(CharBuffer.wrap(msg.toCharArray()));
+            return byteBuff.array();
+        } catch (Exception ex) {
+            throw new CodingException("ISO-8859-1(Latin) encode failed: " + ex);
+        }
+    }
+
     private static byte[] encodeUtf16(String msg)
         throws CodingException
     {
@@ -739,8 +756,19 @@ public final class BearerData {
                 uData.payload = encode7bitAscii(uData.payloadStr, false);
                 uData.msgEncoding = UserData.ENCODING_7BIT_ASCII;
             } catch (CodingException ex) {
-                uData.payload = encodeUtf16(uData.payloadStr);
-                uData.msgEncoding = UserData.ENCODING_UNICODE_16;
+                if (Resources.getSystem().getBoolean(
+                            com.android.internal.R.bool.config_sms_latin_encoding_support)) {
+                    try {
+                        uData.payload = encodeLatin(uData.payloadStr);
+                        uData.msgEncoding = UserData.ENCODING_LATIN;
+                    } catch (CodingException ex1) {
+                        uData.payload = encodeUtf16(uData.payloadStr);
+                        uData.msgEncoding = UserData.ENCODING_UNICODE_16;
+                    }
+                } else {
+                    uData.payload = encodeUtf16(uData.payloadStr);
+                    uData.msgEncoding = UserData.ENCODING_UNICODE_16;
+                }
             }
             uData.numFields = uData.payloadStr.length();
             uData.msgEncodingSet = true;

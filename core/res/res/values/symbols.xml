@@ -284,6 +284,7 @@
   <java-symbol type="bool" name="config_sip_wifi_only" />
   <java-symbol type="bool" name="config_sms_capable" />
   <java-symbol type="bool" name="config_sms_utf8_support" />
+  <java-symbol type="bool" name="config_sms_latin_encoding_support" />
   <java-symbol type="bool" name="config_suspendWhenScreenOffDueToProximity" />
   <java-symbol type="bool" name="config_swipeDisambiguation" />
   <java-symbol type="bool" name="config_syncstorageengine_masterSyncAutomatically" />
@@ -3442,4 +3443,5 @@
   <java-symbol type="fraction" name="config_prescaleAbsoluteVolume_index3" />
 
   <java-symbol type="string" name="config_defaultAssistantComponentName" />
+
 </resources>
