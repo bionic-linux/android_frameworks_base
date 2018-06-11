@@ -681,7 +681,7 @@ public final class SystemServer {
 
         // Manages Overlay packages
         traceBeginAndSlog("StartOverlayManagerService");
-        mSystemServiceManager.startService(new OverlayManagerService(mSystemContext, installer));
+        mSystemServiceManager.startService(new OverlayManagerService(mSystemContext));
         traceEnd();
 
         // The sensor service needs access to package manager service, app ops
