@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b6881f9_fd595fae",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-11T22:49:09Z",
+      "side": 1,
+      "message": "Where is this being called for an MO SMS? I can\u0027t find the path (the method also states that this should only be called for MT)",
+      "range": {
+        "startLine": 691,
+        "startChar": 19,
+        "endLine": 691,
+        "endChar": 77
+      },
+      "revId": "094ec2cf9ed87562306cfa1e5c6c57a5544e25b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
