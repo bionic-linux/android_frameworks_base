@@ -22,6 +22,29 @@
       "revId": "6fd62b3f2df5e63503ebe4318a9e1702dfff6209",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54724bfc_ebcfba46",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-11T01:31:16Z",
+      "side": 1,
+      "message": "Sorry to realize this quite this late, but I think there is a problem in moving this here.\n\nBefore, the code would set mNetworkAgent to null before entering the try clause. If any exception happen between lines 1048 and 1080, then agentDisconnect() in 1107 would not disconnect the old network agent (it would only disconnect the new one if any), and 1112 would restore it.\nWith this, if any exception is thrown say in 1056 then agentDisconnect() in 1107 will kill the old agent that\u0027s still in mNetworkAgent, and 1112 will restore a killed agent.\n\n(the code reads to me like there is still an issue with mNetworkInfo, but I don\u0027t think this patch changes anything about it)",
+      "range": {
+        "startLine": 1081,
+        "startChar": 17,
+        "endLine": 1081,
+        "endChar": 37
+      },
+      "revId": "6fd62b3f2df5e63503ebe4318a9e1702dfff6209",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
