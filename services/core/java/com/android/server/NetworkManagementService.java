@@ -1260,11 +1260,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             cmd.appendArg(d);
         }
 
+        // NOTE: COMMENT OUT FOR NO DNSMASQ
+        /*
         try {
-            mConnector.execute(cmd);
+             mConnector.execute(cmd);
         } catch (NativeDaemonConnectorException e) {
             throw e.rethrowAsParcelableException();
         }
+        //*/
     }
 
     @Override

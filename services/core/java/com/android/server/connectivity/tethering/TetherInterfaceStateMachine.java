@@ -29,6 +29,8 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
+import android.net.dhcp.DhcpServer;
+import android.net.dhcp.DhcpServingParams;
 import android.net.ip.InterfaceController;
 import android.net.ip.RouterAdvertisementDaemon;
 import android.net.ip.RouterAdvertisementDaemon.RaParams;
@@ -49,10 +51,12 @@ import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 
+import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
@@ -134,6 +138,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
     // Advertisements (otherwise, we do not add them to mLinkProperties at all).
     private LinkProperties mLastIPv6LinkProperties;
     private RouterAdvertisementDaemon mRaDaemon;
+    private DhcpServer mDhcpServer;
     private RaParams mLastRaParams;
 
     public TetherInterfaceStateMachine(
@@ -188,7 +193,33 @@ public class TetherInterfaceStateMachine extends StateMachine {
 
     private boolean startIPv4() { return configureIPv4(true); }
 
+    private boolean startDhcp(InterfaceParams ifaceParams, Inet4Address addr, int prefixLen) {
+        final DhcpServingParams params;
+        try {
+            params = new DhcpServingParams.Builder()
+                    .setDefaultRouters(Collections.singleton(addr))
+                    // .setDhcpLeaseTimeSecs(3600)
+                    // TODO: Change this !
+                    .setDhcpLeaseTimeSecs(120)
+                    .setDnsServers(Collections.singleton(addr))
+                    .setServerAddr(new LinkAddress(addr, prefixLen))
+                    .setLinkMtu(1400)
+                    .build();
+        } catch (DhcpServingParams.InvalidParameterException e) {
+            Log.e(TAG, "DHCP params error", e);
+            return false;
+        }
+
+        mDhcpServer = new DhcpServer(getHandler().getLooper(), ifaceParams, params,
+                mLog.forSubComponent("DHCP"));
+        mDhcpServer.start();
+        return true;
+    }
+
     private void stopIPv4() {
+        if (mDhcpServer != null) {
+            mDhcpServer.stop();
+        }
         configureIPv4(false);
         // NOTE: All of configureIPv4() will be refactored out of existence
         // into calls to InterfaceController, shared with startIPv4().
@@ -239,6 +270,9 @@ public class TetherInterfaceStateMachine extends StateMachine {
             }
             ifcg.clearFlag("running");
             mNMService.setInterfaceConfig(mIfaceName, ifcg);
+
+            // TODO: refactor getInterfaceParams with usage in v6
+            startDhcp(mDeps.getInterfaceParams(mIfaceName), (Inet4Address)addr, prefixLen);
         } catch (Exception e) {
             mLog.e("Error configuring interface " + e);
             return false;

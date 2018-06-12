@@ -79,16 +79,13 @@ public class DhcpLease {
 
     /**
      * Push back the expiration time of this lease. If the provided time is sooner than the original
-     * expiration time, the original lease will be returned as-is.
+     * expiration time, the lease time will not be updated.
      *
      * <p>The lease hostname is updated with the provided one if set.
      * @return A {@link DhcpLease} with expiration time set to max(expTime, currentExpTime)
      */
     public DhcpLease renew(long expTime, @Nullable String hostname) {
-        if (expTime <= mExpTime) {
-            return this;
-        }
-        return new DhcpLease(mClientId, mHwAddr, mNetAddr, expTime,
+        return new DhcpLease(mClientId, mHwAddr, mNetAddr, Math.max(expTime, mExpTime),
                 hostname == null ? mHostname : hostname);
     }
 

@@ -83,11 +83,18 @@ public class SharedLog {
     //////
 
     public void e(Exception e) {
-        Log.e(mTag, record(Category.ERROR, e.toString()));
+        Log.e(mTag, record(Category.ERROR, e.toString()), e);
     }
 
     public void e(String msg) {
         Log.e(mTag, record(Category.ERROR, msg));
+    }
+
+    /**
+     * Log an error due to an exception, including the exception stacktrace.
+     */
+    public void e(String msg, Throwable e) {
+        Log.e(mTag, record(Category.ERROR, msg + ": " + e.toString()), e);
     }
 
     public void i(String msg) {
