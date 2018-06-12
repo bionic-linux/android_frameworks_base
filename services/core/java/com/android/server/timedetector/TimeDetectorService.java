@@ -20,24 +20,31 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.timedetector.ITimeDetectorService;
 import android.app.timedetector.TimeSignal;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.os.Binder;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Process;
+import android.provider.Settings;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.DumpUtils;
+import com.android.server.FgThread;
 import com.android.server.SystemService;
+import com.android.server.timedetector.TimeDetectorStrategy.Callback;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.Objects;
 
 public final class TimeDetectorService extends ITimeDetectorService.Stub {
-
     private static final String TAG = "timedetector.TimeDetectorService";
 
     public static class Lifecycle extends SystemService {
 
-        public Lifecycle(Context context) {
+        public Lifecycle(@NonNull Context context) {
             super(context);
         }
 
@@ -51,32 +58,60 @@ public final class TimeDetectorService extends ITimeDetectorService.Stub {
         }
     }
 
-    private final Context mContext;
-    private final TimeDetectorStrategy mTimeDetectorStrategy;
+    @NonNull private final Context mContext;
+    @NonNull private final Callback mCallback;
 
-    private static TimeDetectorService create(Context context) {
-        TimeDetectorStrategy timeDetector = new SimpleTimeDetectorStrategy();
-        timeDetector.initialize(new TimeDetectorStrategyCallbackImpl(context));
-        return new TimeDetectorService(context, timeDetector);
+    // The handler to use whenever communicating with the strategy.
+    @NonNull private final Handler mHandler;
+    @NonNull private final TimeDetectorStrategy mTimeDetectorStrategy;
+
+    private static TimeDetectorService create(@NonNull Context context) {
+        final TimeDetectorStrategy timeDetector = new SimpleTimeDetectorStrategy();
+        final TimeDetectorStrategyCallbackImpl callback =
+                new TimeDetectorStrategyCallbackImpl(context);
+        timeDetector.initialize(callback);
+
+        // All time detection operations are handled in a single thread for simplicity.
+        Handler handler = FgThread.getHandler();
+
+        TimeDetectorService timeDetectorService =
+                new TimeDetectorService(context, handler, callback, timeDetector);
+
+        // Wire up event listening.
+        ContentResolver contentResolver = context.getContentResolver();
+        contentResolver.registerContentObserver(
+                Settings.Global.getUriFor(Settings.Global.AUTO_TIME), true,
+                new ContentObserver(handler) {
+                    public void onChange(boolean selfChange) {
+                        timeDetectorService.handleAutoTimeDetectionToggle();
+                    }
+                });
+
+        return timeDetectorService;
     }
 
     @VisibleForTesting
-    public TimeDetectorService(@NonNull Context context,
-            @NonNull TimeDetectorStrategy timeDetectorStrategy) {
+    public TimeDetectorService(@NonNull Context context, @NonNull Handler handler,
+            @NonNull Callback callback, @NonNull TimeDetectorStrategy timeDetectorStrategy) {
         mContext = Objects.requireNonNull(context);
+        mCallback = Objects.requireNonNull(callback);
+        mHandler = Objects.requireNonNull(handler);
         mTimeDetectorStrategy = Objects.requireNonNull(timeDetectorStrategy);
     }
 
     @Override
     public void suggestTime(@NonNull TimeSignal timeSignal) {
         enforceSetTimePermission();
+        Objects.requireNonNull(timeSignal);
 
-        long callerIdToken = Binder.clearCallingIdentity();
-        try {
-            mTimeDetectorStrategy.suggestTime(timeSignal);
-        } finally {
-            Binder.restoreCallingIdentity(callerIdToken);
-        }
+        mHandler.post(() -> mTimeDetectorStrategy.suggestTime(timeSignal));
+    }
+
+    @VisibleForTesting
+    public void handleAutoTimeDetectionToggle() {
+        final boolean timeDetectionEnabled = mCallback.isTimeDetectionEnabled();
+        mHandler.post(
+                () -> mTimeDetectorStrategy.handleAutoTimeDetectionToggle(timeDetectionEnabled));
     }
 
     @Override
@@ -84,7 +119,10 @@ public final class TimeDetectorService extends ITimeDetectorService.Stub {
             @Nullable String[] args) {
         if (!DumpUtils.checkDumpPermission(mContext, TAG, pw)) return;
 
-        mTimeDetectorStrategy.dump(fd, pw, args);
+        // We guarantee the strategy object is single threaded, so run the dump on the handler and
+        // wait for the response. We don't want to set a timeout as then the printwriter could
+        // be shared across multiple threads.
+        mHandler.runWithScissors(() -> mTimeDetectorStrategy.dump(pw, args), 0);
     }
 
     private void enforceSetTimePermission() {
