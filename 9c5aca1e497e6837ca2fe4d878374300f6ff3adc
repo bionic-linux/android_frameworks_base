@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5603bc70_d4108c22",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2613,
+      "author": {
+        "id": 1060529
+      },
+      "writtenOn": "2018-06-13T17:06:20Z",
+      "side": 1,
+      "message": "hmm could you explain how receiver could be null here?",
+      "range": {
+        "startLine": 2613,
+        "startChar": 16,
+        "endLine": 2613,
+        "endChar": 32
+      },
+      "revId": "9c5aca1e497e6837ca2fe4d878374300f6ff3adc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
