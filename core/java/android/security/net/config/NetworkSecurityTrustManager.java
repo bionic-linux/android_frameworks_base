@@ -16,16 +16,17 @@
 
 package android.security.net.config;
 
+import android.util.ArrayMap;
+
 import com.android.org.conscrypt.TrustManagerImpl;
 
-import android.util.ArrayMap;
 import java.io.IOException;
 import java.net.Socket;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.MessageDigest;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +40,6 @@ import javax.net.ssl.X509ExtendedTrustManager;
  * @hide
  */
 public class NetworkSecurityTrustManager extends X509ExtendedTrustManager {
-    // TODO: Replace this with a general X509TrustManager and use duck-typing.
     private final TrustManagerImpl mDelegate;
     private final NetworkSecurityConfig mNetworkSecurityConfig;
     private final Object mIssuersLock = new Object();
@@ -52,7 +52,7 @@ public class NetworkSecurityTrustManager extends X509ExtendedTrustManager {
         }
         mNetworkSecurityConfig = config;
         try {
-            TrustedCertificateStoreAdapter certStore = new TrustedCertificateStoreAdapter(config);
+            ConscryptCertStoreAdapter certStore = new ConscryptCertStoreAdapter(config);
             // Provide an empty KeyStore since TrustManagerImpl doesn't support null KeyStores.
             // TrustManagerImpl will use certStore to lookup certificates.
             KeyStore store = KeyStore.getInstance(KeyStore.getDefaultType());
