@@ -22,6 +22,30 @@
       "revId": "9c5aca1e497e6837ca2fe4d878374300f6ff3adc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea5bd4b_8cc231f2",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2613,
+      "author": {
+        "id": 1330713
+      },
+      "writtenOn": "2018-06-14T07:58:36Z",
+      "side": 1,
+      "message": "This is a log when we failed and crashed on Android N.\nWe cannot reproduce this issue recently because this patch was applied to our recent SW.\n\nSo, the line number pointed in the log is not same as the current file, but the place was pointed this \"receiver\" place.\n\n-------------------------\n07-10 07:40:56.477  2277  2323 I ActivityManager: Start proc 4020:com.sankuai.meituan/u0a225 for broadcast com.sankuai.meituan/com.meituan.android.common.locate.reporter.LocationInfoReceiver\n07-10 07:40:59.552  2277  5051 I ActivityManager: Process com.sankuai.meituan (pid 4020) has died\n07-10 07:40:59.684  2277  2322 W LocationManagerService: RemoteException calling onLocationChanged on Reciever[c2c209d listener UpdateRecord[passive com.sankuai.meituan(10225) Request[POWER_NONE passive fastest\u003d+1s0ms]]]\n07-10 07:40:59.708  2277  4908 E LocationManagerService: linkToDeath failed:\nat com.android.server.LocationManagerService.getReceiverLocked(LocationManagerService.java:1509)\nat com.android.server.LocationManagerService.checkListenerOrIntentLocked(LocationManagerService.java:1595)\nat com.android.server.LocationManagerService.requestLocationUpdates(LocationManagerService.java:1627)\n07-10 07:40:59.719  2277  2323 I ActivityManager: Start proc 4108:com.sankuai.meituan/u0a225 for broadcast com.sankuai.meituan/com.meituan.android.common.locate.reporter.LocationInfoReceiver\n07-10 07:41:04.126  2277  2322 D ActivityManager: New dropbox entry: system_server, system_server_crash, 312daf14-1664-4ce7-adf9-70b24d43ec41\n-------------------------",
+      "parentUuid": "5603bc70_d4108c22",
+      "range": {
+        "startLine": 2613,
+        "startChar": 16,
+        "endLine": 2613,
+        "endChar": 32
+      },
+      "revId": "9c5aca1e497e6837ca2fe4d878374300f6ff3adc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
