@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a51cf25_70f8a238",
+        "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-06-19T19:58:06Z",
+      "side": 1,
+      "message": "Can we document the purpose of this class better?  Ie @link to where we\u0027d get instances of this, and if possible say when we\u0027d expect to use it.",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 51
+      },
+      "revId": "b81f3d7fd0a5dd4787ae2ec0acbb48eebe33a238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1950d167_3ef6a262",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-06-19T19:58:06Z",
+      "side": 1,
+      "message": "Please indicate in the comment how the scale works; is this golf score rules where 0 is awesome?",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 43
+      },
+      "revId": "b81f3d7fd0a5dd4787ae2ec0acbb48eebe33a238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
