@@ -1,0 +1,285 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd2d874_c589b740",
+        "filename": "services/core/java/com/android/server/timedetector/SimpleTimeDetectorStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "In what units?",
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae988f51_b6b35376",
+        "filename": "services/core/java/com/android/server/timedetector/SimpleTimeDetectorStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "Please define a threading/synchronization model for these values; either @GuardedBy() or volatile?  (They\u0027re being set by what appears to be an incoming Binder thread, and we\u0027ve gotta define our memory fences for readers to observe stuff.)",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe33467_bf0dde3e",
+        "filename": "services/core/java/com/android/server/timedetector/SimpleTimeDetectorStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "Do you anticipate cleaning this up in the current release, or will it have to stick around for a few years?  If the latter, you may want to look into BroadcastOptions to block the broadcast based on target SDK.  (Doesn\u0027t have to be in this CL.)",
+      "range": {
+        "startLine": 226,
+        "startChar": 22,
+        "endLine": 226,
+        "endChar": 41
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b223fab_c7c8b78d",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "We\u0027re on a mission to avoid new threads.  :)\n\nPlease use an existing thread like FgThread.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 37
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcd09e9_dddd4dfe",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "This is implicitly using the current thread; use FgThread.getHandler() instead.",
+      "range": {
+        "startLine": 86,
+        "startChar": 36,
+        "endLine": 86,
+        "endChar": 49
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67f1770_b5d4e582",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "Hmm, two notes:\n\n-- If you\u0027re jumping threads, you can no longer throw useful exceptions back to the caller.\n-- If you\u0027re jumping threads, you no longer need to clear/restore Binder ident.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0b863c_5a3862df",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "This post() is wasteful; you\u0027ve already asked to be executed on a specific thread via the ContentObserver ctor above.",
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b43043_a592ec15",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "The whole point of this method name is that it should scare people into never using it.  :P\n\nJust call dump directly?  iirc the caller (over in AMS) has some logic around shutting down the pipe it passed in, so it expects you to block until you\u0027re done writing.  Thus, the current code would be subject to cutting off output based on race conditions.  :(",
+      "range": {
+        "startLine": 133,
+        "startChar": 17,
+        "endLine": 133,
+        "endChar": 32
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae98eea2_d3347114",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "Random thought; wdyt about having a runUnderWakelock(Runnable) method, so the other side of the Callback can prove correct releasing?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 86
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfb139f_b82c40a0",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "units?  Either in docs or add _MILLIS in field name.",
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef192917_5309df47",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "You\u0027re claiming @NonNull for all these things, but not actually enforcing it with Preconditions.checkNotNull()?",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73f4ff1_7e343b61",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "Pick a scoped prefix such that SELinux will be happy; \"ro.sys.foobar\" is a good prefix choice.",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 69
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a151df_766137fa",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2018-06-20T18:17:33Z",
+      "side": 1,
+      "message": "Technically these booleans are defined as !\u003d 0.",
+      "range": {
+        "startLine": 74,
+        "startChar": 76,
+        "endLine": 74,
+        "endChar": 91
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
