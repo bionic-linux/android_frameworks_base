@@ -22,6 +22,30 @@
       "revId": "094ec2cf9ed87562306cfa1e5c6c57a5544e25b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe10230_95aabddb",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2018-06-20T08:18:52Z",
+      "side": 1,
+      "message": "Hi Brad,\n\nthe API is used in QC implemenation, we can save MO SMS into ICC card.\n\nso need this condition.\n\nCurrently AOSP messaging does not support COPY SMS into ICC card, so you cannot find the path",
+      "parentUuid": "5b6881f9_fd595fae",
+      "range": {
+        "startLine": 691,
+        "startChar": 19,
+        "endLine": 691,
+        "endChar": 77
+      },
+      "revId": "094ec2cf9ed87562306cfa1e5c6c57a5544e25b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
