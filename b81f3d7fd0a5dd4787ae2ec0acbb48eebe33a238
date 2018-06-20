@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "579c15da_a375c44c",
+        "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-20T00:29:40Z",
+      "side": 1,
+      "message": "This is (sadly) copy+paste from 2 of the other identical classes. I\u0027ve gone through and homogenized them very briefly so that it\u0027s at least not the nonsense you pointed out (because the text is nonsense), but since this is in-line with the rest of the classes, which also need cleaning up, I\u0027d like to look holistically at the entire structure which has 2 different hierarchies, and try to clean the whole thing up consistently. The hierarchies are:\nCellInfo\u003cRAT\u003e : CellInfo -\u003e CellIdentity\u003cRAT\u003e, CellSignalStrength\u003cRAT\u003e and... separately\nCellIdentity\u003cRAT\u003e : CellIdentity",
+      "parentUuid": "1a51cf25_70f8a238",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 51
+      },
+      "revId": "b81f3d7fd0a5dd4787ae2ec0acbb48eebe33a238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1950d167_3ef6a262",
         "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2018-06-19T19:58:06Z",
       "side": 1,
       "message": "Please indicate in the comment how the scale works; is this golf score rules where 0 is awesome?",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 43
+      },
+      "revId": "b81f3d7fd0a5dd4787ae2ec0acbb48eebe33a238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6dbbf2_5608f77b",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-06-20T00:29:40Z",
+      "side": 1,
+      "message": "This text was the same in all the classes (sigh). I updated it with the text copied from the SignalStrength class (with a minor modification), so that now they are all in-sync. This is another place where I intend to refactor and provide some abstractions, but we should scrub all these classes at the same time.",
+      "parentUuid": "1950d167_3ef6a262",
       "range": {
         "startLine": 82,
         "startChar": 4,
