@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9dd11a60_4138b662",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-20T18:26:09Z",
+      "side": 1,
+      "message": "Please start adding \"Bug\" tag to CLs, for example:\n\n\"Bug: 73012819\"\n\nfor this CL.",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "094ec2cf9ed87562306cfa1e5c6c57a5544e25b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b6881f9_fd595fae",
         "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
         "patchSetId": 1
