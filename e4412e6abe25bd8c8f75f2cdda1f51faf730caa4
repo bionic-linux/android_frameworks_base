@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c682cbe3_979eb68e",
+        "filename": "services/core/java/com/android/server/timedetector/SimpleTimeDetectorStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecd2d874_c589b740",
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae988f51_b6b35376",
         "filename": "services/core/java/com/android/server/timedetector/SimpleTimeDetectorStrategy.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2018-06-20T18:17:33Z",
       "side": 1,
       "message": "Please define a threading/synchronization model for these values; either @GuardedBy() or volatile?  (They\u0027re being set by what appears to be an incoming Binder thread, and we\u0027ve gotta define our memory fences for readers to observe stuff.)",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbd8c87_5e5ccef4",
+        "filename": "services/core/java/com/android/server/timedetector/SimpleTimeDetectorStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "Is there a way to say \"this class must be accessed by a single thread and therefore it doesn\u0027t need synchronization\".\n\nWe could add synchronized everywhere but it would imply it was necessary / that multiple threads could access it.\n\nI could put checks at the top of every method method to ensure the correct thread is being used. I\u0027d need to pass in the thread in initialize but that\u0027s no big deal.",
+      "parentUuid": "ae988f51_b6b35376",
       "range": {
         "startLine": 48,
         "startChar": 0,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "395f9d36_c402c606",
+        "filename": "services/core/java/com/android/server/timedetector/SimpleTimeDetectorStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "http://ag/4389290 will remove one user.\n\nAnother user is the NetworkTimeUpdateService, which is my next target (in parallel with some time zone detector work). I\u0027m hoping to move some of the NetworkTimeUpdateService in here, or make the integration less intent-based. TBD.\n\nWear uses the intent too but I\u0027m hoping they\u0027ll also be able to switch to the new code in future.\n\nOf course, there may be OEM code out there that I can\u0027t see. Will probably remove it and then may have to put it back / replace it once we understand how others are using it.",
+      "parentUuid": "cbe33467_bf0dde3e",
+      "range": {
+        "startLine": 226,
+        "startChar": 22,
+        "endLine": 226,
+        "endChar": 41
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b223fab_c7c8b78d",
         "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
         "patchSetId": 4
@@ -76,6 +142,30 @@
       "writtenOn": "2018-06-20T18:17:33Z",
       "side": 1,
       "message": "We\u0027re on a mission to avoid new threads.  :)\n\nPlease use an existing thread like FgThread.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 37
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe023bf9_41bb7773",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "Will switch.\n\nFYI - this might impact the runWithScissors() discussion below because I don\u0027t know whether dump() might already be run on the FgThread and what contention this might introduce for us or others using the same thread.\n\nIf we end up doing a lot of blocking work in the strategy we could impact other things that are trying to use the FgThread. Maybe worth a chat.",
+      "parentUuid": "7b223fab_c7c8b78d",
       "range": {
         "startLine": 74,
         "startChar": 0,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "823595d0_a1ddcbc7",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "I put the logic in handleAutoTimeDetectionToggle() to switch threads to the handler thread.\n\nPutting the logic there ensures the TimeDetectorServiceTest gets the same threading behavior as when the AUTO_TIME setting changes and I don\u0027t need to think about threads in the test as it\u0027s inherently single threaded.\n\nI will switch to FgThread.getHandler() above.",
+      "parentUuid": "5fcd09e9_dddd4dfe",
+      "range": {
+        "startLine": 86,
+        "startChar": 36,
+        "endLine": 86,
+        "endChar": 49
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c67f1770_b5d4e582",
         "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
         "patchSetId": 4
@@ -122,6 +236,30 @@
       "writtenOn": "2018-06-20T18:17:33Z",
       "side": 1,
       "message": "Hmm, two notes:\n\n-- If you\u0027re jumping threads, you can no longer throw useful exceptions back to the caller.\n-- If you\u0027re jumping threads, you no longer need to clear/restore Binder ident.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c59c96_82bfbdb2",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "1) I don\u0027t see any need right now to throw exceptions back. The client is just suggesting things - it shouldn\u0027t block significantly or expect a return value. (But I haven\u0027t made the binder aidl \"oneway\" because I don\u0027t know what other methods will be added just yet and that acts at the class level).\n\n2) Wasn\u0027t sure about this. Will remove caller identity code.",
+      "parentUuid": "c67f1770_b5d4e582",
       "range": {
         "startLine": 112,
         "startChar": 0,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "15b858f8_8ca4c249",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "See below regarding the motivation for this method to handle the threading / @VisibleForTesting.\n\nMy understanding that by using the same handler everywhere this will be executed immediately if it\u0027s already there. Please correct me if wrong.",
+      "parentUuid": "5e0b863c_5a3862df",
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11b43043_a592ec15",
         "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
         "patchSetId": 4
@@ -162,6 +318,30 @@
       "writtenOn": "2018-06-20T18:17:33Z",
       "side": 1,
       "message": "The whole point of this method name is that it should scare people into never using it.  :P\n\nJust call dump directly?  iirc the caller (over in AMS) has some logic around shutting down the pipe it passed in, so it expects you to block until you\u0027re done writing.  Thus, the current code would be subject to cutting off output based on race conditions.  :(",
+      "range": {
+        "startLine": 133,
+        "startChar": 17,
+        "endLine": 133,
+        "endChar": 32
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d6ecb7_8ace8d66",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "Yeah, but I read the comment and I need the blocking behavior with the current threading approach. I thought 0 was \"wait indefinitely\", which I thought avoided the case you\u0027re worried about. I think you\u0027re covering what I tried to answer in the comment above.\n\nI didn\u0027t want to add synchronization around the strategy state fields just because dump could be running in a different thread.\n\nThe point of only interacting with the strategy class in a single thread is to avoid adding implementations needing to be synchronized to make them easier to reason about *and* to avoid contention between callers blocking multiple threads. It also means the tests (which are single threaded) are actually representative of what will actually happen.\n\nPlease can you suggest an alternative method that allows dump() to block until the runnable is complete, or provide a high-level threading approach that would be more normal.",
+      "parentUuid": "11b43043_a592ec15",
       "range": {
         "startLine": 133,
         "startChar": 17,
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "cc524355_092c7309",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "On desktop/server java I\u0027d do it in a heartbeat, but this didn\u0027t hit my bar for re-use / weight lifted....\n\ncallback.runUnderWakeLock(() -\u003e {\n    \u003cstuff\u003e\n    callback.xyz();\n    \u003cstuff\u003e\n    callback.abc();\n});\n\ncallback.runUnderWakeLock(() -\u003e {\n    doStuffUnderWakeLock();\n});\n\n\ndidn\u0027t seem a huge win over the:\n\ncallback.acquireWakelock();\ntry {\n  \u003cstuff\u003e\n  callback.xyz();\n  \u003cstuff\u003e\n  callback.abc();\n} finally {\n  callback.releaseWakelock();\n}\n\nbut if you don\u0027t mind the extra runnable I\u0027ll switch it out. I can\u0027t think of anything OTTOMH that it will cause complications for. Each method on callback that requires a wakelock will still need to check the wakelock is held, etc.",
+      "parentUuid": "ae98eea2_d3347114",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 86
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbfb139f_b82c40a0",
         "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
         "patchSetId": 4
@@ -214,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "a9533ee6_35dc672d",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbfb139f_b82c40a0",
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef192917_5309df47",
         "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
         "patchSetId": 4
@@ -225,6 +447,30 @@
       "writtenOn": "2018-06-20T18:17:33Z",
       "side": 1,
       "message": "You\u0027re claiming @NonNull for all these things, but not actually enforcing it with Preconditions.checkNotNull()?",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14612c5_16bcf495",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "I thought that some of these were guaranteed and therefore there\u0027s no need to check.\n\nI have no problem with checking for safety in this case.\n\nThere are some cases where if both ends of a contract say \"NonNull\" (e.g. a method and the field the return value is stored on) we shouldn\u0027t *have* to check.\n\nAlso, if I pull out a private method for readability, presumably there\u0027s no expectation I add extra checks. So, I\u0027m going to not bother on private methods, but I will do it on private fields because it helps to document intent.\n\nWithout static checking for new code or guidelines there\u0027s going to be a ton of cases engineers just miss.",
+      "parentUuid": "ef192917_5309df47",
       "range": {
         "startLine": 59,
         "startChar": 24,
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "66da7978_0722ab43",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "Ah, didn\u0027t know about how these work. Will do.",
+      "parentUuid": "d73f4ff1_7e343b61",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 69
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69a151df_766137fa",
         "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
         "patchSetId": 4
@@ -280,6 +550,30 @@
       "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca4f701_cac713c7",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-21T12:02:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a151df_766137fa",
+      "range": {
+        "startLine": 74,
+        "startChar": 76,
+        "endLine": 74,
+        "endChar": 91
+      },
+      "revId": "e4412e6abe25bd8c8f75f2cdda1f51faf730caa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
