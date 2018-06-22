@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b88551_8ab6604e",
+        "filename": "telephony/java/android/telephony/ims/feature/ImsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1010218
+      },
+      "writtenOn": "2018-06-22T06:06:52Z",
+      "side": 1,
+      "message": "Do we really need to acquire lock in private function when lock is already acquired in caller(setFeatureState) ?",
+      "revId": "602aebca3114db6441ea663c659108528c4add22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
