@@ -45,6 +45,30 @@
       "revId": "5363bad241c9cea5ec5d2f87eb9e14c622ab4772",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed03bb4_be229ff6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2018-06-22T09:25:36Z",
+      "side": 1,
+      "message": "Yeah sorry I meant to rebase this on top of the other handover CL; this was manually cherry-picked from pi-dev to AOSP so I think I messed up the dependent change here.",
+      "parentUuid": "a243aa13_4741df90",
+      "range": {
+        "startLine": 1061,
+        "startChar": 15,
+        "endLine": 1061,
+        "endChar": 47
+      },
+      "revId": "5363bad241c9cea5ec5d2f87eb9e14c622ab4772",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
