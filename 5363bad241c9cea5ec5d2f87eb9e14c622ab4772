@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e07b226e_15c6d5dc",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-22T03:58:19Z",
+      "side": 1,
+      "message": "Partially",
+      "range": {
+        "startLine": 1061,
+        "startChar": 60,
+        "endLine": 1061,
+        "endChar": 68
+      },
+      "revId": "5363bad241c9cea5ec5d2f87eb9e14c622ab4772",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a243aa13_4741df90",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-06-22T03:58:19Z",
+      "side": 1,
+      "message": "I do not understand this change. The comment here speaks about seamless handover but as of this patch it\u0027s not supported so I don\u0027t see what this patch is trying to do. Did you mean to build this on top of aosp/658121 ? Or did you mean to rebase aosp/658121 on top of this ? I don\u0027t think I can make sense of this without seeing how you intend to have it interact with that change.",
+      "range": {
+        "startLine": 1061,
+        "startChar": 15,
+        "endLine": 1061,
+        "endChar": 47
+      },
+      "revId": "5363bad241c9cea5ec5d2f87eb9e14c622ab4772",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
