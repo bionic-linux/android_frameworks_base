@@ -34,6 +34,24 @@
       "revId": "602aebca3114db6441ea663c659108528c4add22",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a28b35_c71d4b05",
+        "filename": "telephony/java/android/telephony/ims/feature/ImsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-22T23:18:38Z",
+      "side": 1,
+      "message": "Sorry for the churn, after looking at it further, I want to keep the current code because:\n1) I want to document through code that mStatusCallbacks should be locked before accessing, so I do not want to remove the lock from notifyFeatureState.\n2) Java locks are re-entrant so acquiring the lock multiple times is fine in Java.\n3) If someone calls notifyFeatureState later when they change the code, they do not have to worry about making sure to lock this method.",
+      "parentUuid": "89a9505a_42910e49",
+      "revId": "602aebca3114db6441ea663c659108528c4add22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
