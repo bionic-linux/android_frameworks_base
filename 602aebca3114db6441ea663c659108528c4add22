@@ -16,6 +16,24 @@
       "revId": "602aebca3114db6441ea663c659108528c4add22",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a9505a_42910e49",
+        "filename": "telephony/java/android/telephony/ims/feature/ImsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-06-22T23:00:55Z",
+      "side": 1,
+      "message": "No, i can remove lock from setFeatureState (caller). I want to keep lock around this section that accesses mStatusCallbacks to make clear that it must be locked before using. \n\nsendImsServiceIntent should also not be locked...",
+      "parentUuid": "f9b88551_8ab6604e",
+      "revId": "602aebca3114db6441ea663c659108528c4add22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
