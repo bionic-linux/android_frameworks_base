@@ -52,6 +52,24 @@
       "revId": "602aebca3114db6441ea663c659108528c4add22",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b530671_ddb2fdad",
+        "filename": "telephony/java/android/telephony/ims/feature/ImsFeature.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1010218
+      },
+      "writtenOn": "2018-06-23T05:09:48Z",
+      "side": 1,
+      "message": "Thanks Brad.",
+      "parentUuid": "13a28b35_c71d4b05",
+      "revId": "602aebca3114db6441ea663c659108528c4add22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
