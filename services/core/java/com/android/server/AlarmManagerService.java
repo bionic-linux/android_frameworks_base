@@ -940,8 +940,8 @@ class AlarmManagerService extends SystemService {
                     ? clampPositive(whenElapsed + a.windowLength)
                     : maxTriggerTime(nowElapsed, whenElapsed, a.repeatInterval);
         }
-        a.whenElapsed = whenElapsed;
-        a.maxWhenElapsed = maxElapsed;
+        a.expectedWhenElapsed = a.whenElapsed = whenElapsed;
+        a.expectedMaxWhenElapsed = a.maxWhenElapsed = maxElapsed;
         setImplLocked(a, true, doValidate);
     }
 
