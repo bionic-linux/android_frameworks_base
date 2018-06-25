@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7328097d_ecd024a9",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-25T18:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73aba7de_4a94d63a",
+      "revId": "677032bd8c2ecb31e4f1be44b6303c91f27ec4c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccbad42e_4894daa1",
         "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "677032bd8c2ecb31e4f1be44b6303c91f27ec4c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa62489_1761bffa",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-06-25T18:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccbad42e_4894daa1",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "677032bd8c2ecb31e4f1be44b6303c91f27ec4c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
