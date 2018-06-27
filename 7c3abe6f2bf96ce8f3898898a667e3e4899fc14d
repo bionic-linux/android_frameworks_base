@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef66d408_22da408e",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2488,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-06-27T23:00:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "475ce15b_03f268de",
+      "range": {
+        "startLine": 2488,
+        "startChar": 45,
+        "endLine": 2488,
+        "endChar": 73
+      },
+      "revId": "7c3abe6f2bf96ce8f3898898a667e3e4899fc14d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2713de6_56b27302",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "7c3abe6f2bf96ce8f3898898a667e3e4899fc14d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9205123_c99e0ec0",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-06-27T23:00:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2713de6_56b27302",
+      "range": {
+        "startLine": 421,
+        "startChar": 27,
+        "endLine": 421,
+        "endChar": 48
+      },
+      "revId": "7c3abe6f2bf96ce8f3898898a667e3e4899fc14d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
