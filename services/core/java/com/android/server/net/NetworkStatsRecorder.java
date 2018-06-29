@@ -41,9 +41,9 @@ import com.android.internal.net.VpnInfo;
 import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
 
-import libcore.io.IoUtils;
-
 import com.google.android.collect.Sets;
+
+import libcore.io.IoUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -213,7 +213,7 @@ public class NetworkStatsRecorder {
      */
     public void recordSnapshotLocked(NetworkStats snapshot,
             Map<String, NetworkIdentitySet> ifaceIdent, @Nullable VpnInfo[] vpnArray,
-            long currentTimeMillis) {
+            long currentTimeMillis, boolean isIncremental) {
         final HashSet<String> unknownIfaces = Sets.newHashSet();
 
         // skip recording when snapshot missing
@@ -281,8 +281,13 @@ public class NetworkStatsRecorder {
                 }
             }
         }
-
-        mLastSnapshot = snapshot;
+        if (isIncremental) {
+            // The stats get are the increments since last time, no need to record the
+            // snapshot and calculate the delta.
+            mLastSnapshot = new NetworkStats(snapshot.getElapsedRealtime(), -1);
+        } else {
+            mLastSnapshot = snapshot;
+        }
 
         if (LOGV && unknownIfaces.size() > 0) {
             Slog.w(TAG, "unknown interfaces " + unknownIfaces + ", ignoring those stats");
