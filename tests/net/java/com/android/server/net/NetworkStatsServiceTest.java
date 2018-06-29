@@ -100,7 +100,6 @@ import android.telephony.TelephonyManager;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.test.BroadcastInterceptingContext;
-import com.android.server.LocalServices;
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings;
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings.Config;
 
@@ -199,7 +198,7 @@ public class NetworkStatsServiceTest {
         mService = new NetworkStatsService(
                 mServiceContext, mNetManager, mAlarmManager, wakeLock, mClock,
                 TelephonyManager.getDefault(), mSettings, new NetworkStatsObservers(),
-                mStatsDir, getBaseDir(mStatsDir));
+                mStatsDir, getBaseDir(mStatsDir), false);
         mHandlerThread = new HandlerThread("HandlerThread");
         mHandlerThread.start();
         Handler.Callback callback = new NetworkStatsService.HandlerCallback(mService);
@@ -1024,6 +1023,186 @@ public class NetworkStatsServiceTest {
                 2 /* requestId */, sTemplateImsi1, thresholdInBytes);
 
         mService.unregisterUsageRequest(unknownRequest);
+    }
+
+    @Test
+    public void testUid3g4gCombinedBpfStats() throws Exception {
+        // pretend that network comes online
+        mService.enableBpfStats(true);
+        expectDefaultSettings();
+        expectNetworkState(buildMobile3gState(IMSI_1));
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(buildEmptyStats());
+        expectBandwidthControlCheck();
+
+        mService.forceUpdateIfaces(NETWORKS_MOBILE);
+
+
+        // create some traffic
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1024L, 8L, 1024L, 8L, 0L)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 512L, 4L, 512L, 4L, 0L));
+        mService.incrementOperationCount(UID_RED, 0xF00D, 5);
+
+        forcePollAndWaitForIdle();
+
+        // verify service recorded history
+        assertUidTotal(sTemplateImsi1, UID_RED, 1024L, 8L, 1024L, 8L, 5);
+
+
+        // now switch over to 4g network
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkState(buildMobile4gState(TEST_IFACE2));
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1));
+        expectBandwidthControlCheck();
+
+        mService.forceUpdateIfaces(NETWORKS_MOBILE);
+        forcePollAndWaitForIdle();
+
+        // verify service recorded history unchanged
+        assertUidTotal(sTemplateImsi1, UID_RED, 1024L, 8L, 1024L, 8L, 5);
+
+        // create traffic on second network
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1024L, 8L, 1024L, 8L, 0L)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 512L, 4L, 512L, 4L, 0L)
+                .addValues(TEST_IFACE2, UID_RED, SET_DEFAULT, TAG_NONE, 512L, 4L, 256L, 2L, 0L)
+                .addValues(TEST_IFACE2, UID_RED, SET_DEFAULT, 0xFAAD, 512L, 4L, 256L, 2L, 0L));
+        mService.incrementOperationCount(UID_RED, 0xFAAD, 5);
+
+        forcePollAndWaitForIdle();
+
+        // verify that ALL_MOBILE template combines both
+        assertUidTotal(sTemplateImsi1, UID_RED, 1536L, 12L, 1280L, 10L, 10);
+    }
+
+    @Test
+    public void testBpfStatsSummaryForAllUid() throws Exception {
+        mService.enableBpfStats(true);
+        // pretend that network comes online
+        expectDefaultSettings();
+        expectNetworkState(buildWifiState());
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(buildEmptyStats());
+        expectBandwidthControlCheck();
+
+        mService.forceUpdateIfaces(NETWORKS_WIFI);
+
+
+        // create some traffic for two apps
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 50L, 5L, 50L, 5L, 0L)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 10L, 1L, 10L, 1L, 0L)
+                .addValues(TEST_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 1024L, 8L, 512L, 4L, 0L));
+        mService.incrementOperationCount(UID_RED, 0xF00D, 1);
+
+        forcePollAndWaitForIdle();
+
+        // verify service recorded history
+        assertUidTotal(sTemplateWifi, UID_RED, 50L, 5L, 50L, 5L, 1);
+        assertUidTotal(sTemplateWifi, UID_BLUE, 1024L, 8L, 512L, 4L, 0);
+
+
+        // now create more traffic in next hour, but only for one app
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 50L, 5L, 50L, 5L, 0L)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 10L, 1L, 10L, 1L, 0L)
+                .addValues(TEST_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 2048L, 16L, 1024L, 8L, 0L));
+        forcePollAndWaitForIdle();
+
+        // first verify entire history present
+        NetworkStats stats = mSession.getSummaryForAllUid(
+                sTemplateWifi, Long.MIN_VALUE, Long.MAX_VALUE, true);
+        assertEquals(3, stats.size());
+        assertValues(stats, IFACE_ALL, UID_RED, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 50L + 50L, 5L + 5L, 50L + 50L, 5L + 5L, 1);
+        assertValues(stats, IFACE_ALL, UID_RED, SET_DEFAULT, 0xF00D, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 10L + 10L, 1L + 1L, 10L + 10L, 1L + 1L, 1);
+        assertValues(stats, IFACE_ALL, UID_BLUE, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 2048L + 1024L, 16L + 8L, 1024L + 512L, 8L + 4L, 0);
+
+        // now verify that recent history only contains one uid
+        final long currentTime = currentTimeMillis();
+        stats = mSession.getSummaryForAllUid(
+                sTemplateWifi, currentTime - HOUR_IN_MILLIS, currentTime, true);
+        assertEquals(3, stats.size());
+        assertValues(stats, IFACE_ALL, UID_RED, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 50L, 5L, 50L, 5L, 0);
+        assertValues(stats, IFACE_ALL, UID_RED, SET_DEFAULT, 0xF00D, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 10L, 1L, 10L, 1L, 0);
+        assertValues(stats, IFACE_ALL, UID_BLUE, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 2048, 16L, 1024L, 8L, 0);
+    }
+
+    @Test
+    public void testBpfStatsForegroundBackground() throws Exception {
+        mService.enableBpfStats(true);
+        // pretend that network comes online
+        expectDefaultSettings();
+        expectNetworkState(buildWifiState());
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(buildEmptyStats());
+        expectBandwidthControlCheck();
+
+        mService.forceUpdateIfaces(NETWORKS_WIFI);
+
+
+        // create some initial traffic
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 128L, 2L, 128L, 2L, 0L)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 64L, 1L, 64L, 1L, 0L));
+        mService.incrementOperationCount(UID_RED, 0xF00D, 1);
+
+        forcePollAndWaitForIdle();
+
+        // verify service recorded history
+        assertUidTotal(sTemplateWifi, UID_RED, 128L, 2L, 128L, 2L, 1);
+
+
+        // now switch to foreground
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_FOREGROUND, TAG_NONE, 32L, 2L, 32L, 2L, 0L)
+                .addValues(TEST_IFACE, UID_RED, SET_FOREGROUND, 0xFAAD, 1L, 1L, 1L, 1L, 0L));
+        mService.setUidForeground(UID_RED, true);
+        mService.incrementOperationCount(UID_RED, 0xFAAD, 1);
+
+        forcePollAndWaitForIdle();
+
+        // test that we combined correctly
+        assertUidTotal(sTemplateWifi, UID_RED, 160L, 4L, 160L, 4L, 2);
+
+        // verify entire history present
+        final NetworkStats stats = mSession.getSummaryForAllUid(
+                sTemplateWifi, Long.MIN_VALUE, Long.MAX_VALUE, true);
+        assertEquals(4, stats.size());
+        assertValues(stats, IFACE_ALL, UID_RED, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 128L, 2L, 128L, 2L, 1);
+        assertValues(stats, IFACE_ALL, UID_RED, SET_DEFAULT, 0xF00D, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 64L, 1L, 64L, 1L, 1);
+        assertValues(stats, IFACE_ALL, UID_RED, SET_FOREGROUND, TAG_NONE, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 32L, 2L, 32L, 2L, 1);
+        assertValues(stats, IFACE_ALL, UID_RED, SET_FOREGROUND, 0xFAAD, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_YES, 1L, 1L, 1L, 1L, 1);
     }
 
     private static File getBaseDir(File statsDir) {
