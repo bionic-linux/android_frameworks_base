@@ -17,7 +17,6 @@
 package com.android.server.net;
 
 import static android.net.ConnectivityManager.TYPE_MOBILE;
-import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.NetworkStats.DEFAULT_NETWORK_NO;
 import static android.net.NetworkStats.DEFAULT_NETWORK_YES;
 import static android.net.NetworkStats.METERED_NO;
@@ -33,11 +32,8 @@ import static com.android.internal.util.TestUtils.waitForIdleHandler;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.when;
 
 import android.app.usage.NetworkStatsManager;
 import android.net.DataUsageRequest;
@@ -49,7 +45,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.Message;
 import android.os.Messenger;
 import android.os.Process;
 import android.os.UserHandle;
@@ -59,12 +54,7 @@ import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 
 import com.android.internal.net.VpnInfo;
-import com.android.server.net.NetworkStatsService;
 import com.android.server.net.NetworkStatsServiceTest.LatchedHandler;
-
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -72,6 +62,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Objects;
 
 /**
  * Tests for {@link NetworkStatsObservers}.
@@ -256,7 +248,7 @@ public class NetworkStatsObserversTest {
 
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
         waitForObserverToIdle();
     }
 
@@ -280,14 +272,14 @@ public class NetworkStatsObserversTest {
         NetworkStats uidSnapshot = null;
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
 
         // Delta
         xtSnapshot = new NetworkStats(TEST_START, 1 /* initialSize */)
                 .addIfaceValues(TEST_IFACE, BASE_BYTES + 1024L, 10L, BASE_BYTES + 2048L, 20L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
         waitForObserverToIdle();
     }
 
@@ -312,7 +304,7 @@ public class NetworkStatsObserversTest {
         NetworkStats uidSnapshot = null;
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
 
         // Delta
         xtSnapshot = new NetworkStats(TEST_START + MINUTE_IN_MILLIS, 1 /* initialSize */)
@@ -320,7 +312,7 @@ public class NetworkStatsObserversTest {
                         BASE_BYTES + THRESHOLD_BYTES, 22L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
         waitForObserverToIdle();
         assertEquals(NetworkStatsManager.CALLBACK_LIMIT_REACHED, mHandler.lastMessageType);
     }
@@ -346,7 +338,7 @@ public class NetworkStatsObserversTest {
                         DEFAULT_NETWORK_YES, BASE_BYTES, 2L, BASE_BYTES, 2L, 0L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
 
         // Delta
         uidSnapshot = new NetworkStats(TEST_START + 2 * MINUTE_IN_MILLIS, 2 /* initialSize */)
@@ -355,7 +347,7 @@ public class NetworkStatsObserversTest {
                         BASE_BYTES + THRESHOLD_BYTES, 2L, 0L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
         waitForObserverToIdle();
         assertEquals(NetworkStatsManager.CALLBACK_LIMIT_REACHED, mHandler.lastMessageType);
     }
@@ -381,7 +373,7 @@ public class NetworkStatsObserversTest {
                         DEFAULT_NETWORK_NO, BASE_BYTES, 2L, BASE_BYTES, 2L, 0L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
 
         // Delta
         uidSnapshot = new NetworkStats(TEST_START + 2 * MINUTE_IN_MILLIS, 2 /* initialSize */)
@@ -390,7 +382,7 @@ public class NetworkStatsObserversTest {
                         BASE_BYTES + THRESHOLD_BYTES, 2L, 0L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
         waitForObserverToIdle();
     }
 
@@ -415,7 +407,7 @@ public class NetworkStatsObserversTest {
                         DEFAULT_NETWORK_YES, BASE_BYTES, 2L, BASE_BYTES, 2L, 0L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
 
         // Delta
         uidSnapshot = new NetworkStats(TEST_START + 2 * MINUTE_IN_MILLIS, 2 /* initialSize */)
@@ -424,7 +416,7 @@ public class NetworkStatsObserversTest {
                         BASE_BYTES + THRESHOLD_BYTES, 2L, 0L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
         waitForObserverToIdle();
         assertEquals(NetworkStatsManager.CALLBACK_LIMIT_REACHED, mHandler.lastMessageType);
     }
@@ -450,7 +442,7 @@ public class NetworkStatsObserversTest {
                         ROAMING_NO, DEFAULT_NETWORK_YES, BASE_BYTES, 2L, BASE_BYTES, 2L, 0L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
 
         // Delta
         uidSnapshot = new NetworkStats(TEST_START + 2 * MINUTE_IN_MILLIS, 2 /* initialSize */)
@@ -459,8 +451,82 @@ public class NetworkStatsObserversTest {
                         BASE_BYTES + THRESHOLD_BYTES, 2L, 0L);
         mStatsObservers.updateStats(
                 xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
-                VPN_INFO, TEST_START);
+                VPN_INFO, TEST_START, false);
         waitForObserverToIdle();
+    }
+
+    @Test
+    public void testUpdateStats_defaultAccess_bpfUidStats_notifies() throws Exception {
+        DataUsageRequest inputRequest = new DataUsageRequest(
+                DataUsageRequest.REQUEST_ID_UNSET, sTemplateImsi1, THRESHOLD_BYTES);
+
+        DataUsageRequest request = mStatsObservers.register(inputRequest, mMessenger, mockBinder,
+                UID_RED, NetworkStatsAccess.Level.DEFAULT);
+        assertTrue(request.requestId > 0);
+        assertTrue(Objects.equals(sTemplateImsi1, request.template));
+        assertEquals(THRESHOLD_BYTES, request.thresholdInBytes);
+
+        NetworkIdentitySet identSet = makeTestIdentSet();
+        mActiveUidIfaces.put(TEST_IFACE, identSet);
+
+        // Baseline
+        NetworkStats xtSnapshot = null;
+        NetworkStats uidSnapshot = new NetworkStats(TEST_START, 2 /* initialSize */)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                        DEFAULT_NETWORK_YES, BASE_BYTES, 2L, BASE_BYTES, 2L, 0L);
+        mStatsObservers.updateStats(
+                xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
+                VPN_INFO, TEST_START, true);
+
+        // Delta
+        // When using eBPF tool to gather the per uid stats, the result NetworkStats is the
+        // delta between current stats poll and the last one, so it should trigger the notification
+        // with THRESHOLD_BYTES of stats instead of BASE_BYTES + THRESHOLD_BYTES;
+        uidSnapshot = new NetworkStats(TEST_START + 2 * MINUTE_IN_MILLIS, 2 /* initialSize */)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                        DEFAULT_NETWORK_NO, THRESHOLD_BYTES, 2L, THRESHOLD_BYTES, 2L, 0L);
+        mStatsObservers.updateStats(
+                xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
+                VPN_INFO, TEST_START, true);
+        waitForObserverToIdle();
+        assertEquals(NetworkStatsManager.CALLBACK_LIMIT_REACHED, mHandler.lastMessageType);
+    }
+
+    @Test
+    public void testUpdateStats_userAccess_bpfUidStats_notifies() throws Exception {
+        DataUsageRequest inputRequest = new DataUsageRequest(
+                DataUsageRequest.REQUEST_ID_UNSET, sTemplateImsi1, THRESHOLD_BYTES);
+
+        DataUsageRequest request = mStatsObservers.register(inputRequest, mMessenger, mockBinder,
+                UID_BLUE, NetworkStatsAccess.Level.USER);
+        assertTrue(request.requestId > 0);
+        assertTrue(Objects.equals(sTemplateImsi1, request.template));
+        assertEquals(THRESHOLD_BYTES, request.thresholdInBytes);
+
+        NetworkIdentitySet identSet = makeTestIdentSet();
+        mActiveUidIfaces.put(TEST_IFACE, identSet);
+
+        // Baseline
+        NetworkStats xtSnapshot = null;
+        NetworkStats uidSnapshot = new NetworkStats(TEST_START, 2 /* initialSize */)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                        DEFAULT_NETWORK_YES, BASE_BYTES, 2L, BASE_BYTES, 2L, 0L);
+        mStatsObservers.updateStats(
+                xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
+                VPN_INFO, TEST_START, true);
+
+        // Delta
+        // When using eBPF tool to gather the per uid stats, the result NetworkStats is the
+        // delta between current stats poll and the last one, so it should trigger the notification
+        // with THRESHOLD_BYTES of stats instead of BASE_BYTES + THRESHOLD_BYTES;
+        uidSnapshot = new NetworkStats(TEST_START + 2 * MINUTE_IN_MILLIS, 2 /* initialSize */)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                        DEFAULT_NETWORK_YES, THRESHOLD_BYTES, 2L, THRESHOLD_BYTES, 2L, 0L);
+        mStatsObservers.updateStats(
+                xtSnapshot, uidSnapshot, mActiveIfaces, mActiveUidIfaces,
+                VPN_INFO, TEST_START, true);
+        waitForObserverToIdle();
+        assertEquals(NetworkStatsManager.CALLBACK_LIMIT_REACHED, mHandler.lastMessageType);
     }
 
     private void waitForObserverToIdle() {

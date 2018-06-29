@@ -193,7 +193,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     private final PowerManager.WakeLock mWakeLock;
 
-    private final boolean mUseBpfTrafficStats;
+    private boolean mUseBpfTrafficStats;
 
     private IConnectivityManager mConnManager;
 
@@ -329,11 +329,12 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock =
                 powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+        boolean useBpfStats = new File("/sys/fs/bpf/traffic_app_uid_stats_map").exists();
 
         NetworkStatsService service = new NetworkStatsService(context, networkManager, alarmManager,
                 wakeLock, getDefaultClock(), TelephonyManager.getDefault(),
                 new DefaultNetworkStatsSettings(context), new NetworkStatsObservers(),
-                getDefaultSystemDir(), getDefaultBaseDir());
+                getDefaultSystemDir(), getDefaultBaseDir(), useBpfStats);
         service.registerLocalService();
 
         HandlerThread handlerThread = new HandlerThread(TAG);
@@ -350,7 +351,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     NetworkStatsService(Context context, INetworkManagementService networkManager,
             AlarmManager alarmManager, PowerManager.WakeLock wakeLock, Clock clock,
             TelephonyManager teleManager, NetworkStatsSettings settings,
-            NetworkStatsObservers statsObservers, File systemDir, File baseDir) {
+            NetworkStatsObservers statsObservers, File systemDir, File baseDir,
+            boolean useBpfStats) {
         mContext = checkNotNull(context, "missing Context");
         mNetworkManager = checkNotNull(networkManager, "missing INetworkManagementService");
         mAlarmManager = checkNotNull(alarmManager, "missing AlarmManager");
@@ -361,7 +363,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mStatsObservers = checkNotNull(statsObservers, "missing NetworkStatsObservers");
         mSystemDir = checkNotNull(systemDir, "missing systemDir");
         mBaseDir = checkNotNull(baseDir, "missing baseDir");
-        mUseBpfTrafficStats = new File("/sys/fs/bpf/traffic_uid_stats_map").exists();
+        mUseBpfTrafficStats = useBpfStats;
     }
 
     private void registerLocalService() {
@@ -963,8 +965,20 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         return nativeGetTotalStat(type, checkBpfStatsEnable());
     }
 
+    /**
+     * Check if eBPF traffic stats is enabled on the current devices.
+     */
     private boolean checkBpfStatsEnable() {
         return mUseBpfTrafficStats;
+    }
+
+    /**
+     * This method is only used for changing the config of NetworkStatsService in test since the
+     * unit test need to cover both eBPF and non-eBPF stats case.
+     */
+    @VisibleForTesting
+    public void enableBpfStats(boolean enable) {
+        mUseBpfTrafficStats = enable;
     }
 
     /**
@@ -1220,26 +1234,28 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // can't be reattributed to responsible apps.
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordDev");
         mDevRecorder.recordSnapshotLocked(
-                devSnapshot, mActiveIfaces, null /* vpnArray */, currentTime);
+                devSnapshot, mActiveIfaces, null /* vpnArray */, currentTime, false);
         Trace.traceEnd(TRACE_TAG_NETWORK);
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordXt");
         mXtRecorder.recordSnapshotLocked(
-                xtSnapshot, mActiveIfaces, null /* vpnArray */, currentTime);
+                xtSnapshot, mActiveIfaces, null /* vpnArray */, currentTime, false);
         Trace.traceEnd(TRACE_TAG_NETWORK);
 
         // For per-UID stats, pass the VPN info so VPN traffic is reattributed to responsible apps.
         VpnInfo[] vpnArray = mConnManager.getAllVpnInfo();
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordUid");
-        mUidRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, vpnArray, currentTime);
+        mUidRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, vpnArray, currentTime,
+                mUseBpfTrafficStats);
         Trace.traceEnd(TRACE_TAG_NETWORK);
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordUidTag");
-        mUidTagRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, vpnArray, currentTime);
+        mUidTagRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, vpnArray, currentTime,
+                mUseBpfTrafficStats);
         Trace.traceEnd(TRACE_TAG_NETWORK);
 
         // We need to make copies of member fields that are sent to the observer to avoid
         // a race condition between the service handler thread and the observer's
         mStatsObservers.updateStats(xtSnapshot, uidSnapshot, new ArrayMap<>(mActiveIfaces),
-                new ArrayMap<>(mActiveUidIfaces), vpnArray, currentTime);
+                new ArrayMap<>(mActiveUidIfaces), vpnArray, currentTime, mUseBpfTrafficStats);
     }
 
     /**

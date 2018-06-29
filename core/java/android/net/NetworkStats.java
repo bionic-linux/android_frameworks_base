@@ -600,6 +600,22 @@ public class NetworkStats implements Parcelable {
     }
 
     /**
+     * Scrape the {@link #operations} from the given {@link NetworkStats} and append to the caller
+     * {@link NetworkStats} while keep the stats entry to be 0.
+     */
+    public NetworkStats scrapeOperationsFrom(NetworkStats stats) {
+        NetworkStats.Entry entry = null;
+        for (int i = 0; i < stats.size(); i++) {
+            entry = stats.getValues(i, entry);
+            if (entry.operations != 0) {
+                addValues(entry.iface, entry.uid, entry.set, entry.tag, 0L, 0L, 0L, 0L,
+                        entry.operations);
+            }
+        }
+        return this;
+    }
+
+    /**
      * Return list of unique interfaces known by this data structure.
      */
     public String[] getUniqueIfaces() {
