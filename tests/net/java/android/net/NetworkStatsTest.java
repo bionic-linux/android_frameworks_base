@@ -35,6 +35,7 @@ import static android.net.NetworkStats.IFACE_ALL;
 import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
+import static android.net.NetworkStats.multiplySafe;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -133,6 +134,26 @@ public class NetworkStatsTest {
             assertEquals(-1, stats.findIndexHinted(TEST_IFACE2, 102, SET_DEFAULT, TAG_NONE,
                     METERED_YES, ROAMING_YES, DEFAULT_NETWORK_YES, hint));
         }
+    }
+
+    @Test
+    public void testMultiplySafe() {
+        assertEquals(25, multiplySafe(50, 1, 2));
+        assertEquals(100, multiplySafe(50, 2, 1));
+
+        assertEquals(-10, multiplySafe(30, -1, 3));
+        assertEquals(0, multiplySafe(30, 0, 3));
+        assertEquals(10, multiplySafe(30, 1, 3));
+        assertEquals(20, multiplySafe(30, 2, 3));
+        assertEquals(30, multiplySafe(30, 3, 3));
+        assertEquals(40, multiplySafe(30, 4, 3));
+
+        assertEquals(100_000_000_000L,
+                multiplySafe(300_000_000_000L, 10_000_000_000L, 30_000_000_000L));
+        assertEquals(100_000_000_010L,
+                multiplySafe(300_000_000_000L, 10_000_000_001L, 30_000_000_000L));
+        assertEquals(823_202_048L,
+                        multiplySafe(4_939_212_288L, 2_121_815_528L, 12_730_893_165L));
     }
 
     @Test

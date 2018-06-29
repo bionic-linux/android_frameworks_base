@@ -364,11 +364,11 @@ public class NetworkStatsHistory implements Parcelable {
             if (overlap <= 0) continue;
 
             // integer math each time is faster than floating point
-            final long fracRxBytes = rxBytes * overlap / duration;
-            final long fracRxPackets = rxPackets * overlap / duration;
-            final long fracTxBytes = txBytes * overlap / duration;
-            final long fracTxPackets = txPackets * overlap / duration;
-            final long fracOperations = operations * overlap / duration;
+            final long fracRxBytes = NetworkStats.multiplySafe(rxBytes, overlap, duration);
+            final long fracRxPackets = NetworkStats.multiplySafe(rxPackets, overlap, duration);
+            final long fracTxBytes = NetworkStats.multiplySafe(txBytes, overlap, duration);
+            final long fracTxPackets = NetworkStats.multiplySafe(txPackets, overlap, duration);
+            final long fracOperations = NetworkStats.multiplySafe(operations, overlap, duration);
 
             addLong(activeTime, i, overlap);
             addLong(this.rxBytes, i, fracRxBytes); rxBytes -= fracRxBytes;
