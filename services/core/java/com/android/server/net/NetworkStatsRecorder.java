@@ -41,9 +41,9 @@ import com.android.internal.net.VpnInfo;
 import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
 
-import libcore.io.IoUtils;
-
 import com.google.android.collect.Sets;
+
+import libcore.io.IoUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -201,6 +201,19 @@ public class NetworkStatsRecorder {
         return res;
     }
 
+    // For devices using eBPF tools, the fetched stats are the delta since last time, no need to
+    // record a persistent snapshot since boot. But we need to keep the operation counts.
+    private NetworkStats populateEmptySnapshotForBpf(NetworkStats oldSnapshot) {
+        NetworkStats newSnapshot = new NetworkStats(oldSnapshot.getElapsedRealtime(), 1);
+        NetworkStats.Entry entry = null;
+        for (int i = 0; i < oldSnapshot.size(); i++) {
+            entry = oldSnapshot.getValues(i, entry);
+            newSnapshot.combineValues(entry.iface, entry.uid, entry.set, entry.tag, 0L, 0L, 0L, 0L,
+                    entry.operations);
+        }
+        return newSnapshot;
+    }
+
     /**
      * Record any delta that occurred since last {@link NetworkStats} snapshot,
      * using the given {@link Map} to identify network interfaces. First
@@ -213,7 +226,7 @@ public class NetworkStatsRecorder {
      */
     public void recordSnapshotLocked(NetworkStats snapshot,
             Map<String, NetworkIdentitySet> ifaceIdent, @Nullable VpnInfo[] vpnArray,
-            long currentTimeMillis) {
+            long currentTimeMillis, boolean isIncremental) {
         final HashSet<String> unknownIfaces = Sets.newHashSet();
 
         // skip recording when snapshot missing
@@ -221,7 +234,11 @@ public class NetworkStatsRecorder {
 
         // assume first snapshot is bootstrap and don't record
         if (mLastSnapshot == null) {
-            mLastSnapshot = snapshot;
+            if (isIncremental) {
+                mLastSnapshot = populateEmptySnapshotForBpf(snapshot);
+            } else {
+                mLastSnapshot = snapshot;
+            }
             return;
         }
 
@@ -281,8 +298,11 @@ public class NetworkStatsRecorder {
                 }
             }
         }
-
-        mLastSnapshot = snapshot;
+        if (isIncremental) {
+            mLastSnapshot = populateEmptySnapshotForBpf(snapshot);
+        } else {
+            mLastSnapshot = snapshot;
+        }
 
         if (LOGV && unknownIfaces.size() > 0) {
             Slog.w(TAG, "unknown interfaces " + unknownIfaces + ", ignoring those stats");

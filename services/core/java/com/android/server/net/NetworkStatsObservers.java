@@ -104,9 +104,9 @@ class NetworkStatsObservers {
     public void updateStats(NetworkStats xtSnapshot, NetworkStats uidSnapshot,
                 ArrayMap<String, NetworkIdentitySet> activeIfaces,
                 ArrayMap<String, NetworkIdentitySet> activeUidIfaces,
-                VpnInfo[] vpnArray, long currentTime) {
+                VpnInfo[] vpnArray, long currentTime, boolean useBpfStats) {
         StatsContext statsContext = new StatsContext(xtSnapshot, uidSnapshot, activeIfaces,
-                activeUidIfaces, vpnArray, currentTime);
+                activeUidIfaces, vpnArray, currentTime, useBpfStats);
         getHandler().sendMessage(mHandler.obtainMessage(MSG_UPDATE_STATS, statsContext));
     }
 
@@ -354,7 +354,7 @@ class NetworkStatsObservers {
             // thread will update it. We pass a null VPN array because usage is aggregated by uid
             // for this snapshot, so VPN traffic can't be reattributed to responsible apps.
             mRecorder.recordSnapshotLocked(statsContext.mXtSnapshot, statsContext.mActiveIfaces,
-                    null /* vpnArray */, statsContext.mCurrentTime);
+                    null /* vpnArray */, statsContext.mCurrentTime, false);
         }
 
         /**
@@ -396,7 +396,7 @@ class NetworkStatsObservers {
             // thread will update it. We pass the VPN info so VPN traffic is reattributed to
             // responsible apps.
             mRecorder.recordSnapshotLocked(statsContext.mUidSnapshot, statsContext.mActiveUidIfaces,
-                    statsContext.mVpnArray, statsContext.mCurrentTime);
+                    statsContext.mVpnArray, statsContext.mCurrentTime, statsContext.mIsIncrements);
         }
 
         /**
@@ -429,17 +429,19 @@ class NetworkStatsObservers {
         ArrayMap<String, NetworkIdentitySet> mActiveUidIfaces;
         VpnInfo[] mVpnArray;
         long mCurrentTime;
+        boolean mIsIncrements;
 
         StatsContext(NetworkStats xtSnapshot, NetworkStats uidSnapshot,
                 ArrayMap<String, NetworkIdentitySet> activeIfaces,
                 ArrayMap<String, NetworkIdentitySet> activeUidIfaces,
-                VpnInfo[] vpnArray, long currentTime) {
+                VpnInfo[] vpnArray, long currentTime, boolean isIncrements) {
             mXtSnapshot = xtSnapshot;
             mUidSnapshot = uidSnapshot;
             mActiveIfaces = activeIfaces;
             mActiveUidIfaces = activeUidIfaces;
             mVpnArray = vpnArray;
             mCurrentTime = currentTime;
+            mIsIncrements = isIncrements;
         }
     }
 }
