@@ -19,6 +19,7 @@ package android.net;
 import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
 import static android.net.NetworkStats.DEFAULT_NETWORK_NO;
 import static android.net.NetworkStats.DEFAULT_NETWORK_YES;
+import static android.net.NetworkStats.IFACE_ALL;
 import static android.net.NetworkStats.INTERFACES_ALL;
 import static android.net.NetworkStats.METERED_ALL;
 import static android.net.NetworkStats.METERED_NO;
@@ -26,31 +27,29 @@ import static android.net.NetworkStats.METERED_YES;
 import static android.net.NetworkStats.ROAMING_ALL;
 import static android.net.NetworkStats.ROAMING_NO;
 import static android.net.NetworkStats.ROAMING_YES;
-import static android.net.NetworkStats.SET_DEFAULT;
-import static android.net.NetworkStats.SET_FOREGROUND;
+import static android.net.NetworkStats.SET_ALL;
 import static android.net.NetworkStats.SET_DBG_VPN_IN;
 import static android.net.NetworkStats.SET_DBG_VPN_OUT;
-import static android.net.NetworkStats.SET_ALL;
-import static android.net.NetworkStats.IFACE_ALL;
+import static android.net.NetworkStats.SET_DEFAULT;
+import static android.net.NetworkStats.SET_FOREGROUND;
 import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import android.net.NetworkStats.Entry;
 import android.os.Process;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 import android.util.ArrayMap;
 
 import com.google.android.collect.Sets;
 
-import java.util.HashSet;
-
-import org.junit.runner.RunWith;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.HashSet;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -925,6 +924,30 @@ public class NetworkStatsTest {
         assertEquals(2, stats.size());
         assertEquals(firstEntry, stats.getValues(0, null));
         assertEquals(secondEntry, stats.getValues(1, null));
+    }
+
+    @Test
+    public void testScrapeOperationFromStats() {
+        NetworkStats before = new NetworkStats(TEST_START, 6)
+                .addValues(TEST_IFACE, 100, SET_DEFAULT, TAG_NONE, 1000L, 10L, 500L, 5L, 0L)
+                .addValues(TEST_IFACE2, 100, SET_DEFAULT, TAG_NONE, 500L, 10L, 250L, 5L, 1L)
+                .addValues(TEST_IFACE2, 100, SET_DEFAULT, 0xF00D, 1024L, 16L, 512L, 8L, 1L)
+                .addValues(TEST_IFACE2, 100, SET_FOREGROUND, TAG_NONE, 256L, 4L, 128L, 2L, 0L)
+                .addValues(TEST_IFACE, 101, SET_DEFAULT, TAG_NONE, 2048L, 32L, 1024L, 16L, 2L)
+                .addValues(TEST_IFACE, 101, SET_DEFAULT, 0xF00D, 64L, 1L, 128L, 2L, 2L);
+
+        NetworkStats after = new NetworkStats(TEST_START, 6).scrapeOperationsFrom(before);
+
+        // The entry with 0 operation should be removed, the others should be empty stats entry with
+        // only operation count.
+        assertValues(after, 0, TEST_IFACE2, 100, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_NO, 0L, 0L, 0L, 0L, 1L);
+        assertValues(after, 1, TEST_IFACE2, 100, SET_DEFAULT, 0xF00D, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_NO, 0L, 0L, 0L, 0L, 1L);
+        assertValues(after, 2, TEST_IFACE, 101, SET_DEFAULT, TAG_NONE, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_NO, 0L, 0L, 0L, 0L, 2L);
+        assertValues(after, 3, TEST_IFACE, 101, SET_DEFAULT, 0xF00D, METERED_NO, ROAMING_NO,
+                DEFAULT_NETWORK_NO, 0L, 0L, 0L, 0L, 2L);
     }
 
     private static void assertContains(NetworkStats stats,  String iface, int uid, int set,

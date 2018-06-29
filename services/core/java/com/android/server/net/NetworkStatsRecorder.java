@@ -41,9 +41,9 @@ import com.android.internal.net.VpnInfo;
 import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
 
-import libcore.io.IoUtils;
-
 import com.google.android.collect.Sets;
+
+import libcore.io.IoUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -201,6 +201,7 @@ public class NetworkStatsRecorder {
         return res;
     }
 
+
     /**
      * Record any delta that occurred since last {@link NetworkStats} snapshot,
      * using the given {@link Map} to identify network interfaces. First
@@ -213,7 +214,7 @@ public class NetworkStatsRecorder {
      */
     public void recordSnapshotLocked(NetworkStats snapshot,
             Map<String, NetworkIdentitySet> ifaceIdent, @Nullable VpnInfo[] vpnArray,
-            long currentTimeMillis) {
+            long currentTimeMillis, boolean isDelta) {
         final HashSet<String> unknownIfaces = Sets.newHashSet();
 
         // skip recording when snapshot missing
@@ -221,7 +222,18 @@ public class NetworkStatsRecorder {
 
         // assume first snapshot is bootstrap and don't record
         if (mLastSnapshot == null) {
-            mLastSnapshot = snapshot;
+            if (isDelta) {
+                // For devices using eBPF tools, the fetched stats are the delta since last time, no
+                // need to record a persistent snapshot since boot. But we need to keep the
+                // operation counts persistent since the NetworkStatsService need to have a
+                // persistent operation count for reference. And if we lose the operation
+                // information here we will have incorrect operation count the next time we record
+                // NetworkStats
+                mLastSnapshot = new NetworkStats(snapshot.getElapsedRealtime(), snapshot.size())
+                    .scrapeOperationsFrom(snapshot);
+            } else {
+                mLastSnapshot = snapshot;
+            }
             return;
         }
 
@@ -281,8 +293,12 @@ public class NetworkStatsRecorder {
                 }
             }
         }
-
-        mLastSnapshot = snapshot;
+        if (isDelta) {
+            mLastSnapshot = new NetworkStats(snapshot.getElapsedRealtime(), snapshot.size())
+                    .scrapeOperationsFrom(snapshot);
+        } else {
+            mLastSnapshot = snapshot;
+        }
 
         if (LOGV && unknownIfaces.size() > 0) {
             Slog.w(TAG, "unknown interfaces " + unknownIfaces + ", ignoring those stats");
