@@ -127,7 +127,7 @@ public class NetworkStatsFactory {
     }
 
     public NetworkStatsFactory() {
-        this(new File("/proc/"), new File("/sys/fs/bpf/traffic_uid_stats_map").exists());
+        this(new File("/proc/"), new File("/sys/fs/bpf/traffic_stats_map_A").exists());
     }
 
     @VisibleForTesting
