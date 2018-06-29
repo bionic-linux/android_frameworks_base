@@ -33,6 +33,7 @@ import android.app.ActivityThread;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.hidl.token.V1_0.ITokenManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkStats;
 import android.net.Uri;
@@ -57,6 +58,7 @@ import android.telephony.ims.aidl.IImsMmTelFeature;
 import android.telephony.ims.aidl.IImsRcsFeature;
 import android.telephony.ims.aidl.IImsRegistration;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
+import android.telephony.test.V1_0.ITestService;
 import android.util.Log;
 
 import com.android.ims.internal.IImsServiceFeatureCallback;
@@ -1454,6 +1456,22 @@ public class TelephonyManager {
         } catch (RemoteException ex) {
         } catch (NullPointerException ex) {
         }
+    }
+
+    /** @hide */
+    public void setTestRadio(ITestService testService) {
+        try {
+            ITokenManager tokenManager = ITokenManager.getService();
+            ArrayList<Byte> token = tokenManager.createToken(testService);
+            Log.i(TAG, "setTestRadio: token= " + token);
+            ITelephony telephony = getITelephony();
+            byte[] tokenBytes = new byte[token.size()];
+            for (int i = 0; i < token.size(); i++) {
+                tokenBytes[i] = token.get(i);
+            }
+            telephony.setTestRadio(tokenBytes);
+            tokenManager.unregister(token);
+        } catch (RemoteException ex) {}
     }
 
     /**

@@ -1529,4 +1529,6 @@ interface ITelephony {
      * A test API to return installed carrier id list version.
      */
     int getCarrierIdListVersion(int subId);
+
+    void setTestRadio(in byte[] token);
 }
