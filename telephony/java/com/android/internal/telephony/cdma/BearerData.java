@@ -596,6 +596,18 @@ public final class BearerData {
         System.arraycopy(payload, 0, uData.payload, udhBytes, payload.length);
     }
 
+    private static void encode8bitEms(UserData uData, byte[] udhData) throws CodingException {
+        byte[] payload = uData.payload;
+        int udhBytes = udhData.length + 1; // Add length octet.
+        uData.msgEncoding = UserData.ENCODING_OCTET;
+        uData.msgEncodingSet = true;
+        uData.numFields = udhBytes + payload.length;
+        uData.payload = new byte[uData.numFields];
+        uData.payload[0] = (byte) udhData.length;
+        System.arraycopy(udhData, 0, uData.payload, 1, udhData.length);
+        System.arraycopy(payload, 0, uData.payload, udhBytes, payload.length);
+    }
+
     private static void encodeEmsUserDataPayload(UserData uData)
         throws CodingException
     {
@@ -605,6 +617,13 @@ public final class BearerData {
                 encode7bitEms(uData, headerData, true);
             } else if (uData.msgEncoding == UserData.ENCODING_UNICODE_16) {
                 encode16bitEms(uData, headerData);
+            } else if (uData.msgEncoding == UserData.ENCODING_OCTET) {
+                // only for data SMS
+                if (uData.payload == null) {
+                    Rlog.e(LOG_TAG, "user data with octet encoding but null payload");
+                    uData.payload = new byte[0];
+                }
+                encode8bitEms(uData, headerData);
             } else {
                 throw new CodingException("unsupported EMS user data encoding (" +
                                           uData.msgEncoding + ")");
