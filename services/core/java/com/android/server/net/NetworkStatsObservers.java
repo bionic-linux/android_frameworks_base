@@ -356,7 +356,7 @@ class NetworkStatsObservers {
             // thread will update it. We pass a null VPN array because usage is aggregated by uid
             // for this snapshot, so VPN traffic can't be reattributed to responsible apps.
             mRecorder.recordSnapshotLocked(statsContext.mXtSnapshot, statsContext.mActiveIfaces,
-                    null /* vpnArray */, statsContext.mCurrentTime);
+                    null /* vpnArray */, statsContext.mCurrentTime, true);
         }
 
         /**
@@ -398,7 +398,7 @@ class NetworkStatsObservers {
             // thread will update it. We pass the VPN info so VPN traffic is reattributed to
             // responsible apps.
             mRecorder.recordSnapshotLocked(statsContext.mUidSnapshot, statsContext.mActiveUidIfaces,
-                    statsContext.mVpnArray, statsContext.mCurrentTime);
+                    statsContext.mVpnArray, statsContext.mCurrentTime, false);
         }
 
         /**
