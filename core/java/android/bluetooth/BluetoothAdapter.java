@@ -930,7 +930,7 @@ public final class BluetoothAdapter {
             if (DBG) {
                 Log.d(TAG, "enableBLE(): Calling enable");
             }
-            return mManagerService.enable(packageName);
+            return mManagerService.enable(packageName, true);
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         }
@@ -1061,7 +1061,7 @@ public final class BluetoothAdapter {
             return true;
         }
         try {
-            return mManagerService.enable(ActivityThread.currentPackageName());
+            return mManagerService.enable(ActivityThread.currentPackageName(), false);
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         }
