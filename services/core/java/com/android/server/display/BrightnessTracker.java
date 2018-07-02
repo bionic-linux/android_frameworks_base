@@ -167,7 +167,7 @@ public class BrightnessTracker {
     private BrightnessConfiguration mBrightnessConfiguration;
     // End of block of members that should only be accessed on the mBgHandler thread.
 
-    private @UserIdInt int mCurrentUserId = UserHandle.USER_NULL;
+    private volatile @UserIdInt int mCurrentUserId = UserHandle.USER_NULL;
 
     // Lock held while collecting data related to brightness changes.
     private final Object mDataCollectionLock = new Object();
