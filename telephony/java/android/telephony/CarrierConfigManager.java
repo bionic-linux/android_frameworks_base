@@ -2126,6 +2126,14 @@ public class CarrierConfigManager {
     public static final String KEY_SHOW_CALL_BLOCKING_DISABLED_NOTIFICATION_ALWAYS_BOOL =
             "show_call_blocking_disabled_notification_always_bool";
 
+    /**
+     * Flag to hide Preset APN detail parameters. If true, user cannot enter ApnEditor view of
+     * Preset APN, and cannot view detail parameters of the APN. If false, user can enter ApnEditor
+     * view of Preset APN, and can view and edit detail parameters of the APN. Default value is
+     * false.
+     */
+    public static final String KEY_HIDE_PRESET_APN_DETAIL_BOOL = "hide_preset_apn_detail_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2465,6 +2473,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_WCDMA_DEFAULT_SIGNAL_STRENGTH_MEASUREMENT_STRING, "");
         sDefaults.putBoolean(KEY_CONFIG_SHOW_ORIG_DIAL_STRING_FOR_CDMA_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_CALL_BLOCKING_DISABLED_NOTIFICATION_ALWAYS_BOOL, false);
+        sDefaults.putBoolean(KEY_HIDE_PRESET_APN_DETAIL_BOOL, false);
     }
 
     /**
