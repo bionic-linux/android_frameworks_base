@@ -118,6 +118,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private static final int MSG_SET_TEMPORARY_BRIGHTNESS = 6;
     private static final int MSG_SET_TEMPORARY_AUTO_BRIGHTNESS_ADJUSTMENT = 7;
     private static final int MSG_IGNORE_PROXIMITY = 8;
+    private static final int MSG_SWITCH_USER = 9;
 
     private static final int PROXIMITY_UNKNOWN = -1;
     private static final int PROXIMITY_NEGATIVE = 0;
@@ -592,7 +593,8 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     }
 
     public void onSwitchUser(@UserIdInt int newUserId) {
-        handleSettingsChange(true /* userSwitch */);
+        Message msg = mHandler.obtainMessage(MSG_SWITCH_USER);
+        msg.sendToTarget();
         mBrightnessTracker.onSwitchUser(newUserId);
     }
 
@@ -1657,15 +1659,15 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
     private void handleSettingsChange(boolean userSwitch) {
         mPendingScreenBrightnessSetting = getScreenBrightnessSetting();
-
+        mPendingAutoBrightnessAdjustment = getAutoBrightnessAdjustmentSetting();
         if (userSwitch) {
             // Don't treat user switches as user initiated change.
             mCurrentScreenBrightnessSetting = mPendingScreenBrightnessSetting;
+            mAutoBrightnessAdjustment = mPendingAutoBrightnessAdjustment;
             if (mAutomaticBrightnessController != null) {
                 mAutomaticBrightnessController.resetShortTermModel();
             }
         }
-        mPendingAutoBrightnessAdjustment = getAutoBrightnessAdjustmentSetting();
         // We don't bother with a pending variable for VR screen brightness since we just
         // immediately adapt to it.
         mScreenBrightnessForVr = getScreenBrightnessForVrSetting();
@@ -2021,6 +2023,10 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
                 case MSG_IGNORE_PROXIMITY:
                     ignoreProximitySensorUntilChangedInternal();
+                    break;
+
+                case MSG_SWITCH_USER:
+                    handleSettingsChange(true /* userSwitch */);
                     break;
             }
         }
