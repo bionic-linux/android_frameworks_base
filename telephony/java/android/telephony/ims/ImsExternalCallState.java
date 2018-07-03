@@ -190,10 +190,15 @@ public final class ImsExternalCallState implements Parcelable {
         return mAddress;
     }
 
+<<<<<<< HEAD
     /**
      * @return A {@link Uri} containing the local address from the Multiendpoint Dialog Information.
      */
     public @Nullable Uri getLocalAddress() {
+=======
+    /** @hide */
+    public Uri getLocalAddress() {
+>>>>>>> acd7784... FR49835: ImsMultiEndPoint - Sip Notify Change
         return mLocalAddress;
     }
 
