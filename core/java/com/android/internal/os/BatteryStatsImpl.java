@@ -10633,23 +10633,27 @@ public class BatteryStatsImpl extends BatteryStats {
             }
         }
 
-        long totalCpuClustersTimeMs = 0;
+        long[] totalCpuClustersTimeMs = new long[mKernelCpuSpeedReaders.length];
         // Read the time spent for each cluster at various cpu frequencies.
         final long[][] clusterSpeedTimesMs = new long[mKernelCpuSpeedReaders.length][];
         for (int cluster = 0; cluster < mKernelCpuSpeedReaders.length; cluster++) {
             clusterSpeedTimesMs[cluster] = mKernelCpuSpeedReaders[cluster].readDelta();
             if (clusterSpeedTimesMs[cluster] != null) {
                 for (int speed = clusterSpeedTimesMs[cluster].length - 1; speed >= 0; --speed) {
-                    totalCpuClustersTimeMs += clusterSpeedTimesMs[cluster][speed];
+                    totalCpuClustersTimeMs[cluster] += clusterSpeedTimesMs[cluster][speed];
                 }
             }
+            if (DEBUG_ENERGY_CPU) {
+                Slog.d(TAG, "cluster=" + cluster
+                          + ", totalCpuClustersTimeMs[" + cluster + "]="
+                          + totalCpuClustersTimeMs[cluster] + ".");
+            }
         }
-        if (totalCpuClustersTimeMs != 0) {
-            // We have cpu times per freq aggregated over all uids but we need the times per uid.
-            // So, we distribute total time spent by an uid to different cpu freqs based on the
-            // amount of time cpu was running at that freq.
-            final int updatedUidsCount = updatedUids.size();
-            for (int i = 0; i < updatedUidsCount; ++i) {
+        // We have cpu times per freq aggregated over all uids but we need the times per uid.
+        // So, we distribute total time spent by an uid to different cpu freqs based on the
+        // amount of time cpu was running at that freq.
+        final int updatedUidsCount = updatedUids.size();
+        for (int i = 0; i < updatedUidsCount; ++i) {
                 final Uid u = getUidStatsLocked(updatedUids.keyAt(i));
                 final long appCpuTimeUs = updatedUids.valueAt(i);
                 // Add the cpu speeds to this UID.
@@ -10660,6 +10664,7 @@ public class BatteryStatsImpl extends BatteryStats {
                 }
 
                 for (int cluster = 0; cluster < clusterSpeedTimesMs.length; cluster++) {
+                    if (totalCpuClustersTimeMs[cluster] == 0) continue;
                     final int speedsInCluster = clusterSpeedTimesMs[cluster].length;
                     if (u.mCpuClusterSpeedTimesUs[cluster] == null || speedsInCluster !=
                             u.mCpuClusterSpeedTimesUs[cluster].length) {
@@ -10674,10 +10679,9 @@ public class BatteryStatsImpl extends BatteryStats {
                         }
                         cpuSpeeds[speed].addCountLocked(appCpuTimeUs
                                 * clusterSpeedTimesMs[cluster][speed]
-                                / totalCpuClustersTimeMs);
+                                / totalCpuClustersTimeMs[cluster]);
                     }
                 }
-            }
         }
 
         // See if there is a difference in wakelocks between this collection and the last
