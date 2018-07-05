@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108128cb_4d31beed",
+        "filename": "services/net/java/android/net/dhcp/DhcpSocketFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-07-05T06:18:48Z",
+      "side": 1,
+      "message": "attachDhcpFilter only accepts packets to the client port, so it can\u0027t be used for a DHCP server.\n\n        // Check the destination port.\n        BPF_STMT(BPF_LD  | BPF_H    | BPF_IND, kUDPDstPortIndirectOffset),\n        BPF_JUMP(BPF_JMP | BPF_JEQ  | BPF_K,   kDhcpClientPort, 0, 1),",
+      "range": {
+        "startLine": 48,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 37
+      },
+      "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b69062b_a48b95b9",
+        "filename": "services/net/java/android/net/dhcp/DhcpSocketFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-07-05T06:18:48Z",
+      "side": 1,
+      "message": "Use TrafficStats#tagFileDescriptor() so you don\u0027t have to mess around with try/finally.",
+      "range": {
+        "startLine": 65,
+        "startChar": 40,
+        "endLine": 65,
+        "endChar": 63
+      },
+      "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9721d992_744241db",
+        "filename": "services/net/java/android/net/dhcp/DhcpSocketFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-07-05T06:18:48Z",
+      "side": 1,
+      "message": "This will not work well on a server :-)",
+      "range": {
+        "startLine": 72,
+        "startChar": 49,
+        "endLine": 72,
+        "endChar": 61
+      },
+      "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744b1b29_c5be2903",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-07-05T06:18:48Z",
+      "side": 1,
+      "message": "Looks like this is mostly moving code from PacketReader? If so, then for ease of review please arrange things so that gerrit knows it\u0027s a move. Maybe use \"git mv\"?",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 40
+      },
+      "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
