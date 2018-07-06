@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66a5f13f_7b1d35f2",
+        "filename": "services/net/java/android/net/dhcp/DhcpSocketFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-06T06:21:49Z",
+      "side": 1,
+      "message": "As discussed considering the client/server differences I\u0027ll just drop this class and put the (corrected) code directly into DhcpServer. I\u0027m already mocking DhcpPacketListener so this does not need mocking anyway.",
+      "parentUuid": "108128cb_4d31beed",
+      "range": {
+        "startLine": 48,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 37
+      },
+      "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b69062b_a48b95b9",
         "filename": "services/net/java/android/net/dhcp/DhcpSocketFactory.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd39d9d5_60e45fef",
+        "filename": "services/net/java/android/net/dhcp/DhcpSocketFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-06T06:21:49Z",
+      "side": 1,
+      "message": "Adding a method in aosp/713544. The code here will be in another CL.",
+      "parentUuid": "0b69062b_a48b95b9",
+      "range": {
+        "startLine": 65,
+        "startChar": 40,
+        "endLine": 65,
+        "endChar": 63
+      },
+      "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a3f5f30_e420f10d",
+        "filename": "services/net/java/android/net/dhcp/DhcpSocketFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-06T06:21:49Z",
+      "side": 1,
+      "message": "Removing in moved code.",
+      "parentUuid": "9721d992_744241db",
+      "range": {
+        "startLine": 72,
+        "startChar": 49,
+        "endLine": 72,
+        "endChar": 61
+      },
+      "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "744b1b29_c5be2903",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18649d2_0a22aaf8",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-06T06:21:49Z",
+      "side": 1,
+      "message": "From what I understand git does not know about moves (git mv is just a shortcut for rm/add), but figures it out afterwards by looking at the patches.\nI\u0027m emailing a diff, this is indeed not great for review.",
+      "parentUuid": "744b1b29_c5be2903",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 40
+      },
+      "revId": "04adc83c058b08286039a1898d5db5999c2e528b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
