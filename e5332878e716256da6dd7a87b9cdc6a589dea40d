@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "d0bd203b_75f6aadd",
+        "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-07-06T17:51:06Z",
+      "side": 1,
+      "message": "Should this have descriptive and meaningful javadoc style comments then?",
+      "parentUuid": "35c6363d_b1387e08",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 13
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96df3375_ca7deb34",
         "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
         "patchSetId": 8
@@ -307,6 +331,30 @@
       "side": 1,
       "message": "This is in an \"else\", so this is if (asu \u003e\u003d 2 \u0026\u0026 asu !\u003d 99 \u0026\u0026 asu \u003e\u003d STRENGTH_GREAT)... the logic seem correct-ish?",
       "parentUuid": "cf81a26f_8a03b462",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 55
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "650b8b55_8014312f",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-07-06T17:51:06Z",
+      "side": 1,
+      "message": "That makes sense if we\u0027re assuming that the asu will always be [0,31] or 99. I\u0027m a little paranoid that mSignalStrength could be INT_MAX here and we would report great signal strength.",
+      "parentUuid": "b71ed31f_f8e5e45a",
       "range": {
         "startLine": 92,
         "startChar": 26,
