@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "435ccad4_e3aeab48",
+        "filename": "telephony/java/android/telephony/CellInfoTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-06T20:16:52Z",
+      "side": 1,
+      "message": "This is pretty canonical for these functions since there\u0027s not much to say, and I would ask the courtesy of not moving the goalposts. This also happens to be copy+paste from the same file in WCDMA. For fun I grepped all of telephony and went looking for describeContents() with meaningful comments... the only ones that have it are the SmsCb functions, which should give you an idea of just how rare (and frankly, unnecessary) it is. Most functions have no comment whatsoever, since the only reason I have one here in the first place is to satisfy the recently-added and not-so-bright style checker.\n\n\u003ergrep -B5 describeContents \u003candroid\u003e/frameworks/base/telephony",
+      "parentUuid": "d0bd203b_75f6aadd",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 13
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96df3375_ca7deb34",
         "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
         "patchSetId": 8
@@ -355,6 +379,30 @@
       "side": 1,
       "message": "That makes sense if we\u0027re assuming that the asu will always be [0,31] or 99. I\u0027m a little paranoid that mSignalStrength could be INT_MAX here and we would report great signal strength.",
       "parentUuid": "b71ed31f_f8e5e45a",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 55
+      },
+      "revId": "e5332878e716256da6dd7a87b9cdc6a589dea40d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e013b92_f31306c2",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-07-06T20:16:52Z",
+      "side": 1,
+      "message": "Is the assumption great? No, but again... I\u0027m not trying to actually clean up all these classes right now. This is an identical copy from the WCDMA class, so creating an inconsistency here won\u0027t actually help. I\u0027ve proposed that we clean all this up in Q, and Robert is considering it, but my intention here is to add equivalent functionality for TDSCDMA that we have for WCDMA, not to re-work these classes. The getLevel() classes here are broken for other reasons as well (both here, in WCDMA and in GSM which are both already public -__-).\n\nhttps://cs.corp.google.com/aosp-master/frameworks/base/telephony/java/android/telephony/CellSignalStrengthWcdma.java?q\u003dCellSignalStrengthWcdma.java\u0026dr\u0026l\u003d87\n\nhttps://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/CellSignalStrengthGsm.java?q\u003dCellSignalStrengthGsm.java\u0026dr\u0026l\u003d95",
+      "parentUuid": "650b8b55_8014312f",
       "range": {
         "startLine": 92,
         "startChar": 26,
