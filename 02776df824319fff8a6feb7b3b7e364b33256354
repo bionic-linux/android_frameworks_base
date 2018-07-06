@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "388cbd20_dc0422dd",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacketListener.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-06T07:07:07Z",
+      "side": 1,
+      "message": "[nit] perhaps a space after the \")\"\n\nAlternatively / additionally, a private static method might take an InetSocketAddress (which might be null) and return an Inet4Address (which  may be null).",
+      "range": {
+        "startLine": 71,
+        "startChar": 32,
+        "endLine": 71,
+        "endChar": 40
+      },
+      "revId": "02776df824319fff8a6feb7b3b7e364b33256354",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
