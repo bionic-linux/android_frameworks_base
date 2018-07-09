@@ -790,7 +790,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
      * Inform BluetoothAdapter instances that BREDR part is down
      * and turn off all service and stack if no LE app needs it
      */
-    private void sendBrEdrDownCallback() {
+    private synchronized void sendBrEdrDownCallback() {
         if (DBG) {
             Slog.d(TAG, "Calling sendBrEdrDownCallback callbacks");
         }
