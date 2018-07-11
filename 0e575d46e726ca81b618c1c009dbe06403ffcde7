@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "260fe37c_dbf35f9d",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-07-11T23:46:00Z",
+      "side": 1,
+      "message": "We shouldn\u0027t have to specify these, they should be the default unless no_framework_libs or no_standard_libs is set.",
+      "range": {
+        "startLine": 1033,
+        "startChar": 0,
+        "endLine": 1039,
+        "endChar": 20
+      },
+      "revId": "0e575d46e726ca81b618c1c009dbe06403ffcde7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7127374_53fe9d22",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-07-11T23:46:00Z",
+      "side": 1,
+      "message": "I think this was using the library built from source at https://cs.corp.google.com/android/frameworks/multidex/library/Android.mk?g\u003d0",
+      "revId": "0e575d46e726ca81b618c1c009dbe06403ffcde7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41cff4d_32f0fe61",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2018-07-11T23:46:00Z",
+      "side": 1,
+      "message": "Does the one in Android.mk need to be removed?",
+      "revId": "0e575d46e726ca81b618c1c009dbe06403ffcde7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
