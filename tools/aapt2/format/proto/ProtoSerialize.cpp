@@ -313,6 +313,7 @@ void SerializeTableToPb(const ResourceTable& table, pb::ResourceTable* out_table
           SerializeSourceToPb(entry->overlayable.value().source, &source_pool,
                               pb_overlayable->mutable_source());
           pb_overlayable->set_comment(entry->overlayable.value().comment);
+          pb_overlayable->set_category(entry->overlayable.value().category);
         }
 
         for (const std::unique_ptr<ResourceConfigValue>& config_value : entry->values) {

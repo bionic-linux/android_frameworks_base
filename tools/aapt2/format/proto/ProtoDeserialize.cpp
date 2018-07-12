@@ -443,6 +443,7 @@ static bool DeserializePackageFromPb(const pb::Package& pb_package, const ResStr
           DeserializeSourceFromPb(pb_overlayable.source(), src_pool, &overlayable.source);
         }
         overlayable.comment = pb_overlayable.comment();
+        overlayable.category = pb_overlayable.category();
         entry->overlayable = std::move(overlayable);
       }
 

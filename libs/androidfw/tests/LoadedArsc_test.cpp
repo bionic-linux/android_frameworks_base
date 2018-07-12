@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <algorithm>
+
 #include "androidfw/LoadedArsc.h"
 
 #include "android-base/file.h"
@@ -324,6 +326,26 @@ TEST(LoadedArscTest, ResourceIdentifierIterator) {
   ASSERT_EQ(0x7f070002u, *iter++);
   ASSERT_EQ(0x7f070003u, *iter++);
   ASSERT_EQ(end, iter);
+}
+
+TEST(LoadedArscTest, ListOverlayCategories) {
+  std::string contents;
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
+
+  std::unique_ptr<const LoadedArsc> loaded_arsc = LoadedArsc::Load(StringPiece(contents));
+  ASSERT_NE(nullptr, loaded_arsc);
+
+  const std::vector<std::unique_ptr<const LoadedPackage>>& packages = loaded_arsc->GetPackages();
+  ASSERT_EQ(1u, packages.size());
+  EXPECT_EQ(std::string("com.android.basic"), packages[0]->GetPackageName());
+
+  const auto& loaded_package = packages[0];
+  auto v = loaded_package->GetOverlayCategory("com.android.basic:cat");
+  ASSERT_THAT(v, NotNull());
+  ASSERT_EQ(2u, v->size());
+  ASSERT_NE(std::find(v->cbegin(), v->cend(), basic::R::string::test2), v->cend());
+  ASSERT_NE(std::find(v->cbegin(), v->cend(), basic::R::array::integerArray1), v->cend());
 }
 
 }  // namespace android

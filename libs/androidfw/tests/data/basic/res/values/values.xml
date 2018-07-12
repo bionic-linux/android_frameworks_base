@@ -74,7 +74,7 @@
         <item>3</item>
     </integer-array>
 
-    <overlayable>
+    <overlayable category="com.android.basic:cat">
         <item type="string" name="test2" />
         <item type="array" name="integerArray1" />
     </overlayable>

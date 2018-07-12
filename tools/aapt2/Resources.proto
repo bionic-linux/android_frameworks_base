@@ -140,6 +140,9 @@ message Overlayable {
 
   // Any comment associated with the declaration.
   string comment = 2;
+
+  // The overlay category this resource belongs to.
+  string category = 3;
 }
 
 // An entry ID in the range [0x0000, 0xffff].
