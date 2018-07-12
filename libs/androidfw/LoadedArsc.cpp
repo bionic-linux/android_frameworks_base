@@ -586,6 +586,33 @@ std::unique_ptr<const LoadedPackage> LoadedPackage::Load(const Chunk& chunk,
 
       } break;
 
+      case RES_TABLE_CATEGORY_TYPE: {
+        const ResTable_category_header* header = child_chunk.header<ResTable_category_header>();
+        if (header == nullptr) {
+          LOG(ERROR) << "RES_TABLE_CATEGORY_TYPE too small.";
+          return {};
+        }
+
+        if (child_chunk.data_size() / sizeof(ResTable_ref) < dtohl(header->count)) {
+          LOG(ERROR) << "RES_TABLE_CATEGORY_TYPE too small to hold references.";
+          return {};
+        }
+
+        const uint32_t count = dtohl(header->count);
+
+        std::string category_name;
+        util::ReadUtf16StringFromDevice(header->name, arraysize(header->name), &category_name);
+        loaded_package->overlay_categories_[category_name] = std::vector<uint32_t>();
+        loaded_package->overlay_categories_[category_name].reserve(count);
+
+        const ResTable_ref* const ref_begin =
+            reinterpret_cast<const ResTable_ref*>(child_chunk.data_ptr());
+        const ResTable_ref* const ref_end = ref_begin + count;
+        for (auto ref_iter = ref_begin; ref_iter != ref_end; ++ref_iter) {
+          loaded_package->overlay_categories_[category_name].push_back(ref_iter->ident);
+        }
+      } break;
+
       default:
         LOG(WARNING) << StringPrintf("Unknown chunk type '%02x'.", chunk.type());
         break;

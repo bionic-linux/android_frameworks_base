@@ -307,7 +307,8 @@ void Debug::PrintTable(const ResourceTable& table, const DebugPrintTableOptions&
         }
 
         if (entry->overlayable) {
-          printer->Print(" OVERLAYABLE");
+          printer->Print(" OVERLAYABLE category=");
+          printer->Print(entry->overlayable.value().category);
         }
 
         printer->Println();

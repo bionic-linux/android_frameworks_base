@@ -17,6 +17,7 @@
 #ifndef LOADEDARSC_H_
 #define LOADEDARSC_H_
 
+#include <map>
 #include <memory>
 #include <set>
 #include <vector>
@@ -216,6 +217,11 @@ class LoadedPackage {
     }
   }
 
+  const std::vector<uint32_t>* GetOverlayCategory(const std::string& category_name) const {
+    const auto iter = overlay_categories_.find(category_name);
+    return iter != overlay_categories_.end() ? &iter->second : nullptr;
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(LoadedPackage);
 
@@ -233,6 +239,7 @@ class LoadedPackage {
   ByteBucketArray<TypeSpecPtr> type_specs_;
   ByteBucketArray<uint32_t> resource_ids_;
   std::vector<DynamicPackageEntry> dynamic_package_map_;
+  std::map<std::string, std::vector<uint32_t>> overlay_categories_;
 };
 
 // Read-only view into a resource table. This class validates all data

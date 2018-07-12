@@ -98,7 +98,7 @@ struct ParsedResource {
   ResourceId id;
   Visibility::Level visibility_level = Visibility::Level::kUndefined;
   bool allow_new = false;
-  bool overlayable = false;
+  Maybe<std::string> overlayable_category;
 
   std::string comment;
   std::unique_ptr<Value> value;
@@ -132,10 +132,11 @@ static bool AddResourcesToTable(ResourceTable* table, IDiagnostics* diag, Parsed
     }
   }
 
-  if (res->overlayable) {
+  if (res->overlayable_category) {
     Overlayable overlayable;
     overlayable.source = res->source;
     overlayable.comment = res->comment;
+    overlayable.category = res->overlayable_category.value();
     if (!table->SetOverlayable(res->name, overlayable, diag)) {
       return false;
     }
@@ -1028,6 +1029,14 @@ bool ResourceParser::ParseOverlayable(xml::XmlPullParser* parser, ParsedResource
     }
   }
 
+  Maybe<StringPiece> maybe_category = xml::FindNonEmptyAttribute(parser, "category");
+  if (!maybe_category) {
+      diag_->Error(DiagMessage(out_resource->source)
+                   << "<overlayable> missing 'category' attribute");
+      return false;
+  }
+  const std::string category = maybe_category.value().to_string();
+
   bool error = false;
   const size_t depth = parser->depth();
   while (xml::XmlPullParser::NextChildNode(parser, depth)) {
@@ -1069,7 +1078,7 @@ bool ResourceParser::ParseOverlayable(xml::XmlPullParser* parser, ParsedResource
       child_resource.name.type = *type;
       child_resource.name.entry = maybe_name.value().to_string();
       child_resource.source = item_source;
-      child_resource.overlayable = true;
+      child_resource.overlayable_category = category;
       out_resource->child_resources.push_back(std::move(child_resource));
 
       xml::XmlPullParser::SkipCurrentElement(parser);

@@ -240,6 +240,12 @@ bool BinaryResourceParser::ParsePackage(const ResChunk_header* chunk) {
         }
         break;
 
+      case android::RES_TABLE_CATEGORY_TYPE:
+        if (!ParseCategory(package, parser.chunk())) {
+          return false;
+        }
+        break;
+
       default:
         diag_->Warn(DiagMessage(source_)
                     << "unexpected chunk type "
@@ -380,24 +386,12 @@ bool BinaryResourceParser::ParseType(const ResourceTablePackage* package,
       return false;
     }
 
-    const uint32_t type_spec_flags = entry_type_spec_flags_[res_id];
-    if ((entry->flags & ResTable_entry::FLAG_PUBLIC) != 0 ||
-        (type_spec_flags & ResTable_typeSpec::SPEC_OVERLAYABLE) != 0) {
-      if (entry->flags & ResTable_entry::FLAG_PUBLIC) {
-        Visibility visibility;
-        visibility.level = Visibility::Level::kPublic;
-        visibility.source = source_.WithLine(0);
-        if (!table_->SetVisibilityWithIdMangled(name, visibility, res_id, diag_)) {
-          return false;
-        }
-      }
-
-      if (type_spec_flags & ResTable_typeSpec::SPEC_OVERLAYABLE) {
-        Overlayable overlayable;
-        overlayable.source = source_.WithLine(0);
-        if (!table_->SetOverlayableMangled(name, overlayable, diag_)) {
-          return false;
-        }
+    if (entry->flags & ResTable_entry::FLAG_PUBLIC) {
+      Visibility visibility;
+      visibility.level = Visibility::Level::kPublic;
+      visibility.source = source_.WithLine(0);
+      if (!table_->SetVisibilityWithIdMangled(name, visibility, res_id, diag_)) {
+        return false;
       }
 
       // Erase the ID from the map once processed, so that we don't mark the same symbol more than
@@ -426,6 +420,42 @@ bool BinaryResourceParser::ParseLibrary(const ResChunk_header* chunk) {
   for (size_t i = 0; i < count; i++) {
     table_->included_packages_[entries.valueAt(i)] =
         util::Utf16ToUtf8(StringPiece16(entries.keyAt(i).string()));
+  }
+  return true;
+}
+
+bool BinaryResourceParser::ParseCategory(const ResourceTablePackage* package,
+                                         const ResChunk_header* chunk) {
+  const ResTable_category_header* header = ConvertTo<ResTable_category_header>(chunk);
+  if (!header) {
+    diag_->Error(DiagMessage(source_) << "corrupt ResTable_category_header chunk");
+    return false;
+  }
+
+  // Extract the package name.
+  const size_t len = strnlen16((const char16_t*)header->name, arraysize(header->name));
+  std::u16string category_name;
+  category_name.resize(len);
+  for (size_t i = 0; i < len; i++) {
+    category_name[i] = util::DeviceToHost16(header->name[i]);
+  }
+
+  // Iterate over the ResTable_ref entries and set the corresponding resources' overlayable field.
+  const ResTable_ref* const ref_begin = reinterpret_cast<const ResTable_ref*>(((uint8_t *)header) +
+        util::DeviceToHost32(header->header.headerSize));
+  const ResTable_ref* const ref_end = ref_begin + util::DeviceToHost32(header->count);
+  for (auto ref_iter = ref_begin; ref_iter != ref_end; ++ref_iter) {
+    ResourceId res_id(util::DeviceToHost32(ref_iter->ident));
+    const auto iter = id_index_.find(res_id);
+    if (iter == id_index_.cend()) {
+        return false;
+    }
+    Overlayable overlayable;
+    overlayable.source = source_.WithLine(0);
+    overlayable.category = util::Utf16ToUtf8(category_name);
+    if (!table_->SetOverlayableMangled(iter->second, overlayable, diag_)) {
+        return false;
+    }
   }
   return true;
 }

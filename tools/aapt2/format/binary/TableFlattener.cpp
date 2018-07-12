@@ -17,9 +17,12 @@
 #include "format/binary/TableFlattener.h"
 
 #include <algorithm>
+#include <map>
 #include <numeric>
 #include <sstream>
 #include <type_traits>
+#include <utility>
+#include <vector>
 
 #include "android-base/logging.h"
 #include "android-base/macros.h"
@@ -266,6 +269,12 @@ class PackageFlattener {
     // If there are libraries (or if the package ID is 0x00), encode a library chunk.
     if (package_->id.value() == 0x00 || !shared_libs_->empty()) {
       FlattenLibrarySpec(buffer);
+    }
+
+    OverlayCategoriesMap categories;
+    FindOverlayCategories(categories);
+    for (auto iter = categories.cbegin(); iter != categories.cend(); ++iter) {
+        FlattenCategorySpec(buffer, iter->first, iter->second);
     }
 
     pkg_writer.Finish();
@@ -558,6 +567,41 @@ class PackageFlattener {
       ++lib_entry;
     }
     lib_writer.Finish();
+  }
+
+  void FlattenCategorySpec(BigBuffer* buffer, const std::string& category_name,
+      const std::vector<uint32_t>& resids) {
+    ChunkWriter writer(buffer);
+    ResTable_category_header* header =
+      writer.StartChunk<ResTable_category_header>(RES_TABLE_CATEGORY_TYPE);
+    strcpy16_htod(header->name, arraysize(header->name), util::Utf8ToUtf16(category_name));
+    header->count = util::HostToDevice32(resids.size());
+
+    ResTable_ref *ref = buffer->NextBlock<ResTable_ref>(resids.size());
+    for (uint32_t resid : resids) {
+      ref->ident = util::HostToDevice32(resid);
+      ++ref;
+    }
+
+    writer.Finish();
+  }
+
+  typedef std::map<std::string, std::vector<uint32_t>> OverlayCategoriesMap;
+  void FindOverlayCategories(OverlayCategoriesMap& out) {
+    const uint32_t pp = package_->id.value_or_default(0) << 24;
+    for (auto& type: package_->types) {
+      const uint32_t tt = type->id.value_or_default(0) << 16;
+      for (auto& entry : type->entries) {
+        if (entry->overlayable) {
+          const uint32_t resid = pp | tt | entry->id.value_or_default(0);
+          const std::string category = entry->overlayable.value().category;
+          if (out.find(category) == out.end()) {
+            out.emplace(category, std::vector<uint32_t>());
+          }
+          out[category].push_back(resid);
+        }
+      }
+    }
   }
 
   IAaptContext* context_;

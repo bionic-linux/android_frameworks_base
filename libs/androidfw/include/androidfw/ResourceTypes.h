@@ -234,7 +234,8 @@ enum {
     RES_TABLE_PACKAGE_TYPE      = 0x0200,
     RES_TABLE_TYPE_TYPE         = 0x0201,
     RES_TABLE_TYPE_SPEC_TYPE    = 0x0202,
-    RES_TABLE_LIBRARY_TYPE      = 0x0203
+    RES_TABLE_LIBRARY_TYPE      = 0x0203,
+    RES_TABLE_CATEGORY_TYPE     = 0x0204,
 };
 
 /**
@@ -1605,6 +1606,13 @@ struct ResTable_lib_entry
 
     // The package name of the shared library. \0 terminated.
     uint16_t packageName[128];
+};
+
+struct ResTable_category_header
+{
+    struct ResChunk_header header;
+    uint16_t name[256]; // 128 for the package name, 128 for the delimiter and category name
+    uint32_t count; // number of ResTable_ref entries that follow
 };
 
 struct alignas(uint32_t) Idmap_header {

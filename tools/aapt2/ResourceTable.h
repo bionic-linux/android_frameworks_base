@@ -61,6 +61,7 @@ struct AllowNew {
 struct Overlayable {
   Source source;
   std::string comment;
+  std::string category;
 };
 
 class ResourceConfigValue {

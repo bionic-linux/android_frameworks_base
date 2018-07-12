@@ -53,6 +53,7 @@ class BinaryResourceParser {
   bool ParseTypeSpec(const ResourceTablePackage* package, const android::ResChunk_header* chunk);
   bool ParseType(const ResourceTablePackage* package, const android::ResChunk_header* chunk);
   bool ParseLibrary(const android::ResChunk_header* chunk);
+  bool ParseCategory(const ResourceTablePackage* package, const android::ResChunk_header* chunk);
 
   std::unique_ptr<Item> ParseValue(const ResourceNameRef& name, const ConfigDescription& config,
                                    const android::Res_value& value);

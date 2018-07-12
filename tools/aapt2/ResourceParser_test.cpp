@@ -874,44 +874,44 @@ TEST_F(ResourceParserTest, ParsePlatformIndependentNewline) {
 
 TEST_F(ResourceParserTest, ParseOverlayableTagWithSystemPolicy) {
   std::string input = R"(
-      <overlayable policy="illegal_policy">
+      <overlayable category="pkg:cat" policy="illegal_policy">
         <item type="string" name="foo" />
       </overlayable>)";
   EXPECT_FALSE(TestParse(input));
 
   input = R"(
-      <overlayable policy="system">
+      <overlayable category="pkg:cat" policy="system">
         <item name="foo" />
       </overlayable>)";
   EXPECT_FALSE(TestParse(input));
 
   input = R"(
-      <overlayable policy="system">
+      <overlayable category="pkg:cat" policy="system">
         <item type="attr" />
       </overlayable>)";
   EXPECT_FALSE(TestParse(input));
 
   input = R"(
-      <overlayable policy="system">
+      <overlayable category="pkg:cat" policy="system">
         <item type="bad_type" name="foo" />
       </overlayable>)";
   EXPECT_FALSE(TestParse(input));
 
-  input = R"(<overlayable policy="system" />)";
+  input = R"(<overlayable category="pkg:cat" policy="system" />)";
   EXPECT_TRUE(TestParse(input));
 
-  input = R"(<overlayable />)";
+  input = R"(<overlayable category="pkg:cat" />)";
   EXPECT_TRUE(TestParse(input));
 
   input = R"(
-      <overlayable policy="system">
+      <overlayable category="pkg:cat" policy="system">
         <item type="string" name="foo" />
         <item type="dimen" name="foo" />
       </overlayable>)";
   ASSERT_TRUE(TestParse(input));
 
   input = R"(
-      <overlayable>
+      <overlayable category="pkg:cat">
         <item type="string" name="bar" />
       </overlayable>)";
   ASSERT_TRUE(TestParse(input));
@@ -922,15 +922,27 @@ TEST_F(ResourceParserTest, ParseOverlayableTagWithSystemPolicy) {
   ASSERT_THAT(search_result.value().entry, NotNull());
   EXPECT_THAT(search_result.value().entry->visibility.level, Eq(Visibility::Level::kUndefined));
   EXPECT_TRUE(search_result.value().entry->overlayable);
+  EXPECT_THAT(search_result.value().entry->overlayable.value().category, Eq("pkg:cat"));
 }
 
 TEST_F(ResourceParserTest, DuplicateOverlayableIsError) {
   std::string input = R"(
-      <overlayable>
+      <overlayable category="pkg:cat">
         <item type="string" name="foo" />
         <item type="string" name="foo" />
       </overlayable>)";
   EXPECT_FALSE(TestParse(input));
+}
+
+TEST_F(ResourceParserTest, ParseOverlayableTagWithCategories) {
+  std::string input = R"(
+      <overlayable category="pkg1:cat1">
+        <item type="string" name="c1" />
+      </overlayable>
+      <overlayable category="pkg1:cat2">
+        <item type="string" name="c2" />
+      </overlayable>)";
+  EXPECT_TRUE(TestParse(input));
 }
 
 TEST_F(ResourceParserTest, ParseIdItem) {
