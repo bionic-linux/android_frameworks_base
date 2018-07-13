@@ -74,15 +74,10 @@ class DhcpAckPacket extends DhcpPacket {
 
         // the client should renew at 1/2 the lease-expiry interval
         if (mLeaseTime != null) {
-            addTlv(buffer, DHCP_RENEWAL_TIME,
-                Integer.valueOf(mLeaseTime.intValue() / 2));
+            addTlv(buffer, DHCP_RENEWAL_TIME, mLeaseTime / 2);
         }
 
-        addTlv(buffer, DHCP_SUBNET_MASK, mSubnetMask);
-        addTlv(buffer, DHCP_ROUTER, mGateways);
-        addTlv(buffer, DHCP_DOMAIN_NAME, mDomainName);
-        addTlv(buffer, DHCP_BROADCAST_ADDRESS, mBroadcastAddress);
-        addTlv(buffer, DHCP_DNS_SERVER, mDnsServers);
+        addCommonServerTlvs(buffer);
         addTlvEnd(buffer);
     }
 

@@ -80,11 +80,7 @@ class DhcpOfferPacket extends DhcpPacket {
                 Integer.valueOf(mLeaseTime.intValue() / 2));
         }
 
-        addTlv(buffer, DHCP_SUBNET_MASK, mSubnetMask);
-        addTlv(buffer, DHCP_ROUTER, mGateways);
-        addTlv(buffer, DHCP_DOMAIN_NAME, mDomainName);
-        addTlv(buffer, DHCP_BROADCAST_ADDRESS, mBroadcastAddress);
-        addTlv(buffer, DHCP_DNS_SERVER, mDnsServers);
+        addCommonServerTlvs(buffer);
         addTlvEnd(buffer);
     }
 }

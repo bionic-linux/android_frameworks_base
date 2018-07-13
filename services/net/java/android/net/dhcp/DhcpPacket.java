@@ -653,6 +653,14 @@ public abstract class DhcpPacket {
         if (!TextUtils.isEmpty(hn)) addTlv(buf, DHCP_HOST_NAME, hn);
     }
 
+    protected void addCommonServerTlvs(ByteBuffer buf) {
+        addTlv(buf, DHCP_SUBNET_MASK, mSubnetMask);
+        addTlv(buf, DHCP_BROADCAST_ADDRESS, mBroadcastAddress);
+        addTlv(buf, DHCP_ROUTER, mGateways);
+        addTlv(buf, DHCP_DNS_SERVER, mDnsServers);
+        addTlv(buf, DHCP_DOMAIN_NAME, mDomainName);
+    }
+
     /**
      * Converts a MAC from an array of octets to an ASCII string.
      */

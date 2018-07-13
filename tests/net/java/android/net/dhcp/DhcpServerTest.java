@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
 
 import static java.net.InetAddress.parseNumericAddress;
 
-import android.net.IpPrefix;
+import android.net.LinkAddress;
 import android.net.MacAddress;
 import android.net.dhcp.DhcpLeaseRepository.InvalidAddressException;
 import android.net.dhcp.DhcpLeaseRepository.OutOfAddressesException;
@@ -77,7 +77,7 @@ public class DhcpServerTest {
     private static final Set<Inet4Address> TEST_DNS_SERVERS = new HashSet<>(
             Arrays.asList(parseAddr("192.168.0.126"), parseAddr("192.168.0.127")));
     private static final Inet4Address TEST_SERVER_ADDR = parseAddr("192.168.0.2");
-    private static final IpPrefix TEST_PREFIX = new IpPrefix(parseAddr("192.168.0.0"), 20);
+    private static final LinkAddress TEST_LINKADDR = new LinkAddress(TEST_SERVER_ADDR, 20);
     private static final int TEST_MTU = 1500;
     private static final Set<Inet4Address> TEST_EXCLUDED_ADDRS = new HashSet<>(
             Arrays.asList(parseAddr("192.168.0.200"), parseAddr("192.168.0.201")));
@@ -114,8 +114,7 @@ public class DhcpServerTest {
                 .setDefaultRouters(TEST_DEFAULT_ROUTERS)
                 .setDhcpLeaseTimeSecs(TEST_LEASE_TIME_SECS)
                 .setDnsServers(TEST_DNS_SERVERS)
-                .setServerAddr(TEST_SERVER_ADDR)
-                .setOnlinkPrefix(TEST_PREFIX)
+                .setServerAddr(TEST_LINKADDR)
                 .setLinkMtu(TEST_MTU)
                 .setExcludedAddrs(TEST_EXCLUDED_ADDRS)
                 .build();
@@ -167,8 +166,7 @@ public class DhcpServerTest {
 
         final DhcpDiscoverPacket discover = new DhcpDiscoverPacket(TEST_TRANS_ID,
                 (short)0 /* secs */,
-                INADDR_ANY /* relayIp */, TEST_CLIENT_MAC_BYTES, false /* broadcast */,
-                INADDR_ANY /* srcIp */);
+                INADDR_ANY /* relayIp */, TEST_CLIENT_MAC_BYTES, false /* broadcast */);
         mServer.processPacket(discover, INADDR_ANY /* srcAddr */);
 
         assertEquals(TEST_CLIENT_ADDR, mResponseDstAddrCaptor.getValue());
@@ -185,8 +183,7 @@ public class DhcpServerTest {
 
         final DhcpDiscoverPacket discover = new DhcpDiscoverPacket(TEST_TRANS_ID,
                 (short)0 /* secs */,
-                INADDR_ANY /* relayIp */, TEST_CLIENT_MAC_BYTES, false /* broadcast */,
-                INADDR_ANY /* srcIp */);
+                INADDR_ANY /* relayIp */, TEST_CLIENT_MAC_BYTES, false /* broadcast */);
         mServer.processPacket(discover, INADDR_ANY /* srcAddr */);
 
         assertEquals(INADDR_BROADCAST, mResponseDstAddrCaptor.getValue());
