@@ -10,5 +10,6 @@ interface IIdmap2 {
    * need permission to open apk_data_file objects, but idmap2d can get away
    * with system_server opening the files on its behalf */
   @nullable @utf8InCpp String createIdmap(@utf8InCpp String targetApkPath,
-                                          @utf8InCpp String overlayApkPath, int userId);
+                                          @utf8InCpp String overlayApkPath,
+                                          boolean ignoreCategories, int userId);
 }

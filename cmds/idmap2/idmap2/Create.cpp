@@ -17,6 +17,7 @@ using android::idmap2::Idmap;
 
 int Create(const std::vector<std::string>& args, std::ostream& out_error) {
   std::string target_apk_path, overlay_apk_path, idmap_path;
+  bool ignore_categories;
 
   const CommandLineOptions opts =
       CommandLineOptions("idmap2 create")
@@ -26,8 +27,9 @@ int Create(const std::vector<std::string>& args, std::ostream& out_error) {
           .MandatoryOption("--overlay-apk-path",
                            "input: path to apk which contains the new resource values",
                            &overlay_apk_path)
-          .MandatoryOption("--idmap-path", "output: path to where to write idmap file",
-                           &idmap_path);
+          .MandatoryOption("--idmap-path", "output: path to where to write idmap file", &idmap_path)
+          .OptionalFlag("--ignore-categories", "do not limit matches by overlay category",
+                        &ignore_categories);
   if (!opts.Parse(args, out_error)) {
     return 1;
   }
@@ -44,8 +46,8 @@ int Create(const std::vector<std::string>& args, std::ostream& out_error) {
     return 1;
   }
 
-  const std::unique_ptr<const Idmap> idmap =
-      Idmap::FromApkAssets(target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, out_error);
+  const std::unique_ptr<const Idmap> idmap = Idmap::FromApkAssets(
+      target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, ignore_categories, out_error);
   if (!idmap) {
     return 1;
   }

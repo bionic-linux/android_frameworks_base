@@ -11,4 +11,15 @@
     <string name="y">y</string>
     <string name="z">z</string>
     <integer name="int1">1</integer>
+
+    <overlayable category="test.target:strings">
+        <item type="string" name="str1"/>
+        <item type="string" name="str2"/>
+        <item type="string" name="str3"/>
+        <item type="string" name="str4"/>
+    </overlayable>
+
+    <overlayable category="test.target:integers">
+        <item type="integer" name="int1"/>
+    </overlayable>
 </resources>

@@ -13,6 +13,7 @@
 
 #include "idmap2/Idmap.h"
 #include "idmap2/ResourceUtils.h"
+#include "idmap2/Xml.h"
 #include "idmap2/ZipFile.h"
 
 namespace android {
@@ -90,6 +91,42 @@ static const LoadedPackage* GetPackageAtIndex0(const LoadedArsc& loaded_arsc) {
   return loaded_arsc.GetPackageById(id);
 }
 #endif
+
+static bool WARN_UNUSED GetCategoryFromManifest(const std::string& apk_path, std::string& out) {
+  std::unique_ptr<const ZipFile> zip = ZipFile::Open(apk_path);
+  if (!zip) {
+    return false;
+  }
+
+  std::unique_ptr<const MemoryChunk> entry = zip->Uncompress("AndroidManifest.xml");
+  if (!entry) {
+    return false;
+  }
+
+  std::unique_ptr<const Xml> xml = Xml::Create(entry->buf, entry->size);
+  if (!xml) {
+    return false;
+  }
+
+  const auto tag = xml->FindTag("overlay");
+  if (!tag) {
+    return false;
+  }
+
+  auto iter = tag->find("category");
+  if (iter == tag->end()) {
+    return false;
+  }
+
+  out = iter->second;
+  return true;
+}
+
+static bool valid_resid(const std::vector<uint32_t>* valid_resids, uint32_t resid) {
+  return resid != 0 &&
+         (valid_resids == nullptr ||
+          std::find(valid_resids->cbegin(), valid_resids->cend(), resid) != valid_resids->cend());
+}
 
 std::unique_ptr<const IdmapHeader> IdmapHeader::FromBinaryStream(std::istream& stream) {
   std::unique_ptr<IdmapHeader> idmap_header(new IdmapHeader());
@@ -189,7 +226,7 @@ std::unique_ptr<const Idmap> Idmap::FromApkAssets(const std::string& target_apk_
                                                   const ApkAssets& target_apk_assets,
                                                   const std::string& overlay_apk_path,
                                                   const ApkAssets& overlay_apk_assets,
-                                                  std::ostream& out_error) {
+                                                  bool ignore_categories, std::ostream& out_error) {
   AssetManager2 target_asset_manager;
   if (!target_asset_manager.SetApkAssets({&target_apk_assets}, true, true)) {
     out_error << "error: failed to create target asset manager" << std::endl;
@@ -238,6 +275,23 @@ std::unique_ptr<const Idmap> Idmap::FromApkAssets(const std::string& target_apk_
     return nullptr;
   }
 
+  // after this check, valid_target_resids can only be null if categories are
+  // ignored, i.e. if all matching resources should be accepted
+  const std::vector<uint32_t>* valid_target_resids = nullptr;
+  if (!ignore_categories) {
+    std::string category_name;
+    if (!GetCategoryFromManifest(overlay_apk_path, category_name)) {
+      out_error << "error: failed to get <overlay category> from overlay manifest" << std::endl;
+      return nullptr;
+    }
+
+    valid_target_resids = target_pkg->GetOverlayCategory(category_name);
+    if (valid_target_resids == nullptr) {
+      out_error << "error: target does not support category '" << category_name << "'" << std::endl;
+      return nullptr;
+    }
+  }
+
   std::unique_ptr<Idmap> idmap(new Idmap());
   std::unique_ptr<IdmapHeader> header(new IdmapHeader());
   header->magic_ = Idmap::magic;
@@ -267,7 +321,7 @@ std::unique_ptr<const Idmap> Idmap::FromApkAssets(const std::string& target_apk_
     name.insert(0, ":");
     name.insert(0, target_pkg->GetPackageName());
     const uint32_t target_resid = NameToResid(target_asset_manager, name);
-    if (target_resid == 0) {
+    if (!valid_resid(valid_target_resids, target_resid)) {
       continue;
     }
     matching_resources.Add(target_resid, overlay_resid);

@@ -113,7 +113,8 @@ TEST_F(Idmap2BinaryTests, CreateIdmapPath) {
   ExecuteIdmap2({"create",
                   "--target-apk-path", GetTargetApkPath(),
                   "--overlay-apk-path", GetOverlayApkPath(),
-                  "--idmap-path", GetIdmapPath()},
+                  "--idmap-path", GetIdmapPath(),
+                  "--ignore-categories"},
                 result);
   // clang-format on
   ASSERT_EQ(result.status, 0);
@@ -138,7 +139,8 @@ TEST_F(Idmap2BinaryTests, Dump) {
   ExecuteIdmap2({"create",
                   "--target-apk-path", GetTargetApkPath(),
                   "--overlay-apk-path", GetOverlayApkPath(),
-                  "--idmap-path", GetIdmapPath()},
+                  "--idmap-path", GetIdmapPath(),
+                  "--ignore-categories"},
                 result);
   // clang-format on
   ASSERT_EQ(result.status, 0);
@@ -253,7 +255,8 @@ TEST_F(Idmap2BinaryTests, Lookup) {
   ExecuteIdmap2({"create",
                   "--target-apk-path", GetTargetApkPath(),
                   "--overlay-apk-path", GetOverlayApkPath(),
-                  "--idmap-path", GetIdmapPath()},
+                  "--idmap-path", GetIdmapPath(),
+                  "--ignore-categories"},
                 result);
   // clang-format on
   ASSERT_EQ(result.status, 0);
