@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99544e2e_1ddc42f5",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-07-13T20:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "260fe37c_dbf35f9d",
+      "range": {
+        "startLine": 1033,
+        "startChar": 0,
+        "endLine": 1039,
+        "endChar": 20
+      },
+      "revId": "0e575d46e726ca81b618c1c009dbe06403ffcde7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7127374_53fe9d22",
         "filename": "Android.bp",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2018-07-11T23:46:00Z",
       "side": 1,
       "message": "I think this was using the library built from source at https://cs.corp.google.com/android/frameworks/multidex/library/Android.mk?g\u003d0",
+      "revId": "0e575d46e726ca81b618c1c009dbe06403ffcde7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decd32a5_271543ed",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-07-13T20:53:31Z",
+      "side": 1,
+      "message": "Created separated patches to rebuilt these three modules from srcs for safety. It seems these three modules won\u0027t affect the doc generation, when I removed these three libs.",
+      "parentUuid": "a7127374_53fe9d22",
       "revId": "0e575d46e726ca81b618c1c009dbe06403ffcde7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "0e575d46e726ca81b618c1c009dbe06403ffcde7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184ebb29_d4c778a6",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-07-13T20:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d41cff4d_32f0fe61",
+      "revId": "0e575d46e726ca81b618c1c009dbe06403ffcde7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
