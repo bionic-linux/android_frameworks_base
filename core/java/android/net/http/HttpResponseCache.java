@@ -16,9 +16,8 @@
 
 package android.net.http;
 
-import com.android.okhttp.Cache;
-import com.android.okhttp.AndroidShimResponseCache;
-import com.android.okhttp.OkCacheContainer;
+import com.android.okhttp.internalandroidapi.ShimCacheContainer;
+import com.android.okhttp.internalandroidapi.ShimResponseCache;
 
 import java.io.Closeable;
 import java.io.File;
@@ -149,12 +148,13 @@ import java.util.Map;
  *       } catch (Exception httpResponseCacheNotAvailable) {
  *       }}</pre>
  */
-public final class HttpResponseCache extends ResponseCache implements Closeable, OkCacheContainer {
+public final class HttpResponseCache extends ResponseCache
+        implements Closeable, ShimCacheContainer {
 
-    private final AndroidShimResponseCache delegate;
+    private final ShimResponseCache mDelegate;
 
-    private HttpResponseCache(AndroidShimResponseCache delegate) {
-        this.delegate = delegate;
+    private HttpResponseCache(ShimResponseCache delegate) {
+        mDelegate = delegate;
     }
 
     /**
@@ -185,7 +185,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
         if (installed instanceof HttpResponseCache) {
             HttpResponseCache installedResponseCache = (HttpResponseCache) installed;
             // don't close and reopen if an equivalent cache is already installed
-            AndroidShimResponseCache trueResponseCache = installedResponseCache.delegate;
+            ShimResponseCache trueResponseCache = installedResponseCache.mDelegate;
             if (trueResponseCache.isEquivalent(directory, maxSize)) {
                 return installedResponseCache;
             } else {
@@ -194,8 +194,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
             }
         }
 
-        AndroidShimResponseCache trueResponseCache =
-                AndroidShimResponseCache.create(directory, maxSize);
+        ShimResponseCache trueResponseCache = ShimResponseCache.create(directory, maxSize);
         HttpResponseCache newResponseCache = new HttpResponseCache(trueResponseCache);
         ResponseCache.setDefault(newResponseCache);
         return newResponseCache;
@@ -203,11 +202,11 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
 
     @Override public CacheResponse get(URI uri, String requestMethod,
             Map<String, List<String>> requestHeaders) throws IOException {
-        return delegate.get(uri, requestMethod, requestHeaders);
+        return mDelegate.get(uri, requestMethod, requestHeaders);
     }
 
     @Override public CacheRequest put(URI uri, URLConnection urlConnection) throws IOException {
-        return delegate.put(uri, urlConnection);
+        return mDelegate.put(uri, urlConnection);
     }
 
     /**
@@ -217,7 +216,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
      */
     public long size() {
         try {
-            return delegate.size();
+            return mDelegate.size();
         } catch (IOException e) {
             // This can occur if the cache failed to lazily initialize.
             return -1;
@@ -229,7 +228,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
      * its data.
      */
     public long maxSize() {
-        return delegate.maxSize();
+        return mDelegate.maxSize();
     }
 
     /**
@@ -239,7 +238,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
      */
     public void flush() {
         try {
-            delegate.flush();
+            mDelegate.flush();
         } catch (IOException ignored) {
         }
     }
@@ -249,7 +248,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
      * supply a response or validate a locally cached response.
      */
     public int getNetworkCount() {
-        return delegate.getNetworkCount();
+        return mDelegate.getNetworkCount();
     }
 
     /**
@@ -258,7 +257,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
      * validated over the network.
      */
     public int getHitCount() {
-        return delegate.getHitCount();
+        return mDelegate.getHitCount();
     }
 
     /**
@@ -267,7 +266,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
      * to handle a redirects and retries.
      */
     public int getRequestCount() {
-        return delegate.getRequestCount();
+        return mDelegate.getRequestCount();
     }
 
     /**
@@ -278,7 +277,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
         if (ResponseCache.getDefault() == this) {
             ResponseCache.setDefault(null);
         }
-        delegate.close();
+        mDelegate.close();
     }
 
     /**
@@ -288,13 +287,13 @@ public final class HttpResponseCache extends ResponseCache implements Closeable,
         if (ResponseCache.getDefault() == this) {
             ResponseCache.setDefault(null);
         }
-        delegate.delete();
+        mDelegate.delete();
     }
 
     /** @hide Needed for OkHttp integration. */
     @Override
-    public Cache getCache() {
-        return delegate.getCache();
+    public ShimCache getShimCache() {
+        return mDelegate.getShimCache();
     }
 
 }
