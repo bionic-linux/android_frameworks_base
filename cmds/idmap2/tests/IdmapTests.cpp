@@ -160,24 +160,24 @@ TEST(IdmapTests, GracefullyFailToCreateIdmapFromCorruptBinaryStream) {
   ASSERT_THAT(idmap, IsNull());
 }
 
-TEST(IdmapTests, CreateIdmapFromApkAssets) {
+TEST(IdmapTests, CreateIdmapFromApkAssetsIgnoreCategories) {
   const std::string target_apk_path(GetTestDataPath() + "/target/target.apk");
   std::unique_ptr<const ApkAssets> target_apk = ApkAssets::Load(target_apk_path);
   ASSERT_THAT(target_apk, NotNull());
 
-  const std::string overlay_apk_path(GetTestDataPath() + "/overlay/overlay.apk");
+  const std::string overlay_apk_path(GetTestDataPath() + "/overlay/overlay-no-category.apk");
   std::unique_ptr<const ApkAssets> overlay_apk = ApkAssets::Load(overlay_apk_path);
   ASSERT_THAT(overlay_apk, NotNull());
 
   std::stringstream error;
-  std::unique_ptr<const Idmap> idmap =
-      Idmap::FromApkAssets(target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, error);
+  std::unique_ptr<const Idmap> idmap = Idmap::FromApkAssets(
+      target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, true, error);
   ASSERT_THAT(idmap, NotNull());
 
   ASSERT_THAT(idmap->GetHeader(), NotNull());
   ASSERT_EQ(idmap->GetHeader()->GetMagic(), 0x504d4449u);
   ASSERT_EQ(idmap->GetHeader()->GetVersion(), 0x01u);
-  ASSERT_EQ(idmap->GetHeader()->GetTargetCrc(), 0xf5ad1d1d);
+  ASSERT_EQ(idmap->GetHeader()->GetTargetCrc(), 0x8c28b684);
   ASSERT_EQ(idmap->GetHeader()->GetOverlayCrc(), 0xd470336b);
   ASSERT_EQ(idmap->GetHeader()->GetTargetPath(), target_apk_path);
   ASSERT_EQ(idmap->GetHeader()->GetOverlayPath(), overlay_apk_path);
@@ -208,6 +208,95 @@ TEST(IdmapTests, CreateIdmapFromApkAssets) {
   ASSERT_EQ(types[1]->GetEntry(1), 0xffffffffu);
   ASSERT_EQ(types[1]->GetEntry(2), 0x00000001u);
   ASSERT_EQ(types[1]->GetEntry(3), 0x00000002u);
+}
+
+TEST(IdmapTests, CreateIdmapFromApkAssetsObeyCategories) {
+  const std::string target_apk_path(GetTestDataPath() + "/target/target.apk");
+  std::unique_ptr<const ApkAssets> target_apk = ApkAssets::Load(target_apk_path);
+  ASSERT_THAT(target_apk, NotNull());
+
+  const std::string overlay_apk_path(GetTestDataPath() + "/overlay/overlay-category-strings.apk");
+  std::unique_ptr<const ApkAssets> overlay_apk = ApkAssets::Load(overlay_apk_path);
+  ASSERT_THAT(overlay_apk, NotNull());
+
+  std::stringstream error;
+  std::unique_ptr<const Idmap> idmap = Idmap::FromApkAssets(
+      target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, false, error);
+  ASSERT_THAT(idmap, NotNull());
+
+  ASSERT_THAT(idmap->GetHeader(), NotNull());
+  ASSERT_EQ(idmap->GetHeader()->GetMagic(), 0x504d4449u);
+  ASSERT_EQ(idmap->GetHeader()->GetVersion(), 0x01u);
+  ASSERT_EQ(idmap->GetHeader()->GetTargetCrc(), 0x8c28b684u);
+  ASSERT_EQ(idmap->GetHeader()->GetOverlayCrc(), 0x66f76916u);
+  ASSERT_EQ(idmap->GetHeader()->GetTargetPath(), target_apk_path);
+  ASSERT_EQ(idmap->GetHeader()->GetOverlayPath(), overlay_apk_path);
+
+  const std::vector<std::unique_ptr<const IdmapData>>& dataBlocks = idmap->GetData();
+  ASSERT_EQ(dataBlocks.size(), 1u);
+
+  const std::unique_ptr<const IdmapData>& data = dataBlocks[0];
+
+  ASSERT_EQ(data->GetHeader()->GetTargetPackageId(), 0x7fu);
+  ASSERT_EQ(data->GetHeader()->GetTypeCount(), 1u);
+
+  const std::vector<std::unique_ptr<const IdmapData::ResourceType>>& types =
+      data->GetResourceTypes();
+  ASSERT_EQ(types.size(), 1u);
+
+  ASSERT_EQ(types[0]->GetTargetType(), 0x02u);
+  ASSERT_EQ(types[0]->GetOverlayType(), 0x01u);
+  ASSERT_EQ(types[0]->GetEntryCount(), 4u);
+  ASSERT_EQ(types[0]->GetEntryOffset(), 3u);
+  ASSERT_EQ(types[0]->GetEntry(0), 0x00000000u);
+  ASSERT_EQ(types[0]->GetEntry(1), 0xffffffffu);
+  ASSERT_EQ(types[0]->GetEntry(2), 0x00000001u);
+  ASSERT_EQ(types[0]->GetEntry(3), 0x00000002u);
+}
+
+TEST(IdmapTests, CreateIdmapFromApkAssetsFailToSneakInAdditionalResourcesThanksToCategories) {
+  const std::string target_apk_path(GetTestDataPath() + "/target/target.apk");
+  std::unique_ptr<const ApkAssets> target_apk = ApkAssets::Load(target_apk_path);
+  ASSERT_THAT(target_apk, NotNull());
+
+  const std::string overlay_apk_path(
+      GetTestDataPath() + "/overlay/overlay-category-strings-also-includes-res-integers.apk");
+  std::unique_ptr<const ApkAssets> overlay_apk = ApkAssets::Load(overlay_apk_path);
+  ASSERT_THAT(overlay_apk, NotNull());
+
+  std::stringstream error;
+  std::unique_ptr<const Idmap> idmap = Idmap::FromApkAssets(
+      target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, false, error);
+  ASSERT_THAT(idmap, NotNull());
+
+  ASSERT_THAT(idmap->GetHeader(), NotNull());
+  ASSERT_EQ(idmap->GetHeader()->GetMagic(), 0x504d4449u);
+  ASSERT_EQ(idmap->GetHeader()->GetVersion(), 0x01u);
+  ASSERT_EQ(idmap->GetHeader()->GetTargetCrc(), 0x8c28b684u);
+  ASSERT_EQ(idmap->GetHeader()->GetOverlayCrc(), 0xd470336bu);
+  ASSERT_EQ(idmap->GetHeader()->GetTargetPath(), target_apk_path);
+  ASSERT_EQ(idmap->GetHeader()->GetOverlayPath(), overlay_apk_path);
+
+  const std::vector<std::unique_ptr<const IdmapData>>& dataBlocks = idmap->GetData();
+  ASSERT_EQ(dataBlocks.size(), 1u);
+
+  const std::unique_ptr<const IdmapData>& data = dataBlocks[0];
+
+  ASSERT_EQ(data->GetHeader()->GetTargetPackageId(), 0x7fu);
+  ASSERT_EQ(data->GetHeader()->GetTypeCount(), 1u);
+
+  const std::vector<std::unique_ptr<const IdmapData::ResourceType>>& types =
+      data->GetResourceTypes();
+  ASSERT_EQ(types.size(), 1u);
+
+  ASSERT_EQ(types[0]->GetTargetType(), 0x02u);
+  ASSERT_EQ(types[0]->GetOverlayType(), 0x02u);
+  ASSERT_EQ(types[0]->GetEntryCount(), 4u);
+  ASSERT_EQ(types[0]->GetEntryOffset(), 3u);
+  ASSERT_EQ(types[0]->GetEntry(0), 0x00000000u);
+  ASSERT_EQ(types[0]->GetEntry(1), 0xffffffffu);
+  ASSERT_EQ(types[0]->GetEntry(2), 0x00000001u);
+  ASSERT_EQ(types[0]->GetEntry(3), 0x00000002u);
 }
 
 class TestVisitor : public Visitor {

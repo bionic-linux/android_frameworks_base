@@ -37,8 +37,8 @@ class Idmap2Service : public BinderService<Idmap2Service>, public BnIdmap2 {
                              bool* _aidl_return);
 
   binder::Status createIdmap(const std::string& target_apk_path,
-                             const std::string& overlay_apk_path, int32_t user_id,
-                             std::unique_ptr<std::string>* _aidl_return);
+                             const std::string& overlay_apk_path, bool ignore_categories,
+                             int32_t user_id, std::unique_ptr<std::string>* _aidl_return);
 };
 }  // namespace os
 }  // namespace android

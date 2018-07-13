@@ -130,7 +130,7 @@ class Idmap2Tests : public testing::Test {
     EXPECT_NE(mkdtemp(const_cast<char*>(tmp_dir_path_.c_str())), nullptr)
         << "Failed to create temporary directory: " << strerror(errno);
     target_apk_path_ = GetTestDataPath() + "/target/target.apk";
-    overlay_apk_path_ = GetTestDataPath() + "/overlay/overlay.apk";
+    overlay_apk_path_ = GetTestDataPath() + "/overlay/overlay-no-category.apk";
     idmap_path_ = tmp_dir_path_ + "/a.idmap";
   }
 

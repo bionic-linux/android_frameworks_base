@@ -186,6 +186,7 @@ class Idmap {
                                                     const ApkAssets& target_apk_assets,
                                                     const std::string& overlay_apk_path,
                                                     const ApkAssets& overlay_apk_assets,
+                                                    bool ignore_categories,
                                                     std::ostream& out_error);
 
   inline const std::unique_ptr<const IdmapHeader>& GetHeader() const {

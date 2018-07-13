@@ -40,13 +40,13 @@ TEST(PrettyPrintVisitorTests, CreatePrettyPrintVisitor) {
   std::unique_ptr<const ApkAssets> target_apk = ApkAssets::Load(target_apk_path);
   ASSERT_THAT(target_apk, NotNull());
 
-  const std::string overlay_apk_path(GetTestDataPath() + "/overlay/overlay.apk");
+  const std::string overlay_apk_path(GetTestDataPath() + "/overlay/overlay-no-category.apk");
   std::unique_ptr<const ApkAssets> overlay_apk = ApkAssets::Load(overlay_apk_path);
   ASSERT_THAT(overlay_apk, NotNull());
 
   std::stringstream error;
-  std::unique_ptr<const Idmap> idmap =
-      Idmap::FromApkAssets(target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, error);
+  std::unique_ptr<const Idmap> idmap = Idmap::FromApkAssets(
+      target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, true, error);
   ASSERT_THAT(idmap, NotNull());
 
   std::stringstream stream;

@@ -70,8 +70,8 @@ Status Idmap2Service::removeIdmap(const std::string& overlay_apk_path,
 }
 
 Status Idmap2Service::createIdmap(const std::string& target_apk_path,
-                                  const std::string& overlay_apk_path, int32_t user_id,
-                                  std::unique_ptr<std::string>* _aidl_return) {
+                                  const std::string& overlay_apk_path, bool ignore_categories,
+                                  int32_t user_id, std::unique_ptr<std::string>* _aidl_return) {
   std::stringstream trace;
   trace << __FUNCTION__ << " " << target_apk_path << " " << overlay_apk_path << " "
         << std::to_string(user_id);
@@ -91,8 +91,8 @@ Status Idmap2Service::createIdmap(const std::string& target_apk_path,
   }
 
   std::stringstream err;
-  const std::unique_ptr<const Idmap> idmap =
-      Idmap::FromApkAssets(target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, err);
+  const std::unique_ptr<const Idmap> idmap = Idmap::FromApkAssets(
+      target_apk_path, *target_apk, overlay_apk_path, *overlay_apk, ignore_categories, err);
   if (!idmap) {
     return error(err.str());
   }

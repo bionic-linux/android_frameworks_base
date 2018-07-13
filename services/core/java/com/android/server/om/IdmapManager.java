@@ -61,7 +61,7 @@ class IdmapManager {
         final String targetPath = targetPackage.applicationInfo.getBaseCodePath();
         final String overlayPath = overlayPackage.applicationInfo.getBaseCodePath();
         try {
-            mIdmap2Service.createIdmap(targetPath, overlayPath, userId);
+            mIdmap2Service.createIdmap(targetPath, overlayPath, false, userId);
         } catch (Exception e) {
             Slog.w(TAG, "failed to generate idmap for " + targetPath + " and "
                     + overlayPath + ": " + e.getMessage());

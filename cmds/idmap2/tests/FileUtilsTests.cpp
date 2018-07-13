@@ -50,11 +50,19 @@ TEST(FileUtilsTests, FindFilesFindApkFilesRecursive) {
     return type == DT_REG && path.size() > 4 && !path.compare(path.size() - 4, 4, ".apk");
   });
   ASSERT_THAT(v, NotNull());
-  ASSERT_EQ(v->size(), 4u);
+  ASSERT_EQ(v->size(), 7u);
+  // clang-format off
   ASSERT_EQ(std::set<std::string>(v->begin(), v->end()),
-            std::set<std::string>({root + "/target/target.apk", root + "/overlay/overlay.apk",
-                                   root + "/overlay/overlay-static-1.apk",
-                                   root + "/overlay/overlay-static-2.apk"}));
+            std::set<std::string>({
+                root + "/overlay/overlay-category-integers.apk",
+                root + "/overlay/overlay-category-strings-also-includes-res-integers.apk",
+                root + "/overlay/overlay-category-strings.apk",
+                root + "/overlay/overlay-no-category.apk",
+                root + "/overlay/overlay-static-1.apk",
+                root + "/overlay/overlay-static-2.apk",
+                root + "/target/target.apk",
+            }));
+  // clang-format on
 }
 
 TEST(FileUtilsTests, ReadFile) {

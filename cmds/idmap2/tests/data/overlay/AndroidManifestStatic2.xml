@@ -4,6 +4,7 @@
     package="test.overlay.static2">
     <overlay
         android:targetPackage="test.target"
+        android:category="test.target:strings"
         android:isStatic="true"
         android:priority="2" />
 </manifest>
