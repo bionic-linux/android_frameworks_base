@@ -24,8 +24,6 @@ import android.os.Parcelable;
 import android.os.StrictMode;
 import android.util.Log;
 
-import libcore.net.UriCodec;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
