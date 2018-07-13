@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d435162_ab413967",
+        "filename": "core/java/android/util/jar/StrictJarManifest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-07-13T16:32:16Z",
+      "side": 1,
+      "message": "FYI lint checks claimed that the import for libcore.io.Stream was in the wrong place. Since IntelliJ disagrees, and since this CL doesn\u0027t touch this import, I\u0027ve skip lint verifications when uploading this file; this may have hidden other lint issues.\n\nI\u0027ll leave it to frameworks owners to clean this up, if required.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "8a0845e517b19f1d546f1c56d28f6fe869f0d905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
