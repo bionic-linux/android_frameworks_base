@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7415c328_32b4f820",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2018-07-16T12:38:58Z",
+      "side": 1,
+      "message": "alternatively, txt if $(1) \u003e 13, otherwise xml",
+      "revId": "4ff08f6b5d0de241da6d6f741d90d9f9becbe9c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
