@@ -16,6 +16,23 @@
       "revId": "4ff08f6b5d0de241da6d6f741d90d9f9becbe9c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd03f811_25c3cb58",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-07-16T18:27:53Z",
+      "side": 1,
+      "message": "just for curiosity, what new sdk library would be added to Make side instead of using the Soong logic? If I remember correctly, only some sdk-online/offline/ds... docs on Make side depend on these variables.",
+      "revId": "4ff08f6b5d0de241da6d6f741d90d9f9becbe9c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
