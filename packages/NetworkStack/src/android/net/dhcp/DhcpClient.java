@@ -438,10 +438,14 @@ public class DhcpClient extends StateMachine {
     }
 
     private boolean sendDiscoverPacket() {
-        ByteBuffer packet = DhcpPacket.buildDiscoverPacket(
-                DhcpPacket.ENCAP_L2, mTransactionId, getSecs(), mHwAddr,
+        DhcpPacket packet = DhcpPacket.buildDiscoverPacket(mTransactionId, getSecs(), mHwAddr,
                 DO_UNICAST, REQUESTED_PARAMS);
-        return transmitPacket(packet, "DHCPDISCOVER", DhcpPacket.ENCAP_L2, INADDR_BROADCAST);
+
+        final ByteBuffer buffer = new DhcpPacketL3Wrapper(INADDR_ANY /* srcAddr */,
+                INADDR_BROADCAST /* dstAddr */, true /* clientPacket */, packet)
+                .buildL2Packet(mHwAddr);
+
+        return transmitPacket(buffer, "DHCPDISCOVER", DhcpPacket.ENCAP_L2, INADDR_BROADCAST);
     }
 
     private boolean sendRequestPacket(
@@ -451,15 +455,22 @@ public class DhcpClient extends StateMachine {
         final int encap = INADDR_ANY.equals(clientAddress)
                 ? DhcpPacket.ENCAP_L2 : DhcpPacket.ENCAP_BOOTP;
 
-        ByteBuffer packet = DhcpPacket.buildRequestPacket(
-                encap, mTransactionId, getSecs(), clientAddress,
-                DO_UNICAST, mHwAddr, requestedAddress,
-                serverAddress, REQUESTED_PARAMS, null);
+        DhcpRequestPacket packet = DhcpPacket.buildRequestPacket(mTransactionId, getSecs(),
+                clientAddress, DO_UNICAST, mHwAddr, requestedAddress, serverAddress,
+                REQUESTED_PARAMS, null);
         String serverStr = (serverAddress != null) ? serverAddress.getHostAddress() : null;
         String description = "DHCPREQUEST ciaddr=" + clientAddress.getHostAddress() +
                              " request=" + requestedAddress.getHostAddress() +
                              " serverid=" + serverStr;
-        return transmitPacket(packet, description, encap, to);
+        final ByteBuffer bytes;
+        if (encap == DhcpPacket.ENCAP_BOOTP) {
+            bytes = packet.toByteBuffer();
+        } else {
+            bytes = new DhcpPacketL3Wrapper(INADDR_ANY /* srcAddr */,
+                    INADDR_BROADCAST /* dstAddr */, true /* clientPacket */, packet)
+                    .buildL2Packet(mHwAddr);
+        }
+        return transmitPacket(bytes, description, encap, to);
     }
 
     private void scheduleLeaseTimers() {

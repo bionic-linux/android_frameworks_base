@@ -37,14 +37,9 @@ class DhcpReleasePacket extends DhcpPacket {
         mClientAddr = clientAddr;
     }
 
-
     @Override
-    public ByteBuffer buildPacket(int encap, short destUdp, short srcUdp) {
-        ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
-        fillInPacket(encap, mServerIdentifier /* destIp */, mClientIp /* srcIp */, destUdp, srcUdp,
-                result, DHCP_BOOTREPLY, mBroadcast);
-        result.flip();
-        return result;
+    public byte getRequestCode() {
+        return DHCP_BOOTREQUEST;
     }
 
     @Override

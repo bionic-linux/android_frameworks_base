@@ -20,7 +20,6 @@ import static android.net.TrafficStats.TAG_SYSTEM_DHCP_SERVER;
 import static android.net.dhcp.DhcpPacket.DHCP_CLIENT;
 import static android.net.dhcp.DhcpPacket.DHCP_HOST_NAME;
 import static android.net.dhcp.DhcpPacket.DHCP_SERVER;
-import static android.net.dhcp.DhcpPacket.ENCAP_BOOTP;
 import static android.net.dhcp.IDhcpServer.STATUS_INVALID_ARGUMENT;
 import static android.net.dhcp.IDhcpServer.STATUS_SUCCESS;
 import static android.net.shared.Inet4AddressUtils.getBroadcastAddress;
@@ -481,15 +480,17 @@ public class DhcpServer extends IDhcpServer.Stub {
         final Inet4Address broadcastAddr = getBroadcastAddress(
                 mServingParams.getServerInet4Addr(), mServingParams.serverAddr.getPrefixLength());
         final String hostname = getHostnameIfRequested(request, lease);
-        final ByteBuffer offerPacket = DhcpPacket.buildOfferPacket(
-                ENCAP_BOOTP, request.mTransId, broadcastFlag, mServingParams.getServerInet4Addr(),
-                request.mRelayIp, lease.getNetAddr(), request.mClientMac, timeout, prefixMask,
-                broadcastAddr, new ArrayList<>(mServingParams.defaultRouters),
+        final DhcpPacket offerPacket = DhcpPacket.buildOfferPacket(
+                request.mTransId, broadcastFlag, request.mClientIp,
+                request.mRelayIp, lease.getNetAddr(), mServingParams.getServerInet4Addr(),
+                request.mClientMac, timeout, prefixMask, broadcastAddr,
+                new ArrayList<>(mServingParams.defaultRouters),
                 new ArrayList<>(mServingParams.dnsServers),
                 mServingParams.getServerInet4Addr(), null /* domainName */, hostname,
                 mServingParams.metered, (short) mServingParams.linkMtu);
 
-        return transmitOfferOrAckPacket(offerPacket, request, lease, clientMac, broadcastFlag);
+        return transmitOfferOrAckPacket(
+            offerPacket.toByteBuffer(), request, lease, clientMac, broadcastFlag);
     }
 
     private boolean transmitAck(@NonNull DhcpPacket request, @NonNull DhcpLease lease,
@@ -499,7 +500,7 @@ public class DhcpServer extends IDhcpServer.Stub {
         final boolean broadcastFlag = getBroadcastFlag(request, lease);
         final int timeout = getLeaseTimeout(lease);
         final String hostname = getHostnameIfRequested(request, lease);
-        final ByteBuffer ackPacket = DhcpPacket.buildAckPacket(ENCAP_BOOTP, request.mTransId,
+        final DhcpAckPacket ackPacket = DhcpPacket.buildAckPacket(request.mTransId,
                 broadcastFlag, mServingParams.getServerInet4Addr(), request.mRelayIp,
                 lease.getNetAddr(), request.mClientIp, request.mClientMac, timeout,
                 mServingParams.getPrefixMaskAsAddress(), mServingParams.getBroadcastAddress(),
@@ -508,20 +509,21 @@ public class DhcpServer extends IDhcpServer.Stub {
                 mServingParams.getServerInet4Addr(), null /* domainName */, hostname,
                 mServingParams.metered, (short) mServingParams.linkMtu);
 
-        return transmitOfferOrAckPacket(ackPacket, request, lease, clientMac, broadcastFlag);
+        return transmitOfferOrAckPacket(
+            ackPacket.toByteBuffer(), request, lease, clientMac, broadcastFlag);
     }
 
     private boolean transmitNak(DhcpPacket request, String message) {
         mLog.w("Transmitting NAK: " + message);
         // Always set broadcast flag for NAK: client may not have a correct IP
-        final ByteBuffer nakPacket = DhcpPacket.buildNakPacket(
-                ENCAP_BOOTP, request.mTransId, mServingParams.getServerInet4Addr(),
+        final DhcpNakPacket nakPacket = DhcpPacket.buildNakPacket(
+                request.mTransId, mServingParams.getServerInet4Addr(),
                 request.mRelayIp, request.mClientMac, true /* broadcast */, message);
 
         final Inet4Address dst = isEmpty(request.mRelayIp)
                 ? IPV4_ADDR_ALL
                 : request.mRelayIp;
-        return transmitPacket(nakPacket, DhcpNakPacket.class.getSimpleName(), dst);
+        return transmitPacket(nakPacket.toByteBuffer(), DhcpNakPacket.class.getSimpleName(), dst);
     }
 
     private boolean transmitOfferOrAckPacket(@NonNull ByteBuffer buf, @NonNull DhcpPacket request,
