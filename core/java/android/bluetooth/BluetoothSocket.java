@@ -665,6 +665,17 @@ public final class BluetoothSocket implements Closeable {
     }
 
     /**
+     * Get the LE Properties object in order to configure this LE Connection to the remote device.
+     * The returned object is not useful if the remote device does not support LE.
+     *
+     * @return the LE Properties object for this remote device.
+     */
+    public BluetoothLeProperties getLeProperties(BluetoothLePropertiesCallback callback) {
+        // TODO: Add implementation
+        return null;
+    }
+
+    /**
      * Change if a SDP entry should be automatically created.
      * Must be called before calling .bind, for the call to have any effect.
      *

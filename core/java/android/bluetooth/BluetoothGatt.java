@@ -910,6 +910,17 @@ public final class BluetoothGatt implements BluetoothProfile {
     }
 
     /**
+     * Get the LE Properties object in order to configure this LE Connection to the remote device.
+     * The returned object is not useful if the remote device does not support LE.
+     *
+     * @return the LE Properties object for this remote device.
+     */
+    public BluetoothLeProperties getLeProperties(BluetoothLePropertiesCallback callback) {
+        // TODO: Add implementation
+        return null;
+    }
+
+    /**
      * Set the preferred connection PHY for this app. Please note that this is just a
      * recommendation, whether the PHY change will happen depends on other applications preferences,
      * local and remote controller capabilities. Controller can override these settings.
