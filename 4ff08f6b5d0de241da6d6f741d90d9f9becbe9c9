@@ -33,6 +33,24 @@
       "revId": "4ff08f6b5d0de241da6d6f741d90d9f9becbe9c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3343d22d_5b5872a1",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2018-07-17T01:28:59Z",
+      "side": 1,
+      "message": "I tried to migrate android.test.base to sdk library by using bp file and added android.test.base.txt file to 28/public/api. In this case, there is a invalid argument as \"-since prebuilts/sdk/28/public/api/android.test.base.txt prebuilts/sdk/28/public/api/android.txt 28\" when doc-comment-check is built.\n\nSo I changed the \"since\" argument generation.\n\nAnd I think that dependency of these variables is okay because there are no changes.",
+      "parentUuid": "bd03f811_25c3cb58",
+      "revId": "4ff08f6b5d0de241da6d6f741d90d9f9becbe9c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
