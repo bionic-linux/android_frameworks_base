@@ -23,18 +23,13 @@ import java.nio.ByteBuffer;
  * This class implements the DHCP-OFFER packet.
  */
 class DhcpOfferPacket extends DhcpPacket {
-    /**
-     * The IP address of the server which sent this packet.
-     */
-    private final Inet4Address mSrcIp;
 
     /**
      * Generates a OFFER packet with the specified parameters.
      */
-    DhcpOfferPacket(int transId, short secs, boolean broadcast, Inet4Address serverAddress,
-            Inet4Address relayIp, Inet4Address clientIp, Inet4Address yourIp, byte[] clientMac) {
-        super(transId, secs, clientIp, yourIp, serverAddress, relayIp, clientMac, broadcast);
-        mSrcIp = serverAddress;
+    DhcpOfferPacket(int transId, short secs, boolean broadcast, Inet4Address relayIp,
+            Inet4Address clientIp, Inet4Address yourIp, Inet4Address nextIp, byte[] clientMac) {
+        super(transId, secs, clientIp, yourIp, nextIp, relayIp, clientMac, broadcast);
     }
 
     public String toString() {
@@ -52,18 +47,9 @@ class DhcpOfferPacket extends DhcpPacket {
                 " lease time " + mLeaseTime + ", domain " + mDomainName;
     }
 
-    /**
-     * Fills in a packet with the specified OFFER attributes.
-     */
-    public ByteBuffer buildPacket(int encap, short destUdp, short srcUdp) {
-        ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
-        Inet4Address destIp = mBroadcast ? INADDR_BROADCAST : mYourIp;
-        Inet4Address srcIp = mBroadcast ? INADDR_ANY : mSrcIp;
-
-        fillInPacket(encap, destIp, srcIp, destUdp, srcUdp, result,
-            DHCP_BOOTREPLY, mBroadcast);
-        result.flip();
-        return result;
+    @Override
+    public byte getRequestCode() {
+        return DHCP_BOOTREPLY;
     }
 
     /**
