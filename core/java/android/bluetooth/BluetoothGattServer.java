@@ -573,6 +573,19 @@ public final class BluetoothGattServer implements BluetoothProfile {
     }
 
     /**
+     * Get the LE Properties object in order to configure this LE Connection to the remote device.
+     * The parameter device should be given by the callback
+     * BluetoothGattServerCallback::onConnectionStateChange.
+     *
+     * @return the LE Properties object for this remote device.
+     */
+    public ConnectionSettings getLeConnectionSettings(BluetoothDevice device,
+                                                      ConnectionSettingsCallback callback) {
+        //TODO: Implementation
+        return null;
+    }
+
+    /**
      * Set the preferred connection PHY for this app. Please note that this is just a
      * recommendation, whether the PHY change will happen depends on other applications peferences,
      * local and remote controller capabilities. Controller can override these settings. <p> {@link
