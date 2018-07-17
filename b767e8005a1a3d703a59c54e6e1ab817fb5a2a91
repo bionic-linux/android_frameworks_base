@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ae8614a_b52950a7",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-17T07:09:21Z",
+      "side": 1,
+      "message": "Why not catch all exceptions, including null pointer exception here ?\n\nSynchronization won\u0027t be needed then.",
+      "range": {
+        "startLine": 807,
+        "startChar": 14,
+        "endLine": 807,
+        "endChar": 39
+      },
+      "revId": "b767e8005a1a3d703a59c54e6e1ab817fb5a2a91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
