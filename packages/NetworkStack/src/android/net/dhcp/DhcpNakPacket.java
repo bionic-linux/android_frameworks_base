@@ -37,18 +37,9 @@ class DhcpNakPacket extends DhcpPacket {
         return s + " NAK, reason " + (mMessage == null ? "(none)" : mMessage);
     }
 
-    /**
-     * Fills in a packet with the requested NAK attributes.
-     */
-    public ByteBuffer buildPacket(int encap, short destUdp, short srcUdp) {
-        ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
-        // Constructor does not set values for layers <= 3: use empty values
-        Inet4Address destIp = INADDR_ANY;
-        Inet4Address srcIp = INADDR_ANY;
-
-        fillInPacket(encap, destIp, srcIp, destUdp, srcUdp, result, DHCP_BOOTREPLY, mBroadcast);
-        result.flip();
-        return result;
+    @Override
+    public byte getRequestCode() {
+        return DHCP_BOOTREPLY;
     }
 
     /**
