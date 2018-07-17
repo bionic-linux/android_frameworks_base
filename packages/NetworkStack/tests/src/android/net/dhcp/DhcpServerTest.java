@@ -90,7 +90,7 @@ public class DhcpServerTest {
     private static final String TEST_HOSTNAME = "testhostname";
 
     private static final int TEST_TRANSACTION_ID = 123;
-    private static final byte[] TEST_CLIENT_MAC_BYTES = new byte [] { 1, 2, 3, 4, 5, 6 };
+    private static final byte[] TEST_CLIENT_MAC_BYTES = new byte[] { 1, 2, 3, 4, 5, 6 };
     private static final MacAddress TEST_CLIENT_MAC = MacAddress.fromBytes(TEST_CLIENT_MAC_BYTES);
     private static final Inet4Address TEST_CLIENT_ADDR = parseAddr("192.168.0.42");
 
@@ -186,7 +186,7 @@ public class DhcpServerTest {
 
         final DhcpDiscoverPacket discover = new DhcpDiscoverPacket(TEST_TRANSACTION_ID,
                 (short) 0 /* secs */, INADDR_ANY /* relayIp */, TEST_CLIENT_MAC_BYTES,
-                false /* broadcast */, INADDR_ANY /* srcIp */);
+                false /* broadcast */);
         mServer.processPacket(discover, DHCP_CLIENT);
 
         assertResponseSentTo(TEST_CLIENT_ADDR);
@@ -202,7 +202,7 @@ public class DhcpServerTest {
 
         final DhcpDiscoverPacket discover = new DhcpDiscoverPacket(TEST_TRANSACTION_ID,
                 (short) 0 /* secs */, INADDR_ANY /* relayIp */, TEST_CLIENT_MAC_BYTES,
-                false /* broadcast */, INADDR_ANY /* srcIp */);
+                false /* broadcast */);
         mServer.processPacket(discover, DHCP_CLIENT);
 
         assertResponseSentTo(INADDR_BROADCAST);

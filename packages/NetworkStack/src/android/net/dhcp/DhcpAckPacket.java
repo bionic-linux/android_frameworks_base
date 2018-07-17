@@ -24,16 +24,9 @@ import java.nio.ByteBuffer;
  */
 class DhcpAckPacket extends DhcpPacket {
 
-    /**
-     * The address of the server which sent this packet.
-     */
-    private final Inet4Address mSrcIp;
-
-    DhcpAckPacket(int transId, short secs, boolean broadcast, Inet4Address serverAddress,
-            Inet4Address relayIp, Inet4Address clientIp, Inet4Address yourIp, byte[] clientMac) {
-        super(transId, secs, clientIp, yourIp, serverAddress, relayIp, clientMac, broadcast);
-        mBroadcast = broadcast;
-        mSrcIp = serverAddress;
+    DhcpAckPacket(int transId, short secs, boolean broadcast, Inet4Address nextIp,
+            Inet4Address clientIp, Inet4Address yourIp, byte[] clientMac) {
+      super(transId, secs, clientIp, yourIp, nextIp, INADDR_ANY, clientMac, broadcast);
     }
 
     public String toString() {
@@ -50,18 +43,9 @@ class DhcpAckPacket extends DhcpPacket {
                 ", lease time " + mLeaseTime;
     }
 
-    /**
-     * Fills in a packet with the requested ACK parameters.
-     */
-    public ByteBuffer buildPacket(int encap, short destUdp, short srcUdp) {
-        ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
-        Inet4Address destIp = mBroadcast ? INADDR_BROADCAST : mYourIp;
-        Inet4Address srcIp = mBroadcast ? INADDR_ANY : mSrcIp;
-
-        fillInPacket(encap, destIp, srcIp, destUdp, srcUdp, result,
-            DHCP_BOOTREPLY, mBroadcast);
-        result.flip();
-        return result;
+    @Override
+    public byte getRequestCode() {
+        return DHCP_BOOTREPLY;
     }
 
     /**
@@ -73,16 +57,5 @@ class DhcpAckPacket extends DhcpPacket {
 
         addCommonServerTlvs(buffer);
         addTlvEnd(buffer);
-    }
-
-    /**
-     * Un-boxes an Integer, returning 0 if a null reference is supplied.
-     */
-    private static final int getInt(Integer v) {
-        if (v == null) {
-            return 0;
-        } else {
-            return v.intValue();
-        }
     }
 }
