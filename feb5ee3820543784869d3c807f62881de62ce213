@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "718e5230_5f0732d5",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2621,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-07-17T00:34:47Z",
+      "side": 1,
+      "message": "Is each part guaranteed to have nonzero length? This might crash otherwise",
+      "range": {
+        "startLine": 2621,
+        "startChar": 45,
+        "endLine": 2621,
+        "endChar": 52
+      },
+      "revId": "feb5ee3820543784869d3c807f62881de62ce213",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e39ed65_048b5494",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-07-17T00:34:47Z",
+      "side": 1,
+      "message": "@SystemApi for the migration?",
+      "range": {
+        "startLine": 424,
+        "startChar": 7,
+        "endLine": 424,
+        "endChar": 12
+      },
+      "revId": "feb5ee3820543784869d3c807f62881de62ce213",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
