@@ -8,6 +8,7 @@ java_library {
     name: "dhcp-packet-lib",
     srcs: [
         "java/android/net/dhcp/*Packet.java",
+	"java/android/net/dhcp/DhcpPacketL3Wrapper.java"
     ]
 }
 

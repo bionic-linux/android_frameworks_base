@@ -186,7 +186,7 @@ public class DhcpServerTest {
 
         final DhcpDiscoverPacket discover = new DhcpDiscoverPacket(TEST_TRANSACTION_ID,
                 (short) 0 /* secs */, INADDR_ANY /* relayIp */, TEST_CLIENT_MAC_BYTES,
-                false /* broadcast */, INADDR_ANY /* srcIp */);
+                false /* broadcast ,  INADDR_ANY /* srcIp */);
         mServer.processPacket(discover, DHCP_CLIENT);
 
         assertResponseSentTo(TEST_CLIENT_ADDR);
@@ -202,7 +202,7 @@ public class DhcpServerTest {
 
         final DhcpDiscoverPacket discover = new DhcpDiscoverPacket(TEST_TRANSACTION_ID,
                 (short) 0 /* secs */, INADDR_ANY /* relayIp */, TEST_CLIENT_MAC_BYTES,
-                false /* broadcast */, INADDR_ANY /* srcIp */);
+                false /* broadcast ,  INADDR_ANY /* srcIp */);
         mServer.processPacket(discover, DHCP_CLIENT);
 
         assertResponseSentTo(INADDR_BROADCAST);
