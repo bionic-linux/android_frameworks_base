@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09b04938_aaca9745",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-17T07:33:49Z",
+      "side": 1,
+      "message": "android.bluetooth.BluetoothLeProperties\n\nSince the package already tell us it\u0027s about bluetooth, and there is \"le\" package inside, why not someting like:\n\nandroid.bluetooth.le.ConnectionSettings ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57032048_e663b6ae",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-17T07:33:49Z",
+      "side": 1,
+      "message": "what does this enigmatic function do ? If it\u0027s for updating connection, why not call it \"updateConnection\", since it\u0027s already triggering callback called onConnectionParamUpdated ?\n\nWhat we need is updateConnection(int interval, int timeout);",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a6d019_aad157a4",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-17T07:33:49Z",
+      "side": 1,
+      "message": "Just one metod for updating connection parameters should be enough.",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 5
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb87e923_ee8d9ed7",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-17T07:33:49Z",
+      "side": 1,
+      "message": "Where is Data Lenght Extension control ?",
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920b4961_ec29c270",
+        "filename": "core/java/android/bluetooth/BluetoothLePropertiesCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-17T07:33:49Z",
+      "side": 1,
+      "message": "Bluetooth spec uses \"connection update\" without \"parameters\" so maybe we should also use it like this.\n\nAdd status, we want to inform about not successful updates too.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efebcbdd_40a22515",
+        "filename": "core/java/android/bluetooth/BluetoothLePropertiesCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-17T07:33:49Z",
+      "side": 1,
+      "message": "Data length change callback here too ?",
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9959bde3_9fb76695",
+        "filename": "core/java/android/bluetooth/BluetoothSocket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-17T07:33:49Z",
+      "side": 1,
+      "message": "How about obtaining this object in same way you obtain BluetoothGatt, or directly from BluetoothDevice ?\nThis way you won\u0027t need those method in gatt client, server, and for sockets",
+      "range": {
+        "startLine": 673,
+        "startChar": 4,
+        "endLine": 676,
+        "endChar": 5
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
