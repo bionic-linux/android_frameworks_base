@@ -16,8 +16,6 @@
 
 package android.net.dhcp;
 
-import android.util.Log;
-
 import java.net.Inet4Address;
 import java.nio.ByteBuffer;
 
@@ -40,16 +38,9 @@ class DhcpRequestPacket extends DhcpPacket {
             + (mRequestedParams == null ? 0 : mRequestedParams.length);
     }
 
-    /**
-     * Fills in a packet with the requested REQUEST attributes.
-     */
-    public ByteBuffer buildPacket(int encap, short destUdp, short srcUdp) {
-        ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
-
-        fillInPacket(encap, INADDR_BROADCAST, INADDR_ANY, destUdp, srcUdp,
-            result, DHCP_BOOTREQUEST, mBroadcast);
-        result.flip();
-        return result;
+    @Override
+    public byte getRequestCode() {
+        return DHCP_BOOTREQUEST;
     }
 
     /**
