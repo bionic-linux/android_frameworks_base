@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d314235f_7316ee07",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-17T18:06:25Z",
+      "side": 1,
+      "message": "Done. Great suggestion! I was trying to find a good name for this new class.",
+      "parentUuid": "09b04938_aaca9745",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57032048_e663b6ae",
         "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-07-17T07:33:49Z",
       "side": 1,
       "message": "what does this enigmatic function do ? If it\u0027s for updating connection, why not call it \"updateConnection\", since it\u0027s already triggering callback called onConnectionParamUpdated ?\n\nWhat we need is updateConnection(int interval, int timeout);",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd6b9b1_ad66daf8",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-17T18:06:25Z",
+      "side": 1,
+      "message": "For this function and the other 2 below, I am asking the App or user to describe the desired usage behavior instead of specifying the BTSIG-spec connection parameters. This allows the BT stack to choose the best set of connection parameters plus other parameters. For example, we should enable the Data Length Extension for DATA_THROUGHPUT_HIGH and this parameter is not part of connection parameter. For future BT-SIG spec, there may be more parameters that the BT stack could control and I do not want to hardcode the BTSIG v4.2 parameters now.\nOn a separate topic, the triggering of onConnectionParamUpdated is something that I am not 100% comfortable but the best I can find for now. The reason is that in the future BTSIG spec, we may have other parameters to expose. I am trying to give the App some indications about how much we have satisfy their requests but could not find a non-BTSIG-spec way of describing it. Maybe you have some ideas about this callback.",
+      "parentUuid": "57032048_e663b6ae",
       "range": {
         "startLine": 92,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ae708f87_4ea6ec37",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-17T18:06:25Z",
+      "side": 1,
+      "message": "See reply for onConnectionParamUpdated()",
+      "parentUuid": "c1a6d019_aad157a4",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 5
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb87e923_ee8d9ed7",
         "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
         "patchSetId": 1
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "899f6bc9_dbdd6630",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-17T18:06:25Z",
+      "side": 1,
+      "message": "This proposed API does not explicitly expose the Data Length Extension (DLE). The most direct way is to call requestMtu() method since the BT stack will try to make the Tx Data Length to be equal of multiples of requested MTU. setDataThroughput(DATA_THROUGHPUT_HIGH) will also enable DLE.",
+      "parentUuid": "eb87e923_ee8d9ed7",
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "920b4961_ec29c270",
         "filename": "core/java/android/bluetooth/BluetoothLePropertiesCallback.java",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2018-07-17T07:33:49Z",
       "side": 1,
       "message": "Bluetooth spec uses \"connection update\" without \"parameters\" so maybe we should also use it like this.\n\nAdd status, we want to inform about not successful updates too.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9c9f98_0c56580c",
+        "filename": "core/java/android/bluetooth/BluetoothLePropertiesCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-17T18:06:25Z",
+      "side": 1,
+      "message": "These parameters could change on-the-fly based on requests from other Apps or a later request from the same App. So, I am not sure if a \"status\" parameter is appropriate. Maybe, we need a completion callback for each of the 3 requests and also this general connection parameter update callback. What do you think?\nI am a bit torn about exposing the BTSIG v4.2 connection parameters since in the future with newer BTSIG spec, these parameters can change.",
+      "parentUuid": "920b4961_ec29c270",
       "range": {
         "startLine": 39,
         "startChar": 16,
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "3f64b43a_963d51a7",
+        "filename": "core/java/android/bluetooth/BluetoothLePropertiesCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-17T18:06:25Z",
+      "side": 1,
+      "message": "Good idea, we can expand the readPhy() return parameters to include the Data Length change. This means that this callback will be triggered as a result of readPhy and also whenever these physical parameters changed.",
+      "parentUuid": "efebcbdd_40a22515",
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9959bde3_9fb76695",
         "filename": "core/java/android/bluetooth/BluetoothSocket.java",
         "patchSetId": 1
@@ -139,6 +271,30 @@
       "writtenOn": "2018-07-17T07:33:49Z",
       "side": 1,
       "message": "How about obtaining this object in same way you obtain BluetoothGatt, or directly from BluetoothDevice ?\nThis way you won\u0027t need those method in gatt client, server, and for sockets",
+      "range": {
+        "startLine": 673,
+        "startChar": 4,
+        "endLine": 676,
+        "endChar": 5
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b78e0ae_60feb96e",
+        "filename": "core/java/android/bluetooth/BluetoothSocket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-17T18:06:25Z",
+      "side": 1,
+      "message": "My original idea is to obtain from this object from BluetoothDevice. Andre thinks that BluetoothDevice is just a storage container for the MAC address and should not be access to affect the connection parameters. \nOne advantage of getting this class from the different types of connections (gatt client, server or sockets) is that we have the context of the request for changing the connection behavior. For example, an App requesting low-latency for GATT-server could be interpreted differently for the same request for a Gatt-client.\nAndre: feel free to chime in.",
+      "parentUuid": "9959bde3_9fb76695",
       "range": {
         "startLine": 673,
         "startChar": 4,
