@@ -69,11 +69,23 @@ public class DhcpPacketTest {
         private byte mType;
         // TODO: Make this a map of option numbers to bytes instead.
         private byte[] mDomainBytes, mVendorInfoBytes, mLeaseTimeBytes, mNetmaskBytes;
+        private final byte mRequestCode;
 
         public TestDhcpPacket(byte type, Inet4Address clientIp, Inet4Address yourIp) {
             super(0xdeadbeef, (short) 0, clientIp, yourIp, INADDR_ANY, INADDR_ANY,
                   CLIENT_MAC, true);
             mType = type;
+            switch (type) {
+                case DHCP_MESSAGE_TYPE_DISCOVER:
+                case DHCP_MESSAGE_TYPE_REQUEST:
+                case DHCP_MESSAGE_TYPE_DECLINE:
+                case DHCP_MESSAGE_TYPE_RELEASE:
+                case DHCP_MESSAGE_TYPE_INFORM:
+                    mRequestCode = DHCP_BOOTREQUEST;
+                    break;
+                default:
+                    mRequestCode = DHCP_BOOTREPLY;
+            }
         }
 
         public TestDhcpPacket(byte type) {
@@ -100,11 +112,9 @@ public class DhcpPacketTest {
             return this;
         }
 
-        public ByteBuffer buildPacket(int encap, short unusedDestUdp, short unusedSrcUdp) {
-            ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
-            fillInPacket(encap, CLIENT_ADDR, SERVER_ADDR,
-                         DHCP_CLIENT, DHCP_SERVER, result, DHCP_BOOTREPLY, false);
-            return result;
+        @Override
+        public byte getRequestCode() {
+            return mRequestCode;
         }
 
         public void finishPacket(ByteBuffer buffer) {
@@ -123,14 +133,6 @@ public class DhcpPacketTest {
             }
             addTlvEnd(buffer);
         }
-
-        // Convenience method.
-        public ByteBuffer build() {
-            // ENCAP_BOOTP packets don't contain ports, so just pass in 0.
-            ByteBuffer pkt = buildPacket(ENCAP_BOOTP, (short) 0, (short) 0);
-            pkt.flip();
-            return pkt;
-        }
     }
 
     private void assertDomainAndVendorInfoParses(
@@ -139,8 +141,8 @@ public class DhcpPacketTest {
         ByteBuffer packet = new TestDhcpPacket(DHCP_MESSAGE_TYPE_OFFER)
                 .setDomainBytes(domainBytes)
                 .setVendorInfoBytes(vendorInfoBytes)
-                .build();
-        DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_BOOTP);
+                .toByteBuffer();
+        DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet);
         assertEquals(expectedDomain, offerPacket.mDomainName);
         assertEquals(expectedVendorInfo, offerPacket.mVendorInfo);
     }
@@ -181,7 +183,7 @@ public class DhcpPacketTest {
         if (leaseTimeBytes != null) {
             testPacket.setLeaseTimeBytes(leaseTimeBytes);
         }
-        ByteBuffer packet = testPacket.build();
+        ByteBuffer packet = testPacket.toByteBuffer();
         DhcpPacket offerPacket = null;
 
         if (!expectValid) {
@@ -236,8 +238,8 @@ public class DhcpPacketTest {
                                 byte[] netmaskBytes) throws Exception {
         ByteBuffer packet = new TestDhcpPacket(type, clientIp, yourIp)
                 .setNetmaskBytes(netmaskBytes)
-                .build();
-        DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_BOOTP);
+                .toByteBuffer();
+        DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet);
         DhcpResults results = offerPacket.toDhcpResults();
 
         if (expected != null) {
@@ -876,9 +878,11 @@ public class DhcpPacketTest {
                 (byte) 0xda, (byte) 0x01, (byte) 0x19, (byte) 0x5b, (byte) 0xb1, (byte) 0x7a
         };
 
-        ByteBuffer packet = DhcpPacket.buildDiscoverPacket(
-                DhcpPacket.ENCAP_L2, transactionId, secs, hwaddr,
-                false /* do unicast */, DhcpClient.REQUESTED_PARAMS);
+        DhcpPacket packet = DhcpPacket.buildDiscoverPacket(
+                transactionId, secs, hwaddr, false /* do unicast */, DhcpClient.REQUESTED_PARAMS);
+        ByteBuffer packetBuffer = new DhcpPacketL3Wrapper(INADDR_ANY /* srcAddr */,
+                INADDR_BROADCAST /* dstAddr */, true /* clientPacket */, packet)
+                .buildL2Packet(hwaddr);
 
         byte[] headers = new byte[] {
             // Ethernet header.
@@ -940,13 +944,13 @@ public class DhcpPacketTest {
             // Our packets are always of even length. TODO: find out why and possibly fix it.
             (byte) 0x00
         };
-        byte[] expected = new byte[DhcpPacket.MIN_PACKET_LENGTH_L2 + options.length];
+        byte[] expected = new byte[DhcpPacketL3Wrapper.MIN_PACKET_LENGTH_L2 + options.length];
         assertTrue((expected.length & 1) == 0);
         System.arraycopy(headers, 0, expected, 0, headers.length);
-        System.arraycopy(options, 0, expected, DhcpPacket.MIN_PACKET_LENGTH_L2, options.length);
+        System.arraycopy(options, 0, expected, DhcpPacketL3Wrapper.MIN_PACKET_LENGTH_L2, options.length);
 
-        byte[] actual = new byte[packet.limit()];
-        packet.get(actual);
+        byte[] actual = new byte[packetBuffer.limit()];
+        packetBuffer.get(actual);
         String msg =
                 "Expected:\n  " + Arrays.toString(expected) +
                 "\nActual:\n  " + Arrays.toString(actual);

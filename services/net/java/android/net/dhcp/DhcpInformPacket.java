@@ -37,16 +37,9 @@ class DhcpInformPacket extends DhcpPacket {
         return s + " INFORM";
     }
 
-    /**
-     * Builds an INFORM packet.
-     */
-    public ByteBuffer buildPacket(int encap, short destUdp, short srcUdp) {
-        ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
-
-        fillInPacket(encap, mClientIp, mYourIp, destUdp, srcUdp, result,
-            DHCP_BOOTREQUEST, false);
-        result.flip();
-        return result;
+    @Override
+    public byte getRequestCode() {
+        return DHCP_BOOTREQUEST;
     }
 
     /**

@@ -302,8 +302,8 @@ public class DhcpServer {
                 getPrefixMaskAsInet4Address(mServingParams.serverAddr.getPrefixLength());
         final Inet4Address broadcastAddr = getBroadcastAddress(
                 mServingParams.getServerInet4Addr(), mServingParams.serverAddr.getPrefixLength());
-        final ByteBuffer offerPacket = DhcpPacket.buildOfferPacket(
-                ENCAP_BOOTP, request.mTransId, broadcastFlag, mServingParams.getServerInet4Addr(),
+        final DhcpPacket offerPacket = DhcpPacket.buildOfferPacket(
+                request.mTransId, broadcastFlag,
                 lease.getNetAddr(), request.mClientMac, timeout,
                 prefixMask,
                 broadcastAddr,
@@ -315,7 +315,7 @@ public class DhcpServer {
             // Error already logged
             return false;
         }
-        return sendPacket(offerPacket, "DHCP offer", dst);
+        return sendPacket(offerPacket.toByteBuffer(), "DHCP offer", dst);
     }
 
     private boolean transmitAck(DhcpPacket request, DhcpLease lease) {
@@ -328,7 +328,7 @@ public class DhcpServer {
         }
 
         final int timeout = getLeaseTimeout(lease);
-        final ByteBuffer ackPacket = DhcpPacket.buildAckPacket(ENCAP_BOOTP, request.mTransId,
+        final DhcpAckPacket ackPacket = DhcpPacket.buildAckPacket(request.mTransId,
                 broadcastFlag, mServingParams.getServerInet4Addr(), lease.getNetAddr(),
                 request.mClientMac, timeout, mServingParams.getPrefixMaskAsAddress(),
                 mServingParams.getBroadcastAddress(),
@@ -339,7 +339,7 @@ public class DhcpServer {
         if (!addArpEntry(request, lease)) {
             return false;
         }
-        return sendPacket(ackPacket, "DHCP ACK", dst);
+        return sendPacket(ackPacket.toByteBuffer(), "DHCP ACK", dst);
     }
 
     private boolean addArpEntry(DhcpPacket request, DhcpLease lease) {
@@ -364,14 +364,14 @@ public class DhcpServer {
     private boolean transmitNak(DhcpPacket request, String message) {
         mLog.w("Transmitting NAK: " + message);
         // Always set broadcast flag for NAK: client may not have a correct IP
-        final ByteBuffer nakPacket = DhcpPacket.buildNakPacket(
-                ENCAP_BOOTP, request.mTransId, mServingParams.getServerInet4Addr(),
+        final DhcpNakPacket nakPacket = DhcpPacket.buildNakPacket(
+                request.mTransId, mServingParams.getServerInet4Addr(),
                 request.mClientMac, true /* broadcast */, message);
 
         final Inet4Address dst = isEmpty(request.mRelayIp)
                 ? (Inet4Address)Inet4Address.ALL
                 : request.mRelayIp;
-        return sendPacket(nakPacket, "DHCP nak", dst);
+        return sendPacket(nakPacket.toByteBuffer(), "DHCP nak", dst);
     }
 
 

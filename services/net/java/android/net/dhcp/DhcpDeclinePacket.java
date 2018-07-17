@@ -37,16 +37,9 @@ class DhcpDeclinePacket extends DhcpPacket {
         return s + " DECLINE";
     }
 
-    /**
-     * Fills in a packet with the requested DECLINE attributes.
-     */
-    public ByteBuffer buildPacket(int encap, short destUdp, short srcUdp) {
-        ByteBuffer result = ByteBuffer.allocate(MAX_LENGTH);
-
-        fillInPacket(encap, mClientIp, mYourIp, destUdp, srcUdp, result,
-            DHCP_BOOTREQUEST, false);
-        result.flip();
-        return result;
+    @Override
+    public byte getRequestCode() {
+        return DHCP_BOOTREPLY;
     }
 
     /**
