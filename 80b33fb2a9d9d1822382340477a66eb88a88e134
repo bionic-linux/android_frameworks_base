@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "58a09ef7_30118246",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-18T17:35:00Z",
+      "side": 1,
+      "message": "We tried going this way for first version of Advertising API, and it was disaster. Instead of exposing raw values to users, we let them specify some predefined constants, i.e. MIN, MEDIUM, MAX.\nWhat we ended up with, is a ton of request, to provide special value X that only particular project or company must have for their battery/discovery speed optimization.\n\nYou have just four values for connection parameters, Conn_Interval_Min,\nConn_Interval_Max,\nConn_Latency,\nSupervision_Timeout,\n\nJust let users provide them and add some reasonable check around the values.",
+      "parentUuid": "1fd6b9b1_ad66daf8",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1a6d019_aad157a4",
         "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
         "patchSetId": 1
@@ -172,6 +196,24 @@
       "side": 1,
       "message": "This proposed API does not explicitly expose the Data Length Extension (DLE). The most direct way is to call requestMtu() method since the BT stack will try to make the Tx Data Length to be equal of multiples of requested MTU. setDataThroughput(DATA_THROUGHPUT_HIGH) will also enable DLE.",
       "parentUuid": "eb87e923_ee8d9ed7",
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1169bfd4_4623b550",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-18T17:35:00Z",
+      "side": 1,
+      "message": "Please explicitly expose DLE",
+      "parentUuid": "899f6bc9_dbdd6630",
       "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -295,6 +337,30 @@
       "side": 1,
       "message": "My original idea is to obtain from this object from BluetoothDevice. Andre thinks that BluetoothDevice is just a storage container for the MAC address and should not be access to affect the connection parameters. \nOne advantage of getting this class from the different types of connections (gatt client, server or sockets) is that we have the context of the request for changing the connection behavior. For example, an App requesting low-latency for GATT-server could be interpreted differently for the same request for a Gatt-client.\nAndre: feel free to chime in.",
       "parentUuid": "9959bde3_9fb76695",
+      "range": {
+        "startLine": 673,
+        "startChar": 4,
+        "endLine": 676,
+        "endChar": 5
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d76d596_0bc99c75",
+        "filename": "core/java/android/bluetooth/BluetoothSocket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-18T17:35:00Z",
+      "side": 1,
+      "message": "Requests to this class should be interpreted in same way, no matter how this object was obtained.\n\nHow about connect/disconnect management from this object ?",
+      "parentUuid": "3b78e0ae_60feb96e",
       "range": {
         "startLine": 673,
         "startChar": 4,
