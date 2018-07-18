@@ -22,10 +22,11 @@ import android.net.NetworkRequest;
 import android.net.ip.RouterAdvertisementDaemon;
 import android.net.util.InterfaceParams;
 import android.net.util.NetdService;
-import android.os.Handler;
 import android.net.util.SharedLog;
+import android.os.Handler;
 
 import com.android.internal.util.StateMachine;
+import com.android.server.connectivity.MockableSystemProperties;
 
 import java.util.ArrayList;
 
@@ -68,5 +69,10 @@ public class TetheringDependencies {
 
     public NetworkRequest getDefaultNetworkRequest() {
         return null;
+    }
+
+    public EntitlementManager getEntitlementManager(Context ctx, StateMachine target,
+            SharedLog log, int what, MockableSystemProperties systemProperties) {
+        return new EntitlementManager(ctx, target, log, what, systemProperties);
     }
 }

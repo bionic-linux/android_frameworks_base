@@ -24,6 +24,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -40,8 +41,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.IConnectivityManager;
@@ -53,7 +52,8 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.util.SharedLog;
-
+import android.os.Handler;
+import android.os.Message;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -62,10 +62,9 @@ import com.android.internal.util.StateMachine;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -318,6 +317,14 @@ public class UpstreamNetworkMonitorTest {
         NetworkRequest netReq = (NetworkRequest) mCM.requested.values().toArray()[0];
         assertTrue(netReq.networkCapabilities.hasTransport(TRANSPORT_CELLULAR));
         assertFalse(netReq.networkCapabilities.hasCapability(NET_CAPABILITY_DUN));
+        // mobile is not permitted, we should not use HIPRI.
+        mUNM.updateMobileUpstreamPermitted(false);
+        assertSatisfiesLegacyType(TYPE_NONE, mUNM.selectPreferredUpstreamType(preferredTypes));
+        assertEquals(0, mCM.requested.size());
+        // mobile change back to permitted, HIRPI should come back
+        mUNM.updateMobileUpstreamPermitted(true);
+        assertSatisfiesLegacyType(TYPE_MOBILE_HIPRI,
+                mUNM.selectPreferredUpstreamType(preferredTypes));
 
         wifiAgent.fakeConnect();
         // WiFi is up, and we should prefer it over cell.
@@ -346,6 +353,14 @@ public class UpstreamNetworkMonitorTest {
         netReq = (NetworkRequest) mCM.requested.values().toArray()[0];
         assertTrue(netReq.networkCapabilities.hasTransport(TRANSPORT_CELLULAR));
         assertTrue(netReq.networkCapabilities.hasCapability(NET_CAPABILITY_DUN));
+        // mobile is not permitted, we should not use DUN.
+        mUNM.updateMobileUpstreamPermitted(false);
+        assertSatisfiesLegacyType(TYPE_NONE, mUNM.selectPreferredUpstreamType(preferredTypes));
+        assertEquals(0, mCM.requested.size());
+        // mobile change back to permitted, DUN should come back
+        mUNM.updateMobileUpstreamPermitted(true);
+        assertSatisfiesLegacyType(TYPE_MOBILE_DUN,
+                mUNM.selectPreferredUpstreamType(preferredTypes));
     }
 
     @Test
@@ -359,32 +374,42 @@ public class UpstreamNetworkMonitorTest {
         mCM.makeDefaultNetwork(cellAgent);
         assertEquals(cellAgent.networkId, mUNM.getCurrentPreferredUpstream().network);
 
-        // [1] WiFi connects but not validated/promoted to default -> mobile selected.
+        // [1] Mobile connects but not permitted -> null selected
+        mUNM.updateMobileUpstreamPermitted(false);
+        assertEquals(null, mUNM.getCurrentPreferredUpstream());
+        mUNM.updateMobileUpstreamPermitted(true);
+
+        // [2] WiFi connects but not validated/promoted to default -> mobile selected.
         final TestNetworkAgent wifiAgent = new TestNetworkAgent(mCM, TRANSPORT_WIFI);
         wifiAgent.fakeConnect();
         assertEquals(cellAgent.networkId, mUNM.getCurrentPreferredUpstream().network);
 
-        // [2] WiFi validates and is promoted to the default network -> WiFi selected.
+        // [3] WiFi validates and is promoted to the default network -> WiFi selected.
         mCM.makeDefaultNetwork(wifiAgent);
         assertEquals(wifiAgent.networkId, mUNM.getCurrentPreferredUpstream().network);
 
-        // [3] DUN required, no other changes -> WiFi still selected
+        // [4] DUN required, no other changes -> WiFi still selected
         mUNM.updateMobileRequiresDun(true);
         assertEquals(wifiAgent.networkId, mUNM.getCurrentPreferredUpstream().network);
 
-        // [4] WiFi no longer validated, mobile becomes default, DUN required -> null selected.
+        // [5] WiFi no longer validated, mobile becomes default, DUN required -> null selected.
         mCM.makeDefaultNetwork(cellAgent);
         assertEquals(null, mUNM.getCurrentPreferredUpstream());
         // TODO: make sure that a DUN request has been filed. This is currently
         // triggered by code over in Tethering, but once that has been moved
         // into UNM we should test for this here.
 
-        // [5] DUN network arrives -> DUN selected
+        // [6] DUN network arrives -> DUN selected
         final TestNetworkAgent dunAgent = new TestNetworkAgent(mCM, TRANSPORT_CELLULAR);
         dunAgent.networkCapabilities.addCapability(NET_CAPABILITY_DUN);
         dunAgent.networkCapabilities.removeCapability(NET_CAPABILITY_INTERNET);
         dunAgent.fakeConnect();
         assertEquals(dunAgent.networkId, mUNM.getCurrentPreferredUpstream().network);
+
+        // [7] Mobile is not permitted -> null selected
+        mUNM.updateMobileUpstreamPermitted(false);
+        assertEquals(null, mUNM.getCurrentPreferredUpstream());
+        mUNM.updateMobileUpstreamPermitted(true);
     }
 
     @Test

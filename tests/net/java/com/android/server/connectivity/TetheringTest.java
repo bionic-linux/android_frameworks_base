@@ -23,34 +23,33 @@ import static android.net.ConnectivityManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.ConnectivityManager.EXTRA_ACTIVE_LOCAL_ONLY;
 import static android.net.ConnectivityManager.EXTRA_ACTIVE_TETHER;
 import static android.net.ConnectivityManager.EXTRA_AVAILABLE_TETHER;
-import static android.net.ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
-import static android.net.ConnectivityManager.TETHERING_WIFI;
 import static android.net.ConnectivityManager.TETHERING_USB;
+import static android.net.ConnectivityManager.TETHERING_WIFI;
+import static android.net.ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
-import static android.net.wifi.WifiManager.IFACE_IP_MODE_LOCAL_ONLY;
-import static android.net.wifi.WifiManager.IFACE_IP_MODE_TETHERED;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_INTERFACE_NAME;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_MODE;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_STATE;
+import static android.net.wifi.WifiManager.IFACE_IP_MODE_LOCAL_ONLY;
+import static android.net.wifi.WifiManager.IFACE_IP_MODE_TETHERED;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.mock;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -86,9 +85,10 @@ import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.PersistableBundle;
 import android.os.RemoteException;
-import android.os.test.TestLooper;
+import android.os.ResultReceiver;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.test.TestLooper;
 import android.provider.Settings;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -99,6 +99,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
+import com.android.server.connectivity.tethering.EntitlementManager;
 import com.android.server.connectivity.tethering.IControlsTethering;
 import com.android.server.connectivity.tethering.IPv6TetheringCoordinator;
 import com.android.server.connectivity.tethering.OffloadHardwareInterface;
@@ -123,11 +124,11 @@ import java.util.Vector;
 public class TetheringTest {
     private static final int IFINDEX_OFFSET = 100;
 
-    private static final String[] PROVISIONING_APP_NAME = {"some", "app"};
     private static final String TEST_MOBILE_IFNAME = "test_rmnet_data0";
     private static final String TEST_XLAT_MOBILE_IFNAME = "v4-test_rmnet_data0";
     private static final String TEST_USB_IFNAME = "test_rndis0";
     private static final String TEST_WLAN_IFNAME = "test_wlan0";
+    private static final int ONE_OF_DOWNSTREAM_TYPE = TETHERING_WIFI;
 
     // Actual contents of the request don't matter for this test. The lack of
     // any specific TRANSPORT_* is sufficient to identify this request.
@@ -149,6 +150,7 @@ public class TetheringTest {
     @Mock private RouterAdvertisementDaemon mRouterAdvertisementDaemon;
     @Mock private INetd mNetd;
 
+    private MockEntitlementManager mEnMgr;
     private final MockTetheringDependencies mTetheringDependencies =
             new MockTetheringDependencies();
 
@@ -188,6 +190,41 @@ public class TetheringTest {
         }
     }
 
+    public class MockEntitlementManager extends EntitlementManager {
+
+        private boolean mRequired = false;
+        public int addDownStreamMappingCalls = 0;
+
+        public MockEntitlementManager(Context ctx, StateMachine target,
+                SharedLog log, int what, MockableSystemProperties systemProperties) {
+            super(ctx, target, log, what, systemProperties);
+        }
+
+        public void fakeProvisioningRequired(boolean value) {
+            mRequired = value;
+        }
+
+        @Override
+        public void addDownStreamMapping(int type, int resultcode) {
+            addDownStreamMappingCalls++;
+        }
+
+        @Override
+        public void removeDownStreamMapping(int type) {
+            addDownStreamMappingCalls = 0;
+        }
+
+        @Override
+        public boolean isTetherProvisioningRequired() {
+            return mRequired;
+        }
+
+        @Override
+        public void runSilentTetherProvisioning(int type, ResultReceiver receiver) {
+            receiver.send(type, null);
+        }
+    }
+
     public class MockTetheringDependencies extends TetheringDependencies {
         StateMachine upstreamNetworkMonitorMasterSM;
         ArrayList<TetherInterfaceStateMachine> ipv6CoordinatorNotifyList;
@@ -197,6 +234,7 @@ public class TetheringTest {
             upstreamNetworkMonitorMasterSM = null;
             ipv6CoordinatorNotifyList = null;
             isTetheringSupportedCalls = 0;
+            mEnMgr = null;
         }
 
         @Override
@@ -247,6 +285,13 @@ public class TetheringTest {
         @Override
         public NetworkRequest getDefaultNetworkRequest() {
             return mDefaultRequest;
+        }
+
+        @Override
+        public EntitlementManager getEntitlementManager(Context ctx, StateMachine target,
+                SharedLog log, int what, MockableSystemProperties systemProperties) {
+            mEnMgr = new MockEntitlementManager(ctx, target, log, what, systemProperties);
+            return (EntitlementManager) mEnMgr;
         }
     }
 
@@ -347,61 +392,6 @@ public class TetheringTest {
     @After
     public void tearDown() {
         mServiceContext.unregisterReceiver(mBroadcastReceiver);
-    }
-
-    private void setupForRequiredProvisioning() {
-        // Produce some acceptable looking provision app setting if requested.
-        when(mResources.getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app))
-                .thenReturn(PROVISIONING_APP_NAME);
-        // Don't disable tethering provisioning unless requested.
-        when(mSystemProperties.getBoolean(eq(Tethering.DISABLE_PROVISIONING_SYSPROP_KEY),
-                                          anyBoolean())).thenReturn(false);
-        // Act like the CarrierConfigManager is present and ready unless told otherwise.
-        when(mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE))
-                .thenReturn(mCarrierConfigManager);
-        when(mCarrierConfigManager.getConfig()).thenReturn(mCarrierConfig);
-        mCarrierConfig.putBoolean(CarrierConfigManager.KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
-    }
-
-    @Test
-    public void canRequireProvisioning() {
-        setupForRequiredProvisioning();
-        sendConfigurationChanged();
-        assertTrue(mTethering.isTetherProvisioningRequired());
-    }
-
-    @Test
-    public void toleratesCarrierConfigManagerMissing() {
-        setupForRequiredProvisioning();
-        when(mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE))
-                .thenReturn(null);
-        sendConfigurationChanged();
-        // Couldn't get the CarrierConfigManager, but still had a declared provisioning app.
-        // We therefore still require provisioning.
-        assertTrue(mTethering.isTetherProvisioningRequired());
-    }
-
-    @Test
-    public void toleratesCarrierConfigMissing() {
-        setupForRequiredProvisioning();
-        when(mCarrierConfigManager.getConfig()).thenReturn(null);
-        sendConfigurationChanged();
-        // We still have a provisioning app configured, so still require provisioning.
-        assertTrue(mTethering.isTetherProvisioningRequired());
-    }
-
-    @Test
-    public void provisioningNotRequiredWhenAppNotFound() {
-        setupForRequiredProvisioning();
-        when(mResources.getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app))
-                .thenReturn(null);
-        assertTrue(!mTethering.isTetherProvisioningRequired());
-        when(mResources.getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app))
-                .thenReturn(new String[] {"malformedApp"});
-        assertTrue(!mTethering.isTetherProvisioningRequired());
     }
 
     private void sendWifiApStateChanged(int state) {
@@ -921,6 +911,24 @@ public class TetheringTest {
                 expectedInteractionsWithShowNotification);
     }
 
+    @Test
+    public void testIfEntitleManagerBeTouched() throws Exception {
+        // This is called, but will throw.
+        mEnMgr.fakeProvisioningRequired(true);
+        mTethering.startTethering(ONE_OF_DOWNSTREAM_TYPE, null, false);
+        assertTrue(1 <= mEnMgr.addDownStreamMappingCalls);
+        mTethering.stopTethering(ONE_OF_DOWNSTREAM_TYPE);
+        assertEquals(0, mEnMgr.addDownStreamMappingCallss);
+    }
+
+    @Test
+    public void testIfEntitleManagerBeTouchedWhenProvisioningNotRequired() throws Exception {
+        // This is called, but will throw.
+        mTethering.startTethering(ONE_OF_DOWNSTREAM_TYPE, null, false);
+        assertTrue(1 <= mEnMgr.addDownStreamMappingCalls);
+        mTethering.stopTethering(ONE_OF_DOWNSTREAM_TYPE);
+        assertEquals(0, mEnMgr.addDownStreamMappingCalls);
+    }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an
     // already operating tethering mode interface.
