@@ -24,11 +24,12 @@ import android.net.dhcp.DhcpServingParams;
 import android.net.ip.RouterAdvertisementDaemon;
 import android.net.util.InterfaceParams;
 import android.net.util.NetdService;
-import android.os.Handler;
 import android.net.util.SharedLog;
+import android.os.Handler;
 import android.os.Looper;
 
 import com.android.internal.util.StateMachine;
+import com.android.server.connectivity.MockableSystemProperties;
 
 import java.util.ArrayList;
 
@@ -76,5 +77,10 @@ public class TetheringDependencies {
     public DhcpServer makeDhcpServer(Looper looper, InterfaceParams iface, DhcpServingParams params,
             SharedLog log) {
         return new DhcpServer(looper, iface, params, log);
+    }
+
+    public EntitlementManager getEntitlementManager(Context ctx, SharedLog log,
+            MockableSystemProperties systemProperties) {
+        return new EntitlementManager(ctx, log, systemProperties);
     }
 }
