@@ -22,6 +22,30 @@
       "revId": "b767e8005a1a3d703a59c54e6e1ab817fb5a2a91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cbe90f_cbe28641",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1309501
+      },
+      "writtenOn": "2018-07-19T03:03:34Z",
+      "side": 1,
+      "message": "Catch null pointer exception can fix the NPE issue.\nBut if mBluetoothGatt.unregAll() and mBluetooth.onBrEdrDown() are called at the same time,\nthe state in GattService maybe wrong.\nAfter onBrEdrDown were called, GattService\u0027s stop（） function will be run, in which mClientMap will be cleared.\nWhen mBluetoothGatt.unregAll() were called, GattService\u0027s unregAll() function can\u0027t unregisterClient（） for that mClientMap have been cleared.\nIn my opinion, we need call mBluetoothGatt.unregAll() first and then call mBluetooth.onBrEdrDown() for this situation.",
+      "parentUuid": "8ae8614a_b52950a7",
+      "range": {
+        "startLine": 807,
+        "startChar": 14,
+        "endLine": 807,
+        "endChar": 39
+      },
+      "revId": "b767e8005a1a3d703a59c54e6e1ab817fb5a2a91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
