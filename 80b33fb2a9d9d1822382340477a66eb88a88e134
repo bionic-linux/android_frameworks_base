@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1cd75b6b_713a753d",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-19T20:59:44Z",
+      "side": 1,
+      "message": "This object would not impact the connection. It just expose the Connection settings for the current or future LE ACL connections and it does not expose the LE ACL connection itself. It does not keep the connection open when the application is holding it.\nGood question on how to dispose it. My current thinking is that it is tied to the life of the App and it will register a DeathRecipient to clean up itself when the calling process dies. I am not thinking of a method to unregister. Is there a need to unregister? Any other ideas on how to dispose of this object.",
+      "parentUuid": "6b496cf8_162554d1",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57032048_e663b6ae",
         "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
         "patchSetId": 1
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "We tried going this way for first version of Advertising API, and it was disaster. Instead of exposing raw values to users, we let them specify some predefined constants, i.e. MIN, MEDIUM, MAX.\nWhat we ended up with, is a ton of request, to provide special value X that only particular project or company must have for their battery/discovery speed optimization.\n\nYou have just four values for connection parameters, Conn_Interval_Min,\nConn_Interval_Max,\nConn_Latency,\nSupervision_Timeout,\n\nJust let users provide them and add some reasonable check around the values.",
       "parentUuid": "1fd6b9b1_ad66daf8",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c800336f_5efd4a67",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-19T20:59:44Z",
+      "side": 1,
+      "message": "I discussed with Andre yesterday. His point is that we could not guarantee any particular set of lower BT parameters since the Android phone is not an single-task embedded device. Having an API that allows an App to specify these parameters is misleading. On the phone, we have to do trade-offs between requests from multiple Apps and the other wireless activities the phone is doing. So, his thinking is that having an API that does not specify BT-parameters, but describe the use case is a better choice. Andre: please feel free to chime in.\n\nBTW, the possible parameters to control are the 4 conn parameters (CI_Min, CI_Max, Conn_Latency, Timeout), plus Tx Data Length (with Data Len. Ext.), min_CE, max_CE, and 1/2M PHY.",
+      "parentUuid": "58a09ef7_30118246",
       "range": {
         "startLine": 92,
         "startChar": 16,
@@ -384,6 +432,30 @@
       "side": 1,
       "message": "Requests to this class should be interpreted in same way, no matter how this object was obtained.\n\nHow about connect/disconnect management from this object ?",
       "parentUuid": "3b78e0ae_60feb96e",
+      "range": {
+        "startLine": 673,
+        "startChar": 4,
+        "endLine": 676,
+        "endChar": 5
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ab307d_0027138b",
+        "filename": "core/java/android/bluetooth/BluetoothSocket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-07-19T20:59:44Z",
+      "side": 1,
+      "message": "This object will not support the connect/disconnect management. My thinking is that it only expose the Connection Settings (new name). Furthermore, it may not know which logical connection (Gatt client or server or LE CoC) that would be referred to for this connection management.",
+      "parentUuid": "6d76d596_0bc99c75",
       "range": {
         "startLine": 673,
         "startChar": 4,
