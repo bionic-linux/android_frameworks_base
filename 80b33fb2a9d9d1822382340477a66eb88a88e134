@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "6b496cf8_162554d1",
+        "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-07-19T07:31:43Z",
+      "side": 1,
+      "message": "How would that object impact the connection ? Do we keep the connection when application holds it ?\n\n\nHow do you dispose of this object? How do you unregister it\u0027s callback ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "80b33fb2a9d9d1822382340477a66eb88a88e134",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57032048_e663b6ae",
         "filename": "core/java/android/bluetooth/BluetoothLeProperties.java",
         "patchSetId": 1
