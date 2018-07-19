@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b07027_481f2ca3",
+        "filename": "telephony/java/com/android/internal/telephony/ISmsImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-07-19T02:03:57Z",
+      "side": 1,
+      "message": "forward",
+      "range": {
+        "startLine": 25,
+        "startChar": 37,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "2f533c5bf1b567c653d4600b11e60f7d108b8ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81326fc3_259918f7",
+        "filename": "telephony/java/com/android/internal/telephony/ISmsImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-07-19T02:03:57Z",
+      "side": 1,
+      "message": "that facilitates",
+      "range": {
+        "startLine": 25,
+        "startChar": 23,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "2f533c5bf1b567c653d4600b11e60f7d108b8ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
