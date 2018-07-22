@@ -423,7 +423,8 @@ public class LocationManagerService extends ILocationManager.Stub {
                             + (foreground ? "foreground" : "background)"));
                         record.mIsForegroundUid = foreground;
 
-                        if (!isThrottlingExemptLocked(record.mReceiver.mIdentity)) {
+                        if (!isThrottlingExemptLocked(record.mReceiver.mIdentity)
+                            && !affectedProviders.contains(provider)) {
                             affectedProviders.add(provider);
                         }
                     }
