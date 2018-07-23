@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac0327b8_1e83b82a",
+        "filename": "core/tests/coretests/src/android/util/Base64Test.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-07-23T12:18:32Z",
+      "side": 1,
+      "message": "please expand the comment a little or put in a test method comment explaining about the flush().",
+      "range": {
+        "startLine": 567,
+        "startChar": 19,
+        "endLine": 567,
+        "endChar": 24
+      },
+      "revId": "dc037bfab5538b02a492b7e14894c8fade404ae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929c72ed_c59335d8",
+        "filename": "core/tests/coretests/src/android/util/Base64Test.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-07-23T12:18:32Z",
+      "side": 1,
+      "message": "Same here - could do with an explanation.",
+      "range": {
+        "startLine": 572,
+        "startChar": 16,
+        "endLine": 572,
+        "endChar": 55
+      },
+      "revId": "dc037bfab5538b02a492b7e14894c8fade404ae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
