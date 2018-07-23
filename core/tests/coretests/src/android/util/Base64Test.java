@@ -16,13 +16,13 @@
 
 package android.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Random;
 
 public class Base64Test extends TestCase {
@@ -528,4 +528,65 @@ public class Base64Test extends TestCase {
             assertEquals(plain, actual);
         }
     }
+
+    public void testOutputStream_ioExceptionDuringClose() {
+        OutputStream out = new OutputStream() {
+            @Override public void write(int b) throws IOException { }
+            @Override public void close() throws IOException {
+                throw new IOException("close()");
+            }
+        };
+        OutputStream out2 = new Base64OutputStream(out, Base64.DEFAULT);
+        try {
+            out2.close();
+            fail();
+        } catch (IOException expected) {
+        }
+    }
+
+    public void testOutputStream_ioExceptionDuringCloseAndWrite() {
+        OutputStream out = new OutputStream() {
+            @Override public void write(int b) throws IOException {
+                throw new IOException("write()");
+            }
+            @Override public void write(byte[] b) throws IOException {
+                throw new IOException("write()");
+            }
+            @Override public void write(byte[] b, int off, int len) throws IOException {
+                throw new IOException("write()");
+            }
+            @Override public void close() throws IOException {
+                throw new IOException("close()");
+            }
+        };
+        OutputStream out2 = new Base64OutputStream(out, Base64.DEFAULT);
+        try {
+            out2.close();
+            fail();
+        } catch (IOException expected) {
+            // the write occurs first, so that IOE should be thrown
+            assertEquals("write()", expected.getMessage());
+        }
+    }
+
+    public void testOutputStream_ioExceptionDuringWrite() {
+        OutputStream out = new OutputStream() {
+            @Override public void write(int b) throws IOException {
+                throw new IOException("write()");
+            }
+            @Override public void write(byte[] b) throws IOException {
+                throw new IOException("write()");
+            }
+            @Override public void write(byte[] b, int off, int len) throws IOException {
+                throw new IOException("write()");
+            }
+        };
+        OutputStream out2 = new Base64OutputStream(out, Base64.DEFAULT);
+        try {
+            out2.close();
+            fail();
+        } catch (IOException expected) {
+        }
+    }
+
 }
