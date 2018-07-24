@@ -22,6 +22,30 @@
       "revId": "d75ae2760e564f421708c3476189778a2ac3ce6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2822eec_1490da19",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-07-24T09:37:41Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "bc3979d3_f9a4c835",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "d75ae2760e564f421708c3476189778a2ac3ce6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
