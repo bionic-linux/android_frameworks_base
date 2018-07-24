@@ -1598,18 +1598,22 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         @Override
         public void foundNonMonotonic(NetworkStats left, int leftIndex, NetworkStats right,
                 int rightIndex, String cookie) {
-            Log.w(TAG, "found non-monotonic values; saving to dropbox");
+            try {
+                Log.w(TAG, "found non-monotonic values; saving to dropbox");
 
-            // record error for debugging
-            final StringBuilder builder = new StringBuilder();
-            builder.append("found non-monotonic " + cookie + " values at left[" + leftIndex
-                    + "] - right[" + rightIndex + "]\n");
-            builder.append("left=").append(left).append('\n');
-            builder.append("right=").append(right).append('\n');
+                // record error for debugging
+                final StringBuilder builder = new StringBuilder();
+                builder.append("found non-monotonic " + cookie + " values at left[" + leftIndex
+                        + "] - right[" + rightIndex + "]\n");
+                builder.append("left=").append(left).append('\n');
+                builder.append("right=").append(right).append('\n');
 
-            final DropBoxManager dropBox = (DropBoxManager) mContext.getSystemService(
-                    Context.DROPBOX_SERVICE);
-            dropBox.addText(TAG_NETSTATS_ERROR, builder.toString());
+                final DropBoxManager dropBox = (DropBoxManager) mContext.getSystemService(
+                        Context.DROPBOX_SERVICE);
+                dropBox.addText(TAG_NETSTATS_ERROR, builder.toString());
+            } catch (OutOfMemoryError e) {
+                Log.wtf(TAG, "problem in saving to dropbox", e);
+            }
         }
     }
 
