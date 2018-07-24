@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9fbdb08_a4822b3f",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-07-24T12:00:49Z",
+      "side": 1,
+      "message": "spurious plural",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "35f6402a3dc5e58ffcc1db1730441330ecf3537f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
