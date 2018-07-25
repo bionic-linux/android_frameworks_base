@@ -22,6 +22,7 @@
 
 #include "android_os_HwBinder.h"
 #include "android_os_HwBlob.h"
+#include "android_os_NativeHandle.h"
 #include "android_os_HwRemoteBinder.h"
 
 #include <nativehelper/JNIHelp.h>
@@ -436,6 +437,18 @@ static void JHwParcel_native_writeString(
     signalExceptionForError(env, err);
 }
 
+static void JHwParcel_native_writeNativeHandle(
+        JNIEnv *env, jobject thiz, jobject valObj) {
+    hardware::Parcel *parcel =
+        JHwParcel::GetNativeContext(env, thiz)->getParcel();
+
+    native_handle_t* handle = JNativeHandle::MakeCppNativeHandle(env, valObj);
+    status_t err = parcel->writeNativeHandleNoDup(handle);
+    signalExceptionForError(env, err);
+
+    native_handle_delete(handle);
+}
+
 #define DEFINE_PARCEL_VECTOR_WRITER(Suffix,Type)                               \
 static void JHwParcel_native_write ## Suffix ## Vector(                        \
         JNIEnv *env, jobject thiz, Type ## Array valObj) {                     \
@@ -585,6 +598,39 @@ static jstring JHwParcel_native_readString(JNIEnv *env, jobject thiz) {
     }
 
     return MakeStringObjFromHidlString(env, *s);
+}
+
+static jobject ReadNativeHandle(JNIEnv *env, jobject thiz, jboolean embedded,
+                                jlong parentHandle, jlong offset) {
+    hardware::Parcel *parcel =
+        JHwParcel::GetNativeContext(env, thiz)->getParcel();
+
+    const native_handle_t *handle = nullptr;
+    status_t err = OK;
+
+    if (embedded) {
+        err = parcel->readEmbeddedNativeHandle(parentHandle, offset, &handle);
+    } else {
+        err = parcel->readNativeHandleNoDup(&handle);
+    }
+
+    if (err != OK) {
+        signalExceptionForError(env, err);
+        return nullptr;
+    }
+
+    return JNativeHandle::MakeJavaNativeHandleObj(env, handle);
+}
+
+static jobject JHwParcel_native_readNativeHandle(JNIEnv *env, jobject thiz) {
+    return ReadNativeHandle(env, thiz, false /* embedded */,
+                            0L /* parentHandle */, 0L /* offset */);
+}
+
+static jobject JHwParcel_native_readEmbeddedNativeHandle(
+        JNIEnv *env, jobject thiz, jlong parentHandle, jlong offset) {
+    return ReadNativeHandle(env, thiz, true /* embedded */,
+                            parentHandle, offset);
 }
 
 #define DEFINE_PARCEL_VECTOR_READER(Suffix,Type,NewType)                       \
@@ -890,6 +936,9 @@ static JNINativeMethod gMethods[] = {
     { "writeString", "(Ljava/lang/String;)V",
         (void *)JHwParcel_native_writeString },
 
+    { "writeNativeHandle", "(L" PACKAGE_PATH "/NativeHandle;)V",
+        (void *)JHwParcel_native_writeNativeHandle },
+
     { "writeBoolVector", "([Z)V", (void *)JHwParcel_native_writeBoolVector },
     { "writeInt8Vector", "([B)V", (void *)JHwParcel_native_writeInt8Vector },
     { "writeInt16Vector", "([S)V", (void *)JHwParcel_native_writeInt16Vector },
@@ -919,6 +968,12 @@ static JNINativeMethod gMethods[] = {
 
     { "readString", "()Ljava/lang/String;",
         (void *)JHwParcel_native_readString },
+
+    { "readNativeHandle", "()L" PACKAGE_PATH "/NativeHandle;",
+        (void *)JHwParcel_native_readNativeHandle },
+
+    { "readEmbeddedNativeHandle", "(JJ)L" PACKAGE_PATH "/NativeHandle;",
+        (void *)JHwParcel_native_readEmbeddedNativeHandle },
 
     { "readBoolVectorAsArray", "()[Z",
         (void *)JHwParcel_native_readBoolVector },

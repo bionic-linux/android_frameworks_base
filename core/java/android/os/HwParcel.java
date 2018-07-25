@@ -115,6 +115,13 @@ public class HwParcel {
      * @param val to write
      */
     public native final void writeString(String val);
+    /**
+     * Writes a native handle (without duplicating the underlying
+     * file descriptors) to the end of the parcel.
+     *
+     * @param val to write
+     */
+    public native final void writeNativeHandle(NativeHandle val);
 
     /**
      * Writes an array of boolean values to the end of the parcel.
@@ -328,6 +335,25 @@ public class HwParcel {
      * @throws IllegalArgumentException if the parcel has no more data
      */
     public native final String readString();
+    /**
+     * Reads a native handle (without duplicating the underlying file
+     * descriptors) from the parcel.
+     *
+     * @return a {@link NativeHandle} instance parsed from the parcel
+     * @throws IllegalArgumentException if the parcel has no more data
+     */
+    public native final NativeHandle readNativeHandle();
+    /**
+     * Reads an embedded native handle (without duplicating the underlying
+     * file descriptors) from the parcel.
+     *
+     * @param parentHandle handle from which to read the embedded object
+     * @param offset offset into parent
+     * @return a {@link NativeHandle} instance parsed from the parcel
+     * @throws IllegalArgumentException if the parcel has no more data
+     */
+    public native final NativeHandle readEmbeddedNativeHandle(
+            long parentHandle, long offset);
 
     /**
      * Reads an array of boolean values from the parcel.
