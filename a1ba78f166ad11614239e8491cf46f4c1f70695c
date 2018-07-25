@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c8cec08_4700c50f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1937,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-07-25T20:57:02Z",
+      "side": 1,
+      "message": "\"Flag indicating whether to support \"Network default\" option in Caller ID settings for Calling Line Identification Restriction (CLIR).\"",
+      "range": {
+        "startLine": 1936,
+        "startChar": 7,
+        "endLine": 1937,
+        "endChar": 19
+      },
+      "revId": "a1ba78f166ad11614239e8491cf46f4c1f70695c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08abe805_0af510d2",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-07-25T20:57:02Z",
+      "side": 1,
+      "message": "Remove @hide annotation and run \"make update-api\" to generate API diff. We are trying to break the habit of adding hidden APIs in this file.",
+      "range": {
+        "startLine": 1938,
+        "startChar": 7,
+        "endLine": 1938,
+        "endChar": 12
+      },
+      "revId": "a1ba78f166ad11614239e8491cf46f4c1f70695c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
