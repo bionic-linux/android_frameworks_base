@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19716184_6874376e",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "delete (since you\u0027re not calling logging functions?)",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfd0528_55267712",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "let these be nullptr at first to save the extra allocation? (or if you need the default constructor here, still let these default to null and just call NativeHandle(new int[0], new int[0]) from there)",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fe489f_b1104b70",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "nit: delete?",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83069e9f_37400377",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "FileDescriptor (because Java can\u0027t manage the actual raw integers)",
+      "range": {
+        "startLine": 36,
+        "startChar": 33,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37718145_3bbdda1e",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "Can you only expose a FileDescriptor here if exactly one is provided otherwise throw an IllegalArgumentException (maybe Michael has a better idea as well)?",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083de1c0_ea7e10f6",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "can you make this private (so that it continues to be opaque data in Java)?",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f42e7a3_f35674a8",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "Is there a reason why we can\u0027t just call all of those methods here and then write it directly rather than creating a subBlob, writing to it, and then writing that sub blob to the blob?",
+      "range": {
+        "startLine": 497,
+        "startChar": 4,
+        "endLine": 497,
+        "endChar": 18
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab60a48_3308bf60",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "nit: delete since we\u0027re not doing debug logs here",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b29619_fb86edda",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "nit: don\u0027t name this type if you don\u0027t need to",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a223e4c_faa10085",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "nit: gNativeHandleInfo is more common for a name? or gNativeHandleFields?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 9
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7446c6_97556bab",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-25T00:43:01Z",
+      "side": 1,
+      "message": "nit: /* ??? */",
+      "range": {
+        "startLine": 44,
+        "startChar": 65,
+        "endLine": 44,
+        "endChar": 72
+      },
+      "revId": "e95a620c2e74169a9f4ba58f92c098696edcaa46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
