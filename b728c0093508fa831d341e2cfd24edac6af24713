@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4d0797f_f659834f",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-07-25T09:36:38Z",
+      "side": 1,
+      "message": "I had to examine the code to understand l.241, and I don\u0027t think this comment is correct in that the value returned by nextInt() does not actually influence what URL is used in this test. The whole point in storing the next URL\u0027s index in a member in NetworkMonitor although it\u0027s random with no guarantee it will not return the same as last time is to ensure that whatever we do the URL that is used first is always the first URL in the array. Whatever random() returns only affects what URLs are used from the second time on, and in this test that\u0027s not happening and you only need to set something for the mock random to avoid throw so the value does not matter. I then suggest you call this when() in the setup phase, and override it in tests that actually need a non-zero value.",
+      "range": {
+        "startLine": 168,
+        "startChar": 50,
+        "endLine": 168,
+        "endChar": 76
+      },
+      "revId": "b728c0093508fa831d341e2cfd24edac6af24713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
