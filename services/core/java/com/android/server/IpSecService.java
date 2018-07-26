@@ -620,8 +620,8 @@ public class IpSecService extends IIpSecService.Stub {
                                 mConfig.getSourceAddress(),
                                 mConfig.getDestinationAddress(),
                                 spi,
-                                mConfig.getMarkValue(),
-                                mConfig.getMarkMask(),
+                                0,
+                                0,
                                 mConfig.getXfrmInterfaceId());
             } catch (RemoteException | ServiceSpecificException e) {
                 Log.e(TAG, "Failed to delete SA with ID: " + mResourceId, e);
@@ -1537,6 +1537,9 @@ public class IpSecService extends IIpSecService.Stub {
                 throw new IllegalArgumentException(
                         "Invalid IpSecTransform.mode: " + config.getMode());
         }
+
+        config.setMarkValue(0);
+        config.setMarkMask(0);
     }
 
     private static final String TUNNEL_OP = AppOpsManager.OPSTR_MANAGE_IPSEC_TUNNELS;
@@ -1758,9 +1761,14 @@ public class IpSecService extends IIpSecService.Stub {
             // Default to using the invalid SPI of 0. This allows policies to skip SPI matching as
             // part of the template resolution.
             int spi = IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
-            c.setMarkValue(mark);
-            c.setMarkMask(0xffffffff);
             c.setXfrmInterfaceId(tunnelInterfaceInfo.getIfId());
+
+            // TODO: enable this when UPDSA supports updating marks. Currently update does nothing
+            // with marks. Leave empty (defaulting to 0) to ensure the config matches the actual
+            // allocated resources in the kernel.
+            //
+            // c.setMarkValue(mark);
+            // c.setMarkMask(0xffffffff);
 
             if (direction == IpSecManager.DIRECTION_OUT) {
                 // Set output mark via underlying network (output only)
