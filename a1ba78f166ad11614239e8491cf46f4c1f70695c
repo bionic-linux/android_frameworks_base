@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4dc9ee1_d1538862",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1937,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-07-26T12:15:38Z",
+      "side": 1,
+      "message": "Thank you, I\u0027ve updated in patch set 3.",
+      "parentUuid": "1c8cec08_4700c50f",
+      "range": {
+        "startLine": 1936,
+        "startChar": 7,
+        "endLine": 1937,
+        "endChar": 19
+      },
+      "revId": "a1ba78f166ad11614239e8491cf46f4c1f70695c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08abe805_0af510d2",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a1ba78f166ad11614239e8491cf46f4c1f70695c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b919ab8_e8f4ac4a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-07-26T12:15:38Z",
+      "side": 1,
+      "message": "Thanks, done in patch set 3.\nI\u0027ve removed @hide and added \"api/current.txt\" after generating API diff.",
+      "parentUuid": "08abe805_0af510d2",
+      "range": {
+        "startLine": 1938,
+        "startChar": 7,
+        "endLine": 1938,
+        "endChar": 12
+      },
+      "revId": "a1ba78f166ad11614239e8491cf46f4c1f70695c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
