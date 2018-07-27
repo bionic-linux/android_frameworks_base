@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc570922_45b7a734",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2018-07-27T22:42:35Z",
+      "side": 1,
+      "message": "nit: This is also exposing the internal ints / fds. Consider only exposing whether it has an fd or not:\n\n(\"NativeHandle{hasFd \u003d %b}\", getFd() !\u003d null \u0026\u0026 getFd().valid());\n\n(It is not super-sensitive data, so it is probably fine now... Also, this is system api, not in SDK)",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 5
+      },
+      "revId": "3ae503d11a6b98aec8b64cc7af0be7d551db8fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a728b889_9bd6d69d",
+        "filename": "core/jni/hwbinder/EphemeralStorage.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2018-07-27T22:42:35Z",
+      "side": 1,
+      "message": "nit:\nnative_handle_t* ret \u003d item.mPtr \u003d native_handle_create(numFds, numInts)\n...\nreturn ret;",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 54
+      },
+      "revId": "3ae503d11a6b98aec8b64cc7af0be7d551db8fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
