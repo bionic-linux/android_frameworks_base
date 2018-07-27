@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a45d8fc6_db8f12e9",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T04:41:11Z",
+      "side": 1,
+      "message": "Note: I do intend to change the visibility of these methods, but that causes a few issues with testing (the constructor/methods I need are no longer public). I\u0027ll make this change as soon as I figure out the best way to work around that (temporarily change visibility using reflection while testing?).",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
