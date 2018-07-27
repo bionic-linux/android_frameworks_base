@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6af61a8d_93dc70b5",
+        "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4102,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2018-07-27T23:44:06Z",
+      "side": 0,
+      "message": "Can you also remove the declaration in the StackInfo if we aren\u0027t populating it anymore?",
+      "revId": "249119da537e6737a1624b3cd7c3107f4871583c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
