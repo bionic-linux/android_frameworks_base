@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb3b4b70_37d7a3ea",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3329,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c8cdf54_3b23c9fe",
+      "range": {
+        "startLine": 3329,
+        "startChar": 0,
+        "endLine": 3329,
+        "endChar": 43
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6681c967_8276d961",
         "filename": "api/system-current.txt",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a136af49_c6dda799",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3332,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6681c967_8276d961",
+      "range": {
+        "startLine": 3331,
+        "startChar": 0,
+        "endLine": 3332,
+        "endChar": 34
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c7a48ca_76414f38",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca77613_1c78d2de",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Yes, for the moment, default-initialization is done in a few places; I\u0027ll fix this in a follow-up CL. Thanks!",
+      "parentUuid": "5c7a48ca_76414f38",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 5
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "726c18bc_3e322556",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32026023_0f67a5f3",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af5c616a_c7dbc88b",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 3
@@ -138,6 +234,30 @@
       "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2638022_ca94a0d4",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af5c616a_c7dbc88b",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 79
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "20dbd2cd_1fdbf3c3",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd471527_9865c689",
+      "range": {
+        "startLine": 63,
+        "startChar": 64,
+        "endLine": 63,
+        "endChar": 74
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2ca8a36_c6bfd770",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 3
@@ -184,6 +328,30 @@
       "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2b2b08_6df5dab1",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done (But this looks so much nicer :()",
+      "parentUuid": "c2ca8a36_c6bfd770",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 8
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "52c381f4_dea352d4",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "I thought this would be cleaner than both: 1. throwing an exception (since the client may not be aware of the number of FDs), and 2. adding a method to query for a valid FD. The FileDescriptor object returned here is invalid anyway, so it should fail gracefully if the client attempts to do anything with it.",
+      "parentUuid": "89424fd7_91b921d1",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 40
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19dab288_a33d3b24",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 3
@@ -221,6 +413,30 @@
       "writtenOn": "2018-07-27T18:17:38Z",
       "side": 1,
       "message": "yeah, also remove this since we shouldn\u0027t need it in testing",
+      "range": {
+        "startLine": 72,
+        "startChar": 17,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64cb47d_6ebd78f6",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "19dab288_a33d3b24",
       "range": {
         "startLine": 72,
         "startChar": 17,
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "8f3997f5_f0d32f1f",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8bbbbe12_9a74d066",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26ee22a8_6e73d1f9",
         "filename": "core/jni/android_os_HwBlob.cpp",
         "patchSetId": 3
@@ -267,6 +507,30 @@
       "writtenOn": "2018-07-27T18:17:38Z",
       "side": 1,
       "message": "see, it seems this object dies during the body of this function so exposing new methods etc.. in the class header should be unnecessary.\n\nCan you just factor out some methods to have static versions which can be called here to directly write the native handle?",
+      "range": {
+        "startLine": 492,
+        "startChar": 28,
+        "endLine": 492,
+        "endChar": 38
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6534cc_ce593e15",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Sure, the underlying jobject is destroyed, but it\u0027s contents are not (the data is copied to \"subBlob\" on line 495; note that subBlob-\u003ewrite() does a memcpy, not shallow pointer update). Also, in the definition of putBlob (invoked on line 504), a StrongPointer reference is maintained to this subBlob, so it doesn\u0027t go out of existence either.\n\nAlso, I can\u0027t actually write to parcel yet: https://android-review.googlesource.com/c/platform/frameworks/base/+/721316/1/core/jni/android_os_HwBlob.cpp#497. I\u0027ll be sure to follow-up offline :)",
+      "parentUuid": "26ee22a8_6e73d1f9",
       "range": {
         "startLine": 492,
         "startChar": 28,
@@ -302,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "c9fc6371_d3adba06",
+        "filename": "core/jni/android_os_HwBlob.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Ack, please see the comments in HwBlob.cpp",
+      "parentUuid": "6351ba87_9babb7ba",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb284173_1d6ea78e",
         "filename": "core/jni/android_os_HwParcel.cpp",
         "patchSetId": 3
@@ -322,6 +610,30 @@
       "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4c11fc_69960848",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Ack. There\u0027s more type-specific code on the write side, but it\u0027s certainly doable. I\u0027ll come back to this later :)",
+      "parentUuid": "fb284173_1d6ea78e",
+      "range": {
+        "startLine": 542,
+        "startChar": 12,
+        "endLine": 542,
+        "endChar": 52
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "a7db93a7_4111ab74",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c10fe799_35f8abdc",
+      "range": {
+        "startLine": 544,
+        "startChar": 4,
+        "endLine": 545,
+        "endChar": 0
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc7cc53a_791713e4",
         "filename": "core/jni/android_os_HwParcel.cpp",
         "patchSetId": 3
@@ -371,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "63baef46_0e687fc8",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc7cc53a_791713e4",
+      "range": {
+        "startLine": 546,
+        "startChar": 24,
+        "endLine": 546,
+        "endChar": 28
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e1fb44_34c0e09a",
         "filename": "core/jni/android_os_HwParcel.cpp",
         "patchSetId": 3
@@ -385,6 +745,24 @@
       "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ebc630_c28e0653",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e1fb44_34c0e09a",
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -411,6 +789,30 @@
     },
     {
       "key": {
+        "uuid": "8d48ceb5_8b96b978",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "The underlying memory is allocated using malloc, so I\u0027m just constructing the object in-place here (using placement new). setTo is invoked on the very next line :)",
+      "parentUuid": "3cd8795a_6c178802",
+      "range": {
+        "startLine": 569,
+        "startChar": 13,
+        "endLine": 569,
+        "endChar": 26
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c5a3a42_02c6b40e",
         "filename": "core/jni/android_os_HwParcel.cpp",
         "patchSetId": 3
@@ -431,6 +833,30 @@
       "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7738d3_398b9341",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "I added tests exercising both arrays and vectors of hidl_handles here: https://android-review.googlesource.com/c/platform/system/tools/hidl/+/722537/4/test/java_test/hidl_test_java_native.cpp#809. Thanks!",
+      "parentUuid": "4c5a3a42_02c6b40e",
+      "range": {
+        "startLine": 669,
+        "startChar": 22,
+        "endLine": 669,
+        "endChar": 46
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -457,6 +883,30 @@
     },
     {
       "key": {
+        "uuid": "99163d83_fea5ee51",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "I would\u0027ve had to (essentially) duplicate the readStringVector() code, so, unfortunately, it wouldn\u0027t help with the size :(",
+      "parentUuid": "d5e27894_0cf95718",
+      "range": {
+        "startLine": 799,
+        "startChar": 26,
+        "endLine": 799,
+        "endChar": 40
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0410c2ec_d7ee33e7",
         "filename": "core/jni/android_os_NativeHandle.cpp",
         "patchSetId": 3
@@ -468,6 +918,30 @@
       "writtenOn": "2018-07-27T18:17:38Z",
       "side": 1,
       "message": "see b/34134129. We are supporting null handles here? Can you add a test for it?",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a32c81_c0512ac5",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Oh, I see. Just to clarify: it\u0027s OK to return a null NativeHandle object, right? If that\u0027s indeed what you meant, I\u0027ll make the appropriate changes. Thanks!",
+      "parentUuid": "0410c2ec_d7ee33e7",
       "range": {
         "startLine": 41,
         "startChar": 27,
@@ -503,6 +977,30 @@
     },
     {
       "key": {
+        "uuid": "98faddc4_c4b956c4",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5f39772_ba5c894d",
+      "range": {
+        "startLine": 65,
+        "startChar": 42,
+        "endLine": 65,
+        "endChar": 71
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9558af29_89d92175",
         "filename": "core/jni/hwbinder/EphemeralStorage.cpp",
         "patchSetId": 3
@@ -526,6 +1024,30 @@
     },
     {
       "key": {
+        "uuid": "b2ec72c7_3e5ddcfa",
+        "filename": "core/jni/hwbinder/EphemeralStorage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done (sorry, this was based on the other alloc implementations). Thanks for pointing this out!",
+      "parentUuid": "9558af29_89d92175",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 78,
+        "endChar": 20
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffa99a46_7c950b4e",
         "filename": "core/jni/hwbinder/EphemeralStorage.cpp",
         "patchSetId": 3
@@ -546,6 +1068,30 @@
       "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408af9d4_dd71729a",
+        "filename": "core/jni/hwbinder/EphemeralStorage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-27T20:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffa99a46_7c950b4e",
+      "range": {
+        "startLine": 82,
+        "startChar": 38,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
