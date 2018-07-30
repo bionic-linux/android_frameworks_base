@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "e4bd4e04_6d446d12",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-30T20:28:51Z",
+      "side": 1,
+      "message": "TestApi is still public and it will inherit SystemApi from the class. I\u0027m not sure if there is a better way to express this currently (b/71630695 is filed for this). If it is trouble, just test what we intend on using and new tests will definitely be added when new APIs are introduced.",
+      "parentUuid": "ce67a8a0_ed6a2163",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af5c616a_c7dbc88b",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 3
@@ -367,6 +391,30 @@
       "side": 1,
       "message": "I think it is good to expose only the APIs to read the first FD (and not the other FDs and ints), but I don\u0027t think we should throw exceptions if the internal native handle contains these extra things.",
       "parentUuid": "20dbd2cd_1fdbf3c3",
+      "range": {
+        "startLine": 63,
+        "startChar": 64,
+        "endLine": 63,
+        "endChar": 74
+      },
+      "revId": "09fe0a1f499a686b7737e99eb281089e5d4c664a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93be4f5_d40e36a7",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-30T20:28:51Z",
+      "side": 1,
+      "message": "Do you have a better suggestion?",
+      "parentUuid": "fbc9bd6d_2a41770a",
       "range": {
         "startLine": 63,
         "startChar": 64,
