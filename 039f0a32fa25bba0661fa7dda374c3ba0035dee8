@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed1c8bb_9f467f73",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2018-07-30T21:09:36Z",
+      "side": 1,
+      "message": "Can you please add comments that indicate when/if ownership of the underlying file descriptors is transferred and when it isn\u0027t? I know our native headers do a terrible job of this, but maybe this can do better?",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d5c2d7_3c91507b",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2018-07-30T21:09:36Z",
+      "side": 1,
+      "message": "Usually better to use CHECK_EQ(mType, BlobType::GENERIC) if possible as the debug output on failure then shows both values.",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b48582_a4ac15a4",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2018-07-30T21:09:36Z",
+      "side": 1,
+      "message": "can you use std::unique_ptr\u003cnative_handle_t\u003e nativeHandle(JNativeHandle::MakeCpp..., native_handle_delete)?",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afde100c_f025719d",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2018-07-30T21:09:36Z",
+      "side": 1,
+      "message": "I am not positive, but you may leak the local references to these \"jobject\"s if you don\u0027t explicitly free them using DeleteLocalRef() or manage them using ScopedLocalRef (preferred).\n\nThis won\u0027t be an immediate problem (and may not ever be if GC kicks in in time) but if you do this with too many objects the static limit will be exceeded and your Java runtime instance will kick you for it.",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c45bcfa_044a7233",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2018-07-30T21:09:36Z",
+      "side": 1,
+      "message": "same comment above applies to these jintArrays",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
