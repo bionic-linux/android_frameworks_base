@@ -93,6 +93,30 @@
       "revId": "094ec2cf9ed87562306cfa1e5c6c57a5544e25b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6bb72b_af422ff3",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2018-07-31T06:26:00Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "76f689e1_095008e1",
+      "range": {
+        "startLine": 691,
+        "startChar": 19,
+        "endLine": 691,
+        "endChar": 77
+      },
+      "revId": "094ec2cf9ed87562306cfa1e5c6c57a5544e25b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
