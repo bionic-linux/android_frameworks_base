@@ -1143,6 +1143,7 @@ doc_defaults {
     metalava_previous_api: ":public-api-for-metalava-annotations",
     metalava_merge_annotations_dirs: [
         "tools/metalava/manual",
+        "libcore/ojluni/annotations",
     ],
 }
 
