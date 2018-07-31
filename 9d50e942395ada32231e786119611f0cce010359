@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e2e943_b35398ba",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-31T18:13:22Z",
+      "side": 1,
+      "message": "Maybe Michael has an opinion on this? Also consider this to be an error and have another method which is like \u0027isFd\u0027?",
+      "range": {
+        "startLine": 83,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 9
+      },
+      "revId": "9d50e942395ada32231e786119611f0cce010359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6113373d_3f702256",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-31T18:13:22Z",
+      "side": 1,
+      "message": "nit: use cpp style casts",
+      "range": {
+        "startLine": 170,
+        "startChar": 13,
+        "endLine": 170,
+        "endChar": 18
+      },
+      "revId": "9d50e942395ada32231e786119611f0cce010359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885869e1_e8010c6b",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-31T18:13:22Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 12
+      },
+      "revId": "9d50e942395ada32231e786119611f0cce010359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d16106_17761eff",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-07-31T18:13:22Z",
+      "side": 1,
+      "message": "nit: CHECK before write?",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 37
+      },
+      "revId": "9d50e942395ada32231e786119611f0cce010359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
