@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94842961_9eb16c4e",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-31T03:56:15Z",
+      "side": 1,
+      "message": "Done. Any suggestions with regards to the documentation would be greatly appreciated!",
+      "parentUuid": "2ed1c8bb_9f467f73",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d5c2d7_3c91507b",
         "filename": "core/jni/android_os_HwBlob.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02f14be_aea3efcd",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-31T03:56:15Z",
+      "side": 1,
+      "message": "Done, changed everywhere",
+      "parentUuid": "e4d5c2d7_3c91507b",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aafc1b6b_c9cbe0a2",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-31T03:56:15Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "b7b48582_a4ac15a4",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afde100c_f025719d",
         "filename": "core/jni/android_os_NativeHandle.cpp",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c4327e15_bda1e70e",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-31T03:56:15Z",
+      "side": 1,
+      "message": "Done. Good point, thank you!",
+      "parentUuid": "afde100c_f025719d",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c45bcfa_044a7233",
         "filename": "core/jni/android_os_NativeHandle.cpp",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9c5609_d708073a",
+        "filename": "core/jni/android_os_NativeHandle.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-07-31T03:56:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c45bcfa_044a7233",
+      "revId": "039f0a32fa25bba0661fa7dda374c3ba0035dee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
