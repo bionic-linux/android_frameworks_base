@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd5327b_50d56099",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2018-08-01T00:21:56Z",
+      "side": 1,
+      "message": "If it is private (and only your JNI code uses it), why the copy / make it mutable?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "cc05c804a3d8ba6080457561da265ab306df0cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
