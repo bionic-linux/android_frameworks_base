@@ -22,6 +22,30 @@
       "revId": "cc05c804a3d8ba6080457561da265ab306df0cac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e4b0e3_5eb654ba",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-01T01:56:57Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "afd5327b_50d56099",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "cc05c804a3d8ba6080457561da265ab306df0cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
