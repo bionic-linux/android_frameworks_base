@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5fec4e43_244e738e",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-01T00:17:00Z",
+      "side": 1,
+      "message": "Done. Good catch, thanks!",
+      "parentUuid": "6113373d_3f702256",
+      "range": {
+        "startLine": 170,
+        "startChar": 13,
+        "endLine": 170,
+        "endChar": 18
+      },
+      "revId": "9d50e942395ada32231e786119611f0cce010359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "885869e1_e8010c6b",
         "filename": "core/jni/android_os_HwBlob.cpp",
         "patchSetId": 6
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "bfd9a994_9c651899",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-01T00:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "885869e1_e8010c6b",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 12
+      },
+      "revId": "9d50e942395ada32231e786119611f0cce010359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5d16106_17761eff",
         "filename": "core/jni/android_os_HwBlob.cpp",
         "patchSetId": 6
@@ -91,6 +139,30 @@
       "revId": "9d50e942395ada32231e786119611f0cce010359",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6390d9_f0611ce6",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-01T00:17:00Z",
+      "side": 1,
+      "message": "Yes, I\u0027m just asserting that blobs of type NATIVE_HANDLE shouldn\u0027t contain any sub-blobs. I could move writeSubBlobsToParcel(...) into the GENERIC case block, but I thought it would be safer to do this (in case someone adds a new type sepcialization and forgets to make the recursive call). I don\u0027t feel strongly, though, so I\u0027d be glad to make the change if you think that\u0027s better.\n\nThanks!",
+      "parentUuid": "e5d16106_17761eff",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 37
+      },
+      "revId": "9d50e942395ada32231e786119611f0cce010359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
