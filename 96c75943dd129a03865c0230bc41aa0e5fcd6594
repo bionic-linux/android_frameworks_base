@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff5d5f96_d3607f52",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Sorry, I meant the one provided as an argument. Rephrased the comment to be more intelligible. Thank you!",
+      "parentUuid": "5b1da4bd_10866500",
+      "range": {
+        "startLine": 44,
+        "startChar": 65,
+        "endLine": 44,
+        "endChar": 78
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecbdbd49_9def060e",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
@@ -69,6 +93,30 @@
       "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fe50db_69dd94a0",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done. It\u0027s private, as Yifan mentioned, so the annotation doesn\u0027t seem to affect the API exposed through system-current.txt; I can certainly make the change if that\u0027s the convention, though :)",
+      "parentUuid": "3c47b969_0fc2fdc4",
+      "range": {
+        "startLine": 54,
+        "startChar": 67,
+        "endLine": 54,
+        "endChar": 79
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "eb669ddf_de517266",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Ack, rephrased both the comment and exception string. Please let me know if you\u0027d like to see any other changes here!",
+      "parentUuid": "45b19301_7b9d9a52",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e74a0f_75b56ec2",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
@@ -157,6 +229,24 @@
       "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910c85d6_ecc393ff",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e74a0f_75b56ec2",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "2894b37a_e9b5986e",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done. Added a new method (hasSingleFileDescriptor) to query the object state, instead. Thank you!",
+      "parentUuid": "741a299f_7c882e78",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1682c8cb_606cb066",
         "filename": "core/jni/android_os_HwBlob.cpp",
         "patchSetId": 8
@@ -191,6 +299,24 @@
       "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae5a2f9_f5c55010",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done. Sorry, should\u0027ve referred to the standard! Changed below, as well.",
+      "parentUuid": "1682c8cb_606cb066",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -217,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "0f6e32fe_258782f3",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "40f3d30f_36b0cfe7",
+      "range": {
+        "startLine": 169,
+        "startChar": 31,
+        "endLine": 169,
+        "endChar": 48
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7325f357_478c36cd",
         "filename": "core/jni/android_os_HwBlob.cpp",
         "patchSetId": 8
@@ -231,6 +381,24 @@
       "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cd4c27_f4b2d665",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Yes, CHECK_EQ complains about a missing operator\u003c\u003c for this type (also, it\u0027s an enum class, so clang doesn\u0027t perform the conversion implicitly).",
+      "parentUuid": "7325f357_478c36cd",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +422,30 @@
       "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e010e6_53275e47",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Unfortunately, BlobType is declared within JHwBlob, so clang forces me to use the fully-qualified name here (currently outside the JHwBlob scope).",
+      "parentUuid": "70eac1ab_52c88a1b",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 17
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +484,24 @@
     },
     {
       "key": {
+        "uuid": "d904941d_08d01a75",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done, fixed this in all the places I could find. Please let me know if you find a stray one!",
+      "parentUuid": "b94578a8_a438cea3",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f9223e6_2b6fb732",
         "filename": "core/jni/android_os_HwBlob.h",
         "patchSetId": 8
@@ -315,6 +525,30 @@
     },
     {
       "key": {
+        "uuid": "5ce47fcc_87dbecff",
+        "filename": "core/jni/android_os_HwBlob.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done (exceeded 80 chars, so I split it as per the linter\u0027s suggestion)",
+      "parentUuid": "8f9223e6_2b6fb732",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18fee197_56dc60aa",
         "filename": "core/jni/android_os_HwParcel.cpp",
         "patchSetId": 8
@@ -332,6 +566,24 @@
     },
     {
       "key": {
+        "uuid": "0b53ff00_32545224",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done. Good point, thanks!",
+      "parentUuid": "18fee197_56dc60aa",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f469bcb_7688d409",
         "filename": "core/jni/android_os_HwParcel.cpp",
         "patchSetId": 8
@@ -346,6 +598,24 @@
       "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17261bbc_969ea98e",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f469bcb_7688d409",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -369,6 +639,30 @@
       "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce60723_3d1d9e94",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-02T23:58:38Z",
+      "side": 1,
+      "message": "Sorry, I think this reaches 82 chars (I wasn\u0027t sure if the clang-format for this directory is accurate; the other lines seem to wrap at 80?)",
+      "parentUuid": "4148f3d6_4f566b22",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 584,
+        "endChar": 43
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
