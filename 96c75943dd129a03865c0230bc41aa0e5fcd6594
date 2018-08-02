@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3c47b969_0fc2fdc4",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2018-08-02T21:03:17Z",
+      "side": 1,
+      "message": "Only used by JNI native code. The constructor is private though; does it still need to be annotated with @hide?",
+      "parentUuid": "ecbdbd49_9def060e",
+      "range": {
+        "startLine": 54,
+        "startChar": 67,
+        "endLine": 54,
+        "endChar": 79
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac267369_a6b92122",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
@@ -59,6 +83,30 @@
       "writtenOn": "2018-08-02T19:34:55Z",
       "side": 1,
       "message": "Why can\u0027t Java handle multiple FDs?\n\nWhy can\u0027t Java handle data streams? Aren\u0027t they just as opaque as in native?\n\nIf something has a single FD and a data stream, why is it invalid for Java to handle the FD?\n\nAs the API currently stands, if a NativeHandle is given to you, it\u0027s impossible to use safely from Java other than to just pass it along to something else since there\u0027s no way to check how many FDs or data streams it contains.",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e67b733_ffe448f5",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2018-08-02T21:03:17Z",
+      "side": 1,
+      "message": "It can handle multiple FDs (in fact it does already, in private members), but we decide to minimize the API (to only expose the first FD) to a client. Should any Java client need to send and receive more FDs, we can add those APIs later. Same for data streams.",
+      "parentUuid": "ac267369_a6b92122",
       "range": {
         "startLine": 73,
         "startChar": 37,
@@ -196,6 +244,24 @@
       "writtenOn": "2018-08-02T19:34:55Z",
       "side": 1,
       "message": "nit: frameworks/base standard is to do an 8-space hanging indent for continued lines, not alignment. If the Treble standard is to do alignment over hanging indent and you strongly want to follow that convention here, then I think you should do it in a follow up CL since there are a few places already have a hanging indent that need to be fixed up.\n\nHere and a bunch of places below.",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94578a8_a438cea3",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2018-08-02T21:03:17Z",
+      "side": 1,
+      "message": "Do we have clang-format to auto-format this?",
+      "parentUuid": "5d30db8c_d088fb40",
       "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
