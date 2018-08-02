@@ -1,0 +1,284 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b1da4bd_10866500",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "What does it mean for a file descriptor to be \"parameterized\"?",
+      "range": {
+        "startLine": 44,
+        "startChar": 65,
+        "endLine": 44,
+        "endChar": 78
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbdbd49_9def060e",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: \"from JNI\" or \"from native code.\"\n\nDo we expect developers to call this, or is this just a convenience method for our generated code? If the latter, then please @hide this constructor.",
+      "range": {
+        "startLine": 54,
+        "startChar": 67,
+        "endLine": 54,
+        "endChar": 79
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac267369_a6b92122",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "Why can\u0027t Java handle multiple FDs?\n\nWhy can\u0027t Java handle data streams? Aren\u0027t they just as opaque as in native?\n\nIf something has a single FD and a data stream, why is it invalid for Java to handle the FD?\n\nAs the API currently stands, if a NativeHandle is given to you, it\u0027s impossible to use safely from Java other than to just pass it along to something else since there\u0027s no way to check how many FDs or data streams it contains.",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e74a0f_75b56ec2",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: getFileDescriptor",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741a299f_7c882e78",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "Don\u0027t return an invalid FileDescriptor, return null or throw an exception instead. This is just going to push the error down the road a bit so it\u0027ll be impossible to tell what the actual source was.",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1682c8cb_606cb066",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "Why add this check? If you pass 0, then memcpy is just a no-op anyways.",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f3d30f_36b0cfe7",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: BlobType\n\nYou refer to it as just BlobType pretty much every where else, so stick to the same name so it\u0027s obvious it\u0027s the same type.",
+      "range": {
+        "startLine": 169,
+        "startChar": 31,
+        "endLine": 169,
+        "endChar": 48
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7325f357_478c36cd",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "Do you actually need the casts? Both should of type JHwBlob::BlobType",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70eac1ab_52c88a1b",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: BlobType",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 17
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d30db8c_d088fb40",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: frameworks/base standard is to do an 8-space hanging indent for continued lines, not alignment. If the Treble standard is to do alignment over hanging indent and you strongly want to follow that convention here, then I think you should do it in a follow up CL since there are a few places already have a hanging indent that need to be fixed up.\n\nHere and a bunch of places below.",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9223e6_2b6fb732",
+        "filename": "core/jni/android_os_HwBlob.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: this can all fit on one line",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18fee197_56dc60aa",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: unnecessary line break\n\nAlso, not sure if there\u0027s a Treble style rule, but I prefer to pass non-optional parameters as const references over to pointers. Then you don\u0027t have to check if they\u0027re null and you don\u0027t have to deref them everywhere you want to do things like array access.",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f469bcb_7688d409",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: 8 space hanging indent",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4148f3d6_4f566b22",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-02T19:34:55Z",
+      "side": 1,
+      "message": "nit: unnecessary line break\n\nPlease go through and check your early line breaks, I suspect there are a few more below but I\u0027m going to stop calling them out.",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 584,
+        "endChar": 43
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
