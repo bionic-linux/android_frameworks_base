@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "45b19301_7b9d9a52",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-02T21:04:16Z",
+      "side": 1,
+      "message": "This comment probably needs to be re-written.\n\nNo Java code works with or knows how to use a native handle, so for the time being, they will be treated as opaque data only. There is no reason for any Java code to inspect these values, but they can be handed back down to native code using HIDL.",
+      "parentUuid": "ac267369_a6b92122",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e74a0f_75b56ec2",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
