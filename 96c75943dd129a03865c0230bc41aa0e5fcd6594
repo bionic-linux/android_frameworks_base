@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "25aefb2c_088417fa",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1320646
+      },
+      "writtenOn": "2018-08-03T02:39:45Z",
+      "side": 1,
+      "message": "Added @hide annotation as well!",
+      "parentUuid": "f9fe50db_69dd94a0",
+      "range": {
+        "startLine": 54,
+        "startChar": 67,
+        "endLine": 54,
+        "endChar": 79
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac267369_a6b92122",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
