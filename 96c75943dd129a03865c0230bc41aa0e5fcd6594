@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "1a74cf0c_9d372b35",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-03T16:27:31Z",
+      "side": 1,
+      "message": "Ah, sorry, yeah, I totally misread this constructor as private. This isn\u0027t necessary (but doesn\u0027t hurt anything).",
+      "parentUuid": "25aefb2c_088417fa",
+      "range": {
+        "startLine": 54,
+        "startChar": 67,
+        "endLine": 54,
+        "endChar": 79
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac267369_a6b92122",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
@@ -227,6 +251,30 @@
       "side": 1,
       "message": "Ack, rephrased both the comment and exception string. Please let me know if you\u0027d like to see any other changes here!",
       "parentUuid": "45b19301_7b9d9a52",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7740de_2a574178",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-03T16:27:31Z",
+      "side": 1,
+      "message": "\u003e It can handle multiple FDs (in fact it does already, in private members), but we decide to minimize the API (to only expose the first FD) to a client.\n\nThis seems like a really odd design decision to me. Why not just expose all of the FDs from the beginning? What are you actually protecting against here?\n\n\u003e No Java code works with or knows how to use a native handle, so for the time being, they will be treated as opaque data only. There is no reason for any Java code to inspect these values, but they can be handed back down to native code using HIDL.\n\nIsn\u0027t this just because they\u0027ve never been part of the Java API before? :)\n\nAre the ints any less opaque in native code? I don\u0027t believe they are, unless you understand where the native handle came from. I don\u0027t really understand why we\u0027d restrict Java code from inspecting or using the native handles just as they would in native code.\n\nRestricting this interface just feels like it makes any evolution of an interface that uses it more brittle because it stops working with Java clients until at least the next vendor API rev.",
+      "parentUuid": "eb669ddf_de517266",
       "range": {
         "startLine": 73,
         "startChar": 37,
@@ -426,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "3dcf6581_f258e925",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-03T16:27:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69cd4c27_f4b2d665",
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70eac1ab_52c88a1b",
         "filename": "core/jni/android_os_HwBlob.cpp",
         "patchSetId": 8
@@ -461,6 +527,30 @@
       "side": 1,
       "message": "Unfortunately, BlobType is declared within JHwBlob, so clang forces me to use the fully-qualified name here (currently outside the JHwBlob scope).",
       "parentUuid": "70eac1ab_52c88a1b",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 17
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f91b374b_4dd28aed",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-03T16:27:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "85e010e6_53275e47",
       "range": {
         "startLine": 174,
         "startChar": 0,
@@ -561,6 +651,30 @@
       "side": 1,
       "message": "Done (exceeded 80 chars, so I split it as per the linter\u0027s suggestion)",
       "parentUuid": "8f9223e6_2b6fb732",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba6b494d_be7222ee",
+        "filename": "core/jni/android_os_HwBlob.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-03T16:27:31Z",
+      "side": 1,
+      "message": "Not sure where the 80-character column limit came from, Android Frameworks native code is 100-character column limits.\n\ngo/droidcppstyle is somewhat old, but contains most of our style guidelines.",
+      "parentUuid": "5ce47fcc_87dbecff",
       "range": {
         "startLine": 92,
         "startChar": 0,
@@ -678,6 +792,30 @@
       "side": 1,
       "message": "Sorry, I think this reaches 82 chars (I wasn\u0027t sure if the clang-format for this directory is accurate; the other lines seem to wrap at 80?)",
       "parentUuid": "4148f3d6_4f566b22",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 584,
+        "endChar": 43
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a22136d8_a9430a30",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-03T16:27:31Z",
+      "side": 1,
+      "message": "What clang-format are you looking at? There are none in this directory that I see.\n\nRegardless, 100-character column limit is the style guideline for frameworks code.",
+      "parentUuid": "7ce60723_3d1d9e94",
       "range": {
         "startLine": 583,
         "startChar": 0,
