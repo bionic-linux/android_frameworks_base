@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75740d64_a2e16877",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacketListener.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-03T09:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "204b30f5_7f0dbe57",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 28
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97a12a15_cc3a90ff",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5e2ffea6_47636be3",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-03T09:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97a12a15_cc3a90ff",
+      "range": {
+        "startLine": 41,
+        "startChar": 74,
+        "endLine": 41,
+        "endChar": 75
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55154478_724fc1cd",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 9
@@ -62,6 +110,24 @@
       "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7422f814_9f7aa381",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-03T09:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55154478_724fc1cd",
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0507d270_b24c6049",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-03T09:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7110f4de_3da9477b",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cedda6a_d9fa28ae",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 9
@@ -108,6 +198,30 @@
       "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71feb012_bd916526",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-03T09:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cedda6a_d9fa28ae",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "170d57cd_e8508d92",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-03T09:10:05Z",
+      "side": 1,
+      "message": "ACK - but since I\u0027m only moving this code I\u0027ll leave as-is as you suggested. I\u0027d prefer not to change behavior now.",
+      "parentUuid": "554679bc_b2711d06",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 24
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f971a9_8c9a28f3",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 9
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "d4305d00_a3343aaf",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-03T09:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f971a9_8c9a28f3",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 18
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f5fc36c_6ea53806",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 9
@@ -177,6 +339,30 @@
       "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7615df41_d4b3d3c9",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-03T09:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f5fc36c_6ea53806",
+      "range": {
+        "startLine": 171,
+        "startChar": 20,
+        "endLine": 171,
+        "endChar": 49
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
