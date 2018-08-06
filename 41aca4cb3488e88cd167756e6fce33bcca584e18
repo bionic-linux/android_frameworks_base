@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "626a23c9_3e0b52fb",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-08-06T20:47:30Z",
+      "side": 1,
+      "message": "Is this being used by apps other internal telephony? If so, please make this a public api and run \"make update-api\".\n\nWe need to make sure that all new APIs are not @hide anymore.",
+      "range": {
+        "startLine": 966,
+        "startChar": 9,
+        "endLine": 966,
+        "endChar": 13
+      },
+      "revId": "41aca4cb3488e88cd167756e6fce33bcca584e18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
