@@ -22,6 +22,30 @@
       "revId": "b728c0093508fa831d341e2cfd24edac6af24713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2590ed_fc54c1ce",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-07T05:38:41Z",
+      "side": 1,
+      "message": "Good catch - this should have been refactored after some code changes eventually made it obsolete. Done.",
+      "parentUuid": "c4d0797f_f659834f",
+      "range": {
+        "startLine": 168,
+        "startChar": 50,
+        "endLine": 168,
+        "endChar": 76
+      },
+      "revId": "b728c0093508fa831d341e2cfd24edac6af24713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
