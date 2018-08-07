@@ -16,6 +16,24 @@
       "revId": "249119da537e6737a1624b3cd7c3107f4871583c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c07b3aa_3e30de5f",
+        "filename": "services/core/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4102,
+      "author": {
+        "id": 1124914
+      },
+      "writtenOn": "2018-08-07T09:44:08Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "6af61a8d_93dc70b5",
+      "revId": "249119da537e6737a1624b3cd7c3107f4871583c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
