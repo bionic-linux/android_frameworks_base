@@ -187,6 +187,30 @@
       "revId": "6c265fff4a4b60e3747c7b48cfb6b234734809eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e9ab23a_763b5ddb",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T10:53:52Z",
+      "side": 1,
+      "message": "\u003e I guess it\u0027s not called onError because we don\u0027t expect clients to touch any internal state in that case, but just report the error.\n\nGuess what you\u0027ll find in half the implementations one year from now... :)\nThat being said the issue is rendered moot by your other comment :\n\n\u003e Since it\u0027s only moved code, I\u0027d prefer not to change behavior in this CL\n\nYou\u0027re right, that\u0027s a pretty strong argument for not changing this then. At most add a TODO, or do nothing at all.",
+      "parentUuid": "8702458d_6f236504",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 32
+      },
+      "revId": "6c265fff4a4b60e3747c7b48cfb6b234734809eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

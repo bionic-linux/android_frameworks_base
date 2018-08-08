@@ -226,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "bc2e53d5_c3271666",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T10:53:52Z",
+      "side": 1,
+      "message": "Your new wording makes me suddenly understand what I missed, it\u0027s painfully obvious : someone may simply already have called stop() because that\u0027s a public entry point for this class. Maybe the right rewording is along the lines of :\n\n  [1] when a client calls start(), createFd() is called, followed by the onStart() hook if all goes well. Override onStart() to initialize...\n  ...\n  [3] when a client calls stop(), the onStop() hook is called (unless already stopped or never started). Override onStop() to cleanup...\n\nWhat do you think ?",
+      "parentUuid": "20c5026b_e4fef985",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cedda6a_d9fa28ae",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 9
