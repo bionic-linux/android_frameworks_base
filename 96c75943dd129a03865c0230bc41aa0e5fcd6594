@@ -287,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "f2fa200d_8e9cb992",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-08T01:24:37Z",
+      "side": 1,
+      "message": "I can open it up if you insist, but there is no reason for any code to use this. If people want to use these in Java code, I will be very sad. It\u0027s for low-level graphics stuff, historically all in native code, and I don\u0027t see a reason to open it up.\n\nAnd plus, if we have a user, we can always open it up later.",
+      "parentUuid": "0a7740de_2a574178",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e74a0f_75b56ec2",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
