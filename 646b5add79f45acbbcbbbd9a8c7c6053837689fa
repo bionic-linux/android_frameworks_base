@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "20c5026b_e4fef985",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-08T09:19:40Z",
+      "side": 1,
+      "message": "Do you mean behavior in the \"previously stopped\" case is not documented ? Added full \"if and only if\" condition so both cases are covered.",
+      "parentUuid": "bae989fc_4e8d5f9b",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cedda6a_d9fa28ae",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 9
