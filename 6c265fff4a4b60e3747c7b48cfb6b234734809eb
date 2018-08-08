@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047e6b42_5e43b240",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T06:50:14Z",
+      "side": 1,
+      "message": "How about naming this parameter BufferType or something ? It\u0027s not obvious from the class what this is for.",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "6c265fff4a4b60e3747c7b48cfb6b234734809eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8026a58c_120bd501",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T06:50:14Z",
+      "side": 1,
+      "message": "Document this simply counts the calls to readPacket. If an implementation is doing partial reads or something the name only becomes error-prone ; it\u0027s better to document.",
+      "range": {
+        "startLine": 122,
+        "startChar": 22,
+        "endLine": 122,
+        "endChar": 40
+      },
+      "revId": "6c265fff4a4b60e3747c7b48cfb6b234734809eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6908ab_1b4875b7",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T06:50:14Z",
+      "side": 1,
+      "message": "Are there any constraints on having read or not read something if Exception ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 62,
+        "endLine": 132,
+        "endChar": 71
+      },
+      "revId": "6c265fff4a4b60e3747c7b48cfb6b234734809eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd475b1b_32713d20",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T06:50:14Z",
+      "side": 1,
+      "message": "If for any reason the socket can\u0027t be opened, clients have no way of knowing at all. I suggest defining an onError hook or something and calling it here, with the exception as context if applicable.",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 32
+      },
+      "revId": "6c265fff4a4b60e3747c7b48cfb6b234734809eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

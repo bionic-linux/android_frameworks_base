@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "bae989fc_4e8d5f9b",
+        "filename": "services/net/java/android/net/util/FdEventsReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-08-08T06:50:14Z",
+      "side": 1,
+      "message": "Sorry this was not about the word \"previously\". I meant the explanation makes no affordance for coming here when the reader is already stopped.",
+      "parentUuid": "0507d270_b24c6049",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 58
+      },
+      "revId": "646b5add79f45acbbcbbbd9a8c7c6053837689fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cedda6a_d9fa28ae",
         "filename": "services/net/java/android/net/util/FdEventsReader.java",
         "patchSetId": 9
