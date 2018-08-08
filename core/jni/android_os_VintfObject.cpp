@@ -96,7 +96,7 @@ static jobjectArray android_os_VintfObject_report(JNIEnv* env, jclass)
     return toJavaStringArray(env, cStrings);
 }
 
-static jint verify(JNIEnv* env, jobjectArray packageInfo, android::vintf::DisabledChecks checks) {
+static jint verify(JNIEnv* env, jobjectArray packageInfo, android::vintf::CheckFlags::Type checks) {
     std::vector<std::string> cPackageInfo;
     if (packageInfo) {
         size_t count = env->GetArrayLength(packageInfo);
