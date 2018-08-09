@@ -25,8 +25,6 @@ import android.util.Log;
 import com.android.ims.internal.IImsCallSession;
 import com.android.ims.internal.IImsVideoCallProvider;
 
-import java.util.Objects;
-
 /**
  * Provides the call initiation/termination, and media exchange between two IMS endpoints.
  * It directly communicates with IMS service which implements the IMS protocol behavior.
@@ -457,6 +455,21 @@ public class ImsCallSession {
          */
         public void callQualityChanged(CallQuality callQuality) {
             // no-op
+        }
+
+        /**
+         * Called when the explicit call transfer request is successful and the transferred
+         * session is terminated.
+         */
+        public void callSessionExplicitCallTransferred() {
+        }
+
+        /**
+         * Called when the explicit call transfer request is failed.
+         *
+         * @param reasonInfo detailed reason of the explicit call transfer failure
+         */
+        public void callSessionExplicitCallTransferFailed(ImsReasonInfo reasonInfo) {
         }
     }
 
@@ -1069,6 +1082,23 @@ public class ImsCallSession {
     }
 
     /**
+     * Connects the two calls and disconnects the subscriber from both calls. When it succeeds,
+     * {@link Listener#callSessionExplicitCallTransferred} is called.
+     *
+     * @see Listener#callSessionExplicitCallTransferred
+     * @see Listener#callSessionExplicitCallTransferFailed
+     */
+    public void explicitCallTransfer() {
+        if (mClosed) {
+            return;
+        }
+        try {
+            miSession.explicitCallTransfer();
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
      * A listener type for receiving notification on IMS call session events.
      * When an event is generated for an {@link IImsCallSession},
      * the application is notified by having one of the methods called on
@@ -1420,6 +1450,23 @@ public class ImsCallSession {
         public void callQualityChanged(CallQuality callQuality) {
             if (mListener != null) {
                 mListener.callQualityChanged(callQuality);
+            }
+        }
+
+        /**
+         * Notifies the result of the explicit call transfer operation.
+         */
+        @Override
+        public void callSessionExplicitCallTransferred() {
+            if (mListener != null) {
+                mListener.callSessionExplicitCallTransferred();
+            }
+        }
+
+        @Override
+        public void callSessionExplicitCallTransferFailed(ImsReasonInfo reasonInfo) {
+            if (mListener != null) {
+                mListener.callSessionExplicitCallTransferFailed(reasonInfo);
             }
         }
     }

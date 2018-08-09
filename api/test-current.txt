@@ -3186,6 +3186,8 @@ package android.telephony.ims {
     method public void callSessionConferenceExtendReceived(android.telephony.ims.stub.ImsCallSessionImplBase, android.telephony.ims.ImsCallProfile);
     method public void callSessionConferenceExtended(android.telephony.ims.stub.ImsCallSessionImplBase, android.telephony.ims.ImsCallProfile);
     method public void callSessionConferenceStateUpdated(android.telephony.ims.ImsConferenceState);
+    method public void callSessionExplicitCallTransferFailed(@NonNull android.telephony.ims.ImsReasonInfo);
+    method public void callSessionExplicitCallTransferred();
     method public void callSessionHandover(int, int, android.telephony.ims.ImsReasonInfo);
     method public void callSessionHandoverFailed(int, int, android.telephony.ims.ImsReasonInfo);
     method public void callSessionHeld(android.telephony.ims.ImsCallProfile);
@@ -3718,6 +3720,7 @@ package android.telephony.ims.stub {
     method public void accept(int, android.telephony.ims.ImsStreamMediaProfile);
     method public void close();
     method public void deflect(String);
+    method public void explicitCallTransfer();
     method public void extendToConference(String[]);
     method public String getCallId();
     method public android.telephony.ims.ImsCallProfile getCallProfile();

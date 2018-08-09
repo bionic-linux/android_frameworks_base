@@ -152,4 +152,10 @@ oneway interface IImsCallSessionListener {
      * @param callQuality then updated call quality
      */
     void callQualityChanged(in CallQuality callQuality);
+
+    /**
+     * Notifies the result of the explicit call transfer operation.
+     */
+    void callSessionExplicitCallTransferred();
+    void callSessionExplicitCallTransferFailed(in ImsReasonInfo reasonInfo);
 }

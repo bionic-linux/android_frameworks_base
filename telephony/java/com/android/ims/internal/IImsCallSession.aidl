@@ -282,4 +282,13 @@ interface IImsCallSession {
      * @param rttMessage RTT message to be sent
      */
     void sendRttMessage(in String rttMessage);
+
+    /**
+     * Connects the two calls and disconnects the subscriber from both calls. When it succeeds,
+     * {@link ImsCallSession.Listener#callSessionExplicitCallTransferred} is called.
+     *
+     * @see Listener#callSessionExplicitCallTransferred,
+     *      Listener#callSessionExplicitCallTransferFailed
+     */
+    void explicitCallTransfer();
 }

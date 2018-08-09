@@ -629,5 +629,31 @@ public class ImsCallSessionListener {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * The explicit call transfer is successful.
+     * the call fails, call {@link #callSessionExplicitCallTransferFailed(ImsReasonInfo)}.
+     */
+    public void callSessionExplicitCallTransferred() {
+        try {
+            mListener.callSessionExplicitCallTransferred();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * The explicit call transfer has failed.
+     *
+     * @param reasonInfo {@link ImsReasonInfo} containing the detailed reason of the session
+     * transfer failure.
+     */
+    public void callSessionExplicitCallTransferFailed(@NonNull ImsReasonInfo reasonInfo) {
+        try {
+            mListener.callSessionExplicitCallTransferFailed(reasonInfo);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
