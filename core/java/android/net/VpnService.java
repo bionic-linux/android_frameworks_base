@@ -327,6 +327,70 @@ public class VpnService extends Service {
     }
 
     /**
+     * Adds a network route to the VPN interface.
+     *
+     * <p>Both IPv4 and IPv6 routes are supported. The VPN must already be established.
+     *
+     * <p>Adding a route implicitly allows traffic from that address family (i.e., IPv4 or IPv6) to
+     * be routed over the VPN. @see #allowFamily
+     *
+     * @throws IllegalArgumentException if the address is invalid.
+     *
+     * @param address The IP address (IPv4 or IPv6) to add as a route for the VPN interface.
+     * @param prefixLength The prefix length of the address.
+     *
+     * @return {@code true} on success.
+     */
+    public boolean addRoute(InetAddress address, int prefixLength) {
+        check(address, prefixLength);
+
+        try {
+            return getService().addVpnRoute(address.getHostAddress(), prefixLength);
+        } catch (RemoteException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Removes a network address from the VPN interface.
+     *
+     * <p>Both IPv4 and IPv6 routes are supported. The VPN must already be established.
+     *
+     * <p>After removing a route, if there are no addresses, routes or DNS servers of a particular
+     * address family (i.e., IPv4 or IPv6) configured on the VPN, that <b>DOES NOT</b> block that
+     * family from being routed. In other words, once an address family has been allowed, it stays
+     * allowed for the rest of the VPN's session. @see Builder#allowFamily
+     *
+     * @throws IllegalArgumentException if the address is invalid.
+     *
+     * @param address The IP address (IPv4 or IPv6) to remove as a route for the VPN interface.
+     * @param prefixLength The prefix length of the address.
+     *
+     * @return {@code true} on success.
+     */
+    public boolean removeRoute(InetAddress address, int prefixLength) {
+        check(address, prefixLength);
+
+        try {
+            return getService().removeVpnRoute(address.getHostAddress(), prefixLength);
+        } catch (RemoteException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static void checkRoutePrefix(InetAddress address, int prefixLength) {
+        int offset = prefixLength / 8;
+        byte[] bytes = address.getAddress();
+        if (offset < bytes.length) {
+            for (bytes[offset] <<= prefixLength % 8; offset < bytes.length; ++offset) {
+                if (bytes[offset] != 0) {
+                    throw new IllegalArgumentException("Bad address");
+                }
+            }
+        }
+    }
+
+    /**
      * Sets the underlying networks used by the VPN for its upstream connections.
      *
      * <p>Used by the system to know the actual networks that carry traffic for apps affected by
