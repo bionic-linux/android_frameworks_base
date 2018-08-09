@@ -335,6 +335,30 @@
     },
     {
       "key": {
+        "uuid": "5118c384_4621767b",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-09T23:22:43Z",
+      "side": 1,
+      "message": "I still feel really weird about this though.\n\nNothing in Java should pull the fds/ints out of this. If I add those APIs, I\u0027ll still keep getFileDescriptor (since that is a common usecase).",
+      "parentUuid": "8f675337_de76825f",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e74a0f_75b56ec2",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
