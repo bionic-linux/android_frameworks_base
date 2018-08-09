@@ -327,6 +327,58 @@ public class VpnService extends Service {
     }
 
     /**
+     * Adds a network route to the VPN interface.
+     *
+     * <p>Adding a route implicitly allows traffic from that address family (i.e., IPv4 or IPv6) to
+     * be routed over the VPN.
+     *
+     * @return {@code true} on success.
+     * @throws IllegalArgumentException if the route is invalid.
+     */
+    public boolean addRoute(InetAddress address, int prefixLength) {
+        check(address, prefixLength);
+        checkRoutePrefix(address, prefixLength);
+
+        try {
+            return getService().addVpnRoute(address.getHostAddress(), prefixLength);
+        } catch (RemoteException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Removes a network route to the VPN interface.
+     *
+     * <p>Removing a route may implicitly allows traffic from that address family (i.e., IPv4 or
+     * IPv6) to be routed over the VPN.
+     *
+     * @return {@code true} on success.
+     * @throws IllegalArgumentException if the route is invalid.
+     */
+    public boolean removeRoute(InetAddress address, int prefixLength) {
+        check(address, prefixLength);
+        checkRoutePrefix(address, prefixLength);
+
+        try {
+            return getService().removeVpnRoute(address.getHostAddress(), prefixLength);
+        } catch (RemoteException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static void checkRoutePrefix(InetAddress address, int prefixLength) {
+        int offset = prefixLength / 8;
+        byte[] bytes = address.getAddress();
+        if (offset < bytes.length) {
+            for (bytes[offset] <<= prefixLength % 8; offset < bytes.length; ++offset) {
+                if (bytes[offset] != 0) {
+                    throw new IllegalArgumentException("Bad address");
+                }
+            }
+        }
+    }
+
+    /**
      * Sets the underlying networks used by the VPN for its upstream connections.
      *
      * <p>Used by the system to know the actual networks that carry traffic for apps affected by

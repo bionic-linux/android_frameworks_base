@@ -151,16 +151,6 @@ import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
 import com.android.server.net.NetworkPolicyManagerInternal;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -178,6 +168,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * Tests for {@link ConnectivityService}.
@@ -4340,6 +4339,50 @@ public class ConnectivityServiceTest {
         defaultCallback.assertNoCallback();
 
         mCm.unregisterNetworkCallback(defaultCallback);
+    }
+
+    @Test
+    public void testVpnAddRemoveRoute() {
+        final int uid = Process.myUid();
+        final IpPrefix testPrefix = new IpPrefix("1:2:3:4::/32");
+
+        final TestNetworkCallback vpnNetworkCallback = new TestNetworkCallback();
+        final NetworkRequest vpnNetworkRequest =
+                new NetworkRequest.Builder()
+                .removeCapability(NET_CAPABILITY_NOT_VPN)
+                .addTransportType(TRANSPORT_VPN)
+                .build();
+        NetworkCapabilities nc;
+        mCm.registerNetworkCallback(vpnNetworkRequest, vpnNetworkCallback);
+        vpnNetworkCallback.assertNoCallback();
+
+        final MockNetworkAgent vpnNetworkAgent = new MockNetworkAgent(TRANSPORT_VPN);
+        mMockVpn.setNetworkAgent(vpnNetworkAgent);
+        mMockVpn.connect();
+        vpnNetworkAgent.connect(true /* validated */, false /* hasInternet */);
+
+        vpnNetworkCallback.expectAvailableThenValidatedCallbacks(vpnNetworkAgent);
+
+        // Add a ipv6 route:
+        mService.addVpnRoute(
+                testPrefix.getAddress().getHostAddress(), testPrefix.getPrefixLength());
+
+        CallbackInfo info =
+                vpnNetworkCallback.expectCallback(CallbackState.LINK_PROPERTIES, vpnNetworkAgent);
+        LinkProperties lp = (LinkProperties) info.arg;
+        List<RouteInfo> routes = lp.getAllRoutes();
+        assertTrue(routes.contains(new RouteInfo(testPrefix, null)));
+
+        // Remove the ipv6 route:
+        mService.removeVpnRoute(
+                testPrefix.getAddress().getHostAddress(), testPrefix.getPrefixLength());
+
+        info = vpnNetworkCallback.expectCallback(CallbackState.LINK_PROPERTIES, vpnNetworkAgent);
+        lp = (LinkProperties) info.arg;
+        routes = lp.getAllRoutes();
+        assertFalse(routes.contains(new RouteInfo(testPrefix, null)));
+
+        mMockVpn.disconnect();
     }
 
     @Test

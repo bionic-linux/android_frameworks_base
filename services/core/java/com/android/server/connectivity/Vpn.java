@@ -1483,6 +1483,28 @@ public class Vpn {
         return success;
     }
 
+    public synchronized boolean addRoute(String address, int prefixLength) {
+        if (!isCallerEstablishedOwnerLocked()) {
+            return false;
+        }
+
+        InetAddress parsed = InetAddress.parseNumericAddress(address);
+        mConfig.routes.add(new RouteInfo(new IpPrefix(parsed, prefixLength), null));
+        mNetworkAgent.sendLinkProperties(makeLinkProperties());
+        return true;
+    }
+
+    public synchronized boolean removeRoute(String address, int prefixLength) {
+        if (!isCallerEstablishedOwnerLocked()) {
+            return false;
+        }
+
+        InetAddress parsed = InetAddress.parseNumericAddress(address);
+        mConfig.routes.remove(new RouteInfo(new IpPrefix(parsed, prefixLength), null));
+        mNetworkAgent.sendLinkProperties(makeLinkProperties());
+        return true;
+    }
+
     public synchronized boolean setUnderlyingNetworks(Network[] networks) {
         if (!isCallerEstablishedOwnerLocked()) {
             return false;
