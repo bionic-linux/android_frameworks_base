@@ -311,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "8f675337_de76825f",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-09T19:00:55Z",
+      "side": 1,
+      "message": "I\u0027d strongly prefer this just have all the functionality of the native version. I still don\u0027t see why it\u0027s wrong for Java to handle multiple FDs but not native (unless we think it\u0027s wrong for Java to handle any FDs... but then why write this?). And yes, maybe Java shouldn\u0027t be handling the magic ints passed along, but that\u0027s better solved in code / design review than preventing it here. This is a totally opaque container class, so trying to any sort of design review with it seems like a bit of a pointless act.\n\nAs it stands, this feels like a footgun in disguise. There\u0027s no way in the type system, with the way this is setup, to guarantee that only a single FD is passed across. In practice today, that\u0027s ~always true and so people will make the assumption that calling getFileDescriptor() is always safe... until we actually use the ints of a native handle, or pass more than one FD, and everything blows up.\n\nAnd yes, we can open it up later, but then we\u0027re stuck with this wart of an API (\"get the first file descriptor but blow up if there\u0027s more than one, even though that\u0027s totally a valid state now\"). Why not just do it now? I can\u0027t think of a single instance where we\u0027ve regretted giving parity between APIs, but plenty where we regret not doing so.",
+      "parentUuid": "f2fa200d_8e9cb992",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "96c75943dd129a03865c0230bc41aa0e5fcd6594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e74a0f_75b56ec2",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 8
