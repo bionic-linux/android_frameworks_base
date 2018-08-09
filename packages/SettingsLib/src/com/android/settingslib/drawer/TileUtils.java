@@ -182,6 +182,13 @@ public class TileUtils {
     public static final String META_DATA_PREFERENCE_CUSTOM_VIEW =
             "com.android.settings.custom_view";
 
+    /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to indicate that the preference is a replacement for other preference
+     * which has the same priority.
+     */
+    public static final String META_DATA_IS_REPLACEMENT = "com.android.settings.IS_REPLACEMENT";
+
     public static final String SETTING_PKG = "com.android.settings";
 
     /**
@@ -256,7 +263,11 @@ public class TileUtils {
                 }
                 categoryMap.put(category.key, category);
             }
-            category.addTile(tile);
+            if (tile.metaData.getBoolean(META_DATA_IS_REPLACEMENT, false)) {
+                category.replaceTile(tile);
+            } else {
+                category.addTile(tile);
+            }
         }
         ArrayList<DashboardCategory> categories = new ArrayList<>(categoryMap.values());
         for (DashboardCategory category : categories) {

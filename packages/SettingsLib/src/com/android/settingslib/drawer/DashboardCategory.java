@@ -99,6 +99,25 @@ public class DashboardCategory implements Parcelable {
         mTiles.remove(n);
     }
 
+    public boolean replaceTile(Tile tile) {
+        Tile originalTile = null;
+        boolean replaced = false;
+        for (Tile t : getTiles()) {
+            if (t.priority == tile.priority) {
+                originalTile = t;
+                break;
+            }
+        }
+        if (originalTile != null) {
+            removeTile(originalTile);
+            addTile(tile);
+            replaced = true;
+        } else {
+            addTile(tile);
+        }
+        return replaced;
+    }
+
     public int getTilesCount() {
         return mTiles.size();
     }
