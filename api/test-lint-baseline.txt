@@ -1583,6 +1583,8 @@ MissingNullability: android.telephony.ims.ImsCallSessionListener#callSessionConf
     Missing nullability on parameter `profile` in method `callSessionConferenceExtended`
 MissingNullability: android.telephony.ims.ImsCallSessionListener#callSessionConferenceStateUpdated(android.telephony.ims.ImsConferenceState) parameter #0:
     Missing nullability on parameter `state` in method `callSessionConferenceStateUpdated`
+MissingNullability: android.telephony.ims.ImsCallSessionListener#callSessionExplicitCallTransferFailed(android.telephony.ims.ImsReasonInfo) parameter #0:
+    Missing nullability on parameter `reasonInfo` in method `callSessionExplicitCallTransferFailed`
 MissingNullability: android.telephony.ims.ImsCallSessionListener#callSessionHandover(int, int, android.telephony.ims.ImsReasonInfo) parameter #2:
     Missing nullability on parameter `reasonInfo` in method `callSessionHandover`
 MissingNullability: android.telephony.ims.ImsCallSessionListener#callSessionHandoverFailed(int, int, android.telephony.ims.ImsReasonInfo) parameter #2:
@@ -1638,6 +1640,12 @@ MissingNullability: android.telephony.ims.ImsConferenceState#getConnectionStateF
 MissingNullability: android.telephony.ims.ImsConferenceState#mParticipants:
     Missing nullability on field `mParticipants` in class `class android.telephony.ims.ImsConferenceState`
 MissingNullability: android.telephony.ims.ImsConferenceState#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `out` in method `writeToParcel`
+MissingNullability: android.telephony.ims.ImsExplicitCallTransferInfo#CREATOR:
+    Missing nullability on field `CREATOR` in class `class android.telephony.ims.ImsExplicitCallTransferInfo`
+MissingNullability: android.telephony.ims.ImsExplicitCallTransferInfo#getTargetAddress():
+    Missing nullability on method `getTargetAddress` return
+MissingNullability: android.telephony.ims.ImsExplicitCallTransferInfo#writeToParcel(android.os.Parcel, int) parameter #0:
     Missing nullability on parameter `out` in method `writeToParcel`
 MissingNullability: android.telephony.ims.ImsExternalCallState#writeToParcel(android.os.Parcel, int) parameter #0:
     Missing nullability on parameter `out` in method `writeToParcel`
@@ -1733,6 +1741,8 @@ MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#accept(int
     Missing nullability on parameter `profile` in method `accept`
 MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#deflect(String) parameter #0:
     Missing nullability on parameter `deflectNumber` in method `deflect`
+MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#explicitCallTransfer(android.telephony.ims.ImsExplicitCallTransferInfo) parameter #0:
+    Missing nullability on parameter `ectInfo` in method `explicitCallTransfer`
 MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#extendToConference(String[]) parameter #0:
     Missing nullability on parameter `participants` in method `extendToConference`
 MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#getCallId():

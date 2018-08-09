@@ -266,6 +266,11 @@ public class ImsCallSessionImplBase implements AutoCloseable {
         public void sendRttMessage(String rttMessage) {
             ImsCallSessionImplBase.this.sendRttMessage(rttMessage);
         }
+
+        @Override
+        public void explicitCallTransfer() {
+            ImsCallSessionImplBase.this.explicitCallTransfer();
+        }
     };
 
     /**
@@ -596,6 +601,16 @@ public class ImsCallSessionImplBase implements AutoCloseable {
      * @param rttMessage RTT message to be sent
      */
     public void sendRttMessage(String rttMessage) {
+    }
+
+    /**
+     * Connects the two calls and disconnects the subscriber from both calls. When it succeeds,
+     * {@link ImsCallSession.Listener#callSessionExplicitCallTransferred} is called.
+     *
+     * @see {@link ImsCallSession.Listener#callSessionExplicitCallTransferred},
+     *      {@link ImsCallSession.Listener#callSessionExplicitCallTransferFailed}
+     */
+    public void explicitCallTransfer() {
     }
 
     /** @hide */

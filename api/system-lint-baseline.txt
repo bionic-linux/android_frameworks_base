@@ -91,6 +91,16 @@ MissingNullability: android.telephony.cdma.CdmaSmsCbProgramData#writeToParcel(an
     
 MissingNullability: android.telephony.data.DataService#onUnbind(android.content.Intent) parameter #0:
     
+MissingNullability: android.telephony.ims.ImsCallSessionListener#callSessionExplicitCallTransferFailed(android.telephony.ims.ImsReasonInfo) parameter #0:
+    Missing nullability on parameter `reasonInfo` in method `callSessionExplicitCallTransferFailed`
+MissingNullability: android.telephony.ims.ImsExplicitCallTransferInfo#CREATOR:
+    Missing nullability on field `CREATOR` in class `class android.telephony.ims.ImsExplicitCallTransferInfo`
+MissingNullability: android.telephony.ims.ImsExplicitCallTransferInfo#getTargetAddress():
+    Missing nullability on method `getTargetAddress` return
+MissingNullability: android.telephony.ims.ImsExplicitCallTransferInfo#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `out` in method `writeToParcel`
+MissingNullability: android.telephony.ims.stub.ImsCallSessionImplBase#explicitCallTransfer(android.telephony.ims.ImsExplicitCallTransferInfo) parameter #0:
+    Missing nullability on parameter `ectInfo` in method `explicitCallTransfer`
 MissingNullability: android.telephony.ims.stub.ImsSmsImplBase#onSmsStatusReportReceived(int, String, byte[]) parameter #1:
     
 MissingNullability: android.telephony.ims.stub.ImsSmsImplBase#onSmsStatusReportReceived(int, String, byte[]) parameter #2:

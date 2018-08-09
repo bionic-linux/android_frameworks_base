@@ -378,6 +378,17 @@ public class ImsCallSessionImplBase extends IImsCallSession.Stub {
     }
 
     /**
+     * Connects the two calls and disconnects the subscriber from both calls. When it succeeds,
+     * {@link ImsCallSession.Listener#callSessionExplicitCallTransferred} is called.
+     *
+     * @see {@link ImsCallSession.Listener#callSessionExplicitCallTransferred},
+     *      {@link ImsCallSession.Listener#callSessionExplicitCallTransferFailed}
+     */
+    @Override
+    public void explicitCallTransfer() {
+    }
+
+    /**
      * There are two different ImsCallSessionListeners that need to reconciled here, we need to
      * convert the "old" version of the com.android.ims.internal.IImsCallSessionListener to the
      * "new" version of the Listener android.telephony.ims.ImsCallSessionListener when calling
@@ -605,6 +616,17 @@ public class ImsCallSessionImplBase extends IImsCallSession.Stub {
         @Override
         public void callQualityChanged(CallQuality callQuality) throws RemoteException {
             mNewListener.callQualityChanged(callQuality);
+        }
+
+        @Override
+        public void callSessionExplicitCallTransferred(IImsCallSession i) throws RemoteException {
+            mNewListener.callSessionExplicitCallTransferred();
+        }
+
+        @Override
+        public void callSessionExplicitCallTransferFailed(IImsCallSession i,
+                ImsReasonInfo reasonInfo) throws RemoteException {
+            mNewListener.callSessionExplicitCallTransferFailed(reasonInfo);
         }
     }
 }
