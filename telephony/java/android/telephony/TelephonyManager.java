@@ -6003,6 +6003,24 @@ public class TelephonyManager {
     }
 
     /**
+     * Get P-CSCF address from PCO after data connection is established or modified.
+     * @param apnType the apnType, "ims" for IMS APN, "emergency" for EMERGENCY APN
+     * @return array of P-CSCF address
+     * @hide
+     */
+    public String[] getPcscfAddressForSubscriber(String apnType, int subId) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) {
+                return new String[0];
+            }
+            return telephony.getPcscfAddressForSubscriber(apnType, subId, getOpPackageName());
+        } catch (RemoteException e) {
+            return new String[0];
+        }
+    }
+
+    /**
      * Enables IMS for the framework. This will trigger IMS registration and ImsFeature capability
      * status updates, if not already enabled.
      * @hide
