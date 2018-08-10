@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e0fa915_63aa78af",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T21:55:12Z",
+      "side": 1,
+      "message": "also, I just now realized I didn\u0027t mark this as \u0027@hide\u0027 since it\u0027s implicit. I really prefer using the system-current.txt file as the source of truth for what is in what API surface. I think b/71630695 is a much better solution for this thing (coupled with having \u0027in the SDK\u0027 not be the default but rather an attribute which I\u0027ve heard some people talk about). If I end up adding another patchset on this, I\u0027ll add it, but I\u0027d rather forget about this kind of thing for now and push for a more universal solution.",
+      "revId": "549399b458a2c2c7645142bae436f525483004e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
