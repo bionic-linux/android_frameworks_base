@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "739e6519_6da49a3f",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T18:02:24Z",
+      "side": 1,
+      "message": "The questions was asking if you agree, not questioning myself. If you are expecting a single filedescriptor and you get anything else (ints on the side, etc..), you shouldn\u0027t blindly use the fd, it should be an error and detected as early as possible.",
+      "parentUuid": "fd9a7eac_88b61114",
+      "range": {
+        "startLine": 88,
+        "startChar": 34,
+        "endLine": 88,
+        "endChar": 53
+      },
+      "revId": "6aae91ef03b25ae31002df7a3d3f19edb8320c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "355023ec_39f43069",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 14
@@ -60,6 +84,30 @@
       "writtenOn": "2018-08-10T17:49:04Z",
       "side": 1,
       "message": "At the very least, this is no longer up to date. I\u0027m not sure why this is any better than:\n\n  handle.getFileDescriptors().get(0)\n\nIt\u0027s 8 fewer characters, but more likely to blow up on you because you have to care about the ints as well as the FD list size.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 52
+      },
+      "revId": "6aae91ef03b25ae31002df7a3d3f19edb8320c1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3124ce76_9820e552",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T18:02:24Z",
+      "side": 1,
+      "message": "It\u0027s better because it asserts about the integers (and it also errors if there are more than one fd). If you are expecting one fd, you shouldn\u0027t happily use the first one when there are two.",
+      "parentUuid": "355023ec_39f43069",
       "range": {
         "startLine": 100,
         "startChar": 0,
