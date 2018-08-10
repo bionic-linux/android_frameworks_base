@@ -856,6 +856,13 @@ interface ITelephony {
     String[] getPcscfAddress(String apnType, String callingPackage);
 
     /**
+     * Get P-CSCF address from PCO after data connection is established or modified.
+     * @param apnType the apnType, "ims" for IMS APN, "emergency" for EMERGENCY APN
+     * @param callingPackage The package making the call.
+     */
+    String[] getPcscfAddressForSubscriber(String apnType, int subId, String callingPackage);
+
+    /**
      * Set IMS registration state
      */
     void setImsRegistrationState(boolean registered);
