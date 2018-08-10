@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "652f16d1_4a14f31d",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T18:39:27Z",
+      "side": 1,
+      "message": "Actually, it looks like we\u0027re using it in tests. I\u0027ll add it in native and here as well.",
+      "parentUuid": "16efe353_b2e7c2d2",
+      "revId": "da1b67e0d3e09e0e5dcc6155445693342cfb5e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "885abfe2_4fd71de8",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 10
