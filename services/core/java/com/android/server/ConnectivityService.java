@@ -3608,6 +3608,52 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /**
+     * Return the VPN configuration corresponding to the given VPN network.
+     * @param network the VPN network object provided by the framework.
+     * @return the VPN configuration object associagted to the VPN network, or null if the given
+     * network object is null or not a VPN network.
+     */
+    @Override
+    public VpnConfig getVpnNetworkConfiguration(Network network) {
+        enforceConnectivityInternalPermission();
+        if (network == null) {
+            return null;
+        }
+        synchronized (mVpns) {
+            for (int i = 0; i < mVpns.size(); i++) {
+                Vpn vpn = mVpns.valueAt(i);
+                if (vpn.getNetId() == network.netId) {
+                    return vpn.getVpnConfig();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Return the user handle of the user who initiated the given VPN network.
+     * @param network the VPN network object provided by the framework.
+     * @return the user handle who initiated the VPN, or -1 if the network object is null
+     * or not a VPN network.
+     */
+    @Override
+    public int getVpnNetworkInitiatingUser(Network network) {
+        enforceConnectivityInternalPermission();
+        if (network == null) {
+            return -1;
+        }
+        synchronized (mVpns) {
+            for (int i = 0; i < mVpns.size(); i++) {
+                Vpn vpn = mVpns.valueAt(i);
+                if (vpn.getNetId() == network.netId) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
      * Ask all VPN objects to recompute and update their capabilities.
      *
      * When underlying networks change, VPNs may have to update capabilities to reflect things

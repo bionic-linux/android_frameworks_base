@@ -116,6 +116,10 @@ interface IConnectivityManager
 
     VpnConfig getVpnConfig(int userId);
 
+    VpnConfig getVpnNetworkConfiguration(in Network network);
+
+    int getVpnNetworkInitiatingUser(in Network network);
+
     void startLegacyVpn(in VpnProfile profile);
 
     LegacyVpnInfo getLegacyVpnInfo(int userId);
