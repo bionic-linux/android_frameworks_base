@@ -37,6 +37,47 @@
     },
     {
       "key": {
+        "uuid": "16efe353_b2e7c2d2",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T18:36:12Z",
+      "side": 1,
+      "message": "Actually, FileDescriptor doesn\u0027t provide an equality comparison, so I would have to do that myself as well. Do you think it would be useful nevertheless?",
+      "parentUuid": "6acf039a_1425abe6",
+      "revId": "da1b67e0d3e09e0e5dcc6155445693342cfb5e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885abfe2_4fd71de8",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T18:36:12Z",
+      "side": 1,
+      "message": "This is also false since this object will never close it.",
+      "range": {
+        "startLine": 45,
+        "startChar": 63,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "da1b67e0d3e09e0e5dcc6155445693342cfb5e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8cc5c45_b2ad2813",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 10
@@ -72,6 +113,30 @@
       "side": 1,
       "message": "Let me look into this.",
       "parentUuid": "d8cc5c45_b2ad2813",
+      "range": {
+        "startLine": 54,
+        "startChar": 76,
+        "endLine": 56,
+        "endChar": 65
+      },
+      "revId": "da1b67e0d3e09e0e5dcc6155445693342cfb5e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08f8a34_e867c1ed",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T18:36:12Z",
+      "side": 1,
+      "message": "Yeah, so, FileDescriptor represents a reference to an open file in the system. It doesn\u0027t have ownership. Also, I think the comment here was talking about the specific \u0027int[]\u0027 objects here. I\u0027ll update it to emphasize this. Can you suggest a better API? Do you think we should open up FileOutputStreams in these cases? Does Java have a better way to manage this? What\u0027s happening is that binder is opening up the FD, and if you want to use it outside of that window, you need to use it or dupe it yourself.\n\n\nOne thing about the native HIDL API is that it doesn\u0027t dupe fds if you don\u0027t need them. Binder will keep all of the FDs open for the duration of the binder call. You only need to dupe them out if you want to make a copy of them.",
+      "parentUuid": "c7516472_5050ea34",
       "range": {
         "startLine": 54,
         "startChar": 76,
