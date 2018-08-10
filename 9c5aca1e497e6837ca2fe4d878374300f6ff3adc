@@ -46,6 +46,30 @@
       "revId": "9c5aca1e497e6837ca2fe4d878374300f6ff3adc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3b08e5_d7522384",
+        "filename": "services/core/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2613,
+      "author": {
+        "id": 1105161
+      },
+      "writtenOn": "2018-08-10T19:37:59Z",
+      "side": 1,
+      "message": "Wei, agreed, if you trace the code backwards from what can create an UpdateRecord, this doesn\u0027t seem possible, so I\u0027m curious if the author can help point to a code path might cause this (which might be a better place to prevent this?)",
+      "parentUuid": "5603bc70_d4108c22",
+      "range": {
+        "startLine": 2613,
+        "startChar": 16,
+        "endLine": 2613,
+        "endChar": 32
+      },
+      "revId": "9c5aca1e497e6837ca2fe4d878374300f6ff3adc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
