@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6acf039a_1425abe6",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T18:00:02Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "08d013b9_f0a11d26",
+      "revId": "da1b67e0d3e09e0e5dcc6155445693342cfb5e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8cc5c45_b2ad2813",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 10
@@ -30,6 +48,30 @@
       "writtenOn": "2018-08-03T16:27:31Z",
       "side": 1,
       "message": "Why doesn\u0027t the Java object dup the file descriptors before being constructed? If you clone a native_handle, it does do that, so it seems like an incongruity between the APIs. If you did, it\u0027d also make the life cycle a lot more obvious (i.e. it\u0027d be like any other Closeable / AutoCloseable object).\n\nNot owning the FDs is also weird in that you have to drop down into native to close them, for basically no reason.",
+      "range": {
+        "startLine": 54,
+        "startChar": 76,
+        "endLine": 56,
+        "endChar": 65
+      },
+      "revId": "da1b67e0d3e09e0e5dcc6155445693342cfb5e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7516472_5050ea34",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-10T18:00:02Z",
+      "side": 1,
+      "message": "Let me look into this.",
+      "parentUuid": "d8cc5c45_b2ad2813",
       "range": {
         "startLine": 54,
         "startChar": 76,
