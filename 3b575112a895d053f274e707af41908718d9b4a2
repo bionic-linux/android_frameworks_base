@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b0c8e0_7235274d",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-13T20:27:35Z",
+      "side": 1,
+      "message": "Can you explicitly document that it\u0027s the responsibility of the caller to close the returned NativeHandle when it\u0027s finished with it? Java developers might expect this will happen automatically during finalization, but they\u0027ll actually linger forever.",
+      "revId": "3b575112a895d053f274e707af41908718d9b4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
