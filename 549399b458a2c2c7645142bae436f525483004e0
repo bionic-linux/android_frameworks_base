@@ -34,6 +34,24 @@
       "revId": "549399b458a2c2c7645142bae436f525483004e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39549311_41e38e9b",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T17:48:40Z",
+      "side": 1,
+      "message": "Haha, wow, well, I added it anyway. Glad we\u0027re on the same page. :)",
+      "parentUuid": "4b8e5325_a27fe196",
+      "revId": "549399b458a2c2c7645142bae436f525483004e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
