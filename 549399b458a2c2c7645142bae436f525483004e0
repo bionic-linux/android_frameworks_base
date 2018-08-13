@@ -16,6 +16,24 @@
       "revId": "549399b458a2c2c7645142bae436f525483004e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8e5325_a27fe196",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-08-13T16:58:55Z",
+      "side": 1,
+      "message": "Oh, yeah, no need to mark this as @hide. I misread the first patch and thought one of the constructors was public when it was private; system-current.txt is the source of truth for what\u0027s actually a truly public surface.",
+      "parentUuid": "6e0fa915_63aa78af",
+      "revId": "549399b458a2c2c7645142bae436f525483004e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
