@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7105686_c582c97a",
+        "filename": "core/java/android/os/HwParcel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T20:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a50c1ca_e66c51cc",
+      "range": {
+        "startLine": 355,
+        "startChar": 62,
+        "endLine": 355,
+        "endChar": 66
+      },
+      "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc0e566b_0930eed2",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 18
@@ -45,6 +69,30 @@
       "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63d2773_d674468f",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T20:07:52Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure why it is this way. I assume it made more sense at one point in the past. I\u0027ll go ahead and change it here though.\n\nIt looks like FileDescriptor[] is more common than *\u003cFileDescriptor\u003e in the codebase as well.\n\nDone.",
+      "parentUuid": "fc0e566b_0930eed2",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3dee3ba4_ea50ec56",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T20:07:52Z",
+      "side": 1,
+      "message": "seems that we don\u0027t in Android",
+      "parentUuid": "2fa200f3_c8912411",
+      "range": {
+        "startLine": 44,
+        "startChar": 20,
+        "endLine": 44,
+        "endChar": 40
+      },
+      "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9262b5db_501fb228",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 18
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fb482f9d_30845ab6",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T20:07:52Z",
+      "side": 1,
+      "message": "TIL, but no longer applicable",
+      "parentUuid": "9262b5db_501fb228",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d01bb2f_42423353",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 18
@@ -114,6 +210,30 @@
       "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae79a8c_0d31b5e7",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T20:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d01bb2f_42423353",
+      "range": {
+        "startLine": 56,
+        "startChar": 13,
+        "endLine": 56,
+        "endChar": 69
+      },
+      "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "90a5a1c9_84f1019b",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T20:07:52Z",
+      "side": 1,
+      "message": "I\u0027ll hold off on this one.",
+      "parentUuid": "5197a25e_812c6847",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 20
+      },
+      "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d2f1cad_24342650",
         "filename": "core/java/android/os/NativeHandle.java",
         "patchSetId": 18
@@ -184,6 +328,30 @@
       "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f5f506_1fadabfd",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T20:07:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d2f1cad_24342650",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 13
+      },
+      "revId": "93b01f660f9b313f5491a39f8691758a2eaa2a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
