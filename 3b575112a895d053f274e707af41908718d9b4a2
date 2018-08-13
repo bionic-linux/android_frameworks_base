@@ -16,6 +16,24 @@
       "revId": "3b575112a895d053f274e707af41908718d9b4a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e843943_9c96e871",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-08-13T20:52:21Z",
+      "side": 1,
+      "message": "Yes, I will, but in order to avoid further delay on this CL, I\u0027ll put the clarification in another CL. Thank you, Michael!",
+      "parentUuid": "21b0c8e0_7235274d",
+      "revId": "3b575112a895d053f274e707af41908718d9b4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
