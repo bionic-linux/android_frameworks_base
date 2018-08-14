@@ -389,7 +389,7 @@ public class MtpDatabase implements AutoCloseable {
         }
         // Add the new file to MediaProvider
         if (succeeded) {
-            String path = obj.getPath().toString();
+            String path = toNormalPath(obj.getPath()).toString();
             int format = obj.getFormat();
             // Get parent info from MediaProvider, since the id is different from MTP's
             ContentValues values = new ContentValues();
@@ -577,6 +577,9 @@ public class MtpDatabase implements AutoCloseable {
             return MtpConstants.RESPONSE_GENERAL_ERROR;
         }
 
+        newPath = toNormalPath(newPath);
+        oldPath = toNormalPath(oldPath);
+
         // finally update MediaProvider
         ContentValues values = new ContentValues();
         values.put(Files.FileColumns.DATA, newPath.toString());
@@ -645,8 +648,8 @@ public class MtpDatabase implements AutoCloseable {
             return;
         // Get parent info from MediaProvider, since the id is different from MTP's
         ContentValues values = new ContentValues();
-        Path path = newParentObj.getPath().resolve(name);
-        Path oldPath = oldParentObj.getPath().resolve(name);
+        Path path = toNormalPath(newParentObj.getPath().resolve(name));
+        Path oldPath = toNormalPath(oldParentObj.getPath().resolve(name));
         values.put(Files.FileColumns.DATA, path.toString());
         if (obj.getParent().isRoot()) {
             values.put(Files.FileColumns.PARENT, 0);
@@ -707,7 +710,7 @@ public class MtpDatabase implements AutoCloseable {
         if (!success) {
             return;
         }
-        String path = obj.getPath().toString();
+        String path = toNormalPath(obj.getPath()).toString();
         int format = obj.getFormat();
         // Get parent info from MediaProvider, since the id is different from MTP's
         ContentValues values = new ContentValues();
@@ -869,6 +872,8 @@ public class MtpDatabase implements AutoCloseable {
         int ret = -1;
         Cursor c = null;
         try {
+            path = toNormalPath(path);
+
             c = mMediaProvider.query(mObjectsUri, ID_PROJECTION, PATH_WHERE,
                     new String[]{path.toString()}, null, null);
             if (c != null && c.moveToNext()) {
@@ -885,6 +890,8 @@ public class MtpDatabase implements AutoCloseable {
 
     private void deleteFromMedia(Path path, boolean isDir) {
         try {
+            path = toNormalPath(path);
+
             // Delete the object(s) from MediaProvider, but ignore errors.
             if (isDir) {
                 // recursive case - delete all children first
@@ -932,7 +939,7 @@ public class MtpDatabase implements AutoCloseable {
                 ArrayList<Integer> result = new ArrayList<>();
                 while (c.moveToNext()) {
                     // Translate result handles back into handles for this session.
-                    String refPath = c.getString(0);
+                    String refPath = toInternalString(c.getString(0));
                     MtpStorageManager.MtpObject refObj = mManager.getByPath(refPath);
                     if (refObj != null) {
                         result.add(refObj.getId());
@@ -986,4 +993,24 @@ public class MtpDatabase implements AutoCloseable {
 
     private native final void native_setup();
     private native final void native_finalize();
+
+    static private Path toNormalPath(Path path) {
+        String pattern = "/mnt/media_rw";
+
+        if (path.startsWith(pattern)) {
+            Path subPath = path.subpath(2, path.getNameCount());
+            path = Paths.get("/storage").resolve(subPath);
+        }
+        return path;
+    }
+
+    static private String toInternalString(String path) {
+        String pattern = "/storage/emulated";
+
+        if (path.indexOf(pattern) == -1) {
+            String substring = path.substring(8);
+            path = "/mnt/media_rw" + substring;
+        }
+        return path;
+    }
 }
