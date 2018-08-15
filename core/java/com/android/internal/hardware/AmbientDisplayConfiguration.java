@@ -28,6 +28,7 @@ public class AmbientDisplayConfiguration {
 
     private final Context mContext;
 
+    @TestApi
     public AmbientDisplayConfiguration(Context context) {
         mContext = context;
     }
@@ -100,6 +101,7 @@ public class AmbientDisplayConfiguration {
         return !TextUtils.isEmpty(longPressSensorType());
     }
 
+    @TestApi
     public boolean alwaysOnEnabled(int user) {
         return boolSettingDefaultOn(Settings.Secure.DOZE_ALWAYS_ON, user) && alwaysOnAvailable()
                 && !accessibilityInversionEnabled(user);
