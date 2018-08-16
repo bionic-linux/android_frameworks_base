@@ -3234,6 +3234,8 @@ public class ExifInterface {
             int thumbnailOffset = jpegInterchangeFormatAttribute.getIntValue(mExifByteOrder);
             int thumbnailLength = jpegInterchangeFormatLengthAttribute.getIntValue(mExifByteOrder);
 
+            // Rewind to the beginning of the file.
+            in.seek(0);
             // The following code limits the size of thumbnail size not to overflow EXIF data area.
             thumbnailLength = Math.min(thumbnailLength, in.available() - thumbnailOffset);
             if (mMimeType == IMAGE_TYPE_JPEG || mMimeType == IMAGE_TYPE_RAF
