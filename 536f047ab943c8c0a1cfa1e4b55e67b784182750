@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "97793efe_1d676081",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1059229
+      },
+      "writtenOn": "2018-08-17T19:40:49Z",
+      "side": 1,
+      "message": "Removed hide",
+      "parentUuid": "ef4fa894_cbbd9c0f",
+      "range": {
+        "startLine": 603,
+        "startChar": 11,
+        "endLine": 603,
+        "endChar": 16
+      },
+      "revId": "536f047ab943c8c0a1cfa1e4b55e67b784182750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efccc07e_74b75f98",
         "filename": "core/java/android/bluetooth/le/ScanRecord.java",
         "patchSetId": 5
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "265646a5_589e63b6",
+        "filename": "core/java/android/bluetooth/le/ScanRecord.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1059229
+      },
+      "writtenOn": "2018-08-17T19:40:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efccc07e_74b75f98",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "536f047ab943c8c0a1cfa1e4b55e67b784182750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2c9873a_f2891369",
         "filename": "core/java/android/bluetooth/le/ScanRecord.java",
         "patchSetId": 5
@@ -115,6 +163,30 @@
       "revId": "536f047ab943c8c0a1cfa1e4b55e67b784182750",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6195f5df_4a4c268f",
+        "filename": "core/java/android/bluetooth/le/ScanRecord.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1059229
+      },
+      "writtenOn": "2018-08-17T19:40:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2c9873a_f2891369",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "536f047ab943c8c0a1cfa1e4b55e67b784182750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
