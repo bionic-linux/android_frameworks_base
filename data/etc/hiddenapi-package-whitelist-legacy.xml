@@ -22,7 +22,6 @@ platform cert need to be included, as apps signed with the platform cert are exe
 -->
 
 <config>
-  <hidden-api-whitelisted-app package="android.ext.services" />
   <hidden-api-whitelisted-app package="com.android.apps.tag" />
   <hidden-api-whitelisted-app package="com.android.basicsmsreceiver" />
   <hidden-api-whitelisted-app package="com.android.bookmarkprovider" />
@@ -32,15 +31,11 @@ platform cert need to be included, as apps signed with the platform cert are exe
   <hidden-api-whitelisted-app package="com.android.car.messenger" />
   <hidden-api-whitelisted-app package="com.android.car.overview" />
   <hidden-api-whitelisted-app package="com.android.car.stream" />
-  <hidden-api-whitelisted-app package="com.android.companiondevicemanager" />
   <hidden-api-whitelisted-app package="com.android.dreams.basic" />
   <hidden-api-whitelisted-app package="com.android.gallery" />
   <hidden-api-whitelisted-app package="com.android.launcher3" />
-  <hidden-api-whitelisted-app package="com.android.mtp" />
   <hidden-api-whitelisted-app package="com.android.musicfx" />
-  <hidden-api-whitelisted-app package="com.android.packageinstaller" />
-  <hidden-api-whitelisted-app package="com.android.printservice.recommendation" />
-  <hidden-api-whitelisted-app package="com.android.printspooler" />
+  <hidden-api-whitelisted-app package="com.android.permissioncontroller" />
   <hidden-api-whitelisted-app package="com.android.providers.blockednumber" />
   <hidden-api-whitelisted-app package="com.android.providers.calendar" />
   <hidden-api-whitelisted-app package="com.android.providers.contacts" />
@@ -49,9 +44,7 @@ platform cert need to be included, as apps signed with the platform cert are exe
   <hidden-api-whitelisted-app package="com.android.providers.media" />
   <hidden-api-whitelisted-app package="com.android.providers.tv" />
   <hidden-api-whitelisted-app package="com.android.providers.userdictionary" />
-  <hidden-api-whitelisted-app package="com.android.smspush" />
   <hidden-api-whitelisted-app package="com.android.spare_parts" />
-  <hidden-api-whitelisted-app package="com.android.statementservice" />
   <hidden-api-whitelisted-app package="com.android.storagemanager" />
   <hidden-api-whitelisted-app package="com.android.systemui.plugins" />
   <hidden-api-whitelisted-app package="com.android.terminal" />

@@ -23,6 +23,7 @@ LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 LOCAL_PACKAGE_NAME := StatementService
 LOCAL_PRIVATE_PLATFORM_APIS := true
+LOCAL_BUNDLED_MODULE := true
 LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_JAVA_LIBRARIES += org.apache.http.legacy
