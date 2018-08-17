@@ -42,8 +42,24 @@ include $(BUILD_PREBUILT)
 
 ########################
 include $(CLEAR_VARS)
-LOCAL_MODULE := hiddenapi-package-whitelist.xml
+LOCAL_MODULE := hiddenapi-package-whitelist-legacy.xml
 LOCAL_MODULE_CLASS := ETC
 LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/sysconfig
 LOCAL_SRC_FILES := $(LOCAL_MODULE)
 include $(BUILD_PREBUILT)
+
+########################
+include $(CLEAR_VARS)
+LOCAL_MODULE := hiddenapi-package-whitelist.xml
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/sysconfig
+include $(BUILD_SYSTEM)/base_rules.mk
+$(warning $(LOCAL_BUILT_MODULE))
+
+$(LOCAL_BUILT_MODULE): $(MANIFEST_PKGNAME)
+	echo '<?xml version="1.0" encoding="utf-8"?>' > $@
+	echo '<config>' >> $@
+	for MANIFEST in $(PRIVATE_MANIFESTS); do \
+		echo '<hidden-api-whitelisted-app package="'`$(MANIFEST_PKGNAME) $${MANIFEST}`'"/>'; \
+	done | sort | uniq >> $@
+	echo '</config>' >> $@

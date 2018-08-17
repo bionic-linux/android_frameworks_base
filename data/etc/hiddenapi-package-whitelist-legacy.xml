@@ -22,7 +22,6 @@ platform cert need to be included, as apps signed with the platform cert are exe
 -->
 
 <config>
-  <hidden-api-whitelisted-app package="android.ext.services" />
   <hidden-api-whitelisted-app package="com.android.apps.tag" />
   <hidden-api-whitelisted-app package="com.android.basicsmsreceiver" />
   <hidden-api-whitelisted-app package="com.android.bookmarkprovider" />
@@ -32,7 +31,6 @@ platform cert need to be included, as apps signed with the platform cert are exe
   <hidden-api-whitelisted-app package="com.android.car.messenger" />
   <hidden-api-whitelisted-app package="com.android.car.overview" />
   <hidden-api-whitelisted-app package="com.android.car.stream" />
-  <hidden-api-whitelisted-app package="com.android.companiondevicemanager" />
   <hidden-api-whitelisted-app package="com.android.dreams.basic" />
   <hidden-api-whitelisted-app package="com.android.gallery" />
   <hidden-api-whitelisted-app package="com.android.launcher3" />
