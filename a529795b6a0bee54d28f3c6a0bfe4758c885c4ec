@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf0bf46b_0916f764",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-08-20T23:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163b7eb8_a8aa1def",
+      "range": {
+        "startLine": 280,
+        "startChar": 12,
+        "endLine": 280,
+        "endChar": 16
+      },
+      "revId": "a529795b6a0bee54d28f3c6a0bfe4758c885c4ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af8d4c2f_6dfd5909",
         "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7c03db7e_250a0cf0",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-08-20T23:19:17Z",
+      "side": 1,
+      "message": "While I agree that it would be better for the note to be here with the parameter description, I am unable to overcome the Android SDK limitation that the parameter description must be single lined. I am unable to rephrase the same content into a single line.",
+      "parentUuid": "af8d4c2f_6dfd5909",
+      "range": {
+        "startLine": 282,
+        "startChar": 78,
+        "endLine": 282,
+        "endChar": 79
+      },
+      "revId": "a529795b6a0bee54d28f3c6a0bfe4758c885c4ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee084955_eb6afdd6",
         "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "a529795b6a0bee54d28f3c6a0bfe4758c885c4ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d31769_6ab8da1f",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2018-08-20T23:19:17Z",
+      "side": 1,
+      "message": "Done. Thanks. Not sure how I inserted this unwanted character.",
+      "parentUuid": "ee084955_eb6afdd6",
+      "range": {
+        "startLine": 285,
+        "startChar": 52,
+        "endLine": 285,
+        "endChar": 53
+      },
+      "revId": "a529795b6a0bee54d28f3c6a0bfe4758c885c4ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
