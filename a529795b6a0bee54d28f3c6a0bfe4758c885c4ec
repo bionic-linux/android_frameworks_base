@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "af8d4c2f_6dfd5909",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2018-08-20T21:20:33Z",
+      "side": 1,
+      "message": "Would it be better place to put details about how PendingIntent should be constructed ?",
+      "range": {
+        "startLine": 282,
+        "startChar": 78,
+        "endLine": 282,
+        "endChar": 79
+      },
+      "revId": "a529795b6a0bee54d28f3c6a0bfe4758c885c4ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee084955_eb6afdd6",
         "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
         "patchSetId": 1
