@@ -2419,6 +2419,14 @@ public class CarrierConfigManager {
     public static final String KEY_OPPORTUNISTIC_NETWORK_DATA_SWITCH_HYSTERESIS_TIME_LONG =
             "opportunistic_network_data_switch_hysteresis_time_long";
 
+    /*
+     * Support ASCII 7-BIT encoding for long SMS. This carrier config is used to enable
+     * this feature.
+     * @hide
+     */
+    public static final String KEY_ASCII_7_BIT_SUPPORT_FOR_LONG_MESSAGE_BOOL =
+            "ascii_7_bit_support_for_long_message_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2794,6 +2802,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_OR_EXIT_HYSTERESIS_TIME_LONG, 10000);
         /* Default value is 10 seconds. */
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_DATA_SWITCH_HYSTERESIS_TIME_LONG, 10000);
+        sDefaults.putBoolean(KEY_ASCII_7_BIT_SUPPORT_FOR_LONG_MESSAGE_BOOL, false);
     }
 
     /**
