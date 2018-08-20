@@ -22,6 +22,30 @@
       "revId": "41aca4cb3488e88cd167756e6fce33bcca584e18",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a616a2_69dda6b0",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2018-08-20T07:45:11Z",
+      "side": 1,
+      "message": "Hi Brad, actually we use this API in SmsProvider, hide API is fine.\n\ndo we really publish this API?",
+      "parentUuid": "626a23c9_3e0b52fb",
+      "range": {
+        "startLine": 966,
+        "startChar": 9,
+        "endLine": 966,
+        "endChar": 13
+      },
+      "revId": "41aca4cb3488e88cd167756e6fce33bcca584e18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
