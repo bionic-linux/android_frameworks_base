@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163b7eb8_a8aa1def",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2018-08-20T20:10:50Z",
+      "side": 1,
+      "message": "Change to \"may\" as we might change this behaviour in the future.",
+      "range": {
+        "startLine": 280,
+        "startChar": 12,
+        "endLine": 280,
+        "endChar": 16
+      },
+      "revId": "a529795b6a0bee54d28f3c6a0bfe4758c885c4ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
