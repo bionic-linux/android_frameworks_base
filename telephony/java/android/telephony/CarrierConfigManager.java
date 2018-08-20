@@ -2398,6 +2398,14 @@ public class CarrierConfigManager {
     public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSSNR_INT =
             "opportunistic_network_exit_threshold_rssnr_int";
 
+    /*
+     * Support ASCII 7-BIT encoding for long SMS. This carrier config is used to enable
+     * this feature.
+     * @hide
+     */
+    public static final String KEY_ASCII_7_BIT_SUPPORT_FOR_LONG_MESSAGE_BOOL =
+            "ascii_7_bit_support_for_long_message_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2767,6 +2775,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSSNR_INT, 45);
         /* Default value is minimum RSSNR level needed for SIGNAL_STRENGTH_MODERATE */
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSSNR_INT, 10);
+        sDefaults.putBoolean(KEY_ASCII_7_BIT_SUPPORT_FOR_LONG_MESSAGE_BOOL, false);
     }
 
     /**
