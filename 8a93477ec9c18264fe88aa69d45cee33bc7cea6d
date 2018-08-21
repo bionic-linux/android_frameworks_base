@@ -16,6 +16,24 @@
       "revId": "8a93477ec9c18264fe88aa69d45cee33bc7cea6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e33780_dcd63f04",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1542,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-08-21T21:19:51Z",
+      "side": 1,
+      "message": "I double checked, but it seems they didn\u0027t have last-released for test in old world:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/727452/3/Android.bp#b1072",
+      "parentUuid": "e4c8f9d4_9436fc64",
+      "revId": "8a93477ec9c18264fe88aa69d45cee33bc7cea6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

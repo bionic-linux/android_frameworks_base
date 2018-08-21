@@ -16,6 +16,24 @@
       "revId": "cd060d9808732074e7bd64ad43362ea8f58265f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc2ea7c_2e044d2d",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1521,
+      "author": {
+        "id": 1136354
+      },
+      "writtenOn": "2018-08-21T21:19:51Z",
+      "side": 1,
+      "message": "I double checked, but it seems they also used api/removed.txt to check last-released:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/727452/3/Android.bp#b1072",
+      "parentUuid": "d94df619_8f488573",
+      "revId": "cd060d9808732074e7bd64ad43362ea8f58265f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
