@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d94df619_8f488573",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1521,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2018-08-21T20:19:19Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right -- this is the same file as on line 1517, right?",
+      "revId": "cd060d9808732074e7bd64ad43362ea8f58265f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
