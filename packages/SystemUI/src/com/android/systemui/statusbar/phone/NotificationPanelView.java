@@ -516,9 +516,9 @@ public class NotificationPanelView extends PanelView implements
                     mClockPositionResult.clockY, CLOCK_ANIMATION_PROPERTIES, animateClock);
             updateClock();
             stackScrollerPadding = mClockPositionResult.stackScrollerPadding;
+            mNotificationStackScroller.setAntiBurnInOffsetX(mClockPositionResult.clockX);
         }
         mNotificationStackScroller.setIntrinsicPadding(stackScrollerPadding);
-        mNotificationStackScroller.setAntiBurnInOffsetX(mClockPositionResult.clockX);
         mKeyguardBottomArea.setBurnInXOffset(mClockPositionResult.clockX);
 
         mStackScrollerMeasuringPass++;
