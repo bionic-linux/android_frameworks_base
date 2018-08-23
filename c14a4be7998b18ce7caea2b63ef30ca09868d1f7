@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87a571d0_d4eba6e2",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2018-08-23T04:02:53Z",
+      "side": 0,
+      "message": "\"Originating or Destination Addr\" OR just \"Addr\" will be fine.",
+      "revId": "c14a4be7998b18ce7caea2b63ef30ca09868d1f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072537c1_7f7b94b1",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2018-08-23T04:02:53Z",
+      "side": 0,
+      "message": "For MESSAGE_TYPE_SUBMIT, origAddress \u003d destAddress and mOriginatingAddress \u003d mRecipientAddress are expected results?\nIf not, I think these should be moved into above switch-case OR we can handle it in parseSms().",
+      "revId": "c14a4be7998b18ce7caea2b63ef30ca09868d1f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d87a390_1bd3a1f2",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2018-08-23T04:02:53Z",
+      "side": 0,
+      "message": "Don\u0027t we need to take care mRecipientAddress case here?\n\nI think below code will be fine here instead.\nif (MESSAGE_TYPE_SUBMIT) mRecipientAddress \u003d mOriginatingAddress;",
+      "revId": "c14a4be7998b18ce7caea2b63ef30ca09868d1f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
