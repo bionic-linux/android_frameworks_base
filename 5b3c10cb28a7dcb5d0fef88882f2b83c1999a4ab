@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d0c7f1c_6d1bbf9f",
+        "filename": "core/java/android/database/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-08-24T03:44:26Z",
+      "side": 1,
+      "message": "This person doesn\u0027t write Android code.  :)",
+      "revId": "5b3c10cb28a7dcb5d0fef88882f2b83c1999a4ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
