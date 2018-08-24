@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df217ba5_5e29a142",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-24T03:28:56Z",
+      "side": 1,
+      "message": "What about the comment in the TetheringConfiguration class:\n\n    \"BT is limited to max default of 5 connections. 192.168.44.1 to 192.168.48.1\"\n\nIs this not true?",
+      "range": {
+        "startLine": 275,
+        "startChar": 8,
+        "endLine": 275,
+        "endChar": 9
+      },
+      "revId": "431f479b59f23a54b375940cee069b4f3420b8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
