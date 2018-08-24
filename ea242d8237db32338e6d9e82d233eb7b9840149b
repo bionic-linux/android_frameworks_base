@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cef9f82_b57fea0b",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-08-24T15:33:28Z",
+      "side": 1,
+      "message": "|sort",
+      "revId": "ea242d8237db32338e6d9e82d233eb7b9840149b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447eccb5_13026130",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2018-08-24T15:33:28Z",
+      "side": 1,
+      "message": "|sort\n\nalways prefer alphabetical order, unless there\u0027s some reason why things have to be in a specific order. (and in that case, prefer to add a comment explaining why.)",
+      "revId": "ea242d8237db32338e6d9e82d233eb7b9840149b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
