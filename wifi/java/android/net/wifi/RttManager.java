@@ -27,7 +27,7 @@ import java.util.List;
 @Deprecated
 @SystemService(Context.WIFI_RTT_SERVICE)
 public class RttManager {
-
+    //test
     private static final boolean DBG = false;
     private static final String TAG = "RttManager";
 
