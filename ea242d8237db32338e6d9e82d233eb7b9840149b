@@ -33,6 +33,24 @@
       "revId": "ea242d8237db32338e6d9e82d233eb7b9840149b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206066f0_d5726b20",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2018-08-26T23:50:24Z",
+      "side": 1,
+      "message": "Looks like this change was already merged that way into internal master. Should we fix it in AOSP and create potential merge problems down the road? Maybe merge it as is and then fix in a separate CL in AOSP which will be merged later into internal master by merge bots?",
+      "parentUuid": "447eccb5_13026130",
+      "revId": "ea242d8237db32338e6d9e82d233eb7b9840149b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
