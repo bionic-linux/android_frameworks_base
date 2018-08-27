@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "646bf0eb_54cd41ad",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22532,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2018-08-27T09:51:27Z",
+      "side": 0,
+      "message": "Hi, Jeff\n\nWe met some rebooting loop issues because of broken /data/system/packages.xml(also found some other broken xml files too under the parent directoy), and in order to get out of that, we just delete the broken file and let PackageManager regenarating it, but after the phone boot up, lots of 3rd party apps keeps crashing on launch becaue of their uid were changed, and they don\u0027t have the permission to read/write files they created before.\n\nBut all system apps are all good, then we found the framework just cleared and recreated the date dir automatically for them.  \n \nSo, really don\u0027t getting the point why not recover data dir for 3rd party apps just like you do for system apps under that condition (which is rare)？ Could you give a bit more explanation, THX!",
+      "range": {
+        "startLine": 22531,
+        "startChar": 55,
+        "endLine": 22532,
+        "endChar": 19
+      },
+      "revId": "faac4ad153f55b1d224e2e800c24d0b9eb0ae0e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
