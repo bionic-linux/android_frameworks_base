@@ -711,6 +711,7 @@ public class NotificationManagerService extends SystemService {
                         nv.rank, nv.count);
 
                 StatusBarNotification sbn = r.sbn;
+                mListeners.notifyClickedLocked(r);
                 cancelNotification(callingUid, callingPid, sbn.getPackageName(), sbn.getTag(),
                         sbn.getId(), Notification.FLAG_AUTO_CANCEL,
                         FLAG_FOREGROUND_SERVICE, false, r.getUserId(),
@@ -740,6 +741,7 @@ public class NotificationManagerService extends SystemService {
                 EventLogTags.writeNotificationActionClicked(key, actionIndex,
                         r.getLifespanMs(now), r.getFreshnessMs(now), r.getExposureMs(now),
                         nv.rank, nv.count);
+                mListeners.notifyActionClickedLocked(r);
                 nv.recycle();
                 reportUserInteraction(r);
             }
@@ -6695,6 +6697,58 @@ public class NotificationManagerService extends SystemService {
         }
 
         /**
+         * asynchronously notify all listeners about a clicked notification
+         */
+        @GuardedBy("mNotificationLock")
+        public void notifyClickedLocked(NotificationRecord r) {
+            final StatusBarNotification sbn = r.sbn;
+
+            // make a copy in case changes are made to the underlying Notification object
+            // NOTE: this copy is lightweight: it doesn't include heavyweight parts of the
+            // notification
+            final StatusBarNotification sbnLight = sbn.cloneLight();
+            for (final ManagedServiceInfo info : getServices()) {
+                if (!isVisibleToListener(sbn, info)) {
+                    continue;
+                }
+
+                final NotificationRankingUpdate update = makeRankingUpdateLocked(info);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyClicked(info, sbnLight, update);
+                    }
+                });
+            }
+        }
+
+        /**
+         * asynchronously notify all listeners about notification action is selected by the user
+         */
+        @GuardedBy("mNotificationLock")
+        public void notifyActionClickedLocked(NotificationRecord r) {
+            final StatusBarNotification sbn = r.sbn;
+
+            // make a copy in case changes are made to the underlying Notification object
+            // NOTE: this copy is lightweight: it doesn't include heavyweight parts of the
+            // notification
+            final StatusBarNotification sbnLight = sbn.cloneLight();
+            for (final ManagedServiceInfo info : getServices()) {
+                if (!isVisibleToListener(sbn, info)) {
+                    continue;
+                }
+
+                final NotificationRankingUpdate update = makeRankingUpdateLocked(info);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyActionClicked(info, sbnLight, update);
+                    }
+                });
+            }
+        }
+
+        /**
          * Asynchronously notify all listeners about a reordering of notifications
          * unless changedHiddenNotifications is populated.
          * If changedHiddenNotifications is populated, there was a change in the hidden state
@@ -6872,6 +6926,34 @@ public class NotificationManagerService extends SystemService {
                 listener.onNotificationRemoved(sbnHolder, rankingUpdate, stats, reason);
             } catch (RemoteException ex) {
                 Log.e(TAG, "unable to notify listener (removed): " + listener, ex);
+            }
+        }
+
+        private void notifyClicked(final ManagedServiceInfo info, StatusBarNotification sbn,
+                NotificationRankingUpdate rankingUpdate) {
+            if (!info.enabledAndUserMatches(sbn.getUserId())) {
+                return;
+            }
+            final INotificationListener listener = (INotificationListener) info.service;
+            StatusBarNotificationHolder sbnHolder = new StatusBarNotificationHolder(sbn);
+            try {
+                listener.onNotificationClicked(sbnHolder, rankingUpdate);
+            } catch (RemoteException ex) {
+                Log.e(TAG, "unable to notify listener (clicked): " + listener, ex);
+            }
+        }
+
+        private void notifyActionClicked(final ManagedServiceInfo info, StatusBarNotification sbn,
+                NotificationRankingUpdate rankingUpdate) {
+            if (!info.enabledAndUserMatches(sbn.getUserId())) {
+                return;
+            }
+            final INotificationListener listener = (INotificationListener) info.service;
+            StatusBarNotificationHolder sbnHolder = new StatusBarNotificationHolder(sbn);
+            try {
+                listener.onNotificationActionClicked(sbnHolder, rankingUpdate);
+            } catch (RemoteException ex) {
+                Log.e(TAG, "unable to notify listener (action clicked): " + listener, ex);
             }
         }
 

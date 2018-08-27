@@ -427,6 +427,56 @@ public abstract class NotificationListenerService extends Service {
     }
 
     /**
+     * Implement this method to learn about notifications as they are clicked by user.
+     *
+     * @param sbn A data structure encapsulating at least the original information (tag and id)
+     *            and source (package name) used to post the {@link android.app.Notification} that
+     *            was just clicked.
+     */
+    public void onNotificationClicked(StatusBarNotification sbn) {
+        // optional
+    }
+
+    /**
+     * Implement this method to learn about notifications as they are clicked by user.
+     *
+     * @param sbn A data structure encapsulating at least the original information (tag and id)
+     *            and source (package name) used to post the {@link android.app.Notification} that
+     *            was just clicked.
+     * @param rankingMap The current ranking map that can be used to retrieve ranking information
+     *                   for active notifications.
+     */
+    public void onNotificationClicked(StatusBarNotification sbn, RankingMap rankingMap) {
+        onNotificationClicked(sbn);
+    }
+
+    /**
+     * Implement this method to learn about notifications as their action buttons are clicked by
+     * user.
+     *
+     * @param sbn A data structure encapsulating at least the original information (tag and id)
+     *            and source (package name) used to post the {@link android.app.Notification} that
+     *            was just clicked.
+     */
+    public void onNotificationActionClicked(StatusBarNotification sbn) {
+        // optional
+    }
+
+    /**
+     * Implement this method to learn about notifications as their action buttons are clicked by
+     * user.
+     *
+     * @param sbn A data structure encapsulating at least the original information (tag and id)
+     *            and source (package name) used to post the {@link android.app.Notification} that
+     *            was just clicked.
+     * @param rankingMap The current ranking map that can be used to retrieve ranking information
+     *                   for active notifications.
+     */
+    public void onNotificationActionClicked(StatusBarNotification sbn, RankingMap rankingMap) {
+        onNotificationActionClicked(sbn);
+    }
+
+    /**
      * Implement this method to learn about when the listener is enabled and connected to
      * the notification manager.  You are safe to call {@link #getActiveNotifications()}
      * at this time.
@@ -1291,6 +1341,48 @@ public abstract class NotificationListenerService extends Service {
         }
 
         @Override
+        public void onNotificationClicked(IStatusBarNotificationHolder sbnHolder,
+                NotificationRankingUpdate update) {
+            StatusBarNotification sbn;
+            try {
+                sbn = sbnHolder.get();
+            } catch (RemoteException e) {
+                Log.w(TAG, "onNotificationClicked: Error receiving StatusBarNotification", e);
+                return;
+            }
+            // protect subclass from concurrent modifications of (@link mNotificationKeys}.
+            synchronized (mLock) {
+                SomeArgs args = SomeArgs.obtain();
+                args.arg1 = sbn;
+                args.arg2 = mRankingMap;
+                mHandler.obtainMessage(MyHandler.MSG_ON_NOTIFICATION_CLICKED,
+                        args).sendToTarget();
+            }
+
+        }
+
+        @Override
+        public void onNotificationActionClicked(IStatusBarNotificationHolder sbnHolder,
+                NotificationRankingUpdate update) {
+            StatusBarNotification sbn;
+            try {
+                sbn = sbnHolder.get();
+            } catch (RemoteException e) {
+                Log.w(TAG, "onNotificationActionClicked: Error receiving StatusBarNotification", e);
+                return;
+            }
+            // protect subclass from concurrent modifications of (@link mNotificationKeys}.
+            synchronized (mLock) {
+                SomeArgs args = SomeArgs.obtain();
+                args.arg1 = sbn;
+                args.arg2 = mRankingMap;
+                mHandler.obtainMessage(MyHandler.MSG_ON_NOTIFICATION_ACTION_CLICKED,
+                        args).sendToTarget();
+            }
+
+        }
+
+        @Override
         public void onListenerConnected(NotificationRankingUpdate update) {
             // protect subclass from concurrent modifications of (@link mNotificationKeys}.
             synchronized (mLock) {
@@ -1974,6 +2066,8 @@ public abstract class NotificationListenerService extends Service {
         public static final int MSG_ON_INTERRUPTION_FILTER_CHANGED = 6;
         public static final int MSG_ON_NOTIFICATION_CHANNEL_MODIFIED = 7;
         public static final int MSG_ON_NOTIFICATION_CHANNEL_GROUP_MODIFIED = 8;
+        public static final int MSG_ON_NOTIFICATION_CLICKED = 9;
+        public static final int MSG_ON_NOTIFICATION_ACTION_CLICKED = 10;
 
         public MyHandler(Looper looper) {
             super(looper, null, false);
@@ -2038,6 +2132,22 @@ public abstract class NotificationListenerService extends Service {
                     NotificationChannelGroup group = (NotificationChannelGroup) args.arg3;
                     int modificationType = (int) args.arg4;
                     onNotificationChannelGroupModified(pkgName, user, group, modificationType);
+                } break;
+
+                case MSG_ON_NOTIFICATION_CLICKED: {
+                    SomeArgs args = (SomeArgs) msg.obj;
+                    StatusBarNotification sbn = (StatusBarNotification) args.arg1;
+                    RankingMap rankingMap = (RankingMap) args.arg2;
+                    args.recycle();
+                    onNotificationClicked(sbn, rankingMap);
+                } break;
+
+                case MSG_ON_NOTIFICATION_ACTION_CLICKED: {
+                    SomeArgs args = (SomeArgs) msg.obj;
+                    StatusBarNotification sbn = (StatusBarNotification) args.arg1;
+                    RankingMap rankingMap = (RankingMap) args.arg2;
+                    args.recycle();
+                    onNotificationActionClicked(sbn, rankingMap);
                 } break;
             }
         }
