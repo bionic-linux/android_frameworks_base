@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c40829_952cce95",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/drawer/TileUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1110928
+      },
+      "writtenOn": "2018-08-27T22:28:31Z",
+      "side": 1,
+      "message": "This is error prone and can be dangerous..\n\nThis allows anyone to provide a tile that remove any other tile. So you can have a situation where App A provides a tile, but App B can provide another tile to \"remove it\". We need to make sure apps can only affect tiles relative to themselves, but not modify things others provide.\n\nIf you just want to disable a tile, can\u0027t you change the android:enabled property for the tiles you care about?",
+      "range": {
+        "startLine": 266,
+        "startChar": 12,
+        "endLine": 270,
+        "endChar": 13
+      },
+      "revId": "5afcdd13302cc7211f435b7d0d12fa51a50b7a26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
