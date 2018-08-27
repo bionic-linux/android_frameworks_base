@@ -31,6 +31,10 @@ oneway interface INotificationListener
     void onListenerConnected(in NotificationRankingUpdate update);
     void onNotificationPosted(in IStatusBarNotificationHolder notificationHolder,
             in NotificationRankingUpdate update);
+    void onNotificationClicked(in IStatusBarNotificationHolder notificationHolder,
+            in NotificationRankingUpdate update);
+    void onNotificationActionClicked(in IStatusBarNotificationHolder notificationHolder,
+            in NotificationRankingUpdate update);
     // stats only for assistant
     void onNotificationRemoved(in IStatusBarNotificationHolder notificationHolder,
             in NotificationRankingUpdate update, in NotificationStats stats, int reason);
