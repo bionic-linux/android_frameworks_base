@@ -22528,8 +22528,7 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
      * <p>
      * Verifies that directories exist and that ownership and labeling is
      * correct for all installed apps. If there is an ownership mismatch, this
-     * will try recovering system apps by wiping data; third-party app data is
-     * left intact.
+     * will try recovering apps by wiping data
      */
     private void prepareAppDataLIF(PackageParser.Package pkg, int userId, int flags) {
         if (pkg == null) {
@@ -22584,19 +22583,15 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
             ceDataInode = mInstaller.createAppData(volumeUuid, packageName, userId, flags,
                     appId, seInfo, app.targetSdkVersion);
         } catch (InstallerException e) {
-            if (app.isSystemApp()) {
-                logCriticalInfo(Log.ERROR, "Failed to create app data for " + packageName
-                        + ", but trying to recover: " + e);
-                destroyAppDataLeafLIF(pkg, userId, flags);
-                try {
-                    ceDataInode = mInstaller.createAppData(volumeUuid, packageName, userId, flags,
-                            appId, seInfo, app.targetSdkVersion);
-                    logCriticalInfo(Log.DEBUG, "Recovery succeeded!");
-                } catch (InstallerException e2) {
-                    logCriticalInfo(Log.DEBUG, "Recovery failed!");
-                }
-            } else {
-                Slog.e(TAG, "Failed to create app data for " + packageName + ": " + e);
+            logCriticalInfo(Log.ERROR, "Failed to create app data for " + packageName
+                    + ", but trying to recover: " + e);
+            destroyAppDataLeafLIF(pkg, userId, flags);
+            try {
+                ceDataInode = mInstaller.createAppData(volumeUuid, packageName, userId, flags,
+                        appId, seInfo, app.targetSdkVersion);
+                logCriticalInfo(Log.DEBUG, "Recovery succeeded!");
+            } catch (InstallerException e2) {
+                logCriticalInfo(Log.DEBUG, "Recovery failed!");
             }
         }
         // Prepare the application profiles only for upgrades and first boot (so that we don't
