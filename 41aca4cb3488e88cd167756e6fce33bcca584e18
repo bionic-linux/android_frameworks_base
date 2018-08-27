@@ -46,6 +46,30 @@
       "revId": "41aca4cb3488e88cd167756e6fce33bcca584e18",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b588e62_19758b7c",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-08-27T16:51:50Z",
+      "side": 1,
+      "message": "Okay, just making sure it will not be used in vendor/system apps or it will not be accessible.",
+      "parentUuid": "b3a616a2_69dda6b0",
+      "range": {
+        "startLine": 966,
+        "startChar": 9,
+        "endLine": 966,
+        "endChar": 13
+      },
+      "revId": "41aca4cb3488e88cd167756e6fce33bcca584e18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
