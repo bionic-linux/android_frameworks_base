@@ -16,6 +16,24 @@
       "revId": "a1766a1b2d2c2a826d6c204205233ba3ae30a54e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0910202_9e219a20",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/license/LicenseHtmlLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1305591
+      },
+      "writtenOn": "2018-08-28T17:23:04Z",
+      "side": 1,
+      "message": "I plan to add support to AOSP soon.",
+      "parentUuid": "e728db19_7e267c0a",
+      "revId": "a1766a1b2d2c2a826d6c204205233ba3ae30a54e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
