@@ -366,7 +366,13 @@ public class RouterAdvertisementDaemon {
             |   Options ...
             +-+-+-+-+-+-+-+-+-+-+-+-
         */
-        final byte DEFAULT_HOPLIMIT = 64;
+        // Tethered traffic will have the hop limit properly decremented.
+        // Consequently, set the hoplimit greater by one than the upstream
+        // unicast hop limit.
+        //
+        // TODO: Dynamically pass down the IPV6_UNICAST_HOPS value from the
+        // upstream interface for more correct behaviour.
+        final byte DEFAULT_HOPLIMIT = 65;
         ra.put(ICMPV6_ND_ROUTER_ADVERT)
           .put(asByte(0))
           .putShort(asShort(0))
