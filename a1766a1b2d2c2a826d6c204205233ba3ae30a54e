@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e728db19_7e267c0a",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/license/LicenseHtmlLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2018-08-28T17:17:35Z",
+      "side": 1,
+      "message": "A little weird this can load from /product_services but the package manager can not. No harm I guess...",
+      "revId": "a1766a1b2d2c2a826d6c204205233ba3ae30a54e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
