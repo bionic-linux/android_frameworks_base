@@ -45,6 +45,7 @@ public class GraphicsEnvironment {
     private static final String TAG = "GraphicsEnvironment";
     private static final String PROPERTY_GFX_DRIVER = "ro.gfx.driver.0";
     private static final String ANGLE_PACKAGE_NAME = "com.android.angle";
+    private static final String GLES_MODE_METADATA_KEY = "com.android.angle.GLES_MODE";
 
     private ClassLoader mClassLoader;
     private String mLayerPath;
@@ -123,7 +124,6 @@ public class GraphicsEnvironment {
                     }
                 }
             }
-
         }
 
         // Include the app's lib directory in all cases
@@ -181,7 +181,6 @@ public class GraphicsEnvironment {
         }
 
         ApplicationInfo angleInfo;
-
         try {
             angleInfo = context.getPackageManager().getApplicationInfo(ANGLE_PACKAGE_NAME,
                 PackageManager.MATCH_SYSTEM_ONLY);
