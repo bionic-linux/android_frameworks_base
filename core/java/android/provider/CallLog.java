@@ -509,6 +509,93 @@ public class CallLog {
         private static final int MIN_DURATION_FOR_NORMALIZED_NUMBER_UPDATE_MS = 1000 * 10;
 
         /**
+         * Value for {@link CallLog.Calls#BLOCK_REASON}, set when {@link CallLog.Calls#TYPE} is
+         * {@link CallLog.Calls#BLOCKED_TYPE} to indicate that a call was blocked by a
+         * CallScreeningService. The {@link CallLog.Calls#CALL_SCREENING_COMPONENT_NAME} and
+         * {@link CallLog.Calls#CALL_SCREENING_APP_NAME} columns will indicate which call screening
+         * service was responsible for blocking the call.
+         */
+        public static final int BLOCK_REASON_CALL_SCREENING_SERVICE = 1;
+
+        /**
+         * Value for {@link CallLog.Calls#BLOCK_REASON}, set when {@link CallLog.Calls#TYPE} is
+         * {@link CallLog.Calls#BLOCKED_TYPE} to indicate that a call was blocked because the user
+         * configured a contact to be sent directly to voicemail.
+         */
+        public static final int BLOCK_REASON_DIRECT_TO_VOICEMAIL = 2;
+
+        /**
+         * Value for {@link CallLog.Calls#BLOCK_REASON}, set when {@link CallLog.Calls#TYPE} is
+         * {@link CallLog.Calls#BLOCKED_TYPE} to indicate that a call was blocked because it is
+         * in the BlockedNumbers provider.
+         */
+        public static final int BLOCK_REASON_BLOCKED_NUMBER = 3;
+
+        /**
+         * Value for {@link CallLog.Calls#BLOCK_REASON}, set when {@link CallLog.Calls#TYPE} is
+         * {@link CallLog.Calls#BLOCKED_TYPE} to indicate that a call was blocked because the user
+         * has chosen to block all calls from unknown numbers.
+         */
+        public static final int BLOCK_REASON_UNKNOWN_NUMBER = 4;
+
+        /**
+         * Value for {@link CallLog.Calls#BLOCK_REASON}, set when {@link CallLog.Calls#TYPE} is
+         * {@link CallLog.Calls#BLOCKED_TYPE} to indicate that a call was blocked because the user
+         * has chosen to block all calls from restricted numbers.
+         */
+        public static final int BLOCK_REASON_RESTRICTED_NUMBER = 5;
+
+        /**
+         * Value for {@link CallLog.Calls#BLOCK_REASON}, set when {@link CallLog.Calls#TYPE} is
+         * {@link CallLog.Calls#BLOCKED_TYPE} to indicate that a call was blocked because the user
+         * has chosen to block all calls from pay phones.
+         */
+        public static final int BLOCK_REASON_PAY_PHONE = 6;
+
+        /**
+         * Value for {@link CallLog.Calls#BLOCK_REASON}, set when {@link CallLog.Calls#TYPE} is
+         * {@link CallLog.Calls#BLOCKED_TYPE} to indicate that a call was blocked because the user
+         * has chosen to block all calls from numbers not in their contacts.
+         */
+        public static final int BLOCK_REASON_NOT_IN_CONTACTS = 7;
+
+        /**
+         * The ComponentName of the CallScreeningService which blocked this call. Will be
+         * populated when the {@link CallLog.Calls#TYPE} is {@link CallLog.Calls#BLOCKED_TYPE}.
+         * <P>Type: TEXT</P>
+         */
+        public static final String CALL_SCREENING_COMPONENT_NAME = "call_screening_component_name";
+
+        /**
+         * The name of the app which blocked a call. Will be populated when the
+         * {@link CallLog.Calls#TYPE} is {@link CallLog.Calls#BLOCKED_TYPE}. Provided as a
+         * convenience so that the call log can still indicate which app blocked a call, even if
+         * that app is no longer installed.
+         * <P>Type: TEXT</P>
+         */
+        public static final String CALL_SCREENING_APP_NAME = "call_screening_app_name";
+
+        /**
+         * Where the {@link CallLog.Calls#TYPE} is {@link CallLog.Calls#BLOCKED_TYPE},
+         * indicates the reason why a call is blocked.
+         * <P>Type: INTEGER</P>
+         *
+         * <p>
+         * Allowed values:
+         * <ul>
+         * <li>{@link CallLog.Calls#BLOCK_REASON_CALL_SCREENING_SERVICE}</li>
+         * <li>{@link CallLog.Calls#BLOCK_REASON_DIRECT_TO_VOICEMAIL}</li>
+         * <li>{@link CallLog.Calls#BLOCK_REASON_BLOCKED_NUMBER}</li>
+         * <li>{@link CallLog.Calls#BLOCK_REASON_UNKNOWN_NUMBER}</li>
+         * <li>{@link CallLog.Calls#BLOCK_REASON_RESTRICTED_NUMBER}</li>
+         * <li>{@link CallLog.Calls#BLOCK_REASON_PAY_PHONE}</li>
+         * <li>{@link CallLog.Calls#BLOCK_REASON_NOT_IN_CONTACTS}</li>
+         * </ul>
+         * </p>
+         */
+        public static final String BLOCK_REASON = "block_reason";
+
+        /**
          * Adds a call to the call log.
          *
          * @param ci the CallerInfo object to get the target contact from.  Can be null
