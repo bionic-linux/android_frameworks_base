@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83242ac7_0546b519",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-29T03:27:27Z",
+      "side": 1,
+      "message": "I think this name is a bit misleading, since it\u0027s about the framework server and not the protocol.\n\nmUsingLegacyDhcpServer would be fine, I think.  This boolean and the constructor argument will be deleted toward the end of / after Q anyway.",
+      "range": {
+        "startLine": 133,
+        "startChar": 26,
+        "endLine": 133,
+        "endChar": 38
+      },
+      "revId": "8c91b29dc05bd6e33f4afba7b409ad3fb3b32f71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7c2986_bca58430",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachineTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-08-29T03:27:27Z",
+      "side": 1,
+      "message": "\"usingLegacyDhcp\" would be more readable, I suspect",
+      "range": {
+        "startLine": 401,
+        "startChar": 73,
+        "endLine": 401,
+        "endChar": 84
+      },
+      "revId": "8c91b29dc05bd6e33f4afba7b409ad3fb3b32f71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
