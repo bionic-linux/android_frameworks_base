@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09b8f31d_2beca613",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003824
+      },
+      "writtenOn": "2018-08-29T23:15:23Z",
+      "side": 1,
+      "message": "\"but not shown yet\"?",
+      "range": {
+        "startLine": 62,
+        "startChar": 37,
+        "endLine": 62,
+        "endChar": 64
+      },
+      "revId": "d0b9014a51c375754d1fa77543a127bb05006257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
