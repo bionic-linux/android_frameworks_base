@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0404f314_3e0ad41b",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1153427
+      },
+      "writtenOn": "2018-08-29T06:04:47Z",
+      "side": 1,
+      "message": "How about inserting a warning log for such double unexpected scenarios?",
+      "revId": "a69557467f8c52fa1c7b1f53bad3cb59a76d5294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8f67f8_c47fb889",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1153427
+      },
+      "writtenOn": "2018-08-29T06:04:47Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "a69557467f8c52fa1c7b1f53bad3cb59a76d5294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
