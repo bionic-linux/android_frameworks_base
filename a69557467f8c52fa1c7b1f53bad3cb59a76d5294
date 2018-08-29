@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a6592ad_a538538c",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-08-29T20:17:11Z",
+      "side": 1,
+      "message": "Done.\n\nJust to make it clear, we do know that this can happen and cannot be avoided.  Occasionally receiving BadTokenException here is indeed expected (or we could call it \"predicted\").\n\nThus I don\u0027t want these messages to look scary, especially to QA team. If this scenario happens often, and if we putput some scary warnings like \"Ignoring BadTokenException!\", then QA team would start forwarding bug reports to the IME team just because they saw a scary word \"Exception\" there in some bugreports even if the issue is caused by something else. We should be cautious about ideas to add warning messages for possible/known scenarios just because it could be useful debugging info.\n\nKeep in mind that I may later just remove those messages or hide them with \"if (DEBUG)\" for the next major platform release if I found that log too verbose.",
+      "parentUuid": "0404f314_3e0ad41b",
+      "revId": "a69557467f8c52fa1c7b1f53bad3cb59a76d5294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b8f67f8_c47fb889",
         "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a69557467f8c52fa1c7b1f53bad3cb59a76d5294",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43987c8_177e3388",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-08-29T20:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b8f67f8_c47fb889",
+      "revId": "a69557467f8c52fa1c7b1f53bad3cb59a76d5294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
