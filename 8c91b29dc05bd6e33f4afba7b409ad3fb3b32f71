@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7e14f1d_94843783",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-29T03:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83242ac7_0546b519",
+      "range": {
+        "startLine": 133,
+        "startChar": 26,
+        "endLine": 133,
+        "endChar": 38
+      },
+      "revId": "8c91b29dc05bd6e33f4afba7b409ad3fb3b32f71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c7c2986_bca58430",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachineTest.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "8c91b29dc05bd6e33f4afba7b409ad3fb3b32f71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa3ee16_ca56dbc9",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachineTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-29T03:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c7c2986_bca58430",
+      "range": {
+        "startLine": 401,
+        "startChar": 73,
+        "endLine": 401,
+        "endChar": 84
+      },
+      "revId": "8c91b29dc05bd6e33f4afba7b409ad3fb3b32f71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
