@@ -16,6 +16,9 @@
 
 package android.inputmethodservice;
 
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
+import android.annotation.IntDef;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Rect;
@@ -24,6 +27,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+
+import java.lang.annotation.Retention;
 
 /**
  * A SoftInputWindow is a Dialog that is intended to be used for a top-level input
@@ -42,14 +47,52 @@ public class SoftInputWindow extends Dialog {
     final boolean mTakesFocus;
     private final Rect mBounds = new Rect();
 
+    @Retention(SOURCE)
+    @IntDef(value = {SoftInputWindowState.WAITING_TOKEN, SoftInputWindowState.TOKEN_SET,
+            SoftInputWindowState.SHOWN_AT_LEAST_ONCE, SoftInputWindowState.REJECTED_AT_LEAST_ONCE})
+    private @interface SoftInputWindowState {
+        /**
+         * The window token is not set yet
+         */
+        int WAITING_TOKEN = 0;
+        /**
+         * The window token was set, but was shown at least once.
+         */
+        int TOKEN_SET = 1;
+        /**
+         * The window was shown at least once.
+         */
+        int SHOWN_AT_LEAST_ONCE = 2;
+        /**
+         * {@link android.view.WindowManager.BadTokenException} was sent when calling
+         * {@link Dialog#show()} at least once.
+         */
+        int REJECTED_AT_LEAST_ONCE = 3;
+    }
+
+    @SoftInputWindowState
+    private int mWindowState = SoftInputWindowState.WAITING_TOKEN;
+
     public interface Callback {
         public void onBackPressed();
     }
 
     public void setToken(IBinder token) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.token = token;
-        getWindow().setAttributes(lp);
+        switch (mWindowState) {
+            case SoftInputWindowState.WAITING_TOKEN:
+                // This is the only expected scenario.
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.token = token;
+                getWindow().setAttributes(lp);
+                mWindowState = SoftInputWindowState.TOKEN_SET;
+                break;
+            case SoftInputWindowState.TOKEN_SET:
+            case SoftInputWindowState.SHOWN_AT_LEAST_ONCE:
+            case SoftInputWindowState.REJECTED_AT_LEAST_ONCE:
+                throw new IllegalStateException("setToken can be called only once");
+            default:
+                throw new IllegalStateException("Unexpected state=" + mWindowState);
+        }
     }
     
     /**
@@ -189,5 +232,51 @@ public class SoftInputWindow extends Dialog {
         }
 
         getWindow().setFlags(windowSetFlags, windowModFlags);
+    }
+
+    @Override
+    public final void show() {
+        switch (mWindowState) {
+            case SoftInputWindowState.WAITING_TOKEN:
+                throw new IllegalStateException("Window token is not set yet.");
+            case SoftInputWindowState.TOKEN_SET:
+            case SoftInputWindowState.SHOWN_AT_LEAST_ONCE:
+                try {
+                    super.show();
+                } catch (WindowManager.BadTokenException e) {
+                    mWindowState = SoftInputWindowState.REJECTED_AT_LEAST_ONCE;
+                }
+                break;
+            case SoftInputWindowState.REJECTED_AT_LEAST_ONCE:
+                // nothing we can safely do anymore because WMS has already denied show().
+                break;
+            default:
+                throw new IllegalStateException("Unexpected state=" + mWindowState);
+        }
+    }
+
+    final void dismissForDestroyIfNecessary() {
+        switch (mWindowState) {
+            case SoftInputWindowState.WAITING_TOKEN:
+            case SoftInputWindowState.TOKEN_SET:
+                // nothing to do because the window has never been shown.
+                break;
+            case SoftInputWindowState.SHOWN_AT_LEAST_ONCE:
+                // Disable exit animation for the current IME window
+                // to avoid the race condition between the exit and enter animations
+                // when the current IME is being switched to another one.
+                try {
+                    getWindow().setWindowAnimations(0);
+                    dismiss();
+                } catch (WindowManager.BadTokenException e) {
+                    mWindowState = SoftInputWindowState.REJECTED_AT_LEAST_ONCE;
+                }
+                break;
+            case SoftInputWindowState.REJECTED_AT_LEAST_ONCE:
+                // nothing we can safely do anymore because WMS has already denied show().
+                break;
+            default:
+                throw new IllegalStateException("Unexpected state=" + mWindowState);
+        }
     }
 }
