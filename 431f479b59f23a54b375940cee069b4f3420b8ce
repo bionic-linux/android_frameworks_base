@@ -22,6 +22,30 @@
       "revId": "431f479b59f23a54b375940cee069b4f3420b8ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0668fed_159da448",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-08-29T03:12:19Z",
+      "side": 1,
+      "message": "I tried to pair 5 devices, but pairing started failing after the 4th one succeeded. After retrying the IP addresses given to 3 devices were 192.168.44.215, 192.168.44.152, 192.168.44.133. So the \"192.168.44.1 to 192.168.48.1\" does not seem correct, I only got addresses in 192.168.44.0/24.",
+      "parentUuid": "df217ba5_5e29a142",
+      "range": {
+        "startLine": 275,
+        "startChar": 8,
+        "endLine": 275,
+        "endChar": 9
+      },
+      "revId": "431f479b59f23a54b375940cee069b4f3420b8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
