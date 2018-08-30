@@ -1468,12 +1468,13 @@ public class SubscriptionManager {
     }
 
     /**
-     * @return true if a valid subId else false
-     * @hide
+     * Checks if the supplied subscription Id is valid.
+     *
+     * @param subscriptionId The subscription Id.
+     * @return true if the supplied subscriptionId is valid; false otherwise.
      */
-    @UnsupportedAppUsage
-    public static boolean isValidSubscriptionId(int subId) {
-        return subId > INVALID_SUBSCRIPTION_ID ;
+    public static boolean isValidSubscriptionId(int subscriptionId) {
+        return subscriptionId > INVALID_SUBSCRIPTION_ID;
     }
 
     /**
