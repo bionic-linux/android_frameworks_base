@@ -3398,4 +3398,7 @@
   <java-symbol type="fraction" name="config_prescaleAbsoluteVolume_index1" />
   <java-symbol type="fraction" name="config_prescaleAbsoluteVolume_index2" />
   <java-symbol type="fraction" name="config_prescaleAbsoluteVolume_index3" />
+
+  <!-- Minimal height of bottom stack when IME is displayed -->
+  <java-symbol type="dimen" name="config_bottom_stack_minimal_height" />
 </resources>
