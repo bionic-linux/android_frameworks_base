@@ -1415,6 +1415,15 @@ public class CarrierConfigManager {
             "broadcast_emergency_call_state_changes_bool";
 
     /**
+      * Boolean indicating if the label of SIM Toolkit on the launcher can be updated dynamically.
+      * The alpha identifier of SET UP MENU command can be displayed as the label of SIM Toolkit
+      * if {@code false}.
+      * @hide
+      */
+    public static final String KEY_STK_DISABLE_LABEL_UPDATE_BY_SETUP_MENU_BOOL =
+            "stk_disable_label_update_by_setup_menu_bool";
+
+    /**
       * Indicates whether STK LAUNCH_BROWSER command is disabled.
       * If {@code true}, then the browser will not be launched
       * on UI for the LAUNCH_BROWSER STK command.
@@ -3405,6 +3414,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_EDITABLE_WFC_ROAMING_MODE_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_BLOCKING_PAY_PHONE_OPTION_BOOL, false);
         sDefaults.putBoolean(KEY_USE_WFC_HOME_NETWORK_MODE_IN_ROAMING_NETWORK_BOOL, false);
+        sDefaults.putBoolean(KEY_STK_DISABLE_LABEL_UPDATE_BY_SETUP_MENU_BOOL, false);
         sDefaults.putBoolean(KEY_STK_DISABLE_LAUNCH_BROWSER_BOOL, false);
         sDefaults.putBoolean(KEY_ALLOW_METERED_NETWORK_FOR_CERT_DOWNLOAD_BOOL, false);
         sDefaults.putStringArray(KEY_CARRIER_WIFI_STRING_ARRAY, null);
