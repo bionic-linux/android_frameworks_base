@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19152afc_6049b8b5",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3238,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2018-08-30T04:50:29Z",
+      "side": 1,
+      "message": "Can we do this outside of the method?\nI don\u0027t feel comfortable to change the position of input stream inside.",
+      "range": {
+        "startLine": 3238,
+        "startChar": 12,
+        "endLine": 3238,
+        "endChar": 22
+      },
+      "revId": "fc357e33d5ff6d9845660d4211b8119bd6ceb07e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
