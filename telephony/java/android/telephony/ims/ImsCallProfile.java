@@ -299,6 +299,16 @@ public final class ImsCallProfile implements Parcelable {
      */
     public static final String EXTRA_CALL_RAT_TYPE_ALT = "callRadioTech";
 
+    /**
+     * String extra property containing forwarded numbers associated with the current connection
+     * for an IMS call. The value is string array, and it can include multiple numbers, and
+     * the array values are expected E164 (e.g. +1 (650) 253-0000) format.
+     * Note: This is used by {@link com.android.internal.telephony.imsphone.ImsPhoneConnection#
+     *     updateForwardedNumberFromExtras(Bundle)} to display the forwarded call number on
+     * call-in-progress screen.
+     */
+    public static final String EXTRA_FORWARDED_NUMBER = "ForwardedNumber";
+
     /** @hide */
     public int mServiceType;
     /** @hide */
