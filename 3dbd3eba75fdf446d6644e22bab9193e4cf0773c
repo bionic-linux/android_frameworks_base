@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69124005_96ea6d9d",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-08-30T02:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96b4bbfb_d2ce159a",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "3dbd3eba75fdf446d6644e22bab9193e4cf0773c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b18869a_7bec89b6",
         "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
         "patchSetId": 6
