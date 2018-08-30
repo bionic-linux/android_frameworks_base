@@ -1168,6 +1168,15 @@ public class CarrierConfigManager {
             "stk_disable_launch_browser_bool";
 
     /**
+      * Boolean indicating if the label of SIM Toolkit on the launcher can be updated dynamically.
+      * The alpha identifier of SET UP MENU command can be displayed as the label of SIM Toolkit
+      * if {@code false}.
+      * @hide
+      */
+    public static final String KEY_STK_DISABLE_DYNAMIC_LABEL_UPDATE_BOOL =
+            "stk_disable_dynamic_label_update_bool";
+
+    /**
      * Boolean indicating if show data RAT icon on status bar even when data is disabled
      * @hide
      */
@@ -2374,6 +2383,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_FILTERED_CNAP_NAMES_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_EDITABLE_WFC_ROAMING_MODE_BOOL, false);
         sDefaults.putBoolean(KEY_STK_DISABLE_LAUNCH_BROWSER_BOOL, false);
+        sDefaults.putBoolean(KEY_STK_DISABLE_DYNAMIC_LABEL_UPDATE_BOOL, false);
         sDefaults.putBoolean(KEY_PERSIST_LPP_MODE_BOOL, true);
         sDefaults.putStringArray(KEY_CARRIER_WIFI_STRING_ARRAY, null);
         sDefaults.putInt(KEY_PREF_NETWORK_NOTIFICATION_DELAY_INT, -1);
