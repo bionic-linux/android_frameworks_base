@@ -3115,6 +3115,14 @@ public class CarrierConfigManager {
     public static final String KEY_SUPPORT_WPS_OVER_IMS_BOOL =
             "support_wps_over_ims_bool";
 
+    /**
+     * Flag specifying whether to show forwarded number on call-in-progress screen.
+     * When true, forwarded number is shown.
+     * When false, forwarded number is not shown.
+     */
+    public static final String KEY_SHOW_FORWARDED_NUMBER_BOOL =
+            "show_forwarded_number_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -3533,6 +3541,7 @@ public class CarrierConfigManager {
                 });
         sDefaults.putBoolean(KEY_SUPPORT_WPS_OVER_IMS_BOOL, true);
         sDefaults.putAll(Ims.getDefaults());
+        sDefaults.putBoolean(KEY_SHOW_FORWARDED_NUMBER_BOOL, false);
     }
 
     /**
