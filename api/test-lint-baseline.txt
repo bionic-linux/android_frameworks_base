@@ -23,6 +23,8 @@ ActionValue: android.telephony.ims.ImsCallProfile#EXTRA_DISPLAY_TEXT:
     Inconsistent extra value; expected `android.telephony.ims.extra.DISPLAY_TEXT`, was `DisplayText`
 ActionValue: android.telephony.ims.ImsCallProfile#EXTRA_EMERGENCY_CALL:
     Inconsistent extra value; expected `android.telephony.ims.extra.EMERGENCY_CALL`, was `e_call`
+ActionValue: android.telephony.ims.ImsCallProfile#EXTRA_FORWARDED_NUMBER:
+    Inconsistent extra value; expected `android.telephony.ims.extra.FORWARDED_NUMBER`, was `ForwardedNumber`
 ActionValue: android.telephony.ims.ImsCallProfile#EXTRA_IS_CALL_PULL:
     Inconsistent extra value; expected `android.telephony.ims.extra.IS_CALL_PULL`, was `CallPull`
 ActionValue: android.telephony.ims.ImsCallProfile#EXTRA_OI:

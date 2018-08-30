@@ -3269,6 +3269,14 @@ public class CarrierConfigManager {
     public static final String KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL =
             "prevent_clir_activation_and_deactivation_code_bool";
 
+    /**
+     * Flag specifying whether to show forwarded number on call-in-progress screen.
+     * When true, forwarded number is shown.
+     * When false, forwarded number is not shown.
+     */
+    public static final String KEY_SHOW_FORWARDED_NUMBER_BOOL =
+            "show_forwarded_number_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -3698,6 +3706,7 @@ public class CarrierConfigManager {
                 new int[] {4 /* BUSY */});
         sDefaults.putBoolean(KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL, false);
         sDefaults.putLong(KEY_DATA_SWITCH_VALIDATION_TIMEOUT_LONG, 2000);
+        sDefaults.putBoolean(KEY_SHOW_FORWARDED_NUMBER_BOOL, false);
     }
 
     /**
