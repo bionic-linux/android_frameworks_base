@@ -228,6 +228,7 @@ public final class ImsCallProfile implements Parcelable {
      *  DisplayText: Display text for the call.
      *  AdditionalCallInfo: Additional call info.
      *  CallPull: Boolean value specifying if the call is a pulled call.
+     *  ForwardedNumber: Forwarded number.
      */
     public static final String EXTRA_OI = "oi";
     public static final String EXTRA_CNA = "cna";
@@ -238,6 +239,7 @@ public final class ImsCallProfile implements Parcelable {
     public static final String EXTRA_DISPLAY_TEXT = "DisplayText";
     public static final String EXTRA_ADDITIONAL_CALL_INFO = "AdditionalCallInfo";
     public static final String EXTRA_IS_CALL_PULL = "CallPull";
+    public static final String EXTRA_FORWARDED_NUMBER = "ForwardedNumber";
 
     /**
      * Extra key which the RIL can use to indicate the radio technology used for a call.
