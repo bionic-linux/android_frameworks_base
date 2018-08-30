@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9d5f136d_0a0f80d6",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-08-30T06:38:23Z",
+      "side": 1,
+      "message": "\u003e As I said in different comment, I\u0027m not a big fan of adding a bunch of Log.i/Log.d things just because it could be helpful for someone else.\n\nTo clarify, I\u0027m totally fine with having Log.i/Log.d as long as they are disabled by default with \"if (DEBUG)\" block.",
+      "parentUuid": "064e5961_80d84a35",
+      "range": {
+        "startLine": 277,
+        "startChar": 38,
+        "endLine": 277,
+        "endChar": 47
+      },
+      "revId": "3dbd3eba75fdf446d6644e22bab9193e4cf0773c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec444a1f_14de369b",
         "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
         "patchSetId": 6
