@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "7af1895d_4d80e644",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-08-30T02:57:19Z",
+      "side": 1,
+      "message": "Done.\n\nJust for the record, since SoftInputWindow is used not only from InputMethodService but also from VoiceInteractionSession, technically this is not guaranteed to be the IME window token.",
+      "parentUuid": "2b18869a_7bec89b6",
+      "range": {
+        "startLine": 269,
+        "startChar": 45,
+        "endLine": 269,
+        "endChar": 50
+      },
+      "revId": "3dbd3eba75fdf446d6644e22bab9193e4cf0773c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79f7ef4a_20290640",
         "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
         "patchSetId": 6
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "064e5961_80d84a35",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-08-30T02:57:19Z",
+      "side": 1,
+      "message": "Done.  I\u0027m not entirely sure if it\u0027s really helpful though.  Reaching here means that the IME is already destroyed so the fact that showSoftInput() is NO-OP doesn\u0027t sound strange.\n\nAs I said in different comment, I\u0027m not a big fan of adding a bunch of Log.i/Log.d things just because it could be helpful for someone else.",
+      "parentUuid": "79f7ef4a_20290640",
+      "range": {
+        "startLine": 277,
+        "startChar": 38,
+        "endLine": 277,
+        "endChar": 47
+      },
+      "revId": "3dbd3eba75fdf446d6644e22bab9193e4cf0773c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec444a1f_14de369b",
         "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
         "patchSetId": 6
@@ -91,6 +139,30 @@
       "revId": "3dbd3eba75fdf446d6644e22bab9193e4cf0773c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3b069b_b0092ff8",
+        "filename": "core/java/android/inputmethodservice/SoftInputWindow.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-08-30T02:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec444a1f_14de369b",
+      "range": {
+        "startLine": 306,
+        "startChar": 20,
+        "endLine": 306,
+        "endChar": 79
+      },
+      "revId": "3dbd3eba75fdf446d6644e22bab9193e4cf0773c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
