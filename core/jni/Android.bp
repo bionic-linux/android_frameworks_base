@@ -261,7 +261,6 @@ cc_library_shared {
         "libziparchive",
         "libETC1",
         "libhardware",
-        "libhardware_legacy",
         "libselinux",
         "libicuuc",
         "libmedia",
