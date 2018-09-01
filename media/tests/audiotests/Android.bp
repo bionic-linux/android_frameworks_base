@@ -9,7 +9,7 @@ cc_test {
         "libcutils",
         "libutils",
         "libbinder",
-        "libhardware_legacy",
+        "libpower",
         "libmedia",
         "libaudioclient",
     ],
