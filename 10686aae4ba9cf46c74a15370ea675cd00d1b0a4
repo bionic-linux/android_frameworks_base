@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "353738cf_0f894448",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-03T05:43:13Z",
+      "side": 1,
+      "message": "provided",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "10686aae4ba9cf46c74a15370ea675cd00d1b0a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc508e5_8e97aa6a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3640,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-03T05:43:13Z",
+      "side": 1,
+      "message": "getVpnNetworkUserHandle ?",
+      "range": {
+        "startLine": 3640,
+        "startChar": 15,
+        "endLine": 3640,
+        "endChar": 42
+      },
+      "revId": "10686aae4ba9cf46c74a15370ea675cd00d1b0a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2742fc8_4cd7066e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3649,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-03T05:43:13Z",
+      "side": 1,
+      "message": "Looks to me like you\u0027re looking for mVpns.keyAt(i) here",
+      "range": {
+        "startLine": 3649,
+        "startChar": 27,
+        "endLine": 3649,
+        "endChar": 28
+      },
+      "revId": "10686aae4ba9cf46c74a15370ea675cd00d1b0a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748412cd_92aa3869",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-03T05:43:13Z",
+      "side": 1,
+      "message": "Please factorize these two functions, they are almost identical. You can have an internal call return a Vpn instance, then the getVpnNetworkConfiguration would return .getVpnConfig() ; the InitiatingUser would return .mUserHandle that you\u0027d make package-private.",
+      "range": {
+        "startLine": 3654,
+        "startChar": 3,
+        "endLine": 3654,
+        "endChar": 5
+      },
+      "revId": "10686aae4ba9cf46c74a15370ea675cd00d1b0a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
