@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "109171a7_a541c257",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3649,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2018-09-03T12:58:49Z",
+      "side": 1,
+      "message": "Exact. Thanks !",
+      "parentUuid": "e2742fc8_4cd7066e",
+      "range": {
+        "startLine": 3649,
+        "startChar": 27,
+        "endLine": 3649,
+        "endChar": 28
+      },
+      "revId": "10686aae4ba9cf46c74a15370ea675cd00d1b0a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "748412cd_92aa3869",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -82,6 +106,30 @@
       "writtenOn": "2018-09-03T05:43:13Z",
       "side": 1,
       "message": "Please factorize these two functions, they are almost identical. You can have an internal call return a Vpn instance, then the getVpnNetworkConfiguration would return .getVpnConfig() ; the InitiatingUser would return .mUserHandle that you\u0027d make package-private.",
+      "range": {
+        "startLine": 3654,
+        "startChar": 3,
+        "endLine": 3654,
+        "endChar": 5
+      },
+      "revId": "10686aae4ba9cf46c74a15370ea675cd00d1b0a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142ce3bb_2b4f7fbc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2018-09-03T12:58:49Z",
+      "side": 1,
+      "message": "mUserHandle of Vpn is in a different package than ConnectivityService. So I would need to add a getter (or make the field public). Alternatively I can implement getVpnNetworkConfiguration given the result of getVpnNetworkInitiatingUser.",
+      "parentUuid": "748412cd_92aa3869",
       "range": {
         "startLine": 3654,
         "startChar": 3,
