@@ -4980,4 +4980,7 @@
     <!-- Strings for car -->
     <!-- String displayed when loading a user in the car [CHAR LIMIT=30] -->
     <string name="car_loading_profile">Loading</string>
+
+    <!-- Notification for when a wired headset is attached but not supported. -->
+    <string name="headset_unsupported_message">Headset not supported. Use another headset.</string>
 </resources>

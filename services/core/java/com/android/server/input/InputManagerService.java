@@ -292,6 +292,9 @@ public class InputManagerService extends IInputManager.Stub
     /** Switch code: Camera lens cover. When set the lens is covered. */
     public static final int SW_CAMERA_LENS_COVER = 0x09;
 
+    /** Switch code: Unsupport Headset. When set, unsupported device inserted. */
+    public static final int SW_UNSUPPORT_INSERT = 0x10;
+
     // Viewport constants defined in InputReader.h.
     public static final int VIEWPORT_DEFAULT = 1;
     public static final int VIEWPORT_EXTERNAL = 2;
@@ -304,8 +307,11 @@ public class InputManagerService extends IInputManager.Stub
     public static final int SW_MICROPHONE_INSERT_BIT = 1 << SW_MICROPHONE_INSERT;
     public static final int SW_LINEOUT_INSERT_BIT = 1 << SW_LINEOUT_INSERT;
     public static final int SW_JACK_PHYSICAL_INSERT_BIT = 1 << SW_JACK_PHYSICAL_INSERT;
+    public static final int SW_UNSUPPORT_INSERT_BIT = 1 << SW_UNSUPPORT_INSERT;
     public static final int SW_JACK_BITS =
-            SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT | SW_JACK_PHYSICAL_INSERT_BIT | SW_LINEOUT_INSERT_BIT;
+            SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT |
+            SW_JACK_PHYSICAL_INSERT_BIT | SW_LINEOUT_INSERT_BIT |
+            SW_UNSUPPORT_INSERT_BIT;
     public static final int SW_CAMERA_LENS_COVER_BIT = 1 << SW_CAMERA_LENS_COVER;
 
     /** Whether to use the dev/input/event or uevent subsystem for the audio jack. */
