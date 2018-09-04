@@ -27,6 +27,7 @@ import android.util.Slog;
 import android.media.AudioManager;
 import android.util.Log;
 import android.view.InputDevice;
+import android.widget.Toast;
 
 import com.android.internal.R;
 import com.android.server.input.InputManagerService;
@@ -34,9 +35,11 @@ import com.android.server.input.InputManagerService.WiredAccessoryCallbacks;
 import static com.android.server.input.InputManagerService.SW_HEADPHONE_INSERT;
 import static com.android.server.input.InputManagerService.SW_MICROPHONE_INSERT;
 import static com.android.server.input.InputManagerService.SW_LINEOUT_INSERT;
+import static com.android.server.input.InputManagerService.SW_UNSUPPORT_INSERT;
 import static com.android.server.input.InputManagerService.SW_HEADPHONE_INSERT_BIT;
 import static com.android.server.input.InputManagerService.SW_MICROPHONE_INSERT_BIT;
 import static com.android.server.input.InputManagerService.SW_LINEOUT_INSERT_BIT;
+import static com.android.server.input.InputManagerService.SW_UNSUPPORT_INSERT_BIT;
 
 import java.io.File;
 import java.io.FileReader;
@@ -72,6 +75,8 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
     private static final int MSG_NEW_DEVICE_STATE = 1;
     private static final int MSG_SYSTEM_READY = 2;
 
+    private static final int MSG_UNSUPPORTED_HEADSET_INSERT = 0;
+
     private final Object mLock = new Object();
 
     private final WakeLock mWakeLock;  // held while there is a pending route change
@@ -84,9 +89,12 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
     private final WiredAccessoryObserver mObserver;
     private final InputManagerService mInputManager;
 
+    private Context mContext;
+
     private final boolean mUseDevInputEventForAudioJack;
 
     public WiredAccessoryManager(Context context, InputManagerService inputManager) {
+        mContext = context;
         PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "WiredAccessoryManager");
         mWakeLock.setReferenceCounted(false);
@@ -111,6 +119,9 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
             if (mInputManager.getSwitchState(-1, InputDevice.SOURCE_ANY, SW_LINEOUT_INSERT) == 1) {
                 switchValues |= SW_LINEOUT_INSERT_BIT;
             }
+            if (mInputManager.getSwitchState(-1, InputDevice.SOURCE_ANY, SW_UNSUPPORT_INSERT) == 1) {
+                switchValues |= SW_UNSUPPORT_INSERT_BIT;
+            }
             notifyWiredAccessoryChanged(0, switchValues,
                     SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT | SW_LINEOUT_INSERT_BIT);
         }
@@ -124,11 +135,13 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
                 + " bits=" + switchCodeToString(switchValues, switchMask)
                 + " mask=" + Integer.toHexString(switchMask));
 
+        mUnsupportedHeadsetHandler.removeMessages(MSG_UNSUPPORTED_HEADSET_INSERT);
+
         synchronized (mLock) {
             int headset;
             mSwitchValues = (mSwitchValues & ~switchMask) | switchValues;
-            switch (mSwitchValues &
-                (SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT | SW_LINEOUT_INSERT_BIT)) {
+            switch (mSwitchValues & (SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT
+                    | SW_UNSUPPORT_INSERT_BIT | SW_LINEOUT_INSERT_BIT)) {
                 case 0:
                     headset = 0;
                     break;
@@ -149,6 +162,12 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
                     headset = BIT_HEADSET;
                     break;
 
+                case SW_UNSUPPORT_INSERT_BIT:
+                    headset = 0;
+                    mUnsupportedHeadsetHandler.sendEmptyMessageDelayed(
+                            MSG_UNSUPPORTED_HEADSET_INSERT, 1000);
+                    break;
+
                 default:
                     headset = 0;
                     break;
@@ -157,6 +176,21 @@ final class WiredAccessoryManager implements WiredAccessoryCallbacks {
             updateLocked(NAME_H2W,
                 (mHeadsetState & ~(BIT_HEADSET | BIT_HEADSET_NO_MIC | BIT_LINEOUT)) | headset);
         }
+    }
+
+    private final Handler mUnsupportedHeadsetHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_UNSUPPORTED_HEADSET_INSERT:
+                    onUnsupportedHeadset();
+                    break;
+            }
+        }
+    };
+
+    private void onUnsupportedHeadset() {
+        Toast.makeText(mContext, R.string.headset_unsupported_message, Toast.LENGTH_LONG).show();
     }
 
     @Override
