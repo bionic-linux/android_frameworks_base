@@ -300,6 +300,9 @@ public class InputManagerService extends IInputManager.Stub
     /** Switch code: Microphone. When set it is off. */
     public static final int SW_MUTE_DEVICE = 0x0e;
 
+    /** Switch code: Unsupport Headset. When set, unsupported device inserted. */
+    public static final int SW_UNSUPPORT_INSERT = 0x12;
+
     public static final int SW_LID_BIT = 1 << SW_LID;
     public static final int SW_TABLET_MODE_BIT = 1 << SW_TABLET_MODE;
     public static final int SW_KEYPAD_SLIDE_BIT = 1 << SW_KEYPAD_SLIDE;
@@ -307,8 +310,11 @@ public class InputManagerService extends IInputManager.Stub
     public static final int SW_MICROPHONE_INSERT_BIT = 1 << SW_MICROPHONE_INSERT;
     public static final int SW_LINEOUT_INSERT_BIT = 1 << SW_LINEOUT_INSERT;
     public static final int SW_JACK_PHYSICAL_INSERT_BIT = 1 << SW_JACK_PHYSICAL_INSERT;
+    public static final int SW_UNSUPPORT_INSERT_BIT = 1 << SW_UNSUPPORT_INSERT;
     public static final int SW_JACK_BITS =
-            SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT | SW_JACK_PHYSICAL_INSERT_BIT | SW_LINEOUT_INSERT_BIT;
+            SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT |
+            SW_JACK_PHYSICAL_INSERT_BIT | SW_LINEOUT_INSERT_BIT |
+            SW_UNSUPPORT_INSERT_BIT;
     public static final int SW_CAMERA_LENS_COVER_BIT = 1 << SW_CAMERA_LENS_COVER;
     public static final int SW_MUTE_DEVICE_BIT = 1 << SW_MUTE_DEVICE;
 
