@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9298ab2a_5bd126c5",
+        "filename": "cmds/incident_helper/tests/PageTypeInfoParser_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-09-04T19:33:40Z",
+      "side": 1,
+      "message": "This is supposed to be 1\u003c\u003c9 from the line above, right? I would have preferred a contexpr to unify these two for readability, but since this is a c/p...",
+      "range": {
+        "startLine": 58,
+        "startChar": 33,
+        "endLine": 58,
+        "endChar": 36
+      },
+      "revId": "93ca85a1724806c30b0fbc04837a7e869ba1c165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
