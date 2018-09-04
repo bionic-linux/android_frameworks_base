@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf7a349f_864185d7",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-04T07:00:52Z",
+      "side": 1,
+      "message": "Why is this static?  We only ever really have one UpstreamNewtorkMonitor, but even still all the other variables regular class members.\n\nIn general, statics don\u0027t make it any easier to test code, for one thing.",
+      "range": {
+        "startLine": 85,
+        "startChar": 27,
+        "endLine": 85,
+        "endChar": 43
+      },
+      "revId": "bf9b07cd356f4dcdf2b130c728d078a39e68bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a97e711_fb587270",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-04T07:00:52Z",
+      "side": 1,
+      "message": "Ah, perhaps this is why it\u0027s static.  In this case, just pass in this boolean as an extra argument.\n\nAlso, let\u0027s not use this deprecated function but rather see if we can instead check the NetworkCapabilities below for TRANSPORT_CELLULAR.",
+      "range": {
+        "startLine": 463,
+        "startChar": 17,
+        "endLine": 463,
+        "endChar": 33
+      },
+      "revId": "bf9b07cd356f4dcdf2b130c728d078a39e68bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
