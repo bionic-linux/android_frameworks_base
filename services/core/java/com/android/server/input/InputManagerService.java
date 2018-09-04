@@ -304,9 +304,21 @@ public class InputManagerService extends IInputManager.Stub
     public static final int SW_MICROPHONE_INSERT_BIT = 1 << SW_MICROPHONE_INSERT;
     public static final int SW_LINEOUT_INSERT_BIT = 1 << SW_LINEOUT_INSERT;
     public static final int SW_JACK_PHYSICAL_INSERT_BIT = 1 << SW_JACK_PHYSICAL_INSERT;
-    public static final int SW_JACK_BITS =
-            SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT | SW_JACK_PHYSICAL_INSERT_BIT | SW_LINEOUT_INSERT_BIT;
+
     public static final int SW_CAMERA_LENS_COVER_BIT = 1 << SW_CAMERA_LENS_COVER;
+
+    private final int mSwUnsupportedInsert;
+    private final int mSwUnsupportedInsertBit;
+    private final int mSwJackBits;
+
+    public int getSwitchCodeForUnsupportedInsert() {
+        return mSwUnsupportedInsert;
+    }
+
+    public int getSwitchCodeBitForUnsupportedInsert() {
+        return mSwUnsupportedInsertBit;
+    }
+
 
     /** Whether to use the dev/input/event or uevent subsystem for the audio jack. */
     final boolean mUseDevInputEventForAudioJack;
@@ -319,6 +331,12 @@ public class InputManagerService extends IInputManager.Stub
                 context.getResources().getBoolean(R.bool.config_useDevInputEventForAudioJack);
         Slog.i(TAG, "Initializing input manager, mUseDevInputEventForAudioJack="
                 + mUseDevInputEventForAudioJack);
+        mSwUnsupportedInsert =
+                context.getResources().getInteger(R.integer.config_switchCode_unsupportedHeadset);
+        mSwUnsupportedInsertBit = 1 << mSwUnsupportedInsert;
+        mSwJackBits = SW_HEADPHONE_INSERT_BIT | SW_MICROPHONE_INSERT_BIT |
+                SW_JACK_PHYSICAL_INSERT_BIT | SW_LINEOUT_INSERT_BIT |
+                mSwUnsupportedInsertBit;
         mPtr = nativeInit(this, mContext, mHandler.getLooper().getQueue());
 
         String doubleTouchGestureEnablePath = context.getResources().getString(
@@ -1794,7 +1812,7 @@ public class InputManagerService extends IInputManager.Stub
             mWindowManagerCallbacks.notifyCameraLensCoverSwitchChanged(whenNanos, lensCovered);
         }
 
-        if (mUseDevInputEventForAudioJack && (switchMask & SW_JACK_BITS) != 0) {
+        if (mUseDevInputEventForAudioJack && (switchMask & mSwJackBits) != 0) {
             mWiredAccessoryCallbacks.notifyWiredAccessoryChanged(whenNanos, switchValues,
                     switchMask);
         }
