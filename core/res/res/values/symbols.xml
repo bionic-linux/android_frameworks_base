@@ -3398,4 +3398,8 @@
   <java-symbol type="fraction" name="config_prescaleAbsoluteVolume_index1" />
   <java-symbol type="fraction" name="config_prescaleAbsoluteVolume_index2" />
   <java-symbol type="fraction" name="config_prescaleAbsoluteVolume_index3" />
+
+  <!-- Notification for when a wired headset is attached but not supported. -->
+  <java-symbol type="string" name="headset_unsupported_message" />
+  <java-symbol type="integer" name="config_switchCode_unsupportedHeadset" />
 </resources>
