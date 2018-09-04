@@ -3871,4 +3871,7 @@
 
   <java-symbol type="bool" name="config_automotiveHideNavBarForKeyboard" />
   <java-symbol type="bool" name="reset_geo_fencing_check_after_boot_or_apm" />
+
+  <!-- Notification for when a wired headset is attached but not supported. -->
+  <java-symbol type="string" name="headset_unsupported_message" />
 </resources>

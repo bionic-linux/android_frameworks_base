@@ -5653,4 +5653,7 @@ ul.</string>
     <string name="PERSOSUBSTATE_SIM_IMPI_SUCCESS">IMPI unlock successful.</string>
     <!-- Success message displayed on SIM NS_SP Depersonalization panel [CHAR LIMIT=none] -->
     <string name="PERSOSUBSTATE_SIM_NS_SP_SUCCESS">Network subset service provider unlock successful.</string>
+
+    <!-- Notification for when a wired headset is attached but not supported. -->
+    <string name="headset_unsupported_message">This headset is not supported.</string>
 </resources>
