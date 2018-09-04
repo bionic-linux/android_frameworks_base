@@ -139,6 +139,30 @@
       "revId": "10686aae4ba9cf46c74a15370ea675cd00d1b0a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90239e72_483230d4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-04T02:18:57Z",
+      "side": 1,
+      "message": "Ouch, right. I\u0027m personally okay with making the field public – after all, the class is @hide, the field is final, and it\u0027s only for internals of ConnectivityService which already has this information anyway.",
+      "parentUuid": "142ce3bb_2b4f7fbc",
+      "range": {
+        "startLine": 3654,
+        "startChar": 3,
+        "endLine": 3654,
+        "endChar": 5
+      },
+      "revId": "10686aae4ba9cf46c74a15370ea675cd00d1b0a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
