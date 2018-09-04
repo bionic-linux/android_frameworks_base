@@ -3392,4 +3392,7 @@
 
   <java-symbol type="integer" name="config_defaultHapticFeedbackIntensity" />
   <java-symbol type="integer" name="config_defaultNotificationVibrationIntensity" />
+
+  <!-- Notification for when a wired headset is attached but not supported. -->
+  <java-symbol type="string" name="headset_unsupported_message" />
 </resources>
