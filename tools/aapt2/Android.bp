@@ -149,6 +149,7 @@ cc_library_host_static {
     proto: {
         export_proto_headers: true,
     },
+    export_include_dirs: ["."],
     defaults: ["aapt2_defaults"],
 }
 
