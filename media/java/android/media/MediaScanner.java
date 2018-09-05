@@ -516,6 +516,8 @@ public class MediaScanner implements AutoCloseable {
         private int mColorStandard;
         private int mColorTransfer;
         private int mColorRange;
+        private int mSampleRate;
+        private int mBitsPerSample;
 
         public MyMediaScannerClient() {
             mDateFormatter = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
@@ -598,6 +600,8 @@ public class MediaScanner implements AutoCloseable {
             mColorStandard = -1;
             mColorTransfer = -1;
             mColorRange = -1;
+            mSampleRate = 0;
+            mBitsPerSample = 0;
 
             return entry;
         }
@@ -772,6 +776,10 @@ public class MediaScanner implements AutoCloseable {
                 mColorTransfer = parseSubstring(value, 0, -1);
             } else if (name.equalsIgnoreCase("colorrange")) {
                 mColorRange = parseSubstring(value, 0, -1);
+            } else if (name.equalsIgnoreCase("samplerate")) {
+                mSampleRate = parseSubstring(value, 0, 0);
+            } else if (name.equalsIgnoreCase("bitspersample")) {
+                mBitsPerSample = parseSubstring(value, 0, 0);
             } else {
                 //Log.v(TAG, "unknown tag: " + name + " (" + mProcessGenres + ")");
             }
@@ -947,6 +955,12 @@ public class MediaScanner implements AutoCloseable {
                     map.put(Audio.Media.TRACK, mTrack);
                     map.put(Audio.Media.DURATION, mDuration);
                     map.put(Audio.Media.COMPILATION, mCompilation);
+                    if (mSampleRate > 0) {
+                        map.put(Audio.Media.SAMPLE_RATE, mSampleRate);
+                    }
+                    if (mBitsPerSample > 0) {
+                        map.put(Audio.Media.BITS_PER_SAMPLE, mBitsPerSample);
+                    }
                 }
                 if (!mScanSuccess) {
                     // force mediaprovider to not determine the media type from the mime type
