@@ -1375,6 +1375,20 @@ public final class MediaStore {
              * @hide
              */
             public static final String TITLE_RESOURCE_URI = "title_resource_uri";
+
+            /**
+             * The sampling rate of the audio file
+             * <P>Type: INTEGER</P>
+             * @hide
+             */
+            public static final String SAMPLE_RATE = "sample_rate";
+
+            /**
+             * The bits per sample of the audio file
+             * <P>Type: INTEGER</P>
+             * @hide
+             */
+            public static final String BITS_PER_SAMPLE = "bits_per_sample";
         }
 
         /**
