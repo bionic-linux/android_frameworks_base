@@ -1997,6 +1997,14 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
     @Override
     void removeImmediately() {
         mRemovingDisplay = true;
+        if (mService.mDisplayFrozen && mService.mFrozenDisplayId == mDisplayId) {
+            Slog.d(TAG, "Display " + mDisplayId + " is still frozen, stop freezing");
+            try {
+                mService.stopFreezingDisplayLocked();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         try {
             super.removeImmediately();
             if (DEBUG_DISPLAY) Slog.v(TAG_WM, "Removing display=" + this);

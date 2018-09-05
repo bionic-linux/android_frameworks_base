@@ -749,7 +749,7 @@ public class WindowManagerService extends IWindowManager.Stub
     private int mExitAnimId, mEnterAnimId;
 
     // The display that the rotation animation is applying to.
-    private int mFrozenDisplayId;
+    int mFrozenDisplayId;
 
     /** Skip repeated AppWindowTokens initialization. Note that AppWindowsToken's version of this
      * is a long initialized to Long.MIN_VALUE so that it doesn't match this value on startup. */
