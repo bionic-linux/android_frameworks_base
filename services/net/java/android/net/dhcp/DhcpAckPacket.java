@@ -38,15 +38,22 @@ class DhcpAckPacket extends DhcpPacket {
 
     public String toString() {
         String s = super.toString();
-        String dnsServers = " DNS servers: ";
+        String dnsServers = "";
+        String ntpServers = "";
 
         for (Inet4Address dnsServer: mDnsServers) {
             dnsServers += dnsServer.toString() + " ";
         }
 
+        for (Inet4Address ntpServer: mNtpServers) {
+            ntpServers += ntpServer + " ";
+        }
+
         return s + " ACK: your new IP " + mYourIp +
                 ", netmask " + mSubnetMask +
-                ", gateways " + mGateways + dnsServers +
+                ", gateways " + mGateways +
+                ", DNS servers: " + dnsServers +
+                ", NTP servers: " + ntpServers +
                 ", lease time " + mLeaseTime;
     }
 

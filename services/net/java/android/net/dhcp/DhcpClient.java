@@ -158,6 +158,7 @@ public class DhcpClient extends StateMachine {
         DHCP_RENEWAL_TIME,
         DHCP_REBINDING_TIME,
         DHCP_VENDOR_INFO,
+        DHCP_NTP_SERVER,
     };
 
     // DHCP flag that means "yes, we support unicast."

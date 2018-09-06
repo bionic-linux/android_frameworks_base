@@ -223,7 +223,7 @@ public class IpClientTest {
         ProvisioningConfiguration config = new ProvisioningConfiguration.Builder()
                 .withoutIPv4()
                 .withoutIpReachabilityMonitor()
-                .withInitialConfiguration(conf(links(addresses), prefixes(prefixes), ips()))
+                .withInitialConfiguration(conf(links(addresses), prefixes(prefixes), ips(), ips()))
                 .build();
 
         ipc.startProvisioning(config);
@@ -264,31 +264,34 @@ public class IpClientTest {
         InitialConfiguration empty = conf(links(), prefixes());
         IsProvisionedTestCase[] testcases = {
             // nothing
-            notProvisionedCase(links(), routes(), dns(), null),
-            notProvisionedCase(links(), routes(), dns(), empty),
+            notProvisionedCase(links(), routes(), dns(), ntp(), null),
+            notProvisionedCase(links(), routes(), dns(),  ntp(), empty),
 
             // IPv4
-            provisionedCase(links("192.0.2.12/24"), routes(), dns(), empty),
+            provisionedCase(links("192.0.2.12/24"), routes(), dns(), ntp(), empty),
 
             // IPv6
             notProvisionedCase(
                     links("fe80::a4be:f92:e1f7:22d1/64", "fd2c:4e57:8e3c:0:548d:2db2:4fcf:ef75/64"),
-                    routes(), dns(), empty),
+                    routes(), dns(), ntp(), empty),
             notProvisionedCase(
                     links("fe80::a4be:f92:e1f7:22d1/64", "fd2c:4e57:8e3c:0:548d:2db2:4fcf:ef75/64"),
-                    routes("fe80::/64", "fd2c:4e57:8e3c::/64"), dns("fd00:1234:5678::1000"), empty),
+                    routes("fe80::/64", "fd2c:4e57:8e3c::/64"), dns("fd00:1234:5678::1000"),  ntp("fd00:1234:5678::1001"), empty),
             provisionedCase(
                     links("2001:db8:dead:beef:f00::a0/64", "fe80::1/64"),
                     routes("::/0"),
-                    dns("2001:db8:dead:beef:f00::02"), empty),
+                    dns("2001:db8:dead:beef:f00::02"),
+                    ntp("fd00:1234:5678::1002"),
+                    empty),
 
             // Initial configuration
             provisionedCase(
                     links("fe80::e1f7:22d1/64", "fd2c:4e57:8e3c:0:548d:2db2:4fcf:ef75/64"),
                     routes("fe80::/64", "fd2c:4e57:8e3c::/64"),
                     dns(),
+                    ntp(),
                     conf(links("fe80::e1f7:22d1/64", "fd2c:4e57:8e3c:0:548d:2db2:4fcf:ef75/64"),
-                        prefixes( "fe80::/64", "fd2c:4e57:8e3c::/64"), ips()))
+                        prefixes( "fe80::/64", "fd2c:4e57:8e3c::/64"), ips(), ips()))
         };
 
         for (IsProvisionedTestCase testcase : testcases) {
@@ -314,17 +317,17 @@ public class IpClientTest {
     }
 
     static IsProvisionedTestCase provisionedCase(Set<LinkAddress> lpAddrs, Set<RouteInfo> lpRoutes,
-            Set<InetAddress> lpDns, InitialConfiguration config) {
-        return provisioningTest(true, lpAddrs, lpRoutes, lpDns, config);
+            Set<InetAddress> lpDns, Set<InetAddress> lpNtp, InitialConfiguration config) {
+        return provisioningTest(true, lpAddrs, lpRoutes, lpDns, lpNtp, config);
     }
 
     static IsProvisionedTestCase notProvisionedCase(Set<LinkAddress> lpAddrs,
-            Set<RouteInfo> lpRoutes, Set<InetAddress> lpDns, InitialConfiguration config) {
-        return provisioningTest(false, lpAddrs, lpRoutes, lpDns, config);
+            Set<RouteInfo> lpRoutes, Set<InetAddress> lpDns, Set<InetAddress> lpNtp, InitialConfiguration config) {
+        return provisioningTest(false, lpAddrs, lpRoutes, lpDns, lpNtp, config);
     }
 
     static IsProvisionedTestCase provisioningTest(boolean isProvisioned, Set<LinkAddress> lpAddrs,
-            Set<RouteInfo> lpRoutes, Set<InetAddress> lpDns, InitialConfiguration config) {
+            Set<RouteInfo> lpRoutes, Set<InetAddress> lpDns, Set<InetAddress> lpNtp, InitialConfiguration config) {
         IsProvisionedTestCase testcase = new IsProvisionedTestCase();
         testcase.isProvisioned = isProvisioned;
         testcase.lp = new LinkProperties();
@@ -335,6 +338,9 @@ public class IpClientTest {
         for (InetAddress dns : lpDns) {
             testcase.lp.addDnsServer(dns);
         }
+        for (InetAddress ntp : lpNtp) {
+            testcase.lp.addNtpServer(ntp);
+        }
         testcase.config = config;
         return testcase;
     }
@@ -343,45 +349,52 @@ public class IpClientTest {
     public void testInitialConfigurations() throws Exception {
         InitialConfigurationTestCase[] testcases = {
             validConf("valid IPv4 configuration",
-                    links("192.0.2.12/24"), prefixes("192.0.2.0/24"), dns("192.0.2.2")),
+                    links("192.0.2.12/24"), prefixes("192.0.2.0/24"), dns("192.0.2.2"), ntp("192.0.2.3")),
             validConf("another valid IPv4 configuration",
-                    links("192.0.2.12/24"), prefixes("192.0.2.0/24"), dns()),
+                    links("192.0.2.12/24"), prefixes("192.0.2.0/24"), dns(), ntp()),
             validConf("valid IPv6 configurations",
                     links("2001:db8:dead:beef:f00::a0/64", "fe80::1/64"),
                     prefixes("2001:db8:dead:beef::/64", "fe80::/64"),
-                    dns("2001:db8:dead:beef:f00::02")),
+                    dns("2001:db8:dead:beef:f00::02"),
+                    ntp("2002:db8:dead:beef:f00::02")),
             validConf("valid IPv6 configurations",
-                    links("fe80::1/64"), prefixes("fe80::/64"), dns()),
+                    links("fe80::1/64"), prefixes("fe80::/64"), dns(), ntp()),
             validConf("valid IPv6/v4 configuration",
                     links("2001:db8:dead:beef:f00::a0/48", "192.0.2.12/24"),
                     prefixes("2001:db8:dead:beef::/64", "192.0.2.0/24"),
-                    dns("192.0.2.2", "2001:db8:dead:beef:f00::02")),
+                    dns("192.0.2.2", "2001:db8:dead:beef:f00::02"),
+                    ntp("192.0.2.2", "2001:db8:dead:beef:f00::02")),
             validConf("valid IPv6 configuration without any GUA.",
                     links("fd00:1234:5678::1/48"),
                     prefixes("fd00:1234:5678::/48"),
-                    dns("fd00:1234:5678::1000")),
+                    dns("fd00:1234:5678::1000"),
+                    ntp("fd00:1234:5678::1001")),
 
-            invalidConf("empty configuration", links(), prefixes(), dns()),
+            invalidConf("empty configuration", links(), prefixes(), dns(), ntp()),
             invalidConf("v4 addr and dns not in any prefix",
-                    links("192.0.2.12/24"), prefixes("198.51.100.0/24"), dns("192.0.2.2")),
+                    links("192.0.2.12/24"), prefixes("198.51.100.0/24"), dns("192.0.2.2"),ntp("192.0.2.3")),
             invalidConf("v4 addr not in any prefix",
-                    links("198.51.2.12/24"), prefixes("198.51.100.0/24"), dns("192.0.2.2")),
+                    links("198.51.2.12/24"), prefixes("198.51.100.0/24"), dns("192.0.2.2"),ntp("192.0.2.3")),
             invalidConf("v4 dns addr not in any prefix",
-                    links("192.0.2.12/24"), prefixes("192.0.2.0/24"), dns("198.51.100.2")),
+                    links("192.0.2.12/24"), prefixes("192.0.2.0/24"), dns("198.51.100.2"),ntp("192.0.2.3")),
             invalidConf("v6 addr not in any prefix",
                     links("2001:db8:dead:beef:f00::a0/64", "fe80::1/64"),
                     prefixes("2001:db8:dead:beef::/64"),
-                    dns("2001:db8:dead:beef:f00::02")),
+                    dns("2001:db8:dead:beef:f00::02"),
+                    ntp("2002:db8:dead:beef:f00::02")),
             invalidConf("v6 dns addr not in any prefix",
-                    links("fe80::1/64"), prefixes("fe80::/64"), dns("2001:db8:dead:beef:f00::02")),
+                    links("fe80::1/64"),
+                    prefixes("fe80::/64"),
+                    dns("2001:db8:dead:beef:f00::02"),
+                    ntp("2002:db8:dead:beef:f00::02")),
             invalidConf("default ipv6 route and no GUA",
-                    links("fd01:1111:2222:3333::a0/128"), prefixes("::/0"), dns()),
+                    links("fd01:1111:2222:3333::a0/128"), prefixes("::/0"), dns(), ntp()),
             invalidConf("invalid v6 prefix length",
                     links("2001:db8:dead:beef:f00::a0/128"), prefixes("2001:db8:dead:beef::/32"),
-                    dns()),
+                    dns(), ntp()),
             invalidConf("another invalid v6 prefix length",
                     links("2001:db8:dead:beef:f00::a0/128"), prefixes("2001:db8:dead:beef::/72"),
-                    dns())
+                    dns(), ntp())
         };
 
         for (InitialConfigurationTestCase testcase : testcases) {
@@ -405,13 +418,13 @@ public class IpClientTest {
     }
 
     static InitialConfigurationTestCase validConf(String descr, Set<LinkAddress> links,
-            Set<IpPrefix> prefixes, Set<InetAddress> dns) {
-        return confTestCase(descr, true, conf(links, prefixes, dns));
+            Set<IpPrefix> prefixes, Set<InetAddress> dns, Set<InetAddress> ntp) {
+        return confTestCase(descr, true, conf(links, prefixes, dns, ntp));
     }
 
     static InitialConfigurationTestCase invalidConf(String descr, Set<LinkAddress> links,
-            Set<IpPrefix> prefixes, Set<InetAddress> dns) {
-        return confTestCase(descr, false, conf(links, prefixes, dns));
+            Set<IpPrefix> prefixes, Set<InetAddress> dns, Set<InetAddress> ntp) {
+        return confTestCase(descr, false, conf(links, prefixes, dns, ntp));
     }
 
     static InitialConfigurationTestCase confTestCase(
@@ -433,15 +446,16 @@ public class IpClientTest {
     }
 
     static InitialConfiguration conf(Set<LinkAddress> links, Set<IpPrefix> prefixes) {
-        return conf(links, prefixes, new HashSet<>());
+        return conf(links, prefixes, new HashSet<>(), new HashSet<>());
     }
 
     static InitialConfiguration conf(
-            Set<LinkAddress> links, Set<IpPrefix> prefixes, Set<InetAddress> dns) {
+            Set<LinkAddress> links, Set<IpPrefix> prefixes, Set<InetAddress> dns, Set<InetAddress> ntp) {
         InitialConfiguration conf = new InitialConfiguration();
         conf.ipAddresses.addAll(links);
         conf.directlyConnectedRoutes.addAll(prefixes);
         conf.dnsServers.addAll(dns);
+        conf.ntpServers.addAll(ntp);
         return conf;
     }
 
@@ -462,6 +476,10 @@ public class IpClientTest {
     }
 
     static Set<InetAddress> dns(String... addresses) {
+        return ips(addresses);
+    }
+
+    static Set<InetAddress> ntp(String... addresses) {
         return ips(addresses);
     }
 

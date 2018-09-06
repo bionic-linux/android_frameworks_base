@@ -512,6 +512,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     final MultipathPolicyTracker mMultipathPolicyTracker;
 
+    private int mNumNtpEntries; // Count of NTP servers entries
+
     /**
      * Implements support for the legacy "one network per network type" model.
      *
@@ -4623,6 +4625,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // updateDnses will fetch the private DNS configuration from DnsManager.
         mDnsManager.updatePrivateDnsStatus(netId, newLp);
 
+        updateDhcpNtpServers(newLp, oldLp, netId); // Update NTP servers provided by DHCP
         // Start or stop clat accordingly to network state.
         networkAgent.updateClat(mNetd);
         if (isDefaultNetwork(networkAgent)) {
@@ -4761,6 +4764,57 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mDnsManager.setDnsConfigurationForNetwork(netId, newLp, isDefaultNetwork);
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
+        }
+    }
+
+    /**
+     * Update available NTP servers list provided by DHCP option 42
+     * @param newLp LinkProperties to be updated
+     * @param oldLp previous LinkProperties
+     * @param netId id of linked network
+     */
+    private void updateDhcpNtpServers(LinkProperties newLp, LinkProperties oldLp, int netId) {
+        if (oldLp != null && newLp.isIdenticalNtps(oldLp)) {
+            return;  // no updating necessary
+        }
+
+        final NetworkAgentInfo defaultNai = getDefaultNetwork();
+        final boolean isDefaultNetwork = (defaultNai != null && defaultNai.network.netId == netId);
+        final Collection<InetAddress> ntps = newLp.getNtpServers();
+
+        if (DBG) {
+            log("Setting NTP servers for network " + netId + " to " + ntps);
+        }
+        try {
+            if (isDefaultNetwork) setDefaultDhcpNtpSystemProperties(ntps);
+            //mDnsManager.setDnsConfigurationForNetwork(netId, newLp, isDefaultNetwork);
+            // TODO : if DHCP option 42 (NTP) is enabled in conf, transmit value to NTP client
+            // Now, we just set NTP servers adresses in (setprop)
+        } catch (Exception e) {
+            loge("Exception in setDnsConfigurationForNetwork: " + e);
+        }
+    }
+
+    /**
+     * Update system properties to provide readed DHCP option 42 NTP servers
+     * @param ntpServers new DHCP provided NTP servers
+     */
+    private void setDefaultDhcpNtpSystemProperties(Collection<InetAddress> ntpServers) {
+        try {
+            int last = 0;
+            for (InetAddress ntpServer : ntpServers) {
+                ++last;
+                String key = "net.dhcp.ntp" + last;
+                String value = ntpServer.getHostAddress();
+                mSystemProperties.set(key, value);
+            }
+            for (int i = last + 1; i <= mNumNtpEntries; ++i) {
+                String key = "net.dhcp.ntp" + i;
+                mSystemProperties.set(key, "");
+            }
+            mNumNtpEntries = last;
+        } catch (RuntimeException e) {
+            loge("Can't set net.dhcp.ntp system property:" + e);
         }
     }
 
@@ -5094,6 +5148,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
         updateTcpBufferSizes(newNetwork);
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
+        setDefaultDhcpNtpSystemProperties(newNetwork.linkProperties.getNtpServers());
         notifyIfacesChangedForNetworkStats();
     }
 
