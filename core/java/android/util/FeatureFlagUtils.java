@@ -33,6 +33,7 @@ public class FeatureFlagUtils {
 
     public static final String FFLAG_PREFIX = "sys.fflag.";
     public static final String FFLAG_OVERRIDE_PREFIX = FFLAG_PREFIX + "override.";
+    public static final String FASTER_EMERGENCY_SETTINGS = "settings_faster_emergency";
 
     private static final Map<String, String> DEFAULT_FLAGS;
     static {
@@ -44,6 +45,7 @@ public class FeatureFlagUtils {
         DEFAULT_FLAGS.put("settings_data_usage_v2", "true");
         DEFAULT_FLAGS.put("settings_audio_switcher", "true");
         DEFAULT_FLAGS.put("settings_systemui_theme", "true");
+        DEFAULT_FLAGS.put(FASTER_EMERGENCY_SETTINGS, "false");
     }
 
     /**
