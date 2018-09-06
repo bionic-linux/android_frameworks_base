@@ -54,6 +54,7 @@ public final class LinkProperties implements Parcelable {
     private ArrayList<LinkAddress> mLinkAddresses = new ArrayList<>();
     private ArrayList<InetAddress> mDnses = new ArrayList<>();
     private ArrayList<InetAddress> mValidatedPrivateDnses = new ArrayList<>();
+    private ArrayList<InetAddress> mNtpServers = new ArrayList<>();
     private boolean mUsePrivateDns;
     private String mPrivateDnsServerName;
     private String mDomains;
@@ -178,6 +179,7 @@ public final class LinkProperties implements Parcelable {
             mUsePrivateDns = source.mUsePrivateDns;
             mPrivateDnsServerName = source.mPrivateDnsServerName;
             mDomains = source.mDomains;
+            mNtpServers.addAll(source.mNtpServers);
             mRoutes.addAll(source.mRoutes);
             mHttpProxy = (source.mHttpProxy == null) ? null : new ProxyInfo(source.mHttpProxy);
             for (LinkProperties l: source.mStackedLinks.values()) {
@@ -703,6 +705,60 @@ public final class LinkProperties implements Parcelable {
     }
 
     /**
+     * Adds the given {@link InetAddress} to the list of NTP servers.
+     *
+     * @param ntpServer The {@link InetAddress} to add to the list of NTP servers.
+     * @return true if the NTP server was added, false if it was already present.
+     * @hide
+     */
+    public boolean addNtpServer(InetAddress ntpServer) {
+        if (ntpServer != null && !mNtpServers.contains(ntpServer)) {
+            mNtpServers.add(ntpServer);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes the given {@link InetAddress} from the list of NTP servers.
+     *
+     * @param dnsServer The {@link InetAddress} to remove from the list of NTP servers.
+     * @return true if the NTP server was removed, false if it did not exist.
+     * @hide
+     */
+    public boolean removeNtpServer(InetAddress ntpServer) {
+        if (ntpServer != null) {
+            return mNtpServers.remove(ntpServer);
+        }
+        return false;
+    }
+
+    /**
+     * Replaces the NTP servers in this {@code LinkProperties} with
+     * the given {@link Collection} of {@link InetAddress} objects.
+     *
+     * @param addresses The {@link Collection} of NTP servers to set in this object.
+     * @hide
+     */
+    public void setNtpServers(Collection<InetAddress> ntpServers) {
+        mNtpServers.clear();
+        for (InetAddress ntpServer: ntpServers) {
+            addNtpServer(ntpServer);
+        }
+    }
+
+    /**
+     * Returns all the {@link InetAddress} for NTP servers on this link.
+     *
+     * @return An umodifiable {@link List} of {@link InetAddress} for NTP servers on
+     *         this link.
+     * @hide TODO : available in public API ?
+     */
+    public List<InetAddress> getNtpServers() {
+        return Collections.unmodifiableList(mNtpServers);
+    }
+
+    /**
      * Adds a stacked link.
      *
      * If there is already a stacked link with the same interface name as link,
@@ -765,6 +821,7 @@ public final class LinkProperties implements Parcelable {
         mIfaceName = null;
         mLinkAddresses.clear();
         mDnses.clear();
+        mNtpServers.clear();
         mUsePrivateDns = false;
         mPrivateDnsServerName = null;
         mDomains = null;
@@ -843,6 +900,12 @@ public final class LinkProperties implements Parcelable {
             resultJoiner.add("HttpProxy:");
             resultJoiner.add(mHttpProxy.toString());
         }
+
+        resultJoiner.add("NtpAddresses: [");
+        if (!mDnses.isEmpty()) {
+            resultJoiner.add(TextUtils.join(",", mNtpServers));
+        }
+        resultJoiner.add("]");
 
         final Collection<LinkProperties> stackedLinksValues = mStackedLinks.values();
         if (!stackedLinksValues.isEmpty()) {
@@ -957,6 +1020,36 @@ public final class LinkProperties implements Parcelable {
     @UnsupportedAppUsage
     public boolean hasIPv6DnsServer() {
         for (InetAddress ia : mDnses) {
+            if (ia instanceof Inet6Address) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if this link has an IPv4 NTP server.
+     *
+     * @return {@code true} if there is an IPv4 NTP server, {@code false} otherwise.
+     * @hide
+     */
+    public boolean hasIPv4NtpServer() {
+        for (InetAddress ia : mNtpServers) {
+            if (ia instanceof Inet4Address) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if this link has an IPv6 NTP server.
+     *
+     * @return {@code true} if there is an IPv6 NTP server, {@code false} otherwise.
+     * @hide
+     */
+    public boolean hasIPv6NtpServer() {
+        for (InetAddress ia : mNtpServers) {
             if (ia instanceof Inet6Address) {
                 return true;
             }
@@ -1144,6 +1237,24 @@ public final class LinkProperties implements Parcelable {
     }
 
     /**
+     * Compares this {@code LinkProperties} NTP addresses against the target
+     *
+     * @param target LinkProperties to compare.
+     * @return {@code true} if both are identical, {@code false} otherwise.
+     * @hide
+     */
+    public boolean isIdenticalNtps(LinkProperties target) {
+        Collection<InetAddress> targetNtps = target.getNtpServers();
+
+        if (mNtpServers == null) {
+            return targetNtps == null;
+        }
+
+        return (mNtpServers.size() == targetNtps.size()) ?
+                mNtpServers.containsAll(targetNtps) : false;
+    }
+
+    /**
      * Compares this {@code LinkProperties} stacked links against the target
      *
      * @param target LinkProperties to compare.
@@ -1278,6 +1389,18 @@ public final class LinkProperties implements Parcelable {
     }
 
     /**
+     * Compares the validated private DNS addresses in this LinkProperties with another
+     * LinkProperties.
+     *
+     * @param target a LinkProperties with the new list of dns addresses
+     * @return the differences between the NTP addresses.
+     * @hide
+     */
+    public CompareResult<InetAddress> compareNtps(LinkProperties target) {
+        return new CompareResult<>(mNtpServers, target != null ? target.getNtpServers() : null);
+    }
+
+    /**
      * Compares all routes in this LinkProperties with another LinkProperties,
      * examining both the the base link and all stacked links.
      *
@@ -1334,7 +1457,8 @@ public final class LinkProperties implements Parcelable {
                 + mMtu * 51
                 + ((null == mTcpBufferSizes) ? 0 : mTcpBufferSizes.hashCode())
                 + (mUsePrivateDns ? 57 : 0)
-                + ((null == mPrivateDnsServerName) ? 0 : mPrivateDnsServerName.hashCode());
+                + ((null == mPrivateDnsServerName) ? 0 : mPrivateDnsServerName.hashCode())
+                + mNtpServers.size() * 59;
     }
 
     /**
@@ -1358,6 +1482,10 @@ public final class LinkProperties implements Parcelable {
         dest.writeBoolean(mUsePrivateDns);
         dest.writeString(mPrivateDnsServerName);
         dest.writeString(mDomains);
+        dest.writeInt(mNtpServers.size());
+        for(InetAddress d : mNtpServers) {
+            dest.writeByteArray(d.getAddress());
+        }
         dest.writeInt(mMtu);
         dest.writeString(mTcpBufferSizes);
         dest.writeInt(mRoutes.size());
@@ -1407,6 +1535,12 @@ public final class LinkProperties implements Parcelable {
                 netProp.setUsePrivateDns(in.readBoolean());
                 netProp.setPrivateDnsServerName(in.readString());
                 netProp.setDomains(in.readString());
+                addressCount = in.readInt();
+                for (int i = 0; i < addressCount; i++) {
+                    try {
+                        netProp.addNtpServer(InetAddress.getByAddress(in.createByteArray()));
+                    } catch (UnknownHostException e) { }
+                }
                 netProp.setMtu(in.readInt());
                 netProp.setTcpBufferSizes(in.readString());
                 addressCount = in.readInt();

@@ -470,6 +470,7 @@ public class IpClient extends StateMachine {
         public final Set<LinkAddress> ipAddresses = new HashSet<>();
         public final Set<IpPrefix> directlyConnectedRoutes = new HashSet<>();
         public final Set<InetAddress> dnsServers = new HashSet<>();
+        public final Set<InetAddress> ntpServers = new HashSet<>();
         public Inet4Address gateway; // WiFi legacy behavior with static ipv4 config
 
         public static InitialConfiguration copy(InitialConfiguration config) {
@@ -480,15 +481,16 @@ public class IpClient extends StateMachine {
             configCopy.ipAddresses.addAll(config.ipAddresses);
             configCopy.directlyConnectedRoutes.addAll(config.directlyConnectedRoutes);
             configCopy.dnsServers.addAll(config.dnsServers);
+            configCopy.ntpServers.addAll(config.ntpServers);
             return configCopy;
         }
 
         @Override
         public String toString() {
             return String.format(
-                    "InitialConfiguration(IPs: {%s}, prefixes: {%s}, DNS: {%s}, v4 gateway: %s)",
+                    "InitialConfiguration(IPs: {%s}, prefixes: {%s}, DNS: {%s}, NTP: {%s}, v4 gateway: %s)",
                     join(", ", ipAddresses), join(", ", directlyConnectedRoutes),
-                    join(", ", dnsServers), gateway);
+                    join(", ", dnsServers), join(", ", ntpServers), gateway);
         }
 
         public boolean isValid() {
@@ -1222,6 +1224,7 @@ public class IpClient extends StateMachine {
             newLp.addRoute(route);
         }
         addAllReachableDnsServers(newLp, netlinkLinkProperties.getDnsServers());
+        addAllNtpServers(newLp, netlinkLinkProperties.getNtpServers());
 
         // [3] Add in data from DHCPv4, if available.
         //
@@ -1233,6 +1236,7 @@ public class IpClient extends StateMachine {
             }
             addAllReachableDnsServers(newLp, mDhcpResults.dnsServers);
             newLp.setDomains(mDhcpResults.domains);
+            addAllNtpServers(newLp, mDhcpResults.ntpServers);
 
             if (mDhcpResults.mtu != 0) {
                 newLp.setMtu(mDhcpResults.mtu);
@@ -1258,6 +1262,7 @@ public class IpClient extends StateMachine {
                 }
             }
             addAllReachableDnsServers(newLp, config.dnsServers);
+            addAllNtpServers(newLp, config.ntpServers);
         }
         final LinkProperties oldLp = mLinkProperties;
         if (DBG) {
@@ -1281,6 +1286,18 @@ public class IpClient extends StateMachine {
             }
         }
     }
+
+    /**
+     * Add NTP servers to a LinkProperties
+     * @param lp LinkProperties where NTP servers will be added
+     +* @param ntpServers list of NTP server addresses
+     */
+     private static void addAllNtpServers(
+        LinkProperties lp, Iterable<InetAddress> ntpServers) {
+         for (InetAddress ntpServer : ntpServers) {
+             lp.addNtpServer(ntpServer);
+         }
+     }
 
     // Returns false if we have lost provisioning, true otherwise.
     private boolean handleLinkPropertiesUpdate(boolean sendCallbacks) {

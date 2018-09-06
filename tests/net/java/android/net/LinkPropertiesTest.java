@@ -53,6 +53,8 @@ public class LinkPropertiesTest {
     private static InetAddress DNS1 = NetworkUtils.numericToInetAddress("75.208.7.1");
     private static InetAddress DNS2 = NetworkUtils.numericToInetAddress("69.78.7.1");
     private static InetAddress DNS6 = NetworkUtils.numericToInetAddress("2001:4860:4860::8888");
+    private static InetAddress NTP1 = NetworkUtils.numericToInetAddress("75.208.7.2");
+    private static InetAddress NTP2 = NetworkUtils.numericToInetAddress("69.78.7.2");;
     private static InetAddress GATEWAY1 = NetworkUtils.numericToInetAddress("75.208.8.1");
     private static InetAddress GATEWAY2 = NetworkUtils.numericToInetAddress("69.78.8.1");
     private static InetAddress GATEWAY61 = NetworkUtils.numericToInetAddress("fe80::6:0000:613");
@@ -128,6 +130,9 @@ public class LinkPropertiesTest {
         // set 2 dnses
         source.addDnsServer(DNS1);
         source.addDnsServer(DNS2);
+        // set 2 ntps
+        source.addNtpServer(NTP1);
+        source.addNtpServer(NTP2);
         // set 2 gateways
         source.addRoute(new RouteInfo(GATEWAY1));
         source.addRoute(new RouteInfo(GATEWAY2));
@@ -141,6 +146,8 @@ public class LinkPropertiesTest {
         target.addLinkAddress(LINKADDRV6);
         target.addDnsServer(DNS1);
         target.addDnsServer(DNS2);
+        target.addNtpServer(NTP1);
+        target.addNtpServer(NTP2);
         target.addRoute(new RouteInfo(GATEWAY1));
         target.addRoute(new RouteInfo(GATEWAY2));
         target.setMtu(MTU);
@@ -154,6 +161,8 @@ public class LinkPropertiesTest {
         target.addLinkAddress(LINKADDRV6);
         target.addDnsServer(DNS1);
         target.addDnsServer(DNS2);
+        source.addNtpServer(NTP1);
+        source.addNtpServer(NTP2);
         target.addRoute(new RouteInfo(GATEWAY1));
         target.addRoute(new RouteInfo(GATEWAY2));
         target.setMtu(MTU);
@@ -167,6 +176,8 @@ public class LinkPropertiesTest {
         target.addLinkAddress(LINKADDRV6);
         target.addDnsServer(DNS1);
         target.addDnsServer(DNS2);
+        source.addNtpServer(NTP1);
+        source.addNtpServer(NTP2);
         target.addRoute(new RouteInfo(GATEWAY1));
         target.addRoute(new RouteInfo(GATEWAY2));
         target.setMtu(MTU);
@@ -179,6 +190,22 @@ public class LinkPropertiesTest {
         // change dnses
         target.addDnsServer(NetworkUtils.numericToInetAddress("75.208.7.2"));
         target.addDnsServer(DNS2);
+        source.addNtpServer(NTP1);
+        source.addNtpServer(NTP2);
+        target.addRoute(new RouteInfo(GATEWAY1));
+        target.addRoute(new RouteInfo(GATEWAY2));
+        target.setMtu(MTU);
+        assertFalse(source.equals(target));
+
+        target.clear();
+        target.setInterfaceName(NAME);
+        target.addLinkAddress(LINKADDRV4);
+        target.addLinkAddress(LINKADDRV6);
+        target.addDnsServer(NTP1);
+        target.addDnsServer(DNS2);
+        // change NTP
+        source.addNtpServer(NetworkUtils.numericToInetAddress("75.208.7.3"));
+        source.addNtpServer(NTP2);
         target.addRoute(new RouteInfo(GATEWAY1));
         target.addRoute(new RouteInfo(GATEWAY2));
         target.setMtu(MTU);
@@ -190,6 +217,8 @@ public class LinkPropertiesTest {
         target.addLinkAddress(LINKADDRV6);
         target.addDnsServer(DNS1);
         target.addDnsServer(DNS2);
+        source.addNtpServer(NTP1);
+        source.addNtpServer(NTP2);
         // change gateway
         target.addRoute(new RouteInfo(NetworkUtils.numericToInetAddress("75.208.8.2")));
         target.addRoute(new RouteInfo(GATEWAY2));
@@ -202,6 +231,8 @@ public class LinkPropertiesTest {
         target.addLinkAddress(LINKADDRV6);
         target.addDnsServer(DNS1);
         target.addDnsServer(DNS2);
+        source.addNtpServer(NTP1);
+        source.addNtpServer(NTP2);
         target.addRoute(new RouteInfo(GATEWAY1));
         target.addRoute(new RouteInfo(GATEWAY2));
         // change mtu
@@ -799,6 +830,9 @@ public class LinkPropertiesTest {
         // set 2 dnses
         source.addDnsServer(DNS1);
         source.addDnsServer(DNS2);
+        // set 2 ntps
+        source.addNtpServer(NTP1);
+        source.addNtpServer(NTP2);
         // set 2 gateways
         source.addRoute(new RouteInfo(GATEWAY1));
         source.addRoute(new RouteInfo(GATEWAY2));

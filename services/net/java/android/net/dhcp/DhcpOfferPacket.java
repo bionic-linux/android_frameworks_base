@@ -39,16 +39,23 @@ class DhcpOfferPacket extends DhcpPacket {
 
     public String toString() {
         String s = super.toString();
-        String dnsServers = ", DNS servers: ";
 
+        String dnsServers = ", DNS servers: ";
         if (mDnsServers != null) {
             for (Inet4Address dnsServer: mDnsServers) {
                 dnsServers += dnsServer + " ";
             }
         }
 
+        String ntpServers = ", NTP servers: ";
+        if (mNtpServers != null) {
+            for (Inet4Address ntpServer: mNtpServers) {
+                ntpServers += ntpServer + " ";
+            }
+        }
+
         return s + " OFFER, ip " + mYourIp + ", mask " + mSubnetMask +
-                dnsServers + ", gateways " + mGateways +
+                dnsServers + ntpServers + ", gateways " + mGateways +
                 " lease time " + mLeaseTime + ", domain " + mDomainName;
     }
 

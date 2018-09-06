@@ -279,7 +279,7 @@ public class DhcpPacketTest {
     }
 
     private void assertDhcpResults(String ipAddress, String gateway, String dnsServersString,
-            String domains, String serverAddress, String vendorInfo, int leaseDuration,
+            String ntpServersString,String domains, String serverAddress, String vendorInfo, int leaseDuration,
             boolean hasMeteredHint, int mtu, DhcpResults dhcpResults) throws Exception {
         assertEquals(new LinkAddress(ipAddress), dhcpResults.ipAddress);
         assertEquals(v4Address(gateway), dhcpResults.gateway);
@@ -290,6 +290,13 @@ public class DhcpPacketTest {
             dnsServers.add(v4Address(dnsServerString));
         }
         assertEquals(dnsServers, dhcpResults.dnsServers);
+
+        String[] ntpServerStrings = ntpServersString.split(",");
+        ArrayList ntpServers = new ArrayList();
+        for (String ntpServerString : ntpServerStrings) {
+            ntpServers.add(v4Address(ntpServerString));
+        }
+        assertEquals(ntpServers, dhcpResults.ntpServers);
 
         assertEquals(domains, dhcpResults.domains);
         assertEquals(v4Address(serverAddress), dhcpResults.serverAddress);
@@ -323,12 +330,13 @@ public class DhcpPacketTest {
             "0000000000000000000000000000000000000000000000000000000000000000" +
             // Options
             "638253633501023604c0a89003330400001c200104fffff0000304c0a89ffe06080808080808080404" +
+            "2a08c0000202c0000203" + // NTP [42(2a)] + [Size 8(08) + [Ip1Ip2]
             "3a0400000e103b040000189cff00000000000000000000"));
 
         DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_L3);
         assertTrue(offerPacket instanceof DhcpOfferPacket);  // Implicitly checks it's non-null.
         DhcpResults dhcpResults = offerPacket.toDhcpResults();
-        assertDhcpResults("192.168.159.247/20", "192.168.159.254", "8.8.8.8,8.8.4.4",
+        assertDhcpResults("192.168.159.247/20", "192.168.159.254", "8.8.8.8,8.8.4.4","192.0.2.2,192.0.2.3",
                 null, "192.168.144.3", null, 7200, false, 0, dhcpResults);
     }
 
@@ -353,13 +361,14 @@ public class DhcpPacketTest {
             "0000000000000000000000000000000000000000000000000000000000000000" +
             // Options
             "638253633501023604c0a82b01330400000e103a04000007083b0400000c4e0104ffffff00" +
+            "2a08c0000202c0000203" + // NTP [42(2a)] + [Size 8(08) + [Ip1Ip2]
             "1c04c0a82bff0304c0a82b010604c0a82b012b0f414e44524f49445f4d455445524544ff"));
 
-        assertEquals(337, packet.limit());
+        assertEquals(347, packet.limit());
         DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_L3);
         assertTrue(offerPacket instanceof DhcpOfferPacket);  // Implicitly checks it's non-null.
         DhcpResults dhcpResults = offerPacket.toDhcpResults();
-        assertDhcpResults("192.168.43.247/24", "192.168.43.1", "192.168.43.1",
+        assertDhcpResults("192.168.43.247/24", "192.168.43.1", "192.168.43.1", "192.0.2.2,192.0.2.3",
                 null, "192.168.43.1", "ANDROID_METERED", 3600, true, 0, dhcpResults);
         assertTrue(dhcpResults.hasMeteredHint());
     }
@@ -565,7 +574,8 @@ public class DhcpPacketTest {
         assertTrue(offerPacket instanceof DhcpOfferPacket);  // Implicitly checks it's non-null.
         DhcpResults dhcpResults = offerPacket.toDhcpResults();
         assertDhcpResults("192.168.159.247/20", "192.168.159.254", "8.8.8.8,8.8.4.4",
-                null, "192.168.144.3", null, 7200, false, expectedMtu, dhcpResults);
+                "192.0.2.2,192.0.2.3",null, "192.168.144.3", null, 7200,
+                false, expectedMtu, dhcpResults);
     }
 
     @Test
@@ -588,7 +598,9 @@ public class DhcpPacketTest {
             "0000000000000000000000000000000000000000000000000000000000000000" +
             "0000000000000000000000000000000000000000000000000000000000000000" +
             // Options
-            "638253633501023604c0a89003330400001c200104fffff0000304c0a89ffe06080808080808080404" +
+            "638253633501023604c0a89003330400001c200104fffff0000304c0a89ffe" +
+            "06080808080808080404" + // DNS
+            "2a08c0000202c0000203" + // // NTP [42(2a)] + [Size 8(08) + [Ip1Ip2]
             "3a0400000e103b040000189cff00000000"));
 
         checkMtu(packet, 0, null);
@@ -703,12 +715,13 @@ public class DhcpPacketTest {
             "0000000000000000000000000000000000000000000000000000000000000000" +
             // Options
             "638253633501023604010101010104ffff000033040000a8c03401030304ac1101010604ac110101" +
+            "2a08c0000202c0000203" + // NTP [42(2a)] + [Size 8(08) + [Ip1Ip2]
             "0000000000000000000000000000000000000000000000ff000000"));
 
         DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_L2);
         assertTrue(offerPacket instanceof DhcpOfferPacket);
         DhcpResults dhcpResults = offerPacket.toDhcpResults();
-        assertDhcpResults("172.17.152.118/16", "172.17.1.1", "172.17.1.1",
+        assertDhcpResults("172.17.152.118/16", "172.17.1.1", "172.17.1.1", "192.0.2.2,192.0.2.3",
                 null, "1.1.1.1", null, 43200, false, 0, dhcpResults);
     }
 
@@ -733,12 +746,13 @@ public class DhcpPacketTest {
             "0000000000000000000000000000000000000000000000000000000000000000" +
             // Options.
             "638253633501023604c00002fe33040000bfc60104fffff00003040a3f50010608c0000201c0000202" +
+            "2a08c0000202c0000203" + // NTP [42(2a)] + [Size 8(08) + [Ip1Ip2]
             "0f0f646f6d61696e3132332e636f2e756b0000000000ff00000000"));
 
         DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_L3);
         assertTrue(offerPacket instanceof DhcpOfferPacket);
         DhcpResults dhcpResults = offerPacket.toDhcpResults();
-        assertDhcpResults("10.63.93.4/20", "10.63.80.1", "192.0.2.1,192.0.2.2",
+        assertDhcpResults("10.63.93.4/20", "10.63.80.1", "192.0.2.1,192.0.2.2", "192.0.2.2,192.0.2.3",
                 "domain123.co.uk", "192.0.2.254", null, 49094, false, 0, dhcpResults);
     }
 
@@ -765,13 +779,14 @@ public class DhcpPacketTest {
             "0000000000000000000000000000000000000000000000000000000000000000" +
             // Options.
             "6382536335010236040a20ff80330400001c200104fffff00003040a20900106089458413494584135" +
+            "2a08c0000202c0000203" + // NTP [42(2a)] + [Size 8(08) + [Ip1Ip2]
             "0f0b6c616e63732e61632e756b000000000000000000ff00000000"));
 
         DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_L2);
         assertTrue(offerPacket instanceof DhcpOfferPacket);
         assertEquals("BCF5AC000000", HexDump.toHexString(offerPacket.getClientMac()));
         DhcpResults dhcpResults = offerPacket.toDhcpResults();
-        assertDhcpResults("10.32.158.205/20", "10.32.144.1", "148.88.65.52,148.88.65.53",
+        assertDhcpResults("10.32.158.205/20", "10.32.144.1", "148.88.65.52,148.88.65.53", "192.0.2.2,192.0.2.3",
                 "lancs.ac.uk", "10.32.255.128", null, 7200, false, 0, dhcpResults);
     }
 
@@ -798,15 +813,16 @@ public class DhcpPacketTest {
             "0000000000000000000000000000000000000000000000000000000000000000" +
             "0000000000000000000000000000000000000000000000000000000000000000" +
             // Options.
-            "6382536335010236040a0169fc3304000151800104ffff000003040a0fc817060cd1818003d1819403" +
-            "d18180060f0777766d2e6564751c040a0fffffff000000"));
+            "6382536335010236040a0169fc3304000151800104ffff000003040a0fc817060cd1818003d1819403d1818006" +
+                    "2a08c0000202c0000203" +
+                    "0f0777766d2e6564751c040a0fffffff000000"));
 
         DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_L2);
         assertTrue(offerPacket instanceof DhcpOfferPacket);
         assertEquals("9CD917000000", HexDump.toHexString(offerPacket.getClientMac()));
         DhcpResults dhcpResults = offerPacket.toDhcpResults();
         assertDhcpResults("10.15.122.242/16", "10.15.200.23",
-                "209.129.128.3,209.129.148.3,209.129.128.6",
+                "209.129.128.3,209.129.148.3,209.129.128.6","192.0.2.2,192.0.2.3",
                 "wvm.edu", "10.1.105.252", null, 86400, false, 0, dhcpResults);
     }
 
@@ -865,14 +881,18 @@ public class DhcpPacketTest {
             "0000000000000000000000000000000000000000000000000000000000000000" +
             // Options.
             "638253633501023604c0abbd023304000070803a04000038403b04000062700104ffffff00" +
-            "0308c0a8bd01ffffff0006080808080808080404ff000000000000"));
+            "0308c0a8bd01ffffff00" +
+            "06080808080808080404" + // DNS
+            "2a08c0000202c0000203" + // NTP : option NTP(42) + size(8) + Ips
+            "ff000000000000"));
 
         DhcpPacket offerPacket = DhcpPacket.decodeFullPacket(packet, ENCAP_L2);
         assertTrue(offerPacket instanceof DhcpOfferPacket);
         assertEquals("FC3D93000000", HexDump.toHexString(offerPacket.getClientMac()));
         DhcpResults dhcpResults = offerPacket.toDhcpResults();
         assertDhcpResults("192.168.189.49/24", "192.168.189.1", "8.8.8.8,8.8.4.4",
-                null, "192.171.189.2", null, 28800, false, 0, dhcpResults);
+                "192.0.2.2,192.0.2.3", null, "192.171.189.2", null,
+                28800, false, 0, dhcpResults);
     }
 
     @Test
@@ -900,7 +920,7 @@ public class DhcpPacketTest {
             (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
             // UDP header.
             (byte) 0x00, (byte) 0x44, (byte) 0x00, (byte) 0x43,
-            (byte) 0x01, (byte) 0x42, (byte) 0x6a, (byte) 0x4a,
+            (byte) 0x01, (byte) 0x42, (byte) 0x3e, (byte) 0x4b,
             // BOOTP.
             (byte) 0x01, (byte) 0x01, (byte) 0x06, (byte) 0x00,
             (byte) 0xde, (byte) 0xad, (byte) 0xbe, (byte) 0xef,
@@ -931,7 +951,7 @@ public class DhcpPacketTest {
                     'a', 'n', 'd', 'r', 'o', 'i', 'd', '-',
                     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e',
             // Requested parameter list.
-            (byte) 0x37, (byte) 0x0a,
+            (byte) 0x37, (byte) 0x0b, //TOdo
                 DHCP_SUBNET_MASK,
                 DHCP_ROUTER,
                 DHCP_DNS_SERVER,
@@ -942,10 +962,9 @@ public class DhcpPacketTest {
                 DHCP_RENEWAL_TIME,
                 DHCP_REBINDING_TIME,
                 DHCP_VENDOR_INFO,
-            // End options.
-            (byte) 0xff,
-            // Our packets are always of even length. TODO: find out why and possibly fix it.
-            (byte) 0x00
+                DHCP_NTP_SERVER,
+            // End options. RFC2132, Chapter 3.2 End option -> end is 255
+            (byte) 0xff
         };
         byte[] expected = new byte[DhcpPacket.MIN_PACKET_LENGTH_L2 + options.length];
         assertTrue((expected.length & 1) == 0);
@@ -971,6 +990,7 @@ public class DhcpPacketTest {
                 CLIENT_MAC, leaseTimeSecs, NETMASK /* netMask */,
                 BROADCAST_ADDR /* bcAddr */, Collections.singletonList(SERVER_ADDR) /* gateways */,
                 Collections.singletonList(SERVER_ADDR) /* dnsServers */,
+                Collections.singletonList(SERVER_ADDR) /* ntpervers */,
                 SERVER_ADDR /* dhcpServerIdentifier */, null /* domainName */, false /* metered */);
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -1026,6 +1046,9 @@ public class DhcpPacketTest {
         bos.write(SERVER_ADDR.getAddress());
         // Nameserver
         bos.write(new byte[] { (byte) 0x06, (byte) 0x04 });
+        bos.write(SERVER_ADDR.getAddress());
+        // NTP
+        bos.write(new byte[] { (byte) 0x2A, (byte) 0x04 });
         bos.write(SERVER_ADDR.getAddress());
         // End options.
         bos.write(0xff);

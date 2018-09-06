@@ -151,7 +151,7 @@ public abstract class DhcpPacket {
      * DHCP Optional Type: DHCP DNS Server
      */
     protected static final byte DHCP_DNS_SERVER = 6;
-    protected List<Inet4Address> mDnsServers;
+    protected List<Inet4Address> mDnsServers = new ArrayList<>();;
 
     /**
      * DHCP Optional Type: DHCP Host Name
@@ -176,6 +176,12 @@ public abstract class DhcpPacket {
      */
     protected static final byte DHCP_BROADCAST_ADDRESS = 28;
     protected Inet4Address mBroadcastAddress;
+
+    /**
+    * DHCP Optional Type: DHCP provided NTP SERVERS
+    */
+    protected static final byte DHCP_NTP_SERVER = 42;
+    protected List<Inet4Address> mNtpServers = new ArrayList<>();
 
     /**
      * DHCP Optional Type: Vendor specific information
@@ -697,6 +703,7 @@ public abstract class DhcpPacket {
         addTlv(buf, DHCP_DNS_SERVER, mDnsServers);
         addTlv(buf, DHCP_DOMAIN_NAME, mDomainName);
         addTlv(buf, DHCP_VENDOR_INFO, mVendorInfo);
+        addTlv(buf, DHCP_NTP_SERVER, mNtpServers);
     }
 
     /**
@@ -805,6 +812,7 @@ public abstract class DhcpPacket {
         byte[] clientMac;
         byte[] clientId = null;
         List<Inet4Address> dnsServers = new ArrayList<>();
+        List<Inet4Address> ntpServers = new ArrayList<>();
         List<Inet4Address> gateways = new ArrayList<>();  // aka router
         Inet4Address serverIdentifier = null;
         Inet4Address netMask = null;
@@ -1067,6 +1075,11 @@ public abstract class DhcpPacket {
                             packet.get(id);
                             expectedLen = optionLen;
                         } break;
+                        case DHCP_NTP_SERVER:
+                            for (expectedLen = 0; expectedLen < optionLen; expectedLen += 4) {
+                                ntpServers.add(readIpAddress(packet));
+                            }
+                            break;
                         case DHCP_VENDOR_INFO:
                             expectedLen = optionLen;
                             // Embedded nulls are safe as this does not get passed to netd.
@@ -1148,6 +1161,7 @@ public abstract class DhcpPacket {
         newPacket.mClientId = clientId;
         newPacket.mDnsServers = dnsServers;
         newPacket.mDomainName = domainName;
+        newPacket.mNtpServers = ntpServers;
         newPacket.mGateways = gateways;
         newPacket.mHostName = hostName;
         newPacket.mLeaseTime = leaseTime;
@@ -1217,6 +1231,7 @@ public abstract class DhcpPacket {
 
         results.dnsServers.addAll(mDnsServers);
         results.domains = mDomainName;
+        results.ntpServers.addAll(mNtpServers);
         results.serverAddress = mServerIdentifier;
         results.vendorInfo = mVendorInfo;
         results.leaseDuration = (mLeaseTime != null) ? mLeaseTime : INFINITE_LEASE;
@@ -1258,7 +1273,7 @@ public abstract class DhcpPacket {
     public static ByteBuffer buildOfferPacket(int encap, int transactionId,
         boolean broadcast, Inet4Address serverIpAddr, Inet4Address relayIp,
         Inet4Address yourIp, byte[] mac, Integer timeout, Inet4Address netMask,
-        Inet4Address bcAddr, List<Inet4Address> gateways, List<Inet4Address> dnsServers,
+        Inet4Address bcAddr, List<Inet4Address> gateways, List<Inet4Address> dnsServers, List<Inet4Address> ntpServers,
         Inet4Address dhcpServerIdentifier, String domainName, boolean metered) {
         DhcpPacket pkt = new DhcpOfferPacket(
                 transactionId, (short) 0, broadcast, serverIpAddr, relayIp,
@@ -1267,6 +1282,7 @@ public abstract class DhcpPacket {
         pkt.mDnsServers = dnsServers;
         pkt.mLeaseTime = timeout;
         pkt.mDomainName = domainName;
+        pkt.mNtpServers = ntpServers;
         pkt.mServerIdentifier = dhcpServerIdentifier;
         pkt.mSubnetMask = netMask;
         pkt.mBroadcastAddress = bcAddr;
@@ -1282,7 +1298,7 @@ public abstract class DhcpPacket {
     public static ByteBuffer buildAckPacket(int encap, int transactionId,
         boolean broadcast, Inet4Address serverIpAddr, Inet4Address relayIp, Inet4Address yourIp,
         Inet4Address requestClientIp, byte[] mac, Integer timeout, Inet4Address netMask,
-        Inet4Address bcAddr, List<Inet4Address> gateways, List<Inet4Address> dnsServers,
+        Inet4Address bcAddr, List<Inet4Address> gateways, List<Inet4Address> dnsServers, List<Inet4Address> ntpServers,
         Inet4Address dhcpServerIdentifier, String domainName, boolean metered) {
         DhcpPacket pkt = new DhcpAckPacket(
                 transactionId, (short) 0, broadcast, serverIpAddr, relayIp, requestClientIp, yourIp,
@@ -1291,6 +1307,7 @@ public abstract class DhcpPacket {
         pkt.mDnsServers = dnsServers;
         pkt.mLeaseTime = timeout;
         pkt.mDomainName = domainName;
+        pkt.mNtpServers = ntpServers;
         pkt.mSubnetMask = netMask;
         pkt.mServerIdentifier = dhcpServerIdentifier;
         pkt.mBroadcastAddress = bcAddr;

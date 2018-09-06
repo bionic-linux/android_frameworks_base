@@ -65,6 +65,13 @@ public class DhcpServingParams {
     public final Set<Inet4Address> dnsServers;
 
     /**
+     * NTP servers to be advertised to DHCP clients. May be empty.
+     * This set is provided by {@link DhcpServingParams.Builder} and is immutable.
+     */
+    @NonNull
+    public final Set<Inet4Address> ntpServers;
+
+    /**
      * Excluded addresses that the DHCP server is not allowed to assign to clients.
      * This set is provided by {@link DhcpServingParams.Builder} and is immutable.
      */
@@ -92,11 +99,13 @@ public class DhcpServingParams {
 
     private DhcpServingParams(@NonNull LinkAddress serverAddr,
             @NonNull Set<Inet4Address> defaultRouters,
-            @NonNull Set<Inet4Address> dnsServers, @NonNull Set<Inet4Address> excludedAddrs,
+            @NonNull Set<Inet4Address> dnsServers,
+            @NonNull Set<Inet4Address> ntpServers, @NonNull Set<Inet4Address> excludedAddrs,
             long dhcpLeaseTimeSecs, int linkMtu, boolean metered) {
         this.serverAddr = serverAddr;
         this.defaultRouters = defaultRouters;
         this.dnsServers = dnsServers;
+        this.ntpServers = ntpServers;
         this.excludedAddrs = excludedAddrs;
         this.dhcpLeaseTimeSecs = dhcpLeaseTimeSecs;
         this.linkMtu = linkMtu;
@@ -137,6 +146,7 @@ public class DhcpServingParams {
         private LinkAddress serverAddr;
         private Set<Inet4Address> defaultRouters;
         private Set<Inet4Address> dnsServers;
+        private Set<Inet4Address> ntpServers = new HashSet<>(); // NTP server list is optional, and can be empty
         private Set<Inet4Address> excludedAddrs;
         private long dhcpLeaseTimeSecs;
         private int linkMtu = MTU_UNSET;
@@ -213,9 +223,39 @@ public class DhcpServingParams {
         }
 
         /**
+         * Set the NTP servers to be advertised to DHCP clients.
+         *
+         * <p>This may be an empty list of servers, can be set explicitly before building the
+         * {@link DhcpServingParams}.
+         */
+        public Builder setNtpServers(@NonNull Set<Inet4Address> ntpServers) {
+            this.ntpServers = ntpServers;
+            return this;
+        }
+
+        /**
+         * Set the NTP servers to be advertised to DHCP clients.
+         *
+         * <p>This may be an empty list of servers, can be set explicitly before building the
+         * {@link DhcpServingParams}.
+         */
+        public Builder setNtpServers(@NonNull Inet4Address... ntpServers) {
+            return setNtpServers(Sets.newArraySet(ntpServers));
+        }
+
+        /**
+         * Convenience method to build the parameters with no NTP server.
+         *
+         * <p>Equivalent to calling {@link #setNtpServers(Inet4Address...)} with no address.
+         */
+        public Builder withNoNtpServer() {
+            return setNtpServers();
+        }
+
+        /**
          * Set excluded addresses that the DHCP server is not allowed to assign to clients.
          *
-         * <p>This parameter is optional. DNS servers and default routers are always excluded
+         * <p>This parameter is optional. DNS/NTP servers and default routers are always excluded
          * and do not need to be set here.
          */
         public Builder setExcludedAddrs(@NonNull Set<Inet4Address> excludedAddrs) {
@@ -226,7 +266,7 @@ public class DhcpServingParams {
         /**
          * Set excluded addresses that the DHCP server is not allowed to assign to clients.
          *
-         * <p>This parameter is optional. DNS servers and default routers are always excluded
+         * <p>This parameter is optional. DNS/NTP servers and default routers are always excluded
          * and do not need to be set here.
          */
         public Builder setExcludedAddrs(@NonNull Inet4Address... excludedAddrs) {
@@ -313,10 +353,12 @@ public class DhcpServingParams {
             excl.add((Inet4Address) serverAddr.getAddress());
             excl.addAll(defaultRouters);
             excl.addAll(dnsServers);
+            excl.addAll(ntpServers);
 
             return new DhcpServingParams(serverAddr,
                     Collections.unmodifiableSet(new HashSet<>(defaultRouters)),
                     Collections.unmodifiableSet(new HashSet<>(dnsServers)),
+                    Collections.unmodifiableSet(new HashSet<>(ntpServers)),
                     Collections.unmodifiableSet(excl),
                     dhcpLeaseTimeSecs, linkMtu, metered);
         }
