@@ -23,6 +23,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -40,6 +42,10 @@ public class DhcpResults extends StaticIpConfiguration {
     /** Vendor specific information (from RFC 2132). */
     @UnsupportedAppUsage
     public String vendorInfo;
+
+    /** List of time servers (NTP) addresses (from RFC 2132) **/
+    @UnsupportedAppUsage
+    public ArrayList<InetAddress> ntpServers = new ArrayList<>();
 
     @UnsupportedAppUsage
     public int leaseDuration;
@@ -64,6 +70,8 @@ public class DhcpResults extends StaticIpConfiguration {
         super(source);
 
         if (source != null) {
+            // Make copy of ntp servers addresses
+            ntpServers = new ArrayList<InetAddress>(source.ntpServers);
             // All these are immutable, so no need to make copies.
             serverAddress = source.serverAddress;
             vendorInfo = source.vendorInfo;
@@ -99,6 +107,7 @@ public class DhcpResults extends StaticIpConfiguration {
         str.append(" Vendor info ").append(vendorInfo);
         str.append(" lease ").append(leaseDuration).append(" seconds");
         if (mtu != 0) str.append(" MTU ").append(mtu);
+        str.append(" Ntp server(s) : ").append(ntpServers);
 
         return str.toString();
     }
@@ -113,6 +122,7 @@ public class DhcpResults extends StaticIpConfiguration {
 
         return super.equals((StaticIpConfiguration) obj) &&
                 Objects.equals(serverAddress, target.serverAddress) &&
+                ntpServers.equals(target.ntpServers) && // same NTP servers list (content check)
                 Objects.equals(vendorInfo, target.vendorInfo) &&
                 leaseDuration == target.leaseDuration &&
                 mtu == target.mtu;
@@ -204,5 +214,13 @@ public class DhcpResults extends StaticIpConfiguration {
 
     public void setDomains(String newDomains) {
         domains = newDomains;
+    }
+
+    /**
+    * Define a NTP servers list
+    * @param newNtpServers NTP servers list to be used
+    */
+    public void setNtpServers(ArrayList<InetAddress> newNtpServers) {
+        ntpServers = newNtpServers;
     }
 }

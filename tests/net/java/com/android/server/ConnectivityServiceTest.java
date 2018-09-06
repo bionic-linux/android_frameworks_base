@@ -4532,4 +4532,38 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.disconnect();
         mCm.unregisterNetworkCallback(networkCallback);
     }
+
+    @Test
+    public void testBasicNtpConfigurationPushed() throws Exception {
+
+        reset(mNetworkManagementService);
+
+        final String[] EMPTY_STRING_ARRAY = new String[0];
+        mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_ETHERNET);
+        waitForIdle();
+
+        final LinkProperties cellLp = new LinkProperties();
+        cellLp.setInterfaceName(MOBILE_IFNAME);
+        cellLp.addLinkAddress(new LinkAddress("192.0.2.4/24"));
+        cellLp.addRoute(new RouteInfo((IpPrefix) null, InetAddress.getByName("192.0.2.4"),
+                MOBILE_IFNAME));
+        cellLp.addLinkAddress(new LinkAddress("2001:db8:1::1/64"));
+        cellLp.addRoute(new RouteInfo((IpPrefix) null, InetAddress.getByName("2001:db8:1::1"),
+                MOBILE_IFNAME));
+        cellLp.addNtpServer(InetAddress.getByName("192.0.2.10"));
+        cellLp.addNtpServer(InetAddress.getByName("192.0.2.20"));
+        mCellNetworkAgent.sendLinkProperties(cellLp);
+        mCellNetworkAgent.connect(false);
+        waitForIdle();
+
+        reset(mNetworkManagementService);
+
+        assertEquals(2, cellLp.getNtpServers().size());
+        assertTrue(cellLp.getNtpServers().contains(InetAddress.getByName("192.0.2.10"))
+                && cellLp.getNtpServers().contains(InetAddress.getByName("192.0.2.20")));
+
+        cellLp.removeNtpServer(InetAddress.getByName("192.0.2.20"));
+        assertEquals(1, cellLp.getNtpServers().size());
+        assertTrue(cellLp.getNtpServers().contains(InetAddress.getByName("192.0.2.10")));
+    }
 }
