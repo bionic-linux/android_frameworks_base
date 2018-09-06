@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684a7edb_df8770da",
+        "filename": "config/hiddenapi-dark-greylist.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-09-06T11:09:06Z",
+      "side": 1,
+      "message": "I was wondering if we should make the script support #comments in these files, so we can add something at the top here saying \"don\u0027t edit this script\"?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 8
+      },
+      "revId": "3cc74c71ef907a76547424aea6597f7b2907e9fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
