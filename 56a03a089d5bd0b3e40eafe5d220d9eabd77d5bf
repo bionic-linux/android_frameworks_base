@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9835b455_17989fab",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-07T11:46:04Z",
+      "side": 1,
+      "message": "In a future CL it would be good to delete this method as well.",
+      "range": {
+        "startLine": 1821,
+        "startChar": 0,
+        "endLine": 1826,
+        "endChar": 0
+      },
+      "revId": "56a03a089d5bd0b3e40eafe5d220d9eabd77d5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
