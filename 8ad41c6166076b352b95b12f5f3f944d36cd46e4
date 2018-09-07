@@ -22,6 +22,30 @@
       "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf879610_5035a843",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerServiceUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-09-07T15:53:06Z",
+      "side": 1,
+      "message": "Because this is shared code. I was thinking it\u0027s not OK to also make bg-dexopt more noisy...",
+      "parentUuid": "ea429c3f_3cb684fc",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
