@@ -22,6 +22,30 @@
       "revId": "56a03a089d5bd0b3e40eafe5d220d9eabd77d5bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e87c2bb_1efae54d",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1826,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-09-10T09:00:24Z",
+      "side": 1,
+      "message": "got it",
+      "parentUuid": "9835b455_17989fab",
+      "range": {
+        "startLine": 1821,
+        "startChar": 0,
+        "endLine": 1826,
+        "endChar": 0
+      },
+      "revId": "56a03a089d5bd0b3e40eafe5d220d9eabd77d5bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
