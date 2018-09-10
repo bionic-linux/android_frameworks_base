@@ -22,6 +22,30 @@
       "revId": "02ca886a9ffbb2c2b0119d31738a8774a7888e79",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c952f505_e3b76297",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 11828,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-09-10T18:31:31Z",
+      "side": 1,
+      "message": "Bah, crap.\n\n(close_with_tag isn\u0027t showing up, so it isn\u0027t as important for now to reduce native stacks)",
+      "parentUuid": "3123cb7e_944e5fc7",
+      "range": {
+        "startLine": 11827,
+        "startChar": 82,
+        "endLine": 11828,
+        "endChar": 90
+      },
+      "revId": "02ca886a9ffbb2c2b0119d31738a8774a7888e79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
