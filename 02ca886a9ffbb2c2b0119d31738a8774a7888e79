@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3123cb7e_944e5fc7",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 11828,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2018-09-10T18:25:50Z",
+      "side": 1,
+      "message": "Is the deletion of munlock intentional?\n\nAlso, android_fdsan_close_with_tag as well?",
+      "range": {
+        "startLine": 11827,
+        "startChar": 82,
+        "endLine": 11828,
+        "endChar": 90
+      },
+      "revId": "02ca886a9ffbb2c2b0119d31738a8774a7888e79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
