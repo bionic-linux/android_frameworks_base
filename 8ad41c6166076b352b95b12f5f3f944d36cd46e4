@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b537142f_5c57ad3a",
+        "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2018-09-10T17:56:24Z",
+      "side": 1,
+      "message": "line too long",
+      "range": {
+        "startLine": 128,
+        "startChar": 100,
+        "endLine": 128,
+        "endChar": 101
+      },
+      "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea429c3f_3cb684fc",
         "filename": "services/core/java/com/android/server/pm/PackageManagerServiceUtils.java",
         "patchSetId": 1
@@ -109,6 +132,30 @@
       "side": 1,
       "message": "Ack.",
       "parentUuid": "820f5df1_86ee87fe",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d2ec14_38b76e04",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerServiceUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2018-09-10T17:56:24Z",
+      "side": 1,
+      "message": "It might be cleaner to encapsulate all debug flags we care about in a separate class.\n\nPassing debug flags around tends to be annoying when the method has more than one caller.",
+      "parentUuid": "0604a4f3_607caeb0",
       "range": {
         "startLine": 173,
         "startChar": 12,
