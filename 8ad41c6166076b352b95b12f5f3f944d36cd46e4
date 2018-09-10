@@ -94,6 +94,30 @@
       "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0604a4f3_607caeb0",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerServiceUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-09-10T14:40:29Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "820f5df1_86ee87fe",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
