@@ -46,6 +46,30 @@
       "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3eee16_6ac522ba",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerServiceUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2018-09-10T13:41:52Z",
+      "side": 1,
+      "message": "Hmm, we have two DEBUG_DEXOPT variables? Can we rename one? :)",
+      "parentUuid": "bf879610_5035a843",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
