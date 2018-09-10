@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0380c730_33740d83",
+        "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-09-10T19:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b537142f_5c57ad3a",
+      "range": {
+        "startLine": 128,
+        "startChar": 100,
+        "endLine": 128,
+        "endChar": 101
+      },
+      "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea429c3f_3cb684fc",
         "filename": "services/core/java/com/android/server/pm/PackageManagerServiceUtils.java",
         "patchSetId": 1
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "It might be cleaner to encapsulate all debug flags we care about in a separate class.\n\nPassing debug flags around tends to be annoying when the method has more than one caller.",
       "parentUuid": "0604a4f3_607caeb0",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f644039e_58ecfc4b",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerServiceUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-09-10T19:48:12Z",
+      "side": 1,
+      "message": "Don\u0027t really understand that suggestion. If it\u0027s struct-like to contain multiple flags, it would make this method depend on the knowledge of which users there are in the system. If it\u0027s just a flag there passed in, it doesn\u0027t change the bool type.",
+      "parentUuid": "34d2ec14_38b76e04",
       "range": {
         "startLine": 173,
         "startChar": 12,
