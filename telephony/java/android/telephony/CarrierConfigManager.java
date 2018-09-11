@@ -2324,11 +2324,36 @@ public class CarrierConfigManager {
     /**
      * Determine whether to use only RSRP for the number of LTE signal bars.
      * @hide
+     *
+     * @deprecated use {@link #KEY_PARAMETERS_USED_FOR_LTE_SIGNAL_BAR_INT}.
      */
     // FIXME: this key and related keys must not be exposed without a consistent philosophy for
     // all RATs.
+    @Deprecated
     public static final String KEY_USE_ONLY_RSRP_FOR_LTE_SIGNAL_BAR_BOOL =
             "use_only_rsrp_for_lte_signal_bar_bool";
+
+    /**
+     * Bit-field integer to determine whether to use Reference Signal Received Power (RSRP),
+     * Reference Signal Received Quality (RSRQ), or/and Reference Signal Signal to Noise Ratio
+     * (RSSNR) for the number of LTE signal bars and signal criteria reporting enabling.
+     *
+     * <p> If a measure is not set, signal criteria reporting from modem will not be triggered and
+     * not be used for calculating signal level. If multiple measures are set bit, the parameter
+     * whose value is smallest is used to indicate the signal level.
+     *
+     *  RSRP = 1 << 0,
+     *  RSRQ = 1 << 1,
+     *  RSSNR = 1 << 2,
+     *
+     *  The value of this key must be bitwise OR of {@link CellSignalStrengthLte#USE_RSRP},
+     *  {@link CellSignalStrengthLte#USE_RSRQ}, {@link CellSignalStrengthLte#USE_RSSNR}.
+     *
+     * For example, if both RSRP and RSRQ are used, the value of key is 3 (1 << 0 | 1 << 1).
+     * If the key is invalid or not configured, a default value (RSRP = 1 << 0) will apply.
+     */
+    public static final String KEY_PARAMETERS_USED_FOR_LTE_SIGNAL_BAR_INT =
+            "parameters_used_for_lte_signal_bar_int";
 
     /**
      * List of 4 customized 5G SS reference signal received power (SSRSRP) thresholds.
@@ -2631,6 +2656,32 @@ public class CarrierConfigManager {
      */
     public static final String KEY_LTE_RSRP_THRESHOLDS_INT_ARRAY =
             "lte_rsrp_thresholds_int_array";
+
+    /**
+     * A list of 4 LTE RSRQ thresholds above which a signal level is considered POOR,
+     * MODERATE, GOOD, or EXCELLENT, to be used in SignalStrength reporting.
+     *
+     * Note that the min and max thresholds are fixed at -34(dB) and 3(dB) as explained in
+     * TS 136.133 v12.6.0 section 9.1.7 - RSRQ Measurement Report Mapping.
+     * <p>
+     * See SignalStrength#MAX_LTE_RSRQ and SignalStrength#MIN_LTE_RSRQ. Any signal level outside
+     * these boundaries is considered invalid.
+     */
+    public static final String KEY_LTE_RSRQ_THRESHOLDS_INT_ARRAY =
+            "lte_rsrq_thresholds_int_array";
+
+    /**
+     * A list of 4 LTE RSSNR thresholds above which a signal level is considered POOR,
+     * MODERATE, GOOD, or EXCELLENT, to be used in SignalStrength reporting.
+     *
+     * Note that the min and max thresholds are fixed at -200(10*dB) and 300(10*dB).
+     *
+     * <p>
+     * See SignalStrength#MAX_LTE_RSSNR and SignalStrength#MIN_LTE_RSSNR. Any signal level outside
+     * these boundaries is considered invalid.
+     */
+    public static final String KEY_LTE_RSSNR_THRESHOLDS_INT_ARRAY =
+            "lte_rssnr_thresholds_int_array";
 
     /**
      * Decides when clients try to bind to iwlan network service, which package name will
@@ -3739,6 +3790,20 @@ public class CarrierConfigManager {
                         -108, /* SIGNAL_STRENGTH_GOOD */
                         -98,  /* SIGNAL_STRENGTH_GREAT */
                 });
+        sDefaults.putIntArray(KEY_LTE_RSRQ_THRESHOLDS_INT_ARRAY,
+                new int[] {
+                        -19, /* SIGNAL_STRENGTH_POOR */
+                        -17, /* SIGNAL_STRENGTH_MODERATE */
+                        -14, /* SIGNAL_STRENGTH_GOOD */
+                        -12  /* SIGNAL_STRENGTH_GREAT */
+                });
+        sDefaults.putIntArray(KEY_LTE_RSSNR_THRESHOLDS_INT_ARRAY,
+                new int[] {
+                        -30, /* SIGNAL_STRENGTH_POOR */
+                        10,  /* SIGNAL_STRENGTH_MODERATE */
+                        45,  /* SIGNAL_STRENGTH_GOOD */
+                        130  /* SIGNAL_STRENGTH_GREAT */
+                });
         sDefaults.putIntArray(KEY_WCDMA_RSCP_THRESHOLDS_INT_ARRAY,
                 new int[] {
                         -115,  /* SIGNAL_STRENGTH_POOR */
@@ -3834,6 +3899,8 @@ public class CarrierConfigManager {
                 new int[] {4 /* BUSY */});
         sDefaults.putBoolean(KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL, false);
         sDefaults.putLong(KEY_DATA_SWITCH_VALIDATION_TIMEOUT_LONG, 2000);
+        sDefaults.putInt(KEY_PARAMETERS_USED_FOR_LTE_SIGNAL_BAR_INT,
+                CellSignalStrengthLte.USE_RSRP | CellSignalStrengthLte.USE_RSSNR);
     }
 
     /**
