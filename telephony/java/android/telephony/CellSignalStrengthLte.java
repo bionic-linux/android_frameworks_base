@@ -55,6 +55,12 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     private static final int MAX_LTE_RSRP = -44;
     private static final int MIN_LTE_RSRP = -140;
 
+    private static final int MAX_LTE_RSRQ = 3;
+    private static final int MIN_LTE_RSRQ = -34;
+
+    private static final int MAX_LTE_RSSNR = 300;
+    private static final int MIN_LTE_RSSNR = -200;
+
     @UnsupportedAppUsage(maxTargetSdk = android.os.Build.VERSION_CODES.P)
     private int mSignalStrength; // To be removed
     private int mRssi;
@@ -81,7 +87,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      *
      * @param rssi in dBm [-113,-51], UNKNOWN
      * @param rsrp in dBm [-140,-43], UNKNOWN
-     * @param rsrq in dB [-20,-3], UNKNOWN
+     * @param rsrq in dB [-34, 3], UNKNOWN
      * @param rssnr in 10*dB [-200, +300], UNKNOWN
      * @param cqi [0, 15], UNKNOWN
      * @param timingAdvance [0, 1282], UNKNOWN
@@ -94,7 +100,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
         mRssi = inRangeOrUnavailable(rssi, -113, -51);
         mSignalStrength = mRssi;
         mRsrp = inRangeOrUnavailable(rsrp, -140, -43);
-        mRsrq = inRangeOrUnavailable(rsrq, -20, -3);
+        mRsrq = inRangeOrUnavailable(rsrq, -34, 3);
         mRssnr = inRangeOrUnavailable(rssnr, -200, 300);
         mCqi = inRangeOrUnavailable(cqi, 0, 15);
         mTimingAdvance = inRangeOrUnavailable(timingAdvance, 0, 1282);
@@ -154,25 +160,43 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     }
 
     // Lifted from Default carrier configs and max range of RSRP
-    private static final int[] sThresholds = new int[]{-115, -105, -95, -85};
+    private static final int[] sRsrpThresholds = new int[]{-115, -105, -95, -85};
+    // Lifted from Default carrier configs and max range of RSRQ
+    private static final int[] sRsrqThresholds = new int[]{-19, -17, -14, -12};
+    // Lifted from Default carrier configs and max range of RSSNR
+    private static final int[] sRssnrThresholds = new int[]{-30, 10, 45, 130};
     private static final int sRsrpBoost = 0;
 
     /** @hide */
     @Override
     public void updateLevel(PersistableBundle cc, ServiceState ss) {
-        int[] thresholds;
-        boolean rsrpOnly;
+        int[] rsrpThresholds, rsrqThresholds, rssnrThresholds;
+        boolean rsrpOnly, rsrpAndRsrq;
         if (cc == null) {
-            thresholds = sThresholds;
+            rsrpThresholds = sRsrpThresholds;
+            rsrqThresholds = sRsrqThresholds;
+            rssnrThresholds = sRssnrThresholds;
             rsrpOnly = false;
+            rsrpAndRsrq = false;
         } else {
             rsrpOnly = cc.getBoolean(
                     CarrierConfigManager.KEY_USE_ONLY_RSRP_FOR_LTE_SIGNAL_BAR_BOOL, false);
-            thresholds = cc.getIntArray(
+            rsrpAndRsrq = cc.getBoolean(
+                    CarrierConfigManager.KEY_USE_RSRP_AND_RSRQ_FOR_LTE_SIGNAL_BAR_BOOL, false);
+            rsrpThresholds = cc.getIntArray(
                     CarrierConfigManager.KEY_LTE_RSRP_THRESHOLDS_INT_ARRAY);
-            if (thresholds == null) thresholds = sThresholds;
+            rsrqThresholds = cc.getIntArray(
+                    CarrierConfigManager.KEY_LTE_RSRQ_THRESHOLDS_INT_ARRAY);
+            rssnrThresholds = cc.getIntArray(
+                    CarrierConfigManager.KEY_LTE_RSSNR_THRESHOLDS_INT_ARRAY);
+            if (rsrpThresholds == null) rsrpThresholds = sRsrpThresholds;
+            if (rsrqThresholds == null) rsrqThresholds = sRsrqThresholds;
+            if (rssnrThresholds == null) rssnrThresholds = sRssnrThresholds;
             if (DBG) log("updateLevel() carrierconfig - rsrpOnly="
-                    + rsrpOnly + ", thresholds=" + Arrays.toString(thresholds));
+                    + rsrpOnly + ", rsrpAndRsrq=" + rsrpAndRsrq
+                    + ", rsrpThresholds=" + Arrays.toString(rsrpThresholds)
+                    + ", rsrqThresholds=" + Arrays.toString(rsrqThresholds)
+                    + ", rssnrThresholds=" + Arrays.toString(rssnrThresholds));
         }
 
 
@@ -183,6 +207,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
 
         int rssiIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
         int rsrpIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        int rsrqIconLevel = -1;
         int snrIconLevel = -1;
 
         int rsrp = mRsrp + rsrpBoost;
@@ -190,8 +215,8 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
         if (rsrp < MIN_LTE_RSRP || rsrp > MAX_LTE_RSRP) {
             rsrpIconLevel = -1;
         } else {
-            rsrpIconLevel = thresholds.length;
-            while (rsrpIconLevel > 0 && rsrp < thresholds[rsrpIconLevel - 1]) rsrpIconLevel--;
+            rsrpIconLevel = rsrpThresholds.length;
+            while (rsrpIconLevel > 0 && rsrp < rsrpThresholds[rsrpIconLevel - 1]) rsrpIconLevel--;
         }
 
         if (rsrpOnly) {
@@ -203,37 +228,74 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
         }
 
         /*
-         * Values are -200 dB to +300 (SNR*10dB) RS_SNR >= 13.0 dB =>4 bars 4.5
-         * dB <= RS_SNR < 13.0 dB => 3 bars 1.0 dB <= RS_SNR < 4.5 dB => 2 bars
-         * -3.0 dB <= RS_SNR < 1.0 dB 1 bar RS_SNR < -3.0 dB/No Service Antenna
-         * Icon Only
+         * Values are -34 dB to 3 RSRQ >= rsrqThresholds[3] dB => 4 bars
+         * rsrqThresholds[2] dB <= RSRQ < rsrqThresholds[3] dB => 3 bars
+         * rsrqThresholds[1] dB <= RSRQ < rsrqThresholds[2] dB => 2 bars
+         * rsrqThresholds[0] dB <= RSRQ < rsrqThresholds[1] dB => 1 bar
+         * RSRQ < rsrqThresholds[0] dB/No Service Antenna Icon Only
          */
-        if (mRssnr > 300) snrIconLevel = -1;
-        else if (mRssnr >= 130) snrIconLevel = SIGNAL_STRENGTH_GREAT;
-        else if (mRssnr >= 45) snrIconLevel = SIGNAL_STRENGTH_GOOD;
-        else if (mRssnr >= 10) snrIconLevel = SIGNAL_STRENGTH_MODERATE;
-        else if (mRssnr >= -30) snrIconLevel = SIGNAL_STRENGTH_POOR;
-        else if (mRssnr >= -200)
-            snrIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
-
-        if (DBG) log("updateLevel() - rsrp:" + mRsrp + " snr:" + mRssnr + " rsrpIconLevel:"
-                + rsrpIconLevel + " snrIconLevel:" + snrIconLevel
-                + " lteRsrpBoost:" + sRsrpBoost);
-
-        /* Choose a measurement type to use for notification */
-        if (snrIconLevel != -1 && rsrpIconLevel != -1) {
-            /*
-             * The number of bars displayed shall be the smaller of the bars
-             * associated with LTE RSRP and the bars associated with the LTE
-             * RS_SNR
-             */
-            mLevel = (rsrpIconLevel < snrIconLevel ? rsrpIconLevel : snrIconLevel);
-            return;
+        if (mRsrq < MIN_LTE_RSRQ || mRsrq > MAX_LTE_RSRQ) {
+            if (mRsrq != CellInfo.UNAVAILABLE) {
+                Rlog.e(LOG_TAG, "getLteLevel - invalid lte rsrq: mRsrq=" + mRsrq);
+            }
+        } else {
+            rsrqIconLevel = rsrqThresholds.length;
+            while (rsrqIconLevel > 0 && mRsrq < rsrqThresholds[rsrqIconLevel - 1]) rsrqIconLevel--;
         }
 
-        if (snrIconLevel != -1) {
-            mLevel = snrIconLevel;
-            return;
+        /*
+         * Values are -200 dB to +300 (SNR*10dB) RS_SNR >= rssnrThresholds[3] dB => 4 bars
+         * rssnrThresholds[2] dB <= RS_SNR < rssnrThresholds[3] dB => 3 bars
+         * rssnrThresholds[1] dB <= RS_SNR < rssnrThresholds[2] dB => 2 bars
+         * rssnrThresholds[0] dB <= RS_SNR < rssnrThresholds[1] dB => 1 bar
+         * RS_SNR < rssnrThresholds[0] dB/No Service Antenna Icon Only
+         */
+        if (mRssnr < MIN_LTE_RSSNR || mRssnr > MAX_LTE_RSSNR) {
+            if (mRssnr != CellInfo.UNAVAILABLE) {
+                Rlog.e(LOG_TAG, "getLteLevel - invalid lte rssnr: mRssnr=" + mRssnr);
+            }
+        } else {
+            snrIconLevel = rssnrThresholds.length;
+            while (snrIconLevel > 0 && mRssnr < rssnrThresholds[snrIconLevel - 1]) snrIconLevel--;
+        }
+
+        if (DBG) {
+            log("updateLevel() - rsrp:" + mRsrp + " rsrq:" + mRsrq + " snr:" + mRssnr
+                    + " rsrpIconLevel:" + rsrpIconLevel + " rsrqIconLevel:" + rsrqIconLevel
+                    + " snrIconLevel:" + snrIconLevel + " lteRsrpBoost:" + sRsrpBoost);
+        }
+
+        /* Choose a measurement type to use for notification */
+        if (rsrpAndRsrq) {
+            if (rsrqIconLevel != -1 && rsrpIconLevel != -1) {
+                /*
+                 * The number of bars displayed shall be the smaller of the bars
+                 * associated with LTE RSRP and the bars associated with the LTE
+                 * RSRQ
+                 */
+                mLevel = (rsrpIconLevel < rsrqIconLevel ? rsrpIconLevel : rsrqIconLevel);
+                return;
+            }
+
+            if (rsrqIconLevel != -1) {
+                mLevel = rsrqIconLevel;
+                return;
+            }
+        } else {
+            if (snrIconLevel != -1 && rsrpIconLevel != -1) {
+                /*
+                 * The number of bars displayed shall be the smaller of the bars
+                 * associated with LTE RSRP and the bars associated with the LTE
+                 * RS_SNR
+                 */
+                mLevel = (rsrpIconLevel < snrIconLevel ? rsrpIconLevel : snrIconLevel);
+                return;
+            }
+
+            if (snrIconLevel != -1) {
+                mLevel = snrIconLevel;
+                return;
+            }
         }
 
         if (rsrpIconLevel != -1) {
