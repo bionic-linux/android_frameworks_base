@@ -213,6 +213,30 @@
       "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10a38f2_b141ee1e",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerServiceUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2018-09-11T20:09:53Z",
+      "side": 1,
+      "message": "You are right, I was suggestion a struct-like with multiple flags. I find that when debugging it\u0027s rare that I want to enable dexopt debug from one caller and not the other. Having debug flags together could make it easier to trace things.\n\nMight be the time spent in g3 which has much nicer flag infrastructure :).",
+      "parentUuid": "f644039e_58ecfc4b",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 25
+      },
+      "revId": "8ad41c6166076b352b95b12f5f3f944d36cd46e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
