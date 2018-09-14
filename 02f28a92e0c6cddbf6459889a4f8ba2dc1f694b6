@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eef5e5e_41f7f726",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-14T02:55:00Z",
+      "side": 1,
+      "message": "Can we make this safe to call all the time, whether provisioning is required or not?\n\nWe have had lurking bugs where our notion of \"provisioning required\" or \"tethering supported\" may change without us noticing properly and then we can\u0027t actually shutdown tethering correctly.\n\nThis CL probably shouldn\u0027t have any behaviour change, so perhaps just leave a TODO here saying we need to come back and robust-ify this.",
+      "range": {
+        "startLine": 365,
+        "startChar": 66,
+        "endLine": 365,
+        "endChar": 67
+      },
+      "revId": "02f28a92e0c6cddbf6459889a4f8ba2dc1f694b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76cb9792_e82bcb6e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-14T02:55:00Z",
+      "side": 1,
+      "message": "Perhaps line break between \"(\" and \"R\" would be more natural.",
+      "range": {
+        "startLine": 54,
+        "startChar": 90,
+        "endLine": 54,
+        "endChar": 99
+      },
+      "revId": "02f28a92e0c6cddbf6459889a4f8ba2dc1f694b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042646e9_eb8e8c9b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-09-14T02:55:00Z",
+      "side": 1,
+      "message": "Can you comment on the thread-safety here?  I believe calls to Tethering#{start,stop}Tethering can come in from another thread (via Settings calls to CM-\u003eCS).  Those calls would update this variable at the same time the SIM card provisioning might be running on the master SM thread.",
+      "range": {
+        "startLine": 120,
+        "startChar": 62,
+        "endLine": 120,
+        "endChar": 77
+      },
+      "revId": "02f28a92e0c6cddbf6459889a4f8ba2dc1f694b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
