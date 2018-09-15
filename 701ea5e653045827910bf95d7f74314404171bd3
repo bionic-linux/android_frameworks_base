@@ -1,0 +1,358 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c5a34fe_b72c7f6a",
+        "filename": "startop/tools/view-compiler/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure if -s in the directory is ok, do we have precedent to do this? Usually its _ in the directory name, filenames, etc.",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1656d4ad_adbf6c7c",
+        "filename": "startop/tools/view-compiler/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: use a longer name",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1286a8d4_d40a46ed",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rio-endl",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567ec042_aa29d96f",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: go/art-style-guide discourages using auto for trivial types",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ba6571_d274031e",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: if (!view_stack_.empty())",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68da3c46_9e28d3f1",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: if (!view_stack_.empty())",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cfc5e6_2db99e3a",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: class_name",
+      "range": {
+        "startLine": 86,
+        "startChar": 25,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d090ab_bbfeab10",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "\u0026",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 13
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090c3fe2_0496965f",
+        "filename": "startop/tools/view-compiler/java-builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: I guess you would want to call this something like Start/Finish because Begin/End immediately made me think it was an iterator",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c2fc89_e78188bf",
+        "filename": "startop/tools/view-compiler/java-builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: class_name",
+      "range": {
+        "startLine": 50,
+        "startChar": 24,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c4ade8_173b9e26",
+        "filename": "startop/tools/view-compiler/java-builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: don\u0027t intermix fields and methods in the order (i.e. all fields last)",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05449639_7d090aef",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: /*paramname*/",
+      "range": {
+        "startLine": 45,
+        "startChar": 45,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24fd4b13_e702161e",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: magic numbers",
+      "range": {
+        "startLine": 53,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bf2bb3_9e76dc66",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: I would consider using \n\n  TypeName variableName{parameters};\n\nwhich is the post-C++11 modern style to construct objects, and doesn\u0027t carry the problems of the older way to construct elements.\n\nhttp://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-list",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d786bce_56944552",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: /*in*/ ? /*out*/ ?",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 25
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fecf20_bbff92dc",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "nit: 1 arg per line.",
+      "range": {
+        "startLine": 75,
+        "startChar": 22,
+        "endLine": 76,
+        "endChar": 72
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab209d57_84e80404",
+        "filename": "startop/tools/view-compiler/util-test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "swap the order of the arguments\n\n  EXPECT_EQ(expected, actual)\n\notherwise the gtest failures are flipped",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed09305_00a0f937",
+        "filename": "tools/aapt2/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2018-09-15T01:17:14Z",
+      "side": 1,
+      "message": "? this seems sketchy",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
