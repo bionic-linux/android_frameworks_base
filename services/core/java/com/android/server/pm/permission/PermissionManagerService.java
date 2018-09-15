@@ -1046,34 +1046,34 @@ public class PermissionManagerService {
         if (!privappPermissionsDisable && privilegedPermission && pkg.isPrivileged()
                 && !platformPackage && platformPermission) {
             if (!hasPrivappWhitelistEntry(perm, pkg)) {
+                // it's only a reportable violation if the permission isn't explicitly denied
+                ArraySet<String> deniedPermissions = null;
+                if (pkg.isVendor()) {
+                    deniedPermissions = SystemConfig.getInstance()
+                            .getVendorPrivAppDenyPermissions(pkg.packageName);
+                } else if (pkg.isProduct()) {
+                    deniedPermissions = SystemConfig.getInstance()
+                            .getProductPrivAppDenyPermissions(pkg.packageName);
+                } else {
+                    deniedPermissions = SystemConfig.getInstance()
+                            .getPrivAppDenyPermissions(pkg.packageName);
+                }
+                final boolean permissionViolation =
+                        deniedPermissions == null || !deniedPermissions.contains(perm);
+                if (!permissionViolation) {
+                    // Don't grant the app an explictly denied permission
+                    return false;
+                }
                 // Only report violations for apps on system image
                 if (!mSystemReady && !pkg.isUpdatedSystemApp()) {
-                    // it's only a reportable violation if the permission isn't explicitly denied
-                    ArraySet<String> deniedPermissions = null;
-                    if (pkg.isVendor()) {
-                        deniedPermissions = SystemConfig.getInstance()
-                                .getVendorPrivAppDenyPermissions(pkg.packageName);
-                    } else if (pkg.isProduct()) {
-                        deniedPermissions = SystemConfig.getInstance()
-                                .getProductPrivAppDenyPermissions(pkg.packageName);
-                    } else {
-                        deniedPermissions = SystemConfig.getInstance()
-                                .getPrivAppDenyPermissions(pkg.packageName);
-                    }
-                    final boolean permissionViolation =
-                            deniedPermissions == null || !deniedPermissions.contains(perm);
-                    if (permissionViolation) {
-                        Slog.w(TAG, "Privileged permission " + perm + " for package "
-                                + pkg.packageName + " - not in privapp-permissions whitelist");
+                    Slog.w(TAG, "Privileged permission " + perm + " for package "
+                            + pkg.packageName + " - not in privapp-permissions whitelist");
 
-                        if (RoSystemProperties.CONTROL_PRIVAPP_PERMISSIONS_ENFORCE) {
-                            if (mPrivappPermissionsViolations == null) {
-                                mPrivappPermissionsViolations = new ArraySet<>();
-                            }
-                            mPrivappPermissionsViolations.add(pkg.packageName + ": " + perm);
+                    if (RoSystemProperties.CONTROL_PRIVAPP_PERMISSIONS_ENFORCE) {
+                        if (mPrivappPermissionsViolations == null) {
+                            mPrivappPermissionsViolations = new ArraySet<>();
                         }
-                    } else {
-                        return false;
+                        mPrivappPermissionsViolations.add(pkg.packageName + ": " + perm);
                     }
                 }
                 if (RoSystemProperties.CONTROL_PRIVAPP_PERMISSIONS_ENFORCE) {
