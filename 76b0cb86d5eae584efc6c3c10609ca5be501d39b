@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "f241cf17_857112d3",
+        "filename": "startop/tools/view_compiler/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2018-09-17T21:41:22Z",
+      "side": 1,
+      "message": "Should this be \"Then to\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec700e2f_1bd194e6",
+        "filename": "startop/tools/view_compiler/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2018-09-17T21:41:22Z",
+      "side": 1,
+      "message": "It should also be noted that this only works for apps that do no use / include custom layout inflator or factory.",
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52084bea_ebccd169",
         "filename": "startop/tools/view_compiler/java_builder.cc",
         "patchSetId": 2
