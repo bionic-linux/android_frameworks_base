@@ -7842,14 +7842,17 @@ public class TelephonyManager {
     }
 
     /**
-     * Return the application ID for the app type like {@link APPTYPE_CSIM}.
+     * Return the application ID for the uicc application type like {@link #APPTYPE_CSIM}.
+     * All uicc applications are uniquely identified by application ID. See ETSI 102.221 and 101.220
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE}
      *
-     * Requires that the calling app has READ_PRIVILEGED_PHONE_STATE permission
-     *
-     * @param appType the uicc app type like {@link APPTYPE_CSIM}
-     * @return Application ID for specificied app type or null if no uicc or error.
+     * @param appType the uicc app type like {@link #APPTYPE_CSIM}
+     * @return Application ID for specified app type or {@code null} if no uicc or error.
      * @hide
      */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public String getAidForAppType(int appType) {
         return getAidForAppType(getSubId(), appType);
     }
