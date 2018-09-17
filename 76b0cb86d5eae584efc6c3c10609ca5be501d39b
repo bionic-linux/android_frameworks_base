@@ -136,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e0181126_cb5e9348",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T23:56:43Z",
+      "side": 1,
+      "message": "Thanks for the suggestion!\n\nI think for now I\u0027d like to keep things as they are, because with raw strings everything would be completely left aligned, and I think the indentation like we have here is nicer.\n\nI wasn\u0027t really aware of raw strings in C++, so I expect I\u0027ll use them more as this tool grows.",
+      "parentUuid": "d3bca37a_db807167",
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52084bea_ebccd169",
         "filename": "startop/tools/view_compiler/java_builder.cc",
         "patchSetId": 2
@@ -194,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "e14fe7af_fdc29c43",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T23:56:43Z",
+      "side": 1,
+      "message": "Yes, or different methods. If it\u0027s okay, I\u0027d like to save this for a later CL and consider supporting multiple compiled views a feature still to be added.",
+      "parentUuid": "231edb68_50740067",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "677c5342_b360bc1f",
         "filename": "startop/tools/view_compiler/java_builder.cc",
         "patchSetId": 2
@@ -205,6 +247,30 @@
       "writtenOn": "2018-09-17T23:13:08Z",
       "side": 1,
       "message": "You can use android::base::StringPrintf to format the string for this line.\n\nStringPrintf(\"XmlResourceParser xml \u003d res.getLayout(%s.R.layout.%s);\", package_, layout_name_);\n\nHere and other places would make this much more readable.",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12132bc_a60f847a",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T23:56:43Z",
+      "side": 1,
+      "message": "Good idea, I think this is much more readable.",
+      "parentUuid": "677c5342_b360bc1f",
       "range": {
         "startLine": 52,
         "startChar": 15,
@@ -240,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "e534afaa_e5cba2e0",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T23:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3322e83c_eb9ceb0d",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec93c873_2e1dfdd9",
         "filename": "startop/tools/view_compiler/java_builder.cc",
         "patchSetId": 2
@@ -251,6 +341,30 @@
       "writtenOn": "2018-09-17T23:13:08Z",
       "side": 1,
       "message": "Why not \"layout\"? And this can be declared closer to where it is first used in line 86.",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c798924d_230d36d0",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T23:56:43Z",
+      "side": 1,
+      "message": "I like layout. I also renamed the variable to layout_var. Personally, I like having these variables all defined in one place, so I\u0027d rather keep the definition here.",
+      "parentUuid": "ec93c873_2e1dfdd9",
       "range": {
         "startLine": 71,
         "startChar": 33,
@@ -283,6 +397,30 @@
       "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30787d69_4a0e5b66",
+        "filename": "startop/tools/view_compiler/java_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T23:56:43Z",
+      "side": 1,
+      "message": "How about JavaViewBuilder?",
+      "parentUuid": "57e2caef_095bb632",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -356,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "067df8e4_43b196fe",
+        "filename": "startop/tools/view_compiler/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T23:56:43Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m planning on refactoring this as development continues. Here\u0027s my rough plan for the factoring:\n\n* this loop moves into libviewcompiler and takes the parser as a parameter\n* the JavaViewBuilder gets split into two parts: one part works in terms of high level operations like \"create a variable\" or \"call a constructor\", the second part does the low level source code formatting.\n* the parsing loop will call the high level operations\n* eventually there will be an interface-compatible replacement for the low level code formatter that directly generates compiled code\n\nAt that point, main.cc should basically be a call into the library, and then the library can be used as is in tests and also hopefully on device.\n\nI\u0027d rather go ahead and land this version and follow up with the refactorings and new functionality though.",
+      "parentUuid": "0dfc1c52_a6ccc42c",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 71
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "640d3892_8c95fb50",
         "filename": "startop/tools/view_compiler/util.cc",
         "patchSetId": 2
@@ -367,6 +529,30 @@
       "writtenOn": "2018-09-17T23:13:08Z",
       "side": 1,
       "message": "You could use aapt::util::Split(filename, aapt::file::sDirSep)[0].",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e3e192_c92b20a4",
+        "filename": "startop/tools/view_compiler/util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T23:56:43Z",
+      "side": 1,
+      "message": "Ah, great!\n\nHow about I do this in a follow up CL?",
+      "parentUuid": "640d3892_8c95fb50",
       "range": {
         "startLine": 21,
         "startChar": 0,
