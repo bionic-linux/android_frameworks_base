@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "211f51c8_9332ce24",
+        "filename": "startop/tools/view-compiler/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c5a34fe_b72c7f6a",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1656d4ad_adbf6c7c",
         "filename": "startop/tools/view-compiler/Android.bp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bc39bf_446d8a22",
+        "filename": "startop/tools/view-compiler/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "I changed it to `viewcompiler`.",
+      "parentUuid": "1656d4ad_adbf6c7c",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "86b04b23_59794e4b",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1286a8d4_d40a46ed",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "567ec042_aa29d96f",
         "filename": "startop/tools/view-compiler/java-builder.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5685ef0_640c7f67",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "567ec042_aa29d96f",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c600ae01_62eb3172",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40ba6571_d274031e",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68da3c46_9e28d3f1",
         "filename": "startop/tools/view-compiler/java-builder.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2edca91_c593d68b",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68da3c46_9e28d3f1",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "995348f8_1c295e8b",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61cfc5e6_2db99e3a",
+      "range": {
+        "startLine": 86,
+        "startChar": 25,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d090ab_bbfeab10",
         "filename": "startop/tools/view-compiler/java-builder.cc",
         "patchSetId": 1
@@ -147,6 +279,30 @@
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce534515_88541679",
+        "filename": "startop/tools/view-compiler/java-builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38d090ab_bbfeab10",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 13
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "69859db1_fd24f9de",
+        "filename": "startop/tools/view-compiler/java-builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "090c3fe2_0496965f",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2c2fc89_e78188bf",
         "filename": "startop/tools/view-compiler/java-builder.h",
         "patchSetId": 1
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "c675dc46_44533fad",
+        "filename": "startop/tools/view-compiler/java-builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2c2fc89_e78188bf",
+      "range": {
+        "startLine": 50,
+        "startChar": 24,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07c4ade8_173b9e26",
         "filename": "startop/tools/view-compiler/java-builder.h",
         "patchSetId": 1
@@ -210,6 +414,24 @@
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4a7fe0_d3e420a7",
+        "filename": "startop/tools/view-compiler/java-builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07c4ade8_173b9e26",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "eebab8db_cf7477b9",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "05449639_7d090aef",
+      "range": {
+        "startLine": 45,
+        "startChar": 45,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24fd4b13_e702161e",
         "filename": "startop/tools/view-compiler/main.cc",
         "patchSetId": 1
@@ -259,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "80b6cee4_3dd7d8d2",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24fd4b13_e702161e",
+      "range": {
+        "startLine": 53,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92bf2bb3_9e76dc66",
         "filename": "startop/tools/view-compiler/main.cc",
         "patchSetId": 1
@@ -273,6 +543,24 @@
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e721c39_471fc88f",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92bf2bb3_9e76dc66",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -299,6 +587,30 @@
     },
     {
       "key": {
+        "uuid": "73ba8915_e2b14a9d",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d786bce_56944552",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 25
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58fecf20_bbff92dc",
         "filename": "startop/tools/view-compiler/main.cc",
         "patchSetId": 1
@@ -322,6 +634,30 @@
     },
     {
       "key": {
+        "uuid": "0380fa3f_a07ce994",
+        "filename": "startop/tools/view-compiler/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58fecf20_bbff92dc",
+      "range": {
+        "startLine": 75,
+        "startChar": 22,
+        "endLine": 76,
+        "endChar": 72
+      },
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab209d57_84e80404",
         "filename": "startop/tools/view-compiler/util-test.cc",
         "patchSetId": 1
@@ -339,6 +675,24 @@
     },
     {
       "key": {
+        "uuid": "d1022546_bb98cf01",
+        "filename": "startop/tools/view-compiler/util-test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "Thanks, I always get this wrong.\n\nDone",
+      "parentUuid": "ab209d57_84e80404",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed09305_00a0f937",
         "filename": "tools/aapt2/Android.bp",
         "patchSetId": 1
@@ -350,6 +704,24 @@
       "writtenOn": "2018-09-15T01:17:14Z",
       "side": 1,
       "message": "? this seems sketchy",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88124438_490ddffd",
+        "filename": "tools/aapt2/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T21:08:29Z",
+      "side": 1,
+      "message": "+Ryan Mitchell\n\nI agree. Ryan owns this code, so I\u0027d like his input. Basically, aapt2 is both a standalone tool and also a library. Right now the library is used by the framework through JNI, but my tool uses it from native code. To use it from native code, we need access to the header files. That said, it\u0027s probably better to factor the headers we need into an include/ directory to the API is a bit more hermetic.",
+      "parentUuid": "bed09305_00a0f937",
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
