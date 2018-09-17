@@ -119,6 +119,23 @@
     },
     {
       "key": {
+        "uuid": "d3bca37a_db807167",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-17T23:13:08Z",
+      "side": 1,
+      "message": "Consider using raw multi-line string syntax with R\"(...)\" \nSee: https://en.cppreference.com/w/cpp/language/string_literal\nAlso for example: https://cs.corp.google.com/android/frameworks/base/tools/aapt2/link/XmlReferenceLinker_test.cpp?type\u003dcs\u0026q\u003d%22TEST_F(XmlReferenceLinkerTest,+LinkBasicAttributes)+%7B%22\u0026sq\u003dpackage:Android\u0026g\u003d0\u0026l\u003d82",
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52084bea_ebccd169",
         "filename": "startop/tools/view_compiler/java_builder.cc",
         "patchSetId": 2
@@ -148,6 +165,121 @@
       "side": 1,
       "message": "Clang-format weirdness. It should be a little better now.",
       "parentUuid": "52084bea_ebccd169",
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231edb68_50740067",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-17T23:13:08Z",
+      "side": 1,
+      "message": "Should we be using different class names for each layout?",
+      "range": {
+        "startLine": 32,
+        "startChar": 30,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677c5342_b360bc1f",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-17T23:13:08Z",
+      "side": 1,
+      "message": "You can use android::base::StringPrintf to format the string for this line.\n\nStringPrintf(\"XmlResourceParser xml \u003d res.getLayout(%s.R.layout.%s);\", package_, layout_name_);\n\nHere and other places would make this much more readable.",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3322e83c_eb9ceb0d",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-17T23:13:08Z",
+      "side": 1,
+      "message": "Would this be better named view_var? It is difficult to know what this variable is for with this name.",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec93c873_2e1dfdd9",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-17T23:13:08Z",
+      "side": 1,
+      "message": "Why not \"layout\"? And this can be declared closer to where it is first used in line 86.",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e2caef_095bb632",
+        "filename": "startop/tools/view_compiler/java_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-17T23:13:08Z",
+      "side": 1,
+      "message": "nit: ViewJavaBuilder or something similar would be clearer",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 17
+      },
       "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -198,6 +330,52 @@
       "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dfc1c52_a6ccc42c",
+        "filename": "startop/tools/view_compiler/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-17T23:13:08Z",
+      "side": 1,
+      "message": "You could pass the parser to the Builder and have it iterate through the hierarchy in some Generate or Build method. It wouldn\u0027t be much of a builder anymore though...",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 71
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640d3892_8c95fb50",
+        "filename": "startop/tools/view_compiler/util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-17T23:13:08Z",
+      "side": 1,
+      "message": "You could use aapt::util::Split(filename, aapt::file::sDirSep)[0].",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
