@@ -16,6 +16,8 @@
 
 package android.telephony;
 
+import static android.content.Context.TELECOM_SERVICE;
+
 import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.IntDef;
@@ -4351,7 +4353,7 @@ public class TelephonyManager {
     * @hide
     */
     private ITelecomService getTelecomService() {
-        return ITelecomService.Stub.asInterface(ServiceManager.getService(Context.TELECOM_SERVICE));
+        return ITelecomService.Stub.asInterface(ServiceManager.getService(TELECOM_SERVICE));
     }
 
     private ITelephonyRegistry getTelephonyRegistry() {
@@ -6200,57 +6202,43 @@ public class TelephonyManager {
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#endCall()} instead.
+     * @removed Use {@link android.telecom.TelecomManager#endCall()} instead.
      * @hide
      */
     @Deprecated
     @SystemApi
     @RequiresPermission(android.Manifest.permission.CALL_PHONE)
     public boolean endCall() {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.endCall();
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#endCall", e);
-        }
-        return false;
+        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
+        return tm.endCall();
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#acceptRingingCall} instead
+     * @removed Use {@link android.telecom.TelecomManager#acceptRingingCall} instead
      * @hide
      */
     @Deprecated
     @SystemApi
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public void answerRingingCall() {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                telephony.answerRingingCall();
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#answerRingingCall", e);
-        }
+        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
+        tm.acceptRingingCall();
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#silenceRinger} instead
+     * @removed Use {@link android.telecom.TelecomManager#silenceRinger} instead
      * @hide
      */
     @Deprecated
     @SystemApi
     @SuppressLint("Doclava125")
     public void silenceRinger() {
-        try {
-            getTelecomService().silenceRinger(getOpPackageName());
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelecomService#silenceRinger", e);
-        }
+        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
+        tm.silenceRinger();
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#isInCall} instead
+     * @removed Use {@link android.telecom.TelecomManager#isInCall} instead
      * @hide
      */
     @Deprecated
@@ -6260,18 +6248,12 @@ public class TelephonyManager {
             android.Manifest.permission.READ_PHONE_STATE
     })
     public boolean isOffhook() {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.isOffhook(getOpPackageName());
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#isOffhook", e);
-        }
-        return false;
+        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
+        return tm.isInCall();
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#isRinging} instead
+     * @removed Use {@link android.telecom.TelecomManager#isRinging} instead
      * @hide
      */
     @Deprecated
@@ -6281,18 +6263,12 @@ public class TelephonyManager {
             android.Manifest.permission.READ_PHONE_STATE
     })
     public boolean isRinging() {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.isRinging(getOpPackageName());
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#isRinging", e);
-        }
-        return false;
+        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
+        return tm.isRinging();
     }
 
     /**
-     * @deprecated Use {@link android.telecom.TelecomManager#isInCall} instead
+     * @removed Use {@link android.telecom.TelecomManager#isInCall} instead
      * @hide
      */
     @Deprecated
@@ -6302,14 +6278,8 @@ public class TelephonyManager {
             android.Manifest.permission.READ_PHONE_STATE
     })
     public boolean isIdle() {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.isIdle(getOpPackageName());
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#isIdle", e);
-        }
-        return true;
+        TelecomManager tm = (TelecomManager) mContext.getSystemService(TELECOM_SERVICE);
+        return !tm.isInCall();
     }
 
     /**
