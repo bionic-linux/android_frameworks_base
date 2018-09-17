@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "413e9668_f4f2da14",
+        "filename": "startop/tools/view_compiler/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T22:23:59Z",
+      "side": 1,
+      "message": "I added a title at least. I think too many more sections would be overkill at this point.",
+      "parentUuid": "27096bf4_5434d45b",
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f241cf17_857112d3",
         "filename": "startop/tools/view_compiler/README.md",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3faa3301_ffd102ab",
+        "filename": "startop/tools/view_compiler/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T22:23:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f241cf17_857112d3",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec700e2f_1bd194e6",
         "filename": "startop/tools/view_compiler/README.md",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "48d208e4_1e86035a",
+        "filename": "startop/tools/view_compiler/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T22:23:59Z",
+      "side": 1,
+      "message": "I added a not about custom layout inflaters.\n\nIt actually does work somewhat for factories, since it generates code to get the factories from the default inflater and gives them first dibs to create a class.",
+      "parentUuid": "ec700e2f_1bd194e6",
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52084bea_ebccd169",
         "filename": "startop/tools/view_compiler/java_builder.cc",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2018-09-17T21:30:14Z",
       "side": 1,
       "message": "nit: Why is this on a separate line? The rest of the code is formatted the way the output would be formatted.",
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13644006_f50687fe",
+        "filename": "startop/tools/view_compiler/java_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T22:23:59Z",
+      "side": 1,
+      "message": "Clang-format weirdness. It should be a little better now.",
+      "parentUuid": "52084bea_ebccd169",
       "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -96,6 +174,30 @@
       "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5c7bf2_e964677d",
+        "filename": "startop/tools/view_compiler/java_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-17T22:23:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5485319a_ac20d045",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
