@@ -16,6 +16,24 @@
       "revId": "4be1419838d8e356f28d05c186b4ba4609dea8a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d1d7b4_fa639f6e",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11347,
+      "author": {
+        "id": 1352384
+      },
+      "writtenOn": "2018-09-17T13:21:58Z",
+      "side": 0,
+      "message": "This setting value will not be used anymore because it need adb command to enable/disable. It will be replaced by feature flag in FeatureFlagUtils.java, so that fishfood/dogfood user can enable/disable it from Settings -\u003e Develop options -\u003e Feature flag.",
+      "parentUuid": "e5c6778b_405aaa8b",
+      "revId": "4be1419838d8e356f28d05c186b4ba4609dea8a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
