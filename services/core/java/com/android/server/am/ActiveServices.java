@@ -2469,6 +2469,9 @@ public final class ActiveServices {
             created = true;
         } catch (DeadObjectException e) {
             Slog.w(TAG, "Application dead when creating service " + r);
+            if (mAm.mPersistentStartingProcesses.contains(app)) {
+                mAm.mPersistentStartingProcesses.remove(app);
+            }
             mAm.appDiedLocked(app);
             throw e;
         } finally {
