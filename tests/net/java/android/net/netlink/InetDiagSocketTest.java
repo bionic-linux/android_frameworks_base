@@ -18,6 +18,7 @@ package android.net.netlink;
 
 import static android.net.netlink.StructNlMsgHdr.NLM_F_DUMP;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_REQUEST;
+import static android.os.Process.INVALID_UID;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
 import static android.system.OsConstants.IPPROTO_TCP;
@@ -66,18 +67,34 @@ public class InetDiagSocketTest {
         mCm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    private void checkConnectionOwnerUidTcp(Socket s) {
-        int expectedUid = Process.myUid();
-        InetSocketAddress local = new InetSocketAddress(s.getLocalAddress(), s.getLocalPort());
+    private void checkConnectionOwnerUidTcp(Socket s, boolean succeed) {
+        int expectedUid;
+        InetSocketAddress local;
+        if (succeed) {
+            expectedUid = Process.myUid();
+            local = new InetSocketAddress(s.getLocalAddress(), s.getLocalPort());
+        } else {
+            // Use a port which is unused on Android to avoid potential collisions.
+            local = new InetSocketAddress(1);
+            expectedUid = INVALID_UID;
+        }
         InetSocketAddress remote = new InetSocketAddress(s.getInetAddress(), s.getPort());
         int uid = mCm.getConnectionOwnerUid(IPPROTO_TCP, local, remote);
         assertEquals(expectedUid, uid);
     }
 
-    private void checkConnectionOwnerUidUdp(DatagramSocket s, boolean sourceOnly)
+    private void checkConnectionOwnerUidUdp(DatagramSocket s, boolean sourceOnly, boolean succeed)
             throws Exception {
-        int expectedUid = Process.myUid();
-        InetSocketAddress local = new InetSocketAddress(s.getLocalAddress(), s.getLocalPort());
+        int expectedUid;
+        InetSocketAddress local;
+        if (succeed) {
+            expectedUid = Process.myUid();
+            local = new InetSocketAddress(s.getLocalAddress(), s.getLocalPort());
+        } else {
+            // Use a port which is unused on Android to avoid potential collisions.
+            local = new InetSocketAddress(1);
+            expectedUid = INVALID_UID;
+        }
         InetSocketAddress remote;
         if (sourceOnly) {
             remote = new InetSocketAddress(0);
@@ -88,7 +105,8 @@ public class InetDiagSocketTest {
         assertEquals(expectedUid, uid);
     }
 
-    private void checkGetConnectionOwnerUidUdp(String to, String from, boolean sourceOnly)
+    private void checkGetConnectionOwnerUidUdp(String to, String from, boolean sourceOnly,
+                                               boolean succeed)
             throws Exception {
         DatagramSocket s;
         if (from == null) {
@@ -99,11 +117,12 @@ public class InetDiagSocketTest {
         s.setSoTimeout(SOCKET_TIMEOUT_MS);
         s.connect(InetAddress.getByName(to), 7);
 
-        checkConnectionOwnerUidUdp(s, sourceOnly);
+        checkConnectionOwnerUidUdp(s, sourceOnly, succeed);
         s.close();
     }
 
-    private void checkGetConnectionOwnerUidTcp(String to, String from) throws Exception {
+    private void checkGetConnectionOwnerUidTcp(String to, String from, boolean succeed)
+            throws Exception {
         ServerSocket listen = new ServerSocket(0, 10, InetAddress.getByName("::"));
         Socket client = new Socket();
         if (from != null) {
@@ -115,27 +134,28 @@ public class InetDiagSocketTest {
         Socket server = null;
         listen.setSoTimeout(SOCKET_TIMEOUT_MS);
         server = listen.accept();
-        checkConnectionOwnerUidTcp(client);
-        checkConnectionOwnerUidTcp(server);
+        checkConnectionOwnerUidTcp(client, succeed);
+        checkConnectionOwnerUidTcp(server, succeed);
         listen.close();
         client.close();
         server.close();
     }
 
-    @Test
-    public void testGetConnectionOwnerUid() throws Exception {
-        checkGetConnectionOwnerUidTcp("::", null);
-        checkGetConnectionOwnerUidTcp("0.0.0.0", null);
-        checkGetConnectionOwnerUidTcp("127.0.0.1", "127.0.0.2");
-        checkGetConnectionOwnerUidUdp("2001:db8:dead:beef::f02", null, false);
-        checkGetConnectionOwnerUidUdp("192.168.2.254", null, false);
-        checkGetConnectionOwnerUidUdp("127.0.0.1", "127.0.0.2", false);
-        checkGetConnectionOwnerUidUdp("127.0.0.1", "127.0.0.2", true);
+    public void getConnectionOwnerUidSucceed(boolean succeed) throws Exception {
+        checkGetConnectionOwnerUidTcp("::", null, succeed);
+        checkGetConnectionOwnerUidTcp("0.0.0.0", null, succeed);
+        checkGetConnectionOwnerUidTcp("127.0.0.1", "127.0.0.2", succeed);
+        checkGetConnectionOwnerUidUdp("2001:db8:dead:beef::f02", null, false, succeed);
+        checkGetConnectionOwnerUidUdp("192.168.2.254", null, false, succeed);
+        checkGetConnectionOwnerUidUdp("127.0.0.1", "127.0.0.2", false, succeed);
+        checkGetConnectionOwnerUidUdp("127.0.0.1", "127.0.0.2", true, succeed);
     }
 
-    /**
-     * TODO Add negative test cases.
-     */
+    @Test
+    public void testGetConnectionOwnerUid() throws Exception {
+        getConnectionOwnerUidSucceed(true);
+        getConnectionOwnerUidSucceed(false);
+    }
 
     /**
      * TODO Add tests for pure IPv4 sockets created with android.system.Os#socket(AF_INET, ...).
