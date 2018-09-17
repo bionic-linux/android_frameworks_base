@@ -7715,6 +7715,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             app.resetPackageList(mProcessStats);
             app.unlinkDeathRecipient();
             startProcessLocked(app, "bind fail", processName);
+            mPersistentStartingProcesses.remove(app);
             return false;
         }
 
