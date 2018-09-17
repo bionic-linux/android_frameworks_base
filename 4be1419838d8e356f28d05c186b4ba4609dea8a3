@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c6778b_405aaa8b",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11347,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2018-09-17T13:12:01Z",
+      "side": 0,
+      "message": "Don\u0027t you want to preserve the existing value of this setting?",
+      "revId": "4be1419838d8e356f28d05c186b4ba4609dea8a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
