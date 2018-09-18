@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7d0496_a5136e8c",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1138679
+      },
+      "writtenOn": "2018-09-18T20:48:07Z",
+      "side": 1,
+      "message": "This explanation make it worse...  Change it to:\n\nReturn {@code true} if the user can initiate a connection for this profile in UI.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 7
+      },
+      "revId": "08091613af24b1de03402c6a4b83542fb9b18951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfdc082_1744de1b",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1138679
+      },
+      "writtenOn": "2018-09-18T20:48:07Z",
+      "side": 1,
+      "message": "I don\u0027t think this is best name however I cannot think of a better one.",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "08091613af24b1de03402c6a4b83542fb9b18951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
