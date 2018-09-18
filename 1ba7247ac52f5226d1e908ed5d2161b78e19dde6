@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2888add_75f38271",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1802,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-09-18T22:42:30Z",
+      "side": 1,
+      "message": "Clarify here what CFNRy is, and say what the behavior is when it\u0027s true vs false -- it\u0027s hard to figure out unless someone goes and reads the associated changed in telephony.",
+      "range": {
+        "startLine": 1802,
+        "startChar": 24,
+        "endLine": 1802,
+        "endChar": 29
+      },
+      "revId": "1ba7247ac52f5226d1e908ed5d2161b78e19dde6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
