@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8e96350_2d7f5fdb",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-18T00:38:46Z",
+      "side": 1,
+      "message": "expectSuccess?",
+      "range": {
+        "startLine": 70,
+        "startChar": 62,
+        "endLine": 70,
+        "endChar": 69
+      },
+      "revId": "7836b72609fd24b7b10b6c7e8f2596865ed7f044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4aab353_c5d08e11",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-09-18T00:38:46Z",
+      "side": 1,
+      "message": "This could deterministically fail if an app happens to be bound to port 65535. Instead of doing this would suggest creating a socket, binding it to a port of 0, getting the port, closing the socket, and immediately reusing that same port. That reduces the chance of collision. Maybe factor that out to a function, findLikelyFreePort, that you can use elsewhere.",
+      "range": {
+        "startLine": 77,
+        "startChar": 26,
+        "endLine": 77,
+        "endChar": 52
+      },
+      "revId": "7836b72609fd24b7b10b6c7e8f2596865ed7f044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
