@@ -725,6 +725,24 @@
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5f1f04_423a0cca",
+        "filename": "tools/aapt2/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-18T20:07:16Z",
+      "side": 1,
+      "message": "The jni library only gives access to running link and compile. Those are commands that are normally called from the command line and do not give any access to the internals of aapt2. \n\n+Todd Kennedy has owners on aapt2 so he needs to also weigh in on this. Since you only need the xml parser, we can just export the xml directory in aapt2.",
+      "parentUuid": "88124438_490ddffd",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
