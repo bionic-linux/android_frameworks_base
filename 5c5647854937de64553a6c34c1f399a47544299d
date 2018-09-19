@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7a6066b_f6f85a9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2018-09-19T16:55:28Z",
+      "side": 1,
+      "message": "I prefer the following style.\n\nFix: 116078227",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 57
+      },
+      "revId": "5c5647854937de64553a6c34c1f399a47544299d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
