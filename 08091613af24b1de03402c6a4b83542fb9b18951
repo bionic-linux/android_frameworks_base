@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4753be94_b7a8e8b1",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1367088
+      },
+      "writtenOn": "2018-09-19T10:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f7d0496_a5136e8c",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 7
+      },
+      "revId": "08091613af24b1de03402c6a4b83542fb9b18951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dfdc082_1744de1b",
         "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfile.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-09-18T20:48:07Z",
       "side": 1,
       "message": "I don\u0027t think this is best name however I cannot think of a better one.",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "08091613af24b1de03402c6a4b83542fb9b18951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765e4e42_2e6d8183",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1367088
+      },
+      "writtenOn": "2018-09-19T10:58:37Z",
+      "side": 1,
+      "message": "I have had checked several naming convention of it \n\u0027hasAccessProfile\u0027\n\u0027canAccessProfile\u0027,       https://petroware.no/javastyle.html   (14. is prefix should be ...) \n\u0027accessProfileEnabled\u0027    http://go/java-practices/naming#positive-booleans\n\nHow about \u0027accessProfileEnabled\u0027?",
+      "parentUuid": "8dfdc082_1744de1b",
       "range": {
         "startLine": 31,
         "startChar": 12,
