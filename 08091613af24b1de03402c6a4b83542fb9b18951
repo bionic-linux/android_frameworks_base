@@ -117,6 +117,30 @@
       "revId": "08091613af24b1de03402c6a4b83542fb9b18951",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0cbeb4_5016b5a5",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1367088
+      },
+      "writtenOn": "2018-09-20T01:28:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26a9cc6e_cffbe1df",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "08091613af24b1de03402c6a4b83542fb9b18951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
