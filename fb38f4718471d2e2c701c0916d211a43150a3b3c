@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94e766f3_678df9f1",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-09-20T22:11:12Z",
+      "side": 1,
+      "message": "test_move_serialization",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "fb38f4718471d2e2c701c0916d211a43150a3b3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
