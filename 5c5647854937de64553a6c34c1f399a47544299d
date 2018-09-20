@@ -22,6 +22,30 @@
       "revId": "5c5647854937de64553a6c34c1f399a47544299d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745834a0_113c7004",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1153427
+      },
+      "writtenOn": "2018-09-20T00:33:10Z",
+      "side": 1,
+      "message": "Ack \u0026 Done",
+      "parentUuid": "e7a6066b_f6f85a9b",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 57
+      },
+      "revId": "5c5647854937de64553a6c34c1f399a47544299d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
