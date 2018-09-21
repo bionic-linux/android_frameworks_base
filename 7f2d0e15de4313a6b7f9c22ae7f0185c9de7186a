@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e202b52d_8add4171",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7860,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-09-21T22:19:04Z",
+      "side": 1,
+      "message": "Update the comment to be same as the internal one referring to UiccAppType.\n\nAnd for other fields also make the comments the same.",
+      "revId": "7f2d0e15de4313a6b7f9c22ae7f0185c9de7186a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
