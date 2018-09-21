@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a9aa6a7_cb1a4699",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5724,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-09-21T00:26:11Z",
+      "side": 1,
+      "message": "nit: these are just network modes, not the preferred ones.",
+      "range": {
+        "startLine": 5724,
+        "startChar": 7,
+        "endLine": 5724,
+        "endChar": 16
+      },
+      "revId": "b97de71a7fc2009a759bfede1183074c859a27e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
