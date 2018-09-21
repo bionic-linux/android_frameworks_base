@@ -743,6 +743,23 @@
       "revId": "701ea5e653045827910bf95d7f74314404171bd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c9231c_593cc379",
+        "filename": "tools/aapt2/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-09-21T17:15:50Z",
+      "side": 1,
+      "message": "I talked with Ryan a little more off line. I think what we are going to do is pull the headers in io/, xml/, and any transitive dependencies into a new include/ directory and export that. I\u0027ll probably factor that into a separate CL because it\u0027s conceptually different from the bulk of this one.",
+      "revId": "701ea5e653045827910bf95d7f74314404171bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
