@@ -424,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "51e737cf_3a3c7ef3",
+        "filename": "startop/tools/view_compiler/java_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-09-21T21:10:18Z",
+      "side": 1,
+      "message": "Would JavaViewBuilder fall afoul of the Java vs Java Language rule?  We don\u0027t want to get the cats involved.  ManagedViewBuilder?  JavaLangViewBuilder?",
+      "parentUuid": "30787d69_4a0e5b66",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "76b0cb86d5eae584efc6c3c10609ca5be501d39b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5485319a_ac20d045",
         "filename": "startop/tools/view_compiler/java_builder.h",
         "patchSetId": 2
