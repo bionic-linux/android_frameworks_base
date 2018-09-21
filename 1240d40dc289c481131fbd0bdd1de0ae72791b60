@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f902aaf_5519ea3b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5728,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-09-21T16:46:49Z",
+      "side": 1,
+      "message": "nit: add a new line between this and the below comment. please also fix the other place like that.",
+      "range": {
+        "startLine": 5728,
+        "startChar": 4,
+        "endLine": 5728,
+        "endChar": 91
+      },
+      "revId": "1240d40dc289c481131fbd0bdd1de0ae72791b60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d818d0_6e415ded",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5752,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-09-21T16:46:49Z",
+      "side": 1,
+      "message": "I feel this name is inconsistent with the below constants NETWORK_MODE_LTE_CDMA_EVDO, it should be NETWORK_MODE_CDMA_EVDO. \n\nBut the original name is NETWORK_MODE_CDMA, not sure which one is better..",
+      "range": {
+        "startLine": 5752,
+        "startChar": 28,
+        "endLine": 5752,
+        "endChar": 45
+      },
+      "revId": "1240d40dc289c481131fbd0bdd1de0ae72791b60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcc6c4b_bc0b7820",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5882,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-09-21T16:46:49Z",
+      "side": 1,
+      "message": "we should add this annotation before the parameter networkType in setPreferredNetworkType(int subId, int networkType) if you want to mark that method as system api.",
+      "range": {
+        "startLine": 5882,
+        "startChar": 11,
+        "endLine": 5882,
+        "endChar": 27
+      },
+      "revId": "1240d40dc289c481131fbd0bdd1de0ae72791b60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
