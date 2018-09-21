@@ -140,6 +140,30 @@
       "revId": "1240d40dc289c481131fbd0bdd1de0ae72791b60",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1094d3fe_c0b01fd0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5882,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-09-21T17:30:24Z",
+      "side": 1,
+      "message": "I mean make systemAPI",
+      "parentUuid": "d34491f4_cd5a4a57",
+      "range": {
+        "startLine": 5882,
+        "startChar": 11,
+        "endLine": 5882,
+        "endChar": 27
+      },
+      "revId": "1240d40dc289c481131fbd0bdd1de0ae72791b60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
