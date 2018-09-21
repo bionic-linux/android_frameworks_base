@@ -22,6 +22,30 @@
       "revId": "fb38f4718471d2e2c701c0916d211a43150a3b3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611208bc_0cf73610",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-09-21T10:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94e766f3_678df9f1",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "fb38f4718471d2e2c701c0916d211a43150a3b3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
