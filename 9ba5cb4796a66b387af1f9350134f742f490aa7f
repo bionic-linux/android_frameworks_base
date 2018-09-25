@@ -22,6 +22,30 @@
       "revId": "9ba5cb4796a66b387af1f9350134f742f490aa7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9deacc82_4ee1395c",
+        "filename": "tools/aapt2/java/ManifestClassGenerator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2018-09-25T22:24:08Z",
+      "side": 1,
+      "message": "That won\u0027t help actually.  StringPiece doesn\u0027t own the data it refers to - so the storage allocated by TransformToFieldName will get deleted nonetheless.",
+      "parentUuid": "d8e4eae7_f808a013",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "9ba5cb4796a66b387af1f9350134f742f490aa7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
