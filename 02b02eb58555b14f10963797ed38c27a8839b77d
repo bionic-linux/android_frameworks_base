@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a09a7123_b96bbb79",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7855,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-09-25T21:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "596cdb97_36a7352a",
+      "range": {
+        "startLine": 7855,
+        "startChar": 74,
+        "endLine": 7855,
+        "endChar": 93
+      },
+      "revId": "02b02eb58555b14f10963797ed38c27a8839b77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d7d60a7_2581fef1",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 8
@@ -92,6 +116,30 @@
       "revId": "02b02eb58555b14f10963797ed38c27a8839b77d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ec4557_35082f90",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7866,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-09-25T21:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7d60a7_2581fef1",
+      "range": {
+        "startLine": 7866,
+        "startChar": 33,
+        "endLine": 7866,
+        "endChar": 36
+      },
+      "revId": "02b02eb58555b14f10963797ed38c27a8839b77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
