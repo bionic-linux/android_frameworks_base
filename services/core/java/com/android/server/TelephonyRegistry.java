@@ -217,6 +217,8 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     @TelephonyManager.RadioPowerState
     private int mRadioPowerState = TelephonyManager.RADIO_POWER_UNAVAILABLE;
 
+    private int mPreferredDataSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+
     private final LocalLog mLocalLog = new LocalLog(100);
 
     private PreciseDataConnectionState mPreciseDataConnectionState =
@@ -756,9 +758,15 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             remove(r.binder);
                         }
                     }
+<<<<<<< HEAD
                     if ((events & PhoneStateListener.LISTEN_RADIO_POWER_STATE_CHANGED) != 0) {
                         try {
                             r.callback.onRadioPowerStateChanged(mRadioPowerState);
+=======
+                    if ((events & PhoneStateListener.LISTEN_PREFERRED_DATA_SUBID_CHANGE) != 0) {
+                        try {
+                            r.callback.onPreferredDataSubIdChanged(mPreferredDataSubId);
+>>>>>>> 8b53afe6158... Add PhoneStateListener#onPreferredDataSubIdChanged
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -1584,12 +1592,18 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
     }
 
+<<<<<<< HEAD
     public void notifyRadioPowerStateChanged(@TelephonyManager.RadioPowerState int state) {
         if (!checkNotifyPermission("notifyRadioPowerStateChanged()")) {
+=======
+    public void notifyPreferredDataSubIdChanged(int preferredSubId) {
+        if (!checkNotifyPermission("notifyPreferredDataSubIdChanged()")) {
+>>>>>>> 8b53afe6158... Add PhoneStateListener#onPreferredDataSubIdChanged
             return;
         }
 
         if (VDBG) {
+<<<<<<< HEAD
             log("notifyRadioPowerStateChanged: state= " + state);
         }
 
@@ -1601,6 +1615,19 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                         PhoneStateListener.LISTEN_RADIO_POWER_STATE_CHANGED)) {
                     try {
                         r.callback.onRadioPowerStateChanged(state);
+=======
+            log("notifyPreferredDataSubIdChanged: preferredSubId=" + preferredSubId);
+        }
+
+        synchronized (mRecords) {
+            mPreferredDataSubId = preferredSubId;
+
+            for (Record r : mRecords) {
+                if (r.matchPhoneStateListenerEvent(
+                        PhoneStateListener.LISTEN_PREFERRED_DATA_SUBID_CHANGE)) {
+                    try {
+                        r.callback.onPreferredDataSubIdChanged(preferredSubId);
+>>>>>>> 8b53afe6158... Add PhoneStateListener#onPreferredDataSubIdChanged
                     } catch (RemoteException ex) {
                         mRemoveList.add(r.binder);
                     }
@@ -1609,7 +1636,10 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             handleRemoveListLocked();
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8b53afe6158... Add PhoneStateListener#onPreferredDataSubIdChanged
 
     @Override
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
@@ -1647,7 +1677,11 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             pw.println("mBackgroundCallState=" + mBackgroundCallState);
             pw.println("mVoLteServiceState=" + mVoLteServiceState);
             pw.println("mPhoneCapability=" + mPhoneCapability);
+<<<<<<< HEAD
             pw.println("mRadioPowerState=" + mRadioPowerState);
+=======
+            pw.println("mPreferredDataSubId=" + mPreferredDataSubId);
+>>>>>>> 8b53afe6158... Add PhoneStateListener#onPreferredDataSubIdChanged
 
             pw.decreaseIndent();
 
