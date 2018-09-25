@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2297e32_6da5fa6a",
+        "filename": "tools/aapt2/io/FileStream_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-25T23:52:50Z",
+      "side": 1,
+      "message": "If we have this void, we should be able to get rid of reinterpret_cast\u003cconst void**\u003e and then do StringPiece(reinterpret_cast\u003cconst char*\u003e(buffer), size).",
+      "revId": "68f961b99476a21b27d6d7457d30bca5fec68e92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20652c2e_1539c38f",
+        "filename": "tools/aapt2/io/FileStream_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2018-09-25T23:52:50Z",
+      "side": 1,
+      "message": "Is this here for a reason?",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 37
+      },
+      "revId": "68f961b99476a21b27d6d7457d30bca5fec68e92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
