@@ -22,6 +22,30 @@
       "revId": "3535bcf736eef0ba8b61ad62e5b8c047e6c847ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bef7d45_39e49fae",
+        "filename": "tools/aapt2/java/ManifestClassGenerator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2018-09-25T20:22:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5b5b89_5f0878de",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "3535bcf736eef0ba8b61ad62e5b8c047e6c847ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
