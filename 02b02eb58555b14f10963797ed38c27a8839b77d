@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45013284_93528ecd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5399,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-09-25T20:34:30Z",
+      "side": 1,
+      "message": "each app type is defined as public API, shouldn\u0027t this be public as well for the consistency?",
+      "parentUuid": "9f940c59_d63d3ee5",
+      "range": {
+        "startLine": 5399,
+        "startChar": 0,
+        "endLine": 5399,
+        "endChar": 33
+      },
+      "revId": "02b02eb58555b14f10963797ed38c27a8839b77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "596cdb97_36a7352a",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 8
