@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3852ca7b_53013d8b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5695,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-09-25T20:10:21Z",
+      "side": 1,
+      "message": "Make sure to specify the prefix, it\u0027s used in the API docs generation.\n@IntDef({prefix \u003d { \"NETWORK_MODE_\" }, value \u003d {",
+      "range": {
+        "startLine": 5695,
+        "startChar": 4,
+        "endLine": 5695,
+        "endChar": 13
+      },
+      "revId": "b77e321372407f7e9b5d0b264ce3213e40d2b39e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14626034_d3f45250",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5899,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-09-25T20:10:21Z",
+      "side": 1,
+      "message": "Don\u0027t need to say this; the @PrefNetworkMode will ensure the API docs include the list of valid options.",
+      "range": {
+        "startLine": 5899,
+        "startChar": 43,
+        "endLine": 5899,
+        "endChar": 78
+      },
+      "revId": "b77e321372407f7e9b5d0b264ce3213e40d2b39e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
