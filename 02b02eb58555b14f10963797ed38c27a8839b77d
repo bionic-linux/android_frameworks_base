@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f940c59_d63d3ee5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5399,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-09-25T20:06:55Z",
+      "side": 1,
+      "message": "This is declared correctly, but should be @hide so it wouldn\u0027t be in the current.txt.",
+      "range": {
+        "startLine": 5399,
+        "startChar": 0,
+        "endLine": 5399,
+        "endChar": 33
+      },
+      "revId": "02b02eb58555b14f10963797ed38c27a8839b77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596cdb97_36a7352a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7855,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-09-25T20:06:55Z",
+      "side": 1,
+      "message": "Since UiccAppType won\u0027t be public, just give an example.",
+      "range": {
+        "startLine": 7855,
+        "startChar": 74,
+        "endLine": 7855,
+        "endChar": 93
+      },
+      "revId": "02b02eb58555b14f10963797ed38c27a8839b77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7d60a7_2581fef1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7866,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-09-25T20:06:55Z",
+      "side": 1,
+      "message": "Make sure to declare are:\n@UiccAppType int appType\nIf you do this, the API docs for the parameter will automatically show the list of valid values.",
+      "range": {
+        "startLine": 7866,
+        "startChar": 33,
+        "endLine": 7866,
+        "endChar": 36
+      },
+      "revId": "02b02eb58555b14f10963797ed38c27a8839b77d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
