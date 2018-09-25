@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c7d4781_b8510f20",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/HeadsUpAppearanceControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2018-09-25T21:03:00Z",
+      "side": 1,
+      "message": "can you add some more tests in order for us not to break this anymore in the future? I.e make sure that the operator name is being hidden and shown.",
+      "revId": "4bf3bd4fc4e5f0d47604809c768dd1129d0de8ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
