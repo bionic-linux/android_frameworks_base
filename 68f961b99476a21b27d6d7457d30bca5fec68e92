@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d29b96e_ebe39cb3",
+        "filename": "tools/aapt2/io/FileStream_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2018-09-26T00:03:21Z",
+      "side": 1,
+      "message": "Yes, that probably makes more sense since in.Next() takes a void**.\n\nActually, feel free to commandeer this patch and fix it as you feel right.  I just uploaded it  to point out the underlying issue with GTest\u0027s overeager printing.",
+      "parentUuid": "e2297e32_6da5fa6a",
+      "revId": "68f961b99476a21b27d6d7457d30bca5fec68e92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20652c2e_1539c38f",
         "filename": "tools/aapt2/io/FileStream_test.cpp",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2018-09-25T23:52:50Z",
       "side": 1,
       "message": "Is this here for a reason?",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 37
+      },
+      "revId": "68f961b99476a21b27d6d7457d30bca5fec68e92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bf3d98_65e2531a",
+        "filename": "tools/aapt2/io/FileStream_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2018-09-26T00:03:21Z",
+      "side": 1,
+      "message": "No, it was just a sanity-check on my part.  I deleted this in PS2.",
+      "parentUuid": "20652c2e_1539c38f",
       "range": {
         "startLine": 96,
         "startChar": 0,
