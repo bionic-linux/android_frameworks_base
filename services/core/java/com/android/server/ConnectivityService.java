@@ -5318,6 +5318,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (oldDefaultNetwork != null) {
                 mLegacyTypeTracker.remove(oldDefaultNetwork.networkInfo.getType(),
                                           oldDefaultNetwork, true);
+                removeDataActivityTracking(oldDefaultNetwork);
             }
             mDefaultInetConditionPublished = newNetwork.lastValidated ? 100 : 0;
             mLegacyTypeTracker.add(newNetwork.networkInfo.getType(), newNetwork);
