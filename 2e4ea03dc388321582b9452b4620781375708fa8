@@ -22,6 +22,30 @@
       "revId": "2e4ea03dc388321582b9452b4620781375708fa8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e260bf_9b1c7cde",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-09-27T17:37:56Z",
+      "side": 1,
+      "message": "The whole point here is that this isn\u0027t an error. Printing an exception in the log for something that should be permitted is misleading, so... no. That\u0027s why I\u0027m using Rlog.d; otherwise, I wouldn\u0027t have made this change.",
+      "parentUuid": "c190cfe5_0cd27fb4",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "2e4ea03dc388321582b9452b4620781375708fa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
