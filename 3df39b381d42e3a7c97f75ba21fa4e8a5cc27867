@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94855ff2_4d9aa7b9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5321,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-27T03:57:37Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the right place to do this, because the call to setupDataActivityTracking is inside makeDefault.\nInstead, I suggest we rename makeDefault into switchDefaultNetwork, and pass it both the old and new networks. Then makeDefault could both remove data activity tracking from the old network and add it to the new one.\n\nWhat do you think ?",
+      "range": {
+        "startLine": 5321,
+        "startChar": 16,
+        "endLine": 5321,
+        "endChar": 42
+      },
+      "revId": "3df39b381d42e3a7c97f75ba21fa4e8a5cc27867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
