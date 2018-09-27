@@ -773,7 +773,8 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
 
         final SurfaceControl.Builder b = mService.makeSurfaceBuilder(mSession)
                 .setSize(mSurfaceSize, mSurfaceSize)
-                .setOpaque(true);
+                .setOpaque(true)
+                .setAbstract(true);
         mWindowingLayer = b.setName("Display Root").build();
         mOverlayLayer = b.setName("Display Overlays").build();
 
@@ -3850,7 +3851,7 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
         SurfaceSession s = child != null ? child.getSession() : getSession();
         final SurfaceControl.Builder b = mService.makeSurfaceBuilder(s);
         b.setSize(mSurfaceSize, mSurfaceSize);
-
+        b.setAbstract(true);
         if (child == null) {
             return b;
         }
