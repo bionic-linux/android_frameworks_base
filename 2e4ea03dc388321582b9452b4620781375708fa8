@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c190cfe5_0cd27fb4",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2018-09-27T17:28:39Z",
+      "side": 1,
+      "message": "Can we use Rlog.e so that we know which mScanId has caused this exception",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "2e4ea03dc388321582b9452b4620781375708fa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
