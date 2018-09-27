@@ -22,6 +22,30 @@
       "revId": "3df39b381d42e3a7c97f75ba21fa4e8a5cc27867",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26078f07_8ca966ee",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5321,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-09-27T14:08:37Z",
+      "side": 1,
+      "message": "Since we may not able to combine all the default network switch logic in one place. Thus, I wonder if switchDefaultNetwork may not do exact as the function name. I update it based on discussion if I do not have misunderstanding about it. Also, I combine setupDataActivityTracking\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 and removeDataActivityTracking\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 within the same function. It could be processed in the same place depends on  new and old network. Do you think it\u0027s appropriate?",
+      "parentUuid": "94855ff2_4d9aa7b9",
+      "range": {
+        "startLine": 5321,
+        "startChar": 16,
+        "endLine": 5321,
+        "endChar": 42
+      },
+      "revId": "3df39b381d42e3a7c97f75ba21fa4e8a5cc27867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
