@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6114b355_172af3de",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "Let\u0027s just call this mEntitlementMgr. I don\u0027t think the 4 characters omission buys you anything.",
+      "range": {
+        "startLine": 185,
+        "startChar": 37,
+        "endLine": 185,
+        "endChar": 48
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c5e651_8e2d9e69",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "Why not \"startTethering\" ?",
+      "range": {
+        "startLine": 341,
+        "startChar": 20,
+        "endLine": 341,
+        "endChar": 31
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17bc3c7e_ee80af63",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "final. Also move in the branch where it\u0027s used (or even inline)",
+      "range": {
+        "startLine": 347,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 22
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f879143_643ed596",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "go/avoidwe",
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95f0892_58039019",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "I don\u0027t understand the grammar of this. If we had those bugs then they are not potential bugs, and conversely if they are potential bugs then we didn\u0027t have them.",
+      "range": {
+        "startLine": 359,
+        "startChar": 15,
+        "endLine": 359,
+        "endChar": 41
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36199cdf_0269925a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "@GuardedBy(\"mCurrentTethers\")",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 52
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bec93cf_b97e48ad",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "Can you please document what the integer values represent ? They are ConnectivityManager#TETHERING_* right ? Also what this list is supposed to contain at any given type (I presume, the list of downstreams ?)",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0862c51_e34566d6",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "While you\u0027re at it can you please annotate this with @Nullable ?",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 11
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c91577_a4d0de11",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "Is this prescriptive ? If yes it should be written in the imperative voice (\"pass a new...\"), otherwise I don\u0027t understand what you mean here",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 52
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f86a3c7_fbc19061",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "\"conf\" maybe ? \"ctx\" typically stands for context",
+      "range": {
+        "startLine": 76,
+        "startChar": 59,
+        "endLine": 76,
+        "endChar": 62
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23e9184_d409df4d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "You should make mCurrentTethers an ArraySet instead. Then all this is done for you.",
+      "range": {
+        "startLine": 82,
+        "startChar": 17,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d11c1c4_2c889841",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "Maybe :\n\n  Tell EntitlementManager that a given type of tethering has been disabled",
+      "range": {
+        "startLine": 89,
+        "startChar": 32,
+        "endLine": 89,
+        "endChar": 63
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7d5d32_fe77787f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "This might take a considerable amount of time. I suggest you only use the lock to make a copy of mCurrentTethers and then run the loop outside of the locks, similar to what the old code was doing.",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 36
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e680251_b5ac0802",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "go/avoidwe throughout",
+      "range": {
+        "startLine": 110,
+        "startChar": 11,
+        "endLine": 110,
+        "endChar": 13
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ee3c26_7f6642bf",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T12:20:05Z",
+      "side": 1,
+      "message": "assertFalse( (also below)",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 20
+      },
+      "revId": "a097a822928672e2be8b87eddb1617a56638e766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
