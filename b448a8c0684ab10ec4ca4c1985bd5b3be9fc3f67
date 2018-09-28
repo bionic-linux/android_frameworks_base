@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3ea06126_124e0521",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4554,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-09-28T13:26:43Z",
+      "side": 1,
+      "message": "If the verify fails, it won\u0027t be caught by that. It\u0027s still a fail case.",
+      "parentUuid": "2515cc58_09e7bd5b",
+      "range": {
+        "startLine": 4554,
+        "startChar": 10,
+        "endLine": 4554,
+        "endChar": 15
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1b202ad_c3a9c2df",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8c0e5f43_6ba0af8c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4575,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-09-28T13:26:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b1b202ad_c3a9c2df",
+      "range": {
+        "startLine": 4574,
+        "startChar": 0,
+        "endLine": 4575,
+        "endChar": 9
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d691162a_aeaec1ad",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -88,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "11a58aa1_8c85b76e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4579,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-09-28T13:26:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d691162a_aeaec1ad",
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec4c761_54bc4e3c",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -99,6 +165,30 @@
       "writtenOn": "2018-09-28T10:20:27Z",
       "side": 1,
       "message": "Can we wait for the callback instead ? Timing on broadcasts is notoriously fiddly.",
+      "range": {
+        "startLine": 4583,
+        "startChar": 8,
+        "endLine": 4583,
+        "endChar": 15
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15a7e7a_85caed10",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4583,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-09-28T13:26:43Z",
+      "side": 1,
+      "message": "I\u0027ve tried to do that. However, the LOST callback will be trigger earlier than removeDataActivityTracking\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000. The expected verify result will be 0 time. That\u0027s why I use broadcast since the code sequence is as my expectation.",
+      "parentUuid": "7ec4c761_54bc4e3c",
       "range": {
         "startLine": 4583,
         "startChar": 8,
