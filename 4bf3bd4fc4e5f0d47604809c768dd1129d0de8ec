@@ -16,6 +16,24 @@
       "revId": "4bf3bd4fc4e5f0d47604809c768dd1129d0de8ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b84d54_99bdcf61",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/HeadsUpAppearanceControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1234082
+      },
+      "writtenOn": "2018-09-28T05:39:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c7d4781_b8510f20",
+      "revId": "4bf3bd4fc4e5f0d47604809c768dd1129d0de8ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
