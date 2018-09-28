@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2010f675_d6feb64c",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-09-28T01:52:11Z",
+      "side": 1,
+      "message": "I guess the Networkscan and PhoneInterfaceManager(the dest class which try to stop the network scan) is ran on different threads, but the exceptions are local to threads, so there is no effort to catch the exception here. \n\nThe IllegalArgumentException will be never threw here, because the catch RuntimeException can handle IllegalArgumentException.",
+      "range": {
+        "startLine": 115,
+        "startChar": 17,
+        "endLine": 115,
+        "endChar": 44
+      },
+      "revId": "ce40801ef5e1c91888e6c186710ce0578801b139",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
