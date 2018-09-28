@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "842c397e_6e0f7105",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3805,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T13:24:40Z",
+      "side": 1,
+      "message": "It does not look to me like this is accurate in the case of {start,stop}UsingNetworkFeature. These get converted to NetworkRequests and get honored like any other request, including when they come from the system.\n\nIs there anything wrong with treating this case like disallowedBecauseSystemCaller in ConnectivityService ? After all if the control comes here we know it\u0027s the system trying to call one of those legacy methods ; we could print a log for now and throw an exception later.",
+      "range": {
+        "startLine": 3804,
+        "startChar": 43,
+        "endLine": 3805,
+        "endChar": 57
+      },
+      "revId": "5bc069a3e5124b5ef7466b4b00c39cc403b9a3e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
