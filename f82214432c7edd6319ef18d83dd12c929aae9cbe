@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eb21ced_63cd9fbb",
+        "filename": "core/java/android/os/ParcelFileDescriptor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-09-28T18:24:23Z",
+      "side": 1,
+      "message": "Are you sure these are safe changes to make?  Should they be guarded by target SDK level of the running app?",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 64
+      },
+      "revId": "f82214432c7edd6319ef18d83dd12c929aae9cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
