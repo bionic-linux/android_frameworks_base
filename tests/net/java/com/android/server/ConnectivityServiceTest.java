@@ -4532,4 +4532,94 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.disconnect();
         mCm.unregisterNetworkCallback(networkCallback);
     }
+
+    @Test
+    public void testDataActivityTracking() {
+        final TestNetworkCallback networkCallback = new TestNetworkCallback();
+        final NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .build();
+        mCm.registerNetworkCallback(networkRequest, networkCallback);
+
+        mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
+        final LinkProperties cellLp = new LinkProperties();
+        cellLp.setInterfaceName(MOBILE_IFNAME);
+        mCellNetworkAgent.sendLinkProperties(cellLp);
+        reset(mNetworkManagementService);
+        mCellNetworkAgent.connect(true);
+        networkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        try {
+            verify(mNetworkManagementService, times(1)).addIdleTimer(MOBILE_IFNAME, anyInt(),
+                    ConnectivityManager.TYPE_MOBILE);
+        } catch (Exception e) {}
+
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        final LinkProperties wifiLp = new LinkProperties();
+        wifiLp.setInterfaceName(WIFI_IFNAME);
+        mWiFiNetworkAgent.sendLinkProperties(wifiLp);
+
+        // Network switch
+        reset(mNetworkManagementService);
+        mWiFiNetworkAgent.connect(true);
+        networkCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        networkCallback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
+        networkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
+        try {
+            verify(mNetworkManagementService, times(1)).addIdleTimer(WIFI_IFNAME, anyInt(),
+                    ConnectivityManager.TYPE_WIFI);
+        } catch (Exception e) {}
+        try {
+            verify(mNetworkManagementService, times(1)).removeIdleTimer(MOBILE_IFNAME);
+        } catch (Exception e) {}
+
+        // Disconnect wifi and switch back to cell
+        reset(mNetworkManagementService);
+        mWiFiNetworkAgent.disconnect();
+        networkCallback.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
+        assertNoCallbacks(networkCallback);
+        try {
+            verify(mNetworkManagementService, times(1)).removeIdleTimer(WIFI_IFNAME);
+        } catch (Exception e) {}
+         try {
+            verify(mNetworkManagementService, times(1)).addIdleTimer(MOBILE_IFNAME, anyInt(),
+                    ConnectivityManager.TYPE_MOBILE);
+        } catch (Exception e) {}
+
+        // reconnect wifi
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        wifiLp.setInterfaceName(WIFI_IFNAME);
+        mWiFiNetworkAgent.sendLinkProperties(wifiLp);
+        mWiFiNetworkAgent.connect(true);
+        networkCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        networkCallback.expectCallback(CallbackState.LOSING, mCellNetworkAgent);
+        networkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
+
+        // Disconnect cell
+        reset(mNetworkManagementService);
+        mCellNetworkAgent.disconnect();
+        networkCallback.expectCallback(CallbackState.LOST, mCellNetworkAgent);
+        // LOST callback is triggered earlier than removing idle timer. Broadcast should also be
+        // sent as network being switched. Ensure rule removal for cell will not be triggered
+        // unexpectedly before network being removed.
+        waitForIdle();
+        try {
+            verify(mNetworkManagementService, times(0)).removeIdleTimer(MOBILE_IFNAME);
+        } catch (Exception e) {}
+        try {
+            verify(mNetworkManagementService, times(1)).removeNetwork(
+                    mCellNetworkAgent.getNetwork().netId);
+        } catch (Exception e) {}
+
+        // Disconnect wifi
+        ConditionVariable cv = waitForConnectivityBroadcasts(1);
+        reset(mNetworkManagementService);
+        mWiFiNetworkAgent.disconnect();
+        waitFor(cv);
+        try {
+            verify(mNetworkManagementService, times(1)).removeIdleTimer(WIFI_IFNAME);
+        } catch (Exception e) {}
+
+        // Clean up
+        mCm.unregisterNetworkCallback(networkCallback);
+    }
 }
