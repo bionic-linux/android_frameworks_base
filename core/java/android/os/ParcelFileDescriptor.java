@@ -397,26 +397,29 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
      * @param socket The Socket whose FileDescriptor is used to create
      *               a new ParcelFileDescriptor.
      *
-     * @return A new ParcelFileDescriptor with the FileDescriptor of the
-     *         specified Socket.
+     * @return A new ParcelFileDescriptor with a duped copy of the
+     * FileDescriptor of the specified Socket.
      */
     public static ParcelFileDescriptor fromSocket(Socket socket) {
         FileDescriptor fd = socket.getFileDescriptor$();
-        return fd != null ? new ParcelFileDescriptor(fd) : null;
+        return fd != null ? ParcelFileDescriptor.dup(fd) : null;
     }
 
     /**
-     * Create a new ParcelFileDescriptor from the specified DatagramSocket.
+     * Create a new ParcelFileDescriptor from the specified DatagramSocket. The
+     * new ParcelFileDescriptor holds a dup of the original FileDescriptor in
+     * the DatagramSocket, so you must still close the DatagramSocket as well
+     * as the new ParcelFileDescriptor.
      *
      * @param datagramSocket The DatagramSocket whose FileDescriptor is used
      *               to create a new ParcelFileDescriptor.
      *
-     * @return A new ParcelFileDescriptor with the FileDescriptor of the
-     *         specified DatagramSocket.
+     * @return A new ParcelFileDescriptor with a duped copy of the
+     * FileDescriptor of the specified Socket.
      */
     public static ParcelFileDescriptor fromDatagramSocket(DatagramSocket datagramSocket) {
         FileDescriptor fd = datagramSocket.getFileDescriptor$();
-        return fd != null ? new ParcelFileDescriptor(fd) : null;
+        return fd != null ? ParcelFileDescriptor.dup(fd) : null;
     }
 
     /**
@@ -546,7 +549,7 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
         }
         file.deactivate();
         FileDescriptor fd = file.getFileDescriptor();
-        return fd != null ? new ParcelFileDescriptor(fd) : null;
+        return fd != null ? ParcelFileDescriptor.dup(fd) : null;
     }
 
     /**
