@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ec4765_d185437f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2576,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T10:20:27Z",
+      "side": 1,
+      "message": "Sorry, I meant including the spaces. Our style guide says this should say :\n\n    updateDataActivityTracking(null /* newNetwork */, nai);",
+      "range": {
+        "startLine": 2576,
+        "startChar": 43,
+        "endLine": 2576,
+        "endChar": 57
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2515cc58_09e7bd5b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4554,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T10:20:27Z",
+      "side": 1,
+      "message": "Won\u0027t this prevent the test from failing if the verify fails ?",
+      "range": {
+        "startLine": 4554,
+        "startChar": 10,
+        "endLine": 4554,
+        "endChar": 15
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b202ad_c3a9c2df",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4575,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T10:20:27Z",
+      "side": 1,
+      "message": "Suggestion : disconnect wifi first, so that you can test that when wifi disconnects and cell becomes the default network again, the idle timer is added again on cell. Then reconnect wifi, and disconnect cell exactly as you\u0027re doing right now (and see my comment below)",
+      "range": {
+        "startLine": 4574,
+        "startChar": 0,
+        "endLine": 4575,
+        "endChar": 9
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d691162a_aeaec1ad",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4579,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T10:20:27Z",
+      "side": 1,
+      "message": "Additionally verify here that removeIdleTimer is not called when cell disconnects while wifi is the default.",
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec4c761_54bc4e3c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4583,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T10:20:27Z",
+      "side": 1,
+      "message": "Can we wait for the callback instead ? Timing on broadcasts is notoriously fiddly.",
+      "range": {
+        "startLine": 4583,
+        "startChar": 8,
+        "endLine": 4583,
+        "endChar": 15
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
