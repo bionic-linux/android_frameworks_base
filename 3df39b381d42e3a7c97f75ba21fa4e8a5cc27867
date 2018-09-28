@@ -46,6 +46,30 @@
       "revId": "3df39b381d42e3a7c97f75ba21fa4e8a5cc27867",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc96bec_310eb99f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5321,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T02:26:38Z",
+      "side": 1,
+      "message": "Yes, I think your new patch is a good way to address both my concerns and yours. Thanks a lot for coming up with this solution.",
+      "parentUuid": "26078f07_8ca966ee",
+      "range": {
+        "startLine": 5321,
+        "startChar": 16,
+        "endLine": 5321,
+        "endChar": 42
+      },
+      "revId": "3df39b381d42e3a7c97f75ba21fa4e8a5cc27867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
