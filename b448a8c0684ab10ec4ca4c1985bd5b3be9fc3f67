@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "863b2732_3ee4e2a7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4554,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T14:09:03Z",
+      "side": 1,
+      "message": "Oh, because it\u0027s Error and not Exception, I understand now. Sure then.\n\nBut then can we make this catch RemoteException instead of just Exception ? That would make the point of this a lot clearer I think.",
+      "parentUuid": "3ea06126_124e0521",
+      "range": {
+        "startLine": 4554,
+        "startChar": 10,
+        "endLine": 4554,
+        "endChar": 15
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1b202ad_c3a9c2df",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -198,6 +222,30 @@
       "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2711e1dc_6e5b2a7c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4583,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-09-28T14:09:03Z",
+      "side": 1,
+      "message": "Ack, thanks for the precision.",
+      "parentUuid": "f15a7e7a_85caed10",
+      "range": {
+        "startLine": 4583,
+        "startChar": 8,
+        "endLine": 4583,
+        "endChar": 15
+      },
+      "revId": "b448a8c0684ab10ec4ca4c1985bd5b3be9fc3f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
