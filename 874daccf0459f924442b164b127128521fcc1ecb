@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56467c60_f19751c6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4676,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-09-28T04:59:22Z",
+      "side": 1,
+      "message": "Why isn\u0027t this all on one line?",
+      "range": {
+        "startLine": 4675,
+        "startChar": 0,
+        "endLine": 4676,
+        "endChar": 51
+      },
+      "revId": "874daccf0459f924442b164b127128521fcc1ecb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
