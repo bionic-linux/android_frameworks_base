@@ -27,6 +27,6 @@ public class EncryptionHelper {
 
     private static boolean isDataEncrypted() {
         String voldState = VoldProperties.decrypt().orElse("");
-        return "1".equals(voldState) || "trigger_restart_min_framework".equals(voldState);
+        return "trigger_restart_min_framework".equals(voldState);
     }
 }

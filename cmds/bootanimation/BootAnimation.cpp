@@ -309,8 +309,7 @@ status_t BootAnimation::readyToRun() {
     char decrypt[PROPERTY_VALUE_MAX];
     property_get("vold.decrypt", decrypt, "");
 
-    bool encryptedAnimation = atoi(decrypt) != 0 ||
-        !strcmp("trigger_restart_min_framework", decrypt);
+    bool encryptedAnimation = !strcmp("trigger_restart_min_framework", decrypt);
 
     if (!mShuttingDown && encryptedAnimation) {
         static const char* encryptedBootFiles[] =
