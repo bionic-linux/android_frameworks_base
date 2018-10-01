@@ -175,6 +175,33 @@ public class TelecomManager {
             "android.telecom.extra.CHANGE_DEFAULT_DIALER_PACKAGE_NAME";
 
     /**
+     * Broadcast intent action indicating that the current default call screening app has changed.
+     * The string extra {@link #EXTRA_DEFAULT_CALL_SCREENING_APP_COMPONENT_NAME} will contain the
+     * name of the Component of the previous or the new call screening app.
+     * <p>
+     * The string extra {@link #EXTRA_IS_DEFAULT_CALL_SCREENING_APP} will indicate the component
+     * name in the string extra {@link #EXTRA_DEFAULT_CALL_SCREENING_APP_COMPONENT_NAME} is
+     * default call screening app or not.
+     */
+    public static final String ACTION_DEFAULT_CALL_SCREENING_APP_CHANGED =
+            "android.telecom.action.DEFAULT_CALL_SCREENING_APP_CHANGED";
+
+    /**
+     * Extra value used with {@link #ACTION_DEFAULT_CALL_SCREENING_APP_CHANGED} broadcast to
+     * indicate the ComponentName of the call screening app which has changed.
+     */
+    public static final String EXTRA_DEFAULT_CALL_SCREENING_APP_COMPONENT_NAME =
+            "android.telecom.extra.DEFAULT_CALL_SCREENING_APP_COMPONENT_NAME";
+
+    /**
+     * Extra value used with {@link #ACTION_DEFAULT_CALL_SCREENING_APP_CHANGED} broadcast to
+     * indicate
+     * whether an app is the default call screening app.
+     */
+    public static final String EXTRA_IS_DEFAULT_CALL_SCREENING_APP =
+            "android.telecom.extra.IS_DEFAULT_CALL_SCREENING_APP";
+
+    /**
      * Optional extra for {@link android.content.Intent#ACTION_CALL} containing a boolean that
      * determines whether the speakerphone should be automatically turned on for an outgoing call.
      */
@@ -1166,6 +1193,81 @@ public class TelecomManager {
             Log.e(TAG, "RemoteException attempting to get the system dialer package name.", e);
         }
         return null;
+    }
+
+    /**
+     * Used to trigger display of the ChangeDefaultCallScreeningApp activity to prompt the user to
+     * change the call screening app.
+     * {@link com.android.server.telecom.components.ChangeDefaultCallScreeningApp}
+     * <p>
+     * A {@link SecurityException} will be thrown if calling package name doesn't match the
+     * package of the passed {@link ComponentName}
+     *
+     * @param componentName to verify that the calling package name matches the package of the
+     *                      passed ComponentName.
+     */
+    public void requestChangeDefaultCallScreeningApp(ComponentName componentName) {
+        try {
+            if (isServiceConnected()) {
+                getTelecomService().requestChangeDefaultCallScreeningApp(componentName, mContext
+                        .getOpPackageName());
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG,
+                    "RemoteException calling ITelecomService#requestChangeDefaultCallScreeningApp.",
+                    e);
+        }
+    }
+
+    /**
+     * Used to verify that the passed ComponentName is default call screening app.
+     * <p>
+     * A {@link SecurityException} will be thrown if the package for the specified
+     * {@link ComponentName} is default call screening app.
+     *
+     * @param componentName to verify that the package of the passed ComponentName matched the
+     *                      default call screening packageName.
+     * @return true if the passed ComponentName matched the default call screening packageName.
+     */
+    public boolean isDefaultCallScreeningApp(ComponentName componentName) {
+        try {
+            if (isServiceConnected()) {
+                return getTelecomService().isDefaultCallScreeningApp(componentName);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG,
+                    "RemoteException calling ITelecomService#isDefaultCallScreeningApp.",
+                    e);
+        }
+        return false;
+    }
+
+    /**
+     * Used to set the default call screening package.
+     * <p>
+     * Requires permission: {@link android.Manifest.permission#MODIFY_PHONE_STATE}
+     * Requires permission: {@link android.Manifest.permission#WRITE_SECURE_SETTINGS}
+     * <p>
+     * A {@link IllegalArgumentException} will be thrown if the specified package and component
+     * name of {@link ComponentName} does't exist, or the specified component of
+     * {@link ComponentName} does't have {@link android.Manifest.permission#BIND_SCREENING_SERVICE}.
+     *
+     * @param componentName to set the default call screening to.
+     * @hide
+     */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.MODIFY_PHONE_STATE,
+            android.Manifest.permission.WRITE_SECURE_SETTINGS
+    })
+    public void setDefaultCallScreeningApp(ComponentName componentName) {
+        try {
+            if (isServiceConnected()) {
+                getTelecomService().setDefaultCallScreeningApp(componentName);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG,
+                    "RemoteException calling ITelecomService#setDefaultCallScreeningApp.", e);
+        }
     }
 
     /**
