@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b632c38_14a5aedf",
+        "filename": "core/java/android/os/ParcelFileDescriptor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-10-01T23:37:46Z",
+      "side": 1,
+      "message": "{@link #dup(FileDescriptor)} throws IOException.\n\n?",
+      "range": {
+        "startLine": 403,
+        "startChar": 39,
+        "endLine": 403,
+        "endChar": 70
+      },
+      "revId": "a08d7a270adf0140c519ba714f89b88a4e9b805f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
