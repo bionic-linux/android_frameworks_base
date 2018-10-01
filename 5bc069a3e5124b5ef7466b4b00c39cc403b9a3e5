@@ -22,6 +22,30 @@
       "revId": "5bc069a3e5124b5ef7466b4b00c39cc403b9a3e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff171137_4da26c59",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3805,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-01T03:12:43Z",
+      "side": 1,
+      "message": "Good catch! Unfortunately it does not seem trivial to disable startUsingNetworkFeature without breaking tethering. I think the only way that ConnectivityService knows that startUsingNetworkFeature is being called is by the legacyType member in NetworkRequests being set. But Tethering uses this member to ensure that LegacyTypeTracker triggers CONNECTIVITY_ACTION broadcasts.\n\nLeft code as is and reworded commit message so it only mentions requestRouteToHost.",
+      "parentUuid": "842c397e_6e0f7105",
+      "range": {
+        "startLine": 3804,
+        "startChar": 43,
+        "endLine": 3805,
+        "endChar": 57
+      },
+      "revId": "5bc069a3e5124b5ef7466b4b00c39cc403b9a3e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
