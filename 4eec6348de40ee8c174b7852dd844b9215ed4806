@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55bb9510_7b2ca711",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/HeadsUpAppearanceController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2018-10-01T18:18:41Z",
+      "side": 1,
+      "message": "can we make this a setter, setAnimationsEnabled(boolean) instead? We really don\u0027t want direct field access.",
+      "revId": "4eec6348de40ee8c174b7852dd844b9215ed4806",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c103c4de_b172e65a",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/HeadsUpAppearanceController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2018-10-01T18:18:41Z",
+      "side": 1,
+      "message": "can you add some method documentation about state (which we should call endState) and what this function does?\nAlso, we should rename these to hide(view, state) and show(view) without the animate in it, since it\u0027s internally deciding if it should animate or not.",
+      "revId": "4eec6348de40ee8c174b7852dd844b9215ed4806",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
