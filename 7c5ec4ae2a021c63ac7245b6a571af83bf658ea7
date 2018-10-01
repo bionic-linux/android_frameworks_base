@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aa08a97_ea90b945",
+        "filename": "core/java/android/os/ParcelFileDescriptor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-10-01T23:28:23Z",
+      "side": 1,
+      "message": "Here and below: Why not UncheckedIOException? That type is more specific, and the type of its cause is specifically IOException.\n\nThat this method may throw that exception should also be documented via a @throws clause in the javadoc, or similar.",
+      "range": {
+        "startLine": 408,
+        "startChar": 22,
+        "endLine": 408,
+        "endChar": 38
+      },
+      "revId": "7c5ec4ae2a021c63ac7245b6a571af83bf658ea7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
