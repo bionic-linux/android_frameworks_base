@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e4d660_ec8ad369",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1870,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-01T04:38:23Z",
+      "side": 1,
+      "message": "Can the same interface appear more than once in tetherStats? If so, we need to do some de-duplication here, right?",
+      "range": {
+        "startLine": 1870,
+        "startChar": 20,
+        "endLine": 1870,
+        "endChar": 31
+      },
+      "revId": "387e722c5ec3b1ac0733784ae61ac0176ba44fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
