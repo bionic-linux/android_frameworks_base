@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e518f2ed_f4f86f45",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1356846
+      },
+      "writtenOn": "2018-10-02T06:03:45Z",
+      "side": 1,
+      "message": "add the description about throwing Exception",
+      "parentUuid": "457e594a_a96aa5a8",
+      "range": {
+        "startLine": 1199,
+        "startChar": 0,
+        "endLine": 1205,
+        "endChar": 7
+      },
+      "revId": "085708a1856092d5b0bb41b81f8978aa86327309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ab41c8e_2d731800",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-10-02T05:21:17Z",
       "side": 1,
       "message": "ditto.",
+      "range": {
+        "startLine": 1220,
+        "startChar": 0,
+        "endLine": 1224,
+        "endChar": 95
+      },
+      "revId": "085708a1856092d5b0bb41b81f8978aa86327309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a97c55_77d99790",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1356846
+      },
+      "writtenOn": "2018-10-02T06:03:45Z",
+      "side": 1,
+      "message": "add the description about throwing Exception",
+      "parentUuid": "8ab41c8e_2d731800",
       "range": {
         "startLine": 1220,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "11f536bd_a92e845f",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1356846
+      },
+      "writtenOn": "2018-10-02T06:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48687a9b_b7d167a4",
+      "range": {
+        "startLine": 1236,
+        "startChar": 8,
+        "endLine": 1236,
+        "endChar": 21
+      },
+      "revId": "085708a1856092d5b0bb41b81f8978aa86327309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002e8788_11a0e835",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2018-10-02T05:21:17Z",
       "side": 1,
       "message": "ditto.",
+      "range": {
+        "startLine": 1239,
+        "startChar": 0,
+        "endLine": 1247,
+        "endChar": 7
+      },
+      "revId": "085708a1856092d5b0bb41b81f8978aa86327309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcae3360_91cbc07b",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1356846
+      },
+      "writtenOn": "2018-10-02T06:03:45Z",
+      "side": 1,
+      "message": "add the description about throwing Exception",
+      "parentUuid": "002e8788_11a0e835",
       "range": {
         "startLine": 1239,
         "startChar": 0,
