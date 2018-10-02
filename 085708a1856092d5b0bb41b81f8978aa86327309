@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457e594a_a96aa5a8",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-10-02T05:21:17Z",
+      "side": 1,
+      "message": "Should we add a description about throw SecurityException in java doc?",
+      "range": {
+        "startLine": 1199,
+        "startChar": 0,
+        "endLine": 1205,
+        "endChar": 7
+      },
+      "revId": "085708a1856092d5b0bb41b81f8978aa86327309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab41c8e_2d731800",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-10-02T05:21:17Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 1220,
+        "startChar": 0,
+        "endLine": 1224,
+        "endChar": 95
+      },
+      "revId": "085708a1856092d5b0bb41b81f8978aa86327309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48687a9b_b7d167a4",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-10-02T05:21:17Z",
+      "side": 1,
+      "message": "why always return false?",
+      "range": {
+        "startLine": 1236,
+        "startChar": 8,
+        "endLine": 1236,
+        "endChar": 21
+      },
+      "revId": "085708a1856092d5b0bb41b81f8978aa86327309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002e8788_11a0e835",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2018-10-02T05:21:17Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 1239,
+        "startChar": 0,
+        "endLine": 1247,
+        "endChar": 7
+      },
+      "revId": "085708a1856092d5b0bb41b81f8978aa86327309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
