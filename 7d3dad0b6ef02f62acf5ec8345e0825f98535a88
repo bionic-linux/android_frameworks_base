@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e0873c8_750a357b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/HeadsUpAppearanceController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2018-10-02T19:45:57Z",
+      "side": 1,
+      "message": "Hides the view and sets the state to endState when finished.",
+      "revId": "7d3dad0b6ef02f62acf5ec8345e0825f98535a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ae8525_05644168",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/HeadsUpAppearanceController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2018-10-02T19:45:57Z",
+      "side": 1,
+      "message": "nit: capitalize \"The\" view to hide.",
+      "revId": "7d3dad0b6ef02f62acf5ec8345e0825f98535a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
