@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57d01f39_e8398e62",
+        "filename": "core/java/android/os/ParcelFileDescriptor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-10-02T12:35:10Z",
+      "side": 1,
+      "message": "super nit (okay to ignore): Here and below: For consistency, consider \"e\" rather than \"ex\". Typically we only use \"ex\" for nested catch blocks where the name \"e\" is already being used by the enclosing block.",
+      "range": {
+        "startLine": 410,
+        "startChar": 29,
+        "endLine": 410,
+        "endChar": 31
+      },
+      "revId": "2bfdd691b6ff9d6be6f30c068cde55f62d8ce925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
