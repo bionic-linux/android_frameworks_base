@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd5f515_48ba97c7",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5006,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-10-02T00:48:10Z",
+      "side": 1,
+      "message": "We should try to add a more useful message. Is it always OMTP which is not supported or can it be CTIA? We could refer to the CTIA web sire of Phone documentation for more information on supported headphones",
+      "range": {
+        "startLine": 5006,
+        "startChar": 70,
+        "endLine": 5006,
+        "endChar": 90
+      },
+      "revId": "63f15f467b3d0a26dec1cd1bd8bd474f85850fbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aced70f_a38a9c0f",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-10-02T00:48:10Z",
+      "side": 1,
+      "message": "please add new value at the end of list",
+      "range": {
+        "startLine": 144,
+        "startChar": 22,
+        "endLine": 144,
+        "endChar": 45
+      },
+      "revId": "63f15f467b3d0a26dec1cd1bd8bd474f85850fbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
