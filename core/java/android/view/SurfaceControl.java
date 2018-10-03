@@ -252,6 +252,12 @@ public class SurfaceControl implements Parcelable {
     public static final int CURSOR_WINDOW = 0x00002000;
 
     /**
+     * Surface creation flag: Surface is a abstract layer. It does not need buffer.
+     * Therefore, Its layer size can larger than the maximum size of GPU texture.
+     */
+    public static final int ABSTRACT = 0x00100000;
+
+    /**
      * Surface creation flag: Creates a normal surface.
      * This is the default.
      *
@@ -538,6 +544,20 @@ public class SurfaceControl implements Parcelable {
          */
         public Builder setFlags(int flags) {
             mFlags = flags;
+            return this;
+        }
+
+        /**
+         * Specify whether the Surface is a abstract layer or not. If true, the
+         * system will ignore the layer size of this layer. Because it do not
+         * need buffer, it should not be limited by GPU's texture size.
+         */
+        public Builder setAbstract(boolean isAbstract) {
+            if (isAbstract) {
+                mFlags |= ABSTRACT;
+            } else {
+                mFlags &= ~ABSTRACT;
+            }
             return this;
         }
     }
