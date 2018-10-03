@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00c31438_7f95f00b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-10-03T04:31:41Z",
+      "side": 1,
+      "message": "Delete this part as this is not entirely true. This depends on some other carrier config as well. Here all that you should say is if false, user can view the APN (it is not hidden). Whether user can edit the details or not depends on another config.",
+      "range": {
+        "startLine": 2132,
+        "startChar": 27,
+        "endLine": 2132,
+        "endChar": 77
+      },
+      "revId": "647d328478b92e5483137fadd4f6210d4a01ed68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
