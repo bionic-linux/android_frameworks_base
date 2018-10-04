@@ -3253,6 +3253,26 @@ public class AudioService extends IAudioService.Stub
         if (!checkAudioSettingsPermission("setSpeakerphoneOn()")) {
             return;
         }
+
+        if (UserHandle.getAppId(Binder.getCallingUid()) >= FIRST_APPLICATION_UID) {
+            if (mMode == AudioSystem.MODE_IN_CALL) {
+                Log.w(TAG, "mMode is call, Permission Denial: setSpeakerphoneOn from pid="
+                        + Binder.getCallingPid() + ", uid=" + Binder.getCallingUid());
+                return;
+            }
+            synchronized (mSetModeDeathHandlers) {
+                Iterator iter = mSetModeDeathHandlers.iterator();
+                while (iter.hasNext()) {
+                    SetModeDeathHandler h = (SetModeDeathHandler) iter.next();
+                    if (h.getMode() == AudioSystem.MODE_IN_CALL) {
+                        Log.w(TAG, "getMode is call, Permission Denial: setSpeakerphoneOn from pid="
+                                + Binder.getCallingPid() + ", uid=" + Binder.getCallingUid());
+                        return;
+                    }
+                }
+            }
+        }
+
         // for logging only
         final String eventSource = new StringBuilder("setSpeakerphoneOn(").append(on)
                 .append(") from u/pid:").append(Binder.getCallingUid()).append("/")
