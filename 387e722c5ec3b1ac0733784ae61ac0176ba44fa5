@@ -22,6 +22,30 @@
       "revId": "387e722c5ec3b1ac0733784ae61ac0176ba44fa5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aedf960_a28360d4",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1870,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2018-10-04T08:45:40Z",
+      "side": 1,
+      "message": "fixed it in netd, the same interface appear only once.",
+      "parentUuid": "37e4d660_ec8ad369",
+      "range": {
+        "startLine": 1870,
+        "startChar": 20,
+        "endLine": 1870,
+        "endChar": 31
+      },
+      "revId": "387e722c5ec3b1ac0733784ae61ac0176ba44fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
