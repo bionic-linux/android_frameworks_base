@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67290087_c93a51ef",
+        "filename": "services/core/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-10-04T22:17:57Z",
+      "side": 1,
+      "message": "maybe use a public getter and private member instead of exposing directly a public member.",
+      "range": {
+        "startLine": 310,
+        "startChar": 21,
+        "endLine": 310,
+        "endChar": 41
+      },
+      "revId": "a37b58ca3219c9693e9efa584490e0c6eef15936",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a28e1a_594f99cf",
+        "filename": "services/core/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-10-04T22:17:57Z",
+      "side": 1,
+      "message": "does not need to be public",
+      "range": {
+        "startLine": 312,
+        "startChar": 21,
+        "endLine": 312,
+        "endChar": 32
+      },
+      "revId": "a37b58ca3219c9693e9efa584490e0c6eef15936",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
