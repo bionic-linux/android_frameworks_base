@@ -22,6 +22,30 @@
       "revId": "647d328478b92e5483137fadd4f6210d4a01ed68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3056f3_1462b1e5",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2018-10-05T08:35:29Z",
+      "side": 1,
+      "message": "Thank you, I removed the part to avoid misunderstanding as your suggestion.",
+      "parentUuid": "00c31438_7f95f00b",
+      "range": {
+        "startLine": 2132,
+        "startChar": 27,
+        "endLine": 2132,
+        "endChar": 77
+      },
+      "revId": "647d328478b92e5483137fadd4f6210d4a01ed68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
