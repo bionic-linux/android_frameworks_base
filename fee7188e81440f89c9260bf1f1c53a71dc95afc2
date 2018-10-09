@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "500b550f_2fb36fa0",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/HeadsUpAppearanceController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2018-10-09T23:23:34Z",
+      "side": 1,
+      "message": "can we inline this method here? There\u0027s no reason we need show and animateShow, the implementation of animateShow should just be the implementation of show.\nSame goes for hide - animateHide()",
+      "revId": "fee7188e81440f89c9260bf1f1c53a71dc95afc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
