@@ -28,7 +28,6 @@ namespace dex {
 using std::shared_ptr;
 using std::string;
 
-using art::Instruction;
 using ::dex::kAccPublic;
 
 const TypeDescriptor TypeDescriptor::INT{"I"};
@@ -66,7 +65,7 @@ void WriteTestDexFile(const string& filename) {
 
   MethodBuilder method{cbuilder.CreateMethod("foo", Prototype{TypeDescriptor::INT})};
 
-  MethodBuilder::Register r = method.MakeRegister();
+  Value r = method.MakeRegister();
   method.BuildConst4(r, 5);
   method.BuildReturn(r);
 
@@ -76,6 +75,10 @@ void WriteTestDexFile(const string& filename) {
 
   std::ofstream out_file(filename);
   out_file.write(image.ptr<const char>(), image.size());
+}
+
+TypeDescriptor TypeDescriptor::FromClassname(const std::string& name) {
+  return TypeDescriptor{art::DotToDescriptor(name.c_str())};
 }
 
 DexBuilder::DexBuilder() : dex_file_{std::make_shared<ir::DexFile>()} {
@@ -197,18 +200,20 @@ ir::EncodedMethod* MethodBuilder::Encode() {
   return method;
 }
 
-MethodBuilder::Register MethodBuilder::MakeRegister() { return num_registers_++; }
+Value MethodBuilder::MakeRegister() { return Value::Local(num_registers_++); }
 
-void MethodBuilder::BuildReturn() { buffer_.push_back(Instruction::RETURN_VOID); }
+void MethodBuilder::BuildReturn() { buffer_.push_back(art::Instruction::RETURN_VOID); }
 
-void MethodBuilder::BuildReturn(Register src) { buffer_.push_back(Instruction::RETURN | src << 8); }
+void MethodBuilder::BuildReturn(Value src) { buffer_.push_back(art::Instruction::RETURN | src.value() << 8); }
 
-void MethodBuilder::BuildConst4(Register target, int value) {
+void MethodBuilder::BuildConst4(Value target, int value) {
   DCHECK_LT(value, 16);
   // TODO: support more registers
-  DCHECK_LT(target, 16);
-  buffer_.push_back(Instruction::CONST_4 | (value << 12) | (target << 8));
+  DCHECK_LT(target.value(), 16);
+  buffer_.push_back(art::Instruction::CONST_4 | (value << 12) | (target.value() << 8));
 }
+
+Value::Value(size_t value, Kind kind) : value_{value}, kind_{kind} {}
 
 }  // namespace dex
 }  // namespace startop

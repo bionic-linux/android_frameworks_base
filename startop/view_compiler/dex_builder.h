@@ -55,6 +55,10 @@ class TypeDescriptor {
   static const TypeDescriptor INT;
   static const TypeDescriptor VOID;
 
+  // Creates a type descriptor from a fully-qualified class name. For example, it turns the class
+  // name java.lang.Object into the descriptor Ljava/lang/Object.
+  static TypeDescriptor FromClassname(const std::string& name);
+
   // Return the full descriptor, such as I or Ljava/lang/Object
   const std::string& descriptor() const { return descriptor_; }
   // Return the shorty descriptor, such as I or L
@@ -85,6 +89,33 @@ class Prototype {
   const std::vector<TypeDescriptor> param_types_;
 };
 
+// Represents a DEX register or constant. We separate regular registers and parameters
+// because we will not know the real parameter id until after all instructions
+// have been generated.
+class Value {
+ public:
+  static Value Local(size_t id) { return Value{id, Kind::kLocalRegister}; }
+  static Value Parameter(size_t id) { return Value{id, Kind::kParameter}; }
+  static Value Immediate(size_t value) { return Value{value, Kind::kImmediate}; }
+
+  size_t value() const { return value_; }
+  bool is_parameter() const { return kind_ == Kind::kParameter; }
+
+ private:
+  enum class Kind { kLocalRegister, kParameter, kImmediate };
+
+  const size_t value_;
+  const Kind kind_;
+
+  Value(size_t value, Kind kind);
+};
+
+// A virtual instruction. We convert these to real instructions in MethodBuilder::Encode.
+// Virtual instructions are needed to keep track of information that is not known until all of the
+// code is generated. This information includes things like how many local registers are created and
+// branch target locations.
+class Instruction {};
+
 // Tools to help build methods and their bodies.
 class MethodBuilder {
  public:
@@ -93,13 +124,10 @@ class MethodBuilder {
   // Encode the method into DEX format.
   ir::EncodedMethod* Encode();
 
-  // Registers are just represented by their number.
-  using Register = size_t;
-
   // Create a new register to be used to storing values. Note that these are not SSA registers, like
   // might be expected in similar code generators. This does no liveness tracking or anything, so
   // it's up to the caller to reuse registers as appropriate.
-  Register MakeRegister();
+  Value MakeRegister();
 
   /////////////////////////////////
   // Instruction builder methods //
@@ -107,9 +135,9 @@ class MethodBuilder {
 
   // return-void
   void BuildReturn();
-  void BuildReturn(Register src);
+  void BuildReturn(Value src);
   // const/4
-  void BuildConst4(Register target, int value);
+  void BuildConst4(Value target, int value);
 
   // TODO: add builders for more instructions
 
@@ -118,7 +146,10 @@ class MethodBuilder {
   ir::Class* class_;
   ir::MethodDecl* decl_;
 
-  // A buffer to hold instructions we are generating.
+  // A list of the instructions we will eventually encode.
+  std::vector<Instruction> instructions_;
+
+  // A buffer to hold instructions that have been encoded.
   std::vector<::dex::u2> buffer_;
 
   // How many registers we've allocated
