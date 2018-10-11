@@ -74,7 +74,9 @@ public class ServiceState implements Parcelable {
 
     /**
      * Radio of telephony is explicitly powered off.
+     * @deprecated Use {@link TelephonyManager#getRadioPowerState()} instead}
      */
+    @Deprecated
     public static final int STATE_POWER_OFF = 3;
 
     /** @hide */
