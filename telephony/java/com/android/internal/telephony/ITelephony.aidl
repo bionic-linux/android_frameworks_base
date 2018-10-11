@@ -1477,4 +1477,10 @@ interface ITelephony {
      * Return the network selection mode on the subscription with id {@code subId}.
      */
      int getNetworkSelectionMode(int subId);
+
+     /**
+      * Return the network selection mode on the subscription with id {@code subId}.
+      *
+      */
+     int getRadioPowerState(int subId, String callingPackage);
 }
