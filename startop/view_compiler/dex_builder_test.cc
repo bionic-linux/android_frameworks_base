@@ -80,3 +80,16 @@ TEST(DexBuilderTest, VerifyDexReturn5) {
 
   EXPECT_TRUE(EncodeAndVerify(&dex_file));
 }
+
+TEST(DexBuilderTest, VerifyDexReturnIntParam) {
+  DexBuilder dex_file;
+
+  auto cbuilder{dex_file.MakeClass("dextest.DexTest")};
+
+  auto method{
+      cbuilder.CreateMethod("foo", Prototype{TypeDescriptor::Int(), TypeDescriptor::Int()})};
+  method.BuildReturn(Value::Parameter(0));
+  method.Encode();
+
+  EXPECT_TRUE(EncodeAndVerify(&dex_file));
+}
