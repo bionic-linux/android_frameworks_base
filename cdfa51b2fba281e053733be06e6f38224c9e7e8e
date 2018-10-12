@@ -22,6 +22,30 @@
       "revId": "cdfa51b2fba281e053733be06e6f38224c9e7e8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acfba746_55413d16",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6851,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-12T18:45:50Z",
+      "side": 1,
+      "message": "there are some default cases, we need to return somthing for example callers don\u0027t have permission or phone process is unavailable. In that case, should we return modem radio unavailable?",
+      "parentUuid": "37363c18_a7582292",
+      "range": {
+        "startLine": 6850,
+        "startChar": 20,
+        "endLine": 6851,
+        "endChar": 39
+      },
+      "revId": "cdfa51b2fba281e053733be06e6f38224c9e7e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
