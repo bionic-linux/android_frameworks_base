@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37363c18_a7582292",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6851,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-10-12T18:37:50Z",
+      "side": 1,
+      "message": "Is there really any difference between these 2? Do we need them both?",
+      "range": {
+        "startLine": 6850,
+        "startChar": 20,
+        "endLine": 6851,
+        "endChar": 39
+      },
+      "revId": "cdfa51b2fba281e053733be06e6f38224c9e7e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
