@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27bc1bc7_d705d012",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-12T19:12:39Z",
+      "side": 1,
+      "message": "Same here and requires more public API info.",
+      "range": {
+        "startLine": 279,
+        "startChar": 10,
+        "endLine": 279,
+        "endChar": 16
+      },
+      "revId": "07447412318c7a06c61f5c0466e5789588ee32a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a06a33_25e43544",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1920,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-12T19:12:39Z",
+      "side": 1,
+      "message": "Any reasons for mark it \"hide\" when used by SMS providers and QC MMS app? Feel like these should be public APIs, and could you provide more details and references link to SMS/MMS spec?",
+      "range": {
+        "startLine": 1920,
+        "startChar": 11,
+        "endLine": 1920,
+        "endChar": 16
+      },
+      "revId": "07447412318c7a06c61f5c0466e5789588ee32a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048446a7_95321682",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1925,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-12T19:12:39Z",
+      "side": 1,
+      "message": "Is it an INTEGER (boolean), instead of INTEGER? Just like \"ARCHIVED\" column above.",
+      "range": {
+        "startLine": 1925,
+        "startChar": 20,
+        "endLine": 1925,
+        "endChar": 65
+      },
+      "revId": "07447412318c7a06c61f5c0466e5789588ee32a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
