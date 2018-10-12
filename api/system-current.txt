@@ -4281,6 +4281,21 @@ package android.provider {
     field public static final java.lang.String INSTANT_APPS_ENABLED = "instant_apps_enabled";
   }
 
+  public static final class Telephony.Carriers implements android.provider.BaseColumns {
+    field public static final int CARRIER_DELETED = 5; // 0x5
+    field public static final int CARRIER_DELETED_BUT_PRESENT_IN_XML = 6; // 0x6
+    field public static final int CARRIER_EDITED = 4; // 0x4
+    field public static final java.lang.String EDITED = "edited";
+    field public static final java.lang.String MAX_CONNS = "max_conns";
+    field public static final java.lang.String MAX_CONNS_TIME = "max_conns_time";
+    field public static final int UNEDITED = 0; // 0x0
+    field public static final int USER_DELETED = 2; // 0x2
+    field public static final int USER_DELETED_BUT_PRESENT_IN_XML = 3; // 0x3
+    field public static final int USER_EDITED = 1; // 0x1
+    field public static final java.lang.String USER_VISIBLE = "user_visible";
+    field public static final java.lang.String WAIT_TIME = "wait_time";
+  }
+
   public final class TimeZoneRulesDataContract {
     field public static final java.lang.String AUTHORITY = "com.android.timezone";
   }
