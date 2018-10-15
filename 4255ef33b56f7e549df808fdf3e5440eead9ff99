@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e084c7e7_7281ffcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2018-10-15T19:41:32Z",
+      "side": 1,
+      "message": "Please use \"Bug:\". That has special meaning. For example:\n\nBug: 109710668",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 5
+      },
+      "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49529887_c80cd451",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 2
@@ -18,6 +41,29 @@
         "startChar": 16,
         "endLine": 3258,
         "endChar": 21
+      },
+      "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f492e5_506c880b",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3264,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2018-10-15T19:41:32Z",
+      "side": 1,
+      "message": "May be simpler to use\n   for(SetModeDeathHandler h : mSetModeDeathHandlers) {",
+      "range": {
+        "startLine": 3264,
+        "startChar": 16,
+        "endLine": 3264,
+        "endChar": 24
       },
       "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
