@@ -46,6 +46,30 @@
       "revId": "cdfa51b2fba281e053733be06e6f38224c9e7e8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193902a9_6c1eefd8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6851,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-10-15T17:43:05Z",
+      "side": 1,
+      "message": "I believe UNAVAILABLE and UNKNOWN are similar with different reasons. UNAVAILABLE means value is not known from modem, UNKNOWN means it is not known because of missing permission/phone process crashing. I am not sure if we need to have different values for these. Unless you know of a specific usecase where these need to be differentiated, I think we can merge them into one.",
+      "parentUuid": "acfba746_55413d16",
+      "range": {
+        "startLine": 6850,
+        "startChar": 20,
+        "endLine": 6851,
+        "endChar": 39
+      },
+      "revId": "cdfa51b2fba281e053733be06e6f38224c9e7e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
