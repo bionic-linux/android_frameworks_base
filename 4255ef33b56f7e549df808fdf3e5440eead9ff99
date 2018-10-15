@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49529887_c80cd451",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3258,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-10-15T19:29:12Z",
+      "side": 1,
+      "message": "This is redundant with code below: having one handler in the stack with mode IN_CALL implies that mMode is IN_CALL.\nI would prefer to check a system permission like MODIFY_PHONE_STATE rather than the UID.",
+      "range": {
+        "startLine": 3258,
+        "startChar": 16,
+        "endLine": 3258,
+        "endChar": 21
+      },
+      "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d993399c_c95681bf",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3267,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-10-15T19:29:12Z",
+      "side": 1,
+      "message": "we should allow the UID owning the audio mode to change speaker phone state and extend this to IN_COMMUNICATION",
+      "range": {
+        "startLine": 3267,
+        "startChar": 26,
+        "endLine": 3267,
+        "endChar": 33
+      },
+      "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
