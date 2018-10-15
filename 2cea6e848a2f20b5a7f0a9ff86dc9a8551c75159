@@ -22,6 +22,30 @@
       "revId": "2cea6e848a2f20b5a7f0a9ff86dc9a8551c75159",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671a5139_ba57fbf2",
+        "filename": "Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-10-15T15:35:08Z",
+      "side": 1,
+      "message": "Yeah, sounds better. Will rename.\n\nI guess we should do the same for the dark greylist too? (hiddenapi-max-sdk-o-blacklist.txt?)",
+      "parentUuid": "fd36044a_aef10e9e",
+      "range": {
+        "startLine": 90,
+        "startChar": 27,
+        "endLine": 90,
+        "endChar": 52
+      },
+      "revId": "2cea6e848a2f20b5a7f0a9ff86dc9a8551c75159",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
