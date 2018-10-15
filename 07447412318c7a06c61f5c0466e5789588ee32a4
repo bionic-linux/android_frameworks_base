@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2358dd03_b722c357",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2018-10-15T02:36:33Z",
+      "side": 1,
+      "message": "done, which is used to indicate 3gpp2 SMS priority, default value is -1",
+      "parentUuid": "27bc1bc7_d705d012",
+      "range": {
+        "startLine": 279,
+        "startChar": 10,
+        "endLine": 279,
+        "endChar": 16
+      },
+      "revId": "07447412318c7a06c61f5c0466e5789588ee32a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63a06a33_25e43544",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "33a72406_2eefe26f",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1920,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2018-10-15T02:36:33Z",
+      "side": 1,
+      "message": "actually MMS app used new string definition to query DB, here marked as hide to avoid API context update",
+      "parentUuid": "63a06a33_25e43544",
+      "range": {
+        "startLine": 1920,
+        "startChar": 11,
+        "endLine": 1920,
+        "endChar": 16
+      },
+      "revId": "07447412318c7a06c61f5c0466e5789588ee32a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "048446a7_95321682",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "07447412318c7a06c61f5c0466e5789588ee32a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146e625d_f520c61e",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1925,
+      "author": {
+        "id": 1157922
+      },
+      "writtenOn": "2018-10-15T02:36:33Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "048446a7_95321682",
+      "range": {
+        "startLine": 1925,
+        "startChar": 20,
+        "endLine": 1925,
+        "endChar": 65
+      },
+      "revId": "07447412318c7a06c61f5c0466e5789588ee32a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
