@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd36044a_aef10e9e",
+        "filename": "Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-10-15T13:08:13Z",
+      "side": 1,
+      "message": "This corresponds to MaxTargetSdk\u003dP with the annotation. How about we name them correspondingly - hiddenapi-max-sdk-p-blacklist.txt?",
+      "range": {
+        "startLine": 90,
+        "startChar": 27,
+        "endLine": 90,
+        "endChar": 52
+      },
+      "revId": "2cea6e848a2f20b5a7f0a9ff86dc9a8551c75159",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
