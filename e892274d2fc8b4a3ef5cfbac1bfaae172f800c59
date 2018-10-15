@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f31d22dc_935b202c",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-15T23:56:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "536503ee_42faef66",
+      "range": {
+        "startLine": 1482,
+        "startChar": 49,
+        "endLine": 1482,
+        "endChar": 69
+      },
+      "revId": "e892274d2fc8b4a3ef5cfbac1bfaae172f800c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bd12692_9a364f8e",
         "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "e892274d2fc8b4a3ef5cfbac1bfaae172f800c59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e3674a_cc448ad4",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-15T23:56:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd12692_9a364f8e",
+      "range": {
+        "startLine": 1485,
+        "startChar": 32,
+        "endLine": 1485,
+        "endChar": 37
+      },
+      "revId": "e892274d2fc8b4a3ef5cfbac1bfaae172f800c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
