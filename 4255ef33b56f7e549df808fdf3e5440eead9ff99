@@ -91,6 +91,23 @@
       "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ea08a6_24c424a9",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3267,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-15T21:14:18Z",
+      "side": 1,
+      "message": "I\u0027d be fine with preventing a voip app from doing this for IN_COMMUNICATION and directing them to the Telecom APIs which provide the ability to change audio routes. :)",
+      "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
