@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "16f2c224_e558bd88",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2824,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-16T22:53:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "124db126_7ab713ba",
+      "range": {
+        "startLine": 2824,
+        "startChar": 44,
+        "endLine": 2824,
+        "endChar": 47
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9b97a11_c125cd59",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 4
@@ -203,6 +227,30 @@
       "side": 1,
       "message": "Actually this is very transient, and is seen only on upgrade. No one accessing the db should ever see this value. Also it is very old that we are probably ready to deprecate soon. It would be better to not expose it otherwise later we have to deal with deprecation.",
       "parentUuid": "fdffa869_36d5204a",
+      "range": {
+        "startLine": 2917,
+        "startChar": 0,
+        "endLine": 2917,
+        "endChar": 18
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1194ee_56f2729a",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2917,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-16T22:53:32Z",
+      "side": 1,
+      "message": "if this is a transient one and one one will get this value when query the db, I am okay to not expose this.",
+      "parentUuid": "27febf4b_3bc376b6",
       "range": {
         "startLine": 2917,
         "startChar": 0,
