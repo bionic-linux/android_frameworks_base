@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "124db126_7ab713ba",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2824,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-10-16T22:08:13Z",
+      "side": 1,
+      "message": "could you do it in all the newly @SystemApi comments?",
+      "parentUuid": "1d47a1e6_97cf5ce3",
+      "range": {
+        "startLine": 2824,
+        "startChar": 44,
+        "endLine": 2824,
+        "endChar": 47
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9b97a11_c125cd59",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "we want to expose the column EDITED, all the above values (CARRIER_EDITED/USER_EDITED etc) are the possible entry in this columns, thus expose all together.",
       "parentUuid": "f7a1d949_18ff1c7a",
+      "range": {
+        "startLine": 2917,
+        "startChar": 0,
+        "endLine": 2917,
+        "endChar": 18
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdffa869_36d5204a",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2917,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-10-16T22:08:13Z",
+      "side": 1,
+      "message": "okay",
+      "parentUuid": "297f2822_bcc48108",
       "range": {
         "startLine": 2917,
         "startChar": 0,
