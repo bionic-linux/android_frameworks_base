@@ -8,6 +8,7 @@
 #include "Main.h"
 #include "ResourceFilter.h"
 
+#include <android-base/macros.h>
 #include <utils/misc.h>
 #include <utils/SortedVector.h>
 
@@ -301,6 +302,7 @@ int AaptLocaleValue::initFromDirName(const Vector<String8>& parts, const int sta
                         break;
                     }
                     // This is not alphabetical, so we fall through to variant
+                    FALLTHROUGH_INTENDED;
                 case 5:
                 case 6:
                 case 7:
