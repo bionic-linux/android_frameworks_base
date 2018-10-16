@@ -442,7 +442,7 @@ message SystemPropertiesProto {
         message Telephony {
             optional bool  call_ring_multiple = 1;
             optional int32 default_cdma_sub = 2;
-            optional int32 default_network = 3;
+            optional int32 default_network = 10;
         }
         optional Telephony telephony = 38;
 
