@@ -26,6 +26,7 @@
 #endif
 #include "utils/GLUtils.h"
 
+#include <android-base/macros.h>
 #include <cutils/properties.h>
 #include <utils/Log.h>
 #include <utils/String8.h>
@@ -234,13 +235,13 @@ void Caches::flush(FlushMode mode) {
             gradientCache.clear();
             fontRenderer.clear();
             fboCache.clear();
-        // fall through
+            FALLTHROUGH_INTENDED;
         case FlushMode::Moderate:
             fontRenderer.flush();
             textureCache.flush();
             pathCache.clear();
             tessellationCache.clear();
-        // fall through
+            FALLTHROUGH_INTENDED;
         case FlushMode::Layers:
             renderBufferCache.clear();
             break;

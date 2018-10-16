@@ -26,6 +26,7 @@ cc_binary_host {
         "-Werror",
     ],
     srcs: ["main.cpp"],
+    header_libs: ["libbase_headers"],
     shared_libs: [
         "libplatformprotos",
         "libprotobuf-cpp-full",

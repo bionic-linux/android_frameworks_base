@@ -154,6 +154,8 @@ cc_defaults {
 
     whole_static_libs: ["libskia"],
 
+    header_libs: ["libbase_headers"],
+
     srcs: [
         "hwui/AnimatedImageDrawable.cpp",
         "hwui/AnimatedImageThread.cpp",
