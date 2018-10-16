@@ -16,6 +16,24 @@
       "revId": "2cb68a548bd6919760b0052dae8a78fb83d35c77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109574c8_2d4a9770",
+        "filename": "media/jni/android_mtp_MtpDatabase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2018-10-16T19:09:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b10e7e_2a0518d9",
+      "revId": "2cb68a548bd6919760b0052dae8a78fb83d35c77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
