@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebf9cf48_ba7db02c",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2825,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2018-10-16T05:38:18Z",
+      "side": 1,
+      "message": "I think it was mentioned as INTEGER because booleans are stored as int 1/0 in db.",
+      "revId": "950c437bc962aced1a2d5406d88a8d220c482c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
