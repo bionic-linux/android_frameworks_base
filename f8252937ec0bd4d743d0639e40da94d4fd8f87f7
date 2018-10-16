@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d47a1e6_97cf5ce3",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2824,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-16T21:28:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "60c4413f_7b09e1c3",
+      "range": {
+        "startLine": 2824,
+        "startChar": 44,
+        "endLine": 2824,
+        "endChar": 47
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9b97a11_c125cd59",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c710be73_c38ee708",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2883,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-16T21:28:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e9b97a11_c125cd59",
+      "range": {
+        "startLine": 2883,
+        "startChar": 0,
+        "endLine": 2883,
+        "endChar": 11
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a1d949_18ff1c7a",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-10-16T21:21:28Z",
       "side": 1,
       "message": "Not sure we should expose the *_BUT_PRESENT_IN_XML fields. It\u0027s not part of the bug, right?",
+      "range": {
+        "startLine": 2917,
+        "startChar": 0,
+        "endLine": 2917,
+        "endChar": 18
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297f2822_bcc48108",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2917,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-16T21:28:38Z",
+      "side": 1,
+      "message": "we want to expose the column EDITED, all the above values (CARRIER_EDITED/USER_EDITED etc) are the possible entry in this columns, thus expose all together.",
+      "parentUuid": "f7a1d949_18ff1c7a",
       "range": {
         "startLine": 2917,
         "startChar": 0,
