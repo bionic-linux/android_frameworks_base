@@ -29,6 +29,7 @@
 #include <memory>
 #include <type_traits>
 
+#include <android-base/macros.h>
 #include <androidfw/ByteBucketArray.h>
 #include <androidfw/ResourceTypes.h>
 #include <androidfw/TypeWrappers.h>
@@ -3066,6 +3067,7 @@ struct LocaleParserState {
        case 4:
            if ('0' <= start[0] && start[0] <= '9') {
                // this is a variant, so fall through
+               FALLTHROUGH_INTENDED;
            } else {
                config->localeScript[0] = toupper(start[0]);
                for (size_t i = 1; i < 4; ++i) {

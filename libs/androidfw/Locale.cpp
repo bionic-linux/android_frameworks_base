@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <android-base/macros.h>
 #include "androidfw/Locale.h"
 #include "androidfw/Util.h"
 
@@ -158,6 +159,7 @@ bool LocaleValue::InitFromBcp47TagImpl(const StringPiece& bcp47tag, const char s
       case 4:
         if ('0' <= subtags[1][0] && subtags[1][0] <= '9') {
           // This is a variant: fall through
+          FALLTHROUGH_INTENDED;
         } else {
           set_script(subtags[1].c_str());
           break;

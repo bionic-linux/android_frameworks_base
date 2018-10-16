@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <android-base/macros.h>
 #include <frameworks/base/core/proto/android/os/incident.pb.h>
 
 #include <map>
@@ -260,6 +261,7 @@ static bool isDefaultMessageImpl(const Descriptor* descriptor, const Destination
                 return false;
             case FieldDescriptor::TYPE_STRING:
                 if (getPrivacyFlags(field).patterns_size() != 0) return false;
+                continue;
             default:
                 continue;
         }
@@ -358,6 +360,7 @@ static bool generatePrivacyFlags(const Descriptor* descriptor, const Destination
                     break;
                 }
                 // else treat string field as primitive field and goes to default
+                FALLTHROUGH_INTENDED;
             default:
                 if (!hasDefaultFlags[i]) printPrivacy(fieldName, field, "NULL", fieldDest, "NULL");
         }

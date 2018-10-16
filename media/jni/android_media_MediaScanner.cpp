@@ -17,6 +17,7 @@
 
 //#define LOG_NDEBUG 0
 #define LOG_TAG "MediaScannerJNI"
+#include <android-base/macros.h>
 #include <utils/Log.h>
 #include <utils/threads.h>
 #include <media/mediascanner.h>
@@ -92,6 +93,7 @@ static bool isValidUtf8(const char* bytes) {
                 return false;
             }
             // Fall through to take care of the final byte.
+            FALLTHROUGH_INTENDED;
         case 0x0c:
         case 0x0d:
             // Bit pattern 110x, so there is one additional byte.

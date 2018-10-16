@@ -72,6 +72,7 @@ cc_library_host_static {
         "-Wno-format-y2k",
         "-DSTATIC_ANDROIDFW_FOR_TOOLS",
     ],
+    header_libs: ["libbase_headers"],
 
     srcs: [
         "AaptAssets.cpp",
