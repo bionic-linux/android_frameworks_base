@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60c4413f_7b09e1c3",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2824,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-10-16T21:21:28Z",
+      "side": 1,
+      "message": "nit: \"APN\" instead of \"apn\" here and below",
+      "range": {
+        "startLine": 2824,
+        "startChar": 44,
+        "endLine": 2824,
+        "endChar": 47
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b97a11_c125cd59",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2883,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-10-16T21:21:28Z",
+      "side": 1,
+      "message": "@SystemApi?",
+      "range": {
+        "startLine": 2883,
+        "startChar": 0,
+        "endLine": 2883,
+        "endChar": 11
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a1d949_18ff1c7a",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2917,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-10-16T21:21:28Z",
+      "side": 1,
+      "message": "Not sure we should expose the *_BUT_PRESENT_IN_XML fields. It\u0027s not part of the bug, right?",
+      "range": {
+        "startLine": 2917,
+        "startChar": 0,
+        "endLine": 2917,
+        "endChar": 18
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404c2e66_9838cc23",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2944,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-10-16T21:21:28Z",
+      "side": 1,
+      "message": "here as well",
+      "range": {
+        "startLine": 2944,
+        "startChar": 0,
+        "endLine": 2944,
+        "endChar": 18
+      },
+      "revId": "f8252937ec0bd4d743d0639e40da94d4fd8f87f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
