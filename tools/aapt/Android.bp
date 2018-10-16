@@ -74,6 +74,7 @@ cc_library_host_static {
         // Allow implicit fallthroughs in AaptAssets.cpp until they are fixed.
         "-Wno-error=implicit-fallthrough",
     ],
+    header_libs: ["libbase_headers"],
 
     srcs: [
         "AaptAssets.cpp",

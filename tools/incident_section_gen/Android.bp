@@ -28,6 +28,7 @@ cc_binary_host {
         "-Wno-error=implicit-fallthrough",
     ],
     srcs: ["main.cpp"],
+    header_libs: ["libbase_headers"],
     shared_libs: [
         "libplatformprotos",
         "libprotobuf-cpp-full",
