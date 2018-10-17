@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841e9a5b_e3e3cf96",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-17T19:45:37Z",
+      "side": 1,
+      "message": "So should we remove this then?",
+      "range": {
+        "startLine": 2930,
+        "startChar": 11,
+        "endLine": 2930,
+        "endChar": 81
+      },
+      "revId": "8026e2d1f945bb9b557f35a16ba7ec45de3424eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
