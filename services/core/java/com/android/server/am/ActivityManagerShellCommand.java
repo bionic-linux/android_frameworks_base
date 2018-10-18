@@ -2737,13 +2737,26 @@ final class ActivityManagerShellCommand extends ShellCommand {
         mInternal.enforceCallingPermission(android.Manifest.permission.SET_ACTIVITY_WATCHER,
                 "attach-agent");
         String process = getNextArgRequired();
-        String agent = getNextArgRequired();
+        String agent_and_args = getNextArgRequired();
         String opt;
         if ((opt = getNextArg()) != null) {
             pw.println("Error: Unknown option: " + opt);
             return -1;
         }
-        mInternal.attachAgent(process, agent);
+        String[] splits = agent_and_args.split("=", 2);
+        String agent = splits[0];
+        String arg = splits.length == 2 ? splits[1] : "";
+        ParcelFileDescriptor pfd = null;
+        try {
+            pfd = openFileForSystem(agent, "r");
+            mInternal.attachAgent(process, pfd, agent, arg);
+        } finally {
+            if (pfd != null) {
+                try {
+                    pfd.close();
+                } catch (IOException e) {}
+            }
+        }
         return 0;
     }
 

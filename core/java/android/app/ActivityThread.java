@@ -814,6 +814,12 @@ public final class ActivityThread extends ClientTransactionHandler {
         int flags;
     }
 
+    static final class AttachAgentData {
+        ParcelFileDescriptor mFd;
+        String mPath;
+        String mArgs;
+    }
+
     private class ApplicationThread extends IApplicationThread.Stub {
         private static final String DB_INFO_FORMAT = "  %8s %8s %14s %14s  %s";
 
@@ -1068,8 +1074,13 @@ public final class ActivityThread extends ClientTransactionHandler {
             sendMessage(H.DUMP_HEAP, dhd, 0, 0, true /*async*/);
         }
 
-        public void attachAgent(String agent) {
-            sendMessage(H.ATTACH_AGENT, agent);
+        @Override
+        public void attachAgent(ParcelFileDescriptor pfd, String agent, String args) {
+            AttachAgentData aad = new AttachAgentData();
+            aad.mPath = agent;
+            aad.mArgs = args;
+            aad.mFd = pfd;
+            sendMessage(H.ATTACH_AGENT, aad);
         }
 
         public void setSchedulingGroup(int group) {
@@ -1861,7 +1872,8 @@ public final class ActivityThread extends ClientTransactionHandler {
                     break;
                 case ATTACH_AGENT: {
                     Application app = getApplication();
-                    handleAttachAgent((String) msg.obj, app != null ? app.mLoadedApk : null);
+                    handleAttachAgent((AttachAgentData) msg.obj,
+                            app != null ? app.mLoadedApk : null);
                     break;
                 }
                 case APPLICATION_INFO_CHANGED:
@@ -3395,24 +3407,47 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
     }
 
-    private static boolean attemptAttachAgent(String agent, ClassLoader classLoader) {
+    private static boolean attemptAttachAgent(int fd, String agent, String args) {
         try {
-            VMDebug.attachAgent(agent, classLoader);
+            VMDebug.attachAgent(fd, agent, args);
             return true;
         } catch (IOException e) {
-            Slog.e(TAG, "Attaching agent with " + classLoader + " failed: " + agent);
+            Slog.e(TAG, "Attaching agent with fd " + fd + " failed: " + agent + "=" + args);
+            return false;
+        }
+    }
+
+    private static boolean attemptAttachAgent(String agent, String args, ClassLoader classLoader) {
+        try {
+            VMDebug.attachAgent(agent, args, classLoader);
+            return true;
+        } catch (IOException e) {
+            Slog.e(TAG, "Attaching agent with " + classLoader + " failed: " + agent + "=" + args);
             return false;
         }
     }
 
     static void handleAttachAgent(String agent, LoadedApk loadedApk) {
-        ClassLoader classLoader = loadedApk != null ? loadedApk.getClassLoader() : null;
-        if (attemptAttachAgent(agent, classLoader)) {
+        String[] args = agent.split("=", 2);
+        AttachAgentData aad = new AttachAgentData();
+        aad.mPath = args[0];
+        aad.mArgs = args.length == 2 ? args[1] : "";
+        aad.mFd = null;
+        handleAttachAgent(aad, loadedApk);
+    }
+
+    static void handleAttachAgent(AttachAgentData agent, LoadedApk loadedApk) {
+        if (agent.mFd != null
+                && attemptAttachAgent(agent.mFd.getFd(), agent.mPath, agent.mArgs)) {
             return;
         }
-        if (classLoader != null) {
-            attemptAttachAgent(agent, null);
-        }
+        // ClassLoader classLoader = loadedApk != null ? loadedApk.getClassLoader() : null;
+        // if (attemptAttachAgent(agent.mPath, agent.mArgs, classLoader)) {
+        //     return;
+        // }
+        // if (classLoader != null) {
+        //     attemptAttachAgent(agent.mPath, agent.mArgs, null);
+        // }
     }
 
     private static final ThreadLocal<Intent> sCurrentBroadcastIntent = new ThreadLocal<Intent>();

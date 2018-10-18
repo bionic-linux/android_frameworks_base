@@ -128,7 +128,7 @@ oneway interface IApplicationThread {
     void scheduleLocalVoiceInteractionStarted(IBinder token,
             IVoiceInteractor voiceInteractor);
     void handleTrustStorageUpdate();
-    void attachAgent(String path);
+    void attachAgent(in ParcelFileDescriptor fd, in String path, in String args);
     void scheduleApplicationInfoChanged(in ApplicationInfo ai);
     void setNetworkBlockSeq(long procStateSeq);
     void scheduleTransaction(in ClientTransaction transaction);

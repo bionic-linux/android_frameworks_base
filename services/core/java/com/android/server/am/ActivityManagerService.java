@@ -7667,7 +7667,12 @@ public class ActivityManagerService extends IActivityManager.Stub
             // If we were asked to attach an agent on startup, do so now, before we're binding
             // application code.
             if (preBindAgent != null) {
-                thread.attachAgent(preBindAgent);
+                String[] splits = preBindAgent.split("=", 2);
+                String agent = splits[0];
+                String arg = splits.length == 2 ? splits[1] : "";
+                // TODO Support sending the agent as a file-descriptor for pre-bind.
+                ParcelFileDescriptor pfd = null;
+                thread.attachAgent(pfd, agent, arg);
             }
 
 
@@ -26934,7 +26939,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     /**
      * Attach an agent to the specified process (proces name or PID)
      */
-    public void attachAgent(String process, String path) {
+    public void attachAgent(String process, ParcelFileDescriptor pfd, String agent, String arg) {
         try {
             synchronized (this) {
                 ProcessRecord proc = findProcessLocked(process, UserHandle.USER_SYSTEM, "attachAgent");
@@ -26949,7 +26954,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                     }
                 }
 
-                proc.thread.attachAgent(path);
+                proc.thread.attachAgent(pfd, agent, arg);
             }
         } catch (RemoteException e) {
             throw new IllegalStateException("Process disappeared");
