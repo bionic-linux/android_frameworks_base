@@ -16,6 +16,24 @@
       "revId": "0940695f792ae0da998272f7f46409adb47ac3aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252e46c2_34a077be",
+        "filename": "core/java/android/net/Uri.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2018-10-18T16:48:11Z",
+      "side": 1,
+      "message": "maybe going from front and skipping to first ]: if first char is [ would be easier?\n\nOr just first look for ]: and if that fails look for : ?\n\nOTOH, we already expect the tail after the : to be a parseable Integer so not sure if UTF16 matters (can it even be UTF16?)",
+      "parentUuid": "d60250a0_0dfd9b4d",
+      "revId": "0940695f792ae0da998272f7f46409adb47ac3aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
