@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81bcc459_01d82fef",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-18T23:49:08Z",
+      "side": 1,
+      "message": "guess \":-\" is a typo of \":\"",
+      "range": {
+        "startLine": 300,
+        "startChar": 43,
+        "endLine": 300,
+        "endChar": 45
+      },
+      "revId": "aa7e96e2729e6f72095d08a5f8048b7dde37059e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75b8f68_6a6cea89",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-18T23:49:08Z",
+      "side": 1,
+      "message": "can you indent characters one space after \"*\"? Just like you did above.",
+      "range": {
+        "startLine": 300,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 6
+      },
+      "revId": "aa7e96e2729e6f72095d08a5f8048b7dde37059e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28adf071_38770754",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-18T23:49:08Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 307,
+        "startChar": 4,
+        "endLine": 307,
+        "endChar": 5
+      },
+      "revId": "aa7e96e2729e6f72095d08a5f8048b7dde37059e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f22552_61c1c6ca",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-18T23:49:08Z",
+      "side": 1,
+      "message": "move to the same line.",
+      "range": {
+        "startLine": 313,
+        "startChar": 83,
+        "endLine": 314,
+        "endChar": 36
+      },
+      "revId": "aa7e96e2729e6f72095d08a5f8048b7dde37059e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83a32a5_4502e4ac",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-18T23:49:08Z",
+      "side": 1,
+      "message": "\"Elsewhere\" seems to be a little bit vague. Perhaps it could be more specific?",
+      "range": {
+        "startLine": 391,
+        "startChar": 42,
+        "endLine": 391,
+        "endChar": 51
+      },
+      "revId": "aa7e96e2729e6f72095d08a5f8048b7dde37059e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc424369_7fa95ce0",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2018-10-18T23:49:08Z",
+      "side": 1,
+      "message": "Would be great to remove, if not needed.",
+      "revId": "aa7e96e2729e6f72095d08a5f8048b7dde37059e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
