@@ -19,7 +19,6 @@ package android.telephony;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.telephony.Rlog;
 
 import java.util.Objects;
 
@@ -31,8 +30,22 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     private static final String LOG_TAG = "CellSignalStrengthLte";
     private static final boolean DBG = false;
 
+    /**
+     * Indicates the unknown or undetectable RSSI value in dBm.
+     */
+    public static final int SIGNAL_STRENGTH_LTE_RSSI_UNKNOWN_DBM = Integer.MAX_VALUE;
+
+    /**
+     * Indicates the unknown or undetectable RSSI value in ASU.
+     *
+     * Reference: TS 27.007 8.5 - Signal quality +CSQ
+     *
+     * @hide
+     */
+    public static final int SIGNAL_STRENGTH_LTE_RSSI_UNKNOWN_ASU = 99;
+
     @UnsupportedAppUsage
-    private int mSignalStrength;
+    private int mRssi;
     @UnsupportedAppUsage
     private int mRsrp;
     @UnsupportedAppUsage
@@ -51,9 +64,9 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     }
 
     /** @hide */
-    public CellSignalStrengthLte(int signalStrength, int rsrp, int rsrq, int rssnr, int cqi,
+    public CellSignalStrengthLte(int rssi, int rsrp, int rsrq, int rssnr, int cqi,
             int timingAdvance) {
-        mSignalStrength = signalStrength;
+        mRssi = rssi;
         mRsrp = rsrp;
         mRsrq = rsrq;
         mRssnr = rssnr;
@@ -68,7 +81,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
 
     /** @hide */
     protected void copyFrom(CellSignalStrengthLte s) {
-        mSignalStrength = s.mSignalStrength;
+        mRssi = s.mRssi;
         mRsrp = s.mRsrp;
         mRsrq = s.mRsrq;
         mRssnr = s.mRssnr;
@@ -85,7 +98,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     /** @hide */
     @Override
     public void setDefaultValues() {
-        mSignalStrength = Integer.MAX_VALUE;
+        mRssi = SIGNAL_STRENGTH_LTE_RSSI_UNKNOWN_ASU;
         mRsrp = Integer.MAX_VALUE;
         mRsrq = Integer.MAX_VALUE;
         mRssnr = Integer.MAX_VALUE;
@@ -137,6 +150,24 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      */
     public int getRsrq() {
         return mRsrq;
+    }
+
+    /**
+     * Get Received Signal Strength Indication (RSSI) in dBm
+     *
+     * The value range is [-113, -51] inclusively or {@link #SIGNAL_STRENGTH_LTE_RSSI_UNKNOWN_DBM}
+     * if is not known or not detectable.
+     *
+     * Reference: TS 27.007 8.5 Signal quality +CSQ
+     *
+     * @return the RSSI if available or {@link #SIGNAL_STRENGTH_LTE_RSSI_UNKNOWN_DBM} if
+     * unavailable.
+     */
+    public int getRssi() {
+        if (mRssi == SIGNAL_STRENGTH_LTE_RSSI_UNKNOWN_ASU) {
+            return SIGNAL_STRENGTH_LTE_RSSI_UNKNOWN_DBM;
+        }
+        return -113 + (2 * mRssi);
     }
 
     /**
@@ -205,7 +236,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
 
     @Override
     public int hashCode() {
-        return Objects.hash(mSignalStrength, mRsrp, mRsrq, mRssnr, mCqi, mTimingAdvance);
+        return Objects.hash(mRssi, mRsrp, mRsrq, mRssnr, mCqi, mTimingAdvance);
     }
 
     @Override
@@ -222,7 +253,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
             return false;
         }
 
-        return mSignalStrength == s.mSignalStrength
+        return mRssi == s.mRssi
                 && mRsrp == s.mRsrp
                 && mRsrq == s.mRsrq
                 && mRssnr == s.mRssnr
@@ -236,7 +267,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     @Override
     public String toString() {
         return "CellSignalStrengthLte:"
-                + " ss=" + mSignalStrength
+                + " rssi=" + mRssi
                 + " rsrp=" + mRsrp
                 + " rsrq=" + mRsrq
                 + " rssnr=" + mRssnr
@@ -248,7 +279,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (DBG) log("writeToParcel(Parcel, int): " + toString());
-        dest.writeInt(mSignalStrength);
+        dest.writeInt(mRssi);
         // Need to multiply rsrp and rsrq by -1
         // to ensure consistency when reading values written here
         // unless the values are invalid
@@ -264,7 +295,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      * where the token is already been processed.
      */
     private CellSignalStrengthLte(Parcel in) {
-        mSignalStrength = in.readInt();
+        mRssi = in.readInt();
         // rsrp and rsrq are written into the parcel as positive values.
         // Need to convert into negative values unless the values are invalid
         mRsrp = in.readInt();
