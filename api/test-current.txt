@@ -613,6 +613,10 @@ package android.net {
     method public static long getLoopbackTxPackets();
   }
 
+  public class VpnService extends android.app.Service {
+    method public static void teardownSelf(android.content.Context);
+  }
+
 }
 
 package android.os {
