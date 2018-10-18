@@ -21,7 +21,7 @@ package android.telephony;
  */
 public abstract class CellSignalStrength {
 
-    public static final int SIGNAL_STRENGTH_NONE_OR_UNKNOWN = 0;
+    public static final int SIGNAL_STRENGTH_NONE_OR_UNKNOWN = Integer.MAX_VALUE;
 
     public static final int SIGNAL_STRENGTH_POOR = 1;
 

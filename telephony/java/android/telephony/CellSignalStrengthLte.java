@@ -31,8 +31,27 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     private static final String LOG_TAG = "CellSignalStrengthLte";
     private static final boolean DBG = false;
 
+    /**
+     * Indicates the unknown or undetectable RSSI value in ASU.
+     *
+     * Reference: TS 27.007 8.5 - Signal quality +CSQ
+     */
+    private static final int SIGNAL_STRENGTH_LTE_RSSI_ASU_UNKNOWN = 99;
+    /**
+     * Indicates the maximum valid RSSI value in ASU.
+     *
+     * Reference: TS 27.007 8.5 - Signal quality +CSQ
+     */
+    private static final int SIGNAL_STRENGTH_LTE_RSSI_VALID_ASU_MAX_VALUE = 31;
+    /**
+     * Indicates the minimum valid RSSI value in ASU.
+     *
+     * Reference: TS 27.007 8.5 - Signal quality +CSQ
+     */
+    private static final int SIGNAL_STRENGTH_LTE_RSSI_VALID_ASU_MIN_VALUE = 0;
+
     @UnsupportedAppUsage
-    private int mSignalStrength;
+    private int mRssi;
     @UnsupportedAppUsage
     private int mRsrp;
     @UnsupportedAppUsage
@@ -51,9 +70,9 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     }
 
     /** @hide */
-    public CellSignalStrengthLte(int signalStrength, int rsrp, int rsrq, int rssnr, int cqi,
+    public CellSignalStrengthLte(int rssi, int rsrp, int rsrq, int rssnr, int cqi,
             int timingAdvance) {
-        mSignalStrength = signalStrength;
+        mRssi = convertRssiAsuToDBm(rssi);
         mRsrp = rsrp;
         mRsrq = rsrq;
         mRssnr = rssnr;
@@ -68,7 +87,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
 
     /** @hide */
     protected void copyFrom(CellSignalStrengthLte s) {
-        mSignalStrength = s.mSignalStrength;
+        mRssi = s.mRssi;
         mRsrp = s.mRsrp;
         mRsrq = s.mRsrq;
         mRssnr = s.mRssnr;
@@ -85,7 +104,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     /** @hide */
     @Override
     public void setDefaultValues() {
-        mSignalStrength = Integer.MAX_VALUE;
+        mRssi = CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
         mRsrp = Integer.MAX_VALUE;
         mRsrq = Integer.MAX_VALUE;
         mRssnr = Integer.MAX_VALUE;
@@ -137,6 +156,21 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      */
     public int getRsrq() {
         return mRsrq;
+    }
+
+    /**
+     * Get Received Signal Strength Indication (RSSI) in dBm
+     *
+     * The value range is [-113, -51] inclusively or
+     * {@link CellSignalStrength#SIGNAL_STRENGTH_NONE_OR_UNKNOWN} if not known or not detectable.
+     *
+     * Reference: TS 27.007 8.5 Signal quality +CSQ
+     *
+     * @return the RSSI if available or {@link CellSignalStrength#SIGNAL_STRENGTH_NONE_OR_UNKNOWN}
+     * if unavailable.
+     */
+    public int getRssi() {
+        return mRssi;
     }
 
     /**
@@ -205,7 +239,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
 
     @Override
     public int hashCode() {
-        return Objects.hash(mSignalStrength, mRsrp, mRsrq, mRssnr, mCqi, mTimingAdvance);
+        return Objects.hash(mRssi, mRsrp, mRsrq, mRssnr, mCqi, mTimingAdvance);
     }
 
     @Override
@@ -222,7 +256,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
             return false;
         }
 
-        return mSignalStrength == s.mSignalStrength
+        return mRssi == s.mRssi
                 && mRsrp == s.mRsrp
                 && mRsrq == s.mRsrq
                 && mRssnr == s.mRssnr
@@ -236,7 +270,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     @Override
     public String toString() {
         return "CellSignalStrengthLte:"
-                + " ss=" + mSignalStrength
+                + " rssi(dBm)=" + mRssi
                 + " rsrp=" + mRsrp
                 + " rsrq=" + mRsrq
                 + " rssnr=" + mRssnr
@@ -248,7 +282,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (DBG) log("writeToParcel(Parcel, int): " + toString());
-        dest.writeInt(mSignalStrength);
+        dest.writeInt(mRssi);
         // Need to multiply rsrp and rsrq by -1
         // to ensure consistency when reading values written here
         // unless the values are invalid
@@ -264,7 +298,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      * where the token is already been processed.
      */
     private CellSignalStrengthLte(Parcel in) {
-        mSignalStrength = in.readInt();
+        mRssi = convertRssiAsuToDBm(in.readInt());
         // rsrp and rsrq are written into the parcel as positive values.
         // Need to convert into negative values unless the values are invalid
         mRsrp = in.readInt();
@@ -303,5 +337,18 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      */
     private static void log(String s) {
         Rlog.w(LOG_TAG, s);
+    }
+
+    private static int convertRssiAsuToDBm(int rssiAsu) {
+        if (rssiAsu != SIGNAL_STRENGTH_LTE_RSSI_ASU_UNKNOWN
+                && (rssiAsu < SIGNAL_STRENGTH_LTE_RSSI_VALID_ASU_MIN_VALUE
+                || rssiAsu > SIGNAL_STRENGTH_LTE_RSSI_VALID_ASU_MAX_VALUE)) {
+            RLog.e(TAG, "convertRssiAsuToDBm: invalid RSSI in ASU=" + rssiAsu);
+            return CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        }
+        if (rssiAsu == SIGNAL_STRENGTH_LTE_RSSI_ASU_UNKNOWN) {
+            return CellSignalStrength.SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+        }
+        return -113 + (2 * rssiAsu);
     }
 }
