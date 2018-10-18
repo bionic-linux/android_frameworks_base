@@ -21,6 +21,7 @@ import static android.system.OsConstants.AF_INET6;
 
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -225,6 +226,29 @@ public class VpnService extends Service {
                 cm.prepareVpn(null, packageName, userId);
             }
             cm.setVpnPackageAuthorization(packageName, userId, true);
+        } catch (RemoteException e) {
+            // ignore
+        }
+    }
+
+    /**
+     * Tears down this VPN, immediately closing the TUN and tearing down the VPN Network
+     *
+     * <p>Also un-prepares this VPN. Unless it becomes prepared again, subsequent calls to other
+     * methods in this class will fail.
+     *
+     * <p>Requires {@link android.Manifest.permission#CONTROL_VPN}
+     *
+     * @hide
+     */
+    @TestApi
+    @RequiresPermission(android.Manifest.permission.CONTROL_VPN)
+    public static void teardownSelf(Context context) {
+        IConnectivityManager cm = getService();
+        String packageName = context.getPackageName();
+        try {
+            int userId = context.getUserId();
+            cm.teardownVpn(packageName, userId);
         } catch (RemoteException e) {
             // ignore
         }
