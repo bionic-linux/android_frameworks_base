@@ -21,6 +21,9 @@ package android.telephony;
  */
 public abstract class CellSignalStrength {
 
+    /**
+     * Indicates the invalid measures of cell signal strength
+     */
     public static final int SIGNAL_STRENGTH_NONE_OR_UNKNOWN = 0;
 
     public static final int SIGNAL_STRENGTH_POOR = 1;
