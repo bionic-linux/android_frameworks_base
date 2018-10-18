@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "96a17f7d_f6e6377a",
+        "filename": "core/java/android/net/Uri.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-10-18T20:08:46Z",
+      "side": 1,
+      "message": "I assume this means that we\u0027ll skip over %3A rather than treating that as a \":\"?  I assume that\u0027s fine; I\u0027m not very clear about how many layers of decoding need to be applied before various parsing stages can run.",
+      "range": {
+        "startLine": 1134,
+        "startChar": 37,
+        "endLine": 1134,
+        "endChar": 56
+      },
+      "revId": "0940695f792ae0da998272f7f46409adb47ac3aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d60250a0_0dfd9b4d",
         "filename": "core/java/android/net/Uri.java",
         "patchSetId": 1
