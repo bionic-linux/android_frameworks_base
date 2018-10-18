@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d60250a0_0dfd9b4d",
+        "filename": "core/java/android/net/Uri.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-18T08:38:40Z",
+      "side": 1,
+      "message": "UTF-16?",
+      "revId": "0940695f792ae0da998272f7f46409adb47ac3aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
