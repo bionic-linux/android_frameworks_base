@@ -700,8 +700,20 @@ public class Vpn {
         return getAppUid(packageName, mUserHandle) == mOwnerUID;
     }
 
+    public synchronized void teardown(String currentPackage) {
+        enforceControlPermission();
+
+        // Prevent packages from tearing others down.
+        if(!isCurrentPreparedPackage(currentPackage)){
+            throw new IllegalArgumentException("Illegal attempt to teardown other packages' VPNs.");
+        }
+
+        teardownInternal(currentPackage);
+    }
+
     /** Prepare the VPN for the given package. Does not perform permission checks. */
-    private void prepareInternal(String newPackage) {
+    private void teardownInternal(String currentPackage) {
+
         long token = Binder.clearCallingIdentity();
         try {
             // Reset the interface.
@@ -727,6 +739,26 @@ public class Vpn {
                 mLegacyVpnRunner.exit();
                 mLegacyVpnRunner = null;
             }
+
+            try {
+                mNetd.denyProtect(mOwnerUID);
+            } catch (Exception e) {
+                Log.wtf(TAG, "Failed to disallow UID " + mOwnerUID + " to call protect() " + e);
+            }
+
+            if(mPackage != null){
+                setPackageAuthorization(mPackage, false);
+            }
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+    }
+
+    /** Prepare the VPN for the given package. Does not perform permission checks. */
+    private void prepareInternal(String newPackage) {
+        long token = Binder.clearCallingIdentity();
+        try {
+            teardownInternal(mPackage);
 
             try {
                 mNetd.denyProtect(mOwnerUID);

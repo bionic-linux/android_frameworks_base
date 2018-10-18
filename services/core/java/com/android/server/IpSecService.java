@@ -621,7 +621,7 @@ public class IpSecService extends IIpSecService.Stub {
                                 mConfig.getDestinationAddress(),
                                 spi,
                                 0,
-                                mConfig.getMarkMask(),
+                                0,
                                 mConfig.getXfrmInterfaceId());
             } catch (RemoteException | ServiceSpecificException e) {
                 Log.e(TAG, "Failed to delete SA with ID: " + mResourceId, e);

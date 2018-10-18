@@ -43,6 +43,7 @@ import static android.system.OsConstants.IPPROTO_UDP;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.BroadcastOptions;
 import android.app.NotificationManager;
@@ -171,11 +172,7 @@ import com.android.server.net.BaseNetworkObserver;
 import com.android.server.net.LockdownVpnTracker;
 import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.utils.PriorityDump;
-
 import com.google.android.collect.Lists;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -200,6 +197,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * @hide
@@ -3681,6 +3681,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 return vpn.prepare(oldPackage, newPackage);
             } else {
                 return false;
+            }
+        }
+    }
+
+    /**
+     * Fully tears down a VPN Network and the underlying TUN interface.
+     *
+     * <p>VPN permissions are checked in the {@link Vpn} class. If the caller is not {@code userId},
+     * {@link android.Manifest.permission.INTERACT_ACROSS_USERS_FULL} permission is required.
+     *
+     * @param currentPackage Package name of the application which currently controls VPN,
+     *     deauthorizing it. If this does not match the current active VPN,
+     * @param userId User for whom to teardown the VPN.
+     * @hide
+     */
+    @Override
+    public void teardownVpn(@NonNull String currentPackage, int userId) {
+        enforceCrossUserPermission(userId);
+
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            Vpn vpn = mVpns.get(userId);
+            if (vpn != null) {
+                vpn.teardown(currentPackage);
             }
         }
     }
