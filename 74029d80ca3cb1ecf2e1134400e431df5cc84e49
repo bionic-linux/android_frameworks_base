@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28cd2a5e_4cc9410b",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-19T19:12:04Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure that in this class, these are the \"actual\" values not the ASU values. We should try to be consistent.",
+      "revId": "74029d80ca3cb1ecf2e1134400e431df5cc84e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f0eb5a_fd825822",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-19T19:12:04Z",
+      "side": 1,
+      "message": "The CellSignalStrength classes don\u0027t use ASU in general. They have a specific method for getAsuLevel(), but otherwise I think it\u0027s all the \"actual\" values, which is probably better for the user.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 51
+      },
+      "revId": "74029d80ca3cb1ecf2e1134400e431df5cc84e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
