@@ -57,6 +57,30 @@
       "revId": "74029d80ca3cb1ecf2e1134400e431df5cc84e49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a092a24_de94b3f3",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-19T21:53:43Z",
+      "side": 1,
+      "message": "That seems not RSSI",
+      "parentUuid": "17f0eb5a_fd825822",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 51
+      },
+      "revId": "74029d80ca3cb1ecf2e1134400e431df5cc84e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
