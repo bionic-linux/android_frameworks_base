@@ -3907,10 +3907,59 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         }
 
         if (mVelocityTracker != null) {
-            mVelocityTracker.addMovement(vtev);
+            addMovementUsingAdjustedCoordinates(vtev);
         }
         vtev.recycle();
         return true;
+    }
+
+    /**
+     * Add a modified MotionEvent to the velocity tracker. VelocityTracker uses real screen (raw)
+     * coordinates to calculate the fling velocity, but AbsListView intentionally adjusts
+     * MotionEvents using offsetLocation. Since offsetLocation does not alter the raw
+     * coordinates of a MotionEvent, we force VelocityTracker to use the adjusted coordinates by
+     * creating a new MotionEvent, and passing in the adjusted (non-raw) coordinates only.
+     */
+    private void addMovementUsingAdjustedCoordinates(MotionEvent event) {
+        final int pointerCount = event.getPointerCount();
+        MotionEvent.PointerCoords[] coords = new MotionEvent.PointerCoords[pointerCount];
+        MotionEvent.PointerProperties[] props = new MotionEvent.PointerProperties[pointerCount];
+
+        // Set pointerProperties and preallocate pointerCoords
+        for (int p = 0; p < pointerCount; p++) {
+            props[p] = new MotionEvent.PointerProperties();
+            event.getPointerProperties(p, props[p]);
+            coords[p] = new MotionEvent.PointerCoords();
+        }
+
+        // Get adjusted pointerCoords and add to velocity tracker, one historical event at a time
+        final int historySize = event.getHistorySize();
+        for (int h = 0; h < historySize; h++) {
+            final long eventTime = event.getHistoricalEventTime(h);
+            for (int p = 0; p < pointerCount; p++) {
+                event.getHistoricalPointerCoords(p, h, coords[p]);
+                coords[p].setAxisValue(MotionEvent.AXIS_X, event.getHistoricalX(p, h));
+                coords[p].setAxisValue(MotionEvent.AXIS_Y, event.getHistoricalY(p, h));
+            }
+            MotionEvent historicalEvent = MotionEvent.obtain(event.getDownTime(), eventTime,
+                    event.getAction(), pointerCount, props, coords,
+                    event.getMetaState(), event.getButtonState(),
+                    event.getXPrecision(), event.getYPrecision(),
+                    event.getDeviceId(), event.getEdgeFlags(), event.getSource(), event.getFlags());
+            mVelocityTracker.addMovement(historicalEvent);
+        }
+
+        for (int p = 0; p < pointerCount; p++) {
+            event.getPointerCoords(p, coords[p]);
+            coords[p].setAxisValue(MotionEvent.AXIS_X, event.getX(p));
+            coords[p].setAxisValue(MotionEvent.AXIS_Y, event.getY(p));
+            MotionEvent latestEvent = MotionEvent.obtain(event.getDownTime(), event.getEventTime(),
+                    event.getAction(), pointerCount, props, coords,
+                    event.getMetaState(), event.getButtonState(),
+                    event.getXPrecision(), event.getYPrecision(),
+                    event.getDeviceId(), event.getEdgeFlags(), event.getSource(), event.getFlags());
+            mVelocityTracker.addMovement(latestEvent);
+        }
     }
 
     private void onTouchDown(MotionEvent ev) {
@@ -4479,73 +4528,73 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         }
 
         switch (actionMasked) {
-        case MotionEvent.ACTION_DOWN: {
-            int touchMode = mTouchMode;
-            if (touchMode == TOUCH_MODE_OVERFLING || touchMode == TOUCH_MODE_OVERSCROLL) {
-                mMotionCorrection = 0;
-                return true;
-            }
-
-            final int x = (int) ev.getX();
-            final int y = (int) ev.getY();
-            mActivePointerId = ev.getPointerId(0);
-
-            int motionPosition = findMotionRow(y);
-            if (touchMode != TOUCH_MODE_FLING && motionPosition >= 0) {
-                // User clicked on an actual view (and was not stopping a fling).
-                // Remember where the motion event started
-                v = getChildAt(motionPosition - mFirstPosition);
-                mMotionViewOriginalTop = v.getTop();
-                mMotionX = x;
-                mMotionY = y;
-                mMotionPosition = motionPosition;
-                mTouchMode = TOUCH_MODE_DOWN;
-                clearScrollingCache();
-            }
-            mLastY = Integer.MIN_VALUE;
-            initOrResetVelocityTracker();
-            mVelocityTracker.addMovement(ev);
-            mNestedYOffset = 0;
-            startNestedScroll(SCROLL_AXIS_VERTICAL);
-            if (touchMode == TOUCH_MODE_FLING) {
-                return true;
-            }
-            break;
-        }
-
-        case MotionEvent.ACTION_MOVE: {
-            switch (mTouchMode) {
-            case TOUCH_MODE_DOWN:
-                int pointerIndex = ev.findPointerIndex(mActivePointerId);
-                if (pointerIndex == -1) {
-                    pointerIndex = 0;
-                    mActivePointerId = ev.getPointerId(pointerIndex);
+            case MotionEvent.ACTION_DOWN: {
+                int touchMode = mTouchMode;
+                if (touchMode == TOUCH_MODE_OVERFLING || touchMode == TOUCH_MODE_OVERSCROLL) {
+                    mMotionCorrection = 0;
+                    return true;
                 }
-                final int y = (int) ev.getY(pointerIndex);
-                initVelocityTrackerIfNotExists();
-                mVelocityTracker.addMovement(ev);
-                if (startScrollIfNeeded((int) ev.getX(pointerIndex), y, null)) {
+
+                final int x = (int) ev.getX();
+                final int y = (int) ev.getY();
+                mActivePointerId = ev.getPointerId(0);
+
+                int motionPosition = findMotionRow(y);
+                if (touchMode != TOUCH_MODE_FLING && motionPosition >= 0) {
+                    // User clicked on an actual view (and was not stopping a fling).
+                    // Remember where the motion event started
+                    v = getChildAt(motionPosition - mFirstPosition);
+                    mMotionViewOriginalTop = v.getTop();
+                    mMotionX = x;
+                    mMotionY = y;
+                    mMotionPosition = motionPosition;
+                    mTouchMode = TOUCH_MODE_DOWN;
+                    clearScrollingCache();
+                }
+                mLastY = Integer.MIN_VALUE;
+                initOrResetVelocityTracker();
+                addMovementUsingAdjustedCoordinates(ev);
+                mNestedYOffset = 0;
+                startNestedScroll(SCROLL_AXIS_VERTICAL);
+                if (touchMode == TOUCH_MODE_FLING) {
                     return true;
                 }
                 break;
             }
-            break;
-        }
 
-        case MotionEvent.ACTION_CANCEL:
-        case MotionEvent.ACTION_UP: {
-            mTouchMode = TOUCH_MODE_REST;
-            mActivePointerId = INVALID_POINTER;
-            recycleVelocityTracker();
-            reportScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
-            stopNestedScroll();
-            break;
-        }
+            case MotionEvent.ACTION_MOVE: {
+                switch (mTouchMode) {
+                    case TOUCH_MODE_DOWN:
+                        int pointerIndex = ev.findPointerIndex(mActivePointerId);
+                        if (pointerIndex == -1) {
+                            pointerIndex = 0;
+                            mActivePointerId = ev.getPointerId(pointerIndex);
+                        }
+                        final int y = (int) ev.getY(pointerIndex);
+                        initVelocityTrackerIfNotExists();
+                        addMovementUsingAdjustedCoordinates(ev);
+                        if (startScrollIfNeeded((int) ev.getX(pointerIndex), y, null)) {
+                            return true;
+                        }
+                        break;
+                }
+                break;
+            }
 
-        case MotionEvent.ACTION_POINTER_UP: {
-            onSecondaryPointerUp(ev);
-            break;
-        }
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP: {
+                mTouchMode = TOUCH_MODE_REST;
+                mActivePointerId = INVALID_POINTER;
+                recycleVelocityTracker();
+                reportScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
+                stopNestedScroll();
+                break;
+            }
+
+            case MotionEvent.ACTION_POINTER_UP: {
+                onSecondaryPointerUp(ev);
+                break;
+            }
         }
 
         return false;
