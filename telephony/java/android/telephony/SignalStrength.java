@@ -20,9 +20,7 @@ import android.annotation.UnsupportedAppUsage;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.telephony.CarrierConfigManager;
 import android.util.Log;
-import android.content.res.Resources;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,8 +63,7 @@ public class SignalStrength implements Parcelable {
     };
 
     /**
-     * Use Integer.MAX_VALUE because -1 is a valid value in signal strength.
-     * @hide
+     * Indicates the invalid measures of signal strength.
      */
     public static final int INVALID = Integer.MAX_VALUE;
 
