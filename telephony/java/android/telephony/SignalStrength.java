@@ -65,8 +65,7 @@ public class SignalStrength implements Parcelable {
     };
 
     /**
-     * Use Integer.MAX_VALUE because -1 is a valid value in signal strength.
-     * @hide
+     * Indicates the invalid measures of signal strength.
      */
     public static final int INVALID = Integer.MAX_VALUE;
 
