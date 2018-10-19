@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28ba2999_f265c674",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 5006,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-10-19T23:25:53Z",
+      "side": 1,
+      "message": "Michael Wright wrote:\nDo we really need to include this detail? I don\u0027t think any of our users are going to understand what OMTP means and it seems unnecessary. \"This headset is not supported.\" is probably sufficient.",
+      "range": {
+        "startLine": 5006,
+        "startChar": 52,
+        "endLine": 5006,
+        "endChar": 56
+      },
+      "revId": "b98031a1c1b852e87836d0fd12d5af7531b8dbb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776b56d7_e0ffe772",
+        "filename": "services/core/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2018-10-19T23:25:53Z",
+      "side": 1,
+      "message": "Michael Wright wrote:\nThese values are part of the kernel UAPI, but this new value doesn\u0027t seem to be. I really don\u0027t want to have more Android-specific extensions to the kernel, so please work with upstream to allocate a SW_ constant for whatever information you\u0027re trying to pass and then cherry-pick back. That way we don\u0027t need a config overlay, etc, for this.",
+      "range": {
+        "startLine": 335,
+        "startChar": 60,
+        "endLine": 335,
+        "endChar": 96
+      },
+      "revId": "b98031a1c1b852e87836d0fd12d5af7531b8dbb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
