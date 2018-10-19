@@ -3907,11 +3907,96 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         }
 
         if (mVelocityTracker != null) {
-            mVelocityTracker.addMovement(vtev);
+            addMovementUsingAdjustedCoordinates(vtev);
         }
         vtev.recycle();
         return true;
     }
+
+    /**
+     * Add a modified MotionEvent to the velocity tracker. VelocityTracker uses real screen (raw)
+     * coordinates to calculate the fling velocity, but AbsListView intentionally adjusts
+     * MotionEvents using offsetLocation. Since offsetLocation does not alter the raw
+     * coordinates of a MotionEvent, we force VelocityTracker to use the adjusted coordinates by
+     * creating a new MotionEvent, and passing in the adjusted (non-raw) coordinates only.
+     */
+    private void addMovementUsingAdjustedCoordinates(MotionEvent event) {
+        final int pointerCount = event.getPointerCount();
+        MotionEvent.PointerCoords[] coords = new MotionEvent.PointerCoords[pointerCount];
+        MotionEvent.PointerProperties[] props = new MotionEvent.PointerProperties[pointerCount];
+
+        // Set pointerProperties and preallocate pointerCoords
+        for (int p = 0; p < pointerCount; p++) {
+            props[p] = new MotionEvent.PointerProperties();
+            event.getPointerProperties(p, props[p]);
+            coords[p] = new MotionEvent.PointerCoords();
+        }
+
+        // Get adjusted pointerCoords and add to velocity tracker, one historical event at a time
+        final int historySize = event.getHistorySize();
+        for (int h = 0; h < historySize; h++) {
+            final long eventTime = event.getHistoricalEventTime(h);
+            for (int p = 0; p < pointerCount; p++) {
+                event.getHistoricalPointerCoords(p, h, coords[p]);
+                coords[p].setAxisValue(MotionEvent.AXIS_X, event.getHistoricalX(p, h));
+                coords[p].setAxisValue(MotionEvent.AXIS_Y, event.getHistoricalY(p, h));
+            }
+            MotionEvent historicalEvent = MotionEvent.obtain(event.getDownTime(), eventTime,
+                    event.getAction(), pointerCount, props, coords,
+                    event.getMetaState(), event.getButtonState(),
+                    event.getXPrecision(), event.getYPrecision(),
+                    event.getDeviceId(), event.getEdgeFlags(), event.getSource(), event.getFlags());
+            mVelocityTracker.addMovement(historicalEvent);
+        }
+
+        for (int p = 0; p < pointerCount; p++) {
+            event.getPointerCoords(p, coords[p]);
+            coords[p].setAxisValue(MotionEvent.AXIS_X, event.getX(p));
+            coords[p].setAxisValue(MotionEvent.AXIS_Y, event.getY(p));
+            MotionEvent latestEvent = MotionEvent.obtain(event.getDownTime(), event.getEventTime(),
+                    event.getAction(), pointerCount, props, coords,
+                    event.getMetaState(), event.getButtonState(),
+                    event.getXPrecision(), event.getYPrecision(),
+                    event.getDeviceId(), event.getEdgeFlags(), event.getSource(), event.getFlags());
+            mVelocityTracker.addMovement(latestEvent);
+        }
+    }
+
+//    /**
+//     * Add a modified MotionEvent to the velocity tracker. VelocityTracker uses real screen (raw)
+//     * coordinates to calculate the fling velocity, but AbsListView intentionally adjusts
+//     * MotionEvents using offsetLocation. Since offsetLocation does not alter the raw coordinates
+//     * of a MotionEvent, we force VelocityTracker to use the adjusted coordinates by creating a
+//     * new MotionEvent, and passing in the adjusted (non-raw) coordinates only.
+//     */
+//    private void addMovement(MotionEvent ev) {
+//        float x = ev.getX();
+//        float y = ev.getY();
+//        float rawX = ev.getRawX();
+//        float rawY = ev.getRawY();
+//        final long downTime = ev.getDownTime();
+//        final long eventTime = ev.getEventTime();
+//        final int index = ev.findPointerIndex(mActivePointerId);
+//        MotionEvent copy = MotionEvent.obtain(downTime, eventTime, ev.getAction(), x, y, ev.getMetaState());
+//        //mVelocityTracker.addMovement(copy);
+//        Log.e(TAG, "Adding motionevent: [" + (rawX - x) + ", " + (rawY - y) + "] (x,y) = (" + x + ", " + y + "), raw: (x,y) = (" + rawX + ", " + rawY + ")");
+//        addMovementUsingRawCoordinates(ev);
+//    }
+
+//    /**
+//     * 0 deg => return vY
+//     * 90 deg => return vX
+//     * 180 deg => return -vY
+//     * 270 deg => return -vX
+//     * @return rotated velocity based on the orientation of the view
+//     */
+//    private float getRotatedVelocity() {
+//        float angle = getRotation();
+//        float vX = mVelocityTracker.getXVelocity(mActivePointerId);
+//        float vY = mVelocityTracker.getYVelocity(mActivePointerId);
+//        double v = vX * Math.sin(Math.toRadians(angle)) + vY * Math.cos(Math.toRadians(angle));
+//        return (float)v;
+//    }
 
     private void onTouchDown(MotionEvent ev) {
         mHasPerformedLongPress = false;
@@ -4504,7 +4589,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             }
             mLastY = Integer.MIN_VALUE;
             initOrResetVelocityTracker();
-            mVelocityTracker.addMovement(ev);
+            addMovementUsingAdjustedCoordinates(ev);
             mNestedYOffset = 0;
             startNestedScroll(SCROLL_AXIS_VERTICAL);
             if (touchMode == TOUCH_MODE_FLING) {
@@ -4523,7 +4608,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 }
                 final int y = (int) ev.getY(pointerIndex);
                 initVelocityTrackerIfNotExists();
-                mVelocityTracker.addMovement(ev);
+                addMovementUsingAdjustedCoordinates(ev);
                 if (startScrollIfNeeded((int) ev.getX(pointerIndex), y, null)) {
                     return true;
                 }
