@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a54d86ef_a510fe5e",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-19T21:51:33Z",
+      "side": 1,
+      "message": "There is no way to convert from an ASU to an dBm RSSI that is larger than -51 dBm.\nThe mSignalStrengh was designed for an ASU value.",
+      "parentUuid": "28cd2a5e_4cc9410b",
+      "revId": "74029d80ca3cb1ecf2e1134400e431df5cc84e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17f0eb5a_fd825822",
         "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
         "patchSetId": 1
