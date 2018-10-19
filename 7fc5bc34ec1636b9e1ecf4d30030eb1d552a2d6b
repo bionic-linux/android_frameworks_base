@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "665f1394_db3288be",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-19T22:54:31Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7c784e_bf3a6ef7",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-19T22:54:31Z",
+      "side": 1,
+      "message": "suggest to do the calculation in the constructor.",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
