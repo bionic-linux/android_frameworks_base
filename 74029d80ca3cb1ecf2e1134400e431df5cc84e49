@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "47913c0e_8edc4e35",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-19T22:09:48Z",
+      "side": 1,
+      "message": "That\u0027s correct. mSignalStrength uses ASU. An RSSI \u003e -51 is unrealistic and won\u0027t be encountered in the real world. In practice, (LTE) cells are usually between -90 and -110dBm.\n\nThat\u0027s why the people who wrote the specs didn\u0027t even provide RSSI ranges \u003e than -51... it\u0027s not useful.",
+      "parentUuid": "a54d86ef_a510fe5e",
+      "revId": "74029d80ca3cb1ecf2e1134400e431df5cc84e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17f0eb5a_fd825822",
         "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
         "patchSetId": 1
