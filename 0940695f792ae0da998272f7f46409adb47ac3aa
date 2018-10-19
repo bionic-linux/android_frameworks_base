@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc8542fd_1cba99e7",
+        "filename": "core/java/android/net/Uri.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-19T02:26:17Z",
+      "side": 1,
+      "message": "I believe this is the correct thing to do. For example, if I say https://www.google.com%3A3128, this is not a URL for www.google.com on port 3128, but an address for www.google.com:3128 on the default port 80.",
+      "parentUuid": "96a17f7d_f6e6377a",
+      "range": {
+        "startLine": 1134,
+        "startChar": 37,
+        "endLine": 1134,
+        "endChar": 56
+      },
+      "revId": "0940695f792ae0da998272f7f46409adb47ac3aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d60250a0_0dfd9b4d",
         "filename": "core/java/android/net/Uri.java",
         "patchSetId": 1
@@ -75,6 +99,24 @@
       "revId": "0940695f792ae0da998272f7f46409adb47ac3aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4149b65f_c8dd923a",
+        "filename": "core/java/android/net/Uri.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-19T02:26:17Z",
+      "side": 1,
+      "message": "About the lookup : what Tobias said.\n\nAbout UTF, I believe either is correct : the key property here is that valid coding units can never be part of a multi-coding unit character, and that\u0027s a property shared by all UTF encoding schemes, including UTF-16 (this code would not be correct if the string was encoded in, say, Shift-JIS because \u0027:\u0027 or \u00270\u0027 could be part of a wider character), but as this is a Java string it certainly is UTF-16. I don\u0027t have a strong opinion either, so changed to UTF-16.",
+      "parentUuid": "742352c8_a0e763e9",
+      "revId": "0940695f792ae0da998272f7f46409adb47ac3aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
