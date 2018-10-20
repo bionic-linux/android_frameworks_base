@@ -93,6 +93,30 @@
       "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1ce6f5_42e6d274",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-20T00:07:35Z",
+      "side": 1,
+      "message": "The downside of that is that it means you\u0027re storing (and printing) ASU. :-(",
+      "parentUuid": "754d4422_0cbe2244",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
