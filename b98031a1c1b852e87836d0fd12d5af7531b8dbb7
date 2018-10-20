@@ -45,6 +45,30 @@
       "revId": "b98031a1c1b852e87836d0fd12d5af7531b8dbb7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2007b3_c530f5f7",
+        "filename": "services/core/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1243029
+      },
+      "writtenOn": "2018-10-20T00:46:24Z",
+      "side": 1,
+      "message": "I got it, but it\u0027s fact that the different definition is already used.\nCan we use this change, then use the uapi definition when it\u0027s upstreamed?\nWe actually got a complaint about the current behavior (especially from Chinese since OMTP is still major in China) so we should improve it.",
+      "parentUuid": "776b56d7_e0ffe772",
+      "range": {
+        "startLine": 335,
+        "startChar": 60,
+        "endLine": 335,
+        "endChar": 96
+      },
+      "revId": "b98031a1c1b852e87836d0fd12d5af7531b8dbb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
