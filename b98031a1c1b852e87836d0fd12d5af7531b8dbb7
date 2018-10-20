@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb566681_49983ce5",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 5006,
+      "author": {
+        "id": 1243029
+      },
+      "writtenOn": "2018-10-20T00:55:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ba2999_f265c674",
+      "range": {
+        "startLine": 5006,
+        "startChar": 52,
+        "endLine": 5006,
+        "endChar": 56
+      },
+      "revId": "b98031a1c1b852e87836d0fd12d5af7531b8dbb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "776b56d7_e0ffe772",
         "filename": "services/core/java/com/android/server/input/InputManagerService.java",
         "patchSetId": 6
