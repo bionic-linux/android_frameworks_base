@@ -6997,7 +6997,7 @@ status_t DynamicRefTable::lookupResourceValue(Res_value* value) const {
     switch (value->dataType) {
     case Res_value::TYPE_ATTRIBUTE:
         resolvedType = Res_value::TYPE_ATTRIBUTE;
-        // fallthrough
+        [[fallthrough]];
     case Res_value::TYPE_REFERENCE:
         if (!mAppAsLib) {
             return NO_ERROR;
@@ -7008,7 +7008,7 @@ status_t DynamicRefTable::lookupResourceValue(Res_value* value) const {
         break;
     case Res_value::TYPE_DYNAMIC_ATTRIBUTE:
         resolvedType = Res_value::TYPE_ATTRIBUTE;
-        // fallthrough
+        [[fallthrough]];
     case Res_value::TYPE_DYNAMIC_REFERENCE:
         break;
     default:
