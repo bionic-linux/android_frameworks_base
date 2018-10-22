@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f70932ab_8c98593c",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-22T20:03:21Z",
+      "side": 1,
+      "message": "Sorry, I just realized we probably don\u0027t want a specific constant for this... all of the values use Integer.MAX_VALUE as an \"unknown\", and I think we have a bug to define a generic single constant for this, like VALUE_UNKNOWN that we can re-use for all fields.",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 64
+      },
+      "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "665f1394_db3288be",
         "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
         "patchSetId": 2
