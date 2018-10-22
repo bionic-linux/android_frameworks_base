@@ -108,6 +108,30 @@
       "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091aafde_f8ac8989",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3267,
+      "author": {
+        "id": 1373382
+      },
+      "writtenOn": "2018-10-22T04:51:15Z",
+      "side": 1,
+      "message": "I\u0027d like to limit it to the IN_CALL mode since there are many games that use the speaker mode during voip communication.",
+      "parentUuid": "d993399c_c95681bf",
+      "range": {
+        "startLine": 3267,
+        "startChar": 26,
+        "endLine": 3267,
+        "endChar": 33
+      },
+      "revId": "4255ef33b56f7e549df808fdf3e5440eead9ff99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
