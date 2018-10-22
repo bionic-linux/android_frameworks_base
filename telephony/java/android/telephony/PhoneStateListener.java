@@ -314,7 +314,7 @@ public class PhoneStateListener {
      * using a particular non-null Looper.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public PhoneStateListener(Looper looper) {
         this(null, looper);
     }

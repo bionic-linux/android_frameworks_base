@@ -5158,6 +5158,7 @@ package android.telephony {
   }
 
   public class PhoneStateListener {
+    ctor public PhoneStateListener(android.os.Looper);
     method public void onRadioPowerStateChanged(int);
     field public static final int LISTEN_RADIO_POWER_STATE_CHANGED = 8388608; // 0x800000
   }
