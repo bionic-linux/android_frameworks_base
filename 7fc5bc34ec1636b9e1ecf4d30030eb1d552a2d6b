@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f21b104_ee96d86a",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-22T21:37:52Z",
+      "side": 1,
+      "message": "Which constant I can use? Can I use SignalStrenth.INVALID ? I am also making it public.",
+      "parentUuid": "f70932ab_8c98593c",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 64
+      },
+      "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "665f1394_db3288be",
         "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
         "patchSetId": 2
@@ -140,6 +164,30 @@
       "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d9d414_5df7df37",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-22T21:37:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b1ce6f5_42e6d274",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
