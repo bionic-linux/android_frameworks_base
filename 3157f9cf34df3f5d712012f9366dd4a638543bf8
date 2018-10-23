@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1b92949_08101425",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-23T22:22:40Z",
+      "side": 1,
+      "message": "EXTRA_DEFAULT_CALL_SCREENING_APP_COMPONENT_NAME",
+      "range": {
+        "startLine": 182,
+        "startChar": 32,
+        "endLine": 182,
+        "endChar": 67
+      },
+      "revId": "3157f9cf34df3f5d712012f9366dd4a638543bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9854f57_c61b4a13",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-23T22:22:40Z",
+      "side": 1,
+      "message": "EXTRA_IS_DEFAULT_CALL_SCREENING_APP",
+      "range": {
+        "startLine": 183,
+        "startChar": 40,
+        "endLine": 183,
+        "endChar": 87
+      },
+      "revId": "3157f9cf34df3f5d712012f9366dd4a638543bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be54bb39_c734e92f",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-23T22:22:40Z",
+      "side": 1,
+      "message": "and the boolean",
+      "range": {
+        "startLine": 183,
+        "startChar": 12,
+        "endLine": 183,
+        "endChar": 26
+      },
+      "revId": "3157f9cf34df3f5d712012f9366dd4a638543bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc27025_c4427fde",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-23T22:22:40Z",
+      "side": 1,
+      "message": "minor: can probably put this on the previous line.",
+      "range": {
+        "startLine": 199,
+        "startChar": 7,
+        "endLine": 199,
+        "endChar": 56
+      },
+      "revId": "3157f9cf34df3f5d712012f9366dd4a638543bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65996d4c_b9091f18",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-23T22:22:40Z",
+      "side": 1,
+      "message": "Please remove this @link.  These API docs become the public API and com.android.server.telecom.components.ChangeDefaultCallScreeningApp is not a public class.  So the link will be broken.",
+      "range": {
+        "startLine": 1201,
+        "startChar": 7,
+        "endLine": 1201,
+        "endChar": 82
+      },
+      "revId": "3157f9cf34df3f5d712012f9366dd4a638543bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b2bb80_9a9de648",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-23T22:22:40Z",
+      "side": 1,
+      "message": "Add @NonNull annotation since componentname is required.",
+      "revId": "3157f9cf34df3f5d712012f9366dd4a638543bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d211b8e_a6ea70e7",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-23T22:22:40Z",
+      "side": 1,
+      "message": "does not belong to the calling app.",
+      "range": {
+        "startLine": 1226,
+        "startChar": 29,
+        "endLine": 1226,
+        "endChar": 58
+      },
+      "revId": "3157f9cf34df3f5d712012f9366dd4a638543bf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
