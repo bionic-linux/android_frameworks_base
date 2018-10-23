@@ -31,6 +31,7 @@ import android.net.InterfaceConfiguration;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkInfo;
+import android.net.NetworkMisc;
 import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.test.TestLooper;
@@ -55,6 +56,7 @@ public class Nat464XlatTest {
     static final LinkAddress ADDR = new LinkAddress("192.0.2.5/29");
 
     @Mock ConnectivityService mConnectivity;
+    @Mock NetworkMisc mMisc;
     @Mock INetworkManagementService mNms;
     @Mock InterfaceConfiguration mConfig;
     @Mock NetworkAgentInfo mNai;
@@ -78,6 +80,7 @@ public class Nat464XlatTest {
         mNai.networkInfo = new NetworkInfo(null);
         mNai.networkInfo.setType(ConnectivityManager.TYPE_WIFI);
         when(mNai.connService()).thenReturn(mConnectivity);
+        when(mNai.netMisc()).thenReturn(mMisc);
         when(mNai.handler()).thenReturn(mHandler);
 
         when(mNms.getInterfaceConfig(eq(STACKED_IFACE))).thenReturn(mConfig);
@@ -103,9 +106,15 @@ public class Nat464XlatTest {
             mNai.networkInfo.setType(type);
             for (NetworkInfo.DetailedState state : supportedDetailedStates) {
                 mNai.networkInfo.setDetailedState(state, "reason", "extraInfo");
+                mNai.netMisc().skip464xlat = true;
+                assertFalse(
+                        String.format("requiresClat expected for type=%d state=%s skip464xlat=%b",
+                        type, state, mNai.netMisc().skip464xlat), Nat464Xlat.requiresClat(mNai));
+
+                mNai.netMisc().skip464xlat = false;
                 assertTrue(
-                        String.format("requiresClat expected for type=%d state=%s", type, state),
-                        Nat464Xlat.requiresClat(mNai));
+                        String.format("requiresClat expected for type=%d state=%s skip464xlat=%b",
+                        type, state, mNai.netMisc().skip464xlat), Nat464Xlat.requiresClat(mNai));
             }
         }
     }
