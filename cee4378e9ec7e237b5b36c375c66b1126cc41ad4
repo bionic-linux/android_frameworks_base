@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51b9614b_4d272388",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-23T23:06:32Z",
+      "side": 1,
+      "message": "Should this be something like SIGNAL_STRENGTH_INVALID?\n\nAlso, which methods return this?  None of the signal strength methods indicate they can return an invalid value.",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "cee4378e9ec7e237b5b36c375c66b1126cc41ad4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
