@@ -1811,6 +1811,7 @@ public class AudioService extends IAudioService.Stub
         }
         int index = mStreamStates[streamType].getIndex(device);
         sendVolumeUpdate(streamType, oldIndex, index, flags);
+        mStreamStates[streamType].mute(index == 0);
     }
 
     // Called after a delay when volume down is pressed while muted
