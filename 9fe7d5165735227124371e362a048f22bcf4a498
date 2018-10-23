@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3e6741e_cca4841c",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2018-10-23T14:58:28Z",
+      "side": 1,
+      "message": "muting a stream mutes it for all devices, so this change has more impact than just firing off the intent.",
+      "range": {
+        "startLine": 1814,
+        "startChar": 34,
+        "endLine": 1814,
+        "endChar": 38
+      },
+      "revId": "9fe7d5165735227124371e362a048f22bcf4a498",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
