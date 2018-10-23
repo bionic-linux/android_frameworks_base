@@ -46,6 +46,30 @@
       "revId": "d0ed27ddb73777915ca5b91af68e0155a244c4ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76bd950_0591c9a0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-23T14:12:14Z",
+      "side": 1,
+      "message": "Yes, I think that comment is out of date. In fact, now that we crash the system when netd crashes, I think most of NetdService can be removed. All we need here, really, is \n\n    mNetd \u003d INetd.Stub.asInterface(ServiceManager.getService(\"netd\"));\n\nor similar. Luke, maybe that\u0027s another cleanup that we can add to the list?",
+      "parentUuid": "a3f63eca_c297e2cd",
+      "range": {
+        "startLine": 287,
+        "startChar": 39,
+        "endLine": 287,
+        "endChar": 67
+      },
+      "revId": "d0ed27ddb73777915ca5b91af68e0155a244c4ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
