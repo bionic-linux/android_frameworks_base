@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "517d595e_b6c23a96",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-23T13:41:05Z",
+      "side": 1,
+      "message": "I suppose it could be, if SystemServer.java (or whatever it is that starts ConnectivityService) does a getService() for netd and only creates ConnectivityService once it has a non-null netd binder token.",
+      "range": {
+        "startLine": 287,
+        "startChar": 39,
+        "endLine": 287,
+        "endChar": 67
+      },
+      "revId": "d0ed27ddb73777915ca5b91af68e0155a244c4ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
