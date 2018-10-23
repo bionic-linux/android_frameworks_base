@@ -43,6 +43,7 @@ import static android.system.OsConstants.IPPROTO_UDP;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.BroadcastOptions;
 import android.app.NotificationManager;
@@ -206,6 +207,7 @@ import java.util.TreeSet;
  */
 public class ConnectivityService extends IConnectivityManager.Stub
         implements PendingIntent.OnFinished {
+    @NonNull
     private static final String TAG = ConnectivityService.class.getSimpleName();
 
     private static final String DIAG_ARG = "--diag";
@@ -235,22 +237,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final String LINGER_DELAY_PROPERTY = "persist.netmon.linger";
     private static final int DEFAULT_LINGER_DELAY_MS = 30_000;
     @VisibleForTesting
-    protected int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
+    int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
 
     // How long to delay to removal of a pending intent based request.
     // See Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS
     private final int mReleasePendingIntentDelayMs;
 
-    private MockableSystemProperties mSystemProperties;
+    @NonNull
+    private final MockableSystemProperties mSystemProperties;
 
-    private Tethering mTethering;
+    @NonNull
+    private final Tethering mTethering;
 
+    @NonNull
     private final PermissionMonitor mPermissionMonitor;
 
-    private KeyStore mKeyStore;
+    @NonNull
+    private final KeyStore mKeyStore;
 
     @VisibleForTesting
     @GuardedBy("mVpns")
+    @NonNull
     protected final SparseArray<Vpn> mVpns = new SparseArray<>();
 
     // TODO: investigate if mLockdownEnabled can be removed and replaced everywhere by
@@ -258,26 +265,35 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @GuardedBy("mVpns")
     private boolean mLockdownEnabled;
     @GuardedBy("mVpns")
+    @Nullable
     private LockdownVpnTracker mLockdownTracker;
 
     /**
      * Stale copy of uid rules provided by NPMS. As long as they are accessed only in internal
      * handler thread, they don't need a lock.
      */
-    private SparseIntArray mUidRules = new SparseIntArray();
+    @NonNull
+    private final SparseIntArray mUidRules = new SparseIntArray();
     /** Flag indicating if background data is restricted. */
     private boolean mRestrictBackground;
 
+    @NonNull
     final private Context mContext;
     // 0 is full bad, 100 is full good
     private int mDefaultInetConditionPublished = 0;
 
-    private INetworkManagementService mNMS;
-    private INetd mNetd;
-    private INetworkStatsService mStatsService;
-    private INetworkPolicyManager mPolicyManager;
-    private NetworkPolicyManagerInternal mPolicyManagerInternal;
+    @NonNull
+    private final INetworkManagementService mNMS;
+    @Nullable // TODO : This is scary, can mNetd be made non-null ?
+    private final INetd mNetd;
+    @NonNull
+    private final INetworkStatsService mStatsService;
+    @NonNull
+    private final INetworkPolicyManager mPolicyManager;
+    @NonNull
+    private final NetworkPolicyManagerInternal mPolicyManagerInternal;
 
+    @Nullable
     private String mCurrentTcpBufferSizes;
 
     private static final SparseArray<String> sMagicDecoderRing = MessageUtils.findMessageNames(
@@ -446,39 +462,55 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     /** Handler thread used for both of the handlers below. */
     @VisibleForTesting
+    @NonNull
     protected final HandlerThread mHandlerThread;
     /** Handler used for internal events. */
+    @NonNull
     final private InternalHandler mHandler;
     /** Handler used for incoming {@link NetworkStateTracker} events. */
+    @NonNull
     final private NetworkStateTrackerHandler mTrackerHandler;
+    @NonNull
     private final DnsManager mDnsManager;
 
     private boolean mSystemReady;
+    @Nullable
     private Intent mInitialBroadcast;
 
-    private PowerManager.WakeLock mNetTransitionWakeLock;
-    private int mNetTransitionWakeLockTimeout;
+    @NonNull
+    private final PowerManager.WakeLock mNetTransitionWakeLock;
+    private final int mNetTransitionWakeLockTimeout;
+    @NonNull
     private final PowerManager.WakeLock mPendingIntentWakeLock;
 
     // A helper object to track the current default HTTP proxy. ConnectivityService needs to tell
     // the world when it changes.
+    @NonNull
     private final ProxyTracker mProxyTracker;
 
-    final private SettingsObserver mSettingsObserver;
+    @NonNull
+    private final SettingsObserver mSettingsObserver;
 
-    private UserManager mUserManager;
+    @NonNull
+    private final UserManager mUserManager;
 
-    private NetworkConfig[] mNetConfigs;
+    @NonNull
+    private final NetworkConfig[] mNetConfigs;
     private int mNetworksDefined;
 
     // the set of network types that can only be enabled by system/sig apps
-    private List mProtectedNetworks;
+    @NonNull
+    private final ArrayList<Integer> mProtectedNetworks;
 
-    private TelephonyManager mTelephonyManager;
+    @NonNull
+    private final TelephonyManager mTelephonyManager;
 
-    private KeepaliveTracker mKeepaliveTracker;
-    private NetworkNotificationManager mNotifier;
-    private LingerMonitor mLingerMonitor;
+    @NonNull
+    private final KeepaliveTracker mKeepaliveTracker;
+    @NonNull
+    private final NetworkNotificationManager mNotifier;
+    @NonNull
+    private final LingerMonitor mLingerMonitor;
 
     // sequence number for Networks; keep in sync with system/netd/NetworkController.cpp
     private static final int MIN_NET_ID = 100; // some reserved marks
@@ -490,13 +522,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // NetworkRequest activity String log entries.
     private static final int MAX_NETWORK_REQUEST_LOGS = 20;
+    @NonNull
     private final LocalLog mNetworkRequestInfoLogs = new LocalLog(MAX_NETWORK_REQUEST_LOGS);
 
     // NetworkInfo blocked and unblocked String log entries
     private static final int MAX_NETWORK_INFO_LOGS = 40;
+    @NonNull
     private final LocalLog mNetworkInfoBlockingLogs = new LocalLog(MAX_NETWORK_INFO_LOGS);
 
     private static final int MAX_WAKELOCK_LOGS = 20;
+    @NonNull
     private final LocalLog mWakelockLogs = new LocalLog(MAX_WAKELOCK_LOGS);
     private int mTotalWakelockAcquisitions = 0;
     private int mTotalWakelockReleases = 0;
@@ -507,16 +542,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // Array of <Network,ReadOnlyLocalLogs> tracking network validation and results
     private static final int MAX_VALIDATION_LOGS = 10;
     private static class ValidationLog {
+        @NonNull
         final Network mNetwork;
+        @Nullable
         final String mName;
+        @NonNull
         final ReadOnlyLocalLog mLog;
 
-        ValidationLog(Network network, String name, ReadOnlyLocalLog log) {
+        ValidationLog(@NonNull Network network, @Nullable String name,
+                @NonNull ReadOnlyLocalLog log) {
             mNetwork = network;
             mName = name;
             mLog = log;
         }
     }
+    @NonNull
     private final ArrayDeque<ValidationLog> mValidationLogs = new ArrayDeque<>(MAX_VALIDATION_LOGS);
 
     private void addValidationLogs(ReadOnlyLocalLog log, Network network, String name) {
@@ -528,15 +568,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    @NonNull
     private final IpConnectivityLog mMetricsLog;
 
     @GuardedBy("mBandwidthRequests")
+    @NonNull
     private final SparseArray<Integer> mBandwidthRequests = new SparseArray(10);
 
     @VisibleForTesting
+    @NonNull
     final MultinetworkPolicyTracker mMultinetworkPolicyTracker;
 
     @VisibleForTesting
+    @NonNull
     final MultipathPolicyTracker mMultipathPolicyTracker;
 
     /**
@@ -581,6 +625,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
          *    on mTypeLists to be thread-safe with respect to a concurrent remove call.
          *  - dump is thread-safe with respect to concurrent add and remove calls.
          */
+        @NonNull
         private final ArrayList<NetworkAgentInfo> mTypeLists[];
 
         public LegacyTypeTracker() {
@@ -726,12 +771,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
             pw.println();
         }
     }
-    private LegacyTypeTracker mLegacyTypeTracker = new LegacyTypeTracker();
+    @NonNull
+    private final LegacyTypeTracker mLegacyTypeTracker = new LegacyTypeTracker();
 
     /**
      * Helper class which parses out priority arguments and dumps sections according to their
      * priority. If priority arguments are omitted, function calls the legacy dump command.
      */
+    @NonNull
     private final PriorityDump.PriorityDumper mPriorityDumper = new PriorityDump.PriorityDumper() {
         @Override
         public void dumpHigh(FileDescriptor fd, PrintWriter pw, String[] args, boolean asProto) {
@@ -935,6 +982,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @VisibleForTesting
+    @NonNull
     protected Tethering makeTethering() {
         // TODO: Move other elements into @Overridden getters.
         final TetheringDependencies deps = new TetheringDependencies() {
@@ -1521,13 +1569,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private INetworkManagementEventObserver mDataActivityObserver = new BaseNetworkObserver() {
-        @Override
-        public void interfaceClassDataActivityChanged(String label, boolean active, long tsNanos) {
-            int deviceType = Integer.parseInt(label);
-            sendDataActivityBroadcast(deviceType, active, tsNanos);
-        }
-    };
+    @NonNull
+    private final INetworkManagementEventObserver mDataActivityObserver =
+            new BaseNetworkObserver() {
+                @Override
+                public void interfaceClassDataActivityChanged(String label, boolean active,
+                        long tsNanos) {
+                    int deviceType = Integer.parseInt(label);
+                    sendDataActivityBroadcast(deviceType, active, tsNanos);
+                }
+            };
 
     /**
      * Ensures that the system cannot call a particular method.
@@ -1644,6 +1695,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @VisibleForTesting
+    @NonNull
     protected final INetdEventCallback mNetdEventCallback = new BaseNetdEventCallback() {
         @Override
         public void onPrivateDnsValidationEvent(int netId, String ipAddress,
@@ -1679,6 +1731,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    @NonNull
     private final INetworkPolicyListener mPolicyListener = new NetworkPolicyManager.Listener() {
         @Override
         public void onUidRulesChanged(int uid, int uidRules) {
@@ -2068,6 +2121,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // Overridden for testing purposes to avoid writing to SystemProperties.
     @VisibleForTesting
+    @NonNull
     protected MockableSystemProperties getSystemProperties() {
         return new MockableSystemProperties();
     }
@@ -3610,11 +3664,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private static class SettingsObserver extends ContentObserver {
+        @NonNull
         final private HashMap<Uri, Integer> mUriEventMap;
+        @NonNull
         final private Context mContext;
+        @NonNull
         final private Handler mHandler;
 
-        SettingsObserver(Context context, Handler handler) {
+        SettingsObserver(@NonNull Context context, @NonNull Handler handler) {
             super(null);
             mUriEventMap = new HashMap<>();
             mContext = context;
@@ -4005,8 +4062,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
      *   <provisioningUrl mcc="310" mnc="4">http://myserver.com/foo?mdn=%3$s&amp;iccid=%1$s&amp;imei=%2$s</provisioningUrl>
      *  </provisioningUrls>
      */
-    private static final String PROVISIONING_URL_PATH =
-            "/data/misc/radio/provisioning_urls.xml";
+    private static final String PROVISIONING_URL_PATH = "/data/misc/radio/provisioning_urls.xml";
+    @NonNull
     private final File mProvisioningUrlFile = new File(PROVISIONING_URL_PATH);
 
     /** XML tag for root element. */
@@ -4184,7 +4241,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private BroadcastReceiver mUserIntentReceiver = new BroadcastReceiver() {
+    @NonNull
+    private final BroadcastReceiver mUserIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
@@ -4205,7 +4263,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     };
 
-    private BroadcastReceiver mUserPresentReceiver = new BroadcastReceiver() {
+    @NonNull
+    private final BroadcastReceiver mUserPresentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Try creating lockdown tracker, since user present usually means
@@ -4215,20 +4274,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     };
 
+    @NonNull
     private final HashMap<Messenger, NetworkFactoryInfo> mNetworkFactoryInfos = new HashMap<>();
+    @NonNull
     private final HashMap<NetworkRequest, NetworkRequestInfo> mNetworkRequests = new HashMap<>();
 
     private static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
     // Map from UID to number of NetworkRequests that UID has filed.
     @GuardedBy("mUidToNetworkRequestCount")
+    @NonNull
     private final SparseIntArray mUidToNetworkRequestCount = new SparseIntArray();
 
     private static class NetworkFactoryInfo {
-        public final String name;
-        public final Messenger messenger;
-        public final AsyncChannel asyncChannel;
+        @NonNull
+        final String name;
+        @NonNull
+        final Messenger messenger;
+        @NonNull
+        final AsyncChannel asyncChannel;
 
-        public NetworkFactoryInfo(String name, Messenger messenger, AsyncChannel asyncChannel) {
+        public NetworkFactoryInfo(@NonNull String name, @NonNull Messenger messenger,
+                @NonNull AsyncChannel asyncChannel) {
             this.name = name;
             this.messenger = messenger;
             this.asyncChannel = asyncChannel;
@@ -4247,15 +4313,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * Also used to notice when the calling process dies so we can self-expire
      */
     private class NetworkRequestInfo implements IBinder.DeathRecipient {
+        @NonNull
         final NetworkRequest request;
+        @Nullable
         final PendingIntent mPendingIntent;
         boolean mPendingIntentSent;
+        @Nullable
         private final IBinder mBinder;
         final int mPid;
         final int mUid;
+        @Nullable
         final Messenger messenger;
 
-        NetworkRequestInfo(NetworkRequest r, PendingIntent pi) {
+        NetworkRequestInfo(@NonNull NetworkRequest r, @NonNull PendingIntent pi) {
             request = r;
             ensureNetworkRequestHasType(request);
             mPendingIntent = pi;
@@ -4266,7 +4336,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             enforceRequestCountLimit();
         }
 
-        NetworkRequestInfo(Messenger m, NetworkRequest r, IBinder binder) {
+        NetworkRequestInfo(@Nullable Messenger m, @NonNull NetworkRequest r, IBinder binder) {
             super();
             messenger = m;
             request = r;
@@ -4627,34 +4697,42 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     // NOTE: Accessed on multiple threads, must be synchronized on itself.
     @GuardedBy("mNetworkForRequestId")
+    @NonNull
     private final SparseArray<NetworkAgentInfo> mNetworkForRequestId = new SparseArray<>();
 
     // NOTE: Accessed on multiple threads, must be synchronized on itself.
     @GuardedBy("mNetworkForNetId")
+    @NonNull
     private final SparseArray<NetworkAgentInfo> mNetworkForNetId = new SparseArray<>();
     // NOTE: Accessed on multiple threads, synchronized with mNetworkForNetId.
     // An entry is first added to mNetIdInUse, prior to mNetworkForNetId, so
     // there may not be a strict 1:1 correlation between the two.
     @GuardedBy("mNetworkForNetId")
+    @NonNull
     private final SparseBooleanArray mNetIdInUse = new SparseBooleanArray();
 
     // NetworkAgentInfo keyed off its connecting messenger
     // TODO - eval if we can reduce the number of lists/hashmaps/sparsearrays
     // NOTE: Only should be accessed on ConnectivityServiceThread, except dump().
+    @NonNull
     private final HashMap<Messenger, NetworkAgentInfo> mNetworkAgentInfos = new HashMap<>();
 
     @GuardedBy("mBlockedAppUids")
+    @NonNull
     private final HashSet<Integer> mBlockedAppUids = new HashSet<>();
 
     // Note: if mDefaultRequest is changed, NetworkMonitor needs to be updated.
+    @NonNull
     private final NetworkRequest mDefaultRequest;
 
     // Request used to optionally keep mobile data active even when higher
     // priority networks like Wi-Fi are active.
+    @NonNull
     private final NetworkRequest mDefaultMobileDataRequest;
 
     // Request used to optionally keep wifi data active even when higher
     // priority networks like ethernet are active.
+    @NonNull
     private final NetworkRequest mDefaultWifiRequest;
 
     private NetworkAgentInfo getNetworkForRequest(int requestId) {
