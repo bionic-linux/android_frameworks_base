@@ -22,6 +22,30 @@
       "revId": "d0ed27ddb73777915ca5b91af68e0155a244c4ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f63eca_c297e2cd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-23T14:08:21Z",
+      "side": 1,
+      "message": "I think in the practice it can\u0027t actually happen, as this is final and in line 4874 we just reference it as if it was nothing. ...and then we catch Exception for good measure (to be fair it\u0027s to catch the RemoteExceptions, not the NPEs).\n\nThe fetching code specifically says :\n\n     * Return an INetd instance, or null if not available.\n     *\n     * It is the caller\u0027s responsibility to check for a null return value\n     * and to handle RemoteException errors from invocations on the returned\n     * interface if, for example, netd dies and is restarted.\n     *\n     * Returned instances of INetd should not be cached.\n\n...but we ignore it and happily cache it ever after. I guess this comment dates from the time when netd\u0027s lifetime was not linked to that of the system server and we tried to somehow survive a netd crash ? Maybe now this comment is outdated and needs to go.\n\nFor now I suggest this patch is fine with this TODO.",
+      "parentUuid": "517d595e_b6c23a96",
+      "range": {
+        "startLine": 287,
+        "startChar": 39,
+        "endLine": 287,
+        "endChar": 67
+      },
+      "revId": "d0ed27ddb73777915ca5b91af68e0155a244c4ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
