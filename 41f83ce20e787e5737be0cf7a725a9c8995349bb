@@ -22,6 +22,30 @@
       "revId": "41f83ce20e787e5737be0cf7a725a9c8995349bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777a90ae_7edc0ab8",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2018-10-23T18:48:45Z",
+      "side": 1,
+      "message": "handler might not work in this case. see the implementation #342 we have to define the handler inside the constructor to trigger each callback when received specific message.",
+      "parentUuid": "f4270e30_7fcec462",
+      "range": {
+        "startLine": 317,
+        "startChar": 3,
+        "endLine": 317,
+        "endChar": 14
+      },
+      "revId": "41f83ce20e787e5737be0cf7a725a9c8995349bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
