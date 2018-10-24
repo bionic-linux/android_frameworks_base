@@ -145,6 +145,7 @@ public class SignalStrength implements Parcelable {
      *
      * @hide
      */
+<<<<<<< HEAD
     public SignalStrength(android.hardware.radio.V1_0.SignalStrength signalStrength) {
         this(new CellSignalStrengthCdma(signalStrength.cdma, signalStrength.evdo),
                 new CellSignalStrengthGsm(signalStrength.gw),
@@ -152,6 +153,40 @@ public class SignalStrength implements Parcelable {
                 new CellSignalStrengthTdscdma(signalStrength.tdScdma),
                 new CellSignalStrengthLte(signalStrength.lte),
                 new CellSignalStrengthNr());
+=======
+    public SignalStrength(
+            int gsmSignalStrength, int gsmBitErrorRate,
+            int cdmaDbm, int cdmaEcio,
+            int evdoDbm, int evdoEcio, int evdoSnr,
+            int lteSignalStrength, int lteRsrp, int lteRsrq, int lteRssnr, int lteCqi,
+            int tdScdmaRscp, int wcdmaSignalStrength, int wcdmaRscpAsu,
+            // values Added by config
+            int lteRsrpBoost, boolean gsmFlag, boolean lteLevelBaseOnRsrp,
+            String wcdmaDefaultMeasurement) {
+        mGsmSignalStrength = gsmSignalStrength;
+        mGsmBitErrorRate = gsmBitErrorRate;
+        mCdmaDbm = cdmaDbm;
+        mCdmaEcio = cdmaEcio;
+        mEvdoDbm = evdoDbm;
+        mEvdoEcio = evdoEcio;
+        mEvdoSnr = evdoSnr;
+        mLteSignalStrength = lteSignalStrength;
+        mLteRsrp = lteRsrp;
+        mLteRsrq = lteRsrq;
+        mLteRssnr = lteRssnr;
+        mLteCqi = lteCqi;
+        mTdScdmaRscp = tdScdmaRscp;
+        mWcdmaSignalStrength = wcdmaSignalStrength;
+        mWcdmaRscpAsu = wcdmaRscpAsu;
+        mWcdmaRscp = wcdmaRscpAsu - 120;
+        mLteRsrpBoost = lteRsrpBoost;
+        mIsGsm = gsmFlag;
+        mUseOnlyRsrpForLteLevel = lteLevelBaseOnRsrp;
+        mWcdmaDefaultSignalMeasurement = wcdmaDefaultMeasurement;
+        setLteRsrpThresholds(getDefaultLteRsrpThresholds());
+        setWcdmaRscpThresholds(getDefaultWcdmaRscpThresholds());
+        if (DBG) log("initialize: " + toString());
+>>>>>>> 38e968e... Fix showing empty signal strength for TD-SCDMA
     }
 
     /**
