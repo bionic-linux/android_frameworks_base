@@ -350,7 +350,8 @@ public class CarVolumeDialogImpl implements VolumeDialog {
     listItem.setProgress(progress);
     listItem.setOnSeekBarChangeListener(
         new CarVolumeDialogImpl.VolumeSeekBarChangeListener(volumeGroupId, mCarAudioManager));
-    Drawable primaryIcon = mContext.getResources().getDrawable(volumeItem.icon);
+    //By applying mutate() we are able to modify this drawable separately.
+    Drawable primaryIcon = mContext.getResources().getDrawable(volumeItem.icon, mContext.getTheme()).mutate();
     primaryIcon.setTint(color);
     listItem.setPrimaryActionIcon(primaryIcon);
     if (supplementalIconId != 0) {
