@@ -46,6 +46,30 @@
       "revId": "cee4378e9ec7e237b5b36c375c66b1126cc41ad4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9006bfa_f8803aa7",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-25T17:55:26Z",
+      "side": 1,
+      "message": "Usage: after replacing the above \u0027unfortunate choice\u0027 of \u0027-1\u0027 by using SignalStrength.INVALID (INT_MAX), relevant APIs can return SignalStrength.INVALID\n\nNaming: don\u0027t see a reason to add SIGNAL_STRENGTH as a prefix; if there is, I can make the change.",
+      "parentUuid": "c436a8cf_d944486d",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "cee4378e9ec7e237b5b36c375c66b1126cc41ad4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
