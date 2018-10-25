@@ -22,6 +22,30 @@
       "revId": "cee4378e9ec7e237b5b36c375c66b1126cc41ad4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c436a8cf_d944486d",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-25T17:44:40Z",
+      "side": 1,
+      "message": "Because long ago, someone made unfortunate choices, this class uses -1 as its public \"invalid\" except in cases where -1 is within the valid range of values (oops!) This \"INVALID\" field is because we were able to fix the signals coming in to SignalStrength to use INT_MAX. We weren\u0027t able to fix the public API because it\u0027s the public API.",
+      "parentUuid": "51b9614b_4d272388",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "cee4378e9ec7e237b5b36c375c66b1126cc41ad4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
