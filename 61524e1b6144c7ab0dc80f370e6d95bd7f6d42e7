@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9e0c06b_8fe7a747",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-26T17:48:44Z",
+      "side": 1,
+      "message": "Question: Is it a underlying bug that getEvdoDvm or getCdmaDbm can return invalid values?  It seems like these should always be a valid value.",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "61524e1b6144c7ab0dc80f370e6d95bd7f6d42e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
