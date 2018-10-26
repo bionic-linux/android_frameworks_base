@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf1a1021_71741ddf",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-26T06:17:54Z",
+      "side": 1,
+      "message": "nai.netMisc() always just returns mMisc. So, maybe just make this \"mMisc\"?",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 30
+      },
+      "revId": "fad776fe7863769a9e5c39183760956845b2a14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d0470a_c5a1c836",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-26T06:17:54Z",
+      "side": 1,
+      "message": "Nit: in order to make the assertion more readable, suggest defining the string first. Something like:\n\n    String msg \u003d String.format(\"...\");\n    assertFalse(msg, Nat464Xlat.requiresClat(mNai));",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 65
+      },
+      "revId": "fad776fe7863769a9e5c39183760956845b2a14b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
