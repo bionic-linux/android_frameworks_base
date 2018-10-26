@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe1a2ca_490b90c0",
+        "filename": "telephony/java/android/telephony/CellSignalStrength.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-26T17:35:42Z",
+      "side": 1,
+      "message": "@Shuo, this is a \"special\" value of unknown that\u0027s used for getLevel(). We need a new value. Lemme take a crack at it?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 79
+      },
+      "revId": "2231bfcc1c266c103f87e9643bf80f8a182e8bb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

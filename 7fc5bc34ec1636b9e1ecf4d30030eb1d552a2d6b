@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c39c651e_1031617f",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-10-26T17:35:42Z",
+      "side": 1,
+      "message": "I think creating a new constant in the base CellInfo class would be awesome. Yes, it should be public. I have an old bug sitting on me that this will fix. :-)\n\nhttps://b.corp.google.com/issues/28171234",
+      "parentUuid": "9f21b104_ee96d86a",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 64
+      },
+      "revId": "7fc5bc34ec1636b9e1ecf4d30030eb1d552a2d6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "665f1394_db3288be",
         "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
         "patchSetId": 2
