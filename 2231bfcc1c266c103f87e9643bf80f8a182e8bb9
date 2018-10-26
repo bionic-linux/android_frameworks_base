@@ -22,6 +22,30 @@
       "revId": "2231bfcc1c266c103f87e9643bf80f8a182e8bb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b6ec92_89420dbe",
+        "filename": "telephony/java/android/telephony/CellSignalStrength.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-26T17:42:36Z",
+      "side": 1,
+      "message": "I decided to use your CellInfo constant. Please check the latest patch set. I need your CL merged aosp/800040",
+      "parentUuid": "cbe1a2ca_490b90c0",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 79
+      },
+      "revId": "2231bfcc1c266c103f87e9643bf80f8a182e8bb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
