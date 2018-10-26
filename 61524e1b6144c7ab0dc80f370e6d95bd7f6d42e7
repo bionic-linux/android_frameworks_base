@@ -22,6 +22,30 @@
       "revId": "61524e1b6144c7ab0dc80f370e6d95bd7f6d42e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a8fcd3_9c643667",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-26T18:09:07Z",
+      "side": 1,
+      "message": "From my understanding of the code logic, if SignalStrength is reported from RIL, it will do validateInput on EvdoDvm and CdmaDbm and after this invalid value will never be return. But if it is not reported by RIL yet, the default value (which is invalid) can be returned by the API.\n\nSo the default(invalid) is likely returned and thus I filed b/118460482 that need to standardize the invalid value for Signal Strength RSSI.",
+      "parentUuid": "e9e0c06b_8fe7a747",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "61524e1b6144c7ab0dc80f370e6d95bd7f6d42e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
