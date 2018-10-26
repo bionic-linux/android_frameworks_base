@@ -70,6 +70,30 @@
       "revId": "cee4378e9ec7e237b5b36c375c66b1126cc41ad4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d105123_06d2058c",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2018-10-26T00:51:34Z",
+      "side": 1,
+      "message": "See latest patch set",
+      "parentUuid": "d9006bfa_f8803aa7",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "cee4378e9ec7e237b5b36c375c66b1126cc41ad4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
