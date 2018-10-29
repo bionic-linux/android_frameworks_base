@@ -165,6 +165,8 @@ LIBANDROID {
     AObbInfo_getPackageName;
     AObbInfo_getVersion;
     AObbScanner_getObbInfo;
+    AProcess_setThreadPriority; # introduced=29
+    AProcess_getThreadPriority; # introduced=29
     ASensorEventQueue_disableSensor;
     ASensorEventQueue_enableSensor;
     ASensorEventQueue_getEvents;
