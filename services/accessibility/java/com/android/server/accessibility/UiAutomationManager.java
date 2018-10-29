@@ -44,6 +44,7 @@ class UiAutomationManager {
     private static final String LOG_TAG = "UiAutomationManager";
 
     private UiAutomationService mUiAutomationService;
+    private Object mLock;
 
     private AccessibilityServiceInfo mUiAutomationServiceInfo;
 
@@ -56,11 +57,7 @@ class UiAutomationManager {
             new DeathRecipient() {
                 @Override
                 public void binderDied() {
-                    mUiAutomationServiceOwner.unlinkToDeath(this, 0);
-                    mUiAutomationServiceOwner = null;
-                    if (mUiAutomationService != null) {
-                        destroyUiAutomationService();
-                    }
+                    destroyUiAutomationService();
                 }
             };
 
@@ -97,6 +94,7 @@ class UiAutomationManager {
         }
 
         mSystemSupport = systemSupport;
+        mLock = lock;
         mUiAutomationService = new UiAutomationService(context, accessibilityServiceInfo, id,
                 mainHandler, lock, securityPolicy, systemSupport, windowManagerInternal,
                 globalActionPerfomer);
@@ -176,16 +174,26 @@ class UiAutomationManager {
     }
 
     private void destroyUiAutomationService() {
-        mUiAutomationService.mServiceInterface.asBinder().unlinkToDeath(mUiAutomationService, 0);
-        mUiAutomationService.onRemoved();
-        mUiAutomationService.resetLocked();
-        mUiAutomationService = null;
-        mUiAutomationFlags = 0;
-        if (mUiAutomationServiceOwner != null) {
-            mUiAutomationServiceOwner.unlinkToDeath(mUiAutomationServiceOwnerDeathRecipient, 0);
-            mUiAutomationServiceOwner = null;
+        synchronized (mLock) {
+            if (mUiAutomationService != null) {
+                mUiAutomationService.mServiceInterface.asBinder().unlinkToDeath(mUiAutomationService, 0);
+                mUiAutomationService.onRemoved();
+                mUiAutomationService.resetLocked();
+                mUiAutomationService = null;
+            }
+
+            mUiAutomationFlags = 0;
+
+            if (mUiAutomationServiceOwner != null) {
+                mUiAutomationServiceOwner.unlinkToDeath(mUiAutomationServiceOwnerDeathRecipient, 0);
+                mUiAutomationServiceOwner = null;
+            }
+
+            if (mSystemSupport != null) {
+                mSystemSupport.onClientChange(false);
+                mSystemSupport = null;
+            }
         }
-        mSystemSupport.onClientChange(false);
     }
 
     private class UiAutomationService extends AbstractAccessibilityServiceConnection {
@@ -215,7 +223,6 @@ class UiAutomationManager {
                     // If the serviceInterface is null, the UiAutomation has been shut down on
                     // another thread.
                     if (serviceInterface != null) {
-                        service.linkToDeath(this, 0);
                         serviceInterface.init(this, mId, mOverlayWindowToken);
                     }
                 } catch (RemoteException re) {
