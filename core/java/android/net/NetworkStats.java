@@ -931,21 +931,22 @@ public class NetworkStats implements Parcelable {
     }
 
     /**
-     * Return all rows except those attributed to the requested UID; doesn't
-     * mutate the original structure.
+     * Keep all rows except those attributed to the requested UIDs.
      */
-    public NetworkStats withoutUids(int[] uids) {
-        final NetworkStats stats = new NetworkStats(elapsedRealtime, 10);
-
+    public void withoutUids(int[] uids) {
         Entry entry = new Entry();
+        int nextOutputEntry = 0;
         for (int i = 0; i < size; i++) {
-            entry = getValues(i, entry);
-            if (!ArrayUtils.contains(uids, entry.uid)) {
-                stats.addValues(entry);
+            if (!ArrayUtils.contains(uids, uid[i])) {
+                if (i != nextOutputEntry) {
+                    entry = getValues(i, entry);
+                    setValues(nextOutputEntry, entry);
+                }
+                nextOutputEntry++;
             }
         }
 
-        return stats;
+        size = nextOutputEntry;
     }
 
     /**
