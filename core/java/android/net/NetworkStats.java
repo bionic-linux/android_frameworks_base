@@ -42,6 +42,10 @@ import java.util.Objects;
  * optimizes for rapid in-memory comparison, but consider using
  * {@link NetworkStatsHistory} when persisting.
  *
+ * @apiNote This class is not thread-safe as it contains a lot of mutable states
+ *          and will throw IndexOutOfBoundsException if it's used across multiple
+ *          threads.
+ *
  * @hide
  */
 public class NetworkStats implements Parcelable {
@@ -441,6 +445,25 @@ public class NetworkStats implements Parcelable {
         entry.txPackets = txPackets[i];
         entry.operations = operations[i];
         return entry;
+    }
+
+    /**
+     * Copy entry from index @{code src} to index @{code dest}.
+     */
+    private void copyEntry(int dest, int src) {
+        if (dest == src) return;
+        iface[dest] = iface[src];
+        uid[dest] = uid[src];
+        set[dest] = set[src];
+        tag[dest] = tag[src];
+        metered[dest] = metered[src];
+        roaming[dest] = roaming[src];
+        defaultNetwork[dest] = defaultNetwork[src];
+        rxBytes[dest] = rxBytes[src];
+        rxPackets[dest] = rxPackets[src];
+        txBytes[dest] = txBytes[src];
+        txPackets[dest] = txPackets[src];
+        operations[dest] = operations[src];
     }
 
     public long getElapsedRealtime() {
@@ -931,21 +954,18 @@ public class NetworkStats implements Parcelable {
     }
 
     /**
-     * Return all rows except those attributed to the requested UID; doesn't
-     * mutate the original structure.
+     * Remove all rows that match one of specified UIDs.
      */
-    public NetworkStats withoutUids(int[] uids) {
-        final NetworkStats stats = new NetworkStats(elapsedRealtime, 10);
-
-        Entry entry = new Entry();
+    public void removeUids(int[] uids) {
+        int nextOutputEntry = 0;
         for (int i = 0; i < size; i++) {
-            entry = getValues(i, entry);
-            if (!ArrayUtils.contains(uids, entry.uid)) {
-                stats.addValues(entry);
+            if (!ArrayUtils.contains(uids, uid[i])) {
+                copyEntry(nextOutputEntry, i);
+                nextOutputEntry++;
             }
         }
 
-        return stats;
+        size = nextOutputEntry;
     }
 
     /**
