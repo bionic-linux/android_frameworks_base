@@ -46,6 +46,30 @@
       "revId": "61524e1b6144c7ab0dc80f370e6d95bd7f6d42e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d54b2b_e0d2254d",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-10-29T17:27:04Z",
+      "side": 1,
+      "message": "When you say \"not reported by RIL yet\" do you mean that the modem is not in sync with the APIS exposed by the system?  Ie its an older RIL implementation that doesn\u0027t properly handle newer APIS?",
+      "parentUuid": "d6a8fcd3_9c643667",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "61524e1b6144c7ab0dc80f370e6d95bd7f6d42e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
