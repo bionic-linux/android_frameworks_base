@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "03c20387_a0d3302c",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T23:22:08Z",
+      "side": 1,
+      "message": "Yep. If the programmer doesn\u0027t check, you may get segfaults, or if you make more calls, you\u0027ll get a JNI error because you\u0027re operating with a pending exception.",
+      "parentUuid": "82e3ec89_fe21a5c0",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4569196b_f05649d2",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Here I was trying to make the existing code cleaner without changing the current behavior.  I think a function that returns a std::string would be better as long as we are OK with an extra string copy along this critical path.",
       "parentUuid": "4569196b_f05649d2",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 3
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9d9380_728b00eb",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T23:22:08Z",
+      "side": 1,
+      "message": "You\u0027re changing current behavior in the rest of the CL already. :-)",
+      "parentUuid": "795b62c4_1d66e4d8",
       "range": {
         "startLine": 91,
         "startChar": 0,
@@ -307,6 +355,30 @@
       "side": 1,
       "message": "I moved this definition here for several reasons.  The first is that, logically, the variable is in use across the entire scope of the function.  It acts as an error string buffer (and should be used as one) by any function that can generate error strings called by this function.  It makes sense to me to make the logical and lexical scope match.\n\nThe second reason is that it helps reduce the amount of work programmers have to do and helps avoid compiler errors.  If I needed an error string buffer before the declaration at the site of the current first usage, I might not notice that and attempt to use it.  This causes a new compiler error and adds a compilation cycle to my development workflow.  If I did notice that my new usage is before the current usage then I could either create a new buffer (which would be logically incorrect) or I could move the definition.  The only correct solution for the programmer is to move the definition.  Doing so now doesn\u0027t cause any problems and it possibly saves time for future developers.",
       "parentUuid": "eba60c8d_056d40df",
+      "range": {
+        "startLine": 749,
+        "startChar": 2,
+        "endLine": 749,
+        "endChar": 24
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09ad386_f4339845",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T23:22:08Z",
+      "side": 1,
+      "message": "This is *not* Android style. Once there is an earlier user, sure, go ahead, move it. Otherwise when I read this function it\u0027s nothing but clutter.",
+      "parentUuid": "9f5c30af_6821501c",
       "range": {
         "startLine": 749,
         "startChar": 2,
