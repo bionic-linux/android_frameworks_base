@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35a281cb_1d9a17ff",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-30T15:56:59Z",
+      "side": 1,
+      "message": "If nextOutputEntry \u003d\u003d i, then we\u0027re copying the entry to itself, right? Can/should we skip the copy if nextOutputEntry \u003d\u003d i? That might improve the performance of this method.",
+      "range": {
+        "startLine": 973,
+        "startChar": 16,
+        "endLine": 973,
+        "endChar": 25
+      },
+      "revId": "d7591e8e4fa96cc3448ba74746d0d727f127f628",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7b242a_5161cade",
+        "filename": "tests/net/java/android/net/NetworkStatsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-30T15:56:59Z",
+      "side": 1,
+      "message": "Optional: the test data has all the rows with UID 100 at the beginning. It might be worth adding more test data so that UID 100 appears after other UIDs as well. That would provide more coverage. If you do this, I suggest doing it in its own small CL on which you can run the tests independently.",
+      "revId": "d7591e8e4fa96cc3448ba74746d0d727f127f628",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
