@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3f6e33b_66e49be7",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-30T07:39:12Z",
+      "side": 1,
+      "message": "Let\u0027s rename this method to \"removeUids\" and also update the comment",
+      "range": {
+        "startLine": 936,
+        "startChar": 16,
+        "endLine": 936,
+        "endChar": 27
+      },
+      "revId": "ba2c30863752f54997baa9c25574eb3488757910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d37b1f_0d0d9cf0",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-30T07:39:12Z",
+      "side": 1,
+      "message": "Suggest factoring this into a separate method to both clarify and speed up.\n\n  void copyEntry(int dest, int src) {\n    if (dest \u003d\u003d src) return;\n    uid[dest] \u003d uid[src];\n    ...\n  }\n\n...or something similar.",
+      "range": {
+        "startLine": 941,
+        "startChar": 14,
+        "endLine": 944,
+        "endChar": 17
+      },
+      "revId": "ba2c30863752f54997baa9c25574eb3488757910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
