@@ -18,90 +18,98 @@ import unittest
 from generate_hiddenapi_lists import *
 
 class TestHiddenapiListGeneration(unittest.TestCase):
+    def test_check_entries_set(self):
+        check_entries_set([ 'A', 'B' ], { 'A' : 1, 'B' : 2, 'C' : 3 }, 'source')
 
-    def test_move_between_sets(self):
-        A = set([1, 2, 3, 4])
-        B = set([5, 6, 7, 8])
-        move_between_sets(set([2, 4]), A, B)
-        self.assertEqual(A, set([1, 3]))
-        self.assertEqual(B, set([2, 4, 5, 6, 7, 8]))
+    def test_check_entries_set__fail(self):
+        with self.assertRaises(AssertionError):
+            check_entries_set([ 'A', 'B', 'D' ], { 'A' : 1, 'B' : 2, 'C' : 3 }, 'source')
 
-    def test_move_between_sets_fail_not_superset(self):
-        A = set([1, 2, 3, 4])
-        B = set([5, 6, 7, 8])
-        with self.assertRaises(AssertionError) as ar:
-            move_between_sets(set([0, 2]), A, B)
+    def test_check_tags_set(self):
+        check_tags_set([ TAG_WHITELIST, TAG_GREYLIST ], 'source')
 
-    def test_move_between_sets_fail_not_disjoint(self):
-        A = set([1, 2, 3, 4])
-        B = set([4, 5, 6, 7, 8])
-        with self.assertRaises(AssertionError) as ar:
-            move_between_sets(set([1, 4]), A, B)
+    def test_check_tags_set__fail(self):
+        with self.assertRaises(AssertionError):
+            check_tags_set([ TAG_WHITELIST, TAG_GREYLIST, 'foo' ], 'source')
 
-    def test_get_package_name(self):
-        self.assertEqual(get_package_name("Ljava/lang/String;->clone()V"), "Ljava/lang/")
-
-    def test_get_package_name_fail_no_arrow(self):
-        with self.assertRaises(AssertionError) as ar:
-            get_package_name("Ljava/lang/String;-clone()V")
-        with self.assertRaises(AssertionError) as ar:
-            get_package_name("Ljava/lang/String;>clone()V")
-        with self.assertRaises(AssertionError) as ar:
-            get_package_name("Ljava/lang/String;__clone()V")
-
-    def test_get_package_name_fail_no_package(self):
-        with self.assertRaises(AssertionError) as ar:
-            get_package_name("LString;->clone()V")
-
-    def test_all_package_names(self):
-        self.assertEqual(all_package_names(), set())
-        self.assertEqual(all_package_names(set(["Lfoo/Bar;->baz()V"])), set(["Lfoo/"]))
+    def test_filter_dict_keys(self):
         self.assertEqual(
-            all_package_names(set(["Lfoo/Bar;->baz()V", "Lfoo/BarX;->bazx()I"])),
-            set(["Lfoo/"]))
-        self.assertEqual(
-            all_package_names(
-                set(["Lfoo/Bar;->baz()V"]),
-                set(["Lfoo/BarX;->bazx()I", "Labc/xyz/Mno;->ijk()J"])),
-            set(["Lfoo/", "Labc/xyz/"]))
+            filter_dict_keys((lambda key, val: key + val < 10), { 1 : 2, 3 : 4, 5 : 6 }),
+            [ 1, 3 ])
 
-    def test_move_all(self):
-        src = set([ "abc", "xyz" ])
-        dst = set([ "def" ])
-        move_all(src, dst)
-        self.assertEqual(src, set())
-        self.assertEqual(dst, set([ "abc", "def", "xyz" ]))
+    def test_merge_two_disjoint_dicts(self):
+        self.assertEquals(merge_two_disjoint_dicts({}, {}), {})
+        self.assertEquals(merge_two_disjoint_dicts({ 'A' : 1 }, {}), { 'A' : 1 })
+        self.assertEquals(merge_two_disjoint_dicts({}, { 'B' : 2 }), { 'B' : 2 })
+        self.assertEquals(
+            merge_two_disjoint_dicts({ 'A' : 1 }, { 'B' : 2 }),
+            { 'A' : 1 , 'B' : 2 })
+        self.assertEquals(
+            merge_two_disjoint_dicts({ 'A' : 1 }, { 2 : 'B' }),
+            { 'A' : 1 , 2 : 'B' })
 
-    def test_move_from_packages(self):
-        src = set([ "Lfoo/bar/ClassA;->abc()J",        # will be moved
-                    "Lfoo/bar/ClassA;->def()J",        # will be moved
-                    "Lcom/pkg/example/ClassD;->ijk:J", # not moved: different package
-                    "Lfoo/bar/xyz/ClassC;->xyz()Z" ])  # not moved: subpackage
-        dst = set()
-        packages = set([ "Lfoo/bar/" ])
-        move_from_packages(packages, src, dst)
-        self.assertEqual(
-            src, set([ "Lfoo/bar/xyz/ClassC;->xyz()Z", "Lcom/pkg/example/ClassD;->ijk:J" ]))
-        self.assertEqual(
-            dst, set([ "Lfoo/bar/ClassA;->abc()J", "Lfoo/bar/ClassA;->def()J" ]))
+    def test_merge_two_disjoint_dicts__fail(self):
+        with self.assertRaises(AssertionError):
+            merge_two_disjoint_dicts({ 'A' : 1 }, { 'A' : 2 })
 
-    def test_move_serialization(self):
-        # All the entries should be moved apart from the last one
-        src = set([ "Lfoo/bar/ClassA;->readObject(Ljava/io/ObjectInputStream;)V",
-                    "Lfoo/bar/ClassA;->readObjectNoData()V",
-                    "Lfoo/bar/ClassA;->readResolve()Ljava/lang/Object;",
-                    "Lfoo/bar/ClassA;->serialVersionUID:J",
-                    "Lfoo/bar/ClassA;->serialPersistentFields:[Ljava/io/ObjectStreamField;",
-                    "Lfoo/bar/ClassA;->writeObject(Ljava/io/ObjectOutputStream;)V",
-                    "Lfoo/bar/ClassA;->writeReplace()Ljava/lang/Object;",
-                    # Should not be moved as signature does not match
-                    "Lfoo/bar/ClassA;->readObject(Ljava/io/ObjectInputStream;)I"])
-        expectedToMove = len(src) - 1
-        dst = set()
-        packages = set([ "Lfoo/bar/" ])
-        move_serialization(src, dst)
-        self.assertEqual(len(src), 1)
-        self.assertEqual(len(dst), expectedToMove)
+    def test_get_valid_subset_of_unassigned_keys(self):
+        d = { 'A' : set(), 'B' : set(TAG_WHITELIST), 'C' : set(TAG_GREYLIST) }
+        e = set([ 'A', 'B', 'D' ])
+        self.assertEqual(get_valid_subset_of_unassigned_keys(e, d), set([ 'A' ]))
+
+    def test_parse_csv(self):
+        d = { 'A' : set(), 'B' : set([TAG_WHITELIST]) }
+        # Test empty CSV entry.
+        parse_csv([ "A" ], d)
+        self.assertEqual(d, { 'A' : set(), 'B' : set([TAG_WHITELIST]) })
+        # Test assigning an already assigned tag.
+        parse_csv([ "B," + TAG_WHITELIST ], d)
+        self.assertEqual(d, { 'A' : set(), 'B' : set([TAG_WHITELIST]) })
+        # Test new additions.
+        parse_csv([ "A," + TAG_GREYLIST, "B," + TAG_BLACKLIST + "," + TAG_BLACKLIST_MAX_O ], d)
+        self.assertEqual(d,
+            { 'A' : set([ TAG_GREYLIST ]),
+              'B' : set([ TAG_WHITELIST, TAG_BLACKLIST, TAG_BLACKLIST_MAX_O ]) })
+
+    def test_parse_csv__fail_entry(self):
+        d = { 'A' : set(), 'B' : set() }
+        with self.assertRaises(AssertionError):
+            parse_csv([ 'C' ], d)
+
+    def test_parse_csv__fail_tag(self):
+        d = { 'A' : set(), 'B' : set() }
+        with self.assertRaises(AssertionError):
+            parse_csv([ 'A,foo' ], d)
+
+    def test_assign_tag(self):
+        d = { 'A' : set(), 'B' : set([TAG_WHITELIST]) }
+        # Test assigning an already assigned tag.
+        assign_tag(TAG_WHITELIST, [ 'B' ], d)
+        self.assertEqual(d, { 'A' : set(), 'B' : set([TAG_WHITELIST]) })
+        # Test new additions.
+        assign_tag(TAG_GREYLIST, [ 'A', 'B' ], d)
+        self.assertEqual(d,
+            { 'A' : set([ TAG_GREYLIST ]),
+              'B' : set([ TAG_WHITELIST, TAG_GREYLIST ]) })
+
+    def test_assign_tag__fail_entry(self):
+        d = { 'A' : set(), 'B' : set() }
+        with self.assertRaises(AssertionError):
+            assign_tag(TAG_WHITELIST, [ 'C' ], d)
+
+    def test_assign_tag__fail_tag(self):
+        d = { 'A' : set(), 'B' : set() }
+        with self.assertRaises(AssertionError):
+            assign_tag('foo', [ 'A' ], d)
+
+    def test_generate_csv(self):
+        self.assertEqual(
+            generate_csv({ 'A' : set(),
+                           'B' : set([ TAG_WHITELIST ]),
+                           'C' : set([ TAG_GREYLIST, TAG_BLACKLIST ]) }),
+            [ 'A\n',
+              'B,' + TAG_WHITELIST + '\n',
+              'C,' + TAG_BLACKLIST + ',' + TAG_GREYLIST + '\n' ])
 
 if __name__ == '__main__':
     unittest.main()
