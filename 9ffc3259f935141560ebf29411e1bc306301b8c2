@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa325f15_82e90739",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T18:26:09Z",
+      "side": 1,
+      "message": "Don\u0027t create that macro, as it can be misused.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4569196b_f05649d2",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T18:26:09Z",
+      "side": 1,
+      "message": "Do you have numbers that say the C-style interface is really necessary? This would all be cleaner if we made one more copy of the string and returned a std::string out of a function, rather than ugly macros.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 3
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b667e12_f59c0c52",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T18:26:09Z",
+      "side": 1,
+      "message": "Missing [[noreturn]]",
+      "range": {
+        "startLine": 568,
+        "startChar": 0,
+        "endLine": 568,
+        "endChar": 6
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41f1696c_b506f373",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 2
@@ -46,6 +115,69 @@
       "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c975f397_df1ea899",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T18:26:09Z",
+      "side": 1,
+      "message": "This just makes the code brittle, because you have to read the macro to understand that you should *not* use it. I\u0027d rather you added the nice-name code to the error function (possibly an overload?).",
+      "range": {
+        "startLine": 585,
+        "startChar": 2,
+        "endLine": 587,
+        "endChar": 48
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacc5f8c_e8dc7387",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T18:26:09Z",
+      "side": 1,
+      "message": "Spurious newline.",
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba60c8d_056d40df",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T18:26:09Z",
+      "side": 1,
+      "message": "This isn\u0027t C. Move close to the actual use (\u003drevert this).",
+      "range": {
+        "startLine": 749,
+        "startChar": 2,
+        "endLine": 749,
+        "endChar": 24
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

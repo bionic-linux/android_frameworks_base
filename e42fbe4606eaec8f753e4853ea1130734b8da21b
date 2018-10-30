@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91811755_310a66d8",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T18:26:09Z",
+      "side": 0,
+      "message": "Avoid unnecessary changes.",
+      "range": {
+        "startLine": 781,
+        "startChar": 2,
+        "endLine": 783,
+        "endChar": 51
+      },
+      "revId": "e42fbe4606eaec8f753e4853ea1130734b8da21b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e79ecfc_53870738",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-10-30T18:26:09Z",
+      "side": 0,
+      "message": "Avoid gratuitous changes.",
+      "range": {
+        "startLine": 847,
+        "startChar": 2,
+        "endLine": 848,
+        "endChar": 18
+      },
+      "revId": "e42fbe4606eaec8f753e4853ea1130734b8da21b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
