@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82e3ec89_fe21a5c0",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-30T22:28:04Z",
+      "side": 1,
+      "message": "Misused in the sense that the programmer can use the extracted string without checking if the original is non-null and the extracted one is null?",
+      "parentUuid": "aa325f15_82e90739",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4569196b_f05649d2",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-10-30T18:26:09Z",
       "side": 1,
       "message": "Do you have numbers that say the C-style interface is really necessary? This would all be cleaner if we made one more copy of the string and returned a std::string out of a function, rather than ugly macros.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 3
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795b62c4_1d66e4d8",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-30T22:28:04Z",
+      "side": 1,
+      "message": "Here I was trying to make the existing code cleaner without changing the current behavior.  I think a function that returns a std::string would be better as long as we are OK with an extra string copy along this critical path.",
+      "parentUuid": "4569196b_f05649d2",
       "range": {
         "startLine": 91,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f35d854_c9f11007",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-30T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b667e12_f59c0c52",
+      "range": {
+        "startLine": 568,
+        "startChar": 0,
+        "endLine": 568,
+        "endChar": 6
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6b072abb_b467ad83",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-30T22:28:04Z",
+      "side": 1,
+      "message": "It\u0027s not that you can\u0027t use nice_name, just that if you don\u0027t use the check macro you might not exit when it fails to extract.  The worst that will happen is that the process name isn\u0027t changed instead of failing and killing the process.  This is not ideal, but I\u0027m honestly not sure if killing the whole Zygote due to failing to extract a string is ideal either.\n\nOverloading causes issues with std::bind, so I think the alternative solution is to have an extra jstring parameter for the failure function and prefer it over the char* parameter.  Doing so would make failures to extract the nice_name silent though, as the error function would simply not use the value if it fails to extract.  Or I guess we could print out an error about string extraction failure instead of whatever error the function was supposed to print out.  Or we could print out both errors?",
+      "parentUuid": "c975f397_df1ea899",
+      "range": {
+        "startLine": 585,
+        "startChar": 2,
+        "endLine": 587,
+        "endChar": 48
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aacc5f8c_e8dc7387",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 2
@@ -158,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "571d22cb_c90e2483",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-30T22:28:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aacc5f8c_e8dc7387",
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eba60c8d_056d40df",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 2
@@ -169,6 +283,30 @@
       "writtenOn": "2018-10-30T18:26:09Z",
       "side": 1,
       "message": "This isn\u0027t C. Move close to the actual use (\u003drevert this).",
+      "range": {
+        "startLine": 749,
+        "startChar": 2,
+        "endLine": 749,
+        "endChar": 24
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5c30af_6821501c",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-30T22:28:04Z",
+      "side": 1,
+      "message": "I moved this definition here for several reasons.  The first is that, logically, the variable is in use across the entire scope of the function.  It acts as an error string buffer (and should be used as one) by any function that can generate error strings called by this function.  It makes sense to me to make the logical and lexical scope match.\n\nThe second reason is that it helps reduce the amount of work programmers have to do and helps avoid compiler errors.  If I needed an error string buffer before the declaration at the site of the current first usage, I might not notice that and attempt to use it.  This causes a new compiler error and adds a compilation cycle to my development workflow.  If I did notice that my new usage is before the current usage then I could either create a new buffer (which would be logically incorrect) or I could move the definition.  The only correct solution for the programmer is to move the definition.  Doing so now doesn\u0027t cause any problems and it possibly saves time for future developers.",
+      "parentUuid": "eba60c8d_056d40df",
       "range": {
         "startLine": 749,
         "startChar": 2,
