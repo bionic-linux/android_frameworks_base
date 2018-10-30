@@ -22,6 +22,30 @@
       "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86ce505_dd4f13e6",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-30T18:16:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41f1696c_b506f373",
+      "range": {
+        "startLine": 580,
+        "startChar": 30,
+        "endLine": 581,
+        "endChar": 106
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
