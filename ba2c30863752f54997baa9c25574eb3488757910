@@ -86,6 +86,24 @@
       "revId": "ba2c30863752f54997baa9c25574eb3488757910",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c49eede_9ce0e2aa",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-10-30T11:23:01Z",
+      "side": 1,
+      "message": "I don\u0027t think there is any performance reasons for not performing them. But I think the question is, how should the code behave when passed values out of bound ? I think the right thing to do is probably to throw an OOB exception right ? Well that\u0027s what they do : there is no point writing if (dest \u003c 0 || dest \u003e\u003d size) throw new IndexOutOfBoundsException().\n\nIf you think failing silently is better, then I\u0027d encourage you to do the bounds check as you\u0027ve written in your comment, but I\u0027m not sure it\u0027s better than throw OOB.\n\nThe main concern I\u0027d have with any of this is the threading, because a caller could then receive OOB when they\u0027ve done nothing wrong because of a concurrent modification. But :\n・It\u0027s already the case.\n・It\u0027s unclear that silently failing is actually better than throwing OOB, because you\u0027re in an inconsistent state anyway.\n...so in this case, maybe we just want to write in the class comment that this class is not thread-safe at all as it contains a lot of mutable state and will throw OOBs left and right if it\u0027s used across multiple threads.",
+      "parentUuid": "307f3b88_0bd1ecbb",
+      "revId": "ba2c30863752f54997baa9c25574eb3488757910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
