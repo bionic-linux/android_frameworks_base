@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f8cd989_3b00e0d1",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-30T09:46:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3f6e33b_66e49be7",
+      "range": {
+        "startLine": 936,
+        "startChar": 16,
+        "endLine": 936,
+        "endChar": 27
+      },
+      "revId": "ba2c30863752f54997baa9c25574eb3488757910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90d37b1f_0d0d9cf0",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 2
@@ -42,6 +66,23 @@
         "endLine": 944,
         "endChar": 17
       },
+      "revId": "ba2c30863752f54997baa9c25574eb3488757910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307f3b88_0bd1ecbb",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-10-30T09:46:11Z",
+      "side": 1,
+      "message": "Agreed, but do we need boundary checks inside the function?\ne.g. if (dest \u003c 0 || dest \u003e\u003d size) return;\n\nHowever, I did not see any check inside getValues/setValues.\nSo I\u0027m wondering if there is any performance consideration against the checks.",
       "revId": "ba2c30863752f54997baa9c25574eb3488757910",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
