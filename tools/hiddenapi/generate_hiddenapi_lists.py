@@ -32,6 +32,32 @@ import os
 import sys
 import re
 
+TAG_WHITELIST = "whitelist"
+TAG_GREYLIST = "greylist"
+TAG_BLACKLIST = "blacklist"
+TAG_BLACKLIST_MAX_O = "blacklist-max-o"
+
+TAG_IGNORE_MISSING_SUFFIX = "-ignore-missing"
+
+TAGS = [
+    TAG_WHITELIST,
+    TAG_GREYLIST,
+    TAG_BLACKLIST,
+    TAG_BLACKLIST_MAX_O,
+]
+
+SERIALIZATION_PATTERNS = [
+    r'readObject\(Ljava/io/ObjectInputStream;\)V',
+    r'readObjectNoData\(\)V',
+    r'readResolve\(\)Ljava/lang/Object;',
+    r'serialVersionUID:J',
+    r'serialPersistentFields:\[Ljava/io/ObjectStreamField;',
+    r'writeObject\(Ljava/io/ObjectOutputStream;\)V',
+    r'writeReplace\(\)Ljava/lang/Object;',
+]
+
+SERIALIZATION_REGEX = re.compile(r'.*->(' + '|'.join(SERIALIZATION_PATTERNS) + r')$')
+
 def get_args():
     """Parses command line arguments.
 
@@ -39,21 +65,19 @@ def get_args():
         Namespace: dictionary of parsed arguments
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input-public', required=True, help='List of all public members')
-    parser.add_argument('--input-private', required=True, help='List of all private members')
-    parser.add_argument(
-        '--input-whitelists', nargs='*',
-        help='Lists of members to force on whitelist')
-    parser.add_argument(
-        '--input-greylists', nargs='*',
-        help='Lists of members to force on light greylist')
-    parser.add_argument(
-        '--input-blacklists', nargs='*',
-        help='Lists of members to force on blacklist')
-    parser.add_argument('--output-whitelist', required=True)
-    parser.add_argument('--output-light-greylist', required=True)
-    parser.add_argument('--output-dark-greylist', required=True)
-    parser.add_argument('--output-blacklist', required=True)
+    parser.add_argument('--public', required=True, help='List of all public members')
+    parser.add_argument('--private', required=True, help='List of all private members')
+
+    parser.add_argument('--flags', nargs='*', default=[],
+            help='CSV files to include in the flags')
+
+    for tag in TAGS:
+        ignore_missing_tag = tag + TAG_IGNORE_MISSING_SUFFIX
+        parser.add_argument('--' + tag, dest=tag, nargs='*', default=[],
+            help='Lists of members tag ' + tag)
+        parser.add_argument('--' + ignore_missing_tag, dest=ignore_missing_tag, nargs='*',
+            default=[], help='Lists of members tag ' + tag)
+    parser.add_argument('--output', required=True)
     return parser.parse_args()
 
 def read_lines(filename):
@@ -68,7 +92,8 @@ def read_lines(filename):
         list: Lines of the loaded file as a list of strings.
     """
     with open(filename, 'r') as f:
-        return filter(lambda line: not line.startswith('#'), f.readlines())
+        return map(lambda line: line.strip(),
+                   filter(lambda line: not line.startswith('#'),f.readlines()))
 
 def write_lines(filename, lines):
     """Writes list of lines into a file, overwriting the file it it exists.
@@ -80,164 +105,77 @@ def write_lines(filename, lines):
     with open(filename, 'w') as f:
         f.writelines(lines)
 
-def move_between_sets(subset, src, dst, source = "<unknown>"):
-    """Removes a subset of elements from one set and add it to another.
-
-    Args:
-        subset (set): The subset of `src` to be moved from `src` to `dst`.
-        src (set): Source set. Must be a superset of `subset`.
-        dst (set): Destination set. Must be disjoint with `subset`.
-    """
-    assert src.issuperset(subset), (
+def check_input_set(api_subset, output, source):
+    key_set = set(output.keys())
+    assert key_set.issuperset(api_subset), (
         "Error processing: {}\n"
         "The following entries were not found:\n"
         "{}"
         "Please visit go/hiddenapi for more information.").format(
-            source, "".join(map(lambda x: "  " + str(x), subset.difference(src))))
-    assert dst.isdisjoint(subset)
-    # Order matters if `src` and `subset` are the same object.
-    dst.update(subset)
-    src.difference_update(subset)
+            source, "".join(map(lambda x: "  " + str(x), set(api_subset).difference(key_set))))
 
-def get_package_name(signature):
-    """Returns the package name prefix of a class member signature.
+def check_tag_set(tags, source):
+    assert set(TAGS).issuperset(tags), (
+        "Error processing: {}\n"
+        "The following tags were not recognized: \n"
+        "{}\n"
+        "Please visit go/hiddenapi for more information.").format(
+            source, "\n".join(set(tags).difference(TAGS)))
 
-    Example: "Ljava/lang/String;->hashCode()J" --> "Ljava/lang/"
+def filter_dict(fn_lambda, output):
+    return filter(lambda x: fn_lambda(x, output[x]), output)
 
-    Args:
-        signature (string): Member signature
+def assign_tag(tag, api_subset, output, ignore_missing=False, source="<unknown>"):
+    if ignore_missing:
+        api_subset = set(api_subset).intersection(output.keys())
+    else:
+        check_input_set(api_subset, output, source)
+    check_tag_set([ tag ], source)
+    map(lambda api: output[api].add(tag), api_subset)
 
-    Returns
-        string: Package name of the given member
-    """
-    class_name_end = signature.find("->")
-    assert class_name_end != -1, "Invalid signature: {}".format(signature)
-    package_name_end = signature.rfind("/", 0, class_name_end)
-    assert package_name_end != -1, "Invalid signature: {}".format(signature)
-    return signature[:package_name_end + 1]
+def merge_csv(csv_lines, output, source = "<unknown>"):
+    csv_values = map(lambda line: line.split(','), csv_lines)
+    check_input_set(map(lambda csv: csv[0], csv_values), output, source)
+    tags = reduce(lambda x, y: set(x).union(y), map(lambda csv: csv[1:], csv_values), [])
+    check_tag_set(tags, source)
+    map(lambda csv : output[csv[0]].update(csv[1:]), csv_values)
 
-def all_package_names(*args):
-    """Returns a set of packages names in given lists of member signatures.
+def is_unassigned():
+    return lambda api, api_tags: not api_tags
 
-    Example: args = [ set([ "Lpkg1/ClassA;->foo()V", "Lpkg2/ClassB;->bar()J" ]),
-                      set([ "Lpkg1/ClassC;->baz()Z" ]) ]
-             return value = set([ "Lpkg1/", "Lpkg2" ])
+def is_serialization():
+    return lambda api, api_tags: SERIALIZATION_REGEX.match(api)
 
-    Args:
-        *args (list): List of sets to iterate over and extract the package names
-                      of its elements (member signatures)
+def merge_two_disjoint_dicts(x, y):
+    assert set(x.keys()).isdisjoint(set(y.keys()))
+    z = x.copy()
+    z.update(y)
+    return z
 
-    Returns:
-        set: All package names extracted from the given lists of signatures.
-    """
-    packages = set()
-    for arg in args:
-        packages = packages.union(map(get_package_name, arg))
-    return packages
-
-def move_all(src, dst):
-    """Moves all elements of one set to another.
-
-    Args:
-        src (set): Source set. Will become empty.
-        dst (set): Destination set. Will contain all elements of `src`.
-    """
-    move_between_sets(src, src, dst)
-
-def move_from_files(filenames, src, dst):
-    """Loads member signatures from a list of files and moves them to a given set.
-
-    Opens files in `filenames`, reads all their lines and moves those from `src`
-    set to `dst` set.
-
-    Args:
-        filenames (list): List of paths to files to be loaded.
-        src (set): Set that loaded lines should be moved from.
-        dst (set): Set that loaded lines should be moved to.
-    """
-    if filenames:
-        for filename in filenames:
-            move_between_sets(set(read_lines(filename)), src, dst, filename)
-
-def move_serialization(src, dst):
-    """Moves all members matching serialization API signatures between given sets.
-
-    Args:
-        src (set): Set that will be searched for serialization API and that API
-                   will be removed from it.
-        dst (set): Set that serialization API will be moved to.
-    """
-    serialization_patterns = [
-        r'readObject\(Ljava/io/ObjectInputStream;\)V',
-        r'readObjectNoData\(\)V',
-        r'readResolve\(\)Ljava/lang/Object;',
-        r'serialVersionUID:J',
-        r'serialPersistentFields:\[Ljava/io/ObjectStreamField;',
-        r'writeObject\(Ljava/io/ObjectOutputStream;\)V',
-        r'writeReplace\(\)Ljava/lang/Object;',
-    ]
-    regex = re.compile(r'.*->(' + '|'.join(serialization_patterns) + r')$')
-    move_between_sets(filter(lambda api: regex.match(api), src), src, dst)
-
-def move_from_packages(packages, src, dst):
-    """Moves all members of given package names from one set to another.
-
-    Args:
-        packages (list): List of string package names.
-        src (set): Set that will be searched for API matching one of the given
-                   package names. Surch API will be removed from the set.
-        dst (set): Set that matching API will be moved to.
-    """
-    move_between_sets(filter(lambda api: get_package_name(api) in packages, src), src, dst)
+def create_output_file(output):
+    return sorted(map(lambda api: ",".join([api] + sorted(output[api])) + "\n", output))
 
 def main(argv):
-    args = get_args()
+    args = vars(get_args())
 
-    # Initialize API sets by loading lists of public and private API. Public API
-    # are all members resolvable from SDK API stubs, other members are private.
-    # As an optimization, skip the step of moving public API from a full set of
-    # members and start with a populated whitelist.
-    whitelist = set(read_lines(args.input_public))
-    uncategorized = set(read_lines(args.input_private))
-    light_greylist = set()
-    dark_greylist = set()
-    blacklist = set()
+    public = { x: set([TAG_WHITELIST]) for x in read_lines(args["public"]) }
+    private = { x: set() for x in read_lines(args["private"]) }
+    output = merge_two_disjoint_dicts(public, private)
 
-    # Assert that there is no overlap between public and private API.
-    assert whitelist.isdisjoint(uncategorized)
-    num_all_api = len(whitelist) + len(uncategorized)
+    for filename in args["flags"]:
+        merge_csv(read_lines(filename), output, filename)
 
-    # Read all files which manually assign members to specific lists.
-    move_from_files(args.input_whitelists, uncategorized, whitelist)
-    move_from_files(args.input_greylists, uncategorized, light_greylist)
-    move_from_files(args.input_blacklists, uncategorized, blacklist)
+    for tag in TAGS:
+        for filename in args[tag]:
+            assign_tag(tag, read_lines(filename), output, False, filename)
+        for filename in args[tag + TAG_IGNORE_MISSING_SUFFIX]:
+            assign_tag(tag, read_lines(filename), output, True, filename)
 
-    # Iterate over all uncategorized members and move serialization API to whitelist.
-    move_serialization(uncategorized, whitelist)
+    assign_tag(TAG_WHITELIST, filter_dict(is_serialization(), output), output)
 
-    # Extract package names of members from whitelist and light greylist, which
-    # are assumed to have been finalized at this point. Assign all uncategorized
-    # members from the same packages to the dark greylist.
-    dark_greylist_packages = all_package_names(whitelist, light_greylist)
-    move_from_packages(dark_greylist_packages, uncategorized, dark_greylist)
+    assign_tag(TAG_BLACKLIST, filter_dict(is_unassigned(), output), output)
 
-    # Assign all uncategorized members to the blacklist.
-    move_all(uncategorized, blacklist)
-
-    # Assert we have not missed anything.
-    assert whitelist.isdisjoint(light_greylist)
-    assert whitelist.isdisjoint(dark_greylist)
-    assert whitelist.isdisjoint(blacklist)
-    assert light_greylist.isdisjoint(dark_greylist)
-    assert light_greylist.isdisjoint(blacklist)
-    assert dark_greylist.isdisjoint(blacklist)
-    assert num_all_api == len(whitelist) + len(light_greylist) + len(dark_greylist) + len(blacklist)
-
-    # Write final lists to disk.
-    write_lines(args.output_whitelist, whitelist)
-    write_lines(args.output_light_greylist, light_greylist)
-    write_lines(args.output_dark_greylist, dark_greylist)
-    write_lines(args.output_blacklist, blacklist)
+    write_lines(args["output"], create_output_file(output))
 
 if __name__ == "__main__":
     main(sys.argv)
