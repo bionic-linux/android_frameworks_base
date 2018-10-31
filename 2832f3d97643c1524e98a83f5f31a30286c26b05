@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bfbb566_7eb6910f",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-31T05:29:29Z",
+      "side": 1,
+      "message": "The line length limit in this file is 100 characters.",
+      "range": {
+        "startLine": 109,
+        "startChar": 100,
+        "endLine": 109,
+        "endChar": 102
+      },
+      "revId": "2832f3d97643c1524e98a83f5f31a30286c26b05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc73653_df61d1aa",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-10-31T05:29:29Z",
+      "side": 1,
+      "message": "Per style guide, variables should be camelCase. So rename this to errorMsg or similar.",
+      "revId": "2832f3d97643c1524e98a83f5f31a30286c26b05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
