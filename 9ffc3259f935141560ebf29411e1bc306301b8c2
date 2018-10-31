@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "068917ae_ad19afdc",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-31T00:39:56Z",
+      "side": 1,
+      "message": "That is also the current behavior of code without this macro.  Nothing is preventing the programmer from using the results of ScopedUtfChars.c_str() without checking it for nullity.  Nor do I think that this macro makes that more likely to happen.\n\nI like your idea of moving this particular extraction into the fail function, but in general I don\u0027t see how this macro makes things worse than having programmers repeat this exact same sequence of steps manually, possibly with errors.",
+      "parentUuid": "03c20387_a0d3302c",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4569196b_f05649d2",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "You\u0027re changing current behavior in the rest of the CL already. :-)",
       "parentUuid": "795b62c4_1d66e4d8",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 3
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada96a2a_97aa5d27",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-31T00:39:56Z",
+      "side": 1,
+      "message": "The only change to current behavior I intended to make was failing slightly earlier if a string fails to extract.  Are there other changes to externally visible behavior that I\u0027m missing?\n\nDoes anyone else object to allocating several new strings in this code path?",
+      "parentUuid": "8f9d9380_728b00eb",
       "range": {
         "startLine": 91,
         "startChar": 0,
@@ -379,6 +427,30 @@
       "side": 1,
       "message": "This is *not* Android style. Once there is an earlier user, sure, go ahead, move it. Otherwise when I read this function it\u0027s nothing but clutter.",
       "parentUuid": "9f5c30af_6821501c",
+      "range": {
+        "startLine": 749,
+        "startChar": 2,
+        "endLine": 749,
+        "endChar": 24
+      },
+      "revId": "9ffc3259f935141560ebf29411e1bc306301b8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192329d0_2de0d5d5",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-10-31T00:39:56Z",
+      "side": 1,
+      "message": "Just to clarify, you are saying that if there is an earlier use the declaration should be moved to just before the new, earlier use, right?",
+      "parentUuid": "f09ad386_f4339845",
       "range": {
         "startLine": 749,
         "startChar": 2,
