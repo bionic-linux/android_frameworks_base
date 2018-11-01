@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "977dd6ed_6a290aa9",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-01T02:33:07Z",
+      "side": 1,
+      "message": "It\u0027s taken care of in copyEntry().",
+      "parentUuid": "35a281cb_1d9a17ff",
+      "range": {
+        "startLine": 973,
+        "startChar": 16,
+        "endLine": 973,
+        "endChar": 25
+      },
+      "revId": "d7591e8e4fa96cc3448ba74746d0d727f127f628",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b7b242a_5161cade",
         "filename": "tests/net/java/android/net/NetworkStatsTest.java",
         "patchSetId": 4
