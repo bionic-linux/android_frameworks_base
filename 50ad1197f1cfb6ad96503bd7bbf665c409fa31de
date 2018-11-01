@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e0372cc_4a78289f",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-11-01T15:32:27Z",
+      "side": 1,
+      "message": "Stale?",
+      "range": {
+        "startLine": 583,
+        "startChar": 38,
+        "endLine": 583,
+        "endChar": 48
+      },
+      "revId": "50ad1197f1cfb6ad96503bd7bbf665c409fa31de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee8b5aa_1aca7ab2",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-11-01T15:32:27Z",
+      "side": 1,
+      "message": "Line too long.",
+      "revId": "50ad1197f1cfb6ad96503bd7bbf665c409fa31de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c5cbba_e208399d",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-11-01T15:32:27Z",
+      "side": 1,
+      "message": "Lines too long.",
+      "revId": "50ad1197f1cfb6ad96503bd7bbf665c409fa31de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb184275_46a56b9b",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2018-11-01T15:32:27Z",
+      "side": 1,
+      "message": "Since you touch it, add parameter name comments for the nullptr values?",
+      "revId": "50ad1197f1cfb6ad96503bd7bbf665c409fa31de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
