@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78e46894_35319605",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-11-01T15:54:37Z",
+      "side": 1,
+      "message": "I\u0027d recommend doing this below as:\n\n  // @NotThreadSafe\n  public class NetworkStats ...\n\n(Leave it commented out like that since I don\u0027t think we have javax in the framework.)",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 81
+      },
+      "revId": "a03532c27c4bb148595b9738e9103a7584b70347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd52661b_72e73d6d",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-11-01T15:54:37Z",
+      "side": 1,
+      "message": "Hmm, I like the current design better, where it returns a new object that has been filtered, and which leaves the original object unmutated.",
+      "range": {
+        "startLine": 955,
+        "startChar": 0,
+        "endLine": 957,
+        "endChar": 0
+      },
+      "revId": "a03532c27c4bb148595b9738e9103a7584b70347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
