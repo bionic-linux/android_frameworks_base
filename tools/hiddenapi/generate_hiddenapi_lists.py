@@ -26,6 +26,7 @@ TAG_WHITELIST = "whitelist"
 TAG_GREYLIST = "greylist"
 TAG_BLACKLIST = "blacklist"
 TAG_GREYLIST_MAX_O = "greylist-max-o"
+TAG_GREYLIST_MAX_P = "greylist-max-p"
 
 # List of all known tags.
 TAGS = [
@@ -33,6 +34,7 @@ TAGS = [
     TAG_GREYLIST,
     TAG_BLACKLIST,
     TAG_GREYLIST_MAX_O,
+    TAG_GREYLIST_MAX_P,
 ]
 
 # Suffix used in command line args to express that only known and
