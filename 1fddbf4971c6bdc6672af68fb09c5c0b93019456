@@ -22,6 +22,30 @@
       "revId": "1fddbf4971c6bdc6672af68fb09c5c0b93019456",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69295566_c85f6526",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-11-01T15:19:37Z",
+      "side": 1,
+      "message": "localhost won\u0027t be an alias as this is for numeric addresses.\n\nI don\u0027t particularly see any issue with treating null and empty string the same or conversely, any particular advantage to treating them differently. Treating them differently to how the internal API works will just make it that little bit more difficult for developers to fix their Apps.",
+      "parentUuid": "8d314b48_97490ec0",
+      "range": {
+        "startLine": 37,
+        "startChar": 68,
+        "endLine": 37,
+        "endChar": 91
+      },
+      "revId": "1fddbf4971c6bdc6672af68fb09c5c0b93019456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
