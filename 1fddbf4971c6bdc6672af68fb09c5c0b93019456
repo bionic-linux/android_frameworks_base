@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d314b48_97490ec0",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-11-01T14:08:45Z",
+      "side": 1,
+      "message": "Allowing both null and an empty string as an alias of each other seems like a poor choice for an API (perhaps \"localhost\" or similar will be another alias) because it reduces clarity for what states the application can be in / it can obscure problems.\n\nFrom an API perspective, perhaps it\u0027d be better to disallow either \"\" or null, or both?\n\n(Yes, I know that that\u0027s the behavior that the internal method implements, but having it in an API seems worse, and there\u0027s nothing stopping us implementing additional restrictions here even if we don\u0027t change the behavior of the delegate implementation).",
+      "range": {
+        "startLine": 37,
+        "startChar": 68,
+        "endLine": 37,
+        "endChar": 91
+      },
+      "revId": "1fddbf4971c6bdc6672af68fb09c5c0b93019456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
