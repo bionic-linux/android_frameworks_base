@@ -63,6 +63,24 @@
       "revId": "d7591e8e4fa96cc3448ba74746d0d727f127f628",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e31259_94f9bdb8",
+        "filename": "tests/net/java/android/net/NetworkStatsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-11-01T09:28:29Z",
+      "side": 1,
+      "message": "OK, will submit another CL to address this.",
+      "parentUuid": "6b7b242a_5161cade",
+      "revId": "d7591e8e4fa96cc3448ba74746d0d727f127f628",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
