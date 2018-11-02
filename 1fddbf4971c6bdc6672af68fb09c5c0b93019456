@@ -46,6 +46,30 @@
       "revId": "1fddbf4971c6bdc6672af68fb09c5c0b93019456",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d7cf4b5_92608842",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-11-02T22:40:29Z",
+      "side": 1,
+      "message": "\u003e localhost won\u0027t be an alias as this is for numeric addresses.\n\nSo null / \"\" are aliases for \"127.0.0.1\" or \"::1\" (not documented which one)?\n\n\u003e Treating them differently to how the internal API works will just make it that little\n\u003e bit more difficult for developers to fix their Apps.\n\nNot necessarily. It depends on the relation between:\n\n(a) # of apps null / \"\" is an error condition where an exception is the *correct* thing to do\n\nand\n\n(b) # of apps that generally treat null / \"\" as aliases for the loopback address and want the current behavior\n\nIf (a) \u003e (b) (or even, I think, when (a) is not much smaller than (b)) then we\u0027d be *helping* app developers, not making things more difficult for them, because that would be the correct behavior for their apps.\n\nMy personal expectation of a method like this is that it throw NPE for null and IAE for \"\", so I would guess that (a) is indeed greater than (b). I haven\u0027t done an analysis so this is based purely on gut feeling - I just don\u0027t see why we would think that someone who gives us a null or \"\" was after the loopback address rather than an exception.\n\nIs there precedent for null and \"\" being regarded as aliases for the loopback address in any other public APIs? Alternatively, can we look at a couple of example apps and figure out which of the two behaviors (if they care at all) is correct for them?\n\nThat said, Lorenzo is the person reviewing this CL for API review, so I\u0027m also interested in his perspective.",
+      "parentUuid": "69295566_c85f6526",
+      "range": {
+        "startLine": 37,
+        "startChar": 68,
+        "endLine": 37,
+        "endChar": 91
+      },
+      "revId": "1fddbf4971c6bdc6672af68fb09c5c0b93019456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
