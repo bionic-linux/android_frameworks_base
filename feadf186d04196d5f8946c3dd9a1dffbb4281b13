@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05a28845_22499050",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1238792
+      },
+      "writtenOn": "2018-11-05T15:41:17Z",
+      "side": 1,
+      "message": "Have you considered writing tests for this? It would be beneficial.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "feadf186d04196d5f8946c3dd9a1dffbb4281b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179b8919_58d3e268",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1238792
+      },
+      "writtenOn": "2018-11-05T15:41:17Z",
+      "side": 1,
+      "message": "Maybe \"setActualDefaultRingtoneUriForSlot\"?",
+      "range": {
+        "startLine": 874,
+        "startChar": 23,
+        "endLine": 874,
+        "endChar": 56
+      },
+      "revId": "feadf186d04196d5f8946c3dd9a1dffbb4281b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2d2941_a90f4748",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1238792
+      },
+      "writtenOn": "2018-11-05T15:41:17Z",
+      "side": 1,
+      "message": "I would recommend doing IntDef with values 0,1. This way we don\u0027t have to document what is the supported range of slots.\n\nAlso what happens if I have only one slot but I call this with slotId: 1?",
+      "range": {
+        "startLine": 875,
+        "startChar": 37,
+        "endLine": 875,
+        "endChar": 43
+      },
+      "revId": "feadf186d04196d5f8946c3dd9a1dffbb4281b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac3a45e_6da26db0",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1238792
+      },
+      "writtenOn": "2018-11-05T15:41:17Z",
+      "side": 1,
+      "message": "@NonNull?",
+      "range": {
+        "startLine": 875,
+        "startChar": 16,
+        "endLine": 875,
+        "endChar": 19
+      },
+      "revId": "feadf186d04196d5f8946c3dd9a1dffbb4281b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bffc2f9_c4303297",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1238792
+      },
+      "writtenOn": "2018-11-05T15:41:17Z",
+      "side": 1,
+      "message": "Why not private?",
+      "range": {
+        "startLine": 1105,
+        "startChar": 4,
+        "endLine": 1106,
+        "endChar": 10
+      },
+      "revId": "feadf186d04196d5f8946c3dd9a1dffbb4281b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
