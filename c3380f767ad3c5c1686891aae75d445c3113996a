@@ -22,6 +22,30 @@
       "revId": "c3380f767ad3c5c1686891aae75d445c3113996a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdccb103_0a060f5b",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2018-11-06T02:58:57Z",
+      "side": 1,
+      "message": "Tried to track down the test breakage and ended up here. Is there some reason we need to do the conversion? Can we just put the rssi into the parcel as-is?",
+      "parentUuid": "78947071_f6f98a95",
+      "range": {
+        "startLine": 304,
+        "startChar": 16,
+        "endLine": 304,
+        "endChar": 35
+      },
+      "revId": "c3380f767ad3c5c1686891aae75d445c3113996a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
