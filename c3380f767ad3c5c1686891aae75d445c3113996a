@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78947071_f6f98a95",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-11-06T02:09:46Z",
+      "side": 1,
+      "message": "Ah, if you want to have this here you need to have a convertRssiDBmToAsu() method in writeToParcel(). Can we remove this and just update the other tests?",
+      "range": {
+        "startLine": 304,
+        "startChar": 16,
+        "endLine": 304,
+        "endChar": 35
+      },
+      "revId": "c3380f767ad3c5c1686891aae75d445c3113996a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
