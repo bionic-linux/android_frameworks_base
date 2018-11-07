@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9ab262e_58a42634",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "Please move this inside the branch of the if() where it\u0027s used (or inline)",
+      "range": {
+        "startLine": 347,
+        "startChar": 29,
+        "endLine": 347,
+        "endChar": 42
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb775ddb_694f0450",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "s/noticing/notifying/ I think ?",
+      "range": {
+        "startLine": 360,
+        "startChar": 56,
+        "endLine": 360,
+        "endChar": 64
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b471eb71_140bfd8f",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "I am not sure what you are getting at. Do you mean that we should always call cancelTetheringProvisioningRechecks without performing the isTetheringSupported() test ? If that\u0027s what you mean, then what\u0027s stopping you from doing this now ?",
+      "range": {
+        "startLine": 359,
+        "startChar": 15,
+        "endLine": 362,
+        "endChar": 49
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a22845d_46a7643d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "Let\u0027s just say Tethering#updateConfiguration()",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbe00bd_0d94b09f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "Stupid question : if it\u0027s for all enabled tethering types, why does this method name contain \"SimCard\" ?",
+      "range": {
+        "startLine": 127,
+        "startChar": 43,
+        "endLine": 127,
+        "endChar": 65
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520fd161_ee8f6117",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "Can you document how the results will be returned ?",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 66
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea02f11_acd08e83",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "Can you document this as being one of the ConnectivityManager#TETHERING_* types ?\n(you can do this in another patch)",
+      "range": {
+        "startLine": 162,
+        "startChar": 53,
+        "endLine": 162,
+        "endChar": 61
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faaf2bd_8df11282",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "In the old tests, we used to have an explicit call to a function that set things up to look like an app is installed as the provisioning app. Now this is done in setUp() and it\u0027s not explicit any more.\n\nThis feels like at least a missed opportunity to in the future write tests for other cases where there is no such app installed. Because you\u0027re only moving those of course you don\u0027t need to add those cases, but if you could keep that other method so as not to make writing those new tests harder it would be great.",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 45
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14973188_c808b92b",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-07T08:56:56Z",
+      "side": 1,
+      "message": "assertFalse(mEn...",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 18
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
