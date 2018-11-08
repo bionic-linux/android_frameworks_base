@@ -7415,6 +7415,24 @@ message MetricsEvent {
     SETTINGS_GESTURE_NAV_BACK_SENSITIVITY_DLG = 1748;
 
     // ---- End Q Constants, all Q constants go above this line ----
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    // CATEGORY: SETTINGS
+    SETTINGS_ADB_WIRELESS = 1749;
+
+    // ACTION: Settings > Developer Options > Toggle on Wireless debugging
+    // CATEGORY: SETTINGS
+    ACTION_ADB_WIRELESS_ON = 1750;
+
+    // ACTION: Settings > Developer Options > Toggle off Wireless debugging
+    // CATEGORY: SETTINGS
+    ACTION_ADB_WIRELESS_OFF = 1751;
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    //   > Pair device with pairing code > Click on discoverable device > Dialog
+    // CATEGORY: SETTINGS
+    ADB_WIRELESS_DEVICE_PAIRING_DIALOG = 1752;
+
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
   }
