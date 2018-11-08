@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "362852bc_b2cc4fac",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-08T15:13:38Z",
+      "side": 1,
+      "message": "Suggest using the example ranges - \"192.0.2.1\" or \"2001:db8::1:2\".",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184782a8_1b1a5382",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-08T15:13:38Z",
+      "side": 1,
+      "message": "This particular behaviour doesn\u0027t seem very useful. Is it because that is what our current implementation already does?",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d18584_ac656c4d",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-08T15:13:38Z",
+      "side": 1,
+      "message": "The implementation will actually accept IPv6 addresses in square brackets (e.g., [2001:db8::1]\") as a valid numeric IP address.\n\nThis isn\u0027t great behaviour for a public API since that format is special for URLs. Is this something we can change before we make this method public? Or do we really need to maintain compatibility with the current behaviour of the hidden function?",
+      "range": {
+        "startLine": 39,
+        "startChar": 51,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
