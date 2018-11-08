@@ -6989,6 +6989,8 @@ message MetricsEvent {
     // OS: Q
     ACTION_SET_NEW_PARENT_PROFILE_PASSWORD = 1646;
 
+    // ---- End Q Constants, all Q constants go above this line ----
+
     // Tagged data for SMART_REPLY_VISIBLE and SMART_REPLY_ACTION.
     // Whether the smart reply was / is to be sent via direct reply because
     // getEditChoicesBeforeSending was enabled.
@@ -7417,5 +7419,27 @@ message MetricsEvent {
     // ---- End Q Constants, all Q constants go above this line ----
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    // CATEGORY: SETTINGS
+    // OS: Q
+    SETTINGS_ADB_WIRELESS = 1749;
+
+    // ACTION: Settings > Developer Options > Toggle on Wireless debugging
+    // CATEGORY: SETTINGS
+    // OS: Q
+    ACTION_ADB_WIRELESS_ON = 1750;
+
+    // ACTION: Settings > Developer Options > Toggle off Wireless debugging
+    // CATEGORY: SETTINGS
+    // OS: Q
+    ACTION_ADB_WIRELESS_OFF = 1751;
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    //   > Pair device with pairing code > Click on discoverable device > Dialog
+    // CATEGORY: SETTINGS
+    // OS: Q
+    ADB_WIRELESS_DEVICE_PAIRING_DIALOG = 1752;
+
   }
 }
