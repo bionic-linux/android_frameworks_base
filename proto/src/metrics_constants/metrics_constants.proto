@@ -7427,6 +7427,24 @@ message MetricsEvent {
     // OS: Q
     SETTINGS_AWARE_DISPLAY = 1750;
     // ---- End Q Constants, all Q constants go above this line ----
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    // CATEGORY: SETTINGS
+    SETTINGS_ADB_WIRELESS = 1751;
+
+    // ACTION: Settings > Developer Options > Toggle on Wireless debugging
+    // CATEGORY: SETTINGS
+    ACTION_ADB_WIRELESS_ON = 1752;
+
+    // ACTION: Settings > Developer Options > Toggle off Wireless debugging
+    // CATEGORY: SETTINGS
+    ACTION_ADB_WIRELESS_OFF = 1753;
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    //   > Pair device with pairing code > Click on discoverable device > Dialog
+    // CATEGORY: SETTINGS
+    ADB_WIRELESS_DEVICE_PAIRING_DIALOG = 1754;
+
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
   }
