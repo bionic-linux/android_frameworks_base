@@ -2434,6 +2434,15 @@ class StorageManagerService extends IStorageManager.Stub
         }
     }
 
+    /**
+     * Signal that checkpointing partitions should commit changes
+     */
+    @Override
+    public void commitChanges() throws RemoteException {
+
+        mVold.commitChanges();
+    }
+
     @Override
     public String getPassword() throws RemoteException {
         mContext.enforceCallingOrSelfPermission(Manifest.permission.CRYPT_KEEPER,

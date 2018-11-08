@@ -187,4 +187,5 @@ interface IStorageManager {
     void allocateBytes(String volumeUuid, long bytes, int flags, String callingPackage) = 78;
     void runIdleMaintenance() = 79;
     void abortIdleMaintenance() = 80;
+    void commitChanges() = 83;
 }
