@@ -22,6 +22,30 @@
       "revId": "9850dd9751459288a62dadc8b539b4969b485638",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1ea296_221e0898",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-11-08T20:33:17Z",
+      "side": 1,
+      "message": "Curious what the motivation is, but seems reasonable to me.",
+      "parentUuid": "35dc0415_83c45478",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "9850dd9751459288a62dadc8b539b4969b485638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
