@@ -46,6 +46,30 @@
       "revId": "9850dd9751459288a62dadc8b539b4969b485638",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90ac540_dbcb17a8",
+        "filename": "core/java/android/os/NativeHandle.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2018-11-09T02:36:45Z",
+      "side": 1,
+      "message": "Just because FileDescriptor isn\u0027t so useful. Thanks!",
+      "parentUuid": "ae1ea296_221e0898",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "9850dd9751459288a62dadc8b539b4969b485638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
