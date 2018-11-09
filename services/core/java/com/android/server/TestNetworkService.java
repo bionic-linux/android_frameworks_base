@@ -281,17 +281,21 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         agent.teardown();
     }
 
+    // TODO: change back to AppOpsManager.OPSTR_MANAGE_TEST_NETWORKS;
+    private static final String OP_TEST_NETWORK = "STOPSHIP";
+
     /** Enforce that the caller has AppOp OP_MANAGE_TEST_NETWORKS. */
     public static void enforceTestNetworkPermissions(Context context, String callingPackage) {
         checkNotNull(callingPackage, "Null calling package cannot create Test Networks");
 
         AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-        switch (appOps.noteOp(
-                AppOpsManager.OPSTR_MANAGE_TEST_NETWORKS, Binder.getCallingUid(), callingPackage)) {
-            case AppOpsManager.MODE_ALLOWED:
-                return;
-            default:
-                throw new SecurityException("AppOp required for test network creation");
+        if (false) { // STOPSHIP if this line is present
+            switch (appOps.noteOp(OP_TEST_NETWORK, Binder.getCallingUid(), callingPackage)) {
+                case AppOpsManager.MODE_ALLOWED:
+                    return;
+                default:
+                    throw new SecurityException("AppOp required for test network creation");
+            }
         }
     }
 }
