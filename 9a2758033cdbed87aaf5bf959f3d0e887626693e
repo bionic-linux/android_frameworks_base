@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b53128ea_1981f4e6",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-11-09T18:28:07Z",
+      "side": 1,
+      "message": "Magic numbers and bin ops.",
+      "revId": "9a2758033cdbed87aaf5bf959f3d0e887626693e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c896a2d_a0e80ca2",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-11-09T18:28:07Z",
+      "side": 1,
+      "message": "Shifting by 8 and 12 seems to be common.  Is there a name we could give these operations?",
+      "revId": "9a2758033cdbed87aaf5bf959f3d0e887626693e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
