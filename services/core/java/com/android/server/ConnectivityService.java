@@ -2095,15 +2095,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         try {
             if (VDBG || DDBG) Slog.d(TAG, "Setting tx/rx TCP buffers to " + tcpBufferSizes);
 
-            final String prefix = "/sys/kernel/ipv4/tcp_";
-            FileUtils.stringToFile(prefix + "rmem_min", values[0]);
-            FileUtils.stringToFile(prefix + "rmem_def", values[1]);
-            FileUtils.stringToFile(prefix + "rmem_max", values[2]);
-            FileUtils.stringToFile(prefix + "wmem_min", values[3]);
-            FileUtils.stringToFile(prefix + "wmem_def", values[4]);
-            FileUtils.stringToFile(prefix + "wmem_max", values[5]);
+            mNetd.setTcpRWmemorySize(values);
             mCurrentTcpBufferSizes = tcpBufferSizes;
-        } catch (IOException e) {
+        } catch (RemoteException e) {
             loge("Can't set TCP buffer sizes:" + e);
         }
 
