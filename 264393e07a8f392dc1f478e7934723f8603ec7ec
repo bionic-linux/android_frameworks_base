@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5cbea5a_9b39b561",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-11-09T00:27:57Z",
+      "side": 1,
+      "message": "Since this is a simple type (e.g. `dex::u8`) it probably shouldn\u0027t use auto.",
+      "revId": "264393e07a8f392dc1f478e7934723f8603ec7ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f194d8_c453ba04",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-11-09T00:27:57Z",
+      "side": 1,
+      "message": "Magic number and bit operation.  Would it be possible to put the number in a macro and create a small function to perform this operation?  I\u0027m not entirely sure why this is being bitor\u0027ed, and a function name might help with that.",
+      "revId": "264393e07a8f392dc1f478e7934723f8603ec7ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2259b3ab_d0f86e6b",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-11-09T00:27:57Z",
+      "side": 1,
+      "message": "Magic number",
+      "revId": "264393e07a8f392dc1f478e7934723f8603ec7ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1c8ae5_591ae492",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2018-11-09T00:27:57Z",
+      "side": 1,
+      "message": "Magic binary operations",
+      "revId": "264393e07a8f392dc1f478e7934723f8603ec7ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
