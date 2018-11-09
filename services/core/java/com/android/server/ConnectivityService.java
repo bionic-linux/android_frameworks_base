@@ -65,6 +65,7 @@ import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.ITestNetworkManager;
 import android.net.LinkProperties;
 import android.net.LinkProperties.CompareResult;
 import android.net.MatchAllNetworkSpecifier;
@@ -5674,7 +5675,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             try {
                 // This should never fail.  Specifying an already in use NetID will cause failure.
-                if (networkAgent.isVPN()) {
+                if (networkAgent.isVPN() || nai.isTestNetwork()) {
                     mNMS.createVirtualNetwork(networkAgent.network.netId,
                             !networkAgent.linkProperties.getDnsServers().isEmpty(),
                             (networkAgent.networkMisc == null ||
@@ -6215,5 +6216,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         return uid;
+    }
+
+    private TestNetworkService mTNS;
+
+    /**
+     * Returns a IBinder to a TestNetworkService. Will be lazily created as needed.
+     *
+     * <p>The TestNetworkService must be run in the system server due to TUN creation.
+     */
+    public synchronized IBinder getTestNetworkService(String callingPackage) {
+        TestNetworkService.enforceTestNetworkPermissions(mContext);
+
+        if (mTNS == null) {
+            mTNS = new TestNetworkService(mContext, mNMS);
+        }
+
+        return mTNS;
     }
 }
