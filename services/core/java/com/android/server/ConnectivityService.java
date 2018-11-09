@@ -95,7 +95,6 @@ import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -279,6 +278,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private INetworkStatsService mStatsService;
     private INetworkPolicyManager mPolicyManager;
     private NetworkPolicyManagerInternal mPolicyManagerInternal;
+
+    /**
+     * TestNetworkService (lazily) created upon first usage. Locked to prevent creation of multiple
+     * instances.
+     */
+    @GuardedBy("this")
+    private TestNetworkService mTNS;
 
     private String mCurrentTcpBufferSizes;
 
@@ -5712,7 +5718,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             try {
                 // This should never fail.  Specifying an already in use NetID will cause failure.
-                if (networkAgent.isVPN()) {
+                if (networkAgent.isVPN() || networkAgent.isTestNetwork()) {
                     mNMS.createVirtualNetwork(networkAgent.network.netId,
                             (networkAgent.networkMisc == null ||
                                 !networkAgent.networkMisc.allowBypass));
@@ -6252,5 +6258,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         return uid;
+    }
+
+    /**
+     * Returns a IBinder to a TestNetworkService. Will be lazily created as needed.
+     *
+     * <p>The TestNetworkService must be run in the system server due to TUN creation.
+     */
+    public synchronized IBinder getTestNetworkService(String callingPackage) {
+        TestNetworkService.enforceTestNetworkPermissions(mContext);
+
+        if (mTNS == null) {
+            mTNS = new TestNetworkService(mContext, mNMS);
+        }
+
+        return mTNS;
     }
 }
