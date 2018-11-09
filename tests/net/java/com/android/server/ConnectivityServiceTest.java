@@ -96,6 +96,7 @@ import android.net.ConnectivityManager.PacketKeepalive;
 import android.net.ConnectivityManager.PacketKeepaliveCallback;
 import android.net.ConnectivityManager.TooManyRequestsException;
 import android.net.ConnectivityThread;
+import android.net.INetd;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
@@ -228,6 +229,7 @@ public class ConnectivityServiceTest {
     @Mock INetworkManagementService mNetworkManagementService;
     @Mock INetworkStatsService mStatsService;
     @Mock INetworkPolicyManager mNpm;
+    @Mock INetd mMockNetd;
 
     private ArgumentCaptor<String[]> mStringArrayCaptor = ArgumentCaptor.forClass(String[].class);
 
@@ -926,8 +928,9 @@ public class ConnectivityServiceTest {
 
         public WrappedConnectivityService(Context context, INetworkManagementService netManager,
                 INetworkStatsService statsService, INetworkPolicyManager policyManager,
-                IpConnectivityLog log) {
+                IpConnectivityLog log, INetd netd) {
             super(context, netManager, statsService, policyManager, log);
+            mNetd = netd;
             mLingerDelayMs = TEST_LINGER_DELAY_MS;
         }
 
@@ -1087,7 +1090,8 @@ public class ConnectivityServiceTest {
                 mNetworkManagementService,
                 mStatsService,
                 mNpm,
-                mock(IpConnectivityLog.class));
+                mock(IpConnectivityLog.class),
+                mMockNetd);
 
         final ArgumentCaptor<INetworkPolicyListener> policyListenerCaptor =
                 ArgumentCaptor.forClass(INetworkPolicyListener.class);
