@@ -22,6 +22,30 @@
       "revId": "07160ff7e5ac08e45d9fc15c61d84054b8790d3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7424d62_08a43fae",
+        "filename": "config/hiddenapi-light-greylist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2018-11-12T10:47:39Z",
+      "side": 0,
+      "message": "Looks like it, these are AIDL methods",
+      "parentUuid": "fc207fee_a7a3fd66",
+      "range": {
+        "startLine": 531,
+        "startChar": 9,
+        "endLine": 531,
+        "endChar": 27
+      },
+      "revId": "07160ff7e5ac08e45d9fc15c61d84054b8790d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
