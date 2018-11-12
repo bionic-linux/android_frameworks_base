@@ -46,6 +46,30 @@
       "revId": "07160ff7e5ac08e45d9fc15c61d84054b8790d3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cebcee_93a37cb1",
+        "filename": "config/hiddenapi-light-greylist.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-11-12T15:18:01Z",
+      "side": 0,
+      "message": "Well spotted. Fixed it in http://aosp/823420",
+      "parentUuid": "f7424d62_08a43fae",
+      "range": {
+        "startLine": 531,
+        "startChar": 9,
+        "endLine": 531,
+        "endChar": 27
+      },
+      "revId": "07160ff7e5ac08e45d9fc15c61d84054b8790d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
