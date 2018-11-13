@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a913d28_aeaa4e24",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-11-13T21:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "277fa9b5_d4c69b71",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 43
+      },
+      "revId": "6bd4b2303df532d0ae5f386ceba5542ba52c1766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e52dedb9_80832c40",
         "filename": "startop/view_compiler/dex_builder.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3078b7d4_6c6b1736",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-11-13T21:43:34Z",
+      "side": 1,
+      "message": "Eventually, yes. I doubt we\u0027ll need it for the view compiler though. I added a DCHECK to make it a little more clear that this isn\u0027t supported yet.",
+      "parentUuid": "e52dedb9_80832c40",
+      "range": {
+        "startLine": 317,
+        "startChar": 22,
+        "endLine": 317,
+        "endChar": 37
+      },
+      "revId": "6bd4b2303df532d0ae5f386ceba5542ba52c1766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9df533d_b3e5e3ee",
         "filename": "startop/view_compiler/dex_testcase_generator.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "6bd4b2303df532d0ae5f386ceba5542ba52c1766",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8038305d_a49a180c",
+        "filename": "startop/view_compiler/dex_testcase_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-11-13T21:43:34Z",
+      "side": 1,
+      "message": "I added a couple more tests that should break if strings get sorted wrong.",
+      "parentUuid": "a9df533d_b3e5e3ee",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 53
+      },
+      "revId": "6bd4b2303df532d0ae5f386ceba5542ba52c1766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
