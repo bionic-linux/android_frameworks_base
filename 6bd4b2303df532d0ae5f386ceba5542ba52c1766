@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277fa9b5_d4c69b71",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-11-13T17:23:04Z",
+      "side": 1,
+      "message": "Nit: DCHECK_EQ?",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 43
+      },
+      "revId": "6bd4b2303df532d0ae5f386ceba5542ba52c1766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52dedb9_80832c40",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-11-13T17:23:04Z",
+      "side": 1,
+      "message": "Is it worth adding the const-string jumbo handling for when the index is \u003e\u003d 65536?",
+      "range": {
+        "startLine": 317,
+        "startChar": 22,
+        "endLine": 317,
+        "endChar": 37
+      },
+      "revId": "6bd4b2303df532d0ae5f386ceba5542ba52c1766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9df533d_b3e5e3ee",
+        "filename": "startop/view_compiler/dex_testcase_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-11-13T17:23:04Z",
+      "side": 1,
+      "message": "Since strings are sorted, maybe it\u0027s worth adding more strings to the test to make sure indices are correct after sorting?",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 53
+      },
+      "revId": "6bd4b2303df532d0ae5f386ceba5542ba52c1766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
