@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a630dbbf_d11840cd",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2018-11-13T02:21:11Z",
+      "side": 1,
+      "message": "Still would like to see this as:\n\n  // @NotThreadSafe\n  public class ...\n\nAnd I don\u0027t think we\u0027ve used \"@apiNote\" very often.",
+      "revId": "63015b1f5e467ec5c8c958513062eea2491a9fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
