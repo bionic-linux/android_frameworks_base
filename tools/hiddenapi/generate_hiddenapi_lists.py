@@ -129,24 +129,24 @@ class FlagsDict:
             "This suggests an issue with the `hiddenapi` build tool.")
 
         # Compute the whole key set
-        self.data_keyset = public_api_set.union(private_api_set)
+        self._dict_keyset = public_api_set.union(private_api_set)
 
         # Create a dict that creates entries for both public and private API,
         # and assigns public API to the whitelist.
-        self.data = {}
+        self._dict = {}
         for api in public_api:
-            self.data[api] = set([ FLAG_WHITELIST ])
+            self._dict[api] = set([ FLAG_WHITELIST ])
         for api in private_api:
-            self.data[api] = set()
+            self._dict[api] = set()
 
     def _check_entries_set(self, keys_subset, source):
         assert isinstance(keys_subset, set)
-        assert keys_subset.issubset(self.data_keyset), (
+        assert keys_subset.issubset(self._dict_keyset), (
             "Error processing: {}\n"
-            "The following entries were not found:\n"
+            "The following entries were unexpected:\n"
             "{}"
             "Please visit go/hiddenapi for more information.").format(
-                source, "".join(map(lambda x: "  " + str(x), keys_subset - self.data_keyset)))
+                source, "".join(map(lambda x: "  " + str(x), keys_subset - self._dict_keyset)))
 
     def _check_flags_set(self, flags_subset, source):
         assert isinstance(flags_subset, set)
@@ -169,7 +169,7 @@ class FlagsDict:
         Returns:
             A set of APIs which match the predicate.
         """
-        return set(filter(lambda x: filter_fn(x, self.data[x]), self.data_keyset))
+        return set(filter(lambda x: filter_fn(x, self._dict[x]), self._dict_keyset))
 
     def get_valid_subset_of_unassigned_apis(self, api_subset):
         """Sanitizes a key set input to only include keys which exist in the dictionary
@@ -190,7 +190,7 @@ class FlagsDict:
         Returns:
             List of lines comprising a CSV file. See "parse_and_merge_csv" for format description.
         """
-        return sorted(map(lambda api: ",".join([api] + sorted(self.data[api])), self.data))
+        return sorted(map(lambda api: ",".join([api] + sorted(self._dict[api])), self._dict))
 
     def parse_and_merge_csv(self, csv_lines, source = "<unknown>"):
         """Parses CSV entries and merges them into a given dictionary.
@@ -218,7 +218,7 @@ class FlagsDict:
 
         # Iterate over all CSV lines, find entry in dict and append flags to it.
         for csv in csv_values:
-            self.data[csv[0]].update(csv[1:])
+            self._dict[csv[0]].update(csv[1:])
 
     def assign_flag(self, flag, apis, source="<unknown>"):
         """Assigns a flag to given subset of entries.
@@ -239,7 +239,7 @@ class FlagsDict:
 
         # Iterate over the API subset, find each entry in dict and assign the flag to it.
         for api in apis:
-            self.data[api].add(flag)
+            self._dict[api].add(flag)
 
 def main(argv):
     # Parse arguments.
