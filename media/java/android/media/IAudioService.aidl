@@ -127,6 +127,8 @@ interface IAudioService {
 
     boolean isBluetoothA2dpOn();
 
+    boolean isDynamicRouting();
+
     int requestAudioFocus(in AudioAttributes aa, int durationHint, IBinder cb,
             IAudioFocusDispatcher fd, String clientId, String callingPackageName, int flags,
             IAudioPolicyCallback pcb, int sdk);

@@ -785,6 +785,21 @@ public class AudioManager {
      * and may not enable muting or changing the volume of audio streams.
      * This method will return true on such devices.
      * <p>The following APIs have no effect when volume is fixed:
+     */
+    public boolean isDynamicRouting() {
+        final IAudioService service = getService();
+        try {
+            return service.isDynamicRouting();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Indicates if the device implements a fixed volume policy.
+     * <p>Some devices may use the the dynamic audio routing.
+     * This method will return true on such devices.
+     * <p>The following APIs have no effect when volume is fixed:
      * <ul>
      *   <li> {@link #adjustVolume(int, int)}
      *   <li> {@link #adjustSuggestedStreamVolume(int, int, int)}
