@@ -126,7 +126,7 @@ public class UpstreamNetworkMonitorTest {
     }
 
     @Test
-    public void testDoesNothingBeforeStarted() {
+    public void testDoesNoThingBeforeTrackDefaultAndStarted() throws Exception {
         assertTrue(mCM.hasNoCallbacks());
         assertFalse(mUNM.mobileNetworkRequested());
 
@@ -138,37 +138,40 @@ public class UpstreamNetworkMonitorTest {
 
     @Test
     public void testDefaultNetworkIsTracked() throws Exception {
-        assertEquals(0, mCM.trackingDefault.size());
+        assertTrue(mCM.hasNoCallbacks());
+        mUNM.startTrackDefaultNetwork(mDefaultRequest);
 
-        mUNM.start(mDefaultRequest);
+        mUNM.start();
         assertEquals(1, mCM.trackingDefault.size());
 
         mUNM.stop();
-        assertTrue(mCM.hasNoCallbacks());
+        assertTrue(mCM.onlyHasDefaultCallbacks());
     }
 
     @Test
     public void testListensForAllNetworks() throws Exception {
         assertTrue(mCM.listening.isEmpty());
 
-        mUNM.start(mDefaultRequest);
+        mUNM.startTrackDefaultNetwork(mDefaultRequest);
+        mUNM.start();
         assertFalse(mCM.listening.isEmpty());
         assertTrue(mCM.isListeningForAll());
 
         mUNM.stop();
-        assertTrue(mCM.hasNoCallbacks());
+        assertTrue(mCM.onlyHasDefaultCallbacks());
     }
 
     @Test
     public void testCallbacksRegistered() {
-        mUNM.start(mDefaultRequest);
-        verify(mCM, times(1)).registerNetworkCallback(
-                any(NetworkRequest.class), any(NetworkCallback.class), any(Handler.class));
+        mUNM.startTrackDefaultNetwork(mDefaultRequest);
         verify(mCM, times(1)).requestNetwork(
                 eq(mDefaultRequest), any(NetworkCallback.class), any(Handler.class));
+        mUNM.start();
+        verify(mCM, times(1)).registerNetworkCallback(
+                any(NetworkRequest.class), any(NetworkCallback.class), any(Handler.class));
 
         mUNM.stop();
-        verify(mCM, times(2)).unregisterNetworkCallback(any(NetworkCallback.class));
+        verify(mCM, times(1)).unregisterNetworkCallback(any(NetworkCallback.class));
     }
 
     @Test
@@ -176,7 +179,7 @@ public class UpstreamNetworkMonitorTest {
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
 
-        mUNM.start(mDefaultRequest);
+        mUNM.start();
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
 
@@ -199,11 +202,9 @@ public class UpstreamNetworkMonitorTest {
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
 
-        mUNM.start(mDefaultRequest);
+        mUNM.start();
         verify(mCM, times(1)).registerNetworkCallback(
                 any(NetworkRequest.class), any(NetworkCallback.class), any(Handler.class));
-        verify(mCM, times(1)).requestNetwork(
-                eq(mDefaultRequest), any(NetworkCallback.class), any(Handler.class));
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
 
@@ -227,7 +228,7 @@ public class UpstreamNetworkMonitorTest {
         assertTrue(mCM.isDunRequested());
 
         mUNM.stop();
-        verify(mCM, times(3)).unregisterNetworkCallback(any(NetworkCallback.class));
+        verify(mCM, times(2)).unregisterNetworkCallback(any(NetworkCallback.class));
 
         verifyNoMoreInteractions(mCM);
     }
@@ -237,7 +238,7 @@ public class UpstreamNetworkMonitorTest {
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
 
-        mUNM.start(mDefaultRequest);
+        mUNM.start();
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
 
@@ -257,7 +258,7 @@ public class UpstreamNetworkMonitorTest {
 
     @Test
     public void testUpdateMobileRequiresDun() throws Exception {
-        mUNM.start(mDefaultRequest);
+        mUNM.start();
 
         // Test going from no-DUN to DUN correctly re-registers callbacks.
         mUNM.updateMobileRequiresDun(false);
@@ -285,7 +286,8 @@ public class UpstreamNetworkMonitorTest {
         final Collection<Integer> preferredTypes = new ArrayList<>();
         preferredTypes.add(TYPE_WIFI);
 
-        mUNM.start(mDefaultRequest);
+        mUNM.startTrackDefaultNetwork(mDefaultRequest);
+        mUNM.start();
         // There are no networks, so there is nothing to select.
         assertSatisfiesLegacyType(TYPE_NONE, mUNM.selectPreferredUpstreamType(preferredTypes));
 
@@ -350,7 +352,8 @@ public class UpstreamNetworkMonitorTest {
 
     @Test
     public void testGetCurrentPreferredUpstream() throws Exception {
-        mUNM.start(mDefaultRequest);
+        mUNM.startTrackDefaultNetwork(mDefaultRequest);
+        mUNM.start();
         mUNM.updateMobileRequiresDun(false);
 
         // [0] Mobile connects, DUN not required -> mobile selected.
@@ -389,7 +392,8 @@ public class UpstreamNetworkMonitorTest {
 
     @Test
     public void testLocalPrefixes() throws Exception {
-        mUNM.start(mDefaultRequest);
+        mUNM.startTrackDefaultNetwork(mDefaultRequest);
+        mUNM.start();
 
         // [0] Test minimum set of local prefixes.
         Set<IpPrefix> local = mUNM.getLocalPrefixes();
@@ -521,11 +525,19 @@ public class UpstreamNetworkMonitorTest {
         }
 
         boolean hasNoCallbacks() {
-            return allCallbacks.isEmpty() &&
-                   trackingDefault.isEmpty() &&
-                   listening.isEmpty() &&
-                   requested.isEmpty() &&
-                   legacyTypeMap.isEmpty();
+            return allCallbacks.isEmpty()
+                    && trackingDefault.isEmpty()
+                    && listening.isEmpty()
+                    && requested.isEmpty()
+                    && legacyTypeMap.isEmpty();
+        }
+
+        boolean onlyHasDefaultCallbacks() {
+            return (allCallbacks.size() == 1)
+                    && (trackingDefault.size() == 1)
+                    && listening.isEmpty()
+                    && requested.isEmpty()
+                    && legacyTypeMap.isEmpty();
         }
 
         boolean isListeningForAll() {
