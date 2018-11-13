@@ -290,7 +290,7 @@ public class AudioService extends IAudioService.Stub
     private int mMode = AudioSystem.MODE_NORMAL;
     // protects mRingerMode
     private final Object mSettingsLock = new Object();
-
+    private boolean mIsDynamicRouting = false;
     private SoundPool mSoundPool;
     private final Object mSoundEffectsLock = new Object();
     private static final int NUM_SOUNDPOOL_CHANNELS = 4;
@@ -2542,6 +2542,11 @@ public class AudioService extends IAudioService.Stub
     /** @see AudioManager#isValidRingerMode(int) */
     public boolean isValidRingerMode(int ringerMode) {
         return ringerMode >= 0 && ringerMode <= AudioManager.RINGER_MODE_MAX;
+    }
+
+    /** @see AudioManager#isDynamicRouting() */
+    public boolean isDynamicRouting() {
+        return mIsDynamicRouting;
     }
 
     public void setRingerModeExternal(int ringerMode, String caller) {
@@ -7672,7 +7677,9 @@ public class AudioService extends IAudioService.Stub
                         " binder death", e);
                 return null;
             }
+            mIsDynamicRouting = true;
         }
+
         return regId;
     }
 
@@ -7689,6 +7696,7 @@ public class AudioService extends IAudioService.Stub
                 pcb.asBinder().unlinkToDeath(app, 0/*flags*/);
             }
             app.release();
+            mIsDynamicRouting = false;
         }
         // TODO implement clearing mix attribute matching info in native audio policy
     }
