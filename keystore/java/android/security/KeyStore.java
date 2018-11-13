@@ -64,6 +64,7 @@ import sun.security.x509.AlgorithmId;
  */
 public class KeyStore {
     private static final String TAG = "KeyStore";
+    private static final String KEYSTORE_SERVICE_NAME = "android.security.keystore";
 
     // ResponseCodes - see system/security/keystore/include/keystore/keystore.h
     @UnsupportedAppUsage
@@ -149,7 +150,7 @@ public class KeyStore {
 
     private int mError = NO_ERROR;
 
-    private final IKeystoreService mBinder;
+    private IKeystoreService mBinder;
     private final Context mContext;
 
     private IBinder mToken;
@@ -157,6 +158,7 @@ public class KeyStore {
     private KeyStore(IKeystoreService binder) {
         mBinder = binder;
         mContext = getApplicationContext();
+        linkBinderToDeath();
     }
 
     @UnsupportedAppUsage
@@ -169,11 +171,40 @@ public class KeyStore {
         return application;
     }
 
+    private void linkBinderToDeath() {
+        try {
+            mBinder.asBinder().linkToDeath(new Binder.DeathRecipient() {
+                    public void binderDied() {
+                        if (mBinder == null) {
+                            return;
+                        }
+
+                        Log.w(TAG, "Connection to " + KEYSTORE_SERVICE_NAME + " died");
+                        mBinder.asBinder().unlinkToDeath(this, 0);
+                        mBinder = null;
+                    }
+                }, 0);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Failed linking to death of " + KEYSTORE_SERVICE_NAME, e);
+        }
+    }
+
+    private void ensureBinder() {
+        if (mBinder != null) {
+            return;
+        }
+
+        Log.w(TAG, "Reestablishing connection to " + KEYSTORE_SERVICE_NAME);
+        mBinder = IKeystoreService.Stub.asInterface(ServiceManager
+                .getService(KEYSTORE_SERVICE_NAME));
+        linkBinderToDeath();
+    }
+
     @UnsupportedAppUsage
     public static KeyStore getInstance() {
-        IKeystoreService keystore = IKeystoreService.Stub.asInterface(ServiceManager
-                .getService("android.security.keystore"));
-        return new KeyStore(keystore);
+        IKeystoreService binder = IKeystoreService.Stub.asInterface(ServiceManager
+                .getService(KEYSTORE_SERVICE_NAME));
+        return new KeyStore(binder);
     }
 
     private synchronized IBinder getToken() {
@@ -186,6 +217,7 @@ public class KeyStore {
     @UnsupportedAppUsage
     public State state(int userId) {
         final int ret;
+        ensureBinder();
         try {
             ret = mBinder.getState(userId);
         } catch (RemoteException e) {
@@ -211,6 +243,7 @@ public class KeyStore {
     }
 
     public byte[] get(String key, int uid) {
+        ensureBinder();
         try {
             key = key != null ? key : "";
             return mBinder.get(key, uid);
@@ -233,6 +266,7 @@ public class KeyStore {
     }
 
     public int insert(String key, byte[] value, int uid, int flags) {
+        ensureBinder();
         try {
             if (value == null) {
                 value = new byte[0];
@@ -250,6 +284,7 @@ public class KeyStore {
     }
 
     public boolean delete(String key, int uid) {
+        ensureBinder();
         try {
             int ret = mBinder.del(key, uid);
             return (ret == NO_ERROR || ret == KEY_NOT_FOUND);
@@ -265,6 +300,7 @@ public class KeyStore {
     }
 
     public boolean contains(String key, int uid) {
+        ensureBinder();
         try {
             return mBinder.exist(key, uid) == NO_ERROR;
         } catch (RemoteException e) {
@@ -281,6 +317,7 @@ public class KeyStore {
      * List all entries in the keystore for {@code uid} starting with {@code prefix}.
      */
     public String[] list(String prefix, int uid) {
+        ensureBinder();
         try {
             return mBinder.list(prefix, uid);
         } catch (RemoteException e) {
@@ -298,6 +335,7 @@ public class KeyStore {
 
     @UnsupportedAppUsage
     public boolean reset() {
+        ensureBinder();
         try {
             return mBinder.reset() == NO_ERROR;
         } catch (RemoteException e) {
@@ -313,6 +351,7 @@ public class KeyStore {
      * @return whether {@code user}'s keystore was locked.
      */
     public boolean lock(int userId) {
+        ensureBinder();
         try {
             return mBinder.lock(userId) == NO_ERROR;
         } catch (RemoteException e) {
@@ -337,6 +376,7 @@ public class KeyStore {
      * @return whether the keystore was unlocked.
      */
     public boolean unlock(int userId, String password) {
+        ensureBinder();
         try {
             password = password != null ? password : "";
             mError = mBinder.unlock(userId, password);
@@ -356,6 +396,7 @@ public class KeyStore {
      * Check if the keystore for {@code userId} is empty.
      */
     public boolean isEmpty(int userId) {
+        ensureBinder();
         try {
             return mBinder.isEmpty(userId) != 0;
         } catch (RemoteException e) {
@@ -370,6 +411,7 @@ public class KeyStore {
     }
 
     public String grant(String key, int uid) {
+        ensureBinder();
         try {
             String grantAlias =  mBinder.grant(key, uid);
             if (grantAlias == "") return null;
@@ -381,6 +423,7 @@ public class KeyStore {
     }
 
     public boolean ungrant(String key, int uid) {
+        ensureBinder();
         try {
             return mBinder.ungrant(key, uid) == NO_ERROR;
         } catch (RemoteException e) {
@@ -394,6 +437,7 @@ public class KeyStore {
      * epoch. Will return -1L if the key could not be found or other error.
      */
     public long getmtime(String key, int uid) {
+        ensureBinder();
         try {
             final long millis = mBinder.getmtime(key, uid);
             if (millis == -1L) {
@@ -417,6 +461,7 @@ public class KeyStore {
     }
 
     public boolean isHardwareBacked(String keyType) {
+        ensureBinder();
         try {
             return mBinder.is_hardware_backed(keyType.toUpperCase(Locale.US)) == NO_ERROR;
         } catch (RemoteException e) {
@@ -426,6 +471,7 @@ public class KeyStore {
     }
 
     public boolean clearUid(int uid) {
+        ensureBinder();
         try {
             return mBinder.clear_uid(uid) == NO_ERROR;
         } catch (RemoteException e) {
@@ -439,6 +485,7 @@ public class KeyStore {
     }
 
     public boolean addRngEntropy(byte[] data, int flags) {
+        ensureBinder();
         try {
             return mBinder.addRngEntropy(data, flags) == NO_ERROR;
         } catch (RemoteException e) {
@@ -449,6 +496,7 @@ public class KeyStore {
 
     public int generateKey(String alias, KeymasterArguments args, byte[] entropy, int uid,
             int flags, KeyCharacteristics outCharacteristics) {
+        ensureBinder();
         try {
             entropy = entropy != null ? entropy : new byte[0];
             args = args != null ? args : new KeymasterArguments();
@@ -471,6 +519,7 @@ public class KeyStore {
 
     public int getKeyCharacteristics(String alias, KeymasterBlob clientId, KeymasterBlob appId,
             int uid, KeyCharacteristics outCharacteristics) {
+        ensureBinder();
         try {
             clientId = clientId != null ? clientId : new KeymasterBlob(new byte[0]);
             appId = appId != null ? appId : new KeymasterBlob(new byte[0]);
@@ -488,6 +537,7 @@ public class KeyStore {
 
     public int importKey(String alias, KeymasterArguments args, int format, byte[] keyData,
             int uid, int flags, KeyCharacteristics outCharacteristics) {
+        ensureBinder();
         try {
             int error = mBinder.importKey(alias, args, format, keyData, uid, flags,
                     outCharacteristics);
@@ -571,6 +621,7 @@ public class KeyStore {
             String wrappingKeyAlias,
             byte[] maskingKey, KeymasterArguments args, long rootSid, long fingerprintSid, int uid,
             KeyCharacteristics outCharacteristics) {
+        ensureBinder();
         try {
             int error = mBinder.importWrappedKey(wrappedKeyAlias, wrappedKey, wrappingKeyAlias,
                     maskingKey, args, rootSid, fingerprintSid, outCharacteristics);
@@ -588,6 +639,7 @@ public class KeyStore {
 
     public ExportResult exportKey(String alias, int format, KeymasterBlob clientId,
             KeymasterBlob appId, int uid) {
+        ensureBinder();
         try {
             clientId = clientId != null ? clientId : new KeymasterBlob(new byte[0]);
             appId = appId != null ? appId : new KeymasterBlob(new byte[0]);
@@ -604,6 +656,7 @@ public class KeyStore {
 
     public OperationResult begin(String alias, int purpose, boolean pruneable,
             KeymasterArguments args, byte[] entropy, int uid) {
+        ensureBinder();
         try {
             args = args != null ? args : new KeymasterArguments();
             entropy = entropy != null ? entropy : new byte[0];
@@ -622,6 +675,7 @@ public class KeyStore {
     }
 
     public OperationResult update(IBinder token, KeymasterArguments arguments, byte[] input) {
+        ensureBinder();
         try {
             arguments = arguments != null ? arguments : new KeymasterArguments();
             input = input != null ? input : new byte[0];
@@ -634,6 +688,7 @@ public class KeyStore {
 
     public OperationResult finish(IBinder token, KeymasterArguments arguments, byte[] signature,
             byte[] entropy) {
+        ensureBinder();
         try {
             arguments = arguments != null ? arguments : new KeymasterArguments();
             entropy = entropy != null ? entropy : new byte[0];
@@ -650,6 +705,7 @@ public class KeyStore {
     }
 
     public int abort(IBinder token) {
+        ensureBinder();
         try {
             return mBinder.abort(token);
         } catch (RemoteException e) {
@@ -666,6 +722,7 @@ public class KeyStore {
      * a {@code KeymasterDefs.KM_ERROR_} value or {@code KeyStore} ResponseCode.
      */
     public int addAuthToken(byte[] authToken) {
+        ensureBinder();
         try {
             return mBinder.addAuthToken(authToken);
         } catch (RemoteException e) {
@@ -686,6 +743,7 @@ public class KeyStore {
         if (newPassword == null) {
             newPassword = "";
         }
+        ensureBinder();
         try {
             return mBinder.onUserPasswordChanged(userId, newPassword) == NO_ERROR;
         } catch (RemoteException e) {
@@ -703,6 +761,7 @@ public class KeyStore {
      * password as the parent.
      */
     public void onUserAdded(int userId, int parentId) {
+        ensureBinder();
         try {
             mBinder.onUserAdded(userId, parentId);
         } catch (RemoteException e) {
@@ -725,6 +784,7 @@ public class KeyStore {
      * @param userId the removed user.
      */
     public void onUserRemoved(int userId) {
+        ensureBinder();
         try {
             mBinder.onUserRemoved(userId);
         } catch (RemoteException e) {
@@ -738,6 +798,7 @@ public class KeyStore {
 
     public int attestKey(
             String alias, KeymasterArguments params, KeymasterCertificateChain outChain) {
+        ensureBinder();
         try {
             if (params == null) {
                 params = new KeymasterArguments();
@@ -753,6 +814,7 @@ public class KeyStore {
     }
 
     public int attestDeviceIds(KeymasterArguments params, KeymasterCertificateChain outChain) {
+        ensureBinder();
         try {
             if (params == null) {
                 params = new KeymasterArguments();
@@ -771,6 +833,7 @@ public class KeyStore {
      * Notify keystore that the device went off-body.
      */
     public void onDeviceOffBody() {
+        ensureBinder();
         try {
             mBinder.onDeviceOffBody();
         } catch (RemoteException e) {
@@ -805,6 +868,7 @@ public class KeyStore {
      */
     public int presentConfirmationPrompt(IBinder listener, String promptText, byte[] extraData,
                                          String locale, int uiOptionsAsFlags) {
+        ensureBinder();
         try {
             return mBinder.presentConfirmationPrompt(listener, promptText, extraData, locale,
                                                      uiOptionsAsFlags);
@@ -822,6 +886,7 @@ public class KeyStore {
      * example {@code KeyStore.CONFIRMATIONUI_OK}.
      */
     public int cancelConfirmationPrompt(IBinder listener) {
+        ensureBinder();
         try {
             return mBinder.cancelConfirmationPrompt(listener);
         } catch (RemoteException e) {
@@ -836,6 +901,7 @@ public class KeyStore {
      * @return whether the confirmationUI HAL is available.
      */
     public boolean isConfirmationPromptSupported() {
+        ensureBinder();
         try {
             return mBinder.isConfirmationPromptSupported();
         } catch (RemoteException e) {
