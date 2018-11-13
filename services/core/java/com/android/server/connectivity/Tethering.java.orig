@@ -1382,7 +1382,7 @@ public class Tethering extends BaseNetworkObserver {
                     return;
                 }
 
-                mUpstreamNetworkMonitor.startObserveAllNetworks();
+                mUpstreamNetworkMonitor.startObserveAllNetwork();
 
                 // TODO: De-duplicate with updateUpstreamWanted() below.
                 if (upstreamWanted()) {
