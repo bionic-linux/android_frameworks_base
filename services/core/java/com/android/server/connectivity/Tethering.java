@@ -1381,7 +1381,7 @@ public class Tethering extends BaseNetworkObserver {
                     return;
                 }
 
-                mUpstreamNetworkMonitor.start(mDeps.getDefaultNetworkRequest());
+                mUpstreamNetworkMonitor.startObserveAllNetwork();
 
                 // TODO: De-duplicate with updateUpstreamWanted() below.
                 if (upstreamWanted()) {
@@ -1655,6 +1655,10 @@ public class Tethering extends BaseNetworkObserver {
                 mOffloadController.setLocalPrefixes(localPrefixes);
             }
         }
+    }
+
+    public void systemReady() {
+        mUpstreamNetworkMonitor.startTrackDefaultNetwork(mDeps.getDefaultNetworkRequest());
     }
 
     @Override
