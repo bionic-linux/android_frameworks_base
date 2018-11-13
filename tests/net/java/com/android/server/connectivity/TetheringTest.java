@@ -130,10 +130,6 @@ public class TetheringTest {
     private static final String TEST_USB_IFNAME = "test_rndis0";
     private static final String TEST_WLAN_IFNAME = "test_wlan0";
 
-    // Actual contents of the request don't matter for this test. The lack of
-    // any specific TRANSPORT_* is sufficient to identify this request.
-    private static final NetworkRequest mDefaultRequest = new NetworkRequest.Builder().build();
-
     @Mock private ApplicationInfo mApplicationInfo;
     @Mock private Context mContext;
     @Mock private INetworkManagementService mNMService;
@@ -256,11 +252,6 @@ public class TetheringTest {
         public boolean isTetheringSupported() {
             isTetheringSupportedCalls++;
             return true;
-        }
-
-        @Override
-        public NetworkRequest getDefaultNetworkRequest() {
-            return mDefaultRequest;
         }
     }
 
@@ -496,7 +487,7 @@ public class TetheringTest {
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_LOCAL_ONLY);
         verifyNoMoreInteractions(mWifiManager);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_ACTIVE_LOCAL_ONLY);
-        verify(mUpstreamNetworkMonitor, times(1)).start(any(NetworkRequest.class));
+        verify(mUpstreamNetworkMonitor, times(1)).start();
         // TODO: Figure out why this isn't exactly once, for sendTetherStateChangedBroadcast().
         assertTrue(1 <= mTetheringDependencies.isTetheringSupportedCalls);
 
@@ -541,9 +532,29 @@ public class TetheringTest {
     }
 
     private void runUsbTethering(NetworkState upstreamState) {
+        when(mUpstreamNetworkMonitor.getDefaultInternetUpstream()).
+                thenReturn(upstreamState.network);
         prepareUsbTethering(upstreamState);
         sendUsbBroadcast(true, true, true);
         mLooper.dispatchAll();
+
+        // If default upstream is available, tethering should receive EVENT_UPSTREAM_CALLBACK
+        // callback to choose tether upstream after starting UpstreamNetworkMonitor
+        mTetheringDependencies.upstreamNetworkMonitorMasterSM.sendMessage(
+                Tethering.TetherMasterSM.EVENT_UPSTREAM_CALLBACK,
+                UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES,
+                0,
+                upstreamState);
+        mLooper.dispatchAll();
+    }
+
+    @Test
+    public void testRegisterMobileWhenNoDefaultUpstream() throws Exception {
+        prepareUsbTethering(null);
+        sendUsbBroadcast(true, true, true);
+        mLooper.dispatchAll();
+
+        verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
     }
 
     @Test
@@ -730,7 +741,7 @@ public class TetheringTest {
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_TETHERED);
         verifyNoMoreInteractions(mWifiManager);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_ACTIVE_TETHER);
-        verify(mUpstreamNetworkMonitor, times(1)).start(any(NetworkRequest.class));
+        verify(mUpstreamNetworkMonitor, times(1)).start();
         // In tethering mode, in the default configuration, an explicit request
         // for a mobile network is also made.
         verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
