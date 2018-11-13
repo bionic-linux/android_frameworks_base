@@ -76,10 +76,10 @@ $(OUT_DOCS)/offline-sdk-timestamp: $(OUT_DOCS)/offline-sdk-docs-docs.zip
 .KATI_RESTAT: $(INTERNAL_PLATFORM_HIDDENAPI_FLAGS)
 $(INTERNAL_PLATFORM_HIDDENAPI_FLAGS): \
     frameworks/base/tools/hiddenapi/generate_hiddenapi_lists.py \
-    frameworks/base/config/hiddenapi-light-greylist.txt \
-    frameworks/base/config/hiddenapi-vendor-list.txt \
-    frameworks/base/config/hiddenapi-max-sdk-p-blacklist.txt \
-    frameworks/base/config/hiddenapi-force-blacklist.txt \
+    frameworks/base/config/hiddenapi-greylist.txt \
+    frameworks/base/config/hiddenapi-blacklist-max-p.txt \
+    frameworks/base/config/hiddenapi-blacklist-max-o.txt \
+    frameworks/base/config/hiddenapi-blacklist.txt \
     $(INTERNAL_PLATFORM_HIDDENAPI_PUBLIC_LIST) \
     $(INTERNAL_PLATFORM_HIDDENAPI_PRIVATE_LIST) \
     $(INTERNAL_PLATFORM_REMOVED_DEX_API_FILE)
@@ -87,12 +87,11 @@ $(INTERNAL_PLATFORM_HIDDENAPI_FLAGS): \
 	    --public $(INTERNAL_PLATFORM_HIDDENAPI_PUBLIC_LIST) \
 	    --private $(INTERNAL_PLATFORM_HIDDENAPI_PRIVATE_LIST) \
 	    --flags $(PRIVATE_FLAGS_INPUTS) \
-	    --greylist \
-	        frameworks/base/config/hiddenapi-light-greylist.txt \
-	        frameworks/base/config/hiddenapi-vendor-list.txt \
+	    --greylist frameworks/base/config/hiddenapi-greylist.txt \
 	    --greylist-ignore-missing $(INTERNAL_PLATFORM_REMOVED_DEX_API_FILE) \
+	    --blacklist-max-p frameworks/base/config/hiddenapi-blacklist-max-p.txt \
 	    --blacklist-max-o-ignore-missing frameworks/base/config/hiddenapi-blacklist-max-o.txt \
-	    --blacklist frameworks/base/config/hiddenapi-force-blacklist.txt \
+	    --blacklist frameworks/base/config/hiddenapi-blacklist.txt \
 	    --output $@.tmp
 	$(call commit-change-for-toc,$@)
 
