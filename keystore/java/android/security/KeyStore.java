@@ -292,6 +292,29 @@ public class KeyStore {
         }
     }
 
+    /**
+     * List all uids of all keys that are bound to the current user credentials.
+     * Only system is allowed to call this method.
+     */
+    @UnsupportedAppUsage
+    public int[] listUidsOfAuthBoundKeys() {
+        try {
+            int[] uidsOut = new int[1024];
+            int rc = mBinder.listUidsOfAuthBoundKeys(uidsOut);
+            if (rc != 0) {
+                Log.w(TAG, String.format("listUidsOfAuthBoundKeys failed with error code %d", rc));
+                return null;
+            }
+            return uidsOut;
+        } catch (RemoteException e) {
+            Log.w(TAG, "Cannot connect to keystore", e);
+            return null;
+        } catch (android.os.ServiceSpecificException e) {
+            Log.w(TAG, "KeyStore exception", e);
+            return null;
+        }
+    }
+
     public String[] list(String prefix) {
         return list(prefix, UID_SELF);
     }
