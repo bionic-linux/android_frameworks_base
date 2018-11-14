@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ca8b014f_0f8d42a1",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-11-14T15:19:12Z",
+      "side": 1,
+      "message": "I don\u0027t think \"we had some internal method with this exact (bad) behavior that apps were using even though they were not supposed to\" is a strong argument for exposing a public API that does exactly the same thing as opposed to a different but better one. Apps have to change their code anyway; they can do everything they did through the old API through the new API, it just works a little bit differently. \n\nSo, I think our public API should not allow null, and should probably also not allow \"\" but I don\u0027t feel as strongly about the latter. If I correctly read between the lines on Lorenzo\u0027s comment then I suspect that he agrees.\n\n\u003e create a support library which contains additional logic to replicate the\n\u003e behavior of the internal API.\n\nI strongly disagree with this part. If we create a support library API then it should be one that makes the public API\u0027s behavior available on old platforms, not one that makes the old (internal) API\u0027s behavior available on new platforms. We could however include sample code for how to get the old API\u0027s behavior on top of the new one in a deprecation comment (@deprecated) on the old API.",
+      "parentUuid": "abc28052_a0a0b712",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84d18584_ac656c4d",
         "filename": "core/java/android/net/InetAddresses.java",
         "patchSetId": 3
