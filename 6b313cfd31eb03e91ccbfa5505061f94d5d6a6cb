@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27fd925f_75681f8c",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-11-14T15:08:03Z",
+      "side": 1,
+      "message": "Any particular reason why they\u0027re better?",
+      "parentUuid": "362852bc_b2cc4fac",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "184782a8_1b1a5382",
         "filename": "core/java/android/net/InetAddresses.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "abc28052_a0a0b712",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-11-14T15:08:03Z",
+      "side": 1,
+      "message": "It\u0027s what our current code already does. If the API behavior is different to the internal method then it will make it more difficult for developers to switch. However, if this API is intended to exist long term then that cost may be worth it.\n\nOne possible approach is to change this method to address the issues you have raised and then create a support library which contains additional logic to replicate the behavior of the internal API.",
+      "parentUuid": "184782a8_1b1a5382",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84d18584_ac656c4d",
         "filename": "core/java/android/net/InetAddresses.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-11-08T15:13:38Z",
       "side": 1,
       "message": "The implementation will actually accept IPv6 addresses in square brackets (e.g., [2001:db8::1]\") as a valid numeric IP address.\n\nThis isn\u0027t great behaviour for a public API since that format is special for URLs. Is this something we can change before we make this method public? Or do we really need to maintain compatibility with the current behaviour of the hidden function?",
+      "range": {
+        "startLine": 39,
+        "startChar": 51,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd5ddd4_af54f106",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-11-14T15:08:03Z",
+      "side": 1,
+      "message": "See above. We can change it, the only issue is whether it will increase the cost for developers to switch over.",
+      "parentUuid": "84d18584_ac656c4d",
       "range": {
         "startLine": 39,
         "startChar": 51,

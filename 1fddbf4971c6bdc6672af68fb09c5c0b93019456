@@ -70,6 +70,30 @@
       "revId": "1fddbf4971c6bdc6672af68fb09c5c0b93019456",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ba4e3f8_79c8150b",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-11-14T15:08:03Z",
+      "side": 1,
+      "message": "\u003e So null / \"\" are aliases for \"127.0.0.1\" or \"::1\" (not documented which one)?\n\nIt is documented that it will return an instance of Inet6Address that represents the loopback address, i.e. ::1.\n\nI have added a comment on http://b/78686891 to see whether that caller depends on the behavior of this wrt null/\"\". I am not sure that it will help us much because even if they do not rely on that behavior that does not help us understand whether others may rely on it.\n\nI have had a quick look at the usages made of it internally and there are plenty of places where it seems to be passed \"\". I\u0027ve found paths through other public APIs that pass nulls through so it is possible that Apps rely on this behavior through those other APIs too.",
+      "parentUuid": "4d7cf4b5_92608842",
+      "range": {
+        "startLine": 37,
+        "startChar": 68,
+        "endLine": 37,
+        "endChar": 91
+      },
+      "revId": "1fddbf4971c6bdc6672af68fb09c5c0b93019456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
