@@ -164,6 +164,30 @@
       "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "751277fa_75575c2c",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-11-14T15:41:32Z",
+      "side": 1,
+      "message": "Chances are that if any apps rely on the internal method\u0027s behavior then they only do so accidentally. It\u0027s not clear at all that apps would prefer us to keep the old (broken, IMO) behavior rather than have the new method exhibit different (better, IMO) behavior.\n\nThat the old method accepts square brackets and null, and to a lesser extent that it accepts \"\",  all seem like poor behavior that we probably shouldn\u0027t elevate to the status of an officially sanctioned public API.",
+      "parentUuid": "5fd5ddd4_af54f106",
+      "range": {
+        "startLine": 39,
+        "startChar": 51,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
