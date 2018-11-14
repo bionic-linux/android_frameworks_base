@@ -34,6 +34,24 @@
       "revId": "f028e2634b49a72c1c7809b1ecb6e07532dd6025",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dc810c6_e5abc3ad",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2018-11-14T19:03:27Z",
+      "side": 1,
+      "message": "You may want to make a new result class that has an error field and a uids array field.",
+      "parentUuid": "6ba027d8_f404a105",
+      "revId": "f028e2634b49a72c1c7809b1ecb6e07532dd6025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
