@@ -52,6 +52,24 @@
       "revId": "f028e2634b49a72c1c7809b1ecb6e07532dd6025",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5d53eec_f1efe486",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1362721
+      },
+      "writtenOn": "2018-11-14T20:39:54Z",
+      "side": 1,
+      "message": "After some trial and error I figured out how output arrays work in AIDL. The cpp service will receive a vector initialized to the size passed in. Changing the size of the vector will result in a runtime exception. So this can be worked around by ignoring \u00270\u0027 entries in the result. Janis is right that a result class would be better, but that will take me a bit to implement.",
+      "parentUuid": "4dc810c6_e5abc3ad",
+      "revId": "f028e2634b49a72c1c7809b1ecb6e07532dd6025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
