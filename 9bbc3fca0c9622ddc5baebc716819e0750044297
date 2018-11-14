@@ -22,6 +22,29 @@
       "revId": "9bbc3fca0c9622ddc5baebc716819e0750044297",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99001c96_88da9589",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2311,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-11-14T23:37:25Z",
+      "side": 1,
+      "message": "Determines whether the carrier wants to cancel the cs reject notification automatically when the voice registration state changes. If true, the notification will be automatically removed when the voice registration state changes. If false, the notification will persist until the user dismisses it, the SIM is removed, or the device is rebooted.",
+      "range": {
+        "startLine": 2311,
+        "startChar": 7,
+        "endLine": 2311,
+        "endChar": 77
+      },
+      "revId": "9bbc3fca0c9622ddc5baebc716819e0750044297",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
