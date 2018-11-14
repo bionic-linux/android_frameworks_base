@@ -70,6 +70,24 @@
       "revId": "f028e2634b49a72c1c7809b1ecb6e07532dd6025",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92d8f86e_c2a210e3",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2018-11-14T21:17:09Z",
+      "side": 1,
+      "message": "I suggest adding the result class tomorrow.  Let\u0027s let TreeHugger chew on this and merge it.",
+      "parentUuid": "b5d53eec_f1efe486",
+      "revId": "f028e2634b49a72c1c7809b1ecb6e07532dd6025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
