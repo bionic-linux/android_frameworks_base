@@ -139,7 +139,8 @@ public class ApfFilter {
         DROPPED_IPV6_MULTICAST_PING,
         DROPPED_IPV6_NON_ICMP_MULTICAST,
         DROPPED_802_3_FRAME,
-        DROPPED_ETHERTYPE_BLACKLISTED;
+        DROPPED_ETHERTYPE_BLACKLISTED,
+        DROPPED_ARP_REPLY_SPA_NO_HOST;
 
         // Returns the negative byte offset from the end of the APF data segment for
         // a given counter.
@@ -289,15 +290,16 @@ public class ApfFilter {
 
     private static final int ARP_HEADER_OFFSET = ETH_HEADER_LEN;
     private static final int ARP_OPCODE_OFFSET = ARP_HEADER_OFFSET + 6;
-    private static final short ARP_OPCODE_REQUEST = 1;
-    private static final short ARP_OPCODE_REPLY = 2;
     private static final byte[] ARP_IPV4_HEADER = {
             0, 1, // Hardware type: Ethernet (1)
             8, 0, // Protocol type: IP (0x0800)
             6,    // Hardware size: 6
             4,    // Protocol size: 4
     };
-    private static final int ARP_TARGET_IP_ADDRESS_OFFSET = ETH_HEADER_LEN + 24;
+    private static final short ARP_OPCODE_REQUEST = 1;
+    private static final short ARP_OPCODE_REPLY = 2;
+    private static final int ARP_SOURCE_IP_ADDRESS_OFFSET = ARP_HEADER_OFFSET + 14;
+    private static final int ARP_TARGET_IP_ADDRESS_OFFSET = ARP_HEADER_OFFSET + 24;
     // Do not log ApfProgramEvents whose actual lifetimes was less than this.
     private static final int APF_PROGRAM_EVENT_LIFETIME_THRESHOLD = 2;
     // Limit on the Black List size to cap on program usage for this
@@ -883,6 +885,8 @@ public class ApfFilter {
         //   pass
         // if not ARP IPv4 reply or request
         //   pass
+        // if ARP reply source ip is 0.0.0.0
+        //   drop
         // if unicast ARP reply
         //   pass
         // if interface has no IPv4 address
@@ -905,6 +909,11 @@ public class ApfFilter {
         gen.addJumpIfR0Equals(ARP_OPCODE_REQUEST, checkTargetIPv4); // Skip to unicast check
         maybeSetCounter(gen, Counter.PASSED_ARP_UNKNOWN);
         gen.addJumpIfR0NotEquals(ARP_OPCODE_REPLY, mCountAndPassLabel);
+
+        // Drop if ARP reply source IP is 0.0.0.0
+        gen.addLoad32(Register.R0, ARP_SOURCE_IP_ADDRESS_OFFSET);
+        maybeSetCounter(gen, Counter.DROPPED_ARP_REPLY_SPA_NO_HOST);
+        gen.addJumpIfR0Equals(IPV4_ANY_HOST_ADDRESS, mCountAndDropLabel);
 
         // Pass if unicast reply.
         gen.addLoadImmediate(Register.R0, ETH_DEST_ADDR_OFFSET);
