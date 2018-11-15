@@ -650,11 +650,20 @@ public class ConnectivityManager {
     @Deprecated
     public static final int TYPE_VPN = 17;
 
-    /** {@hide} */
-    public static final int MAX_RADIO_TYPE   = TYPE_VPN;
+    /**
+     * A network that is exclusively meant to be used for testing
+     *
+     * @deprecated Use {@link NetworkCapabilities} instead.
+     * @hide
+     */
+    @Deprecated
+    public static final int TYPE_TEST = 18;
 
     /** {@hide} */
-    public static final int MAX_NETWORK_TYPE = TYPE_VPN;
+    public static final int MAX_RADIO_TYPE = TYPE_TEST;
+
+    /** {@hide} */
+    public static final int MAX_NETWORK_TYPE = TYPE_TEST;
 
     private static final int MIN_NETWORK_TYPE = TYPE_MOBILE;
 
