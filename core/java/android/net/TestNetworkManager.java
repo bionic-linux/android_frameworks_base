@@ -16,6 +16,7 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.RequiresPermission;
 import android.annotation.TestApi;
 import android.content.Context;
 import android.os.IBinder;
@@ -49,6 +50,7 @@ public class TestNetworkManager {
      * @hide
      */
     @TestApi
+    @RequiresPermission(android.Manifest.permission.MANAGE_TEST_NETWORKS)
     public void teardownTestNetwork(@NonNull Network network) {
         try {
             mService.teardownTestNetwork(network.netId);
@@ -65,6 +67,7 @@ public class TestNetworkManager {
      * @hide
      */
     @TestApi
+    @RequiresPermission(android.Manifest.permission.MANAGE_TEST_NETWORKS)
     public void createTestNetwork(@NonNull String iface, @NonNull IBinder binder) {
         try {
             mService.createTestNetwork(iface, binder);
@@ -83,6 +86,7 @@ public class TestNetworkManager {
      * @hide
      */
     @TestApi
+    @RequiresPermission(android.Manifest.permission.MANAGE_TEST_NETWORKS)
     public ParcelFileDescriptor createTunInterface(
             @NonNull String iface, @NonNull LinkAddress[] linkAddrs) {
         try {
