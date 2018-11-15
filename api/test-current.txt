@@ -612,6 +612,7 @@ package android.net {
   }
 
   public class TestNetworkManager {
+    method public android.os.ParcelFileDescriptor createTapInterface(java.lang.String);
     method public void createTestNetwork(java.lang.String, android.os.IBinder);
     method public android.os.ParcelFileDescriptor createTunInterface(java.lang.String, android.net.LinkAddress[]);
     method public void teardownTestNetwork(android.net.Network);
