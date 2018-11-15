@@ -49,17 +49,18 @@ static int inet4 = -1;
 #define SYSTEM_ERROR (-1)
 #define BAD_ARGUMENT (-2)
 
-static int create_tun_interface(const char* iface) {
-    int tun = open("/dev/tun", O_RDWR | O_NONBLOCK);
+static int create_tuntap_interface(const char* iface, bool useTun) {
+    int tuntap = open("/dev/tun", O_RDWR | O_NONBLOCK);
 
     ifreq ifr;
     memset(&ifr, 0, sizeof(ifr));
 
     // Allocate interface.
-    ifr.ifr_flags = IFF_TUN | IFF_NO_PI;
+    ifr.ifr_flags = IFF_NO_PI | (useTun ? IFF_TUN : IFF_TAP);
+
     strncpy(ifr.ifr_name, iface, IFNAMSIZ);
-    if (ioctl(tun, TUNSETIFF, &ifr)) {
-        ALOGE("Cannot allocate TUN: %s", strerror(errno));
+    if (ioctl(tuntap, TUNSETIFF, &ifr)) {
+        ALOGE("Cannot allocate TUN/TAP: %s", strerror(errno));
         goto error;
     }
 
@@ -70,14 +71,14 @@ static int create_tun_interface(const char* iface) {
         goto error;
     }
 
-    return tun;
+    return tuntap;
 
 error:
-    close(tun);
+    close(tuntap);
     return SYSTEM_ERROR;
 }
 
-static int reset_tun_interface(const char* iface) {
+static int reset_tuntap_interface(const char* iface) {
     ifreq ifr;
     memset(&ifr, 0, sizeof(ifr));
 
@@ -100,19 +101,19 @@ static void throwException(JNIEnv* env, int error, const char* message) {
     }
 }
 
-static jint create(JNIEnv* env, jobject /* thiz */, jstring jIface) {
+static jint create(JNIEnv* env, jobject /* thiz */, jstring jIface, jboolean useTun) {
     const char* iface = jIface ? env->GetStringUTFChars(jIface, NULL) : NULL;
     if (!iface) {
         jniThrowNullPointerException(env, "iface");
         return -1;
     }
 
-    int tun = create_tun_interface(iface);
-    if (tun < 0) {
-        throwException(env, tun, "Cannot create interface");
+    int tuntap = create_tuntap_interface(iface, useTun);
+    if (tuntap < 0) {
+        throwException(env, tuntap, "Cannot create interface");
         return -1;
     }
-    return tun;
+    return tuntap;
 }
 
 static void reset(JNIEnv* env, jobject /* thiz */, jstring jIface) {
@@ -121,7 +122,7 @@ static void reset(JNIEnv* env, jobject /* thiz */, jstring jIface) {
         jniThrowNullPointerException(env, "iface");
         return;
     }
-    if (reset_tun_interface(iface) < 0) {
+    if (reset_tuntap_interface(iface) < 0) {
         throwException(env, SYSTEM_ERROR, "Cannot reset interface");
     }
     env->ReleaseStringUTFChars(jIface, iface);
@@ -130,8 +131,8 @@ static void reset(JNIEnv* env, jobject /* thiz */, jstring jIface) {
 //------------------------------------------------------------------------------
 
 static const JNINativeMethod gMethods[] = {
-    {"jniCreateTun", "(Ljava/lang/String;)I", (void*)create},
-    {"jniTeardownTun", "(Ljava/lang/String;)V", (void*)reset},
+    {"jniCreateTunTap", "(Ljava/lang/String;Z)I", (void*)create},
+    {"jniTeardownTunTap", "(Ljava/lang/String;)V", (void*)reset},
 };
 
 int register_android_server_TestNetworkService(JNIEnv* env) {
