@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "747c4b18_98af83e8",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-11-15T00:33:22Z",
+      "side": 1,
+      "message": "The instruction itself supports at most 5 args even though it\u0027s stored in a 4 bit field.",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 43
+      },
+      "revId": "b392758a657e4dcedfe3b3823cbfe30dbbf352e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c79796_2da8636e",
+        "filename": "startop/view_compiler/dex_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2018-11-15T00:33:22Z",
+      "side": 1,
+      "message": "Note that the normal semantics for new is:\n- allocate object\n- evaluate args\n- call constructor\n\nIt\u0027s probably fine to evaluate the args before calling new-instance though.",
+      "range": {
+        "startLine": 393,
+        "startChar": 1,
+        "endLine": 398,
+        "endChar": 95
+      },
+      "revId": "b392758a657e4dcedfe3b3823cbfe30dbbf352e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
