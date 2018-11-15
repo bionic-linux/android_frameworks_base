@@ -594,6 +594,7 @@ public final class NetworkCapabilities implements Parcelable {
             TRANSPORT_VPN,
             TRANSPORT_WIFI_AWARE,
             TRANSPORT_LOWPAN,
+            TRANSPORT_TEST,
     })
     public @interface Transport { }
 
@@ -632,10 +633,18 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int TRANSPORT_LOWPAN = 6;
 
+    /**
+     * Indicates this network uses a Test-only virtual interface as a transport.
+     *
+     * @hide
+     */
+    @TestApi
+    public static final int TRANSPORT_TEST = 7;
+
     /** @hide */
     public static final int MIN_TRANSPORT = TRANSPORT_CELLULAR;
     /** @hide */
-    public static final int MAX_TRANSPORT = TRANSPORT_LOWPAN;
+    public static final int MAX_TRANSPORT = TRANSPORT_TEST;
 
     /** @hide */
     public static boolean isValidTransport(@Transport int transportType) {
@@ -649,7 +658,8 @@ public final class NetworkCapabilities implements Parcelable {
         "ETHERNET",
         "VPN",
         "WIFI_AWARE",
-        "LOWPAN"
+        "LOWPAN",
+        "TEST"
     };
 
     /**
