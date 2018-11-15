@@ -32,4 +32,6 @@ interface ITestNetworkManager
 
     ParcelFileDescriptor buildTun(
             in String intfName, in LinkAddress[] linkAddrs, in String callingPackage);
+
+    ParcelFileDescriptor buildTap(in String intfName, in String callingPackage);
 }
