@@ -67,9 +67,9 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     private final Handler mHandler;
 
     // Native method stubs
-    private static native int jniCreateTun(String iface);
+    private static native int jniCreateTunTap(String iface, boolean useTun);
 
-    private static native void jniTeardownTun(String iface);
+    private static native void jniTeardownTunTap(String iface);
 
     @VisibleForTesting
     protected TestNetworkService(Context context, INetworkManagementService netManager) {
@@ -93,11 +93,28 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     @Override
     public synchronized ParcelFileDescriptor buildTun(
             String iface, LinkAddress[] linkAddrs, String callingPackage) {
+        return buildTunTap(iface, linkAddrs, true, callingPackage);
+    }
+
+    /**
+     * Build a TAP interface with the given interface name.
+     *
+     * <p>This method will return the FileDescriptor to the TAP interface. Close it to teardown the
+     * TAP interface.
+     */
+    @Override
+    public synchronized ParcelFileDescriptor buildTap(
+            String iface, String callingPackage) {
+        return buildTunTap(iface, null, false, callingPackage);
+    }
+
+    private ParcelFileDescriptor buildTunTap(
+            String iface, LinkAddress[] linkAddrs, boolean useTun, String callingPackage) {
         enforceTestNetworkPermissions(mContext, callingPackage);
 
         long token = Binder.clearCallingIdentity();
         try {
-            ParcelFileDescriptor tunIntf = ParcelFileDescriptor.adoptFd(jniCreateTun(iface));
+            ParcelFileDescriptor tunIntf = ParcelFileDescriptor.adoptFd(jniCreateTunTap(iface, useTun));
             for (LinkAddress addr : linkAddrs) {
                 mNetd.interfaceAddAddress(
                         iface, addr.getAddress().getHostAddress(), addr.getPrefixLength());
