@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e5fea9c_8dd21e8e",
+        "filename": "startop/view_compiler/dex_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-11-15T00:40:08Z",
+      "side": 1,
+      "message": "This one is fixed in the upcoming cleanup, so I will leave it as is for now.",
+      "parentUuid": "747c4b18_98af83e8",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 43
+      },
+      "revId": "b392758a657e4dcedfe3b3823cbfe30dbbf352e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5c79796_2da8636e",
         "filename": "startop/view_compiler/dex_builder.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b392758a657e4dcedfe3b3823cbfe30dbbf352e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54deb3bb_bba9e320",
+        "filename": "startop/view_compiler/dex_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-11-15T00:40:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a5c79796_2da8636e",
+      "range": {
+        "startLine": 393,
+        "startChar": 1,
+        "endLine": 398,
+        "endChar": 95
+      },
+      "revId": "b392758a657e4dcedfe3b3823cbfe30dbbf352e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
