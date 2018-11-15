@@ -91,4 +91,21 @@ public class TestNetworkManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Build a tap interface for testing purposes
+     *
+     * @param iface the name to assign to the created TAP
+     * @return A ParcelFileDescriptor of the underlying TAP interface. Close this to teardown the
+     *     TAP interface.
+     * @hide
+     */
+    @TestApi
+    public ParcelFileDescriptor createTapInterface(@NonNull String iface) {
+        try {
+            return mService.createTapInterface(iface);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }

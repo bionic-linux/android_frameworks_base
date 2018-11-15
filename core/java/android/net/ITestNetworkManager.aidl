@@ -27,6 +27,8 @@ import android.os.ParcelFileDescriptor;
  */
 interface ITestNetworkManager
 {
+    ParcelFileDescriptor createTapInterface(in String iface);
+
     ParcelFileDescriptor createTunInterface(in String iface, in LinkAddress[] linkAddrs);
 
     void setupTestNetwork(in String iface, in IBinder binder);
