@@ -19,6 +19,7 @@ package com.android.server;
 import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -67,9 +68,9 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     @NonNull private final Handler mHandler;
 
     // Native method stubs
-    private static native int jniCreateTun(@NonNull String iface);
+    private static native int jniCreateTunTap(@NonNull String iface, boolean useTun);
 
-    private static native void jniTeardownTun(@NonNull String iface);
+    private static native void jniTeardownTunTap(@NonNull String iface);
 
     @VisibleForTesting
     protected TestNetworkService(
@@ -94,11 +95,28 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             @NonNull String iface,
             @NonNull LinkAddress[] linkAddrs,
             @NonNull String callingPackage) {
+        return buildTunTap(iface, linkAddrs, true, callingPackage);
+    }
+
+    /**
+     * Build a TAP interface with the given interface name.
+     *
+     * <p>This method will return the FileDescriptor to the TAP interface. Close it to teardown the
+     * TAP interface.
+     */
+    @Override
+    public synchronized ParcelFileDescriptor buildTap(
+            @NonNull String iface, @NonNull String callingPackage) {
+        return buildTunTap(iface, null, false, callingPackage);
+    }
+
+    private ParcelFileDescriptor buildTunTap(@NonNull String iface,
+            @Nullable LinkAddress[] linkAddrs, boolean useTun, @NonNull String callingPackage) {
         enforceTestNetworkPermissions(mContext, callingPackage);
 
         long token = Binder.clearCallingIdentity();
         try {
-            ParcelFileDescriptor tunIntf = ParcelFileDescriptor.adoptFd(jniCreateTun(iface));
+            ParcelFileDescriptor tunIntf = ParcelFileDescriptor.adoptFd(jniCreateTunTap(iface, useTun));
             for (LinkAddress addr : linkAddrs) {
                 mNetd.interfaceAddAddress(
                         iface, addr.getAddress().getHostAddress(), addr.getPrefixLength());
