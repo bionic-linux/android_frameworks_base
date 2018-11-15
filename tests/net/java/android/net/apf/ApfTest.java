@@ -1045,11 +1045,13 @@ public class ApfTest {
             0, 2  // Opcode: reply (2)
     };
     private static final int ARP_TARGET_IP_ADDRESS_OFFSET = ETH_HEADER_LEN + 24;
+    private static final int ARP_SOURCE_IP_ADDRESS_OFFSET = ETH_HEADER_LEN + 14;
 
     private static final byte[] MOCK_IPV4_ADDR           = {10, 0, 0, 1};
     private static final byte[] MOCK_BROADCAST_IPV4_ADDR = {10, 0, 31, (byte) 255}; // prefix = 19
     private static final byte[] MOCK_MULTICAST_IPV4_ADDR = {(byte) 224, 0, 0, 1};
     private static final byte[] ANOTHER_IPV4_ADDR        = {10, 0, 0, 2};
+    private static final byte[] IPV4_SOURCE_ADDR         = {10, 0, 0, 3};
     private static final byte[] IPV4_ANY_HOST_ADDR       = {0, 0, 0, 0};
 
     // Helper to initialize a default apfFilter.
@@ -1395,6 +1397,9 @@ public class ApfTest {
         assertVerdict(filterResult, program, arpRequestBroadcast(ANOTHER_IPV4_ADDR));
         assertDrop(program, arpRequestBroadcast(IPV4_ANY_HOST_ADDR));
 
+        // Verify ARP reply packets are always filtered if source IP is 0.0.0.0
+        assertDrop(program, arpReplySrcIpAnyHost());
+
         // Verify unicast ARP reply packet is always accepted.
         assertPass(program, arpReplyUnicast(MOCK_IPV4_ADDR));
         assertPass(program, arpReplyUnicast(ANOTHER_IPV4_ADDR));
@@ -1427,11 +1432,19 @@ public class ApfTest {
         apfFilter.shutdown();
     }
 
+    private static byte[] arpReplySrcIpAnyHost() {
+        ByteBuffer packet = ByteBuffer.wrap(new byte[100]);
+        packet.putShort(ETH_ETHERTYPE_OFFSET, (short)ETH_P_ARP);
+        put(packet, ARP_HEADER_OFFSET, ARP_IPV4_REPLY_HEADER);
+        put(packet, ARP_SOURCE_IP_ADDRESS_OFFSET,IPV4_ANY_HOST_ADDR);
+        return packet.array();
+    }
+
     private static byte[] arpRequestBroadcast(byte[] tip) {
         ByteBuffer packet = ByteBuffer.wrap(new byte[100]);
         packet.putShort(ETH_ETHERTYPE_OFFSET, (short)ETH_P_ARP);
         put(packet, ETH_DEST_ADDR_OFFSET, ETH_BROADCAST_MAC_ADDRESS);
-        put(packet, ARP_HEADER_OFFSET, ARP_IPV4_REPLY_HEADER);
+        put(packet, ARP_HEADER_OFFSET, ARP_IPV4_REQUEST_HEADER);
         put(packet, ARP_TARGET_IP_ADDRESS_OFFSET, tip);
         return packet.array();
     }
@@ -1440,6 +1453,7 @@ public class ApfTest {
         ByteBuffer packet = ByteBuffer.wrap(new byte[100]);
         packet.putShort(ETH_ETHERTYPE_OFFSET, (short)ETH_P_ARP);
         put(packet, ARP_HEADER_OFFSET, ARP_IPV4_REPLY_HEADER);
+        put(packet, ARP_SOURCE_IP_ADDRESS_OFFSET, IPV4_SOURCE_ADDR);
         put(packet, ARP_TARGET_IP_ADDRESS_OFFSET, tip);
         return packet.array();
     }
