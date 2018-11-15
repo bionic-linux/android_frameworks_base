@@ -604,6 +604,7 @@ package android.net {
   public final class NetworkCapabilities implements android.os.Parcelable {
     method public int[] getCapabilities();
     method public int[] getTransportTypes();
+    field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 
   public class TrafficStats {
