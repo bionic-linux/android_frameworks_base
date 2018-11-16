@@ -447,6 +447,7 @@ class UserController implements Handler.Callback {
         // in already-running apps that are partially aware
         if (userId == UserHandle.USER_SYSTEM) {
             mInjector.startPersistentApps(PackageManager.MATCH_DIRECT_BOOT_UNAWARE);
+            maybeUnlockChildProfile(userId);
         }
         mInjector.installEncryptionUnawareProviders(userId);
 
@@ -1175,7 +1176,12 @@ class UserController implements Handler.Callback {
 
         // We just unlocked a user, so let's now attempt to unlock any
         // managed profiles under that user.
+        maybeUnlockChildProfile(userId);
 
+        return true;
+    }
+
+    private void maybeUnlockChildProfile(int userId){
         // First, get list of userIds. Requires mLock, so we cannot make external calls, e.g. to UMS
         int[] userIds;
         synchronized (mLock) {
@@ -1192,8 +1198,6 @@ class UserController implements Handler.Callback {
                 maybeUnlockUser(testUserId);
             }
         }
-
-        return true;
     }
 
     boolean switchUser(final int targetUserId) {
