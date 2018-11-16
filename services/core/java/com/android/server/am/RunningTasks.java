@@ -62,10 +62,11 @@ class RunningTasks {
                 final ActivityStack stack = display.getChildAt(stackNdx);
                 stack.getRunningTasks(mTmpStackTasks, ignoreActivityType, ignoreWindowingMode,
                         callingUid, allowed);
-                for (int i = mTmpStackTasks.size() - 1; i >= 0; i--) {
-                    mTmpSortedSet.addAll(mTmpStackTasks);
-                }
             }
+        }
+
+        if (mTmpStackTasks.size() > 0) {
+            mTmpSortedSet.addAll(mTmpStackTasks);
         }
 
         // Take the first {@param maxNum} tasks and create running task infos for them
