@@ -396,6 +396,7 @@ public abstract class AbstractCursor implements CrossProcessCursor {
      * @param cr The content resolver from the caller's context.
      * @param notifyUri The URI to watch for changes. This can be a
      * specific row URI, or a base URI for a whole class of content.
+     * It can't include userId part.
      */
     @Override
     public void setNotificationUri(ContentResolver cr, Uri notifyUri) {
