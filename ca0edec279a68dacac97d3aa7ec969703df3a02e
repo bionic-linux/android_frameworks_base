@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd890377_dc9580d1",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-16T07:05:51Z",
+      "side": 1,
+      "message": "I think here should make a request packet, right?\nPlease correct if I\u0027m wrong.",
+      "range": {
+        "startLine": 1447,
+        "startChar": 39,
+        "endLine": 1447,
+        "endChar": 62
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
