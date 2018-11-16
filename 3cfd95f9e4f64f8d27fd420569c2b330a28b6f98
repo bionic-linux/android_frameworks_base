@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d674a1a9_0f2a8d56",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T21:39:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db0b1cf5_53b252ca",
+      "range": {
+        "startLine": 347,
+        "startChar": 29,
+        "endLine": 347,
+        "endChar": 42
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb775ddb_694f0450",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 8
@@ -140,6 +164,30 @@
       "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d3cde5_8a6a1e8d",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T21:39:02Z",
+      "side": 1,
+      "message": "All right that makes sense, my only side comment then would be to explain why that would be better. But if you are going to do it in a followup patch anyway, then I am happy with this.",
+      "parentUuid": "26b22bb2_6e931c73",
+      "range": {
+        "startLine": 359,
+        "startChar": 15,
+        "endLine": 362,
+        "endChar": 49
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +325,30 @@
         "startChar": 7,
         "endLine": 127,
         "endChar": 66
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b93743d_6b09ff50",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-11-16T21:39:02Z",
+      "side": 1,
+      "message": "Oh I see. I\u0027ll write a comment on the new patchset then. Thanks.",
+      "parentUuid": "1022a3c2_010f4bf4",
+      "range": {
+        "startLine": 127,
+        "startChar": 43,
+        "endLine": 127,
+        "endChar": 65
       },
       "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
