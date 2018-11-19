@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -31,6 +32,7 @@ import static org.mockito.Mockito.when;
 
 import android.app.AppOpsManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
@@ -42,6 +44,7 @@ import android.net.IpSecTunnelInterfaceResponse;
 import android.net.IpSecUdpEncapResponse;
 import android.net.LinkAddress;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkUtils;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
@@ -104,26 +107,33 @@ public class IpSecServiceParameterizedTest {
     };
 
     AppOpsManager mMockAppOps = mock(AppOpsManager.class);
+    ConnectivityManager mMockConnectivityManager = mock(ConnectivityManager.class);
 
-    MockContext mMockContext = new MockContext() {
-        @Override
-        public Object getSystemService(String name) {
-            switch(name) {
-                case Context.APP_OPS_SERVICE:
-                    return mMockAppOps;
-                default:
-                    return null;
-            }
-        }
+    MockContext mMockContext =
+            new MockContext() {
+                @Override
+                public Object getSystemService(String name) {
+                    switch (name) {
+                        case Context.APP_OPS_SERVICE:
+                            return mMockAppOps;
+                        case Context.CONNECTIVITY_SERVICE:
+                            return mMockConnectivityManager;
+                        default:
+                            return null;
+                    }
+                }
 
-        @Override
-        public void enforceCallingOrSelfPermission(String permission, String message) {
-            if (permission == android.Manifest.permission.MANAGE_IPSEC_TUNNELS) {
-                return;
-            }
-            throw new SecurityException("Unavailable permission requested");
-        }
-    };
+                @Override
+                public void enforceCallingOrSelfPermission(String permission, String message) {
+                    if (permission == android.Manifest.permission.MANAGE_IPSEC_TUNNELS) {
+                        return;
+                    } else if (permission
+                            == android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS) {
+                        throw new SecurityException("Restricted network permission not granted");
+                    }
+                    throw new SecurityException("Unavailable permission requested");
+                }
+            };
 
     INetd mMockNetd;
     IpSecService.IpSecServiceConfiguration mMockIpSecSrvConfig;
@@ -165,6 +175,11 @@ public class IpSecServiceParameterizedTest {
         // A mismatch between the package name and the UID will return MODE_IGNORED.
         when(mMockAppOps.noteOp(anyInt(), anyInt(), eq("badPackage")))
             .thenReturn(AppOpsManager.MODE_IGNORED);
+
+        // Setup mock connectivity service as always-permissive
+        NetworkCapabilities caps = new NetworkCapabilities();
+        caps.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+        when(mMockConnectivityManager.getNetworkCapabilities(anyObject())).thenReturn(caps);
     }
 
     //TODO: Add a test to verify SPI.
@@ -589,6 +604,22 @@ public class IpSecServiceParameterizedTest {
                         anyInt(),
                         anyInt(),
                         anyInt());
+    }
+
+    @Test
+    public void testCreateTunnelInterfaceRestrictedNetwork() throws Exception {
+        NetworkCapabilities caps = new NetworkCapabilities();
+        caps.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+        when(mMockConnectivityManager.getNetworkCapabilities(anyObject())).thenReturn(caps);
+
+        // mMockContext throws an exception if we get to the permission check.
+
+        try {
+            IpSecTunnelInterfaceResponse createTunnelResp =
+                    createAndValidateTunnel(mSourceAddr, mDestinationAddr, "blessedPackage");
+            fail("Did not hit enforceCallingOrSelfPermission!");
+        } catch (SecurityException expected) {
+        }
     }
 
     @Test
