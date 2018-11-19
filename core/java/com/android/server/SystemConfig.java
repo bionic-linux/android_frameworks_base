@@ -320,8 +320,9 @@ public class SystemConfig {
                 Environment.getOemDirectory(), "etc", "permissions"), oemPermissionFlag);
 
         // Allow Product to customize system configs around libs, features, permissions and apps
-        int productPermissionFlag = ALLOW_LIBS | ALLOW_FEATURES | ALLOW_PERMISSIONS |
-                ALLOW_APP_CONFIGS | ALLOW_PRIVAPP_PERMISSIONS;
+        // Allow Product app within white list to access hidden api
+	int productPermissionFlag = ALLOW_LIBS | ALLOW_FEATURES | ALLOW_PERMISSIONS |
+                ALLOW_APP_CONFIGS | ALLOW_PRIVAPP_PERMISSIONS | ALLOW_HIDDENAPI_WHITELISTING;
         readPermissions(Environment.buildPath(
                 Environment.getProductDirectory(), "etc", "sysconfig"), productPermissionFlag);
         readPermissions(Environment.buildPath(
