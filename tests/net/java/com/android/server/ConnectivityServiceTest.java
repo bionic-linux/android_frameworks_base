@@ -66,6 +66,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.atLeastOnce;
@@ -74,11 +75,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -158,16 +159,6 @@ import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
 import com.android.server.net.NetworkPolicyManagerInternal;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -185,6 +176,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * Tests for {@link ConnectivityService}.
@@ -4503,6 +4504,28 @@ public class ConnectivityServiceTest {
                 vpnNetworkAgent);
 
         mMockVpn.disconnect();
+    }
+
+    @Test
+    public void testRegisterNetworkAgentVpn() throws Exception {
+        // Register a networkAgent
+        MockNetworkAgent vpnNetworkAgent = new MockNetworkAgent(TRANSPORT_VPN);
+
+        // Verify that network is created in netd even if we are not in the CONNECTED state.
+        // Use timeout 100ms to allow for async calls to complete
+        verify(mNetworkManagementService, timeout(100))
+                .createVirtualNetwork(anyInt(), anyBoolean(), anyBoolean());
+    }
+
+    @Test
+    public void testRegisterNetworkAgentWifi() throws Exception {
+        // Register a networkAgent
+        MockNetworkAgent vpnNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+
+        // Verify that network is created in netd even if we are not in the CONNECTED state.
+        // Use timeout 100ms to allow for async calls to complete
+        verify(mNetworkManagementService, timeout(100))
+                .createPhysicalNetwork(anyInt(), anyInt());
     }
 
     @Test
