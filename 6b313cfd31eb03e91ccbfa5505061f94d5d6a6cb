@@ -188,6 +188,30 @@
       "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5115c01e_590c941e",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-19T04:41:18Z",
+      "side": 1,
+      "message": "+1. I was forgetting that to use this new method, apps need to change their code anyway. Given that, it seems better to make the new method behave like we want it to behave, rather than carrying forward strange behaviours of the existing method that apps might not even be depending on.\n\nI\u0027d prefer just to say that null and \"\" are invalid IP addresses (which they undoubtedly are) and remove support for square brackets. We can communicate this to application developers in the same place as we document what new method to switch to.",
+      "parentUuid": "751277fa_75575c2c",
+      "range": {
+        "startLine": 39,
+        "startChar": 51,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
