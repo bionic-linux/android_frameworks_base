@@ -66,10 +66,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
@@ -78,7 +81,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -158,16 +160,6 @@ import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
 import com.android.server.net.NetworkPolicyManagerInternal;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -185,6 +177,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * Tests for {@link ConnectivityService}.
@@ -4503,6 +4505,38 @@ public class ConnectivityServiceTest {
                 vpnNetworkAgent);
 
         mMockVpn.disconnect();
+    }
+
+    @Test
+    public void testRegisterNetworkAgent() {
+        // Build callback
+        final TestNetworkCallback vpnNetworkCallback = new TestNetworkCallback();
+
+        // Build networkRequest
+        final NetworkRequest vpnNetworkRequest =
+                new NetworkRequest.Builder()
+                        .removeCapability(NET_CAPABILITY_NOT_VPN)
+                        .addTransportType(TRANSPORT_VPN)
+                        .build();
+        mCm.registerNetworkCallback(vpnNetworkRequest, vpnNetworkCallback);
+
+        // Register a networkAgent in CONNECTED
+        MockNetworkAgent vpnNetworkAgent = new MockNetworkAgent(TRANSPORT_VPN);
+        vpnNetworkAgent.connect(true);
+
+        // Wait for callback (to ensure registration is done)
+        vpnNetworkCallback.expectAvailableThenValidatedCallbacks(vpnNetworkAgent);
+
+        // verify that mNetworkManagementService.createVirtualNetwork() is called
+        //     before updateUids() or updateNetworkInfo()
+        InOrder orderVerifier = inOrder(mNetworkManagementService);
+        orderVerifier
+                .verify(mNetworkManagementService)
+                .createVirtualNetwork(anyInt(), anyBoolean(), anyBoolean());
+        orderVerifier
+                .verify(mNetworkManagementService)
+                .updateUids(anyObject(), anyObject(), anyObject());
+        orderVerifier.verify(mNetworkManagementService).updateNetworkInfo(anyObject(), anyObject());
     }
 
     @Test

@@ -4724,8 +4724,34 @@ public class ConnectivityService extends IConnectivityManager.Stub
         nai.asyncChannel.connect(mContext, mTrackerHandler, nai.messenger);
         NetworkInfo networkInfo = nai.networkInfo;
         nai.networkInfo = null;
-        updateNetworkInfo(nai, networkInfo);
+
+        createNetwork(nai);
         updateUids(nai, null, nai.networkCapabilities);
+        updateNetworkInfo(nai, networkInfo);
+    }
+
+    private void createNetwork(NetworkAgentInfo nai) {
+        if (!nai.created) {
+            // A network that has just connected has zero requests and is thus a foreground network.
+            nai.networkCapabilities.addCapability(NET_CAPABILITY_FOREGROUND);
+
+            try {
+                // This should never fail.  Specifying an already in use NetID will cause failure.
+                if (nai.isVPN()) {
+                    mNMS.createVirtualNetwork(
+                            nai.network.netId,
+                            !nai.linkProperties.getDnsServers().isEmpty(),
+                            (nai.networkMisc == null || !nai.networkMisc.allowBypass));
+                } else {
+                    mNMS.createPhysicalNetwork(
+                            nai.network.netId, getNetworkPermission(nai.networkCapabilities));
+                }
+            } catch (Exception e) {
+                loge("Error creating network " + nai.network.netId + ": " + e.getMessage());
+                return;
+            }
+            nai.created = true;
+        }
     }
 
     private void updateLinkProperties(NetworkAgentInfo networkAgent, LinkProperties oldLp) {
@@ -5620,31 +5646,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     " to " + state);
         }
 
-        if (!networkAgent.created
-                && (state == NetworkInfo.State.CONNECTED
-                || (state == NetworkInfo.State.CONNECTING && networkAgent.isVPN()))) {
-
-            // A network that has just connected has zero requests and is thus a foreground network.
-            networkAgent.networkCapabilities.addCapability(NET_CAPABILITY_FOREGROUND);
-
-            try {
-                // This should never fail.  Specifying an already in use NetID will cause failure.
-                if (networkAgent.isVPN()) {
-                    mNMS.createVirtualNetwork(networkAgent.network.netId,
-                            !networkAgent.linkProperties.getDnsServers().isEmpty(),
-                            (networkAgent.networkMisc == null ||
-                                !networkAgent.networkMisc.allowBypass));
-                } else {
-                    mNMS.createPhysicalNetwork(networkAgent.network.netId,
-                            getNetworkPermission(networkAgent.networkCapabilities));
-                }
-            } catch (Exception e) {
-                loge("Error creating network " + networkAgent.network.netId + ": "
-                        + e.getMessage());
-                return;
-            }
-            networkAgent.created = true;
-        }
 
         if (!networkAgent.everConnected && state == NetworkInfo.State.CONNECTED) {
             networkAgent.everConnected = true;
