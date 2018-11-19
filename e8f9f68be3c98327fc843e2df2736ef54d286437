@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc4614b_888cacaa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2099,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-19T01:32:15Z",
+      "side": 1,
+      "message": "Since values[] is just a string array, suggest:\n\n    String rmemValues \u003d String.join(\" \", values[0], values[1], values[2]);\n\netc.",
+      "range": {
+        "startLine": 2098,
+        "startChar": 0,
+        "endLine": 2099,
+        "endChar": 77
+      },
+      "revId": "e8f9f68be3c98327fc843e2df2736ef54d286437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60d51fe_23bd0d5b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-19T01:32:15Z",
+      "side": 1,
+      "message": "We should probably have netd throw a ServiceSpecficException if the operation fails, and catch it here.",
+      "range": {
+        "startLine": 2102,
+        "startChar": 17,
+        "endLine": 2102,
+        "endChar": 32
+      },
+      "revId": "e8f9f68be3c98327fc843e2df2736ef54d286437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
