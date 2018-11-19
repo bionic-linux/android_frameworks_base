@@ -30,6 +30,7 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 import android.annotation.NonNull;
 import android.app.AppOpsManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.IIpSecService;
 import android.net.INetd;
 import android.net.IpSecAlgorithm;
@@ -42,6 +43,7 @@ import android.net.IpSecTunnelInterfaceResponse;
 import android.net.IpSecUdpEncapResponse;
 import android.net.LinkAddress;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkUtils;
 import android.net.TrafficStats;
 import android.net.util.NetdService;
@@ -1279,6 +1281,9 @@ public class IpSecService extends IIpSecService.Stub {
         checkInetAddress(localAddr);
         checkInetAddress(remoteAddr);
 
+        // Check that the user has the permissions to use this Network
+        enforceNetworkPermissions(underlyingNetwork);
+
         // TODO: Check that underlying network exists, and IP addresses not assigned to a different
         //       network (b/72316676).
 
@@ -1557,6 +1562,26 @@ public class IpSecService extends IIpSecService.Stub {
                 return;
             default:
                 throw new SecurityException("Request to ignore AppOps for non-legacy API");
+        }
+    }
+
+    private ConnectivityManager getConnectivityManager() {
+        return (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    private void enforceNetworkPermissions(Network network) {
+        checkNotNull(network, "Null network provided");
+
+        // Retrieve network capabilities
+        NetworkCapabilities nc = getConnectivityManager().getNetworkCapabilities(network);
+        if (nc == null) {
+            throw new IllegalArgumentException("Invalid Network");
+        }
+
+        if (!nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)) {
+            mContext.enforceCallingOrSelfPermission(
+                    android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS,
+                    "Caller does not have permission to use restricted Networks");
         }
     }
 
