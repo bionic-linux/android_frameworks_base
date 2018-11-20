@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d009024_93d8c866",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2442,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2018-11-20T08:45:26Z",
+      "side": 1,
+      "message": "Please delete this blank line.\n\nThis isn\u0027t guarded by any permissions, which seems non-ideal. The only caller here should be the system process, so how about a check similar to verifyEncryptionPassword earlier in the file ?",
+      "revId": "631f82c158defd42163a74929302f5d53ae2f612",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
