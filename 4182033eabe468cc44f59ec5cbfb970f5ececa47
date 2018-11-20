@@ -16,6 +16,24 @@
       "revId": "4182033eabe468cc44f59ec5cbfb970f5ececa47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cef2646_904011da",
+        "filename": "config/hiddenapi-greylist-max-o.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-11-20T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26456a3b_2984a63f",
+      "revId": "4182033eabe468cc44f59ec5cbfb970f5ececa47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
