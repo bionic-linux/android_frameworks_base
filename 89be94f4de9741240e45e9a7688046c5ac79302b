@@ -22,6 +22,30 @@
       "revId": "89be94f4de9741240e45e9a7688046c5ac79302b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c33364_1f6c5f31",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-11-20T09:16:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d12f8a4a_eda254d1",
+      "range": {
+        "startLine": 127,
+        "startChar": 55,
+        "endLine": 127,
+        "endChar": 61
+      },
+      "revId": "89be94f4de9741240e45e9a7688046c5ac79302b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

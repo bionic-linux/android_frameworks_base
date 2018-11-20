@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "51e7654e_915ab47d",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-11-20T09:16:07Z",
+      "side": 1,
+      "message": "Ack, the change already include the following entitlement pending commit.",
+      "parentUuid": "e4d3cde5_8a6a1e8d",
+      "range": {
+        "startLine": 359,
+        "startChar": 15,
+        "endLine": 362,
+        "endChar": 49
+      },
+      "revId": "3cfd95f9e4f64f8d27fd420569c2b330a28b6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a22845d_46a7643d",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 8
