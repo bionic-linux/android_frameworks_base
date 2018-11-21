@@ -18,13 +18,16 @@ package com.android.server;
 
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -36,6 +39,7 @@ import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
+import android.net.IpSecCreateSaParcel;
 import android.net.IpSecManager;
 import android.net.IpSecSpiResponse;
 import android.net.IpSecTransform;
@@ -61,6 +65,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.ArgumentCaptor;
 
 /** Unit tests for {@link IpSecService}. */
 @SmallTest
@@ -292,40 +297,71 @@ public class IpSecServiceParameterizedTest {
         config.setEncapRemotePort(REMOTE_ENCAP_PORT);
     }
 
-    private void verifyTransformNetdCalledForCreatingSA(
+    private IpSecCreateSaParcel verifyTransformNetdCalledForCreatingSA(
             IpSecConfig config, IpSecTransformResponse resp) throws Exception {
-        verifyTransformNetdCalledForCreatingSA(config, resp, 0);
+        return verifyTransformNetdCalledForCreatingSA(config, resp, 0);
     }
 
-    private void verifyTransformNetdCalledForCreatingSA(
+    private IpSecCreateSaParcel verifyTransformNetdCalledForCreatingSA(
             IpSecConfig config, IpSecTransformResponse resp, int encapSocketPort) throws Exception {
         IpSecAlgorithm auth = config.getAuthentication();
         IpSecAlgorithm crypt = config.getEncryption();
         IpSecAlgorithm authCrypt = config.getAuthenticatedEncryption();
 
-        verify(mMockNetd, times(1))
-                .ipSecAddSecurityAssociation(
-                        eq(mUid),
-                        eq(config.getMode()),
-                        eq(config.getSourceAddress()),
-                        eq(config.getDestinationAddress()),
-                        eq((config.getNetwork() != null) ? config.getNetwork().netId : 0),
-                        eq(TEST_SPI),
-                        eq(0),
-                        eq(0),
-                        eq((auth != null) ? auth.getName() : ""),
-                        eq((auth != null) ? auth.getKey() : new byte[] {}),
-                        eq((auth != null) ? auth.getTruncationLengthBits() : 0),
-                        eq((crypt != null) ? crypt.getName() : ""),
-                        eq((crypt != null) ? crypt.getKey() : new byte[] {}),
-                        eq((crypt != null) ? crypt.getTruncationLengthBits() : 0),
-                        eq((authCrypt != null) ? authCrypt.getName() : ""),
-                        eq((authCrypt != null) ? authCrypt.getKey() : new byte[] {}),
-                        eq((authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0),
-                        eq(config.getEncapType()),
-                        eq(encapSocketPort),
-                        eq(config.getEncapRemotePort()),
-                        eq(config.getXfrmInterfaceId()));
+        // Call addSecurityAssociation, capture CreateSaParcel
+        ArgumentCaptor<IpSecCreateSaParcel> captor =
+                ArgumentCaptor.forClass(IpSecCreateSaParcel.class);
+        verify(mMockNetd, atLeastOnce()).ipSecAddSecurityAssociation(captor.capture());
+        IpSecCreateSaParcel createSaParcel = captor.getValue();
+
+        // Verify selector & ID
+        assertEquals(mUid, createSaParcel.transformId);
+        assertEquals(config.getMode(), createSaParcel.mode);
+        assertEquals(config.getSourceAddress(), createSaParcel.sourceAddress);
+        assertEquals(config.getDestinationAddress(), createSaParcel.destinationAddress);
+        assertEquals(TEST_SPI, createSaParcel.spi);
+
+        // Verify UnderlyingNetwork
+        assertEquals(
+                (config.getNetwork() != null) ? config.getNetwork().netId : 0,
+                createSaParcel.underlyingNetId);
+
+        // Verify Mark
+        assertEquals(0, createSaParcel.markValue);
+        assertEquals(0, createSaParcel.markMask);
+
+        // Verify Auth
+        assertEquals((auth != null) ? auth.getName() : "", createSaParcel.authAlgo);
+        assertArrayEquals((auth != null) ? auth.getKey() : new byte[] {}, createSaParcel.authKey);
+        assertEquals(
+                (auth != null) ? auth.getTruncationLengthBits() : 0, createSaParcel.authTruncBits);
+
+        // Verify Crypt
+        assertEquals((crypt != null) ? crypt.getName() : "", createSaParcel.cryptAlgo);
+        assertArrayEquals(
+                (crypt != null) ? crypt.getKey() : new byte[] {}, createSaParcel.cryptKey);
+        assertEquals(
+                (crypt != null) ? crypt.getTruncationLengthBits() : 0,
+                createSaParcel.cryptTruncBits);
+
+        // Verify Aead
+        assertEquals((authCrypt != null) ? authCrypt.getName() : "", createSaParcel.aeadAlgo);
+        assertArrayEquals(
+                (authCrypt != null) ? authCrypt.getKey() : new byte[] {}, createSaParcel.aeadKey);
+        assertEquals(
+                (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0,
+                createSaParcel.aeadIcvBits);
+
+        // Verify Encap
+        assertEquals(config.getEncapType(), createSaParcel.encapType);
+        assertEquals(encapSocketPort, createSaParcel.encapLocalPort);
+        assertEquals(config.getEncapRemotePort(), createSaParcel.encapRemotePort);
+
+        // Verify XFRM Interface IDs
+        assertEquals(config.getXfrmInterfaceId(), createSaParcel.interfaceId);
+
+        // Return for any further verification needed
+        return createSaParcel;
     }
 
     @Test
@@ -339,6 +375,25 @@ public class IpSecServiceParameterizedTest {
         assertEquals(IpSecManager.Status.OK, createTransformResp.status);
 
         verifyTransformNetdCalledForCreatingSA(ipSecConfig, createTransformResp);
+    }
+
+    @Test
+    public void testCreateTransformAuthOnly() throws Exception {
+        IpSecConfig ipSecConfig = new IpSecConfig();
+        addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
+        addAuthAndCryptToIpSecConfig(ipSecConfig);
+        ipSecConfig.setEncryption(null);
+
+        IpSecTransformResponse createTransformResp =
+                mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
+        assertEquals(IpSecManager.Status.OK, createTransformResp.status);
+
+        // Call addSecurityAssociation, capture CreateSaParcel
+        ArgumentCaptor<IpSecCreateSaParcel> captor =
+                ArgumentCaptor.forClass(IpSecCreateSaParcel.class);
+        verify(mMockNetd, times(1)).ipSecAddSecurityAssociation(captor.capture());
+        IpSecCreateSaParcel createSaParcel = captor.getValue();
+        assertEquals(IpSecAlgorithm.CRYPT_NULL, createSaParcel.cryptAlgo);
     }
 
     @Test
@@ -666,7 +721,46 @@ public class IpSecServiceParameterizedTest {
     }
 
     @Test
-    public void testApplyTunnelModeTransform() throws Exception {
+    public void testApplyTunnelModeTransformOutbound() throws Exception {
+        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_OUT);
+
+        // Additionally also verify the security policies are updated
+        for (int selAddrFamily : ADDRESS_FAMILIES) {
+            verify(mMockNetd, times(1))
+                    .ipSecUpdateSecurityPolicy(
+                            eq(mUid),
+                            eq(selAddrFamily),
+                            eq(IpSecManager.DIRECTION_OUT),
+                            anyString(),
+                            anyString(),
+                            eq(TEST_SPI),
+                            not(eq(0)), // iKey/oKey
+                            not(eq(0)), // mask
+                            not(eq(0))); // xfrm_if_id
+        }
+    }
+
+    @Test
+    public void testApplyTunnelModeTransformInbound() throws Exception {
+        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_IN);
+
+        // Additionally also verify the security policies are updated
+        for (int selAddrFamily : ADDRESS_FAMILIES) {
+            verify(mMockNetd, times(1))
+                    .ipSecUpdateSecurityPolicy(
+                            eq(mUid),
+                            eq(selAddrFamily),
+                            eq(IpSecManager.DIRECTION_IN),
+                            anyString(),
+                            anyString(),
+                            eq(0),
+                            not(eq(0)), // iKey/oKey
+                            not(eq(0)), // mask
+                            not(eq(0))); // xfrm_if_id
+        }
+    }
+
+    private void applyAndVerifyTunnelModeTransform(int direction) throws Exception {
         IpSecConfig ipSecConfig = new IpSecConfig();
         ipSecConfig.setMode(IpSecTransform.MODE_TUNNEL);
         addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
