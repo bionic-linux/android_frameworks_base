@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48a97cc3_bdb7a54f",
+        "filename": "telecomm/java/android/telecom/PhoneAccountSuggestion.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-11-21T17:45:33Z",
+      "side": 1,
+      "message": "who needs a license anyways",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "96f75b0b52fbe7d8d29111895a3840023818d2c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3427118e_b9494e0d",
+        "filename": "telecomm/java/android/telecom/PhoneAccountSuggestion.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-11-21T17:45:33Z",
+      "side": 1,
+      "message": "Add comments for what these reasons cause the framework to do",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "96f75b0b52fbe7d8d29111895a3840023818d2c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc29158_ee13ac44",
+        "filename": "telecomm/java/android/telecom/PhoneAccountSuggestion.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-11-21T17:45:33Z",
+      "side": 1,
+      "message": "Will we eventually want to add ranking?",
+      "range": {
+        "startLine": 25,
+        "startChar": 31,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "96f75b0b52fbe7d8d29111895a3840023818d2c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d79389e_108f5ca9",
+        "filename": "telecomm/java/android/telecom/PhoneAccountSuggestion.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-11-21T17:45:33Z",
+      "side": 1,
+      "message": "Why is the constructor @System and the rest public?",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "96f75b0b52fbe7d8d29111895a3840023818d2c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7047444_daa5e760",
+        "filename": "telecomm/java/android/telecom/PhoneAccountSuggestion.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-11-21T17:45:33Z",
+      "side": 1,
+      "message": "What does auto select do?",
+      "range": {
+        "startLine": 34,
+        "startChar": 20,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "96f75b0b52fbe7d8d29111895a3840023818d2c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
