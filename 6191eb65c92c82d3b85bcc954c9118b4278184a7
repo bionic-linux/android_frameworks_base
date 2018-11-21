@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33e8f708_f95b73a3",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-21T21:49:11Z",
+      "side": 1,
+      "message": "Maybe a new package name, e.g. com.android.server.runtime? I found it\u0027s common other services have its  own sub-package. Maybe useful for adding OWNER file or more classes in the future.",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5298bc08_a8a26a3b",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-21T21:49:11Z",
+      "side": 1,
+      "message": "Not sure how to name the service, or how costly a Android service is, but a service created only for info sounds a bit luxury. For future usage, maybe RuntimeService or RuntimeModuleService?",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac514534_1bf745fb",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-21T21:49:11Z",
+      "side": 1,
+      "message": "can this and line 61 move into line 68?",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268c31e3_fd65468e",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-21T21:49:11Z",
+      "side": 1,
+      "message": "How about in java doc style @return?",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9aad0b_e7a80dfd",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-21T21:49:11Z",
+      "side": 1,
+      "message": "I am not sure what the conventions of naming scheme. Since the information doesn\u0027t come from libcore, but dumped by non-updatable RuntimeInfoService, can we use another namespace or another prefix, e.g. runtime.timezone.data_",
+      "range": {
+        "startLine": 96,
+        "startChar": 33,
+        "endLine": 96,
+        "endChar": 40
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6edb07_0989ef54",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-21T21:49:11Z",
+      "side": 1,
+      "message": "Just curious. Is it a common format used by other services? It would be nice that it\u0027s, because we can re-use the same parser in the host side.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 29
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f094f83d_19bb68f6",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-21T21:49:11Z",
+      "side": 1,
+      "message": "nit: can the exception type is printed as well?",
+      "range": {
+        "startLine": 158,
+        "startChar": 60,
+        "endLine": 158,
+        "endChar": 61
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
