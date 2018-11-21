@@ -24,7 +24,6 @@ import android.os.SystemProperties;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Slog;
-import android.view.ThreadedRenderer;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
@@ -43,7 +42,7 @@ class GlobalSettingsToPropertiesMapper {
     // already whitelisted prefixes in system_server.te, e.g. sys.
     private static final String[][] sGlobalSettingsMapping = new String[][] {
         {Settings.Global.SYS_VDSO, "sys.vdso"},
-        {Settings.Global.FPS_DEVISOR, ThreadedRenderer.DEBUG_FPS_DIVISOR},
+        {Settings.Global.FPS_DEVISOR, "debug.hwui.fps_divisor"},
         {Settings.Global.DISPLAY_PANEL_LPM, "sys.display_panel_lpm"},
         {Settings.Global.SYS_UIDCPUPOWER, "sys.uidcpupower"},
         {Settings.Global.SYS_TRACED, "sys.traced.enable_override"},
