@@ -251,6 +251,8 @@ public class AppIdleHistory {
             appUsageHistory.lastUsedScreenTime = getScreenOnTime(elapsedRealtime);
         }
 
+        appUsageHistory.bucketingReason = REASON_MAIN_USAGE | usageReason;
+
         if (appUsageHistory.currentBucket > newBucket) {
             appUsageHistory.currentBucket = newBucket;
             if (DEBUG) {
@@ -259,7 +261,6 @@ public class AppIdleHistory {
                         + ", reason=0x0" + Integer.toHexString(appUsageHistory.bucketingReason));
             }
         }
-        appUsageHistory.bucketingReason = REASON_MAIN_USAGE | usageReason;
 
         return appUsageHistory;
     }
