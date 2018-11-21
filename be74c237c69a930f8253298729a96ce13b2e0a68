@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e455299_89e3fcee",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-11-21T09:12:36Z",
+      "side": 1,
+      "message": "rename to maybeCopyEntry, since it only copies if src !\u003d dest?",
+      "revId": "be74c237c69a930f8253298729a96ce13b2e0a68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
