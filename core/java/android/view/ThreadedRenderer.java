@@ -74,123 +74,6 @@ public final class ThreadedRenderer {
     private static final String CACHE_PATH_SHADERS = "com.android.opengl.shaders_cache";
     private static final String CACHE_PATH_SKIASHADERS = "com.android.skia.shaders_cache";
 
-    /**
-     * System property used to enable or disable threaded rendering profiling.
-     * The default value of this property is assumed to be false.
-     *
-     * When profiling is enabled, the adb shell dumpsys gfxinfo command will
-     * output extra information about the time taken to execute by the last
-     * frames.
-     *
-     * Possible values:
-     * "true", to enable profiling
-     * "visual_bars", to enable profiling and visualize the results on screen
-     * "false", to disable profiling
-     *
-     * @see #PROFILE_PROPERTY_VISUALIZE_BARS
-     *
-     * @hide
-     */
-    public static final String PROFILE_PROPERTY = "debug.hwui.profile";
-
-    /**
-     * Value for {@link #PROFILE_PROPERTY}. When the property is set to this
-     * value, profiling data will be visualized on screen as a bar chart.
-     *
-     * @hide
-     */
-    public static final String PROFILE_PROPERTY_VISUALIZE_BARS = "visual_bars";
-
-    /**
-     * System property used to specify the number of frames to be used
-     * when doing threaded rendering profiling.
-     * The default value of this property is #PROFILE_MAX_FRAMES.
-     *
-     * When profiling is enabled, the adb shell dumpsys gfxinfo command will
-     * output extra information about the time taken to execute by the last
-     * frames.
-     *
-     * Possible values:
-     * "60", to set the limit of frames to 60
-     */
-    static final String PROFILE_MAXFRAMES_PROPERTY = "debug.hwui.profile.maxframes";
-
-    /**
-     * System property used to debug EGL configuration choice.
-     *
-     * Possible values:
-     * "choice", print the chosen configuration only
-     * "all", print all possible configurations
-     */
-    static final String PRINT_CONFIG_PROPERTY = "debug.hwui.print_config";
-
-    /**
-     * Turn on to draw dirty regions every other frame.
-     *
-     * Possible values:
-     * "true", to enable dirty regions debugging
-     * "false", to disable dirty regions debugging
-     *
-     * @hide
-     */
-    public static final String DEBUG_DIRTY_REGIONS_PROPERTY = "debug.hwui.show_dirty_regions";
-
-    /**
-     * Turn on to flash hardware layers when they update.
-     *
-     * Possible values:
-     * "true", to enable hardware layers updates debugging
-     * "false", to disable hardware layers updates debugging
-     *
-     * @hide
-     */
-    public static final String DEBUG_SHOW_LAYERS_UPDATES_PROPERTY =
-            "debug.hwui.show_layers_updates";
-
-    /**
-     * Controls overdraw debugging.
-     *
-     * Possible values:
-     * "false", to disable overdraw debugging
-     * "show", to show overdraw areas on screen
-     * "count", to display an overdraw counter
-     *
-     * @hide
-     */
-    public static final String DEBUG_OVERDRAW_PROPERTY = "debug.hwui.overdraw";
-
-    /**
-     * Value for {@link #DEBUG_OVERDRAW_PROPERTY}. When the property is set to this
-     * value, overdraw will be shown on screen by coloring pixels.
-     *
-     * @hide
-     */
-    public static final String OVERDRAW_PROPERTY_SHOW = "show";
-
-    /**
-     * Turn on to debug non-rectangular clip operations.
-     *
-     * Possible values:
-     * "hide", to disable this debug mode
-     * "highlight", highlight drawing commands tested against a non-rectangular clip
-     * "stencil", renders the clip region on screen when set
-     *
-     * @hide
-     */
-    public static final String DEBUG_SHOW_NON_RECTANGULAR_CLIP_PROPERTY =
-            "debug.hwui.show_non_rect_clip";
-
-    /**
-     * Sets the FPS devisor to lower the FPS.
-     *
-     * Sets a positive integer as a divisor. 1 (the default value) menas the full FPS, and 2
-     * means half the full FPS.
-     *
-     *
-     * @hide
-     */
-    public static final String DEBUG_FPS_DIVISOR = "debug.hwui.fps_divisor";
-
     public static int EGL_CONTEXT_PRIORITY_HIGH_IMG = 0x3101;
     public static int EGL_CONTEXT_PRIORITY_MEDIUM_IMG = 0x3102;
     public static int EGL_CONTEXT_PRIORITY_LOW_IMG = 0x3103;
@@ -332,10 +215,6 @@ public final class ThreadedRenderer {
     // but possibly both can just be deleted.
     private static final int SYNC_CONTEXT_IS_STOPPED = 1 << 2;
     private static final int SYNC_FRAME_DROPPED = 1 << 3;
-
-    private static final String[] VISUALIZERS = {
-        PROFILE_PROPERTY_VISUALIZE_BARS,
-    };
 
     private static final int FLAG_DUMP_FRAMESTATS   = 1 << 0;
     private static final int FLAG_DUMP_RESET        = 1 << 1;

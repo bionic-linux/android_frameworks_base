@@ -29,6 +29,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.sysprop.DebugHwuiProperties;
 import android.util.Log;
 import android.util.TimeUtils;
 import android.view.animation.AnimationUtils;
@@ -250,7 +251,7 @@ public final class Choreographer {
             mCallbackQueues[i] = new CallbackQueue();
         }
         // b/68769804: For low FPS experiments.
-        setFPSDivisor(SystemProperties.getInt(ThreadedRenderer.DEBUG_FPS_DIVISOR, 1));
+        setFPSDivisor(DebugHwuiProperties.fps_divisor().orElse(1));
     }
 
     private static float getRefreshRate() {
