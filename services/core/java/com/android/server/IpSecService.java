@@ -35,6 +35,7 @@ import android.net.IIpSecService;
 import android.net.INetd;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
+import android.net.IpSecCreateSaParcel;
 import android.net.IpSecManager;
 import android.net.IpSecSpiResponse;
 import android.net.IpSecTransform;
@@ -1606,30 +1607,45 @@ public class IpSecService extends IIpSecService.Stub {
             cryptName = crypt.getName();
         }
 
-        mSrvConfig
-                .getNetdInstance()
-                .ipSecAddSecurityAssociation(
-                        Binder.getCallingUid(),
-                        c.getMode(),
-                        c.getSourceAddress(),
-                        c.getDestinationAddress(),
-                        (c.getNetwork() != null) ? c.getNetwork().netId : 0,
-                        spiRecord.getSpi(),
-                        c.getMarkValue(),
-                        c.getMarkMask(),
-                        (auth != null) ? auth.getName() : "",
-                        (auth != null) ? auth.getKey() : new byte[] {},
-                        (auth != null) ? auth.getTruncationLengthBits() : 0,
-                        cryptName,
-                        (crypt != null) ? crypt.getKey() : new byte[] {},
-                        (crypt != null) ? crypt.getTruncationLengthBits() : 0,
-                        (authCrypt != null) ? authCrypt.getName() : "",
-                        (authCrypt != null) ? authCrypt.getKey() : new byte[] {},
-                        (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0,
-                        encapType,
-                        encapLocalPort,
-                        encapRemotePort,
-                        c.getXfrmInterfaceId());
+        // Build request parcel
+        IpSecCreateSaParcel createSaParcel = new IpSecCreateSaParcel();
+        createSaParcel.transformId = Binder.getCallingUid();
+        createSaParcel.mode = c.getMode();
+        createSaParcel.sourceAddress = c.getSourceAddress();
+        createSaParcel.destinationAddress = c.getDestinationAddress();
+        createSaParcel.spi = spiRecord.getSpi();
+
+        // Underlying network
+        createSaParcel.underlyingNetId = (c.getNetwork() != null) ? c.getNetwork().netId : 0;
+
+        // Mark
+        createSaParcel.markValue = c.getMarkValue();
+        createSaParcel.markMask = c.getMarkMask();
+
+        // Auth
+        createSaParcel.authAlgo = (auth != null) ? auth.getName() : "";
+        createSaParcel.authKey = (auth != null) ? auth.getKey() : new byte[] {};
+        createSaParcel.authTruncBits = (auth != null) ? auth.getTruncationLengthBits() : 0;
+
+        // Crypt
+        createSaParcel.cryptAlgo = cryptName; // Pass CRYPT_NULL if no crypt (or authcrypt) provided
+        createSaParcel.cryptKey = (crypt != null) ? crypt.getKey() : new byte[] {};
+        createSaParcel.cryptTruncBits = (crypt != null) ? crypt.getTruncationLengthBits() : 0;
+
+        // Aead
+        createSaParcel.aeadAlgo = (authCrypt != null) ? authCrypt.getName() : "";
+        createSaParcel.aeadKey = (authCrypt != null) ? authCrypt.getKey() : new byte[] {};
+        createSaParcel.aeadIcvBits = (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0;
+
+        // Encap
+        createSaParcel.encapType = encapType;
+        createSaParcel.encapLocalPort = encapLocalPort;
+        createSaParcel.encapRemotePort = encapRemotePort;
+
+        // XFRM-I IF_ID
+        createSaParcel.interfaceId = c.getXfrmInterfaceId();
+
+        mSrvConfig.getNetdInstance().ipSecAddSecurityAssociation(createSaParcel);
     }
 
     /**
