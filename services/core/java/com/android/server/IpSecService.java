@@ -24,7 +24,6 @@ import static android.system.OsConstants.AF_UNSPEC;
 import static android.system.OsConstants.EINVAL;
 import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
-
 import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
@@ -793,6 +792,7 @@ public class IpSecService extends IIpSecService.Stub {
     private final class TunnelInterfaceRecord extends OwnedResourceRecord {
         private final String mInterfaceName;
         private final Network mUnderlyingNetwork;
+        private final boolean mAllowRestrictedNetworks;
 
         // outer addresses
         private final String mLocalAddress;
@@ -807,6 +807,7 @@ public class IpSecService extends IIpSecService.Stub {
                 int resourceId,
                 String interfaceName,
                 Network underlyingNetwork,
+                boolean allowRestrictedNetworks,
                 String localAddr,
                 String remoteAddr,
                 int ikey,
@@ -816,6 +817,7 @@ public class IpSecService extends IIpSecService.Stub {
 
             mInterfaceName = interfaceName;
             mUnderlyingNetwork = underlyingNetwork;
+            mAllowRestrictedNetworks = allowRestrictedNetworks;
             mLocalAddress = localAddr;
             mRemoteAddress = remoteAddr;
             mIkey = ikey;
@@ -869,6 +871,10 @@ public class IpSecService extends IIpSecService.Stub {
 
         public Network getUnderlyingNetwork() {
             return mUnderlyingNetwork;
+        }
+
+        public boolean isAllowRestrictedNetworks() {
+            return mAllowRestrictedNetworks;
         }
 
         /** Returns the local, outer address for the tunnelInterface */
@@ -1274,7 +1280,11 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public synchronized IpSecTunnelInterfaceResponse createTunnelInterface(
-            String localAddr, String remoteAddr, Network underlyingNetwork, IBinder binder,
+            String localAddr,
+            String remoteAddr,
+            Network underlyingNetwork,
+            boolean allowRestrictedNetworks,
+            IBinder binder,
             String callingPackage) {
         enforceTunnelPermissions(callingPackage);
         checkNotNull(binder, "Null Binder passed to createTunnelInterface");
@@ -1283,10 +1293,7 @@ public class IpSecService extends IIpSecService.Stub {
         checkInetAddress(remoteAddr);
 
         // Check that the user has the permissions to use this Network
-        enforceNetworkPermissions(underlyingNetwork);
-
-        // TODO: Check that underlying network exists, and IP addresses not assigned to a different
-        //       network (b/72316676).
+        enforceNetworkPermissions(underlyingNetwork, allowRestrictedNetworks);
 
         int callerUid = Binder.getCallingUid();
         UserRecord userRecord = mUserResourceTracker.getUserRecord(callerUid);
@@ -1338,6 +1345,7 @@ public class IpSecService extends IIpSecService.Stub {
                                     resourceId,
                                     intfName,
                                     underlyingNetwork,
+                                    allowRestrictedNetworks,
                                     localAddr,
                                     remoteAddr,
                                     ikey,
@@ -1548,6 +1556,10 @@ public class IpSecService extends IIpSecService.Stub {
 
         config.setMarkValue(0);
         config.setMarkMask(0);
+
+        // Clear allowRestrictedNetwork. This can only be set (and known) when applying tunnel
+        //    mode transforms to a tunnel.
+        config.setAllowRestrictedNetworks(false);
     }
 
     private static final String TUNNEL_OP = AppOpsManager.OPSTR_MANAGE_IPSEC_TUNNELS;
@@ -1570,7 +1582,7 @@ public class IpSecService extends IIpSecService.Stub {
         return (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    private void enforceNetworkPermissions(Network network) {
+    private void enforceNetworkPermissions(Network network, boolean allowRestrictedNetworks) {
         checkNotNull(network, "Null network provided");
 
         // Retrieve network capabilities
@@ -1579,7 +1591,17 @@ public class IpSecService extends IIpSecService.Stub {
             throw new IllegalArgumentException("Invalid Network");
         }
 
-        if (!nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)) {
+        // If restricted, make sure allowRestrictedNetworks is on
+        if (!nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
+                && !allowRestrictedNetworks) {
+            throw new IllegalArgumentException(
+                    "Restricted networks not allowed, but restricted network provided");
+        }
+
+        // If we are allowing restricted networks, check permissions. Above case checks to make sure
+        // that restricted networks are always paired with the allowRestrictedNetworks flag.
+        if (allowRestrictedNetworks) {
+            // TODO: Maybe also allow NETWORK_STACK?
             mContext.enforceCallingOrSelfPermission(
                     android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS,
                     "Caller does not have permission to use restricted Networks");
@@ -1617,6 +1639,7 @@ public class IpSecService extends IIpSecService.Stub {
 
         // Underlying network
         createSaParcel.underlyingNetId = (c.getNetwork() != null) ? c.getNetwork().netId : 0;
+        createSaParcel.allowRestrictedNetworks = c.isAllowRestrictedNetworks();
 
         // Mark
         createSaParcel.markValue = c.getMarkValue();
@@ -1814,8 +1837,11 @@ public class IpSecService extends IIpSecService.Stub {
             // c.setMarkMask(0xffffffff);
 
             if (direction == IpSecManager.DIRECTION_OUT) {
-                // Set output mark via underlying network (output only)
+                // Set underlying network and permissions for output mark
+                // Permissions bits are only needed for the outbound packets, and are only set with
+                // output mark (or set-mark)
                 c.setNetwork(tunnelInterfaceInfo.getUnderlyingNetwork());
+                c.setAllowRestrictedNetworks(tunnelInterfaceInfo.isAllowRestrictedNetworks());
 
                 // Set outbound SPI only. We want inbound to use any valid SA (old, new) on rekeys,
                 // but want to guarantee outbound packets are sent over the new SA.

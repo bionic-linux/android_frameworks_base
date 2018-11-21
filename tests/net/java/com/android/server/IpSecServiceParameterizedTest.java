@@ -59,6 +59,7 @@ import android.test.mock.MockContext;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -114,6 +115,7 @@ public class IpSecServiceParameterizedTest {
     AppOpsManager mMockAppOps = mock(AppOpsManager.class);
     ConnectivityManager mMockConnectivityManager = mock(ConnectivityManager.class);
 
+    AtomicBoolean mHasRestrictedNetworkPermission = new AtomicBoolean(false);
     MockContext mMockContext =
             new MockContext() {
                 @Override
@@ -134,6 +136,9 @@ public class IpSecServiceParameterizedTest {
                         return;
                     } else if (permission
                             == android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS) {
+                        if (mHasRestrictedNetworkPermission.get()) {
+                            return;
+                        }
                         throw new SecurityException("Restricted network permission not granted");
                     }
                     throw new SecurityException("Unavailable permission requested");
@@ -630,9 +635,19 @@ public class IpSecServiceParameterizedTest {
 
     private IpSecTunnelInterfaceResponse createAndValidateTunnel(
             String localAddr, String remoteAddr, String pkgName) {
+        return createAndValidateTunnel(localAddr, remoteAddr, false, pkgName);
+    }
+
+    private IpSecTunnelInterfaceResponse createAndValidateTunnel(
+            String localAddr, String remoteAddr, boolean allowRestrictedNetworks, String pkgName) {
         IpSecTunnelInterfaceResponse createTunnelResp =
                 mIpSecService.createTunnelInterface(
-                        mSourceAddr, mDestinationAddr, fakeNetwork, new Binder(), pkgName);
+                        mSourceAddr,
+                        mDestinationAddr,
+                        fakeNetwork,
+                        allowRestrictedNetworks,
+                        new Binder(),
+                        pkgName);
 
         assertNotNull(createTunnelResp);
         assertEquals(IpSecManager.Status.OK, createTunnelResp.status);
@@ -662,6 +677,22 @@ public class IpSecServiceParameterizedTest {
     }
 
     @Test
+    public void testCreateTunnelInterfaceRestrictedNetworkButDisallowRestricted() throws Exception {
+        NetworkCapabilities caps = new NetworkCapabilities();
+        caps.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+        when(mMockConnectivityManager.getNetworkCapabilities(anyObject())).thenReturn(caps);
+
+        // mMockContext throws an exception if we get to the permission check.
+
+        try {
+            IpSecTunnelInterfaceResponse createTunnelResp =
+                    createAndValidateTunnel(mSourceAddr, mDestinationAddr, false, "blessedPackage");
+            fail("Did not hit enforceCallingOrSelfPermission!");
+        } catch (IllegalArgumentException expected) {
+        }
+    }
+
+    @Test
     public void testCreateTunnelInterfaceRestrictedNetwork() throws Exception {
         NetworkCapabilities caps = new NetworkCapabilities();
         caps.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
@@ -671,7 +702,7 @@ public class IpSecServiceParameterizedTest {
 
         try {
             IpSecTunnelInterfaceResponse createTunnelResp =
-                    createAndValidateTunnel(mSourceAddr, mDestinationAddr, "blessedPackage");
+                    createAndValidateTunnel(mSourceAddr, mDestinationAddr, true, "blessedPackage");
             fail("Did not hit enforceCallingOrSelfPermission!");
         } catch (SecurityException expected) {
         }
@@ -722,45 +753,30 @@ public class IpSecServiceParameterizedTest {
 
     @Test
     public void testApplyTunnelModeTransformOutbound() throws Exception {
-        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_OUT);
+        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_OUT, false);
+    }
 
-        // Additionally also verify the security policies are updated
-        for (int selAddrFamily : ADDRESS_FAMILIES) {
-            verify(mMockNetd, times(1))
-                    .ipSecUpdateSecurityPolicy(
-                            eq(mUid),
-                            eq(selAddrFamily),
-                            eq(IpSecManager.DIRECTION_OUT),
-                            anyString(),
-                            anyString(),
-                            eq(TEST_SPI),
-                            not(eq(0)), // iKey/oKey
-                            not(eq(0)), // mask
-                            not(eq(0))); // xfrm_if_id
-        }
+    @Test
+    public void testApplyTunnelModeTransformOutboundAllowRestricted() throws Exception {
+        // "Give" ourselves the permission
+        mHasRestrictedNetworkPermission.set(true);
+        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_OUT, true);
     }
 
     @Test
     public void testApplyTunnelModeTransformInbound() throws Exception {
-        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_IN);
-
-        // Additionally also verify the security policies are updated
-        for (int selAddrFamily : ADDRESS_FAMILIES) {
-            verify(mMockNetd, times(1))
-                    .ipSecUpdateSecurityPolicy(
-                            eq(mUid),
-                            eq(selAddrFamily),
-                            eq(IpSecManager.DIRECTION_IN),
-                            anyString(),
-                            anyString(),
-                            eq(0),
-                            not(eq(0)), // iKey/oKey
-                            not(eq(0)), // mask
-                            not(eq(0))); // xfrm_if_id
-        }
+        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_IN, false);
     }
 
-    private void applyAndVerifyTunnelModeTransform(int direction) throws Exception {
+    @Test
+    public void testApplyTunnelModeTransformInboundAllowRestricted() throws Exception {
+        // "Give" ourselves the permission
+        mHasRestrictedNetworkPermission.set(true);
+        applyAndVerifyTunnelModeTransform(IpSecManager.DIRECTION_IN, true);
+    }
+
+    private void applyAndVerifyTunnelModeTransform(int direction, boolean allowRestrictedNetworks)
+            throws Exception {
         IpSecConfig ipSecConfig = new IpSecConfig();
         ipSecConfig.setMode(IpSecTransform.MODE_TUNNEL);
         addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
@@ -770,8 +786,16 @@ public class IpSecServiceParameterizedTest {
                 mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
         ParcelFileDescriptor pfd = ParcelFileDescriptor.fromSocket(new Socket());
 
+        // Mock capabilities checks. Set NOT_RESTRICTED based on allowRestrictedNetworks flag
+        NetworkCapabilities caps = new NetworkCapabilities();
+        if (!allowRestrictedNetworks) {
+            caps.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+        }
+        when(mMockConnectivityManager.getNetworkCapabilities(anyObject())).thenReturn(caps);
+
         IpSecTunnelInterfaceResponse createTunnelResp =
-                createAndValidateTunnel(mSourceAddr, mDestinationAddr, "blessedPackage");
+                createAndValidateTunnel(
+                        mSourceAddr, mDestinationAddr, allowRestrictedNetworks, "blessedPackage");
 
         int transformResourceId = createTransformResp.resourceId;
         int tunnelResourceId = createTunnelResp.resourceId;
@@ -779,7 +803,30 @@ public class IpSecServiceParameterizedTest {
                 tunnelResourceId, direction, transformResourceId, "blessedPackage");
 
         ipSecConfig.setXfrmInterfaceId(tunnelResourceId);
-        verifyTransformNetdCalledForCreatingSA(ipSecConfig, createTransformResp);
+        IpSecCreateSaParcel parcel =
+                verifyTransformNetdCalledForCreatingSA(ipSecConfig, createTransformResp);
+
+        // Additionally also verify the security policies are updated
+        for (int selAddrFamily : ADDRESS_FAMILIES) {
+            verify(mMockNetd, times(1))
+                    .ipSecUpdateSecurityPolicy(
+                            eq(mUid),
+                            eq(selAddrFamily),
+                            eq(direction),
+                            anyString(),
+                            anyString(),
+
+                            // SPI must only be set in outbound direction
+                            eq(direction == IpSecManager.DIRECTION_OUT ? TEST_SPI : 0),
+                            not(eq(0)), // iKey/oKey
+                            not(eq(0)), // mask
+                            not(eq(0))); // xfrm_if_id
+        }
+
+        // allowRestrictedNetworks should always be false in the inbound direction
+        assertEquals(
+                (direction == IpSecManager.DIRECTION_OUT ? allowRestrictedNetworks : false),
+                parcel.allowRestrictedNetworks);
     }
 
     @Test

@@ -779,9 +779,13 @@ public final class IpSecManager {
             }
         }
 
-        private IpSecTunnelInterface(@NonNull Context ctx, @NonNull IIpSecService service,
-                @NonNull InetAddress localAddress, @NonNull InetAddress remoteAddress,
-                @NonNull Network underlyingNetwork)
+        private IpSecTunnelInterface(
+                @NonNull Context ctx,
+                @NonNull IIpSecService service,
+                @NonNull InetAddress localAddress,
+                @NonNull InetAddress remoteAddress,
+                @NonNull Network underlyingNetwork,
+                boolean allowRestrictedNetworks)
                 throws ResourceUnavailableException, IOException {
             mOpPackageName = ctx.getOpPackageName();
             mService = service;
@@ -795,6 +799,7 @@ public final class IpSecManager {
                                 localAddress.getHostAddress(),
                                 remoteAddress.getHostAddress(),
                                 underlyingNetwork,
+                                allowRestrictedNetworks,
                                 new Binder(),
                                 mOpPackageName);
                 switch (result.status) {
@@ -873,8 +878,13 @@ public final class IpSecManager {
      *
      * @param localAddress The local addres of the tunnel
      * @param remoteAddress The local addres of the tunnel
-     * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel.
-     *        This network should almost certainly be a network such as WiFi with an L2 address.
+     * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel. This
+     *     network should almost certainly be a network such as WiFi with an L2 address.
+     * @param allowRestrictedNetworks Whether the IPsec tunnel network may continue routing traffic
+     *     if the underlying network becomes restricted (eg moving to become a background Network).
+     *     Passing a underlyingNetwork that does not have hte NET_CAPABILITY_NOT_RESTRICTED will
+     *     require allowRestrictedNetworks to be true. Setting this to true will require caller to
+     *     hold {@link android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS}
      * @return a new {@link IpSecManager#IpSecTunnelInterface} with the specified properties
      * @throws IOException indicating that the socket could not be opened or bound
      * @throws ResourceUnavailableException indicating that too many encapsulation sockets are open
@@ -882,12 +892,20 @@ public final class IpSecManager {
      */
     @NonNull
     @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
-    public IpSecTunnelInterface createIpSecTunnelInterface(@NonNull InetAddress localAddress,
-            @NonNull InetAddress remoteAddress, @NonNull Network underlyingNetwork)
+    public IpSecTunnelInterface createIpSecTunnelInterface(
+            @NonNull InetAddress localAddress,
+            @NonNull InetAddress remoteAddress,
+            @NonNull Network underlyingNetwork,
+            boolean allowRestrictedNetworks)
             throws ResourceUnavailableException, IOException {
         try {
             return new IpSecTunnelInterface(
-                    mContext, mService, localAddress, remoteAddress, underlyingNetwork);
+                    mContext,
+                    mService,
+                    localAddress,
+                    remoteAddress,
+                    underlyingNetwork,
+                    allowRestrictedNetworks);
         } catch (ServiceSpecificException e) {
             throw rethrowCheckedExceptionFromServiceSpecificException(e);
         }

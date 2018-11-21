@@ -42,6 +42,10 @@ public final class IpSecConfig implements Parcelable {
     // for outbound packets. It may also be used to select packets.
     private Network mNetwork;
 
+    // Whether the tunnel should continue to function if the underlying
+    // Network goes into the background and becomes restricted
+    private boolean mAllowRestrictedNetworks;
+
     // Minimum requirements for identifying a transform
     // SPI identifying the IPsec SA in packet processing
     // and a destination IP address
@@ -110,6 +114,11 @@ public final class IpSecConfig implements Parcelable {
     /** Set the underlying network that will carry traffic for this transform */
     public void setNetwork(Network network) {
         mNetwork = network;
+    }
+
+    /** Set whether or not traffic can be routed over a restricted network */
+    public void setAllowRestrictedNetworks(boolean allowRestrictedNetworks) {
+        mAllowRestrictedNetworks = allowRestrictedNetworks;
     }
 
     public void setEncapType(int encapType) {
@@ -183,6 +192,10 @@ public final class IpSecConfig implements Parcelable {
 
     public Network getNetwork() {
         return mNetwork;
+    }
+
+    public boolean isAllowRestrictedNetworks() {
+        return mAllowRestrictedNetworks;
     }
 
     public int getEncapType() {
