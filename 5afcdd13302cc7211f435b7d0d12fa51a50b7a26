@@ -22,6 +22,30 @@
       "revId": "5afcdd13302cc7211f435b7d0d12fa51a50b7a26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d29755_d852717d",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/drawer/TileUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1221462
+      },
+      "writtenOn": "2018-11-22T07:14:05Z",
+      "side": 1,
+      "message": "Thank you for your advice.\nWe have confirmed if using the android:enabled property, our purpose will be achieved, so this request isn\u0027t needed.",
+      "parentUuid": "49c40829_952cce95",
+      "range": {
+        "startLine": 266,
+        "startChar": 12,
+        "endLine": 270,
+        "endChar": 13
+      },
+      "revId": "5afcdd13302cc7211f435b7d0d12fa51a50b7a26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
