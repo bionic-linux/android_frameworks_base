@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "b37ef0b5_4b0cb3c0",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-22T15:59:24Z",
+      "side": 1,
+      "message": "Also: the use of proto is suppose to mean we don\u0027t need to parse the text; host side tests should be able to use the proto defn and use full host proto classes.",
+      "parentUuid": "2adddb5f_33062251",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 29
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f094f83d_19bb68f6",
         "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
         "patchSetId": 3
