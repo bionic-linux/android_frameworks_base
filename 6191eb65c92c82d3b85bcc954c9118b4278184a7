@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05cdec9d_b00a23ce",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-22T15:48:12Z",
+      "side": 1,
+      "message": "The inspiration is DiskStatsService, which doesn\u0027t. Once we\u0027ve done first round comments I\u0027ll send it to a framework person and we can get their preference.",
+      "parentUuid": "33e8f708_f95b73a3",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5298bc08_a8a26a3b",
         "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-11-21T21:49:11Z",
       "side": 1,
       "message": "Not sure how to name the service, or how costly a Android service is, but a service created only for info sounds a bit luxury. For future usage, maybe RuntimeService or RuntimeModuleService?",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39341d5_af5f7a61",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-22T15:48:12Z",
+      "side": 1,
+      "message": "See the discussion doc (comments there would be appreciated). Having one for runtime was already an improvement over having one just for the core library or tzdata module.\n\nRuntimeService seemed too generic but is probably my preference if you don\u0027t like RuntimeInfoService.\n\nRuntimeModuleService seemed tied to the runtime module, which would already be slightly incorrect because it covers more than the runtime module.",
+      "parentUuid": "5298bc08_a8a26a3b",
       "range": {
         "startLine": 44,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a0cee54a_36c6d871",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-22T15:48:12Z",
+      "side": 1,
+      "message": "This is carried over from DiskStatsService. I\u0027m not a huge fan either. It makes sure that if more things are added the flush will always happen but I\u0027ll change it because I don\u0027t like it.",
+      "parentUuid": "ac514534_1bf745fb",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "268c31e3_fd65468e",
         "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2018-11-21T21:49:11Z",
       "side": 1,
       "message": "How about in java doc style @return?",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e9c8ec_17208019",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-22T15:48:12Z",
+      "side": 1,
+      "message": "Because it\u0027s pointless to have in addition to the description and the description is better than just having a @return.",
+      "parentUuid": "268c31e3_fd65468e",
       "range": {
         "startLine": 78,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7c3cfff6_9ce23881",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-22T15:48:12Z",
+      "side": 1,
+      "message": "I\u0027m making it up as I go along, but it\u0027s associated with the core_library even though we can\u0027t read the file from libcore. As stated in the comment: APK-based updates are probably going away in a future release so try to ignore it. It\u0027s being added for completeness while the two systems exist side-by-side.",
+      "parentUuid": "6a9aad0b_e7a80dfd",
+      "range": {
+        "startLine": 96,
+        "startChar": 33,
+        "endLine": 96,
+        "endChar": 40
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c6edb07_0989ef54",
         "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2adddb5f_33062251",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-22T15:48:12Z",
+      "side": 1,
+      "message": "AFAIK, there\u0027s no common format. See DiskStatsService.",
+      "parentUuid": "2c6edb07_0989ef54",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 29
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f094f83d_19bb68f6",
         "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2018-11-21T21:49:11Z",
       "side": 1,
       "message": "nit: can the exception type is printed as well?",
+      "range": {
+        "startLine": 158,
+        "startChar": 60,
+        "endLine": 158,
+        "endChar": 61
+      },
+      "revId": "6191eb65c92c82d3b85bcc954c9118b4278184a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b611f8_e14b55c4",
+        "filename": "services/core/java/com/android/server/RuntimeInfoService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-22T15:48:12Z",
+      "side": 1,
+      "message": "Fixed in PS4",
+      "parentUuid": "f094f83d_19bb68f6",
       "range": {
         "startLine": 158,
         "startChar": 60,
