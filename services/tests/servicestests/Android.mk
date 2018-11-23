@@ -63,10 +63,10 @@ LOCAL_JNI_SHARED_LIBRARIES := \
     liblog \
     liblzma \
     libnativehelper \
-    libnetdaidl \
     libui \
     libunwind \
-    libutils
+    libutils \
+    netd_aidl_interface-cpp
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 
