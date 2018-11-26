@@ -200,6 +200,7 @@ import com.android.internal.util.Preconditions;
 import com.android.internal.util.XmlUtils;
 import com.android.server.DeviceIdleController;
 import com.android.server.EventLogTags;
+import com.android.server.IoThread;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.lights.Light;
@@ -255,7 +256,7 @@ public class NotificationManagerService extends SystemService {
 
     // message codes
     static final int MESSAGE_DURATION_REACHED = 2;
-    static final int MESSAGE_SAVE_POLICY_FILE = 3;
+    // 3: removed to a different handler
     static final int MESSAGE_SEND_RANKING_UPDATE = 4;
     static final int MESSAGE_LISTENER_HINTS_CHANGED = 5;
     static final int MESSAGE_LISTENER_NOTIFICATION_FILTER_CHANGED = 6;
@@ -547,7 +548,7 @@ public class NotificationManagerService extends SystemService {
             mListeners.migrateToXml();
             mAssistants.migrateToXml();
             mConditionProviders.migrateToXml();
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
         mAssistants.ensureAssistant();
@@ -577,32 +578,39 @@ public class NotificationManagerService extends SystemService {
         }
     }
 
-    public void savePolicyFile() {
-        mHandler.removeMessages(MESSAGE_SAVE_POLICY_FILE);
-        mHandler.sendEmptyMessage(MESSAGE_SAVE_POLICY_FILE);
-    }
-
-    private void handleSavePolicyFile() {
-        if (DBG) Slog.d(TAG, "handleSavePolicyFile");
-        synchronized (mPolicyFile) {
-            final FileOutputStream stream;
-            try {
-                stream = mPolicyFile.startWrite();
-            } catch (IOException e) {
-                Slog.w(TAG, "Failed to save policy file", e);
-                return;
-            }
-
-            try {
-                writePolicyXml(stream, false /*forBackup*/);
-                mPolicyFile.finishWrite(stream);
-            } catch (IOException e) {
-                Slog.w(TAG, "Failed to save policy file, restoring backup", e);
-                mPolicyFile.failWrite(stream);
-            }
+    @VisibleForTesting
+    protected void handleSavePolicyFile() {
+        if (!IoThread.getHandler().hasCallbacks(mSavePolicyFile)) {
+            IoThread.getHandler().post(mSavePolicyFile);
         }
-        BackupManager.dataChanged(getContext().getPackageName());
     }
+
+    private final class SavePolicyFileRunnable implements Runnable {
+        @Override
+        public void run() {
+            if (DBG) Slog.d(TAG, "handleSavePolicyFile");
+            synchronized (mPolicyFile) {
+                final FileOutputStream stream;
+                try {
+                    stream = mPolicyFile.startWrite();
+                } catch (IOException e) {
+                    Slog.w(TAG, "Failed to save policy file", e);
+                    return;
+                }
+
+                try {
+                    writePolicyXml(stream, false /*forBackup*/);
+                    mPolicyFile.finishWrite(stream);
+                } catch (IOException e) {
+                    Slog.w(TAG, "Failed to save policy file, restoring backup", e);
+                    mPolicyFile.failWrite(stream);
+                }
+            }
+            BackupManager.dataChanged(getContext().getPackageName());
+        }
+    }
+
+    private final SavePolicyFileRunnable mSavePolicyFile = new SavePolicyFileRunnable();
 
     private void writePolicyXml(OutputStream stream, boolean forBackup) throws IOException {
         final XmlSerializer out = new FastXmlSerializer();
@@ -1096,7 +1104,7 @@ public class NotificationManagerService extends SystemService {
                 mAssistants.onPackagesChanged(removingPackage, pkgList, uidList);
                 mConditionProviders.onPackagesChanged(removingPackage, pkgList, uidList);
                 mRankingHelper.onPackagesChanged(removingPackage, changeUserId, pkgList, uidList);
-                savePolicyFile();
+                handleSavePolicyFile();
             }
         }
     };
@@ -1159,7 +1167,7 @@ public class NotificationManagerService extends SystemService {
                 mListeners.onUserRemoved(user);
                 mConditionProviders.onUserRemoved(user);
                 mAssistants.onUserRemoved(user);
-                savePolicyFile();
+                handleSavePolicyFile();
             } else if (action.equals(Intent.ACTION_USER_UNLOCKED)) {
                 final int user = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, USER_NULL);
                 mConditionProviders.onUserUnlocked(user);
@@ -1405,7 +1413,7 @@ public class NotificationManagerService extends SystemService {
         mZenModeHelper.addCallback(new ZenModeHelper.Callback() {
             @Override
             public void onConfigChanged() {
-                savePolicyFile();
+                handleSavePolicyFile();
             }
 
             @Override
@@ -1695,7 +1703,7 @@ public class NotificationManagerService extends SystemService {
                     modifiedChannel, NOTIFICATION_CHANNEL_OR_GROUP_UPDATED);
         }
 
-        savePolicyFile();
+        handleSavePolicyFile();
     }
 
     private void maybeNotifyChannelOwner(String pkg, int uid, NotificationChannel preUpdate,
@@ -2152,7 +2160,7 @@ public class NotificationManagerService extends SystemService {
                 Slog.w(TAG, "Can't notify app about app block change", e);
             }
 
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
         /**
@@ -2214,7 +2222,7 @@ public class NotificationManagerService extends SystemService {
         public void setShowBadge(String pkg, int uid, boolean showBadge) {
             checkCallerIsSystem();
             mRankingHelper.setShowBadge(pkg, uid, showBadge);
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
         @Override
@@ -2222,7 +2230,7 @@ public class NotificationManagerService extends SystemService {
                 NotificationChannelGroup group) throws RemoteException {
             enforceSystemOrSystemUI("Caller not system or systemui");
             createNotificationChannelGroup(pkg, uid, group, false, false);
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
         @Override
@@ -2235,7 +2243,7 @@ public class NotificationManagerService extends SystemService {
                 final NotificationChannelGroup group = groups.get(i);
                 createNotificationChannelGroup(pkg, Binder.getCallingUid(), group, true, false);
             }
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
         private void createNotificationChannelsImpl(String pkg, int uid,
@@ -2253,7 +2261,7 @@ public class NotificationManagerService extends SystemService {
                         mRankingHelper.getNotificationChannel(pkg, uid, channel.getId(), false),
                         NOTIFICATION_CHANNEL_OR_GROUP_ADDED);
             }
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
         @Override
@@ -2298,7 +2306,7 @@ public class NotificationManagerService extends SystemService {
                     UserHandle.getUserHandleForUid(callingUid),
                     mRankingHelper.getNotificationChannel(pkg, callingUid, channelId, true),
                     NOTIFICATION_CHANNEL_OR_GROUP_DELETED);
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
         @Override
@@ -2341,7 +2349,7 @@ public class NotificationManagerService extends SystemService {
                 mListeners.notifyNotificationChannelGroupChanged(
                         pkg, UserHandle.getUserHandleForUid(callingUid), groupToDelete,
                         NOTIFICATION_CHANNEL_OR_GROUP_DELETED);
-                savePolicyFile();
+                handleSavePolicyFile();
             }
         }
 
@@ -2462,7 +2470,7 @@ public class NotificationManagerService extends SystemService {
                         true, UserHandle.getCallingUserId(), packages, uids);
             }
 
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
 
@@ -3224,7 +3232,7 @@ public class NotificationManagerService extends SystemService {
                 final ByteArrayInputStream bais = new ByteArrayInputStream(payload);
                 try {
                     readPolicyXml(bais, true /*forRestore*/);
-                    savePolicyFile();
+                    handleSavePolicyFile();
                 } catch (NumberFormatException | XmlPullParserException | IOException e) {
                     Slog.w(TAG, "applyRestore: error reading payload", e);
                 }
@@ -3265,7 +3273,7 @@ public class NotificationManagerService extends SystemService {
                                     .setPackage(pkg)
                                     .addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY),
                             UserHandle.of(userId), null);
-                    savePolicyFile();
+                    handleSavePolicyFile();
                 }
             } finally {
                 Binder.restoreCallingIdentity(identity);
@@ -3399,7 +3407,7 @@ public class NotificationManagerService extends SystemService {
                                     .addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY),
                             UserHandle.of(userId), null);
 
-                    savePolicyFile();
+                    handleSavePolicyFile();
                 }
             } finally {
                 Binder.restoreCallingIdentity(identity);
@@ -3425,7 +3433,7 @@ public class NotificationManagerService extends SystemService {
                                     .addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY),
                             UserHandle.of(userId), null);
 
-                    savePolicyFile();
+                    handleSavePolicyFile();
                 }
             } finally {
                 Binder.restoreCallingIdentity(identity);
@@ -3497,7 +3505,7 @@ public class NotificationManagerService extends SystemService {
             verifyPrivilegedListener(token, user);
             createNotificationChannelGroup(
                     pkg, getUidForPackageAndUser(pkg, user), group, false, true);
-            savePolicyFile();
+            handleSavePolicyFile();
         }
 
         @Override
@@ -4244,7 +4252,7 @@ public class NotificationManagerService extends SystemService {
                 Slog.d(TAG, "Ignored enqueue for snoozed notification " + r.getKey());
             }
             mSnoozeHelper.update(userId, r);
-            savePolicyFile();
+            handleSavePolicyFile();
             return false;
         }
 
@@ -4373,7 +4381,7 @@ public class NotificationManagerService extends SystemService {
                 mSnoozeHelper.snooze(r, mDuration);
             }
             r.recordSnoozed();
-            savePolicyFile();
+            handleSavePolicyFile();
         }
     }
 
@@ -5381,9 +5389,6 @@ public class NotificationManagerService extends SystemService {
                 case MESSAGE_FINISH_TOKEN_TIMEOUT:
                     handleKillTokenTimeout((IBinder)msg.obj);
                     break;
-                case MESSAGE_SAVE_POLICY_FILE:
-                    handleSavePolicyFile();
-                    break;
                 case MESSAGE_SEND_RANKING_UPDATE:
                     handleSendRankingUpdate();
                     break;
@@ -5778,7 +5783,7 @@ public class NotificationManagerService extends SystemService {
                         if (reason != REASON_SNOOZED) {
                             final boolean wasSnoozed = mSnoozeHelper.cancel(userId, pkg, tag, id);
                             if (wasSnoozed) {
-                                savePolicyFile();
+                                handleSavePolicyFile();
                             }
                         }
                     }
@@ -5928,7 +5933,7 @@ public class NotificationManagerService extends SystemService {
             Slog.d(TAG, String.format("unsnooze event(%s, %s)", key, listenerName));
         }
         mSnoozeHelper.repost(key);
-        savePolicyFile();
+        handleSavePolicyFile();
     }
 
     @GuardedBy("mNotificationLock")
