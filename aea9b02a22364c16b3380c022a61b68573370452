@@ -22,6 +22,30 @@
       "revId": "aea9b02a22364c16b3380c022a61b68573370452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989388ae_bafd5803",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2373,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2018-11-27T17:14:59Z",
+      "side": 1,
+      "message": "aosp/836528 will fix it.",
+      "parentUuid": "da034e6a_bdc56dc5",
+      "range": {
+        "startLine": 2373,
+        "startChar": 31,
+        "endLine": 2373,
+        "endChar": 85
+      },
+      "revId": "aea9b02a22364c16b3380c022a61b68573370452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
