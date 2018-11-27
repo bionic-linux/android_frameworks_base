@@ -4040,6 +4040,7 @@ public class PackageManagerService extends IPackageManager.Stub
     @Override
     public PackageInfo getPackageInfoVersioned(VersionedPackage versionedPackage,
             int flags, int userId) {
+        if(versionedPackage == null) return null;
         return getPackageInfoInternal(versionedPackage.getPackageName(),
                 versionedPackage.getLongVersionCode(), flags, Binder.getCallingUid(), userId);
     }
@@ -6578,6 +6579,7 @@ public class PackageManagerService extends IPackageManager.Stub
         mPermissionManager.enforceCrossUserPermission(Binder.getCallingUid(), userId,
                 false /* requireFullPermission */, false /* checkShell */,
                 "query intent activities");
+        if (intent == null) return Collections.emptyList();
         final String pkgName = intent.getPackage();
         ComponentName comp = intent.getComponent();
         if (comp == null) {
@@ -8354,6 +8356,7 @@ public class PackageManagerService extends IPackageManager.Stub
         synchronized (mPackages) {
             final int callingUid = Binder.getCallingUid();
             final int callingUserId = UserHandle.getUserId(callingUid);
+            if (component == null) return null;
             final PackageSetting ps = mSettings.mPackages.get(component.getPackageName());
             if (ps == null) return null;
             if (filterAppAccessLPr(ps, callingUid, component, TYPE_UNKNOWN, callingUserId)) {
@@ -14233,7 +14236,7 @@ public class PackageManagerService extends IPackageManager.Stub
             synchronized (mPackages) {
                 for (int i = 0; i < packageNames.length; i++) {
                     final String packageName = packageNames[i];
-                    if (callingPackage.equals(packageName)) {
+                    if (callingPackage !=null && callingPackage.equals(packageName)) {
                         Slog.w(TAG, "Calling package: " + callingPackage + " trying to "
                                 + (suspended ? "" : "un") + "suspend itself. Ignoring");
                         unactionedPackages.add(packageName);
@@ -15170,6 +15173,12 @@ public class PackageManagerService extends IPackageManager.Stub
                 mHandler.sendEmptyMessage(MCS_RECONNECT);
                 res = false;
             }
+            catch (Exception e) {
+                if (DEBUG_INSTALL) Slog.i(TAG, "Posting install MCS_GIVE_UP");
+                mHandler.sendEmptyMessage(MCS_GIVE_UP);
+                res = false;
+            }
+
             handleReturnCode();
             return res;
         }
@@ -15660,10 +15669,10 @@ public class PackageManagerService extends IPackageManager.Stub
                         }
                     }
 
-                    final ComponentName requiredVerifierComponent = matchComponentForVerifier(
-                            mRequiredVerifierPackage, receivers);
                     if (ret == PackageManager.INSTALL_SUCCEEDED
                             && mRequiredVerifierPackage != null) {
+                        final ComponentName requiredVerifierComponent = matchComponentForVerifier(
+                                mRequiredVerifierPackage, receivers);
                         Trace.asyncTraceBegin(
                                 TRACE_TAG_PACKAGE_MANAGER, "verification", verificationId);
                         /*
@@ -19176,6 +19185,10 @@ public class PackageManagerService extends IPackageManager.Stub
     }
 
     private void clearExternalStorageDataSync(String packageName, int userId, boolean allData) {
+        if (packageName == null){
+            Slog.w(TAG, "clearExternalStorageDataSync packageName is null!");
+            return;
+        }
         if (DEFAULT_CONTAINER_PACKAGE.equals(packageName)) return;
 
         final boolean mounted;
@@ -19521,6 +19534,10 @@ public class PackageManagerService extends IPackageManager.Stub
     @Override
     public void deleteApplicationCacheFiles(final String packageName,
             final IPackageDataObserver observer) {
+        if (null == packageName) {
+            Slog.w(TAG, "Failed to delete cache files, for packageName is null!");
+            return ;
+        }
         final int userId = UserHandle.getCallingUserId();
         deleteApplicationCacheFilesAsUser(packageName, userId, observer);
     }
@@ -20709,6 +20726,7 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
     public void setComponentEnabledSetting(ComponentName componentName,
             int newState, int flags, int userId) {
         if (!sUserManager.exists(userId)) return;
+        if (componentName == null) return;
         setEnabledSetting(componentName.getPackageName(),
                 componentName.getClassName(), newState, flags, userId, null);
     }
@@ -21120,6 +21138,7 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
         mPermissionManager.enforceCrossUserPermission(callingUid, userId,
                 false /*requireFullPermission*/, false /*checkShell*/, "getComponentEnabled");
         synchronized (mPackages) {
+            if (component == null) return COMPONENT_ENABLED_STATE_DISABLED;
             if (filterAppAccessLPr(mSettings.getPackageLPr(component.getPackageName()), callingUid,
                     component, TYPE_UNKNOWN, userId)) {
                 return COMPONENT_ENABLED_STATE_DISABLED;
