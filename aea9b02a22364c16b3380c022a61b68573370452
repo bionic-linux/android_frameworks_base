@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da034e6a_bdc56dc5",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2373,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2018-11-27T16:50:27Z",
+      "side": 1,
+      "message": "The correct tag is \"{@link android.Manifest.permission#MODIFY_PHONE_STATE}\" (note the \"#\" in front of the member name instead of \".\"). This is breaking the aosp-master sdk build.",
+      "range": {
+        "startLine": 2373,
+        "startChar": 31,
+        "endLine": 2373,
+        "endChar": 85
+      },
+      "revId": "aea9b02a22364c16b3380c022a61b68573370452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
