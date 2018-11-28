@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "947512b1_f222115e",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 24227,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-11-28T12:49:14Z",
+      "side": 1,
+      "message": "This line contains two entries:\nHSPLandroid/icu/util/CodePointMap;-\u003estringIterator(Ljava/lang/CharSequence;I)Landroid/icu/util/CodePointMap$StringIterator;\n\nand:\n\nHSPLandroid/icu/util/Currency$1;-\u003e\u003cinit\u003e()V\n\nIt is causing the following message to be logged during the build, although it does not appear to be fatal.\n\nprofman E 11-28 12:23:45 209396 209396 profman.cc:806] Invalid method name and signature stringIterator(Ljava/lang/CharSequence;I)Landroid/icu/util/CodePointMap$StringIterator;HSPLandroid/icu/util/Currency$1;-\u003e\u003cinit\u003e()V",
+      "revId": "6ea0cb0d65ee13b9c4014d56ccb4926ac49c6e4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
