@@ -805,6 +805,13 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             remove(r.binder);
                         }
                     }
+                    if ((events & PhoneStateListener.LISTEN_CALL_ATTRIBUTES_CHANGED) != 0) {
+                        try {
+                            r.callback.onCallAttributesChanged(mCallAttributes);
+                        } catch (RemoteException ex) {
+                            remove(r.binder);
+                        }
+                    }
                 }
             }
         } else {
@@ -1578,6 +1585,33 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                         } catch (RemoteException ex) {
                             mRemoveList.add(r.binder);
                         }
+                    }
+                }
+            }
+            handleRemoveListLocked();
+        }
+    }
+
+    // TODO call this when ImsCallSession.Listener#callQualityChanged goes off
+    public void notifyCallQualityChanged(CallQuality callQuality) {
+        if (!checkNotifyPermission("notifyCallQualityChanged()")) {
+            return;
+        }
+
+        if (VDBG) {
+            log("notifyCallQualityChanged: callQuality=" + callQuality);
+        }
+
+
+        synchronized (mRecords) {
+            mCallAttributes.setCallQuality(callQuality);
+            for (Record r : mRecords) {
+                if (r.matchPhoneStateListenerEvent(
+                        PhoneStateListener.LISTEN_CALL_ATTRIBUTES_CHANGED)) {
+                    try {
+                        r.callback.onCallAttributesChanged(mCallAttributes);
+                    } catch (RemoteException ex) {
+                        mRemoveList.add(r.binder);
                     }
                 }
             }

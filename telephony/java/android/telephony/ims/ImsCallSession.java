@@ -18,6 +18,7 @@ package android.telephony.ims;
 
 import android.os.Message;
 import android.os.RemoteException;
+import android.telephony.CallQuality;
 import android.telephony.ims.aidl.IImsCallSessionListener;
 import android.util.Log;
 
@@ -441,6 +442,13 @@ public class ImsCallSession {
          * Device received RTT message from Remote UE
          */
         public void callSessionRttMessageReceived(String rttMessage) {
+            // no-op
+        }
+
+        /**
+         * TODO
+         */
+        public void callQualityChangedReceived(CallQuality callQuality) {
             // no-op
         }
     }
@@ -1395,6 +1403,16 @@ public class ImsCallSession {
         public void callSessionRttMessageReceived(String rttMessage) {
             if (mListener != null) {
                 mListener.callSessionRttMessageReceived(rttMessage);
+            }
+        }
+
+        /**
+         * Call quality updated
+         */
+        @Override
+        public void callQualityChanged(CallQuality callquality) {
+            if (mListener != null) {
+                mListener.callQualityChanged(callQuality);
             }
         }
     }
