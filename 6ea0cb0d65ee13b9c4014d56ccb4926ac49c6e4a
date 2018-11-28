@@ -16,6 +16,24 @@
       "revId": "6ea0cb0d65ee13b9c4014d56ccb4926ac49c6e4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b9c86a_a57b5bde",
+        "filename": "config/boot-image-profile.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 24227,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-11-28T13:26:30Z",
+      "side": 1,
+      "message": "Thanks, Paul! I probably miss a new line here. I will prepare a fix.",
+      "parentUuid": "947512b1_f222115e",
+      "revId": "6ea0cb0d65ee13b9c4014d56ccb4926ac49c6e4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
