@@ -16,6 +16,7 @@
 
 package com.android.ims.internal;
 
+import android.telephony.CallQuality;
 import android.telephony.ims.ImsStreamMediaProfile;
 import android.telephony.ims.ImsCallProfile;
 import android.telephony.ims.ImsReasonInfo;
@@ -152,4 +153,11 @@ oneway interface IImsCallSessionListener {
      * @param rttMessage Received RTT message
      */
     void callSessionRttMessageReceived(in String rttMessage);
+
+    /**
+     * Notifies of a change to the call quality.
+     *
+     * @param callQuality then updated call quality
+     */
+    void callQualityChanged(in CallQuality callQuality);
 }
