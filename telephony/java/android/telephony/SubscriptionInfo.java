@@ -132,10 +132,15 @@ public class SubscriptionInfo implements Parcelable {
     private UiccAccessRule[] mAccessRules;
 
     /**
-     * The ID of the SIM card. It is the ICCID of the active profile for a UICC card and the EID
-     * for an eUICC card.
+     * The string ID of the SIM card. It is the ICCID of the active profile for a UICC card and the
+     * EID for an eUICC card.
      */
-    private String mCardId;
+    private String mCardString;
+
+    /**
+     * The card ID of the SIM card. This maps uniquely to the card string.
+     */
+    private int mCardId;
 
     /**
      * Whether the subscription is opportunistic.
@@ -168,9 +173,9 @@ public class SubscriptionInfo implements Parcelable {
     public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
             CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
             Bitmap icon, String mcc, String mnc, String countryIso, boolean isEmbedded,
-            @Nullable UiccAccessRule[] accessRules, String cardId) {
+            @Nullable UiccAccessRule[] accessRules, String cardString) {
         this(id, iccId, simSlotIndex, displayName, carrierName, nameSource, iconTint, number,
-                roaming, icon, mcc, mnc, countryIso, isEmbedded, accessRules, cardId,
+                roaming, icon, mcc, mnc, countryIso, isEmbedded, accessRules, cardString,
                 false, null, true);
     }
 
@@ -180,20 +185,22 @@ public class SubscriptionInfo implements Parcelable {
     public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
             CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
             Bitmap icon, String mcc, String mnc, String countryIso, boolean isEmbedded,
-            @Nullable UiccAccessRule[] accessRules, String cardId, boolean isOpportunistic,
+            @Nullable UiccAccessRule[] accessRules, String cardString, boolean isOpportunistic,
             @Nullable String groupUUID, boolean isMetered) {
         this(id, iccId, simSlotIndex, displayName, carrierName, nameSource, iconTint, number,
-                roaming, icon, mcc, mnc, countryIso, isEmbedded, accessRules, cardId,
+                roaming, icon, mcc, mnc, countryIso, isEmbedded, accessRules, cardString, -1,
                 isOpportunistic, groupUUID, isMetered, false);
     }
+
     /**
      * @hide
      */
     public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
             CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
             Bitmap icon, String mcc, String mnc, String countryIso, boolean isEmbedded,
-            @Nullable UiccAccessRule[] accessRules, String cardId, boolean isOpportunistic,
-            @Nullable String groupUUID, boolean isMetered, boolean isGroupDisabled) {
+            @Nullable UiccAccessRule[] accessRules, String cardString, int cardId,
+            boolean isOpportunistic, @Nullable String groupUUID, boolean isMetered,
+            boolean isGroupDisabled) {
         this.mId = id;
         this.mIccId = iccId;
         this.mSimSlotIndex = simSlotIndex;
@@ -209,6 +216,7 @@ public class SubscriptionInfo implements Parcelable {
         this.mCountryIso = countryIso;
         this.mIsEmbedded = isEmbedded;
         this.mAccessRules = accessRules;
+        this.mCardString = cardString;
         this.mCardId = cardId;
         this.mIsOpportunistic = isOpportunistic;
         this.mGroupUUID = groupUUID;
@@ -508,10 +516,21 @@ public class SubscriptionInfo implements Parcelable {
     }
 
     /**
-     * @return the ID of the SIM card which contains the subscription.
+     * @return the card string of the SIM card which contains the subscription. The card string is
+     * the ICCID for UICCs or the EID for eUICCs.
+     * @hide
+     * //TODO rename usages in LPA: UiccSlotUtil.java, UiccSlotsManager.java, UiccSlotInfoTest.java
+     */
+    public String getCardString() {
+        return this.mCardString;
+    }
+
+    /**
+     * @return the cardId of the SIM card which contains the subscription.
      * @hide
      */
-    public String getCardId() {
+    @SystemApi
+    public int getCardId() {
         return this.mCardId;
     }
 
@@ -549,7 +568,8 @@ public class SubscriptionInfo implements Parcelable {
             Bitmap iconBitmap = Bitmap.CREATOR.createFromParcel(source);
             boolean isEmbedded = source.readBoolean();
             UiccAccessRule[] accessRules = source.createTypedArray(UiccAccessRule.CREATOR);
-            String cardId = source.readString();
+            String cardString = source.readString();
+            int cardId = source.readInt();
             boolean isOpportunistic = source.readBoolean();
             String groupUUID = source.readString();
             boolean isMetered = source.readBoolean();
@@ -557,8 +577,8 @@ public class SubscriptionInfo implements Parcelable {
 
             return new SubscriptionInfo(id, iccId, simSlotIndex, displayName, carrierName,
                     nameSource, iconTint, number, dataRoaming, iconBitmap, mcc, mnc, countryIso,
-                    isEmbedded, accessRules, cardId, isOpportunistic, groupUUID, isMetered,
-                    isGroupDisabled);
+                    isEmbedded, accessRules, cardString, cardId, isOpportunistic, groupUUID,
+                    isMetered, isGroupDisabled);
         }
 
         @Override
@@ -584,7 +604,8 @@ public class SubscriptionInfo implements Parcelable {
         mIconBitmap.writeToParcel(dest, flags);
         dest.writeBoolean(mIsEmbedded);
         dest.writeTypedArray(mAccessRules, flags);
-        dest.writeString(mCardId);
+        dest.writeString(mCardString);
+        dest.writeInt(mCardId);
         dest.writeBoolean(mIsOpportunistic);
         dest.writeString(mGroupUUID);
         dest.writeBoolean(mIsMetered);
@@ -614,23 +635,24 @@ public class SubscriptionInfo implements Parcelable {
     @Override
     public String toString() {
         String iccIdToPrint = givePrintableIccid(mIccId);
-        String cardIdToPrint = givePrintableIccid(mCardId);
+        String cardStringToPrint = givePrintableIccid(mCardString);
         return "{id=" + mId + ", iccId=" + iccIdToPrint + " simSlotIndex=" + mSimSlotIndex
                 + " displayName=" + mDisplayName + " carrierName=" + mCarrierName
                 + " nameSource=" + mNameSource + " iconTint=" + mIconTint + " mNumber=" + mNumber
                 + " dataRoaming=" + mDataRoaming + " iconBitmap=" + mIconBitmap + " mcc " + mMcc
                 + " mnc " + mMnc + "mCountryIso=" + mCountryIso + " isEmbedded " + mIsEmbedded
                 + " accessRules " + Arrays.toString(mAccessRules)
-                + " cardId=" + cardIdToPrint + " isOpportunistic " + mIsOpportunistic
-                + " mGroupUUID=" + mGroupUUID + " isMetered=" + mIsMetered
-                + " mIsGroupDisabled=" + mIsGroupDisabled + "}";
+                + " cardString=" + cardStringToPrint + " cardId=" + mCardId
+                + " isOpportunistic " + mIsOpportunistic + " mGroupUUID=" + mGroupUUID
+                + " isMetered=" + mIsMetered + " mIsGroupDisabled=" + mIsGroupDisabled + "}";
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(mId, mSimSlotIndex, mNameSource, mIconTint, mDataRoaming, mIsEmbedded,
                 mIsOpportunistic, mGroupUUID, mIsMetered, mIccId, mNumber, mMcc, mMnc,
-                mCountryIso, mCardId, mDisplayName, mCarrierName, mAccessRules, mIsGroupDisabled);
+                mCountryIso, mCardString, mCardId, mDisplayName, mCarrierName, mAccessRules,
+                mIsGroupDisabled);
     }
 
     @Override
@@ -660,6 +682,7 @@ public class SubscriptionInfo implements Parcelable {
                 && Objects.equals(mMcc, toCompare.mMcc)
                 && Objects.equals(mMnc, toCompare.mMnc)
                 && Objects.equals(mCountryIso, toCompare.mCountryIso)
+                && Objects.equals(mCardString, toCompare.mCardString)
                 && Objects.equals(mCardId, toCompare.mCardId)
                 && TextUtils.equals(mDisplayName, toCompare.mDisplayName)
                 && TextUtils.equals(mCarrierName, toCompare.mCarrierName)
