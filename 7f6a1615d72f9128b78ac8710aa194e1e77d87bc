@@ -45,6 +45,30 @@
       "revId": "7f6a1615d72f9128b78ac8710aa194e1e77d87bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f53866d_750b7c23",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2018-11-29T17:23:46Z",
+      "side": 1,
+      "message": "UNREACHABLE() doesn\u0027t appear to be in scope. All the other cases do return.",
+      "parentUuid": "0b0fa3c9_ab6bf8f5",
+      "range": {
+        "startLine": 1064,
+        "startChar": 8,
+        "endLine": 1064,
+        "endChar": 15
+      },
+      "revId": "7f6a1615d72f9128b78ac8710aa194e1e77d87bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
