@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3747bff8_5bf255a9",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b55b6fc3_5a0f8381",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c2f941d_08245a18",
         "filename": "services/net/java/android/net/apf/ApfFilter.java",
         "patchSetId": 1
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "6d6f1276_6f20201d",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c2f941d_08245a18",
+      "range": {
+        "startLine": 291,
+        "startChar": 4,
+        "endLine": 292,
+        "endChar": 71
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "137ddf2d_7b649b5f",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78aa69c_54e59ceb",
+      "range": {
+        "startLine": 292,
+        "startChar": 49,
+        "endLine": 292,
+        "endChar": 66
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abf24879_62b9e0fb",
         "filename": "services/net/java/android/net/apf/ApfFilter.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3fdafc57_8142aed9",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf24879_62b9e0fb",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 52
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7083e8b4_8a15f51e",
         "filename": "services/net/java/android/net/apf/ApfFilter.java",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624a9ec2_890bffe5",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7083e8b4_8a15f51e",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 80
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "1184fda7_bac3b777",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49299eb5_e50234b9",
+      "range": {
+        "startLine": 914,
+        "startChar": 19,
+        "endLine": 914,
+        "endChar": 21
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "057d5146_0483b330",
         "filename": "services/net/java/android/net/apf/ApfFilter.java",
         "patchSetId": 1
@@ -175,6 +319,30 @@
       "writtenOn": "2018-11-22T03:20:18Z",
       "side": 1,
       "message": "perhaps: or IPV4_ZERO_HOST_ADDRESS or IPV4_ZERO or INADDR_ANY or IPV4_INADDR_ANY",
+      "range": {
+        "startLine": 916,
+        "startChar": 30,
+        "endLine": 916,
+        "endChar": 51
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53e0cde_948a3da9",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "It\u0027s defined at line#265. do we need another one for the same definition?",
+      "parentUuid": "057d5146_0483b330",
       "range": {
         "startLine": 916,
         "startChar": 30,
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "0f7804ea_59dbc4c5",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "I tried 0.0.1.2 and it pass the filter. May I know what the bug you mentioned that would cause 0.0.1.2 to be dropped?",
+      "parentUuid": "3cfa3fae_44084176",
+      "range": {
+        "startLine": 1400,
+        "startChar": 72,
+        "endLine": 1400,
+        "endChar": 79
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "235903cc_54d55d34",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 1
@@ -233,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "9252125b_3d371391",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "235903cc_54d55d34",
+      "range": {
+        "startLine": 1435,
+        "startChar": 46,
+        "endLine": 1435,
+        "endChar": 48
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd890377_dc9580d1",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 1
@@ -253,6 +469,30 @@
       "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9310f4_b08c159b",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-11-30T10:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd890377_dc9580d1",
+      "range": {
+        "startLine": 1447,
+        "startChar": 39,
+        "endLine": 1447,
+        "endChar": 62
+      },
+      "revId": "ca0edec279a68dacac97d3aa7ec969703df3a02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
