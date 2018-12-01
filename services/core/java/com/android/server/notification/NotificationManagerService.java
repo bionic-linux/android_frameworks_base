@@ -574,8 +574,7 @@ public class NotificationManagerService extends SystemService {
     }
 
     public void savePolicyFile() {
-        mHandler.removeMessages(MESSAGE_SAVE_POLICY_FILE);
-        mHandler.sendEmptyMessage(MESSAGE_SAVE_POLICY_FILE);
+        mRankingHandler.requestSavePolicyFile();
     }
 
     private void handleSavePolicyFile() {
@@ -5333,9 +5332,6 @@ public class NotificationManagerService extends SystemService {
                 case MESSAGE_FINISH_TOKEN_TIMEOUT:
                     handleKillTokenTimeout((IBinder)msg.obj);
                     break;
-                case MESSAGE_SAVE_POLICY_FILE:
-                    handleSavePolicyFile();
-                    break;
                 case MESSAGE_SEND_RANKING_UPDATE:
                     handleSendRankingUpdate();
                     break;
@@ -5372,6 +5368,9 @@ public class NotificationManagerService extends SystemService {
                 case MESSAGE_RANKING_SORT:
                     handleRankingSort();
                     break;
+                case MESSAGE_SAVE_POLICY_FILE:
+                    handleSavePolicyFile();
+                    break;
             }
         }
 
@@ -5379,6 +5378,13 @@ public class NotificationManagerService extends SystemService {
             removeMessages(MESSAGE_RANKING_SORT);
             Message msg = Message.obtain();
             msg.what = MESSAGE_RANKING_SORT;
+            sendMessage(msg);
+        }
+
+        public void requestSavePolicyFile() {
+            removeMessages(MESSAGE_SAVE_POLICY_FILE);
+            Message msg = Message.obtain();
+            msg.what = MESSAGE_SAVE_POLICY_FILE;
             sendMessage(msg);
         }
 
