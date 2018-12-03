@@ -172,6 +172,9 @@ public class AdbDebuggingManager {
 
                 mOutputStream = mSocket.getOutputStream();
                 mInputStream = mSocket.getInputStream();
+                String head = "AU";
+                mOutputStream.write(head.getBytes());
+                mOutputStream.flush();
             } catch (IOException ioe) {
                 Slog.e(TAG, "Caught an exception opening the socket: " + ioe);
                 closeSocketLocked();

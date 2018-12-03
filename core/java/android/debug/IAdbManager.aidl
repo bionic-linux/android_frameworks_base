@@ -41,4 +41,54 @@ interface IAdbManager {
      * Clear all public keys installed for secure ADB debugging.
      */
     void clearDebuggingKeys();
+
+    /**
+     * Adb wireless enable
+     */
+    void enableAdbWireless(boolean enable);
+
+    /**
+     * Get paired devices for adb wireless
+     */
+    void queryAdbWirelessPairedDevices();
+
+    /**
+     * Get devices requesting for pairng
+     */
+    void queryAdbWirelessPairingDevices();
+
+    /**
+     * Pair with device
+     */
+    void pairDevice(int pairMode, int deviceId, String code);
+
+    /**
+     * Unpair with device
+     */
+    void unPairDevice(int deviceId);
+
+    /**
+     * Cancel pairing with device
+     */
+    void cancelPairing(int pairMode, int deviceId);
+
+    /**
+     * get adb wireless status
+     */
+    boolean isEnabled();
+
+    /**
+     * Query device name
+     */
+    String getName();
+
+    /**
+     * set device name
+     */
+    void setName(String name);
+
+    /**
+     * set adbd in discover state
+     */
+    void setDiscoverable(int pairMode, boolean enable);
 }
