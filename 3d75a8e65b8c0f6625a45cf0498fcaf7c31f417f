@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b16d9212_a82db4a5",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-03T13:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bef0c8f_0c22cba9",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 11
+      },
+      "revId": "3d75a8e65b8c0f6625a45cf0498fcaf7c31f417f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c90dd7f3_6e208378",
         "filename": "services/net/java/android/net/apf/ApfFilter.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-11-30T20:21:05Z",
       "side": 1,
       "message": "do we have a way of annotating this (and reply) as big endian (cause I assume that\u0027s what this is),\neven if only as a comment.",
+      "range": {
+        "startLine": 299,
+        "startChar": 25,
+        "endLine": 299,
+        "endChar": 30
+      },
+      "revId": "3d75a8e65b8c0f6625a45cf0498fcaf7c31f417f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2f4357_a2e6495b",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-03T13:01:19Z",
+      "side": 1,
+      "message": "If declare these two opcodes as byte[],\nprivate static final byte[] ARP_OPCODE_REQUEST \u003d {0, 1};\nprivate static final byte[] ARP_OPCODE_REPLY \u003d {0, 2};\n\nBut this change will cause the following two lines need to convert byte[] to int value.\nFrom\ngen.addJumpIfR0Equals(ARP_OPCODE_REQUEST, checkTargetIPv4); // Skip to unicast check\ngen.addJumpIfR0NotEquals(ARP_OPCODE_REPLY, mCountAndPassLabel);\n\nchange to \n\ngen.addJumpIfR0Equals(ByteBuffer.wrap(ARP_OPCODE_REQUEST).getShort(), checkTargetIPv4); // Skip to unicast check\ngen.addJumpIfR0NotEquals(ByteBuffer.wrap(ARP_OPCODE_REPLY).getShort(), mCountAndPassLabel);\n\nWhat do you think? Or just add a comment to describe the opcode is big-endian?",
+      "parentUuid": "c90dd7f3_6e208378",
       "range": {
         "startLine": 299,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "071d9f8e_e311dad1",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-03T13:01:19Z",
+      "side": 1,
+      "message": "got it.\nyes, it will fail if Load16 here.",
+      "parentUuid": "3869288e_633feec0",
+      "range": {
+        "startLine": 914,
+        "startChar": 12,
+        "endLine": 914,
+        "endChar": 21
+      },
+      "revId": "3d75a8e65b8c0f6625a45cf0498fcaf7c31f417f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ba25e8_77108c8f",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "3d75a8e65b8c0f6625a45cf0498fcaf7c31f417f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512e864b_506a8c23",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-03T13:01:19Z",
+      "side": 1,
+      "message": "Do you mean just write ARP_HEADER_OFFSET + 14 when I use it?\nBut I think this definition makes the code easier to read.",
+      "parentUuid": "a0ba25e8_77108c8f",
+      "range": {
+        "startLine": 1051,
+        "startChar": 29,
+        "endLine": 1051,
+        "endChar": 57
+      },
+      "revId": "3d75a8e65b8c0f6625a45cf0498fcaf7c31f417f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ce64d37d_27eaef86",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-03T13:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4a5ebf9_ff592f2a",
+      "range": {
+        "startLine": 1060,
+        "startChar": 32,
+        "endLine": 1060,
+        "endChar": 54
+      },
+      "revId": "3d75a8e65b8c0f6625a45cf0498fcaf7c31f417f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21c1dea1_cd2a464e",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "3d75a8e65b8c0f6625a45cf0498fcaf7c31f417f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8380a8_5975ef6b",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2018-12-03T13:01:19Z",
+      "side": 1,
+      "message": "I think it is better to follow the coding style consistent with the other functions.",
+      "parentUuid": "21c1dea1_cd2a464e",
+      "range": {
+        "startLine": 1447,
+        "startChar": 8,
+        "endLine": 1447,
+        "endChar": 14
+      },
+      "revId": "3d75a8e65b8c0f6625a45cf0498fcaf7c31f417f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
