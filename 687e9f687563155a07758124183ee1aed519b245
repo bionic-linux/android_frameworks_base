@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6d495a1_7bf03256",
+        "filename": "services/core/java/com/android/server/RuntimeService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2018-12-03T15:39:24Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "687e9f687563155a07758124183ee1aed519b245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
