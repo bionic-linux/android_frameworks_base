@@ -16,6 +16,24 @@
       "revId": "19d090461f83d66d00e27c0d6ada5f9a7bd9ebd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c78f424_d855dde6",
+        "filename": "config/hiddenapi-greylist.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-12-04T19:13:35Z",
+      "side": 1,
+      "message": "\"and merges vendor.txt into greylist.txt.\"\nI can rephrase if you want.",
+      "parentUuid": "5f3614e4_67b399ae",
+      "revId": "19d090461f83d66d00e27c0d6ada5f9a7bd9ebd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
