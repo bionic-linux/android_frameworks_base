@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aff0813d_272f4774",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-04T03:40:34Z",
+      "side": 1,
+      "message": "I gave this function an unfortunate name... every time I see a call, I can\u0027t help but think \"why are we *setting* the counter before the comparison?\"\n\nTo make it clear that this isn\u0027t setting anything, let\u0027s rename it to maybeLoadCounter() or maybeSetupCounter().",
+      "range": {
+        "startLine": 160,
+        "startChar": 17,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "84c2de3cd4207ba6470f1a727249d150e40998d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5b9625_88d34226",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-04T03:40:34Z",
+      "side": 1,
+      "message": "Can we coalesce this function with arpReplyUnicast()?\nLike this: arpReply(byte[] sip, byte[] tip)\n\nAlternatively: let\u0027s explicitly set ARP_TARGET_IP_ADDRESS_OFFSET to IPV4_ANY_HOST_ADDRESS even though it\u0027s already zero-initialized.",
+      "range": {
+        "startLine": 1445,
+        "startChar": 26,
+        "endLine": 1445,
+        "endChar": 46
+      },
+      "revId": "84c2de3cd4207ba6470f1a727249d150e40998d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
