@@ -16,6 +16,12 @@
 
 package com.android.server;
 
+import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_CRITICAL;
+import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_HIGH;
+import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_NORMAL;
+import static android.os.IServiceManager.DUMP_FLAG_PROTO;
+import static android.view.Display.DEFAULT_DISPLAY;
+
 import android.app.ActivityThread;
 import android.app.INotificationManager;
 import android.app.usage.UsageStatsManagerInternal;
@@ -83,11 +89,12 @@ import com.android.server.job.JobSchedulerService;
 import com.android.server.lights.LightsService;
 import com.android.server.media.MediaResourceMonitorService;
 import com.android.server.media.MediaRouterService;
-import com.android.server.media.MediaUpdateService;
 import com.android.server.media.MediaSessionService;
+import com.android.server.media.MediaUpdateService;
 import com.android.server.media.projection.MediaProjectionManagerService;
 import com.android.server.net.NetworkPolicyManagerService;
 import com.android.server.net.NetworkStatsService;
+import com.android.server.net.ipmemorystore.IpMemoryStoreService;
 import com.android.server.net.watchlist.NetworkWatchlistService;
 import com.android.server.notification.NotificationManagerService;
 import com.android.server.oemlock.OemLockService;
@@ -131,12 +138,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
-
-import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_CRITICAL;
-import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_HIGH;
-import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_NORMAL;
-import static android.os.IServiceManager.DUMP_FLAG_PROTO;
-import static android.view.Display.DEFAULT_DISPLAY;
 
 public final class SystemServer {
     private static final String TAG = "SystemServer";
@@ -1086,6 +1087,15 @@ public final class SystemServer {
                 ServiceManager.addService(Context.NETWORKMANAGEMENT_SERVICE, networkManagement);
             } catch (Throwable e) {
                 reportWtf("starting NetworkManagement Service", e);
+            }
+            traceEnd();
+
+            traceBeginAndSlog("StartIpMemoryStoreService");
+            try {
+                ServiceManager.addService(Context.IP_MEMORY_STORE_SERVICE,
+                        new IpMemoryStoreService(context));
+            } catch (Throwable e) {
+                reportWtf("starting IP Memory Store Service", e);
             }
             traceEnd();
 
