@@ -52,6 +52,24 @@
       "revId": "be74c237c69a930f8253298729a96ce13b2e0a68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41a6757d_cfab75a5",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-04T08:36:36Z",
+      "side": 1,
+      "message": "I feel that name is too long.\nI\u0027ll vode for lorenzo this time,\nsince \"maybe\" would possibly make user aware of this behavior and check the code here.\nAnd since there are not so many places calling this.\nI think it might be fair enough?",
+      "parentUuid": "695202c2_6ae6fdbe",
+      "revId": "be74c237c69a930f8253298729a96ce13b2e0a68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
