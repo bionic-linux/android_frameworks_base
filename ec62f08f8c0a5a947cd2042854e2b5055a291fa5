@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8ec623a_d927261c",
+        "filename": "Android.mk",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-12-04T14:58:33Z",
+      "side": 0,
+      "message": "This does not appear to be used anywhere. But its replacement greylist-max-p is passed as the --greylist-max-p option to generate_hiddenapi_lists.py. What is the effect of that? Would that be worth explaining in the commit message?",
+      "revId": "ec62f08f8c0a5a947cd2042854e2b5055a291fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
