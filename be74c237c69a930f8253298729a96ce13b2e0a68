@@ -34,6 +34,24 @@
       "revId": "be74c237c69a930f8253298729a96ce13b2e0a68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "695202c2_6ae6fdbe",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-04T07:52:21Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not a huge fan. Generally speaking while I recognize the need for \"maybe\" in some cases I like to keep it at a minimum because it means \"under undescript conditions\". The good point is that it makes you check when you use, which is sometimes appropriate. The bad point is that, well, it doesn\u0027t tell you what it does. Will this copy ? Answer : ¯\\_(ツ)_/¯\n\nI can understand the concern that future implementors may be tempted to test for equality before calling this if it\u0027s called \"copyEntry\". But I think we can do better than \"maybe\" by making the condition explicit, as in this case it\u0027s simple. How about \"copyEntryUnlessSameReference\" or something ?\n\nThat being said, I don\u0027t feel too strongly about this.",
+      "parentUuid": "e1753de4_b2d75808",
+      "revId": "be74c237c69a930f8253298729a96ce13b2e0a68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
