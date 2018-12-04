@@ -3005,6 +3005,7 @@ public abstract class Context {
             VIBRATOR_SERVICE,
             //@hide: STATUS_BAR_SERVICE,
             CONNECTIVITY_SERVICE,
+            //@hide: IP_MEMORY_STORE_SERVICE,
             IPSEC_SERVICE,
             //@hide: UPDATE_LOCK_SERVICE,
             //@hide: NETWORKMANAGEMENT_SERVICE,
@@ -3492,6 +3493,14 @@ public abstract class Context {
      * @see android.net.ConnectivityManager
      */
     public static final String CONNECTIVITY_SERVICE = "connectivity";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.net.IpMemoryStore} to store and read information about
+     * known networks.
+     * @hide
+     */
+    public static final String IP_MEMORY_STORE_SERVICE = "ipmemorystore";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a

@@ -29,6 +29,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources.Theme;
 import android.database.sqlite.SQLiteCompatibilityWalFlags;
 import android.database.sqlite.SQLiteGlobal;
+import android.net.IpMemoryStore;
 import android.os.BaseBundle;
 import android.os.Binder;
 import android.os.Build;
@@ -87,6 +88,7 @@ import com.android.server.media.MediaSessionService;
 import com.android.server.media.projection.MediaProjectionManagerService;
 import com.android.server.net.NetworkPolicyManagerService;
 import com.android.server.net.NetworkStatsService;
+import com.android.server.net.ipmemorystore.IpMemoryStoreService;
 import com.android.server.net.watchlist.NetworkWatchlistService;
 import com.android.server.notification.NotificationManagerService;
 import com.android.server.oemlock.OemLockService;
@@ -1085,6 +1087,15 @@ public final class SystemServer {
                 ServiceManager.addService(Context.NETWORKMANAGEMENT_SERVICE, networkManagement);
             } catch (Throwable e) {
                 reportWtf("starting NetworkManagement Service", e);
+            }
+            traceEnd();
+
+            traceBeginAndSlog("StartIpMemoryStoreService");
+            try {
+                ServiceManager.addService(Context.IP_MEMORY_STORE_SERVICE,
+                        new IpMemoryStoreService(context));
+            } catch (Throwable e) {
+                reportWtf("starting IP Memory Store Service", e);
             }
             traceEnd();
 
