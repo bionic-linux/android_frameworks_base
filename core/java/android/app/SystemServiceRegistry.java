@@ -82,8 +82,10 @@ import android.net.ConnectivityThread;
 import android.net.EthernetManager;
 import android.net.IConnectivityManager;
 import android.net.IEthernetManager;
+import android.net.IIpMemoryStore;
 import android.net.IIpSecService;
 import android.net.INetworkPolicyManager;
+import android.net.IpMemoryStore;
 import android.net.IpSecManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkScoreManager;
@@ -282,6 +284,17 @@ final class SystemServiceRegistry {
                 IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
                 return new ConnectivityManager(context, service);
             }});
+
+        registerService(Context.IP_MEMORY_STORE_SERVICE, IpMemoryStore.class,
+                new CachedServiceFetcher<IpMemoryStore>() {
+                    @Override
+                    public IpMemoryStore createService(final ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        IBinder b = ServiceManager.getServiceOrThrow(
+                                Context.IP_MEMORY_STORE_SERVICE);
+                        IIpMemoryStore service = IIpMemoryStore.Stub.asInterface(b);
+                        return new IpMemoryStore(ctx, service);
+                    }});
 
         registerService(Context.IPSEC_SERVICE, IpSecManager.class,
                 new CachedServiceFetcher<IpSecManager>() {
