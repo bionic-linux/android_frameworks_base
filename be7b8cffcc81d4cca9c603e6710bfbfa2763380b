@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e92f03f_a5703a7f",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-05T04:10:43Z",
+      "side": 0,
+      "message": "Looks like this was incorrect before: the function is called arpRequestBroadcast, but we were actually making an ARP *reply*. It\u0027s good that we\u0027re fixing this.\n\nHowever, it does mean that we are no longer testing something that we were testing before. Previously, we were testing that when the device receives a broadcast ARP reply with tip !\u003d 0.0.0.0 it accepts it. Should we continue to test for this? Does it make sense? Maciej, any thoughts?",
+      "range": {
+        "startLine": 1438,
+        "startChar": 39,
+        "endLine": 1438,
+        "endChar": 60
+      },
+      "revId": "be7b8cffcc81d4cca9c603e6710bfbfa2763380b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

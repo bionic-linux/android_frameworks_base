@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313077f6_deecb41b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-05T04:10:43Z",
+      "side": 1,
+      "message": "IIRC in the bug we noted that the the Linux kernel always ignores these packets. Can we mention that here? Maybe also mention that the kernel function that does this is arp_process?",
+      "revId": "dda6f88341a09beeb8c65fb782257f26e3cfe8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
