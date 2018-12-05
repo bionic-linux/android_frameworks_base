@@ -22,6 +22,30 @@
       "revId": "d026413b276e06a73b6db12d27a8c73fe40cdfd0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2e2a1e_47f9279d",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1243029
+      },
+      "writtenOn": "2018-12-05T07:50:39Z",
+      "side": 1,
+      "message": "Thanks for your comment.\n0 is invalid so that let me change it.",
+      "parentUuid": "65da70f1_d0751a34",
+      "range": {
+        "startLine": 958,
+        "startChar": 36,
+        "endLine": 958,
+        "endChar": 38
+      },
+      "revId": "d026413b276e06a73b6db12d27a8c73fe40cdfd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
