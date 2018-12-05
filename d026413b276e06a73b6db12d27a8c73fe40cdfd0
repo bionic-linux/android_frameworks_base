@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65da70f1_d0751a34",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2018-12-05T01:37:16Z",
+      "side": 1,
+      "message": "wouldn\u0027t \"\u003e\" make more sense here? If not, what\u0027s the meaning of a sample rate of 0?",
+      "range": {
+        "startLine": 958,
+        "startChar": 36,
+        "endLine": 958,
+        "endChar": 38
+      },
+      "revId": "d026413b276e06a73b6db12d27a8c73fe40cdfd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
