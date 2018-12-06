@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93ed6dfa_99eede00",
+        "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-12-06T23:10:34Z",
+      "side": 1,
+      "message": "nit: maybe remove the slash, and put this comment above \"@hide\".",
+      "range": {
+        "startLine": 499,
+        "startChar": 7,
+        "endLine": 499,
+        "endChar": 9
+      },
+      "revId": "75785f62393442de934cf690cce6bd91bb1431bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
