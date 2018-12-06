@@ -24,6 +24,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -176,6 +178,36 @@ public class SignalStrength implements Parcelable {
         if (mWcdma.isValid()) return mWcdma;
         if (mGsm.isValid()) return mGsm;
         return mLte;
+    }
+
+    /**
+     * Returns a List of CellSignalStrength Components of this SignalStrength Report.
+     *
+     * Use this API to access underlying
+     * {@link android.telephony#CellSignalStrength CellSignalStrength} objects that provide more
+     * granular information about the SignalStrength report. Only valid (non-empty)
+     * CellSignalStrengths will be returned. The order of any returned elements is not guaranteed,
+     * and the list may contain more than one instance of a CellSignalStrength type if the device
+     * is connected to multiple cells of the same type.
+     *
+     * @return a List of CellSignalStrength or an empty List if there are no valid measurements.
+     *
+     * @see android.telephony#CellSignalStrength
+     * @see android.telephony#CellSignalStrengthNr
+     * @see android.telephony#CellSignalStrengthLte
+     * @see android.telephony#CellSignalStrengthTdscdma
+     * @see android.telephony#CellSignalStrengthWcdma
+     * @see android.telephony#CellSignalStrengthCdma
+     * @see android.telephony#CellSignalStrengthGsm
+     */
+    public @NonNull List<CellSignalStrength> getCellSignalStrengths() {
+        List<CellSignalStrength> cssList = new ArrayList<>(2); // Should usually have max 2 elems
+        if (mLte.isValid()) cssList.add(mLte);
+        if (mCdma.isValid()) cssList.add(mCdma);
+        if (mTdscdma.isValid()) cssList.add(mTdscdma);
+        if (mWcdma.isValid()) cssList.add(mWcdma);
+        if (mGsm.isValid()) cssList.add(mGsm);
+        return cssList;
     }
 
     /** @hide */
