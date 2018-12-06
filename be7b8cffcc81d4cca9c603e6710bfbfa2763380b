@@ -22,6 +22,30 @@
       "revId": "be7b8cffcc81d4cca9c603e6710bfbfa2763380b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016cf543_cea8bfd5",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2018-12-06T00:21:41Z",
+      "side": 0,
+      "message": "I think broadcast arp replies with target_ip not in {0.0.0.0, 255.255.255.255, our ip [10.0.0.1 for 10.0.0.1/24], subnet network/bcast ip, ie. 10.0.0.0 or 10.0.0.255 for 10.0.0.1/24} are probably safe to drop - especially, so, if the drop rules apply only while sleeping.\n\nThis is because even if we drop them, and arp times out, we should then do an arp request (either unicast or broadcast) and the reply for that, *should* be one of the above 5 ips.\n\nOf course this would get complex if we have multiple v4 ips on the interface...\n\nThat said... dropping valid but believed spurious packets is a lot more likely to break things then dropping packets which are meaningless...\n\nHowever, this may be worthwhile... there could be a fair amount of this spam...",
+      "parentUuid": "1e92f03f_a5703a7f",
+      "range": {
+        "startLine": 1438,
+        "startChar": 39,
+        "endLine": 1438,
+        "endChar": 60
+      },
+      "revId": "be7b8cffcc81d4cca9c603e6710bfbfa2763380b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
