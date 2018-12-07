@@ -16,12 +16,91 @@
 
 package android.net;
 
+import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.PrivateData;
+import android.net.ipmemorystore.IOnL2KeyResponseListener;
+import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
+import android.net.ipmemorystore.IOnPrivateDataRetrievedListener;
+import android.net.ipmemorystore.IOnSameNetworkResponseListener;
+import android.net.ipmemorystore.IOnStatusListener;
+
 /** {@hide} */
-interface IIpMemoryStore {
+oneway interface IIpMemoryStore {
     /**
-     * Returns the version of the memory store.
-     * This is just a fake method returning 1 to have some method in there
-     * without adding any actual complexity to review.
+     * Store network attributes for a given L2 key.
+     * If L2Key is null, choose automatically from the attributes ; passing null is equivalent to
+     * calling findL2Key with the attributes and storing in the returned value.
+     *
+     * @param l2Key The L2 key for the L2 network. If this is null, the memory store will
+     *              try and find a matching network from the attributes. If it finds one it
+     *              will use it, otherwise it will create a new row and associate an
+     *              automatically generated L2 key.
+     * @param attributes The attributes for this network.
+     * @param listener A listener to inform of the completion of this call, or null.
+     * @return (through the listener) The L2 key. This is useful if the L2 key was not specified.
      */
-    int version();
+    void storeNetworkAttributes(String l2Key, in NetworkAttributes attributes,
+            IOnL2KeyResponseListener listener);
+
+    /**
+     * Store a binary blob associated with an L2 key and a name.
+     *
+     * @param l2Key The L2 key for this network.
+     * @param clientId The ID of the client.
+     * @param name The name of this data.
+     * @param data The data to store.
+     */
+    void storePrivateData(String l2Key, String clientId, String name, in PrivateData data,
+            IOnStatusListener listener);
+
+    /**
+     * Returns the best L2 key associated with the attributes.
+     *
+     * This will find a record that would be in the same group as the passed attributes. This is
+     * useful to choose the key for storing a sample or private data when the L2 key is not known.
+     * If multiple records are group-close to these attributes, the closest match is returned.
+     * If multiple records have the same closeness, the one with the smaller (unicode codepoint
+     * order) L2 key is returned.
+     * If no record matches these attributes, a new L2 key is automatically generated.
+     *
+     * @param attributes The attributes of the network to find.
+     * @param listener The listener to invoke to return the answer.
+     */
+    void findL2Key(in NetworkAttributes attributes, IOnL2KeyResponseListener listener);
+
+    /**
+     * Returns whether, to the best of the store's ability to tell, the two specified L2 keys point
+     * to the same L3 network.
+     *
+     * @param l2Key1 The key for the first network.
+     * @param l2Key2 The key for the second network.
+     * @param listener The listener to invoke to give the answer.
+     * @return (through the listener) A SameL3NetworkResponse containing the answer and confidence.
+     */
+    void isSameNetwork(String l2Key1, String l2Key2, IOnSameNetworkResponseListener listener);
+
+    /**
+     * Retrieve the network attributes for a key.
+     * If no record is present for this key, this will return null attributes.
+     *
+     * @param l2Key The key of the network to query.
+     * @param listener The listener to invoke to give the answer.
+     * @return (through the listener) The network attributes and the L2 key associated with
+     *         the query.
+     */
+    void retrieveNetworkAttributes(String l2Key, IOnNetworkAttributesRetrieved listener);
+
+    /**
+     * Retrieve previously stored private data.
+     * If no data was stored for this L2 key and name this will return null.
+     *
+     * @param l2Key The L2 key.
+     * @param clientId The id of the client that stored this data.
+     * @param name The name of the data.
+     * @param listener The listener to invoke to give the answer.
+     * @return (through the listener) The private data if any or null if none, with the L2 key
+     *         and the name of the data associated with the query.
+     */
+    void retrievePrivateData(String l2Key, String clientId, String name,
+            IOnPrivateDataRetrievedListener listener);
 }

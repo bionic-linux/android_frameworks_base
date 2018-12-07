@@ -17,8 +17,16 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.net.ipmemorystore.IOnL2KeyResponseListener;
+import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
+import android.net.ipmemorystore.IOnPrivateDataRetrievedListener;
+import android.net.ipmemorystore.IOnSameNetworkResponseListener;
+import android.net.ipmemorystore.IOnStatusListener;
+import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.PrivateData;
 import android.os.RemoteException;
 
 import com.android.internal.util.Preconditions;
@@ -39,13 +47,119 @@ public class IpMemoryStore {
     }
 
     /**
-     * Returns the version of the memory store
-     * @hide
-     **/
-    // TODO : remove this
-    public int version() {
+     * Store network attributes for a given L2 key.
+     * If L2Key is null, choose automatically from the attributes ; passing null is equivalent to
+     * calling findL2Key with the attributes and storing in the returned value.
+     *
+     * @param l2Key The L2 key for the L2 network. If this is null, the memory store will
+     *              try and find a matching network from the attributes. If it finds one it
+     *              will use it, otherwise it will create a new row and associate an
+     *              automatically generated L2 key.
+     * @param attributes The attributes for this network.
+     * @param listener A listener to inform of the completion of this call, or null.
+     * Through the listener, returns the L2 key. This is useful if the L2 key was not specified.
+     */
+    public void storeNetworkAttributes(@Nullable final String l2Key,
+            @NonNull final NetworkAttributes attributes,
+            @NonNull final IOnL2KeyResponseListener listener) {
         try {
-            return mService.version();
+            mService.storeNetworkAttributes(l2Key, attributes, listener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Store a binary blob associated with an L2 key and a name.
+     *
+     * @param l2Key The L2 key for this network.
+     * @param clientId The ID of the client.
+     * @param name The name of this data.
+     * @param data The data to store.
+     */
+    public void storePrivateData(@NonNull final String l2Key, @NonNull final String clientId,
+            @NonNull final String name, @NonNull final PrivateData data,
+            @NonNull final IOnStatusListener listener) {
+        try {
+            mService.storePrivateData(l2Key, clientId, name, data, listener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Returns the best L2 key associated with the attributes.
+     *
+     * This will find a record that would be in the same group as the passed attributes. This is
+     * useful to choose the key for storing a sample or private data when the L2 key is not known.
+     * If multiple records are group-close to these attributes, the closest match is returned.
+     * If multiple records have the same closeness, the one with the smaller (unicode codepoint
+     * order) L2 key is returned.
+     * If no record matches these attributes, a new L2 key is automatically generated.
+     *
+     * @param attributes The attributes of the network to find.
+     * @param listener The listener to invoke to return the answer.
+     */
+    public void findL2Key(@NonNull final NetworkAttributes attributes,
+            @NonNull final IOnL2KeyResponseListener listener) {
+        try {
+            mService.findL2Key(attributes, listener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Returns whether, to the best of the store's ability to tell, the two specified L2 keys point
+     * to the same L3 network.
+     *
+     * @param l2Key1 The key for the first network.
+     * @param l2Key2 The key for the second network.
+     * @param listener The listener to invoke to give the answer.
+     * Through the listener, returns a SameL3NetworkResponse containing the answer and confidence.
+     */
+    public void isSameNetwork(@NonNull final String l2Key1, @NonNull final String l2Key2,
+            @NonNull final IOnSameNetworkResponseListener listener) {
+        try {
+            mService.isSameNetwork(l2Key1, l2Key2, listener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Retrieve the network attributes for a key.
+     * If no record is present for this key, this will return null attributes.
+     *
+     * @param l2Key The key of the network to query.
+     * @param listener The listener to invoke to give the answer.
+     * Through the listener, returns the network attributes and the L2 key associated with the
+     * the query.
+     */
+    public void retrieveNetworkAttributes(@NonNull final String l2Key,
+            @NonNull final IOnNetworkAttributesRetrieved listener) {
+        try {
+            mService.retrieveNetworkAttributes(l2Key, listener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Retrieve previously stored private data.
+     * If no data was stored for this L2 key and name this will return null.
+     *
+     * @param l2Key The L2 key.
+     * @param clientId The id of the client that stored this data.
+     * @param name The name of the data.
+     * @param listener The listener to invoke to give the answer.
+     * Through the listener, returns the private data if any or null if none, with the L2 key
+     *         and the name of the data associated with the query.
+     */
+    public void retrievePrivateData(@NonNull final String l2Key, @NonNull final String clientId,
+            @NonNull final String name, @NonNull final IOnPrivateDataRetrievedListener listener) {
+        try {
+            mService.retrievePrivateData(l2Key, clientId, name, listener);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

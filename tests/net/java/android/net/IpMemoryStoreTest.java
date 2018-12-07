@@ -43,11 +43,28 @@ public class IpMemoryStoreTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    // TODO : remove this useless test
     @Test
-    public void testVersion() throws RemoteException {
-        doReturn(30).when(mMockService).version();
+    public void testNetworkAttributes() {
         final IpMemoryStore store = new IpMemoryStore(mMockContext, mMockService);
-        assertEquals(store.version(), 30);
+        // TODO : implement this
     }
+
+    @Test
+    public void testPrivateData() {
+        final IpMemoryStore store = new IpMemoryStore(mMockContext, mMockService);
+        // TODO : implement this
+    }
+
+    @Test
+    public void testFindL2Key() {
+        final IpMemoryStore store = new IpMemoryStore(mMockContext, mMockService);
+        // TODO : implement this
+    }
+
+    @Test
+    public void testIsSameNetwork() {
+        final IpMemoryStore store = new IpMemoryStore(mMockContext, mMockService);
+        // TODO : implement this
+    }
+
 }
