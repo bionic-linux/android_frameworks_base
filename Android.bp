@@ -721,6 +721,15 @@ aidl_interface {
     local_include_dir: "core/java",
     srcs: [
         "core/java/android/net/IIpMemoryStore.aidl",
+        "core/java/android/net/ipmemorystore/Blob.aidl",
+        "core/java/android/net/ipmemorystore/IOnBlobRetrievedListener.aidl",
+        "core/java/android/net/ipmemorystore/IOnL2KeyResponseListener.aidl",
+        "core/java/android/net/ipmemorystore/IOnNetworkAttributesRetrieved.aidl",
+        "core/java/android/net/ipmemorystore/IOnSameNetworkResponseListener.aidl",
+        "core/java/android/net/ipmemorystore/IOnStatusListener.aidl",
+        "core/java/android/net/ipmemorystore/NetworkAttributesParceled.aidl",
+        "core/java/android/net/ipmemorystore/SameL3NetworkResponseParceled.aidl",
+        "core/java/android/net/ipmemorystore/StatusParceled.aidl",
     ],
     api_dir: "aidl/networkstack",
 }
