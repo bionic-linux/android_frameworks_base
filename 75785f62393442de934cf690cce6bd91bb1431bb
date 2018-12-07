@@ -22,6 +22,30 @@
       "revId": "75785f62393442de934cf690cce6bd91bb1431bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47874f2_6f69c267",
+        "filename": "telephony/java/android/telephony/SubscriptionInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-07T00:12:42Z",
+      "side": 1,
+      "message": "This has a dependency on LPA code, so what I\u0027ll do is once I get +2 in AOSP, I\u0027ll CP to internal and include the needed LPA changes in the topic and remove this comment.",
+      "parentUuid": "93ed6dfa_99eede00",
+      "range": {
+        "startLine": 499,
+        "startChar": 7,
+        "endLine": 499,
+        "endChar": 9
+      },
+      "revId": "75785f62393442de934cf690cce6bd91bb1431bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
