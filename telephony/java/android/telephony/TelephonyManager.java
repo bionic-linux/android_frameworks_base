@@ -225,6 +225,13 @@ public class TelephonyManager {
     @SystemApi
     public static final int SRVCC_STATE_HANDOVER_CANCELED  = 3;
 
+    /**
+     * An invalid card identifier.
+     * @hide
+     */
+    @SystemApi
+    public static final int INVALID_CARD_ID = -1;
+
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(prefix = {"SRVCC_STATE_"},
@@ -3087,6 +3094,30 @@ public class TelephonyManager {
         } catch (NullPointerException ex) {
             // This could happen before phone restarts due to crashing
             return PhoneConstants.LTE_ON_CDMA_UNKNOWN;
+        }
+    }
+
+    /**
+     * Get the card ID of the default eUICC card. If there is no eUICC, returns
+     * {@link #INVALID_CARD_ID}.
+     *
+     * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     *
+     * @return card ID of the default eUICC card.
+     * @hide
+     */
+    @SystemApi
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public int getCardIdForDefaultEuicc() {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) {
+                return INVALID_CARD_ID;
+            }
+            return telephony.getCardIdForDefaultEuicc(mSubId, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            return INVALID_CARD_ID;
         }
     }
 
