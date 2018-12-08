@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd070e06_6ba373b5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-08T06:43:43Z",
+      "side": 1,
+      "message": "Could we also start it in systemReady? If not, do we need to add some comment here if CALLBACK_LISTEN_ALL should not start to listen before entering TetherModeAliveState?",
+      "range": {
+        "startLine": 1384,
+        "startChar": 15,
+        "endLine": 1385,
+        "endChar": 0
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce40cd7_fa6dfd2a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-08T06:43:43Z",
+      "side": 1,
+      "message": "Nit:If you\u0027ve seperated default network tracking from this, should we also rename this to something like \"startTrackAllNetwork\" for better understanding of what does in the function.",
+      "range": {
+        "startLine": 135,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780e380f_c02a79bd",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-08T06:43:43Z",
+      "side": 1,
+      "message": "Shall we remove this since we\u0027ve checked it outside handleLost() or it means something else?",
+      "range": {
+        "startLine": 335,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 40
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de86ba94_44de0d63",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-08T06:43:43Z",
+      "side": 1,
+      "message": "I think it\u0027s a signal word \"nothing\" instead of \"no thing\", right?\nThen it should be \"testDoesNothingBeforeTrackDefaultAndStarted\".",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 31
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
