@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f05111b9_d2e277ef",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/BearerData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-10T23:12:26Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 1103,
+        "startChar": 12,
+        "endLine": 1103,
+        "endChar": 63
+      },
+      "revId": "d9eb101055005f570c89b53c8c51902f0113ed50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf78d3f_30de1e06",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/BearerData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-10T23:12:26Z",
+      "side": 1,
+      "message": "offsetBits + paddingBits \u003d offsetBits + ((offsetSeptents*7) - offsetBits) \u003d offsetSeptents*7.\n\nTherefore, this should be \"inStream.skip(offsetSeptents*7)\"",
+      "range": {
+        "startLine": 1112,
+        "startChar": 26,
+        "endLine": 1112,
+        "endChar": 50
+      },
+      "revId": "d9eb101055005f570c89b53c8c51902f0113ed50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
