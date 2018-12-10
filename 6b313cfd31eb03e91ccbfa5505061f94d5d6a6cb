@@ -212,6 +212,30 @@
       "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd132cc_6dc4dabf",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-12-10T16:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5115c01e_590c941e",
+      "range": {
+        "startLine": 39,
+        "startChar": 51,
+        "endLine": 39,
+        "endChar": 66
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
