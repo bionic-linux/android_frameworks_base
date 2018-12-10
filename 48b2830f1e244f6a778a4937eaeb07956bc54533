@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b91cfaa1_e9ae0a6b",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2018-12-10T23:12:14Z",
+      "side": 1,
+      "message": "Nit: integers",
+      "range": {
+        "startLine": 312,
+        "startChar": 66,
+        "endLine": 312,
+        "endChar": 75
+      },
+      "revId": "48b2830f1e244f6a778a4937eaeb07956bc54533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
