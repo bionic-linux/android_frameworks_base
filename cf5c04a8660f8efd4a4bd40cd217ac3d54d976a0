@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e34b80b9_74199920",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-12-10T21:55:21Z",
+      "side": 1,
+      "message": "nit: remove the extra space.",
+      "range": {
+        "startLine": 1495,
+        "startChar": 67,
+        "endLine": 1495,
+        "endChar": 68
+      },
+      "revId": "cf5c04a8660f8efd4a4bd40cd217ac3d54d976a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
