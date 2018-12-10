@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b5d0e7e_9399067e",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-10T08:07:00Z",
+      "side": 1,
+      "message": "I would add comment as your suggestion. I don\u0027t want to let tethering register listen all network callback if tethering don\u0027t be enabled.",
+      "parentUuid": "fd070e06_6ba373b5",
+      "range": {
+        "startLine": 1384,
+        "startChar": 15,
+        "endLine": 1385,
+        "endChar": 0
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ce40cd7_fa6dfd2a",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c45b3848_c12888a6",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-10T08:07:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ce40cd7_fa6dfd2a",
+      "range": {
+        "startLine": 135,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "780e380f_c02a79bd",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2018-12-08T06:43:43Z",
       "side": 1,
       "message": "Shall we remove this since we\u0027ve checked it outside handleLost() or it means something else?",
+      "range": {
+        "startLine": 335,
+        "startChar": 8,
+        "endLine": 336,
+        "endChar": 40
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86e10a7_de1608c0",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-10T08:07:00Z",
+      "side": 1,
+      "message": "No, we still have chance to got handleLost() from CALLBACK_MOBILE_REQUEST callback",
+      "parentUuid": "780e380f_c02a79bd",
       "range": {
         "startLine": 335,
         "startChar": 8,
@@ -91,6 +163,30 @@
       "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdfa45c_bd139562",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-10T08:07:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "de86ba94_44de0d63",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 31
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
