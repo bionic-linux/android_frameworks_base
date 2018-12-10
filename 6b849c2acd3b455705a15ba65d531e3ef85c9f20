@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f999c40e_f0f74fa0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9399,
+      "author": {
+        "id": 1261841
+      },
+      "writtenOn": "2018-12-10T19:27:41Z",
+      "side": 1,
+      "message": "Out of curiosity, is 5G\u0027s name really this generic (New Radio) or does it have other full name?",
+      "range": {
+        "startLine": 9399,
+        "startChar": 49,
+        "endLine": 9399,
+        "endChar": 51
+      },
+      "revId": "6b849c2acd3b455705a15ba65d531e3ef85c9f20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
