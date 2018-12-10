@@ -22,6 +22,30 @@
       "revId": "6b849c2acd3b455705a15ba65d531e3ef85c9f20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36eb2c9_2d98a24e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9399,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2018-12-10T22:00:34Z",
+      "side": 1,
+      "message": "Yes, even if this is not a good name.",
+      "parentUuid": "f999c40e_f0f74fa0",
+      "range": {
+        "startLine": 9399,
+        "startChar": 49,
+        "endLine": 9399,
+        "endChar": 51
+      },
+      "revId": "6b849c2acd3b455705a15ba65d531e3ef85c9f20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
