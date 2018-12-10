@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "133ab4d6_70e2c906",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-12-10T21:37:07Z",
+      "side": 1,
+      "message": "same nit here, not sure if we should say \"will never incur network traffic\" rather than being overly specific about DNS lookups (DNS lookups shouldn\u0027t be that special here)? Up to you.\n\n(I know that this wording existed before you, but you\u0027re elevating it to a public API documentation).",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 49
+      },
+      "revId": "e826b4d7138baccd3172af62f94a80ff03ef78dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
