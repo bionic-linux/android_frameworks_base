@@ -22,6 +22,8 @@ import android.annotation.Nullable;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
+import android.app.admin.DevicePolicyEventLogger;
+import android.app.admin.DevicePolicyManager;
 import android.app.usage.NetworkStats.Bucket;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -37,6 +39,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
+import android.stats.devicepolicy.DevicePolicyEnums;
 import android.util.DataUnit;
 import android.util.Log;
 
@@ -173,6 +176,7 @@ public class NetworkStatsManager {
         bucket = stats.getDeviceSummaryForNetwork();
 
         stats.close();
+        logIfManagedDeviceAdmin(DevicePolicyEnums.QUERY_SUMMARY_FOR_DEVICE);
         return bucket;
     }
 
@@ -246,6 +250,7 @@ public class NetworkStatsManager {
         stats.startSummaryEnumeration();
 
         stats.close();
+        logIfManagedDeviceAdmin(DevicePolicyEnums.QUERY_SUMMARY_FOR_USER);
         return stats.getSummaryAggregate();
     }
 
@@ -281,6 +286,8 @@ public class NetworkStatsManager {
         NetworkStats result;
         result = new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
         result.startSummaryEnumeration();
+
+        logIfManagedDeviceAdmin(DevicePolicyEnums.QUERY_SUMMARY);
 
         return result;
     }
@@ -391,6 +398,9 @@ public class NetworkStatsManager {
         NetworkStats result;
         result = new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
         result.startUserUidEnumeration();
+
+        logIfManagedDeviceAdmin(DevicePolicyEnums.QUERY_DETAILS);
+
         return result;
     }
 
@@ -515,6 +525,20 @@ public class NetworkStatsManager {
                         + NetworkIdentity.scrubSubscriberId(subscriberId) + "'.");
         }
         return template;
+    }
+
+    private void logIfManagedDeviceAdmin(int eventId) {
+        final DevicePolicyManager dpm = mContext.getSystemService(DevicePolicyManager.class);
+        if (dpm == null) {
+            return;
+        }
+        final String packageName = mContext.getPackageName();
+        if (!dpm.isProfileOwnerApp(packageName) && !dpm.isDeviceOwnerApp(packageName)) {
+            return;
+        }
+        DevicePolicyEventLogger
+                .createEvent(eventId)
+                .write();
     }
 
     private static class CallbackHandler extends Handler {
