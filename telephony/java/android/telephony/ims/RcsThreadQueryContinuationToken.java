@@ -13,40 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package android.telephony.ims;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * RcsParticipant is an RCS capable contact that can participate in {@link RcsThread}s.
- * @hide - TODO(sahinc) make this public
+ * A continuation token to provide for {@link RcsMessageStore#getRcsThreads}. Use this token to
+ * break large queries into manageable chunks
+ * @hide - TODO make this public
  */
-public class RcsParticipant implements Parcelable {
-    /**
-     * Returns the row id of this participant.
-     *
-     * TODO(sahinc) implement
-     * @hide
-     */
-    public int getId() {
-        return 12345;
+public class RcsThreadQueryContinuationToken implements Parcelable {
+    protected RcsThreadQueryContinuationToken(Parcel in) {
     }
 
-    public static final Creator<RcsParticipant> CREATOR = new Creator<RcsParticipant>() {
-        @Override
-        public RcsParticipant createFromParcel(Parcel in) {
-            return new RcsParticipant(in);
-        }
+    public static final Creator<RcsThreadQueryContinuationToken> CREATOR =
+            new Creator<RcsThreadQueryContinuationToken>() {
+                @Override
+                public RcsThreadQueryContinuationToken createFromParcel(Parcel in) {
+                    return new RcsThreadQueryContinuationToken(in);
+                }
 
-        @Override
-        public RcsParticipant[] newArray(int size) {
-            return new RcsParticipant[size];
-        }
-    };
-
-    protected RcsParticipant(Parcel in) {
-    }
+                @Override
+                public RcsThreadQueryContinuationToken[] newArray(int size) {
+                    return new RcsThreadQueryContinuationToken[size];
+                }
+            };
 
     @Override
     public int describeContents() {
@@ -55,6 +48,5 @@ public class RcsParticipant implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
     }
 }
