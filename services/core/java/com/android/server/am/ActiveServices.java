@@ -114,6 +114,9 @@ public final class ActiveServices {
     // How long we wait for a service to finish executing.
     static final int SERVICE_TIMEOUT = 20*1000;
 
+    // Active bindings upper limit to the service.
+    static final int MAX_ACTIVE_BINDINGS = 100;
+
     // How long we wait for a service to finish executing.
     static final int SERVICE_BACKGROUND_TIMEOUT = SERVICE_TIMEOUT * 10;
 
@@ -1614,6 +1617,18 @@ public final class ActiveServices {
             if (clist == null) {
                 clist = new ArrayList<ConnectionRecord>();
                 s.connections.put(binder, clist);
+            } else if (clist.size() > MAX_ACTIVE_BINDINGS) {
+                try {
+                    if (callerApp.thread != null) {
+                        callerApp.thread.scheduleCrash("Too much!! Too much binding to the {"
+                                + b.service.shortName + ":@"
+                                + Integer.toHexString(System.identityHashCode(binder)) + " }");
+                    }
+                    return 0;
+                } catch (RemoteException e) {
+                    Slog.e(TAG, "Exception scheduling crash of failed ," +
+                            "scheduleCrash for too much bingding to a service .", e);
+                }
             }
             clist.add(c);
             b.connections.add(c);
