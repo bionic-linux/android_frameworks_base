@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff4354e_a6f242ce",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2018-12-11T21:52:25Z",
+      "side": 1,
+      "message": "remove and replace with \"!isApex\"; it\u0027s easier to reason that you\u0027re talking about two distinct sets -- \"is apex\" and \"is not apex\" -- if you use the same test",
+      "range": {
+        "startLine": 611,
+        "startChar": 26,
+        "endLine": 611,
+        "endChar": 32
+      },
+      "revId": "a9a54f6d9524d7a41f07d5c0bf11380b234735b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
