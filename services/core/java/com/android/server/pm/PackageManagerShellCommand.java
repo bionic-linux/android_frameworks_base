@@ -534,6 +534,7 @@ class PackageManagerShellCommand extends ShellCommand {
         boolean listInstaller = false;
         boolean showUid = false;
         boolean showVersionCode = false;
+        boolean showApex = false;
         int uid = -1;
         int userId = UserHandle.USER_SYSTEM;
         try {
@@ -573,6 +574,10 @@ class PackageManagerShellCommand extends ShellCommand {
                     case "--show-versioncode":
                         showVersionCode = true;
                         break;
+                    case "--apex":
+                        getFlags |= PackageManager.MATCH_APEX;
+                        showApex = true;
+                        break;
                     case "--user":
                         userId = UserHandle.parseUserArg(getNextArgRequired());
                         break;
@@ -603,32 +608,39 @@ class PackageManagerShellCommand extends ShellCommand {
             if (filter != null && !info.packageName.contains(filter)) {
                 continue;
             }
-            if (uid != -1 && info.applicationInfo.uid != uid) {
+            final boolean hasApp = info.applicationInfo != null;
+            if (uid != -1 && hasApp && info.applicationInfo.uid != uid) {
                 continue;
             }
-            final boolean isSystem =
+
+            final boolean isSystem = hasApp &&
                     (info.applicationInfo.flags&ApplicationInfo.FLAG_SYSTEM) != 0;
-            if ((!listDisabled || !info.applicationInfo.enabled) &&
-                    (!listEnabled || info.applicationInfo.enabled) &&
+            final boolean isEnabled = hasApp && info.applicationInfo.enabled;
+            if ((!listDisabled || !isEnabled) &&
+                    (!listEnabled || isEnabled) &&
                     (!listSystem || isSystem) &&
                     (!listThirdParty || !isSystem)) {
                 pw.print("package:");
-                if (showSourceDir) {
+                if (showSourceDir && hasApp) {
                     pw.print(info.applicationInfo.sourceDir);
                     pw.print("=");
                 }
                 pw.print(info.packageName);
-                if (showVersionCode) {
+                if (showVersionCode && hasApp) {
                     pw.print(" versionCode:");
                     pw.print(info.applicationInfo.versionCode);
                 }
-                if (listInstaller) {
+                if (listInstaller && !info.isApex) {
                     pw.print("  installer=");
                     pw.print(mInterface.getInstallerPackageName(info.packageName));
                 }
-                if (showUid) {
+                if (showUid && hasApp) {
                     pw.print(" uid:");
                     pw.print(info.applicationInfo.uid);
+                }
+                if (showApex) {
+                    pw.print(" apex:");
+                    pw.print(info.isApex);
                 }
                 pw.println();
             }
@@ -2692,7 +2704,7 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("    Prints all system libraries.");
         pw.println("");
         pw.println("  list packages [-f] [-d] [-e] [-s] [-3] [-i] [-l] [-u] [-U] ");
-        pw.println("      [--uid UID] [--user USER_ID] [FILTER]");
+        pw.println("      [--apex] [--uid UID] [--user USER_ID] [FILTER]");
         pw.println("    Prints all packages; optionally only those whose name contains");
         pw.println("    the text in FILTER.  Options are:");
         pw.println("      -f: see their associated file");
@@ -2705,6 +2717,7 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("      -l: ignored (used for compatibility with older releases)");
         pw.println("      -U: also show the package UID");
         pw.println("      -u: also include uninstalled packages");
+        pw.println("      --apex: also include APEX packages");
         pw.println("      --uid UID: filter to only show packages with the given UID");
         pw.println("      --user USER_ID: only list packages belonging to the given user");
         pw.println("");
