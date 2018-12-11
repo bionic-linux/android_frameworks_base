@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73c635f5_81ad4dd5",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2018-12-11T15:13:19Z",
+      "side": 1,
+      "message": "Can we remove this too?",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 40
+      },
+      "revId": "2f2df203a67a0e80d1a4e8b2699b491d8a93fd2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
