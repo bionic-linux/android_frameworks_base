@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a642d41f_ea5344a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-11T11:05:14Z",
+      "side": 1,
+      "message": "Even if the PM flag means \u0027also include apex\u0027, we can still do something different here. If this is what we want, we can just add an --apex-only arg here, call with MATCH_APEX and filter out the non-apex packages. This way we can also be sure we don\u0027t break existing parsers (though it seems the chance is small with it being added at the end).",
+      "parentUuid": "9f224fbc_a316a5e7",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "cd986abe1c7d8a3548bfa78e639b62e3aced5a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b4bddb9_29457d42",
         "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I think we should make applicationInfo outof ApexInfo. For example, things like showVersionCode, showSourceDir are useful even to APEXes.",
       "parentUuid": "6b4bddb9_29457d42",
+      "range": {
+        "startLine": 616,
+        "startChar": 13,
+        "endLine": 618,
+        "endChar": 77
+      },
+      "revId": "cd986abe1c7d8a3548bfa78e639b62e3aced5a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d9251a_99fe0bc2",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2018-12-11T11:05:14Z",
+      "side": 1,
+      "message": "Sure, that also works for me.",
+      "parentUuid": "024986e2_64f9e0bd",
       "range": {
         "startLine": 616,
         "startChar": 13,
