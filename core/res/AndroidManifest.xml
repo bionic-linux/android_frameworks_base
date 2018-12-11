@@ -399,7 +399,10 @@
     <protected-broadcast android:name="android.telecom.action.DEFAULT_DIALER_CHANGED" />
     <protected-broadcast android:name="android.provider.action.DEFAULT_SMS_PACKAGE_CHANGED" />
     <protected-broadcast android:name="android.provider.action.SMS_MMS_DB_CREATED" />
+<<<<<<< HEAD   (58ee53 Merge "Add Call redirection app in Telecom test-commands")
     <protected-broadcast android:name="android.provider.action.SMS_MMS_DB_LOST" />
+=======
+>>>>>>> BRANCH (7409b8 Merge PQ1A.181205.006 from Pi-QPR1-Release into ToT for Pi-P)
     <protected-broadcast android:name="android.intent.action.CONTENT_CHANGED" />
     <protected-broadcast android:name="android.provider.Telephony.MMS_DOWNLOADED" />
 
