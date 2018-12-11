@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6955f7a2_722dd554",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-12-11T11:30:41Z",
+      "side": 1,
+      "message": "This is a good idea. Thanks! Done.",
+      "parentUuid": "a642d41f_ea5344a6",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "cd986abe1c7d8a3548bfa78e639b62e3aced5a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b4bddb9_29457d42",
         "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
         "patchSetId": 1
