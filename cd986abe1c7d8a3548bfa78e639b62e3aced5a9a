@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f224fbc_a316a5e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-12-11T10:58:35Z",
+      "side": 1,
+      "message": "I would like to have such option (i.e., MATCH_ONLY_APEX) but people didn\u0027t like it.\n\nThese lines are parsed by several places. One place that I am looking at is \n\ntools/tradefederation/core/src/com/android/tradefed/device/TestDevice.java:81\n\nprivate static final Pattern PACKAGE_REGEX \u003d Pattern.compile(\"package:(.*)\u003d(.*)\");",
+      "parentUuid": "73253b88_5dcaf694",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "cd986abe1c7d8a3548bfa78e639b62e3aced5a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b4bddb9_29457d42",
         "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-12-11T10:54:02Z",
       "side": 1,
       "message": "can we just have a branch (or even function) for info.isApex in the beginning to avoid all the logic changes? We\u0027re in a bit of a weird place with info.applicationInfo \u003d\u003d null, and I worry people might forget to check for it when adding new stuff later.",
+      "range": {
+        "startLine": 616,
+        "startChar": 13,
+        "endLine": 618,
+        "endChar": 77
+      },
+      "revId": "cd986abe1c7d8a3548bfa78e639b62e3aced5a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024986e2_64f9e0bd",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2018-12-11T10:58:35Z",
+      "side": 1,
+      "message": "I think we should make applicationInfo outof ApexInfo. For example, things like showVersionCode, showSourceDir are useful even to APEXes.",
+      "parentUuid": "6b4bddb9_29457d42",
       "range": {
         "startLine": 616,
         "startChar": 13,
