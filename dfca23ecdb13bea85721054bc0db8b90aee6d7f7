@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b4531e4_7cacf31a",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-11T13:36:01Z",
+      "side": 1,
+      "message": "I thought this was better, because the listener is just a signature for stuff that returns an L2 key. You can see it\u0027s reused for findL2Key. I think it\u0027s clearer this way than to write on the listener a multiplexing of what will be returned by each call using this, and also a lot more useful because the developer who uses this methods needs this info here, rather than over there.\n\nPlease let me know if you feel strongly about this.",
+      "parentUuid": "aaa9095d_1b934afa",
+      "range": {
+        "startLine": 40,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 96
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d536437c_7c08c3a5",
         "filename": "core/java/android/net/IIpMemoryStore.aidl",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "53fe2e75_7c1b9ddf",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-11T13:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d536437c_7c08c3a5",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcff055f_d5110393",
         "filename": "core/java/android/net/IIpMemoryStore.aidl",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-12-11T09:23:28Z",
       "side": 1,
       "message": "Are there use-cases where we would want to query some information based on known NetworkAttributes without modifying contents of the datastore ? In that case maybe creating the key could be an option as boolean parameter of a flag ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 85
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad12a79_2f72aed3",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-11T13:36:01Z",
+      "side": 1,
+      "message": "Yes that makes sense. I just changed this to say this will just return a null key if there is no match. A client can still say storeNetworkAttributes without a key, and get an L2 key assigned and returned to them that way.",
+      "parentUuid": "bcff055f_d5110393",
       "range": {
         "startLine": 64,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f5d21bfe_02fb4e1c",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-11T13:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7fbade2_64d26d4b",
+      "range": {
+        "startLine": 77,
+        "startChar": 36,
+        "endLine": 77,
+        "endChar": 45
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "394e2db7_c3d331ad",
         "filename": "core/java/android/net/IpMemoryStore.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2018-12-11T09:23:28Z",
       "side": 1,
       "message": "Keeping IIpMemoryStore as-is looks good to me, but how about having 2 versions of storeNetworkAttributes (maybe with different naming) ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f80e1cb_adcbdd7c",
+        "filename": "core/java/android/net/IpMemoryStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-11T13:36:01Z",
+      "side": 1,
+      "message": "I guess you mean one that takes a @NonNull key and one that takes a @Nullable key and will call findL2Key automatically ?\nThat is how I intend to implement that, but I think it should be done on the service side. This class is the manager class living in the app process.",
+      "parentUuid": "394e2db7_c3d331ad",
       "range": {
         "startLine": 51,
         "startChar": 7,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "156ae3a5_d4b7e763",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-11T13:36:01Z",
+      "side": 1,
+      "message": "Yes I think you are right, now this needs to be structured. Unfortunately that limits members to types declared in AIDL2, so I expect to have to define a parcelable object with only basic types and conversions to and from my object.\n\n...which, when you think of it, is not massively better than to roll stuff out by hand for parcelables \u003e.\u003e\n\nI think maybe this should not hold the progress of the feature for now. I added a TODO.",
+      "parentUuid": "429b111c_14e11040",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c800f2_731c9218",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b105a314_ae03d9c3",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-11T13:36:01Z",
+      "side": 1,
+      "message": "This is the address that was assigned to this device last time it connected to this network. Typically this is DHCP but it could be a static configuration.\n\nYou make a good point with V4, because in V6 \"the assigned address\" doesn\u0027t mean much. I added V4 in the name.\n\nI couldn\u0027t think of a much more expressive name, so I reworded the comment. Let me know if you have a better idea for the member.",
+      "parentUuid": "b8c800f2_731c9218",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfc1a1e3_7a3abb3d",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b53ca74_73d00021",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-11T13:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc1a1e3_7a3abb3d",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 88
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
