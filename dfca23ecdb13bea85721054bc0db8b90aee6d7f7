@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaa9095d_1b934afa",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T09:23:28Z",
+      "side": 1,
+      "message": "Should this not be documented in the listener param ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 96
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d536437c_7c08c3a5",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T09:23:28Z",
+      "side": 1,
+      "message": "Maybe this one should be documented ?",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcff055f_d5110393",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T09:23:28Z",
+      "side": 1,
+      "message": "Are there use-cases where we would want to query some information based on known NetworkAttributes without modifying contents of the datastore ? In that case maybe creating the key could be an option as boolean parameter of a flag ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 85
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7fbade2_64d26d4b",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T09:23:28Z",
+      "side": 1,
+      "message": "This sounds a little like the caller should invoke it - should we say \"that will be invoked\" ?",
+      "range": {
+        "startLine": 77,
+        "startChar": 36,
+        "endLine": 77,
+        "endChar": 45
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394e2db7_c3d331ad",
+        "filename": "core/java/android/net/IpMemoryStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T09:23:28Z",
+      "side": 1,
+      "message": "Keeping IIpMemoryStore as-is looks good to me, but how about having 2 versions of storeNetworkAttributes (maybe with different naming) ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429b111c_14e11040",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T09:23:28Z",
+      "side": 1,
+      "message": "Note for migration to another process: my understanding was that this syntax is not usable in stable AIDL",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8c800f2_731c9218",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T09:23:28Z",
+      "side": 1,
+      "message": "Should we say v4 address, or dhcpv4Address ? I think the matching logic/confidence might depend on what kind of address this is.",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc1a1e3_7a3abb3d",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-11T09:23:28Z",
+      "side": 1,
+      "message": "dnsAddresses is not really nullable here",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 88
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
