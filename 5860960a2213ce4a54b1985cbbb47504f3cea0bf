@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d04fec7_88b49dff",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3101,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2018-12-11T19:03:04Z",
+      "side": 1,
+      "message": "If this is the method which is being referenced by other docs, we should make it more clear what a card ID is.\nSome things that should be mentioned:\n1. How the card ID is determined (believe its just a unique sequential ID associated with a Euicc.\n2. The fact that its unique to a device.\n3. The fact its stable for that card on that device.",
+      "range": {
+        "startLine": 3101,
+        "startChar": 7,
+        "endLine": 3101,
+        "endChar": 50
+      },
+      "revId": "5860960a2213ce4a54b1985cbbb47504f3cea0bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
