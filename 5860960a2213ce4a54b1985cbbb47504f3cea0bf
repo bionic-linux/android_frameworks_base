@@ -22,6 +22,30 @@
       "revId": "5860960a2213ce4a54b1985cbbb47504f3cea0bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0b7990_dffe8eae",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3101,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-11T21:39:11Z",
+      "side": 1,
+      "message": "Will do!\n\n1. The card ID is a unique ID associated with any UICC (Initially it\u0027ll only be used for eUICCs, but in the future we can use it for any API that\u0027s card based). I think the fact that it\u0027s sequential is an implementation detail we don\u0027t need to mention.\n\n2,3: ack",
+      "parentUuid": "2d04fec7_88b49dff",
+      "range": {
+        "startLine": 3101,
+        "startChar": 7,
+        "endLine": 3101,
+        "endChar": 50
+      },
+      "revId": "5860960a2213ce4a54b1985cbbb47504f3cea0bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
