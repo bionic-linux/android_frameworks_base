@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647a72d4_bb7fe8ee",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2018-12-11T23:42:36Z",
+      "side": 1,
+      "message": "Okay if we do it, we should count the connections per each client UID. Otherwise a malicious app could create 100 bindings to an important system service to DOS the system.",
+      "revId": "4ba1cc3f4c9f202b6cf99fcc4740f57395f0bd17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
