@@ -114,6 +114,9 @@ public final class ActiveServices {
     // How long we wait for a service to finish executing.
     static final int SERVICE_TIMEOUT = 20*1000;
 
+    // Active bindings upper limit to the service.
+    static final int MAX_ACTIVE_BINDINGS = 100;
+
     // How long we wait for a service to finish executing.
     static final int SERVICE_BACKGROUND_TIMEOUT = SERVICE_TIMEOUT * 10;
 
@@ -1614,6 +1617,12 @@ public final class ActiveServices {
             if (clist == null) {
                 clist = new ArrayList<ConnectionRecord>();
                 s.connections.put(binder, clist);
+            } 
+            for (int i = clist.size() - 1; i >= 0; i--) {
+                ConnectionRecord item = clist.get(i);
+                if (item.equals(c)) {
+                    clist.remove(item);
+                }
             }
             clist.add(c);
             b.connections.add(c);
