@@ -2256,7 +2256,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
         // RINGER_MODE_VIBRATE, with which the device should vibrate anyway.
         int vibrateSetting = getIntValueFromSystem(db, Settings.System.VIBRATE_ON,
                 AudioManager.VIBRATE_SETTING_OFF);
-        boolean vibrateWhenRinging = ((vibrateSetting & 3) == AudioManager.VIBRATE_SETTING_ON);
+        boolean vibrateWhenRinging = ((vibrateSetting & 3) == AudioManager.VIBRATE_SETTING_ON)
+                || mContext.getResources().getBoolean(R.bool.def_vibrate_when_ringing);
 
         SQLiteStatement stmt = null;
         try {
