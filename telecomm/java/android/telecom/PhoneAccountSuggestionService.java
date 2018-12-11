@@ -3,6 +3,7 @@ package android.telecom;
 import android.annotation.NonNull;
 import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -40,6 +41,7 @@ import java.util.Map;
  * @hide
  */
 @SystemApi
+@TestApi
 public class PhoneAccountSuggestionService extends Service {
     /**
      * The {@link Intent} that must be declared in the {@code intent-filter} element of the
