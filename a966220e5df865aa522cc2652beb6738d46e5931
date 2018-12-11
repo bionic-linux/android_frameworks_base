@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f824c465_5a11fb0c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-11T03:08:26Z",
+      "side": 1,
+      "message": "Already rename the function name from #start() to #startObserveAllNetwork() in patchset 6. I think this is clear enough, so I don\u0027t add additional comment here.",
+      "parentUuid": "8b5d0e7e_9399067e",
+      "range": {
+        "startLine": 1384,
+        "startChar": 15,
+        "endLine": 1385,
+        "endChar": 0
+      },
+      "revId": "a966220e5df865aa522cc2652beb6738d46e5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ce40cd7_fa6dfd2a",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 5
