@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6413da2c_f10a6aa1",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-12T04:44:31Z",
+      "side": 1,
+      "message": "If dest is able to be null, should we add a null check otherwise we will get a null pointer exception while using it?",
+      "range": {
+        "startLine": 147,
+        "startChar": 8,
+        "endLine": 147,
+        "endChar": 12
+      },
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cea617e_c336a712",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-12T04:44:31Z",
+      "side": 1,
+      "message": "Sorry, may I know what POD is?",
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de21d8f2_7bbe8403",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-12T04:44:31Z",
+      "side": 1,
+      "message": "Not a strong option.\n\nI will expect to get boolean for \"isSameNetwork\" to indicate it\u0027s the same or not. Could we rename to somthing like, getNetorkDifferenceStatus?(but this one may not be good enough)",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58425f5f_be03042f",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-12T04:44:31Z",
+      "side": 1,
+      "message": "Will this able to be a configurable value? I am not sure if we could always say that it\u0027s the same network if the confidence is greater than 0.5 or that\u0027s our assumption for that? I mean if I prefer confidence \u003e 0.6 to be treated as the same network. Is that possible?\n\nNot necessary in this commit if that is a possible todo",
+      "range": {
+        "startLine": 86,
+        "startChar": 28,
+        "endLine": 86,
+        "endChar": 31
+      },
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29726179_c8f79e73",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-12T04:44:31Z",
+      "side": 1,
+      "message": "Will it able to be null since it\u0027s marked as NonNull? or it does not mean listener could be null?",
+      "range": {
+        "startLine": 55,
+        "startChar": 75,
+        "endLine": 55,
+        "endChar": 84
+      },
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f879cfe_0210ecba",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-12T04:44:31Z",
+      "side": 1,
+      "message": "Do we need to document it?",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ad47b8_4483a628",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2018-12-12T04:44:31Z",
+      "side": 1,
+      "message": "Will this also need a documented note @return to explain the behavior to align with the others?",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 7
+      },
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
