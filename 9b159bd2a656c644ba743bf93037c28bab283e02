@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdc04667_ceaa2c9e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-12T03:49:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "acd6d373_cbd43825",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "9b159bd2a656c644ba743bf93037c28bab283e02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bef32688_d84b2c7f",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "9b159bd2a656c644ba743bf93037c28bab283e02",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ce369a_6dde11f9",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-12T03:49:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bef32688_d84b2c7f",
+      "range": {
+        "startLine": 63,
+        "startChar": 71,
+        "endLine": 63,
+        "endChar": 74
+      },
+      "revId": "9b159bd2a656c644ba743bf93037c28bab283e02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b8e7b551_d2915205",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-12T03:49:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bbd9a8f4_d2825ffb",
+      "range": {
+        "startLine": 64,
+        "startChar": 3,
+        "endLine": 64,
+        "endChar": 6
+      },
+      "revId": "9b159bd2a656c644ba743bf93037c28bab283e02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f6d0787_0304ee46",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "9b159bd2a656c644ba743bf93037c28bab283e02",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b61560_4981133d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-12T03:49:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1f6d0787_0304ee46",
+      "range": {
+        "startLine": 138,
+        "startChar": 37,
+        "endLine": 138,
+        "endChar": 38
+      },
+      "revId": "9b159bd2a656c644ba743bf93037c28bab283e02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
