@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "847c4855_853d1e53",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-12T06:55:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7177c7aa_6d0774de",
+      "range": {
+        "startLine": 1661,
+        "startChar": 16,
+        "endLine": 1661,
+        "endChar": 27
+      },
+      "revId": "3f3503c66d050444d9d83e3b3c7703d8a43698c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d871bb_31de0a3e",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 9
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "43cd6fd7_d6d9d220",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-12T06:55:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76d871bb_31de0a3e",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "3f3503c66d050444d9d83e3b3c7703d8a43698c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a7dc5d8_61538b04",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 9
@@ -83,6 +131,30 @@
       "writtenOn": "2018-12-12T05:44:37Z",
       "side": 1,
       "message": "I am concerned that this requires the owner of UNM to manage the internal lifecycle details. Before this change, all the owner has to know is that UNM has to be started and stopped, which is not too much to ask of the caller. But with this, the caller has to know about all the internal details of UNM because it needs to tell it at the right time what to start monitor.\n\nI would much prefer if UNM offered more meaningful controls. For example, registerMobileNetworkRequest() exists because when the configuration requires it, Tethering needs to bring up a DUN network ; I think this would be expressed in a more meaningful way by having a method like \"setRequiresDun(boolean)\", and have UNM decide from that setting whether it\u0027s appropriate to file the request.\n\nLikewise, UNM needs to track the default network or all networks depending on whether the configuration says to latch to the default network or to use the priority list. The settings should probably reflect that.\n\nDo you think that\u0027s possible ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 42,
+        "endLine": 59,
+        "endChar": 47
+      },
+      "revId": "3f3503c66d050444d9d83e3b3c7703d8a43698c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f9ba71_c6e6c33a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2018-12-12T06:55:13Z",
+      "side": 1,
+      "message": "As the discuss, I will refine this in the separate. Thanks your suggestion.",
+      "parentUuid": "6a7dc5d8_61538b04",
       "range": {
         "startLine": 59,
         "startChar": 42,
