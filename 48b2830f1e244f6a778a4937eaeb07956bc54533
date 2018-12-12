@@ -45,6 +45,30 @@
       "revId": "48b2830f1e244f6a778a4937eaeb07956bc54533",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477ed5d4_d807d8f9",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1362721
+      },
+      "writtenOn": "2018-12-12T18:07:24Z",
+      "side": 1,
+      "message": "I like it. The comment above makes it clear.",
+      "parentUuid": "c2672414_fe77a1f1",
+      "range": {
+        "startLine": 328,
+        "startChar": 8,
+        "endLine": 333,
+        "endChar": 30
+      },
+      "revId": "48b2830f1e244f6a778a4937eaeb07956bc54533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
