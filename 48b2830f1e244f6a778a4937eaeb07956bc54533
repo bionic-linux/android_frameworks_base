@@ -22,6 +22,29 @@
       "revId": "48b2830f1e244f6a778a4937eaeb07956bc54533",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2672414_fe77a1f1",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2018-12-12T05:55:06Z",
+      "side": 1,
+      "message": "return uidsOut.stream().mapToInt(Integer::parseInt).toArray();\n\nNot sure if that\u0027s actually clearer :-)",
+      "range": {
+        "startLine": 328,
+        "startChar": 8,
+        "endLine": 333,
+        "endChar": 30
+      },
+      "revId": "48b2830f1e244f6a778a4937eaeb07956bc54533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
