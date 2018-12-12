@@ -22,6 +22,30 @@
       "revId": "2fe9e3748ae17ed15e7b3ff28139b91d00d0350e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3618997d_dd63286e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2018-12-12T18:26:07Z",
+      "side": 1,
+      "message": "Yes, the implementation is part of the same topic (aosp/846016)",
+      "parentUuid": "7fb9eab6_2e550220",
+      "range": {
+        "startLine": 3122,
+        "startChar": 29,
+        "endLine": 3122,
+        "endChar": 53
+      },
+      "revId": "2fe9e3748ae17ed15e7b3ff28139b91d00d0350e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
