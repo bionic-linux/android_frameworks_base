@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f709e7de_2ac58da6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2018-12-12T02:19:06Z",
+      "side": 1,
+      "message": "tag",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "eae348e6787021ec826f03c780b11920e5961960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d287cc0_6d7e1a85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2018-12-12T02:19:06Z",
+      "side": 1,
+      "message": "detailed",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "eae348e6787021ec826f03c780b11920e5961960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a7845c_4ce15892",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2018-12-12T02:19:06Z",
+      "side": 1,
+      "message": "gets",
+      "range": {
+        "startLine": 11,
+        "startChar": 64,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "eae348e6787021ec826f03c780b11920e5961960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed82aa4_a24a0bf6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2018-12-12T02:19:06Z",
+      "side": 1,
+      "message": "from the",
+      "range": {
+        "startLine": 13,
+        "startChar": 33,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "eae348e6787021ec826f03c780b11920e5961960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
