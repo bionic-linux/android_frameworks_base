@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8c4037d2_cfcf7af3",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-12T08:47:28Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about this :-)",
+      "parentUuid": "2b4531e4_7cacf31a",
+      "range": {
+        "startLine": 40,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 96
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d536437c_7c08c3a5",
         "filename": "core/java/android/net/IIpMemoryStore.aidl",
         "patchSetId": 2
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "cf936dcc_e3fb46f1",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-12T08:47:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ad12a79_2f72aed3",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 85
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7fbade2_64d26d4b",
         "filename": "core/java/android/net/IIpMemoryStore.aidl",
         "patchSetId": 2
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "I guess you mean one that takes a @NonNull key and one that takes a @Nullable key and will call findL2Key automatically ?\nThat is how I intend to implement that, but I think it should be done on the service side. This class is the manager class living in the app process.",
       "parentUuid": "394e2db7_c3d331ad",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdca51f_fbc4e6fb",
+        "filename": "core/java/android/net/IpMemoryStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-12T08:47:28Z",
+      "side": 1,
+      "message": "I meant having a storeNetworkAttributes(@NonNull l2Key, NetworkAttributes attr, Listener l) -\u003e mService.storeNetworkAttributes(l2Key, attr, l)\n\nand a matchAndUpdateNetworkAttributes(NetworkAttributes attr, Listener l) -\u003e mService.storeNetworkAttributes(null, l2Key, attr, l) (naming TBD)",
+      "parentUuid": "6f80e1cb_adcbdd7c",
       "range": {
         "startLine": 51,
         "startChar": 7,

@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "befed2c5_ab955583",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-12T08:47:28Z",
+      "side": 1,
+      "message": "\"Similarity\" would also be an option. I don\u0027t have a strong opinion on this either though.",
+      "parentUuid": "adf15c8f_d44b28d2",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58425f5f_be03042f",
         "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
         "patchSetId": 4
