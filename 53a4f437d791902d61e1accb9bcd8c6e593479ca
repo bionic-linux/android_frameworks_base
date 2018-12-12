@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "e5190bdf_e7507f6d",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-12T09:49:16Z",
+      "side": 1,
+      "message": "Is it better if we merge them into one listener?\n  e.g. IIpMemoryStoreListener",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 36
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1749553_2e7b8a46",
+        "filename": "core/java/android/net/ipmemorystore/IOnL2KeyResponseListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-12T09:49:16Z",
+      "side": 1,
+      "message": "Should we also give NetworkAttributes back to user?\nFor example if user wants to retrieve multiple keys.\nThe current code will force user to sequentially query -\u003e use latch to wait for callback event -\u003e put it in hashMap\u003cNetworkAttributes, l2key\u003e.\nWith NetworkAttributes then users might query them at the same time\n\nIf it is better, then maybe we could merge the callback with IOnNetworkAttributesRetrieved?",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb935024_0e43336d",
+        "filename": "core/java/android/net/ipmemorystore/IOnPrivateDataRetrievedListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-12T09:49:16Z",
+      "side": 1,
+      "message": "Also for other get functions, as you did in OnStatusListener,\ndo we need field in the callbacks that indicate the reason of not returning the result?\n  e.g. invalid argument, storage corruption, key not found, name not found, no permission ...",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9399ad1_4a759584",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-12T09:49:16Z",
+      "side": 1,
+      "message": "1. Should we also consider the following in LinkProperties?\n a. gateway/subnet in routes\n b. domains\n c. proxies\n\n2. Maybe add comments for why we don\u0027t use v6 as you described in reply?",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d281708_25d28d78",
         "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
         "patchSetId": 5
