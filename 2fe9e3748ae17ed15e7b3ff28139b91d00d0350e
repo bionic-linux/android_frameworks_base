@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb9eab6_2e550220",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1248840
+      },
+      "writtenOn": "2018-12-12T05:14:41Z",
+      "side": 1,
+      "message": "Do we need to implement this in PhoneInterfaceManager?",
+      "range": {
+        "startLine": 3122,
+        "startChar": 29,
+        "endLine": 3122,
+        "endChar": 53
+      },
+      "revId": "2fe9e3748ae17ed15e7b3ff28139b91d00d0350e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
