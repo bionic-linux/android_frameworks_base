@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7177c7aa_6d0774de",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T06:41:49Z",
+      "side": 1,
+      "message": "Summing up what we discussed offline.\n\n- It\u0027s true that having system ready start stuff that will take time getting ready is an anti-pattern\n- It\u0027s true that this strictly speaking does not fix the race condition (it\u0027s still possible to query UNM for the status before UNM is ready\n\nHowever :\n\n- Fixing this race condition for good is a lot more complex than this simple fix.\n- The probability of the race happening with this design is vanishingly small.\n- The race condition already exists and this patch is not making it worse, only better.\n- Even when the race happens (they always do) the only concrete drawback is the device will perform a useless entitlement check. It will not use its result erroneously to deny tethering to a non-mobile upstream, the only drawback is one single useless entitlement check resulting in no user-visible issue.\n\n\nIn this situation, we agree this was probably a good tradeoff, fixing a large majority of the cases with a reasonably simple change, with the only (already existing anyway) drawback is not even user-visible and only costs a few bytes once.\n\nTherefore : we agreed to go with the design in this patchset.",
+      "parentUuid": "fcd45123_3d289aee",
+      "range": {
+        "startLine": 1661,
+        "startChar": 16,
+        "endLine": 1661,
+        "endChar": 27
+      },
+      "revId": "3f3503c66d050444d9d83e3b3c7703d8a43698c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d871bb_31de0a3e",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 9
