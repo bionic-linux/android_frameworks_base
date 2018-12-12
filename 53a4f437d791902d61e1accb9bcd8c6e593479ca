@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "09d7c30a_384f1246",
+        "filename": "core/java/android/net/ipmemorystore/IOnPrivateDataRetrievedListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:19:27Z",
+      "side": 1,
+      "message": "\u003e As for invalid argument or no permission, these would be exceptions thrown by the method rather than returned in the callback.\n\nWelp, that\u0027s not going to work as all these methods are one-way. Maybe a status is needed in all these callbacks after all.",
+      "parentUuid": "203936e7_1968b9cc",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9399ad1_4a759584",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 5
