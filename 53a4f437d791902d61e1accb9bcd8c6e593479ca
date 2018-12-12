@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48b37d37_68a3fce6",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "I did ponder this, and the reason I have made them separate is so that you can make use of the SAM style. The call site will look like :\n\n    memoryStore.findL2Key(attributes, l2Key -\u003e doSomethingWithL2Key(l2Key));\n\nConversely, it does mean that a client that wants to define a static class implementing the listeners will have to define one for each of them.\n\n\n\nIf we make them a single listener, the interface would look like this :\n\n    interface IpMemoryStoreListener {\n        default void onL2KeyResponse(@NonNull final String l2Key) {}\n        default void onComplete(@NonNull final Status status) {}\n        ...\n    }\n\n...and therefore the call site will look like :\n\n    memoryStore.findL2Key(attributes, new IpMemoryStoreListener() {\n        @Override\n        void onL2KeyResponse(@NonNull final String l2Key) {\n            doSomethingWithL2Key(l2Key);\n        }\n    });\n\nWe\u0027d also have to separate callback methods for storeNetworkAttributes and findL2Key, so that the client can define them both and use the same object on multiple calls. Then clients could define a single callback object.\n\n\nI think defining many interfaces is the better solution. This is especially true when you factor in that the L2 key on its own, or the sameness result on its own, or the attributes on their own usually can\u0027t be used without some context (e.g. the SSID of the network) ; this context will almost certainly be captured, giving the lambda syntax even more of an advantage.",
+      "parentUuid": "e5190bdf_e7507f6d",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 36
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1749553_2e7b8a46",
         "filename": "core/java/android/net/ipmemorystore/IOnL2KeyResponseListener.aidl",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-12-12T09:49:16Z",
       "side": 1,
       "message": "Should we also give NetworkAttributes back to user?\nFor example if user wants to retrieve multiple keys.\nThe current code will force user to sequentially query -\u003e use latch to wait for callback event -\u003e put it in hashMap\u003cNetworkAttributes, l2key\u003e.\nWith NetworkAttributes then users might query them at the same time\n\nIf it is better, then maybe we could merge the callback with IOnNetworkAttributesRetrieved?",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6edfc82_d6d8367f",
+        "filename": "core/java/android/net/ipmemorystore/IOnL2KeyResponseListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "I think the idiomatic way of doing this, thanks to capture and lambda, would be :\n\n    final NetworkAttributes attr \u003d getNetworkAttributes();\n    memoryStore.findL2Key(attr, l2key -\u003e map.put(attr, l2key));\n\nAfter all, I think the client is much more likely to want to index the hashmap by the attributes they can produce, rather than the attributes the network store would return.\n\nAnd if they really want to index by the return value, then\n\n    memoryStore.findL2Key(attr,\n        l2key -\u003e memoryStore.retrieveNetworkAttributes(l2key,\n            retrievedAttributes -\u003e map.put(attr, l2key)));\n\nThat being said, I don\u0027t think this is the kind of use case we would like to encourage. The memory store is here for you and it\u0027s its job to save and retrieve data. Querying stuff unboundedly and putting it in a map is not recommended use for any database. In fact, I\u0027m not sure what they\u0027d do with this map.\n\nAs for clients querying or writing at the same time, I don\u0027t think a database can generally speaking make any guarantees anyway. The way databases usually implement this is with transactions, and I think it\u0027s a bit out of scope for this ; besides, the clients typically control the L2 key so I don\u0027t expect there should be a very large amount of concurrent writing and reading by different clients.\n\n\n\nAs as side note, keep in mind that because the caller is going to be in the system server, they should be very very careful about using a latch to block a system server thread :)",
+      "parentUuid": "b1749553_2e7b8a46",
       "range": {
         "startLine": 24,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "203936e7_1968b9cc",
+        "filename": "core/java/android/net/ipmemorystore/IOnPrivateDataRetrievedListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "I think it\u0027s generally not going to be useful in the callback. If the memory store is busted, I don\u0027t see any client taking a different action according to the reason. In this case key not found and name not found are the same thing ; I don\u0027t see what a client could do if there is storage corruption that would be different from consider it data not found. Either there is data matching the query, or there isn\u0027t.\n\nAs for invalid argument or no permission, these would be exceptions thrown by the method rather than returned in the callback.\n\nSo for now, I don\u0027t think it\u0027s necessary for the methods we have.\n\nThat being said, in the future, we may have methods that would benefit from this. In this case, we should add a status to the listeners.\n\nOther reviewers, do you have an opinion ?",
+      "parentUuid": "eb935024_0e43336d",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9399ad1_4a759584",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7f87fe30_b14a4db4",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "1. Yes. But this will come in a later patch.\nRefer to https://docs.google.com/document/d/19hYLn26zVaX-2NBk9ZVB47hEoP9jBfAKvMLLEkz924I/edit#bookmark\u003did.eu9k66x1nm69 for the entire list of columns that I plan to implement.\n\n2. Done.",
+      "parentUuid": "a9399ad1_4a759584",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d281708_25d28d78",
         "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2018-12-12T08:47:28Z",
       "side": 1,
       "message": "How about UNKNOWN_NETWORK for consistency with the other 2 constants ?\nNETWORK_SAME, NETWORK_DIFFERENT, NETWORK_UNKNOWN may also be an option that makes it easier to see the different options in alphabetical listings/autocomplete.",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eda4ad9_5692f9f4",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "It is pretty difficult to find a good naming.\nI think it is very important to make it clear that \"is unknown\" is not \"meh I dunno mebbe ?\", but \"I have never encountered one of those\", and I think what you suggest would be misleading.\n\nI tried to formulate it so as to keep a common prefix. I\u0027m not super happy with the result but I think it\u0027s probably better than what I had. WDYT ?",
+      "parentUuid": "1d281708_25d28d78",
       "range": {
         "startLine": 50,
         "startChar": 28,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f0dd135a_dce7484b",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "How do I writed code. This would not have happened if I had writed unit tests for this.\n\nDone, thanks",
+      "parentUuid": "c71d5389_27ec83f5",
+      "range": {
+        "startLine": 103,
+        "startChar": 13,
+        "endLine": 103,
+        "endChar": 23
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63335d10_7a287cab",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 5
@@ -151,6 +295,30 @@
       "writtenOn": "2018-12-12T08:47:28Z",
       "side": 1,
       "message": "This is not really consistent with behavior on other methods such as findL2Key",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45ffb10_3c4e1644",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "I don\u0027t think the nullability of the receiver should be decided by consistency matters, but by the semantics of the function.\nIn storeNetworkAttributes, most callers will have an L2 key, and won\u0027t do anything different when the call fails versus succeeds. Therefore I think it makes sense to let them specify a null listener.\nBy contrast calling findL2Key makes no sense at all with a null listener.\n\nThat being said, storePrivateData should have a nullable listener as it follows the same semantics as storeNetworkAttributes : done.",
+      "parentUuid": "63335d10_7a287cab",
       "range": {
         "startLine": 62,
         "startChar": 13,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "85681c23_a1fbca0f",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "Yeah I tried but checkstyle won\u0027t let me write @return for void methods. It\u0027s happy with this however.",
+      "parentUuid": "e29b0560_b8916ae1",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 7
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c638175_d7b49424",
         "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
         "patchSetId": 5
@@ -206,6 +398,30 @@
       "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759d0109_a1dd3d46",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "Yes probably. Done.",
+      "parentUuid": "5c638175_d7b49424",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 81
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

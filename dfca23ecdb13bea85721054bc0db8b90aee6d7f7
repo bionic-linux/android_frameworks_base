@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "91f1d1dc_91053758",
+        "filename": "core/java/android/net/IpMemoryStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "Ah I see.\nI personally prefer the current scheme with a single key documented to possibly take null as an argument. It keeps the API surface smaller, and the nullability should be part of the signature as of Q.\n\nDo any of the other reviewers have an opinion ? I don\u0027t feel too strongly about this.",
+      "parentUuid": "6fdca51f_fbc4e6fb",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "revId": "dfca23ecdb13bea85721054bc0db8b90aee6d7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "429b111c_14e11040",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.aidl",
         "patchSetId": 2

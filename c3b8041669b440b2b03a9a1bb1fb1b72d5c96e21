@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "3842bb3f_75b02a32",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:10:30Z",
+      "side": 1,
+      "message": "\"Similarity\" is a much more common word, but to me it implies some degree of similarity and some degree of difference. Here we are looking for a binary answer. The confidence is, concretely, a similarity score, but that\u0027s an implementation detail ; API-wise we are not trying to supply a similarity value but really to tell how confident we are that this is the *same* network. It\u0027s pretty nuanced :)",
+      "parentUuid": "befed2c5_ab955583",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "c3b8041669b440b2b03a9a1bb1fb1b72d5c96e21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58425f5f_be03042f",
         "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
         "patchSetId": 4
