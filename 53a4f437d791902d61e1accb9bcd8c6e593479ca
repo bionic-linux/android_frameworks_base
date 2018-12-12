@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d3cd67b8_2726bf1b",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:14:03Z",
+      "side": 1,
+      "message": "(resolving, please reopen if you disagree)",
+      "parentUuid": "48b37d37_68a3fce6",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 36
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1749553_2e7b8a46",
         "filename": "core/java/android/net/ipmemorystore/IOnL2KeyResponseListener.aidl",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2882c4_8c7e43fa",
+        "filename": "core/java/android/net/ipmemorystore/IOnL2KeyResponseListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:14:03Z",
+      "side": 1,
+      "message": "(resolving, please reopen if you disagree)",
+      "parentUuid": "f6edfc82_d6d8367f",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "f00b2f66_b76a5ea4",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:14:03Z",
+      "side": 1,
+      "message": "(tests written, resolving)",
+      "parentUuid": "f0dd135a_dce7484b",
+      "range": {
+        "startLine": 103,
+        "startChar": 13,
+        "endLine": 103,
+        "endChar": 23
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63335d10_7a287cab",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 5
@@ -331,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "b1175f77_fabebc1d",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:14:03Z",
+      "side": 1,
+      "message": "(done, resolving)",
+      "parentUuid": "f45ffb10_3c4e1644",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e29b0560_b8916ae1",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 5
@@ -375,6 +471,30 @@
       "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fe8cdb_a15983e3",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-12T13:14:03Z",
+      "side": 1,
+      "message": "(resolving, please reopen if you disagree)",
+      "parentUuid": "85681c23_a1fbca0f",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 7
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
