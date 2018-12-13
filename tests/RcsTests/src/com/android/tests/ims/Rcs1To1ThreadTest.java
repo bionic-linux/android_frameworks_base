@@ -19,34 +19,28 @@ import static com.google.common.truth.Truth.assertThat;
 
 import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
+import android.telephony.ims.Rcs1To1Thread;
 import android.telephony.ims.RcsParticipant;
-import android.telephony.ims.RcsThreadQueryParameters;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class RcsThreadQueryParametersTest {
+public class Rcs1To1ThreadTest {
 
     @Test
     public void testCanUnparcel() {
-        RcsParticipant rcsParticipant = new RcsParticipant(1, "+5559999999");
-        RcsThreadQueryParameters rcsThreadQueryParameters = RcsThreadQueryParameters.builder()
-                .isGroupThread(true)
-                .withParticipant(rcsParticipant)
-                .limitResultsTo(50)
-                .sort(true)
-                .build();
+        RcsParticipant recipient = new RcsParticipant(55, "+5551234567");
+        Rcs1To1Thread rcs1To1Thread = new Rcs1To1Thread(123, recipient, 456);
 
         Parcel parcel = Parcel.obtain();
-        rcsThreadQueryParameters.writeToParcel(parcel, rcsThreadQueryParameters.describeContents());
+        rcs1To1Thread.writeToParcel(parcel, rcs1To1Thread.describeContents());
 
         parcel.setDataPosition(0);
-        rcsThreadQueryParameters = RcsThreadQueryParameters.CREATOR.createFromParcel(parcel);
+        rcs1To1Thread = Rcs1To1Thread.CREATOR.createFromParcel(parcel);
 
-        assertThat(rcsThreadQueryParameters.isGroupThread()).isTrue();
-        assertThat(rcsThreadQueryParameters.getRcsParticipants()).contains(rcsParticipant);
-        assertThat(rcsThreadQueryParameters.getLimit()).isEqualTo(50);
-        assertThat(rcsThreadQueryParameters.isAscending()).isTrue();
+        assertThat(rcs1To1Thread.getThreadId()).isEqualTo(123);
+        assertThat(rcs1To1Thread.getRecipient()).isEqualTo(recipient);
+        assertThat(rcs1To1Thread.getFallbackThreadId()).isEqualTo(456);
     }
 }

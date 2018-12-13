@@ -19,7 +19,7 @@ import android.os.Parcel;
 
 /**
  * This is a single instance of a message sent over RCS.
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public class RcsOutgoingMessage extends RcsMessage {
     public static final Creator<RcsOutgoingMessage> CREATOR = new Creator<RcsOutgoingMessage>() {

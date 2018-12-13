@@ -16,14 +16,18 @@
 
 package android.telephony.ims;
 
+import android.annotation.WorkerThread;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 /**
  * RcsThread represents a single RCS conversation thread. It holds messages that were sent and
  * received and events that occurred on that thread.
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
+ * TODO(109759350) add exceptions and roll back local changes if RPC fails
  */
 public abstract class RcsThread implements Parcelable {
     // Since this is an abstract class that gets parcelled, the sub-classes need to write these
@@ -39,6 +43,48 @@ public abstract class RcsThread implements Parcelable {
 
     RcsThread(Parcel in) {
         mThreadId = in.readInt();
+    }
+
+    /**
+     * @return Returns the number of {@link RcsMessage}s that exist in this RcsThread.
+     */
+    public int getMessageCount() {
+        // TODO (109759350) - implement
+        return 0;
+    }
+
+    /**
+     * Adds a new {@link RcsMessage} to this RcsThread and persists it in storage.
+     *
+     * @param rcsMessage The message to add to the thread
+     */
+    @WorkerThread
+    public void addMessage(RcsMessage rcsMessage) {
+        // TODO (109759350) - implement
+    }
+
+    /**
+     * Deletes an {@link RcsMessage} from this RcsThread and updates the storage.
+     *
+     * @param rcsMessage The message to delete from the thread
+     */
+    @WorkerThread
+    public void deleteMessage(RcsMessage rcsMessage) {
+        // TODO (109759350) - implement
+    }
+
+    /**
+     * @return Returns whether this is a group thread or not
+     */
+    public abstract boolean isGroup();
+
+
+    /**
+     * @hide
+     */
+    @VisibleForTesting
+    public int getThreadId() {
+        return mThreadId;
     }
 
     public static final Creator<RcsThread> CREATOR = new Creator<RcsThread>() {

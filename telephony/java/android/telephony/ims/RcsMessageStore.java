@@ -27,6 +27,7 @@ import android.telephony.ims.aidl.IRcs;
  * RcsMessageStore is the application interface to RcsProvider and provides access methods to
  * RCS related database tables.
  * @hide - TODO make this public
+ * TODO(109759350) add exceptions and roll back local changes if RPC fails
  */
 public class RcsMessageStore {
     static final String TAG = "RcsMessageStore";
