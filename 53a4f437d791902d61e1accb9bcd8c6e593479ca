@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "632eeee8_e2f6a1a5",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-13T04:25:31Z",
+      "side": 1,
+      "message": "Your version solves both the consistency and autocomplete issue, so looks good !",
+      "parentUuid": "6eda4ad9_5692f9f4",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71d5389_27ec83f5",
         "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
         "patchSetId": 5
