@@ -19,7 +19,7 @@ import android.os.Parcelable;
 
 /**
  * A part of a composite {@link RcsMessage}.
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public abstract class RcsPart implements Parcelable {
 }

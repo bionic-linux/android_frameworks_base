@@ -19,7 +19,7 @@ import android.os.Parcel;
 
 /**
  * A part of a composite {@link RcsMessage} that holds a file transfer.
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public class RcsFileTransferPart extends RcsPart {
     public static final Creator<RcsFileTransferPart> CREATOR = new Creator<RcsFileTransferPart>() {
