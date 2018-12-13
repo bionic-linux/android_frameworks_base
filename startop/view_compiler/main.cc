@@ -41,6 +41,7 @@ using startop::dex::DexBuilder;
 using startop::dex::MethodBuilder;
 using startop::dex::Prototype;
 using startop::dex::TypeDescriptor;
+using namespace startop::util;
 using std::string;
 
 constexpr char kStdoutFilename[]{"stdout"};
@@ -107,7 +108,7 @@ int main(int argc, char** argv) {
   }
 
   const char* const filename = argv[kFileNameParam];
-  const string layout_name = FindLayoutNameFromFilename(filename);
+  const string layout_name = startop::util::FindLayoutNameFromFilename(filename);
 
   XMLDocument xml;
   xml.LoadFile(filename);
