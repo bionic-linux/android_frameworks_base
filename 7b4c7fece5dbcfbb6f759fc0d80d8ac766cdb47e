@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1bce4d62_f6248805",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:21:57Z",
+      "side": 1,
+      "message": "Added a comment, and clarified/future-proofed the code. This is simply to ensure the hashcode is different from simply hashing the data member just in case.",
+      "parentUuid": "51a87e0d_582d39e5",
+      "range": {
+        "startLine": 72,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "7b4c7fece5dbcfbb6f759fc0d80d8ac766cdb47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c43414d_b776f88a",
         "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5a562a5d_d7894cd3",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:21:57Z",
+      "side": 1,
+      "message": "Indeed. Done.",
+      "parentUuid": "0c43414d_b776f88a",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "7b4c7fece5dbcfbb6f759fc0d80d8ac766cdb47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56da4a09_8134951a",
         "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "7b4c7fece5dbcfbb6f759fc0d80d8ac766cdb47e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b303a6_88341dc6",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:21:57Z",
+      "side": 1,
+      "message": "Yes, but made moot by addressing your other comment.",
+      "parentUuid": "56da4a09_8134951a",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 11
+      },
+      "revId": "7b4c7fece5dbcfbb6f759fc0d80d8ac766cdb47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
