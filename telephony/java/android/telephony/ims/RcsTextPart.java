@@ -19,7 +19,7 @@ import android.os.Parcel;
 
 /**
  * A part of a composite {@link RcsMessage} that holds a string
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public class RcsTextPart extends RcsPart {
     public static final Creator<RcsTextPart> CREATOR = new Creator<RcsTextPart>() {

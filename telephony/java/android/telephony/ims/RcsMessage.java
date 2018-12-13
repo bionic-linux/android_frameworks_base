@@ -19,7 +19,7 @@ import android.os.Parcelable;
 
 /**
  * This is a single instance of a message sent or received over RCS.
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public abstract class RcsMessage implements Parcelable {
 }
