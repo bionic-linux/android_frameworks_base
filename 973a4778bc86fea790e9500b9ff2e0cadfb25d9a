@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffe77af0_1806ce0d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:00:31Z",
+      "side": 1,
+      "message": "Sorry I still don\u0027t get this comment. These are not callbacks, they are regular methods called from the owner right ? A callback is a function that you pass to someone so that they can call you back later.",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "973a4778bc86fea790e9500b9ff2e0cadfb25d9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
