@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51a87e0d_582d39e5",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-13T07:30:26Z",
+      "side": 1,
+      "message": "Don\u0027t see why *3 here?\nCould you explain more about it?",
+      "range": {
+        "startLine": 72,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "7b4c7fece5dbcfbb6f759fc0d80d8ac766cdb47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c43414d_b776f88a",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-13T07:30:26Z",
+      "side": 1,
+      "message": "Why we need to build this from byte[]?\nI mean, it would be easier to maintain from String, right?",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "7b4c7fece5dbcfbb6f759fc0d80d8ac766cdb47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56da4a09_8134951a",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-13T07:30:26Z",
+      "side": 1,
+      "message": "can this be static?",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 11
+      },
+      "revId": "7b4c7fece5dbcfbb6f759fc0d80d8ac766cdb47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
