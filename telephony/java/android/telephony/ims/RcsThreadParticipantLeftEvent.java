@@ -19,7 +19,7 @@ import android.os.Parcel;
 
 /**
  * An event that indicates an RCS participant has left an {@link RcsThread}.
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public class RcsThreadParticipantLeftEvent extends RcsThreadEvent {
     public static final Creator<RcsThreadParticipantLeftEvent> CREATOR =

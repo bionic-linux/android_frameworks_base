@@ -19,7 +19,7 @@ import android.os.Parcelable;
 
 /**
  * An event that happened on an {@link RcsThread}.
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public abstract class RcsThreadEvent implements Parcelable {
 }

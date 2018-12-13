@@ -17,7 +17,7 @@ package com.android.tests.ims;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import android.os.Bundle;
+import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
 import android.telephony.ims.RcsParticipant;
 
@@ -35,9 +35,11 @@ public class RcsParticipantTest {
         RcsParticipant rcsParticipant = new RcsParticipant(ID, CANONICAL_ADDRESS);
         rcsParticipant.setAlias(ALIAS);
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("Some key", rcsParticipant);
-        rcsParticipant = bundle.getParcelable("Some key");
+        Parcel parcel = Parcel.obtain();
+        rcsParticipant.writeToParcel(parcel, rcsParticipant.describeContents());
+
+        parcel.setDataPosition(0);
+        rcsParticipant = RcsParticipant.CREATOR.createFromParcel(parcel);
 
         assertThat(rcsParticipant.getId()).isEqualTo(ID);
         assertThat(rcsParticipant.getAlias()).isEqualTo(ALIAS);

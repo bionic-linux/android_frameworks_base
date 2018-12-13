@@ -16,6 +16,7 @@
 
 package android.telephony.ims.aidl;
 
+import android.net.Uri;
 import android.telephony.ims.RcsParticipant;
 import android.telephony.ims.Rcs1To1Thread;
 import android.telephony.ims.RcsThreadQueryContinuationToken;
@@ -39,6 +40,20 @@ interface IRcs {
 
     // RcsThread APIs
     int getMessageCount(int rcsThreadId);
+
+    // Rcs1To1Thread APIs
+    void set1To1ThreadFallbackThreadId(int rcsThreadId, int fallbackId);
+
+    // RcsGroupThread APIs
+    void setGroupThreadName(int rcsThreadId, String groupName);
+
+    void setGroupThreadIcon(int rcsThreadId, in Uri groupIcon);
+
+    void setGroupThreadOwner(int rcsThreadId, in RcsParticipant participant);
+
+    void addParticipantToGroupThread(int rcsThreadId, in RcsParticipant participant);
+
+    void removeParticipantFromGroupThread(int rcsThreadId, in RcsParticipant participant);
 
     // RcsParticipant APIs
     RcsParticipant createRcsParticipant(String canonicalAddress);

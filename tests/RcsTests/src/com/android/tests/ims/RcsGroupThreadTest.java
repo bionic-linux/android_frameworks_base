@@ -13,40 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.android.tests.ims;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
+import android.telephony.ims.RcsGroupThread;
 import android.telephony.ims.RcsParticipant;
-import android.telephony.ims.RcsThreadQueryParameters;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class RcsThreadQueryParametersTest {
-
+public class RcsGroupThreadTest {
     @Test
     public void testCanUnparcel() {
-        RcsParticipant rcsParticipant = new RcsParticipant(1, "+5559999999");
-        RcsThreadQueryParameters rcsThreadQueryParameters = RcsThreadQueryParameters.builder()
-                .isGroupThread(true)
-                .withParticipant(rcsParticipant)
-                .limitResultsTo(50)
-                .sort(true)
-                .build();
+        RcsParticipant ownerParticipant = new RcsParticipant(5, "+5557654321");
+        Uri groupIcon = Uri.parse("content://group_icon");
+
+        RcsGroupThread rcsGroupThread = new RcsGroupThread(10, ownerParticipant, "Group name",
+                groupIcon, "conferenceUri");
 
         Parcel parcel = Parcel.obtain();
-        rcsThreadQueryParameters.writeToParcel(parcel, rcsThreadQueryParameters.describeContents());
+        rcsGroupThread.writeToParcel(parcel, rcsGroupThread.describeContents());
 
         parcel.setDataPosition(0);
-        rcsThreadQueryParameters = RcsThreadQueryParameters.CREATOR.createFromParcel(parcel);
+        rcsGroupThread = RcsGroupThread.CREATOR.createFromParcel(parcel);
 
-        assertThat(rcsThreadQueryParameters.isGroupThread()).isTrue();
-        assertThat(rcsThreadQueryParameters.getRcsParticipants()).contains(rcsParticipant);
-        assertThat(rcsThreadQueryParameters.getLimit()).isEqualTo(50);
-        assertThat(rcsThreadQueryParameters.isAscending()).isTrue();
+        assertThat(rcsGroupThread.getThreadId()).isEqualTo(10);
+        assertThat(rcsGroupThread.getConferenceUri()).isEqualTo("conferenceUri");
+        assertThat(rcsGroupThread.getGroupName()).isEqualTo("Group name");
+        assertThat(rcsGroupThread.getGroupIcon()).isEqualTo(groupIcon);
+        assertThat(rcsGroupThread.getOwner()).isEqualTo(ownerParticipant);
     }
 }
