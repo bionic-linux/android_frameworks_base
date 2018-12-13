@@ -20,7 +20,7 @@ import android.os.Parcel;
 /**
  * A part of a composite {@link RcsMessage} that holds a media that is rendered on the screen
  * (i.e. image, video etc)
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public class RcsMultiMediaPart extends RcsFileTransferPart {
     public static final Creator<RcsMultiMediaPart> CREATOR = new Creator<RcsMultiMediaPart>() {
