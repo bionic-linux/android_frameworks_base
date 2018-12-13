@@ -19,7 +19,7 @@ import android.os.Parcel;
 
 /**
  * An event that indicates an {@link RcsGroupThread}'s icon was changed.
- * @hide - TODO(sahinc) make this public
+ * @hide - TODO(109759350) make this public
  */
 public class RcsThreadIconChangedEvent extends RcsThreadEvent {
     public static final Creator<RcsThreadIconChangedEvent> CREATOR =

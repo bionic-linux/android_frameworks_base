@@ -17,37 +17,36 @@ package com.android.tests.ims;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import android.os.Bundle;
+import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
 import android.telephony.ims.RcsParticipant;
 import android.telephony.ims.RcsThreadQueryParameters;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 
 @RunWith(AndroidJUnit4.class)
 public class RcsThreadQueryParametersTest {
-    private RcsThreadQueryParameters mRcsThreadQueryParameters;
-    @Mock RcsParticipant mMockParticipant;
 
     @Test
-    public void testUnparceling() {
-        String key = "some key";
-        mRcsThreadQueryParameters = RcsThreadQueryParameters.builder()
+    public void testCanUnparcel() {
+        RcsParticipant rcsParticipant = new RcsParticipant(1, "+5559999999");
+        RcsThreadQueryParameters rcsThreadQueryParameters = RcsThreadQueryParameters.builder()
                 .isGroupThread(true)
-                .withParticipant(mMockParticipant)
+                .withParticipant(rcsParticipant)
                 .limitResultsTo(50)
                 .sort(true)
                 .build();
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(key, mRcsThreadQueryParameters);
-        mRcsThreadQueryParameters = bundle.getParcelable(key);
+        Parcel parcel = Parcel.obtain();
+        rcsThreadQueryParameters.writeToParcel(parcel, rcsThreadQueryParameters.describeContents());
 
-        assertThat(mRcsThreadQueryParameters.isGroupThread()).isTrue();
-        assertThat(mRcsThreadQueryParameters.getRcsParticipants()).contains(mMockParticipant);
-        assertThat(mRcsThreadQueryParameters.getLimit()).isEqualTo(50);
-        assertThat(mRcsThreadQueryParameters.isAscending()).isTrue();
+        parcel.setDataPosition(0);
+        rcsThreadQueryParameters = RcsThreadQueryParameters.CREATOR.createFromParcel(parcel);
+
+        assertThat(rcsThreadQueryParameters.isGroupThread()).isTrue();
+        assertThat(rcsThreadQueryParameters.getRcsParticipants()).contains(rcsParticipant);
+        assertThat(rcsThreadQueryParameters.getLimit()).isEqualTo(50);
+        assertThat(rcsThreadQueryParameters.isAscending()).isTrue();
     }
 }
