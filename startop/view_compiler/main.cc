@@ -31,6 +31,7 @@
 namespace {
 
 using namespace tinyxml2;
+using namespace startop::util;
 using std::string;
 
 constexpr char kStdoutFilename[]{"stdout"};
