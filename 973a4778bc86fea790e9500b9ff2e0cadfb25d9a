@@ -22,6 +22,30 @@
       "revId": "973a4778bc86fea790e9500b9ff2e0cadfb25d9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b9d62ed_163fa3f0",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-13T09:06:34Z",
+      "side": 1,
+      "message": "After offline sync, I get it now. Suggest the following wording :\n\nThe owner of UNM gets it to register network callbacks by calling the following methods :",
+      "parentUuid": "ffe77af0_1806ce0d",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "973a4778bc86fea790e9500b9ff2e0cadfb25d9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
