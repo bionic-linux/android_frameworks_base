@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,30 +19,28 @@ import static com.google.common.truth.Truth.assertThat;
 
 import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
+import android.telephony.ims.Rcs1To1Thread;
 import android.telephony.ims.RcsParticipant;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class RcsParticipantTest {
-    private static final int ID = 123;
-    private static final String ALIAS = "alias";
-    private static final String CANONICAL_ADDRESS = "+1234567890";
+public class Rcs1To1ThreadTest {
 
     @Test
     public void testCanUnparcel() {
-        RcsParticipant rcsParticipant = new RcsParticipant(ID, CANONICAL_ADDRESS);
-        rcsParticipant.setAlias(ALIAS);
+        RcsParticipant recipient = new RcsParticipant(55, "+5551234567");
+        Rcs1To1Thread rcs1To1Thread = new Rcs1To1Thread(123, recipient, 456);
 
         Parcel parcel = Parcel.obtain();
-        rcsParticipant.writeToParcel(parcel, rcsParticipant.describeContents());
+        rcs1To1Thread.writeToParcel(parcel, rcs1To1Thread.describeContents());
 
         parcel.setDataPosition(0);
-        rcsParticipant = RcsParticipant.CREATOR.createFromParcel(parcel);
+        rcs1To1Thread = Rcs1To1Thread.CREATOR.createFromParcel(parcel);
 
-        assertThat(rcsParticipant.getId()).isEqualTo(ID);
-        assertThat(rcsParticipant.getAlias()).isEqualTo(ALIAS);
-        assertThat(rcsParticipant.getCanonicalAddress()).isEqualTo(CANONICAL_ADDRESS);
+        assertThat(rcs1To1Thread.getThreadId()).isEqualTo(123);
+        assertThat(rcs1To1Thread.getRecipient()).isEqualTo(recipient);
+        assertThat(rcs1To1Thread.getFallbackThreadId()).isEqualTo(456);
     }
 }

@@ -19,30 +19,29 @@ import static com.google.common.truth.Truth.assertThat;
 
 import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
-import android.telephony.ims.RcsParticipant;
+import android.telephony.ims.RcsThread;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class RcsParticipantTest {
-    private static final int ID = 123;
-    private static final String ALIAS = "alias";
-    private static final String CANONICAL_ADDRESS = "+1234567890";
-
+public class RcsThreadTest {
     @Test
     public void testCanUnparcel() {
-        RcsParticipant rcsParticipant = new RcsParticipant(ID, CANONICAL_ADDRESS);
-        rcsParticipant.setAlias(ALIAS);
+        RcsThread rcsThread = new RcsThread(445) {
+            @Override
+            public boolean isGroup() {
+                return false;
+            }
+        };
 
         Parcel parcel = Parcel.obtain();
-        rcsParticipant.writeToParcel(parcel, rcsParticipant.describeContents());
+        parcel.writeInt(998);
+        rcsThread.writeToParcel(parcel, rcsThread.describeContents());
 
         parcel.setDataPosition(0);
-        rcsParticipant = RcsParticipant.CREATOR.createFromParcel(parcel);
+        rcsThread = RcsThread.CREATOR.createFromParcel(parcel);
 
-        assertThat(rcsParticipant.getId()).isEqualTo(ID);
-        assertThat(rcsParticipant.getAlias()).isEqualTo(ALIAS);
-        assertThat(rcsParticipant.getCanonicalAddress()).isEqualTo(CANONICAL_ADDRESS);
+        assertThat(rcsThread.getThreadId()).isEqualTo(445);
     }
 }
