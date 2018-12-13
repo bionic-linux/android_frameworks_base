@@ -31,13 +31,16 @@ import com.android.internal.util.Preconditions;
 
 /**
  * RcsParticipant is an RCS capable contact that can participate in {@link RcsThread}s.
- * @hide - TODO(sahinc) make this public
+ *
+ * @hide - TODO(109759350) make this public
  */
 public class RcsParticipant implements Parcelable {
     // The row ID of this participant in the database
     private int mId;
+
     // The phone number of this participant
     private String mCanonicalAddress;
+
     // The RCS alias of this participant. This is different than the name of the contact in the
     // Contacts app - i.e. RCS protocol allows users to define aliases for themselves that doesn't
     // require other users to add them as contacts and give them a name.
@@ -72,12 +75,11 @@ public class RcsParticipant implements Parcelable {
             return;
         }
 
-        mCanonicalAddress = canonicalAddress;
-
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.updateRcsParticipantCanonicalAddress(mId, mCanonicalAddress);
+                iRcs.updateRcsParticipantCanonicalAddress(mId, canonicalAddress);
+                mCanonicalAddress = canonicalAddress;
             }
         } catch (RemoteException re) {
             Rlog.e(TAG, "RcsParticipant: Exception happened during setCanonicalAddress", re);
@@ -106,11 +108,37 @@ public class RcsParticipant implements Parcelable {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.updateRcsParticipantAlias(mId, mAlias);
+                iRcs.updateRcsParticipantAlias(mId, alias);
+                mAlias = alias;
             }
         } catch (RemoteException re) {
             Rlog.e(TAG, "RcsParticipant: Exception happened during setCanonicalAddress", re);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof RcsParticipant)) {
+            return false;
+        }
+
+        RcsParticipant other = (RcsParticipant) obj;
+        if (mId == other.mId && TextUtils.equals(mAlias, other.mAlias) && TextUtils.equals(
+                mCanonicalAddress, other.mCanonicalAddress)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = mId;
+        hash = hash * 31 + (mCanonicalAddress == null ? 0 : mCanonicalAddress.hashCode());
+        return hash * 31 + (mAlias == null ? 0 : mAlias.hashCode());
     }
 
     /**
