@@ -6603,6 +6603,10 @@ package android.util {
 
 package android.view {
 
+  public abstract class LayoutInflater {
+    method public final android.view.View tryCreateView(android.view.View, java.lang.String, android.content.Context, android.util.AttributeSet);
+  }
+
   public abstract interface WindowManager implements android.view.ViewManager {
     method public abstract android.graphics.Region getCurrentImeTouchRegion();
   }
