@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f6b9475_0f313ae2",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1060493
+      },
+      "writtenOn": "2018-12-14T19:22:56Z",
+      "side": 1,
+      "message": "You should prevent anyone from using any new hidden APIs with reflection. You may as well black list them immediately.",
+      "range": {
+        "startLine": 817,
+        "startChar": 0,
+        "endLine": 817,
+        "endChar": 24
+      },
+      "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
