@@ -46,6 +46,30 @@
       "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d72bb95_29a9ab5f",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1060493
+      },
+      "writtenOn": "2018-12-14T19:58:43Z",
+      "side": 1,
+      "message": "If we want this to be accessible from a compiler, we must make this a public API. If it is on-device generated, I consider that ok hidden API.\n\nI thought only reflection would cause a call to be blocked. I didn\u0027t think it mattered which code was making the call. You\u0027re going to be making direct calls to this code. Is my understanding correct?",
+      "parentUuid": "754dfd8c_f12b5c1d",
+      "range": {
+        "startLine": 817,
+        "startChar": 0,
+        "endLine": 817,
+        "endChar": 24
+      },
+      "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
