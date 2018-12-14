@@ -53,12 +53,12 @@
 #include <android-base/stringprintf.h>
 #include <cutils/fs.h>
 #include <cutils/multiuser.h>
-#include <cutils/sched_policy.h>
 #include <private/android_filesystem_config.h>
 #include <utils/String8.h>
 #include <selinux/android.h>
 #include <seccomp_policy.h>
 #include <stats_event_list.h>
+#include <processgroup/sched_policy_ctrl.h>
 #include <processgroup/processgroup.h>
 
 #include "core_jni_helpers.h"
@@ -1028,15 +1028,14 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
           RuntimeAbort(env, __LINE__, "System server process has died. Restarting Zygote!");
       }
 
-      bool low_ram_device = GetBoolProperty("ro.config.low_ram", false);
-      bool per_app_memcg = GetBoolProperty("ro.config.per_app_memcg", low_ram_device);
-      if (per_app_memcg) {
+      if (UsePerAppMemcg()) {
           // Assign system_server to the correct memory cgroup.
-          // Not all devices mount /dev/memcg so check for the file first
+          // Not all devices mount memcg so check if it is mounted first
           // to avoid unnecessarily printing errors and denials in the logs.
-          if (!access("/dev/memcg/system/tasks", F_OK) &&
-                !WriteStringToFile(StringPrintf("%d", pid), "/dev/memcg/system/tasks")) {
-              ALOGE("couldn't write %d to /dev/memcg/system/tasks", pid);
+          std::string tasks_file;
+          if (CgroupGetAttributePath("SystemServerMemcgTasks", tasks_file) &&
+                !WriteStringToFile(StringPrintf("%d", pid), tasks_file.c_str())) {
+              ALOGE("couldn't write %d to %s", pid, tasks_file.c_str());
           }
       }
   }
