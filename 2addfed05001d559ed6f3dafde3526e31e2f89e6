@@ -94,6 +94,30 @@
       "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd076d7f_de58d4a7",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2018-12-14T23:37:22Z",
+      "side": 1,
+      "message": "I just talked with agampe@ to get a better idea of the space of possibilities here.\n\nIn the near-term, it seems like the light greylist (which I think @UnsupportedAppUsage does) is the way to go. This is basically an internal API that we don\u0027t want to make part of the SDK just yet, but it needs to be called from an application\u0027s context. The light-greylist gives us that option.\n\nLonger term, I could see a case for going lighter or darker. For going lighter, apps may want to do their own custom inflation or include precompiled layouts, and these methods would be helpful. I don\u0027t really want to freeze the API just yet, but I don\u0027t foresee too many changes, and changing it will probably be difficult anyway.\n\nIf we instead want to go darker, agampe@ suggested having the LayoutInflater load the compiled views from a classloader that has hidden API checks disabled, which would still give the precompiled layout code the ability to call these methods. This would take more implementation effort, but it may be useful as there are some other cases where what are effectively system libraries are loaded from an application context.",
+      "parentUuid": "c467f1ca_dc7409b9",
+      "range": {
+        "startLine": 817,
+        "startChar": 0,
+        "endLine": 817,
+        "endChar": 24
+      },
+      "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
