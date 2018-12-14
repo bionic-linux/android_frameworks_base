@@ -774,24 +774,8 @@ public abstract class LayoutInflater {
             ta.recycle();
         }
 
-        if (name.equals(TAG_1995)) {
-            // Let's party like it's 1995!
-            return new BlinkLayout(context, attrs);
-        }
-
         try {
-            View view;
-            if (mFactory2 != null) {
-                view = mFactory2.onCreateView(parent, name, context, attrs);
-            } else if (mFactory != null) {
-                view = mFactory.onCreateView(name, context, attrs);
-            } else {
-                view = null;
-            }
-
-            if (view == null && mPrivateFactory != null) {
-                view = mPrivateFactory.onCreateView(parent, name, context, attrs);
-            }
+            View view = tryCreateView(parent, name, context, attrs);
 
             if (view == null) {
                 final Object lastContext = mConstructorArgs[0];
@@ -823,6 +807,46 @@ public abstract class LayoutInflater {
             ie.setStackTrace(EMPTY_STACK_TRACE);
             throw ie;
         }
+    }
+
+    /**
+     * Try to create a view.
+     *
+     * @hide for use by precompiled views
+     */
+    @UnsupportedAppUsage
+    public View tryCreateView(View parent, String name, Context context, AttributeSet attrs)
+        throws Exception {
+        if (name.equals(TAG_1995)) {
+            // Let's party like it's 1995!
+            return new BlinkLayout(context, attrs);
+        }
+
+        View view;
+        if (mFactory2 != null) {
+            view = mFactory2.onCreateView(parent, name, context, attrs);
+        } else if (mFactory != null) {
+            view = mFactory.onCreateView(name, context, attrs);
+        } else {
+            view = null;
+        }
+
+        if (view == null && mPrivateFactory != null) {
+            view = mPrivateFactory.onCreateView(parent, name, context, attrs);
+        }
+
+        return view;
+    }
+
+    /**
+     * Try to create a view group
+     *
+     * @hide for use by precompiled views
+     */
+    @UnsupportedAppUsage
+    public ViewGroup tryCreateViewGroup(View parent, String name, Context context, AttributeSet
+        attrs) throws Exception {
+        return (ViewGroup) tryCreateView(parent, name, context, attrs);
     }
 
     /**
