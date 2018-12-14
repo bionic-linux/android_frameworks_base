@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9826389c_34a9f86a",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2018-12-14T21:16:14Z",
+      "side": 1,
+      "message": "Because they are in ranges that are reserved for documentation (that\u0027s what Lorenzo meant with \"example ranges\"), ie. they won\u0027t occur as real-world addresses.\n\nQuoting from https://en.wikipedia.org/wiki/Reserved_IP_addresses\n\nAddress range 192.0.2.0–192.0.2.255  Assigned as TEST-NET-1, documentation and examples.\nAddress range 2001:db8:: Addresses used in documentation and example source code.",
+      "parentUuid": "27fd925f_75681f8c",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "184782a8_1b1a5382",
         "filename": "core/java/android/net/InetAddresses.java",
         "patchSetId": 3
