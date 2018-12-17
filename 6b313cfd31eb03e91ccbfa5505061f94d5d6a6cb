@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b7d5e7e3_1adcfc0d",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-12-17T13:24:06Z",
+      "side": 1,
+      "message": "Thanks. Have updated the JavaDoc here and added the addresses to the CTS tests.",
+      "parentUuid": "9826389c_34a9f86a",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "184782a8_1b1a5382",
         "filename": "core/java/android/net/InetAddresses.java",
         "patchSetId": 3
@@ -141,6 +165,30 @@
       "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe221051_005dce70",
+        "filename": "core/java/android/net/InetAddresses.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2018-12-17T13:24:06Z",
+      "side": 1,
+      "message": "I am not sure if anyone actually relied on the differences in behavior between the old and new APIs so I\u0027m not sure it\u0027s worth doing. If it is I would like to do it in a separate change to avoid delaying this any further.",
+      "parentUuid": "ca8b014f_0f8d42a1",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "6b313cfd31eb03e91ccbfa5505061f94d5d6a6cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
