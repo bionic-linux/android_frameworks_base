@@ -142,6 +142,30 @@
       "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94b858d_b43bead8",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1060493
+      },
+      "writtenOn": "2018-12-17T17:34:20Z",
+      "side": 1,
+      "message": "FWIW, I don\u0027t think this is a particularly dangerous API to add to the public. tryCreateViewGroup on the other hand seems like an unnecessary public API as it just does a cast.\n\nYou will have to return an @Nullable view and likewise mark the nullability of all the parameters.",
+      "parentUuid": "46172174_a7d991cb",
+      "range": {
+        "startLine": 817,
+        "startChar": 0,
+        "endLine": 817,
+        "endChar": 24
+      },
+      "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
