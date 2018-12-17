@@ -118,6 +118,30 @@
       "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46172174_a7d991cb",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2018-12-17T11:06:20Z",
+      "side": 1,
+      "message": "We can chat about this offline, if you\u0027d like, but in general the preference is that if it\u0027s meant to be visible to apps, it should be public API. The expectation with @UnsupportedAppUsage is that it is used by legacy apps and should be deprecated in the future. There\u0027s also no CTS testing on it.\n\nOther options is @SystemApi - people don\u0027t fully agree on its definition but i\u0027ve recently heard hackbod@ say it is intended for internal use with support for more than one release. That seems to fit your use case.\n\nDepending on how the dex code is generated and loaded, we could also consider loading it as \"platform dex file\", in which case it could access framework code without any restrictions.",
+      "parentUuid": "fd076d7f_de58d4a7",
+      "range": {
+        "startLine": 817,
+        "startChar": 0,
+        "endLine": 817,
+        "endChar": 24
+      },
+      "revId": "2addfed05001d559ed6f3dafde3526e31e2f89e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
