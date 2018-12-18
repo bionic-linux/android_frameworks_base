@@ -53,6 +53,8 @@ interface IRcs {
 
     void addParticipantToGroupThread(int rcsThreadId, int participantId);
 
+    void setGroupThreadConferenceUri(int rcsThreadId, String conferenceUri);
+
     void removeParticipantFromGroupThread(int rcsThreadId, int participantId);
 
     // RcsParticipant APIs

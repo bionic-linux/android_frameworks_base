@@ -228,9 +228,16 @@ public class RcsGroupThread extends RcsThread {
      * @param conferenceUri The URI as String to be used as the conference URI.
      */
     public void setConferenceUri(String conferenceUri) {
-        mConferenceUri = conferenceUri;
-
-        // TODO (109759350) - implement saving into storage
+        try {
+            IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
+            if (iRcs != null) {
+                iRcs.setGroupThreadConferenceUri(mThreadId, conferenceUri);
+                mConferenceUri = conferenceUri;
+            }
+        } catch (RemoteException re) {
+            Log.e(RcsMessageStore.TAG,
+                    "Rcs1To1Thread: Exception happened during setFallbackThreadId", re);
+        }
     }
 
     public static final Creator<RcsGroupThread> CREATOR = new Creator<RcsGroupThread>() {
