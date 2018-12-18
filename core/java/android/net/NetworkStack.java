@@ -100,7 +100,9 @@ public class NetworkStack {
         IBinder connector = null;
         try {
             final Class service = Class.forName(
-                    "com.google.android.networkstack.NetworkStackService");
+                    "com.google.android.networkstack.NetworkStackService",
+                    true /* initialize */,
+                    mContext.getClassLoader());
             connector = (IBinder) service.getMethod("makeConnector").invoke(null);
         } catch (ClassNotFoundException e) {
             // Normal behavior if stack is provided by the app: fall through
