@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f8c369a_b4274113",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2018-12-18T00:37:38Z",
+      "side": 1,
+      "message": "Do we want developers to override it? Should this be final?\n\nI think we should add a javadoc on the ordering guarantees of the calls developer will get on their custom LayoutInflater. When will this this get called? If this does return null, what will the layoutinflater do?",
+      "range": {
+        "startLine": 827,
+        "startChar": 4,
+        "endLine": 827,
+        "endChar": 16
+      },
+      "revId": "dd92595cbddff1e7040f105c0df09ef3c37f5a36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
