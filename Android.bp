@@ -883,6 +883,16 @@ java_library {
     },
 }
 
+// java sysprop static library (for robolectric test only)
+// ============================================================
+java_library_static {
+    name: "platform-properties-robolectric-static",
+    srcs: [
+        ":platform-properties",
+    ],
+}
+
+
 // ====  c++ proto device library  ==============================
 cc_library {
     name: "libplatformprotos",
