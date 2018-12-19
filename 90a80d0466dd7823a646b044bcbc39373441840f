@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c42393b6_f5809511",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2018-12-19T02:14:19Z",
+      "side": 1,
+      "message": "perhaps \u0027cleared\u0027?",
+      "range": {
+        "startLine": 12,
+        "startChar": 32,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "90a80d0466dd7823a646b044bcbc39373441840f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0f4352_59b45d57",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2018-12-19T02:14:19Z",
+      "side": 1,
+      "message": "The fetched stats are the delta since ...",
+      "range": {
+        "startLine": 285,
+        "startChar": 25,
+        "endLine": 285,
+        "endChar": 28
+      },
+      "revId": "90a80d0466dd7823a646b044bcbc39373441840f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
