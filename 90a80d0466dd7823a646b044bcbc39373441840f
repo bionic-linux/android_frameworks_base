@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "8cbe412c_f98a6fa0",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-19T03:04:28Z",
+      "side": 1,
+      "message": "This is the value of the useBpfStats parameter, right? Why do we hardcode this to false in this function? Does that mean that all existing callers will use the non-BPF codepath?\n\nPer VC discussion I think this would be clearer if we didn\u0027t add a function and instead just changed the signature of the existing function. This will also help correctness, because we\u0027ll be forced to look at all the callers, and ensure that they pass in the right value.",
+      "range": {
+        "startLine": 109,
+        "startChar": 39,
+        "endLine": 109,
+        "endChar": 44
+      },
+      "revId": "90a80d0466dd7823a646b044bcbc39373441840f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66a087d_c85a5bb4",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2018-12-19T03:04:28Z",
+      "side": 1,
+      "message": "Do we need to add another overload of updateStats just to add a new boolean? If it only has a few callers, then we can change those callers.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 5
+      },
+      "revId": "90a80d0466dd7823a646b044bcbc39373441840f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e0f4352_59b45d57",
         "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
         "patchSetId": 8
