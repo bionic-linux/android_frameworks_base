@@ -44,7 +44,7 @@ public:
     const bool deviceSpecific;
     String8 name;
 
-    Section(int id, int64_t timeoutMs = REMOTE_CALL_TIMEOUT_MS, bool userdebugAndEngOnly = false,
+    explicit Section(int id, int64_t timeoutMs = REMOTE_CALL_TIMEOUT_MS, bool userdebugAndEngOnly = false,
             bool deviceSpecific = false);
     virtual ~Section();
 
@@ -109,7 +109,7 @@ private:
  */
 class WorkerThreadSection : public Section {
 public:
-    WorkerThreadSection(int id, int64_t timeoutMs = REMOTE_CALL_TIMEOUT_MS,
+    explicit WorkerThreadSection(int id, int64_t timeoutMs = REMOTE_CALL_TIMEOUT_MS,
                         bool userdebugAndEngOnly = false);
     virtual ~WorkerThreadSection();
 

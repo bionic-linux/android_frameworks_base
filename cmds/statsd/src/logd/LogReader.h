@@ -35,7 +35,7 @@ public:
     /**
      * Construct the LogReader with the event listener. (Which is StatsService)
      */
-    LogReader(const sp<LogListener>& listener);
+    explicit LogReader(const sp<LogListener>& listener);
 
     /**
      * Destructor.
