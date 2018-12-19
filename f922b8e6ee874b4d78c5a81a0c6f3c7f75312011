@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53245a4e_3bfa71a3",
+        "filename": "telephony/java/android/telephony/CellIdentityNr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1414477
+      },
+      "writtenOn": "2018-12-19T00:55:00Z",
+      "side": 1,
+      "message": "This class is missing an important attribute (the actual NR Cell Identity) and the names of the fields are not what was declared by the 3GPP for NR (for example, TAC should be TAI).\n\nHere is a list of what I would propose calling them to match the spec and add bandwidth to match the data CellIdentityLTE provides:\nint     getBandwidth()\nint     getNci() -  NR Cell Identity (NCI) \nint     getTai() - Tracking Area identity (TAI)",
+      "revId": "f922b8e6ee874b4d78c5a81a0c6f3c7f75312011",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
