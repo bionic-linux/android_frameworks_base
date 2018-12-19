@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfb2c5c0_8f5f0f39",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2018-12-19T22:30:26Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t make sense in context. If this method returns null, this method is done. The layout inflater isn\u0027t doing anything.",
+      "range": {
+        "startLine": 819,
+        "startChar": 88,
+        "endLine": 821,
+        "endChar": 81
+      },
+      "revId": "5d8e5e2bcc7c381854b7ff8718f54b1e6a97b7b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
