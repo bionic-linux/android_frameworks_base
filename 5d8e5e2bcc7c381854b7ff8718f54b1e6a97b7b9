@@ -46,6 +46,30 @@
       "revId": "5d8e5e2bcc7c381854b7ff8718f54b1e6a97b7b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9047f96_992f690c",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2018-12-19T22:31:58Z",
+      "side": 1,
+      "message": "Also, who is the intended caller for this method? Is there a developer use case here?",
+      "parentUuid": "cfb2c5c0_8f5f0f39",
+      "range": {
+        "startLine": 819,
+        "startChar": 88,
+        "endLine": 821,
+        "endChar": 81
+      },
+      "revId": "5d8e5e2bcc7c381854b7ff8718f54b1e6a97b7b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
