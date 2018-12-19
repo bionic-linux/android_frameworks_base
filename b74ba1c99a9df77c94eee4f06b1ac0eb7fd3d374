@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "875f0866_c6c42894",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2327,
+      "author": {
+        "id": 1403772
+      },
+      "writtenOn": "2018-12-19T23:32:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a2384b3_70559a0e",
+      "range": {
+        "startLine": 2327,
+        "startChar": 40,
+        "endLine": 2327,
+        "endChar": 52
+      },
+      "revId": "b74ba1c99a9df77c94eee4f06b1ac0eb7fd3d374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bdc93e1_a181fa27",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b74ba1c99a9df77c94eee4f06b1ac0eb7fd3d374",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb74b0c_0f5cdfa4",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2332,
+      "author": {
+        "id": 1403772
+      },
+      "writtenOn": "2018-12-19T23:32:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bdc93e1_a181fa27",
+      "range": {
+        "startLine": 2332,
+        "startChar": 13,
+        "endLine": 2332,
+        "endChar": 49
+      },
+      "revId": "b74ba1c99a9df77c94eee4f06b1ac0eb7fd3d374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
