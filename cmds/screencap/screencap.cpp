@@ -226,7 +226,7 @@ int main(int argc, char** argv)
         struct FDWStream final : public SkWStream {
           size_t fBytesWritten = 0;
           int fFd;
-          FDWStream(int f) : fFd(f) {}
+          explicit FDWStream(int f) : fFd(f) {}
           size_t bytesWritten() const override { return fBytesWritten; }
           bool write(const void* buffer, size_t size) override {
             fBytesWritten += size;

@@ -124,7 +124,7 @@ void SkiaRecordingCanvas::callDrawGLFunction(Functor* functor,
 
 class VectorDrawable : public SkDrawable {
 public:
-    VectorDrawable(VectorDrawableRoot* tree)
+    explicit VectorDrawable(VectorDrawableRoot* tree)
             : mRoot(tree)
             , mBounds(tree->stagingProperties()->getBounds()) {}
 

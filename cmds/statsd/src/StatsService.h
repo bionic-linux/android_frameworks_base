@@ -45,7 +45,7 @@ namespace statsd {
 
 class StatsService : public BnStatsManager, public LogListener, public IBinder::DeathRecipient {
 public:
-    StatsService(const sp<Looper>& handlerLooper);
+    explicit StatsService(const sp<Looper>& handlerLooper);
     virtual ~StatsService();
 
     /** The anomaly alarm registered with AlarmManager won't be updated by less than this. */

@@ -34,7 +34,7 @@ struct Source {
 
   Source() = default;
 
-  inline Source(const android::StringPiece& path) : path(path.to_string()) {  // NOLINT(implicit)
+  inline Source(const android::StringPiece& path) : path(path.to_string()) {  // NOLINT(google-explicit-constructor)
   }
 
   inline Source(const android::StringPiece& path, size_t line)

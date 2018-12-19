@@ -268,22 +268,22 @@ inline Matcher getSimpleMatcher(int32_t tag, size_t field) {
 struct Value {
     Value() : type(UNKNOWN) {}
 
-    Value(int32_t v) {
+    Value(int32_t v) { // NOLINT(google-explicit-constructor)
         int_value = v;
         type = INT;
     }
 
-    Value(int64_t v) {
+    Value(int64_t v) { // NOLINT(google-explicit-constructor)
         long_value = v;
         type = LONG;
     }
 
-    Value(float v) {
+    Value(float v) { // NOLINT(google-explicit-constructor)
         float_value = v;
         type = FLOAT;
     }
 
-    Value(const std::string& v) {
+    Value(const std::string& v) { // NOLINT(google-explicit-constructor)
         str_value = v;
         type = STRING;
     }

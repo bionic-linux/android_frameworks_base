@@ -27,7 +27,7 @@ namespace skiapipeline {
 
 class SkiaOpenGLPipeline : public SkiaPipeline {
 public:
-    SkiaOpenGLPipeline(renderthread::RenderThread& thread);
+    explicit SkiaOpenGLPipeline(renderthread::RenderThread& thread);
     virtual ~SkiaOpenGLPipeline() {}
 
     renderthread::MakeCurrentResult makeCurrent() override;
