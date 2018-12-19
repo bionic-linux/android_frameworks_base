@@ -248,7 +248,7 @@ void SkiaOpenGLPipeline::invokeFunctor(const RenderThread& thread, Functor* func
 
 class AutoEglFence {
 public:
-    AutoEglFence(EGLDisplay display) : mDisplay(display) {
+    explicit AutoEglFence(EGLDisplay display) : mDisplay(display) {
         fence = eglCreateSyncKHR(mDisplay, EGL_SYNC_FENCE_KHR, NULL);
     }
 

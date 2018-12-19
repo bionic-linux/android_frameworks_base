@@ -432,7 +432,7 @@ RENDERTHREAD_SKIA_PIPELINE_TEST(RenderNodeDrawable, projectionHwLayer) {
     static const int LAYER_HEIGHT = 200;
     class ProjectionTestCanvas : public SkCanvas {
     public:
-        ProjectionTestCanvas(int* drawCounter)
+        explicit ProjectionTestCanvas(int* drawCounter)
                 : SkCanvas(CANVAS_WIDTH, CANVAS_HEIGHT), mDrawCounter(drawCounter) {}
         void onDrawArc(const SkRect&, SkScalar startAngle, SkScalar sweepAngle, bool useCenter,
                        const SkPaint&) override {
@@ -457,7 +457,7 @@ RENDERTHREAD_SKIA_PIPELINE_TEST(RenderNodeDrawable, projectionHwLayer) {
 
     class ProjectionLayer : public SkSurface_Base {
     public:
-        ProjectionLayer(int* drawCounter)
+        explicit ProjectionLayer(int* drawCounter)
                 : SkSurface_Base(SkImageInfo::MakeN32Premul(LAYER_WIDTH, LAYER_HEIGHT), nullptr)
                 , mDrawCounter(drawCounter) {}
         virtual sk_sp<SkImage> onNewImageSnapshot() override {

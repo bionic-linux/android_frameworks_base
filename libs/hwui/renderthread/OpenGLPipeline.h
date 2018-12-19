@@ -28,7 +28,7 @@ namespace renderthread {
 
 class OpenGLPipeline : public IRenderPipeline {
 public:
-    OpenGLPipeline(RenderThread& thread);
+    explicit OpenGLPipeline(RenderThread& thread);
     virtual ~OpenGLPipeline() {}
 
     MakeCurrentResult makeCurrent() override;

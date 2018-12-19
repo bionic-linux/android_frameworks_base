@@ -289,7 +289,7 @@ void OpenGLPipeline::invokeFunctor(const RenderThread& thread, Functor* functor)
 
 class AutoEglFence {
 public:
-    AutoEglFence(EGLDisplay display) : mDisplay(display) {
+    explicit AutoEglFence(EGLDisplay display) : mDisplay(display) {
         fence = eglCreateSyncKHR(mDisplay, EGL_SYNC_FENCE_KHR, NULL);
     }
 
@@ -327,7 +327,7 @@ private:
 
 class AutoGlTexture {
 public:
-    AutoGlTexture(uirenderer::Caches& caches) : mCaches(caches) {
+    explicit AutoGlTexture(uirenderer::Caches& caches) : mCaches(caches) {
         glGenTextures(1, &mTexture);
         caches.textureState().bindTexture(mTexture);
     }

@@ -49,7 +49,7 @@ struct AppData {
     // Empty constructor needed for unordered map.
     AppData() {
     }
-    AppData(const int64_t v) : versionCode(v), deleted(false){};
+    explicit AppData(const int64_t v) : versionCode(v), deleted(false){};
 };
 
 // When calling appendUidMap, we retrieve all the ChangeRecords since the last

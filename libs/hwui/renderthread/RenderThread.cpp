@@ -56,7 +56,7 @@ static void (*gOnStartHook)() = nullptr;
 
 class DisplayEventReceiverWrapper : public VsyncSource {
 public:
-    DisplayEventReceiverWrapper(std::unique_ptr<DisplayEventReceiver>&& receiver)
+    explicit DisplayEventReceiverWrapper(std::unique_ptr<DisplayEventReceiver>&& receiver)
             : mDisplayEventReceiver(std::move(receiver)) {}
 
     virtual void requestNextVsync() override {
@@ -90,7 +90,7 @@ private:
 
 class DummyVsyncSource : public VsyncSource {
 public:
-    DummyVsyncSource(RenderThread* renderThread) : mRenderThread(renderThread) {}
+    explicit DummyVsyncSource(RenderThread* renderThread) : mRenderThread(renderThread) {}
 
     virtual void requestNextVsync() override {
         mRenderThread->queue().postDelayed(16_ms, [this]() {
