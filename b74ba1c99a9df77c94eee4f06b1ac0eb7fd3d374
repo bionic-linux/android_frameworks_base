@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a2384b3_70559a0e",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2327,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-19T19:08:52Z",
+      "side": 1,
+      "message": "Specify SMS in description",
+      "range": {
+        "startLine": 2327,
+        "startChar": 40,
+        "endLine": 2327,
+        "endChar": 52
+      },
+      "revId": "b74ba1c99a9df77c94eee4f06b1ac0eb7fd3d374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdc93e1_a181fa27",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2332,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2018-12-19T19:08:52Z",
+      "side": 1,
+      "message": "this should have the suffix \"_bool\"",
+      "range": {
+        "startLine": 2332,
+        "startChar": 13,
+        "endLine": 2332,
+        "endChar": 49
+      },
+      "revId": "b74ba1c99a9df77c94eee4f06b1ac0eb7fd3d374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
