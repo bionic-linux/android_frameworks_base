@@ -30,7 +30,7 @@
 
 #include <android/hardware/power/1.0/IPower.h>
 #include <android/hardware/power/1.1/IPower.h>
-#include <android/system/suspend/1.0/ISystemSuspend.h>
+#include <android/system/suspend/1.0/ISystemSuspendControl.h>
 #include <android/system/suspend/1.0/ISystemSuspendCallback.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <jni.h>
@@ -50,7 +50,7 @@ using android::hardware::power::V1_0::Status;
 using android::hardware::power::V1_1::PowerStateSubsystem;
 using android::hardware::power::V1_1::PowerStateSubsystemSleepState;
 using android::hardware::hidl_vec;
-using android::system::suspend::V1_0::ISystemSuspend;
+using android::system::suspend::V1_0::ISystemSuspendControl;
 using android::system::suspend::V1_0::ISystemSuspendCallback;
 using IPowerV1_1 = android::hardware::power::V1_1::IPower;
 using IPowerV1_0 = android::hardware::power::V1_0::IPower;
@@ -66,7 +66,7 @@ static sem_t wakeup_sem;
 extern sp<IPowerV1_0> getPowerHalV1_0();
 extern sp<IPowerV1_1> getPowerHalV1_1();
 extern bool processPowerHalReturn(const Return<void> &ret, const char* functionName);
-extern sp<ISystemSuspend> getSuspendHal();
+extern const sp<ISystemSuspendControl>& getSuspendControlHal();
 
 // Java methods used in getLowPowerStats
 static jmethodID jgetAndUpdatePlatformState = NULL;
@@ -108,8 +108,7 @@ static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
             return -1;
         }
         ALOGV("Registering callback...");
-        sp<ISystemSuspend> suspendHal = getSuspendHal();
-        suspendHal->registerCallback(new WakeupCallback());
+        getSuspendControlHal()->registerCallback(new WakeupCallback());
     }
 
     // Wait for wakeup.

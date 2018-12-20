@@ -20,6 +20,7 @@
 
 #include <android/hardware/power/1.1/IPower.h>
 #include <android/system/suspend/1.0/ISystemSuspend.h>
+#include <android/system/suspend/1.0/ISystemSuspendControl.h>
 #include <nativehelper/JNIHelp.h>
 #include "jni.h"
 
@@ -46,6 +47,7 @@ using android::hardware::power::V1_0::PowerHint;
 using android::hardware::power::V1_0::Feature;
 using android::String8;
 using android::system::suspend::V1_0::ISystemSuspend;
+using android::system::suspend::V1_0::ISystemSuspendControl;
 using android::system::suspend::V1_0::IWakeLock;
 using android::system::suspend::V1_0::WakeLockType;
 using IPowerV1_1 = android::hardware::power::V1_1::IPower;
@@ -175,31 +177,31 @@ void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t 
     }
 }
 
-static sp<ISystemSuspend> gSuspendHal = nullptr;
 static sp<IWakeLock> gSuspendBlocker = nullptr;
 static std::mutex gSuspendMutex;
 
 // Assume SystemSuspend HAL is always alive.
 // TODO: Force device to restart if SystemSuspend HAL dies.
-sp<ISystemSuspend> getSuspendHal() {
-    static std::once_flag suspendHalFlag;
-    std::call_once(suspendHalFlag, [](){
-        ::android::hardware::details::waitForHwService(ISystemSuspend::descriptor, "default");
-        gSuspendHal = ISystemSuspend::getService();
-        assert(gSuspendHal != nullptr);
-    });
-    return gSuspendHal;
+const sp<ISystemSuspendControl>& getSuspendControlHal() {
+    static sp<ISystemSuspendControl> suspendControlHal = ISystemSuspendControl::getService();
+    assert(suspendControlHal != nullptr);
+    return suspendControlHal;
+}
+
+const sp<ISystemSuspend>& getSuspendHal() {
+    static sp<ISystemSuspend> suspendHal = ISystemSuspend::getService();
+    assert(suspendHal != nullptr);
+    return suspendHal;
 }
 
 void enableAutoSuspend() {
     static bool enabled = false;
 
-    std::lock_guard<std::mutex> lock(gSuspendMutex);
     if (!enabled) {
-        sp<ISystemSuspend> suspendHal = getSuspendHal();
-        suspendHal->enableAutosuspend();
+        getSuspendControlHal()->enableAutosuspend();
         enabled = true;
     }
+    std::lock_guard<std::mutex> lock(gSuspendMutex);
     if (gSuspendBlocker) {
         gSuspendBlocker->release();
         gSuspendBlocker.clear();
@@ -209,8 +211,7 @@ void enableAutoSuspend() {
 void disableAutoSuspend() {
     std::lock_guard<std::mutex> lock(gSuspendMutex);
     if (!gSuspendBlocker) {
-        sp<ISystemSuspend> suspendHal = getSuspendHal();
-        gSuspendBlocker = suspendHal->acquireWakeLock(WakeLockType::PARTIAL,
+        gSuspendBlocker = getSuspendHal()->acquireWakeLock(WakeLockType::PARTIAL,
                 "PowerManager.SuspendLockout");
     }
 }
