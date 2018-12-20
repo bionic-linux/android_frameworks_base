@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "70236145_b7e063bd",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2018-12-20T01:16:49Z",
+      "side": 1,
+      "message": "The private data (or null),",
+      "range": {
+        "startLine": 107,
+        "startChar": 38,
+        "endLine": 107,
+        "endChar": 79
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fdcb1b_bc2b834d",
+        "filename": "core/java/android/net/IpMemoryStore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2018-12-20T01:16:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 162,
+        "startChar": 41,
+        "endLine": 162,
+        "endChar": 78
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68471654_afd208c0",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.aidl",
         "patchSetId": 8
@@ -41,6 +87,29 @@
         "startChar": 0,
         "endLine": 24,
         "endChar": 53
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90230e63_5571f185",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2018-12-20T01:16:49Z",
+      "side": 1,
+      "message": "Invasion of the PODs! I did not know this acronym, either. PSO (Please Spell Out)",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 8
       },
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -140,6 +209,52 @@
     },
     {
       "key": {
+        "uuid": "728e31de_c69e7405",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2018-12-20T01:16:49Z",
+      "side": 1,
+      "message": "It makes sense to put this here for now, but this seems very generic and it might make sense to move it to a more generic place in the namespace.",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c971c7_eddb1b3c",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2018-12-20T01:16:49Z",
+      "side": 1,
+      "message": "I find this name ambiguous. Is memory store making a promise to prevent clients from reading each other\u0027s private data? If not, a name like OpaqueData or ClientData might be better.\n\nOr just Blob (https://en.wikipedia.org/wiki/Binary_large_object)",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 24
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "352c974c_387aaa79",
         "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
         "patchSetId": 8
@@ -151,6 +266,30 @@
       "writtenOn": "2018-12-19T08:54:16Z",
       "side": 1,
       "message": "Why ByteBuffer and not byte[]? ByteBuffer is useful to append, etc., but the memory store is not going to touch the private data, right? Might want to mention in a comment.",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ab605d_5494bdd9",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2018-12-20T01:16:49Z",
+      "side": 1,
+      "message": "It should also be made clear (in comments at least) that the buffer should be treated as immutable.",
+      "parentUuid": "352c974c_387aaa79",
       "range": {
         "startLine": 34,
         "startChar": 17,
