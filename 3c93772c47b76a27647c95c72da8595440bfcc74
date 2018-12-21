@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18fed2a9_ef1a9a9a",
+        "filename": "packages/SimAppDialog/src/com/android/simappdialog/InstallCarrierAppActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2018-12-21T20:21:22Z",
+      "side": 1,
+      "message": "this seems like it needs to be null, not the empty string, to be functionally equivalent. at a quick glance WizardManagerHelper.getThemeRes will treat the empty string differently from null, and will likely fail.",
+      "range": {
+        "startLine": 54,
+        "startChar": 61,
+        "endLine": 54,
+        "endChar": 63
+      },
+      "revId": "3c93772c47b76a27647c95c72da8595440bfcc74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
