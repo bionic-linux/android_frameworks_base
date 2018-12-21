@@ -31,7 +31,8 @@ import com.android.internal.annotations.VisibleForTesting;
  */
 public abstract class RcsThread implements Parcelable {
     // Since this is an abstract class that gets parcelled, the sub-classes need to write these
-    // magic values into the parcel so that we know which type to unparcel into.
+    // magic values into the parcel so that we know which type to unparcel into. These are defined
+    // as integer instead of boolean for extensibility.
     protected static final int RCS_1_TO_1_TYPE = 998;
     protected static final int RCS_GROUP_TYPE = 999;
 
@@ -77,7 +78,6 @@ public abstract class RcsThread implements Parcelable {
      * @return Returns whether this is a group thread or not
      */
     public abstract boolean isGroup();
-
 
     /**
      * @hide
