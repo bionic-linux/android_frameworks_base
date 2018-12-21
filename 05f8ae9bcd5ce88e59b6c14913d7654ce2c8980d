@@ -137,6 +137,30 @@
       "revId": "05f8ae9bcd5ce88e59b6c14913d7654ce2c8980d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d778900b_4deb2bb9",
+        "filename": "telephony/java/android/telephony/CellInfoLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2018-12-21T00:59:41Z",
+      "side": 1,
+      "message": "We sure do (added in one of the earlier patch sets)! That\u0027s actually a big part of why this is all so much cleaner. We are using the type system of Java to pick the right decoding/instantiation for us.",
+      "parentUuid": "95441900_84f396a0",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 81
+      },
+      "revId": "05f8ae9bcd5ce88e59b6c14913d7654ce2c8980d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
