@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5cf28a2_398fa779",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-21T05:36:19Z",
+      "side": 1,
+      "message": "Could you tell more about why this is needed, but others are not?\nIs there any design limitation at ebpf side?",
+      "range": {
+        "startLine": 205,
+        "startChar": 48,
+        "endLine": 205,
+        "endChar": 89
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787b0abc_d32749e6",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-21T05:36:19Z",
+      "side": 1,
+      "message": "it looks like similar to NetworkStats.spliceOperationsFrom\nshould we move this util function into NetworkStats?",
+      "range": {
+        "startLine": 206,
+        "startChar": 25,
+        "endLine": 206,
+        "endChar": 52
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd05b3f_63ca8fd0",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-21T05:36:19Z",
+      "side": 1,
+      "message": "should we use oldSnapshot.size() to avoid array grows frequently when combineValues?",
+      "range": {
+        "startLine": 207,
+        "startChar": 86,
+        "endLine": 207,
+        "endChar": 87
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc02ca12_2b0890b7",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-21T05:36:19Z",
+      "side": 1,
+      "message": "to avoid findIndex every time, is addValues() better here?",
+      "range": {
+        "startLine": 211,
+        "startChar": 24,
+        "endLine": 211,
+        "endChar": 37
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a656fa37_a38c7997",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-21T05:36:19Z",
+      "side": 1,
+      "message": "is \"isDelta\" better and more consistent with \"delta\" in other comments.",
+      "range": {
+        "startLine": 229,
+        "startChar": 44,
+        "endLine": 229,
+        "endChar": 57
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f73cda_557142c1",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-21T05:36:19Z",
+      "side": 1,
+      "message": "like null vpn  array comments here, could you add some comments about why pass false for xt/dev?",
+      "range": {
+        "startLine": 1233,
+        "startChar": 11,
+        "endLine": 1233,
+        "endChar": 47
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
