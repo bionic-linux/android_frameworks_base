@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "766cc412_716b753f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-12-21T23:49:18Z",
+      "side": 1,
+      "message": "Sure, to my understanding the NetworkStatsService keep a persistent operation count since boot (https://cs.corp.google.com/android/frameworks/base/services/core/java/com/android/server/net/NetworkStatsService.java?rcl\u003dc5cd1325fc05d3569cab56ff04fb1475355c78e7\u0026l\u003d292). So we have to keep the operation count in NetworkStatsRecorder the same otherwise we will double the operation count we currently have every new stats pull. Though I am not sure if we can have a better way to solve that.",
+      "parentUuid": "d5cf28a2_398fa779",
+      "range": {
+        "startLine": 205,
+        "startChar": 48,
+        "endLine": 205,
+        "endChar": 89
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "787b0abc_d32749e6",
         "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb77167_189eb5b5",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-12-21T23:49:18Z",
+      "side": 1,
+      "message": "It looks like the spliceOperationsFrom() funtion is trying to restore the historic operation count into the NetworkStats snapshot and it does not add new entries if it does not exist in current NetworkStats. So I guess we need to have a new method anyway. But I agree we should provide a util in NetworkStats instead of this function.",
+      "parentUuid": "787b0abc_d32749e6",
+      "range": {
+        "startLine": 206,
+        "startChar": 25,
+        "endLine": 206,
+        "endChar": 52
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6b4e695d_9e0775da",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-12-21T23:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cd05b3f_63ca8fd0",
+      "range": {
+        "startLine": 207,
+        "startChar": 86,
+        "endLine": 207,
+        "endChar": 87
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc02ca12_2b0890b7",
         "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b4670bf3_df0d5397",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-12-21T23:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc02ca12_2b0890b7",
+      "range": {
+        "startLine": 211,
+        "startChar": 24,
+        "endLine": 211,
+        "endChar": 37
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a656fa37_a38c7997",
         "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60b65a8_5f0dcd7f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-12-21T23:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a656fa37_a38c7997",
+      "range": {
+        "startLine": 229,
+        "startChar": 44,
+        "endLine": 229,
+        "endChar": 57
+      },
+      "revId": "07708c3091cbb0a39a82a39bb511dcf4cc1ebaaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
