@@ -17,6 +17,8 @@
 package android.telephony.ims.aidl;
 
 import android.net.Uri;
+import android.telephony.ims.RcsMessage;
+import android.telephony.ims.RcsPart;
 import android.telephony.ims.RcsParticipant;
 import android.telephony.ims.Rcs1To1Thread;
 import android.telephony.ims.RcsThreadQueryContinuationToken;
@@ -63,4 +65,25 @@ interface IRcs {
     void updateRcsParticipantCanonicalAddress(int id, String canonicalAddress);
 
     void updateRcsParticipantAlias(int id, String alias);
+
+    // RcsMessage APIs
+    void setMessageSubId(int messageId, int subId);
+
+    void setMessageStatus(int messageId, int status);
+
+    void setMessageOriginationTimestamp(int messageId, long originationTimestamp);
+
+    void setGlobalMessageIdForMessage(int messageId, String globalId);
+
+    void addPartToMessage(int messageId, in RcsPart rcsPart);
+
+    void removePartFromMessage(int messageId, in RcsPart rcsPart);
+
+    void setMessageArrivalTimestamp(int messageId, long arrivalTimestamp);
+
+    void setMessageNotifiedTimestamp(int messageId, long notifiedTimestamp);
+
+    void setOutgoingDeliveryDeliveredTimestamp(in RcsMessage message, in RcsParticipant recipient, long deliveredTimestamp);
+
+    void setOutgoingDeliverySeenTimestamp(in RcsMessage message, in RcsParticipant recipient, long seenTimestamp);
 }

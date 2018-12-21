@@ -15,6 +15,7 @@
  */
 package android.telephony.ims;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
@@ -22,4 +23,17 @@ import android.os.Parcelable;
  * @hide - TODO(109759350) make this public
  */
 public abstract class RcsPart implements Parcelable {
+    public static final Creator<RcsPart> CREATOR = new Creator<RcsPart>() {
+        @Override
+        public RcsPart createFromParcel(Parcel in) {
+            // TODO(109759350) implement
+            return null;
+        }
+
+        @Override
+        public RcsPart[] newArray(int size) {
+            return new RcsPart[0];
+        }
+    };
+
 }
