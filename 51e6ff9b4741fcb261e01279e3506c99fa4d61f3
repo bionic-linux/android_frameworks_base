@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7aea32a_0494a68b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-22T03:44:06Z",
+      "side": 1,
+      "message": "1. IIUC in this change, the function will get delta instead of stats from boot, right?\nBut it seems also include tether and vt part, and that part are snapshot but not delta.\nThis might not be correct. did I miss something?\n\n2. IIUC anything depends on NetworkStatsFactory.readNetworkStatsDetail() will change its meaning in ebpf case, right? \nIs this change going to break APIs like below?\nNetworkStatsService.getDataLayerSnapshotForUid\nNetworkStatsService.getDetailedUidStats\nTrafficStats.start/stopDataProfiling\nStatsCompanionService: https://cs.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/stats/StatsCompanionService.java?type\u003dcs\u0026q\u003dreadNetworkStatsDetail\u0026sq\u003dpackage:aosp-master\u0026g\u003d0\u0026l\u003d634\nBatteryStatsImpl: https://cs.corp.google.com/aosp-master/frameworks/base/core/java/com/android/internal/os/BatteryStatsImpl.java?type\u003dcs\u0026q\u003dreadNetworkStatsDetail\u0026sq\u003dpackage:aosp-master\u0026g\u003d0\u0026l\u003d11108",
+      "range": {
+        "startLine": 1635,
+        "startChar": 25,
+        "endLine": 1635,
+        "endChar": 49
+      },
+      "revId": "51e6ff9b4741fcb261e01279e3506c99fa4d61f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
