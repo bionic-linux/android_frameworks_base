@@ -22,6 +22,30 @@
       "revId": "51e6ff9b4741fcb261e01279e3506c99fa4d61f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a621201_de88a0bc",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2018-12-22T20:54:02Z",
+      "side": 1,
+      "message": "Thanks for point them out, it seems we have multiple caller to read the raw stats data then. If this is true then we have to figure out another way to do this since the stats will be cleaned everytime the networkStatsFactory.readNetworkStatsDetail() get called.",
+      "parentUuid": "c7aea32a_0494a68b",
+      "range": {
+        "startLine": 1635,
+        "startChar": 25,
+        "endLine": 1635,
+        "endChar": 49
+      },
+      "revId": "51e6ff9b4741fcb261e01279e3506c99fa4d61f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
