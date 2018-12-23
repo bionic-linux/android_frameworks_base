@@ -22,6 +22,30 @@
       "revId": "3c93772c47b76a27647c95c72da8595440bfcc74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0cbe58_2ee00c9c",
+        "filename": "packages/SimAppDialog/src/com/android/simappdialog/InstallCarrierAppActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2018-12-23T23:32:01Z",
+      "side": 1,
+      "message": "ack, but this code IS functionally equivalent with SystemProperties.get(..) which returns \"\" when property is not found.\n\nAnyway, there must be the same problem on previous code. Let me upload a separate CL to fix this.",
+      "parentUuid": "18fed2a9_ef1a9a9a",
+      "range": {
+        "startLine": 54,
+        "startChar": 61,
+        "endLine": 54,
+        "endChar": 63
+      },
+      "revId": "3c93772c47b76a27647c95c72da8595440bfcc74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
