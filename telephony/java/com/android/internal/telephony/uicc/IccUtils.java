@@ -883,4 +883,56 @@ public class IccUtils {
         }
         return 0;
     }
+
+    private static final int MDN_NUMBER_TYPE_INDEX = 9;
+
+    /**
+     * Decode cdma byte into String, refer to C.S0065 5.2.35.
+     * EFmdn is defined as follows:
+     *
+     *  | Bytes  | Description                   | Length  |
+     *  ----------------------------------------------------
+     *  | 1      | RFU          |Number of digits| 1 byte  |
+     *  | 2 ¨C 9  | MDN                           | 8 bytes |
+     *  | 10     | NUMBER_TYPE and NUMBER_PLAN   | 1 byte  |
+     *  | 11     | PI and SI                     | 1 byte  |
+     */
+    public static String cdmaBcdToStringEx(byte[] data, int offset, int length) {
+        StringBuilder ret = new StringBuilder();
+        //check if International number
+        boolean prependPlus = false;
+        if (length > 0 && data.length > MDN_NUMBER_TYPE_INDEX) {
+            //ISDN/Telephony numbering plan(b7-b4) 0001 + number type(b3-b1) 001
+            prependPlus = data[MDN_NUMBER_TYPE_INDEX] == 0x09;
+        }
+        if (prependPlus) ret.append('+');
+
+        int count = 0;
+        for (int i = offset; count < length; i++) {
+            int v;
+            v = data[i] & 0xf;
+            if (v == 0x0b) {
+                ret.append('*');
+            } else if (v == 0x0c) {
+                ret.append('#');
+            } else {
+                if (v > 9)  v = 0;
+                ret.append((char) ('0' + v));
+            }
+
+            if (++count == length) break;
+
+            v = (data[i] >> 4) & 0xf;
+            if (v == 0x0b) {
+                ret.append('*');
+            } else if (v == 0x0c) {
+                ret.append('#');
+            } else {
+                if (v > 9)  v = 0;
+                ret.append((char) ('0' + v));
+            }
+            ++count;
+        }
+        return ret.toString();
+    }
 }
