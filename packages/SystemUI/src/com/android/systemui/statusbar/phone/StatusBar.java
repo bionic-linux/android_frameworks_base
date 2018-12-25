@@ -49,6 +49,7 @@ import android.app.IWallpaperManager;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.app.StatusBarManager;
 import android.app.TaskStackBuilder;
@@ -3165,6 +3166,29 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateNotificationViews();
         mMediaManager.clearCurrentMediaNotification();
         setLockscreenUser(newUserId);
+        if(newUserId == 0) {
+            notifyUserSwitched(newUserId);
+        }
+    }
+
+    private void notifyUserSwitched(int userid) {
+        int notifyID = 1;
+        String CHANNEL_ID = "user_switch_channel";
+        NotificationManager notificationManager = (NotificationManager) mContext
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID,
+                NotificationManager.IMPORTANCE_LOW);
+        notificationManager.createNotificationChannel(channel);
+        Notification notification = new Notification.Builder(mContext)
+                .setContentTitle(mContext.getString(com.android.internal.R.string.user_switching_message,
+                                mContext.getString(com.android.internal.R.string.owner_name)))
+                .setProgress(0, 0, true)
+                .setSmallIcon(com.android.internal.R.drawable.ic_settings)
+                .setChannelId(CHANNEL_ID).build();
+        notificationManager.notify(notifyID, notification);
+        mHandler.postDelayed(() -> {
+            notificationManager.cancel(notifyID);
+        }, 5000);
     }
 
     @Override
