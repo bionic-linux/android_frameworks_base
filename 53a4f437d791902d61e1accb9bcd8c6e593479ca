@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "6dd6ec86_d1b88d98",
+        "filename": "core/java/android/net/ipmemorystore/IOnPrivateDataRetrievedListener.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Implemented this as suggested by Junyu.",
+      "parentUuid": "09d7c30a_384f1246",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "53a4f437d791902d61e1accb9bcd8c6e593479ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9399ad1_4a759584",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 5

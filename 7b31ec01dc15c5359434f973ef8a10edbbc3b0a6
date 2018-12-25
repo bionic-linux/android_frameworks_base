@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "827323d7_68c7e833",
+        "filename": "Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec79460_1df1dec5",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 69
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70236145_b7e063bd",
         "filename": "core/java/android/net/IIpMemoryStore.aidl",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984698eb_859d6c95",
+        "filename": "core/java/android/net/IIpMemoryStore.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70236145_b7e063bd",
+      "range": {
+        "startLine": 107,
+        "startChar": 38,
+        "endLine": 107,
+        "endChar": 79
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8913a011_43008b56",
+        "filename": "core/java/android/net/IpMemoryStore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94fdcb1b_bc2b834d",
+      "range": {
+        "startLine": 162,
+        "startChar": 41,
+        "endLine": 162,
+        "endChar": 78
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68471654_afd208c0",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.aidl",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8bf0f3_11fca695",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Moved the class to stable AIDL.",
+      "parentUuid": "68471654_afd208c0",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 53
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a19079f3_cbc1c265",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "I thought this was a very common acronym. Removed, the sentence is better without it.",
+      "parentUuid": "90230e63_5571f185",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 8
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d34d426_73960167",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb51b34_26a1d3ca",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d34d426_73960167",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 66
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "2e1757f5_e71f32b3",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Hopefully handled by the TODO on the next line.",
+      "parentUuid": "6edad865_db85c66d",
+      "range": {
+        "startLine": 42,
+        "startChar": 56,
+        "endLine": 42,
+        "endChar": 57
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "605fa26a_e8f915fa",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 8
@@ -183,6 +351,30 @@
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c21cc3_f5134b53",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "The way the memory store will represent this is with a weight of 0 (not implemented yet). I don\u0027t think they need to be annotated in any specific way.",
+      "parentUuid": "605fa26a_e8f915fa",
+      "range": {
+        "startLine": 58,
+        "startChar": 25,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5750d425_09d0394d",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e2e3fd_5f73b620",
+      "range": {
+        "startLine": 75,
+        "startChar": 44,
+        "endLine": 75,
+        "endChar": 51
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "728e31de_c69e7405",
         "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
         "patchSetId": 8
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "1b3d3967_62c07dbc",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Ack. I\u0027d argue it\u0027s difficult to do this now when there is so little visibility on what can be shared between mainline modules, but other comments make this moot.",
+      "parentUuid": "728e31de_c69e7405",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81c971c7_eddb1b3c",
         "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
         "patchSetId": 8
@@ -252,6 +492,30 @@
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05124b66_b78c52f9",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Makes sense. I like OpaqueData and Blob, so I took Blob.\nFor the moment, because this is only a wrapper for this, I decided to just adopt the parcelable class as a first class citizen. I may come to regret this, but if I do I\u0027ll likely realize in time to make a friend object for it.",
+      "parentUuid": "81c971c7_eddb1b3c",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 24
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "40fe3304_df4d5e17",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Changed to byte[] as that lets me use the parcelable object directly. I added comments to the parcelable file stating how the client mutates this at its own risk.",
+      "parentUuid": "49ab605d_5494bdd9",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e4e9189_e51cd927",
         "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
         "patchSetId": 8
@@ -322,6 +610,30 @@
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6740b6_a29a8a6e",
+        "filename": "core/java/android/net/ipmemorystore/PrivateData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Removed the class in favor of the structured parcelable.",
+      "parentUuid": "2e4e9189_e51cd927",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "d6f1f5b1_6ba31929",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65370bc8_8a155965",
+      "range": {
+        "startLine": 36,
+        "startChar": 62,
+        "endLine": 36,
+        "endChar": 71
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "642f0362_8645ce20",
         "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
         "patchSetId": 8
@@ -359,6 +695,30 @@
       "writtenOn": "2018-12-19T08:54:16Z",
       "side": 1,
       "message": "Nit: this is actually an error, right?",
+      "range": {
+        "startLine": 90,
+        "startChar": 57,
+        "endLine": 90,
+        "endChar": 84
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc70ca5_38e66214",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "In some sort of way ? It\u0027s expected to happen sometimes, and it doesn\u0027t indicate any misuse or dysfunction. Did you mean this should be called ERROR_NETWORK_NEVER_CONNECTED or something ?",
+      "parentUuid": "642f0362_8645ce20",
       "range": {
         "startLine": 90,
         "startChar": 57,
@@ -394,6 +754,30 @@
     },
     {
       "key": {
+        "uuid": "ed11104f_edc8daf3",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "More importantly maybe, I\u0027m thinking there is very little to lose by creating a new row in all cases. If the L2 key isn\u0027t known, then relying on grouping is what the client is trying to do, and they will get that by creating a new row.\n\nChanged the spec.",
+      "parentUuid": "7189c45a_d03b1a16",
+      "range": {
+        "startLine": 51,
+        "startChar": 85,
+        "endLine": 52,
+        "endChar": 71
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ead04d6b_52baeb27",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
@@ -414,6 +798,30 @@
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcfc16c_18f03078",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead04d6b_52baeb27",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -463,6 +871,54 @@
     },
     {
       "key": {
+        "uuid": "f3f5dd37_10d24c95",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78aa8051_cfa6edc1",
+      "range": {
+        "startLine": 94,
+        "startChar": 76,
+        "endLine": 94,
+        "endChar": 85
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55577c12_1918a6f2",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Sorry I had this right in the two other files and forgot to update this. Fixed.",
+      "parentUuid": "149ea28a_ffe655b6",
+      "range": {
+        "startLine": 94,
+        "startChar": 85,
+        "endLine": 94,
+        "endChar": 86
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4a9bcff_d94c8e8b",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
@@ -483,6 +939,30 @@
       "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47ad532_245e6b52",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-25T14:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4a9bcff_d94c8e8b",
+      "range": {
+        "startLine": 108,
+        "startChar": 29,
+        "endLine": 108,
+        "endChar": 30
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
