@@ -110,6 +110,14 @@ public:
     /** return a pointer to the JNIEnv pointer for this thread */
     static JNIEnv* getJNIEnv();
 
+    /*
+     * Makes the current thread visible to the VM.
+     *
+     * The JNIEnv pointer returned is only valid for the current thread, and
+     * thus must be tucked into thread-local storage.
+     */
+    static int javaAttachThread(const char* threadName, JNIEnv** pEnv);
+
     /** return a new string corresponding to 'className' with all '.'s replaced by '/'s. */
     static char* toSlashClassName(const char* className);
 
