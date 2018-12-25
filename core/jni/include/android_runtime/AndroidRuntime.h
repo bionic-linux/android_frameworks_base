@@ -110,6 +110,8 @@ public:
     /** return a pointer to the JNIEnv pointer for this thread */
     static JNIEnv* getJNIEnv();
 
+    static int javaAttachThread(const char* threadName, JNIEnv** pEnv);
+
     /** return a new string corresponding to 'className' with all '.'s replaced by '/'s. */
     static char* toSlashClassName(const char* className);
 

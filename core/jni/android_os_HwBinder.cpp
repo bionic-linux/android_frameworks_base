@@ -141,7 +141,10 @@ JHwBinder::JHwBinder(JNIEnv *env, jobject thiz) {
 JHwBinder::~JHwBinder() {
     JNIEnv *env = AndroidRuntime::getJNIEnv();
 
-    env->DeleteGlobalRef(mObject);
+    if (env) {
+        LOG(INFO) << "~JHwBinder, DeleteGlobalRef.";
+        env->DeleteGlobalRef(mObject);
+    }
     mObject = NULL;
 }
 
@@ -152,6 +155,13 @@ status_t JHwBinder::onTransact(
         uint32_t flags,
         TransactCallback callback) {
     JNIEnv *env = AndroidRuntime::getJNIEnv();
+    char pThreadName[64] = {0};
+
+    if (env == nullptr) {
+        LOG(ERROR) << "env is null, attach thread.";
+        AndroidRuntime::javaAttachThread(pThreadName, &env);
+    }
+
     bool isOneway = (flags & TF_ONE_WAY) != 0;
     ScopedLocalRef<jobject> replyObj(env, nullptr);
     sp<JHwParcel> replyContext = nullptr;
