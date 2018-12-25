@@ -79,6 +79,7 @@ update-api: doc-comment-check-docs
 
 # ==== hiddenapi lists =======================================
 .KATI_RESTAT: $(INTERNAL_PLATFORM_HIDDENAPI_FLAGS)
+ifneq ($(UNSAFE_DISABLE_HIDDENAPI_FLAGS),true)
 $(INTERNAL_PLATFORM_HIDDENAPI_FLAGS): \
     frameworks/base/tools/hiddenapi/generate_hiddenapi_lists.py \
     frameworks/base/config/hiddenapi-greylist.txt \
@@ -105,6 +106,18 @@ $(INTERNAL_PLATFORM_HIDDENAPI_GREYLIST_METADATA): \
     frameworks/base/tools/hiddenapi/merge_csv.py \
     $(PRIVATE_METADATA_INPUTS)
 	frameworks/base/tools/hiddenapi/merge_csv.py $(PRIVATE_METADATA_INPUTS) > $@
+
+else  # UNSAFE_DISABLE_HIDDENAPI_FLAGS
+$(INTERNAL_PLATFORM_HIDDENAPI_FLAGS):
+	@echo WARNING: skipping hiddenapi post-processing for: $@
+	@mkdir -p $(dir $@)
+	@touch $@
+
+$(INTERNAL_PLATFORM_HIDDENAPI_GREYLIST_METADATA):
+	@echo WARNING: skipping hiddenapi post-processing for: $@
+	@mkdir -p $(dir $@)
+	@touch $@
+endif
 
 $(call dist-for-goals,droidcore,$(INTERNAL_PLATFORM_HIDDENAPI_FLAGS))
 $(call dist-for-goals,droidcore,$(INTERNAL_PLATFORM_HIDDENAPI_GREYLIST_METADATA))
