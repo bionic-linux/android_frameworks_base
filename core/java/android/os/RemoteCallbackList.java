@@ -122,7 +122,18 @@ public class RemoteCallbackList<E extends IInterface> {
             try {
                 Callback cb = new Callback(callback, cookie);
                 binder.linkToDeath(cb, 0);
-                mCallbacks.put(binder, cb);
+                Callback oldDeathRecipient = mCallbacks.put(binder, cb);
+                if (oldDeathRecipient != null) {
+                    removeRegistration(oldDeathRecipient);
+                    try {
+                        // Global reference would overflow if the same callback was
+                        // registered repeatedly
+                        binder.unlinkToDeath(oldDeathRecipient, 0);
+                    } catch (NoSuchElementException e) {
+                        // Should not happen
+                        Slog.d(TAG, "Failed to unregister " + oldDeathRecipient);
+                    }
+                }
                 return true;
             } catch (RemoteException e) {
                 return false;
