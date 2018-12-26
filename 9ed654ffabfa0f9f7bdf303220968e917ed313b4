@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2627150f_1126c09a",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T07:10:48Z",
+      "side": 1,
+      "message": "Necessary to avoid merge conflicts in master for now.",
+      "range": {
+        "startLine": 1209,
+        "startChar": 22,
+        "endLine": 1209,
+        "endChar": 33
+      },
+      "revId": "9ed654ffabfa0f9f7bdf303220968e917ed313b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
