@@ -22,6 +22,178 @@
       "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7bbcf0_35999a16",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T09:36:15Z",
+      "side": 1,
+      "message": "I was told a while ago (aosp/3889476) that the OS team has a strong preference against streams in system_server.\nCould this be moved to a static method ?",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7c89a2_99f7baa3",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T09:36:15Z",
+      "side": 1,
+      "message": "I think this is identical to getByAddressOrNull",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59501e80_cc59805d",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T09:36:15Z",
+      "side": 1,
+      "message": "If SameL3NetworkResponse lives in the module, this method will not be available to the framework - should the framework use the parcel in the response directly ? That could be fine since it\u0027s only 3 attributes for now.",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 5
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad937dd_40c2506b",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponseParceled.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T09:36:15Z",
+      "side": 1,
+      "message": "I used \"...Parcel\" instead of \"...Parceled\" in my code, I think it applies better to the object (it\u0027s a parcel, whereas Parceled is an adjective so I think you would need to call it \"...ParceledObject\" to get a noun).",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f02dcf_3622f21e",
+        "filename": "core/java/android/net/ipmemorystore/StatusParceled.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T09:36:15Z",
+      "side": 1,
+      "message": "Do you foresee other status states that we can\u0027t communicate with just an int ?",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0cc8a5_11d61882",
+        "filename": "startop/view_compiler/tinyxml_layout_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T09:36:15Z",
+      "side": 1,
+      "message": "Why is this added ?",
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c3d0cc_1e9f14ac",
+        "filename": "telecomm/java/android/telecom/PhoneAccountSuggestion.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T09:36:15Z",
+      "side": 1,
+      "message": "Should this be in another CL ?",
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04e2134_8ecf9c50",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-26T09:36:15Z",
+      "side": 1,
+      "message": "There\u0027s java.util.Arrays.equals(byte[], byte[]), would that work ?",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 55
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
