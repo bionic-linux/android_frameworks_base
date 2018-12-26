@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a02aa729_90992e13",
+        "filename": "Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2018-12-26T03:29:57Z",
+      "side": 1,
+      "message": "is it all structured? if yes, could we use core/java/android/net/ipmemorystore/**/*.aidl ?",
+      "range": {
+        "startLine": 724,
+        "startChar": 9,
+        "endLine": 724,
+        "endChar": 44
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
