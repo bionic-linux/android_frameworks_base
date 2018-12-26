@@ -621,36 +621,22 @@ public abstract class ContentResolver {
     public final @Nullable String getType(@NonNull Uri url) {
         Preconditions.checkNotNull(url, "url");
 
-        // XXX would like to have an acquireExistingUnstableProvider for this.
-        IContentProvider provider = acquireExistingProvider(url);
-        if (provider != null) {
-            try {
-                return provider.getType(url);
-            } catch (RemoteException e) {
-                // Arbitrary and not worth documenting, as Activity
-                // Manager will kill this process shortly anyway.
-                return null;
-            } catch (java.lang.Exception e) {
-                Log.w(TAG, "Failed to get type for: " + url + " (" + e.getMessage() + ")");
-                return null;
-            } finally {
-                releaseProvider(provider);
-            }
-        }
-
-        if (!SCHEME_CONTENT.equals(url.getScheme())) {
+        IContentProvider provider = acquireProvider(url);
+        if (provider == null) {
             return null;
         }
 
         try {
-            String type = ActivityManager.getService().getProviderMimeType(
-                    ContentProvider.getUriWithoutUserId(url), resolveUserId(url));
-            return type;
+            return provider.getType(url);
         } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+            // Arbitrary and not worth documenting, as Activity
+            // Manager will kill this process shortly anyway.
+            return null;
         } catch (java.lang.Exception e) {
             Log.w(TAG, "Failed to get type for: " + url + " (" + e.getMessage() + ")");
             return null;
+        } finally {
+            releaseProvider(provider);
         }
     }
 
