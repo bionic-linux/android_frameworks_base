@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7d151e75_6fa8ece1",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T12:35:10Z",
+      "side": 1,
+      "message": "Done, but this is a lot harder to read. Considering how structured aidl is forcing to write a large amount of code like this, this is going to be pretty bad.",
+      "parentUuid": "de7bbcf0_35999a16",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f7c89a2_99f7baa3",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 9
@@ -92,6 +116,30 @@
       "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc475d5_dc699496",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T12:35:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f7c89a2_99f7baa3",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9a5a67ab_8a16e069",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T12:35:10Z",
+      "side": 1,
+      "message": "SameL3NetworkResponse lives in the framework and is available to both the framework and the module. (hence core/java/android/net/ipmemorystore/)\n\nI would rather not have anyone use the parcelable out of a wrapper considering how dangerous those mutable objects are the second you send them to other threads.",
+      "parentUuid": "59501e80_cc59805d",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 5
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bad937dd_40c2506b",
         "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponseParceled.aidl",
         "patchSetId": 9
@@ -138,6 +210,30 @@
       "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb36b4f_52afe7e3",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponseParceled.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T12:35:10Z",
+      "side": 1,
+      "message": "Well strictly speaking it\u0027s a parcelable, not a parcel (and not necessarily parceled).\n\nChanged to \"parcelable\".",
+      "parentUuid": "bad937dd_40c2506b",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "37289ea0_66a15ca2",
+        "filename": "core/java/android/net/ipmemorystore/StatusParceled.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T12:35:10Z",
+      "side": 1,
+      "message": "Not at the moment, but I prefer wrapping an int rather than having to add a Status later.",
+      "parentUuid": "34f02dcf_3622f21e",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0cc8a5_11d61882",
         "filename": "startop/view_compiler/tinyxml_layout_parser.cc",
         "patchSetId": 9
@@ -181,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "370c5475_1742fa42",
+        "filename": "startop/view_compiler/tinyxml_layout_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T12:35:10Z",
+      "side": 1,
+      "message": "I don\u0027t know why gerrit shows this. It\u0027s unchanged, as you can see both in the diff (no differences) and in the cover page for the change where it\u0027s marked unchanged.",
+      "parentUuid": "7c0cc8a5_11d61882",
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88c3d0cc_1e9f14ac",
         "filename": "telecomm/java/android/telecom/PhoneAccountSuggestion.aidl",
         "patchSetId": 9
@@ -195,6 +333,24 @@
       "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c9d61b_7790857d",
+        "filename": "telecomm/java/android/telecom/PhoneAccountSuggestion.aidl",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T12:35:10Z",
+      "side": 1,
+      "message": "Likewise, this looks like a gerrit bug.",
+      "parentUuid": "88c3d0cc_1e9f14ac",
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +374,30 @@
       "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd482289_e15c414b",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T12:35:10Z",
+      "side": 1,
+      "message": "Ah yes. I thought of it after going home, but didn\u0027t do it. Thanks.",
+      "parentUuid": "c04e2134_8ecf9c50",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 55
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
