@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa0bf47b_f50f6f7d",
+        "filename": "Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2018-12-26T09:51:38Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "a02aa729_90992e13",
+      "range": {
+        "startLine": 724,
+        "startChar": 9,
+        "endLine": 724,
+        "endChar": 44
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de7bbcf0_35999a16",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 9
