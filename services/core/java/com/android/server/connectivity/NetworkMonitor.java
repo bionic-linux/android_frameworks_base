@@ -93,13 +93,25 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import android.os.Bundle;
+import android.os.PowerManager;
+import android.net.wifi.WifiConfiguration;
+import android.net.Network;
+import android.net.Proxy;
+import java.io.InputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import android.os.SystemProperties;
+import android.app.AlarmManager;
+
 /**
  * {@hide}
  */
 public class NetworkMonitor extends StateMachine {
     private static final String TAG = NetworkMonitor.class.getSimpleName();
     private static final boolean DBG  = true;
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
     private static final boolean VDBG_STALL = Log.isLoggable(TAG, Log.DEBUG);
     // Default configuration values for captive portal detection probes.
     // TODO: append a random length parameter to the default HTTPS url.
@@ -391,6 +403,53 @@ public class NetworkMonitor extends StateMachine {
         mDataStallEvaluationType = getDataStallEvalutionType();
 
         start();
+
+        mHandler = new Handler(mConnectivityServiceHandler.getLooper()) {
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
+                    // If the isCaptivePortal does not return within 10s, we consider the authentication to have failed.
+                    case EVENT_NETWORK_TEST_TIMEOUT:
+                        if (DBG) log("handleMessage EVENT_NETWORK_TEST_TIMEOUT");
+                        if (isWifi()) sendNetworkValidBroadcast(false, msg.arg1);
+                        break;
+                    // If captive portal wifi is automatically connected, we reserve 3s time to trigger wifi2wifi.
+                    // If the switch is failed, the built-in browser authentication interface will pop up.
+                    case EVENT_WIFI_TO_WIFI_TIMEOUT:
+                        if (DBG) log("handle EVENT_WIFI_TO_WIFI_TIMEOUT");
+                        if (null == mPortalBrowserIntent || null == mWifiManager || null == mContext) {
+                            loge("mWifiManager or mPortalBrowserIntent is null do nothing.");
+                            return;
+                        }
+                        int networkId = WifiConfiguration.INVALID_NETWORK_ID;
+                        WifiInfo info = mWifiManager.getConnectionInfo();
+                        if (info != null) {
+                            networkId = info.getNetworkId();
+                        }
+                        int netIdSaved = WifiConfiguration.INVALID_NETWORK_ID;
+                        Bundle extras = mPortalBrowserIntent.getExtras();
+                        if (null != extras) {
+                            WifiInfo wifiInfo = extras.getParcelable("wifiInfo");
+                            if (null != wifiInfo) {
+                                netIdSaved = wifiInfo.getNetworkId();
+                            }
+                        }
+                        if (DBG) log("networkId = " + networkId + " , netIdSaved = " + netIdSaved);
+                        if (isWifi() && WifiConfiguration.INVALID_NETWORK_ID != networkId && networkId == netIdSaved) {
+                            Intent intent = new Intent("android.net.wifi.PORTAL_DETECT_FOR_AUTO_CONNECT_WIFI");
+                            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
+                            mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
+                            try {
+                                mContext.startActivityAsUser(mPortalBrowserIntent, UserHandle.CURRENT);
+                            } catch (Exception e) {
+                                loge("start built-in browser failed");
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
     }
 
     public void forceReevaluation(int responsibleUid) {
@@ -406,7 +465,7 @@ public class NetworkMonitor extends StateMachine {
 
     @Override
     protected void log(String s) {
-        if (DBG) Log.d(TAG + "/" + mNetworkAgentInfo.name(), s);
+        if (DBG && mNetworkAgentInfo != null) Log.d(TAG + "/" + mNetworkAgentInfo.name(), s);
     }
 
     private void validationLog(int probeType, Object url, String msg) {
@@ -446,10 +505,16 @@ public class NetworkMonitor extends StateMachine {
             switch (message.what) {
                 case CMD_NETWORK_CONNECTED:
                     logNetworkEvent(NetworkEvent.NETWORK_CONNECTED);
+                    if (isWifi()) {
+                        registerWifiReceiver();
+                    }
                     transitionTo(mEvaluatingState);
                     return HANDLED;
                 case CMD_NETWORK_DISCONNECTED:
                     logNetworkEvent(NetworkEvent.NETWORK_DISCONNECTED);
+                    if (isWifi()) {
+                        unregisterWifiReceiver();
+                    }
                     if (mLaunchCaptivePortalAppBroadcastReceiver != null) {
                         mContext.unregisterReceiver(mLaunchCaptivePortalAppBroadcastReceiver);
                         mLaunchCaptivePortalAppBroadcastReceiver = null;
@@ -460,6 +525,12 @@ public class NetworkMonitor extends StateMachine {
                 case CMD_CAPTIVE_PORTAL_RECHECK:
                     log("Forcing reevaluation for UID " + message.arg1);
                     mUidResponsibleForReeval = message.arg1;
+                    // Forbid third app to force reevaluation because it may trigger a pop-up authentication interface.
+                    if (isWifi() && mUidResponsibleForReeval != android.os.Process.SYSTEM_UID) {
+                        mUidResponsibleForReeval = INVALID_UID;
+                        if (DBG) log("Forcing reevaluation not allowed for third app ");
+                        return HANDLED;
+                    }
                     transitionTo(mEvaluatingState);
                     return HANDLED;
                 case CMD_CAPTIVE_PORTAL_APP_FINISHED:
@@ -484,7 +555,8 @@ public class NetworkMonitor extends StateMachine {
                             sendMessage(CMD_FORCE_REEVALUATION, NO_UID, 0);
                             break;
                         case APP_RETURN_WANTED_AS_IS:
-                            mDontDisplaySigninNotification = true;
+                            // The authentication interface needs to pop up again when wifi is detected again and authentication is needed.
+                            // mDontDisplaySigninNotification = true;
                             // TODO: Distinguish this from a network that actually validates.
                             // Displaying the "x" on the system UI icon may still be a good idea.
                             transitionTo(mEvaluatingPrivateDnsState);
@@ -642,7 +714,23 @@ public class NetworkMonitor extends StateMachine {
             if (!mEvaluationTimer.isStarted()) {
                 mEvaluationTimer.start();
             }
-            sendMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
+            if (DBG) log("EvaluatingState enter");
+            if (isWifi()) {
+                // We need to leave some time to third-party cooperation SDK to authenticate wifi,
+                // so we do not have to pop up the authentication interface
+                int oneTouchConnectOpenWifiState =
+                        Settings.System.getInt(mContext.getContentResolver(), ONE_TOUCH_CONNECT_OPEN_WIFI, 1);
+                if (oneTouchConnectOpenWifiState == 1 &&
+                            isOneTouchConnectWifi(mWifiManager.getConnectionInfo().getNetworkId())) {
+                    if (DBG) log("isOneTouchConnectWifi, delay 5s to reevaluate");
+                    sendMessageDelayed(CMD_REEVALUATE, ++mReevaluateToken, 0, 6000);
+                } else {
+                    sendMessageDelayed(CMD_REEVALUATE, ++mReevaluateToken, 0, 1000);
+                }
+            } else {
+                sendMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
+            }
+
             if (mUidResponsibleForReeval != INVALID_UID) {
                 TrafficStats.setThreadStatsUid(mUidResponsibleForReeval);
                 mUidResponsibleForReeval = INVALID_UID;
@@ -687,7 +775,8 @@ public class NetworkMonitor extends StateMachine {
                     // Before IGNORE_REEVALUATE_ATTEMPTS attempts are made,
                     // ignore any re-evaluation requests. After, restart the
                     // evaluation process via EvaluatingState#enter.
-                    return (mEvaluateAttempts < IGNORE_REEVALUATE_ATTEMPTS) ? HANDLED : NOT_HANDLED;
+                    // delete for network check after wifi2wifi
+                    // return (mEvaluateAttempts < IGNORE_REEVALUATE_ATTEMPTS) ? HANDLED : NOT_HANDLED;
                 default:
                     return NOT_HANDLED;
             }
@@ -726,6 +815,10 @@ public class NetworkMonitor extends StateMachine {
     private class CaptivePortalState extends State {
         private static final String ACTION_LAUNCH_CAPTIVE_PORTAL_APP =
                 "android.net.netmon.launchCaptivePortalApp";
+        private long mLastEvaluateTime;
+        private EvaluateMode mEvaluateMode;
+        private boolean mIsWifi;
+        private int mCurrentModeEvaluateTimes;
 
         @Override
         public void enter() {
@@ -742,6 +835,29 @@ public class NetworkMonitor extends StateMachine {
                         ACTION_LAUNCH_CAPTIVE_PORTAL_APP, new Random().nextInt(),
                         CMD_LAUNCH_CAPTIVE_PORTAL_APP);
             }
+
+            mIsWifi = isWifi();
+            mHandler.removeMessages(EVENT_WIFI_TO_WIFI_TIMEOUT);
+            if (mIsWifi) {
+                mEvaluateMode = EvaluateMode.FAST_0;
+                mCurrentModeEvaluateTimes = 0;
+                int netId = mWifiManager.getConnectionInfo().getNetworkId();
+                mWifiManager.setPortalState(netId, 2/*check fail*/);
+                boolean isUserSelect = isUserSelect(netId);
+                if (DBG) log("CaptivePortalState IsWifi : isuserselect = " + isUserSelect);
+                if (isUserSelect) { // user select wifi pop up authentication interface
+                    startAuthenticationActivity(mLastPortalProbeResult.redirectUrl);
+                } else { // is auto connect wifi
+                    mPortalBrowserIntent = buildAutoStartBroadcastIntent(mLastPortalProbeResult.redirectUrl);
+                    mWifiManager.startScan();
+                    mHandler.sendEmptyMessageDelayed(EVENT_WIFI_TO_WIFI_TIMEOUT, 3000/*ms*/);
+                }
+                // Continuous reevaluate to update third-party application authentication results.
+                Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
+                sendMessageDelayed(msg, mEvaluateMode.getDelayTime());
+                return;
+            }
+
             // Display the sign in notification.
             Message message = obtainMessage(EVENT_PROVISIONING_NOTIFICATION, 1, mNetId,
                     mLaunchCaptivePortalAppBroadcastReceiver.getPendingIntent());
@@ -755,6 +871,66 @@ public class NetworkMonitor extends StateMachine {
         @Override
         public void exit() {
             removeMessages(CMD_CAPTIVE_PORTAL_RECHECK);
+            removeMessages(CMD_REEVALUATE);
+            mHandler.removeMessages(EVENT_WIFI_TO_WIFI_TIMEOUT);
+        }
+
+        @Override
+        public boolean processMessage(Message message) {
+            switch (message.what) {
+                // Continuous reevaluate to update third-party application authentication results.
+                case CMD_REEVALUATE:
+                    if (!mIsWifi) {
+                        return NOT_HANDLED;
+                    }
+                    if (DBG) log("CaptivePortalState CMD_REEVALUATE");
+                    if (!isScreenOn() || message.arg1 != mReevaluateToken) {
+                        return HANDLED;
+                    }
+                    mLastEvaluateTime = System.currentTimeMillis();
+                    mCurrentModeEvaluateTimes++;
+                    removeMessages(CMD_REEVALUATE);
+                    CaptivePortalProbeResult probeResult = isCaptivePortal();
+                    if (probeResult.isSuccessful()) {
+                        if (DBG) log("CaptivePortalState probeResult isSuccessful");
+                        int netId = mWifiManager.getConnectionInfo().getNetworkId();
+                        sendNetworkValidBroadcast(true, netId);
+                        mWifiManager.setPortalState(netId, 1/*check ok*/);
+                        mHandler.removeMessages(EVENT_WIFI_TO_WIFI_TIMEOUT);
+                        transitionTo(mEvaluatingPrivateDnsState);
+                    } else {
+                        if (DBG) log("CaptivePortalState probeResult check fail");
+                        if (mCurrentModeEvaluateTimes >= mEvaluateMode.getEvaluateTimes()) {
+                            mCurrentModeEvaluateTimes = 0;
+                            mEvaluateMode = EvaluateMode.next(mEvaluateMode);
+                        }
+                        if (DBG) log("CaptivePortalState next check delay : " + mEvaluateMode.getDelayTime());
+                        Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
+                        sendMessageDelayed(msg, mEvaluateMode.getDelayTime());
+                    }
+                    return HANDLED;
+                case CMD_SCREEN_ON:
+                    if (mIsWifi) {
+                        if (DBG) log("CMD_SCREEN_ON mLastEvaluateTime = " + mLastEvaluateTime + " , next delay time = " + mEvaluateMode.getDelayTime());
+                        Message msg1 = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
+                        long currentTime = System.currentTimeMillis();
+                        removeMessages(CMD_REEVALUATE);
+                        if (currentTime - mLastEvaluateTime >= mEvaluateMode.mDelayTime) {
+                            sendMessage(msg1);
+                        } else {
+                            sendMessageDelayed(msg1, mEvaluateMode.mDelayTime - (mLastEvaluateTime - currentTime));
+                        }
+                    }
+                    return HANDLED;
+                case CMD_SCREEN_OFF:
+                    if (mIsWifi) {
+                        removeMessages(CMD_REEVALUATE);
+                    }
+                    return HANDLED;
+                default:
+                    break;
+            }
+            return NOT_HANDLED;
         }
     }
 
@@ -887,6 +1063,9 @@ public class NetworkMonitor extends StateMachine {
             final int token = ++mProbeToken;
             mThread = new Thread(() -> sendMessage(obtainMessage(CMD_PROBE_COMPLETE, token, 0,
                     isCaptivePortal())));
+            mHandler.removeMessages(EVENT_NETWORK_TEST_TIMEOUT);
+            int netId = mWifiManager.getConnectionInfo().getNetworkId();
+            mHandler.sendMessageDelayed(obtainMessage(EVENT_NETWORK_TEST_TIMEOUT, netId), 10 * 1000);
             mThread.start();
         }
 
@@ -894,6 +1073,7 @@ public class NetworkMonitor extends StateMachine {
         public boolean processMessage(Message message) {
             switch (message.what) {
                 case CMD_PROBE_COMPLETE:
+                    mHandler.removeMessages(EVENT_NETWORK_TEST_TIMEOUT);
                     // Ensure that CMD_PROBE_COMPLETE from stale threads are ignored.
                     if (message.arg1 != mProbeToken) {
                         return HANDLED;
@@ -903,6 +1083,7 @@ public class NetworkMonitor extends StateMachine {
                             (CaptivePortalProbeResult) message.obj;
                     mLastProbeTime = SystemClock.elapsedRealtime();
                     if (probeResult.isSuccessful()) {
+                        if (isWifi()) sendNetworkValidBroadcast(true, netId);
                         // Transit EvaluatingPrivateDnsState to get to Validated
                         // state (even if no Private DNS validation required).
                         transitionTo(mEvaluatingPrivateDnsState);
@@ -910,8 +1091,12 @@ public class NetworkMonitor extends StateMachine {
                         notifyNetworkTestResultInvalid(probeResult.redirectUrl);
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
+                    } else if ((mEvaluateAttempts > 1) || (isUserWifiCaptivePortalDetection())) {
+                        if (isWifi()) sendNetworkValidBroadcast(false, netId);
+                        notifyNetworkTestResultInvalid(probeResult.redirectUrl);
                     } else {
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
+                        if (isWifi()) sendNetworkValidBroadcast(false, netId);
                         notifyNetworkTestResultInvalid(probeResult.redirectUrl);
                         transitionTo(mWaitingForNextProbeState);
                     }
@@ -1004,6 +1189,10 @@ public class NetworkMonitor extends StateMachine {
     }
 
     private String getCaptivePortalServerHttpsUrl() {
+        // Use Chinese urls instead of Google's
+        if (!isOverses()) {
+           return CHINA_SERVER_HTTPS;
+        }
         return mDependencies.getSetting(mContext,
                 Settings.Global.CAPTIVE_PORTAL_HTTPS_URL, DEFAULT_HTTPS_URL);
     }
@@ -1033,10 +1222,18 @@ public class NetworkMonitor extends StateMachine {
 
     // Static for direct access by ConnectivityService
     public static String getCaptivePortalServerHttpUrl(Context context) {
+        // Use Chinese urls instead of Google's
+        if (!isOverses()) {
+            return CHINA_SERVER_HTTP;
+        }
         return getCaptivePortalServerHttpUrl(Dependencies.DEFAULT, context);
     }
 
     public static String getCaptivePortalServerHttpUrl(Dependencies deps, Context context) {
+        // Use Chinese urls instead of Google's
+        if (!isOverses()) {
+            return CHINA_SERVER_HTTP;
+        }
         return deps.getSetting(context, Settings.Global.CAPTIVE_PORTAL_HTTP_URL, DEFAULT_HTTP_URL);
     }
 
@@ -1045,6 +1242,10 @@ public class NetworkMonitor extends StateMachine {
             String separator = ",";
             String firstUrl = mDependencies.getSetting(mContext,
                     Settings.Global.CAPTIVE_PORTAL_FALLBACK_URL, DEFAULT_FALLBACK_URL);
+            // Use Chinese urls instead of Google's
+            if (!isOverses()) {
+                firstUrl = BAIDU_SERVER_HTTP;
+            }
             String joinedUrls = firstUrl + separator + mDependencies.getSetting(mContext,
                     Settings.Global.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS,
                     DEFAULT_OTHER_FALLBACK_URLS);
@@ -1072,7 +1273,7 @@ public class NetworkMonitor extends StateMachine {
             final String settingsValue = mDependencies.getSetting(
                     mContext, Settings.Global.CAPTIVE_PORTAL_FALLBACK_PROBE_SPECS, null);
             // Probe specs only used if configured in settings
-            if (TextUtils.isEmpty(settingsValue)) {
+            if (TextUtils.isEmpty(settingsValue) || !isOverses()) {
                 return null;
             }
 
@@ -1112,6 +1313,10 @@ public class NetworkMonitor extends StateMachine {
         if (!mIsCaptivePortalCheckEnabled) {
             validationLog("Validation disabled.");
             return CaptivePortalProbeResult.SUCCESS;
+        }
+        if (!isWifi() || mHasProxy) {
+            logd("mobile or has proxy, set CaptivePortalProbeResult 204");
+            return new CaptivePortalProbeResult(204);
         }
 
         URL pacUrl = null;
@@ -1220,6 +1425,8 @@ public class NetworkMonitor extends StateMachine {
     @VisibleForTesting
     protected CaptivePortalProbeResult sendHttpProbe(URL url, int probeType,
             @Nullable CaptivePortalProbeSpec probeSpec) {
+        validationLog("Checking " + url.toString() + " with type " + probeType
+            + " on " + mNetworkAgentInfo.networkInfo.getExtraInfo());
         HttpURLConnection urlConnection = null;
         int httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
         String redirectUrl = null;
@@ -1234,6 +1441,7 @@ public class NetworkMonitor extends StateMachine {
             if (mCaptivePortalUserAgent != null) {
                 urlConnection.setRequestProperty("User-Agent", mCaptivePortalUserAgent);
             }
+            urlConnection.setRequestProperty("Connection", "Close"); // for memory leak
             // cannot read request header after connection
             String requestHeader = urlConnection.getRequestProperties().toString();
 
@@ -1279,7 +1487,12 @@ public class NetworkMonitor extends StateMachine {
                     }
                 }
             }
-        } catch (IOException e) {
+            if (verifyMD5(urlConnection)
+               || (isAuth(httpResponseCode) && isInvalidRedirection(redirectUrl, url.toString()))) {
+                validationLog("invalid redirection interpreted as 204 response.");
+                httpResponseCode = 204;
+            }
+        } catch (Exception e) {
             validationLog(probeType, url, "Probe failed with exception " + e);
             if (httpResponseCode == CaptivePortalProbeResult.FAILED_CODE) {
                 // TODO: Ping gateway and DNS server and log results.
@@ -1351,12 +1564,13 @@ public class NetworkMonitor extends StateMachine {
         final CaptivePortalProbeResult httpsResult = httpsProbe.result();
         final CaptivePortalProbeResult httpResult = httpProbe.result();
 
+        CaptivePortalProbeResult fallbackResult = CaptivePortalProbeResult.FAILED;
         // Look for a conclusive probe result first.
         if (httpResult.isPortal()) {
             return httpResult;
         }
         // httpsResult.isPortal() is not expected, but check it nonetheless.
-        if (httpsResult.isPortal() || httpsResult.isSuccessful()) {
+        if (httpsResult.isSuccessful()) {
             return httpsResult;
         }
         // If a fallback method exists, use it to retry portal detection.
@@ -1364,18 +1578,18 @@ public class NetworkMonitor extends StateMachine {
         final CaptivePortalProbeSpec probeSpec = nextFallbackSpec();
         final URL fallbackUrl = (probeSpec != null) ? probeSpec.getUrl() : nextFallbackUrl();
         if (fallbackUrl != null) {
-            CaptivePortalProbeResult result = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
-            if (result.isPortal()) {
-                return result;
-            }
+            fallbackResult = sendHttpProbe(fallbackUrl, PROBE_FALLBACK, probeSpec);
         }
         // Otherwise wait until http and https probes completes and use their results.
         try {
             httpProbe.join();
-            if (httpProbe.result().isPortal()) {
+            if (httpProbe.result().isPortal() || httpProbe.result().isSuccessful()) {
                 return httpProbe.result();
             }
             httpsProbe.join();
+            if (fallbackResult.isSuccessful() && httpsProbe.result().isFailed()) {
+                return fallbackResult;
+            }
             return httpsProbe.result();
         } catch (InterruptedException e) {
             validationLog("Error: http or https probe wait interrupted!");
@@ -1668,5 +1882,345 @@ public class NetworkMonitor extends StateMachine {
         }
 
         return result;
+    }
+
+    private static final int EVENT_NETWORK_TEST_TIMEOUT = BASE + 14;
+    private static String INVALID_REDIRECTION[] = new String[] { "10086.cn", "yuzua", "huayaochou", "360.cn", "zscaler" };
+    private static String CHINA_SERVER_HTTPS = "https://wf.vivo.com.cn/t?";
+    private static String CHINA_SERVER_HTTP = "http://wifi.vivo.com.cn/generate_204";
+    private static String BAIDU_SERVER_HTTP = "http://www.baidu.com";
+    private final static String CHINA_WIFI_MD5 = "105934603441e8b9";
+
+    private static final int LOGGED_SUCCESS = 1;
+    private static final int LOGGED_FAILED_DISPLAY = 2;
+    private static final int LOGGED_FAILED_NODISPLAY = 3;
+    private static final int LOGGED_FAILED_DISPLAY_EXCEPTION = 4;
+
+    private IntentFilter mIntentFilter;
+    private BroadcastReceiver mBroadcastReceiver;
+    private boolean mHasProxy = false;
+    private boolean isRegister = false;
+    private Handler mHandler = null;
+
+    private boolean isInvalidRedirection(String redirectUrl, String url) {
+        try {
+            if (redirectUrl != null && INVALID_REDIRECTION != null) {
+                for (int i = 0; i < INVALID_REDIRECTION.length; i++) {
+                    if (redirectUrl.contains(INVALID_REDIRECTION[i])) {
+                        return true;
+                    }
+                }
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void startAuthenticationActivity(String redirectUrl) {
+        if (DBG) log("start the authentication activity in browser");
+
+        try {
+            Intent intent = buildAutoStartBroadcastIntent(redirectUrl);
+            if (null != intent) {
+                mContext.startActivityAsUser(intent, UserHandle.CURRENT);
+            } else {
+                loge("build intent error");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean isOverses() {
+        String overseas = SystemProperties.get("ro.vivo.product.overseas", "no");
+        String countrycode = SystemProperties.get("gsm.vivo.countrycode");
+        Log.d(TAG,"overseas = " + overseas + " countrycode =" + countrycode);
+        if(!TextUtils.isEmpty(countrycode)){
+            return !(countrycode.equalsIgnoreCase("CN"));
+        }else{
+            return overseas.equals("yes");
+        }
+    }
+
+    private boolean isUserWifiCaptivePortalDetection() {
+        if (!isOverses() && isWifi()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isWifi() {
+        boolean wifi = false;
+        try {
+            if ((mNetworkAgentInfo != null) && (mNetworkAgentInfo.networkInfo != null)
+                && (mNetworkAgentInfo.networkInfo.getType() == ConnectivityManager.TYPE_WIFI)) {
+                wifi = true;
+            }
+        } catch (java.lang.Exception e) {
+            e.printStackTrace();
+        }
+        if (DBG) log("isWifi " + wifi);
+        return wifi;
+    }
+
+    private void registerWifiReceiver() {
+        if (DBG) log("registerWifiReceiver");
+
+        mBroadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (DBG) log("registerWifiReceiver action:" + action);
+                if (action.equals("android.net.vivo.wifi.captive_portal_logged_in")) {
+                    // action form browser
+                    int netId = intent.getIntExtra("captive_portal_net_id", -1);
+                    String ssid = intent.getStringExtra("captive_portal_ssid");
+                    int result = intent.getIntExtra("captive_portal_logged_state", -1);
+                    String mWifiNetId = intent.getStringExtra(Intent.EXTRA_TEXT);
+
+                    if (DBG) log("netId:" + netId + ", ssid:" + ssid + ", result:" + result + ", mWifiNetId:" + mWifiNetId);
+                    if ((mWifiManager == null) || (netId == -1)) {
+                        loge("mWifiManager is null.");
+                        return;
+                    }
+                    WifiInfo info = mWifiManager.getConnectionInfo();
+                    if (info != null) {
+                        if (DBG) log("info.NetworkId:" + info.getNetworkId());
+                        if (netId == info.getNetworkId() && result == LOGGED_SUCCESS) {
+                            if (DBG) log("send broadcast.");
+                            sendMessage(CMD_CAPTIVE_PORTAL_APP_FINISHED, APP_RETURN_WANTED_AS_IS);
+                            if (isWifi()) sendNetworkValidBroadcast(true, netId);
+                        }
+                    }
+                } else if (action.equals(Proxy.PROXY_CHANGE_ACTION)) {
+                    ProxyInfo info = (ProxyInfo) intent.getParcelableExtra(Proxy.EXTRA_PROXY_INFO);
+                    if (info != null) {
+                        String mhost = info.getHost();
+                        if (DBG) log("GLOBAL_HTTP_PROXY_HOST = " + mhost);
+                        if (mhost != null && !mhost.equals("")) {
+                            mHasProxy = true;
+                        } else {
+                            mHasProxy = false;
+                        }
+                    }
+                } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
+                    sendMessage(CMD_SCREEN_ON);
+                } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
+                    sendMessage(CMD_SCREEN_OFF);
+                } else if (action.equals("android.net.wifi.WIFI_TO_WIFI")) {
+                    mHandler.removeMessages(EVENT_WIFI_TO_WIFI_TIMEOUT);
+                    mPortalBrowserIntent = null;
+                }
+            }
+        };
+
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction("android.net.vivo.wifi.captive_portal_logged_in");
+        mIntentFilter.addAction(Proxy.PROXY_CHANGE_ACTION);
+        mIntentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        mIntentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        mIntentFilter.addAction("android.net.wifi.WIFI_TO_WIFI");
+        mContext.registerReceiver(mBroadcastReceiver, mIntentFilter);
+        isRegister = true;
+    }
+
+    private void unregisterWifiReceiver() {
+        if (DBG) log("unregisterWifiReceiver");
+        if (!isRegister) return;
+        try {
+            mContext.unregisterReceiver(mBroadcastReceiver);
+            isRegister = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean verifyMD5(HttpURLConnection connection) {
+        String result = null;
+        StringBuffer sb = new StringBuffer();
+        InputStream is = null;
+        boolean shouldRedirect = false;
+        try {
+            is = new BufferedInputStream(connection.getInputStream());
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String inputLine = "";
+            while ((inputLine = br.readLine()) != null) {
+                inputLine = inputLine.toLowerCase();
+                inputLine = inputLine.replace(" ", "");
+                if (inputLine.contains(CHINA_WIFI_MD5)) {
+                    if (DBG) log("set shouldRedirect to true.");
+                    shouldRedirect = true;
+                }
+                sb.append(inputLine);
+            }
+            result = sb.toString();
+        } catch (Exception e) {
+            loge("Error reading InputStream");
+            result = null;
+            shouldRedirect = true;
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    loge("Error closing InputStream");
+                }
+            }
+        }
+
+        return shouldRedirect;
+    }
+
+    private void sendNetworkTestResult(CaptivePortalProbeResult probeResult) {
+        if (isWifi()) {
+            mConnectivityServiceHandler.sendMessage(obtainMessage(EVENT_NETWORK_TESTED,
+                    NETWORK_TEST_RESULT_VALID, mNetId, probeResult.redirectUrl));
+        } else {
+            mConnectivityServiceHandler.sendMessage(obtainMessage(EVENT_NETWORK_TESTED,
+                NETWORK_TEST_RESULT_INVALID, mNetId, probeResult.redirectUrl));
+        }
+    }
+
+    private boolean isAuth(int responseCode) { // if wifi need to auth , return true.
+        if (responseCode != 204 && responseCode >= 200 && responseCode <= 399) {
+            return true;
+        }
+        return false;
+    }
+
+    private void sendNetworkValidBroadcast(boolean valid, int netId) {
+        if (DBG) log("sendNetworkValidBroadcast valid:" + valid + ", netId:" + netId);
+        if (valid) {
+            mWifiManager.setPortalState(netId, 1/*check ok*/);
+        }
+        Intent intent = new Intent("android.net.conn.VIVO_SMART_WIFI_VALID");
+        intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
+        intent.putExtra("vivo_smart_wifi_valid", valid);
+        intent.putExtra("vivo_smart_wifi_net_id", netId);
+        mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
+    }
+
+    // One Touch Connect WiFi SDK
+    private static final String ONE_TOUCH_CONNECT_OPEN_WIFI = "one_touch_connect_open_wifi";
+
+    private boolean isOneTouchConnectWifi(int netID) {
+        WifiConfiguration config = getCurrentConfiguration(netID);
+        if (config != null) {
+            return config.vivoWifiConfiguration.getIsOneTouchConnectWifi();
+        } else {
+            return false;
+        }
+    }
+
+    private WifiConfiguration getCurrentConfiguration(int netID) {
+        for (WifiConfiguration config : mWifiManager.getConfiguredNetworks()) {
+            if (netID == config.networkId) {
+                return config;
+            }
+        }
+        return null;
+    }
+
+    private static final int EVENT_WIFI_TO_WIFI_TIMEOUT = BASE + 15;
+    private static final int CMD_SCREEN_ON = BASE + 16;
+    private static final int CMD_SCREEN_OFF = BASE + 17;
+    private Intent mPortalBrowserIntent;
+
+    private boolean isUserSelect(int netId) {
+        if (null == mWifiManager) {
+            log("isAutoConnect wifimanager is null");
+            return false;
+        }
+        if (DBG) log("netId is : " + netId + " , LastSelectedNetworkId = " + mWifiManager.getLastSelectedNetworkId());
+        if (WifiConfiguration.INVALID_NETWORK_ID != netId && netId == mWifiManager.getLastSelectedNetworkId()) {
+            return true;
+        }
+        return false;
+    }
+
+    private Intent buildAutoStartBroadcastIntent(String redirectUrl) {
+        if (DBG) log("buildAutoStartBroadcastIntent");
+        try {
+            int networkID = WifiConfiguration.INVALID_NETWORK_ID;
+
+            if (mWifiManager == null) {
+                loge("mWifiManager is null.");
+                return null;
+            }
+
+            WifiInfo info = mWifiManager.getConnectionInfo();
+            if (info != null) {
+                networkID = info.getNetworkId();
+            }
+
+            if ((networkID == WifiConfiguration.INVALID_NETWORK_ID) || (mContext == null)) {
+                loge("networkID is invalid or mContext is null , will directly return. the current network id is " + networkID);
+                return null;
+            }
+
+            int lastValue = mWifiManager.getAutoLoginVariable(networkID);
+            if (lastValue == 0) {
+                loge("autologin is 0, return");
+                return null;
+            }
+            if (lastValue != 1) {
+                mWifiManager.setAutoLoginVariable(networkID, 1);
+            }
+            final Network network = new Network(mNetworkAgentInfo.network.netId);
+            final String id = String.valueOf(mNetworkAgentInfo.network.netId);
+            if (DBG) log("network = " + network + ", id = " + id + ", redirectUrl = " + redirectUrl + ", wifiInfo = " + info);
+            Intent intent = new Intent();
+            intent.setAction("com.vivo.browser.AUTHENTICATION");
+            intent.putExtra("network", network);
+            intent.putExtra(Intent.EXTRA_TEXT, id);
+            intent.putExtra("redirectUrl", redirectUrl);
+            intent.putExtra("wifiInfo", info);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return intent;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public boolean isScreenOn() {
+        PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        if (null != pm) {
+            return pm.isScreenOn();
+        }
+        return false;
+    }
+
+    private enum EvaluateMode {
+        FAST_0(10 * 1000, 10),FAST_1(20 * 1000, 10),NOMAL(60 * 1000, 5),SLOW(5 * 60 * 1000, Integer.MAX_VALUE);
+        int mDelayTime;
+        int mEvaluateTimes;
+        EvaluateMode(int delayTime, int evaluateTimes) {
+            mDelayTime = delayTime;
+            mEvaluateTimes = evaluateTimes;
+        }
+
+        public int getEvaluateTimes() {
+            return mEvaluateTimes;
+        }
+
+        public int getDelayTime() {
+            return mDelayTime;
+        }
+
+        public static EvaluateMode next(EvaluateMode currentMode) {
+            switch (currentMode) {
+                case FAST_0:
+                    return FAST_1;
+                case FAST_1:
+                    return NOMAL;
+                case NOMAL:
+                    return SLOW;
+                case SLOW:
+                    return SLOW;
+            }
+            return SLOW;
+        }
     }
 }
