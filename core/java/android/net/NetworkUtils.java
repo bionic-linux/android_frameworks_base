@@ -70,6 +70,20 @@ public class NetworkUtils {
             throws SocketException;
 
     /**
+     * Attaches a socket filter that drop all of incoming packets.
+     * @param fd the socket's {@link FileDescriptor}.
+     */
+    @UnsupportedAppUsage
+    public static native void attachDropAllPacketFilter(FileDescriptor fd) throws SocketException;
+
+    /**
+     * Detaches a socket filter.
+     * @param fd the socket's {@link FileDescriptor}.
+     */
+    @UnsupportedAppUsage
+    public static native void detachFilter(FileDescriptor fd) throws SocketException;
+
+    /**
      * Configures a socket for receiving ICMPv6 router solicitations and sending advertisements.
      * @param fd the socket's {@link FileDescriptor}.
      * @param ifIndex the interface index.
