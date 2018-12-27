@@ -36,6 +36,8 @@ import android.net.KeepalivePacketData;
 import android.net.NattKeepalivePacketData;
 import android.net.NetworkAgent;
 import android.net.NetworkUtils;
+import android.net.SocketKeepalive;
+import android.net.SocketKeepalive.InvalidPacketException;
 import android.net.util.IpUtils;
 import android.os.Binder;
 import android.os.Handler;
@@ -374,7 +376,7 @@ public class KeepaliveTracker {
         try {
             packet = NattKeepalivePacketData.nattKeepalivePacket(
                     srcAddress, srcPort, dstAddress, NATT_PORT);
-        } catch (KeepalivePacketData.InvalidPacketException e) {
+        } catch (InvalidPacketException e) {
             notifyMessenger(messenger, NO_KEEPALIVE, e.error);
             return;
         }

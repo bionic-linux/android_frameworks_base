@@ -16,10 +16,15 @@
 
 package android.net;
 
+import static android.net.SocketKeepalive.ERROR_INVALID_IP_ADDRESS;
+import static android.net.SocketKeepalive.ERROR_INVALID_PORT;
+
 import android.net.util.IpUtils;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
+import android.net.SocketKeepalive.InvalidPacketException;
 
 import java.net.InetAddress;
 
@@ -64,20 +69,13 @@ public class KeepalivePacketData implements Parcelable {
         if (srcAddress == null || dstAddress == null || !srcAddress.getClass().getName()
                 .equals(dstAddress.getClass().getName())) {
             Log.e(TAG, "Invalid or mismatched InetAddresses in KeepalivePacketData");
-            throw new InvalidPacketException(SocketKeepalive.ERROR_INVALID_IP_ADDRESS);
+            throw new InvalidPacketException(ERROR_INVALID_IP_ADDRESS);
         }
 
         // Check the ports.
         if (!IpUtils.isValidUdpOrTcpPort(srcPort) || !IpUtils.isValidUdpOrTcpPort(dstPort)) {
             Log.e(TAG, "Invalid ports in KeepalivePacketData");
-            throw new InvalidPacketException(SocketKeepalive.ERROR_INVALID_PORT);
-        }
-    }
-
-    public static class InvalidPacketException extends Exception {
-        public final int error;
-        public InvalidPacketException(int error) {
-            this.error = error;
+            throw new InvalidPacketException(ERROR_INVALID_PORT);
         }
     }
 
@@ -99,7 +97,7 @@ public class KeepalivePacketData implements Parcelable {
         out.writeByteArray(mPacket);
     }
 
-    private KeepalivePacketData(Parcel in) {
+    protected KeepalivePacketData(Parcel in) {
         srcAddress = NetworkUtils.numericToInetAddress(in.readString());
         dstAddress = NetworkUtils.numericToInetAddress(in.readString());
         srcPort = in.readInt();

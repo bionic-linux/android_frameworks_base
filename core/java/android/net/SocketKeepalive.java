@@ -109,6 +109,46 @@ public abstract class SocketKeepalive implements AutoCloseable {
      **/
     public static final int MAX_INTERVAL_SEC = 3600;
 
+    /**
+     * An exception that embarks an error code.
+     * @hide
+     */
+    private static class ErrorCodeException extends Exception {
+        public final int error;
+        public ErrorCodeException(final int error, final Exception e) {
+            super(e);
+            this.error = error;
+        }
+        public ErrorCodeException(final int error) {
+            this.error = error;
+        }
+    }
+
+    /**
+     * This socket is invalid.
+     * See the error code for details, and the optional cause.
+     * @hide
+     */
+    public static class InvalidSocketException extends ErrorCodeException {
+        public InvalidSocketException(final int error, final Exception e) {
+            super(error, e);
+        }
+        public InvalidSocketException(final int error) {
+            super(error);
+        }
+    }
+
+    /**
+     * This packet is invalid.
+     * See the error code for details.
+     * @hide
+     */
+    public static class InvalidPacketException extends ErrorCodeException {
+        public InvalidPacketException(final int error) {
+            super(error);
+        }
+    }
+
     @NonNull final IConnectivityManager mService;
     @NonNull final Network mNetwork;
     @NonNull private final Executor mExecutor;
