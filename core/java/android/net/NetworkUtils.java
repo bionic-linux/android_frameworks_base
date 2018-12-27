@@ -69,6 +69,20 @@ public class NetworkUtils {
             throws SocketException;
 
     /**
+     * Attaches a socket filter that drop all of incoming packets.
+     * @param fd the socket's {@link FileDescriptor}.
+     * @param packetType the hardware address type, one of ARPHRD_*.
+     */
+    @UnsupportedAppUsage
+    public native static void attachDropAllPacketFilter(FileDescriptor fd) throws SocketException;
+
+    /**
+     * Dettaches a socket filter.
+     */
+    @UnsupportedAppUsage
+    public native static void detachFilter(FileDescriptor fd) throws SocketException;
+
+    /**
      * Configures a socket for receiving ICMPv6 router solicitations and sending advertisements.
      * @param fd the socket's {@link FileDescriptor}.
      * @param ifIndex the interface index.

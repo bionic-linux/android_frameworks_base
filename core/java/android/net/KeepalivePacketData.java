@@ -58,7 +58,7 @@ public class KeepalivePacketData implements Parcelable {
 
     // This should only be constructed via static factory methods, such as
     // nattKeepalivePacket
-    protected KeepalivePacketData(InetAddress srcAddress, int srcPort,
+    public KeepalivePacketData(InetAddress srcAddress, int srcPort,
             InetAddress dstAddress, int dstPort, byte[] data) throws InvalidPacketException {
         this.srcAddress = srcAddress;
         this.dstAddress = dstAddress;
@@ -141,7 +141,7 @@ public class KeepalivePacketData implements Parcelable {
         out.writeByteArray(mPacket);
     }
 
-    private KeepalivePacketData(Parcel in) {
+    protected KeepalivePacketData(Parcel in) {
         srcAddress = NetworkUtils.numericToInetAddress(in.readString());
         dstAddress = NetworkUtils.numericToInetAddress(in.readString());
         srcPort = in.readInt();
