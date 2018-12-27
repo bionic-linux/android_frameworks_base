@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "91edc265_f188a92b",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-27T02:12:51Z",
+      "side": 1,
+      "message": "Agreed, I hate that streams are not considered a good option.",
+      "parentUuid": "7d151e75_6fa8ece1",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f7c89a2_99f7baa3",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 9
@@ -187,6 +211,30 @@
       "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff00d65e_e753cba6",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-12-27T02:12:51Z",
+      "side": 1,
+      "message": "This would mean that SameL3NetworkResponse(SameL3NetworkResponseParceled) needs to be a @SystemApi, so SameL3NetworkResponseParceled must be @SystemApi too. There is controversy on whether aidl-generated parcelables should be allowed to be @SystemApi in b/120859231.\n\nAlso you would not be able to update the SameL3NetworkResponse that is used in the module, so things could get tricky when running a more recent module on a framework that has an old SameL3NetworkResponse class - maybe you can do API checks before calling any new method for example ? Having 2 separate classes on each end, one doing parceling and the other one unparceling and useful methods to use the data, may be less risky.",
+      "parentUuid": "9a5a67ab_8a16e069",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 5
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
