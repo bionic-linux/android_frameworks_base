@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "243bc868_c328617b",
+        "filename": "core/java/android/view/TextureView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2018-12-27T09:50:25Z",
+      "side": 1,
+      "message": "please either remove the line if it\u0027s intended to be deleted.",
+      "range": {
+        "startLine": 397,
+        "startChar": 24,
+        "endLine": 397,
+        "endChar": 44
+      },
+      "revId": "09cb55dec0764f458e79e327e6931aa33d5999c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
