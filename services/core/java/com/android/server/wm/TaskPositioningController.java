@@ -153,7 +153,7 @@ class TaskPositioningController {
     }
 
     void finishTaskPositioning() {
-        mHandler.post(() -> {
+        mService.mAnimationHandler.post(() -> {
             if (DEBUG_TASK_POSITIONING) Slog.d(TAG_WM, "finishPositioning");
 
             synchronized (mService.mWindowMap) {
