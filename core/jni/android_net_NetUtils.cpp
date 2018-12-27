@@ -226,6 +226,34 @@ static void android_net_utils_attachControlPacketFilter(
     }
 }
 
+static void android_net_utils_attachDropAllBPFFilter(JNIEnv *env, jobject clazz, jobject javaFd)
+{
+    struct sock_filter filter_code[] = {
+        // Reject all.
+        BPF_STMT(BPF_RET | BPF_K, 0)
+    };
+    struct sock_fprog filter = {
+        sizeof(filter_code) / sizeof(filter_code[0]),
+        filter_code,
+    };
+
+    int fd = jniGetFDFromFileDescriptor(env, javaFd);
+    if (setsockopt(fd, SOL_SOCKET, SO_ATTACH_FILTER, &filter, sizeof(filter)) != 0) {
+        jniThrowExceptionFmt(env, "java/net/SocketException",
+                "setsockopt(SO_ATTACH_FILTER): %s", strerror(errno));
+    }
+}
+
+static void android_net_utils_detachBPFFilter(JNIEnv *env, jobject clazz, jobject javaFd)
+{
+    int dummy = 0;
+    int fd = jniGetFDFromFileDescriptor(env, javaFd);
+    if (setsockopt(fd, SOL_SOCKET, SO_DETACH_FILTER, &dummy, sizeof(dummy)) != 0) {
+        jniThrowExceptionFmt(env, "java/net/SocketException",
+                "setsockopt(SO_DETACH_FILTER): %s", strerror(errno));
+    }
+
+}
 static void android_net_utils_setupRaSocket(JNIEnv *env, jobject clazz, jobject javaFd,
         jint ifIndex)
 {
@@ -475,6 +503,8 @@ static const JNINativeMethod gNetworkUtilMethods[] = {
     { "attachDhcpFilter", "(Ljava/io/FileDescriptor;)V", (void*) android_net_utils_attachDhcpFilter },
     { "attachRaFilter", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_utils_attachRaFilter },
     { "attachControlPacketFilter", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_utils_attachControlPacketFilter },
+    { "attachDropAllBPFFilter", "(Ljava/io/FileDescriptor;)V", (void*) android_net_utils_attachDropAllBPFFilter },
+    { "detachBPFFilter", "(Ljava/io/FileDescriptor;)V", (void*) android_net_utils_detachBPFFilter },
     { "setupRaSocket", "(Ljava/io/FileDescriptor;I)V", (void*) android_net_utils_setupRaSocket },
     { "resNetworkSend", "(I[BII)Ljava/io/FileDescriptor;", (void*) android_net_utils_resNetworkSend },
     { "resNetworkQuery", "(ILjava/lang/String;III)Ljava/io/FileDescriptor;", (void*) android_net_utils_resNetworkQuery },
