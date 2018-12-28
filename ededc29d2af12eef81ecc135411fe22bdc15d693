@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00eed415_135e7c62",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2018-12-28T00:35:03Z",
+      "side": 1,
+      "message": "I get java.lang.ClassCastException: java.net.Inet6Address cannot be cast to java.net.Inet4Address",
+      "range": {
+        "startLine": 51,
+        "startChar": 50,
+        "endLine": 51,
+        "endChar": 96
+      },
+      "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
