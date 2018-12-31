@@ -79,7 +79,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -116,7 +115,6 @@ import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
-import android.net.StringNetworkSpecifier;
 import android.net.UidRange;
 import android.net.captiveportal.CaptivePortalProbeResult;
 import android.net.metrics.IpConnectivityLog;
@@ -138,6 +136,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.mock.MockContentResolver;
+import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
 
@@ -1513,6 +1512,7 @@ public class ConnectivityServiceTest {
     private class TestNetworkCallback extends NetworkCallback {
         private final LinkedBlockingQueue<CallbackInfo> mCallbacks = new LinkedBlockingQueue<>();
         private Network mLastAvailableNetwork;
+        private NetworkCapabilities mLastNetworkCapabilities;
 
         protected void setLastCallback(CallbackState state, Network network, Object o) {
             mCallbacks.offer(new CallbackInfo(state, network, o));
@@ -1526,6 +1526,7 @@ public class ConnectivityServiceTest {
 
         @Override
         public void onCapabilitiesChanged(Network network, NetworkCapabilities netCap) {
+            mLastNetworkCapabilities = netCap;
             setLastCallback(CallbackState.NETWORK_CAPABILITIES, network, netCap);
         }
 
@@ -1567,6 +1568,10 @@ public class ConnectivityServiceTest {
 
         public Network getLastAvailableNetwork() {
             return mLastAvailableNetwork;
+        }
+
+        public NetworkCapabilities getLastNetworkCapabilities() {
+            return mLastNetworkCapabilities;
         }
 
         CallbackInfo nextCallback(int timeoutMs) {
@@ -2544,16 +2549,73 @@ public class ConnectivityServiceTest {
         return new NetworkRequest.Builder().addTransportType(TRANSPORT_WIFI);
     }
 
+    /**
+     * Verify request matching behavior with network specifiers.
+     *
+     * Note: this test is somewhat problematic since it involves removing capabilities from
+     * agents - i.e. agents rejecting requests which they previously accepted. This is flagged
+     * as a WTF bug in
+     * {@link ConnectivityService#mixInCapabilities(NetworkAgentInfo, NetworkCapabilities)} but
+     * does work.
+     */
     @Test
     public void testNetworkSpecifier() {
+        class ConfidentialMatchAllNetworkSpecifier extends NetworkSpecifier implements
+                Parcelable {
+            @Override
+            public boolean satisfiedBy(NetworkSpecifier other) {
+                return true;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {}
+
+            @Override
+            public boolean isSensitive() {
+                return true;
+            }
+        }
+
+        class LocalStringNetworkSpecifier extends NetworkSpecifier implements Parcelable {
+            private String mString;
+
+            LocalStringNetworkSpecifier(String string) {
+                mString = string;
+            }
+
+            @Override
+            public boolean satisfiedBy(NetworkSpecifier other) {
+                if (other instanceof LocalStringNetworkSpecifier) {
+                    return TextUtils.equals(mString,
+                            ((LocalStringNetworkSpecifier) other).mString);
+                }
+                if (other instanceof ConfidentialMatchAllNetworkSpecifier) return true;
+                return false;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {}
+        }
+
+
         NetworkRequest rEmpty1 = newWifiRequestBuilder().build();
         NetworkRequest rEmpty2 = newWifiRequestBuilder().setNetworkSpecifier((String) null).build();
         NetworkRequest rEmpty3 = newWifiRequestBuilder().setNetworkSpecifier("").build();
         NetworkRequest rEmpty4 = newWifiRequestBuilder().setNetworkSpecifier(
             (NetworkSpecifier) null).build();
-        NetworkRequest rFoo = newWifiRequestBuilder().setNetworkSpecifier("foo").build();
+        NetworkRequest rFoo = newWifiRequestBuilder().setNetworkSpecifier(
+                new LocalStringNetworkSpecifier("foo")).build();
         NetworkRequest rBar = newWifiRequestBuilder().setNetworkSpecifier(
-                new StringNetworkSpecifier("bar")).build();
+                new LocalStringNetworkSpecifier("bar")).build();
 
         TestNetworkCallback cEmpty1 = new TestNetworkCallback();
         TestNetworkCallback cEmpty2 = new TestNetworkCallback();
@@ -2562,7 +2624,7 @@ public class ConnectivityServiceTest {
         TestNetworkCallback cFoo = new TestNetworkCallback();
         TestNetworkCallback cBar = new TestNetworkCallback();
         TestNetworkCallback[] emptyCallbacks = new TestNetworkCallback[] {
-                cEmpty1, cEmpty2, cEmpty3 };
+                cEmpty1, cEmpty2, cEmpty3, cEmpty4 };
 
         mCm.registerNetworkCallback(rEmpty1, cEmpty1);
         mCm.registerNetworkCallback(rEmpty2, cEmpty2);
@@ -2570,6 +2632,9 @@ public class ConnectivityServiceTest {
         mCm.registerNetworkCallback(rEmpty4, cEmpty4);
         mCm.registerNetworkCallback(rFoo, cFoo);
         mCm.registerNetworkCallback(rBar, cBar);
+
+        LocalStringNetworkSpecifier nsFoo = new LocalStringNetworkSpecifier("foo");
+        LocalStringNetworkSpecifier nsBar = new LocalStringNetworkSpecifier("bar");
 
         mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
         mWiFiNetworkAgent.connect(false);
@@ -2579,30 +2644,54 @@ public class ConnectivityServiceTest {
         cEmpty4.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         assertNoCallbacks(cFoo, cBar);
 
-        mWiFiNetworkAgent.setNetworkSpecifier(new StringNetworkSpecifier("foo"));
+        mWiFiNetworkAgent.setNetworkSpecifier(nsFoo);
         cFoo.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         for (TestNetworkCallback c: emptyCallbacks) {
             c.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
+            assertEquals(c.getLastNetworkCapabilities().getNetworkSpecifier(), nsFoo);
         }
         cFoo.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
+        assertEquals(nsFoo, cFoo.getLastNetworkCapabilities().getNetworkSpecifier());
+        assertEquals(nsFoo,
+                mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork()).getNetworkSpecifier());
         cFoo.assertNoCallback();
 
-        mWiFiNetworkAgent.setNetworkSpecifier(new StringNetworkSpecifier("bar"));
+        mWiFiNetworkAgent.setNetworkSpecifier(nsBar);
         cFoo.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
         cBar.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         for (TestNetworkCallback c: emptyCallbacks) {
             c.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
+            assertEquals(c.getLastNetworkCapabilities().getNetworkSpecifier(), nsBar);
         }
         cBar.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
+        assertEquals(nsBar, cBar.getLastNetworkCapabilities().getNetworkSpecifier());
+        assertEquals(nsBar,
+                mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork()).getNetworkSpecifier());
+        cBar.assertNoCallback();
+
+        mWiFiNetworkAgent.setNetworkSpecifier(new ConfidentialMatchAllNetworkSpecifier());
+        cFoo.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        for (TestNetworkCallback c : emptyCallbacks) {
+            c.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
+            assertNull(c.getLastNetworkCapabilities().getNetworkSpecifier());
+        }
+        cFoo.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
+        assertNull(cFoo.getLastNetworkCapabilities().getNetworkSpecifier());
+        cBar.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
+        assertNull(cBar.getLastNetworkCapabilities().getNetworkSpecifier());
+        assertNull(
+                mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork()).getNetworkSpecifier());
+        cFoo.assertNoCallback();
         cBar.assertNoCallback();
 
         mWiFiNetworkAgent.setNetworkSpecifier(null);
+        cFoo.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
         cBar.expectCallback(CallbackState.LOST, mWiFiNetworkAgent);
         for (TestNetworkCallback c: emptyCallbacks) {
             c.expectCallback(CallbackState.NETWORK_CAPABILITIES, mWiFiNetworkAgent);
         }
 
-        assertNoCallbacks(cEmpty1, cEmpty2, cEmpty3, cFoo, cBar);
+        assertNoCallbacks(cEmpty1, cEmpty2, cEmpty3, cEmpty4, cFoo, cBar);
     }
 
     @Test

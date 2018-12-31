@@ -95,7 +95,6 @@ import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -1475,6 +1474,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!checkSettingsPermission(callerPid, callerUid)) {
             newNc.setUids(null);
             newNc.setSSID(null);
+        }
+        if (newNc.getNetworkSpecifier() != null && newNc.getNetworkSpecifier().isSensitive()) {
+            newNc.setNetworkSpecifier(null);
         }
         return newNc;
     }
@@ -5232,7 +5234,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         switch (notificationType) {
             case ConnectivityManager.CALLBACK_AVAILABLE: {
-                putParcelable(bundle, new NetworkCapabilities(networkAgent.networkCapabilities));
+                putParcelable(bundle, networkCapabilitiesRestrictedForCallerPermissions(
+                        networkAgent.networkCapabilities, nri.mPid, nri.mUid));
                 putParcelable(bundle, new LinkProperties(networkAgent.linkProperties));
                 // For this notification, arg1 contains the blocked status.
                 msg.arg1 = arg1;

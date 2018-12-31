@@ -17,7 +17,7 @@
 package android.net;
 
 /**
- * Describes specific properties of a network for use in a {@link NetworkRequest}.
+ * Describes specific properties of a requested network for use in a {@link NetworkRequest}.
  *
  * Applications cannot instantiate this class by themselves, but can obtain instances of
  * subclasses of this class via other APIs.
@@ -48,5 +48,28 @@ public abstract class NetworkSpecifier {
      */
     public void assertValidFromUid(int requestorUid) {
         // empty
+    }
+
+    /**
+     * Optional method which can be overriden by concrete implementations of NetworkSpecifier to
+     * indicate to the connectivity service that the information contained in the object is
+     * sensitive and should not be shared with apps.
+     * <p>
+     * This method is relevant to NetworkSpecifier objects used by agents - those are shared with
+     * apps by default. Some agents may store sensitive matching information in the specifier,
+     * e.g. a Wi-Fi SSID (which should not be shared since it may leak location). Other agents
+     * use the Network Specifier to share public information with apps - those should not be
+     * stripped out.
+     * <p>
+     * The default is to share the information.
+     *
+     * @return true to indicate information is sensitive and should be stripped out, false to
+     * indicate that the information is not sensitive and should not be stripped out.
+     *
+     * @hide
+     */
+    public boolean isSensitive() {
+        // TODO (b/122160111): convert default to true.
+        return false;
     }
 }
