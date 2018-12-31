@@ -33,7 +33,56 @@ public class RcsOutgoingMessageDelivery implements Parcelable {
     private long mDeliveredTimestamp;
     private long mSeenTimestamp;
     private final RcsParticipant mRecipient;
-    private final RcsMessage mRcsMessage;
+    private RcsOutgoingMessage mRcsOutgoingMessage;
+
+    /**
+     * Constructor to be used with RcsOutgoingMessage.Builder
+     *
+     * @hide
+     */
+    RcsOutgoingMessageDelivery(RcsParticipant recipient) {
+        mRecipient = recipient;
+    }
+
+    /**
+     * Constructor to be used with RcsOutgoingMessage.Builder
+     *
+     * @hide
+     */
+    RcsOutgoingMessageDelivery(RcsParticipant recipient, long deliveredTimestamp,
+            long seenTimestamp) {
+        mRecipient = recipient;
+        mDeliveredTimestamp = deliveredTimestamp;
+        mSeenTimestamp = seenTimestamp;
+    }
+
+    /**
+     * Sets the {@link RcsMessage} associated with this delivery. Not meant for public use.
+     *
+     * @hide
+     */
+    void setRcsOutgoingMessage(RcsOutgoingMessage rcsOutgoingMessage) {
+        mRcsOutgoingMessage = rcsOutgoingMessage;
+    }
+
+    /**
+     * Writes this object into storage after initialization.
+     *
+     * @hide
+     */
+    void initialSaveToStorage() {
+        try {
+            IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
+            if (iRcs != null) {
+                iRcs.createOutgoingDelivery(mRcsOutgoingMessage.getId(), mRecipient.getId(),
+                        mSeenTimestamp, mDeliveredTimestamp);
+            }
+        } catch (RemoteException re) {
+            Log.e(RcsMessageStore.TAG,
+                    "RcsOutgoingMessageDelivery: Exception happened during initialSaveToStorage: ",
+                    re);
+        }
+    }
 
     /**
      * Sets the delivery time of this outgoing delivery and persists into storage.
@@ -46,8 +95,8 @@ public class RcsOutgoingMessageDelivery implements Parcelable {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.setOutgoingDeliveryDeliveredTimestamp(mRcsMessage, mRecipient,
-                        deliveredTimestamp);
+                iRcs.setOutgoingDeliveryDeliveredTimestamp(mRcsOutgoingMessage.getId(),
+                        mRecipient.getId(), deliveredTimestamp);
                 mDeliveredTimestamp = deliveredTimestamp;
             }
         } catch (RemoteException re) {
@@ -76,7 +125,9 @@ public class RcsOutgoingMessageDelivery implements Parcelable {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.setOutgoingDeliverySeenTimestamp(mRcsMessage, mRecipient, seenTimestamp);
+                iRcs.setOutgoingDeliverySeenTimestamp(mRcsOutgoingMessage.getId(),
+                        mRecipient.getId(),
+                        seenTimestamp);
                 mSeenTimestamp = seenTimestamp;
             }
         } catch (RemoteException re) {
@@ -104,14 +155,14 @@ public class RcsOutgoingMessageDelivery implements Parcelable {
      * @return Returns the {@link RcsMessage} associated with this delivery.
      */
     public RcsMessage getMessage() {
-        return mRcsMessage;
+        return mRcsOutgoingMessage;
     }
 
     protected RcsOutgoingMessageDelivery(Parcel in) {
         mDeliveredTimestamp = in.readLong();
         mSeenTimestamp = in.readLong();
         mRecipient = in.readParcelable(RcsParticipant.class.getClassLoader());
-        mRcsMessage = in.readParcelable(RcsMessage.class.getClassLoader());
+        mRcsOutgoingMessage = in.readParcelable(RcsMessage.class.getClassLoader());
     }
 
     public static final Creator<RcsOutgoingMessageDelivery> CREATOR =
@@ -137,6 +188,6 @@ public class RcsOutgoingMessageDelivery implements Parcelable {
         dest.writeLong(mDeliveredTimestamp);
         dest.writeLong(mSeenTimestamp);
         dest.writeParcelable(mRecipient, flags);
-        dest.writeParcelable(mRcsMessage, flags);
+        dest.writeParcelable(mRcsOutgoingMessage, flags);
     }
 }

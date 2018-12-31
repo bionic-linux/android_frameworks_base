@@ -41,6 +41,10 @@ interface IRcs {
     Rcs1To1Thread createRcs1To1Thread(in RcsParticipant participant);
 
     // RcsThread APIs
+    void addMessage(in RcsMessage rcsOutgoingMessage, int rcsThreadId);
+
+    void deleteMessage(int rcsMessageId, boolean isIncoming, int rcsThreadId, boolean isGroup);
+
     int getMessageCount(int rcsThreadId);
 
     // Rcs1To1Thread APIs
@@ -67,23 +71,26 @@ interface IRcs {
     void updateRcsParticipantAlias(int id, String alias);
 
     // RcsMessage APIs
-    void setMessageSubId(int messageId, int subId);
+    void setMessageSubId(int messageId, boolean isIncoming, int subId);
 
-    void setMessageStatus(int messageId, int status);
+    void setMessageStatus(int messageId, boolean isIncoming, int status);
 
-    void setMessageOriginationTimestamp(int messageId, long originationTimestamp);
+    void setMessageOriginationTimestamp(int messageId, boolean isIncoming, long originationTimestamp);
 
-    void setGlobalMessageIdForMessage(int messageId, String globalId);
+    void setGlobalMessageIdForMessage(int messageId, boolean isIncoming, String globalId);
 
-    void addPartToMessage(int messageId, in RcsPart rcsPart);
+    void addPartToMessage(int messageId, boolean isIncoming, in RcsPart rcsPart);
 
-    void removePartFromMessage(int messageId, in RcsPart rcsPart);
+    void removePartFromMessage(int messageId, boolean isIncoming, in RcsPart rcsPart);
 
-    void setMessageArrivalTimestamp(int messageId, long arrivalTimestamp);
+    void setMessageArrivalTimestamp(int messageId, boolean isIncoming, long arrivalTimestamp);
 
-    void setMessageNotifiedTimestamp(int messageId, long notifiedTimestamp);
+    void setMessageNotifiedTimestamp(int messageId, boolean isIncoming, long notifiedTimestamp);
 
-    void setOutgoingDeliveryDeliveredTimestamp(in RcsMessage message, in RcsParticipant recipient, long deliveredTimestamp);
+    // RcsOutgoingMessageDelivery APIs
+    void createOutgoingDelivery(int messageId, int participantId, long seenTimestamp, long deliveredTimestamp);
 
-    void setOutgoingDeliverySeenTimestamp(in RcsMessage message, in RcsParticipant recipient, long seenTimestamp);
+    void setOutgoingDeliveryDeliveredTimestamp(int messageId, int participantId, long deliveredTimestamp);
+
+    void setOutgoingDeliverySeenTimestamp(int messageId, int participantId, long seenTimestamp);
 }

@@ -19,6 +19,9 @@ package android.telephony.ims;
 import android.annotation.WorkerThread;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.telephony.ims.aidl.IRcs;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -26,6 +29,7 @@ import com.android.internal.annotations.VisibleForTesting;
 /**
  * RcsThread represents a single RCS conversation thread. It holds messages that were sent and
  * received and events that occurred on that thread.
+ *
  * @hide - TODO(109759350) make this public
  * TODO(109759350) add exceptions and roll back local changes if RPC fails
  */
@@ -61,7 +65,15 @@ public abstract class RcsThread implements Parcelable {
      */
     @WorkerThread
     public void addMessage(RcsMessage rcsMessage) {
-        // TODO (109759350) - implement
+        try {
+            IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
+            if (iRcs != null) {
+                iRcs.addMessage(rcsMessage, mThreadId);
+            }
+        } catch (RemoteException re) {
+            Log.e(RcsMessageStore.TAG,
+                    "RcsThread: Exception happened during addMessage: ", re);
+        }
     }
 
     /**
@@ -71,7 +83,16 @@ public abstract class RcsThread implements Parcelable {
      */
     @WorkerThread
     public void deleteMessage(RcsMessage rcsMessage) {
-        // TODO (109759350) - implement
+        try {
+            IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
+            if (iRcs != null) {
+                iRcs.deleteMessage(rcsMessage.getId(), rcsMessage.isIncoming(), mThreadId,
+                        isGroup());
+            }
+        } catch (RemoteException re) {
+            Log.e(RcsMessageStore.TAG,
+                    "RcsThread: Exception happened during deleteMessage: ", re);
+        }
     }
 
     /**
