@@ -59,12 +59,40 @@ public abstract class RcsMessage implements Parcelable {
     private @RcsMessageStatus int mMessageStatus;
     private long mOriginationTimestamp;
     private final Set<RcsPart> mParts;
+    private RcsThread mOwnerThread;
 
     @IntDef({
             DRAFT, SUCCEEDED, FAILED, SENDING, SENDING, DOWNLOADING, PAUSED, RETRYING
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface RcsMessageStatus {
+    }
+
+    RcsMessage(String rcsMessageGlobalId, int subId, @RcsMessageStatus int messageStatus,
+            long originationTimestamp) {
+        mRcsMessageGlobalId = rcsMessageGlobalId;
+        mSubId = subId;
+        mMessageStatus = messageStatus;
+        mOriginationTimestamp = originationTimestamp;
+
+        mParts = new HashSet<>();
+    }
+
+    /**
+     * Sets the row Id of the common message. This is needed to be set externally as the message
+     * does not write itself to the storage.
+     * @hide
+     */
+    public void setId(int id) {
+        mId = id;
+    }
+
+    /**
+     * Returns the row Id from the common message.
+     * @hide
+     */
+    public int getId() {
+        return mId;
     }
 
     /**
@@ -84,7 +112,7 @@ public abstract class RcsMessage implements Parcelable {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.setMessageSubId(mId, subId);
+                iRcs.setMessageSubId(mId, isIncoming(), subId);
                 mSubId = subId;
             }
         } catch (RemoteException re) {
@@ -101,7 +129,7 @@ public abstract class RcsMessage implements Parcelable {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.setMessageStatus(mId, rcsMessageStatus);
+                iRcs.setMessageStatus(mId, isIncoming(), rcsMessageStatus);
                 mMessageStatus = rcsMessageStatus;
             }
         } catch (RemoteException re) {
@@ -130,7 +158,7 @@ public abstract class RcsMessage implements Parcelable {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.setMessageOriginationTimestamp(mId, timestamp);
+                iRcs.setMessageOriginationTimestamp(mId, isIncoming(), timestamp);
                 mOriginationTimestamp = timestamp;
             }
         } catch (RemoteException re) {
@@ -152,14 +180,14 @@ public abstract class RcsMessage implements Parcelable {
      * Sets the globally unique RCS message identifier for this message and persists it into
      * storage. This function does not confirm that this message id is unique.
      *
-     * @param rcsMessageGlobalId The globally RCS message identifier
+     * @param rcsMessageGlobalId The globally unique RCS message identifier
      */
     @WorkerThread
     public void setRcsMessageId(String rcsMessageGlobalId) {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.setGlobalMessageIdForMessage(mId, mRcsMessageGlobalId);
+                iRcs.setGlobalMessageIdForMessage(mId, isIncoming(), mRcsMessageGlobalId);
                 mRcsMessageGlobalId = rcsMessageGlobalId;
             }
         } catch (RemoteException re) {
@@ -201,7 +229,7 @@ public abstract class RcsMessage implements Parcelable {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
                 for (RcsPart rcsPart : rcsParts) {
-                    iRcs.addPartToMessage(mId, rcsPart);
+                    iRcs.addPartToMessage(mId, isIncoming(), rcsPart);
                     mParts.add(rcsPart);
                 }
             }
@@ -220,7 +248,7 @@ public abstract class RcsMessage implements Parcelable {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.removePartFromMessage(mId, rcsPart);
+                iRcs.removePartFromMessage(mId, isIncoming(), rcsPart);
                 mParts.remove(rcsPart);
             }
         } catch (RemoteException re) {
@@ -244,6 +272,8 @@ public abstract class RcsMessage implements Parcelable {
         List<RcsPart> partList = new ArrayList<>();
         in.readTypedList(partList, RcsPart.CREATOR);
         mParts = new HashSet<>(partList);
+
+        mOwnerThread = in.readParcelable(RcsThread.class.getClassLoader());
     }
 
     public static final Creator<RcsMessage> CREATOR = new Creator<RcsMessage>() {
@@ -283,5 +313,7 @@ public abstract class RcsMessage implements Parcelable {
 
         List<RcsPart> partList = new ArrayList<>(mParts);
         dest.writeTypedList(partList, flags);
+
+        dest.writeParcelable(mOwnerThread, flags);
     }
 }
