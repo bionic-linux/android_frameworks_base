@@ -118,8 +118,10 @@ public class CallbackHandlerTest extends SysuiTestCase {
         boolean wide = true;
         int subId = 5;
         boolean roaming = true;
+        int volteIcon = 0;
+
         MobileDataIndicators indicators = new MobileDataIndicators(
-                status, qs, type, qsType, in, out, typeDescription,
+                status, qs, type, qsType, in, out, volteIcon, typeDescription,
                 typeDescriptionHtml, description, subId, roaming, true);
         mHandler.setMobileDataIndicators(indicators);
         waitForCallbacks();
@@ -135,6 +137,7 @@ public class CallbackHandlerTest extends SysuiTestCase {
         assertEquals(qsType, expected.qsType);
         assertEquals(in, expected.activityIn);
         assertEquals(out, expected.activityOut);
+        assertEquals(volteIcon, expected.volteIcon);
         assertEquals(typeDescription, expected.typeContentDescription);
         assertEquals(typeDescriptionHtml, expected.typeContentDescriptionHtml);
         assertEquals(description, expected.qsDescription);
