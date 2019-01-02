@@ -289,8 +289,9 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
     @Override
     public void setMobileDataIndicators(IconState statusIcon, IconState qsIcon, int statusType,
-            int qsType, boolean activityIn, boolean activityOut, String typeContentDescription,
-            String description, boolean isWide, int subId, boolean roaming) {
+            int qsType, boolean activityIn, boolean activityOut, int volteIcon,
+            String typeContentDescription, String description, boolean isWide,
+            int subId, boolean roaming) {
         PhoneState state = getState(subId);
         if (state == null) {
             return;
