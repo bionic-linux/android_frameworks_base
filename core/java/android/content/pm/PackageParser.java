@@ -7534,8 +7534,8 @@ public class PackageParser {
             return null;
         }
         if (!copyNeeded(flags, p, state, null, userId)
-                && ((flags&PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS) == 0
-                        || state.enabled != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_UNTIL_USED)) {
+            && ((flags & PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS) == 0
+            || state.enabled != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_UNTIL_USED)) {
             // In this case it is safe to directly modify the internal ApplicationInfo state:
             // - CompatibilityMode is global state, so will be the same for every call.
             // - We only come in to here if the app should reported as installed; this is the
