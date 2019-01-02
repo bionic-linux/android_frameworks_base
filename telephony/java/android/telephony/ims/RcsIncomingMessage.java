@@ -129,8 +129,10 @@ public class RcsIncomingMessage extends RcsMessage {
      */
     RcsIncomingMessage(RcsParticipant senderParticipant, long arrivalTimestamp,
             long notifiedTimestamp, String rcsMessageGlobalId, int subId,
-            @RcsMessageStatus int messageStatus, long originationTimestamp) {
-        super(rcsMessageGlobalId, subId, messageStatus, originationTimestamp);
+            @RcsMessageStatus int messageStatus, long originationTimestamp, String text,
+            double latitude, double longitude) {
+        super(rcsMessageGlobalId, subId, messageStatus, originationTimestamp, text, latitude,
+                longitude);
         mSenderParticipant = senderParticipant;
         mArrivalTimestamp = arrivalTimestamp;
         mNotifiedTimestamp = notifiedTimestamp;
@@ -160,17 +162,14 @@ public class RcsIncomingMessage extends RcsMessage {
      * Use this builder to get an instance of {@link RcsIncomingMessage}. The message will not be
      * persisted into storage until it is added to an {@link RcsThread}.
      */
-    public static class Builder {
+    public static class Builder extends RcsMessage.Builder {
         private RcsParticipant mSenderParticipant;
         private long mArrivalTimestamp;
         private long mNotifiedTimestamp;
-        private String mRcsMessageGlobalId;
-        private int mSubId;
-        private @RcsMessageStatus int mMessageStatus;
-        private long mOriginationTimestamp;
 
         /**
          * Sets the sender of the message to be built.
+         *
          * @param senderParticipant The {@link RcsParticipant} that sent this message
          * @return The same instance of {@link Builder} to chain setter methods
          */
@@ -181,6 +180,7 @@ public class RcsIncomingMessage extends RcsMessage {
 
         /**
          * Sets the arrival timestamp of the message to be built.
+         *
          * @param arrivalTimestamp The timestamp of the message arrival. The value is in
          *                         milliseconds passed after midnight, January 1, 1970 UTC
          * @return The same instance of {@link Builder} to chain setter methods
@@ -192,55 +192,13 @@ public class RcsIncomingMessage extends RcsMessage {
 
         /**
          * Sets the notification timestamp of the message to be built.
+         *
          * @param notifiedTimestamp The timestamp of the user notified of this message. The value is
          *                          in milliseconds passed after midnight, January 1, 1970 UTC
          * @return The same instance of {@link Builder} to chain setter methods
          */
         public Builder setNotifiedTimestamp(long notifiedTimestamp) {
             mNotifiedTimestamp = notifiedTimestamp;
-            return this;
-        }
-
-        /**
-         * Sets the globally unique RCS message ID for this message.
-         * @param rcsMessageId The unique ID for the message to be built
-         * @return The same instance of {@link Builder} to chain setter methods.
-         */
-        public Builder setRcsMessageId(String rcsMessageId) {
-            mRcsMessageGlobalId = rcsMessageId;
-            return this;
-        }
-
-        /**
-         * Sets the subscription identifier that this outgoing message was sent from.
-         * @param subId The subscription identifier.
-         * @return The same instance of {@link Builder} to chain setter methods.
-         */
-        public Builder setSubId(int subId) {
-            mSubId = subId;
-            return this;
-        }
-
-        /**
-         * Sets the message status for this outgoing message. For a message that is yet to be sent,
-         * it should be {@link android.telephony.ims.RcsMessage.RcsMessageStatus#DRAFT}.
-         * @param rcsMessageStatus The current message status.
-         * @return The same instance of {@link Builder} to chain setter methods.
-         */
-        public Builder setStatus(@RcsMessageStatus int rcsMessageStatus) {
-            mMessageStatus = rcsMessageStatus;
-            return this;
-        }
-
-        /**
-         * Sets the origination timestamp for this outgoing message. This should be the time that
-         * the message was completed and tried to be sent.
-         * @param originationTimestamp The origination timestamp value in milliseconds passed
-         *                             after midnight, January 1, 1970 UTC
-         * @return The same instance of {@link Builder} to chain setter methods.
-         */
-        public Builder setOriginationTimestamp(long originationTimestamp) {
-            mOriginationTimestamp = originationTimestamp;
             return this;
         }
 
@@ -254,7 +212,7 @@ public class RcsIncomingMessage extends RcsMessage {
         public RcsIncomingMessage build() {
             return new RcsIncomingMessage(mSenderParticipant,
                     mArrivalTimestamp, mNotifiedTimestamp, mRcsMessageGlobalId, mSubId,
-                    mMessageStatus, mOriginationTimestamp);
+                    mMessageStatus, mOriginationTimestamp, mText, mLatitude, mLongitude);
         }
     }
 }

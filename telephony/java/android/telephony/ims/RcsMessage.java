@@ -17,6 +17,7 @@ package android.telephony.ims;
 
 import android.annotation.IntDef;
 import android.annotation.WorkerThread;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
@@ -26,10 +27,7 @@ import android.util.Log;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,6 +36,7 @@ import java.util.Set;
  * @hide - TODO(109759350) make this public
  */
 public abstract class RcsMessage implements Parcelable {
+    public static final double LOCATION_NOT_SET = Double.MIN_VALUE;
     public static final @RcsMessageStatus int DRAFT = 0;
     public static final @RcsMessageStatus int SUCCEEDED = 1;
     public static final @RcsMessageStatus int FAILED = 2;
@@ -52,14 +51,18 @@ public abstract class RcsMessage implements Parcelable {
     // as integer instead of boolean for extensibility.
     protected static final int INCOMING_MESSAGE_TYPE = 1998;
     protected static final int OUTGOING_MESSAGE_TYPE = 1999;
+    private static final int FILE_TRANSFER_ID_INDEX = 1;
 
     int mId;
     private String mRcsMessageGlobalId;
     private int mSubId;
     private @RcsMessageStatus int mMessageStatus;
     private long mOriginationTimestamp;
-    private final Set<RcsPart> mParts;
     private RcsThread mOwnerThread;
+    private String mText;
+    private double mLatitude;
+    private double mLongitude;
+    private Set<RcsFileTransferPart> mFileTransfers;
 
     @IntDef({
             DRAFT, SUCCEEDED, FAILED, SENDING, SENDING, DOWNLOADING, PAUSED, RETRYING
@@ -69,18 +72,21 @@ public abstract class RcsMessage implements Parcelable {
     }
 
     RcsMessage(String rcsMessageGlobalId, int subId, @RcsMessageStatus int messageStatus,
-            long originationTimestamp) {
+            long originationTimestamp, String text, double latitude, double longitude) {
         mRcsMessageGlobalId = rcsMessageGlobalId;
         mSubId = subId;
         mMessageStatus = messageStatus;
         mOriginationTimestamp = originationTimestamp;
-
-        mParts = new HashSet<>();
+        mText = text;
+        mLatitude = latitude;
+        mLongitude = longitude;
+        mFileTransfers = new HashSet<>();
     }
 
     /**
      * Sets the row Id of the common message. This is needed to be set externally as the message
      * does not write itself to the storage.
+     *
      * @hide
      */
     public void setId(int id) {
@@ -89,6 +95,7 @@ public abstract class RcsMessage implements Parcelable {
 
     /**
      * Returns the row Id from the common message.
+     *
      * @hide
      */
     public int getId() {
@@ -187,7 +194,7 @@ public abstract class RcsMessage implements Parcelable {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.setGlobalMessageIdForMessage(mId, isIncoming(), mRcsMessageGlobalId);
+                iRcs.setGlobalMessageIdForMessage(mId, isIncoming(), rcsMessageGlobalId);
                 mRcsMessageGlobalId = rcsMessageGlobalId;
             }
         } catch (RemoteException re) {
@@ -204,56 +211,131 @@ public abstract class RcsMessage implements Parcelable {
     }
 
     /**
-     * @return Returns an immutable set of {@link RcsPart}s that this RCS message is composed of.
+     * @return Returns the user visible text included in this message.
      */
-    public Set<RcsPart> getParts() {
-        return Collections.unmodifiableSet(mParts);
+    public String getText() {
+        return mText;
     }
 
     /**
-     * Adds an {@link RcsPart} to the set of existing parts this message has and persists into the
-     * storage.
+     * Sets the user visible text for this message and persists in storage.
+     *
+     * @param text The text this message now has
      */
     @WorkerThread
-    public void addPart(RcsPart rcsPart) {
-        addPart(Collections.singletonList(rcsPart));
-    }
-
-    /**
-     * Adds a collection of {@link RcsPart}s to the set of existing parts this message has and
-     * persists into the storage.
-     */
-    @WorkerThread
-    public void addPart(Iterable<RcsPart> rcsParts) {
+    public void setText(String text) {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                for (RcsPart rcsPart : rcsParts) {
-                    iRcs.addPartToMessage(mId, isIncoming(), rcsPart);
-                    mParts.add(rcsPart);
-                }
+                iRcs.setTextForMessage(mId, isIncoming(), text);
+                mText = text;
             }
         } catch (RemoteException re) {
             Log.e(RcsMessageStore.TAG,
-                    "RcsMessage: Exception happened during addPart", re);
+                    "RcsMessage: Exception happened during setText", re);
         }
     }
 
     /**
-     * Removes a part from the set of existing {@link RcsPart}s this message already has and
-     * persists into the storage.
+     * @return Returns the associated latitude for this message, if it contains a location.
+     */
+    public double getLatitude() {
+        return mLatitude;
+    }
+
+    /**
+     * Sets the latitude for this message and persists in storage.
+     *
+     * @param latitude The latitude for this location message.
      */
     @WorkerThread
-    public void removePart(RcsPart rcsPart) {
+    public void setLatitude(double latitude) {
         try {
             IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
             if (iRcs != null) {
-                iRcs.removePartFromMessage(mId, isIncoming(), rcsPart);
-                mParts.remove(rcsPart);
+                iRcs.setLatitudeForMessage(mId, isIncoming(), latitude);
+                mLatitude = latitude;
             }
         } catch (RemoteException re) {
             Log.e(RcsMessageStore.TAG,
-                    "RcsMessage: Exception happened during removePart", re);
+                    "RcsMessage: Exception happened during setLatitude", re);
+        }
+    }
+
+    /**
+     * @return Returns the associated longitude for this message, if it contains a location.
+     */
+    public double getLongitude() {
+        return mLongitude;
+    }
+
+    /**
+     * Sets the longitude for this message and persists in storage.
+     *
+     * @param longitude The longitude for this location message.
+     */
+    @WorkerThread
+    public void setLongitude(double longitude) {
+        try {
+            IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
+            if (iRcs != null) {
+                iRcs.setLongitudeForMessage(mId, isIncoming(), longitude);
+                mLongitude = longitude;
+            }
+        } catch (RemoteException re) {
+            Log.e(RcsMessageStore.TAG,
+                    "RcsMessage: Exception happened during setLongitude", re);
+        }
+    }
+
+    /**
+     * Attaches a file transfer to this message and persists into storage.
+     */
+    @WorkerThread
+    public void addFileTransferPart(RcsFileTransferPart fileTransferPart) {
+        try {
+            IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
+            if (iRcs != null) {
+                Uri uri = iRcs.storeFileTransfer(mId, isIncoming(), fileTransferPart);
+                if (uri != null) {
+                    fileTransferPart.setId(
+                            Integer.parseInt(uri.getPathSegments().get(FILE_TRANSFER_ID_INDEX)));
+                    mFileTransfers.add(fileTransferPart);
+                }
+            }
+        } catch (RemoteException re) {
+            Log.e(RcsMessageStore.TAG,
+                    "RcsMessage: Exception happened during addFileTransferPart", re);
+        }
+    }
+
+    /**
+     * @return Returns all the file transfers associated with this message.
+     */
+    public Set<RcsFileTransferPart> getFileTransferParts() {
+        return mFileTransfers;
+    }
+
+    /**
+     * Removes a file transfer part from this message, and deletes the part in storage.
+     *
+     * @param fileTransferPart The part to delete.
+     */
+    @WorkerThread
+    public void removeFileTransferPart(RcsFileTransferPart fileTransferPart) {
+        if (!mFileTransfers.contains(fileTransferPart)) {
+            return;
+        }
+
+        try {
+            IRcs iRcs = IRcs.Stub.asInterface(ServiceManager.getService("ircs"));
+            if (iRcs != null) {
+                iRcs.deleteFileTransfer(fileTransferPart.getId());
+                mFileTransfers.remove(fileTransferPart);
+            }
+        } catch (RemoteException re) {
+            Log.e(RcsMessageStore.TAG,
+                    "RcsMessage: Exception happened during removeFileTransferPart", re);
         }
     }
 
@@ -262,17 +344,61 @@ public abstract class RcsMessage implements Parcelable {
      */
     public abstract boolean isIncoming();
 
+    static class Builder {
+        String mRcsMessageGlobalId;
+        int mSubId;
+        @RcsMessageStatus
+        int mMessageStatus;
+        long mOriginationTimestamp;
+        String mText;
+        double mLatitude = LOCATION_NOT_SET;
+        double mLongitude = LOCATION_NOT_SET;
+
+        public Builder setStatus(@RcsMessageStatus int rcsMessageStatus) {
+            mMessageStatus = rcsMessageStatus;
+            return this;
+        }
+
+        public Builder setSubId(int subId) {
+            mSubId = subId;
+            return this;
+        }
+
+        public Builder setRcsMessageId(String rcsMessageId) {
+            mRcsMessageGlobalId = rcsMessageId;
+            return this;
+        }
+
+        public Builder setOriginationTimestamp(long originationTimestamp) {
+            mOriginationTimestamp = originationTimestamp;
+            return this;
+        }
+
+        public Builder setText(String text) {
+            mText = text;
+            return this;
+        }
+
+        public Builder setLatitude(double latitude) {
+            mLatitude = latitude;
+            return this;
+        }
+
+        public Builder setLongitude(double longitude) {
+            mLongitude = longitude;
+            return this;
+        }
+    }
+
     RcsMessage(Parcel in) {
         mId = in.readInt();
         mSubId = in.readInt();
         mMessageStatus = in.readInt();
         mOriginationTimestamp = in.readLong();
         mRcsMessageGlobalId = in.readString();
-
-        List<RcsPart> partList = new ArrayList<>();
-        in.readTypedList(partList, RcsPart.CREATOR);
-        mParts = new HashSet<>(partList);
-
+        mText = in.readString();
+        mLatitude = in.readDouble();
+        mLongitude = in.readDouble();
         mOwnerThread = in.readParcelable(RcsThread.class.getClassLoader());
     }
 
@@ -310,10 +436,9 @@ public abstract class RcsMessage implements Parcelable {
         dest.writeInt(mMessageStatus);
         dest.writeLong(mOriginationTimestamp);
         dest.writeString(mRcsMessageGlobalId);
-
-        List<RcsPart> partList = new ArrayList<>(mParts);
-        dest.writeTypedList(partList, flags);
-
+        dest.writeString(mText);
+        dest.writeDouble(mLatitude);
+        dest.writeDouble(mLongitude);
         dest.writeParcelable(mOwnerThread, flags);
     }
 }
