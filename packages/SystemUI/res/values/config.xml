@@ -677,4 +677,7 @@
         <item>@*android:string/status_bar_alarm_clock</item>
         <item>@*android:string/status_bar_call_strength</item>
     </string-array>
+
+    <!-- Whether to show VoLTE icon in the status bar -->
+    <bool name="config_display_volte">false</bool>
 </resources>

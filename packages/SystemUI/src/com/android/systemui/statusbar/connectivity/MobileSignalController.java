@@ -38,7 +38,9 @@ import android.telephony.ims.ImsException;
 import android.telephony.ims.ImsMmTelManager;
 import android.telephony.ims.ImsReasonInfo;
 import android.telephony.ims.ImsRegistrationAttributes;
+import android.telephony.ims.ImsStateCallback;
 import android.telephony.ims.RegistrationManager.RegistrationCallback;
+import android.telephony.ims.feature.MmTelFeature;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -81,7 +83,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     private final ContentObserver mObserver;
     private final boolean mProviderModelBehavior;
     private final boolean mProviderModelSetting;
-    private final Handler mReceiverHandler;
     private int mImsType = IMS_TYPE_WWAN;
     // Save entire info for logging, we only use the id.
     final SubscriptionInfo mSubscriptionInfo;
@@ -137,6 +138,12 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         @Override
         public void onRegistered(ImsRegistrationAttributes attributes) {
             Log.d(mTag, "onRegistered: " + "attributes=" + attributes);
+            mCurrentState.imsRegistered = true;
+            notifyListenersIfNecessary();
+            if (!mProviderModelBehavior) {
+                return;
+            }
+
             int imsTransportType = attributes.getTransportType();
             int registrationAttributes = attributes.getAttributeFlags();
             if (imsTransportType == AccessNetworkConstants.TRANSPORT_TYPE_WWAN) {
@@ -170,12 +177,51 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         @Override
         public void onUnregistered(ImsReasonInfo info) {
             Log.d(mTag, "onDeregistered: " + "info=" + info);
+            mCurrentState.imsRegistered = false;
+            notifyListenersIfNecessary();
+            if (!mProviderModelBehavior) {
+                return;
+            }
+
             mImsType = IMS_TYPE_WWAN;
             IconState statusIcon = new IconState(
                     true,
                     getCallStrengthIcon(mLastWwanLevel, /* isWifi= */false),
                     getCallStrengthDescription(mLastWwanLevel, /* isWifi= */false));
             notifyCallStateChange(statusIcon, mSubscriptionInfo.getSubscriptionId());
+        }
+    };
+
+    private ImsMmTelManager.CapabilityCallback mCapabilityCallback
+            = new ImsMmTelManager.CapabilityCallback() {
+        @Override
+        public void onCapabilitiesStatusChanged(MmTelFeature.MmTelCapabilities config) {
+            Log.d(mTag, "onCapabilitiesStatusChanged: config=" + config);
+            mCurrentState.voiceCapable =
+                    config.isCapable(MmTelFeature.MmTelCapabilities.CAPABILITY_TYPE_VOICE);
+            mCurrentState.videoCapable =
+                    config.isCapable(MmTelFeature.MmTelCapabilities.CAPABILITY_TYPE_VIDEO);
+            notifyListenersIfNecessary();
+        }
+    };
+
+    private final ImsStateCallback mImsStateCallback = new ImsStateCallback() {
+        @Override
+        public void onUnavailable(int reason) {
+            Log.d(mTag, "ImsStateCallback.onUnavailable: reason=" + reason);
+            removeListeners();
+        }
+
+        @Override
+        public void onAvailable() {
+            Log.d(mTag, "ImsStateCallback.onAvailable");
+            setListeners();
+        }
+
+        @Override
+        public void onError() {
+            Log.e(mTag, "ImsStateCallback.onError");
+            removeListeners();
         }
     };
 
@@ -206,7 +252,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 R.string.status_bar_network_name_separator).toString();
         mNetworkNameDefault = getTextIfExists(
                 com.android.internal.R.string.lockscreen_carrier_default).toString();
-        mReceiverHandler = new Handler(receiverLooper);
 
         mNetworkToIconLookup = mapIconSets(mConfig);
         mDefaultIcons = getDefaultIcons(mConfig);
@@ -272,33 +317,15 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
                 Global.MOBILE_DATA + mSubscriptionInfo.getSubscriptionId()),
                 true, mObserver);
-        if (mProviderModelBehavior) {
-            mReceiverHandler.post(mTryRegisterIms);
-        }
-    }
-
-    // There is no listener to monitor whether the IMS service is ready, so we have to retry the
-    // IMS registration.
-    private final Runnable mTryRegisterIms = new Runnable() {
-        private static final int MAX_RETRY = 12;
-        private int mRetryCount;
-
-        @Override
-        public void run() {
+        if (mConfig.showVolteIcon || mProviderModelBehavior) {
             try {
-                mRetryCount++;
-                mImsMmTelManager.registerImsRegistrationCallback(
-                        mReceiverHandler::post, mRegistrationCallback);
-                Log.d(mTag, "registerImsRegistrationCallback succeeded");
-            } catch (RuntimeException | ImsException e) {
-                if (mRetryCount < MAX_RETRY) {
-                    Log.e(mTag, mRetryCount + " registerImsRegistrationCallback failed", e);
-                    // Wait for 5 seconds to retry
-                    mReceiverHandler.postDelayed(mTryRegisterIms, 5000);
-                }
+                mImsMmTelManager.registerImsStateCallback(mContext.getMainExecutor(),
+                        mImsStateCallback);
+            }catch (ImsException exception) {
+                Log.e(mTag, "failed to call registerImsStateCallback ", exception);
             }
         }
-    };
+    }
 
     /**
      * Stop listening for phone state changes.
@@ -373,6 +400,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         final QsInfo qsInfo = getQsInfo(contentDescription, icons.dataType);
         final SbInfo sbInfo = getSbInfo(contentDescription, icons.dataType);
 
+        final int volteIcon = mConfig.showVolteIcon ? getVolteResId() : 0;
         MobileDataIndicators mobileDataIndicators = new MobileDataIndicators(
                 sbInfo.icon,
                 qsInfo.icon,
@@ -380,6 +408,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 qsInfo.ratTypeIcon,
                 mCurrentState.hasActivityIn(),
                 mCurrentState.hasActivityOut(),
+                volteIcon,
                 dataContentDescription,
                 dataContentDescriptionHtml,
                 qsInfo.description,
@@ -806,6 +835,37 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     @VisibleForTesting
     void setImsType(int imsType) {
         mImsType = imsType;
+    }
+
+    private int getVolteResId() {
+        int resId = 0;
+        int dataNetType = mCurrentState.telephonyDisplayInfo.getNetworkType();
+        int voiceNetTye = mCurrentState.getVoiceNetworkType();
+        if ( (mCurrentState.voiceCapable || mCurrentState.videoCapable)
+                &&  mCurrentState.imsRegistered ) {
+            resId = R.drawable.ic_volte;
+        }else if ((dataNetType == TelephonyManager.NETWORK_TYPE_LTE ||
+                dataNetType == TelephonyManager.NETWORK_TYPE_LTE_CA)
+                && voiceNetTye  == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
+            resId = R.drawable.ic_volte_no_voice;
+        }
+        return resId;
+    }
+
+    private void setListeners() {
+        try {
+            mImsMmTelManager.registerMmTelCapabilityCallback(mContext.getMainExecutor(),
+                    mCapabilityCallback);
+            mImsMmTelManager.registerImsRegistrationCallback (mContext.getMainExecutor(),
+                    mRegistrationCallback);
+        } catch (ImsException e) {
+            Log.e(mTag, "unable to register listeners.", e);
+        }
+    }
+
+    private void removeListeners() {
+        mImsMmTelManager.unregisterMmTelCapabilityCallback(mCapabilityCallback);
+        mImsMmTelManager.unregisterImsRegistrationCallback(mRegistrationCallback);
     }
 
     @Override
