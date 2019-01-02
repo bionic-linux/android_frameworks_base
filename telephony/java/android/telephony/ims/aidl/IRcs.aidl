@@ -17,8 +17,8 @@
 package android.telephony.ims.aidl;
 
 import android.net.Uri;
+import android.telephony.ims.RcsFileTransferPart;
 import android.telephony.ims.RcsMessage;
-import android.telephony.ims.RcsPart;
 import android.telephony.ims.RcsParticipant;
 import android.telephony.ims.Rcs1To1Thread;
 import android.telephony.ims.RcsThreadQueryContinuationToken;
@@ -79,13 +79,15 @@ interface IRcs {
 
     void setGlobalMessageIdForMessage(int messageId, boolean isIncoming, String globalId);
 
-    void addPartToMessage(int messageId, boolean isIncoming, in RcsPart rcsPart);
-
-    void removePartFromMessage(int messageId, boolean isIncoming, in RcsPart rcsPart);
-
     void setMessageArrivalTimestamp(int messageId, boolean isIncoming, long arrivalTimestamp);
 
     void setMessageNotifiedTimestamp(int messageId, boolean isIncoming, long notifiedTimestamp);
+
+    void setTextForMessage(int messageId, boolean isIncoming, String text);
+
+    void setLatitudeForMessage(int messageId, boolean isIncoming, double latitude);
+
+    void setLongitudeForMessage(int messageId, boolean isIncoming, double longitude);
 
     // RcsOutgoingMessageDelivery APIs
     void createOutgoingDelivery(int messageId, int participantId, long seenTimestamp, long deliveredTimestamp);
@@ -93,4 +95,31 @@ interface IRcs {
     void setOutgoingDeliveryDeliveredTimestamp(int messageId, int participantId, long deliveredTimestamp);
 
     void setOutgoingDeliverySeenTimestamp(int messageId, int participantId, long seenTimestamp);
+
+    // RcsFileTransferPart APIs
+    Uri storeFileTransfer(int messageId, boolean isIncoming, in RcsFileTransferPart fileTransferPart);
+
+    void deleteFileTransfer(int partId);
+
+    void setFileTransferSessionId(int partId, String sessionId);
+
+    void setFileTransferContentUri(int partId, String contentUri);
+
+    void setFileTransferContentType(int partId, String contentType);
+
+    void setFileTransferFileSize(int partId, long fileSize);
+
+    void setFileTransferTransferOffset(int partId, long transferOffset);
+
+    void setFileTransferStatus(int partId, int transferStatus);
+
+    void setFileTransferWidth(int partId, int width);
+
+    void setFileTransferHeight(int partId, int height);
+
+    void setFileTransferLength(int partId, long length);
+
+    void setFileTransferPreviewUri(int partId, String uri);
+
+    void setFileTransferPreviewType(int partId, String type);
 }
