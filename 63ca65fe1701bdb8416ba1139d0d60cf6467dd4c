@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c310d699_cc49d53a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2019-01-03T17:47:45Z",
+      "side": 1,
+      "message": "Because this CL is already merged into internal master you need to add the following tag to prevent automerger from trying to merge it again into master:\n\nMerged-In: Ib2af1b66d4649279fdcb97e7cdf8cdb92e361765",
+      "revId": "63ca65fe1701bdb8416ba1139d0d60cf6467dd4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
