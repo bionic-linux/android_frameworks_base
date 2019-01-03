@@ -22,6 +22,30 @@
       "revId": "09cb55dec0764f458e79e327e6931aa33d5999c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca82cd0d_822fae5d",
+        "filename": "core/java/android/view/TextureView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1332588
+      },
+      "writtenOn": "2019-01-03T10:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "243bc868_c328617b",
+      "range": {
+        "startLine": 397,
+        "startChar": 24,
+        "endLine": 397,
+        "endChar": 44
+      },
+      "revId": "09cb55dec0764f458e79e327e6931aa33d5999c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
