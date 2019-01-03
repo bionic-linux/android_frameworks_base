@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "505dc426_dbf06d8a",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-03T23:37:43Z",
+      "side": 1,
+      "message": "not quite understand this part. how does it work if rscp thresholds is configured with 5 entries and mRscp is within the last range (biggest value)",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 73
+      },
+      "revId": "4a2263e93e25dcb597525c67fb22b141e09ba20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47a5b2e_62fc52b3",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-03T23:37:43Z",
+      "side": 1,
+      "message": "nit: loge",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 19
+      },
+      "revId": "4a2263e93e25dcb597525c67fb22b141e09ba20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
