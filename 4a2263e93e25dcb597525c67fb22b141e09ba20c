@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2663a711_b92fa3dd",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-03T23:57:25Z",
+      "side": 1,
+      "message": "The maximum \"level\" that we support is 4 \u003d SIGNAL_STRENGTH_GREAT:\nhttps://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/CellSignalStrength.java?q\u003dCellSignalStrength.java\u0026sq\u003dpackage:android\u0026g\u003d0\u0026l\u003d38\n\nLevel0 \u003c threshold[0] \u003c\u003d Level1 \u003c threshold[1] \u003c\u003d Level2 \u003c threshold[2] \u003c\u003d Level3 \u003c threshold[3] \u003c\u003d Level4.\n\nTo have 5 different \"levels\", we need 4 level thresholds. If we had 5 thresholds, then we\u0027d have 6 possible levels, and in that case both level 4 and 5 (top 2) would be considered to be the same output level (4) when the value returns.\n\nAn alternative approach would be to iterate the entire array and then do math.min(level, MAX_LEVEL) at the end. This would give the same result for the same set of levels.",
+      "parentUuid": "505dc426_dbf06d8a",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 73
+      },
+      "revId": "4a2263e93e25dcb597525c67fb22b141e09ba20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c47a5b2e_62fc52b3",
         "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-03T23:37:43Z",
       "side": 1,
       "message": "nit: loge",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 19
+      },
+      "revId": "4a2263e93e25dcb597525c67fb22b141e09ba20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5030618_ac7d535f",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-03T23:57:25Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "c47a5b2e_62fc52b3",
       "range": {
         "startLine": 183,
         "startChar": 16,
