@@ -3791,6 +3791,34 @@ package android.os {
     field public static final android.os.Parcelable.Creator<android.os.IncidentReportArgs> CREATOR;
   }
 
+  public class LiveImageHelper {
+    ctor public LiveImageHelper(android.os.LiveImageHelper.Callback);
+    method public void start(android.app.Activity, android.net.Uri, long, long) throws java.lang.Exception;
+    method public void start(android.app.Activity, android.net.Uri, long, long) throws java.lang.Exception;
+    field public static final long DEFAULT_USERDATA_SIZE = 10737418240L; // 0x280000000L
+  }
+
+  public static abstract interface LiveImageHelper.Callback {
+    method public abstract void onError(java.lang.Exception);
+    method public abstract void onStatusChanged(android.os.LiveImageHelper.Status);
+  }
+
+  public static final class LiveImageHelper.MessageType extends java.lang.Enum {
+    method public static android.os.LiveImageHelper.MessageType valueOf(java.lang.String);
+    method public static final android.os.LiveImageHelper.MessageType[] values();
+    enum_constant public static final android.os.LiveImageHelper.MessageType ERROR;
+    enum_constant public static final android.os.LiveImageHelper.MessageType STATUS;
+  }
+
+  public static final class LiveImageHelper.Status extends java.lang.Enum {
+    method public static android.os.LiveImageHelper.Status valueOf(java.lang.String);
+    method public static final android.os.LiveImageHelper.Status[] values();
+    enum_constant public static final android.os.LiveImageHelper.Status INPROGRESS;
+    enum_constant public static final android.os.LiveImageHelper.Status INUSE;
+    enum_constant public static final android.os.LiveImageHelper.Status READY;
+    enum_constant public static final android.os.LiveImageHelper.Status UNINIT;
+  }
+
   public final class NativeHandle implements java.io.Closeable {
     ctor public NativeHandle();
     ctor public NativeHandle(java.io.FileDescriptor, boolean);
