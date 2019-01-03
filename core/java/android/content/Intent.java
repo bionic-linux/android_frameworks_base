@@ -3178,6 +3178,15 @@ public class Intent implements Parcelable, Cloneable {
             "android.intent.action.USER_ADDED";
 
     /**
+     * Start a live image procedure.
+     * <p>Input: An URI to the live image
+     * <p>Output: nothing.
+     * @hide
+     */
+    public static final String ACTION_LIVE_IMAGE_STARTED =
+            "android.intent.action.ACTION_LIVE_IMAGE_STARTED";
+
+    /**
      * Broadcast sent by the system when a user is started. Carries an extra
      * EXTRA_USER_HANDLE that has the userHandle of the user.  This is only sent to
      * registered receivers, not manifest receivers.  It is sent to the user

@@ -3791,6 +3791,32 @@ package android.os {
     field public static final android.os.Parcelable.Creator<android.os.IncidentReportArgs> CREATOR;
   }
 
+  public class LiveImage {
+    ctor public LiveImage(android.os.LiveImage.Callback);
+    method public void start(android.app.Activity, android.net.Uri, long) throws java.lang.Exception;
+  }
+
+  public static abstract interface LiveImage.Callback {
+    method public abstract void onError(java.lang.Exception);
+    method public abstract void onStatusChanged(android.os.LiveImage.Status);
+  }
+
+  public static final class LiveImage.MessageType extends java.lang.Enum {
+    method public static android.os.LiveImage.MessageType valueOf(java.lang.String);
+    method public static final android.os.LiveImage.MessageType[] values();
+    enum_constant public static final android.os.LiveImage.MessageType ERROR;
+    enum_constant public static final android.os.LiveImage.MessageType STATUS;
+  }
+
+  public static final class LiveImage.Status extends java.lang.Enum {
+    method public static android.os.LiveImage.Status valueOf(java.lang.String);
+    method public static final android.os.LiveImage.Status[] values();
+    enum_constant public static final android.os.LiveImage.Status INPROGRESS;
+    enum_constant public static final android.os.LiveImage.Status INUSE;
+    enum_constant public static final android.os.LiveImage.Status READY;
+    enum_constant public static final android.os.LiveImage.Status UNINIT;
+  }
+
   public final class NativeHandle implements java.io.Closeable {
     ctor public NativeHandle();
     ctor public NativeHandle(java.io.FileDescriptor, boolean);
