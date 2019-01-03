@@ -3620,6 +3620,41 @@ package android.nfc {
 
 package android.os {
 
+  public class AndroidOnTapManager {
+    ctor public AndroidOnTapManager(android.content.Context, android.os.AndroidOnTapManager.OnStatusChangedListener);
+    method public void bind();
+    method public void start(java.lang.String, long);
+    method public void start(java.lang.String, long, long);
+    method public void unbind();
+    field public static final java.lang.String ACTION_NOTIFY_IF_IN_USE = "android.os.androidontap.action.NOTIFY_IF_IN_USE";
+    field public static final java.lang.String ACTION_START_INSTALL = "android.os.androidontap.action.START_INSTALL";
+    field public static final int CAUSE_ERROR_EXCEPTION = 8; // 0x8
+    field public static final int CAUSE_ERROR_FILE_NOT_FOUND = 3; // 0x3
+    field public static final int CAUSE_ERROR_IO = 4; // 0x4
+    field public static final int CAUSE_ERROR_IPC = 7; // 0x7
+    field public static final int CAUSE_ERROR_NETWORK = 5; // 0x5
+    field public static final int CAUSE_ERROR_UNSUPPORTED_IMAGE_SOURCE = 6; // 0x6
+    field public static final int CAUSE_INSTALL_CANCELLED = 2; // 0x2
+    field public static final int CAUSE_INSTALL_COMPLETED = 1; // 0x1
+    field public static final int CAUSE_NOT_SPECIFIED = 0; // 0x0
+    field public static final java.lang.String KEY_INSTALLED_SIZE = "KEY_INSTALLED_SIZE";
+    field public static final java.lang.String KEY_SYSTEM_SIZE = "KEY_SYSTEM_SIZE";
+    field public static final java.lang.String KEY_SYSTEM_URL = "KEY_SYSTEM_URL";
+    field public static final java.lang.String KEY_USERDATA_SIZE = "KEY_USERDATA_SIZE";
+    field public static final int MSG_POST_STATUS = 3; // 0x3
+    field public static final int MSG_REGISTER_LISTENER = 1; // 0x1
+    field public static final int MSG_UNREGISTER_LISTENER = 2; // 0x2
+    field public static final int STATUS_IN_PROGRESS = 2; // 0x2
+    field public static final int STATUS_IN_USE = 4; // 0x4
+    field public static final int STATUS_NOT_BOUND = 0; // 0x0
+    field public static final int STATUS_READY = 3; // 0x3
+    field public static final int STATUS_UNINIT = 1; // 0x1
+  }
+
+  public static abstract interface AndroidOnTapManager.OnStatusChangedListener {
+    method public abstract void onStatusChanged(int, int, long);
+  }
+
   public class BatteryManager {
     field public static final java.lang.String EXTRA_EVENTS = "android.os.extra.EVENTS";
     field public static final java.lang.String EXTRA_EVENT_TIMESTAMP = "android.os.extra.EVENT_TIMESTAMP";
