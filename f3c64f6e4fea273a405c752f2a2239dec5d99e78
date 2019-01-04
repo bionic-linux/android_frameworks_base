@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ae5e54_53acec54",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "Add a //STOPSHIP if true comment.",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97233d1a_dc5a99f8",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "On a multi-sim device, should a thread be associated with a specific subId, or is it just associated with the device?",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e847b1_8cf6c978",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "I\u0027d suggest a separate logv() function for this.",
+      "range": {
+        "startLine": 130,
+        "startChar": 12,
+        "endLine": 130,
+        "endChar": 16
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b6d99e_5b0a9bda",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "Just use 0 and 1 instead? And use @IntDef; see this as an example: https://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/CellInfo.java?l\u003d44",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083315ee_6bb9fdbc",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "protected?",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4575e8_d5a98f10",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryContinuationToken.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "What exactly is this object going to be, and where will it be generated and used?\nHas this model been discussed with API council or anyone? Are there any examples of APIs that already use this?",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f1af87_770e68a4",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "Why @CheckResult for these methods?",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec71db1_c1936d75",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "groupThreadsOnly?",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cfe730_12603bb9",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "Should there be 3 options? group only, 1:1 only, and both?",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 36
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0721890_b82692c1",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "This should ideally be a SORT_BY_xyz parameter, and additionally have ascending and descending options.",
+      "range": {
+        "startLine": 168,
+        "startChar": 28,
+        "endLine": 168,
+        "endChar": 47
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3d7aea_0d3a3f4b",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T01:05:25Z",
+      "side": 1,
+      "message": "Do this only if participantArrayList is not empty? Otherwise RcsThreadQueryParameters would be different between this and Builder. With Builder if it is not specified, mRcsParticipants will be null.",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 63
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
