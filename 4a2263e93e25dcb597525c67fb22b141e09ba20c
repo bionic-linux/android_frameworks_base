@@ -93,6 +93,30 @@
       "revId": "4a2263e93e25dcb597525c67fb22b141e09ba20c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bf1845_b837dd49",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-04T00:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5030618_ac7d535f",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 183,
+        "endChar": 19
+      },
+      "revId": "4a2263e93e25dcb597525c67fb22b141e09ba20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
