@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c59a47a_72535ce3",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "Deleted these as I didn\u0027t use them once :)",
+      "parentUuid": "67ae5e54_53acec54",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97233d1a_dc5a99f8",
         "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0810175_598e5f99",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "Threads are agnostic to sub ID\u0027s, messages themselves are associated with subId\u0027s - it is so that user can send messages from different SIM cards on the same thread.",
+      "parentUuid": "97233d1a_dc5a99f8",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6a51299d_1ba1c912",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "Deleted as they didn\u0027t get used.",
+      "parentUuid": "21e847b1_8cf6c978",
+      "range": {
+        "startLine": 130,
+        "startChar": 12,
+        "endLine": 130,
+        "endChar": 16
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4b6d99e_5b0a9bda",
         "filename": "telephony/java/android/telephony/ims/RcsThread.java",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd86f45_45ec83bf",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "I removed these in an upcoming CL - will reintroduce in a future CL the way you posted.",
+      "parentUuid": "c4b6d99e_5b0a9bda",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "e0687e0f_ca7ef5c9",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "083315ee_6bb9fdbc",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc4575e8_d5a98f10",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryContinuationToken.java",
         "patchSetId": 3
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "a3e608aa_66fa13ed",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryContinuationToken.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "I am still in the process of figuring this out, but this object will basically hold a query that the provider should execute to get the next batch of results. It will be generated on the controller after the user performs a paginated query. Will send an email to API council about it",
+      "parentUuid": "dc4575e8_d5a98f10",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69f1af87_770e68a4",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
         "patchSetId": 3
@@ -124,6 +238,24 @@
       "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d5b970_fffa904a",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "It is so that people will not forget to call build(), the IDE should warn them if they don\u0027t use the result of this call.",
+      "parentUuid": "69f1af87_770e68a4",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +305,54 @@
     },
     {
       "key": {
+        "uuid": "c75b413b_30d208b6",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "Noted. I am in the process of redefining most of these in CL-9, will fix this as well.",
+      "parentUuid": "21cfe730_12603bb9",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 36
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3f4a550_bc3ccb6d",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "4ec71db1_c1936d75",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0721890_b82692c1",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
         "patchSetId": 3
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "a948985d_3eec0a23",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "Noted. Redefining these currently, will fix the sorting API as well.",
+      "parentUuid": "e0721890_b82692c1",
+      "range": {
+        "startLine": 168,
+        "startChar": 28,
+        "endLine": 168,
+        "endChar": 47
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da3d7aea_0d3a3f4b",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
         "patchSetId": 3
@@ -216,6 +420,30 @@
       "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390102b1_bab6b86e",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T18:30:03Z",
+      "side": 1,
+      "message": "Maybe I am missing something but Builder\u0027s constructor creates the Hash Set so mRcsParticipants shouldn\u0027t be null.",
+      "parentUuid": "da3d7aea_0d3a3f4b",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 63
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
