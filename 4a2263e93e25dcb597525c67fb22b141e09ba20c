@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bf66e91a_aac1e8cb",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-04T20:11:32Z",
+      "side": 1,
+      "message": "thanks for the explanation! given the max level we support is 4 and its not WCDMA specific maybe we can define max level somewhere in the CellSignalStrength?",
+      "parentUuid": "2663a711_b92fa3dd",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 73
+      },
+      "revId": "4a2263e93e25dcb597525c67fb22b141e09ba20c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c47a5b2e_62fc52b3",
         "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
         "patchSetId": 2
