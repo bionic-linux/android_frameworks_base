@@ -295,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "002cacb2_3cf4163a",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-04T21:33:31Z",
+      "side": 1,
+      "message": "calling build() should resolve the IDE warning. In AM we use the same logic in https://cs.corp.google.com/piper///depot/google3/third_party/java_src/android_app/bugle/shared/java/com/google/android/apps/messaging/shared/util/common/TrackingLog.java?q\u003dtrackinglog+bugle\u0026dr\u003dCSs\u0026l\u003d9",
+      "parentUuid": "f32aaa33_25843ced",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ec71db1_c1936d75",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
         "patchSetId": 3
