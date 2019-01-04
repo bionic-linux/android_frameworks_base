@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3bb98a0f_ce53574c",
+        "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T19:56:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0810175_598e5f99",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e847b1_8cf6c978",
         "filename": "telephony/java/android/telephony/ims/RcsMessageStore.java",
         "patchSetId": 3
@@ -259,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "f32aaa33_25843ced",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T19:56:40Z",
+      "side": 1,
+      "message": "Is calling build() on it considered using it? I thought the result has to be assigned to an object, I guess that\u0027s not correct?",
+      "parentUuid": "92d5b970_fffa904a",
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ec71db1_c1936d75",
         "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
         "patchSetId": 3
@@ -435,6 +471,30 @@
       "side": 1,
       "message": "Maybe I am missing something but Builder\u0027s constructor creates the Hash Set so mRcsParticipants shouldn\u0027t be null.",
       "parentUuid": "da3d7aea_0d3a3f4b",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 63
+      },
+      "revId": "f3c64f6e4fea273a405c752f2a2239dec5d99e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d12bcb9_9dcaba16",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadQueryParameters.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-04T19:56:40Z",
+      "side": 1,
+      "message": "Ack. I missed that.",
+      "parentUuid": "390102b1_bab6b86e",
       "range": {
         "startLine": 193,
         "startChar": 8,
