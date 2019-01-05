@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7be70567_ebaaa303",
+        "filename": "core/java/android/view/accessibility/AccessibilityNodeInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2019-01-05T01:30:15Z",
+      "side": 1,
+      "message": "Please mark this is @hide or make it private. That\u0027s what\u0027s breaking in presubmit.",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 61
+      },
+      "revId": "85cafc7dbe42208e321eabd0c906d0160f44a97d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
