@@ -1260,7 +1260,7 @@ public class AudioRecord implements AudioRouting
      * The representation of the data in the buffer will depend on the format specified in
      * the AudioRecord constructor, and will be native endian.
      * @param audioBuffer the direct buffer to which the recorded audio data is written.
-     * Data is written to audioBuffer.position().
+     * Data is written to the beginning of audioBuffer.
      * @param sizeInBytes the number of requested bytes. It is recommended but not enforced
      *    that the number of bytes requested be a multiple of the frame size (sample size in
      *    bytes multiplied by the channel count).
@@ -1288,7 +1288,7 @@ public class AudioRecord implements AudioRouting
      * The representation of the data in the buffer will depend on the format specified in
      * the AudioRecord constructor, and will be native endian.
      * @param audioBuffer the direct buffer to which the recorded audio data is written.
-     * Data is written to audioBuffer.position().
+     * Data is written to the beginning of audioBuffer.
      * @param sizeInBytes the number of requested bytes. It is recommended but not enforced
      *    that the number of bytes requested be a multiple of the frame size (sample size in
      *    bytes multiplied by the channel count).
