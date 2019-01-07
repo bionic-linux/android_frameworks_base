@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "899aee75_9f4bda06",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-07T22:40:00Z",
+      "side": 1,
+      "message": "Added comments, thanks!",
+      "parentUuid": "988b7a48_db90d858",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 26
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb2888a_36c3160d",
         "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6a381015_e90572d5",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-07T22:40:00Z",
+      "side": 1,
+      "message": "Yes, it should always be in sync. I fixed this in the upcoming commit, thanks for the detailed explanation!\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/860618/3/telephony/java/android/telephony/ims/RcsParticipant.java#78",
+      "parentUuid": "fbb2888a_36c3160d",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a85106da_0d8906d4",
         "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a67e85_08fe36ad",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-07T22:40:00Z",
+      "side": 1,
+      "message": "Actually fixed this in next commit, thanks!\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/860618/3/telephony/java/android/telephony/ims/RcsParticipant.java#78",
+      "parentUuid": "a85106da_0d8906d4",
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "cfc346f1_cef919e9",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-07T22:40:00Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "73838e89_aeb8b882",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 87
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7d9f99_712e31a5",
         "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
         "patchSetId": 4
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "7b71c62e_515aabbf",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-07T22:40:00Z",
+      "side": 1,
+      "message": "Fixed in next commit as above",
+      "parentUuid": "9a7d9f99_712e31a5",
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "383d6617_a1da110c",
         "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
         "patchSetId": 4
@@ -119,6 +227,24 @@
       "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba17c82a_a8cae287",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-07T22:40:00Z",
+      "side": 1,
+      "message": "Noted, will fix as a follow up.",
+      "parentUuid": "383d6617_a1da110c",
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +268,30 @@
       "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97a8474_90237da3",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-07T22:40:00Z",
+      "side": 1,
+      "message": "Currently it can, but I am not sure if we want to keep this in the finalized APIs.",
+      "parentUuid": "63720922_6f66ae86",
+      "range": {
+        "startLine": 46,
+        "startChar": 61,
+        "endLine": 46,
+        "endChar": 77
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
