@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "988b7a48_db90d858",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-07T18:37:31Z",
+      "side": 1,
+      "message": "Not sure if I pointed this out earlier. You have added comments with the APIs which is great, but it will be good to add some comments here for the fields as well (applies to other similar Parcelables as well). That would help understand the class at a glance better IMO.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 26
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85106da_0d8906d4",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-07T18:37:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t mCanonicalAddress be updated only after this? And in fact may be return an error instead of void so caller knows that update did not take place?",
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7d9f99_712e31a5",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-07T18:37:31Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383d6617_a1da110c",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-07T18:37:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this include an alias as well?",
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63720922_6f66ae86",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-07T18:37:31Z",
+      "side": 1,
+      "message": "This generally refers to the phone number right? Can it be updated for a participant?",
+      "range": {
+        "startLine": 46,
+        "startChar": 61,
+        "endLine": 46,
+        "endChar": 77
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
