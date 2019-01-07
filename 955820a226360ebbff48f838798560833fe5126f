@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe6a381_1822f82a",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-07T19:42:47Z",
+      "side": 1,
+      "message": "Move string literal to static final variable?",
+      "revId": "955820a226360ebbff48f838798560833fe5126f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e35281c_b03e33f3",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-07T19:42:47Z",
+      "side": 1,
+      "message": "Move string literal to static final variable?",
+      "revId": "955820a226360ebbff48f838798560833fe5126f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379d453f_d8c1116e",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-07T19:42:47Z",
+      "side": 1,
+      "message": "Why is this childParser2?  It doesn\u0027t look like there is currently a childParser in scope.",
+      "revId": "955820a226360ebbff48f838798560833fe5126f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
