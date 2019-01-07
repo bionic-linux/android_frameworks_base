@@ -731,6 +731,30 @@
     },
     {
       "key": {
+        "uuid": "01b53ee5_64cdb9e6",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-07T14:53:44Z",
+      "side": 1,
+      "message": "Sorry, I misread the documentation.\n\nIt seems strange that confidence could be \u003c 0.0 or \u003e 1.0. I was expecting that we\u0027d always have 0.0 \u003c\u003d confidence \u003c\u003d 1.0 (with perhaps a special guard value such as -1.0 for \"unknown\" maybe?). But it\u0027s documented, so I suppose it\u0027s fine.",
+      "parentUuid": "cdc70ca5_38e66214",
+      "range": {
+        "startLine": 90,
+        "startChar": 57,
+        "endLine": 90,
+        "endChar": 84
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7189c45a_d03b1a16",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8
