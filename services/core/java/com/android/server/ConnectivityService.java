@@ -70,6 +70,8 @@ import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.InetAddresses;
+import android.net.IpPrefix;
 import android.net.LinkProperties;
 import android.net.LinkProperties.CompareResult;
 import android.net.MatchAllNetworkSpecifier;
@@ -1712,6 +1714,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
         }
+
+        @Override
+        public void onNat64PrefixEvent(int netId, boolean added,
+                                       String prefixString, int prefixLength) {
+            mHandler.post(() -> handleNat64PrefixEvent(netId, added, prefixString, prefixLength));
+        }
     };
 
     @VisibleForTesting
@@ -2696,6 +2704,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
         mDnsManager.updatePrivateDnsValidation(update);
+        handleUpdateLinkProperties(nai, new LinkProperties(nai.linkProperties));
+    }
+
+    private void handleNat64PrefixEvent(int netId, boolean added, String prefixString,
+            int prefixLength) {
+        NetworkAgentInfo nai = mNetworkForNetId.get(netId);
+        if (nai == null) return;
+
+        log(String.format("NAT64 prefix %s on netId %d: %s/%d",
+                          (added ? "added" : "removed"), netId, prefixString, prefixLength));
+
+        IpPrefix prefix;
+        try {
+            prefix = new IpPrefix(InetAddresses.parseNumericAddress(prefixString),
+                    prefixLength);
+        } catch (IllegalArgumentException e) {
+            loge("Invalid NAT64 prefix " + prefixString + "/" + prefixLength);
+            return;
+        }
+
+        nai.clatd.setNat64Prefix(added ? prefix : null);
         handleUpdateLinkProperties(nai, new LinkProperties(nai.linkProperties));
     }
 
@@ -4970,7 +4999,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 networkAgent.linkProperties = newLp;
             }
             // Start or stop clat accordingly to network state.
-            networkAgent.updateClat(mNMS);
+            networkAgent.updateClat();
             notifyIfacesChangedForNetworkStats();
             if (networkAgent.everConnected) {
                 try {
