@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5baad0aa_80534481",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-08T18:57:57Z",
+      "side": 1,
+      "message": "That doesn\u0027t necessarily make then in sync always. If there are 2 clients both interacting at the same time, and one updates the address/alias, second may have stale values. Is that ok?",
+      "parentUuid": "6a381015_e90572d5",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a85106da_0d8906d4",
         "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
         "patchSetId": 4
@@ -283,6 +307,30 @@
       "side": 1,
       "message": "Currently it can, but I am not sure if we want to keep this in the finalized APIs.",
       "parentUuid": "63720922_6f66ae86",
+      "range": {
+        "startLine": 46,
+        "startChar": 61,
+        "endLine": 46,
+        "endChar": 77
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a3f2951_6f408f65",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-08T18:57:57Z",
+      "side": 1,
+      "message": "Unless the spec allows that, which I think it doesn\u0027t, I think we should remove it.",
+      "parentUuid": "a97a8474_90237da3",
       "range": {
         "startLine": 46,
         "startChar": 61,
