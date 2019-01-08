@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66dd0cc7_e4e8b637",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2019-01-08T10:56:56Z",
+      "side": 1,
+      "message": "I think we want to bindService() here to start getting callback immediately",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25db65b2_f2192880",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2019-01-08T10:56:56Z",
+      "side": 1,
+      "message": "redundant?",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 24
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3be5b42_0aee1ad1",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2019-01-08T10:56:56Z",
+      "side": 1,
+      "message": "Can this be just Context?\nHow about passing it in the constructor so we don\u0027t need to include it in all the calls?",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2718b231_3160cdf7",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2019-01-08T10:56:56Z",
+      "side": 1,
+      "message": "startActivity per the latest discussion",
+      "range": {
+        "startLine": 108,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
