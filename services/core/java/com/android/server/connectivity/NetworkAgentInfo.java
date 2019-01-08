@@ -232,7 +232,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     public final AsyncChannel asyncChannel;
 
     // Used by ConnectivityService to keep track of 464xlat.
-    public Nat464Xlat clatd;
+    public final Nat464Xlat clatd;
 
     // Set after asynchronous creation of the NetworkMonitor.
     private volatile INetworkMonitor mNetworkMonitor;
@@ -240,8 +240,6 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private static final String TAG = ConnectivityService.class.getSimpleName();
     private static final boolean VDBG = false;
     private final ConnectivityService mConnService;
-    private final INetd mNetd;
-    private final INetworkManagementService mNMS;
     private final Context mContext;
     private final Handler mHandler;
 
@@ -257,11 +255,10 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         networkCapabilities = nc;
         currentScore = score;
         mConnService = connService;
-        mNetd = netd;
-        mNMS = nms;
         mContext = context;
         mHandler = handler;
         networkMisc = misc;
+        clatd = new Nat464Xlat(this, netd, nms);
     }
 
     /**
@@ -601,20 +598,18 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     /** Ensure clat has started for this network. */
     public void maybeStartClat() {
-        if (clatd != null && clatd.isStarted()) {
+        if (clatd.isStarted()) {
             return;
         }
-        clatd = new Nat464Xlat(this, mNetd, mNMS);
         clatd.start();
     }
 
     /** Ensure clat has stopped for this network. */
     public void maybeStopClat() {
-        if (clatd == null) {
+        if (!clatd.isStarted()) {
             return;
         }
         clatd.stop();
-        clatd = null;
     }
 
     public String toString() {
