@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41550735_7839f5d4",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2174,
+      "author": {
+        "id": 1138679
+      },
+      "writtenOn": "2019-01-08T18:01:52Z",
+      "side": 1,
+      "message": "Should we support multi-type here?\n\nIt is a little weird to get String for battery level.",
+      "range": {
+        "startLine": 2174,
+        "startChar": 11,
+        "endLine": 2174,
+        "endChar": 17
+      },
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
