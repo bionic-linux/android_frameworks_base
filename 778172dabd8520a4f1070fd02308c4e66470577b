@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "edd922c5_1786612b",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-08T23:23:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16fc2af1_51d48c47",
+      "range": {
+        "startLine": 389,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 102
+      },
+      "revId": "778172dabd8520a4f1070fd02308c4e66470577b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6b4bd49_4b10677f",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 4
@@ -57,6 +81,24 @@
       "revId": "778172dabd8520a4f1070fd02308c4e66470577b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45a1ce6_83a20e62",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-08T23:23:41Z",
+      "side": 1,
+      "message": "I\u0027m going to go ahead and mark this as resolved and keep it as a thing to investigate once we get all the pieces landed.",
+      "parentUuid": "8e16ae32_cafac68e",
+      "revId": "778172dabd8520a4f1070fd02308c4e66470577b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
