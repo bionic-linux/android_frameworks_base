@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33e57932_7ce42bb4",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "Consider com.android.internal.util.BitUtils.getUint16.",
+      "range": {
+        "startLine": 38,
+        "startChar": 18,
+        "endLine": 38,
+        "endChar": 42
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e70760_1ab5de30",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "NUM_SECTIONS",
+      "range": {
+        "startLine": 41,
+        "startChar": 36,
+        "endLine": 41,
+        "endChar": 37
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8200fd4_616621c8",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "{  // Control characters and non-ASCII characters.",
+      "range": {
+        "startLine": 122,
+        "startChar": 44,
+        "endLine": 122,
+        "endChar": 45
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d33e72_508c6131",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "Can you add comments explaining what these are and why we escape them? For example, 0x28 and 0x29 are ( and ), which seem readable.",
+      "range": {
+        "startLine": 125,
+        "startChar": 26,
+        "endLine": 126,
+        "endChar": 77
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f789e4ec_24739d2f",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "private static final int NUM_SECTIONS \u003d ARSECTION + 1;\n\n... and then use NUM_SECTIONS instead of \"4\".",
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd502f4b_edceaafe",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "NUM_SECTIONS",
+      "range": {
+        "startLine": 216,
+        "startChar": 34,
+        "endLine": 216,
+        "endChar": 35
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efe8984_10ac2ded",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "NUM_SECTIONS",
+      "range": {
+        "startLine": 218,
+        "startChar": 28,
+        "endLine": 218,
+        "endChar": 29
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e009d20d_e34529fb",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "We should probably include TXT as well, and maybe SRV and NAPTR if we can. Not necessarily in this CL though.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 6
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b59d87_31429ea8",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "Is this useful? Maybe clients can just pass in \"0\"?",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d07943a_e473ae22",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "Maybe just say \"Will be called exactly once with all the answers to the query.\"",
+      "range": {
+        "startLine": 104,
+        "startChar": 11,
+        "endLine": 104,
+        "endChar": 66
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85697af5_897ebc86",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "{@code null}",
+      "range": {
+        "startLine": 124,
+        "startChar": 15,
+        "endLine": 124,
+        "endChar": 19
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad12bc81_be96e570",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "DNS query flags",
+      "range": {
+        "startLine": 126,
+        "startChar": 20,
+        "endLine": 126,
+        "endChar": 63
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc96939b_cac85563",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "Not for this CL, but we should query for IPv4 and/or IPv6 only if the network we\u0027re on provides those protocols. See _have_ipv4 and _have_ipv6 in the resolver.",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 52
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567b84d8_12a02c20",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-08T16:19:19Z",
+      "side": 1,
+      "message": "Which method is this? android_net_utils_resNetworkResult? Why?",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 44
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
