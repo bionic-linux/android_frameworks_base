@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a72e053_46b90e1e",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-01-08T07:08:41Z",
+      "side": 1,
+      "message": "Taking advantage of the time zone difference, I ll rob ek@ of an opportunity to put his favorite code review comment: EMAGICVALUE.",
+      "range": {
+        "startLine": 723,
+        "startChar": 58,
+        "endLine": 723,
+        "endChar": 60
+      },
+      "revId": "bd3aa075a9f3739db53ca3389d944718acb77e45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9812f1f6_bd7acfbd",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-01-08T07:08:41Z",
+      "side": 1,
+      "message": "nit: no \u0027:\u0027 ?",
+      "range": {
+        "startLine": 874,
+        "startChar": 41,
+        "endLine": 874,
+        "endChar": 42
+      },
+      "revId": "bd3aa075a9f3739db53ca3389d944718acb77e45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
