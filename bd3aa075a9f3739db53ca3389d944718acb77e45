@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "02c64757_442b331b",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-01-08T20:30:57Z",
+      "side": 1,
+      "message": "also should this throw an error on not null and !\u003d 96.\n\nie. clear via null, set via foo/96, anything else throws?",
+      "parentUuid": "6cf6674e_7db46907",
+      "range": {
+        "startLine": 723,
+        "startChar": 58,
+        "endLine": 723,
+        "endChar": 60
+      },
+      "revId": "bd3aa075a9f3739db53ca3389d944718acb77e45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9812f1f6_bd7acfbd",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 1
