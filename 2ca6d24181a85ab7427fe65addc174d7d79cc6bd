@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cc297e0_0a5ec97e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T10:51:55Z",
+      "side": 1,
+      "message": "This parameter is unused.",
+      "range": {
+        "startLine": 573,
+        "startChar": 27,
+        "endLine": 573,
+        "endChar": 57
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bb4c90_3f913f6f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-08T10:51:55Z",
+      "side": 1,
+      "message": "This parameter is unused.",
+      "range": {
+        "startLine": 582,
+        "startChar": 31,
+        "endLine": 582,
+        "endChar": 61
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
