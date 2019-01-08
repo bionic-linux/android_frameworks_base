@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cf6674e_7db46907",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-01-08T20:29:13Z",
+      "side": 1,
+      "message": "Would you prefer 128 - 32?\nOr do you think a constant makes more sense.\n\nI actually hate constants for things like this because then you need to look them up.\n(although a comment about why 96 in the line above works for me)",
+      "parentUuid": "5a72e053_46b90e1e",
+      "range": {
+        "startLine": 723,
+        "startChar": 58,
+        "endLine": 723,
+        "endChar": 60
+      },
+      "revId": "bd3aa075a9f3739db53ca3389d944718acb77e45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9812f1f6_bd7acfbd",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 1
