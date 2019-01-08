@@ -36,6 +36,7 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.os.BatteryStats;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.ParcelUuid;
 import android.os.RemoteException;
@@ -648,6 +649,48 @@ public final class BluetoothAdapter {
 
     private final Object mLock = new Object();
     private final Map<LeScanCallback, ScanCallback> mLeScanClients;
+    private static Map<BluetoothDevice, List<Pair<MetadataListener, Handler>>> sMetadataListeners;
+
+    /**
+     * Bluetooth metadata listener. Overrides the default BluetoothMetadataListener
+     * implementation.
+     */
+    private static final IBluetoothMetadataListener sBluetoothMetadataListener =
+            new IBluetoothMetadataListener.Stub() {
+        @Override
+        public void onMetadataChanged(BluetoothDevice device, int key, String value) {
+            if (sMetadataListeners.containsKey(device)) {
+                List<Pair<MetadataListener, Handler>> list = sMetadataListeners.get(device);
+                for (Pair<MetadataListener, Handler> pair : list) {
+                    MetadataListener listener = pair.first;
+                    Handler handler = pair.second;
+                    runOrQueueCallback(handler, new Runnable() {
+                        @Override
+                        public void run() {
+                                listener.onMetadataChanged(device, key, value);
+                        }
+                    });
+                }
+            }
+            return;
+        }
+    };
+
+    /**
+     * Queue the runnable on a {@link Handler} provided by the user, or execute the runnable
+     * immediately if no Handler was provided.
+     */
+    private static void runOrQueueCallback(final Handler handler, final Runnable cb) {
+        if (handler == null) {
+            try {
+                cb.run();
+            } catch (Exception ex) {
+                Log.w(TAG, "Unhandled exception in callback", ex);
+            }
+        } else {
+            handler.post(cb);
+        }
+    }
 
     /**
      * Get a handle to the default local Bluetooth adapter.
@@ -691,6 +734,10 @@ public final class BluetoothAdapter {
         mManagerService = managerService;
         mLeScanClients = new HashMap<LeScanCallback, ScanCallback>();
         mToken = new Binder();
+        if (sMetadataListeners == null) {
+            sMetadataListeners = new HashMap<BluetoothDevice,
+                List<Pair<MetadataListener, Handler>>>();
+        }
     }
 
     /**
@@ -2607,6 +2654,17 @@ public final class BluetoothAdapter {
                             }
                         }
                     }
+
+                    if (sMetadataListeners.size() != 0) {
+                        try {
+                            List<BluetoothDevice> list = new ArrayList<BluetoothDevice>();
+                            list.addAll(sMetadataListeners.keySet());
+                            mService.registerMetadataListener(sBluetoothMetadataListener,
+                                    list);
+                        } catch (RemoteException e) {
+                            Log.e(TAG, "", e);
+                        }
+                    }
                 }
 
                 public void onBluetoothServiceDown() {
@@ -3089,5 +3147,103 @@ public final class BluetoothAdapter {
         Log.e(TAG, "listenUsingInsecureL2capCoc: PLEASE USE THE OFFICIAL API, "
                     + "listenUsingInsecureL2capChannel");
         return listenUsingInsecureL2capChannel();
+    }
+
+    /**
+     * Register a {@link MetadataListener} to receive update about metadata
+     * changes for this device.
+     *
+     * @param listener {@link MetadataListener} that will receive asynchronous callbacks
+     * @param devices List of {@link BluetoothDevice} that will be registered
+     * @param handler the handler for listener callback
+     * @return true on success, false on error
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public boolean registerMetadataListener(MetadataListener listener,
+            List<BluetoothDevice> devices, Handler handler) {
+        if (DBG) Log.d(TAG, "registerMetdataListener()");
+        if (mService == null) return false;
+        if (listener == null) {
+            throw new NullPointerException("listenr is null");
+        }
+
+        for (BluetoothDevice device : devices) {
+            Pair<MetadataListener, Handler> newPair = new Pair(listener, handler);
+            if (sMetadataListeners.containsKey(device)) {
+                // Replace handler and listener of the device if changed.
+                List<Pair<MetadataListener, Handler>> list = sMetadataListeners.get(device);
+                for (Pair<MetadataListener, Handler> pair : list) {
+                    if (!pair.equals(newPair)) {
+                        list.remove(pair);
+                        list.add(newPair);
+                        sMetadataListeners.replace(device, list);
+                    }
+                }
+            } else {
+                // Add the device to sMetadataListeners with the
+                // registered listener and handler
+                List list = new ArrayList<Pair<MetadataListener, Handler>>();
+                list.add(newPair);
+                sMetadataListeners.put(device, list);
+            }
+        }
+
+        try {
+            mService.registerMetadataListener(sBluetoothMetadataListener,
+                    devices);
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Unregister a {@link MetadataListener} from this device
+     *
+     * @param devices List of {@link BluetoothDevice} that will be unregistered
+     * @return true on success, false on error
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public boolean unregisterMetadataListener(List<BluetoothDevice> devices) {
+        if (DBG) Log.d(TAG, "unregisterMetdataListener()");
+        if (mService == null) return false;
+
+        for (BluetoothDevice device : devices) {
+            if (!sMetadataListeners.containsKey(device)) {
+                sMetadataListeners.remove(device);
+            }
+        }
+
+        try {
+            mService.unRegisterMetadataListener(devices);
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * This abstract class is used to implement {@link BluetoothAdapter} metadata listener.
+     * @hide
+     */
+    @SystemApi
+    public abstract class MetadataListener {
+        /**
+         * Callback triggered if the metadata of {@link BluetoothDevice} registered in
+         * {@link #registerMetadataListener}.
+         *
+         * @param device changed {@link BluetoothDevice}.
+         * @param key changed metadata key, one of METADATA_*.
+         * @param value the new value of metadata.
+         */
+        public void onMetadataChanged(BluetoothDevice device, int key, String value) {
+        }
     }
 }
