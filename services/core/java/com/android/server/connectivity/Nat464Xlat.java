@@ -16,8 +16,9 @@
 
 package com.android.server.connectivity;
 
-import android.net.InterfaceConfiguration;
 import android.net.ConnectivityManager;
+import android.net.InterfaceConfiguration;
+import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkInfo;
@@ -74,6 +75,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
 
     private String mBaseIface;
     private String mIface;
+    private IpPrefix mNat64Prefix;
     private State mState = State.IDLE;
 
     public Nat464Xlat(INetworkManagementService nmService, NetworkAgentInfo nai) {
@@ -90,12 +92,19 @@ public class Nat464Xlat extends BaseNetworkObserver {
         // TODO: migrate to NetworkCapabilities.TRANSPORT_*.
         final boolean supported = ArrayUtils.contains(NETWORK_TYPES, nai.networkInfo.getType());
         final boolean connected = ArrayUtils.contains(NETWORK_STATES, nai.networkInfo.getState());
-        // We only run clat on networks that don't have a native IPv4 address.
-        final boolean hasIPv4Address =
-                (nai.linkProperties != null) && nai.linkProperties.hasIPv4Address();
+
+        // We only run clat on networks that have a global IPv6 address and a NAT64 prefix and don't
+        // have a native IPv4 address.
+        LinkProperties lp = nai.linkProperties;
+        IpPrefix nat64Prefix = lp.getNat64Prefix();
+        final boolean isNat64Network = (lp != null) && lp.hasGlobalIPv6Address()
+                && nat64Prefix != null && !lp.hasIPv4Address();
+
+        // If the network tells us it doesn't use clat, respect that.
         final boolean skip464xlat =
                 (nai.netMisc() != null) && nai.netMisc().skip464xlat;
-        return supported && connected && !hasIPv4Address && !skip464xlat;
+
+        return supported && connected && isNat64Network && !skip464xlat;
     }
 
     /**
@@ -225,12 +234,20 @@ public class Nat464Xlat extends BaseNetworkObserver {
         }
     }
 
+    public void setNat64Prefix(IpPrefix nat64Prefix) {
+        mNat64Prefix = nat64Prefix;
+    }
+
     /**
      * Copies the stacked clat link in oldLp, if any, to the passed LinkProperties.
      * This is necessary because the LinkProperties in mNetwork come from the transport layer, which
      * has no idea that 464xlat is running on top of it.
      */
     public void fixupLinkProperties(LinkProperties oldLp, LinkProperties lp) {
+        if (mNat64Prefix != null) {
+            lp.setNat64Prefix(mNat64Prefix);
+        }
+
         if (!isRunning()) {
             return;
         }
