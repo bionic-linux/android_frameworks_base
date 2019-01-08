@@ -95,7 +95,6 @@ import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -4785,7 +4784,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
         final NetworkAgentInfo nai = new NetworkAgentInfo(messenger, new AsyncChannel(),
                 new Network(reserveNetId()), new NetworkInfo(networkInfo), lp, nc, currentScore,
-                mContext, mTrackerHandler, new NetworkMisc(networkMisc), mDefaultRequest, this);
+                mContext, mTrackerHandler, new NetworkMisc(networkMisc), mDefaultRequest, this,
+                mNMS);
         // Make sure the network capabilities reflect what the agent info says.
         nai.networkCapabilities = mixInCapabilities(nai, nc);
         synchronized (this) {
@@ -4817,11 +4817,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             LinkProperties oldLp) {
         int netId = networkAgent.network.netId;
 
-        // The NetworkAgentInfo does not know whether clatd is running on its network or not. Before
-        // we do anything else, make sure its LinkProperties are accurate.
-        if (networkAgent.clatd != null) {
-            networkAgent.clatd.fixupLinkProperties(oldLp, newLp);
-        }
+        // The NetworkAgentInfo does not know whether clatd is running on its network or not, or
+        // whether there is a NAT64 prefix. Before we do anything else, make sure its LinkProperties
+        // are accurate.
+        networkAgent.clatd.fixupLinkProperties(oldLp, newLp);
 
         updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
         updateMtu(newLp, oldLp);
