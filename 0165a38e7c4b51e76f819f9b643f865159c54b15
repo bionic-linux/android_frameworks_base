@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "6e6e4707_b026134f",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-08T22:33:57Z",
+      "side": 1,
+      "message": "Good point, noted down. I guess there needs to be an event generated for all clients when one of these values change. Or another solution would be to limit the usage of these APIs to the default SMS app only.",
+      "parentUuid": "5baad0aa_80534481",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a85106da_0d8906d4",
         "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
         "patchSetId": 4
@@ -331,6 +355,30 @@
       "side": 1,
       "message": "Unless the spec allows that, which I think it doesn\u0027t, I think we should remove it.",
       "parentUuid": "a97a8474_90237da3",
+      "range": {
+        "startLine": 46,
+        "startChar": 61,
+        "endLine": 46,
+        "endChar": 77
+      },
+      "revId": "0165a38e7c4b51e76f819f9b643f865159c54b15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3bd21f2_d4ccff05",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-08T22:33:57Z",
+      "side": 1,
+      "message": "Noted, will remove.",
+      "parentUuid": "4a3f2951_6f408f65",
       "range": {
         "startLine": 46,
         "startChar": 61,
