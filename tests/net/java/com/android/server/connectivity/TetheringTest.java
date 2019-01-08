@@ -34,6 +34,7 @@ import static android.net.wifi.WifiManager.IFACE_IP_MODE_LOCAL_ONLY;
 import static android.net.wifi.WifiManager.IFACE_IP_MODE_TETHERED;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
+import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -251,6 +252,11 @@ public class TetheringTest {
         public boolean isTetheringSupported() {
             isTetheringSupportedCalls++;
             return true;
+        }
+
+        @Override
+        public int getDefaultDataSubscriptionId() {
+            return INVALID_SUBSCRIPTION_ID;
         }
     }
 
