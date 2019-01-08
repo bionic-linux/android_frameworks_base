@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16fc2af1_51d48c47",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-08T00:30:05Z",
+      "side": 1,
+      "message": "Line too long",
+      "range": {
+        "startLine": 389,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 102
+      },
+      "revId": "778172dabd8520a4f1070fd02308c4e66470577b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b4bd49_4b10677f",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-08T00:30:05Z",
+      "side": 1,
+      "message": "How many times is this called per app start? Are there any performance implications? The exception throwing might be slow.\n\nI guess its all guarded behind feature flag so we can optimize as needed.",
+      "revId": "778172dabd8520a4f1070fd02308c4e66470577b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
