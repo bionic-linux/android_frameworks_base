@@ -333,6 +333,103 @@ public final class BluetoothDevice implements Parcelable {
      */
     public static final int DEVICE_TYPE_DUAL = 3;
 
+    /**
+     * Maximum length of a metadata entry, this is to avoid exploding Bluetooth
+     * disk usage
+     * TODO: Pending discussion on the actual size
+     * @hide
+     */
+    public static final int METADATA_MAX_LENGTH = 2048;
+
+    /**
+     * Manufacturer name of this Bluetooth device
+     * @hide
+     */
+    public static final int METADATA_MANUFACTURER_NAME = 0;
+
+    /**
+     * Model name of this Bluetooth device
+     * @hide
+     */
+    public static final int METADATA_MODEL_NAME = 1;
+
+    /**
+     * Software version of this Bluetooth device
+     * @hide
+     */
+    public static final int METADATA_SOFTWARE_VERSION = 2;
+
+    /**
+     * Hardware version of this Bluetooth device
+     * @hide
+     */
+    public static final int METADATA_HARDWARE_VERSION = 3;
+
+    /**
+     * Package name of the companion app, if any
+     * @hide
+     */
+    public static final int METADATA_COMPANION_APP = 4;
+
+    /**
+     * URI to the main icon shown on the settings UI
+     * @hide
+     */
+    public static final int METADATA_MAIN_ICON = 5;
+
+    /**
+     * Whether this device is an untethered headset with left, right and case
+     * @hide
+     */
+    public static final int METADATA_IS_UNTHETHERED_HEADSET = 6;
+
+    /**
+     * URI to icon of the left headset
+     * @hide
+     */
+    public static final int METADATA_UNTHETHERED_LEFT_ICON = 7;
+
+    /**
+     * URI to icon of the right headset
+     * @hide
+     */
+    public static final int METADATA_UNTHETHERED_RIGHT_ICON = 8;
+
+    /**
+     * URI to icon of the headset charging case
+     * @hide
+     */
+    public static final int METADATA_UNTHETHERED_CASE_ICON = 9;
+
+    /**
+     * Battery level (0-100), -1 is invalid, of the left headset
+     * @hide
+     */
+    public static final int METADATA_UNTHETHERED_LEFT_BATTERY = 10;
+
+    /**
+     * Battery level (0-100), -1 is invalid, of the right headset
+     * @hide
+     */
+    public static final int METADATA_UNTHETHERED_RIGHT_BATTERY = 11;
+
+    /**
+     * Battery level (0-100), -1 is invalid, of the headset charging case
+     * @hide
+     */
+    public static final int METADATA_UNTHETHERED_CASE_BATTERY = 12;
+
+    /**
+     * Whether this Bluetooth device comes with enhanced settings UI slice
+     * @hide
+     */
+    public static final int METADATA_HAS_ENHANCED_SETTINGS_UI = 13;
+
+    /**
+     * URI to the enhanced settings UI slice
+     * @hide
+     */
+    public static final int METADATA_ENHANCED_SETTINGS_UI_URI = 14;
 
     /** @hide */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
@@ -2027,5 +2124,67 @@ public final class BluetoothDevice implements Parcelable {
     public BluetoothSocket createInsecureL2capCocSocket(int transport, int psm) throws IOException {
         Log.e(TAG, "createL2capCocSocket: PLEASE USE THE OFFICIAL API, createInsecureL2capChannel");
         return createInsecureL2capChannel(psm);
+    }
+
+    /**
+     * @param listener metadata listener that will receive asynchronous callbacks
+     * @return true on success, false on error
+     * @hide
+     */
+    public boolean registerMetdataListener(MetadataListener listener) {
+        if (listener == null) {
+            throw new NullPointerException("listenr is null");
+        }
+        //TODO
+        return true;
+    }
+
+    /**
+     * @param listener metadata listener to unregister
+     * @return true on success, false on error
+     * @hide
+     */
+    public boolean unregisterMetadataListener(MetadataListener listener) {
+        if (listener == null) {
+            throw new NullPointerException("listenr is null");
+        }
+        //TODO
+        return true;
+    }
+
+    /**
+     * @param key must be within the list of BluetoothDevice.METADATA_*
+     * @param value must be less than METADATA_MAX_LENGTH characters in length
+     * @return true on success, false on error
+     * @hide
+    */
+    public boolean setMetaData(String key, String value) {
+        if (key == null || value == null) {
+            return false;
+        }
+        //TODO
+        return true;
+    }
+
+    /**
+     * @param key must be within the list of BluetoothDevice.METADATA_*
+     * @return Metadata of the key as string, null on not found
+     * @hide
+     */
+    public String getMetaData(String key) {
+        if (key == null) {
+            return null;
+        }
+        //TODO
+        return null;
+    }
+
+    /**
+     * @hide
+     */
+    public abstract class MetadataListener {
+        void onMetadataChanged(String key, String value) {
+            //TODO
+        }
     }
 }
