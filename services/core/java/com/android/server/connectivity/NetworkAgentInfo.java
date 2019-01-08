@@ -596,7 +596,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     public void updateClat() {
         if (!clatd.isStarted() && Nat464Xlat.requiresClat(this)) {
             clatd.start();
-        } else if (clatd.isStarted && !Nat464Xlat.requiresClat(this)) {
+        } else if (clatd.isStarted() && !Nat464Xlat.requiresClat(this)) {
             clatd.stop();
         }
     }
