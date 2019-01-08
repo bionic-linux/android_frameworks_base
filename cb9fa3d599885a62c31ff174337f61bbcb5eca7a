@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3621e240_09ea8461",
+        "filename": "services/net/java/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-01-08T07:59:53Z",
+      "side": 1,
+      "message": "seem that current buildDiscoverPacket() method doesn\u0027t include DHCP Discover payload. Look like we don\u0027t call writePacket() in somewhere. Please correct me if I miss something.",
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8970d23_1123851e",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-01-08T07:59:53Z",
+      "side": 1,
+      "message": "Shall we also move transport layer protocol code to DhcpL3Wrapper Class?",
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b30d028_1c3b4c04",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-01-08T07:59:53Z",
+      "side": 1,
+      "message": "magic number. Is it better to define a macro for ethernet hardware type?",
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf992814_10497051",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacketL3Wrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-01-08T07:59:53Z",
+      "side": 1,
+      "message": "Maybe we can delete this line after moving this macro from DhcpPacket.java to DhcpPacketL3Wrapper class.",
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3473caf_bf46afa3",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacketL3Wrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-01-08T07:59:53Z",
+      "side": 1,
+      "message": "\"\u003d\u003d\"? ENCAP_L2 equals 0.",
+      "range": {
+        "startLine": 181,
+        "startChar": 20,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
