@@ -39,6 +39,24 @@
       "revId": "778172dabd8520a4f1070fd02308c4e66470577b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e16ae32_cafac68e",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-08T00:36:35Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t love using exception handling as a way to detect whether a layout is precompiled. On the bright side, we try to load the precompiled dex file at LayoutInflater creation time, which should be much less frequent than calls to inflate. If we can\u0027t load the DEX file, we set the mUseCompiledView variable to false and tryInflatePrecompiled then becomes a no-op with no exceptions.\n\nThe exceptions here come in when we try to inflate a view that wasn\u0027t able to be precompiled. Unfortunately, this case is more likely than I\u0027d like, because the view compiler doesn\u0027t support some common features. I will be working to add support for these though.\n\nAn alternative would be to have the view compiler something like `boolean isCompiled(int resid)` or `isCompiled(String layout_name)` in the CompiledView class, which would let us explicitly test whether a layout is supported in a cheaper way.",
+      "parentUuid": "e6b4bd49_4b10677f",
+      "revId": "778172dabd8520a4f1070fd02308c4e66470577b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
