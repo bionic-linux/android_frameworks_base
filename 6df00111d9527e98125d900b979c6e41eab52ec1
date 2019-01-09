@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "d6b5569e_f03d1f6f",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T11:04:53Z",
+      "side": 1,
+      "message": "I see. You are right.\n\nThat would require significant reworking of this well-iterated patch, and would duplicate the work you\u0027re doing in patches you\u0027re currently developing. This will have to go anyway when it moves to the network stack app, so there isn\u0027t much of a risk of forgetting (unless we don\u0027t move this to the network stack app, in which case the problem disappears anyway).",
+      "parentUuid": "ff00d65e_e753cba6",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 5
+      },
+      "revId": "6df00111d9527e98125d900b979c6e41eab52ec1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bad937dd_40c2506b",
         "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponseParceled.aidl",
         "patchSetId": 9

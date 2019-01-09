@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a27e6966_d9a23757",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T11:04:53Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "b480dc65_5f2fc041",
+      "range": {
+        "startLine": 108,
+        "startChar": 30,
+        "endLine": 108,
+        "endChar": 38
+      },
+      "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c07a4535_f6f3c250",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb75ded3_74eda0db",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T11:04:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c07a4535_f6f3c250",
+      "range": {
+        "startLine": 121,
+        "startChar": 16,
+        "endLine": 121,
+        "endChar": 41
+      },
+      "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5d7788a9_de1c124d",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributesParcelable.aidl",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T11:04:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4477b9d2_ef8a07e6",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 7
+      },
+      "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48a471cb_f52e2a80",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributesParcelable.aidl",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b3d176_bafdb221",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributesParcelable.aidl",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T11:04:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a471cb_f52e2a80",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +234,30 @@
       "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a048aeb1_cd121362",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-09T11:04:53Z",
+      "side": 1,
+      "message": "Haha yes. Done. Also renamed setAssignedAddress to setAssignedV4Address.",
+      "parentUuid": "7f755f1d_7e0dd28c",
+      "range": {
+        "startLine": 51,
+        "startChar": 50,
+        "endLine": 51,
+        "endChar": 96
+      },
+      "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
