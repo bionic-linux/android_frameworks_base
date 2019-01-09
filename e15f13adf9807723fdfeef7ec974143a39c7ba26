@@ -1,0 +1,204 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f4e7e62_20ca16d2",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Please add comments for all fields.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152a9fe7_b01d0243",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s safe to assume that db has the same fallback thread.",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 49
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35c6997_eeb85b30",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Where do we store the status of whether the user is a part of a thread or not? As in if user gets removed from a group, they will still have the thread in db, but cannot send message to it.",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a70f44b_b5a3769b",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Same here; add comments.",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a350fa8c_0e38f117",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Same comment as the other file. Value in db may be different.",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ecf8f4_f889c7bd",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Applies to all set functions I guess.",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9026b7_8c6b4634",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Based on comments on the earlier CLs, this API will be removed right?",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be08cae4_f88d4094",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Does there need to be an API for this? Shouldn\u0027t this be auto decided based on participants?",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed9de67_27f57c0e",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Similar to an earlier comment, these kind of APIs will also make RcsThread objects held by the caller stale. I think that is ok though, but something to keep in mind. Also a reason why all operations should be based on id and not objects (see comment below).",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 27
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e66fbfa_da5b7b43",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T18:53:31Z",
+      "side": 1,
+      "message": "Is there a participant id or something similar accessible to the caller? Can we use that instead? Same for the following 2 APIs as well.",
+      "range": {
+        "startLine": 52,
+        "startChar": 49,
+        "endLine": 52,
+        "endChar": 63
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
