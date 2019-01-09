@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "10870e3c_9e6ab17e",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-01-09T10:21:30Z",
+      "side": 1,
+      "message": "Discuss off line and resolved.",
+      "parentUuid": "675f2590_82d67c77",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25db65b2_f2192880",
         "filename": "core/java/android/os/LiveImageHelper.java",
         "patchSetId": 4
