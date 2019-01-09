@@ -122,6 +122,29 @@
     },
     {
       "key": {
+        "uuid": "f49afc65_863bb6af",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-01-09T22:02:41Z",
+      "side": 1,
+      "message": "Maybe this is only me, but this would be misleading to me since the returned set is not immutable, just unmodifiable by the consumer of this method (just a read-only view that might change at any time).",
+      "range": {
+        "startLine": 219,
+        "startChar": 19,
+        "endLine": 219,
+        "endChar": 28
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb9026b7_8c6b4634",
         "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
         "patchSetId": 6
@@ -133,6 +156,29 @@
       "writtenOn": "2019-01-09T18:53:31Z",
       "side": 1,
       "message": "Based on comments on the earlier CLs, this API will be removed right?",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b4b461_2fab3024",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-01-09T22:02:41Z",
+      "side": 1,
+      "message": "I have a general concern here with the usefulness of the equality check here. Right not, an RcsParticipant is not in sync with the database, but even if it were, I still have a possible concern over race conditions, where how fast an update occurs may affect an equality check outcome since we are comparing fields here.\n\nThen again, comparing only the ID may not be what the consumer expects either.\n\nAs a consumer, my initial expectation would be that the IDs should always be equal, and my hope would be that means that the fields are also equal, but I am not sure that we can guarantee that.",
+      "range": {
+        "startLine": 118,
+        "startChar": 19,
+        "endLine": 118,
+        "endChar": 25
+      },
       "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
