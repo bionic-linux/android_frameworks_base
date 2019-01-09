@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dc2bbd6_0d0689b8",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7537,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "This seems like an unrelated change?",
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11aa8be_e9b74ab1",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "I think we commonly use *_enabled, so \"view.precomputed_layout_enabled\"",
+      "range": {
+        "startLine": 77,
+        "startChar": 79,
+        "endLine": 77,
+        "endChar": 102
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f487640_08301920",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "Is there a security concern here as we are going to read and execute code from a cache directory? Who can write to this cache directory?",
+      "range": {
+        "startLine": 78,
+        "startChar": 63,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274c2680_25f7a584",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "Add a comment explaining what this variable means",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32682609_7e80c86c",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "Do we need to make a deep copy of the mPrecompiledClassLoader or are we ok reusing it?",
+      "range": {
+        "startLine": 244,
+        "startChar": 34,
+        "endLine": 244,
+        "endChar": 67
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b4f0f3_31355cd0",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "Add @Nullable to make it clear this returns null sometimes.",
+      "range": {
+        "startLine": 477,
+        "startChar": 12,
+        "endLine": 477,
+        "endChar": 16
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe56f43d_0c2f7671",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "Do you plan to later cache this method?",
+      "range": {
+        "startLine": 489,
+        "startChar": 36,
+        "endLine": 489,
+        "endChar": 45
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a013b7_090368b2",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "Should we include loading the class and the inflater in the trace?",
+      "range": {
+        "startLine": 490,
+        "startChar": 12,
+        "endLine": 490,
+        "endChar": 76
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b820c679_fb0f629e",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "It should have {} I believe it is not all on one line.",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 53
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123d8bfe_3cadcc03",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-09T01:21:04Z",
+      "side": 1,
+      "message": "Is this never null? In general layout inflater allows to have a null parent.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 55,
+        "endLine": 1058,
+        "endChar": 71
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
