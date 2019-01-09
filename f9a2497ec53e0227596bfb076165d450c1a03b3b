@@ -22,6 +22,30 @@
       "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f69a03_b080faf6",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2174,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-09T23:00:02Z",
+      "side": 1,
+      "message": "Like getMetaDataInt() and getMetaDataString()?\nI\u0027ll double check the data we\u0027d like to store and see if we really need two or more API to get the metadata.",
+      "parentUuid": "41550735_7839f5d4",
+      "range": {
+        "startLine": 2174,
+        "startChar": 11,
+        "endLine": 2174,
+        "endChar": 17
+      },
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
