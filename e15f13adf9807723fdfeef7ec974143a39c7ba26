@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e646f81_88b85aee",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "4f4e7e62_20ca16d2",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "152a9fe7_b01d0243",
         "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1875ec25_58b2f14c",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Removed the checks, thanks!",
+      "parentUuid": "152a9fe7_b01d0243",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 49
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0e24ff2a_cbc4e7f1",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Excellent comment that I didn\u0027t account for in the design, noted down. Will think about it and introduce a solution.",
+      "parentUuid": "e35c6997_eeb85b30",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a70f44b_b5a3769b",
         "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
         "patchSetId": 6
@@ -85,6 +157,24 @@
       "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e21c26d_26d6b17d",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "4a70f44b_b5a3769b",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "aca859f3_0587eb47",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Removed, thanks!",
+      "parentUuid": "a350fa8c_0e38f117",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ecf8f4_f889c7bd",
         "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
         "patchSetId": 6
@@ -119,6 +227,24 @@
       "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26872e28_f296e3f7",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Removed, thanks!",
+      "parentUuid": "a7ecf8f4_f889c7bd",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "fc36ba41_eb3bd6a7",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Changed the comment to unmodifiable, thanks!",
+      "parentUuid": "f49afc65_863bb6af",
+      "range": {
+        "startLine": 219,
+        "startChar": 19,
+        "endLine": 219,
+        "endChar": 28
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb9026b7_8c6b4634",
         "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
         "patchSetId": 6
@@ -159,6 +309,24 @@
       "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4337334a_ff2b619e",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "I have to talk with RCS experts on our team, but duly noted.",
+      "parentUuid": "fb9026b7_8c6b4634",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "766029af_a499577d",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Removed field checks. I need this to have the set working correctly, so it kinda needs to be here even thought it\u0027s not fully useful..",
+      "parentUuid": "19b4b461_2fab3024",
+      "range": {
+        "startLine": 118,
+        "startChar": 19,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be08cae4_f88d4094",
         "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
         "patchSetId": 6
@@ -199,6 +391,24 @@
       "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33058cea_ebae7a67",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Ideally yes, realistically our experience is that pretty much all OEMs modified the MmsSmsProvider in different ways, and SMS apps have discovered workarounds etc. so that it is not reliable to use MmsSmsProvider internally to resolve a fallback thread.",
+      "parentUuid": "be08cae4_f88d4094",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "80122add_453c963d",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Acknowledged, will think of a solution.",
+      "parentUuid": "bed9de67_27f57c0e",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 27
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e66fbfa_da5b7b43",
         "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
         "patchSetId": 6
@@ -245,6 +479,30 @@
       "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596b2d91_fb3cd08b",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-09T22:45:32Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "5e66fbfa_da5b7b43",
+      "range": {
+        "startLine": 52,
+        "startChar": 49,
+        "endLine": 52,
+        "endChar": 63
+      },
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
