@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d1621aa_ddcf8b1b",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-01-09T03:28:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ff526e2_f35dc941",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47032bf0_ec423d02",
         "filename": "core/java/android/os/LiveImageHelper.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde43e0a_21fa943b",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-01-09T03:28:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "47032bf0_ec423d02",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1368bf62_f6247c73",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-01-09T03:28:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "10035c24_a804211f",
+      "range": {
+        "startLine": 91,
+        "startChar": 17,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66dd0cc7_e4e8b637",
         "filename": "core/java/android/os/LiveImageHelper.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2019-01-08T10:56:56Z",
       "side": 1,
       "message": "I think we want to bindService() here to start getting callback immediately",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f3818f_871bd634",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-01-09T03:28:37Z",
+      "side": 1,
+      "message": "The should be a callback immediately by the Messenger handler.",
+      "parentUuid": "66dd0cc7_e4e8b637",
       "range": {
         "startLine": 98,
         "startChar": 0,
@@ -114,6 +210,30 @@
       "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53421bea_cea584a4",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-01-09T03:28:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25db65b2_f2192880",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 24
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "c4bece4f_bea82e3d",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-01-09T03:28:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51fbc2c3_0fa25fef",
+      "range": {
+        "startLine": 107,
+        "startChar": 80,
+        "endLine": 107,
+        "endChar": 96
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2718b231_3160cdf7",
         "filename": "core/java/android/os/LiveImageHelper.java",
         "patchSetId": 4
@@ -174,6 +318,30 @@
       "writtenOn": "2019-01-08T10:56:56Z",
       "side": 1,
       "message": "startActivity per the latest discussion",
+      "range": {
+        "startLine": 108,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "cbd234d53e9a5a584a4ba54251ab69e7fe8dc1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30312c12_a46cff67",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-01-09T03:28:37Z",
+      "side": 1,
+      "message": "We still need to bind the ServiceConnection.",
+      "parentUuid": "2718b231_3160cdf7",
       "range": {
         "startLine": 108,
         "startChar": 17,
