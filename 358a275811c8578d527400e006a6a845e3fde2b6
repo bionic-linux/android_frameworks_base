@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab5600b_fd35dc72",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T23:57:06Z",
+      "side": 1,
+      "message": "Can there be multiple owners in a group?",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "358a275811c8578d527400e006a6a845e3fde2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c422e12e_350116a2",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T23:57:06Z",
+      "side": 1,
+      "message": "We should explicitly mention whether the user is going to be part of this Set or not. And if we decide that it will be, then this itself can be used to address my earlier comment; that is not in this Set means that the user has been removed from the group.",
+      "revId": "358a275811c8578d527400e006a6a845e3fde2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa073dc_d7a9c1ea",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T23:57:06Z",
+      "side": 1,
+      "message": "What if the removed participant is an owner?",
+      "revId": "358a275811c8578d527400e006a6a845e3fde2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

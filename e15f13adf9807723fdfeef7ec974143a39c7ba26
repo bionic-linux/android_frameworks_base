@@ -412,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "9e31c5cb_0280775f",
+        "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-01-09T23:57:06Z",
+      "side": 1,
+      "message": "But that means that if this is not explicitly called, there is no fallback thread id? I guess that will lead to multiple conversations with the same person in the app, so the app does have a strong reason to call it?",
+      "parentUuid": "33058cea_ebae7a67",
+      "revId": "e15f13adf9807723fdfeef7ec974143a39c7ba26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed9de67_27f57c0e",
         "filename": "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
         "patchSetId": 6
