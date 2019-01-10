@@ -16,10 +16,14 @@
 
 package android.net.ip;
 
+import static android.net.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
+import static android.net.shared.LinkPropertiesParcelableUtil.toStableParcelable;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.eq;
@@ -40,9 +44,8 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.RouteInfo;
-import android.net.ip.IpClient.Callback;
-import android.net.ip.IpClient.InitialConfiguration;
-import android.net.ip.IpClient.ProvisioningConfiguration;
+import android.net.shared.InitialConfiguration;
+import android.net.shared.ProvisioningConfiguration;
 import android.net.util.InterfaceParams;
 import android.os.INetworkManagementService;
 import android.provider.Settings;
@@ -87,7 +90,7 @@ public class IpClientTest {
     @Mock private INetworkManagementService mNMService;
     @Mock private INetd mNetd;
     @Mock private Resources mResources;
-    @Mock private Callback mCb;
+    @Mock private IIpClientCallbacks mCb;
     @Mock private AlarmManager mAlarm;
     @Mock private IpClient.Dependencies mDependecies;
     private MockContentResolver mContentResolver;
@@ -179,7 +182,7 @@ public class IpClientTest {
     public void testInterfaceNotFoundFailsImmediately() throws Exception {
         setTestInterfaceParams(null);
         final IpClient ipc = new IpClient(mContext, TEST_IFNAME, mCb, mDependecies);
-        ipc.startProvisioning(new IpClient.ProvisioningConfiguration());
+        ipc.startProvisioning(new ProvisioningConfiguration());
         verify(mCb, times(1)).onProvisioningFailure(any());
         ipc.shutdown();
     }
@@ -205,7 +208,8 @@ public class IpClientTest {
         verify(mNMService, timeout(TEST_TIMEOUT_MS).times(1)).disableIpv6(iface);
         verify(mNMService, timeout(TEST_TIMEOUT_MS).times(1)).clearInterfaceAddresses(iface);
         verify(mCb, timeout(TEST_TIMEOUT_MS).times(1))
-                .onLinkPropertiesChange(eq(makeEmptyLinkProperties(iface)));
+                .onLinkPropertiesChange(argThat(
+                        lp -> fromStableParcelable(lp).equals(makeEmptyLinkProperties(iface))));
     }
 
     @Test
@@ -250,13 +254,15 @@ public class IpClientTest {
         mObserver.addressUpdated(iface, new LinkAddress(addresses[lastAddr]));
         LinkProperties want = linkproperties(links(addresses), routes(prefixes));
         want.setInterfaceName(iface);
-        verify(mCb, timeout(TEST_TIMEOUT_MS).times(1)).onProvisioningSuccess(eq(want));
+        verify(mCb, timeout(TEST_TIMEOUT_MS).times(1)).onProvisioningSuccess(argThat(
+                lp -> fromStableParcelable(lp).equals(want)));
 
         ipc.shutdown();
         verify(mNMService, timeout(TEST_TIMEOUT_MS).times(1)).disableIpv6(iface);
         verify(mNMService, timeout(TEST_TIMEOUT_MS).times(1)).clearInterfaceAddresses(iface);
         verify(mCb, timeout(TEST_TIMEOUT_MS).times(1))
-                .onLinkPropertiesChange(eq(makeEmptyLinkProperties(iface)));
+                .onLinkPropertiesChange(argThat(
+                        lp -> fromStableParcelable(lp).equals(makeEmptyLinkProperties(iface))));
     }
 
     @Test
@@ -488,11 +494,11 @@ public class IpClientTest {
         List<String> list3 = Arrays.asList("bar", "baz");
         List<String> list4 = Arrays.asList("foo", "bar", "baz");
 
-        assertTrue(IpClient.all(list1, (x) -> false));
-        assertFalse(IpClient.all(list2, (x) -> false));
-        assertTrue(IpClient.all(list3, (x) -> true));
-        assertTrue(IpClient.all(list2, (x) -> x.charAt(0) == 'f'));
-        assertFalse(IpClient.all(list4, (x) -> x.charAt(0) == 'f'));
+        assertTrue(InitialConfiguration.all(list1, (x) -> false));
+        assertFalse(InitialConfiguration.all(list2, (x) -> false));
+        assertTrue(InitialConfiguration.all(list3, (x) -> true));
+        assertTrue(InitialConfiguration.all(list2, (x) -> x.charAt(0) == 'f'));
+        assertFalse(InitialConfiguration.all(list4, (x) -> x.charAt(0) == 'f'));
     }
 
     @Test
@@ -502,11 +508,11 @@ public class IpClientTest {
         List<String> list3 = Arrays.asList("bar", "baz");
         List<String> list4 = Arrays.asList("foo", "bar", "baz");
 
-        assertFalse(IpClient.any(list1, (x) -> true));
-        assertTrue(IpClient.any(list2, (x) -> true));
-        assertTrue(IpClient.any(list2, (x) -> x.charAt(0) == 'f'));
-        assertFalse(IpClient.any(list3, (x) -> x.charAt(0) == 'f'));
-        assertTrue(IpClient.any(list4, (x) -> x.charAt(0) == 'f'));
+        assertFalse(InitialConfiguration.any(list1, (x) -> true));
+        assertTrue(InitialConfiguration.any(list2, (x) -> true));
+        assertTrue(InitialConfiguration.any(list2, (x) -> x.charAt(0) == 'f'));
+        assertFalse(InitialConfiguration.any(list3, (x) -> x.charAt(0) == 'f'));
+        assertTrue(InitialConfiguration.any(list4, (x) -> x.charAt(0) == 'f'));
     }
 
     @Test

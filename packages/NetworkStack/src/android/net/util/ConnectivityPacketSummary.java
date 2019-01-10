@@ -16,18 +16,18 @@
 
 package android.net.util;
 
-import android.net.dhcp.DhcpPacket;
 import android.net.MacAddress;
+import android.net.dhcp.DhcpPacket;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Arrays;
 import java.util.StringJoiner;
 
 import static android.system.OsConstants.*;
-import static android.net.util.NetworkConstants.*;
+
+import static com.android.server.util.NetworkStackConstants.*;
 
 
 /**
@@ -82,12 +82,14 @@ public class ConnectivityPacketSummary {
         }
 
         mPacket.position(ETHER_SRC_ADDR_OFFSET);
-        final ByteBuffer srcMac = (ByteBuffer) mPacket.slice().limit(ETHER_ADDR_LEN);
+        final ByteBuffer srcMac = (ByteBuffer) mPacket.slice().limit(
+                ETHER_ADDR_LEN);
         sj.add(ByteBuffer.wrap(mHwAddr).equals(srcMac) ? "TX" : "RX");
         sj.add(getMacAddressString(srcMac));
 
         mPacket.position(ETHER_DST_ADDR_OFFSET);
-        final ByteBuffer dstMac = (ByteBuffer) mPacket.slice().limit(ETHER_ADDR_LEN);
+        final ByteBuffer dstMac = (ByteBuffer) mPacket.slice().limit(
+                ETHER_ADDR_LEN);
         sj.add(">").add(getMacAddressString(dstMac));
 
         mPacket.position(ETHER_TYPE_OFFSET);
@@ -374,5 +376,17 @@ public class ConnectivityPacketSummary {
 
         final String MAC48_FORMAT = "%02x:%02x:%02x:%02x:%02x:%02x";
         return String.format(MAC48_FORMAT, printableBytes);
+    }
+
+    public static String asString(int i) {
+        return Integer.toString(i);
+    }
+
+    public static int asUint(byte b) {
+        return (b & 0xff);
+    }
+
+    public static int asUint(short s) {
+        return (s & 0xffff);
     }
 }

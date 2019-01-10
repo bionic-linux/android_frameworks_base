@@ -16,10 +16,10 @@
 
 package android.net.apf;
 
-import static android.net.util.NetworkConstants.*;
 import static android.system.OsConstants.*;
 import static com.android.internal.util.BitUtils.bytesToBEInt;
-import static com.android.internal.util.BitUtils.put;
+import static com.android.server.util.NetworkStackConstants.ICMPV6_ECHO_REQUEST_TYPE;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -33,7 +33,7 @@ import android.net.LinkProperties;
 import android.net.apf.ApfFilter.ApfConfiguration;
 import android.net.apf.ApfGenerator.IllegalInstructionException;
 import android.net.apf.ApfGenerator.Register;
-import android.net.ip.IpClient;
+import android.net.ip.IpClientCallback;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.RaEvent;
 import android.net.util.InterfaceParams;
@@ -47,7 +47,6 @@ import android.system.ErrnoException;
 import android.system.Os;
 import android.text.format.DateUtils;
 import android.util.Log;
-import com.android.frameworks.tests.net.R;
 import com.android.internal.util.HexDump;
 import java.io.File;
 import java.io.FileDescriptor;
@@ -61,6 +60,11 @@ import java.util.List;
 import java.util.Random;
 import libcore.io.IoUtils;
 import libcore.io.Streams;
+
+import com.android.server.networkstack.tests.R;
+
+import com.android.server.util.NetworkStackConstants;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -87,7 +91,7 @@ public class ApfTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         // Load up native shared library containing APF interpreter exposed via JNI.
-        System.loadLibrary("frameworksnettestsjni");
+        System.loadLibrary("networkstacktestsjni");
     }
 
     private static final String TAG = "ApfTest";
@@ -902,7 +906,7 @@ public class ApfTest {
             HexDump.toHexString(data, false), result);
     }
 
-    private class MockIpClientCallback extends IpClient.Callback {
+    private class MockIpClientCallback extends IpClientCallback {
         private final ConditionVariable mGotApfProgram = new ConditionVariable();
         private byte[] mLastApfProgram;
 
@@ -933,7 +937,7 @@ public class ApfTest {
         private final long mFixedTimeMs = SystemClock.elapsedRealtime();
 
         public TestApfFilter(Context context, ApfConfiguration config,
-                IpClient.Callback ipClientCallback, IpConnectivityLog log) throws Exception {
+                IpClientCallback ipClientCallback, IpConnectivityLog log) throws Exception {
             super(context, config, InterfaceParams.getByName("lo"), ipClientCallback, log);
         }
 
@@ -1062,7 +1066,7 @@ public class ApfTest {
     private static final byte[] IPV4_ANY_HOST_ADDR       = {0, 0, 0, 0};
 
     // Helper to initialize a default apfFilter.
-    private ApfFilter setupApfFilter(IpClient.Callback ipClientCallback, ApfConfiguration config)
+    private ApfFilter setupApfFilter(IpClientCallback ipClientCallback, ApfConfiguration config)
             throws Exception {
         LinkAddress link = new LinkAddress(InetAddress.getByAddress(MOCK_IPV4_ADDR), 19);
         LinkProperties lp = new LinkProperties();
@@ -1281,7 +1285,7 @@ public class ApfTest {
 
         // However, we should still let through all other ICMPv6 types.
         ByteBuffer raPacket = ByteBuffer.wrap(packet.array().clone());
-        raPacket.put(ICMP6_TYPE_OFFSET, (byte)ICMPV6_ROUTER_ADVERTISEMENT);
+        raPacket.put(ICMP6_TYPE_OFFSET, (byte) NetworkStackConstants.ICMPV6_ROUTER_ADVERTISEMENT);
         assertPass(ipClientCallback.getApfProgram(), raPacket.array());
 
         // Now wake up from doze mode to ensure that we no longer drop the packets.

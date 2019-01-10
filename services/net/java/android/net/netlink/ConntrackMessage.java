@@ -23,7 +23,6 @@ import static android.net.netlink.StructNlMsgHdr.NLM_F_ACK;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_DUMP;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_REPLACE;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_REQUEST;
-import static android.net.util.NetworkConstants.IPV4_ADDR_LEN;
 import static java.nio.ByteOrder.BIG_ENDIAN;
 
 import android.system.OsConstants;

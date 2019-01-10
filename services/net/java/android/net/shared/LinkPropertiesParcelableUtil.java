@@ -31,12 +31,8 @@ import android.net.RouteInfo;
 import android.net.RouteInfoParcelable;
 import android.net.Uri;
 
-import java.lang.reflect.Array;
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
 
 /**
  * Collection of utility methods to convert to and from stable AIDL parcelables for LinkProperties
@@ -155,31 +151,6 @@ public final class LinkPropertiesParcelableUtil {
                 parcel.scope);
     }
 
-    // Below methods could be implemented easily with streams, but streams are frowned upon in
-    // frameworks code.
-    private static <ParcelableType, BaseType> ParcelableType[] toParcelableArray(
-            @NonNull List<BaseType> base,
-            @NonNull Function<BaseType, ParcelableType> conv,
-            @NonNull Class<ParcelableType> parcelClass) {
-        final ParcelableType[] out = (ParcelableType[]) Array.newInstance(parcelClass, base.size());
-        int i = 0;
-        for (BaseType b : base) {
-            out[i] = conv.apply(b);
-            i++;
-        }
-        return out;
-    }
-
-    private static <ParcelableType, BaseType> List<BaseType> fromParcelableArray(
-            @NonNull ParcelableType[] parceled,
-            @NonNull Function<ParcelableType, BaseType> conv) {
-        final List<BaseType> out = new ArrayList<>(parceled.length);
-        for (ParcelableType t : parceled) {
-            out.add(conv.apply(t));
-        }
-        return out;
-    }
-
     /**
      * Convert a LinkProperties to a LinkPropertiesParcelable
      */
@@ -189,24 +160,24 @@ public final class LinkPropertiesParcelableUtil {
         }
         final LinkPropertiesParcelable parcel = new LinkPropertiesParcelable();
         parcel.ifaceName = lp.getInterfaceName();
-        parcel.linkAddresses = LinkPropertiesParcelableUtil.toParcelableArray(
+        parcel.linkAddresses = ParcelableUtil.toParcelableArray(
                 lp.getLinkAddresses(),
                 LinkPropertiesParcelableUtil::toStableParcelable,
                 LinkAddressParcelable.class);
-        parcel.dnses = toParcelableArray(lp.getDnsServers(), InetAddress::getHostAddress,
+        parcel.dnses = ParcelableUtil.toParcelableArray(lp.getDnsServers(), InetAddress::getHostAddress,
                 String.class);
-        parcel.validatedPrivateDnses = toParcelableArray(lp.getValidatedPrivateDnsServers(),
+        parcel.validatedPrivateDnses = ParcelableUtil.toParcelableArray(lp.getValidatedPrivateDnsServers(),
                 InetAddress::getHostAddress, String.class);
         parcel.usePrivateDns = lp.isPrivateDnsActive();
         parcel.privateDnsServerName = lp.getPrivateDnsServerName();
         parcel.domains = lp.getDomains();
-        parcel.routes = toParcelableArray(
+        parcel.routes = ParcelableUtil.toParcelableArray(
                 lp.getRoutes(), LinkPropertiesParcelableUtil::toStableParcelable,
                 RouteInfoParcelable.class);
         parcel.httpProxy = toStableParcelable(lp.getHttpProxy());
         parcel.mtu = lp.getMtu();
         parcel.tcpBufferSizes = lp.getTcpBufferSizes();
-        parcel.stackedLinks = toParcelableArray(
+        parcel.stackedLinks = ParcelableUtil.toParcelableArray(
                 lp.getStackedLinks(), LinkPropertiesParcelableUtil::toStableParcelable,
                 LinkPropertiesParcelable.class);
         return parcel;
@@ -221,10 +192,10 @@ public final class LinkPropertiesParcelableUtil {
         }
         final LinkProperties lp = new LinkProperties();
         lp.setInterfaceName(parcel.ifaceName);
-        lp.setLinkAddresses(fromParcelableArray(parcel.linkAddresses,
+        lp.setLinkAddresses(ParcelableUtil.fromParcelableArray(parcel.linkAddresses,
                 LinkPropertiesParcelableUtil::fromStableParcelable));
-        lp.setDnsServers(fromParcelableArray(parcel.dnses, InetAddresses::parseNumericAddress));
-        lp.setValidatedPrivateDnsServers(fromParcelableArray(parcel.validatedPrivateDnses,
+        lp.setDnsServers(ParcelableUtil.fromParcelableArray(parcel.dnses, InetAddresses::parseNumericAddress));
+        lp.setValidatedPrivateDnsServers(ParcelableUtil.fromParcelableArray(parcel.validatedPrivateDnses,
                 InetAddresses::parseNumericAddress));
         lp.setUsePrivateDns(parcel.usePrivateDns);
         lp.setPrivateDnsServerName(parcel.privateDnsServerName);

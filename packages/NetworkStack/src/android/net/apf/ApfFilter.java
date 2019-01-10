@@ -16,13 +16,17 @@
 
 package android.net.apf;
 
-import static android.net.util.NetworkConstants.*;
 import static android.system.OsConstants.*;
 import static com.android.internal.util.BitUtils.bytesToBEInt;
 import static com.android.internal.util.BitUtils.getUint16;
 import static com.android.internal.util.BitUtils.getUint32;
 import static com.android.internal.util.BitUtils.getUint8;
 import static com.android.internal.util.BitUtils.uint32;
+
+import static com.android.server.util.NetworkStackConstants.ICMPV6_ECHO_REQUEST_TYPE;
+import static com.android.server.util.NetworkStackConstants.ICMPV6_NEIGHBOR_ADVERTISEMENT;
+import static com.android.server.util.NetworkStackConstants.ICMPV6_ROUTER_ADVERTISEMENT;
+import static com.android.server.util.NetworkStackConstants.ICMPV6_ROUTER_SOLICITATION;
 
 import android.annotation.Nullable;
 import android.content.BroadcastReceiver;
@@ -34,12 +38,13 @@ import android.net.LinkProperties;
 import android.net.NetworkUtils;
 import android.net.apf.ApfGenerator.IllegalInstructionException;
 import android.net.apf.ApfGenerator.Register;
-import android.net.ip.IpClient;
+import android.net.ip.IpClientCallback;
 import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.ApfStats;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.RaEvent;
 import android.net.util.InterfaceParams;
+import android.os.Binder;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.system.ErrnoException;
@@ -308,7 +313,7 @@ public class ApfFilter {
     private static final int APF_MAX_ETH_TYPE_BLACK_LIST_LEN = 20;
 
     private final ApfCapabilities mApfCapabilities;
-    private final IpClient.Callback mIpClientCallback;
+    private final IpClientCallback mIpClientCallback;
     private final InterfaceParams mInterfaceParams;
     private final IpConnectivityLog mMetricsLog;
 
@@ -349,7 +354,7 @@ public class ApfFilter {
 
     @VisibleForTesting
     ApfFilter(Context context, ApfConfiguration config, InterfaceParams ifParams,
-            IpClient.Callback ipClientCallback, IpConnectivityLog log) {
+            IpClientCallback ipClientCallback, IpConnectivityLog log) {
         mApfCapabilities = config.apfCapabilities;
         mIpClientCallback = ipClientCallback;
         mInterfaceParams = ifParams;
@@ -1390,7 +1395,7 @@ public class ApfFilter {
      * filtering using APF programs.
      */
     public static ApfFilter maybeCreate(Context context, ApfConfiguration config,
-            InterfaceParams ifParams, IpClient.Callback ipClientCallback) {
+            InterfaceParams ifParams, IpClientCallback ipClientCallback) {
         if (context == null || config == null || ifParams == null) return null;
         ApfCapabilities apfCapabilities =  config.apfCapabilities;
         if (apfCapabilities == null) return null;

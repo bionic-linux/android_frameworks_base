@@ -13,17 +13,20 @@
  * See the License for the specific language governing perNmissions and
  * limitations under the License.
  */
-package android.net;
+package android.net.ip;
 
-import android.net.INetworkMonitorCallbacks;
-import android.net.dhcp.DhcpServingParamsParcel;
-import android.net.dhcp.IDhcpServerCallbacks;
-import android.net.ip.IIpClientCallbacks;
+import android.net.ProxyInfoParcelable;
+import android.net.ProvisioningConfigurationParcelable;
 
 /** @hide */
-oneway interface INetworkStackConnector {
-    void makeDhcpServer(in String ifName, in DhcpServingParamsParcel params,
-        in IDhcpServerCallbacks cb);
-    void makeNetworkMonitor(int netId, String name, in INetworkMonitorCallbacks cb);
-    void makeIpClient(in String ifName, in IIpClientCallbacks callbacks);
+oneway interface IIpClient {
+    void completedPreDhcpAction();
+    void confirmConfiguration();
+    void readPacketFilterComplete(in byte[] data);
+    void shutdown();
+    void startProvisioning(in ProvisioningConfigurationParcelable req);
+    void stop();
+    void setTcpBufferSizes(in String tcpBufferSizes);
+    void setHttpProxy(in ProxyInfoParcelable proxyInfo);
+    void setMulticastFilter(boolean enabled);
 }
