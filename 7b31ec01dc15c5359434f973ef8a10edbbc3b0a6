@@ -755,6 +755,30 @@
     },
     {
       "key": {
+        "uuid": "44bb218a_fd517b3c",
+        "filename": "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-10T09:24:01Z",
+      "side": 1,
+      "message": "Yes, what you describe ([0.0, 1.0] + -1.0) is exactly how I expect this to work in reality, but my reasoning here is that for the purposes of this method anything at all that\u0027s not in the [0.0, 1.0] is unknown, and if we ever want to add a new guard value that\u0027s what we should expect it to return by default. But throwing would be another reasonable behavior.",
+      "parentUuid": "01b53ee5_64cdb9e6",
+      "range": {
+        "startLine": 90,
+        "startChar": 57,
+        "endLine": 90,
+        "endChar": 84
+      },
+      "revId": "7b31ec01dc15c5359434f973ef8a10edbbc3b0a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7189c45a_d03b1a16",
         "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
         "patchSetId": 8

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "663b878e_ca3400bf",
+        "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-10T09:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a27e6966_d9a23757",
+      "range": {
+        "startLine": 108,
+        "startChar": 30,
+        "endLine": 108,
+        "endChar": 38
+      },
+      "revId": "ededc29d2af12eef81ecc135411fe22bdc15d693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07a4535_f6f3c250",
         "filename": "core/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 13
