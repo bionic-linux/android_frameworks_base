@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65d5e1da_e56cab41",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7537,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "Yup, sorry about that.",
+      "parentUuid": "6dc2bbd6_0d0689b8",
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a11aa8be_e9b74ab1",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5a32efdc_718c8d01",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a11aa8be_e9b74ab1",
+      "range": {
+        "startLine": 77,
+        "startChar": 79,
+        "endLine": 77,
+        "endChar": 102
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f487640_08301920",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2019-01-09T01:21:04Z",
       "side": 1,
       "message": "Is there a security concern here as we are going to read and execute code from a cache directory? Who can write to this cache directory?",
+      "range": {
+        "startLine": 78,
+        "startChar": 63,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7b55ca_1b01665e",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "This is part of the app\u0027s private data directory, so only the app can write it, meaning they could already load this code.\n\nThere\u0027s going to be a followup CL that disables this feature for apps that have JIT disabled. Basically, if the app developer has said they don\u0027t want code generation, we won\u0027t generate compiled layouts either.",
+      "parentUuid": "4f487640_08301920",
       "range": {
         "startLine": 78,
         "startChar": 63,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6cd4fc26_d073ca11",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274c2680_25f7a584",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32682609_7e80c86c",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 6
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "a4063a1a_af56ec13",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "Ah, good point. Since the classloader comes from the Context, we probably want to make sure that the cloned LayoutInflater uses the classloader from newContext instead.\n\nI\u0027ll change this to call initPrecompiledViews() again instead.",
+      "parentUuid": "32682609_7e80c86c",
+      "range": {
+        "startLine": 244,
+        "startChar": 34,
+        "endLine": 244,
+        "endChar": 67
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b4f0f3_31355cd0",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf43473_894869b5",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b4f0f3_31355cd0",
+      "range": {
+        "startLine": 477,
+        "startChar": 12,
+        "endLine": 477,
+        "endChar": 16
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "a2627424_480b3f9b",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "Yeah, I think so. Originally I wanted to not trace the part to decide if we\u0027re using the precompiled view or not, so that way you\u0027d have exactly one of either \"inflate (precompiled)\" or \"inflate\" for each layout that\u0027s inflated. However, we can still get two traces if the method call actually fails for some reason (which it shouldn\u0027t, but still). Anyway, it\u0027s more fair to include the cost, and this will let us see how much time we spend trying to use a precompiled one and failing.\n\nIt\u0027s a shame we can\u0027t decide on a label for the trace at the traceEnd call, since then we could also indicate failure or success.",
+      "parentUuid": "86a013b7_090368b2",
+      "range": {
+        "startLine": 490,
+        "startChar": 12,
+        "endLine": 490,
+        "endChar": 76
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b820c679_fb0f629e",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 6
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "5a123753_58aef2ed",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "The `if` is gone now because I moved the trace higher and we start it unconditionally.",
+      "parentUuid": "b820c679_fb0f629e",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 53
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123d8bfe_3cadcc03",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 6
@@ -214,6 +400,30 @@
       "writtenOn": "2019-01-09T01:21:04Z",
       "side": 1,
       "message": "Is this never null? In general layout inflater allows to have a null parent.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 55,
+        "endLine": 1058,
+        "endChar": 71
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a404537_29f1d0b2",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-10T00:27:23Z",
+      "side": 1,
+      "message": "Down below, in lines 1104 and 1109 in this patch, group gets dereferenced too, and that is also just parent casted to a ViewGroup. Higher up in this function there\u0027s a check for `parent instanceof ViewGroup`, which should be false for null, so I think we\u0027re protected from null here.",
+      "parentUuid": "123d8bfe_3cadcc03",
       "range": {
         "startLine": 1058,
         "startChar": 55,
