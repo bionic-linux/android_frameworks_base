@@ -64,6 +64,8 @@ public class NetworkStatsFactory {
 
     private boolean mUseBpfStats;
 
+    private NetworkStats mPersistSnapshot;
+
     // TODO: only do adjustments in NetworkStatsService and remove this.
     /**
      * (Stacked interface) -> (base interface) association for all connected ifaces since boot.
@@ -135,6 +137,7 @@ public class NetworkStatsFactory {
         mStatsXtIfaceFmt = new File(procRoot, "net/xt_qtaguid/iface_stat_fmt");
         mStatsXtUid = new File(procRoot, "net/xt_qtaguid/stats");
         mUseBpfStats = useBpfStats;
+        mPersistSnapshot = new NetworkStats(SystemClock.elapsedRealtime(), -1);
     }
 
     public NetworkStats readBpfNetworkStatsDev() throws IOException {
@@ -278,8 +281,8 @@ public class NetworkStatsFactory {
             } else {
                 stats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
             }
-            if (nativeReadNetworkStatsDetail(stats, mStatsXtUid.getAbsolutePath(), limitUid,
-                    limitIfaces, limitTag, mUseBpfStats) != 0) {
+            if (nativeReadNetworkStatsDetail(stats, mStatsXtUid.getAbsolutePath(), UID_ALL,
+                    null, TAG_ALL, mUseBpfStats) != 0) {
                 throw new IOException("Failed to parse network stats");
             }
             if (SANITY_CHECK_NATIVE) {
@@ -287,7 +290,11 @@ public class NetworkStatsFactory {
                         limitIfaces, limitTag);
                 assertEquals(javaStats, stats);
             }
-            return stats;
+            mPersistSnapshot.setElapsedRealtime(stats.getElapsedRealtime());
+            mPersistSnapshot.combineAllValues(stats);
+            NetworkStats result = mPersistSnapshot.clone();
+            result.filter(limitUid, limitIfaces, limitTag);
+            return result;
         } else {
             return javaReadNetworkStatsDetail(mStatsXtUid, limitUid, limitIfaces, limitTag);
         }
