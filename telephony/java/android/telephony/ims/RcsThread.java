@@ -21,6 +21,8 @@ import android.os.Parcelable;
 import android.util.Log;
 
 /**
+ * TESTESTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTEST
+ *
  * RcsThread represents a single RCS conversation thread. It holds messages that were sent and
  * received and events that occurred on that thread.
  * @hide - TODO(sahinc) make this public
