@@ -44,6 +44,11 @@ public class InterfaceParams {
     public final MacAddress macAddr;
     public final int defaultMtu;
 
+    // TODO: move the below to NetworkStackConstants when this class is moved to the NetworkStack.
+    private static final int ETHER_MTU = 1500;
+    private static final int IPV6_MIN_MTU = 1280;
+
+
     public static InterfaceParams getByName(String name) {
         final NetworkInterface netif = getNetworkInterfaceByName(name);
         if (netif == null) return null;
