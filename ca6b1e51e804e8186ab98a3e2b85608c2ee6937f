@@ -203,6 +203,52 @@
     },
     {
       "key": {
+        "uuid": "fd22fa9b_c8f469f5",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T10:18:52Z",
+      "side": 1,
+      "message": "{@code null}",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 27
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e874c26_ac999821",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T10:18:52Z",
+      "side": 1,
+      "message": "{@code answer}",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d07943a_e473ae22",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 3
@@ -311,6 +357,53 @@
         "startChar": 0,
         "endLine": 198,
         "endChar": 44
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153c5c56_97c45de4",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T10:18:52Z",
+      "side": 1,
+      "message": "I see it\u0027s android_res_nresult. But there\u0027s no need to reimplement that in Java - we can always define an android_res_nresult_internal that is not in the NDK and that doesn\u0027t close the fd. Then android_res_nresult and this JNI code can both call that.",
+      "parentUuid": "567b84d8_12a02c20",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 44
+      },
+      "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa50ee0_32485f23",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-10T10:18:52Z",
+      "side": 1,
+      "message": "Can we make this something simpler than a Handler? For example, would the following work?\n\n    private class InetAddressAnswerAccumulator {\n\n        List\u003cInetAddress\u003e[] allAnswers;\n        private int mAnswerCount \u003d 0;\n\n        public InetAddressAnswerAccumulator(int size) {\n            answers \u003d new List\u003cInetAddress\u003e[size];\n        }\n\n        public boolean accumulate(List\u003cInetAddress\u003e answer) {\n            answers[mAnswerCount++] \u003d answer;\n            return answerCount \u003d\u003d answers.length;\n        }\n\n        public List\u003cInetAddress\u003e getAnswers() {\n            return answers;\n        }\n    }\n\nYou\u0027d pass the accumulator to registerFDListener, and it would capture it in the lambda. After decoding the answer to a List\u003cInetAddress\u003e, it would pass that list to the accumulator, and then if accumulate() returns true, it would call the user-supplied callback with accumulator.getAnswers().",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 51
       },
       "revId": "ca6b1e51e804e8186ab98a3e2b85608c2ee6937f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
