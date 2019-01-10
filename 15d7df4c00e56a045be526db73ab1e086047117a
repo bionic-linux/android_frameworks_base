@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "644b5747_ffc44f79",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-01-10T20:46:51Z",
+      "side": 1,
+      "message": "Were these for debugging? Please either use Rlog or remove.",
+      "range": {
+        "startLine": 625,
+        "startChar": 28,
+        "endLine": 625,
+        "endChar": 99
+      },
+      "revId": "15d7df4c00e56a045be526db73ab1e086047117a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85426737_882eb278",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-01-10T20:46:51Z",
+      "side": 1,
+      "message": "Were these for debugging? Please either use Rlog or remove.",
+      "revId": "15d7df4c00e56a045be526db73ab1e086047117a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d326acb_ea5dae7d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-01-10T20:46:51Z",
+      "side": 1,
+      "message": "Were these for debugging? Please either use Rlog or remove.",
+      "range": {
+        "startLine": 763,
+        "startChar": 8,
+        "endLine": 763,
+        "endChar": 80
+      },
+      "revId": "15d7df4c00e56a045be526db73ab1e086047117a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
