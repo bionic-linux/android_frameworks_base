@@ -1,0 +1,736 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4410450_10c74404",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "I think its useful to link to the spec:\n\nSee: Section 5 (1-to-1 Messaging) - GSMA RCC.71 (RCS Universal Profile Service Definition Document)",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065a8314_64903c87",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "See my now in the RcsGroupThread; its strange to have a parcelable be mutable and communicate back to a service; shouldn\u0027t be parcelable.",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0fbd45_a0c88b1a",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Minor: {@code false}",
+      "range": {
+        "startLine": 50,
+        "startChar": 23,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a89d4a1_df79fd6b",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "the SMS provider (see {@link android.provider.Telephony.MmsSms#CONTENT_CONVERSATIONS_URI})",
+      "range": {
+        "startLine": 59,
+        "startChar": 37,
+        "endLine": 59,
+        "endChar": 77
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d34a6fd7_e60121a7",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "add:\nSee: {@link android.provider.Telephony.BaseMmsColumns#THREAD_ID}",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f66d3f_f0b2640c",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "The API THREAD_ID indicates its a long int:\nhttps://developer.android.com/reference/android/provider/Telephony.BaseMmsColumns#THREAD_ID\nShould this be a long?",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 14
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa6d514_1af8e2aa",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "@link to {@link android.provider.Telephony.MmsSms#CONTENT_CONVERSATIONS_URI} as above.",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9215597_9fee2328",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Should this be Rcs1To1Thread?",
+      "range": {
+        "startLine": 71,
+        "startChar": 14,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d72a522_1edc8a2f",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Same here; long?",
+      "range": {
+        "startLine": 74,
+        "startChar": 36,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08f318d_263c60d0",
+        "filename": "telephony/java/android/telephony/ims/Rcs1To1Thread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Please add a @Nullable or @NonNull annotation here to make it more clear to the caller if its expected to be able to have no recipient (I suspect it would need to be @NonNull).",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ab81ac_eb2fe35e",
+        "filename": "telephony/java/android/telephony/ims/RcsFileTransferPart.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Additional fields to do?",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459867cf_8ed9a8a0",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Useful to add:\nSee: Section 6 (Group Chat) - GSMA RCC.71 (RCS Universal Profile Service Definition Document)\n\nAlso, is it the case that you can\u0027t fallback to MMS/SMS like in a 1:1 group?",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a9d856_d1dc1dc2",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Minor: {@code true}",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 27
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26381734_dfb55de7",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Recommend adding @NonNull attribute if this is a mandatory item, otherwise add @Nullable.",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cd0ad7_614a8238",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Same here, add @NonNull or @Nullable annotation.\n\nAlso, worth adding:\nSee: US6-2 - GSMA RCC.71",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cddebe7_11c386c9",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Add @Nullable annotation to make it clear this is optional.\n\nSame here, add @NonNull or @Nullable annotation.\n\nAlso, worth adding:\nSee: US6-2 - GSMA RCC.71",
+      "range": {
+        "startLine": 111,
+        "startChar": 10,
+        "endLine": 111,
+        "endChar": 11
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc1a97c_8eca9253",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Also, worth adding:\nSee: US6-2 - GSMA RCC.71",
+      "range": {
+        "startLine": 115,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 7
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e912caff_568cbf9f",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Its strange to have setters on a parcelable class which do actual work in this manner.  Parcelable classes are supposed to be simple data containers which represent an immutable chunk of data.\n\nParcelables are also typically final classes so they can\u0027t be extended.\n\nIf the intention is to expose instances of RcsGroupThreads (for example) to a consuming app and have that app be able to manipulate them, the class hierarchy should not itself be parcelable.  The API which the developer users to get an instance of these thread objects should just return instances of non-parcelable thread objects; under the hood its fine for there to be a private parcelable that is used to ship the parcelable data across the wire.\n\nSee android.telecom.Call for an example.",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 45
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7813a9e6_1338a136",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Add @NonNull attribute for participant param.",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0990c0_b074219d",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "No, we should return a Uri.  We shouldn\u0027t be lenient for different RCS implementations.  A Uri is a pretty flexible data type.\n\nAlso, is this nullable? I presume @NonNull.",
+      "range": {
+        "startLine": 219,
+        "startChar": 11,
+        "endLine": 219,
+        "endChar": 17
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818db147_410e6ddb",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Also use Uri here; we should expect a Uri.\n\nI\u0027m curious, does the group thread state follow the same form as https://tools.ietf.org/html/rfc4575 which is used for IMS conferences?",
+      "range": {
+        "startLine": 230,
+        "startChar": 33,
+        "endLine": 230,
+        "endChar": 39
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aba8cdc_f643321c",
+        "filename": "telephony/java/android/telephony/ims/RcsIncomingMessage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Are there attributes of these which are still to be added?  It seems pretty useless to have a class with nothing in it otherwise.\n\nAlso, why is an incoming and outgoing message a different type?  Could both just be an RcsMessage with a getType() which returns TYPE_INCOMING or TYPE_OUTGOING?",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4643cdba_082003fd",
+        "filename": "telephony/java/android/telephony/ims/RcsLocationPart.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Additional fields to do?",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622f90ce_06cfe740",
+        "filename": "telephony/java/android/telephony/ims/RcsMessage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Would be nice to document the API which sends/receives these.  \n\nAlso, can we like to a spec for these? RCC.71 again?",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e57a92_a53ff4be",
+        "filename": "telephony/java/android/telephony/ims/RcsMultiMediaPart.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Additional fields to do?",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2179b0_0e8924fe",
+        "filename": "telephony/java/android/telephony/ims/RcsOutgoingMessage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Are there attributes of these which are still to be added?  It seems pretty useless to have a class with nothing in it otherwise.",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74f1c63_36145e85",
+        "filename": "telephony/java/android/telephony/ims/RcsPart.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Is it?  It doesn\u0027t seem like its a member of RcsMessage or its sub-classes",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1bb3f32_2738001d",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "See comments on the Thread classes about immutability and final; same thing applies here.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3873544f_8b8ca021",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "@NonNull?\n\nShould this be a URI?  Or is this just for display purposes?",
+      "range": {
+        "startLine": 63,
+        "startChar": 11,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aeb58c2_b0b82f06",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "@NonNull / @Nullable?",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6dbd29_56339cd2",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipant.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "@NonNull I presume",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356ab55f_12691cac",
+        "filename": "telephony/java/android/telephony/ims/RcsParticipantAliasChangedEvent.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "I\u0027m having a tough time understanding what the purpose of this class hierarchy is.\nAre events persisted and retained?  Or is this going to be used as some part of callback/listener mechanism?",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 73
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9381703e_971ec63a",
+        "filename": "telephony/java/android/telephony/ims/RcsTextPart.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "To do?",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f850c07_fe7a8a23",
+        "filename": "telephony/java/android/telephony/ims/RcsThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "I think its useful to reference the GSMA spec here since this class structure supports the requirements there.\n\nSee: GSMA RCC.71 (RCS Universal Profile Service Definition Document)",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b030463_9d06f17c",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadEvent.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Similar to the participant events, its not clear how these fit into the bigger picture?  Are these persisted and thus important to represent as a parcelable object in this manner?  If they\u0027re not persisted or important to persist, it would be better to just report changes using a listener or callback method rather than building up a class hierarchy of parcelables.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 60
+      },
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a62d4d_fe204978",
+        "filename": "telephony/java/android/telephony/ims/RcsThreadIconChangedEvent.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-10T18:59:37Z",
+      "side": 1,
+      "message": "Its definitely odd to have so many big parcelable classes just to report state changes like this.",
+      "revId": "76e5d1167013599ace14f76458818c93022cf118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
