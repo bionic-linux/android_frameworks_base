@@ -16,8 +16,6 @@
 
 package android.net.apf;
 
-import static android.net.util.NetworkConstants.ICMPV6_ECHO_REQUEST_TYPE;
-import static android.net.util.NetworkConstants.ICMPV6_ROUTER_ADVERTISEMENT;
 import static android.system.OsConstants.AF_UNIX;
 import static android.system.OsConstants.ARPHRD_ETHER;
 import static android.system.OsConstants.ETH_P_ARP;
@@ -28,6 +26,7 @@ import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_STREAM;
 
 import static com.android.internal.util.BitUtils.bytesToBEInt;
+import static com.android.server.util.NetworkStackConstants.ICMPV6_ECHO_REQUEST_TYPE;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -57,8 +56,9 @@ import android.system.Os;
 import android.text.format.DateUtils;
 import android.util.Log;
 
-import com.android.frameworks.tests.net.R;
 import com.android.internal.util.HexDump;
+import com.android.server.networkstack.tests.R;
+import com.android.server.util.NetworkStackConstants;
 
 import libcore.io.IoUtils;
 import libcore.io.Streams;
@@ -100,7 +100,7 @@ public class ApfTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         // Load up native shared library containing APF interpreter exposed via JNI.
-        System.loadLibrary("frameworksnettestsjni");
+        System.loadLibrary("networkstacktestsjni");
     }
 
     private static final String TAG = "ApfTest";
@@ -1294,7 +1294,7 @@ public class ApfTest {
 
         // However, we should still let through all other ICMPv6 types.
         ByteBuffer raPacket = ByteBuffer.wrap(packet.array().clone());
-        raPacket.put(ICMP6_TYPE_OFFSET, (byte)ICMPV6_ROUTER_ADVERTISEMENT);
+        raPacket.put(ICMP6_TYPE_OFFSET, (byte) NetworkStackConstants.ICMPV6_ROUTER_ADVERTISEMENT);
         assertPass(ipClientCallback.getApfProgram(), raPacket.array());
 
         // Now wake up from doze mode to ensure that we no longer drop the packets.
