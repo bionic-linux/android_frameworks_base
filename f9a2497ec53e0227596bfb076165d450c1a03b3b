@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d643f56_b7d6657d",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-10T23:04:54Z",
+      "side": 1,
+      "message": "Remove unless we want to change it later",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 50
+      },
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700f56e1_33d835ec",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-10T23:04:54Z",
+      "side": 1,
+      "message": "Let\u0027s get rid of this.",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 426,
+        "endChar": 67
+      },
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a24013_ca7594a9",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-10T23:04:54Z",
+      "side": 1,
+      "message": "Please add comment mentioning that null or empty string means the UI does not exist.",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 432,
+        "endChar": 67
+      },
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66427a40_cdc7dd29",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2133,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-10T23:04:54Z",
+      "side": 1,
+      "message": "/**\n     * Register a {@link MetadataListener} to receive update about metadata\n     * changes for this device.\n     *\n     * @param listener {@link MetadataListener} that will receive asynchronous callbacks\n     * @return true on success, false on error\n     * @hide\n     */",
+      "range": {
+        "startLine": 2129,
+        "startChar": 0,
+        "endLine": 2133,
+        "endChar": 7
+      },
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb3bdf9_0df57a2b",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2146,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-10T23:04:54Z",
+      "side": 1,
+      "message": "/**\n     * Unregister a {@link MetadataListener} from this device\n     *\n     * @param listener {@link MetadataListener} that will be unregistered\n     * @return true on success, false on error\n     * @hide\n     */",
+      "range": {
+        "startLine": 2142,
+        "startChar": 0,
+        "endLine": 2146,
+        "endChar": 7
+      },
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40a22a8c_d3667b77",
         "filename": "core/java/android/bluetooth/BluetoothDevice.java",
         "patchSetId": 1
@@ -101,6 +216,29 @@
       "writtenOn": "2019-01-10T01:51:44Z",
       "side": 1,
       "message": "int",
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c85bef8_57585aef",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-10T23:04:54Z",
+      "side": 1,
+      "message": "We need to add some callbacks regarding the death of Bluetooth stack and the invalidity of this listener. \n\n/*\n * Invoked when this listener becomes invalid and owner of the listener need to re-register with the Bluetooth stack\n */\nvoid onClose()\n\nOr other ways to let the app know that we are dead. \n\nMaybe it is easier to use broadcast since the data size is limited.",
+      "range": {
+        "startLine": 2187,
+        "startChar": 8,
+        "endLine": 2187,
+        "endChar": 18
+      },
       "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
