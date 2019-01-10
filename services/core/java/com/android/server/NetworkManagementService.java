@@ -71,7 +71,7 @@ import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.UidRangeParcel;
-import android.net.util.NetdService;
+import android.net.shared.NetdService;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.os.BatteryStats;
