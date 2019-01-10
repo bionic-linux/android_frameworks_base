@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "48f8241c_033229a7",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2174,
+      "author": {
+        "id": 1138679
+      },
+      "writtenOn": "2019-01-10T02:12:35Z",
+      "side": 1,
+      "message": "Please talk to Jack He before you start",
+      "parentUuid": "25f69a03_b080faf6",
+      "range": {
+        "startLine": 2174,
+        "startChar": 11,
+        "endLine": 2174,
+        "endChar": 17
+      },
+      "revId": "f9a2497ec53e0227596bfb076165d450c1a03b3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff8e0a3c_ddecc441",
         "filename": "core/java/android/bluetooth/BluetoothDevice.java",
         "patchSetId": 1
