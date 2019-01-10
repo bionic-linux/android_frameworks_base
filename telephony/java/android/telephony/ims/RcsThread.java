@@ -23,6 +23,8 @@ import android.os.ServiceManager;
 import android.telephony.ims.aidl.IRcs;
 
 /**
+ * TESTESTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTESTTESTEST
+ *
  * RcsThread represents a single RCS conversation thread. It holds messages that were sent and
  * received and events that occured on that thread.
  * @hide - TODO(sahinc) make this public
