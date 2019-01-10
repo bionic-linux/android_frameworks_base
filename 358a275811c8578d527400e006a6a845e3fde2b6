@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a78a2c3d_5119a3ac",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-10T00:36:58Z",
+      "side": 1,
+      "message": "The spec does not allow that currently.",
+      "parentUuid": "0ab5600b_fd35dc72",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "358a275811c8578d527400e006a6a845e3fde2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c422e12e_350116a2",
         "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8c03d0db_52c7d4b2",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-10T00:36:58Z",
+      "side": 1,
+      "message": "With your previous comment I realized I haven\u0027t accounted for this in the design, so I don\u0027t know the answer yet unfortunately - this will definitely need a revisit and noted it down.",
+      "parentUuid": "c422e12e_350116a2",
+      "revId": "358a275811c8578d527400e006a6a845e3fde2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa073dc_d7a9c1ea",
         "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "358a275811c8578d527400e006a6a845e3fde2b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cbdb2a_60414827",
+        "filename": "telephony/java/android/telephony/ims/RcsGroupThread.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-01-10T00:36:58Z",
+      "side": 1,
+      "message": "We are setting it to null on line 187. However I do realize that this brings up the other conversation on whether the mOwnerParticipant is up to date or not, and I don\u0027t have an answer to that yet.",
+      "parentUuid": "3aa073dc_d7a9c1ea",
+      "revId": "358a275811c8578d527400e006a6a845e3fde2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
