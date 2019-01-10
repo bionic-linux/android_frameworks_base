@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d112849d_338bd0be",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-01-10T04:03:05Z",
+      "side": 1,
+      "message": "TODO: use int",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 6
+      },
+      "revId": "67a3d35afe3cb9d3569bdf63656080668a03d044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d3a10d_a7ae53ca",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-01-10T04:03:05Z",
+      "side": 1,
+      "message": "TODO: add error code",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "67a3d35afe3cb9d3569bdf63656080668a03d044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77058ea9_0215e67d",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-01-10T04:03:05Z",
+      "side": 1,
+      "message": "extract bindService() to bind(), and add an unbind() method",
+      "range": {
+        "startLine": 102,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "67a3d35afe3cb9d3569bdf63656080668a03d044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fd23aa_8be813ad",
+        "filename": "core/java/android/os/LiveImageHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-01-10T04:03:05Z",
+      "side": 1,
+      "message": "define KEY_SYSTEM_SIZE and KEY_USERDATA_SIZE",
+      "range": {
+        "startLine": 115,
+        "startChar": 34,
+        "endLine": 115,
+        "endChar": 40
+      },
+      "revId": "67a3d35afe3cb9d3569bdf63656080668a03d044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
