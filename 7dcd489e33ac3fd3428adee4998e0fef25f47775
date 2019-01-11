@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "84ad0388_1b333f85",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-11T21:12:25Z",
+      "side": 1,
+      "message": "Worth adding null check for mPrecompiledClassLoader? I think that would handle the normal control flow case since it should not commonly get exceptions if mPrecompiledClassLoader is not null.",
+      "range": {
+        "startLine": 493,
+        "startChar": 26,
+        "endLine": 493,
+        "endChar": 49
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e58140ee_0136b182",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 9
