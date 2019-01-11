@@ -36,6 +36,7 @@ public class FeatureFlagUtils {
     public static final String PERSIST_PREFIX = "persist." + FFLAG_OVERRIDE_PREFIX;
     public static final String HEARING_AID_SETTINGS = "settings_bluetooth_hearing_aid";
     public static final String SAFETY_HUB = "settings_safety_hub";
+    public static final String DYNAMIC_SYSTEM = "settings_dynamic_system";
 
     private static final Map<String, String> DEFAULT_FLAGS;
     static {
@@ -46,7 +47,7 @@ public class FeatureFlagUtils {
         DEFAULT_FLAGS.put("settings_data_usage_v2", "true");
         DEFAULT_FLAGS.put("settings_audio_switcher", "true");
         DEFAULT_FLAGS.put("settings_systemui_theme", "true");
-        DEFAULT_FLAGS.put("settings_dynamic_android", "false");
+        DEFAULT_FLAGS.put(DYNAMIC_SYSTEM, "false");
         DEFAULT_FLAGS.put(HEARING_AID_SETTINGS, "false");
         DEFAULT_FLAGS.put(SAFETY_HUB, "false");
     }

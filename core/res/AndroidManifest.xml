@@ -1714,9 +1714,14 @@
     <permission android:name="android.permission.HARDWARE_TEST"
         android:protectionLevel="signature" />
 
-    <!-- @hide Allows an application to manage DynamicAndroid image -->
-    <permission android:name="android.permission.MANAGE_DYNAMIC_ANDROID"
+    <!-- @hide Allows an application to manage DynamicSystem image -->
+    <permission android:name="android.permission.MANAGE_DYNAMIC_SYSTEM"
         android:protectionLevel="signature" />
+
+    <!-- @SystemApi Allows an application to install a DynamicSystem image and get status updates.
+         @hide -->
+    <permission android:name="android.permission.INSTALL_DYNAMIC_SYSTEM"
+        android:protectionLevel="signature|privileged" />
 
     <!-- @SystemApi Allows access to Broadcast Radio
          @hide This is not a third-party API (intended for system apps).-->

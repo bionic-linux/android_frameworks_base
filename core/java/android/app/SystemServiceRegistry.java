@@ -111,13 +111,11 @@ import android.os.BugreportManager;
 import android.os.Build;
 import android.os.DeviceIdleManager;
 import android.os.DropBoxManager;
-import android.os.DynamicAndroidManager;
 import android.os.HardwarePropertiesManager;
 import android.os.IBatteryPropertiesRegistrar;
 import android.os.IBinder;
 import android.os.IDeviceIdleController;
 import android.os.IDumpstate;
-import android.os.IDynamicAndroidService;
 import android.os.IHardwarePropertiesManager;
 import android.os.IPowerManager;
 import android.os.IRecoverySystem;
@@ -135,6 +133,8 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.Vibrator;
 import android.os.health.SystemHealthManager;
+import android.os.image.DynamicSystemManager;
+import android.os.image.IDynamicSystemService;
 import android.os.storage.StorageManager;
 import android.print.IPrintManager;
 import android.print.PrintManager;
@@ -1063,15 +1063,15 @@ final class SystemServiceRegistry {
                             throws ServiceNotFoundException {
                         return new TimeDetector();
                     }});
-        registerService(Context.DYNAMIC_ANDROID_SERVICE, DynamicAndroidManager.class,
-                new CachedServiceFetcher<DynamicAndroidManager>() {
+        registerService(Context.DYNAMIC_SYSTEM_SERVICE, DynamicSystemManager.class,
+                new CachedServiceFetcher<DynamicSystemManager>() {
                     @Override
-                    public DynamicAndroidManager createService(ContextImpl ctx)
+                    public DynamicSystemManager createService(ContextImpl ctx)
                             throws ServiceNotFoundException {
                         IBinder b = ServiceManager.getServiceOrThrow(
-                                Context.DYNAMIC_ANDROID_SERVICE);
-                        return new DynamicAndroidManager(
-                                IDynamicAndroidService.Stub.asInterface(b));
+                                Context.DYNAMIC_SYSTEM_SERVICE);
+                        return new DynamicSystemManager(
+                                IDynamicSystemService.Stub.asInterface(b));
                     }});
     }
 

@@ -63,6 +63,7 @@ package android {
     field public static final String HDMI_CEC = "android.permission.HDMI_CEC";
     field public static final String HIDE_NON_SYSTEM_OVERLAY_WINDOWS = "android.permission.HIDE_NON_SYSTEM_OVERLAY_WINDOWS";
     field public static final String INJECT_EVENTS = "android.permission.INJECT_EVENTS";
+    field public static final String INSTALL_DYNAMIC_SYSTEM = "android.permission.INSTALL_DYNAMIC_SYSTEM";
     field public static final String INSTALL_GRANT_RUNTIME_PERMISSIONS = "android.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS";
     field public static final String INSTALL_PACKAGE_UPDATES = "android.permission.INSTALL_PACKAGE_UPDATES";
     field public static final String INSTALL_SELF_UPDATES = "android.permission.INSTALL_SELF_UPDATES";
@@ -838,7 +839,6 @@ package android.content {
     method @RequiresPermission(android.Manifest.permission.INTERACT_ACROSS_USERS_FULL) public void startActivityAsUser(@RequiresPermission @NonNull android.content.Intent, @NonNull android.os.UserHandle);
     field public static final String BACKUP_SERVICE = "backup";
     field public static final String CONTEXTHUB_SERVICE = "contexthub";
-    field public static final String DYNAMIC_ANDROID_SERVICE = "dynamic_android";
     field public static final String EUICC_CARD_SERVICE = "euicc_card";
     field public static final String HDMI_CONTROL_SERVICE = "hdmi_control";
     field public static final String NETD_SERVICE = "netd";
@@ -860,32 +860,6 @@ package android.content {
     method public void sendBroadcast(android.content.Intent, String, android.os.Bundle);
     method public void sendBroadcastAsUser(android.content.Intent, android.os.UserHandle, String, android.os.Bundle);
     method public void sendOrderedBroadcast(android.content.Intent, String, android.os.Bundle, android.content.BroadcastReceiver, android.os.Handler, int, String, android.os.Bundle);
-  }
-
-  public class DynamicAndroidClient {
-    ctor public DynamicAndroidClient(@NonNull android.content.Context);
-    method public void bind();
-    method public void setOnStatusChangedListener(@NonNull android.content.DynamicAndroidClient.OnStatusChangedListener, @NonNull java.util.concurrent.Executor);
-    method public void setOnStatusChangedListener(@NonNull android.content.DynamicAndroidClient.OnStatusChangedListener);
-    method public void start(String, long);
-    method public void start(String, long, long);
-    method public void unbind();
-    field public static final int CAUSE_ERROR_EXCEPTION = 6; // 0x6
-    field public static final int CAUSE_ERROR_INVALID_URL = 4; // 0x4
-    field public static final int CAUSE_ERROR_IO = 3; // 0x3
-    field public static final int CAUSE_ERROR_IPC = 5; // 0x5
-    field public static final int CAUSE_INSTALL_CANCELLED = 2; // 0x2
-    field public static final int CAUSE_INSTALL_COMPLETED = 1; // 0x1
-    field public static final int CAUSE_NOT_SPECIFIED = 0; // 0x0
-    field public static final int STATUS_IN_PROGRESS = 2; // 0x2
-    field public static final int STATUS_IN_USE = 4; // 0x4
-    field public static final int STATUS_NOT_STARTED = 1; // 0x1
-    field public static final int STATUS_READY = 3; // 0x3
-    field public static final int STATUS_UNKNOWN = 0; // 0x0
-  }
-
-  public static interface DynamicAndroidClient.OnStatusChangedListener {
-    method public void onStatusChanged(int, int, long);
   }
 
   public class Intent implements java.lang.Cloneable android.os.Parcelable {
@@ -4373,6 +4347,36 @@ package android.os {
     method public int getAttributionUid();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.os.WorkSource.WorkChain> CREATOR;
+  }
+
+}
+
+package android.os.image {
+
+  public class DynamicSystemClient {
+    ctor public DynamicSystemClient(@NonNull android.content.Context);
+    method @RequiresPermission(android.Manifest.permission.INSTALL_DYNAMIC_SYSTEM) public void bind();
+    method public void setOnStatusChangedListener(@NonNull java.util.concurrent.Executor, @NonNull android.os.image.DynamicSystemClient.OnStatusChangedListener);
+    method public void setOnStatusChangedListener(@NonNull android.os.image.DynamicSystemClient.OnStatusChangedListener);
+    method @RequiresPermission(android.Manifest.permission.INSTALL_DYNAMIC_SYSTEM) public void start(@NonNull android.net.Uri, long);
+    method @RequiresPermission(android.Manifest.permission.INSTALL_DYNAMIC_SYSTEM) public void start(@NonNull android.net.Uri, long, long);
+    method @RequiresPermission(android.Manifest.permission.INSTALL_DYNAMIC_SYSTEM) public void unbind();
+    field public static final int CAUSE_ERROR_EXCEPTION = 6; // 0x6
+    field public static final int CAUSE_ERROR_INVALID_URL = 4; // 0x4
+    field public static final int CAUSE_ERROR_IO = 3; // 0x3
+    field public static final int CAUSE_ERROR_IPC = 5; // 0x5
+    field public static final int CAUSE_INSTALL_CANCELLED = 2; // 0x2
+    field public static final int CAUSE_INSTALL_COMPLETED = 1; // 0x1
+    field public static final int CAUSE_NOT_SPECIFIED = 0; // 0x0
+    field public static final int STATUS_IN_PROGRESS = 2; // 0x2
+    field public static final int STATUS_IN_USE = 4; // 0x4
+    field public static final int STATUS_NOT_STARTED = 1; // 0x1
+    field public static final int STATUS_READY = 3; // 0x3
+    field public static final int STATUS_UNKNOWN = 0; // 0x0
+  }
+
+  public static interface DynamicSystemClient.OnStatusChangedListener {
+    method public void onStatusChanged(int, int, long, @Nullable Throwable);
   }
 
 }
