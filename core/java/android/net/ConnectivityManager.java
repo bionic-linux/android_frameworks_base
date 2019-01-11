@@ -1194,9 +1194,11 @@ public class ConnectivityManager {
      *        is no current default network.
      *
      * {@hide}
+     * @deprecated please use {@link #getLinkProperties(Network)} on the return
+     *             value of {@link #getActiveNetwork()} instead.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 109783091)
     public LinkProperties getActiveLinkProperties() {
         try {
             return mService.getActiveLinkProperties();
