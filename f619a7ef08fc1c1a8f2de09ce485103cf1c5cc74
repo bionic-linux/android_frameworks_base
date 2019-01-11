@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75f76429_47a17118",
+        "filename": "core/java/android/os/LiveImageManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128729
+      },
+      "writtenOn": "2019-01-11T09:44:34Z",
+      "side": 1,
+      "message": "This is not good to name *Manager here.\nIn Android, *Manager means the module \"in\" the Android framework.",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "f619a7ef08fc1c1a8f2de09ce485103cf1c5cc74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
