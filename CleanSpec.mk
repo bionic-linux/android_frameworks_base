@@ -250,6 +250,7 @@ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/framework/com.android.future
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/framework/com.android.media.remotedisplay.jar)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/media/audio)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/priv-app/SystemUI)
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/priv-app/DynamicAndroidInstallationService)
 # ******************************************************************
 # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST ABOVE THIS BANNER
 # ******************************************************************
