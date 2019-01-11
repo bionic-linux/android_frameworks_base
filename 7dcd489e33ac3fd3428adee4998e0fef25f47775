@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13087606_d6747339",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2019-01-11T20:41:46Z",
+      "side": 1,
+      "message": "Line wrap (or just import the SystemProperties class).",
+      "range": {
+        "startLine": 393,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 102
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3941f2b_3e2c7d1c",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2019-01-11T20:41:46Z",
+      "side": 1,
+      "message": "This code path appears to ignore the root and attachToRoot arguments, which is going to be problematic in most cases.",
+      "range": {
+        "startLine": 468,
+        "startChar": 0,
+        "endLine": 472,
+        "endChar": 0
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440c388a_9a7069b6",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2019-01-11T20:41:46Z",
+      "side": 1,
+      "message": "I saw this was already called out, but I\u0027m calling it out again. We shouldn\u0027t be using exceptions for normal control flow.",
+      "range": {
+        "startLine": 493,
+        "startChar": 12,
+        "endLine": 493,
+        "endChar": 88
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58140ee_0136b182",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2019-01-11T20:41:46Z",
+      "side": 1,
+      "message": "Remove TODO from code and file bug for it.",
+      "range": {
+        "startLine": 494,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 38
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b65d1d_85af68b4",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2019-01-11T20:41:46Z",
+      "side": 1,
+      "message": "Wrap with try { ... } and make sure to close the parser in finally { ... } block.",
+      "range": {
+        "startLine": 1059,
+        "startChar": 12,
+        "endLine": 1063,
+        "endChar": 69
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
