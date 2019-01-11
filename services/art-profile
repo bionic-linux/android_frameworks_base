@@ -3039,6 +3039,7 @@ Lcom/android/server/DiskStatsService;
 Lcom/android/server/DisplayThread;
 Lcom/android/server/DockObserver;
 Lcom/android/server/DropBoxManagerService;
+Lcom/android/server/DynamicSystemService;
 Lcom/android/server/EntropyMixer;
 Lcom/android/server/EventLogTags;
 Lcom/android/server/FgThread;
@@ -5397,6 +5398,9 @@ PLcom/android/server/DropBoxManagerService;->init()V
 PLcom/android/server/DropBoxManagerService;->onBootPhase(I)V
 PLcom/android/server/DropBoxManagerService;->onStart()V
 PLcom/android/server/EntropyMixer$1;-><init>(Lcom/android/server/EntropyMixer;Landroid/os/Looper;)V
+PLcom/android/server/DynamicSystemService;->connect(Landroid/os/IBinder$DeathRecipient;)Landroid/gsi/IGsiService;
+PLcom/android/server/DynamicSystemService;->getGsiService()Landroid/gsi/IGsiService;
+PLcom/android/server/DynamicSystemService;->isInUse()Z
 PLcom/android/server/EntropyMixer$1;->handleMessage(Landroid/os/Message;)V
 PLcom/android/server/EntropyMixer$2;-><init>(Lcom/android/server/EntropyMixer;)V
 PLcom/android/server/EntropyMixer$2;->onReceive(Landroid/content/Context;Landroid/content/Intent;)V
@@ -19129,6 +19133,7 @@ SPLcom/android/server/DisplayThread;->get()Lcom/android/server/DisplayThread;
 SPLcom/android/server/DisplayThread;->getHandler()Landroid/os/Handler;
 SPLcom/android/server/EventLogTags;->writePmCriticalInfo(Ljava/lang/String;)V
 SPLcom/android/server/FgThread;-><init>()V
+SPLcom/android/server/DynamicSystemService;-><init>(Landroid/content/Context;)V
 SPLcom/android/server/FgThread;->ensureThreadLocked()V
 SPLcom/android/server/FgThread;->get()Lcom/android/server/FgThread;
 SPLcom/android/server/FgThread;->getHandler()Landroid/os/Handler;
