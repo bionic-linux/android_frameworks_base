@@ -318,6 +318,7 @@ import android.net.ProxyInfo;
 import android.net.Uri;
 import android.os.BatteryStats;
 import android.os.Binder;
+import android.os.BinderProxy;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
@@ -363,6 +364,7 @@ import android.provider.Downloads;
 import android.provider.Settings;
 import android.service.voice.IVoiceInteractionSession;
 import android.service.voice.VoiceInteractionManagerInternal;
+import android.sysprop.VoldProperties;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -2918,8 +2920,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         private String mExemptionsStr;
         private List<String> mExemptions = Collections.emptyList();
         private int mLogSampleRate = -1;
-        @HiddenApiEnforcementPolicy private int mPolicyPreP = HIDDEN_API_ENFORCEMENT_DEFAULT;
-        @HiddenApiEnforcementPolicy private int mPolicyP = HIDDEN_API_ENFORCEMENT_DEFAULT;
+        @HiddenApiEnforcementPolicy private int mPolicy = HIDDEN_API_ENFORCEMENT_DEFAULT;
 
         public HiddenApiSettings(Handler handler, Context context) {
             super(handler);
@@ -2936,11 +2937,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                     false,
                     this);
             mContext.getContentResolver().registerContentObserver(
-                    Settings.Global.getUriFor(Settings.Global.HIDDEN_API_POLICY_PRE_P_APPS),
-                    false,
-                    this);
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.Global.getUriFor(Settings.Global.HIDDEN_API_POLICY_P_APPS),
+                    Settings.Global.getUriFor(Settings.Global.HIDDEN_API_POLICY),
                     false,
                     this);
             update();
@@ -2975,8 +2972,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                 mLogSampleRate = logSampleRate;
                 zygoteProcess.setHiddenApiAccessLogSampleRate(mLogSampleRate);
             }
-            mPolicyPreP = getValidEnforcementPolicy(Settings.Global.HIDDEN_API_POLICY_PRE_P_APPS);
-            mPolicyP = getValidEnforcementPolicy(Settings.Global.HIDDEN_API_POLICY_P_APPS);
+            mPolicy = getValidEnforcementPolicy(Settings.Global.HIDDEN_API_POLICY);
         }
 
         private @HiddenApiEnforcementPolicy int getValidEnforcementPolicy(String settingsKey) {
@@ -2993,12 +2989,8 @@ public class ActivityManagerService extends IActivityManager.Stub
             return mBlacklistDisabled;
         }
 
-        @HiddenApiEnforcementPolicy int getPolicyForPrePApps() {
-            return mPolicyPreP;
-        }
-
-        @HiddenApiEnforcementPolicy int getPolicyForPApps() {
-            return mPolicyP;
+        @HiddenApiEnforcementPolicy int getPolicy() {
+            return mPolicy;
         }
 
         public void onChange(boolean selfChange) {
@@ -4327,9 +4319,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
 
             if (!disableHiddenApiChecks && !mHiddenApiBlacklist.isDisabled()) {
-                app.info.maybeUpdateHiddenApiEnforcementPolicy(
-                        mHiddenApiBlacklist.getPolicyForPrePApps(),
-                        mHiddenApiBlacklist.getPolicyForPApps());
+                app.info.maybeUpdateHiddenApiEnforcementPolicy(mHiddenApiBlacklist.getPolicy());
                 @HiddenApiEnforcementPolicy int policy =
                         app.info.getHiddenApiEnforcementPolicy();
                 int policyBits = (policy << Zygote.API_ENFORCEMENT_POLICY_SHIFT);
@@ -5589,7 +5579,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         // TODO: Switch to user app stacks here.
         int ret = mActivityStartController.startActivities(caller, -1, callingPackage,
                 intents, resolvedTypes, resultTo, SafeActivityOptions.fromBundle(bOptions), userId,
-                reason);
+                reason, null /* originatingPendingIntent */);
         return ret;
     }
 
@@ -7969,8 +7959,8 @@ public class ActivityManagerService extends IActivityManager.Stub
             SystemProperties.set("sys.boot_completed", "1");
 
             // And trigger dev.bootcomplete if we are not showing encryption progress
-            if (!"trigger_restart_min_framework".equals(SystemProperties.get("vold.decrypt"))
-                    || "".equals(SystemProperties.get("vold.encrypt_progress"))) {
+            if (!"trigger_restart_min_framework".equals(VoldProperties.decrypt().orElse(""))
+                    || "".equals(VoldProperties.encrypt_progress().orElse(""))){
                 SystemProperties.set("dev.bootcomplete", "1");
             }
             mUserController.sendBootCompleted(
@@ -10946,6 +10936,20 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    /**
+     * @return whitelist tag for a uid from mPendingTempWhitelist, null if not currently on
+     * the whitelist
+     */
+    String getPendingTempWhitelistTagForUidLocked(int uid) {
+        final PendingTempWhitelist ptw = mPendingTempWhitelist.get(uid);
+        return ptw != null ? ptw.tag : null;
+    }
+
+    @VisibleForTesting
+    boolean isActivityStartsLoggingEnabled() {
+        return mConstants.mFlagActivityStartsLoggingEnabled;
+    }
+
     @Override
     public void moveStackToDisplay(int stackId, int displayId) {
         enforceCallingPermission(INTERNAL_SYSTEM_WINDOW, "moveStackToDisplay()");
@@ -13657,7 +13661,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         String extraOptions = null;
         switch (bugreportType) {
             case ActivityManager.BUGREPORT_OPTION_FULL:
-                // Default options.
+                extraOptions = "bugreportfull";
                 break;
             case ActivityManager.BUGREPORT_OPTION_INTERACTIVE:
                 extraOptions = "bugreportplus";
@@ -15210,6 +15214,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         public void onLimitReached(int uid) {
                             Slog.wtf(TAG, "Uid " + uid + " sent too many Binders to uid "
                                     + Process.myUid());
+                            BinderProxy.dumpProxyDebugInfo();
                             if (uid == Process.SYSTEM_UID) {
                                 Slog.i(TAG, "Skipping kill (uid is SYSTEM)");
                             } else {
@@ -16061,8 +16066,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
             } else if ("binder-proxies".equals(cmd)) {
                 if (opti >= args.length) {
+                    dumpBinderProxyInterfaceCounts(pw,
+                            "Top proxy interface names held by SYSTEM");
                     dumpBinderProxiesCounts(pw, BinderInternal.nGetBinderProxyPerUidCounts(),
-                            "Counts of Binder Proxies held by SYSTEM");
+                            "Number of proxies per uid held by SYSTEM");
                 } else {
                     String uid = args[opti];
                     opti++;
@@ -16563,6 +16570,15 @@ public class ActivityManagerService extends IActivityManager.Stub
             pw.print(": "); pw.println(uidRec);
         }
         return printed;
+    }
+
+    void dumpBinderProxyInterfaceCounts(PrintWriter pw, String header) {
+        final BinderProxy.InterfaceCount[] proxyCounts = BinderProxy.getSortedInterfaceCounts(50);
+
+        pw.println(header);
+        for (int i = 0; i < proxyCounts.length; i++) {
+            pw.println("    #" + (i + 1) + ": " + proxyCounts[i]);
+        }
     }
 
     boolean dumpBinderProxiesCounts(PrintWriter pw, SparseIntArray counts, String header) {
@@ -23243,6 +23259,19 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
         }
 
+        // If the app was recently in the foreground and moved to a foreground service status,
+        // allow it to get a higher rank in memory for some time, compared to other foreground
+        // services so that it can finish performing any persistence/processing of in-memory state.
+        if (app.foregroundServices && adj > ProcessList.PERCEPTIBLE_RECENT_FOREGROUND_APP_ADJ
+                && (app.lastTopTime + mConstants.TOP_TO_FGS_GRACE_DURATION > now
+                    || app.setProcState <= ActivityManager.PROCESS_STATE_TOP)) {
+            adj = ProcessList.PERCEPTIBLE_RECENT_FOREGROUND_APP_ADJ;
+            app.adjType = "fg-service-act";
+            if (DEBUG_OOM_ADJ_REASON || logUid == appUid) {
+                reportOomAdjMessageLocked(TAG_OOM_ADJ, "Raise to recent fg: " + app);
+            }
+        }
+
         if (adj > ProcessList.PERCEPTIBLE_APP_ADJ
                 || procState > ActivityManager.PROCESS_STATE_TRANSIENT_BACKGROUND) {
             if (app.forcingToImportant != null) {
@@ -23507,6 +23536,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                                         schedGroup = ProcessList.SCHED_GROUP_DEFAULT;
                                         procState = ActivityManager.PROCESS_STATE_PERSISTENT;
                                     }
+                                } else if ((cr.flags & Context.BIND_ADJUST_BELOW_PERCEPTIBLE) != 0
+                                        && clientAdj < ProcessList.PERCEPTIBLE_APP_ADJ
+                                        && adj > ProcessList.PERCEPTIBLE_APP_ADJ + 1) {
+                                    newAdj = ProcessList.PERCEPTIBLE_APP_ADJ + 1;
                                 } else if ((cr.flags&Context.BIND_NOT_VISIBLE) != 0
                                         && clientAdj < ProcessList.PERCEPTIBLE_APP_ADJ
                                         && adj > ProcessList.PERCEPTIBLE_APP_ADJ) {
@@ -24477,6 +24510,8 @@ public class ActivityManagerService extends IActivityManager.Stub
             // Must be called before updating setProcState
             maybeUpdateUsageStatsLocked(app, nowElapsed);
 
+            maybeUpdateLastTopTime(app, now);
+
             app.setProcState = app.curProcState;
             if (app.setProcState >= ActivityManager.PROCESS_STATE_HOME) {
                 app.notCachedSinceIdle = false;
@@ -24698,6 +24733,13 @@ public class ActivityManagerService extends IActivityManager.Stub
         app.reportedInteraction = isInteraction;
         if (!isInteraction) {
             app.interactionEventTime = 0;
+        }
+    }
+
+    private void maybeUpdateLastTopTime(ProcessRecord app, long nowUptime) {
+        if (app.setProcState <= ActivityManager.PROCESS_STATE_TOP
+                && app.curProcState > ActivityManager.PROCESS_STATE_TOP) {
+            app.lastTopTime = nowUptime;
         }
     }
 
@@ -26398,7 +26440,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         packageUid, packageName,
                         intents, resolvedTypes, null /* resultTo */,
                         SafeActivityOptions.fromBundle(bOptions), userId,
-                        false /* validateIncomingUser */);
+                        false /* validateIncomingUser */, null /* originatingPendingIntent */);
             }
         }
 
@@ -26735,6 +26777,18 @@ public class ActivityManagerService extends IActivityManager.Stub
         public Intent getHomeIntent() {
             synchronized (ActivityManagerService.this) {
                 return ActivityManagerService.this.getHomeIntent();
+            }
+        }
+
+        @Override
+        public void notifyDefaultDisplaySizeChanged() {
+            synchronized (ActivityManagerService.this) {
+                if (mSystemServiceManager.isBootCompleted() && mHomeProcess != null) {
+
+                    // TODO: Ugly hack to unblock the release
+                    Slog.i(TAG, "Killing home process because of display size change");
+                    removeProcessLocked(mHomeProcess, false, true, "kill home screen size");
+                }
             }
         }
     }

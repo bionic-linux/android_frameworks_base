@@ -4526,7 +4526,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * a long press could be performed before the tap is checked, in which case the tap's action
      * should not be invoked.
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private boolean mHasPerformedLongPress;
 
     /**
@@ -14095,7 +14095,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * @param flags Constant indicating the value which should be set
      * @param mask Constant indicating the bit range that should be changed
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     void setFlags(int flags, int mask) {
         final boolean accessibilityEnabled =
                 AccessibilityManager.getInstance(mContext).isEnabled();
@@ -24045,7 +24045,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
          * @param outShadowSize A {@link android.graphics.Point} containing the width and height
          * of the shadow image. Your application must set {@link android.graphics.Point#x} to the
          * desired width and must set {@link android.graphics.Point#y} to the desired height of the
-         * image.
+         * image. Since Android P, the width and height must be positive values.
          *
          * @param outShadowTouchPoint A {@link android.graphics.Point} for the position within the
          * shadow image that should be underneath the touch point during the drag and drop

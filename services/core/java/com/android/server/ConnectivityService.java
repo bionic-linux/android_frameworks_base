@@ -274,7 +274,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private int mDefaultInetConditionPublished = 0;
 
     private INetworkManagementService mNMS;
-    private INetd mNetd;
+    @VisibleForTesting
+    protected INetd mNetd;
     private INetworkStatsService mStatsService;
     private INetworkPolicyManager mPolicyManager;
     private NetworkPolicyManagerInternal mPolicyManagerInternal;
@@ -894,9 +895,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         intentFilter.addAction(Intent.ACTION_USER_REMOVED);
         intentFilter.addAction(Intent.ACTION_USER_UNLOCKED);
         mContext.registerReceiverAsUser(
-                mUserIntentReceiver, UserHandle.ALL, intentFilter, null, null);
+                mIntentReceiver, UserHandle.ALL, intentFilter, null, null);
         mContext.registerReceiverAsUser(mUserPresentReceiver, UserHandle.SYSTEM,
                 new IntentFilter(Intent.ACTION_USER_PRESENT), null, null);
+
+        // Listen to package add and removal events for all users.
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        intentFilter.addDataScheme("package");
+        mContext.registerReceiverAsUser(
+                mIntentReceiver, UserHandle.ALL, intentFilter, null, null);
 
         try {
             mNMS.registerObserver(mTethering);
@@ -1659,6 +1669,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 loge("Error parsing ip address in validation event");
             }
         }
+
+        @Override
+        public void onDnsEvent(int netId, int eventType, int returnCode, String hostname,
+                String[] ipAddresses, int ipAddressesCount, long timestamp, int uid) {
+            NetworkAgentInfo nai = getNetworkAgentInfoForNetId(netId);
+            // Netd event only allow registrants from system. Each NetworkMonitor thread is under
+            // the caller thread of registerNetworkAgent. Thus, it's not allowed to register netd
+            // event callback for certain nai. e.g. cellular. Register here to pass to
+            // NetworkMonitor instead.
+            // TODO: Move the Dns Event to NetworkMonitor. Use Binder.clearCallingIdentity() in
+            // registerNetworkAgent to have NetworkMonitor created with system process as design
+            // expectation. Also, NetdEventListenerService only allow one callback from each
+            // caller type. Need to re-factor NetdEventListenerService to allow multiple
+            // NetworkMonitor registrants.
+            if (nai != null && nai.satisfies(mDefaultRequest)) {
+                nai.networkMonitor.sendMessage(NetworkMonitor.EVENT_DNS_NOTIFICATION, returnCode);
+            }
+        }
     };
 
     @VisibleForTesting
@@ -1940,6 +1968,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     void systemReady() {
         mProxyTracker.loadGlobalProxy();
         registerNetdEventCallback();
+        mTethering.systemReady();
 
         synchronized (this) {
             mSystemReady = true;
@@ -2064,7 +2093,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private static final String DEFAULT_TCP_BUFFER_SIZES = "4096,87380,110208,4096,16384,110208";
+    @VisibleForTesting
+    protected static final String DEFAULT_TCP_BUFFER_SIZES = "4096,87380,110208,4096,16384,110208";
     private static final String DEFAULT_TCP_RWND_KEY = "net.tcp.default_init_rwnd";
 
     // Overridden for testing purposes to avoid writing to SystemProperties.
@@ -2073,12 +2103,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return new MockableSystemProperties();
     }
 
-    private void updateTcpBufferSizes(NetworkAgentInfo nai) {
-        if (isDefaultNetwork(nai) == false) {
-            return;
-        }
-
-        String tcpBufferSizes = nai.linkProperties.getTcpBufferSizes();
+    private void updateTcpBufferSizes(String tcpBufferSizes) {
         String[] values = null;
         if (tcpBufferSizes != null) {
             values = tcpBufferSizes.split(",");
@@ -2095,15 +2120,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         try {
             if (VDBG || DDBG) Slog.d(TAG, "Setting tx/rx TCP buffers to " + tcpBufferSizes);
 
-            final String prefix = "/sys/kernel/ipv4/tcp_";
-            FileUtils.stringToFile(prefix + "rmem_min", values[0]);
-            FileUtils.stringToFile(prefix + "rmem_def", values[1]);
-            FileUtils.stringToFile(prefix + "rmem_max", values[2]);
-            FileUtils.stringToFile(prefix + "wmem_min", values[3]);
-            FileUtils.stringToFile(prefix + "wmem_def", values[4]);
-            FileUtils.stringToFile(prefix + "wmem_max", values[5]);
+            String rmemValues = String.join(" ", values[0], values[1], values[2]);
+            String wmemValues = String.join(" ", values[3], values[4], values[5]);
+            mNetd.setTcpRWmemorySize(rmemValues, wmemValues);
             mCurrentTcpBufferSizes = tcpBufferSizes;
-        } catch (IOException e) {
+        } catch (RemoteException | ServiceSpecificException e) {
             loge("Can't set TCP buffer sizes:" + e);
         }
 
@@ -4155,6 +4176,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void onUserAdded(int userId) {
+        mPermissionMonitor.onUserAdded(userId);
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
@@ -4165,11 +4187,62 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void onUserRemoved(int userId) {
+        mPermissionMonitor.onUserRemoved(userId);
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
                 Vpn vpn = mVpns.valueAt(i);
                 vpn.onUserRemoved(userId);
+            }
+        }
+    }
+
+    private void onPackageAdded(String packageName, int uid) {
+        if (TextUtils.isEmpty(packageName) || uid < 0) {
+            Slog.wtf(TAG, "Invalid package in onPackageAdded: " + packageName + " | " + uid);
+            return;
+        }
+        mPermissionMonitor.onPackageAdded(packageName, uid);
+    }
+
+    private void onPackageReplaced(String packageName, int uid) {
+        if (TextUtils.isEmpty(packageName) || uid < 0) {
+            Slog.wtf(TAG, "Invalid package in onPackageReplaced: " + packageName + " | " + uid);
+            return;
+        }
+        final int userId = UserHandle.getUserId(uid);
+        synchronized (mVpns) {
+            final Vpn vpn = mVpns.get(userId);
+            if (vpn == null) {
+                return;
+            }
+            // Legacy always-on VPN won't be affected since the package name is not set.
+            if (TextUtils.equals(vpn.getAlwaysOnPackage(), packageName)) {
+                Slog.d(TAG, "Restarting always-on VPN package " + packageName + " for user "
+                        + userId);
+                vpn.startAlwaysOnVpn();
+            }
+        }
+    }
+
+    private void onPackageRemoved(String packageName, int uid, boolean isReplacing) {
+        if (TextUtils.isEmpty(packageName) || uid < 0) {
+            Slog.wtf(TAG, "Invalid package in onPackageRemoved: " + packageName + " | " + uid);
+            return;
+        }
+        mPermissionMonitor.onPackageRemoved(uid);
+
+        final int userId = UserHandle.getUserId(uid);
+        synchronized (mVpns) {
+            final Vpn vpn = mVpns.get(userId);
+            if (vpn == null) {
+                return;
+            }
+            // Legacy always-on VPN won't be affected since the package name is not set.
+            if (TextUtils.equals(vpn.getAlwaysOnPackage(), packageName) && !isReplacing) {
+                Slog.d(TAG, "Removing always-on VPN package " + packageName + " for user "
+                        + userId);
+                vpn.setAlwaysOnPackage(null, false);
             }
         }
     }
@@ -4185,11 +4258,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private BroadcastReceiver mUserIntentReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             final int userId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, UserHandle.USER_NULL);
+            final int uid = intent.getIntExtra(Intent.EXTRA_UID, -1);
+            final Uri packageData = intent.getData();
+            final String packageName =
+                    packageData != null ? packageData.getSchemeSpecificPart() : null;
             if (userId == UserHandle.USER_NULL) return;
 
             if (Intent.ACTION_USER_STARTED.equals(action)) {
@@ -4202,6 +4279,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 onUserRemoved(userId);
             } else if (Intent.ACTION_USER_UNLOCKED.equals(action)) {
                 onUserUnlocked(userId);
+            } else if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
+                onPackageAdded(packageName, uid);
+            } else if (Intent.ACTION_PACKAGE_REPLACED.equals(action)) {
+                onPackageReplaced(packageName, uid);
+            } else if (Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
+                final boolean isReplacing = intent.getBooleanExtra(
+                        Intent.EXTRA_REPLACING, false);
+                onPackageRemoved(packageName, uid, isReplacing);
             }
         }
     };
@@ -4728,8 +4813,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateUids(nai, null, nai.networkCapabilities);
     }
 
-    private void updateLinkProperties(NetworkAgentInfo networkAgent, LinkProperties oldLp) {
-        LinkProperties newLp = new LinkProperties(networkAgent.linkProperties);
+    private void updateLinkProperties(NetworkAgentInfo networkAgent, LinkProperties newLp,
+            LinkProperties oldLp) {
         int netId = networkAgent.network.netId;
 
         // The NetworkAgentInfo does not know whether clatd is running on its network or not. Before
@@ -4744,7 +4829,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 //        for (LinkProperties lp : newLp.getStackedLinks()) {
 //            updateMtu(lp, null);
 //        }
-        updateTcpBufferSizes(networkAgent);
+        if (isDefaultNetwork(networkAgent)) {
+            updateTcpBufferSizes(newLp.getTcpBufferSizes());
+        }
 
         updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId);
@@ -4754,8 +4841,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // updateDnses will fetch the private DNS configuration from DnsManager.
         mDnsManager.updatePrivateDnsStatus(netId, newLp);
 
-        // Start or stop clat accordingly to network state.
-        networkAgent.updateClat(mNMS);
         if (isDefaultNetwork(networkAgent)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {
@@ -4766,8 +4851,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             synchronized (networkAgent) {
                 networkAgent.linkProperties = newLp;
             }
+            // Start or stop clat accordingly to network state.
+            networkAgent.updateClat(mNMS);
             notifyIfacesChangedForNetworkStats();
-            notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_IP_CHANGED);
+            if (networkAgent.everConnected) {
+                notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_IP_CHANGED);
+            }
         }
 
         mKeepaliveTracker.handleCheckKeepalivesStillValid(networkAgent);
@@ -5072,13 +5161,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     "; created=" + nai.created +
                     "; everConnected=" + nai.everConnected);
         }
-        LinkProperties oldLp = nai.linkProperties;
-        synchronized (nai) {
-            nai.linkProperties = newLp;
-        }
-        if (nai.everConnected) {
-            updateLinkProperties(nai, oldLp);
-        }
+        updateLinkProperties(nai, newLp, new LinkProperties(nai.linkProperties));
     }
 
     private void sendUpdatedScoreToFactories(NetworkAgentInfo nai) {
@@ -5239,7 +5322,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         notifyLockdownVpn(newNetwork);
         handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
-        updateTcpBufferSizes(newNetwork);
+        updateTcpBufferSizes(newNetwork.linkProperties.getTcpBufferSizes());
         mDnsManager.setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
         notifyIfacesChangedForNetworkStats();
     }
@@ -5631,7 +5714,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // This should never fail.  Specifying an already in use NetID will cause failure.
                 if (networkAgent.isVPN()) {
                     mNMS.createVirtualNetwork(networkAgent.network.netId,
-                            !networkAgent.linkProperties.getDnsServers().isEmpty(),
                             (networkAgent.networkMisc == null ||
                                 !networkAgent.networkMisc.allowBypass));
                 } else {
@@ -5654,7 +5736,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
 
             handlePerNetworkPrivateDnsConfig(networkAgent, mDnsManager.getPrivateDnsConfig());
-            updateLinkProperties(networkAgent, null);
+            updateLinkProperties(networkAgent, new LinkProperties(networkAgent.linkProperties),
+                    null);
 
             networkAgent.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_CONNECTED);
             scheduleUnvalidatedPrompt(networkAgent);

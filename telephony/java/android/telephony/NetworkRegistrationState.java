@@ -70,6 +70,43 @@ public class NetworkRegistrationState implements Parcelable {
     /** Registered on roaming network */
     public static final int REG_STATE_ROAMING               = 5;
 
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = "NR_STATUS_",
+            value = {NR_STATUS_NONE, NR_STATUS_RESTRICTED, NR_STATUS_NOT_RESTRICTED,
+                    NR_STATUS_CONNECTED})
+    public @interface NRStatus {}
+
+    /**
+     * The device isn't camped on an LTE cell or the LTE cell doesn't support E-UTRA-NR
+     * Dual Connectivity(EN-DC).
+     * @hide
+     */
+    public static final int NR_STATUS_NONE = -1;
+
+    /**
+     * The device is camped on an LTE cell that supports E-UTRA-NR Dual Connectivity(EN-DC) but
+     * either the use of dual connectivity with NR(DCNR) is restricted or NR is not supported by
+     * the selected PLMN.
+     * @hide
+     */
+    public static final int NR_STATUS_RESTRICTED = 1;
+
+    /**
+     * The device is camped on an LTE cell that supports E-UTRA-NR Dual Connectivity(EN-DC) and both
+     * the use of dual connectivity with NR(DCNR) is not restricted and NR is supported by the
+     * selected PLMN.
+     * @hide
+     */
+    public static final int NR_STATUS_NOT_RESTRICTED = 2;
+
+    /**
+     * The device is camped on an LTE cell that supports E-UTRA-NR Dual Connectivity(EN-DC) and
+     * also connected to at least one 5G cell as a secondary serving cell.
+     * @hide
+     */
+    public static final int NR_STATUS_CONNECTED = 3;
+
     /**
      * Supported service type
      * @hide
@@ -103,6 +140,9 @@ public class NetworkRegistrationState implements Parcelable {
     private int mRoamingType;
 
     private int mAccessNetworkTechnology;
+
+    @NRStatus
+    private int mNrStatus;
 
     private final int mRejectCause;
 
@@ -154,6 +194,7 @@ public class NetworkRegistrationState implements Parcelable {
         mAvailableServices = availableServices;
         mCellIdentity = cellIdentity;
         mEmergencyOnly = emergencyOnly;
+        mNrStatus = NR_STATUS_NONE;
     }
 
     /**
@@ -161,11 +202,9 @@ public class NetworkRegistrationState implements Parcelable {
      * @hide
      */
     public NetworkRegistrationState(int domain, int transportType, int regState,
-                                    int accessNetworkTechnology, int rejectCause,
-                                    boolean emergencyOnly, int[] availableServices,
-                                    @Nullable CellIdentity cellIdentity, boolean cssSupported,
-                                    int roamingIndicator, int systemIsInPrl,
-                                    int defaultRoamingIndicator) {
+            int accessNetworkTechnology, int rejectCause, boolean emergencyOnly,
+            int[] availableServices, @Nullable CellIdentity cellIdentity, boolean cssSupported,
+            int roamingIndicator, int systemIsInPrl, int defaultRoamingIndicator) {
         this(domain, transportType, regState, accessNetworkTechnology, rejectCause, emergencyOnly,
                 availableServices, cellIdentity);
 
@@ -178,13 +217,15 @@ public class NetworkRegistrationState implements Parcelable {
      * @hide
      */
     public NetworkRegistrationState(int domain, int transportType, int regState,
-                                    int accessNetworkTechnology, int rejectCause,
-                                    boolean emergencyOnly, int[] availableServices,
-                                    @Nullable CellIdentity cellIdentity, int maxDataCalls) {
+            int accessNetworkTechnology, int rejectCause, boolean emergencyOnly,
+            int[] availableServices, @Nullable CellIdentity cellIdentity, int maxDataCalls,
+            boolean isDcNrRestricted, boolean isNrAvailable, boolean isEndcAvailable) {
         this(domain, transportType, regState, accessNetworkTechnology, rejectCause, emergencyOnly,
                 availableServices, cellIdentity);
 
-        mDataSpecificStates = new DataSpecificRegistrationStates(maxDataCalls);
+        mDataSpecificStates = new DataSpecificRegistrationStates(
+                maxDataCalls, isDcNrRestricted, isNrAvailable, isEndcAvailable);
+        updateNrStatus(mDataSpecificStates);
     }
 
     protected NetworkRegistrationState(Parcel source) {
@@ -201,6 +242,7 @@ public class NetworkRegistrationState implements Parcelable {
                 VoiceSpecificRegistrationStates.class.getClassLoader());
         mDataSpecificStates = source.readParcelable(
                 DataSpecificRegistrationStates.class.getClassLoader());
+        mNrStatus = source.readInt();
     }
 
     /**
@@ -212,6 +254,19 @@ public class NetworkRegistrationState implements Parcelable {
      * @return The network domain.
      */
     public @Domain int getDomain() { return mDomain; }
+
+    /**
+     * @return the 5G NR connection status.
+     * @hide
+     */
+    public @NRStatus int getNrStatus() {
+        return mNrStatus;
+    }
+
+    /** @hide */
+    public void setNrStatus(@NRStatus int nrStatus) {
+        mNrStatus = nrStatus;
+    }
 
     /**
      * @return The registration state.
@@ -237,10 +292,9 @@ public class NetworkRegistrationState implements Parcelable {
     }
 
     /**
-     * @return {@link ServiceState.RoamingType roaming type}. This could return
-     * overridden roaming type based on resource overlay or carrier config.
-     * @hide
+     * @return the current network roaming type.
      */
+
     public @ServiceState.RoamingType int getRoamingType() {
         return mRoamingType;
     }
@@ -317,6 +371,19 @@ public class NetworkRegistrationState implements Parcelable {
         return "Unknown reg state " + regState;
     }
 
+    private static String nrStatusToString(@NRStatus int nrStatus) {
+        switch (nrStatus) {
+            case NR_STATUS_RESTRICTED:
+                return "RESTRICTED";
+            case NR_STATUS_NOT_RESTRICTED:
+                return "NOT_RESTRICTED";
+            case NR_STATUS_CONNECTED:
+                return "CONNECTED";
+            default:
+                return "NONE";
+        }
+    }
+
     @Override
     public String toString() {
         return new StringBuilder("NetworkRegistrationState{")
@@ -332,6 +399,7 @@ public class NetworkRegistrationState implements Parcelable {
                 .append(" cellIdentity=").append(mCellIdentity)
                 .append(" voiceSpecificStates=").append(mVoiceSpecificStates)
                 .append(" dataSpecificStates=").append(mDataSpecificStates)
+                .append(" nrStatus=").append(nrStatusToString(mNrStatus))
                 .append("}").toString();
     }
 
@@ -339,14 +407,14 @@ public class NetworkRegistrationState implements Parcelable {
     public int hashCode() {
         return Objects.hash(mDomain, mTransportType, mRegState, mRoamingType,
                 mAccessNetworkTechnology, mRejectCause, mEmergencyOnly, mAvailableServices,
-                mCellIdentity, mVoiceSpecificStates, mDataSpecificStates);
+                mCellIdentity, mVoiceSpecificStates, mDataSpecificStates, mNrStatus);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (o == null || !(o instanceof NetworkRegistrationState)) {
+        if (!(o instanceof NetworkRegistrationState)) {
             return false;
         }
 
@@ -358,11 +426,11 @@ public class NetworkRegistrationState implements Parcelable {
                 && mAccessNetworkTechnology == other.mAccessNetworkTechnology
                 && mRejectCause == other.mRejectCause
                 && mEmergencyOnly == other.mEmergencyOnly
-                && (mAvailableServices == other.mAvailableServices
-                    || Arrays.equals(mAvailableServices, other.mAvailableServices))
-                && equals(mCellIdentity, other.mCellIdentity)
-                && equals(mVoiceSpecificStates, other.mVoiceSpecificStates)
-                && equals(mDataSpecificStates, other.mDataSpecificStates);
+                && Arrays.equals(mAvailableServices, other.mAvailableServices)
+                && Objects.equals(mCellIdentity, other.mCellIdentity)
+                && Objects.equals(mVoiceSpecificStates, other.mVoiceSpecificStates)
+                && Objects.equals(mDataSpecificStates, other.mDataSpecificStates)
+                && mNrStatus == other.mNrStatus;
     }
 
     @Override
@@ -378,6 +446,35 @@ public class NetworkRegistrationState implements Parcelable {
         dest.writeParcelable(mCellIdentity, 0);
         dest.writeParcelable(mVoiceSpecificStates, 0);
         dest.writeParcelable(mDataSpecificStates, 0);
+        dest.writeInt(mNrStatus);
+    }
+
+    /**
+     * Use the 5G NR Non-Standalone indicators from the network registration state to update the
+     * NR status. There are 3 indicators in the network registration state:
+     *
+     * 1. if E-UTRA-NR Dual Connectivity (EN-DC) is supported by the primary serving cell.
+     * 2. if NR is supported by the selected PLMN.
+     * 3. if the use of dual connectivity with NR is restricted.
+     *
+     * The network has 5G NR capability if E-UTRA-NR Dual Connectivity is supported by the primary
+     * serving cell.
+     *
+     * The use of NR 5G is not restricted If the network has 5G NR capability and both the use of
+     * DCNR is not restricted and NR is supported by the selected PLMN. Otherwise the use of 5G
+     * NR is restricted.
+     *
+     * @param state data specific registration state contains the 5G NR indicators.
+     */
+    private void updateNrStatus(DataSpecificRegistrationStates state) {
+        mNrStatus = NR_STATUS_NONE;
+        if (state.isEnDcAvailable) {
+            if (!state.isDcNrRestricted && state.isNrAvailable) {
+                mNrStatus = NR_STATUS_NOT_RESTRICTED;
+            } else {
+                mNrStatus = NR_STATUS_RESTRICTED;
+            }
+        }
     }
 
     public static final Parcelable.Creator<NetworkRegistrationState> CREATOR =
@@ -392,14 +489,4 @@ public class NetworkRegistrationState implements Parcelable {
             return new NetworkRegistrationState[size];
         }
     };
-
-    private static boolean equals(Object o1, Object o2) {
-        if (o1 == o2) {
-            return true;
-        } else if (o1 == null) {
-            return false;
-        } else {
-            return o1.equals(o2);
-        }
-    }
 }

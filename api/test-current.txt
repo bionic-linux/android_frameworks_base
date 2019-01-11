@@ -800,6 +800,11 @@ package android.security.keystore {
     field public static final int ID_TYPE_SERIAL = 1; // 0x1
   }
 
+  public class DeviceIdAttestationException extends java.lang.Exception {
+    ctor public DeviceIdAttestationException(java.lang.String);
+    ctor public DeviceIdAttestationException(java.lang.String, java.lang.Throwable);
+  }
+
   public static final class KeyGenParameterSpec.Builder {
     method public android.security.keystore.KeyGenParameterSpec.Builder setUniqueIdIncluded(boolean);
   }
@@ -958,6 +963,18 @@ package android.telecom {
     ctor public CallAudioState(boolean, int, int, android.bluetooth.BluetoothDevice, java.util.Collection<android.bluetooth.BluetoothDevice>);
   }
 
+  public final class PhoneAccountSuggestion implements android.os.Parcelable {
+    ctor public PhoneAccountSuggestion(android.telecom.PhoneAccountHandle, int, boolean);
+  }
+
+  public class PhoneAccountSuggestionService extends android.app.Service {
+    ctor public PhoneAccountSuggestionService();
+    method public void onAccountSuggestionRequest(java.lang.String);
+    method public android.os.IBinder onBind(android.content.Intent);
+    method public final void suggestPhoneAccounts(java.lang.String, java.util.List<android.telecom.PhoneAccountSuggestion>);
+    field public static final java.lang.String SERVICE_INTERFACE = "android.telecom.PhoneAccountSuggestionService";
+  }
+
 }
 
 package android.telephony {
@@ -1050,9 +1067,9 @@ package android.telephony.mbms.vendor {
     method public int initialize(android.telephony.mbms.MbmsGroupCallSessionCallback, int) throws android.os.RemoteException;
     method public void onAppCallbackDied(int, int);
     method public android.os.IBinder onBind(android.content.Intent);
-    method public int startGroupCall(int, long, int[], int[], android.telephony.mbms.GroupCallCallback);
+    method public int startGroupCall(int, long, java.util.List<java.lang.Integer>, java.util.List<java.lang.Integer>, android.telephony.mbms.GroupCallCallback);
     method public void stopGroupCall(int, long);
-    method public void updateGroupCall(int, long, int[], int[]);
+    method public void updateGroupCall(int, long, java.util.List<java.lang.Integer>, java.util.List<java.lang.Integer>);
   }
 
   public class MbmsStreamingServiceBase extends android.os.Binder {

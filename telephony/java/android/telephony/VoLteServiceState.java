@@ -17,6 +17,7 @@
 package android.telephony;
 
 import android.annotation.UnsupportedAppUsage;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -24,9 +25,11 @@ import android.telephony.Rlog;
 
 /**
  * Contains LTE network state related information.
- *
+ * @deprecated Only contains SRVCC state, which isn't specific to LTE handovers. For SRVCC
+ * indications, use {@link PhoneStateListener#onSrvccStateChanged(int)}.
  * @hide
  */
+@Deprecated
 public final class VoLteServiceState implements Parcelable {
 
     private static final String LOG_TAG = "VoLteServiceState";
@@ -78,7 +81,7 @@ public final class VoLteServiceState implements Parcelable {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public VoLteServiceState(int srvccState) {
         initialize();
 

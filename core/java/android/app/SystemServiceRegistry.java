@@ -87,6 +87,7 @@ import android.net.INetworkPolicyManager;
 import android.net.IpSecManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkScoreManager;
+import android.net.NetworkStack;
 import android.net.NetworkWatchlistManager;
 import android.net.lowpan.ILowpanManager;
 import android.net.lowpan.LowpanManager;
@@ -143,6 +144,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.telephony.euicc.EuiccCardManager;
 import android.telephony.euicc.EuiccManager;
+import android.telephony.ims.RcsManager;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -281,6 +283,13 @@ final class SystemServiceRegistry {
                 IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
                 return new ConnectivityManager(context, service);
             }});
+
+        registerService(Context.NETWORK_STACK_SERVICE, NetworkStack.class,
+                new StaticServiceFetcher<NetworkStack>() {
+                @Override
+                public NetworkStack createService() {
+                    return new NetworkStack();
+                }});
 
         registerService(Context.IPSEC_SERVICE, IpSecManager.class,
                 new CachedServiceFetcher<IpSecManager>() {
@@ -513,6 +522,14 @@ final class SystemServiceRegistry {
             public SubscriptionManager createService(ContextImpl ctx) throws ServiceNotFoundException {
                 return new SubscriptionManager(ctx.getOuterContext());
             }});
+
+        registerService(Context.TELEPHONY_RCS_SERVICE, RcsManager.class,
+                new CachedServiceFetcher<RcsManager>() {
+                    @Override
+                    public RcsManager createService(ContextImpl ctx) {
+                        return new RcsManager();
+                    }
+                });
 
         registerService(Context.CARRIER_CONFIG_SERVICE, CarrierConfigManager.class,
                 new CachedServiceFetcher<CarrierConfigManager>() {

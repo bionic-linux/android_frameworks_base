@@ -145,6 +145,7 @@ public abstract class PackageManager {
             MATCH_FACTORY_ONLY,
             MATCH_DEBUG_TRIAGED_MISSING,
             MATCH_INSTANT,
+            MATCH_APEX,
             GET_DISABLED_COMPONENTS,
             GET_DISABLED_UNTIL_USED_COMPONENTS,
             GET_UNINSTALLED_PACKAGES,
@@ -531,6 +532,17 @@ public abstract class PackageManager {
     public static final int MATCH_HIDDEN_UNTIL_INSTALLED_COMPONENTS =  0x20000000;
 
     /**
+     * {@link PackageInfo} flag: include APEX packages that are currently
+     * installed. In APEX terminology, this corresponds to packages that are
+     * currently active, i.e. mounted and available to other processes of the OS.
+     * In particular, this flag alone will not match APEX files that are staged
+     * for activation at next reboot.
+     * TODO(b/119767311): include uninstalled/inactive APEX if
+     *                    MATCH_UNINSTALLED_PACKAGES is set.
+     */
+    public static final int MATCH_APEX = 0x40000000;
+
+    /**
      * Flag for {@link #addCrossProfileIntentFilter}: if this flag is set: when
      * resolving an intent that matches the {@code CrossProfileIntentFilter},
      * the current profile will be skipped. Only activities in the target user
@@ -845,6 +857,14 @@ public abstract class PackageManager {
      * @hide
      */
     public static final int INSTALL_VIRTUAL_PRELOAD = 0x00010000;
+
+    /**
+     * Flag parameter for {@link #installPackage} to indicate that this package
+     * is an APEX package
+     *
+     * @hide
+     */
+    public static final int INSTALL_APEX = 0x00020000;
 
     /** @hide */
     @IntDef(flag = true, prefix = { "DONT_KILL_APP" }, value = {
@@ -1891,6 +1911,30 @@ public abstract class PackageManager {
      */
     @SdkConstant(SdkConstantType.FEATURE)
     public static final String FEATURE_NFC_HOST_CARD_EMULATION_NFCF = "android.hardware.nfc.hcef";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device supports uicc-
+     * based NFC card emulation.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_NFC_OFF_HOST_CARD_EMULATION_UICC =
+                                                                       "android.hardware.nfc.uicc";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device supports eSE-
+     * based NFC card emulation.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_NFC_OFF_HOST_CARD_EMULATION_ESE = "android.hardware.nfc.ese";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The Beam API is enabled on the device.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_NFC_BEAM = "android.sofware.nfc.beam";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and

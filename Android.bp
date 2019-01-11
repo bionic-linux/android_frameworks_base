@@ -484,6 +484,8 @@ java_defaults {
         "telecomm/java/com/android/internal/telecom/IConnectionServiceAdapter.aidl",
         "telecomm/java/com/android/internal/telecom/IInCallAdapter.aidl",
         "telecomm/java/com/android/internal/telecom/IInCallService.aidl",
+        "telecomm/java/com/android/internal/telecom/IPhoneAccountSuggestionCallback.aidl",
+        "telecomm/java/com/android/internal/telecom/IPhoneAccountSuggestionService.aidl",
         "telecomm/java/com/android/internal/telecom/ITelecomService.aidl",
         "telecomm/java/com/android/internal/telecom/RemoteServiceCallback.aidl",
         "telephony/java/android/telephony/data/IDataService.aidl",
@@ -502,6 +504,7 @@ java_defaults {
         "telephony/java/android/telephony/ims/aidl/IImsServiceController.aidl",
         "telephony/java/android/telephony/ims/aidl/IImsServiceControllerListener.aidl",
         "telephony/java/android/telephony/ims/aidl/IImsSmsListener.aidl",
+        "telephony/java/android/telephony/ims/aidl/IRcs.aidl",
         "telephony/java/android/telephony/mbms/IMbmsDownloadSessionCallback.aidl",
         "telephony/java/android/telephony/mbms/IMbmsStreamingSessionCallback.aidl",
         "telephony/java/android/telephony/mbms/IMbmsGroupCallSessionCallback.aidl",
@@ -512,6 +515,7 @@ java_defaults {
         "telephony/java/android/telephony/mbms/vendor/IMbmsDownloadService.aidl",
         "telephony/java/android/telephony/mbms/vendor/IMbmsStreamingService.aidl",
         "telephony/java/android/telephony/mbms/vendor/IMbmsGroupCallService.aidl",
+        "telephony/java/android/telephony/ICellInfoCallback.aidl",
         "telephony/java/android/telephony/INetworkService.aidl",
         "telephony/java/android/telephony/INetworkServiceCallback.aidl",
         "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
@@ -543,6 +547,7 @@ java_defaults {
         "telephony/java/com/android/internal/telephony/IApnSourceService.aidl",
         "telephony/java/com/android/internal/telephony/ICarrierConfigLoader.aidl",
         "telephony/java/com/android/internal/telephony/IMms.aidl",
+        "telephony/java/com/android/internal/telephony/INumberVerificationCallback.aidl",
         "telephony/java/com/android/internal/telephony/IOnSubscriptionsChangedListener.aidl",
         "telephony/java/com/android/internal/telephony/IPhoneStateListener.aidl",
         "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
@@ -596,7 +601,6 @@ java_defaults {
         ":libupdate_engine_aidl",
 
         ":storaged_aidl",
-        ":netd_aidl",
         ":vold_aidl",
         ":installd_aidl",
         ":dumpstate_aidl",
@@ -618,6 +622,8 @@ java_defaults {
         "core/java/com/android/internal/logging/EventLogTags.logtags",
         "core/java/com/android/server/DropboxLogTags.logtags",
         "core/java/org/chromium/arc/EventLogTags.logtags",
+
+        ":platform-properties",
 
         ":framework-statslog-gen",
     ],
@@ -651,7 +657,6 @@ java_defaults {
             "frameworks/av/media/libaudioclient/aidl",
             "frameworks/native/aidl/gui",
             "system/core/storaged/binder",
-            "system/netd/server/binder",
             "system/vold/binder",
             "system/bt/binder",
             "system/security/keystore/binder",
@@ -673,6 +678,8 @@ java_defaults {
     ],
 
     static_libs: [
+        "apex_aidl_interface-java",
+        "networkstack-aidl-interfaces-java",
         "framework-protos",
         "android.hidl.base-V1.0-java",
         "android.hardware.cas-V1.0-java",
@@ -688,13 +695,16 @@ java_defaults {
         "android.hardware.wifi-V1.0-java-constants",
         "android.hardware.radio-V1.0-java",
         "android.hardware.radio-V1.3-java",
+        "android.hardware.radio-V1.4-java",
         "android.hardware.usb.gadget-V1.0-java",
         "netd_aidl_interface-java",
     ],
 
-    // Loaded with System.loadLibrary by android.view.textclassifier
     required: [
+        // TODO: remove gps_debug when the build system propagates "required" properly.
+        "gps_debug.conf",
         "libtextclassifier",
+        // Loaded with System.loadLibrary by android.view.textclassifier
         "libmedia2_jni",
     ],
 
@@ -809,12 +819,26 @@ gensrcs {
     output_extension: "srcjar",
 }
 
+// AIDL interfaces between the core system and the networking mainline module.
+aidl_interface {
+    name: "networkstack-aidl-interfaces",
+    local_include_dir: "core/java",
+    srcs: [
+        "core/java/android/net/INetworkStackConnector.aidl",
+        "core/java/android/net/INetworkStackStatusCallback.aidl",
+        "core/java/android/net/dhcp/DhcpServingParamsParcel.aidl",
+        "core/java/android/net/dhcp/IDhcpServer.aidl",
+        "core/java/android/net/dhcp/IDhcpServerCallbacks.aidl",
+    ],
+    api_dir: "aidl/networkstack",
+}
+
 // Build ext.jar
 // ============================================================
 java_library {
     name: "ext",
     installable: true,
-    sdk_version: "core_current",
+    no_framework_libs: true,
     static_libs: [
         "libphonenumber-platform",
         "nist-sip",
@@ -1140,6 +1164,7 @@ framework_docs_only_libs = [
 metalava_framework_docs_args = "--manifest $(location core/res/AndroidManifest.xml) " +
     "--hide-package com.android.okhttp " +
     "--hide-package com.android.org.conscrypt --hide-package com.android.server " +
+    "--error UnhiddenSystemApi " +
     "--hide RequiresPermission " +
     "--hide MissingPermission --hide BroadcastBehavior " +
     "--hide HiddenSuperclass --hide DeprecationMismatch --hide UnavailableSymbol " +
@@ -1154,6 +1179,7 @@ stubs_defaults {
         ":openjdk_javadoc_files",
         ":non_openjdk_javadoc_files",
         ":android_icu4j_src_files_for_docs",
+        ":conscrypt_public_api_files",
         "test-mock/src/**/*.java",
         "test-runner/src/**/*.java",
     ],
@@ -1214,6 +1240,7 @@ stubs_defaults {
         ":openjdk_javadoc_files",
         ":non_openjdk_javadoc_files",
         ":android_icu4j_src_files_for_docs",
+        ":conscrypt_public_api_files",
     ],
     srcs_lib: "framework",
     srcs_lib_whitelist_dirs: frameworks_base_subdirs,
@@ -1544,11 +1571,17 @@ droidstubs {
 droidstubs {
     name: "hiddenapi-mappings",
     defaults: ["metalava-api-stubs-default"],
+    srcs: [
+        ":openjdk_java_files",
+        ":non_openjdk_java_files",
+    ],
     arg_files: [
         "core/res/AndroidManifest.xml",
     ],
     dex_mapping_filename: "dex-mapping.txt",
     args: metalava_framework_docs_args +
+        " --hide ReferencesHidden " +
+        " --hide UnhiddenSystemApi " +
         " --show-unannotated " +
         " --show-annotation android.annotation.SystemApi " +
         " --show-annotation android.annotation.TestApi "

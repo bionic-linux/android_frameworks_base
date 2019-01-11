@@ -99,6 +99,7 @@ public class SettingsBackupTest {
     private static final Set<String> BACKUP_BLACKLISTED_GLOBAL_SETTINGS =
             newHashSet(
                     Settings.Global.ACTIVITY_MANAGER_CONSTANTS,
+                    Settings.Global.ACTIVITY_STARTS_LOGGING_ENABLED,
                     Settings.Global.ADAPTIVE_BATTERY_MANAGEMENT_ENABLED,
                     Settings.Global.ADB_ENABLED,
                     Settings.Global.ADD_USERS_WHEN_LOCKED,
@@ -185,6 +186,10 @@ public class SettingsBackupTest {
                     Settings.Global.DATA_ROAMING,
                     Settings.Global.DATA_STALL_ALARM_AGGRESSIVE_DELAY_IN_MS,
                     Settings.Global.DATA_STALL_ALARM_NON_AGGRESSIVE_DELAY_IN_MS,
+                    Settings.Global.DATA_STALL_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD,
+                    Settings.Global.DATA_STALL_EVALUATION_TYPE,
+                    Settings.Global.DATA_STALL_MIN_EVALUATE_INTERVAL,
+                    Settings.Global.DATA_STALL_VALID_DNS_TIME_THRESHOLD,
                     Settings.Global.DEBUG_APP,
                     Settings.Global.DEBUG_VIEW_ATTRIBUTES,
                     Settings.Global.DEFAULT_DNS_SERVER,
@@ -256,8 +261,7 @@ public class SettingsBackupTest {
                     Settings.Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED,
                     Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED,
                     Settings.Global.HIDDEN_API_ACCESS_LOG_SAMPLING_RATE,
-                    Settings.Global.HIDDEN_API_POLICY_P_APPS,
-                    Settings.Global.HIDDEN_API_POLICY_PRE_P_APPS,
+                    Settings.Global.HIDDEN_API_POLICY,
                     Settings.Global.HIDE_ERROR_DIALOGS,
                     Settings.Global.HTTP_PROXY,
                     HYBRID_SYSUI_BATTERY_WARNING_FLAGS,

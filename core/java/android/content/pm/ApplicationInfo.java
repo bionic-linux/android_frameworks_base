@@ -46,6 +46,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.text.Collator;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -815,7 +816,17 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * the structure.
      */
     public String[] sharedLibraryFiles;
-    
+
+    /**
+     * List of all shared libraries this application is linked against.  This
+     * field is only set if the {@link PackageManager#GET_SHARED_LIBRARY_FILES
+     * PackageManager.GET_SHARED_LIBRARY_FILES} flag was used when retrieving
+     * the structure.
+     *
+     * {@hide}
+     */
+    public List<SharedLibraryInfo> sharedLibraryInfos;
+
     /**
      * Full path to the default directory assigned to the package for its
      * persistent data.
@@ -1155,11 +1166,11 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * system apps.
      * @hide
      */
-    public static final int HIDDEN_API_ENFORCEMENT_NONE = 0;
+    public static final int HIDDEN_API_ENFORCEMENT_DISABLED = 0;
     /**
      * No API enforcement, but enable the detection logic and warnings. Observed behaviour is the
-     * same as {@link #HIDDEN_API_ENFORCEMENT_NONE} but you may see warnings in the log when APIs
-     * are accessed.
+     * same as {@link #HIDDEN_API_ENFORCEMENT_DISABLED} but you may see warnings in the log when
+     * APIs are accessed.
      * @hide
      * */
     public static final int HIDDEN_API_ENFORCEMENT_JUST_WARN = 1;
@@ -1167,14 +1178,10 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * Dark grey list enforcement. Enforces the dark grey and black lists
      * @hide
      */
-    public static final int HIDDEN_API_ENFORCEMENT_DARK_GREY_AND_BLACK = 2;
-    /**
-     * Blacklist enforcement only.
-     * @hide
-     */
-    public static final int HIDDEN_API_ENFORCEMENT_BLACK = 3;
+    public static final int HIDDEN_API_ENFORCEMENT_ENABLED = 2;
 
-    private static final int HIDDEN_API_ENFORCEMENT_MAX = HIDDEN_API_ENFORCEMENT_BLACK;
+    private static final int HIDDEN_API_ENFORCEMENT_MIN = HIDDEN_API_ENFORCEMENT_DEFAULT;
+    private static final int HIDDEN_API_ENFORCEMENT_MAX = HIDDEN_API_ENFORCEMENT_ENABLED;
 
     /**
      * Values in this IntDef MUST be kept in sync with enum hiddenapi::EnforcementPolicy in
@@ -1183,17 +1190,16 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      */
     @IntDef(prefix = { "HIDDEN_API_ENFORCEMENT_" }, value = {
             HIDDEN_API_ENFORCEMENT_DEFAULT,
-            HIDDEN_API_ENFORCEMENT_NONE,
+            HIDDEN_API_ENFORCEMENT_DISABLED,
             HIDDEN_API_ENFORCEMENT_JUST_WARN,
-            HIDDEN_API_ENFORCEMENT_DARK_GREY_AND_BLACK,
-            HIDDEN_API_ENFORCEMENT_BLACK,
+            HIDDEN_API_ENFORCEMENT_ENABLED,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface HiddenApiEnforcementPolicy {}
 
     /** @hide */
     public static boolean isValidHiddenApiEnforcementPolicy(int policy) {
-        return policy >= HIDDEN_API_ENFORCEMENT_DEFAULT && policy <= HIDDEN_API_ENFORCEMENT_MAX;
+        return policy >= HIDDEN_API_ENFORCEMENT_MIN && policy <= HIDDEN_API_ENFORCEMENT_MAX;
     }
 
     private int mHiddenApiPolicy = HIDDEN_API_ENFORCEMENT_DEFAULT;
@@ -1423,9 +1429,9 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
             return sCollator.compare(sa.toString(), sb.toString());
         }
 
-        @UnsupportedAppUsage
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
         private final Collator   sCollator = Collator.getInstance();
-        @UnsupportedAppUsage
+        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
         private PackageManager   mPM;
     }
 
@@ -1464,6 +1470,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         seInfo = orig.seInfo;
         seInfoUser = orig.seInfoUser;
         sharedLibraryFiles = orig.sharedLibraryFiles;
+        sharedLibraryInfos = orig.sharedLibraryInfos;
         dataDir = orig.dataDir;
         deviceProtectedDataDir = orig.deviceProtectedDataDir;
         credentialProtectedDataDir = orig.credentialProtectedDataDir;
@@ -1539,6 +1546,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         dest.writeString(seInfo);
         dest.writeString(seInfoUser);
         dest.writeStringArray(sharedLibraryFiles);
+        dest.writeTypedList(sharedLibraryInfos);
         dest.writeString(dataDir);
         dest.writeString(deviceProtectedDataDir);
         dest.writeString(credentialProtectedDataDir);
@@ -1611,6 +1619,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         seInfo = source.readString();
         seInfoUser = source.readString();
         sharedLibraryFiles = source.readStringArray();
+        sharedLibraryInfos = source.createTypedArrayList(SharedLibraryInfo.CREATOR);
         dataDir = source.readString();
         deviceProtectedDataDir = source.readString();
         credentialProtectedDataDir = source.readString();
@@ -1664,7 +1673,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * 
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void disableCompatibilityMode() {
         flags |= (FLAG_SUPPORTS_LARGE_SCREENS | FLAG_SUPPORTS_NORMAL_SCREENS |
                 FLAG_SUPPORTS_SMALL_SCREENS | FLAG_RESIZEABLE_FOR_SCREENS |
@@ -1733,16 +1742,12 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      */
     public @HiddenApiEnforcementPolicy int getHiddenApiEnforcementPolicy() {
         if (isAllowedToUseHiddenApis()) {
-            return HIDDEN_API_ENFORCEMENT_NONE;
+            return HIDDEN_API_ENFORCEMENT_DISABLED;
         }
         if (mHiddenApiPolicy != HIDDEN_API_ENFORCEMENT_DEFAULT) {
             return mHiddenApiPolicy;
         }
-        if (targetSdkVersion < Build.VERSION_CODES.P) {
-            return HIDDEN_API_ENFORCEMENT_BLACK;
-        } else {
-            return HIDDEN_API_ENFORCEMENT_DARK_GREY_AND_BLACK;
-        }
+        return HIDDEN_API_ENFORCEMENT_ENABLED;
     }
 
     /**
@@ -1761,23 +1766,15 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * This will have no effect if this app is not subject to hidden API enforcement, i.e. if it
      * is on the package whitelist.
      *
-     * @param policyPreP configured policy for pre-P apps, or {@link
-     *        #HIDDEN_API_ENFORCEMENT_DEFAULT} if nothing configured.
-     * @param policyP configured policy for apps targeting P or later, or {@link
-     *        #HIDDEN_API_ENFORCEMENT_DEFAULT} if nothing configured.
+     * @param policy configured policy for this app, or {@link #HIDDEN_API_ENFORCEMENT_DEFAULT}
+     *        if nothing configured.
      * @hide
      */
-    public void maybeUpdateHiddenApiEnforcementPolicy(
-            @HiddenApiEnforcementPolicy int policyPreP, @HiddenApiEnforcementPolicy int policyP) {
+    public void maybeUpdateHiddenApiEnforcementPolicy(@HiddenApiEnforcementPolicy int policy) {
         if (isPackageWhitelistedForHiddenApis()) {
             return;
         }
-        if (targetSdkVersion < Build.VERSION_CODES.P) {
-            setHiddenApiEnforcementPolicy(policyPreP);
-        } else if (targetSdkVersion >= Build.VERSION_CODES.P) {
-            setHiddenApiEnforcementPolicy(policyP);
-        }
-
+        setHiddenApiEnforcementPolicy(policy);
     }
 
     /**
@@ -1801,7 +1798,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         return pm.getDefaultActivityIcon();
     }
     
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private boolean isPackageUnavailable(PackageManager pm) {
         try {
             return pm.getPackageInfo(packageName, 0) == null;

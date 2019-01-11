@@ -17,6 +17,7 @@
 package android.telephony;
 
 import android.annotation.UnsupportedAppUsage;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -271,7 +272,7 @@ public class RadioAccessFamily implements Parcelable {
         return TelephonyManager.NETWORK_CLASS_UNKNOWN;
     }
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public static int getNetworkTypeFromRaf(int raf) {
         int type;
 
@@ -459,6 +460,9 @@ public class RadioAccessFamily implements Parcelable {
         }
         if ((raf & (1 << ServiceState.RIL_RADIO_TECHNOLOGY_LTE_CA)) != 0) {
             networkTypeRaf |= TelephonyManager.NETWORK_TYPE_BITMASK_LTE_CA;
+        }
+        if ((raf & (1 << ServiceState.RIL_RADIO_TECHNOLOGY_NR)) != 0) {
+            networkTypeRaf |= TelephonyManager.NETWORK_TYPE_BITMASK_NR;
         }
 
         return (networkTypeRaf == 0) ? TelephonyManager.NETWORK_TYPE_UNKNOWN : networkTypeRaf;

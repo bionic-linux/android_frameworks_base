@@ -274,7 +274,6 @@ public class TrafficStats {
      * Changes only take effect during subsequent calls to
      * {@link #tagSocket(Socket)}.
      */
-    @SystemApi
     @SuppressLint("Doclava125")
     public static void setThreadStatsUid(int uid) {
         NetworkManagementSocketTagger.setThreadSocketStatsUid(uid);
@@ -313,7 +312,6 @@ public class TrafficStats {
      *
      * @see #setThreadStatsUid(int)
      */
-    @SystemApi
     @SuppressLint("Doclava125")
     public static void clearThreadStatsUid() {
         NetworkManagementSocketTagger.setThreadSocketStatsUid(-1);
@@ -333,6 +331,14 @@ public class TrafficStats {
 
     /**
      * Remove any statistics parameters from the given {@link Socket}.
+     * <p>
+     * In Android 8.1 (API level 27) and lower, a socket is automatically
+     * untagged when it's sent to another process using binder IPC with a
+     * {@code ParcelFileDescriptor} container. In Android 9.0 (API level 28)
+     * and higher, the socket tag is kept when the socket is sent to another
+     * process using binder IPC. You can mimic the previous behavior by
+     * calling {@code untagSocket()} before sending the socket to another
+     * process.
      */
     public static void untagSocket(Socket socket) throws SocketException {
         SocketTagger.get().untag(socket);

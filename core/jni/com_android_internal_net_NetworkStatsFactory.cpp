@@ -35,7 +35,6 @@
 #include "bpf/BpfUtils.h"
 #include "netdbpf/BpfNetworkStats.h"
 
-using android::bpf::hasBpfSupport;
 using android::bpf::parseBpfNetworkStatsDetail;
 using android::bpf::stats_line;
 
@@ -175,7 +174,7 @@ static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
             }
         }
         s.tag = rawTag >> 32;
-        if (limitTag != -1 && s.tag != limitTag) {
+        if (limitTag != -1 && s.tag != static_cast<uint32_t>(limitTag)) {
             //ALOGI("skipping due to tag: %s", buffer);
             continue;
         }
@@ -188,7 +187,7 @@ static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
         if (sscanf(pos, "%u %u %" PRIu64 " %" PRIu64 " %" PRIu64 " %" PRIu64,
                 &s.uid, &s.set, &s.rxBytes, &s.rxPackets,
                 &s.txBytes, &s.txPackets) == 6) {
-            if (limitUid != -1 && limitUid != s.uid) {
+            if (limitUid != -1 && static_cast<uint32_t>(limitUid) != s.uid) {
                 //ALOGI("skipping due to uid: %s", buffer);
                 continue;
             }
