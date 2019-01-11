@@ -256,6 +256,7 @@ applications that come with the platform
         <permission name="android.permission.ACTIVITY_EMBEDDING"/>
         <permission name="android.permission.FORCE_STOP_PACKAGES"/>
         <permission name="android.permission.GET_APP_OPS_STATS"/>
+        <permission name="android.permission.INSTALL_DYNAMIC_SYSTEM"/>
         <permission name="android.permission.INSTALL_LOCATION_PROVIDER"/>
         <permission name="android.permission.INSTALL_PACKAGES"/>
         <permission name="android.permission.INTERACT_ACROSS_USERS"/>
@@ -316,6 +317,11 @@ applications that come with the platform
     <privapp-permissions package="com.android.vpndialogs">
         <permission name="android.permission.CONNECTIVITY_INTERNAL"/>
         <permission name="android.permission.CONTROL_VPN"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.android.dynsystem">
+        <permission name="android.permission.REBOOT"/>
+        <permission name="android.permission.MANAGE_DYNAMIC_SYSTEM"/>
     </privapp-permissions>
 
 </permissions>
