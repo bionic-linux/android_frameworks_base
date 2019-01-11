@@ -22,6 +22,30 @@
       "revId": "bfcd77e339a8690330fba8b074051f6ba4256ca7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a622f3_fd4546c6",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-11T16:38:10Z",
+      "side": 1,
+      "message": "I think if we do, then tryInflatePrecompiled would have returned null, since there would have been no view to inflate, so we shouldn\u0027t be in this block at all.",
+      "parentUuid": "7a7b3d3f_32143507",
+      "range": {
+        "startLine": 1060,
+        "startChar": 12,
+        "endLine": 1060,
+        "endChar": 45
+      },
+      "revId": "bfcd77e339a8690330fba8b074051f6ba4256ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
