@@ -21,6 +21,7 @@ import static android.view.Surface.ROTATION_90;
 
 import android.graphics.Matrix;
 import android.view.DisplayInfo;
+import android.view.Surface.Rotation;
 
 import com.android.server.wm.utils.CoordinateTransforms;
 
@@ -65,6 +66,16 @@ public class ForcedSeamlessRotator {
     }
 
     /**
+     * Returns the rotation of the display before it started rotating.
+     *
+     * @return the old rotation of the display
+     */
+    @Rotation
+    public int getOldRotation() {
+        return mOldRotation;
+    }
+
+    /**
      * Removes the transform to the window token's surface that undoes the effect of the global
      * display rotation.
      *
@@ -75,12 +86,14 @@ public class ForcedSeamlessRotator {
     public void finish(WindowToken token, WindowState win) {
         mTransform.reset();
         token.getPendingTransaction().setMatrix(token.mSurfaceControl, mTransform, mFloat9);
-        token.getPendingTransaction().deferTransactionUntil(token.mSurfaceControl,
-                win.mWinAnimator.mSurfaceController.mSurfaceControl.getHandle(),
-                win.getFrameNumber());
-        win.getPendingTransaction().deferTransactionUntil(win.mSurfaceControl,
-                win.mWinAnimator.mSurfaceController.mSurfaceControl.getHandle(),
-                win.getFrameNumber());
+        if (win.mWinAnimator.mSurfaceController != null) {
+            token.getPendingTransaction().deferTransactionUntil(token.mSurfaceControl,
+                    win.mWinAnimator.mSurfaceController.mSurfaceControl.getHandle(),
+                    win.getFrameNumber());
+            win.getPendingTransaction().deferTransactionUntil(win.mSurfaceControl,
+                    win.mWinAnimator.mSurfaceController.mSurfaceControl.getHandle(),
+                    win.getFrameNumber());
+        }
     }
 
     public void dump(PrintWriter pw) {

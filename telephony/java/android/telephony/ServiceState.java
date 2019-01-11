@@ -83,7 +83,52 @@ public class ServiceState implements Parcelable {
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({DUPLEX_MODE_UNKNOWN, DUPLEX_MODE_FDD, DUPLEX_MODE_TDD})
+    @IntDef(prefix = "FREQUENCY_RANGE_",
+            value = {FREQUENCY_RANGE_UNKNOWN, FREQUENCY_RANGE_LOW, FREQUENCY_RANGE_MID,
+                    FREQUENCY_RANGE_HIGH, FREQUENCY_RANGE_MMWAVE})
+    public @interface FrequencyRange {}
+
+    /**
+     * Indicates frequency range is unknown.
+     * @hide
+     */
+    public static final int FREQUENCY_RANGE_UNKNOWN = -1;
+
+    /**
+     * Indicates the frequency range is below 1GHz.
+     * @hide
+     */
+    public static final int FREQUENCY_RANGE_LOW = 1;
+
+    /**
+     * Indicates the frequency range is between 1GHz to 3GHz.
+     * @hide
+     */
+    public static final int FREQUENCY_RANGE_MID = 2;
+
+    /**
+     * Indicates the frequency range is between 3GHz and 6GHz.
+     * @hide
+     */
+    public static final int FREQUENCY_RANGE_HIGH = 3;
+
+    /**
+     * Indicates the frequency range is above 6GHz (millimeter wave frequency).
+     * @hide
+     */
+    public static final int FREQUENCY_RANGE_MMWAVE = 4;
+
+    private static final List<Integer> FREQUENCY_RANGE_ORDER = Arrays.asList(
+            FREQUENCY_RANGE_UNKNOWN,
+            FREQUENCY_RANGE_LOW,
+            FREQUENCY_RANGE_MID,
+            FREQUENCY_RANGE_HIGH,
+            FREQUENCY_RANGE_MMWAVE);
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = "DUPLEX_MODE_",
+            value = {DUPLEX_MODE_UNKNOWN, DUPLEX_MODE_FDD, DUPLEX_MODE_TDD})
     public @interface DuplexMode {}
 
     /**
@@ -175,7 +220,7 @@ public class ServiceState implements Parcelable {
      * IWLAN
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public static final int RIL_RADIO_TECHNOLOGY_IWLAN = 18;
 
     /**
@@ -185,9 +230,15 @@ public class ServiceState implements Parcelable {
     public static final int RIL_RADIO_TECHNOLOGY_LTE_CA = 19;
 
     /**
-     * Number of radio technologies for GSM, UMTS and CDMA.
+     * NR(New Radio) 5G.
+     * @hide
      */
-    private static final int NEXT_RIL_RADIO_TECHNOLOGY = 20;
+    public static final int  RIL_RADIO_TECHNOLOGY_NR = 20;
+
+    /**
+     * The number of the radio technologies.
+     */
+    private static final int NEXT_RIL_RADIO_TECHNOLOGY = 21;
 
     /** @hide */
     public static final int RIL_RADIO_CDMA_TECHNOLOGY_BITMASK =
@@ -211,29 +262,30 @@ public class ServiceState implements Parcelable {
             ROAMING_TYPE_INTERNATIONAL
     })
     public @interface RoamingType {}
+
     /**
-     * Roaming type
-     * HOME : in home network
+     * Not roaming, registered in home network.
      * @hide
      */
+    @SystemApi
     public static final int ROAMING_TYPE_NOT_ROAMING = 0;
     /**
-     * Roaming type
-     * UNKNOWN : in a roaming network, but we can not tell if it's domestic or international
+     * registered in a roaming network, but can not tell if it's domestic or international.
      * @hide
      */
+    @SystemApi
     public static final int ROAMING_TYPE_UNKNOWN = 1;
     /**
-     * Roaming type
-     * DOMESTIC : in domestic roaming network
+     * registered in a domestic roaming network
      * @hide
      */
+    @SystemApi
     public static final int ROAMING_TYPE_DOMESTIC = 2;
     /**
-     * Roaming type
-     * INTERNATIONAL : in international roaming network
+     * registered in an international roaming network
      * @hide
      */
+    @SystemApi
     public static final int ROAMING_TYPE_INTERNATIONAL = 3;
 
     /**
@@ -264,24 +316,26 @@ public class ServiceState implements Parcelable {
     @RilRadioTechnology
     private int mRilDataRadioTechnology;
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private boolean mCssIndicator;
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     private int mNetworkId;
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     private int mSystemId;
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private int mCdmaRoamingIndicator;
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private int mCdmaDefaultRoamingIndicator;
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private int mCdmaEriIconIndex;
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private int mCdmaEriIconMode;
 
     @UnsupportedAppUsage
     private boolean mIsUsingCarrierAggregation;
 
+    @FrequencyRange
+    private int mNrFrequencyRange;
     private int mChannelNumber;
     private int[] mCellBandwidths = new int[0];
 
@@ -374,6 +428,7 @@ public class ServiceState implements Parcelable {
         mLteEarfcnRsrpBoost = s.mLteEarfcnRsrpBoost;
         mNetworkRegistrationStates = s.mNetworkRegistrationStates == null ? null :
                 new ArrayList<>(s.mNetworkRegistrationStates);
+        mNrFrequencyRange = s.mNrFrequencyRange;
     }
 
     /**
@@ -405,6 +460,7 @@ public class ServiceState implements Parcelable {
         in.readList(mNetworkRegistrationStates, NetworkRegistrationState.class.getClassLoader());
         mChannelNumber = in.readInt();
         mCellBandwidths = in.createIntArray();
+        mNrFrequencyRange = in.readInt();
     }
 
     public void writeToParcel(Parcel out, int flags) {
@@ -432,6 +488,7 @@ public class ServiceState implements Parcelable {
         out.writeList(mNetworkRegistrationStates);
         out.writeInt(mChannelNumber);
         out.writeIntArray(mCellBandwidths);
+        out.writeInt(mNrFrequencyRange);
     }
 
     public int describeContents() {
@@ -551,7 +608,7 @@ public class ServiceState implements Parcelable {
      * @return roaming type
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public @RoamingType int getVoiceRoamingType() {
         final NetworkRegistrationState regState = getNetworkRegistrationState(
                 NetworkRegistrationState.DOMAIN_CS, AccessNetworkConstants.TransportType.WWAN);
@@ -590,7 +647,7 @@ public class ServiceState implements Parcelable {
      * @return roaming type
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public @RoamingType int getDataRoamingType() {
         final NetworkRegistrationState regState = getNetworkRegistrationState(
                 NetworkRegistrationState.DOMAIN_PS, AccessNetworkConstants.TransportType.WWAN);
@@ -741,7 +798,7 @@ public class ServiceState implements Parcelable {
      * @return numeric format of operator, null if unregistered or unknown
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getVoiceOperatorNumeric() {
         return mVoiceOperatorNumeric;
     }
@@ -791,7 +848,8 @@ public class ServiceState implements Parcelable {
                 mIsEmergencyOnly,
                 mIsUsingCarrierAggregation,
                 mLteEarfcnRsrpBoost,
-                mNetworkRegistrationStates);
+                mNetworkRegistrationStates,
+                mNrFrequencyRange);
     }
 
     @Override
@@ -822,7 +880,8 @@ public class ServiceState implements Parcelable {
                 && mIsUsingCarrierAggregation == s.mIsUsingCarrierAggregation)
                 && (mNetworkRegistrationStates == null ? s.mNetworkRegistrationStates == null :
                         s.mNetworkRegistrationStates != null &&
-                        mNetworkRegistrationStates.containsAll(s.mNetworkRegistrationStates));
+                        mNetworkRegistrationStates.containsAll(s.mNetworkRegistrationStates))
+                && mNrFrequencyRange == s.mNrFrequencyRange;
     }
 
     /**
@@ -957,6 +1016,7 @@ public class ServiceState implements Parcelable {
             .append(", mIsUsingCarrierAggregation=").append(mIsUsingCarrierAggregation)
             .append(", mLteEarfcnRsrpBoost=").append(mLteEarfcnRsrpBoost)
             .append(", mNetworkRegistrationStates=").append(mNetworkRegistrationStates)
+            .append(", mNrFrequencyRange=").append(mNrFrequencyRange)
             .append("}").toString();
     }
 
@@ -986,6 +1046,7 @@ public class ServiceState implements Parcelable {
         mIsUsingCarrierAggregation = false;
         mLteEarfcnRsrpBoost = 0;
         mNetworkRegistrationStates = new ArrayList<>();
+        mNrFrequencyRange = FREQUENCY_RANGE_UNKNOWN;
     }
 
     public void setStateOutOfService() {
@@ -1009,7 +1070,7 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setDataRegState(int state) {
         mDataRegState = state;
         if (VDBG) Rlog.d(LOG_TAG, "[ServiceState] setDataRegState=" + mDataRegState);
@@ -1039,7 +1100,7 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setVoiceRoamingType(@RoamingType int type) {
         NetworkRegistrationState regState = getNetworkRegistrationState(
                 NetworkRegistrationState.DOMAIN_CS, AccessNetworkConstants.TransportType.WWAN);
@@ -1060,7 +1121,7 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setDataRoamingType(@RoamingType int type) {
         NetworkRegistrationState regState = getNetworkRegistrationState(
                 NetworkRegistrationState.DOMAIN_PS, AccessNetworkConstants.TransportType.WWAN);
@@ -1077,7 +1138,7 @@ public class ServiceState implements Parcelable {
     /**
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setEmergencyOnly(boolean emergencyOnly) {
         mIsEmergencyOnly = emergencyOnly;
     }
@@ -1085,7 +1146,7 @@ public class ServiceState implements Parcelable {
     /**
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setCdmaRoamingIndicator(int roaming) {
         this.mCdmaRoamingIndicator = roaming;
     }
@@ -1093,7 +1154,7 @@ public class ServiceState implements Parcelable {
     /**
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setCdmaDefaultRoamingIndicator (int roaming) {
         this.mCdmaDefaultRoamingIndicator = roaming;
     }
@@ -1101,7 +1162,7 @@ public class ServiceState implements Parcelable {
     /**
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setCdmaEriIconIndex(int index) {
         this.mCdmaEriIconIndex = index;
     }
@@ -1109,7 +1170,7 @@ public class ServiceState implements Parcelable {
     /**
      * @hide
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setCdmaEriIconMode(int mode) {
         this.mCdmaEriIconMode = mode;
     }
@@ -1170,7 +1231,7 @@ public class ServiceState implements Parcelable {
      * @param b second obj
      * @return true if two objects equal or both are null
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private static boolean equalsHandlesNulls (Object a, Object b) {
         return (a == null) ? (b == null) : a.equals (b);
     }
@@ -1224,6 +1285,7 @@ public class ServiceState implements Parcelable {
         m.putInt("LteEarfcnRsrpBoost", mLteEarfcnRsrpBoost);
         m.putInt("ChannelNumber", mChannelNumber);
         m.putIntArray("CellBandwidths", mCellBandwidths);
+        m.putInt("mNrFrequencyRange", mNrFrequencyRange);
     }
 
     /** @hide */
@@ -1287,6 +1349,22 @@ public class ServiceState implements Parcelable {
         mIsUsingCarrierAggregation = ca;
     }
 
+    /**
+     * @return the frequency range of 5G NR.
+     * @hide
+     */
+    public @FrequencyRange int getNrFrequencyRange() {
+        return mNrFrequencyRange;
+    }
+
+    /**
+     * @param nrFrequencyRange the frequency range of 5G NR.
+     * @hide
+     */
+    public void setNrFrequencyRange(@FrequencyRange int nrFrequencyRange) {
+        mNrFrequencyRange = nrFrequencyRange;
+    }
+
     /** @hide */
     public int getLteEarfcnRsrpBoost() {
         return mLteEarfcnRsrpBoost;
@@ -1298,7 +1376,7 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setCssIndicator(int css) {
         this.mCssIndicator = (css != 0);
     }
@@ -1477,7 +1555,7 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public int getCssIndicator() {
         return this.mCssIndicator ? 1 : 0;
     }
@@ -1537,7 +1615,7 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public static boolean bearerBitmapHasCdma(int radioTechnologyBitmap) {
         return (RIL_RADIO_CDMA_TECHNOLOGY_BITMASK & radioTechnologyBitmap) != 0;
     }
@@ -1763,5 +1841,14 @@ public class ServiceState implements Parcelable {
 
             mNetworkRegistrationStates.add(regState);
         }
+    }
+
+    /**
+     * @hide
+     */
+    public static final int getBetterNRFrequencyRange(int range1, int range2) {
+        return FREQUENCY_RANGE_ORDER.indexOf(range1) > FREQUENCY_RANGE_ORDER.indexOf(range2)
+                ? range1
+                : range2;
     }
 }

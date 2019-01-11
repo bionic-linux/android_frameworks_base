@@ -42,38 +42,51 @@ public abstract class CellInfo implements Parcelable {
      * @hide
      */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef(prefix = "TYPE_", value = {TYPE_GSM, TYPE_CDMA, TYPE_LTE, TYPE_WCDMA, TYPE_TDSCDMA})
+    @IntDef(prefix = "TYPE_",
+            value = {TYPE_GSM, TYPE_CDMA, TYPE_LTE, TYPE_WCDMA, TYPE_TDSCDMA, TYPE_NR})
     public @interface Type {}
+
     /**
      * Unknown cell identity type
      * @hide
      */
-    public static final int TYPE_UNKNOWN        = 0;
+    public static final int TYPE_UNKNOWN = 0;
+
     /**
      * GSM cell identity type
      * @hide
      */
-    public static final int TYPE_GSM            = 1;
+    public static final int TYPE_GSM = 1;
+
     /**
      * CDMA cell identity type
      * @hide
      */
-    public static final int TYPE_CDMA           = 2;
+    public static final int TYPE_CDMA = 2;
+
     /**
      * LTE cell identity type
      * @hide
      */
-    public static final int TYPE_LTE            = 3;
+    public static final int TYPE_LTE = 3;
+
     /**
      * WCDMA cell identity type
      * @hide
      */
-    public static final int TYPE_WCDMA          = 4;
+    public static final int TYPE_WCDMA = 4;
+
     /**
      * TD-SCDMA cell identity type
      * @hide
      */
-    public static final int TYPE_TDSCDMA        = 5;
+    public static final int TYPE_TDSCDMA = 5;
+
+    /**
+     * 5G cell identity type
+     * @hide
+     */
+    public static final int TYPE_NR = 6;
 
     // Type to distinguish where time stamp gets recorded.
 
@@ -119,7 +132,8 @@ public abstract class CellInfo implements Parcelable {
     /** Connection status is unknown. */
     public static final int CONNECTION_UNKNOWN = Integer.MAX_VALUE;
 
-    private int mCellConnectionStatus = CONNECTION_NONE;
+    /** A cell connection status */
+    private int mCellConnectionStatus;
 
     // True if device is mRegistered to the mobile network
     private boolean mRegistered;
@@ -131,6 +145,7 @@ public abstract class CellInfo implements Parcelable {
     protected CellInfo() {
         this.mRegistered = false;
         this.mTimeStamp = Long.MAX_VALUE;
+        mCellConnectionStatus = CONNECTION_NONE;
     }
 
     /** @hide */
@@ -277,6 +292,7 @@ public abstract class CellInfo implements Parcelable {
                     case TYPE_LTE: return CellInfoLte.createFromParcelBody(in);
                     case TYPE_WCDMA: return CellInfoWcdma.createFromParcelBody(in);
                     case TYPE_TDSCDMA: return CellInfoTdscdma.createFromParcelBody(in);
+                    case TYPE_NR: return CellInfoNr.createFromParcelBody(in);
                     default: throw new RuntimeException("Bad CellInfo Parcel");
                 }
         }
@@ -286,4 +302,44 @@ public abstract class CellInfo implements Parcelable {
             return new CellInfo[size];
         }
     };
+
+    /** @hide */
+    protected CellInfo(android.hardware.radio.V1_0.CellInfo ci) {
+        this.mRegistered = ci.registered;
+        this.mTimeStamp = ci.timeStamp;
+        this.mCellConnectionStatus = CONNECTION_UNKNOWN;
+    }
+
+    /** @hide */
+    protected CellInfo(android.hardware.radio.V1_2.CellInfo ci) {
+        this.mRegistered = ci.registered;
+        this.mTimeStamp = ci.timeStamp;
+        this.mCellConnectionStatus = ci.connectionStatus;
+    }
+
+    /** @hide */
+    public static CellInfo create(android.hardware.radio.V1_0.CellInfo ci) {
+        if (ci == null) return null;
+        switch(ci.cellInfoType) {
+            case android.hardware.radio.V1_0.CellInfoType.GSM: return new CellInfoGsm(ci);
+            case android.hardware.radio.V1_0.CellInfoType.CDMA: return new CellInfoCdma(ci);
+            case android.hardware.radio.V1_0.CellInfoType.LTE: return new CellInfoLte(ci);
+            case android.hardware.radio.V1_0.CellInfoType.WCDMA: return new CellInfoWcdma(ci);
+            case android.hardware.radio.V1_0.CellInfoType.TD_SCDMA: return new CellInfoTdscdma(ci);
+            default: return null;
+        }
+    }
+
+    /** @hide */
+    public static CellInfo create(android.hardware.radio.V1_2.CellInfo ci) {
+        if (ci == null) return null;
+        switch(ci.cellInfoType) {
+            case android.hardware.radio.V1_0.CellInfoType.GSM: return new CellInfoGsm(ci);
+            case android.hardware.radio.V1_0.CellInfoType.CDMA: return new CellInfoCdma(ci);
+            case android.hardware.radio.V1_0.CellInfoType.LTE: return new CellInfoLte(ci);
+            case android.hardware.radio.V1_0.CellInfoType.WCDMA: return new CellInfoWcdma(ci);
+            case android.hardware.radio.V1_0.CellInfoType.TD_SCDMA: return new CellInfoTdscdma(ci);
+            default: return null;
+        }
+    }
 }

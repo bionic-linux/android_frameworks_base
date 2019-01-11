@@ -17,10 +17,11 @@
 #include "dex_builder.h"
 
 #include "dex/descriptors_names.h"
-#include "dex/dex_instruction.h"
 
 #include <fstream>
 #include <memory>
+
+#define DCHECK_NOT_NULL(p) DCHECK((p) != nullptr)
 
 namespace startop {
 namespace dex {
@@ -28,8 +29,8 @@ namespace dex {
 using std::shared_ptr;
 using std::string;
 
-using art::Instruction;
 using ::dex::kAccPublic;
+using Op = Instruction::Op;
 
 const TypeDescriptor TypeDescriptor::Int() { return TypeDescriptor{"I"}; };
 const TypeDescriptor TypeDescriptor::Void() { return TypeDescriptor{"V"}; };
@@ -42,6 +43,66 @@ constexpr uint8_t kDexFileMagic[]{0x64, 0x65, 0x78, 0x0a, 0x30, 0x33, 0x38, 0x00
 constexpr size_t kMaxEncodedStringLength{5};
 
 }  // namespace
+
+std::ostream& operator<<(std::ostream& out, const Instruction::Op& opcode) {
+  switch (opcode) {
+    case Instruction::Op::kReturn:
+      out << "kReturn";
+      return out;
+    case Instruction::Op::kReturnObject:
+      out << "kReturnObject";
+      return out;
+    case Instruction::Op::kMove:
+      out << "kMove";
+      return out;
+    case Instruction::Op::kInvokeVirtual:
+      out << "kInvokeVirtual";
+      return out;
+    case Instruction::Op::kInvokeDirect:
+      out << "kInvokeDirect";
+      return out;
+    case Instruction::Op::kInvokeStatic:
+      out << "kInvokeStatic";
+      return out;
+    case Instruction::Op::kInvokeInterface:
+      out << "kInvokeInterface";
+      return out;
+    case Instruction::Op::kBindLabel:
+      out << "kBindLabel";
+      return out;
+    case Instruction::Op::kBranchEqz:
+      out << "kBranchEqz";
+      return out;
+    case Instruction::Op::kBranchNEqz:
+      out << "kBranchNEqz";
+      return out;
+    case Instruction::Op::kNew:
+      out << "kNew";
+      return out;
+    case Instruction::Op::kCheckCast:
+      out << "kCheckCast";
+      return out;
+  }
+}
+
+std::ostream& operator<<(std::ostream& out, const Value& value) {
+  if (value.is_register()) {
+    out << "Register(" << value.value() << ")";
+  } else if (value.is_parameter()) {
+    out << "Parameter(" << value.value() << ")";
+  } else if (value.is_immediate()) {
+    out << "Immediate(" << value.value() << ")";
+  } else if (value.is_string()) {
+    out << "String(" << value.value() << ")";
+  } else if (value.is_label()) {
+    out << "Label(" << value.value() << ")";
+  } else if (value.is_type()) {
+    out << "Type(" << value.value() << ")";
+  } else {
+    out << "UnknownValue";
+  }
+  return out;
+}
 
 void* TrackingAllocator::Allocate(size_t size) {
   std::unique_ptr<uint8_t[]> buffer = std::make_unique<uint8_t[]>(size);
@@ -56,7 +117,7 @@ void TrackingAllocator::Free(void* ptr) { allocations_.erase(allocations_.find(p
 //
 // package dextest;
 // public class DexTest {
-//     public static int foo() { return 5; }
+//     public static int foo(String s) { return s.length(); }
 // }
 void WriteTestDexFile(const string& filename) {
   DexBuilder dex_file;
@@ -64,11 +125,17 @@ void WriteTestDexFile(const string& filename) {
   ClassBuilder cbuilder{dex_file.MakeClass("dextest.DexTest")};
   cbuilder.set_source_file("dextest.java");
 
-  MethodBuilder method{cbuilder.CreateMethod("foo", Prototype{TypeDescriptor::Int()})};
+  TypeDescriptor string_type = TypeDescriptor::FromClassname("java.lang.String");
 
-  MethodBuilder::Register r = method.MakeRegister();
-  method.BuildConst4(r, 5);
-  method.BuildReturn(r);
+  MethodBuilder method{cbuilder.CreateMethod("foo", Prototype{TypeDescriptor::Int(), string_type})};
+
+  Value result = method.MakeRegister();
+
+  MethodDeclData string_length =
+      dex_file.GetOrDeclareMethod(string_type, "length", Prototype{TypeDescriptor::Int()});
+
+  method.AddInstruction(Instruction::InvokeVirtual(string_length.id, result, Value::Parameter(0)));
+  method.BuildReturn(result);
 
   method.Encode();
 
@@ -76,6 +143,10 @@ void WriteTestDexFile(const string& filename) {
 
   std::ofstream out_file(filename);
   out_file.write(image.ptr<const char>(), image.size());
+}
+
+TypeDescriptor TypeDescriptor::FromClassname(const std::string& name) {
+  return TypeDescriptor{art::DotToDescriptor(name.c_str())};
 }
 
 DexBuilder::DexBuilder() : dex_file_{std::make_shared<ir::DexFile>()} {
@@ -106,6 +177,9 @@ ir::String* DexBuilder::GetOrAddString(const std::string& string) {
     entry = Alloc<ir::String>();
     // +1 for null terminator
     entry->data = slicer::MemView{buffer.get(), header_length + string.size() + 1};
+    ::dex::u4 const new_index = dex_file_->strings_indexes.AllocateIndex();
+    dex_file_->strings_map[new_index] = entry;
+    entry->orig_index = new_index;
     string_data_.push_back(std::move(buffer));
   }
   return entry;
@@ -119,10 +193,9 @@ ClassBuilder DexBuilder::MakeClass(const std::string& name) {
   class_def->type = type_def;
   class_def->super_class = GetOrAddType(art::DotToDescriptor("java.lang.Object"));
   class_def->access_flags = kAccPublic;
-  return ClassBuilder{this, class_def};
+  return ClassBuilder{this, name, class_def};
 }
 
-// TODO(eholk): we probably want GetOrAddString() also
 ir::Type* DexBuilder::GetOrAddType(const std::string& descriptor) {
   if (types_by_descriptor_.find(descriptor) != types_by_descriptor_.end()) {
     return types_by_descriptor_[descriptor];
@@ -131,6 +204,8 @@ ir::Type* DexBuilder::GetOrAddType(const std::string& descriptor) {
   ir::Type* type = Alloc<ir::Type>();
   type->descriptor = GetOrAddString(descriptor);
   types_by_descriptor_[descriptor] = type;
+  type->orig_index = dex_file_->types_indexes.AllocateIndex();
+  dex_file_->types_map[type->orig_index] = type;
   return type;
 }
 
@@ -158,16 +233,11 @@ std::string Prototype::Shorty() const {
   return shorty;
 }
 
-ClassBuilder::ClassBuilder(DexBuilder* parent, ir::Class* class_def)
-    : parent_(parent), class_(class_def) {}
+ClassBuilder::ClassBuilder(DexBuilder* parent, const std::string& name, ir::Class* class_def)
+    : parent_(parent), type_descriptor_{TypeDescriptor::FromClassname(name)}, class_(class_def) {}
 
 MethodBuilder ClassBuilder::CreateMethod(const std::string& name, Prototype prototype) {
-  ir::String* dex_name{parent_->GetOrAddString(name)};
-
-  auto* decl = parent_->Alloc<ir::MethodDecl>();
-  decl->name = dex_name;
-  decl->parent = class_->type;
-  decl->prototype = prototype.Encode(parent_);
+  ir::MethodDecl* decl = parent_->GetOrDeclareMethod(type_descriptor_, name, prototype).decl;
 
   return MethodBuilder{parent_, class_, decl};
 }
@@ -187,9 +257,15 @@ ir::EncodedMethod* MethodBuilder::Encode() {
   method->access_flags = kAccPublic | ::dex::kAccStatic;
 
   auto* code = dex_->Alloc<ir::Code>();
-  code->registers = num_registers_;
-  // TODO: support ins and outs
+  DCHECK_NOT_NULL(decl_->prototype);
+  size_t const num_args =
+      decl_->prototype->param_types != nullptr ? decl_->prototype->param_types->types.size() : 0;
+  code->registers = num_registers_ + num_args;
+  code->ins_count = num_args;
+  EncodeInstructions();
   code->instructions = slicer::ArrayView<const ::dex::u2>(buffer_.data(), buffer_.size());
+  size_t const return_count = decl_->prototype->return_type == dex_->GetOrAddType("V") ? 0 : 1;
+  code->outs_count = std::max(return_count, max_args_);
   method->code = code;
 
   class_->direct_methods.push_back(method);
@@ -197,17 +273,247 @@ ir::EncodedMethod* MethodBuilder::Encode() {
   return method;
 }
 
-MethodBuilder::Register MethodBuilder::MakeRegister() { return num_registers_++; }
+Value MethodBuilder::MakeRegister() { return Value::Local(num_registers_++); }
 
-void MethodBuilder::BuildReturn() { buffer_.push_back(Instruction::RETURN_VOID); }
+Value MethodBuilder::MakeLabel() {
+  labels_.push_back({});
+  return Value::Label(labels_.size() - 1);
+}
 
-void MethodBuilder::BuildReturn(Register src) { buffer_.push_back(Instruction::RETURN | src << 8); }
+void MethodBuilder::AddInstruction(Instruction instruction) {
+  instructions_.push_back(instruction);
+}
 
-void MethodBuilder::BuildConst4(Register target, int value) {
+void MethodBuilder::BuildReturn() { AddInstruction(Instruction::OpNoArgs(Op::kReturn)); }
+
+void MethodBuilder::BuildReturn(Value src, bool is_object) {
+  AddInstruction(Instruction::OpWithArgs(
+      is_object ? Op::kReturnObject : Op::kReturn, /*destination=*/{}, src));
+}
+
+void MethodBuilder::BuildConst4(Value target, int value) {
   DCHECK_LT(value, 16);
-  // TODO: support more registers
-  DCHECK_LT(target, 16);
-  buffer_.push_back(Instruction::CONST_4 | (value << 12) | (target << 8));
+  AddInstruction(Instruction::OpWithArgs(Op::kMove, target, Value::Immediate(value)));
+}
+
+void MethodBuilder::BuildConstString(Value target, const std::string& value) {
+  const ir::String* const dex_string = dex_->GetOrAddString(value);
+  AddInstruction(Instruction::OpWithArgs(Op::kMove, target, Value::String(dex_string->orig_index)));
+}
+
+void MethodBuilder::EncodeInstructions() {
+  buffer_.clear();
+  for (const auto& instruction : instructions_) {
+    EncodeInstruction(instruction);
+  }
+}
+
+void MethodBuilder::EncodeInstruction(const Instruction& instruction) {
+  switch (instruction.opcode()) {
+    case Instruction::Op::kReturn:
+      return EncodeReturn(instruction, ::art::Instruction::RETURN);
+    case Instruction::Op::kReturnObject:
+      return EncodeReturn(instruction, ::art::Instruction::RETURN_OBJECT);
+    case Instruction::Op::kMove:
+      return EncodeMove(instruction);
+    case Instruction::Op::kInvokeVirtual:
+      return EncodeInvoke(instruction, art::Instruction::INVOKE_VIRTUAL);
+    case Instruction::Op::kInvokeDirect:
+      return EncodeInvoke(instruction, art::Instruction::INVOKE_DIRECT);
+    case Instruction::Op::kInvokeStatic:
+      return EncodeInvoke(instruction, art::Instruction::INVOKE_STATIC);
+    case Instruction::Op::kInvokeInterface:
+      return EncodeInvoke(instruction, art::Instruction::INVOKE_INTERFACE);
+    case Instruction::Op::kBindLabel:
+      return BindLabel(instruction.args()[0]);
+    case Instruction::Op::kBranchEqz:
+      return EncodeBranch(art::Instruction::IF_EQZ, instruction);
+    case Instruction::Op::kBranchNEqz:
+      return EncodeBranch(art::Instruction::IF_NEZ, instruction);
+    case Instruction::Op::kNew:
+      return EncodeNew(instruction);
+    case Instruction::Op::kCheckCast:
+      return EncodeCast(instruction);
+  }
+}
+
+void MethodBuilder::EncodeReturn(const Instruction& instruction, ::art::Instruction::Code opcode) {
+  DCHECK(!instruction.dest().has_value());
+  if (instruction.args().size() == 0) {
+    Encode10x(art::Instruction::RETURN_VOID);
+  } else {
+    DCHECK_EQ(1, instruction.args().size());
+    size_t source = RegisterValue(instruction.args()[0]);
+    Encode11x(opcode, source);
+  }
+}
+
+void MethodBuilder::EncodeMove(const Instruction& instruction) {
+  DCHECK_EQ(Instruction::Op::kMove, instruction.opcode());
+  DCHECK(instruction.dest().has_value());
+  DCHECK(instruction.dest()->is_register() || instruction.dest()->is_parameter());
+  DCHECK_EQ(1, instruction.args().size());
+
+  const Value& source = instruction.args()[0];
+
+  if (source.is_immediate()) {
+    // TODO: support more registers
+    DCHECK_LT(RegisterValue(*instruction.dest()), 16);
+    Encode11n(art::Instruction::CONST_4, RegisterValue(*instruction.dest()), source.value());
+  } else if (source.is_string()) {
+    constexpr size_t kMaxRegisters = 256;
+    DCHECK_LT(RegisterValue(*instruction.dest()), kMaxRegisters);
+    DCHECK_LT(source.value(), 65536);  // make sure we don't need a jumbo string
+    Encode21c(::art::Instruction::CONST_STRING, RegisterValue(*instruction.dest()), source.value());
+  } else {
+    UNIMPLEMENTED(FATAL);
+  }
+}
+
+void MethodBuilder::EncodeInvoke(const Instruction& instruction, ::art::Instruction::Code opcode) {
+  constexpr size_t kMaxArgs = 5;
+
+  CHECK_LE(instruction.args().size(), kMaxArgs);
+
+  uint8_t arguments[kMaxArgs]{};
+  for (size_t i = 0; i < instruction.args().size(); ++i) {
+    CHECK(instruction.args()[i].is_variable());
+    arguments[i] = RegisterValue(instruction.args()[i]);
+  }
+
+  Encode35c(opcode,
+            instruction.args().size(),
+            instruction.method_id(),
+            arguments[0],
+            arguments[1],
+            arguments[2],
+            arguments[3],
+            arguments[4]);
+
+  // If there is a return value, add a move-result instruction
+  if (instruction.dest().has_value()) {
+    Encode11x(instruction.result_is_object() ? art::Instruction::MOVE_RESULT_OBJECT
+                                             : art::Instruction::MOVE_RESULT,
+              RegisterValue(*instruction.dest()));
+  }
+
+  max_args_ = std::max(max_args_, instruction.args().size());
+}
+
+// Encodes a conditional branch that tests a single argument.
+void MethodBuilder::EncodeBranch(art::Instruction::Code op, const Instruction& instruction) {
+  const auto& args = instruction.args();
+  const auto& test_value = args[0];
+  const auto& branch_target = args[1];
+  CHECK_EQ(2, args.size());
+  CHECK(test_value.is_variable());
+  CHECK(branch_target.is_label());
+
+  size_t instruction_offset = buffer_.size();
+  size_t field_offset = buffer_.size() + 1;
+  Encode21c(
+      op, RegisterValue(test_value), LabelValue(branch_target, instruction_offset, field_offset));
+}
+
+void MethodBuilder::EncodeNew(const Instruction& instruction) {
+  DCHECK_EQ(Instruction::Op::kNew, instruction.opcode());
+  DCHECK(instruction.dest().has_value());
+  DCHECK(instruction.dest()->is_variable());
+  DCHECK_EQ(1, instruction.args().size());
+
+  const Value& type = instruction.args()[0];
+  DCHECK_LT(RegisterValue(*instruction.dest()), 256);
+  DCHECK(type.is_type());
+  Encode21c(::art::Instruction::NEW_INSTANCE, RegisterValue(*instruction.dest()), type.value());
+}
+
+void MethodBuilder::EncodeCast(const Instruction& instruction) {
+  DCHECK_EQ(Instruction::Op::kCheckCast, instruction.opcode());
+  DCHECK(instruction.dest().has_value());
+  DCHECK(instruction.dest()->is_variable());
+  DCHECK_EQ(1, instruction.args().size());
+
+  const Value& type = instruction.args()[0];
+  DCHECK_LT(RegisterValue(*instruction.dest()), 256);
+  DCHECK(type.is_type());
+  Encode21c(::art::Instruction::CHECK_CAST, RegisterValue(*instruction.dest()), type.value());
+}
+
+size_t MethodBuilder::RegisterValue(const Value& value) const {
+  if (value.is_register()) {
+    return value.value();
+  } else if (value.is_parameter()) {
+    return value.value() + num_registers_;
+  }
+  DCHECK(false && "Must be either a parameter or a register");
+  return 0;
+}
+
+void MethodBuilder::BindLabel(const Value& label_id) {
+  CHECK(label_id.is_label());
+
+  LabelData& label = labels_[label_id.value()];
+  CHECK(!label.bound_address.has_value());
+
+  label.bound_address = buffer_.size();
+
+  // patch any forward references to this label.
+  for (const auto& ref : label.references) {
+    buffer_[ref.field_offset] = *label.bound_address - ref.instruction_offset;
+  }
+  // No point keeping these around anymore.
+  label.references.clear();
+}
+
+::dex::u2 MethodBuilder::LabelValue(const Value& label_id, size_t instruction_offset,
+                                    size_t field_offset) {
+  CHECK(label_id.is_label());
+  LabelData& label = labels_[label_id.value()];
+
+  // Short-circuit if the label is already bound.
+  if (label.bound_address.has_value()) {
+    return *label.bound_address - instruction_offset;
+  }
+
+  // Otherwise, save a reference to where we need to back-patch later.
+  label.references.push_front(LabelReference{instruction_offset, field_offset});
+  return 0;
+}
+
+const MethodDeclData& DexBuilder::GetOrDeclareMethod(TypeDescriptor type, const std::string& name,
+                                                     Prototype prototype) {
+  MethodDeclData& entry = method_id_map_[{type, name, prototype}];
+
+  if (entry.decl == nullptr) {
+    // This method has not already been declared, so declare it.
+    ir::MethodDecl* decl = dex_file_->Alloc<ir::MethodDecl>();
+    // The method id is the last added method.
+    size_t id = dex_file_->methods.size() - 1;
+
+    ir::String* dex_name{GetOrAddString(name)};
+    decl->name = dex_name;
+    decl->parent = GetOrAddType(type.descriptor());
+    decl->prototype = GetOrEncodeProto(prototype);
+
+    // update the index -> ir node map (see tools/dexter/slicer/dex_ir_builder.cc)
+    auto new_index = dex_file_->methods_indexes.AllocateIndex();
+    auto& ir_node = dex_file_->methods_map[new_index];
+    SLICER_CHECK(ir_node == nullptr);
+    ir_node = decl;
+    decl->orig_index = decl->index = new_index;
+
+    entry = {id, decl};
+  }
+
+  return entry;
+}
+
+ir::Proto* DexBuilder::GetOrEncodeProto(Prototype prototype) {
+  ir::Proto*& ir_proto = proto_map_[prototype];
+  if (ir_proto == nullptr) {
+    ir_proto = prototype.Encode(this);
+  }
+  return ir_proto;
 }
 
 }  // namespace dex

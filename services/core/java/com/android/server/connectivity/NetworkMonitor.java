@@ -72,6 +72,7 @@ import android.util.Log;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.Protocol;
+import com.android.internal.util.RingBufferIndices;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.server.connectivity.DnsManager.PrivateDnsConfig;
@@ -99,7 +100,7 @@ public class NetworkMonitor extends StateMachine {
     private static final String TAG = NetworkMonitor.class.getSimpleName();
     private static final boolean DBG  = true;
     private static final boolean VDBG = false;
-
+    private static final boolean VDBG_STALL = Log.isLoggable(TAG, Log.DEBUG);
     // Default configuration values for captive portal detection probes.
     // TODO: append a random length parameter to the default HTTPS url.
     // TODO: randomize browser version ids in the default User-Agent String.
@@ -116,21 +117,30 @@ public class NetworkMonitor extends StateMachine {
     private static final int SOCKET_TIMEOUT_MS = 10000;
     private static final int PROBE_TIMEOUT_MS  = 3000;
 
-    static enum EvaluationResult {
+    // Default configuration values for data stall detection.
+    private static final int DEFAULT_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD = 5;
+    private static final int DEFAULT_DATA_STALL_MIN_EVALUATE_TIME_MS = 60 * 1000;
+    private static final int DEFAULT_DATA_STALL_VALID_DNS_TIME_THRESHOLD_MS = 30 * 60 * 1000;
+
+    private static final int DATA_STALL_EVALUATION_TYPE_DNS = 1;
+    private static final int DEFAULT_DATA_STALL_EVALUATION_TYPES =
+            (1 << DATA_STALL_EVALUATION_TYPE_DNS);
+
+    enum EvaluationResult {
         VALIDATED(true),
         CAPTIVE_PORTAL(false);
-        final boolean isValidated;
+        final boolean mIsValidated;
         EvaluationResult(boolean isValidated) {
-            this.isValidated = isValidated;
+            this.mIsValidated = isValidated;
         }
     }
 
-    static enum ValidationStage {
+    enum ValidationStage {
         FIRST_VALIDATION(true),
         REVALIDATION(false);
-        final boolean isFirstValidation;
+        final boolean mIsFirstValidation;
         ValidationStage(boolean isFirstValidation) {
-            this.isFirstValidation = isFirstValidation;
+            this.mIsFirstValidation = isFirstValidation;
         }
     }
 
@@ -233,9 +243,15 @@ public class NetworkMonitor extends StateMachine {
      */
     public static final int CMD_PROBE_COMPLETE = BASE + 16;
 
+    /**
+     * ConnectivityService notifies NetworkMonitor of DNS query responses event.
+     * arg1 = returncode in OnDnsEvent which indicates the response code for the DNS query.
+     */
+    public static final int EVENT_DNS_NOTIFICATION = BASE + 17;
+
     // Start mReevaluateDelayMs at this value and double.
     private static final int INITIAL_REEVALUATE_DELAY_MS = 1000;
-    private static final int MAX_REEVALUATE_DELAY_MS = 10*60*1000;
+    private static final int MAX_REEVALUATE_DELAY_MS = 10 * 60 * 1000;
     // Before network has been evaluated this many times, ignore repeated reevaluate requests.
     private static final int IGNORE_REEVALUATE_ATTEMPTS = 5;
     private int mReevaluateToken = 0;
@@ -245,7 +261,7 @@ public class NetworkMonitor extends StateMachine {
     // Stop blaming UID that requested re-evaluation after this many attempts.
     private static final int BLAME_FOR_EVALUATION_ATTEMPTS = 5;
     // Delay between reevaluations once a captive portal has been found.
-    private static final int CAPTIVE_PORTAL_REEVALUATE_DELAY_MS = 10*60*1000;
+    private static final int CAPTIVE_PORTAL_REEVALUATE_DELAY_MS = 10 * 60 * 1000;
 
     private static final int NUM_VALIDATION_LOG_LINES = 20;
 
@@ -297,6 +313,7 @@ public class NetworkMonitor extends StateMachine {
     private final State mCaptivePortalState = new CaptivePortalState();
     private final State mEvaluatingPrivateDnsState = new EvaluatingPrivateDnsState();
     private final State mProbingState = new ProbingState();
+    private final State mWaitingForNextProbeState = new WaitingForNextProbeState();
 
     private CustomIntentReceiver mLaunchCaptivePortalAppBroadcastReceiver = null;
 
@@ -313,6 +330,13 @@ public class NetworkMonitor extends StateMachine {
 
     private int mReevaluateDelayMs = INITIAL_REEVALUATE_DELAY_MS;
     private int mEvaluateAttempts = 0;
+    private volatile int mProbeToken = 0;
+    private final int mConsecutiveDnsTimeoutThreshold;
+    private final int mDataStallMinEvaluateTime;
+    private final int mDataStallValidDnsTimeThreshold;
+    private final int mDataStallEvaluationType;
+    private final DnsStallDetector mDnsStallDetector;
+    private long mLastProbeTime;
 
     public NetworkMonitor(Context context, Handler handler, NetworkAgentInfo networkAgentInfo,
             NetworkRequest defaultRequest) {
@@ -345,6 +369,7 @@ public class NetworkMonitor extends StateMachine {
         addState(mMaybeNotifyState, mDefaultState);
             addState(mEvaluatingState, mMaybeNotifyState);
                 addState(mProbingState, mEvaluatingState);
+                addState(mWaitingForNextProbeState, mEvaluatingState);
             addState(mCaptivePortalState, mMaybeNotifyState);
         addState(mEvaluatingPrivateDnsState, mDefaultState);
         addState(mValidatedState, mDefaultState);
@@ -358,14 +383,27 @@ public class NetworkMonitor extends StateMachine {
         mCaptivePortalFallbackUrls = makeCaptivePortalFallbackUrls();
         mCaptivePortalFallbackSpecs = makeCaptivePortalFallbackProbeSpecs();
         mRandom = deps.getRandom();
+        // TODO: Evaluate to move data stall configuration to a specific class.
+        mConsecutiveDnsTimeoutThreshold = getConsecutiveDnsTimeoutThreshold();
+        mDnsStallDetector = new DnsStallDetector(mConsecutiveDnsTimeoutThreshold);
+        mDataStallMinEvaluateTime = getDataStallMinEvaluateTime();
+        mDataStallValidDnsTimeThreshold = getDataStallValidDnsTimeThreshold();
+        mDataStallEvaluationType = getDataStallEvalutionType();
 
         start();
     }
 
+    /**
+     * Request the NetworkMonitor to reevaluate the network.
+     */
     public void forceReevaluation(int responsibleUid) {
         sendMessage(CMD_FORCE_REEVALUATION, responsibleUid, 0);
     }
 
+    /**
+     * Send a notification to NetworkMonitor indicating that private DNS settings have changed.
+     * @param newCfg The new private DNS configuration.
+     */
     public void notifyPrivateDnsSettingsChanged(PrivateDnsConfig newCfg) {
         // Cancel any outstanding resolutions.
         removeMessages(CMD_PRIVATE_DNS_SETTINGS_CHANGED);
@@ -506,6 +544,9 @@ public class NetworkMonitor extends StateMachine {
                     sendMessage(CMD_EVALUATE_PRIVATE_DNS);
                     break;
                 }
+                case EVENT_DNS_NOTIFICATION:
+                    mDnsStallDetector.accumulateConsecutiveDnsTimeoutCount(message.arg1);
+                    break;
                 default:
                     break;
             }
@@ -535,6 +576,13 @@ public class NetworkMonitor extends StateMachine {
                     break;
                 case CMD_EVALUATE_PRIVATE_DNS:
                     transitionTo(mEvaluatingPrivateDnsState);
+                    break;
+                case EVENT_DNS_NOTIFICATION:
+                    mDnsStallDetector.accumulateConsecutiveDnsTimeoutCount(message.arg1);
+                    if (isDataStall()) {
+                        validationLog("Suspecting data stall, reevaluate");
+                        transitionTo(mEvaluatingState);
+                    }
                     break;
                 default:
                     return NOT_HANDLED;
@@ -614,8 +662,9 @@ public class NetworkMonitor extends StateMachine {
         public boolean processMessage(Message message) {
             switch (message.what) {
                 case CMD_REEVALUATE:
-                    if (message.arg1 != mReevaluateToken || mUserDoesNotWant)
+                    if (message.arg1 != mReevaluateToken || mUserDoesNotWant) {
                         return HANDLED;
+                    }
                     // Don't bother validating networks that don't satisfy the default request.
                     // This includes:
                     //  - VPNs which can be considered explicitly desired by the user and the
@@ -772,9 +821,9 @@ public class NetworkMonitor extends StateMachine {
         }
 
         private boolean isStrictModeHostnameResolved() {
-            return (mPrivateDnsConfig != null) &&
-                   mPrivateDnsConfig.hostname.equals(mPrivateDnsProviderHostname) &&
-                   (mPrivateDnsConfig.ips.length > 0);
+            return (mPrivateDnsConfig != null)
+                    && mPrivateDnsConfig.hostname.equals(mPrivateDnsProviderHostname)
+                    && (mPrivateDnsConfig.ips.length > 0);
         }
 
         private void resolveStrictModeHostname() {
@@ -811,9 +860,9 @@ public class NetworkMonitor extends StateMachine {
 
         private boolean sendPrivateDnsProbe() {
             // q.v. system/netd/server/dns/DnsTlsTransport.cpp
-            final String ONE_TIME_HOSTNAME_SUFFIX = "-dnsotls-ds.metric.gstatic.com";
-            final String host = UUID.randomUUID().toString().substring(0, 8) +
-                    ONE_TIME_HOSTNAME_SUFFIX;
+            final String oneTimeHostnameSuffix = "-dnsotls-ds.metric.gstatic.com";
+            final String host = UUID.randomUUID().toString().substring(0, 8)
+                    + oneTimeHostnameSuffix;
             final Stopwatch watch = new Stopwatch().start();
             try {
                 final InetAddress[] ips = mNetworkAgentInfo.network().getAllByName(host);
@@ -838,7 +887,13 @@ public class NetworkMonitor extends StateMachine {
 
         @Override
         public void enter() {
-            mThread = new Thread(() -> sendMessage(obtainMessage(CMD_PROBE_COMPLETE,
+            if (mEvaluateAttempts >= BLAME_FOR_EVALUATION_ATTEMPTS) {
+                //Don't continue to blame UID forever.
+                TrafficStats.clearThreadStatsUid();
+            }
+
+            final int token = ++mProbeToken;
+            mThread = new Thread(() -> sendMessage(obtainMessage(CMD_PROBE_COMPLETE, token, 0,
                     isCaptivePortal())));
             mThread.start();
         }
@@ -847,16 +902,14 @@ public class NetworkMonitor extends StateMachine {
         public boolean processMessage(Message message) {
             switch (message.what) {
                 case CMD_PROBE_COMPLETE:
-                    // Currently, it's not possible to exit this state without mThread having
-                    // terminated. Therefore, this state can never get CMD_PROBE_COMPLETE from a
-                    // stale thread that is not mThread.
-                    // TODO: As soon as it's possible to exit this state without mThread having
-                    // terminated, ensure that CMD_PROBE_COMPLETE from stale threads are ignored.
-                    // This could be done via a sequence number, or by changing mThread to a class
-                    // that has a stopped volatile boolean or AtomicBoolean.
+                    // Ensure that CMD_PROBE_COMPLETE from stale threads are ignored.
+                    if (message.arg1 != mProbeToken) {
+                        return HANDLED;
+                    }
+
                     final CaptivePortalProbeResult probeResult =
                             (CaptivePortalProbeResult) message.obj;
-
+                    mLastProbeTime = SystemClock.elapsedRealtime();
                     if (probeResult.isSuccessful()) {
                         // Transit EvaluatingPrivateDnsState to get to Validated
                         // state (even if no Private DNS validation required).
@@ -866,27 +919,16 @@ public class NetworkMonitor extends StateMachine {
                         mLastPortalProbeResult = probeResult;
                         transitionTo(mCaptivePortalState);
                     } else {
-                        final Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
-                        sendMessageDelayed(msg, mReevaluateDelayMs);
                         logNetworkEvent(NetworkEvent.NETWORK_VALIDATION_FAILED);
                         notifyNetworkTestResultInvalid(probeResult.redirectUrl);
-                        if (mEvaluateAttempts >= BLAME_FOR_EVALUATION_ATTEMPTS) {
-                            // Don't continue to blame UID forever.
-                            TrafficStats.clearThreadStatsUid();
-                        }
-                        mReevaluateDelayMs *= 2;
-                        if (mReevaluateDelayMs > MAX_REEVALUATE_DELAY_MS) {
-                            mReevaluateDelayMs = MAX_REEVALUATE_DELAY_MS;
-                        }
+                        transitionTo(mWaitingForNextProbeState);
                     }
                     return HANDLED;
-                case CMD_REEVALUATE:
-                    // Leave the event to EvaluatingState. Defer this message will result in reset
-                    // of mReevaluateDelayMs and mEvaluateAttempts.
+                case EVENT_DNS_NOTIFICATION:
+                    // Leave the event to DefaultState to record correct dns timestamp.
                     return NOT_HANDLED;
                 default:
-                    // TODO: Some events may able to handle in this state, instead of deferring to
-                    // next state.
+                    // Wait for probe result and defer events to next state by default.
                     deferMessage(message);
                     return HANDLED;
             }
@@ -894,12 +936,37 @@ public class NetworkMonitor extends StateMachine {
 
         @Override
         public void exit() {
-            // If StateMachine get here, the probe started in enter() is guaranteed to have
-            // completed, because in this state, all messages except CMD_PROBE_COMPLETE and
-            // CMD_REEVALUATE are deferred. CMD_REEVALUATE cannot be in the queue, because it is
-            // only ever sent in EvaluatingState#enter, and the StateMachine reach this state by
-            // processing it. Therefore, there is no need to stop the thread.
+            if (mThread.isAlive()) {
+                mThread.interrupt();
+            }
             mThread = null;
+        }
+    }
+
+    // Being in the WaitingForNextProbeState indicates that evaluating probes failed and state is
+    // transited from ProbingState. This ensures that the state machine is only in ProbingState
+    // while a probe is in progress, not while waiting to perform the next probe. That allows
+    // ProbingState to defer most messages until the probe is complete, which keeps the code simple
+    // and matches the pre-Q behaviour where probes were a blocking operation performed on the state
+    // machine thread.
+    private class WaitingForNextProbeState extends State {
+        @Override
+        public void enter() {
+            scheduleNextProbe();
+        }
+
+        private void scheduleNextProbe() {
+            final Message msg = obtainMessage(CMD_REEVALUATE, ++mReevaluateToken, 0);
+            sendMessageDelayed(msg, mReevaluateDelayMs);
+            mReevaluateDelayMs *= 2;
+            if (mReevaluateDelayMs > MAX_REEVALUATE_DELAY_MS) {
+                mReevaluateDelayMs = MAX_REEVALUATE_DELAY_MS;
+            }
+        }
+
+        @Override
+        public boolean processMessage(Message message) {
+            return NOT_HANDLED;
         }
     }
 
@@ -907,7 +974,7 @@ public class NetworkMonitor extends StateMachine {
     // most one per address family. This ensures we only wait up to 20 seconds for TCP connections
     // to complete, regardless of how many IP addresses a host has.
     private static class OneAddressPerFamilyNetwork extends Network {
-        public OneAddressPerFamilyNetwork(Network network) {
+        OneAddressPerFamilyNetwork(Network network) {
             // Always bypass Private DNS.
             super(network.getPrivateDnsBypassingCopy());
         }
@@ -941,12 +1008,36 @@ public class NetworkMonitor extends StateMachine {
     }
 
     public boolean getWifiScansAlwaysAvailableDisabled() {
-        return mDependencies.getSetting(mContext, Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE, 0) == 0;
+        return mDependencies.getSetting(
+                mContext, Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE, 0) == 0;
     }
 
     private String getCaptivePortalServerHttpsUrl() {
         return mDependencies.getSetting(mContext,
                 Settings.Global.CAPTIVE_PORTAL_HTTPS_URL, DEFAULT_HTTPS_URL);
+    }
+
+    private int getConsecutiveDnsTimeoutThreshold() {
+        return mDependencies.getSetting(mContext,
+                Settings.Global.DATA_STALL_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD,
+                DEFAULT_CONSECUTIVE_DNS_TIMEOUT_THRESHOLD);
+    }
+
+    private int getDataStallMinEvaluateTime() {
+        return mDependencies.getSetting(mContext,
+                Settings.Global.DATA_STALL_MIN_EVALUATE_INTERVAL,
+                DEFAULT_DATA_STALL_MIN_EVALUATE_TIME_MS);
+    }
+
+    private int getDataStallValidDnsTimeThreshold() {
+        return mDependencies.getSetting(mContext,
+                Settings.Global.DATA_STALL_VALID_DNS_TIME_THRESHOLD,
+                DEFAULT_DATA_STALL_VALID_DNS_TIME_THRESHOLD_MS);
+    }
+
+    private int getDataStallEvalutionType() {
+        return mDependencies.getSetting(mContext, Settings.Global.DATA_STALL_EVALUATION_TYPE,
+                DEFAULT_DATA_STALL_EVALUATION_TYPES);
     }
 
     // Static for direct access by ConnectivityService
@@ -1164,10 +1255,10 @@ public class NetworkMonitor extends StateMachine {
             // Time how long it takes to get a response to our request
             long responseTimestamp = SystemClock.elapsedRealtime();
 
-            validationLog(probeType, url, "time=" + (responseTimestamp - requestTimestamp) + "ms" +
-                    " ret=" + httpResponseCode +
-                    " request=" + requestHeader +
-                    " headers=" + urlConnection.getHeaderFields());
+            validationLog(probeType, url, "time=" + (responseTimestamp - requestTimestamp) + "ms"
+                    + " ret=" + httpResponseCode
+                    + " request=" + requestHeader
+                    + " headers=" + urlConnection.getHeaderFields());
             // NOTE: We may want to consider an "HTTP/1.0 204" response to be a captive
             // portal.  The only example of this seen so far was a captive portal.  For
             // the time being go with prior behavior of assuming it's not a captive
@@ -1185,7 +1276,7 @@ public class NetworkMonitor extends StateMachine {
                     // sign-in to an empty page. Probably the result of a broken transparent proxy.
                     // See http://b/9972012.
                     validationLog(probeType, url,
-                        "200 response with Content-length=0 interpreted as 204 response.");
+                            "200 response with Content-length=0 interpreted as 204 response.");
                     httpResponseCode = CaptivePortalProbeResult.SUCCESS_CODE;
                 } else if (urlConnection.getContentLengthLong() == -1) {
                     // When no Content-length (default value == -1), attempt to read a byte from the
@@ -1227,7 +1318,7 @@ public class NetworkMonitor extends StateMachine {
             private final boolean mIsHttps;
             private volatile CaptivePortalProbeResult mResult = CaptivePortalProbeResult.FAILED;
 
-            public ProbeThread(boolean isHttps) {
+            ProbeThread(boolean isHttps) {
                 mIsHttps = isHttps;
             }
 
@@ -1361,8 +1452,10 @@ public class NetworkMonitor extends StateMachine {
                     if (cellInfo.isRegistered()) {
                         numRegisteredCellInfo++;
                         if (numRegisteredCellInfo > 1) {
-                            if (VDBG) logw("more than one registered CellInfo." +
-                                    " Can't tell which is active.  Bailing.");
+                            if (VDBG) {
+                                logw("more than one registered CellInfo."
+                                        + " Can't tell which is active.  Bailing.");
+                            }
                             return;
                         }
                         if (cellInfo instanceof CellInfoCdma) {
@@ -1410,14 +1503,14 @@ public class NetworkMonitor extends StateMachine {
     }
 
     private int networkEventType(ValidationStage s, EvaluationResult r) {
-        if (s.isFirstValidation) {
-            if (r.isValidated) {
+        if (s.mIsFirstValidation) {
+            if (r.mIsValidated) {
                 return NetworkEvent.NETWORK_FIRST_VALIDATION_SUCCESS;
             } else {
                 return NetworkEvent.NETWORK_FIRST_VALIDATION_PORTAL_FOUND;
             }
         } else {
-            if (r.isValidated) {
+            if (r.mIsValidated) {
                 return NetworkEvent.NETWORK_REVALIDATION_SUCCESS;
             } else {
                 return NetworkEvent.NETWORK_REVALIDATION_PORTAL_FOUND;
@@ -1435,7 +1528,7 @@ public class NetworkMonitor extends StateMachine {
 
     private void logValidationProbe(long durationMs, int probeType, int probeResult) {
         int[] transports = mNetworkAgentInfo.networkCapabilities.getTransportTypes();
-        boolean isFirstValidation = validationStage().isFirstValidation;
+        boolean isFirstValidation = validationStage().mIsFirstValidation;
         ValidationProbeEvent ev = new ValidationProbeEvent();
         ev.probeType = ValidationProbeEvent.makeProbeType(probeType, isFirstValidation);
         ev.returnCode = probeResult;
@@ -1453,15 +1546,148 @@ public class NetworkMonitor extends StateMachine {
             return new Random();
         }
 
+        /**
+         * Get the value of a global integer setting.
+         * @param symbol Name of the setting
+         * @param defaultValue Value to return if the setting is not defined.
+         */
         public int getSetting(Context context, String symbol, int defaultValue) {
             return Settings.Global.getInt(context.getContentResolver(), symbol, defaultValue);
         }
 
+        /**
+         * Get the value of a global String setting.
+         * @param symbol Name of the setting
+         * @param defaultValue Value to return if the setting is not defined.
+         */
         public String getSetting(Context context, String symbol, String defaultValue) {
             final String value = Settings.Global.getString(context.getContentResolver(), symbol);
             return value != null ? value : defaultValue;
         }
 
         public static final Dependencies DEFAULT = new Dependencies();
+    }
+
+    /**
+     * Methods in this class perform no locking because all accesses are performed on the state
+     * machine's thread. Need to consider the thread safety if it ever could be accessed outside the
+     * state machine.
+     */
+    @VisibleForTesting
+    protected class DnsStallDetector {
+        private static final int DEFAULT_DNS_LOG_SIZE = 50;
+        private int mConsecutiveTimeoutCount = 0;
+        private int mSize;
+        final DnsResult[] mDnsEvents;
+        final RingBufferIndices mResultIndices;
+
+        DnsStallDetector(int size) {
+            mSize = Math.max(DEFAULT_DNS_LOG_SIZE, size);
+            mDnsEvents = new DnsResult[mSize];
+            mResultIndices = new RingBufferIndices(mSize);
+        }
+
+        @VisibleForTesting
+        protected void accumulateConsecutiveDnsTimeoutCount(int code) {
+            final DnsResult result = new DnsResult(code);
+            mDnsEvents[mResultIndices.add()] = result;
+            if (result.isTimeout()) {
+                mConsecutiveTimeoutCount++;
+            } else {
+                // Keep the event in mDnsEvents without clearing it so that there are logs to do the
+                // simulation and analysis.
+                mConsecutiveTimeoutCount = 0;
+            }
+        }
+
+        private boolean isDataStallSuspected(int timeoutCountThreshold, int validTime) {
+            if (timeoutCountThreshold <= 0) {
+                Log.wtf(TAG, "Timeout count threshold should be larger than 0.");
+                return false;
+            }
+
+            // Check if the consecutive timeout count reach the threshold or not.
+            if (mConsecutiveTimeoutCount < timeoutCountThreshold) {
+                return false;
+            }
+
+            // Check if the target dns event index is valid or not.
+            final int firstConsecutiveTimeoutIndex =
+                    mResultIndices.indexOf(mResultIndices.size() - timeoutCountThreshold);
+
+            // If the dns timeout events happened long time ago, the events are meaningless for
+            // data stall evaluation. Thus, check if the first consecutive timeout dns event
+            // considered in the evaluation happened in defined threshold time.
+            final long now = SystemClock.elapsedRealtime();
+            final long firstTimeoutTime = now - mDnsEvents[firstConsecutiveTimeoutIndex].mTimeStamp;
+            return (firstTimeoutTime < validTime);
+        }
+
+        int getConsecutiveTimeoutCount() {
+            return mConsecutiveTimeoutCount;
+        }
+    }
+
+    private static class DnsResult {
+        // TODO: Need to move the DNS return code definition to a specific class once unify DNS
+        // response code is done.
+        private static final int RETURN_CODE_DNS_TIMEOUT = 255;
+
+        private final long mTimeStamp;
+        private final int mReturnCode;
+
+        DnsResult(int code) {
+            mTimeStamp = SystemClock.elapsedRealtime();
+            mReturnCode = code;
+        }
+
+        private boolean isTimeout() {
+            return mReturnCode == RETURN_CODE_DNS_TIMEOUT;
+        }
+    }
+
+
+    @VisibleForTesting
+    protected DnsStallDetector getDnsStallDetector() {
+        return mDnsStallDetector;
+    }
+
+    private boolean dataStallEvaluateTypeEnabled(int type) {
+        return (mDataStallEvaluationType & (1 << type)) != 0;
+    }
+
+    @VisibleForTesting
+    protected long getLastProbeTime() {
+        return mLastProbeTime;
+    }
+
+    @VisibleForTesting
+    protected boolean isDataStall() {
+        boolean result = false;
+        // Reevaluation will generate traffic. Thus, set a minimal reevaluation timer to limit the
+        // possible traffic cost in metered network.
+        if (mNetworkAgentInfo.networkCapabilities.isMetered()
+                && (SystemClock.elapsedRealtime() - getLastProbeTime()
+                < mDataStallMinEvaluateTime)) {
+            return false;
+        }
+
+        // Check dns signal. Suspect it may be a data stall if both :
+        // 1. The number of consecutive DNS query timeouts > mConsecutiveDnsTimeoutThreshold.
+        // 2. Those consecutive DNS queries happened in the last mValidDataStallDnsTimeThreshold ms.
+        if (dataStallEvaluateTypeEnabled(DATA_STALL_EVALUATION_TYPE_DNS)) {
+            if (mDnsStallDetector.isDataStallSuspected(mConsecutiveDnsTimeoutThreshold,
+                    mDataStallValidDnsTimeThreshold)) {
+                result = true;
+                logNetworkEvent(NetworkEvent.NETWORK_CONSECUTIVE_DNS_TIMEOUT_FOUND);
+            }
+        }
+
+        if (VDBG_STALL) {
+            log("isDataStall: result=" + result + ", consecutive dns timeout count="
+                    + mDnsStallDetector.getConsecutiveTimeoutCount());
+        }
+
+        return result;
     }
 }

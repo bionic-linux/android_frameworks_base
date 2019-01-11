@@ -49,6 +49,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.NetworkStack;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -325,6 +326,15 @@ public abstract class Context {
      * is used to impact it.
      */
     public static final int BIND_ADJUST_WITH_ACTIVITY = 0x0080;
+
+    /**
+     * Flag for {@link #bindService}: If binding from something better than perceptible,
+     * still set the adjust below perceptible. This would be used for bound services that can
+     * afford to be evicted when under extreme memory pressure, but should be restarted as soon
+     * as possible.
+     * @hide
+     */
+    public static final int BIND_ADJUST_BELOW_PERCEPTIBLE = 0x0100;
 
     /**
      * @hide Flag for {@link #bindService}: allows binding to a service provided
@@ -3495,6 +3505,15 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link NetworkStack} for communicating with the network stack
+     * @hide
+     * @see #getSystemService(String)
+     * @see NetworkStack
+     */
+    public static final String NETWORK_STACK_SERVICE = "network_stack";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
      * {@link android.net.IpSecManager} for encrypting Sockets or Networks with
      * IPSec.
      *
@@ -4248,6 +4267,13 @@ public abstract class Context {
      * @see #getSystemService(String)
      */
     public static final String TIME_ZONE_DETECTOR_SERVICE = "time_zone_detector";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve an
+     * {@link android.telephony.ims.RcsManager}.
+     * @hide
+     */
+    public static final String TELEPHONY_RCS_SERVICE = "ircs";
 
     /**
      * Determine whether the given permission is allowed for a particular

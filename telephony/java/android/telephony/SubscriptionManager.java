@@ -19,6 +19,7 @@ package android.telephony;
 import static android.net.NetworkPolicyManager.OVERRIDE_CONGESTED;
 import static android.net.NetworkPolicyManager.OVERRIDE_UNMETERED;
 
+import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.DurationMillisLong;
 import android.annotation.NonNull;
@@ -43,6 +44,7 @@ import android.database.ContentObserver;
 import android.net.INetworkPolicyManager;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -50,6 +52,8 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.euicc.EuiccManager;
+import android.telephony.ims.ImsMmTelManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -65,6 +69,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * SubscriptionManager is the application interface to SubscriptionController
@@ -117,7 +122,6 @@ public class SubscriptionManager {
     @UnsupportedAppUsage
     public static final Uri CONTENT_URI = Uri.parse("content://telephony/siminfo");
 
-
     /**
      * Generates a content {@link Uri} used to receive updates on simInfo change
      * on the given subscriptionId
@@ -133,7 +137,7 @@ public class SubscriptionManager {
      * A content {@link Uri} used to receive updates on wfc enabled user setting.
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-     * subscription wfc enabled {@link SubscriptionManager#WFC_IMS_ENABLED}
+     * subscription wfc enabled {@link ImsMmTelManager#isVoWiFiSettingEnabled()}
      * while your app is running. You can also use a {@link JobService} to ensure your app
      * is notified of changes to the {@link Uri} even when it is not running.
      * Note, however, that using a {@link JobService} does not guarantee timely delivery of
@@ -146,10 +150,29 @@ public class SubscriptionManager {
     public static final Uri WFC_ENABLED_CONTENT_URI = Uri.withAppendedPath(CONTENT_URI, "wfc");
 
     /**
-     * A content {@link Uri} used to receive updates on enhanced 4g user setting.
+     * A content {@link Uri} used to receive updates on advanced calling user setting
+     * @see ImsMmTelManager#isAdvancedCallingSettingEnabled().
      * <p>
      * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
-     * subscription enhanced 4G enabled {@link SubscriptionManager#ENHANCED_4G_MODE_ENABLED}
+     * subscription advanced calling enabled
+     * {@link ImsMmTelManager#isAdvancedCallingSettingEnabled()} while your app is running.
+     * You can also use a {@link JobService} to ensure your app is notified of changes to the
+     * {@link Uri} even when it is not running.
+     * Note, however, that using a {@link JobService} does not guarantee timely delivery of
+     * updates to the {@link Uri}.
+     * To be notified of changes to a specific subId, append subId to the URI
+     * {@link Uri#withAppendedPath(Uri, String)}.
+     * @hide
+     */
+    @SystemApi
+    public static final Uri ADVANCED_CALLING_ENABLED_CONTENT_URI = Uri.withAppendedPath(
+            CONTENT_URI, "advanced_calling");
+
+    /**
+     * A content {@link Uri} used to receive updates on wfc mode setting.
+     * <p>
+     * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
+     * subscription wfc mode {@link ImsMmTelManager#getVoWiFiModeSetting()}
      * while your app is running. You can also use a {@link JobService} to ensure your app
      * is notified of changes to the {@link Uri} even when it is not running.
      * Note, however, that using a {@link JobService} does not guarantee timely delivery of
@@ -159,9 +182,59 @@ public class SubscriptionManager {
      * @hide
      */
     @SystemApi
-    public static final Uri ENHANCED_4G_ENABLED_CONTENT_URI = Uri.withAppendedPath(
-            CONTENT_URI, "enhanced_4g");
+    public static final Uri WFC_MODE_CONTENT_URI = Uri.withAppendedPath(CONTENT_URI, "wfc_mode");
 
+    /**
+     * A content {@link Uri} used to receive updates on wfc roaming mode setting.
+     * <p>
+     * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
+     * subscription wfc roaming mode {@link ImsMmTelManager#getVoWiFiRoamingModeSetting()}
+     * while your app is running. You can also use a {@link JobService} to ensure your app
+     * is notified of changes to the {@link Uri} even when it is not running.
+     * Note, however, that using a {@link JobService} does not guarantee timely delivery of
+     * updates to the {@link Uri}.
+     * To be notified of changes to a specific subId, append subId to the URI
+     * {@link Uri#withAppendedPath(Uri, String)}.
+     * @hide
+     */
+    @SystemApi
+    public static final Uri WFC_ROAMING_MODE_CONTENT_URI = Uri.withAppendedPath(
+            CONTENT_URI, "wfc_roaming_mode");
+
+    /**
+     * A content {@link Uri} used to receive updates on vt(video telephony over IMS) enabled
+     * setting.
+     * <p>
+     * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
+     * subscription vt enabled {@link ImsMmTelManager#isVtSettingEnabled()}
+     * while your app is running. You can also use a {@link JobService} to ensure your app
+     * is notified of changes to the {@link Uri} even when it is not running.
+     * Note, however, that using a {@link JobService} does not guarantee timely delivery of
+     * updates to the {@link Uri}.
+     * To be notified of changes to a specific subId, append subId to the URI
+     * {@link Uri#withAppendedPath(Uri, String)}.
+     * @hide
+     */
+    @SystemApi
+    public static final Uri VT_ENABLED_CONTENT_URI = Uri.withAppendedPath(
+            CONTENT_URI, "vt_enabled");
+
+    /**
+     * A content {@link Uri} used to receive updates on wfc roaming enabled setting.
+     * <p>
+     * Use this {@link Uri} with a {@link ContentObserver} to be notified of changes to the
+     * subscription wfc roaming enabled {@link ImsMmTelManager#isVoWiFiRoamingSettingEnabled()}
+     * while your app is running. You can also use a {@link JobService} to ensure your app
+     * is notified of changes to the {@link Uri} even when it is not running.
+     * Note, however, that using a {@link JobService} does not guarantee timely delivery of
+     * updates to the {@link Uri}.
+     * To be notified of changes to a specific subId, append subId to the URI
+     * {@link Uri#withAppendedPath(Uri, String)}.
+     * @hide
+     */
+    @SystemApi
+    public static final Uri WFC_ROAMING_ENABLED_CONTENT_URI = Uri.withAppendedPath(
+            CONTENT_URI, "wfc_roaming_enabled");
 
     /**
      * TelephonyProvider unique key column name is the subscription id.
@@ -309,6 +382,14 @@ public class SubscriptionManager {
     public static final int SIM_PROVISIONED = 0;
 
     /**
+     * TelephonyProvider column name for subscription carrier id.
+     * @see TelephonyManager#getSimCarrierId()
+     * <p>Type: INTEGER (int) </p>
+     * @hide
+     */
+    public static final String CARRIER_ID = "carrier_id";
+
+    /**
      * TelephonyProvider column name for the MCC associated with a SIM, stored as a string.
      * <P>Type: TEXT (String)</P>
      * @hide
@@ -335,6 +416,13 @@ public class SubscriptionManager {
      * @hide
      */
     public static final String MNC = "mnc";
+
+    /**
+     * TelephonyProvider column name for the iso country code associated with a SIM.
+     * <P>Type: TEXT (String)</P>
+     * @hide
+     */
+    public static final String ISO_COUNTRY_CODE = "iso_country_code";
 
     /**
      * TelephonyProvider column name for the sim provisioning status associated with a SIM.
@@ -499,12 +587,20 @@ public class SubscriptionManager {
     public static final String IS_OPPORTUNISTIC = "is_opportunistic";
 
     /**
-     * TelephonyProvider column name for subId of parent subscription of an opportunistic
-     * subscription.
-     * if the parent sub id is valid, then is_opportunistic should always to true.
+     * TelephonyProvider column name for group ID. Subscriptions with same group ID
+     * are considered bundled together, and should behave as a single subscription at
+     * certain scenarios.
+     *
      * @hide
      */
-    public static final String PARENT_SUB_ID = "parent_sub_id";
+    public static final String GROUP_UUID = "group_uuid";
+
+    /**
+     * TelephonyProvider column name for whether a subscription is metered or not, that is, whether
+     * the network it connects to charges for subscription or not. For example, paid CBRS or unpaid.
+     * @hide
+     */
+    public static final String IS_METERED = "is_metered";
 
     /**
      * Broadcast Action: The user has changed one of the default subs related to
@@ -550,7 +646,6 @@ public class SubscriptionManager {
      * the user is interested in.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    @SystemApi
     public static final String ACTION_MANAGE_SUBSCRIPTION_PLANS
             = "android.telephony.action.MANAGE_SUBSCRIPTION_PLANS";
 
@@ -570,7 +665,6 @@ public class SubscriptionManager {
      * {@code android.permission.MANAGE_SUBSCRIPTION_PLANS} permission.
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
-    @SystemApi
     public static final String ACTION_REFRESH_SUBSCRIPTION_PLANS
             = "android.telephony.action.REFRESH_SUBSCRIPTION_PLANS";
 
@@ -781,8 +875,13 @@ public class SubscriptionManager {
         IOnSubscriptionsChangedListener callback = new IOnSubscriptionsChangedListener.Stub() {
             @Override
             public void onSubscriptionsChanged() {
-                if (DBG) log("onOpportunisticSubscriptionsChanged callback received.");
-                mExecutor.execute(() -> onOpportunisticSubscriptionsChanged());
+                final long identity = Binder.clearCallingIdentity();
+                try {
+                    if (DBG) log("onOpportunisticSubscriptionsChanged callback received.");
+                    mExecutor.execute(() -> onOpportunisticSubscriptionsChanged());
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
             }
         };
 
@@ -1338,11 +1437,12 @@ public class SubscriptionManager {
 
     /**
      * Get an array of Subscription Ids for specified slot Index.
-     * @param slotIndex the slot Index.
-     * @return subscription Ids or null if the given slot Index is not valid.
+     * @param slotIndex the slot index.
+     * @return subscription Ids or null if the given slot Index is not valid or there are no active
+     * subscriptions in the slot.
      */
     @Nullable
-    public static int[] getSubscriptionIds(int slotIndex) {
+    public int[] getSubscriptionIds(int slotIndex) {
         return getSubId(slotIndex);
     }
 
@@ -1501,14 +1601,23 @@ public class SubscriptionManager {
         return subId;
     }
 
-    /** @hide */
-    @UnsupportedAppUsage
-    public void setDefaultSmsSubId(int subId) {
-        if (VDBG) logd("setDefaultSmsSubId sub id = " + subId);
+    /**
+     * Set the subscription which will be used by default for SMS, with the subscription which
+     * the supplied subscription ID corresponds to; or throw a RuntimeException if the supplied
+     * subscription ID is not usable (check with {@link #isUsableSubscriptionId(int)}).
+     *
+     * @param subscriptionId the supplied subscription ID
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public void setDefaultSmsSubId(int subscriptionId) {
+        if (VDBG) logd("setDefaultSmsSubId sub id = " + subscriptionId);
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                iSub.setDefaultSmsSubId(subId);
+                iSub.setDefaultSmsSubId(subscriptionId);
             }
         } catch (RemoteException ex) {
             // ignore it
@@ -1556,14 +1665,23 @@ public class SubscriptionManager {
         return subId;
     }
 
-    /** @hide */
-    @UnsupportedAppUsage
-    public void setDefaultDataSubId(int subId) {
-        if (VDBG) logd("setDataSubscription sub id = " + subId);
+    /**
+     * Set the subscription which will be used by default for data, with the subscription which
+     * the supplied subscription ID corresponds to; or throw a RuntimeException if the supplied
+     * subscription ID is not usable (check with {@link #isUsableSubscriptionId(int)}).
+     *
+     * @param subscriptionId the supplied subscription ID
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public void setDefaultDataSubId(int subscriptionId) {
+        if (VDBG) logd("setDataSubscription sub id = " + subscriptionId);
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                iSub.setDefaultDataSubId(subId);
+                iSub.setDefaultDataSubId(subscriptionId);
             }
         } catch (RemoteException ex) {
             // ignore it
@@ -1952,7 +2070,6 @@ public class SubscriptionManager {
      * @throws SecurityException if the caller doesn't meet the requirements
      *             outlined above.
      */
-    @SystemApi
     public @NonNull List<SubscriptionPlan> getSubscriptionPlans(int subId) {
         try {
             SubscriptionPlan[] subscriptionPlans =
@@ -1984,7 +2101,6 @@ public class SubscriptionManager {
      * @throws SecurityException if the caller doesn't meet the requirements
      *             outlined above.
      */
-    @SystemApi
     public void setSubscriptionPlans(int subId, @NonNull List<SubscriptionPlan> plans) {
         try {
             getNetworkPolicy().setSubscriptionPlans(subId,
@@ -2026,7 +2142,6 @@ public class SubscriptionManager {
      * @throws SecurityException if the caller doesn't meet the requirements
      *             outlined above.
      */
-    @SystemApi
     public void setSubscriptionOverrideUnmetered(int subId, boolean overrideUnmetered,
             @DurationMillisLong long timeoutMillis) {
         try {
@@ -2062,7 +2177,6 @@ public class SubscriptionManager {
      * @throws SecurityException if the caller doesn't meet the requirements
      *             outlined above.
      */
-    @SystemApi
     public void setSubscriptionOverrideCongested(int subId, boolean overrideCongested,
             @DurationMillisLong long timeoutMillis) {
         try {
@@ -2207,43 +2321,49 @@ public class SubscriptionManager {
     }
 
     /**
-     * Set preferred default data.
-     * Set on which slot most cellular data will be on.
-     * It's also usually what we set up internet connection on.
+     * Set which subscription is preferred for cellular data.
+     * It's also usually the subscription we set up internet connection on.
      *
      * PreferredData overwrites user setting of default data subscription. And it's used
-     * by AlternativeNetworkAccessService or carrier apps to switch primary and CBRS
+     * by AlternativeNetworkService or carrier apps to switch primary and CBRS
      * subscription dynamically in multi-SIM devices.
      *
-     * @param slotId which slot is preferred to for cellular data. If it's INVALID, it means
-     *               it's unset and defaultDataSubId is used to determine which modem is preferred.
+     * @param subId which subscription is preferred to for cellular data. If it's
+     *              {@link SubscriptionManager#DEFAULT_SUBSCRIPTION_ID}, it means
+     *              it's unset and {@link SubscriptionManager#getDefaultDataSubscriptionId()}
+     *              is used to determine which modem is preferred.
      * @hide
      *
      */
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
-    public void setPreferredData(int slotId) {
-        if (VDBG) logd("[setPreferredData]+ slotId:" + slotId);
+    public void setPreferredData(int subId) {
+        if (VDBG) logd("[setPreferredData]+ subId:" + subId);
         setSubscriptionPropertyHelper(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID,
-                "setPreferredData", (iSub)-> iSub.setPreferredData(slotId));
+                "setPreferredData", (iSub)-> iSub.setPreferredData(subId));
     }
 
     /**
-     * Get opportunistic data Profiles.
+     * Return opportunistic subscriptions that can be visible to the caller.
+     * Opportunistic subscriptions are for opportunistic networks, which are cellular
+     * networks with limited capabilities and coverage, for example, CBRS.
      *
-     *  Provide all available user downloaded profiles on phone which are used only for
-     *  opportunistic data.
-     *  @param slotIndex slot on which the profiles are queried from.
-     *  @return the list of opportunistic subscription info. If none exists, an empty list.
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * or that the calling app has carrier privileges (see
+     * {@link TelephonyManager#hasCarrierPrivileges}).
+     *
+     * @return the list of opportunistic subscription info. If none exists, an empty list.
      */
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
-    public @NonNull List<SubscriptionInfo> getOpportunisticSubscriptions(int slotIndex) {
+    public @NonNull List<SubscriptionInfo> getOpportunisticSubscriptions() {
         String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
         List<SubscriptionInfo> subInfoList = null;
 
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                subInfoList = iSub.getOpportunisticSubscriptions(slotIndex, pkgForDebug);
+                subInfoList = iSub.getOpportunisticSubscriptions(pkgForDebug);
             }
         } catch (RemoteException ex) {
             // ignore it
@@ -2284,19 +2404,170 @@ public class SubscriptionManager {
     }
 
     /**
-     * Set parent subId by simInfo index
+     * Inform SubscriptionManager that subscriptions in the list are bundled
+     * as a group. Typically it's a primary subscription and an opportunistic
+     * subscription. It should only affect multi-SIM scenarios where primary
+     * and opportunistic subscriptions can be activated together.
+     * Being in the same group means they might be activated or deactivated
+     * together, some of them may be invisible to the users, etc.
      *
-     * @param parentSubId subId of its parent subscription.
+     * Caller will either have {@link android.Manifest.permission#MODIFY_PHONE_STATE}
+     * permission or had carrier privilege permission on the subscriptions:
+     * {@link TelephonyManager#hasCarrierPrivileges()} or
+     * {@link #canManageSubscription(SubscriptionInfo)}
+     *
+     * @throws SecurityException if the caller doesn't meet the requirements
+     *             outlined above.
+     *
+     * @param subIdList list of subId that will be in the same group
+     * @return groupUUID a UUID assigned to the subscription group. It returns
+     * null if fails.
+     *
+     */
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public @Nullable String setSubscriptionGroup(@NonNull int[] subIdList) {
+        String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
+        if (VDBG) {
+            logd("[setSubscriptionGroup]+ subIdList:" + Arrays.toString(subIdList));
+        }
+
+        String groupUUID = null;
+        try {
+            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
+            if (iSub != null) {
+                groupUUID = iSub.setSubscriptionGroup(subIdList, pkgForDebug);
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+
+        return groupUUID;
+    }
+
+    /**
+     * Remove a list of subscriptions from their subscription group.
+     * See {@link #setSubscriptionGroup(int[])} for more details.
+     *
+     * Caller will either have {@link android.Manifest.permission#MODIFY_PHONE_STATE}
+     * permission or had carrier privilege permission on the subscriptions:
+     * {@link TelephonyManager#hasCarrierPrivileges()} or
+     * {@link #canManageSubscription(SubscriptionInfo)}
+     *
+     * @throws SecurityException if the caller doesn't meet the requirements
+     *             outlined above.
+     *
+     * @param subIdList list of subId that need removing from their groups.
+     * @return whether the operation succeeds.
+     *
+     */
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public boolean removeSubscriptionsFromGroup(@NonNull int[] subIdList) {
+        String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
+        if (VDBG) {
+            logd("[removeSubscriptionsFromGroup]+ subIdList:" + Arrays.toString(subIdList));
+        }
+
+        try {
+            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
+            if (iSub != null) {
+                return iSub.removeSubscriptionsFromGroup(subIdList, pkgForDebug);
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+
+        return false;
+    }
+
+    /**
+     * Get subscriptionInfo list of subscriptions that are in the same group of given subId.
+     * See {@link #setSubscriptionGroup(int[])} for more details.
+     *
+     * Caller will either have {@link android.Manifest.permission#READ_PHONE_STATE}
+     * permission or had carrier privilege permission on the subscription.
+     * {@link TelephonyManager#hasCarrierPrivileges()}
+     *
+     * @throws SecurityException if the caller doesn't meet the requirements
+     *             outlined above.
+     *
+     * @param subId of which list of subInfo from the same group will be returned.
+     * @return list of subscriptionInfo that belong to the same group, including the given
+     * subscription itself. It will return null if the subscription doesn't exist or it
+     * doesn't belong to any group.
+     *
+     */
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    public @Nullable List<SubscriptionInfo> getSubscriptionsInGroup(int subId) {
+        String pkgForDebug = mContext != null ? mContext.getOpPackageName() : "<unknown>";
+        if (VDBG) {
+            logd("[getSubscriptionsInGroup]+ subId:" + subId);
+        }
+
+        List<SubscriptionInfo> result = null;
+        try {
+            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
+            if (iSub != null) {
+                result = iSub.getSubscriptionsInGroup(subId, pkgForDebug);
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+
+        return result;
+    }
+
+    /**
+     * Set metered by simInfo index
+     *
+     * @param isMetered whether it’s a metered subscription.
      * @param subId the unique SubscriptionInfo index in database
      * @return the number of records updated
      * @hide
-     *
      */
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
-    public int setParentSubId(int parentSubId, int subId) {
-        if (VDBG) logd("[setParentSubId]+ parentSubId:" + parentSubId + " subId:" + subId);
-        return setSubscriptionPropertyHelper(subId, "parentSubId",
-                (iSub)-> iSub.setParentSubId(parentSubId, subId));
+    public int setMetered(boolean isMetered, int subId) {
+        if (VDBG) logd("[setIsMetered]+ isMetered:" + isMetered + " subId:" + subId);
+        return setSubscriptionPropertyHelper(subId, "setIsMetered",
+                (iSub)-> iSub.setMetered(isMetered, subId));
+    }
+
+    /**
+     * Whether system UI should hide a subscription. If it's a bundled opportunistic
+     * subscription, it shouldn't show up in anywhere in Settings app, dialer app,
+     * or status bar.
+     *
+     * @param info the subscriptionInfo to check against.
+     * @return true if this subscription should be hidden.
+     *
+     * @hide
+     */
+    public static boolean shouldHideSubscription(SubscriptionInfo info) {
+        return (info != null && !TextUtils.isEmpty(info.getGroupUuid()) && info.isOpportunistic());
+    }
+
+    /**
+     * Return a list of subscriptions that are available and visible to the user.
+     * Used by Settings app to show a list of subscriptions for user to pick.
+     *
+     * <p>
+     * Permissions android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE is required
+     * for getSelectableSubscriptionInfoList to be invoked.
+     * @return list of user selectable subscriptions.
+     *
+     * @hide
+     */
+    public @Nullable List<SubscriptionInfo> getSelectableSubscriptionInfoList() {
+        List<SubscriptionInfo> availableList = getAvailableSubscriptionInfoList();
+        if (availableList == null) {
+            return null;
+        } else {
+            return getAvailableSubscriptionInfoList().stream()
+                    .filter(subInfo -> !shouldHideSubscription(subInfo))
+                    .collect(Collectors.toList());
+        }
     }
 
     private interface CallISubMethodHelper {
