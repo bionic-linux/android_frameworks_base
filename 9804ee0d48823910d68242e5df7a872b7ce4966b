@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a48e193_bf19834a",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2019-01-11T18:19:23Z",
+      "side": 1,
+      "message": "TODO: should use a profile here instead.",
+      "range": {
+        "startLine": 1035,
+        "startChar": 10,
+        "endLine": 1039,
+        "endChar": 11
+      },
+      "revId": "9804ee0d48823910d68242e5df7a872b7ce4966b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
