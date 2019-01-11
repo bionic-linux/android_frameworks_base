@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "dbdba27a_fc357312",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-11T17:22:58Z",
+      "side": 1,
+      "message": "Good point about throwing. Somehow I missed that, even though the unit test checks for it.",
+      "parentUuid": "02c64757_442b331b",
+      "range": {
+        "startLine": 723,
+        "startChar": 58,
+        "endLine": 723,
+        "endChar": 60
+      },
+      "revId": "bd3aa075a9f3739db53ca3389d944718acb77e45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9812f1f6_bd7acfbd",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "bd3aa075a9f3739db53ca3389d944718acb77e45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f834141b_be44ef9a",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-11T17:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9812f1f6_bd7acfbd",
+      "range": {
+        "startLine": 874,
+        "startChar": 41,
+        "endLine": 874,
+        "endChar": 42
+      },
+      "revId": "bd3aa075a9f3739db53ca3389d944718acb77e45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
