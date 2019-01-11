@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7b3d3f_32143507",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-01-11T00:45:34Z",
+      "side": 1,
+      "message": "Do we every have cases where we get passed in an empty file to inflate and there is no next view?",
+      "range": {
+        "startLine": 1060,
+        "startChar": 12,
+        "endLine": 1060,
+        "endChar": 45
+      },
+      "revId": "bfcd77e339a8690330fba8b074051f6ba4256ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
