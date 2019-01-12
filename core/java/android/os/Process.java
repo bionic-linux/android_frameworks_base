@@ -501,7 +501,8 @@ public class Process {
                                   String[] zygoteArgs) {
         return ZYGOTE_PROCESS.start(processClass, niceName, uid, gid, gids,
                     runtimeFlags, mountExternal, targetSdkVersion, seInfo,
-                    abi, instructionSet, appDataDir, invokeWith, zygoteArgs);
+                    abi, instructionSet, appDataDir, invokeWith,
+                    /*useBlastulaPool=*/ true, zygoteArgs);
     }
 
     /** @hide */
@@ -518,7 +519,8 @@ public class Process {
                                   String[] zygoteArgs) {
         return WebViewZygote.getProcess().start(processClass, niceName, uid, gid, gids,
                     runtimeFlags, mountExternal, targetSdkVersion, seInfo,
-                    abi, instructionSet, appDataDir, invokeWith, zygoteArgs);
+                    abi, instructionSet, appDataDir, invokeWith,
+                    /*useBlastulaPool=*/ false, zygoteArgs);
     }
 
     /**
