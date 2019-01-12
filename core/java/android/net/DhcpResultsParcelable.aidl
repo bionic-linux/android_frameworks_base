@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2019 The Android Open Source Project
+/**
+ * Copyright (c) 2019, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,17 +10,18 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific language governing perNmissions and
  * limitations under the License.
-*/
+ */
 
 package android.net;
 
-import android.net.IpPrefixParcelable;
+import android.net.StaticIpConfigurationParcelable;
 
-parcelable RouteInfoParcelable {
-    IpPrefixParcelable destination;
-    String gatewayAddr;
-    String ifaceName;
-    int type;
+parcelable DhcpResultsParcelable {
+    StaticIpConfigurationParcelable baseConfiguration;
+    int leaseDuration;
+    int mtu;
+    String serverAddress;
+    String vendorInfo;
 }
