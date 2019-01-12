@@ -105,8 +105,14 @@ public final class Zygote {
     /** Number of bytes sent to the Zygote over blastula pipes or the pool event FD */
     public static final int BLASTULA_MANAGEMENT_MESSAGE_BYTES = 8;
 
-    /** If the blastula pool should be created and used to start applications */
-    public static final boolean BLASTULA_POOL_ENABLED = false;
+    /**
+     * If the blastula pool should be created and used to start applications.
+     *
+     * Setting this value to false will disable the creation, maintenance, and use of the blastula
+     * pool.  When the blastula pool is disabled the application lifecycle will be identical to
+     * previous versions of Android.
+     */
+    public static final boolean BLASTULA_POOL_ENABLED = true;
 
     /**
      * File descriptor used for communication between the signal handler and the ZygoteServer poll
@@ -154,6 +160,11 @@ public final class Zygote {
      */
     // TODO (chriswailes): This must be updated at the same time as sBlastulaPoolMax.
     static int sBlastulaPoolRefillThreshold = (sBlastulaPoolMax / 2);
+
+    /**
+     * @hide for internal use only
+     */
+    public static final int SOCKET_BUFFER_SIZE = 256;
 
     private static LocalServerSocket sBlastulaPoolSocket = null;
 
@@ -549,9 +560,9 @@ public final class Zygote {
             IoUtils.closeQuietly(writePipe);
         }
 
-        specializeBlastula(args.mUID, args.mGID, args.mGIDs,
+        specializeBlastula(args.mUid, args.mGid, args.mGids,
                            args.mRuntimeFlags, rlimits, args.mMountExternal,
-                           args.mSEInfo, args.mNiceName, args.mStartChildZygote,
+                           args.mSeInfo, args.mNiceName, args.mStartChildZygote,
                            args.mInstructionSet, args.mAppDataDir);
 
         if (args.mNiceName != null) {
@@ -574,9 +585,9 @@ public final class Zygote {
      * @param args  The arguments to test
      */
     static void validateBlastulaCommand(ZygoteArguments args) {
-        if (args.mABIListQuery) {
+        if (args.mAbiListQuery) {
             throw new IllegalArgumentException(BLASTULA_ERROR_PREFIX + "--query-abi-list");
-        } else if (args.mPIDQuery) {
+        } else if (args.mPidQuery) {
             throw new IllegalArgumentException(BLASTULA_ERROR_PREFIX + "--get-pid");
         } else if (args.mPreloadDefault) {
             throw new IllegalArgumentException(BLASTULA_ERROR_PREFIX + "--preload-default");
@@ -584,7 +595,7 @@ public final class Zygote {
             throw new IllegalArgumentException(BLASTULA_ERROR_PREFIX + "--preload-package");
         } else if (args.mStartChildZygote) {
             throw new IllegalArgumentException(BLASTULA_ERROR_PREFIX + "--start-child-zygote");
-        } else if (args.mAPIBlacklistExemptions != null) {
+        } else if (args.mApiBlacklistExemptions != null) {
             throw new IllegalArgumentException(
                 BLASTULA_ERROR_PREFIX + "--set-api-blacklist-exemptions");
         } else if (args.mHiddenApiAccessLogSampleRate != -1) {
