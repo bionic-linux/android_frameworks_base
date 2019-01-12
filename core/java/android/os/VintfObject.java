@@ -16,13 +16,18 @@
 
 package android.os;
 
-import java.util.Map;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 
+import java.util.Map;
 
 /**
  * Java API for libvintf.
+ *
  * @hide
  */
+@SystemApi
+@TestApi
 public class VintfObject {
 
     /// ---------- OTA
@@ -32,6 +37,8 @@ public class VintfObject {
      * and report them.
      * If any error in getting one of the manifests, it is not included in
      * the list.
+     *
+     * @hide
      */
     public static native String[] report();
 
@@ -44,6 +51,8 @@ public class VintfObject {
      * @return = 0 if success (compatible)
      *         > 0 if incompatible
      *         < 0 if any error (mount partition fails, illformed XML, etc.)
+     *
+     * @hide
      */
     public static native int verify(String[] packageInfo);
 
@@ -55,6 +64,8 @@ public class VintfObject {
      * @return = 0 if success (compatible)
      *         > 0 if incompatible
      *         < 0 if any error (mount partition fails, illformed XML, etc.)
+     *
+     * @hide
      */
     public static native int verifyWithoutAvb();
 
@@ -65,12 +76,18 @@ public class VintfObject {
      * device as stated in device and framework manifests. For example,
      * ["android.hidl.manager@1.0", "android.hardware.camera.device@1.0",
      *  "android.hardware.camera.device@3.2"]. There are no duplicates.
+     *
+     * @hide
      */
+    @SystemApi @TestApi
     public static native String[] getHalNamesAndVersions();
 
     /**
      * @return the BOARD_SEPOLICY_VERS build flag available in device manifest.
+     *
+     * @hide
      */
+    @SystemApi @TestApi
     public static native String getSepolicyVersion();
 
     /**
@@ -78,13 +95,19 @@ public class VintfObject {
      * specified in framework manifest. For example,
      * [("27", ["libjpeg.so", "libbase.so"]),
      *  ("28", ["libjpeg.so", "libbase.so"])]
+     *
+     * @hide
      */
+    @SystemApi @TestApi
     public static native Map<String, String[]> getVndkSnapshots();
 
     /**
      * @return target FCM version, a number specified in the device manifest
      * indicating the FCM version that the device manifest implements. Null if
      * device manifest doesn't specify this number (for legacy devices).
+     *
+     * @hide
      */
+    @SystemApi @TestApi
     public static native Long getTargetFrameworkCompatibilityMatrixVersion();
 }

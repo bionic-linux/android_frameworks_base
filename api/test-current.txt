@@ -730,6 +730,14 @@ package android.os {
     field public static final java.lang.String ACTION_USER_RESTRICTIONS_CHANGED = "android.os.action.USER_RESTRICTIONS_CHANGED";
   }
 
+  public class VintfObject {
+    ctor public VintfObject();
+    method public static java.lang.String[] getHalNamesAndVersions();
+    method public static java.lang.String getSepolicyVersion();
+    method public static java.lang.Long getTargetFrameworkCompatibilityMatrixVersion();
+    method public static java.util.Map<java.lang.String, java.lang.String[]> getVndkSnapshots();
+  }
+
 }
 
 package android.print {

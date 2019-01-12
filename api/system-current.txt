@@ -3970,6 +3970,14 @@ package android.os {
   public static abstract class UserManager.UserRestrictionSource implements java.lang.annotation.Annotation {
   }
 
+  public class VintfObject {
+    ctor public VintfObject();
+    method public static java.lang.String[] getHalNamesAndVersions();
+    method public static java.lang.String getSepolicyVersion();
+    method public static java.lang.Long getTargetFrameworkCompatibilityMatrixVersion();
+    method public static java.util.Map<java.lang.String, java.lang.String[]> getVndkSnapshots();
+  }
+
   public class WorkSource implements android.os.Parcelable {
     method public android.os.WorkSource.WorkChain createWorkChain();
   }
@@ -6097,7 +6105,6 @@ package android.telephony.ims {
     method public void callSessionInviteParticipantsRequestDelivered();
     method public void callSessionInviteParticipantsRequestFailed(android.telephony.ims.ImsReasonInfo);
     method public void callSessionMayHandover(int, int);
-    method public void callSessionRttAudioIndicatorChanged(android.telephony.ims.ImsStreamMediaProfile);
     method public void callSessionMergeComplete(android.telephony.ims.stub.ImsCallSessionImplBase);
     method public void callSessionMergeFailed(android.telephony.ims.ImsReasonInfo);
     method public void callSessionMergeStarted(android.telephony.ims.stub.ImsCallSessionImplBase, android.telephony.ims.ImsCallProfile);
@@ -6108,6 +6115,7 @@ package android.telephony.ims {
     method public void callSessionResumeFailed(android.telephony.ims.ImsReasonInfo);
     method public void callSessionResumeReceived(android.telephony.ims.ImsCallProfile);
     method public void callSessionResumed(android.telephony.ims.ImsCallProfile);
+    method public void callSessionRttAudioIndicatorChanged(android.telephony.ims.ImsStreamMediaProfile);
     method public void callSessionRttMessageReceived(java.lang.String);
     method public void callSessionRttModifyRequestReceived(android.telephony.ims.ImsCallProfile);
     method public void callSessionRttModifyResponseReceived(int);
