@@ -50,6 +50,8 @@ public class NetworkStack {
 
     public static final String NETWORKSTACK_PACKAGE_NAME = "com.android.mainline.networkstack";
 
+    private static final int NETWORKSTACK_TIMEOUT_MS = 10_000;
+
     @NonNull
     @GuardedBy("mPendingNetStackRequests")
     private final ArrayList<NetworkStackCallback> mPendingNetStackRequests = new ArrayList<>();
@@ -170,13 +172,55 @@ public class NetworkStack {
         }
     }
 
-    // TODO: use this method to obtain the connector when implementing network stack operations
+    /**
+     * Block until the NetworkStack connector is registered in ServiceManager.
+     *
+     * <p>This is only useful for non-system processes that do not have a way to be notified of
+     * registration completion. Adding a callback system would be too heavy weight considering that
+     * the connector is registered on boot, so it is unlikely that a client would request it before
+     * it is registered.
+     * TODO: consider blocking boot on registration and simplify much of the logic in this class.
+     */
+    private void waitForConnector() {
+        synchronized (mPendingNetStackRequests) {
+            if (mConnector != null) {
+                return;
+            }
+        }
+        IBinder connector;
+        try {
+            final long before = System.currentTimeMillis();
+            while ((connector = ServiceManager.getService(Context.NETWORK_STACK_SERVICE)) == null) {
+                Thread.sleep(20);
+                if (System.currentTimeMillis() - before > NETWORKSTACK_TIMEOUT_MS) {
+                    Slog.e(TAG, "Timeout waiting for NetworkStack connector");
+                    return;
+                }
+            }
+        } catch (InterruptedException e) {
+            Slog.e(TAG, "Error waiting for NetworkStack connector", e);
+            return;
+        }
+
+        synchronized (mPendingNetStackRequests) {
+            mConnector = INetworkStackConnector.Stub.asInterface(connector);
+        }
+    }
+
     private void requestConnector(@NonNull NetworkStackCallback request) {
         // TODO: PID check.
-        if (Binder.getCallingUid() != Process.SYSTEM_UID) {
+        final int caller = Binder.getCallingUid();
+        if (caller != Process.SYSTEM_UID && caller != Process.BLUETOOTH_UID) {
             // Don't even attempt to obtain the connector and give a nice error message
             throw new SecurityException(
                     "Only the system server should try to bind to the network stack.");
+        }
+
+        if (caller != Process.SYSTEM_UID) {
+            // In the very unlikely event that a non-system process (e.g. Bluetooth) requests a
+            // connector before the system finished registering it on boot, block callers until it
+            // is ready.
+            waitForConnector();
         }
 
         final INetworkStackConnector connector;
