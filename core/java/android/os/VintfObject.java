@@ -16,8 +16,9 @@
 
 package android.os;
 
-import java.util.Map;
+import android.annotation.SystemApi;
 
+import java.util.Map;
 
 /**
  * Java API for libvintf.
@@ -66,11 +67,13 @@ public class VintfObject {
      * ["android.hidl.manager@1.0", "android.hardware.camera.device@1.0",
      *  "android.hardware.camera.device@3.2"]. There are no duplicates.
      */
+    @SystemApi
     public static native String[] getHalNamesAndVersions();
 
     /**
      * @return the BOARD_SEPOLICY_VERS build flag available in device manifest.
      */
+    @SystemApi
     public static native String getSepolicyVersion();
 
     /**
@@ -79,6 +82,7 @@ public class VintfObject {
      * [("27", ["libjpeg.so", "libbase.so"]),
      *  ("28", ["libjpeg.so", "libbase.so"])]
      */
+    @SystemApi
     public static native Map<String, String[]> getVndkSnapshots();
 
     /**
@@ -86,5 +90,6 @@ public class VintfObject {
      * indicating the FCM version that the device manifest implements. Null if
      * device manifest doesn't specify this number (for legacy devices).
      */
+    @SystemApi
     public static native Long getTargetFrameworkCompatibilityMatrixVersion();
 }
