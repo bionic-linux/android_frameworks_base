@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0e816d2_5e32bb8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-14T16:53:12Z",
+      "side": 1,
+      "message": "1) Consistency of Configuration for all profile support\nI discussed with Zach about moving this Hearing Aids Profile configuration only and leaving the other configurations at the same location. He is OK with this exception.\n2) BluetoothAdapter.getSupportedProfiles() support\nThe getSupportedProfiles() hidden API is still unchanged. The separate and new public API is for the 3rd Party Apps to query for Hearing Aid support. This is similar public APIs like isLe2MPhySupported() or isOffloadedFilteringSupported() where the limitation is based on the hardware support.",
+      "parentUuid": "dfa654c4_7d5e1b6e",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "e66bafaccf5892c6d48b213a43d2e0e4d1d45a4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eab5e6ee_7b6625c5",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e66bafaccf5892c6d48b213a43d2e0e4d1d45a4e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a08e47_b7e8f9cc",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-14T16:53:12Z",
+      "side": 1,
+      "message": "This API will be made public in the next CL, go/aog/828781\nCurrently, there are no plans to make getSupportedProfiles() public.",
+      "parentUuid": "eab5e6ee_7b6625c5",
+      "range": {
+        "startLine": 1881,
+        "startChar": 19,
+        "endLine": 1881,
+        "endChar": 48
+      },
+      "revId": "e66bafaccf5892c6d48b213a43d2e0e4d1d45a4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
