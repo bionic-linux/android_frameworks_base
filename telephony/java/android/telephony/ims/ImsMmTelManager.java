@@ -356,13 +356,14 @@ public class ImsMmTelManager {
      * @throws IllegalArgumentException if the subscription associated with this callback is not
      * active (SIM is not inserted, ESIM inactive) or invalid, or a null {@link Executor} or
      * {@link CapabilityCallback} callback.
-     * @throws IllegalStateException if the subscription associated with this callback is valid, but
+     * @throws ImsException if the subscription associated with this callback is valid, but
      * the {@link ImsService} associated with the subscription is not available. This can happen if
-     * the service crashed, for example.
+     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
+     * reason.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void registerImsRegistrationCallback(@CallbackExecutor Executor executor,
-            @NonNull RegistrationCallback c) {
+            @NonNull RegistrationCallback c) throws ImsException {
         if (c == null) {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
         }
@@ -374,6 +375,8 @@ public class ImsMmTelManager {
             getITelephony().registerImsRegistrationCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
+        } catch (IllegalStateException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
     }
 
@@ -421,13 +424,14 @@ public class ImsMmTelManager {
      * @throws IllegalArgumentException if the subscription associated with this callback is not
      * active (SIM is not inserted, ESIM inactive) or invalid, or a null {@link Executor} or
      * {@link CapabilityCallback} callback.
-     * @throws IllegalStateException if the subscription associated with this callback is valid, but
+     * @throws ImsException if the subscription associated with this callback is valid, but
      * the {@link ImsService} associated with the subscription is not available. This can happen if
-     * the service crashed, for example.
+     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
+     * reason.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void registerMmTelCapabilityCallback(@NonNull @CallbackExecutor Executor executor,
-            @NonNull CapabilityCallback c) {
+            @NonNull CapabilityCallback c) throws ImsException {
         if (c == null) {
             throw new IllegalArgumentException("Must include a non-null RegistrationCallback.");
         }
@@ -439,6 +443,8 @@ public class ImsMmTelManager {
             getITelephony().registerMmTelCapabilityCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
+        }  catch (IllegalStateException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
     }
 

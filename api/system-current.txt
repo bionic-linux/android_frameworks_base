@@ -5996,6 +5996,16 @@ package android.telephony.ims {
     field public final java.util.HashMap<java.lang.String, android.os.Bundle> mParticipants;
   }
 
+  public class ImsException extends java.lang.Exception {
+    ctor public ImsException(java.lang.String);
+    ctor public ImsException(java.lang.String, int);
+    ctor public ImsException(java.lang.String, int, java.lang.Throwable);
+    method public int getCode();
+    field public static final int CODE_ERROR_SERVICE_UNAVAILABLE = 1; // 0x1
+    field public static final int CODE_ERROR_UNSPECIFIED = 0; // 0x0
+    field public static final int CODE_ERROR_UNSUPPORTED_OPERATION = 2; // 0x2
+  }
+
   public final class ImsExternalCallState implements android.os.Parcelable {
     ctor public ImsExternalCallState(java.lang.String, android.net.Uri, android.net.Uri, boolean, int, int, boolean);
     method public int describeContents();
@@ -6021,8 +6031,8 @@ package android.telephony.ims {
     method public boolean isVoWiFiRoamingSettingEnabled();
     method public boolean isVoWiFiSettingEnabled();
     method public boolean isVtSettingEnabled();
-    method public void registerImsRegistrationCallback(java.util.concurrent.Executor, android.telephony.ims.ImsMmTelManager.RegistrationCallback);
-    method public void registerMmTelCapabilityCallback(java.util.concurrent.Executor, android.telephony.ims.ImsMmTelManager.CapabilityCallback);
+    method public void registerImsRegistrationCallback(java.util.concurrent.Executor, android.telephony.ims.ImsMmTelManager.RegistrationCallback) throws android.telephony.ims.ImsException;
+    method public void registerMmTelCapabilityCallback(java.util.concurrent.Executor, android.telephony.ims.ImsMmTelManager.CapabilityCallback) throws android.telephony.ims.ImsException;
     method public void setAdvancedCallingSetting(boolean);
     method public void setRttCapabilitySetting(boolean);
     method public void setVoWiFiModeSetting(int);
@@ -6458,7 +6468,7 @@ package android.telephony.ims {
     method public static android.telephony.ims.ProvisioningManager createForSubscriptionId(android.content.Context, int);
     method public int getProvisioningIntValue(int);
     method public java.lang.String getProvisioningStringValue(int);
-    method public void registerProvisioningChangedCallback(java.util.concurrent.Executor, android.telephony.ims.ProvisioningManager.Callback);
+    method public void registerProvisioningChangedCallback(java.util.concurrent.Executor, android.telephony.ims.ProvisioningManager.Callback) throws android.telephony.ims.ImsException;
     method public int setProvisioningIntValue(int, int);
     method public int setProvisioningStringValue(int, java.lang.String);
     method public void unregisterProvisioningChangedCallback(android.telephony.ims.ProvisioningManager.Callback);
