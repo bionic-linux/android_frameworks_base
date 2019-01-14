@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dfa654c4_7d5e1b6e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-14T00:41:18Z",
+      "side": 1,
+      "message": "If we want to make this change, do we want to change all configurations at once so that BluetoothAdapter.getSupportedProfiles() API stays consistent with hearing aid and other profiles? \n\nI worry that creating a separate API just for querying hearing aid support state will confuse developers who use BluetoothAdapter APIs since it is not clear whether BluetoothAdapter.getSupportedProfiles().contains(BluetoothProfile.HEARING_AID) will still work.",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "e66bafaccf5892c6d48b213a43d2e0e4d1d45a4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eab5e6ee_7b6625c5",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 1
