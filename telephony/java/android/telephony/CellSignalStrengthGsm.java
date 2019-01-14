@@ -148,8 +148,8 @@ public final class CellSignalStrengthGsm extends CellSignalStrength implements P
 
     /**
      * Return the Bit Error Rate
-     * @returns the bit error rate (0-7, 99) as defined in TS 27.007 8.5 or UNAVAILABLE.
-     * @hide
+     *
+     * @return the bit error rate (0-7, 99) as defined in TS 27.007 8.5 or UNAVAILABLE.
      */
     public int getBitErrorRate() {
         return mBitErrorRate;
