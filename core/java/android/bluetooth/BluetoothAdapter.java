@@ -1873,6 +1873,20 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Return true if Android Hearing Aids Profile is supported.
+     *
+     * @return true if phone supports Android Hearing Aids Profile
+     */
+    private boolean isHearingAidsProfileSupported() {
+        try {
+            return mManagerService.isAshaHearingAidSupported();
+        } catch (RemoteException e) {
+            Log.e(TAG, "remote expection when calling isAshaHearingAidSupported", e);
+            return false;
+        }
+    }
+
+    /**
      * Get the maximum number of connected audio devices.
      *
      * @return the maximum number of connected audio devices
@@ -2023,6 +2037,11 @@ public final class BluetoothAdapter {
                         if ((supportedProfilesBitMask & (1 << i)) != 0) {
                             supportedProfiles.add(i);
                         }
+                    }
+                } else {
+                    // Bluetooth is disabled. Just fill in known supported Profiles
+                    if (isHearingAidsProfileSupported()) {
+                        supportedProfiles.add(BluetoothProfile.HEARING_AID);
                     }
                 }
             }
@@ -2498,8 +2517,12 @@ public final class BluetoothAdapter {
             BluetoothHidDevice hidDevice = new BluetoothHidDevice(context, listener);
             return true;
         } else if (profile == BluetoothProfile.HEARING_AID) {
-            BluetoothHearingAid hearingAid = new BluetoothHearingAid(context, listener);
-            return true;
+            if (isHearingAidsProfileSupported()) {
+                BluetoothHearingAid hearingAid = new BluetoothHearingAid(context, listener);
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
