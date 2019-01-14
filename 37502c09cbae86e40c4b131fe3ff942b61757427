@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3011f4eb_ff991748",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-14T00:58:38Z",
+      "side": 1,
+      "message": "Do we want a METADATA_MAIN_BATTERY key as well to replace the existing getBatteryLevel() function? Maybe in the iteration.",
+      "range": {
+        "startLine": 660,
+        "startChar": 0,
+        "endLine": 661,
+        "endChar": 51
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff35b358_3eeaba35",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-14T00:58:38Z",
+      "side": 1,
+      "message": "Please use {link BATTERY_LEVEL_UNKNOWN} instead of a hard coded numbers.",
+      "range": {
+        "startLine": 692,
+        "startChar": 30,
+        "endLine": 692,
+        "endChar": 32
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fee739d_d487c592",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-14T00:58:38Z",
+      "side": 1,
+      "message": "Each listener could be invoked using different handler. We should use:\nMap\u003cBluetoothDevice, List\u003candroid.util.Pair\u003cMetadataListener, Handler\u003e\u003e instead.",
+      "range": {
+        "startLine": 759,
+        "startChar": 0,
+        "endLine": 760,
+        "endChar": 83
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055876ce_9fd53a58",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3274,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-14T00:58:38Z",
+      "side": 1,
+      "message": "These API should need BLUETOOTH_PRIVILEGED permission.",
+      "range": {
+        "startLine": 3274,
+        "startChar": 4,
+        "endLine": 3274,
+        "endChar": 43
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a518c303_0dfc1204",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-14T00:58:38Z",
+      "side": 1,
+      "message": "Will this compile?",
+      "range": {
+        "startLine": 3300,
+        "startChar": 16,
+        "endLine": 3300,
+        "endChar": 56
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
