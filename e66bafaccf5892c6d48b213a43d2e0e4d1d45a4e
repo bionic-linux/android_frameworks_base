@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eab5e6ee_7b6625c5",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-14T00:38:29Z",
+      "side": 1,
+      "message": "Why do we need this API? Why not just use BluetoothAdapter.getSupportedProfiles().contains(BluetoothProfile.HEARING_AID)?",
+      "range": {
+        "startLine": 1881,
+        "startChar": 19,
+        "endLine": 1881,
+        "endChar": 48
+      },
+      "revId": "e66bafaccf5892c6d48b213a43d2e0e4d1d45a4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
