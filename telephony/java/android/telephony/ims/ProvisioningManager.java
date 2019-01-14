@@ -116,13 +116,18 @@ public class ProvisioningManager {
      * @param context The context that this manager will use.
      * @param subId The ID of the subscription that this ProvisioningManager will use.
      * @see android.telephony.SubscriptionManager#getActiveSubscriptionInfoList()
-     * @throws IllegalArgumentException if the subscription is invalid or
-     *         the subscription ID is not an active subscription.
+     * @throws IllegalArgumentException if the subscription is invalid.
+     * @throws ImsException if there is no IMS service associated with this subscription, for
+     * example if the IMS service crashed.
      */
-    public static ProvisioningManager createForSubscriptionId(Context context, int subId) {
-        if (!SubscriptionManager.isValidSubscriptionId(subId)
-                || !getSubscriptionManager(context).isActiveSubscriptionId(subId)) {
+    public static ProvisioningManager createForSubscriptionId(Context context, int subId)
+            throws ImsException {
+        if (!SubscriptionManager.isValidSubscriptionId(subId)) {
             throw new IllegalArgumentException("Invalid subscription ID");
+        }
+        if (!getSubscriptionManager(context).isActiveSubscriptionId(subId)) {
+            throw new ImsException("IMS is not Available for this subscription.",
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
 
         return new ProvisioningManager(subId);
@@ -143,18 +148,21 @@ public class ProvisioningManager {
      * @see SubscriptionManager.OnSubscriptionsChangedListener
      * @throws IllegalArgumentException if the subscription associated with this callback is not
      * active (SIM is not inserted, ESIM inactive) or the subscription is invalid.
-     * @throws IllegalStateException if the subscription associated with this callback is valid, but
+     * @throws ImsException if the subscription associated with this callback is valid, but
      * the {@link ImsService} associated with the subscription is not available. This can happen if
-     * the service crashed, for example.
+     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
+     * reason.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void registerProvisioningChangedCallback(@CallbackExecutor Executor executor,
-            @NonNull Callback callback) {
+            @NonNull Callback callback) throws ImsException {
         callback.setExecutor(executor);
         try {
             getITelephony().registerImsProvisioningChangedCallback(mSubId, callback.getBinder());
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
+        }  catch (IllegalStateException e) {
+            throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
     }
 
