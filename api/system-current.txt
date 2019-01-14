@@ -5560,6 +5560,16 @@ package android.telephony {
     method public static deprecated android.telephony.SubscriptionPlan.Builder createRecurringWeekly(java.time.ZonedDateTime);
   }
 
+  public final class TelephonyDebug {
+    ctor public TelephonyDebug();
+    method public static android.content.Intent buildDebugIntent(android.os.ParcelUuid, java.lang.String);
+    method public static void maybeSendDebugEvent(android.os.ParcelUuid, java.lang.String, int);
+    field public static final java.lang.String DEBUG_EVENT = "android.telephony.debug.action.DEBUG_EVENT";
+    field public static final java.lang.String EXTRA_EVENT_DESCRIPTION = "android.telephony.debug.extra.EVENT_DESCRIPTION";
+    field public static final java.lang.String EXTRA_EVENT_ID = "android.telephony.debug.extra.EVENT_ID";
+    field public static final java.lang.String EXTRA_REQUEST = "android.telephony.debug.extra.REQUEST";
+  }
+
   public final class TelephonyHistogram implements android.os.Parcelable {
     ctor public TelephonyHistogram(int, int, int);
     ctor public TelephonyHistogram(android.telephony.TelephonyHistogram);
