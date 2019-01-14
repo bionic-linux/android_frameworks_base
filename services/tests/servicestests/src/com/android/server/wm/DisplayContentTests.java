@@ -28,6 +28,7 @@ import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_
 import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 import static android.view.WindowManager.LayoutParams.TYPE_STATUS_BAR;
 import static android.view.WindowManager.LayoutParams.TYPE_VOICE_INTERACTION;
+
 import static com.android.server.wm.WindowContainer.POSITION_TOP;
 
 import static org.hamcrest.Matchers.is;
@@ -37,9 +38,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
@@ -56,6 +54,9 @@ import android.view.MotionEvent;
 import android.view.Surface;
 
 import com.android.server.wm.utils.WmDisplayCutout;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -267,6 +268,7 @@ public class DisplayContentTests extends WindowTestsBase {
      * Tests tapping on a stack in different display results in window gaining focus.
      */
     @Test
+    @FlakyTest(bugId = 121057970)
     public void testInputEventBringsCorrectDisplayInFocus() throws Exception {
         DisplayContent dc0 = sWm.getDefaultDisplayContentLocked();
         // Create a second display
@@ -330,6 +332,7 @@ public class DisplayContentTests extends WindowTestsBase {
     }
 
     @Test
+    @FlakyTest(bugId = 121057970)
     public void testKeyguard_preventsSecondaryDisplayFocus() throws Exception {
         final WindowState keyguard = createWindow(null, TYPE_STATUS_BAR,
                 sWm.getDefaultDisplayContentLocked(), "keyguard");

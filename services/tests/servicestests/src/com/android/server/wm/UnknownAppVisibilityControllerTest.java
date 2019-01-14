@@ -19,6 +19,7 @@ package com.android.server.wm;
 import static junit.framework.Assert.assertTrue;
 
 import android.platform.test.annotations.Presubmit;
+import android.support.test.filters.FlakyTest;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -55,6 +56,7 @@ public class UnknownAppVisibilityControllerTest extends WindowTestsBase {
     }
 
     @Test
+    @FlakyTest(bugId = 121057970)
     public void testMultiple() throws Exception {
         final AppWindowToken token1 = WindowTestUtils.createTestAppWindowToken(mDisplayContent);
         final AppWindowToken token2 = WindowTestUtils.createTestAppWindowToken(mDisplayContent);

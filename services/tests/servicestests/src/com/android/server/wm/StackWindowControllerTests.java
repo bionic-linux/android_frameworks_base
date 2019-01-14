@@ -16,19 +16,19 @@
 
 package com.android.server.wm;
 
-import android.graphics.Rect;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import android.platform.test.annotations.Presubmit;
-import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import android.graphics.Rect;
+import android.platform.test.annotations.Presubmit;
+import android.support.test.filters.FlakyTest;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * Test class for {@link StackWindowController}.
@@ -61,6 +61,7 @@ public class StackWindowControllerTests extends WindowTestsBase {
     }
 
     @Test
+    @FlakyTest(bugId = 121057970)
     public void testRemoveContainer_deferRemoval() throws Exception {
         final StackWindowController stackController =
                 createStackControllerOnDisplay(mDisplayContent);
