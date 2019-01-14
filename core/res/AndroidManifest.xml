@@ -607,6 +607,9 @@
 
     <protected-broadcast android:name="android.provider.action.DEFAULT_SMS_PACKAGE_CHANGED_INTERNAL" />
 
+    <!-- For Vendor Debugging in Telephony -->
+    <protected-broadcast android:name="android.telephony.debug.action.DEBUG_EVENT" />
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
