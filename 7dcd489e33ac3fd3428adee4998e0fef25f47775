@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b15714c5_62fa4691",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-14T22:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13087606_d6747339",
+      "range": {
+        "startLine": 393,
+        "startChar": 0,
+        "endLine": 393,
+        "endChar": 102
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3941f2b_3e2c7d1c",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac1197a_4c8c3faa",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-14T22:12:28Z",
+      "side": 1,
+      "message": "I added root and attachToRoot to tryInflatePrecompiled, which now includes the logic to generate the layout params and attach the view to the root if needed.",
+      "parentUuid": "b3941f2b_3e2c7d1c",
+      "range": {
+        "startLine": 468,
+        "startChar": 0,
+        "endLine": 472,
+        "endChar": 0
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +190,54 @@
     },
     {
       "key": {
+        "uuid": "f1b789b0_33e2d339",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-14T22:12:28Z",
+      "side": 1,
+      "message": "I opened http://b/122845440 to cover this work as well.",
+      "parentUuid": "a3c626fa_16b94674",
+      "range": {
+        "startLine": 493,
+        "startChar": 26,
+        "endLine": 493,
+        "endChar": 49
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd23cc26_9408e4fa",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-14T22:12:28Z",
+      "side": 1,
+      "message": "Let\u0027s track this in http://b/122845440\n\nUnfortunately, it seems like the reflection API doesn\u0027t let us do much better.",
+      "parentUuid": "440c388a_9a7069b6",
+      "range": {
+        "startLine": 493,
+        "startChar": 12,
+        "endLine": 493,
+        "endChar": 88
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e58140ee_0136b182",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 9
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "7ec46a3d_67bb8782",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-14T22:12:28Z",
+      "side": 1,
+      "message": "Opened http://b/122845440",
+      "parentUuid": "e58140ee_0136b182",
+      "range": {
+        "startLine": 494,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 38
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60b65d1d_85af68b4",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 9
@@ -185,6 +305,30 @@
       "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1156e6d0_967460b3",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-14T22:12:28Z",
+      "side": 1,
+      "message": "This logic is now handled by tryInflatePrecompiled by passing parent in as root and attachToRoot\u003dtrue. I added a try...finally that closes the parser there.",
+      "parentUuid": "60b65d1d_85af68b4",
+      "range": {
+        "startLine": 1059,
+        "startChar": 12,
+        "endLine": 1063,
+        "endChar": 69
+      },
+      "revId": "7dcd489e33ac3fd3428adee4998e0fef25f47775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
