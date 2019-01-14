@@ -3519,6 +3519,9 @@
     <!-- Pre-scale volume at volume step 3 for Absolute Volume -->
     <fraction name="config_prescaleAbsoluteVolume_index3">85%</fraction>
 
+    <!-- Whether ASHA Hearing Aid profile is supported -->
+    <bool name="config_asha_hearing_aid_profile_supported">true</bool>
+
     <!-- Component name for default assistant on this device -->
     <string name="config_defaultAssistantComponentName"></string>
 

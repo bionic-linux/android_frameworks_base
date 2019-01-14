@@ -1873,6 +1873,21 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Return true if Android Hearing Aids Profile is supported.
+     *
+     * @return true if phone supports Android Hearing Aids Profile
+     * @hide
+     */
+    public boolean isHearingAidsProfileSupported() {
+        try {
+            return mManagerService.isAshaHearingAidSupported();
+        } catch (RemoteException e) {
+            Log.e(TAG, "remote expection when calling isAshaHearingAidSupported", e);
+            return false;
+        }
+    }
+
+    /**
      * Get the maximum number of connected audio devices.
      *
      * @return the maximum number of connected audio devices
