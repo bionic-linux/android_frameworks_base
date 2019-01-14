@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "69840de1_c390575e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-14T03:22:43Z",
+      "side": 1,
+      "message": "Is it better if we remove maybeStartClat/maybeStopClat and just use updateClat()?\nGiven that it looks like we could simplify this function \u0026 there are no many caller for this.",
+      "parentUuid": "71a52c17_dbc4802a",
+      "range": {
+        "startLine": 583,
+        "startChar": 18,
+        "endLine": 583,
+        "endChar": 27
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c053e2e4_2c100e4f",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 1
