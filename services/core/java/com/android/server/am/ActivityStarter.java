@@ -2032,8 +2032,9 @@ class ActivityStarter {
             mReuseTask.setIntent(mStartActivity);
         } else if ((mLaunchFlags & FLAG_ACTIVITY_CLEAR_TOP) != 0
                 || isLaunchModeOneOf(LAUNCH_SINGLE_INSTANCE, LAUNCH_SINGLE_TASK)) {
-            ActivityRecord top = intentActivity.getTask().performClearTaskLocked(mStartActivity,
-                    mLaunchFlags);
+            final TaskRecord task = intentActivity.getTask();
+            ActivityRecord top = task != null ? task.performClearTaskLocked(mStartActivity,
+                    mLaunchFlags) : null;
             if (top == null) {
                 // A special case: we need to start the activity because it is not currently
                 // running, and the caller has asked to clear the current task to have this
