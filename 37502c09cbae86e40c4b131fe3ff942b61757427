@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "790f3a85_71d79276",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-14T02:32:47Z",
+      "side": 1,
+      "message": "Sounds good, let\u0027s have a chat about this before I add it to CL.",
+      "parentUuid": "3011f4eb_ff991748",
+      "range": {
+        "startLine": 660,
+        "startChar": 0,
+        "endLine": 661,
+        "endChar": 51
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff35b358_3eeaba35",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9b87f5_821b290b",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-14T02:32:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff35b358_3eeaba35",
+      "range": {
+        "startLine": 692,
+        "startChar": 30,
+        "endLine": 692,
+        "endChar": 32
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f19ac192_b95434a0",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-14T02:32:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fee739d_d487c592",
+      "range": {
+        "startLine": 759,
+        "startChar": 0,
+        "endLine": 760,
+        "endChar": 83
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "055876ce_9fd53a58",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ca9c746e_11f21d36",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3274,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-14T02:32:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "055876ce_9fd53a58",
+      "range": {
+        "startLine": 3274,
+        "startChar": 4,
+        "endLine": 3274,
+        "endChar": 43
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a518c303_0dfc1204",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e33015_23c77967",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-14T02:32:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a518c303_0dfc1204",
+      "range": {
+        "startLine": 3300,
+        "startChar": 16,
+        "endLine": 3300,
+        "endChar": 56
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
