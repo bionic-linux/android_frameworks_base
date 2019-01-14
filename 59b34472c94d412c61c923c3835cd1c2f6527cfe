@@ -33,6 +33,29 @@
       "revId": "59b34472c94d412c61c923c3835cd1c2f6527cfe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb4c03e_68db792b",
+        "filename": "tests/net/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-14T23:38:26Z",
+      "side": 1,
+      "message": "Maybe not for this change but this makes me realize we don\u0027t have coverage for parceling null members, while that tends to be a dangerous case not to test. Maybe add a todo ?",
+      "range": {
+        "startLine": 871,
+        "startChar": 70,
+        "endLine": 871,
+        "endChar": 71
+      },
+      "revId": "59b34472c94d412c61c923c3835cd1c2f6527cfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
