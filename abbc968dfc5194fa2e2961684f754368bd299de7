@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "87e33754_f8c7d75b",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-15T14:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e30f705_1d1d16aa",
+      "range": {
+        "startLine": 146,
+        "startChar": 43,
+        "endLine": 146,
+        "endChar": 50
+      },
+      "revId": "abbc968dfc5194fa2e2961684f754368bd299de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2d46a38_d5fb3e90",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-15T14:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb88b5c_9b6735b6",
+      "range": {
+        "startLine": 146,
+        "startChar": 26,
+        "endLine": 146,
+        "endChar": 34
+      },
+      "revId": "abbc968dfc5194fa2e2961684f754368bd299de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "827d6bf8_54fdceeb",
         "filename": "core/jni/android_net_NetUtils.cpp",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "abbc968dfc5194fa2e2961684f754368bd299de7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87b7afe_64b7e100",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-15T14:23:33Z",
+      "side": 1,
+      "message": "I wonder if we have any better way.\nerrnoException needs additional parameter, so we might need do these things.\nIf we use jniThrowExceptionFmt directly, we might get incomplete exception msg as below.\n\nandroid.system.ErrnoException: null failed: errno 0 (Success)\n\tat android.net.NetworkUtils.resNetworkQuery(Native Method)",
+      "parentUuid": "827d6bf8_54fdceeb",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "abbc968dfc5194fa2e2961684f754368bd299de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d4de9f5b_e4beef3d",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-15T14:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88bf097_c0123b63",
+      "range": {
+        "startLine": 401,
+        "startChar": 35,
+        "endLine": 402,
+        "endChar": 47
+      },
+      "revId": "abbc968dfc5194fa2e2961684f754368bd299de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c48c46ce_d96be3d9",
         "filename": "core/jni/android_net_NetUtils.cpp",
         "patchSetId": 2
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b04d2c20_911cc9b3",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-15T14:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c48c46ce_d96be3d9",
+      "range": {
+        "startLine": 417,
+        "startChar": 17,
+        "endLine": 417,
+        "endChar": 21
+      },
+      "revId": "abbc968dfc5194fa2e2961684f754368bd299de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c604aaf_220f6019",
         "filename": "core/jni/android_net_NetUtils.cpp",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "abbc968dfc5194fa2e2961684f754368bd299de7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be7cbd2_0c9d3d1d",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-15T14:23:33Z",
+      "side": 1,
+      "message": "Done.\nWe might need to throw errnoException.",
+      "parentUuid": "5c604aaf_220f6019",
+      "range": {
+        "startLine": 443,
+        "startChar": 8,
+        "endLine": 443,
+        "endChar": 57
+      },
+      "revId": "abbc968dfc5194fa2e2961684f754368bd299de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
