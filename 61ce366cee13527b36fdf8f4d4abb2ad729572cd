@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b563dd_6cff9963",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-15T19:08:21Z",
+      "side": 1,
+      "message": "Why did you move this here from ZygoteConnection?",
+      "range": {
+        "startLine": 105,
+        "startChar": 35,
+        "endLine": 105,
+        "endChar": 47
+      },
+      "revId": "61ce366cee13527b36fdf8f4d4abb2ad729572cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf31437_1695d730",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-01-15T19:08:21Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 76,
+        "startChar": 21,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "61ce366cee13527b36fdf8f4d4abb2ad729572cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
