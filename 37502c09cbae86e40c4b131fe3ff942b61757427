@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "33c7c0b8_99015aa5",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-15T20:36:39Z",
+      "side": 1,
+      "message": "After discuss, since main battery level is provided from headset directly, we should let user modify it via meta API.",
+      "parentUuid": "790f3a85_71d79276",
+      "range": {
+        "startLine": 660,
+        "startChar": 0,
+        "endLine": 661,
+        "endChar": 51
+      },
+      "revId": "37502c09cbae86e40c4b131fe3ff942b61757427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff35b358_3eeaba35",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 2
