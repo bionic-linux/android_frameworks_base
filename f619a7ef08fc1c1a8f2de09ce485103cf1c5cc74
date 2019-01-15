@@ -22,6 +22,30 @@
       "revId": "f619a7ef08fc1c1a8f2de09ce485103cf1c5cc74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0c5a5c_a5538719",
+        "filename": "core/java/android/os/LiveImageManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-01-15T09:10:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this concern. This class is in the android framework, so the name seems appropriate ?",
+      "parentUuid": "75f76429_47a17118",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "f619a7ef08fc1c1a8f2de09ce485103cf1c5cc74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
