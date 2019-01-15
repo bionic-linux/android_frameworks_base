@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0fb7e01_ab34ea4e",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T20:15:39Z",
+      "side": 1,
+      "message": "hahaha yeah, i was rebasing some other patches and this got uploaded with some vim control garbage in it.",
+      "parentUuid": "b4110fc4_ba3671f8",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "81d7ee0a43cb7b2f0e9dbb6ac78cdf356df6964f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d601cc5f_e266dc54",
         "filename": "telephony/java/android/telephony/TelephonyDebug.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-15T20:12:32Z",
       "side": 1,
       "message": "i like the over all idea and the API :)",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "81d7ee0a43cb7b2f0e9dbb6ac78cdf356df6964f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb6d6ffb_2501bf46",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-15T20:15:39Z",
+      "side": 1,
+      "message": "I wanted your input on whether we should have any additional fields. I have originally added a field called \"RequestedAction\" in an earlier patch set so that the platform could ask specifically for a bug report, or radio logs (or both), but I wasn\u0027t sure if it would be useful... it kind of depends on whether the ConnectivityMonitor will know about specific events on its side.\n\nAny other information that\u0027s sufficiently general that you\u0027d want passed to the connectivity monitor?",
+      "parentUuid": "d601cc5f_e266dc54",
       "range": {
         "startLine": 31,
         "startChar": 19,
