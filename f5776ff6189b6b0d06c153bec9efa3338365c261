@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d6305ec_07dee437",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-15T00:47:43Z",
+      "side": 1,
+      "message": "Would it make sense to just say\n\n  @hide\n  public NetworkSpecifier redact(int destUid) {\n    // TODO (b/122160111): return null by default\n    return this;\n  }\n\n?\nIt sounds like it\u0027s the same thing, only more future-proof.\nI don\u0027t feel too strongly as this is @hide but.",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "f5776ff6189b6b0d06c153bec9efa3338365c261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8132e9dd_5930d348",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-15T00:47:43Z",
+      "side": 1,
+      "message": "Instead of this new boilerplate, can\u0027t you just use expectCapabilitiesLike(Predicate, Agent) which already exists for this purpose ?\n\n  callback.expectCapabilitiesLike(nc -\u003e assertEquals(nc.getNetworkSpecifier(), foo), agent);\n\nIt\u0027s also more robust against double capabilities calls where the first one is not the one you want.",
+      "range": {
+        "startLine": 1573,
+        "startChar": 35,
+        "endLine": 1573,
+        "endChar": 61
+      },
+      "revId": "f5776ff6189b6b0d06c153bec9efa3338365c261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803c25cb_b8f48465",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-15T00:47:43Z",
+      "side": 1,
+      "message": "Hm, it kind of looks like the test in MixInCapabilities might be at fault. It assumes the one-way match between NC needs to be transitive and that property is not guaranteed for specifiers AFAICT.\nAt this moment the specifier is considered a mutable capability by NC but does have the concrete issue that it can cause a request to be dropped when changed which is what we try to avoid with immutable capabilities...\n\nI don\u0027t have a very good answer for you here, so unless either of us thinks of one let\u0027s go with your plan of just having this comment here.",
+      "range": {
+        "startLine": 2555,
+        "startChar": 2,
+        "endLine": 2556,
+        "endChar": 78
+      },
+      "revId": "f5776ff6189b6b0d06c153bec9efa3338365c261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
